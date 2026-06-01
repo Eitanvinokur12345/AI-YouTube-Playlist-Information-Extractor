@@ -47,50 +47,65 @@ For each pending video, analyze the transcript/content and extract ALL AI tools,
 - `relevance` — 1-sentence statement of why this skill is relevant to AI practitioners
 
 **Compare with existing skills in data/skills.json:**
-- If a skill with the same name already exists: keep the higher quality_score version; merge tips lists (deduplicate); log the discarded version to `data/deleted_skills.json` with reason "superseded by higher quality record".
+- If a skill with the same slug already exists: keep the higher quality_score version; merge tips lists (deduplicate); log the discarded version to `data/deleted_skills.json` with reason "superseded by higher quality record".
 - If the skill is new: append it.
 
-**Write a SKILL.md file** at `skills/<category>/<skill-name>/SKILL.md` using this template:
+**Write a SKILL.md file** at `skills/<skill-slug>/SKILL.md` using this template:
 
 ```markdown
+---
+name: <skill-slug-in-kebab-case>
+description: "<One sentence describing when Claude should use this skill. Start with an action verb.>"
+---
+
 # <skill_name>
 
-**Category:** <category>
-**Company:** <company> (<country>)
-**Open Source:** <yes/no>
-**Quality Score:** <quality_score>/10
-**Model Version:** <model_version or N/A>
+## Overview
+<Brief explanation of what this skill covers — 2 sentences.>
 
-## Description
-<description>
+## Key Techniques
+- <Technique 1>
+- <Technique 2>
+- <Technique 3>
 
-## Use Case
-<use_case>
+## How to Apply
+<Step-by-step guidance on using this skill.>
 
-## Output
-<output>
-
-## Tips
-1. <tip 1>
-2. <tip 2>
-3. <tip 3>
-
-## Slash Commands
-<list commands or "None">
-
-## General Tips
-<list or "None">
-
-## Relevance
-<relevance>
+## Examples
+<Concrete examples from the source video.>
 
 ## Source
-- Type: <source_type>
-- URL: <source_url>
-- Video: <title> by <channel_name> (published <publishedAt>)
+Extracted from: [<title>](https://www.youtube.com/watch?v=<video_id>)
+Channel: <channel_name>
 ```
 
-**Update data/skills.json** — append new/updated skill records to the `skills` array.
+**Skills folder structure is FLAT — no category subfolders:**
+```
+skills/
+  prompt-chaining/SKILL.md
+  cursor-ai/SKILL.md
+  n8n-automation/SKILL.md
+  ...
+```
+
+**Slug rules:**
+- Must be unique, kebab-case, and descriptive
+- Lowercase, spaces replaced with hyphens, special characters removed
+- Include a distinguishing suffix if the tool name is too generic (e.g. `claude-code-review` not just `review`)
+
+**The `description` frontmatter field is the most important field** — it is what Claude reads to decide whether to activate this skill. Make it specific, actionable, and start with a verb (e.g. "Use when reviewing pull requests with Claude Code", not "A skill about code review").
+
+**Update data/skills.json** — append new/updated skill records to the `skills` array. The skills array stores objects with `slug` and `source_video_id` only (no `category` field needed):
+
+```json
+{
+  "videos_seen": ["<video_id>", ...],
+  "skills": [
+    {"slug": "cursor-ai", "source_video_id": "<video_id>"},
+    {"slug": "n8n-automation", "source_video_id": "<video_id>"}
+  ]
+}
+```
 
 ---
 
@@ -128,19 +143,18 @@ Structure of `data/models.json`:
 
 ## Step 4 — Tab 3: Skills Improvement
 
-Scan all skills in `data/skills.json`. For any two skills in the **same category** whose names overlap significantly (same tool, slight wording variation, or one is clearly a subset of another):
+Scan all skills in `data/skills.json`. For any two skills whose slugs overlap significantly (same tool, slight wording variation, or one is clearly a subset of another):
 1. Keep the stronger one (higher quality_score; if equal, keep the one with more tips).
 2. Merge tips, slash_commands, and general_tips from both into the keeper (deduplicate).
-3. Back up the deleted skill to `data/deleted_skills.json` (append to array with reason "merged into <keeper_name>").
+3. Back up the deleted skill to `data/deleted_skills.json` (append to array with reason "merged into <keeper_slug>").
 4. Log the merge action to `data/merge_log.json` (append to array):
 
 ```json
 {
   "timestamp": "<ISO-8601>",
-  "merged_from": "<deleted skill name>",
-  "merged_into": "<keeper skill name>",
-  "category": "<category>",
-  "reason": "overlapping same-category skills"
+  "merged_from": "<deleted skill slug>",
+  "merged_into": "<keeper skill slug>",
+  "reason": "overlapping skills"
 }
 ```
 
@@ -225,4 +239,5 @@ If there is nothing to commit (no pending files were processed), skip the commit
 - **Preserve existing data** — always read existing JSON files before writing; append/update, never overwrite blindly.
 - **Follow PIPELINE.md** for any details not covered here.
 - **All JSON files** must be valid, pretty-printed (2-space indent), UTF-8.
-- **skill-name in paths** must be filesystem-safe: lowercase, spaces replaced with hyphens, special chars removed.
+- **Skills folder is FLAT** — `skills/<slug>/SKILL.md`, never `skills/<category>/<slug>/SKILL.md`.
+- **skill slug in paths** must be filesystem-safe: lowercase, spaces replaced with hyphens, special chars removed.

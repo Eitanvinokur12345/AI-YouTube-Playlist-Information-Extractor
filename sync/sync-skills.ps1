@@ -2,9 +2,13 @@
 # Pulls latest skills from GitHub and copies them to Claude skills folder
 # Run this manually or via Task Scheduler
 
-$RepoPath = "C:\Users\eitan\AI-YouTube-Skills"
+# ── CONFIGURATION ──────────────────────────────────────────────────────────────
+# Set these to match your machine. $env:USERPROFILE is auto-detected (no changes needed).
+$RepoPath   = "$env:USERPROFILE\AI-YouTube-Skills"
+$SkillsDest = "$env:USERPROFILE\OneDrive\Desktop\claude skills"
+# ───────────────────────────────────────────────────────────────────────────────
+
 $SkillsSource = "$RepoPath\skills"
-$SkillsDest = "C:\Users\eitan\OneDrive\Desktop\claude skills of eitan"
 
 # Pull latest from GitHub
 Write-Host "Pulling latest from GitHub..."

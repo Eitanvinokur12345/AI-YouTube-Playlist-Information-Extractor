@@ -1,8 +1,13 @@
 # setup-sync.ps1
 # Run this ONCE to: clone the repo and register a daily Task Scheduler job
 
-$RepoUrl = "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor"
-$RepoPath = "C:\Users\eitan\AI-YouTube-Skills"
+# ── CONFIGURATION ──────────────────────────────────────────────────────────────
+# Set these to match your machine. $env:USERPROFILE is auto-detected (no changes needed).
+$RepoPath   = "$env:USERPROFILE\AI-YouTube-Skills"
+$SkillsDest = "$env:USERPROFILE\OneDrive\Desktop\claude skills"
+# ───────────────────────────────────────────────────────────────────────────────
+
+$RepoUrl    = "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor"
 $SyncScript = "$RepoPath\sync\sync-skills.ps1"
 
 # Clone repo if not already cloned

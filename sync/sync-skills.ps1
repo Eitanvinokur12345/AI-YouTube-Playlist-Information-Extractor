@@ -1,30 +1,49 @@
 # sync-skills.ps1
-# Pulls latest skills from GitHub and copies them to Claude skills folder
-# Run this manually or via Task Scheduler
+# Pulls the latest results from GitHub and copies them to your local Desktop folders.
+# Runs via Task Scheduler (see setup-sync.ps1) or manually. Everything here is local
+# and offline-friendly except the single `git pull` at the top.
 
 # ── CONFIGURATION ──────────────────────────────────────────────────────────────
-# Set these to match your machine. $env:USERPROFILE is auto-detected (no changes needed).
-$RepoPath   = "$env:USERPROFILE\AI-YouTube-Skills"
-$SkillsDest = "$env:USERPROFILE\OneDrive\Desktop\claude skills"
+# $env:USERPROFILE is auto-detected — no changes needed on a standard setup.
+$RepoPath = "$env:USERPROFILE\AI-YouTube-Skills"
+$Desktop  = "$env:USERPROFILE\OneDrive\Desktop"
+
+$ClaudeSkillsDest = Join-Path $Desktop "claude skills of eitan"   # Claude skill packages
+$DataDest         = Join-Path $Desktop "AI Skills Data"           # read by the MCP server
+# Non-Claude tools (gemini, chatgpt, ...) each get "<tool> skills of eitan" automatically.
 # ───────────────────────────────────────────────────────────────────────────────
 
-$SkillsSource = "$RepoPath\skills"
+# Quiet robocopy flags: copy tree, overwrite changed files, never DELETE extra files in
+# the destination (so your manually-added skills are preserved). Exit codes 0-7 = success.
+$RC = @("/E", "/R:2", "/W:2", "/NFL", "/NDL", "/NJH", "/NJS", "/NP")
 
-# Pull latest from GitHub
 Write-Host "Pulling latest from GitHub..."
 Set-Location $RepoPath
 git pull origin main
 
-# Copy new skill folders to Claude skills folder
-Write-Host "Syncing skills..."
-if (Test-Path $SkillsSource) {
-    Get-ChildItem $SkillsSource -Directory | ForEach-Object {
-        $destFolder = Join-Path $SkillsDest $_.Name
-        if (-not (Test-Path $destFolder)) {
-            Write-Host "New skill: $($_.Name)"
-            Copy-Item $_.FullName $SkillsDest -Recurse
-        }
+# 1) Claude skill packages: skills/ -> "claude skills of eitan"
+if (Test-Path "$RepoPath\skills") {
+    Write-Host "Syncing Claude skills -> $ClaudeSkillsDest"
+    robocopy "$RepoPath\skills" $ClaudeSkillsDest @RC | Out-Null
+}
+
+# 2) Other-tool skill packages: other-skills/<tool>/ -> "<tool> skills of eitan"
+if (Test-Path "$RepoPath\other-skills") {
+    Get-ChildItem "$RepoPath\other-skills" -Directory | ForEach-Object {
+        $toolDest = Join-Path $Desktop "$($_.Name) skills of eitan"
+        Write-Host "Syncing $($_.Name) skills -> $toolDest"
+        robocopy $_.FullName $toolDest @RC | Out-Null
     }
 }
 
-Write-Host "Done. Skills are up to date."
+# 3) Pipeline data (all 6 tabs) -> "AI Skills Data" (the MCP server reads this offline).
+#    Skip the working folders (_pending / processed) — only the result JSONs are needed.
+if (Test-Path "$RepoPath\data") {
+    Write-Host "Syncing data -> $DataDest"
+    robocopy "$RepoPath\data" $DataDest @RC /XD "_pending" "processed" | Out-Null
+}
+
+# robocopy sets $LASTEXITCODE 1-7 on success; normalize so Task Scheduler shows success.
+if ($LASTEXITCODE -le 7) { $global:LASTEXITCODE = 0 }
+
+Write-Host "Done. Skills, other-tool skills, and data are up to date."

@@ -1,19 +1,129 @@
 {
   "playlist_id": "PLxtsVIUtYhNo6pY9FrVqVe2xh---Y8rxB",
-  "transcript_languages": ["en"],
+  "transcript_languages": ["en", "he"],
   "output_language": "en",
   "timezone": "America/New_York",
   "first_run_process_all": true,
   "rate_limit_seconds": 0.5,
-  "run_interval_hours": 168,
+  "run_interval_hours": 48,
+  "analyze_batch_size": 50,
   "rank_all_models": true,
   "paths": {
     "data_folder": "./data",
-    "skills_folder": "./skills"
+    "skills_folder": "./skills",
+    "other_skills_folder": "./other-skills"
   },
+  "other_tool_folder_pattern": "{tool} skills of eitan",
   "categories": [
     "design", "code", "automation", "agents", "image creation",
     "video creation", "writing", "marketing", "social", "music",
     "integration", "research", "productivity", "other"
+  ],
+  "general_tip_topics": [
+    "prompt engineering", "automation", "agents", "code",
+    "parallel tasks", "self-improving systems", "harness code"
+  ],
+  "self_improvement": {
+    "enabled": true,
+    "cadence": "daily",
+    "autonomy": "safe_auto_suggest_risky",
+    "modules": {
+      "data_hygiene": true,
+      "ratings_and_locking": true,
+      "ux_self_review": true,
+      "token_optimization": true,
+      "health_and_cadence": true,
+      "trend_tabs": true
+    },
+    "safe_auto": ["schema_repair", "orphan_cleanup", "fill_missing_summaries", "exact_duplicate_merge", "cross_tab_consistency", "build_index", "health_report"],
+    "suggest_only": ["fuzzy_duplicate_merge", "rescore_outliers", "recategorize", "ui_changes", "star_suggestions"],
+    "caps": { "max_merges_per_run": 20, "max_deletes_per_run": 20, "max_rescores_per_run": 30, "max_ui_changes_per_week": 1, "max_new_tabs_per_week": 1 },
+    "token_budget_per_run": 200000,
+    "ux_review_min_interval_days": 7,
+    "stars": {
+      "max_total": 10,
+      "max_suggestions_per_run": 1,
+      "proposal_criteria": {
+        "min_quality_score": 9.5,
+        "require_cited_popularity": true,
+        "require_multi_video_endorsement": true,
+        "min_endorsing_videos": 2
+      }
+    },
+    "dynamic_tabs": {
+      "enabled": true,
+      "autonomy": "auto_create_and_announce",
+      "min_evidence_videos": 5,
+      "max_total_active": 6,
+      "reserved_tab_ids": ["skills", "models", "improvement", "tips", "news", "connectors", "selfimprove"]
+    }
+  },
+  "news": {
+    "enabled": true,
+    "summary_mode": "verbatim",
+    "max_items_per_source": 8,
+    "summary_max_chars": 400,
+    "store_days": 30,
+    "request_timeout_seconds": 15
+  },
+  "video_quality": {
+    "enabled": true,
+    "scale": "1-10",
+    "low_quality_threshold": 5,
+    "signals": ["ai_content_review", "recency"],
+    "low_quality_action": "downweight_and_flag",
+    "recency_penalty_points": { "within_6_months": 0, "within_12_months": 1, "within_2_years": 2, "older_than_2_years": 3 }
+  },
+  "news_sources": [
+    { "name": "OpenAI", "url": "https://openai.com/news/rss.xml" },
+    { "name": "Google - The Keyword (AI)", "url": "https://blog.google/technology/ai/rss/" },
+    { "name": "Google DeepMind", "url": "https://deepmind.google/blog/rss.xml" },
+    { "name": "Microsoft AI", "url": "https://blogs.microsoft.com/ai/feed/" },
+    { "name": "Meta AI", "url": "https://ai.meta.com/blog/rss/" },
+    { "name": "Hugging Face", "url": "https://huggingface.co/blog/feed.xml" },
+    { "name": "NVIDIA Blog", "url": "https://blogs.nvidia.com/feed/" },
+    { "name": "AWS Machine Learning", "url": "https://aws.amazon.com/blogs/machine-learning/feed/" },
+    { "name": "MIT News - AI", "url": "https://news.mit.edu/rss/topic/artificial-intelligence2" },
+    { "name": "Berkeley AI Research", "url": "https://bair.berkeley.edu/blog/feed.xml" },
+    { "name": "TechCrunch AI", "url": "https://techcrunch.com/category/artificial-intelligence/feed/" },
+    { "name": "VentureBeat AI", "url": "https://venturebeat.com/category/ai/feed/" },
+    { "name": "The Verge AI", "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml" },
+    { "name": "Ars Technica AI", "url": "https://arstechnica.com/tag/artificial-intelligence/feed/" },
+    { "name": "MIT Technology Review", "url": "https://www.technologyreview.com/feed/" },
+    { "name": "Wired AI", "url": "https://www.wired.com/feed/tag/ai/latest/rss" },
+    { "name": "ZDNET AI", "url": "https://www.zdnet.com/topic/artificial-intelligence/rss.xml" },
+    { "name": "The Decoder", "url": "https://the-decoder.com/feed/" },
+    { "name": "MarkTechPost", "url": "https://www.marktechpost.com/feed/" },
+    { "name": "Synced", "url": "https://syncedreview.com/feed/" },
+    { "name": "AI News", "url": "https://www.artificialintelligence-news.com/feed/" },
+    { "name": "Import AI", "url": "https://importai.substack.com/feed" },
+    { "name": "The Batch (DeepLearning.AI)", "url": "https://www.deeplearning.ai/the-batch/rss.xml" },
+    { "name": "Analytics India Magazine", "url": "https://analyticsindiamag.com/feed/" },
+    { "name": "Google Research", "url": "https://research.google/blog/rss/" },
+    { "name": "Apple Machine Learning", "url": "https://machinelearning.apple.com/rss.xml" },
+    { "name": "Hacker News", "url": "https://hnrss.org/frontpage" },
+    { "name": "arXiv cs.AI", "url": "http://export.arxiv.org/rss/cs.AI" },
+    { "name": "arXiv cs.LG", "url": "http://export.arxiv.org/rss/cs.LG" },
+    { "name": "arXiv cs.CL", "url": "http://export.arxiv.org/rss/cs.CL" },
+    { "name": "arXiv cs.CV", "url": "http://export.arxiv.org/rss/cs.CV" },
+    { "name": "arXiv stat.ML", "url": "http://export.arxiv.org/rss/stat.ML" },
+    { "name": "Microsoft Research", "url": "https://www.microsoft.com/en-us/research/feed/" },
+    { "name": "Amazon Science", "url": "https://www.amazon.science/index.rss" },
+    { "name": "The Gradient", "url": "https://thegradient.pub/rss/" },
+    { "name": "Lil'Log (Lilian Weng)", "url": "https://lilianweng.github.io/index.xml" },
+    { "name": "Simon Willison", "url": "https://simonwillison.net/atom/everything/" },
+    { "name": "Andrej Karpathy", "url": "https://karpathy.github.io/feed.xml" },
+    { "name": "The Register AI/ML", "url": "https://www.theregister.com/software/ai_ml/headlines.atom" },
+    { "name": "SiliconANGLE AI", "url": "https://siliconangle.com/category/ai/feed/" },
+    { "name": "KDnuggets", "url": "https://www.kdnuggets.com/feed" },
+    { "name": "Towards Data Science", "url": "https://towardsdatascience.com/feed" },
+    { "name": "Machine Learning Mastery", "url": "https://machinelearningmastery.com/blog/feed/" },
+    { "name": "PyTorch Blog", "url": "https://pytorch.org/blog/feed.xml" },
+    { "name": "fast.ai", "url": "https://www.fast.ai/index.xml" },
+    { "name": "Ahead of AI (Sebastian Raschka)", "url": "https://magazine.sebastianraschka.com/feed" },
+    { "name": "LessWrong", "url": "https://www.lesswrong.com/feed.xml" },
+    { "name": "AI Alignment Forum", "url": "https://www.alignmentforum.org/feed.xml" },
+    { "name": "Jay Alammar", "url": "https://jalammar.github.io/feed.xml" },
+    { "name": "Sebastian Ruder", "url": "https://newsletter.ruder.io/feed" }
   ]
 }

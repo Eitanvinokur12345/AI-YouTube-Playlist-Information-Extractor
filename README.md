@@ -1,28 +1,85 @@
 # YouTube AI Skills Tracker
 
-Automated tracker that pulls videos from a YouTube playlist and maintains five
-"tabs" of data: a Skills Library, a Models Ranking, an Improvement/merge log,
-a Tips & Commands library, and a News Feed. Runs on a schedule via GitHub
-Actions and publishes a dashboard via GitHub Pages.
+Automated tracker that extracts AI knowledge from a YouTube playlist and maintains **six
+tabs** of data: a **Skills Library**, a **Models Ranking** (ASCII podium + full table), a
+**Skills Improvement / merge log**, a **Tips & Commands** library, a **News Feed**
+(daily/weekly/monthly, US-Eastern), and a **Connectors** list (Claude connectors & MCP
+servers). The News Feed always **merges two streams**: AI news mentioned in the videos **and**
+fresh posts pulled directly from **50 official AI sources** (OpenAI, Google, Anthropic-adjacent
+labs, arXiv, etc.) — so it stays current every day even between video runs. Every skill also
+carries a **video-quality score**: low-quality source videos are still mined, but their skills
+are flagged with a badge, capped in score, and hideable with one toggle. It builds in the
+cloud (runs even when your PC is off), syncs results to local Desktop folders, and ships a
+dashboard + a local offline MCP server. A **daily self-improvement stage** then curates the
+data (dedup, ratings calibration, a health report), can **auto-create a new tab** when a
+strong trend emerges, and lets you **star** proven skills to freeze them so nothing ever
+changes them.
 
 ## How it works
-1. **GitHub Actions** runs the pipeline every 48h (`.github/workflows/pipeline.yml`).
-2. `src/fetch.py` calls the YouTube Data API + transcripts (deterministic).
-3. The **Claude Code GitHub Action** analyzes the new videos and updates all
-   tabs, using a Pro/Max subscription token (no separate API billing).
-4. Results are committed to `data/` and `skills/`, and the **GitHub Pages**
-   dashboard in `docs/` renders them.
+1. **Fetch (cloud, every 48h)** — `.github/workflows/fetch.yml` runs `src/fetch.py`: pulls
+   the playlist + transcripts (English → Hebrew → description → title, used verbatim),
+   classifies news, and writes `data/_pending/*.json` + `data/status.json`.
+2. **Analyze (cloud, every few hours)** — `.github/workflows/analyze.yml` runs the Claude
+   Code Action, which follows **`CLAUDE.md`** to fill all six tabs. For every video it first
+   computes a **video-quality score** (Step 2b: an AI content review of the transcript +
+   a recency adjustment); videos scoring below `low_quality_threshold` (5) are still mined but
+   their skills/connectors/news get `low_quality_source:true` and their score is capped.
+   It processes up to 50 videos per run and **commits after every video**, so nothing is lost
+   if a run is interrupted; the next run resumes from whatever is left in `data/_pending/`.
+   Uses a Pro/Max subscription token — **no separate API billing**.
+3. **Web news (cloud, every 12h)** — `.github/workflows/news.yml` runs `src/news.py`: it pulls
+   the **50 official AI sources** in `config.news_sources` (public RSS/Atom — **no API keys, no
+   tokens, $0**), windows them into daily/weekly/monthly (US-Eastern), and writes
+   `data/daily_web_news.json` etc. The dashboard and MCP server **merge** these with the
+   video-derived news at display time, so the original files are never clobbered.
+4. **Self-improve (cloud, daily)** — `.github/workflows/improve.yml` runs the Claude Code
+   Action following **`IMPROVE.md`**: it auto-applies *safe* fixes (build `index.json`, schema
+   repair, exact-duplicate merge, fill missing summaries, cross-tab consistency, write
+   `health.json`) and writes *risky* proposals (fuzzy merges, rescores, recategorize, UI
+   tweaks, star suggestions) to `data/improvement_suggestions.json` for you to approve. When a
+   strong trend appears across many videos it can **auto-create a new dashboard tab** (logged to
+   `data/extra_tabs.json`, announced on the dashboard with a NEW badge; capped per week). It
+   **never** changes a **starred/frozen** skill. Governed by the `self_improvement` block in
+   `config.json` (safe-auto vs suggest-risky, caps, token budget).
+5. **Sync (local)** — `sync/sync-skills.ps1` git-pulls and copies results to your Desktop:
+   `skills/` → `claude skills of eitan`, `other-skills/<tool>/` → `<tool> skills of eitan`,
+   `data/` → `AI Skills Data`.
+6. **View** — the **GitHub Pages** dashboard in `docs/` (Desktop shortcut, also installable to
+   your phone or computer home screen as a PWA), or the **offline MCP server** in `mcp_server/`
+   queried from Claude Desktop. Star/approve from the MCP server: `star_skill`, `unstar_skill`,
+   `list_suggestions`, `approve_suggestion`, `dismiss_suggestion`, `list_dynamic_tabs`,
+   `dismiss_dynamic_tab`, `run_improve`.
+
+## First-time setup
+1. **Secrets** (repo → Settings → Secrets and variables → Actions):
+   - `YOUTUBE_API_KEY` — YouTube Data API v3 key.
+   - `CLAUDE_CODE_OAUTH_TOKEN_REAL` — from `claude setup-token` (Pro/Max). Expires ~yearly.
+2. **GitHub Pages**: Settings → Pages → Deploy from branch → `main` → `/ (root)`. The
+   dashboard then lives at `…github.io/<repo>/docs/`.
+3. **Local sync**: run `sync/setup-sync.ps1` once (clones repo, registers a daily sync task,
+   creates the Desktop "AI Skills Dashboard" shortcut).
+4. **MCP server** (offline querying): `pip install -r mcp_server/requirements.txt`, then add
+   the block from `mcp_server/claude_desktop_config.example.json` to your Claude Desktop
+   config and restart it.
+5. **(Optional) one-click force-run + starring/approvals** from the MCP server: create a
+   fine-grained GitHub token and set it as `GITHUB_PAT` in the MCP env. Give it *Actions:
+   Read and write* (for force-run) and *Contents: Read and write* (so `star_skill` /
+   `approve_suggestion` can commit `data/stars.json` / `data/approvals.json`). Without it,
+   querying still works fully offline; only these write/trigger actions need it.
+
+## The only recurring task
+The Claude login token (`CLAUDE_CODE_OAUTH_TOKEN_REAL`) expires about **once a year**. When
+analysis starts failing with an auth error, run `claude setup-token` and paste the new value
+into that secret. The dashboard shows a prominent reminder with these steps.
 
 ## Configuration
-Edit `config.json` — playlist ID, paths, timezone, etc. All output goes to
-`./data` and `./skills` by default. On a Windows machine you can point
-`paths` at your OneDrive folders instead.
+Edit `config.json` — playlist ID, `transcript_languages` (`["en","he"]`), timezone,
+`run_interval_hours` (48), `analyze_batch_size` (50), categories, tip topics. Newer blocks:
+`news_sources` (the 50 official feeds), `video_quality` (scale, `low_quality_threshold`,
+recency penalties, `downweight_and_flag` action), and `self_improvement.dynamic_tabs`
+(auto-create-and-announce trend tabs, min evidence videos, weekly cap).
 
-## Secrets (set in GitHub → Settings → Secrets and variables → Actions)
-- `YOUTUBE_API_KEY` — YouTube Data API v3 key.
-- `CLAUDE_CODE_OAUTH_TOKEN` — from `claude setup-token` (Pro/Max), OR use
-  `ANTHROPIC_API_KEY` instead if you prefer pay-as-you-go API analysis.
+Never commit real keys. `.env`, `*.key` are gitignored.
 
-Never commit real keys. `.env` is gitignored; `.env.example` documents the names.
-
-See `PIPELINE.md` for the full per-tab specification.
+See `PIPELINE.md` for the architecture, `CLAUDE.md` for the exact per-tab analysis spec, and
+`IMPROVE.md` for the daily self-improvement protocol.

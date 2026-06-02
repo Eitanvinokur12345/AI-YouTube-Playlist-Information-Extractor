@@ -1,0 +1,71 @@
+name: Analyze pending
+
+# Analysis stage: Claude Code reads CLAUDE.md and processes up to analyze_batch_size
+# (50) videos from data/_pending/, committing after EACH video so nothing is lost if
+# the run is interrupted. Runs every 3 hours to chew through backlog quickly. Widen
+# the interval if you ever hit your Claude subscription rate limit.
+on:
+  schedule:
+    - cron: "0 */3 * * *"
+  workflow_dispatch:
+
+# Never run two analyses at once; queue instead of overlapping.
+concurrency:
+  group: skills-tracker-analyze
+  cancel-in-progress: false
+
+permissions:
+  contents: write   # commit data/ + skills/ back to the repo
+  id-token: write   # OIDC token required by claude-code-action
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350   # stay under GitHub's 6h job cap with margin
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # full history so per-video pushes rebase cleanly
+          persist-credentials: true
+
+      # Skip the (subscription-consuming) Claude step entirely when there is no work.
+      - name: Check for pending work
+        id: guard
+        run: |
+          count=$(ls data/_pending/*.json 2>/dev/null | wc -l | tr -d ' ')
+          echo "pending=$count" >> "$GITHUB_OUTPUT"
+          if [ "$count" -gt 0 ]; then
+            echo "has_pending=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_pending=false" >> "$GITHUB_OUTPUT"
+          fi
+          echo "Pending files: $count"
+
+      - name: Analyze and build all 6 tabs
+        if: steps.guard.outputs.has_pending == 'true'
+        uses: anthropics/claude-code-action@v1
+        with:
+          # Uses your Claude Pro/Max subscription token (NO separate Anthropic API
+          # billing). Generated once a year with `claude setup-token`.
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN_REAL }}
+          prompt: |
+            Run the analysis stage of the YouTube Skills Tracker.
+            Follow CLAUDE.md exactly — it is the authoritative spec.
+            Process up to 50 videos from data/_pending/ (oldest first).
+            For EACH video: run the relevance gate, fill all six tabs, move its
+            file from data/_pending to data/processed, then commit AND push before
+            moving to the next video. Update the run report and the cumulative
+            total_videos_analyzed in data/status.json. Stop after 50 videos and
+            leave the rest in data/_pending for the next run.
+
+      # Safety net: commit anything Claude changed but did not push (partial work).
+      - name: Commit any remaining changes
+        if: always()
+        run: |
+          git config user.name "skills-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data skills other-skills docs 2>/dev/null || true
+          git commit -m "analyze: safety commit $(date -u +%Y-%m-%dT%H:%MZ)" \
+            || echo "nothing to commit"
+          git pull --rebase --autostash origin main || true
+          git push || echo "push skipped"

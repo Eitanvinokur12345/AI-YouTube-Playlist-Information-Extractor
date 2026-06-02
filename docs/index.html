@@ -4,16 +4,117 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AI Skills Tracker — Dashboard</title>
+  <!-- PWA: installable to a phone / desktop home screen -->
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#0f1115" />
+  <link rel="apple-touch-icon" href="icon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="AI Skills" />
   <style>
-    body { font-family: system-ui, sans-serif; margin: 0; background: #0f1115; color: #e8e8ea; }
-    header { padding: 20px 28px; background: #161922; border-bottom: 1px solid #262a36; }
-    h1 { margin: 0; font-size: 20px; }
-    .meta { color: #9aa0ad; font-size: 13px; margin-top: 4px; }
-    nav { display: flex; gap: 8px; padding: 12px 28px; background: #12141b; flex-wrap: wrap; }
-    nav button { background: #1d2230; color: #cfd3dc; border: 1px solid #2a3040; padding: 8px 14px; border-radius: 8px; cursor: pointer; }
-    nav button.active { background: #3b82f6; color: #fff; border-color: #3b82f6; }
-    main { padding: 24px 28px; }
-    .empty { color: #9aa0ad; }
+    :root { --bg:#0f1115; --panel:#161922; --panel2:#1d2230; --line:#262a36;
+            --text:#e8e8ea; --muted:#9aa0ad; --accent:#3b82f6; --good:#22c55e;
+            --warn:#f59e0b; --warnbg:#3a2a08; --bad:#ef4444; }
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, -apple-system, Segoe UI, sans-serif; margin:0;
+           background:var(--bg); color:var(--text); }
+    header { padding:18px 28px; background:var(--panel); border-bottom:1px solid var(--line); }
+    h1 { margin:0; font-size:20px; }
+    .meta { color:var(--muted); font-size:13px; margin-top:4px; }
+
+    /* Big counters */
+    .counters { display:flex; gap:14px; flex-wrap:wrap; padding:14px 28px;
+                background:var(--panel); border-bottom:1px solid var(--line); }
+    .counter { background:var(--panel2); border:1px solid var(--line); border-radius:10px;
+               padding:10px 16px; min-width:150px; }
+    .counter .n { font-size:24px; font-weight:700; }
+    .counter .l { color:var(--muted); font-size:12px; margin-top:2px; }
+    .counter.hl .n { color:var(--accent); }
+
+    /* Yearly-token warning banner */
+    .tokenwarn { margin:0; padding:14px 28px; background:var(--warnbg);
+                 border-bottom:2px solid var(--warn); color:#ffe9bf; }
+    .tokenwarn .badge { display:inline-block; background:var(--warn); color:#1a1205;
+                 font-weight:800; font-size:12px; letter-spacing:.5px;
+                 padding:3px 8px; border-radius:6px; margin-right:8px; }
+    .tokenwarn b { color:#fff; }
+    .tokenwarn details { margin-top:8px; }
+    .tokenwarn summary { cursor:pointer; color:#ffd98a; font-weight:600; }
+    .tokenwarn ol { margin:8px 0 0; padding-left:22px; line-height:1.6; }
+    .tokenwarn code { background:#000; color:#7ee787; padding:1px 6px; border-radius:5px; }
+
+    nav { display:flex; gap:8px; padding:12px 28px; background:#12141b; flex-wrap:wrap; }
+    nav button { background:var(--panel2); color:#cfd3dc; border:1px solid var(--line);
+                 padding:8px 14px; border-radius:8px; cursor:pointer; font-size:14px; }
+    nav button.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+    main { padding:24px 28px; max-width:1100px; }
+    .empty { color:var(--muted); }
+    .subnav { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
+    .subnav button { background:var(--panel2); color:#cfd3dc; border:1px solid var(--line);
+                 padding:5px 12px; border-radius:999px; cursor:pointer; font-size:13px; }
+    .subnav button.active { background:#2b3550; color:#fff; border-color:var(--accent); }
+
+    .card { background:var(--panel); border:1px solid var(--line); border-radius:12px;
+            padding:16px 18px; margin-bottom:14px; }
+    .card h3 { margin:0 0 6px; font-size:16px; }
+    .card .sub { color:var(--muted); font-size:13px; margin-bottom:8px; }
+    .card p { margin:6px 0; line-height:1.5; }
+    .score { display:inline-block; background:#11203a; color:#7fb4ff; border:1px solid #2b4a7a;
+             border-radius:6px; padding:1px 8px; font-weight:700; font-size:13px; }
+    .pill { display:inline-block; background:var(--panel2); color:#cfd3dc;
+            border:1px solid var(--line); border-radius:999px; padding:1px 9px;
+            font-size:12px; margin-left:6px; }
+    a { color:#7fb4ff; }
+    pre.ascii { background:#0a0c10; border:1px solid var(--line); border-radius:10px;
+                padding:14px; overflow:auto; font-size:13px; line-height:1.35; color:#cfe3ff; }
+    table { border-collapse:collapse; width:100%; margin-top:8px; font-size:14px; }
+    th,td { text-align:left; padding:7px 10px; border-bottom:1px solid var(--line); }
+    th { color:var(--muted); font-weight:600; }
+    .official { color:var(--good); font-size:12px; font-weight:700; }
+
+    /* Starred (frozen) skills — proven best-in-class, never auto-changed */
+    .star { color:#f5c518; font-weight:800; margin-right:4px; }
+    .card.starred { border-color:#7a6512; box-shadow:inset 3px 0 0 #f5c518; }
+    .frozenpill { display:inline-block; background:#352c08; color:#f5c518;
+                  border:1px solid #7a6512; border-radius:999px; padding:1px 9px;
+                  font-size:12px; margin-left:6px; }
+
+    /* Video-quality badge + low-quality-source flagging (Skills + News) */
+    .vq { display:inline-block; background:#0f2a1a; color:#7ee7a3; border:1px solid #1f6d44;
+          border-radius:999px; padding:1px 9px; font-size:12px; margin-left:6px; }
+    .vq.low { background:var(--warnbg); color:#ffd98a; border-color:var(--warn); }
+    .lowsrc { display:inline-block; background:#3a1408; color:#ffb38a; border:1px solid var(--bad);
+              border-radius:999px; padding:1px 9px; font-size:12px; margin-left:6px; }
+    .card.lowq { box-shadow:inset 3px 0 0 var(--warn); }
+    /* News source pills (which feed an item came from) */
+    .webpill { display:inline-block; background:#11203a; color:#7fb4ff; border:1px solid #2b4a7a;
+               border-radius:999px; padding:1px 9px; font-size:12px; margin-left:6px; }
+    .vidpill { display:inline-block; background:#2a1033; color:#e0a3ff; border:1px solid #6d2b7a;
+               border-radius:999px; padding:1px 9px; font-size:12px; margin-left:6px; }
+    /* NEW badge on an auto-created trend tab */
+    .newbadge { display:inline-block; background:var(--good); color:#05210f; font-weight:800;
+                font-size:10px; letter-spacing:.5px; padding:1px 6px; border-radius:5px;
+                margin-left:4px; vertical-align:middle; }
+
+    /* Self-Improvement tab: health score + suggestion queue */
+    .health { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+    .health .big { font-size:40px; font-weight:800; }
+    .health .big.good { color:var(--good); } .health .big.warn { color:var(--warn); }
+    .health .big.bad { color:var(--bad); }
+    .metrics { display:flex; gap:10px; flex-wrap:wrap; margin-top:6px; }
+    .metric { background:var(--panel2); border:1px solid var(--line); border-radius:8px;
+              padding:6px 10px; font-size:13px; }
+    .metric b { color:var(--text); }
+    .sug { border-left:3px solid var(--line); padding:4px 0 4px 12px; margin:8px 0; }
+    .stat { display:inline-block; border-radius:999px; padding:1px 9px; font-size:12px;
+            font-weight:700; margin-right:6px; }
+    .st-pending { background:#3a2a08; color:#ffd98a; border:1px solid var(--warn); }
+    .st-approved { background:#08351a; color:#7ee7a3; border:1px solid var(--good); }
+    .st-dismissed { background:#2a2a2a; color:#9aa0ad; border:1px solid var(--line); }
+    .st-applied { background:#11203a; color:#7fb4ff; border:1px solid #2b4a7a; }
+    .hint { color:var(--muted); font-size:13px; margin:4px 0 12px; }
+    code.cmd { background:#000; color:#7ee787; padding:1px 6px; border-radius:5px; }
   </style>
 </head>
 <body>
@@ -21,14 +122,46 @@
     <h1>AI Skills Tracker</h1>
     <div class="meta" id="meta">Loading…</div>
   </header>
+
+  <!-- BIG yearly token-renewal warning (the only recurring manual step) -->
+  <div class="tokenwarn">
+    <span class="badge">IMPORTANT — ONCE A YEAR</span>
+    <b>The cloud login token expires about once a year.</b>
+    When it does, the Analyze workflow fails with an authentication error and no new
+    skills appear. This is the <b>only</b> recurring manual step in the whole system.
+    <details>
+      <summary>How to renew the token (takes ~2 minutes)</summary>
+      <ol>
+        <li>On your PC, open a terminal and run: <code>claude setup-token</code></li>
+        <li>Log in and copy the token it prints.</li>
+        <li>Open your repo on GitHub → <b>Settings → Secrets and variables → Actions</b>.</li>
+        <li>Edit the secret <code>CLAUDE_CODE_OAUTH_TOKEN_REAL</code>, paste the new token, save.</li>
+        <li>Done. The next scheduled run works again. (Optional: <b>Actions → Analyze pending → Run workflow</b> to verify now.)</li>
+      </ol>
+    </details>
+  </div>
+
+  <div class="counters" id="counters"></div>
+
   <nav id="tabs">
     <button data-tab="skills" class="active">Skills Library</button>
     <button data-tab="models">Models Ranking</button>
-    <button data-tab="merges">Improvement Log</button>
+    <button data-tab="improvement">Improvement Log</button>
     <button data-tab="tips">Tips &amp; Commands</button>
     <button data-tab="news">News Feed</button>
+    <button data-tab="connectors">Connectors</button>
+    <button data-tab="selfimprove">Self-Improvement</button>
   </nav>
-  <main id="view"><p class="empty">Dashboard renders from the JSON files in /data once the first pipeline run completes.</p></main>
+
+  <main id="view"><p class="empty">Loading…</p></main>
   <script src="dashboard.js"></script>
+  <!-- PWA: register a tiny service worker so the dashboard installs to a phone/desktop
+       home screen and the app shell loads offline. Data (../data) always hits the network. -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () =>
+        navigator.serviceWorker.register("sw.js").catch(() => {}));
+    }
+  </script>
 </body>
 </html>

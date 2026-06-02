@@ -9,7 +9,7 @@ import logging
 import os
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 import pytz
@@ -50,6 +50,17 @@ def load_skills() -> dict:
         with open(SKILLS_JSON, encoding="utf-8") as fh:
             return json.load(fh)
     return {"videos_seen": [], "skills": []}
+
+
+def load_status() -> dict:
+    """Read existing status.json (to preserve cumulative analyze-stage counters)."""
+    if STATUS_JSON.exists():
+        try:
+            with open(STATUS_JSON, encoding="utf-8") as fh:
+                return json.load(fh)
+        except Exception:
+            return {}
+    return {}
 
 
 def save_json(path: Path, obj: object) -> None:
@@ -101,27 +112,39 @@ def fetch_playlist_videos(youtube, playlist_id: str) -> list[dict]:
 
 
 # ── transcript ────────────────────────────────────────────────────────────────
-def fetch_transcript(video_id: str, title: str, description: str) -> str:
+def fetch_transcript(
+    video_id: str, title: str, description: str, languages: list[str]
+) -> tuple[str, str, str]:
     """
-    Try English transcript first.  Fallback: description.  Final fallback: title.
-    Returns at most MAX_TRANSCRIPT_CHARS characters, exactly as provided.
+    Try a real transcript in each language in `languages` order (e.g. ["en", "he"]),
+    preferring manually-created over auto-generated.  Fallbacks: description, then title.
+
+    The text is returned EXACTLY as YouTube provides it — never edited, translated,
+    or rephrased — truncated to the first MAX_TRANSCRIPT_CHARS characters.
+
+    Returns (text, lang, source):
+      lang   = transcript language code actually used ("en"/"he"/...), "" for a fallback
+      source = "transcript" | "description" | "title"
     """
     try:
-        from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, NoTranscriptFound
+        from youtube_transcript_api import YouTubeTranscriptApi
 
         transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
-        # prefer manually-created English, then auto-generated English
-        try:
-            transcript = transcript_list.find_manually_created_transcript(["en"])
-        except Exception:
+        for lang in languages:
+            transcript = None
             try:
-                transcript = transcript_list.find_generated_transcript(["en"])
+                transcript = transcript_list.find_manually_created_transcript([lang])
             except Exception:
-                transcript = None
+                try:
+                    transcript = transcript_list.find_generated_transcript([lang])
+                except Exception:
+                    transcript = None
 
-        if transcript is not None:
-            raw = " ".join(entry["text"] for entry in transcript.fetch())
-            return raw[:MAX_TRANSCRIPT_CHARS]
+            if transcript is not None:
+                raw = " ".join(entry["text"] for entry in transcript.fetch())
+                if raw.strip():
+                    log.info("Using %s transcript for %s", lang, video_id)
+                    return raw[:MAX_TRANSCRIPT_CHARS], lang, "transcript"
 
     except Exception as exc:
         log.warning("Transcript unavailable for %s: %s", video_id, exc)
@@ -129,11 +152,11 @@ def fetch_transcript(video_id: str, title: str, description: str) -> str:
     # fallback to description
     if description and description.strip():
         log.info("Using description as transcript for %s", video_id)
-        return description.strip()[:MAX_TRANSCRIPT_CHARS]
+        return description.strip()[:MAX_TRANSCRIPT_CHARS], "", "description"
 
     # final fallback: title
     log.info("Using title as transcript for %s", video_id)
-    return title.strip()[:MAX_TRANSCRIPT_CHARS]
+    return title.strip()[:MAX_TRANSCRIPT_CHARS], "", "title"
 
 
 # ── news classification ───────────────────────────────────────────────────────
@@ -209,6 +232,8 @@ def main() -> None:
     cfg = load_config()
     playlist_id = cfg.get("playlist_id", "")
     rate_limit = float(cfg.get("rate_limit_seconds", 0.5))
+    languages = cfg.get("transcript_languages", ["en"])
+    run_interval = float(cfg.get("run_interval_hours", 48))
 
     # read API key from env — never hardcode
     api_key = os.environ.get("YOUTUBE_API_KEY", "")
@@ -219,9 +244,17 @@ def main() -> None:
     # load already-seen IDs
     skills_data = load_skills()
     seen_ids: set[str] = set(skills_data.get("videos_seen", []))
+    already_seen_count: int = len(seen_ids)
     total_skills: int = len(skills_data.get("skills", []))
 
+    # preserve cumulative analyze-stage counter across runs
+    prev_status = load_status()
+    total_videos_analyzed: int = int(prev_status.get("total_videos_analyzed", 0))
+
     run_time_utc = datetime.now(timezone.utc)
+    run_eastern = run_time_utc.astimezone(EASTERN)
+    next_run_utc = run_time_utc + timedelta(hours=run_interval)
+    no_transcript_count = 0
     log.info("Run started at %s", run_time_utc.isoformat())
 
     # fetch playlist
@@ -241,7 +274,11 @@ def main() -> None:
             log.info("Processing video %s: %s", vid, v["title"])
             time.sleep(rate_limit)
 
-            transcript = fetch_transcript(vid, v["title"], v["description"])
+            transcript, lang, source = fetch_transcript(
+                vid, v["title"], v["description"], languages
+            )
+            if source != "transcript":
+                no_transcript_count += 1
 
             pending_record = {
                 "video_id": vid,
@@ -250,10 +287,12 @@ def main() -> None:
                 "publishedAt": v["publishedAt"],
                 "channel_name": v.get("channel_name", ""),
                 "transcript": transcript,
+                "transcript_lang": lang,
+                "transcript_source": source,
                 "fetched_at": run_time_utc.isoformat(),
             }
             save_json(PENDING_DIR / f"{vid}.json", pending_record)
-            log.info("Wrote pending record for %s", vid)
+            log.info("Wrote pending record for %s (source=%s)", vid, source)
 
         # update seen IDs
         new_ids = [v["video_id"] for v in new_videos]
@@ -291,11 +330,32 @@ def main() -> None:
     )
 
     # ── status.json ──────────────────────────────────────────────────────────
-    status = {
+    pending_count = len(list(PENDING_DIR.glob("*.json")))
+
+    # The fetch stage INITIALIZES the run report.  The analyze stage (driven by
+    # CLAUDE.md) updates analyzed_this_run / skipped_not_relevant / errors and
+    # increments the cumulative total_videos_analyzed as it works through pending/.
+    status = dict(prev_status) if isinstance(prev_status, dict) else {}
+    status.update({
         "last_run": run_time_utc.isoformat(),
+        "last_fetch": run_time_utc.isoformat(),
+        "next_run": next_run_utc.isoformat(),
         "videos_seen": len(skills_data.get("videos_seen", [])),
         "total_skills": total_skills,
+        "total_videos_analyzed": total_videos_analyzed,
         "new_videos_this_run": len(new_videos),
+        "run_report": {
+            "run_time": run_eastern.isoformat(),
+            "timezone": "America/New_York",
+            "total_in_playlist": len(all_videos),
+            "already_seen": already_seen_count,
+            "new_found": len(new_videos),
+            "no_transcript": no_transcript_count,
+            "pending_to_analyze": pending_count,
+            "analyzed_this_run": 0,
+            "skipped_not_relevant": 0,
+            "errors": 0,
+        },
         "paths": {
             "pending": str(PENDING_DIR),
             "skills_json": str(SKILLS_JSON),
@@ -303,7 +363,7 @@ def main() -> None:
             "weekly_news": str(WEEKLY_JSON),
             "monthly_news": str(MONTHLY_JSON),
         },
-    }
+    })
     save_json(STATUS_JSON, status)
     log.info("Status written to %s", STATUS_JSON)
     log.info("Fetch stage complete.")

@@ -1,16 +1,14 @@
 # setup-sync.ps1
-# Run this ONCE to: clone the repo and register a daily Task Scheduler job
+# Run this ONCE to: clone the repo, register the daily local sync job, and create the
+# Desktop dashboard shortcut.
 
 # ── CONFIGURATION ──────────────────────────────────────────────────────────────
-# Set these to match your machine. $env:USERPROFILE is auto-detected (no changes needed).
-$RepoPath   = "$env:USERPROFILE\AI-YouTube-Skills"
-$SkillsDest = "$env:USERPROFILE\OneDrive\Desktop\claude skills"
+$RepoPath = "$env:USERPROFILE\AI-YouTube-Skills"
 # ───────────────────────────────────────────────────────────────────────────────
-
 $RepoUrl    = "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor"
 $SyncScript = "$RepoPath\sync\sync-skills.ps1"
 
-# Clone repo if not already cloned
+# 1) Clone the repo if it isn't here yet
 if (-not (Test-Path $RepoPath)) {
     Write-Host "Cloning repo..."
     git clone $RepoUrl $RepoPath
@@ -18,11 +16,20 @@ if (-not (Test-Path $RepoPath)) {
     Write-Host "Repo already exists at $RepoPath"
 }
 
-# Register Task Scheduler job (runs daily at 11:00 AM)
-$Action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-NonInteractive -File `"$SyncScript`""
-$Trigger = New-ScheduledTaskTrigger -Daily -At "11:00AM"
-$Settings = New-ScheduledTaskSettingsSet -ExecutionTimeLimit (New-TimeSpan -Minutes 10)
-Register-ScheduledTask -TaskName "SyncYouTubeSkills" -Action $Action -Trigger $Trigger -Settings $Settings -RunLevel Highest -Force
+# 2) Register a daily sync that pulls results into your Desktop folders.
+#    -StartWhenAvailable runs it late if the PC was off at the scheduled time.
+$Action = New-ScheduledTaskAction -Execute "powershell.exe" `
+    -Argument "-NonInteractive -ExecutionPolicy Bypass -File `"$SyncScript`""
+$Trigger  = New-ScheduledTaskTrigger -Daily -At "11:00AM"
+$Settings = New-ScheduledTaskSettingsSet -ExecutionTimeLimit (New-TimeSpan -Minutes 15) -StartWhenAvailable
+Register-ScheduledTask -TaskName "SyncYouTubeSkills" -Action $Action -Trigger $Trigger `
+    -Settings $Settings -RunLevel Highest -Force
 
-Write-Host "Done! Skills will sync daily at 11:00 AM."
-Write-Host "To sync right now, run: $SyncScript"
+# 3) Create the Desktop dashboard shortcut
+& "$RepoPath\sync\create-shortcut.ps1"
+
+Write-Host ""
+Write-Host "Done! The local sync runs daily at 11:00 AM (change -At above to retime)."
+Write-Host "Sync right now:       $SyncScript"
+Write-Host "Open dashboard:       use the 'AI Skills Dashboard' shortcut on your Desktop"
+Write-Host "Offline dashboard:    $RepoPath\sync\open-dashboard-local.ps1"

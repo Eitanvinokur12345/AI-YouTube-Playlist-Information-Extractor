@@ -1,0 +1,46 @@
+name: Fetch playlist
+
+# Deterministic fetch stage: pulls the playlist, grabs transcripts (English then
+# Hebrew, then description/title), classifies news, and writes data/_pending/*.json
+# + status.json. Runs every 48 hours (cron is UTC). Also runnable manually.
+on:
+  schedule:
+    - cron: "0 6 */2 * *"
+  workflow_dispatch:
+
+# Never run two fetches at once; queue instead of overlapping.
+concurrency:
+  group: skills-tracker-fetch
+  cancel-in-progress: false
+
+permissions:
+  contents: write   # commit data/ back to the repo
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch playlist, transcripts, news classification
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: python -m src.fetch
+
+      - name: Commit pending records + news + status
+        run: |
+          git config user.name "skills-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data
+          git commit -m "fetch: $(date -u +%Y-%m-%dT%H:%MZ) — new pending records + news/status" \
+            || echo "nothing to commit"
+          # Push, rebasing if the remote moved in the meantime.
+          git pull --rebase --autostash origin main || true
+          git push || echo "push skipped"

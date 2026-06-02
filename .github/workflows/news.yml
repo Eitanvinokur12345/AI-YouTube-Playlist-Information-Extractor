@@ -1,0 +1,47 @@
+name: Fetch web news
+
+# Daily AI news from official web sources (RSS/Atom) so the News tab refreshes
+# EVERY day, even when no new videos appeared. Reads config.json -> news_sources,
+# writes data/web_news_store.json + data/{daily,weekly,monthly}_web_news.json.
+# Runs twice a day (cron is UTC). Also runnable manually.
+#
+# COST: $0 — public RSS feeds, no API keys, no tokens, no paid services.
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+  workflow_dispatch:
+
+# Never run two news fetches at once; queue instead of overlapping.
+concurrency:
+  group: skills-tracker-news
+  cancel-in-progress: false
+
+permissions:
+  contents: write   # commit data/ back to the repo
+
+jobs:
+  news:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch official-site AI news (RSS/Atom, verbatim summaries)
+        run: python -m src.news
+
+      - name: Commit web news
+        run: |
+          git config user.name "skills-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data
+          git commit -m "news: $(date -u +%Y-%m-%dT%H:%MZ) — refresh official-site AI news" \
+            || echo "nothing to commit"
+          # Push, rebasing if the remote moved in the meantime.
+          git pull --rebase --autostash origin main || true
+          git push || echo "push skipped"

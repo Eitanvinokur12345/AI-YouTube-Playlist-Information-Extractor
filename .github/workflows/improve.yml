@@ -1,0 +1,70 @@
+name: Self-improve
+
+# Curation stage: once a day, Claude Code reads IMPROVE.md and tidies what already
+# exists — dedup, schema repair, ratings calibration (suggest), star/freeze the best
+# skills, a rate-limited dashboard/UX review, token optimization, and a health report.
+# It NEVER touches frozen/starred records and only AUTO-applies the "safe" operations;
+# risky ones are written as suggestions for you to approve. Separate from analyze.yml.
+on:
+  schedule:
+    - cron: "30 5 * * *"   # daily, 05:30 UTC (before the 06:00 fetch)
+  workflow_dispatch:
+
+# Never overlap improvement runs, and never fight an analyze run for the working tree.
+concurrency:
+  group: skills-tracker-improve
+  cancel-in-progress: false
+
+permissions:
+  contents: write   # commit data/ + docs/ back to the repo
+  id-token: write   # OIDC token required by claude-code-action
+
+jobs:
+  improve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # full history so per-module pushes rebase cleanly
+          persist-credentials: true
+
+      # Skip the (subscription-consuming) Claude step if self-improvement is disabled.
+      - name: Check self-improvement is enabled
+        id: guard
+        run: |
+          enabled=$(python -c "import json;print(json.load(open('config.json')).get('self_improvement',{}).get('enabled',False))" 2>/dev/null || echo "False")
+          echo "enabled=$enabled" >> "$GITHUB_OUTPUT"
+          echo "self_improvement.enabled = $enabled"
+
+      - name: Curate, calibrate, star, review UX, health report
+        if: steps.guard.outputs.enabled == 'True'
+        uses: anthropics/claude-code-action@v1
+        with:
+          # Uses your Claude Pro/Max subscription token (NO separate Anthropic API
+          # billing). Same yearly token as the analyze stage.
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN_REAL }}
+          prompt: |
+            Run the self-improvement stage of the YouTube Skills Tracker.
+            Follow IMPROVE.md exactly — it is the authoritative spec, governed by the
+            self_improvement block in config.json.
+            CRITICAL: never modify, merge, rescore, recategorize, or delete any FROZEN
+            record (slug in data/stars.json, or starred/locked true). Only AUTO-apply
+            operations listed in self_improvement.safe_auto; write everything in
+            suggest_only to data/improvement_suggestions.json instead. First apply any
+            suggestions the user already approved (ids in data/approvals.json). Respect
+            the caps and the token budget. Write data/health.json and append to
+            data/improvement_audit.json, update last_improved_at in data/status.json,
+            and commit after each module.
+
+      # Safety net: commit anything Claude changed but did not push (partial work).
+      - name: Commit any remaining changes
+        if: always()
+        run: |
+          git config user.name "skills-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data docs skills other-skills 2>/dev/null || true
+          git commit -m "improve: safety commit $(date -u +%Y-%m-%dT%H:%MZ)" \
+            || echo "nothing to commit"
+          git pull --rebase --autostash origin main || true
+          git push || echo "push skipped"

@@ -332,6 +332,63 @@ def main() -> None:
     # ── status.json ──────────────────────────────────────────────────────────
     pending_count = len(list(PENDING_DIR.glob("*.json")))
 
+    # ── catch-up protocol (massive-addition handling) ─────────────────────────
+    # When a big batch of new videos lands at once (e.g. you merge another playlist),
+    # switch the analyze stage into "catch-up mode": large batches, newest-first, and a
+    # */30 sprint cron that drains the backlog back-to-back, then auto-returns to normal.
+    # The live switch lives in data/catch_up.json:
+    #   mode = "auto" (default) | "forced_on" | "forced_off"   (set via the MCP tool)
+    # Activation is automatic here on a surge; deactivation happens in analyze.yml when
+    # data/_pending empties. Everything is free (public Actions + your subscription token).
+    cu_cfg = cfg.get("catch_up", {})
+    cu_enabled = bool(cu_cfg.get("enabled", True))
+    surge_threshold = int(cu_cfg.get("surge_threshold", 100))
+    cu_path = DATA_DIR / "catch_up.json"
+    try:
+        cu_state = json.load(open(cu_path, encoding="utf-8")) if cu_path.exists() else {}
+    except Exception:
+        cu_state = {}
+    cu_mode = cu_state.get("mode", "auto")
+    cu_prev_active = bool(cu_state.get("active", False))
+    cu_reason = cu_state.get("reason", "")
+    new_count = len(new_videos)
+
+    if not cu_enabled:
+        cu_active = False
+        cu_reason = ""
+    elif cu_mode == "forced_off":
+        cu_active = False
+        cu_reason = "manual: forced off"
+    elif cu_mode == "forced_on":
+        cu_active = True
+        cu_reason = "manual: forced on"
+    elif new_count >= surge_threshold:                 # auto: a surge just landed
+        cu_active = True
+        cu_reason = f"auto: {new_count} new videos in one fetch (>= {surge_threshold})"
+        cu_state["activated_at"] = run_time_utc.isoformat()
+        cu_state["pending_at_activation"] = pending_count
+    elif cu_prev_active and pending_count > 0:          # auto: still draining a backlog
+        cu_active = True
+        cu_reason = cu_reason or "auto: draining backlog"
+    else:
+        cu_active = False
+        cu_reason = ""
+
+    cu_state.update({
+        "active": cu_active,
+        "mode": cu_mode,
+        "reason": cu_reason,
+        "surge_threshold": surge_threshold,
+        "batch_size": int(cu_cfg.get("batch_size", 1000)),
+        "order": cu_cfg.get("order", "newest_first"),
+        "last_new_count": new_count,
+        "last_pending": pending_count,
+        "updated_at": run_time_utc.isoformat(),
+    })
+    save_json(cu_path, cu_state)
+    if cu_active:
+        log.info("CATCH-UP active (%s) — %d pending", cu_reason, pending_count)
+
     # The fetch stage INITIALIZES the run report.  The analyze stage (driven by
     # CLAUDE.md) updates analyzed_this_run / skipped_not_relevant / errors and
     # increments the cumulative total_videos_analyzed as it works through pending/.
@@ -344,6 +401,13 @@ def main() -> None:
         "total_skills": total_skills,
         "total_videos_analyzed": total_videos_analyzed,
         "new_videos_this_run": len(new_videos),
+        "pending_count": pending_count,
+        "catch_up": {
+            "active": cu_active,
+            "reason": cu_reason,
+            "pending": pending_count,
+            "activated_at": cu_state.get("activated_at", ""),
+        },
         "run_report": {
             "run_time": run_eastern.isoformat(),
             "timezone": "America/New_York",

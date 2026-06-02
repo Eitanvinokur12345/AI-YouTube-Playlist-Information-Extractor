@@ -755,6 +755,77 @@ def dismiss_dynamic_tab(tab_id: str) -> str:
 
 
 @mcp.tool()
+def catch_up_status() -> str:
+    """Show the massive-addition 'catch-up' status: whether the analyze stage is sprinting
+    through a big backlog, how many videos remain, and why it turned on."""
+    cu = _load("catch_up.json", {"active": False, "mode": "auto"})
+    st = _load("status.json", {})
+    pending = cu.get("last_pending")
+    if pending is None:
+        pending = st.get("pending_count", st.get("run_report", {}).get("pending_to_analyze", 0))
+    mode = cu.get("mode", "auto")
+    mode_h = {"auto": "automatic", "forced_on": "forced ON (manual)",
+              "forced_off": "forced OFF (manual)"}.get(mode, mode)
+    if cu.get("active"):
+        return (
+            "CATCH-UP: ON — sprinting through a big backlog, newest videos first.\n"
+            f"  Remaining to analyze: {pending}\n"
+            f"  Mode: {mode_h}\n"
+            f"  Reason: {cu.get('reason','')}\n"
+            f"  Surge threshold: {cu.get('surge_threshold','?')} new videos in one fetch.\n"
+            "It auto-returns to normal speed once the backlog is cleared. "
+            "Use set_catch_up('off') to stop early, or set_catch_up('on') to force it."
+        )
+    return (
+        "CATCH-UP: OFF — running at the normal pace (50 videos / few hours).\n"
+        f"  Pending to analyze: {pending}\n"
+        f"  Mode: {mode_h}\n"
+        f"  It turns on automatically when one fetch finds "
+        f"{cu.get('surge_threshold', _config().get('catch_up', {}).get('surge_threshold', 100))}+ "
+        "new videos (e.g. you merge another playlist). "
+        "Use set_catch_up('on') to force a sprint now."
+    )
+
+
+@mcp.tool()
+def set_catch_up(mode: str) -> str:
+    """Manually control catch-up mode. mode = 'on' (force a sprint now), 'off' (stop and
+    return to normal pace), or 'auto' (default: let it switch on automatically at a surge).
+    Writes data/catch_up.json (needs GITHUB_PAT, like star/approve)."""
+    from datetime import datetime, timezone
+
+    m = mode.strip().lower()
+    alias = {"on": "forced_on", "force_on": "forced_on", "forced_on": "forced_on",
+             "off": "forced_off", "force_off": "forced_off", "forced_off": "forced_off",
+             "auto": "auto"}
+    if m not in alias:
+        return "mode must be 'on', 'off', or 'auto'."
+    new_mode = alias[m]
+    cu = _load("catch_up.json", {})
+    if not isinstance(cu, dict):
+        cu = {}
+    cu["mode"] = new_mode
+    if new_mode == "forced_on":
+        cu["active"] = True
+        cu["reason"] = "manual: forced on"
+    elif new_mode == "forced_off":
+        cu["active"] = False
+        cu["reason"] = "manual: forced off"
+    else:  # auto — let the cloud recompute active on the next fetch/analyze
+        cu["reason"] = "manual: set to auto"
+    cu["updated_at"] = datetime.now(timezone.utc).isoformat()
+    err = _write_state("catch_up.json", cu, f"catch-up: set mode {new_mode}")
+    if err:
+        return err
+    human = {"forced_on": "ON (forced sprint)", "forced_off": "OFF (normal pace)",
+             "auto": "AUTO (turns on by itself at a surge)"}[new_mode]
+    return (
+        f"Catch-up mode set to {human}. The cloud picks this up on the next analyze run "
+        "(within ~30 min while sprinting, or the next scheduled run otherwise)."
+    )
+
+
+@mcp.tool()
 def health() -> str:
     """Show the latest data-health report (score, metrics, token + cadence advice)."""
     h = _load("health.json", {})

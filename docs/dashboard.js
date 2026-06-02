@@ -46,6 +46,24 @@ function renderHeader(status) {
   countersEl.innerHTML = c.map(([l, n, hl]) =>
     `<div class="counter ${hl ? "hl" : ""}"><div class="n">${esc(n)}</div>
      <div class="l">${esc(l)}</div></div>`).join("");
+
+  // Catch-up (massive-addition) banner — shown only while a big backlog is draining.
+  const cuEl = document.getElementById("catchup");
+  if (cuEl) {
+    const cu = status.catch_up || {};
+    const pending = cu.pending ?? rr.pending_to_analyze ?? 0;
+    if (cu.active) {
+      cuEl.hidden = false;
+      cuEl.innerHTML =
+        `<span class="badge">⛏️ CATCHING UP</span> A large batch of videos was added — ` +
+        `Excavatortron is sprinting through the backlog (newest first). ` +
+        `<b>${esc(pending)}</b> still to analyze; new knowledge is being added continuously. ` +
+        `<span class="cusub">${esc(cu.reason || "")}</span>`;
+    } else {
+      cuEl.hidden = true;
+      cuEl.innerHTML = "";
+    }
+  }
 }
 
 // ── Tab: Skills Library ──────────────────────────────────────────────────────

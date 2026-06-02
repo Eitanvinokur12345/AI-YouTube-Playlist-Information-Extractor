@@ -1,15 +1,21 @@
 name: Analyze pending
 
-# Analysis stage: Claude Code reads CLAUDE.md and processes up to analyze_batch_size
-# (50) videos from data/_pending/, committing after EACH video so nothing is lost if
-# the run is interrupted. Runs every 3 hours to chew through backlog quickly. Widen
-# the interval if you ever hit your Claude subscription rate limit.
+# Analysis stage: Claude Code reads CLAUDE.md and processes pending videos from
+# data/_pending/, committing after EACH video so nothing is lost if a run is interrupted.
+#   • Normal mode   — every 3h, analyze_batch_size (50) videos per run, oldest first.
+#   • Catch-up mode — when a big batch of videos lands at once (see src/fetch.py + the
+#     catch_up block in config.json), the run switches to a large batch (process all
+#     remaining), NEWEST-published first, and the */30 "sprint" cron drains the backlog
+#     back-to-back until it clears, then auto-returns to normal. All free (public-repo
+#     Actions + your Pro/Max subscription token) — no extra setup, no extra tokens.
 on:
   schedule:
-    - cron: "0 */3 * * *"
+    - cron: "0 */3 * * *"     # normal cadence
+    - cron: "*/30 * * * *"    # catch-up sprint cadence (no-ops unless catch-up is active)
   workflow_dispatch:
 
-# Never run two analyses at once; queue instead of overlapping.
+# Never run two analyses at once; queue instead of overlapping. GitHub keeps at most one
+# run pending behind the running one, so the sprint cron can't pile up.
 concurrency:
   group: skills-tracker-analyze
   cancel-in-progress: false
@@ -28,21 +34,50 @@ jobs:
           fetch-depth: 0          # full history so per-video pushes rebase cleanly
           persist-credentials: true
 
-      # Skip the (subscription-consuming) Claude step entirely when there is no work.
-      - name: Check for pending work
-        id: guard
+      # Decide whether there is work, and (in catch-up mode) how big a batch + what order.
+      # The */30 sprint cron only does work while catch-up is active; otherwise it no-ops
+      # cheaply (a few seconds of a free runner).
+      - name: Plan this run (pending, catch-up, batch, order)
+        id: plan
+        env:
+          SCHEDULE: ${{ github.event.schedule }}
+          EVENT: ${{ github.event_name }}
         run: |
-          count=$(ls data/_pending/*.json 2>/dev/null | wc -l | tr -d ' ')
-          echo "pending=$count" >> "$GITHUB_OUTPUT"
-          if [ "$count" -gt 0 ]; then
-            echo "has_pending=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "has_pending=false" >> "$GITHUB_OUTPUT"
-          fi
-          echo "Pending files: $count"
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, glob, os
+          pending = len(glob.glob("data/_pending/*.json"))
+          try:
+              cfg = json.load(open("config.json"))
+          except Exception:
+              cfg = {}
+          cu = cfg.get("catch_up", {})
+          enabled = bool(cu.get("enabled", True))
+          try:
+              st = json.load(open("data/catch_up.json"))
+          except Exception:
+              st = {"active": False}
+          active = enabled and bool(st.get("active"))
+          batch = int(cu.get("batch_size", 1000)) if active else int(cfg.get("analyze_batch_size", 50))
+          order = "newest_first" if active else "oldest_first"
+          schedule = os.environ.get("SCHEDULE", "")
+          event = os.environ.get("EVENT", "")
+          frequent = (schedule == cu.get("frequent_cron", "*/30 * * * *"))
+          if pending == 0:
+              has_work = False
+          elif event == "schedule" and frequent and not active:
+              has_work = False          # the sprint cron only works during catch-up
+          else:
+              has_work = True
+          print(f"pending={pending}")
+          print(f"catch_up={'true' if active else 'false'}")
+          print(f"batch={batch}")
+          print(f"order={order}")
+          print(f"has_work={'true' if has_work else 'false'}")
+          PY
+          echo "Plan written to outputs (pending / catch_up / batch / order / has_work)."
 
       - name: Analyze and build all 6 tabs
-        if: steps.guard.outputs.has_pending == 'true'
+        if: steps.plan.outputs.has_work == 'true'
         uses: anthropics/claude-code-action@v1
         with:
           # Uses your Claude Pro/Max subscription token (NO separate Anthropic API
@@ -51,14 +86,46 @@ jobs:
           prompt: |
             Run the analysis stage of the YouTube Skills Tracker.
             Follow CLAUDE.md exactly — it is the authoritative spec.
-            Process up to 50 videos from data/_pending/ (oldest first).
-            For EACH video: run the relevance gate, fill all six tabs, move its
-            file from data/_pending to data/processed, then commit AND push before
-            moving to the next video. Update the run report and the cumulative
-            total_videos_analyzed in data/status.json. Stop after 50 videos and
-            leave the rest in data/_pending for the next run.
+            Process up to ${{ steps.plan.outputs.batch }} videos from data/_pending/.
+            Processing order = ${{ steps.plan.outputs.order }}: if "newest_first", sort the
+            pending records by their publishedAt field and process the NEWEST first; if
+            "oldest_first", process the oldest first.
+            For EACH video: run the relevance gate and the Step 2b video-quality review,
+            fill all six tabs, move its file from data/_pending to data/processed, then
+            commit AND push before moving to the next video. Update the run report and the
+            cumulative total_videos_analyzed in data/status.json. When you reach the batch
+            limit or data/_pending is empty, stop and leave any remainder for the next run.
 
-      # Safety net: commit anything Claude changed but did not push (partial work).
+      # Auto-return: in "auto" mode, once the backlog is drained, turn catch-up off so the
+      # */30 sprint cron goes back to no-op and the 3h cadence resumes. Manual forced_on /
+      # forced_off (set via the MCP tool) are respected.
+      - name: Update catch-up state
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json, glob, pathlib, datetime
+          p = pathlib.Path("data/catch_up.json")
+          try:
+              st = json.loads(p.read_text(encoding="utf-8"))
+          except Exception:
+              st = {"mode": "auto", "active": False}
+          pending = len(glob.glob("data/_pending/*.json"))
+          mode = st.get("mode", "auto")
+          if mode == "forced_off":
+              st["active"] = False
+          elif mode == "forced_on":
+              st["active"] = True
+          elif pending == 0:
+              st["active"] = False          # auto: backlog cleared -> return to normal
+          st["last_pending"] = pending
+          st["updated_at"] = datetime.datetime.utcnow().isoformat() + "Z"
+          p.parent.mkdir(parents=True, exist_ok=True)
+          p.write_text(json.dumps(st, indent=2), encoding="utf-8")
+          print("catch_up active:", st.get("active"), "pending:", pending)
+          PY
+
+      # Safety net: commit anything Claude changed but did not push (partial work) plus the
+      # updated catch-up state.
       - name: Commit any remaining changes
         if: always()
         run: |

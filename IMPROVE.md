@@ -43,7 +43,9 @@ first and obey it. If `self_improvement.enabled` is `false`, do nothing and exit
 
 Read, creating sane defaults if missing:
 - `config.json` → the `self_improvement` block (enabled, autonomy, modules, safe_auto,
-  suggest_only, caps, token_budget_per_run, ux_review_min_interval_days).
+  suggest_only, caps, token_budget_per_run, ux_review_min_interval_days) **and** the
+  `catch_up` block (`enabled`, `curation`).
+- `data/catch_up.json` → `{ "active": bool, "mode": ... }` (default `{"active": false}`).
 - `data/status.json` → note `last_improved_at`, `last_ux_review` (may be absent on first run).
 - `data/stars.json` → `{ "starred": [ {slug, reason, starred_at} ] }` (default `{"starred":[]}`).
 - `data/approvals.json` → `{ "approved_ids": [], "dismissed_ids": [] }` (default both empty).
@@ -52,6 +54,15 @@ Read, creating sane defaults if missing:
 
 Build the frozen-slug set = every slug in `stars.json.starred[*].slug` ∪ every skill/connector
 with `starred==true` or `locked==true`. Keep this set in mind for ALL later steps.
+
+**Catch-up light mode.** If `catch_up.active` is true **and** `config.catch_up.curation ==
+"light_until_caught_up"`, the library is still mid-ingest, so do **not** curate half-finished
+data. This run, perform ONLY the cheap, safe modules — **Step 2 (data hygiene / exact-dup /
+consistency), Step 8 (health report), and Step 9 (audit)** — and **SKIP** Steps 3–7
+(near-duplicate, ratings calibration, stars, UX self-review, trend/new-tab detection). Still
+apply already-approved suggestions (Step 1). Record `"mode": "light (catch-up)"` in the audit
+and set `health.json.note` to say curation is paused until the backlog clears. Full curation
+resumes automatically on the next run after catch-up ends.
 
 ---
 

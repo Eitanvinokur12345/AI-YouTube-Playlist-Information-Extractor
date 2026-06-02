@@ -48,7 +48,7 @@ changes them.
    your phone or computer home screen as a PWA), or the **offline MCP server** in `mcp_server/`
    queried from Claude Desktop. Star/approve from the MCP server: `star_skill`, `unstar_skill`,
    `list_suggestions`, `approve_suggestion`, `dismiss_suggestion`, `list_dynamic_tabs`,
-   `dismiss_dynamic_tab`, `run_improve`.
+   `dismiss_dynamic_tab`, `catch_up_status`, `set_catch_up`, `run_improve`.
 
 ## First-time setup
 1. **Secrets** (repo → Settings → Secrets and variables → Actions):
@@ -66,6 +66,21 @@ changes them.
    Read and write* (for force-run) and *Contents: Read and write* (so `star_skill` /
    `approve_suggestion` can commit `data/stars.json` / `data/approvals.json`). Without it,
    querying still works fully offline; only these write/trigger actions need it.
+
+## Massive additions (catch-up mode)
+If you dump a large batch of videos in at once — e.g. you merge another playlist into your
+tracked one — Excavatortron handles it automatically, like a fresh first run:
+- **Trigger:** when a single fetch finds **100+** new videos (`catch_up.surge_threshold`), it
+  flips `data/catch_up.json` to active. You can also force it with the MCP tool
+  `set_catch_up('on')` / `set_catch_up('off')` (`'auto'` restores automatic behavior).
+- **Sprint:** the analyze workflow switches to a large batch and a **`*/30` cron** that runs
+  back-to-back (newest videos first) until the backlog clears, then **auto-returns to normal**.
+  All free — public-repo Actions are unlimited and analysis uses your subscription token.
+- **Light curation meanwhile:** while catching up, the daily self-improvement run does only
+  cheap, safe fixes and defers dedup/rescore/stars/trend-tabs until the backlog is gone, so it
+  never curates half-ingested data.
+- **Visibility:** the dashboard shows a blue "⛏️ CATCHING UP — N still to analyze" banner; the
+  MCP tool `catch_up_status` reports the same. No action needed from you.
 
 ## The only recurring task
 The Claude login token (`CLAUDE_CODE_OAUTH_TOKEN_REAL`) expires about **once a year**. When

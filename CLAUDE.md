@@ -13,8 +13,13 @@ pending file and populate **all SIX tracker tabs**, then commit the results.
    the next video.** This is mandatory. The run may be interrupted or time out at any moment
    — committing after every video guarantees no work is ever lost and the next run resumes
    cleanly from whatever is left in `data/_pending/`.
-2. **Batch limit:** process at most `analyze_batch_size` (50) pending files per run. Leave
-   the rest in `data/_pending/` — the next scheduled run (every few hours) picks them up.
+2. **Batch limit & order:** the analyze workflow tells you, in its prompt, **how many** videos
+   to process this run and in **what order** (`newest_first` or `oldest_first`). Honor those
+   exactly. Normally it is `analyze_batch_size` (50), oldest first. During **catch-up mode**
+   (a massive addition of videos — see `data/catch_up.json` / the `catch_up` block in
+   `config.json`) it is a large batch, **newest published first**, so the freshest knowledge
+   lands first. Either way, leave any remainder in `data/_pending/` for the next run, and keep
+   committing after every single video.
 3. **Output language is English only** (`output_language` in config.json). Every summary,
    SKILL.md, tip, description, and JSON value you WRITE must be English.
 4. **Transcripts may be English OR Hebrew** (or a description/title fallback). Read and
@@ -38,8 +43,10 @@ pending file and populate **all SIX tracker tabs**, then commit the results.
 
 ## Step 1 — Pick up the pending batch
 
-List `data/_pending/*.json` and take up to 50 files (oldest `fetched_at` first). Each file
-contains:
+List `data/_pending/*.json` and take up to the batch size the workflow gave you, in the order
+it gave you: **`oldest_first`** → sort by `fetched_at` ascending (the normal default);
+**`newest_first`** → sort by `publishedAt` descending (catch-up mode, so the most recent videos
+are analyzed first). Each file contains:
 
 | field               | meaning                                                      |
 |---------------------|--------------------------------------------------------------|

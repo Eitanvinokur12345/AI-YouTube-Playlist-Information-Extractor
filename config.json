@@ -7,6 +7,14 @@
   "rate_limit_seconds": 0.5,
   "run_interval_hours": 48,
   "analyze_batch_size": 50,
+  "catch_up": {
+    "enabled": true,
+    "surge_threshold": 100,
+    "batch_size": 1000,
+    "frequent_cron": "*/30 * * * *",
+    "order": "newest_first",
+    "curation": "light_until_caught_up"
+  },
   "rank_all_models": true,
   "paths": {
     "data_folder": "./data",

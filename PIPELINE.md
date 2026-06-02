@@ -12,8 +12,10 @@ Confirmed settings:
 - **First run:** process **all** videos in the playlist.
 - **News:** US Eastern (America/New_York); always merges **video-mentioned** news with
   **50 official sources** pulled directly via public RSS/Atom ($0, no keys).
-- **Cadence:** fetch every **48 hours**; analyze every few hours in batches of
-  `analyze_batch_size` (50), committing after each video; web news every **12 hours**.
+- **Cadence:** fetch every **48 hours**; analyze every **3 hours** in batches of
+  `analyze_batch_size` (50), committing after each video; web news every **12 hours**. On a
+  **massive addition** of videos, analyze switches to a **catch-up sprint** (large batch,
+  every 30 min, newest-first) until the backlog clears, then auto-returns to normal.
 
 ## Architecture — cloud builds, local viewing
 
@@ -84,6 +86,28 @@ and its own `quality_score` is **capped at the video's score**. Each record also
 **low-quality source** badge, and a **"Hide low-quality sources"** toggle; compare-and-keep-best
 prefers the keeper with the higher `video_quality_score` on a tie.
 
+## Catch-up protocol (massive additions)
+
+When a large batch of videos lands at once (e.g. merging another playlist into the tracked
+one), the system treats it like a fresh first run — governed by the `catch_up` block in
+`config.json` and the live switch `data/catch_up.json` (`mode`: `auto` | `forced_on` |
+`forced_off`):
+- **Detect (fetch.py):** if one fetch finds ≥ `surge_threshold` (100) new videos, it sets
+  `catch_up.json.active = true` and records the reason; it also surfaces this in
+  `status.json.catch_up` for the dashboard banner.
+- **Sprint (analyze.yml):** a second `*/30` cron is added that **no-ops unless catch-up is
+  active**. While active, the analyze run uses a large batch (`catch_up.batch_size`, process all
+  remaining) and **newest-published-first** order, committing after every video. Because the
+  concurrency group keeps at most one run queued behind the running one, the */30 cron drains
+  the backlog back-to-back without piling up. A post-step flips `active` back to `false` once
+  `data/_pending` is empty → **auto-return to normal** (3h cron, batch 50, oldest-first).
+- **Light curation (IMPROVE.md):** while `active` and `catch_up.curation ==
+  "light_until_caught_up"`, the daily improve run does only Steps 2/8/9 (hygiene, health,
+  audit) and skips dedup/rescore/stars/UX/trend-tabs, so it never curates half-ingested data.
+- **Manual control (MCP):** `catch_up_status` reports state; `set_catch_up('on'|'off'|'auto')`
+  forces a sprint, stops it, or restores automatic behavior (writes `catch_up.json`, needs the
+  optional `GITHUB_PAT`). Everything stays $0 (public-repo Actions + your subscription token).
+
 ## The 6 tabs (see CLAUDE.md for exact logic)
 
 1. **Skills Library** — extract every AI tool/skill/technique; quality score 1–10;
@@ -132,7 +156,10 @@ relevant), skipped (no transcript), errors, pending remaining, total analyzed (a
 - `deleted_skills.json`, `merge_log.json` — improvement audit trail.
 - `status.json` — `last_run`, `last_fetch`, `last_analyze`, `last_improved_at`,
   `last_ux_review`, `next_run`, `videos_seen`, `total_skills`, `total_videos_analyzed`
-  (cumulative), `new_videos_this_run`, and the `run_report` block (incl. `ascii`).
+  (cumulative), `new_videos_this_run`, `pending_count`, the `catch_up` summary, and the
+  `run_report` block (incl. `ascii`).
+- `catch_up.json` — the massive-addition switch: `active`, `mode`
+  (`auto`/`forced_on`/`forced_off`), `reason`, `surge_threshold`, `batch_size`, `last_pending`.
 - **Self-improvement files:** `stars.json` (frozen best-in-class slugs), `approvals.json`
   (`approved_ids` / `dismissed_ids`), `improvement_suggestions.json` (risky proposals),
   `improvement_audit.json` (per-run log), `health.json` (score + metrics + advice +

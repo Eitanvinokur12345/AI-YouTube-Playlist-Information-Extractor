@@ -15,6 +15,19 @@
     "order": "newest_first",
     "curation": "light_until_caught_up"
   },
+  "link_following": {
+    "enabled": true,
+    "max_links_per_video": 3,
+    "max_items_per_resource": 15,
+    "follow_for_low_quality_videos": true,
+    "denylist_domains": [
+      "youtube.com", "youtu.be", "twitter.com", "x.com", "instagram.com",
+      "facebook.com", "fb.com", "tiktok.com", "patreon.com", "discord.gg",
+      "discord.com", "t.me", "linktr.ee", "bit.ly", "amzn.to", "amazon.com",
+      "gumroad.com", "buymeacoffee.com", "ko-fi.com", "paypal.com", "twitch.tv",
+      "reddit.com", "linkedin.com", "spotify.com", "apple.co", "threads.net"
+    ]
+  },
   "rank_all_models": true,
   "paths": {
     "data_folder": "./data",
@@ -33,7 +46,7 @@
   ],
   "self_improvement": {
     "enabled": true,
-    "cadence": "daily",
+    "cadence": "every_3_days",
     "autonomy": "safe_auto_suggest_risky",
     "modules": {
       "data_hygiene": true,
@@ -44,10 +57,11 @@
       "trend_tabs": true
     },
     "safe_auto": ["schema_repair", "orphan_cleanup", "fill_missing_summaries", "exact_duplicate_merge", "cross_tab_consistency", "build_index", "health_report"],
-    "suggest_only": ["fuzzy_duplicate_merge", "rescore_outliers", "recategorize", "ui_changes", "star_suggestions"],
+    "suggest_only": ["fuzzy_duplicate_merge", "rescore_outliers", "recategorize", "ui_changes", "star_suggestions", "drop_dead_feed"],
     "caps": { "max_merges_per_run": 20, "max_deletes_per_run": 20, "max_rescores_per_run": 30, "max_ui_changes_per_week": 1, "max_new_tabs_per_week": 1 },
     "token_budget_per_run": 200000,
     "ux_review_min_interval_days": 7,
+    "feed_health": { "fail_streak_threshold": 5 },
     "stars": {
       "max_total": 10,
       "max_suggestions_per_run": 1,

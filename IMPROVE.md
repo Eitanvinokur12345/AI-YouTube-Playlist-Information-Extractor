@@ -1,7 +1,7 @@
-# Self-Improvement Protocol (daily)
+# Self-Improvement Protocol (every few days)
 
 This file is read by the Claude Code GitHub Action in the **improvement stage**
-(`.github/workflows/improve.yml`, runs once a day). It is separate from the analysis stage
+(`.github/workflows/improve.yml`, runs every few days — cadence set by `self_improvement.cadence`). It is separate from the analysis stage
 (`CLAUDE.md`). Where analysis *adds* new knowledge from videos, this stage *curates* what is
 already there: it deduplicates, repairs, calibrates ratings, protects the best skills with a
 **star (freeze)**, reviews the dashboard, optimizes for tokens, and writes a health report.
@@ -58,11 +58,20 @@ with `starred==true` or `locked==true`. Keep this set in mind for ALL later step
 **Catch-up light mode.** If `catch_up.active` is true **and** `config.catch_up.curation ==
 "light_until_caught_up"`, the library is still mid-ingest, so do **not** curate half-finished
 data. This run, perform ONLY the cheap, safe modules — **Step 2 (data hygiene / exact-dup /
-consistency), Step 8 (health report), and Step 9 (audit)** — and **SKIP** Steps 3–7
-(near-duplicate, ratings calibration, stars, UX self-review, trend/new-tab detection). Still
-apply already-approved suggestions (Step 1). Record `"mode": "light (catch-up)"` in the audit
-and set `health.json.note` to say curation is paused until the backlog clears. Full curation
-resumes automatically on the next run after catch-up ends.
+consistency), Step 8 (health report), and Step 9 (audit)** — and **SKIP** Steps 3–7b
+(near-duplicate, ratings calibration, stars, UX self-review, trend/new-tab detection,
+feed-health proposals). Still apply already-approved suggestions (Step 1). Record
+`"mode": "light (catch-up)"` in the audit and set `health.json.note` to say curation is paused
+until the backlog clears. Full curation resumes automatically on the next run after catch-up ends.
+
+**Idle early-exit (token-saver).** If catch-up is *not* active and **nothing has changed**
+since `status.last_improved_at` — no ids in `approvals.approved_ids`; `data/processed/` has not
+grown since the count recorded in the last `improvement_audit.json` run; no news feed has
+crossed the fail-streak threshold since the last run; and the previous health report listed no
+open schema / orphan / exact-duplicate issues — then this is a quiet run. Do ONLY `build_index`
+(Step 2's index), the health report (Step 8) and the audit (Step 9); tag the audit
+`"mode": "idle (no changes)"`; commit and stop. Skip Steps 1 and 3–7b. This keeps a no-work
+day nearly free of tokens.
 
 ---
 
@@ -258,6 +267,34 @@ after that you must never recreate that `trend_key`.
 
 ---
 
+## Step 7b — Module 7: News-feed health  (SUGGEST-ONLY)
+
+Only if `modules.health_and_cadence` is true (shares the health gate). The news stage
+(`src/news.py`) writes `data/feeds_health.json` every run with a per-feed `fail_streak`
+(consecutive runs that returned nothing). `drop_dead_feed` is in `suggest_only`, so **NEVER
+edit `config.json` yourself here** — only propose. Read `data/feeds_health.json` (skip this
+module if it's missing or empty). For each feed whose
+`fail_streak >= self_improvement.feed_health.fail_streak_threshold` (default 5) — effectively a
+dead feed — write one `drop_dead_feed` suggestion (do not re-propose a feed that already has a
+pending/dismissed one, match on the stable `id`):
+
+```json
+{ "id": "<stable-hash>", "type": "drop_dead_feed",
+  "detail": "'The Register AI/ML' has returned nothing for 11 runs straight (last error: fetch failed). Consider removing it from config.news_sources.",
+  "proposed_change": { "action": "remove_news_source", "name": "The Register AI/ML",
+                       "url": "https://www.theregister.com/software/ai_ml/headlines.atom" },
+  "evidence": { "fail_streak": 11, "last_ok": "2026-05-01T00:00:00+00:00",
+                "last_error": "fetch failed (network/HTTP)" },
+  "created_at": "<ISO-8601>", "status": "pending" }
+```
+
+The user approves removals via the dashboard / MCP. An approved `drop_dead_feed` is applied in
+Step 1 on a later run by removing that one entry from `config.news_sources` (this is the only
+case where the improve stage edits `config.json`, and only because the user approved it). Count
+proposals in the audit's `suggested.drop_dead_feed`.
+
+---
+
 ## Step 8 — Module 5: Health report + cadence advice  (ADVISORY, SAFE to write)
 
 Only if `modules.health_and_cadence` is true. `health_report` is safe-auto. Compute and write
@@ -271,7 +308,7 @@ Only if `modules.health_and_cadence` is true. `health_report` is safe-auto. Comp
     "total_skills": 0, "starred": 0, "missing_summaries": 0, "schema_issues": 0,
     "orphan_folders": 0, "exact_duplicates_open": 0, "fuzzy_dupe_suggestions": 0,
     "rescore_suggestions": 0, "pending_suggestions": 0, "pending_to_analyze": 0,
-    "avg_quality_score": 0.0, "active_dynamic_tabs": 0
+    "avg_quality_score": 0.0, "active_dynamic_tabs": 0, "unhealthy_feeds": []
   },
   "token_optimization": {
     "index_built": true, "biggest_files": [ {"file": "skills.json", "kb": 0} ],
@@ -286,6 +323,10 @@ Only if `modules.health_and_cadence` is true. `health_report` is safe-auto. Comp
 `score` is your honest 0–100 rating of data health (deduct for schema issues, orphans, open
 exact duplicates, large unindexed files, big analyze backlog). Append today's `{date, score}`
 to `history` (keep the last ~60). This module is advisory: it does not change skills.
+
+Set `metrics.unhealthy_feeds` to the names of feeds in `data/feeds_health.json` whose
+`fail_streak >= self_improvement.feed_health.fail_streak_threshold` (read-only here — proposing
+their removal is Step 7b). Use `[]` if `feeds_health.json` is missing.
 
 `token_optimization` also covers `self_improvement.token_budget_per_run`: note in `advice` if
 this run came close to the budget and what to trim.
@@ -302,7 +343,7 @@ Append one run summary to `data/improvement_audit.json` → `runs` (keep the las
                "summaries_filled": 0, "stars_stamped": 0, "index_built": true,
                "created_tabs": [] },
   "suggested": { "fuzzy_duplicate_merge": 0, "rescore_outliers": 0, "recategorize": 0,
-                 "ui_change": 0, "star_suggestion": 0, "orphan_folder": 0 },
+                 "ui_change": 0, "star_suggestion": 0, "orphan_folder": 0, "drop_dead_feed": 0 },
   "skipped_frozen": 0, "caps_hit": [], "health_score": 0,
   "notes": "One or two sentences on what happened this run." }
 ```
@@ -341,6 +382,7 @@ If `git push` is rejected because the remote moved (fetch/analyze pushed meanwhi
 6. Stamp stars; suggest new stars — never auto-star (Step 5).
 7. UX self-review — suggest only, rate-limited (Step 6).
 8. Detect trends; auto-create a new tab if warranted — announce it (Step 7).
-9. Write health.json (Step 8).
-10. Write audit + update status (Step 9). Commit throughout (Step 10).
-11. Never modify a frozen record. Stay under the token budget and the caps.
+9. Propose dropping dead news feeds — suggest only (Step 7b).
+10. Write health.json incl. unhealthy feeds (Step 8).
+11. Write audit + update status (Step 9). Commit throughout (Step 10).
+12. Never modify a frozen record. Stay under the token budget and the caps.

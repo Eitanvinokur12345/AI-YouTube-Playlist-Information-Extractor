@@ -1,13 +1,13 @@
 name: Self-improve
 
-# Curation stage: once a day, Claude Code reads IMPROVE.md and tidies what already
+# Curation stage: every few days, Claude Code reads IMPROVE.md and tidies what already
 # exists — dedup, schema repair, ratings calibration (suggest), star/freeze the best
 # skills, a rate-limited dashboard/UX review, token optimization, and a health report.
 # It NEVER touches frozen/starred records and only AUTO-applies the "safe" operations;
 # risky ones are written as suggestions for you to approve. Separate from analyze.yml.
 on:
   schedule:
-    - cron: "30 5 * * *"   # daily, 05:30 UTC (before the 06:00 fetch)
+    - cron: "30 5 */3 * *"   # every ~3 days, 05:30 UTC (matches self_improvement.cadence; IMPROVE.md also idle-exits on no-change days)
   workflow_dispatch:
 
 # Never overlap improvement runs, and never fight an analyze run for the working tree.

@@ -77,12 +77,19 @@ jobs:
           echo "Plan written to outputs (pending / catch_up / batch / order / has_work)."
 
       - name: Analyze and build all 6 tabs
+        id: claude
         if: steps.plan.outputs.has_work == 'true'
         uses: anthropics/claude-code-action@v1
         with:
           # Uses your Claude Pro/Max subscription token (NO separate Anthropic API
           # billing). Generated once a year with `claude setup-token`.
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN_REAL }}
+          # Explicit tool allow-list so the run stays fully non-interactive AND can use the
+          # network for Step 2c (following AI-relevant links in a video's description). This
+          # MUST list every tool the stage uses — Bash/Edit/Write/Read/Glob/Grep for files +
+          # git, WebFetch/WebSearch for links — otherwise it narrows the permissive default
+          # and breaks git/file operations.
+          claude_args: '--allowedTools "Bash,Edit,Write,Read,Glob,Grep,WebFetch,WebSearch,TodoWrite"'
           prompt: |
             Run the analysis stage of the YouTube Skills Tracker.
             Follow CLAUDE.md exactly — it is the authoritative spec.
@@ -91,10 +98,52 @@ jobs:
             pending records by their publishedAt field and process the NEWEST first; if
             "oldest_first", process the oldest first.
             For EACH video: run the relevance gate and the Step 2b video-quality review,
-            fill all six tabs, move its file from data/_pending to data/processed, then
-            commit AND push before moving to the next video. Update the run report and the
-            cumulative total_videos_analyzed in data/status.json. When you reach the batch
-            limit or data/_pending is empty, stop and leave any remainder for the next run.
+            follow any AI-relevant links in the description with WebFetch (Step 2c) and mine
+            their resources, fill all six tabs, move its file from data/_pending to
+            data/processed, then commit AND push before moving to the next video. Update the
+            run report and the cumulative total_videos_analyzed in data/status.json. When you
+            reach the batch limit or data/_pending is empty, stop and leave any remainder for
+            the next run.
+
+      # Reliability (A1): record whether the analyze step succeeded so the dashboard can show
+      # a red, actionable banner (usually a yearly-expired subscription token). The Claude
+      # step is intentionally left ABLE to fail (no continue-on-error) so a real failure also
+      # turns the whole job red and GitHub emails you — this step only adds a machine-readable
+      # flag. A skipped no-op sprint run counts as healthy.
+      - name: Record analyze health
+        if: always()
+        env:
+          OUTCOME: ${{ steps.claude.outcome }}
+          HAS_WORK: ${{ steps.plan.outputs.has_work }}
+        run: |
+          python3 - <<'PY'
+          import json, os, pathlib, datetime
+          p = pathlib.Path("data/status.json")
+          try:
+              st = json.loads(p.read_text(encoding="utf-8"))
+          except Exception:
+              st = {}
+          outcome = os.environ.get("OUTCOME", "")   # success|failure|skipped|cancelled|""
+          now = datetime.datetime.utcnow().isoformat() + "Z"
+          if outcome == "failure":
+              st["analyze_ok"] = False
+              st["analyze_failed_at"] = now
+              st["token_hint"] = (
+                  "The analyze run FAILED. The most common cause is an expired Claude "
+                  "subscription token — renew it (run `claude setup-token` once a year) and "
+                  "update the CLAUDE_CODE_OAUTH_TOKEN_REAL GitHub secret. Otherwise check the "
+                  "Actions log for the failing step."
+              )
+          elif outcome in ("success", "skipped", ""):
+              st["analyze_ok"] = True
+              st["token_hint"] = ""
+              if outcome == "success":
+                  st["last_analyze_ok_at"] = now
+          # 'cancelled' leaves the previous flag as-is
+          p.parent.mkdir(parents=True, exist_ok=True)
+          p.write_text(json.dumps(st, indent=2, ensure_ascii=False), encoding="utf-8")
+          print("analyze_ok:", st.get("analyze_ok"), "outcome:", outcome)
+          PY
 
       # Auto-return: in "auto" mode, once the backlog is drained, turn catch-up off so the
       # */30 sprint cron goes back to no-op and the 3h cadence resumes. Manual forced_on /

@@ -52,6 +52,21 @@
     .catchup b { color:#fff; }
     .catchup .cusub { display:block; color:#9ec3ff; font-size:12px; margin-top:4px; }
 
+    /* Reliability alert banner (red = analyze failed/token; amber = pipeline stalled) */
+    .alert { margin:0; padding:14px 28px; border-bottom:2px solid var(--line); font-size:14px; }
+    .alert.bad { background:#3a0d0d; color:#ffd6d6; border-bottom-color:var(--bad); }
+    .alert.warn { background:var(--warnbg); color:#ffe9bf; border-bottom-color:var(--warn); }
+    .alert .badge { display:inline-block; font-weight:800; font-size:12px; letter-spacing:.5px;
+                    padding:3px 8px; border-radius:6px; margin-right:8px; }
+    .alert.bad .badge { background:var(--bad); color:#2a0606; }
+    .alert.warn .badge { background:var(--warn); color:#1a1205; }
+
+    /* Search box (client-side filter across the data-driven tabs) */
+    .search-wrap { margin-top:10px; }
+    #search { width:100%; max-width:540px; background:var(--panel2); color:var(--text);
+              border:1px solid var(--line); border-radius:8px; padding:8px 12px; font-size:14px; }
+    #search:focus { outline:none; border-color:var(--accent); }
+
     nav { display:flex; gap:8px; padding:12px 28px; background:#12141b; flex-wrap:wrap; }
     nav button { background:var(--panel2); color:#cfd3dc; border:1px solid var(--line);
                  padding:8px 14px; border-radius:8px; cursor:pointer; font-size:14px; }
@@ -107,6 +122,21 @@
                border-radius:999px; padding:1px 9px; font-size:12px; margin-left:6px; }
     .vidpill { display:inline-block; background:#2a1033; color:#e0a3ff; border:1px solid #6d2b7a;
                border-radius:999px; padding:1px 9px; font-size:12px; margin-left:6px; }
+    /* Linked-resource pill: skill/connector discovered via a link in a video description */
+    .linkpill { display:inline-block; background:#0d2330; color:#7fd1ff; border:1px solid #2b6a7a;
+                border-radius:999px; padding:1px 9px; font-size:12px; margin-left:6px; }
+
+    /* HTML model podium (rendered from data — Claude no longer writes ASCII) */
+    .podium { display:flex; gap:10px; align-items:flex-end; margin:6px 0 12px; }
+    .podslot { flex:1; text-align:center; background:var(--panel2); border:1px solid var(--line);
+               border-radius:10px 10px 0 0; padding:10px 8px; }
+    .podslot.pod1 { padding-top:26px; border-color:#7a6512; box-shadow:inset 0 3px 0 #f5c518; }
+    .podslot.pod2 { padding-top:18px; }
+    .podslot.pod3 { padding-top:12px; }
+    .podrank { font-size:12px; color:var(--muted); font-weight:700; }
+    .podscore { font-size:22px; font-weight:800; color:#7fb4ff; }
+    .podname { font-size:13px; margin-top:2px; word-break:break-word; }
+    .runreport td:first-child { color:var(--muted); }
     /* NEW badge on an auto-created trend tab */
     .newbadge { display:inline-block; background:var(--good); color:#05210f; font-weight:800;
                 font-size:10px; letter-spacing:.5px; padding:1px 6px; border-radius:5px;
@@ -137,6 +167,8 @@
     <h1>Excavatortron</h1>
     <div class="meta" style="margin-top:0;font-size:12px;color:var(--muted)">AI Skills Tracker</div>
     <div class="meta" id="meta">Loading…</div>
+    <div class="search-wrap"><input id="search" type="search" autocomplete="off"
+      placeholder="Search skills, models, news, connectors, tips…" /></div>
   </header>
 
   <!-- BIG yearly token-renewal warning (the only recurring manual step) -->
@@ -156,6 +188,10 @@
       </ol>
     </details>
   </div>
+
+  <!-- Reliability: red if the last analyze run failed (token expired / error), amber if the
+       pipeline looks stalled (no recent runs). Filled in by dashboard.js. -->
+  <div class="alert" id="alert" hidden></div>
 
   <!-- Catch-up banner: appears only while a massive addition of videos is draining -->
   <div class="catchup" id="catchup" hidden></div>

@@ -58,6 +58,7 @@ are analyzed first). Each file contains:
 | `transcript`        | transcript (first 8000 chars), or description, or title      |
 | `transcript_lang`   | `"en"` / `"he"` / `""` (empty = a description/title fallback)|
 | `transcript_source` | `"transcript"` \| `"description"` \| `"title"`               |
+| `links`             | up to N AI-resource candidate URLs from the description (deny-filtered, may be `[]`) |
 | `fetched_at`        | when the record was created                                  |
 
 If `data/_pending/` is empty, there is nothing to analyze — jump straight to **Step 9**
@@ -116,6 +117,49 @@ A video is **LOW QUALITY** if `video_quality_score < low_quality_threshold` (def
 When the video is normal/high quality, set `low_quality_source: false` and apply no cap.
 Always carry `video_quality_score` onto each record so the dashboard can show a quality badge.
 This never *drops* a video — it only down-weights and visibly flags weak sources.
+
+---
+
+## Step 2c — Linked resources (follow AI-relevant links in the description)
+
+Videos often point to where the real material lives — a GitHub repo collecting dozens of
+agents, an "awesome-MCP" list, a tool's docs, a launch blog post. The fetch stage already
+pulled up to `link_following.max_links_per_video` candidate URLs into the pending record's
+**`links`** array (social / store / donation domains are already removed by the denylist).
+This step mines those resources so their skills/models/connectors land in the tabs too.
+
+Governed by the `link_following` block in `config.json` (`enabled`, `max_links_per_video`,
+`max_items_per_resource`, `follow_for_low_quality_videos`). If `enabled` is false or `links`
+is empty, skip this step entirely.
+
+1. **Pick the AI-relevant links.** From `links`, keep only those that clearly relate to AI
+   tools / skills / models / agents / connectors (judge by the URL and the surrounding
+   description text). Drop anything off-topic that slipped through (merch, newsletters,
+   unrelated docs). Follow at most `max_links_per_video`. If the video is LOW QUALITY
+   (Step 2b), only follow links when `follow_for_low_quality_videos` is true.
+2. **Fetch each chosen link with `WebFetch`.** This is the only stage allowed to use the
+   network (the analyze workflow allow-lists `WebFetch`). If a fetch fails or times out,
+   skip it silently and continue — never fail a video over a bad link.
+3. **Extract on the resource's own merits.** Treat the fetched page as a *source* and run the
+   same extraction as Steps 3 / 4 / 6 / 8 (skills, models, tips/commands, connectors). A
+   single "awesome list" or multi-agent repo can yield MANY items — cap what you take from
+   one resource at `max_items_per_resource`, keeping the clearly-useful ones. Score each item
+   on the resource's own evidence; the source video's quality cap from Step 2b does **not**
+   apply here (a linked resource is an independent source). Set `low_quality_source: false`
+   unless the resource itself is weak.
+4. **Attribution — tag every link-derived record**, in addition to the normal fields:
+   - `source_type: "linked_resource"`
+   - `source_url`: the followed link (the resource URL, NOT the video)
+   - `discovered_via: "video_description_link"`
+   - `via_video_id`: the `<video_id>` whose description contained the link
+   - `source_video_id`: keep `<video_id>` too, so it still ties back to the video
+   (For connectors, likewise set `source_url` to the link and add `via_video_id`.)
+5. **Dedup exactly like the video path.** Use the same compare-and-keep-best by `slug`
+   (Step 3) / by `name` (Step 8). A linked-resource skill that collides with an existing one
+   merges normally; add the resource's `via_video_id` to `endorsement_video_ids`. Always
+   respect Golden rule #8 (never touch a frozen record).
+
+Everything from this step is committed together with the video in Step 10.
 
 ---
 
@@ -184,7 +228,15 @@ build a skill record:
 - **1–2** — barely relevant, hype with little substance.
 
 ### Compare-and-keep-best (dedup by slug)
-Read `data/skills.json`. **First check Golden rule #8:** if the existing skill is frozen
+**Token-saver — check the compact index first.** `data/skills.json` grows large, so don't
+re-read the whole file for every skill. If **`data/index.json`** exists (a compact
+`{slug: {score, video_quality_score, starred, target_tool}}` map the improve stage maintains),
+look up your new skill's `slug` there first. **Absent → it's a new skill:** append the record
+without deep-reading the existing ones. **Present → a collision:** read just what you need
+from `data/skills.json` to run the merge below. If `data/index.json` is missing, fall back to
+reading `data/skills.json` directly.
+
+**Then check Golden rule #8:** if the existing skill is frozen
 (slug in `data/stars.json`, or `starred`/`locked` true), leave it untouched — do not replace,
 rescore, or merge it; if your new record is genuinely different, give it a distinct slug.
 Otherwise, if a skill with the same `slug` already exists:
@@ -280,8 +332,10 @@ Read `data/models.json` (create as `{}` if missing). For every AI **model** refe
 `open_source`, and its best `quality_score`. Match by exact name+version — never duplicate;
 if a higher score appears for the same model, update it.
 
-For **each category**, store both a podium and the complete ranking, plus a ready-to-display
-ASCII podium string:
+For **each category**, store a podium and the complete ranking. **Do NOT generate an
+`ascii_podium`** — the dashboard renders the podium as HTML and the MCP server renders ASCII
+from these numbers at read-time, so writing an ASCII string here only burns tokens. Store the
+data only:
 
 ```json
 {
@@ -295,8 +349,7 @@ ASCII podium string:
       {"rank": 1, "name": "Claude Sonnet", "version": "4.6", "company": "Anthropic",
        "score": 9.5, "open_source": false},
       {"rank": 2, "...": "..."}
-    ],
-    "ascii_podium": "<see format below>"
+    ]
   }
 }
 ```
@@ -304,21 +357,8 @@ ASCII podium string:
 - `podium` = top 3 (or fewer) by score.
 - `full_ranking` = **ALL** models in the category, sorted by score desc, re-ranked from 1.
   Never cap the list — rank every model found.
-- `ascii_podium` = a pure-ASCII (no emoji) podium for the dashboard / MCP, e.g.:
-
-```
-                CODE
-               +------+
-               |  #1  |
-               | 9.5  |
-        +------+------+------+
-        |  #2  |Claude|  #3  |
-        | 9.2  |Sonnet| 9.0  |
-        |GPT-5 |      |Gemini|
-        +------+------+------+
-```
-Fill rank/score/short-name cells; truncate names to fit the cell width and keep the box
-aligned in a monospace font.
+- If a file already contains an old `ascii_podium` field, just leave it (or drop it); never
+  spend effort creating or refreshing one — the read side draws the podium from the data.
 
 ---
 
@@ -422,24 +462,10 @@ batch, update — do not reset — these fields:
 - `run_report.no_transcript` — leave as set by fetch (videos with no real transcript track,
   analyzed via description/title fallback).
 
-Also write a ready-to-display ASCII run report into `run_report.ascii`:
-
-```
-+======================================================+
-|            YOUTUBE SKILLS TRACKER  —  RUN            |
-+======================================================+
-| Run time (ET) ........ 2026-06-02 06:00              |
-| Total in playlist .... 912                           |
-| Already seen ......... 860                           |
-| New found ............ 52                            |
-| Analyzed this run .... 50                            |
-| Skipped (not rel.) ... 1                             |
-| Skipped (no transc.) . 1                             |
-| Errors ............... 0                             |
-| Pending remaining .... 2                             |
-| Total analyzed (all) . 910                           |
-+======================================================+
-```
+**Do NOT write a `run_report.ascii` string** — the dashboard and the MCP server render the
+run-report box from the numeric fields above at read-time, so generating ASCII here only
+burns tokens. Just keep the numeric `run_report` fields accurate; leave any pre-existing
+`run_report.ascii` value alone.
 
 ---
 
@@ -469,12 +495,13 @@ pushed): run `git pull --rebase --autostash` then `git push` again, and continue
 ## Quick checklist per video
 1. Relevance gate (Step 2) — skip if off-topic.
 2. Rate video quality; flag + cap scores if low quality (Step 2b).
-3. Extract skills + write/route SKILL.md packages (Step 3).
-4. Update models ranking (Step 4).
-5. Merge overlapping skills (Step 5).
-6. Tips & commands (Step 6).
-7. News summary + carry quality flag (Step 7).
-8. Connectors (Step 8).
-9. Update run report + cumulative count (Step 9).
-10. Move pending→processed, commit & push (Step 10).
-11. Stop after 50 videos; leave the rest for the next run.
+3. Follow AI-relevant description links; extract on their own merits + tag `linked_resource` (Step 2c).
+4. Extract skills + write/route SKILL.md packages (Step 3) — index-first dedup.
+5. Update models ranking — data only, no ASCII (Step 4).
+6. Merge overlapping skills (Step 5).
+7. Tips & commands (Step 6).
+8. News summary + carry quality flag (Step 7).
+9. Connectors (Step 8).
+10. Update run report + cumulative count — data only, no ASCII (Step 9).
+11. Move pending→processed, commit & push (Step 10).
+12. Stop after the batch limit; leave the rest for the next run.

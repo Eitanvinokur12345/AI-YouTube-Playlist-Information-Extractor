@@ -13,9 +13,11 @@ Confirmed settings:
 - **News:** US Eastern (America/New_York); always merges **video-mentioned** news with
   **50 official sources** pulled directly via public RSS/Atom ($0, no keys).
 - **Cadence:** fetch every **48 hours**; analyze every **3 hours** in batches of
-  `analyze_batch_size` (50), committing after each video; web news every **12 hours**. On a
-  **massive addition** of videos, analyze switches to a **catch-up sprint** (large batch,
-  every 30 min, newest-first) until the backlog clears, then auto-returns to normal.
+  `analyze_batch_size` (50), committing after each video; web news every **12 hours**;
+  self-improvement every **~3 days** (`self_improvement.cadence`, with an idle early-exit on
+  no-change days). On a **massive addition** of videos, analyze switches to a **catch-up
+  sprint** (large batch, every 30 min, newest-first) until the backlog clears, then
+  auto-returns to normal.
 
 ## Architecture — cloud builds, local viewing
 
@@ -24,7 +26,7 @@ GitHub Actions (cloud, runs even when the PC is off)
   fetch.yml   (every 48h)  ──>  data/_pending/*.json + video news + status ─ commit ─┐
   analyze.yml (every few h) ──> Claude reads CLAUDE.md, fills 6 tabs + video-quality ┤
   news.yml    (every 12h)   ──> src/news.py: 50 official RSS/Atom ─> *_web_news.json ┤
-  improve.yml (daily)       ──> Claude reads IMPROVE.md: curate/dedup/star/trend/health
+  improve.yml (~3 days)     ──> Claude reads IMPROVE.md: curate/dedup/star/trend/health
                                                                                      v
                                                                           GitHub repo (main)
                                                                                      │
@@ -42,20 +44,21 @@ the MCP server load both and merge + sort by timestamp at display time, so neith
 clobber the other.
 
 The fetch stage is deterministic Python. The analyze stage is Claude Code driven entirely
-by **CLAUDE.md** (the authoritative analysis instructions). The daily self-improvement stage
+by **CLAUDE.md** (the authoritative analysis instructions). The self-improvement stage
 is Claude Code driven by **IMPROVE.md**. Viewing/querying (dashboard + MCP server) works
 fully **offline** from the synced `AI Skills Data` folder; only building new results needs
 the cloud.
 
-## Self-improvement stage (daily, IMPROVE.md)
+## Self-improvement stage (every ~3 days, IMPROVE.md)
 
-A separate daily run *curates* what already exists (it never fetches videos). Governed by the
+A separate run every ~3 days *curates* what already exists (it never fetches videos), with an
+idle early-exit on no-change days so quiet periods cost almost nothing. Governed by the
 `self_improvement` block in `config.json` with a **safe-auto / suggest-risky** split:
 - **Auto (safe):** build a compact `data/index.json`, repair malformed records, recreate
   missing SKILL.md packages, merge **exact** duplicates, fill missing news summaries, fix
   cross-tab counts, stamp starred records, and write `data/health.json`.
 - **Suggest only (risky):** fuzzy/near-duplicate merges, rescoring outliers, recategorizing,
-  dashboard/UX changes, and star suggestions are written to
+  dashboard/UX changes, star suggestions, and **dropping dead news feeds** are written to
   `data/improvement_suggestions.json` for you to approve — never applied automatically.
 - **Stars = freeze.** A skill whose slug is in `data/stars.json` (or with `starred`/`locked`
   true) is **proven best-in-class** and is *never* changed, merged, rescored, or deleted by
@@ -63,6 +66,11 @@ A separate daily run *curates* what already exists (it never fetches videos). Go
   land in `data/approvals.json` and are applied on the next improve run.
 - **Caps & budget:** per-run caps (merges/deletes/rescores, UI changes/week) and a token
   budget keep each run cheap and safe. Everything is logged to `data/improvement_audit.json`.
+- **News-feed health (A3, suggest-only).** `src/news.py` tracks each source's consecutive
+  failure streak in `data/feeds_health.json`. When a feed's streak reaches
+  `feed_health.fail_streak_threshold` (5), the improve stage writes a `drop_dead_feed`
+  suggestion (it never edits `config.news_sources` itself); approving it removes the feed on the
+  next run. The MCP tool `news_feed_health` shows the same data offline.
 - **Dynamic trend tabs.** When ≥ `dynamic_tabs.min_evidence_videos` (5) videos converge on a
   topic that doesn't fit an existing tab, the improve stage may **auto-create and announce** a
   new tab (capped at one/week, `max_total_active` 6). It appends `{id,title,items,created_at}`
@@ -85,6 +93,22 @@ and its own `quality_score` is **capped at the video's score**. Each record also
 `video_quality_score`. The dashboard shows a green **vid N/10** badge (amber when low), a red
 **low-quality source** badge, and a **"Hide low-quality sources"** toggle; compare-and-keep-best
 prefers the keeper with the higher `video_quality_score` on a tie.
+
+## Linked-resource extraction (analyze stage, CLAUDE.md Step 2c)
+
+A video's description often points to the real treasure — a GitHub repo full of agents/skills, a
+docs site, a tool's homepage. When `link_following.enabled` is true, the **fetch** stage extracts
+up to `max_links_per_video` (3) candidate URLs from each description into the pending record's
+`links` field, after dropping social / paywall / affiliate hosts (`denylist_domains`). During
+**analysis, Step 2c** filters those links to the AI-relevant ones and follows them with
+**WebFetch** (the only stage allowed network access), mining each resource into the six tabs on
+its **own merits** — its `quality_score` is **not** capped by the source video's quality, since
+the resource is an independent source (cap `max_items_per_resource`, 15). Each extracted record is
+tagged `source_type:"linked_resource"`, `source_url` (the link), `discovered_via:"video_description_link"`,
+and `via_video_id`, and is deduped exactly like a video-derived record. Per-link failures are
+silent (a dead link never breaks a run). The dashboard marks these with a **linked** pill and a
+"Linked resource · via video" source line. Network access is granted in `analyze.yml` via an
+explicit `--allowedTools` list that includes `WebFetch`/`WebSearch`.
 
 ## Catch-up protocol (massive additions)
 
@@ -118,8 +142,10 @@ one), the system treats it like a fresh first run — governed by the `catch_up`
    **"Multi-tool only"** filter. Write a SKILL.md package per reusable skill. **Flat layout:**
    `skills/<slug>/SKILL.md` for Claude skills. Packaged skills for other tools (Gemini Gems,
    ChatGPT Custom GPTs, …) go to `other-skills/<tool>/<slug>/SKILL.md`.
-2. **Models Ranking** — `data/models.json`: per category an ASCII podium + a **full ranked
-   table of ALL models** (sorted by score). Match by exact name+version; never duplicate.
+2. **Models Ranking** — `data/models.json`: per category the **podium** data + a **full ranked
+   table of ALL models** (sorted by score). Match by exact name+version; never duplicate. The
+   top-3 **podium is rendered at display time** — HTML in the dashboard, ASCII in the MCP
+   server — so Claude stores data only and spends no tokens drawing ASCII (token-saver B2).
 3. **Skills Improvement** — merge overlapping same-tool skills into the stronger one; back
    up removals to `data/deleted_skills.json`; log to `data/merge_log.json`.
 4. **Tips & Commands** — `data/tips.json` (`by_tool` + `general` topics) and
@@ -140,27 +166,37 @@ The dashboard adds a 7th view, **Self-Improvement** (read-only): the health scor
 the suggestion queue awaiting your approval, the starred/frozen list, any new-tab announcement,
 and the last audit run. Starred skills show a ★ and sort first across the library and
 connectors. Beyond these seven, the improve stage may inject extra **dynamic trend tabs**
-(see above) that appear in the nav with a NEW badge.
+(see above) that appear in the nav with a NEW badge. A header **search box** (A4) filters every
+tab client-side, and a **reliability banner** appears when something is wrong — **red** if the
+last analyze run failed (e.g. an expired subscription token, A1) or **amber** if no fetch has
+landed in far longer than expected (pipeline stalled, A2); the MCP `pipeline_status` tool
+surfaces the same warnings offline.
 
 ## Run report
 
-Shown every run as an ASCII box (stored in `data/status.json` → `run_report.ascii`):
-run time, total in playlist, already seen, new found, analyzed this run, skipped (not
-relevant), skipped (no transcript), errors, pending remaining, total analyzed (all time).
+The run report — run time, total in playlist, already seen, new found, analyzed this run,
+skipped (not relevant), skipped (no transcript), errors, pending remaining, total analyzed
+(all time) — is stored as **data** in `data/status.json` → `run_report` and **rendered at
+display time** (an HTML table in the dashboard, an ASCII box in the MCP server). Claude no
+longer writes a pre-rendered `run_report.ascii` string (token-saver B2); any legacy `ascii`
+field is still honoured if present.
 
 ## State files (`data/`)
 - `skills.json` — `videos_seen` + full skill records.
-- `models.json` — rankings per category (podium + full + ascii_podium).
+- `models.json` — rankings per category (podium data + full ranked table; the podium is
+  rendered at display time, so no `ascii_podium` is stored).
 - `tips.json`, `commands.json` — Tab 4.
 - `daily_news.json`, `weekly_news.json`, `monthly_news.json` — Tab 5 (video-mentioned).
 - `daily_web_news.json`, `weekly_web_news.json`, `monthly_web_news.json` — Tab 5
-  (official sources, written by `src/news.py`); `web_news_store.json` — the 30-day dedup store.
+  (official sources, written by `src/news.py`); `web_news_store.json` — the 30-day dedup store;
+  `feeds_health.json` — per-source consecutive-failure streaks for the feed-health monitor (A3).
 - `connectors.json` — Tab 6.
 - `deleted_skills.json`, `merge_log.json` — improvement audit trail.
 - `status.json` — `last_run`, `last_fetch`, `last_analyze`, `last_improved_at`,
   `last_ux_review`, `next_run`, `videos_seen`, `total_skills`, `total_videos_analyzed`
-  (cumulative), `new_videos_this_run`, `pending_count`, the `catch_up` summary, and the
-  `run_report` block (incl. `ascii`).
+  (cumulative), `new_videos_this_run`, `pending_count`, the `catch_up` summary, the reliability
+  flags `analyze_ok` / `analyze_failed_at` / `last_analyze_ok_at` / `token_hint` (A1), and the
+  `run_report` data block (rendered at display time; no stored ASCII).
 - `catch_up.json` — the massive-addition switch: `active`, `mode`
   (`auto`/`forced_on`/`forced_off`), `reason`, `surge_threshold`, `batch_size`, `last_pending`.
 - **Self-improvement files:** `stars.json` (frozen best-in-class slugs), `approvals.json`
@@ -168,4 +204,5 @@ relevant), skipped (no transcript), errors, pending remaining, total analyzed (a
   `improvement_audit.json` (per-run log), `health.json` (score + metrics + advice +
   `new_tab_announcement`), `extra_tabs.json` (auto-created dynamic trend tabs),
   `index.json` (compact skill index for cheap reads).
-- `_pending/` — fetched-but-not-yet-analyzed records. `processed/` — done.
+- `_pending/` — fetched-but-not-yet-analyzed records (each carries a `links` array of
+  AI-resource candidate URLs from the description, for Step 2c). `processed/` — done.

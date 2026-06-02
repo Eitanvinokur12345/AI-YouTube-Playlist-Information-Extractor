@@ -115,6 +115,136 @@ def _no_data(thing: str) -> str:
     )
 
 
+# ── read-time ASCII rendering (token-saver B2) ──────────────────────────────────
+# Claude no longer writes pre-rendered ASCII into the data files (it wastes output
+# tokens). The dashboard draws an HTML podium/table; here, for the text-only MCP
+# client, we render the same things as ASCII at READ time from the structured data.
+def _ascii_podium(pod: list[dict], category: str = "") -> str:
+    """Render a top-3 model podium as ASCII from the structured `podium` list."""
+    items = [p for p in (pod or []) if p][:3]
+    if not items:
+        return ""
+    by_rank: dict[int, dict] = {}
+    for p in items:
+        try:
+            by_rank[int(p.get("rank", 0) or 0)] = p
+        except Exception:
+            pass
+    first, second, third = by_rank.get(1), by_rank.get(2), by_rank.get(3)
+    if first and second and third:
+        ordered = [(2, second), (1, first), (3, third)]   # visual: silver, gold, bronze
+    else:
+        ordered = []
+        for i, p in enumerate(items):
+            try:
+                r = int(p.get("rank", i + 1) or (i + 1))
+            except Exception:
+                r = i + 1
+            ordered.append((r, p))
+
+    def label(p: dict) -> str:
+        nm = str(p.get("name", "?"))
+        ver = p.get("version")
+        if ver and ver not in ("any", "latest"):
+            nm += " " + str(ver)
+        return nm
+
+    inner = min(26, max(10, max(len(label(p)) for _, p in ordered) + 2))
+    risers = {1: 3, 2: 1, 3: 0}   # gold stands tallest
+
+    def box(rank: int, p: dict) -> list[str]:
+        nm = label(p)
+        if len(nm) > inner:
+            nm = nm[: inner - 3] + "..."
+        score = f"{p.get('score', '?')}/10"
+        lines = [
+            "+" + "-" * inner + "+",
+            "|" + f"#{rank}".center(inner) + "|",
+            "|" + nm.center(inner) + "|",
+            "|" + score.center(inner) + "|",
+        ]
+        for _ in range(risers.get(rank, 0)):
+            lines.append("|" + " " * inner + "|")
+        lines.append("+" + "-" * inner + "+")
+        return lines
+
+    cols = [box(rank, p) for rank, p in ordered]
+    h = max(len(c) for c in cols)
+    blank = " " * (inner + 2)
+    cols = [[blank] * (h - len(c)) + c for c in cols]   # bottom-align so gold rises
+    body = "\n".join("  ".join(col[i] for col in cols) for i in range(h))
+    return (f"{category} - top 3\n" if category else "") + body
+
+
+def _ascii_run_report(st: dict) -> str:
+    """Render the latest run report as an ASCII box from status.run_report."""
+    rr = st.get("run_report", {}) or {}
+    rows = [
+        ("Run time (ET)", rr.get("run_time", "?")),
+        ("Total in playlist", rr.get("total_in_playlist", "?")),
+        ("Already seen", rr.get("already_seen", "?")),
+        ("New found", rr.get("new_found", "?")),
+        ("Analyzed this run", rr.get("analyzed_this_run", "?")),
+        ("Skipped (not relevant)", rr.get("skipped_not_relevant", "?")),
+        ("No transcript", rr.get("no_transcript", "?")),
+        ("Errors", rr.get("errors", "?")),
+        ("Pending remaining", rr.get("pending_to_analyze", "?")),
+        ("Total analyzed (all time)", st.get("total_videos_analyzed", "?")),
+    ]
+    lk = max(len(k) for k, _ in rows)
+    lv = max(len(str(v)) for _, v in rows)
+    title = "LATEST RUN REPORT"
+    inner = max(lk + lv + 3, len(title))
+    out = ["+" + "-" * (inner + 2) + "+", "| " + title.ljust(inner) + " |",
+           "+" + "-" * (inner + 2) + "+"]
+    for k, v in rows:
+        out.append("| " + f"{k.ljust(lk)} : {str(v).rjust(lv)}".ljust(inner) + " |")
+    out.append("+" + "-" * (inner + 2) + "+")
+    return "\n".join(out)
+
+
+# ── reliability warnings (A1 analyze-failure / A2 stalled pipeline) ──────────────
+def _stale_message(st: dict) -> str:
+    """Return a 'pipeline stalled' message if the last fetch is far older than expected."""
+    from datetime import datetime, timezone
+
+    floor = datetime.min.replace(tzinfo=timezone.utc)
+    last_dt = _parse_iso(st.get("last_fetch") or st.get("last_run") or "")
+    if last_dt <= floor:
+        return ""
+    now = datetime.now(timezone.utc)
+    next_dt = _parse_iso(st.get("next_run", ""))
+    interval = (next_dt - last_dt).total_seconds() if next_dt > last_dt else 0.0
+    if interval <= 0:
+        interval = float(_config().get("run_interval_hours", 48) or 48) * 3600.0
+    age = (now - last_dt).total_seconds()
+    if age > interval * 2:
+        days = max(1, round(age / 86400))
+        hrs = round(interval / 3600)
+        return (
+            f"PIPELINE STALLED? No new fetch for ~{days} day(s) (expected about every "
+            f"{hrs}h). GitHub disables scheduled runs after ~60 days of repo inactivity - "
+            "check the Actions tab, or trigger a Fetch run (run_pipeline)."
+        )
+    return ""
+
+
+def _pipeline_warnings(st: dict) -> str:
+    """A1+A2 banner text for the MCP client: analyze failure (token) and/or staleness."""
+    out = []
+    if st.get("analyze_ok") is False:
+        hint = st.get("token_hint") or (
+            "The last analyze run failed. Check the GitHub Actions log; the most common "
+            "cause is an expired Claude subscription token (renew it once a year with "
+            "`claude setup-token` and update the CLAUDE_CODE_OAUTH_TOKEN_REAL secret)."
+        )
+        out.append("[!] PIPELINE ERROR: " + hint)
+    stale = _stale_message(st)
+    if stale:
+        out.append("[~] " + stale)
+    return ("\n".join(out) + "\n") if out else ""
+
+
 # ── Tab 1: Skills Library ────────────────────────────────────────────────────────
 @mcp.tool()
 def list_categories() -> str:
@@ -198,17 +328,21 @@ def get_ranking_table(category: str = "") -> str:
 
 @mcp.tool()
 def show_podium(category: str) -> str:
-    """Show the ASCII top-3 podium for a category."""
+    """Show the top-3 model podium for a category as ASCII, rendered at read time from the
+    structured podium data (Claude no longer stores pre-rendered ASCII — a token saver)."""
     models = _load("models.json", {})
     blk = models.get(category) or models.get(category.lower())
     if not blk:
         return f"No podium for category '{category}'."
-    ascii_art = blk.get("ascii_podium")
-    if ascii_art:
-        return ascii_art
-    pod = blk.get("podium", [])
+    legacy = blk.get("ascii_podium")   # honour any old pre-rendered art still in the data
+    if legacy:
+        return legacy
+    pod = blk.get("podium", []) or (blk.get("full_ranking", []) or [])[:3]
     if not pod:
         return f"No podium data for '{category}'."
+    art = _ascii_podium(pod, category)
+    if art:
+        return art
     return "\n".join(
         f"#{p.get('rank')}  {p.get('name','?')} {p.get('version','')}  "
         f"{p.get('score','?')}/10  ({p.get('company','')})"
@@ -375,12 +509,13 @@ def find_connector(query: str) -> str:
 # ── status / stats ──────────────────────────────────────────────────────────────
 @mcp.tool()
 def pipeline_status() -> str:
-    """Show pipeline status + the ASCII run report (last run, next run, counters)."""
+    """Show pipeline status + the run report (last run, next run, counters). Surfaces a clear
+    warning if the last analyze run failed (e.g. an expired token, A1) or the pipeline looks
+    stalled (A2). The run report is rendered as ASCII at read time (token saver B2)."""
     st = _load("status.json", {})
     if not st:
         return _no_data("status")
     rr = st.get("run_report", {})
-    ascii_box = rr.get("ascii")
     head = (
         f"Last fetch:   {st.get('last_fetch', st.get('last_run','?'))}\n"
         f"Last analyze: {st.get('last_analyze','?')}\n"
@@ -390,9 +525,15 @@ def pipeline_status() -> str:
         f"Analyzed this run: {rr.get('analyzed_this_run','?')}\n"
         f"Total analyzed (all time): {st.get('total_videos_analyzed','?')}\n"
     )
-    if ascii_box:
-        return head + "\n" + ascii_box
-    return head
+    box = rr.get("ascii") or _ascii_run_report(st)   # legacy art if present, else render now
+    parts = []
+    warn = _pipeline_warnings(st)
+    if warn:
+        parts.append(warn)
+    parts.append(head)
+    if box:
+        parts.append(box)
+    return "\n".join(parts)
 
 
 @mcp.tool()
@@ -858,6 +999,41 @@ def health() -> str:
         lines.append(f"Cadence: {h['cadence_advice']}")
     for a in h.get("advice", []) or []:
         lines.append(f"• {a}")
+    return "\n".join(lines)
+
+
+@mcp.tool()
+def news_feed_health() -> str:
+    """Show per-source news-feed health: consecutive-failure streaks, last-OK time, and the
+    last error. The news fetch stage writes data/feeds_health.json; once a feed's streak
+    crosses self_improvement.feed_health.fail_streak_threshold, the self-improvement stage
+    proposes dropping it (suggest-only — you approve with approve_suggestion)."""
+    h = _load("feeds_health.json", {})
+    feeds = h.get("feeds", {}) if isinstance(h, dict) else {}
+    if not feeds:
+        return (
+            "No feed-health data yet. It is written by the news fetch stage "
+            "(data/feeds_health.json) after the web-news step has run at least once."
+        )
+    threshold = int(
+        _config().get("self_improvement", {}).get("feed_health", {}).get("fail_streak_threshold", 5)
+    )
+    rows = sorted(feeds.items(), key=lambda kv: (kv[1] or {}).get("fail_streak", 0), reverse=True)
+    healthy = sum(1 for _, info in rows if (info or {}).get("fail_streak", 0) == 0)
+    lines = [
+        f"News-feed health ({len(rows)} feeds; {healthy} healthy)  generated "
+        f"{h.get('generated_at','?')}  — drop-suggest threshold = {threshold} consecutive fails:"
+    ]
+    for name, info in rows:
+        info = info or {}
+        streak = info.get("fail_streak", 0)
+        flag = "  <-- will be suggested for removal" if streak >= threshold else ""
+        last_ok = info.get("last_ok") or "never"
+        err = info.get("last_error") or ""
+        line = f"- {name}: fail_streak={streak}, last_ok={last_ok}"
+        if err:
+            line += f", last_error={err}"
+        lines.append(line + flag)
     return "\n".join(lines)
 
 

@@ -58,6 +58,7 @@ WEB_STORE_JSON = DATA_DIR / "web_news_store.json"
 DAILY_WEB_JSON = DATA_DIR / "daily_web_news.json"
 WEEKLY_WEB_JSON = DATA_DIR / "weekly_web_news.json"
 MONTHLY_WEB_JSON = DATA_DIR / "monthly_web_news.json"
+FEEDS_HEALTH_JSON = DATA_DIR / "feeds_health.json"
 
 EASTERN = pytz.timezone("America/New_York")
 USER_AGENT = "AI-Skills-Tracker/1.0 (+github actions; RSS reader)"
@@ -311,7 +312,12 @@ def main() -> None:
     store = load_json(WEB_STORE_JSON, {"items": []})
     by_url: dict[str, dict] = {it["url"]: it for it in store.get("items", []) if it.get("url")}
 
-    # 2) Fetch every source (each failure is non-fatal).
+    # 2) Fetch every source (each failure is non-fatal). Track per-feed health so the
+    #    improve stage can suggest dropping a feed that has been dead for many runs.
+    health_prev = load_json(FEEDS_HEALTH_JSON, {"feeds": {}})
+    prev_feeds = health_prev.get("feeds", {}) if isinstance(health_prev, dict) else {}
+    health: dict[str, dict] = {}
+
     fetched = 0
     added = 0
     ok_sources = 0
@@ -320,25 +326,43 @@ def main() -> None:
         url = src.get("url", "")
         if not url:
             continue
+        prev = prev_feeds.get(name, {}) if isinstance(prev_feeds, dict) else {}
         raw = fetch_feed(url, timeout)
-        if raw is None:
-            continue
-        ok_sources += 1
-        for entry in parse_feed(raw, name, max_items, max_chars):
-            fetched += 1
-            existing = by_url.get(entry["url"])
-            if existing:
-                # refresh fields but keep the first time we saw it
-                entry["first_seen"] = existing.get("first_seen", now_iso)
-                by_url[entry["url"]] = entry
-            else:
-                entry["first_seen"] = now_iso
-                by_url[entry["url"]] = entry
-                added += 1
+        entries = parse_feed(raw, name, max_items, max_chars) if raw is not None else []
+        healthy = bool(entries)  # fetched AND parsed at least one item
+        if healthy:
+            ok_sources += 1
+            for entry in entries:
+                fetched += 1
+                existing = by_url.get(entry["url"])
+                if existing:
+                    # refresh fields but keep the first time we saw it
+                    entry["first_seen"] = existing.get("first_seen", now_iso)
+                    by_url[entry["url"]] = entry
+                else:
+                    entry["first_seen"] = now_iso
+                    by_url[entry["url"]] = entry
+                    added += 1
+            err = ""
+        else:
+            err = "fetch failed (network/HTTP)" if raw is None else "parsed 0 items"
+        health[name] = {
+            "url": url,
+            "fail_streak": 0 if healthy else int(prev.get("fail_streak", 0)) + 1,
+            "last_ok": now_iso if healthy else prev.get("last_ok", ""),
+            "last_error": err,
+            "ok_runs": int(prev.get("ok_runs", 0)) + (1 if healthy else 0),
+            "fail_runs": int(prev.get("fail_runs", 0)) + (0 if healthy else 1),
+        }
 
-    # 3) Prune anything older than store_days; persist the master store.
+    # 3) Prune anything older than store_days; persist the master store + feed health.
     items = prune_store(list(by_url.values()), store_days, now_utc)
     save_json(WEB_STORE_JSON, {"generated_at": now_iso, "items": items})
+    unhealthy = sorted(
+        (n for n, h in health.items() if h["fail_streak"] > 0),
+        key=lambda n: health[n]["fail_streak"], reverse=True,
+    )
+    save_json(FEEDS_HEALTH_JSON, {"generated_at": now_iso, "feeds": health})
 
     # 4) Build the three windowed views the dashboard reads.
     daily, weekly, monthly = window_entries(items, now_utc)
@@ -348,10 +372,12 @@ def main() -> None:
 
     log.info(
         "Web news: %d/%d sources ok, %d items parsed, %d new, store=%d  "
-        "(daily=%d weekly=%d monthly=%d)",
+        "(daily=%d weekly=%d monthly=%d)  unhealthy=%d",
         ok_sources, len(sources), fetched, added, len(items),
-        len(daily), len(weekly), len(monthly),
+        len(daily), len(weekly), len(monthly), len(unhealthy),
     )
+    if unhealthy:
+        log.warning("Feeds with active fail streaks: %s", ", ".join(unhealthy[:10]))
 
 
 if __name__ == "__main__":

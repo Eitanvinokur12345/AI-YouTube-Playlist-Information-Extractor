@@ -7,10 +7,12 @@ from __future__ import annotations
 import json
 import logging
 import os
+import re
 import sys
 import time
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
+from urllib.parse import urlparse
 
 import pytz
 from dateutil import parser as dateutil_parser
@@ -159,6 +161,54 @@ def fetch_transcript(
     return title.strip()[:MAX_TRANSCRIPT_CHARS], "", "title"
 
 
+# ── description links ──────────────────────────────────────────────────────────
+_URL_RE = re.compile(r"https?://[^\s<>\"']+", re.IGNORECASE)
+_TRAILING_PUNCT = ".,;:!?\"'"
+
+
+def extract_links(description: str, denylist: list[str], max_links: int) -> list[str]:
+    """
+    Pull AI-resource candidate URLs out of a video description, DETERMINISTICALLY
+    (no network, no tokens). Strips trailing sentence punctuation, balance-trims a
+    wrapping ')' or ']', de-duplicates preserving order, drops links whose host
+    equals or is a subdomain of any `denylist` entry (social / store / donation
+    domains), and caps the result at `max_links`. The analyze stage (CLAUDE.md) is
+    what decides which of these are actually AI-relevant and worth following.
+    """
+    if not description:
+        return []
+    deny = {d.lower().lstrip(".") for d in (denylist or [])}
+    seen: set[str] = set()
+    out: list[str] = []
+    for raw in _URL_RE.findall(description):
+        url = raw.rstrip(_TRAILING_PUNCT)
+        # trim an unbalanced trailing ) or ] (URL wrapped in parens/brackets)
+        while url and url[-1] in ")]":
+            if url[-1] == ")" and url.count("(") < url.count(")"):
+                url = url[:-1].rstrip(_TRAILING_PUNCT)
+            elif url[-1] == "]" and url.count("[") < url.count("]"):
+                url = url[:-1].rstrip(_TRAILING_PUNCT)
+            else:
+                break
+        if not url or url in seen:
+            continue
+        try:
+            host = (urlparse(url).hostname or "").lower()
+        except Exception:
+            continue
+        if not host:
+            continue
+        if host.startswith("www."):
+            host = host[4:]
+        if any(host == d or host.endswith("." + d) for d in deny):
+            continue
+        seen.add(url)
+        out.append(url)
+        if max_links and len(out) >= max_links:
+            break
+    return out
+
+
 # ── news classification ───────────────────────────────────────────────────────
 def classify_news(videos: list[dict], run_time_utc: datetime) -> tuple[list, list, list]:
     """
@@ -234,6 +284,10 @@ def main() -> None:
     rate_limit = float(cfg.get("rate_limit_seconds", 0.5))
     languages = cfg.get("transcript_languages", ["en"])
     run_interval = float(cfg.get("run_interval_hours", 48))
+    lf_cfg = cfg.get("link_following", {}) or {}
+    lf_enabled = bool(lf_cfg.get("enabled", True))
+    lf_denylist = lf_cfg.get("denylist_domains", [])
+    lf_max_links = int(lf_cfg.get("max_links_per_video", 3))
 
     # read API key from env — never hardcode
     api_key = os.environ.get("YOUTUBE_API_KEY", "")
@@ -289,6 +343,10 @@ def main() -> None:
                 "transcript": transcript,
                 "transcript_lang": lang,
                 "transcript_source": source,
+                "links": (
+                    extract_links(v["description"], lf_denylist, lf_max_links)
+                    if lf_enabled else []
+                ),
                 "fetched_at": run_time_utc.isoformat(),
             }
             save_json(PENDING_DIR / f"{vid}.json", pending_record)

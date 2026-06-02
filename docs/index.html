@@ -6,146 +6,171 @@
   <title>Excavatortron — AI Skills Dashboard</title>
   <!-- PWA: installable to a phone / desktop home screen -->
   <link rel="manifest" href="manifest.webmanifest" />
-  <meta name="theme-color" content="#0f1115" />
+  <meta name="theme-color" content="#2563eb" />
   <link rel="apple-touch-icon" href="icon.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Excavatortron" />
   <style>
-    :root { --bg:#0f1115; --panel:#161922; --panel2:#1d2230; --line:#262a36;
-            --text:#e8e8ea; --muted:#9aa0ad; --accent:#3b82f6; --good:#22c55e;
-            --warn:#f59e0b; --warnbg:#3a2a08; --bad:#ef4444; }
+    :root { --bg:#f5f6fa; --panel:#ffffff; --panel2:#f0f2f7; --line:#e1e4ed;
+            --text:#1a1d27; --muted:#6b7280; --accent:#2563eb; --good:#16a34a;
+            --warn:#d97706; --warnbg:#fffbeb; --bad:#dc2626; }
     * { box-sizing: border-box; }
     body { font-family: system-ui, -apple-system, Segoe UI, sans-serif; margin:0;
            background:var(--bg); color:var(--text); }
-    header { padding:18px 28px; background:var(--panel); border-bottom:1px solid var(--line); }
-    h1 { margin:0; font-size:20px; }
-    .meta { color:var(--muted); font-size:13px; margin-top:4px; }
+
+    /* Header — centered, bold blue top stripe */
+    header { padding:28px 28px 18px; background:var(--panel);
+             border-top:4px solid var(--accent); border-bottom:1px solid var(--line);
+             text-align:center; }
+    h1 { margin:0; font-size:28px; font-weight:800; letter-spacing:-.5px; color:var(--text); }
+    .subtitle { font-size:11px; color:var(--accent); font-weight:700; letter-spacing:1.2px;
+                text-transform:uppercase; margin-top:4px; }
+    .meta { color:var(--muted); font-size:12px; margin-top:8px; }
 
     /* Big counters */
-    .counters { display:flex; gap:14px; flex-wrap:wrap; padding:14px 28px;
-                background:var(--panel); border-bottom:1px solid var(--line); }
-    .counter { background:var(--panel2); border:1px solid var(--line); border-radius:10px;
-               padding:10px 16px; min-width:150px; }
-    .counter .n { font-size:24px; font-weight:700; }
+    .counters { display:flex; gap:12px; flex-wrap:wrap; padding:16px 28px;
+                background:var(--panel); border-bottom:1px solid var(--line);
+                justify-content:center; }
+    .counter { background:var(--panel2); border:1px solid var(--line); border-radius:12px;
+               padding:12px 18px; min-width:150px; text-align:center; }
+    .counter .n { font-size:26px; font-weight:800; color:var(--text); }
     .counter .l { color:var(--muted); font-size:12px; margin-top:2px; }
     .counter.hl .n { color:var(--accent); }
 
     /* Yearly-token warning banner */
     .tokenwarn { margin:0; padding:14px 28px; background:var(--warnbg);
-                 border-bottom:2px solid var(--warn); color:#ffe9bf; }
-    .tokenwarn .badge { display:inline-block; background:var(--warn); color:#1a1205;
+                 border-bottom:2px solid var(--warn); color:#92400e; }
+    .tokenwarn .badge { display:inline-block; background:var(--warn); color:#fff;
                  font-weight:800; font-size:12px; letter-spacing:.5px;
                  padding:3px 8px; border-radius:6px; margin-right:8px; }
-    .tokenwarn b { color:#fff; }
+    .tokenwarn b { color:#78350f; }
     .tokenwarn details { margin-top:8px; }
-    .tokenwarn summary { cursor:pointer; color:#ffd98a; font-weight:600; }
-    .tokenwarn ol { margin:8px 0 0; padding-left:22px; line-height:1.6; }
-    .tokenwarn code { background:#000; color:#7ee787; padding:1px 6px; border-radius:5px; }
+    .tokenwarn summary { cursor:pointer; color:var(--warn); font-weight:600; }
+    .tokenwarn ol { margin:8px 0 0; padding-left:22px; line-height:1.6; color:#78350f; }
+    .tokenwarn code { background:#1a1a1a; color:#7ee787; padding:1px 6px; border-radius:5px; }
 
-    /* Catch-up banner (massive-addition protocol in progress) */
-    .catchup { margin:0; padding:12px 28px; background:#0b2440; color:#cfe3ff;
+    /* Catch-up banner */
+    .catchup { margin:0; padding:12px 28px; background:#eff6ff; color:#1e40af;
                border-bottom:2px solid var(--accent); }
     .catchup .badge { display:inline-block; background:var(--accent); color:#fff;
                font-weight:800; font-size:12px; letter-spacing:.5px; padding:3px 8px;
                border-radius:6px; margin-right:8px; }
-    .catchup b { color:#fff; }
-    .catchup .cusub { display:block; color:#9ec3ff; font-size:12px; margin-top:4px; }
+    .catchup b { color:#1e3a8a; }
+    .catchup .cusub { display:block; color:#3b82f6; font-size:12px; margin-top:4px; }
 
-    /* Reliability alert banner (red = analyze failed/token; amber = pipeline stalled) */
+    /* Reliability alert banner */
     .alert { margin:0; padding:14px 28px; border-bottom:2px solid var(--line); font-size:14px; }
-    .alert.bad { background:#3a0d0d; color:#ffd6d6; border-bottom-color:var(--bad); }
-    .alert.warn { background:var(--warnbg); color:#ffe9bf; border-bottom-color:var(--warn); }
+    .alert.bad { background:#fef2f2; color:#991b1b; border-bottom-color:var(--bad); }
+    .alert.warn { background:var(--warnbg); color:#92400e; border-bottom-color:var(--warn); }
     .alert .badge { display:inline-block; font-weight:800; font-size:12px; letter-spacing:.5px;
                     padding:3px 8px; border-radius:6px; margin-right:8px; }
-    .alert.bad .badge { background:var(--bad); color:#2a0606; }
-    .alert.warn .badge { background:var(--warn); color:#1a1205; }
+    .alert.bad .badge { background:var(--bad); color:#fff; }
+    .alert.warn .badge { background:var(--warn); color:#fff; }
 
-    /* Search box (client-side filter across the data-driven tabs) */
-    .search-wrap { margin-top:10px; }
-    #search { width:100%; max-width:540px; background:var(--panel2); color:var(--text);
-              border:1px solid var(--line); border-radius:8px; padding:8px 12px; font-size:14px; }
-    #search:focus { outline:none; border-color:var(--accent); }
+    /* Search box */
+    .search-wrap { margin-top:14px; display:flex; justify-content:center; }
+    #search { width:100%; max-width:520px; background:var(--panel2); color:var(--text);
+              border:1.5px solid var(--line); border-radius:999px; padding:9px 18px;
+              font-size:14px; transition:border-color .15s, box-shadow .15s; }
+    #search::placeholder { color:var(--muted); }
+    #search:focus { outline:none; border-color:var(--accent);
+                    box-shadow:0 0 0 3px rgba(37,99,235,.12); }
 
-    nav { display:flex; gap:8px; padding:12px 28px; background:#12141b; flex-wrap:wrap; }
-    nav button { background:var(--panel2); color:#cfd3dc; border:1px solid var(--line);
-                 padding:8px 14px; border-radius:8px; cursor:pointer; font-size:14px; }
+    /* Nav */
+    nav { display:flex; gap:8px; padding:12px 28px; background:var(--panel2);
+          border-bottom:1px solid var(--line); flex-wrap:wrap; }
+    nav button { background:var(--panel); color:#374151; border:1.5px solid var(--line);
+                 padding:8px 16px; border-radius:8px; cursor:pointer; font-size:14px;
+                 font-weight:500; transition:border-color .15s, color .15s; }
+    nav button:hover { border-color:var(--accent); color:var(--accent); }
     nav button.active { background:var(--accent); color:#fff; border-color:var(--accent); }
 
     main { padding:24px 28px; max-width:1100px; }
     .empty { color:var(--muted); }
     .subnav { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
-    .subnav button { background:var(--panel2); color:#cfd3dc; border:1px solid var(--line);
-                 padding:5px 12px; border-radius:999px; cursor:pointer; font-size:13px; }
-    .subnav button.active { background:#2b3550; color:#fff; border-color:var(--accent); }
+    .subnav button { background:var(--panel); color:#374151; border:1.5px solid var(--line);
+                 padding:5px 14px; border-radius:999px; cursor:pointer; font-size:13px; }
+    .subnav button.active { background:var(--accent); color:#fff; border-color:var(--accent); }
 
-    .card { background:var(--panel); border:1px solid var(--line); border-radius:12px;
-            padding:16px 18px; margin-bottom:14px; }
-    .card h3 { margin:0 0 6px; font-size:16px; }
+    /* Cards */
+    .card { background:var(--panel); border:1px solid var(--line); border-radius:14px;
+            padding:18px 20px; margin-bottom:14px;
+            box-shadow:0 1px 4px rgba(0,0,0,.06); }
+    .card h3 { margin:0 0 6px; font-size:16px; color:var(--text); }
     .card .sub { color:var(--muted); font-size:13px; margin-bottom:8px; }
     .card p { margin:6px 0; line-height:1.5; }
-    .score { display:inline-block; background:#11203a; color:#7fb4ff; border:1px solid #2b4a7a;
-             border-radius:6px; padding:1px 8px; font-weight:700; font-size:13px; }
-    .pill { display:inline-block; background:var(--panel2); color:#cfd3dc;
+
+    /* Badges & pills */
+    .score { display:inline-block; background:#dbeafe; color:#1d4ed8;
+             border:1px solid #93c5fd; border-radius:6px; padding:1px 8px;
+             font-weight:700; font-size:13px; }
+    .pill { display:inline-block; background:var(--panel2); color:#4b5563;
             border:1px solid var(--line); border-radius:999px; padding:1px 9px;
             font-size:12px; margin-left:6px; }
-    a { color:#7fb4ff; }
-    pre.ascii { background:#0a0c10; border:1px solid var(--line); border-radius:10px;
-                padding:14px; overflow:auto; font-size:13px; line-height:1.35; color:#cfe3ff; }
+    a { color:var(--accent); }
+    pre.ascii { background:var(--panel2); border:1px solid var(--line); border-radius:10px;
+                padding:14px; overflow:auto; font-size:13px; line-height:1.35; color:var(--text); }
     table { border-collapse:collapse; width:100%; margin-top:8px; font-size:14px; }
-    th,td { text-align:left; padding:7px 10px; border-bottom:1px solid var(--line); }
-    th { color:var(--muted); font-weight:600; }
+    th,td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); }
+    th { color:var(--muted); font-weight:600; background:var(--panel2); }
     .official { color:var(--good); font-size:12px; font-weight:700; }
 
-    /* Starred (frozen) skills — proven best-in-class, never auto-changed */
-    .star { color:#f5c518; font-weight:800; margin-right:4px; }
-    .card.starred { border-color:#7a6512; box-shadow:inset 3px 0 0 #f5c518; }
-    .frozenpill { display:inline-block; background:#352c08; color:#f5c518;
-                  border:1px solid #7a6512; border-radius:999px; padding:1px 9px;
+    /* Starred (frozen) skills */
+    .star { color:#d97706; font-weight:800; margin-right:4px; }
+    .card.starred { border-color:#fbbf24; box-shadow:inset 3px 0 0 #f59e0b,
+                    0 1px 4px rgba(0,0,0,.06); }
+    .frozenpill { display:inline-block; background:#fef3c7; color:#92400e;
+                  border:1px solid #fbbf24; border-radius:999px; padding:1px 9px;
                   font-size:12px; margin-left:6px; }
 
-    /* Video-quality badge + low-quality-source flagging (Skills + News) */
-    .vq { display:inline-block; background:#0f2a1a; color:#7ee7a3; border:1px solid #1f6d44;
+    /* Video-quality badges */
+    .vq { display:inline-block; background:#dcfce7; color:#166534; border:1px solid #86efac;
           border-radius:999px; padding:1px 9px; font-size:12px; margin-left:6px; }
-    .vq.low { background:var(--warnbg); color:#ffd98a; border-color:var(--warn); }
-    .lowsrc { display:inline-block; background:#3a1408; color:#ffb38a; border:1px solid var(--bad);
+    .vq.low { background:var(--warnbg); color:#92400e; border-color:#fbbf24; }
+    .lowsrc { display:inline-block; background:#fef2f2; color:#991b1b; border:1px solid #fca5a5;
               border-radius:999px; padding:1px 9px; font-size:12px; margin-left:6px; }
-    .card.lowq { box-shadow:inset 3px 0 0 var(--warn); }
-    /* Cross-tool compatibility: which tools a skill works with, and up to which version */
-    .multitool { display:inline-block; background:#231a3a; color:#c4a3ff; border:1px solid #5a3fa0;
-                 border-radius:999px; padding:1px 9px; font-size:12px; margin-left:6px; font-weight:700; }
-    .compat { display:inline-block; background:#10241f; color:#7fe0c2; border:1px solid #1f6d5a;
+    .card.lowq { box-shadow:inset 3px 0 0 var(--warn), 0 1px 4px rgba(0,0,0,.06); }
+
+    /* Cross-tool */
+    .multitool { display:inline-block; background:#f3e8ff; color:#6d28d9;
+                 border:1px solid #c4b5fd; border-radius:999px; padding:1px 9px;
+                 font-size:12px; margin-left:6px; font-weight:700; }
+    .compat { display:inline-block; background:#ccfbf1; color:#065f46; border:1px solid #5eead4;
               border-radius:999px; padding:1px 9px; font-size:12px; margin:0 4px 4px 0; }
     .compatline { margin-top:8px; }
-    /* News source pills (which feed an item came from) */
-    .webpill { display:inline-block; background:#11203a; color:#7fb4ff; border:1px solid #2b4a7a;
+
+    /* News + source pills */
+    .webpill { display:inline-block; background:#dbeafe; color:#1d4ed8; border:1px solid #93c5fd;
                border-radius:999px; padding:1px 9px; font-size:12px; margin-left:6px; }
-    .vidpill { display:inline-block; background:#2a1033; color:#e0a3ff; border:1px solid #6d2b7a;
+    .vidpill { display:inline-block; background:#f3e8ff; color:#6d28d9; border:1px solid #c4b5fd;
                border-radius:999px; padding:1px 9px; font-size:12px; margin-left:6px; }
-    /* Linked-resource pill: skill/connector discovered via a link in a video description */
-    .linkpill { display:inline-block; background:#0d2330; color:#7fd1ff; border:1px solid #2b6a7a;
+    .linkpill { display:inline-block; background:#e0f2fe; color:#0369a1; border:1px solid #7dd3fc;
                 border-radius:999px; padding:1px 9px; font-size:12px; margin-left:6px; }
 
-    /* HTML model podium (rendered from data — Claude no longer writes ASCII) */
+    /* HTML model podium */
     .podium { display:flex; gap:10px; align-items:flex-end; margin:6px 0 12px; }
-    .podslot { flex:1; text-align:center; background:var(--panel2); border:1px solid var(--line);
-               border-radius:10px 10px 0 0; padding:10px 8px; }
-    .podslot.pod1 { padding-top:26px; border-color:#7a6512; box-shadow:inset 0 3px 0 #f5c518; }
+    .podslot { flex:1; text-align:center; background:var(--panel2); border:1.5px solid var(--line);
+               border-radius:12px 12px 0 0; padding:10px 8px; }
+    .podslot.pod1 { padding-top:26px; border-color:#fbbf24;
+                    box-shadow:inset 0 4px 0 #f59e0b; }
     .podslot.pod2 { padding-top:18px; }
     .podslot.pod3 { padding-top:12px; }
     .podrank { font-size:12px; color:var(--muted); font-weight:700; }
-    .podscore { font-size:22px; font-weight:800; color:#7fb4ff; }
-    .podname { font-size:13px; margin-top:2px; word-break:break-word; }
+    .podscore { font-size:22px; font-weight:800; color:var(--accent); }
+    .podname { font-size:13px; margin-top:2px; word-break:break-word; color:var(--text); }
     .runreport td:first-child { color:var(--muted); }
-    /* NEW badge on an auto-created trend tab */
-    .newbadge { display:inline-block; background:var(--good); color:#05210f; font-weight:800;
+
+    /* NEW badge */
+    .newbadge { display:inline-block; background:var(--good); color:#fff; font-weight:800;
                 font-size:10px; letter-spacing:.5px; padding:1px 6px; border-radius:5px;
                 margin-left:4px; vertical-align:middle; }
 
-    /* Self-Improvement tab: health score + suggestion queue */
+    /* Self-Improvement tab */
     .health { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
     .health .big { font-size:40px; font-weight:800; }
-    .health .big.good { color:var(--good); } .health .big.warn { color:var(--warn); }
+    .health .big.good { color:var(--good); }
+    .health .big.warn { color:var(--warn); }
     .health .big.bad { color:var(--bad); }
     .metrics { display:flex; gap:10px; flex-wrap:wrap; margin-top:6px; }
     .metric { background:var(--panel2); border:1px solid var(--line); border-radius:8px;
@@ -154,18 +179,18 @@
     .sug { border-left:3px solid var(--line); padding:4px 0 4px 12px; margin:8px 0; }
     .stat { display:inline-block; border-radius:999px; padding:1px 9px; font-size:12px;
             font-weight:700; margin-right:6px; }
-    .st-pending { background:#3a2a08; color:#ffd98a; border:1px solid var(--warn); }
-    .st-approved { background:#08351a; color:#7ee7a3; border:1px solid var(--good); }
-    .st-dismissed { background:#2a2a2a; color:#9aa0ad; border:1px solid var(--line); }
-    .st-applied { background:#11203a; color:#7fb4ff; border:1px solid #2b4a7a; }
+    .st-pending { background:#fef3c7; color:#92400e; border:1px solid #fbbf24; }
+    .st-approved { background:#dcfce7; color:#166534; border:1px solid #86efac; }
+    .st-dismissed { background:#f3f4f6; color:#6b7280; border:1px solid #d1d5db; }
+    .st-applied { background:#dbeafe; color:#1e40af; border:1px solid #93c5fd; }
     .hint { color:var(--muted); font-size:13px; margin:4px 0 12px; }
-    code.cmd { background:#000; color:#7ee787; padding:1px 6px; border-radius:5px; }
+    code.cmd { background:#1a1a1a; color:#7ee787; padding:1px 6px; border-radius:5px; }
   </style>
 </head>
 <body>
   <header>
     <h1>Excavatortron</h1>
-    <div class="meta" style="margin-top:0;font-size:12px;color:var(--muted)">AI Skills Tracker</div>
+    <div class="subtitle">AI Skills Tracker</div>
     <div class="meta" id="meta">Loading…</div>
     <div class="search-wrap"><input id="search" type="search" autocomplete="off"
       placeholder="Search skills, models, news, connectors, tips…" /></div>

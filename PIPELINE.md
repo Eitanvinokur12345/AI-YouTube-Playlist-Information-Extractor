@@ -111,10 +111,13 @@ one), the system treats it like a fresh first run — governed by the `catch_up`
 ## The 6 tabs (see CLAUDE.md for exact logic)
 
 1. **Skills Library** — extract every AI tool/skill/technique; quality score 1–10;
-   compare-and-keep-best (merge tips, log discards). Write a SKILL.md package per reusable
-   skill. **Flat layout:** `skills/<slug>/SKILL.md` for Claude skills. Packaged skills for
-   other tools (Gemini Gems, ChatGPT Custom GPTs, …) go to
-   `other-skills/<tool>/<slug>/SKILL.md`.
+   compare-and-keep-best (merge tips, log discards). Each skill also carries **cross-tool
+   compatibility** (`compatibility`: which AI tools it works with + the highest version each is
+   known to work with, e.g. `Claude ≤ Sonnet 4.6`, `ChatGPT ≤ GPT-5`; `multi_tool` flags those
+   spanning 2+ tools). The dashboard shows a **multi-tool** badge, a "Works with:" line, and a
+   **"Multi-tool only"** filter. Write a SKILL.md package per reusable skill. **Flat layout:**
+   `skills/<slug>/SKILL.md` for Claude skills. Packaged skills for other tools (Gemini Gems,
+   ChatGPT Custom GPTs, …) go to `other-skills/<tool>/<slug>/SKILL.md`.
 2. **Models Ranking** — `data/models.json`: per category an ASCII podium + a **full ranked
    table of ALL models** (sorted by score). Match by exact name+version; never duplicate.
 3. **Skills Improvement** — merge overlapping same-tool skills into the stronger one; back

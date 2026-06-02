@@ -91,7 +91,12 @@ Only if `modules.data_hygiene` is true. These are all in `safe_auto`, so perform
 - **`schema_repair`** → fix malformed records in place: missing `slug` (derive kebab-case
   from name), missing `category` (set `"other"`), `quality_score` out of 1–10 (clamp),
   missing `target_tool` (default `"claude"`), non-array `tips`/`slash_commands` (coerce to
-  `[]`). Do not invent scores or descriptions.
+  `[]`). For skills missing the cross-tool fields, backfill **safely without inventing**: if
+  `compatibility` is absent/empty, set it to a single entry from `target_tool`
+  (`[{ "tool": "<Target>", "up_to_version": "any" }]`, capitalized); then set `multi_tool` to
+  `len(compatibility) > 1`. Never add tools the record doesn't already evidence — only the
+  default-from-`target_tool` is allowed here; richer cross-tool data comes from the analyze
+  stage. Do not invent scores or descriptions.
 - **`orphan_cleanup`** → reconcile folders ↔ `skills.json`:
   - A `skills/<slug>/SKILL.md` (or `other-skills/<tool>/<slug>/`) with **no** matching skill
     record → record it as an orphan; if clearly stale (slug not anywhere in skills.json),

@@ -94,7 +94,17 @@ def _fmt_skill(s: dict) -> str:
     cat = s.get("category", "?")
     tool = s.get("target_tool", "claude")
     desc = s.get("description", "")
-    return f"- [{score}/10] {name}  ({cat}, {tool})\n    {desc}"
+    line = f"- [{score}/10] {name}  ({cat}, {tool})\n    {desc}"
+    compat = s.get("compatibility") or []
+    if compat:
+        parts = []
+        for c in compat:
+            ver = c.get("up_to_version")
+            t = c.get("tool", "?")
+            parts.append(f"{t} (up to {ver})" if ver and ver not in ("any", "latest") else str(t))
+        tag = " [multi-tool]" if (s.get("multi_tool") or len(compat) > 1) else ""
+        line += f"\n    Works with{tag}: " + ", ".join(parts)
+    return line
 
 
 def _no_data(thing: str) -> str:

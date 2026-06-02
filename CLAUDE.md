@@ -139,6 +139,24 @@ build a skill record:
 - `target_tool` — which ecosystem this packaged skill belongs to: `"claude"` (default),
   or `"gemini"`, `"chatgpt"`, `"perplexity"`, etc. (see routing below)
 - `is_claude_skill` — true if it is a Claude/Anthropic product or a Claude Code skill
+- `compatibility` — **which AI tools this skill/technique works with, and up to which
+  version**. A list of objects: `[{ "tool": "Claude", "up_to_version": "Sonnet 4.6" },
+  { "tool": "ChatGPT", "up_to_version": "GPT-5" }, { "tool": "Gemini", "up_to_version":
+  "2.5 Pro" }]`. Decide the list with **reasonable inference, not only literal mentions**:
+  - **Generic, tool-agnostic techniques** (prompting patterns, chain-of-thought, ReAct,
+    agent/RAG designs, context engineering, multi-step workflows) → also list the mainstream
+    tools they obviously apply to (typically **Claude, ChatGPT, Gemini**, plus any others the
+    video centers on), even if only one was demonstrated. Use `"up_to_version": "any"` for an
+    inferred entry (you don't know its version ceiling).
+  - **Tool-specific features** (a Claude Code slash command, a Gemini Gem, a ChatGPT Custom
+    GPT, an MCP-only integration, or a product like Cursor / n8n) → list ONLY the tool(s) they
+    actually run on. Never infer cross-tool support that cannot exist.
+  When the video explicitly shows a tool **and** version, use that exact version (e.g.
+  "Sonnet 4.6") instead of "any". If there is genuinely no signal at all, default to a single
+  entry from `target_tool` (e.g. `[{ "tool": "Claude", "up_to_version": "any" }]`). Capitalize
+  tool names for display.
+- `multi_tool` — boolean; `true` when `compatibility` lists **2+ distinct tools**. The
+  dashboard badges these and offers a "multi-tool only" filter, so set it accurately.
 - `source_type` — "youtube"
 - `source_url` — `https://www.youtube.com/watch?v=<video_id>`
 - `source_video_id` — `<video_id>`
@@ -177,6 +195,9 @@ Otherwise, if a skill with the same `slug` already exists:
   (deduplicate, case-insensitive).
 - **Union** `endorsement_video_ids` (add the new video's id — this grows the multi-video
   endorsement count) and `popularity_signals` (dedup) into the keeper.
+- **Union** `compatibility` into the keeper: dedup by `tool` (case-insensitive); when the same
+  tool appears in both, keep the **higher** `up_to_version` (a later video may prove a newer
+  version works). Then recompute `multi_tool` (`true` if 2+ tools remain).
 - **Back up the discarded** version to `data/deleted_skills.json` (append to the array)
   with `reason: "superseded by higher quality record"` and a timestamp.
 If the slug is new, append the record.

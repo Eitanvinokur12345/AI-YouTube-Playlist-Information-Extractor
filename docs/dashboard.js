@@ -6,12 +6,21 @@ const meta = document.getElementById("meta");
 const countersEl = document.getElementById("counters");
 
 const state = { status: null, selectedCategory: "all", newsWindow: "weekly",
-  stars: new Set(), hideLowQuality: false, dynamicTabs: [] };
+  stars: new Set(), hideLowQuality: false, multiToolOnly: false, dynamicTabs: [] };
 
 // True if a skill/connector slug is starred (frozen, best-in-class — never auto-changed).
 const isStarred = (s) =>
   (s && (s.starred === true || s.locked === true)) ||
   (s && s.slug && state.stars.has(String(s.slug).toLowerCase()));
+
+// Cross-tool: the skill/technique works with 2+ AI tools (e.g. Claude, ChatGPT, Gemini).
+const isMultiTool = (s) =>
+  !!s && (s.multi_tool === true || ((s.compatibility || []).length > 1));
+// "Claude ≤ Sonnet 4.6" — a tool plus the highest version it's known to work with.
+const compatLabel = (c) => {
+  const v = c && c.up_to_version;
+  return esc(c && c.tool || "?") + (v && v !== "any" && v !== "latest" ? " &le; " + esc(v) : "");
+};
 
 async function load(file) {
   try {
@@ -79,16 +88,22 @@ function renderSkills(data) {
     `<button class="${state.selectedCategory === c ? "active" : ""}" data-cat="${esc(c)}">${esc(c)}</button>`
   ).join("") + `</div>`;
 
-  // Video-quality filter: hide skills that came from low-quality source videos.
+  // Filter toggles: hide low-quality sources, and show only cross-tool (multi-tool) skills.
   const lowCount = skills.filter(s => s.low_quality_source).length;
-  html += `<div class="subnav"><button class="${state.hideLowQuality ? "active" : ""}" data-toggle="lowq"
-    title="Hide skills extracted from videos that scored below the quality threshold">
-    ${state.hideLowQuality ? "&#10003; " : ""}Hide low-quality sources${lowCount ? ` (${lowCount})` : ""}</button></div>`;
+  const multiCount = skills.filter(isMultiTool).length;
+  html += `<div class="subnav">
+    <button class="${state.multiToolOnly ? "active" : ""}" data-toggle="multitool"
+      title="Show only skills/techniques that work across several AI tools">
+      ${state.multiToolOnly ? "&#10003; " : ""}Multi-tool only${multiCount ? ` (${multiCount})` : ""}</button>
+    <button class="${state.hideLowQuality ? "active" : ""}" data-toggle="lowq"
+      title="Hide skills extracted from videos that scored below the quality threshold">
+      ${state.hideLowQuality ? "&#10003; " : ""}Hide low-quality sources${lowCount ? ` (${lowCount})` : ""}</button></div>`;
 
   let list = skills.slice();
   if (state.selectedCategory !== "all")
     list = list.filter(s => (s.category || "other") === state.selectedCategory);
   if (state.hideLowQuality) list = list.filter(s => !s.low_quality_source);
+  if (state.multiToolOnly) list = list.filter(isMultiTool);
   // Starred (frozen) skills first, then by quality score.
   list.sort((a, b) =>
     (isStarred(b) - isStarred(a)) || ((b.quality_score || 0) - (a.quality_score || 0)));
@@ -98,6 +113,7 @@ function renderSkills(data) {
       <h3>${isStarred(s) ? '<span class="star" title="Starred — kept in original form, never auto-changed">&#9733;</span>' : ""}<span class="score">${esc(s.quality_score ?? "?")}/10</span> ${esc(s.skill_name || s.slug)}
         <span class="pill">${esc(s.category || "other")}</span>
         <span class="pill">${esc(s.target_tool || "claude")}</span>
+        ${isMultiTool(s) ? '<span class="multitool" title="Works across several AI tools">multi-tool</span>' : ""}
         ${s.open_source ? '<span class="pill">open source</span>' : ""}
         ${s.video_quality_score != null ? `<span class="vq ${s.low_quality_source ? "low" : ""}" title="Source video quality (AI content review + recency)">vid ${esc(s.video_quality_score)}/10</span>` : ""}
         ${s.low_quality_source ? '<span class="lowsrc" title="Extracted from a low-quality video — treat with caution; its score was capped">low-quality source</span>' : ""}
@@ -105,6 +121,7 @@ function renderSkills(data) {
       ${s.company ? `<div class="sub">${esc(s.company)}${s.country ? " · " + esc(s.country) : ""}</div>` : ""}
       <p>${esc(s.description || "")}</p>
       ${s.use_case ? `<p><b>Use case:</b> ${esc(s.use_case)}</p>` : ""}
+      ${(s.compatibility && s.compatibility.length) ? `<p class="compatline"><b>Works with:</b> ${s.compatibility.map(c => `<span class="compat">${compatLabel(c)}</span>`).join(" ")}</p>` : ""}
       ${(s.tips && s.tips.length) ? `<p><b>Tips:</b> ${s.tips.map(esc).join(" · ")}</p>` : ""}
       ${s.source_video_id ? `<p><a href="${yt(s.source_video_id)}" target="_blank" rel="noopener">Source video</a></p>` : ""}
     </div>`).join("");
@@ -114,6 +131,8 @@ function renderSkills(data) {
     b.addEventListener("click", () => { state.selectedCategory = b.dataset.cat; renderSkills(data); }));
   const tog = view.querySelector('[data-toggle="lowq"]');
   if (tog) tog.addEventListener("click", () => { state.hideLowQuality = !state.hideLowQuality; renderSkills(data); });
+  const mt = view.querySelector('[data-toggle="multitool"]');
+  if (mt) mt.addEventListener("click", () => { state.multiToolOnly = !state.multiToolOnly; renderSkills(data); });
 }
 
 // ── Tab: Models Ranking ──────────────────────────────────────────────────────

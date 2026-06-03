@@ -4,7 +4,8 @@ Confirmed settings:
 - **Output language:** English for everything written by the pipeline.
 - **Transcripts:** try **English first, then Hebrew** (`config.transcript_languages`),
   then the video description, then the title. Text is used **exactly as YouTube provides
-  it** — never edited, translated, or rephrased. First 8000 chars.
+  it** — never edited, translated, or rephrased. First 80,000 chars (covers ~2 hours of
+  speech at average pacing; long videos are fully captured).
 - **Quality score:** integer 1–10 per skill (rubric in CLAUDE.md). Compare-and-keep-best.
 - **Video quality:** integer 1–10 per source video (AI content review + recency penalty).
   Below `low_quality_threshold` (5) ⇒ still mined, but flagged + score-capped (never deleted).

@@ -55,7 +55,7 @@ are analyzed first). Each file contains:
 | `description`       | video description                                            |
 | `publishedAt`       | ISO-8601 publish timestamp                                   |
 | `channel_name`      | YouTube channel name                                         |
-| `transcript`        | transcript (first 8000 chars), or description, or title      |
+| `transcript`        | transcript (first 80,000 chars), or description, or title    |
 | `transcript_lang`   | `"en"` / `"he"` / `""` (empty = a description/title fallback)|
 | `transcript_source` | `"transcript"` \| `"description"` \| `"title"`               |
 | `links`             | up to N AI-resource candidate URLs from the description (deny-filtered, may be `[]`) |

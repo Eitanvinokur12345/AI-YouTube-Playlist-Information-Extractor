@@ -95,8 +95,12 @@ Only if `modules.data_hygiene` is true. These are all in `safe_auto`, so perform
 
 - **`build_index`** → write `data/index.json`: a compact array of every skill
   `{slug, skill_name, category, quality_score, target_tool, source_video_id, starred}` plus
-  top-level counts. This is the cheap file every later step (and the MCP/dashboard) reads
-  first to avoid loading all heavy records.
+  top-level counts (`total_skills`, `total_videos_analyzed`, `generated_at`). This is the
+  cheap file every later step (and the MCP/dashboard) reads first to avoid loading all heavy
+  records. Also refresh `data/agent_catalog.json` — update its `generated_at` field and the
+  `total_skills` / `total_videos_analyzed` counts inside `how_to_use`; never change endpoint
+  URLs (they are stable). This keeps the catalog accurate for any external agents that fetch
+  it to discover the data.
 - **`schema_repair`** → fix malformed records in place: missing `slug` (derive kebab-case
   from name), missing `category` (set `"other"`), `quality_score` out of 1–10 (clamp),
   missing `target_tool` (default `"claude"`), non-array `tips`/`slash_commands` (coerce to

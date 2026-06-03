@@ -26,6 +26,8 @@ nothing ever changes them.
    computes a **video-quality score** (Step 2b: an AI content review of the transcript +
    a recency adjustment); videos scoring below `low_quality_threshold` (5) are still mined but
    their skills/connectors/news get `low_quality_source:true` and their score is capped.
+   Transcripts are stored up to **80,000 characters** (~2 hours of speech) so long videos are
+   fully mined — not just the opening minutes.
    It also **follows AI-relevant links** in each description with WebFetch (Step 2c) — a linked
    GitHub repo of agents/skills, a docs site, a tool's homepage — and mines those resources into
    the tabs as independent `linked_resource` records (scored on their own merits, not capped by
@@ -92,6 +94,31 @@ tracked one — Excavatortron handles it automatically, like a fresh first run:
   never curates half-ingested data.
 - **Visibility:** the dashboard shows a blue "⛏️ CATCHING UP — N still to analyze" banner; the
   MCP tool `catch_up_status` reports the same. No action needed from you.
+
+## Inter-agent / cross-project access
+
+Every data file is a plain JSON served publicly over HTTPS via GitHub Pages — any Claude
+project, agent, or external tool with `WebFetch` can read it with no auth:
+
+```
+https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/<file>.json
+```
+
+**Start with `data/agent_catalog.json`** — a machine-readable index of every endpoint, what it
+contains, its field schemas, and a suggested discovery workflow. The improve stage regenerates
+it automatically so it stays accurate as new tabs appear.
+
+Key endpoints for agents:
+- `index.json` — compact skill overview (small; start here)
+- `skills.json` — full skill records with quality scores, compatibility, tips
+- `connectors.json` — MCP servers and Claude connectors
+- `models.json` — per-category model rankings
+- `daily_web_news.json` + `daily_news.json` — today's AI news (merge both for full feed)
+- `status.json` — pipeline freshness (`last_analyze` field)
+
+**For local / offline access**: the MCP server (`mcp_server/server.py`) exposes the same data
+through 20+ tools. Add it to your Claude Desktop config once; it works entirely from the
+synced `AI Skills Data` folder without any network calls.
 
 ## The only recurring task
 The Claude login token (`CLAUDE_CODE_OAUTH_TOKEN_REAL`) expires about **once a year**. When

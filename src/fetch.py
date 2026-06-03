@@ -38,7 +38,7 @@ WEEKLY_JSON = DATA_DIR / "weekly_news.json"
 MONTHLY_JSON = DATA_DIR / "monthly_news.json"
 
 EASTERN = pytz.timezone("America/New_York")
-MAX_TRANSCRIPT_CHARS = 8000
+MAX_TRANSCRIPT_CHARS = 80000
 
 
 # ── helpers ───────────────────────────────────────────────────────────────────

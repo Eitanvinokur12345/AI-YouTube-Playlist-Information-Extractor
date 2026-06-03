@@ -1,0 +1,154 @@
+{
+  "_comment": "Machine-readable catalog of all public JSON endpoints in this dashboard. Any Claude project, agent, or tool with WebFetch can discover and use these.",
+  "base_url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/",
+  "dashboard_url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/docs/",
+  "generated_at": "",
+  "description": "Excavatortron — AI Skills Tracker. Automatically extracts skills, model rankings, tips, news, and connectors from a YouTube playlist. Updated continuously via GitHub Actions.",
+  "endpoints": [
+    {
+      "file": "skills.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/skills.json",
+      "description": "All AI skills and techniques extracted from the playlist. Full records with quality scores, compatibility lists, tips, source videos, and star/freeze flags.",
+      "top_level_keys": ["videos_seen", "skills"],
+      "skills_record_fields": ["slug", "skill_name", "category", "description", "use_case", "quality_score", "target_tool", "company", "compatibility", "multi_tool", "tips", "endorsement_video_ids", "video_quality_score", "low_quality_source", "starred", "source_video_id", "source_url"]
+    },
+    {
+      "file": "index.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/index.json",
+      "description": "Compact skill index — fast lookup by slug. Contains only essential fields (slug, skill_name, category, quality_score, target_tool, starred). Much smaller than skills.json; start here for discovery.",
+      "top_level_keys": ["skills", "total_skills", "total_videos_analyzed", "generated_at"]
+    },
+    {
+      "file": "models.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/models.json",
+      "description": "AI model rankings per category (code, agents, writing, etc.). Each category has a podium (top 3) and full_ranking (all models sorted by score).",
+      "top_level_keys": ["<category_name>"],
+      "category_keys": ["podium", "full_ranking"]
+    },
+    {
+      "file": "connectors.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/connectors.json",
+      "description": "Claude connectors and MCP servers mentioned in the playlist videos. Includes name, type, provider, what it does, install source, official flag, and quality score.",
+      "top_level_keys": ["connectors"],
+      "record_fields": ["name", "type", "provider", "category", "what_it_does", "install_or_source", "official", "quality_score", "source_video", "source_url"]
+    },
+    {
+      "file": "tips.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/tips.json",
+      "description": "Practical tips organized by tool (Claude, Gemini, ChatGPT, etc.) and by general topic (prompt engineering, automation, agents, code, parallel tasks, self-improving systems, harness code).",
+      "top_level_keys": ["by_tool", "general"]
+    },
+    {
+      "file": "commands.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/commands.json",
+      "description": "Master list of AI slash commands (e.g. /review, /compact). Each entry has command name, description, tool, and source video.",
+      "top_level_keys": ["commands"],
+      "record_fields": ["command", "description", "tool", "source_video"]
+    },
+    {
+      "file": "daily_news.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/daily_news.json",
+      "description": "AI news from the past 24 hours as mentioned in playlist videos. Entries sorted newest-first with 2-sentence summaries.",
+      "top_level_keys": ["header", "entries"]
+    },
+    {
+      "file": "weekly_news.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/weekly_news.json",
+      "description": "AI news from the past 7 days as mentioned in playlist videos.",
+      "top_level_keys": ["header", "entries"]
+    },
+    {
+      "file": "monthly_news.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/monthly_news.json",
+      "description": "AI news from the past 30 days as mentioned in playlist videos.",
+      "top_level_keys": ["header", "entries"]
+    },
+    {
+      "file": "daily_web_news.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/daily_web_news.json",
+      "description": "AI news from the past 24 hours pulled from 50 official RSS/Atom sources (OpenAI, Google DeepMind, Anthropic-adjacent labs, arXiv, etc.). Updated every 12 hours. No API keys required.",
+      "top_level_keys": ["header", "entries"]
+    },
+    {
+      "file": "weekly_web_news.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/weekly_web_news.json",
+      "description": "AI news from the past 7 days from 50 official sources.",
+      "top_level_keys": ["header", "entries"]
+    },
+    {
+      "file": "monthly_web_news.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/monthly_web_news.json",
+      "description": "AI news from the past 30 days from 50 official sources.",
+      "top_level_keys": ["header", "entries"]
+    },
+    {
+      "file": "status.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/status.json",
+      "description": "Pipeline status and run report. Includes last fetch/analyze timestamps, videos seen, pending count, catch-up mode state, and reliability flags (analyze_ok, analyze_failed_at).",
+      "top_level_keys": ["last_run", "last_fetch", "last_analyze", "last_improved_at", "videos_seen", "total_skills", "total_videos_analyzed", "pending_count", "catch_up", "run_report", "analyze_ok", "analyze_failed_at", "last_analyze_ok_at"]
+    },
+    {
+      "file": "health.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/health.json",
+      "description": "Self-improvement health report: overall score 0-100, metrics (missing summaries, schema issues, duplicates, orphan folders), cadence advice, and pending suggestions count.",
+      "top_level_keys": ["generated_at", "score", "metrics", "token_optimization", "cadence_advice", "new_tab_announcement", "advice", "history"]
+    },
+    {
+      "file": "improvement_suggestions.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/improvement_suggestions.json",
+      "description": "Pending improvement proposals from the self-improvement stage (fuzzy merges, rescores, UI changes, star suggestions, dead feed removals). Approved via MCP tools.",
+      "top_level_keys": ["suggestions"],
+      "suggestion_types": ["fuzzy_duplicate_merge", "rescore_outliers", "recategorize", "ui_change", "star_suggestion", "orphan_folder", "drop_dead_feed"]
+    },
+    {
+      "file": "stars.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/stars.json",
+      "description": "Frozen/starred skills — proven best-in-class, never auto-modified. Each entry has slug, reason, and starred_at timestamp.",
+      "top_level_keys": ["starred"]
+    },
+    {
+      "file": "extra_tabs.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/extra_tabs.json",
+      "description": "Auto-created dynamic trend tabs. When 5+ videos converge on a topic not covered by any existing tab, a new tab is created here and announced on the dashboard.",
+      "top_level_keys": ["tabs"],
+      "tab_fields": ["id", "title", "trend_key", "description", "created_at", "status", "evidence_video_ids", "items"]
+    },
+    {
+      "file": "merge_log.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/merge_log.json",
+      "description": "Audit trail of skill merges performed by the analyze and improve stages.",
+      "top_level_keys": ["merges"]
+    },
+    {
+      "file": "feeds_health.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/feeds_health.json",
+      "description": "Per-source consecutive failure streaks for the 50 official news RSS/Atom feeds. Sources with fail_streak >= 5 are proposed for removal.",
+      "top_level_keys": ["sources"]
+    },
+    {
+      "file": "agent_catalog.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/agent_catalog.json",
+      "description": "This file — machine-readable index of all available endpoints. Fetch this first to discover what data is available.",
+      "top_level_keys": ["base_url", "endpoints", "how_to_use"]
+    }
+  ],
+  "how_to_use": {
+    "for_claude_agents": "WebFetch any endpoint URL above. Start with index.json for a fast skill overview, or skills.json for full records. All files are public, no auth required.",
+    "for_mcp_tools": "The offline MCP server at mcp_server/server.py exposes 20+ tools (list_skills, search_skills, get_skill, show_models, star_skill, list_suggestions, approve_suggestion, pipeline_status, etc.). Add it to Claude Desktop config for local access.",
+    "for_other_agents": "All data is served as static JSON over HTTPS from GitHub Pages. Poll status.json to check freshness (last_analyze field). The catalog is regenerated by the self-improvement stage whenever data changes.",
+    "update_cadence": {
+      "fetch": "every 48 hours — new videos pulled, transcripts fetched",
+      "analyze": "every few hours — Claude extracts skills/models/news from pending videos",
+      "web_news": "every 12 hours — 50 official RSS/Atom sources refreshed",
+      "self_improve": "every ~3 days — dedup, calibrate, health report, catalog regenerated"
+    },
+    "suggested_workflow": [
+      "1. Fetch agent_catalog.json to discover endpoints",
+      "2. Check status.json to confirm data is fresh (last_analyze within 6 hours)",
+      "3. Fetch index.json for a compact skill overview (~small file)",
+      "4. Fetch skills.json for full skill details if needed",
+      "5. Fetch connectors.json for MCP servers and Claude connectors",
+      "6. Fetch daily_web_news.json + daily_news.json and merge for today's AI news"
+    ]
+  }
+}

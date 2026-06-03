@@ -149,6 +149,8 @@ def _ascii_podium(pod: list[dict], category: str = "") -> str:
             nm += " " + str(ver)
         return nm
 
+    if not ordered:
+        return ""
     inner = min(26, max(10, max(len(label(p)) for _, p in ordered) + 2))
     risers = {1: 3, 2: 1, 3: 0}   # gold stands tallest
 
@@ -952,9 +954,13 @@ def set_catch_up(mode: str) -> str:
     if m not in alias:
         return "mode must be 'on', 'off', or 'auto'."
     new_mode = alias[m]
-    cu = _load("catch_up.json", {})
-    if not isinstance(cu, dict):
-        cu = {}
+    raw = _load("catch_up.json", {})
+    # Preserve known-good fields even if the file was somehow malformed; fall back to config.
+    cu = raw if isinstance(raw, dict) else {}
+    if not cu:
+        cu = {k: v for k, v in _config().get("catch_up", {}).items()
+              if k in ("surge_threshold", "batch_size", "order")}
+
     cu["mode"] = new_mode
     if new_mode == "forced_on":
         cu["active"] = True

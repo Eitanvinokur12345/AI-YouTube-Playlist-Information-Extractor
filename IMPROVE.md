@@ -81,6 +81,9 @@ For each suggestion in `improvement_suggestions.json` whose `id` is in
 `approvals.json.approved_ids` and whose `status` is still `"pending"`:
 - Apply its `proposed_change` **unless** it touches a frozen record (then skip it and set the
   suggestion `status:"skipped_frozen"`).
+  - **`drop_dead_feed` special case:** remove the matching entry from `config.news_sources` in
+    `config.json` (by `url` match). This is the ONLY case where this stage edits `config.json`
+    and ONLY because the user explicitly approved it.
 - Honor the relevant cap (e.g. an approved merge still counts against `max_merges_per_run`).
 - Set the suggestion `status:"applied"`, add `applied_at` (ISO-8601).
 - If the change deleted/merged a skill, back it up to `deleted_skills.json` and log to
@@ -97,10 +100,9 @@ Only if `modules.data_hygiene` is true. These are all in `safe_auto`, so perform
   `{slug, skill_name, category, quality_score, target_tool, source_video_id, starred}` plus
   top-level counts (`total_skills`, `total_videos_analyzed`, `generated_at`). This is the
   cheap file every later step (and the MCP/dashboard) reads first to avoid loading all heavy
-  records. Also refresh `data/agent_catalog.json` — update its `generated_at` field and the
-  `total_skills` / `total_videos_analyzed` counts inside `how_to_use`; never change endpoint
-  URLs (they are stable). This keeps the catalog accurate for any external agents that fetch
-  it to discover the data.
+  records. Also refresh `data/agent_catalog.json` — update only its `generated_at` top-level
+  field to the current ISO-8601 timestamp; never change endpoint URLs or any other fields
+  (they are stable). This keeps the catalog timestamped so external agents can verify freshness.
 - **`schema_repair`** → fix malformed records in place: missing `slug` (derive kebab-case
   from name), missing `category` (set `"other"`), `quality_score` out of 1–10 (clamp),
   missing `target_tool` (default `"claude"`), non-array `tips`/`slash_commands` (coerce to
@@ -378,15 +380,15 @@ If `git push` is rejected because the remote moved (fetch/analyze pushed meanwhi
 ---
 
 ## Quick checklist
-1. Load config + state; build the frozen-slug set (Step 0).
-2. Apply already-approved suggestions, skipping frozen (Step 1).
-3. Data hygiene: index, schema, orphans, exact-dup merge, summaries, consistency (Step 2).
-4. Suggest near-duplicate merges (Step 3).
-5. Suggest rescores + recategorizations (Step 4).
-6. Stamp stars; suggest new stars — never auto-star (Step 5).
-7. UX self-review — suggest only, rate-limited (Step 6).
-8. Detect trends; auto-create a new tab if warranted — announce it (Step 7).
-9. Propose dropping dead news feeds — suggest only (Step 7b).
-10. Write health.json incl. unhealthy feeds (Step 8).
-11. Write audit + update status (Step 9). Commit throughout (Step 10).
-12. Never modify a frozen record. Stay under the token budget and the caps.
+0. Load config + state; read stars.json; build the frozen-slug set (Step 0). Check catch-up mode and idle early-exit.
+1. Apply already-approved suggestions first (Step 1) — skip frozen; for `drop_dead_feed` approvals, remove the matching entry from `config.news_sources` in `config.json`.
+2. Data hygiene: build index.json + refresh agent_catalog.json, schema repair, orphans, exact-dup merge, summaries, consistency (Step 2).
+3. Suggest near-duplicate merges (Step 3).
+4. Suggest rescores + recategorizations (Step 4).
+5. Stamp stars; suggest new stars — never auto-star (Step 5).
+6. UX self-review — suggest only, rate-limited (Step 6).
+7. Detect trends; auto-create a new tab if warranted — announce it (Step 7).
+8. Propose dropping dead news feeds — suggest only (Step 7b).
+9. Write health.json incl. unhealthy feeds (Step 8).
+10. Write audit + update status (Step 9). Commit throughout (Step 10).
+11. Never modify a frozen record. Stay under the token budget and the caps.

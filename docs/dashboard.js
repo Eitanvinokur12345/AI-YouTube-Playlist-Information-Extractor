@@ -5,6 +5,35 @@ const view = document.getElementById("view");
 const meta = document.getElementById("meta");
 const countersEl = document.getElementById("counters");
 
+// ── PWA install prompt ───────────────────────────────────────────────────────
+// Chrome/Edge desktop + Android Chrome fire beforeinstallprompt when the site
+// qualifies as installable. Capture it; show the Install button; trigger on click.
+// iOS Safari doesn't support this — we show a static "Add to Home Screen" hint instead.
+let _installPrompt = null;
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  _installPrompt = e;
+  const wrap = document.getElementById("install-wrap");
+  if (wrap) wrap.hidden = false;
+});
+window.addEventListener("appinstalled", () => {
+  _installPrompt = null;
+  const wrap = document.getElementById("install-wrap");
+  if (wrap) wrap.hidden = true;
+});
+function triggerInstall() {
+  if (_installPrompt) { _installPrompt.prompt(); _installPrompt = null; }
+}
+// iOS detection — show a static Add-to-Home-Screen hint
+(function detectIOS() {
+  const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const standalone = window.navigator.standalone;   // true if already installed
+  if (ios && !standalone) {
+    const hint = document.getElementById("ios-hint");
+    if (hint) hint.hidden = false;
+  }
+})();
+
 const state = { status: null, config: null, selectedCategory: "all", newsWindow: "weekly",
   stars: new Set(), hideLowQuality: false, multiToolOnly: false, dynamicTabs: [],
   query: "", activeTab: "skills" };
@@ -23,18 +52,36 @@ const compatLabel = (c) => {
   return esc(c && c.tool || "?") + (v && v !== "any" && v !== "latest" ? " &le; " + esc(v) : "");
 };
 
+// ── data loader with in-memory cache ─────────────────────────────────────────
+// Caches each JSON file in memory for the session so switching tabs is instant.
+// The service worker independently handles network-first + offline persistence.
+const _cache = {};
 async function load(file) {
+  if (_cache[file] !== undefined) return _cache[file];
   try {
     const r = await fetch(DATA + file, { cache: "no-store" });
-    if (!r.ok) return null;
-    return await r.json();
-  } catch { return null; }
+    if (!r.ok) { _cache[file] = null; return null; }
+    _cache[file] = await r.json();
+    return _cache[file];
+  } catch { _cache[file] = null; return null; }
 }
+// Invalidate a specific file's cache (e.g. after an approve action)
+function invalidate(file) { delete _cache[file]; }
 
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, c =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const empty = (msg) => `<p class="empty">${esc(msg)}</p>`;
 const yt = (id) => `https://www.youtube.com/watch?v=${encodeURIComponent(id || "")}`;
+// Human-readable date: "Jun 3, 2026, 2:30 PM" or "?" if unparseable.
+const fmtDate = (s) => {
+  if (!s || s === "?") return s || "?";
+  try {
+    const d = new Date(s);
+    if (isNaN(d)) return String(s);
+    return d.toLocaleString(undefined, { month:"short", day:"numeric", year:"numeric",
+                                         hour:"numeric", minute:"2-digit" });
+  } catch { return String(s); }
+};
 
 // Fetch a repo-root file (e.g. config.json). Same offline/origin assumption as ../data/.
 async function loadRoot(file) {
@@ -136,9 +183,9 @@ function renderHeader(status) {
   if (!status) { meta.textContent = "No runs yet — waiting for the first pipeline run."; return; }
   const rr = status.run_report || {};
   meta.textContent =
-    `Last fetch: ${status.last_fetch || status.last_run || "?"} • ` +
-    `Last analyze: ${status.last_analyze || "?"} • ` +
-    `Next run: ${status.next_run || "?"} • TZ: ${rr.timezone || "America/New_York"}`;
+    `Last fetch: ${fmtDate(status.last_fetch || status.last_run)} • ` +
+    `Last analyze: ${fmtDate(status.last_analyze)} • ` +
+    `Next run: ${fmtDate(status.next_run)}`;
 
   const c = [
     ["Analyzed this run", rr.analyzed_this_run ?? 0, true],
@@ -266,14 +313,19 @@ async function renderImprovement() {
   if (merges && !Array.isArray(merges)) merges = merges.merges || merges.entries || [];
   if (deleted && !Array.isArray(deleted)) deleted = deleted.deleted || deleted.entries || [];
   merges = merges || []; deleted = deleted || [];
+  // Search filtering
+  if (q()) {
+    merges  = merges.filter(e  => hit(e.merged_from, e.merged_into, e.reason));
+    deleted = deleted.filter(e => hit(e.slug, e.skill_name, e.reason));
+  }
   let html = `<div class="card"><h3>Merge log (${merges.length})</h3>` +
     (merges.length ? merges.map(e =>
-      `<p>${esc(e.timestamp || "")}: <b>${esc(e.merged_from)}</b> → <b>${esc(e.merged_into)}</b>
-       <span class="sub">${esc(e.reason || "")}</span></p>`).join("") : empty("No merges yet.")) + `</div>`;
+      `<p>${esc(fmtDate(e.timestamp))}: <b>${esc(e.merged_from)}</b> → <b>${esc(e.merged_into)}</b>
+       <span class="sub">${esc(e.reason || "")}</span></p>`).join("") : empty(q() ? `No merges match "${esc(state.query)}".` : "No merges yet.")) + `</div>`;
   html += `<div class="card"><h3>Deleted / superseded (${deleted.length})</h3>` +
     (deleted.length ? deleted.map(e =>
       `<p><b>${esc(e.slug || e.skill_name || "?")}</b> — <span class="sub">${esc(e.reason || "")}</span></p>`
-    ).join("") : empty("Nothing deleted yet.")) + `</div>`;
+    ).join("") : empty(q() ? `No deleted skills match "${esc(state.query)}".` : "Nothing deleted yet.")) + `</div>`;
   view.innerHTML = html;
 }
 
@@ -450,7 +502,8 @@ async function renderSelfImprove() {
   // Suggestion queue (approve/dismiss are done from the MCP server — read-only here)
   const approved = new Set((apprData && apprData.approved_ids) || []);
   const dismissed = new Set((apprData && apprData.dismissed_ids) || []);
-  const sugs = (sugData && sugData.suggestions) || [];
+  let sugs = (sugData && sugData.suggestions) || [];
+  if (q()) sugs = sugs.filter(s => hit(s.type, s.detail, (s.proposed_change && JSON.stringify(s.proposed_change))));
   const eff = (s) => approved.has(s.id) ? "approved" : dismissed.has(s.id) ? "dismissed" : (s.status || "pending");
   const pending = sugs.filter(s => eff(s) === "pending");
   html += `<div class="card"><h3>Suggestions awaiting your decision (${pending.length})</h3>

@@ -8,9 +8,14 @@
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#2563eb" />
   <link rel="apple-touch-icon" href="icon.png" />
+  <!-- iOS PWA: makes "Add to Home Screen" open as standalone (no Safari chrome) -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Excavatortron" />
+  <!-- Open Graph for sharing -->
+  <meta property="og:title" content="Excavatortron — AI Skills Dashboard" />
+  <meta property="og:description" content="Self-improving AI Skills tracker: skills library, model rankings, daily news, MCP connectors." />
+  <meta property="og:type" content="website" />
   <style>
     :root { --bg:#f5f6fa; --panel:#ffffff; --panel2:#f0f2f7; --line:#e1e4ed;
             --text:#1a1d27; --muted:#6b7280; --accent:#2563eb; --good:#16a34a;
@@ -67,6 +72,16 @@
                     padding:3px 8px; border-radius:6px; margin-right:8px; }
     .alert.bad .badge { background:var(--bad); color:#fff; }
     .alert.warn .badge { background:var(--warn); color:#fff; }
+
+    /* Install-app button (shown only when browser supports PWA install) */
+    .install-btn { display:inline-flex; align-items:center; gap:6px; margin-top:10px;
+                   background:var(--accent); color:#fff; border:none; border-radius:8px;
+                   padding:8px 16px; font-size:13px; font-weight:600; cursor:pointer;
+                   transition:opacity .15s; }
+    .install-btn:hover { opacity:.88; }
+    .ios-hint { margin-top:8px; font-size:12px; color:var(--muted);
+                background:var(--panel2); border:1px solid var(--line);
+                border-radius:8px; padding:8px 12px; display:inline-block; }
 
     /* Search box */
     .search-wrap { margin-top:14px; display:flex; justify-content:center; }
@@ -194,6 +209,17 @@
     <div class="meta" id="meta">Loading…</div>
     <div class="search-wrap"><input id="search" type="search" autocomplete="off"
       placeholder="Search skills, models, news, connectors, tips…" /></div>
+    <!-- PWA install prompt: shown by JS when browser fires beforeinstallprompt (Chrome/Edge).
+         iOS users see a static hint instead (iOS uses Share → Add to Home Screen). -->
+    <div id="install-wrap" hidden>
+      <button id="install-btn" class="install-btn" onclick="triggerInstall()">
+        ⬇&nbsp;Install as App
+      </button>
+    </div>
+    <div id="ios-hint" hidden class="ios-hint">
+      📱 <b>iPhone/iPad:</b> tap the <b>Share</b> button in Safari → <b>Add to Home Screen</b>
+      to open this as a standalone app (no browser chrome).
+    </div>
   </header>
 
   <!-- BIG yearly token-renewal warning (the only recurring manual step) -->

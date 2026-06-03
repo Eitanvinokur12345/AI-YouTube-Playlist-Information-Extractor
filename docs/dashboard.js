@@ -163,13 +163,18 @@ function staleMsg(status, config) {
   return "";
 }
 function renderAlert(status, config) {
+  // Token-renewal banner: only show when the pipeline has actually failed.
+  const tokenwarn = document.getElementById("tokenwarn");
+  if (tokenwarn) tokenwarn.hidden = !(status && status.analyze_ok === false);
+
+  // Reliability banner (separate, below counters)
   const el = document.getElementById("alert");
   if (!el) return;
   let kind = "", msg = "";
   if (status && status.analyze_ok === false) {
     kind = "bad";
-    msg = `<span class="badge">PIPELINE ERROR</span> The last analyze run failed, so new skills ` +
-      `aren’t being added. ` + esc(status.token_hint || "Check the GitHub Actions log for details.");
+    msg = `<span class="badge">PIPELINE ERROR</span> The last analyze run failed — ` +
+      esc(status.token_hint || "check the GitHub Actions log for details.");
   } else {
     const stale = staleMsg(status, config);
     if (stale) { kind = "warn"; msg = `<span class="badge">PIPELINE STALLED?</span> ` + esc(stale); }

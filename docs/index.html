@@ -222,12 +222,12 @@
     </div>
   </header>
 
-  <!-- BIG yearly token-renewal warning (the only recurring manual step) -->
-  <div class="tokenwarn">
-    <span class="badge">IMPORTANT — ONCE A YEAR</span>
-    <b>The cloud login token expires about once a year.</b>
-    When it does, the Analyze workflow fails with an authentication error and no new
-    skills appear. This is the <b>only</b> recurring manual step in the whole system.
+  <!-- Token-renewal warning: hidden by default, shown by JS only when analyze_ok===false -->
+  <div class="tokenwarn" id="tokenwarn" hidden>
+    <span class="badge">ACTION NEEDED</span>
+    <b>The analyze pipeline has failed.</b>
+    The most common cause is an expired Claude login token (happens about once a year).
+    No new skills are being added until this is fixed.
     <details>
       <summary>How to renew the token (takes ~2 minutes)</summary>
       <ol>

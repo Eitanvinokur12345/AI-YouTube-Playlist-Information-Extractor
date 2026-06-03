@@ -435,12 +435,25 @@ For each connector / MCP server:
   "install_or_source": "npx / URL / repo if mentioned, else null",
   "official": true,
   "quality_score": 8,
+  "source": "where it comes from / who makes it (e.g. 'Anthropic', 'community', 'Smithery')",
+  "url": "homepage / repo / install URL if known, else null",
+  "free": "yes",                             // "yes" | "no" | "freemium"
+  "free_tokens": "free tier / quota if any (e.g. '500 calls/mo', 'unlimited'), else null",
+  "paid_version": "paid plan name + price if any (e.g. 'Pro $20/mo'), else null",
+  "works_in": "both",                        // "claude chat" | "claude code" | "both"
   "source_video": "<video_id>",
   "source_url": "https://www.youtube.com/watch?v=<video_id>",
   "video_quality_score": 8,
   "low_quality_source": false
 }
 ```
+The six fields **`source`, `url`, `free`, `free_tokens`, `paid_version`, `works_in`** are
+required so the Connectors tab can show, at a glance, where each MCP/connector comes from,
+whether it is free, what the free quota is, the paid upgrade, and which Claude surface it runs
+in. Fill them from the video; use `null` only when the video genuinely gives no signal.
+`free` is `"yes"` (fully free / open-source), `"no"` (paid only), or `"freemium"` (free tier +
+paid plan). `works_in` is `"claude chat"`, `"claude code"`, or `"both"`.
+
 Dedup by `name` (case-insensitive); keep the higher `quality_score` and merge details. Read
 the existing file first; append/update, never overwrite. Apply the Step 2b cap/flag here too:
 if the source video is low quality, set `low_quality_source: true` and cap `quality_score` at

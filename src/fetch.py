@@ -114,12 +114,34 @@ def fetch_playlist_videos(youtube, playlist_id: str) -> list[dict]:
 
 
 # ── transcript ────────────────────────────────────────────────────────────────
+def _snippets_to_text(fetched) -> str:
+    """
+    Join transcript snippets to plain text, tolerant of both library generations:
+      • youtube-transcript-api >= 1.0  → iterable of FetchedTranscriptSnippet (`.text`)
+      • youtube-transcript-api 0.6.x   → list[dict] with an entry["text"] key
+    """
+    parts: list[str] = []
+    for s in fetched:
+        if hasattr(s, "text"):
+            parts.append(s.text or "")
+        elif isinstance(s, dict):
+            parts.append(s.get("text", "") or "")
+    return " ".join(p for p in parts if p)
+
+
 def fetch_transcript(
     video_id: str, title: str, description: str, languages: list[str]
 ) -> tuple[str, str, str]:
     """
     Try a real transcript in each language in `languages` order (e.g. ["en", "he"]),
     preferring manually-created over auto-generated.  Fallbacks: description, then title.
+
+    Works with BOTH youtube-transcript-api generations:
+      • 1.x  — instance API:  YouTubeTranscriptApi().list(id) / .fetch(id, languages=...)
+      • 0.6.x — classmethods: YouTubeTranscriptApi.list_transcripts(id)
+    The old 0.6.x classmethods were REMOVED in 1.0, so calling list_transcripts() on a
+    1.x install raises AttributeError — which is exactly what silently forced every video
+    onto the description/title fallback before this fix.
 
     The text is returned EXACTLY as YouTube provides it — never edited, translated,
     or rephrased — truncated to the first MAX_TRANSCRIPT_CHARS characters.
@@ -131,22 +153,50 @@ def fetch_transcript(
     try:
         from youtube_transcript_api import YouTubeTranscriptApi
 
-        transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
-        for lang in languages:
-            transcript = None
+        api = None
+        transcript_list = None
+        if hasattr(YouTubeTranscriptApi, "list_transcripts"):
+            # 0.6.x classmethod API
             try:
-                transcript = transcript_list.find_manually_created_transcript([lang])
+                transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
             except Exception:
-                try:
-                    transcript = transcript_list.find_generated_transcript([lang])
-                except Exception:
-                    transcript = None
+                transcript_list = None
+        else:
+            # 1.x instance API
+            api = YouTubeTranscriptApi()
+            try:
+                transcript_list = api.list(video_id)
+            except Exception:
+                transcript_list = None
 
-            if transcript is not None:
-                raw = " ".join(entry["text"] for entry in transcript.fetch())
+        # Preferred path: pick the requested language, manual before auto-generated.
+        if transcript_list is not None:
+            for lang in languages:
+                transcript = None
+                try:
+                    transcript = transcript_list.find_manually_created_transcript([lang])
+                except Exception:
+                    try:
+                        transcript = transcript_list.find_generated_transcript([lang])
+                    except Exception:
+                        transcript = None
+                if transcript is not None:
+                    raw = _snippets_to_text(transcript.fetch())
+                    if raw.strip():
+                        log.info("Using %s transcript for %s", lang, video_id)
+                        return raw[:MAX_TRANSCRIPT_CHARS], lang, "transcript"
+
+        # Fallback path (1.x): direct fetch honoring language order — catches transcripts
+        # the find_* helpers missed (e.g. auto-translated tracks).
+        if api is not None:
+            try:
+                raw = _snippets_to_text(api.fetch(video_id, languages=languages))
                 if raw.strip():
-                    log.info("Using %s transcript for %s", lang, video_id)
-                    return raw[:MAX_TRANSCRIPT_CHARS], lang, "transcript"
+                    used = languages[0] if languages else ""
+                    log.info("Using direct-fetch transcript for %s", video_id)
+                    return raw[:MAX_TRANSCRIPT_CHARS], used, "transcript"
+            except Exception:
+                pass
 
     except Exception as exc:
         log.warning("Transcript unavailable for %s: %s", video_id, exc)

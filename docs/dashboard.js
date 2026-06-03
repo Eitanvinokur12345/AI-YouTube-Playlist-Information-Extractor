@@ -122,11 +122,14 @@ function podiumHtml(podium) {
   const byRank = {}; p.forEach(x => { byRank[x.rank] = x; });
   const order = (byRank[1] && byRank[2] && byRank[3]) ? [byRank[2], byRank[1], byRank[3]] : p;
   const cls = (m) => "pod" + (m.rank === 1 ? "1" : m.rank === 2 ? "2" : "3");
+  const medal = (r) => r === 1 ? "\u{1F947}" : r === 2 ? "\u{1F948}" : r === 3 ? "\u{1F949}" : "";
   return `<div class="podium">` + order.map(m => `
     <div class="podslot ${cls(m)}">
+      <div class="podmedal">${medal(m.rank)}</div>
       <div class="podrank">#${esc(m.rank)}</div>
-      <div class="podscore">${esc(m.score)}</div>
+      <div class="podscore">${esc(m.score)}<span class="podten">/10</span></div>
       <div class="podname">${esc(m.name)}${m.version ? " " + esc(m.version) : ""}</div>
+      ${m.company ? `<div class="podco">${esc(m.company)}</div>` : ""}
     </div>`).join("") + `</div>`;
 }
 function runReportHtml(status) {
@@ -345,17 +348,22 @@ async function renderTips() {
     return (arr || []).filter(x => hit(x));
   };
   const byTool = (tips && tips.by_tool) || {}; const general = (tips && tips.general) || {};
+  // Each tool / topic becomes its own labelled group with a short bullet list (easier to scan
+  // than one long "·"-joined line).
+  const groupHtml = (t, arr) =>
+    `<div class="tipgroup"><div class="tiptool">${esc(t)}</div><ul>` +
+    arr.map(x => `<li>${esc(x)}</li>`).join("") + `</ul></div>`;
   const byToolEntries = Object.entries(byTool)
     .map(([t, arr]) => [t, filterTips(t, arr)]).filter(([, a]) => a.length);
   if (byToolEntries.length) {
-    html += `<div class="card"><h3>Tips by tool</h3>` + byToolEntries.map(([t, arr]) =>
-      `<p><b>${esc(t)}:</b> ${arr.map(esc).join(" · ")}</p>`).join("") + `</div>`;
+    html += `<div class="card"><h3>Tips by tool</h3>` +
+      byToolEntries.map(([t, arr]) => groupHtml(t, arr)).join("") + `</div>`;
   }
   const gen = Object.entries(general)
     .map(([t, arr]) => [t, filterTips(t, arr)]).filter(([, a]) => a.length);
   if (gen.length) {
-    html += `<div class="card"><h3>General tips</h3>` + gen.map(([t, arr]) =>
-      `<p><b>${esc(t)}:</b> ${arr.map(esc).join(" · ")}</p>`).join("") + `</div>`;
+    html += `<div class="card"><h3>General tips</h3>` +
+      gen.map(([t, arr]) => groupHtml(t, arr)).join("") + `</div>`;
   }
   let list = (cmds && cmds.commands) || [];
   if (q()) list = list.filter(c => hit(c.command, c.description, c.tool));
@@ -391,11 +399,11 @@ async function renderNews() {
       const label = web ? "Read" : "Watch";
       const tag = web ? '<span class="webpill">web</span>' : '<span class="vidpill">video</span>';
       const low = e.low_quality_source ? '<span class="lowsrc">low-quality source</span>' : "";
-      return `<div class="card ${e.low_quality_source ? "lowq" : ""}">
+      return `<div class="card newscard ${e.low_quality_source ? "lowq" : ""}">
         <h3>${esc(e.title || "?")} ${tag} ${low}</h3>
-        <div class="sub">${esc(src)} · ${esc(e.publishedAt || "")}</div>
-        <p>${esc(e.summary || "(summary pending)")}</p>
-        <p><a href="${esc(link)}" target="_blank" rel="noopener">${label}</a></p></div>`;
+        <div class="sub">${esc(src)} · ${esc(fmtDate(e.publishedAt))}</div>
+        <p class="newsum">${esc(e.summary || "(summary pending)")}</p>
+        <p><a href="${esc(link)}" target="_blank" rel="noopener">${label} &rarr;</a></p></div>`;
     }).join("");
   } else { html += empty(q() ? `No ${state.newsWindow} news matches "${esc(state.query)}".` : `No ${state.newsWindow} news entries.`); }
   view.innerHTML = html;
@@ -453,15 +461,30 @@ function renderConnectors(data) {
         (via ? ` · <a href="${yt(via)}" target="_blank" rel="noopener">via video</a>` : "") + `</p>`
       : c.source_video ? `<p><a href="${yt(c.source_video)}" target="_blank" rel="noopener">Source video</a></p>`
       : c.source_url ? `<p><a href="${esc(c.source_url)}" target="_blank" rel="noopener">Source</a></p>` : "";
+    // Free / paid + which Claude surface it runs in (CLAUDE.md Step 8 extended fields).
+    const freeRaw = String(c.free ?? "").toLowerCase();
+    const freeMap = { yes: ["Free", "free-yes"], no: ["Paid", "free-no"], freemium: ["Freemium", "free-mid"] };
+    const fm = freeMap[freeRaw];
+    const freePill = fm ? `<span class="freepill ${fm[1]}">${fm[0]}</span>` : "";
+    const works = c.works_in ? `<span class="workspill" title="Which Claude surface this runs in">${esc(c.works_in)}</span>` : "";
+    const metaBits = [];
+    if (c.free_tokens) metaBits.push(`<span class="metapill"><b>Free tier:</b> ${esc(c.free_tokens)}</span>`);
+    if (c.paid_version) metaBits.push(`<span class="metapill"><b>Paid:</b> ${esc(c.paid_version)}</span>`);
+    const metaRow = metaBits.length ? `<div class="connmeta">${metaBits.join("")}</div>` : "";
+    const urlLine = c.url ? `<p><a href="${esc(c.url)}" target="_blank" rel="noopener">Website / repo</a></p>` : "";
     return `<div class="card ${isStarred(c) ? "starred" : ""}">
     <h3>${isStarred(c) ? '<span class="star" title="Starred — frozen, never auto-changed">&#9733;</span>' : ""}<span class="score">${esc(c.quality_score ?? "?")}/10</span> ${esc(c.name)}
       <span class="pill">${esc(c.type || "")}</span>
+      ${freePill}
+      ${works}
       ${c.official ? '<span class="official">official</span>' : ""}
       ${linkedPill(c)}
       ${isStarred(c) ? '<span class="frozenpill">frozen</span>' : ""}</h3>
-    <div class="sub">${esc(c.provider || "")}${c.category ? " · " + esc(c.category) : ""}</div>
+    <div class="sub">${esc(c.provider || "")}${c.category ? " · " + esc(c.category) : ""}${c.source ? " · src: " + esc(c.source) : ""}</div>
     <p>${esc(c.what_it_does || "")}</p>
-    ${c.install_or_source ? `<p><b>Install/source:</b> ${esc(c.install_or_source)}</p>` : ""}
+    ${metaRow}
+    ${c.install_or_source ? `<p><b>Install / source:</b> ${esc(c.install_or_source)}</p>` : ""}
+    ${urlLine}
     ${srcLine}
   </div>`;
   }).join("") || empty(`No connectors match "${esc(state.query)}".`);

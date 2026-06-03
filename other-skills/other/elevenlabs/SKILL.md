@@ -1,0 +1,27 @@
+---
+name: elevenlabs
+description: "Use Elevenlabs for music tasks — Using Elevenlabs for music tasks."
+---
+
+# Elevenlabs
+
+## Overview
+Elevenlabs is an AI tool by ElevenLabs. It generates and edits music and audio using AI.
+
+## Key Techniques
+- 🔗 Try these AI tools:
+• ElevenLabs (voice): elevenlabs.io/?from=boottify
+• Creatomate (video): creatomate.com/?ref=boottify #UnlockAI potential by pro
+- 🔗 Try these AI tools:
+• ElevenLabs (voice): elevenlabs.io/?from=boottify
+• Creatomate (video): creatomate.com/?ref=boottify
+
+## How to Apply
+Using Elevenlabs for music tasks.
+
+## Examples
+Elevenlabs produces music-focused outputs.
+
+## Source
+Extracted from: [Unlock AI Creativity with Guidance ✨](https://www.youtube.com/watch?v=41J43egKRVI)
+Channel: Boottify

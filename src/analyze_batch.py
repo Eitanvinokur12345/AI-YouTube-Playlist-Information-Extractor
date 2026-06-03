@@ -438,18 +438,17 @@ def process_video(video, index_data):
     deleted_skills = load_json('data/deleted_skills.json', [])
     existing_slugs = set(index_data.keys())
     skills_added = 0
-
+    # within_video_slugs: only avoid duplicates WITHIN the current video's new skills,
+    # NOT against the global index (which would cause -2, -3, etc. instead of proper dedup)
+    within_video_slugs = set()
     new_skills = []
     for display_name, info in found_tools.items():
-        slug = make_slug(display_name, set(existing_slugs))  # preview slug
-        # Check if slug collision
+        slug = make_slug(display_name, within_video_slugs)  # only dedup within this video
+        # Check if slug collision with global index
         if slug in existing_slugs:
             existing_skill = next((s for s in skills_data['skills'] if s['slug'] == slug), None)
             if existing_skill and (existing_skill.get('starred') or existing_skill.get('locked')):
                 continue  # frozen
-        else:
-            # Reserve this slug
-            existing_slugs.add(slug)
 
         base_score = 7 if info.get('category') in ['code', 'automation', 'agents', 'integration'] else 6
         if low_quality:

@@ -3,7 +3,28 @@
 This file is read by the Claude Code GitHub Action to perform the **analysis stage** of
 the YouTube Skills Tracker pipeline. The fetch stage (`src/fetch.py`) has already run and
 written raw video records to `data/_pending/<video_id>.json`. Your job is to analyze each
-pending file and populate **all SIX tracker tabs**, then commit the results.
+pending file and populate the dashboard's data tabs, then commit the results.
+
+**The data tabs you fill:**
+1. **Skills Library** — `data/skills.json` — *reusable techniques & workflows only* (methods
+   you apply: agent loops, prompt patterns, context engineering, a packaged image workflow…).
+2. **Tools** — `data/tools.json` — *the products, models, apps and services themselves*
+   (Gemini 2.5 Pro, Cursor, Midjourney, n8n, DeepSeek…). Tools and techniques are SEPARATE
+   tabs — never put a bare product/model name in `skills.json` (see Step 3 vs Step 3b).
+3. **Models Ranking** — `data/models.json` — every model, ranked per category with a podium.
+4. **Tips & Commands** — `data/tips.json`, `data/commands.json`.
+5. **News Feed** — `data/daily_news.json` / `weekly_news.json` / `monthly_news.json`.
+6. **Connectors** — `data/connectors.json` — Claude connectors & MCP servers.
+Plus **auto-discovered tabs**: when material keeps appearing that fits none of the tabs above,
+log it as a *tab candidate* (Step 8b); the self-improvement stage may spin it into a new tab.
+
+**Two principles that override convenience:**
+- **Extract everything the video AND its surroundings offer.** Each video is a dense source —
+  mine the transcript, the description, and every AI-relevant link (Step 2c) for *all* tools,
+  techniques, models, tips, commands, connectors, news angles and notable claims. Missing a
+  tool or a connector that was clearly shown is the main failure mode; be exhaustive.
+- **Work at batch speed.** A run may need to clear ~50–100 videos. Be thorough but economical
+  per video: capture every material item, but don't over-write prose. Commit after each video.
 
 ---
 
@@ -38,6 +59,21 @@ pending file and populate **all SIX tracker tabs**, then commit the results.
    higher-scored new version. If a new video would normally supersede a frozen skill, keep
    the frozen one as-is and instead record the new variant under a different slug. Before any
    compare-and-keep-best (Step 3) or merge (Step 5), check this rule first.
+9. **Techniques vs. tools — route every extraction to the right tab.** A *technique/skill*
+   (Step 3 → `skills.json`) is a reusable METHOD or workflow you apply. A *tool* (Step 3b →
+   `tools.json`) is a product, model, app or service. The same video usually yields BOTH: put
+   the product in `tools.json` and the specific way-of-using-it in `skills.json`. Never let a
+   bare tool/model name become a "skill". This split is the #1 quality rule.
+10. **Slash commands must be REAL commands.** Only record a `/command` that is an actual
+    invocable command in a specific tool (a Claude Code command, a CLI/bot command), each with
+    a clear "what it does". Reject prose, hashtags, file paths, "and/or" slashes, or generic
+    words (see Step 6's filter). A wrong command is worse than a missing one.
+11. **Hunt connectors & MCP servers actively.** These videos are full of MCP servers; they are
+    high-value and easy to miss. Treat every `npx …-mcp`, Smithery entry, `mcpServers` config,
+    or "connect X to Claude" as a Connector (Step 8).
+12. **Capture orphans as tab candidates, never as junk.** Important, recurring material that
+    fits none of the existing tabs goes to `data/tab_candidates.json` (Step 8b) — not forced
+    into a tab where it doesn't belong.
 
 ---
 
@@ -163,12 +199,25 @@ Everything from this step is committed together with the video in Step 10.
 
 ---
 
-## Step 3 — Tab 1: Skills Library
+## Step 3 — Tab: Skills Library  (TECHNIQUES & WORKFLOWS ONLY)
 
-Extract ALL AI tools, models, skills, or techniques demonstrated in the video. For each one
-build a skill record:
+This tab holds **reusable techniques, workflows and packaged skills** — the *methods you
+apply*, not the products you apply them with. What BELONGS here: "Claude agent loop",
+"context-engineering for long tasks", "the nano-banana image pipeline", "multi-agent code
+review", "3D website build workflow", a Claude Code SKILL you can install. What does NOT belong
+here (these go to **Step 3b → `tools.json`**): "Gemini 2.5 Pro", "Cursor", "Midjourney", "n8n",
+"DeepSeek", "ChatGPT" — those are *tools/models/products*.
 
-- `skill_name` — exact name incl. version (e.g. "Claude Sonnet 4.6", "Cursor", "n8n")
+**Routing test (apply to every candidate):** "Is this a *way of doing something* (technique)
+or a *thing that does it* (tool)?" Technique → here. Tool/model/app/service → Step 3b. A
+product that ships an applicable, repeatable workflow yields TWO records: the product in
+`tools.json`, and the technique in `skills.json` with `target_tool` pointing at the product.
+When in doubt and it's just a named product → `tools.json`, not here.
+
+For each genuine **technique** build a skill record:
+
+- `skill_name` — the technique's name (e.g. "Claude Agent Loop", "Context Engineering for
+  Long Tasks", "Nano-Banana Image Pipeline"). NOT a bare product/model name — those are tools.
 - `slug` — unique kebab-case id (see slug rules below)
 - `category` — one of: design, code, automation, agents, image creation, video creation,
   writing, marketing, social, music, integration, research, productivity, other
@@ -325,12 +374,55 @@ columns shown here are the minimum. Do not remove `videos_seen` entries.
 
 ---
 
-## Step 4 — Tab 2: Models Ranking (rank ALL models)
+## Step 3b — Tab: Tools  (PRODUCTS, MODELS, APPS & SERVICES)
+
+Every named **tool, model, app, platform or service** the video (or a followed link) shows
+goes here → `data/tools.json` (`{"tools":[...]}`, create if missing). This is the catalog of
+*things*, ranked by how often the playlist mentions them. Be exhaustive: if it has a brand name
+and you could go use it, it belongs here — even when it also produced a technique in Step 3.
+
+Tool record:
+- `name` — exact name incl. version where shown (e.g. "Gemini 2.5 Pro", not "Gemini").
+- `slug` — kebab-case unique id (slug rules in Step 3).
+- `category` — one of `config.categories`.
+- `company`, `country` — maker and country of origin (or null).
+- `open_source` — true/false.
+- `description` — 1–2 factual sentences on what it is and does.
+- `quality_score` — integer 1–10 (same rubric as skills); capped by Step 2b if the source video is low-quality.
+- `model_version` — version string, or null.
+- `target_tool` — ecosystem it belongs to/extends (`"claude"`, `"gemini"`, `"openai"`, …, or `"other"`).
+- `endorsement_video_ids` — video ids that featured it; initialize `["<video_id>"]`.
+- `mentions` — `len(endorsement_video_ids)` (how many playlist videos reference it).
+- `source_video_id`, `source_url`, `video_quality_score`, `low_quality_source` — as elsewhere.
+
+**Dedup by `slug` (and obvious name aliases).** If the tool already exists: union
+`endorsement_video_ids` (recompute `mentions`), keep the higher `quality_score`, keep the
+richer `description`, and fill any missing `model_version`/`company`/`country`. Never split one
+product across two slugs — merge aliases (e.g. "perplexity-ai" → "perplexity").
+
+After updating, **re-sort `tools.json` by `mentions` desc, then `quality_score` desc, then
+`name`** so the catalog stays ranked. Tools do NOT get a SKILL.md folder (only techniques do).
+
+> Models are a *subset* of tools: when a tool is an AI model, ALSO add/update it in
+> `models.json` (Step 4). Tools = the full catalog; Models = the ranked-by-category view.
+
+---
+
+## Step 4 — Tab: Models Ranking (rank ALL models)
 
 Read `data/models.json` (create as `{}` if missing). For every AI **model** referenced
 (across the skills you extracted), record name, version, category, company, country,
 `open_source`, and its best `quality_score`. Match by exact name+version — never duplicate;
 if a higher score appears for the same model, update it.
+
+**Use the right model categories — not just one or two.** Sort each model into the category
+that fits its PURPOSE, and always maintain at least these when models exist for them: `code`,
+`image creation`, `video creation`, `productivity` — plus any other of `config.categories`
+that apply (`agents`, `design`, `research`, `writing`, `music`, …). A coding model → `code`;
+an image model (Nano Banana, Midjourney, Flux) → `image creation`; a video model (Seedance,
+Kling, Runway, Veo, Sora) → `video creation`; a general chat/assistant model → `productivity`.
+Do NOT collapse everything into one bucket — the dashboard shows a medal podium per category,
+so populate every category the videos actually cover.
 
 For **each category**, store a podium and the complete ranking. **Do NOT generate an
 `ascii_podium`** — the dashboard renders the podium as HTML and the MCP server renders ASCII
@@ -391,13 +483,24 @@ Scan `data/skills.json`. For any two skills whose slugs clearly describe the **s
 }
 ```
 Append new tips to the right tool / general topic. No duplicates (case-insensitive). Read
-the existing file first and merge.
+the existing file first and merge. Keep tips **tight and de-duplicated**: each tip is one
+actionable sentence; merge near-duplicates into the single clearest version rather than listing
+both; aim for the strongest ~8–12 tips per tool and per topic, not an exhaustive dump. Quality
+over volume — the Tips tab must stay skimmable.
 
-**data/commands.json**
+**data/commands.json** — REAL slash commands only.
 ```json
-{ "commands": [ {"command": "/review", "description": "...", "tool": "...", "source_video": "<video_id>"} ] }
+{ "commands": [ {"command": "/review", "description": "what it does", "tool": "Claude Code", "source_video": "<video_id>"} ] }
 ```
-Append new slash commands. No duplicates (match on `command`). Read existing first; merge.
+A record qualifies ONLY if ALL hold:
+- it starts with `/` and is a single invocable token (`/review`, `/agents`, `/ultra-plan`) —
+  letters/digits/hyphens only, no spaces inside the command itself;
+- it is an ACTUAL command in a specific tool (Claude Code, a CLI, a chatbot) — name that tool in `tool`;
+- you can state precisely what it does in `description`.
+**Reject** (do NOT add): prose or a sentence after the slash, hashtags, URLs / file paths,
+fractions or "and/or" slashes ("client/server", "24/7"), section numbers, and generic words
+that aren't real commands. When unsure, leave it out. Dedup on `command` (case-insensitive);
+read existing first and merge.
 
 ---
 
@@ -419,10 +522,15 @@ Re-save the three news files with the filled summaries. Do not reorder or change
 
 ---
 
-## Step 8 — Tab 6: Connectors
+## Step 8 — Tab: Connectors  (HUNT FOR MCP SERVERS — high priority)
 
-Track **Claude connectors and MCP servers** mentioned in the video → `data/connectors.json`
-(create as `{"connectors": []}` if missing).
+These videos are full of **Claude connectors and MCP servers**, and they are the single
+easiest thing to under-extract. Actively scan every video and every followed link for them and
+record each → `data/connectors.json` (create as `{"connectors": []}` if missing). Signals that
+mean "connector/MCP, capture it": an `npx …-mcp` / `uvx` install line, a `mcpServers` JSON
+block, a Smithery / mcp.so / "awesome-mcp" listing, a GitHub repo whose name ends in `-mcp`,
+"connect <service> to Claude", a Claude.ai Connectors-page entry, or a Desktop/Code config
+snippet. Err toward capturing — a real MCP server missed is a real loss for this tab.
 
 For each connector / MCP server:
 ```json
@@ -461,6 +569,29 @@ if the source video is low quality, set `low_quality_source: true` and cap `qual
 
 ---
 
+## Step 8b — Capture tab candidates (feeds auto-discovered tabs)
+
+Sometimes a video keeps pushing material that is clearly important but fits **none** of the
+tabs above (Skills techniques, Tools, Models, Tips, Commands, News, Connectors) — a whole theme
+the tracker has no home for (e.g. "AI hardware devices", "AI regulation & policy", "AI voice
+agents" as a distinct class). Do NOT force it into a wrong tab and do NOT drop it. Instead
+append an **anecdote** to `data/tab_candidates.json` (`{"candidates":[...]}`, create if missing):
+
+```json
+{ "theme": "ai-voice-agents",
+  "label": "AI Voice Agents",
+  "note": "Video builds a phone agent with a realtime voice API — no skills/tools/news fit.",
+  "video_id": "<video_id>", "source_url": "https://www.youtube.com/watch?v=<video_id>",
+  "ts": "<ISO-8601>" }
+```
+Use a stable kebab `theme` so repeats across videos pile up under the same key — that recurrence
+is exactly what later promotes a theme to a real tab. At most one or two candidates per video;
+this is for genuine orphans, not for everything. The self-improvement stage clusters these and,
+once a theme recurs across enough distinct videos, spins it into its own announced tab (with a
+"NEW" badge for its first week).
+
+---
+
 ## Step 9 — Update the Run Report in status.json
 
 Read `data/status.json` (the fetch stage initialized `run_report`). After processing the
@@ -471,6 +602,8 @@ batch, update — do not reset — these fields:
 - `run_report.errors` += videos that errored (record briefly; keep going)
 - `run_report.pending_to_analyze` = remaining count of `data/_pending/*.json`
 - `total_videos_analyzed` (top-level, **cumulative all-time**) += videos analyzed this run
+- `total_tools` (top-level) = total entries in `data/tools.json`
+- `run_report.tab_candidates_open` = total entries in `data/tab_candidates.json`
 - `last_analyze` = current ISO-8601 timestamp
 - `run_report.no_transcript` — leave as set by fetch (videos with no real transcript track,
   analyzed via description/title fallback).
@@ -509,12 +642,14 @@ pushed): run `git pull --rebase --autostash` then `git push` again, and continue
 1. Relevance gate (Step 2) — skip if off-topic.
 2. Rate video quality; flag + cap scores if low quality (Step 2b).
 3. Follow AI-relevant description links; extract on their own merits + tag `linked_resource` (Step 2c).
-4. Extract skills + write/route SKILL.md packages (Step 3) — index-first dedup.
-5. Update models ranking — data only, no ASCII (Step 4).
-6. Merge overlapping skills (Step 5).
-7. Tips & commands (Step 6).
-8. News summary + carry quality flag (Step 7).
-9. Connectors (Step 8).
-10. Update run report + cumulative count — data only, no ASCII (Step 9).
-11. Move pending→processed, commit & push (Step 10).
-12. Stop after the batch limit; leave the rest for the next run.
+4. Extract **techniques** → skills.json + route SKILL.md packages (Step 3) — index-first dedup.
+5. Extract **tools / models / apps** → tools.json, ranked by mentions (Step 3b).
+6. Update models ranking per category — data only, no ASCII (Step 4).
+7. Merge overlapping skills/tools (Step 5).
+8. Tips + REAL slash commands only (Step 6).
+9. News summary + carry quality flag (Step 7).
+10. Connectors / MCP servers — hunt hard (Step 8).
+11. Capture genuine orphans as tab candidates (Step 8b).
+12. Update run report + cumulative counts — data only, no ASCII (Step 9).
+13. Move pending→processed, commit & push (Step 10).
+14. Stop after the batch limit; leave the rest for the next run.

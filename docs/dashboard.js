@@ -292,6 +292,39 @@ function renderSkills(data) {
   if (mt) mt.addEventListener("click", () => { state.multiToolOnly = !state.multiToolOnly; renderSkills(data); });
 }
 
+// ── Tab: Tools (auto-tracked catalog of AI tools & models seen in the playlist) ─
+// Skills = techniques you apply; Tools = the products/models themselves. Ranked by
+// how many playlist videos mention each, so the most-talked-about tools float up.
+function renderTools(data) {
+  const items = (data && data.tools) || [];
+  if (!items.length) return view.innerHTML = empty("No tools tracked yet.");
+  const cats = ["all", ...Array.from(new Set(items.map(t => t.category || "other"))).sort()];
+  const activeCat = state.toolCategory || "all";
+  let html = `<div class="sub">${items.length} AI tools & models seen across the playlist, ranked by how often they're mentioned.</div>`;
+  html += `<div class="subnav">` + cats.map(c =>
+    `<button class="${activeCat === c ? "active" : ""}" data-tcat="${esc(c)}">${esc(c)}</button>`
+  ).join("") + `</div>`;
+  let list = items.slice();
+  if (activeCat !== "all") list = list.filter(t => (t.category || "other") === activeCat);
+  if (q()) list = list.filter(t => hit(t.name, t.slug, t.company, t.country, t.category, t.description));
+  list.sort((a, b) => ((b.mentions || 0) - (a.mentions || 0)) || ((b.quality_score || 0) - (a.quality_score || 0)));
+  html += list.map(t => `
+    <div class="card ${t.low_quality_source ? "lowq" : ""}">
+      <h3><span class="score">${esc(t.quality_score ?? "?")}/10</span> ${esc(t.name)}
+        <span class="pill">${esc(t.category || "other")}</span>
+        ${t.open_source ? '<span class="pill">open source</span>' : ""}
+        ${t.mentions ? `<span class="mentions" title="How many playlist videos mention this tool">${esc(t.mentions)}× seen</span>` : ""}</h3>
+      ${t.company ? `<div class="sub">${esc(t.company)}${t.country ? " · " + esc(t.country) : ""}${t.model_version ? " · v" + esc(t.model_version) : ""}</div>` : ""}
+      <p>${esc(t.description || "")}</p>
+      ${t.source_url ? `<p><a href="${esc(t.source_url)}" target="_blank" rel="noopener">Source</a></p>`
+        : (t.source_video_id ? `<p><a href="${yt(t.source_video_id)}" target="_blank" rel="noopener">Source video</a></p>` : "")}
+    </div>`).join("");
+  if (!list.length) html += empty(q() ? `No tools match "${esc(state.query)}".` : "No tools in this category.");
+  view.innerHTML = html;
+  view.querySelectorAll("[data-tcat]").forEach(b =>
+    b.addEventListener("click", () => { state.toolCategory = b.dataset.tcat; renderTools(data); }));
+}
+
 // ── Tab: Models Ranking ──────────────────────────────────────────────────────
 function renderModels(data) {
   if (!data || !Object.keys(data).length) return view.innerHTML = empty("No model rankings yet.");
@@ -579,6 +612,7 @@ async function show(tab) {
     b.classList.toggle("active", b.dataset.tab === tab));
   view.innerHTML = empty("Loading…");
   if (tab === "skills") return renderSkills(await load("skills.json"));
+  if (tab === "tools") return renderTools(await load("tools.json"));
   if (tab === "models") return renderModels(await load("models.json"));
   if (tab === "improvement") return renderImprovement();
   if (tab === "tips") return renderTips();

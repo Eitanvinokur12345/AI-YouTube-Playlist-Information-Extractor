@@ -54,7 +54,10 @@
       "ux_self_review": true,
       "token_optimization": true,
       "health_and_cadence": true,
-      "trend_tabs": true
+      "trend_tabs": true,
+      "reference_self_check": true,
+      "skills_folder_learning": true,
+      "review_agents": true
     },
     "safe_auto": ["schema_repair", "orphan_cleanup", "fill_missing_summaries", "exact_duplicate_merge", "cross_tab_consistency", "build_index", "health_report"],
     "suggest_only": ["fuzzy_duplicate_merge", "rescore_outliers", "recategorize", "ui_changes", "star_suggestions", "drop_dead_feed"],
@@ -77,8 +80,58 @@
       "autonomy": "auto_create_and_announce",
       "min_evidence_videos": 5,
       "max_total_active": 6,
-      "reserved_tab_ids": ["skills", "models", "improvement", "tips", "news", "connectors", "selfimprove"]
+      "new_badge_days": 7,
+      "candidates_file": "data/tab_candidates.json",
+      "reserved_tab_ids": ["skills", "tools", "models", "improvement", "tips", "news", "connectors", "selfimprove"]
     }
+  },
+  "reference_self_check": {
+    "enabled": true,
+    "spec_path": "docs/REFERENCE_SPEC.md",
+    "questions": 50,
+    "results_file": "data/self_check.json",
+    "tasks_file": "data/improvement_tasks.json",
+    "auto_fix_next_run": true
+  },
+  "skills_folder_learning": {
+    "enabled": true,
+    "read_paths": ["./skills", "./other-skills"],
+    "purpose": "Learn extraction + design improvements from the curated SKILL.md packages and the reference spec."
+  },
+  "review": {
+    "enabled": true,
+    "dimensions": ["usability", "cut_the_bullshit", "deep_code_bugs"],
+    "claude_first_then_external": true,
+    "usability": {
+      "benchmark_competitors": true,
+      "competitors": ["Future Tools", "There's An AI For That", "Toolify", "Product Hunt AI"]
+    },
+    "external_engine": {
+      "enabled": true,
+      "provider": "gemini",
+      "secret_name": "EXTERNAL_REVIEW_API_KEY",
+      "graceful_skip_if_absent": true
+    },
+    "first_week_intensive": true,
+    "findings_file": "data/review_findings.json"
+  },
+  "cadence": {
+    "mode": "high_freq_plus_weekly_deep",
+    "ingest": "frequent",
+    "weekly_deep_pass": {
+      "enabled": true,
+      "day": "sunday",
+      "israel_local_time": "02:00",
+      "note": "Weekly deep self-improvement + review pass at night Israel time. Crons live in improve.yml / review.yml (UTC)."
+    },
+    "first_week": { "enabled": true, "started_at": null, "intensive_cadence_hours": 24 },
+    "throughput_target": { "videos": 100, "within_hours": 48 }
+  },
+  "extraction": {
+    "exhaustive": true,
+    "transcript_chars": 80000,
+    "capture_tab_candidates": true,
+    "tab_candidates_file": "data/tab_candidates.json"
   },
   "news": {
     "enabled": true,

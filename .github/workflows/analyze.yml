@@ -76,7 +76,7 @@ jobs:
           PY
           echo "Plan written to outputs (pending / catch_up / batch / order / has_work)."
 
-      - name: Analyze and build all 6 tabs
+      - name: Analyze pending videos (skills, tools, models, connectors, commands)
         id: claude
         if: steps.plan.outputs.has_work == 'true'
         uses: anthropics/claude-code-action@v1
@@ -99,11 +99,14 @@ jobs:
             "oldest_first", process the oldest first.
             For EACH video: run the relevance gate and the Step 2b video-quality review,
             follow any AI-relevant links in the description with WebFetch (Step 2c) and mine
-            their resources, fill all six tabs, move its file from data/_pending to
-            data/processed, then commit AND push before moving to the next video. Update the
-            run report and the cumulative total_videos_analyzed in data/status.json. When you
-            reach the batch limit or data/_pending is empty, stop and leave any remainder for
-            the next run.
+            their resources, extract into every relevant section (skills/techniques vs
+            tools/products are SEPARATE — keep them apart; plus models, connectors, and
+            commands/tips), and capture any off-tab recurring anecdote to
+            data/tab_candidates.json for dynamic-tab discovery. Then move its file from
+            data/_pending to data/processed and commit AND push before moving to the next
+            video. Update the run report and the cumulative total_videos_analyzed in
+            data/status.json. When you reach the batch limit or data/_pending is empty, stop
+            and leave any remainder for the next run.
 
       # Reliability (A1): record whether the analyze step succeeded so the dashboard can show
       # a red, actionable banner (usually a yearly-expired subscription token). The Claude

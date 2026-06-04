@@ -1,13 +1,20 @@
 name: Self-improve
 
-# Curation stage: every few days, Claude Code reads IMPROVE.md and tidies what already
-# exists — dedup, schema repair, ratings calibration (suggest), star/freeze the best
-# skills, a rate-limited dashboard/UX review, token optimization, and a health report.
-# It NEVER touches frozen/starred records and only AUTO-applies the "safe" operations;
-# risky ones are written as suggestions for you to approve. Separate from analyze.yml.
+# Curation stage = the weekly DEEP PASS (with IMPROVE.md): dedup, schema repair, ratings
+# calibration (suggest), star/freeze the best skills, dashboard/UX review, the 50-question
+# reference self-check, skills-folder learning, dynamic-tab discovery, token optimization,
+# and a health report. NEVER touches frozen/starred records; only AUTO-applies "safe"
+# operations, risky ones become suggestions to approve. Separate from analyze.yml (the
+# high-frequency INGEST). Runs ~3h BEFORE the review stage so review critiques fresh data.
+#
+#   • Weekly deep pass — Saturday 20:00 UTC (~night Israel time, lead-in to the 23:00 review).
+#   • First-week intensive — also every other night during week one (guard no-ops afterwards).
+# All free: public-repo Actions + your Pro/Max subscription token. IMPROVE.md also idle-exits
+# on no-change days, so an extra firing is cheap.
 on:
   schedule:
-    - cron: "30 5 */3 * *"   # every ~3 days, 05:30 UTC (matches self_improvement.cadence; IMPROVE.md also idle-exits on no-change days)
+    - cron: "0 20 * * 6"     # weekly deep pass (always runs)
+    - cron: "0 20 * * 0-5"   # first-week intensive (guard makes it no-op after week 1)
   workflow_dispatch:
 
 # Never overlap improvement runs, and never fight an analyze run for the working tree.
@@ -29,16 +36,62 @@ jobs:
           fetch-depth: 0          # full history so per-module pushes rebase cleanly
           persist-credentials: true
 
-      # Skip the (subscription-consuming) Claude step if self-improvement is disabled.
-      - name: Check self-improvement is enabled
-        id: guard
+      # Decide whether to run + which mode. The weekly (Saturday) slot and manual dispatch
+      # always run (when self_improvement.enabled). The daily slot only runs during the
+      # first week. The first-week window is anchored in data/review_state.json — the SAME
+      # file the review stage uses — so improve + review share one first-week window. The
+      # 3h stagger (improve 20:00, review 23:00) means they never write this file at once.
+      - name: Plan this run (weekly vs first-week intensive)
+        id: plan
+        env:
+          SCHEDULE: ${{ github.event.schedule }}
+          EVENT: ${{ github.event_name }}
         run: |
-          enabled=$(python -c "import json;print(json.load(open('config.json')).get('self_improvement',{}).get('enabled',False))" 2>/dev/null || echo "False")
-          echo "enabled=$enabled" >> "$GITHUB_OUTPUT"
-          echo "self_improvement.enabled = $enabled"
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os, datetime, pathlib
+          cfg = {}
+          try: cfg = json.load(open("config.json"))
+          except Exception: pass
+          si = cfg.get("self_improvement", {}) or {}
+          fw = (cfg.get("cadence", {}) or {}).get("first_week", {}) or {}
+          enabled = bool(si.get("enabled", False))
+          schedule = os.environ.get("SCHEDULE", "")
+          event = os.environ.get("EVENT", "")
+          weekly = (schedule == "0 20 * * 6")
+          daily  = (schedule == "0 20 * * 0-5")
+          now = datetime.datetime.now(datetime.timezone.utc)
+          # Prefer an explicit config start; else share/stamp the review stage's anchor.
+          started = fw.get("started_at")
+          p = pathlib.Path("data/review_state.json")
+          try: st = json.loads(p.read_text(encoding="utf-8"))
+          except Exception: st = {}
+          if started:
+              first_run = datetime.datetime.fromisoformat(started)
+          else:
+              if not st.get("first_run_at"):
+                  st["first_run_at"] = now.isoformat()
+                  p.parent.mkdir(parents=True, exist_ok=True)
+                  p.write_text(json.dumps(st, indent=2), encoding="utf-8")
+              first_run = datetime.datetime.fromisoformat(st["first_run_at"])
+          if first_run.tzinfo is None:
+              first_run = first_run.replace(tzinfo=datetime.timezone.utc)
+          within_first_week = bool(fw.get("enabled", True)) and (now - first_run).days < 7
+          mode = "first_week_intensive" if within_first_week else "weekly"
+          if not enabled:
+              run = False
+          elif event == "workflow_dispatch" or weekly:
+              run = True
+          elif daily:
+              run = within_first_week     # intensive only during week one
+          else:
+              run = False
+          print(f"run={'true' if run else 'false'}")
+          print(f"mode={mode}")
+          PY
+          echo "Plan: run + mode written to outputs."
 
       - name: Curate, calibrate, star, review UX, health report
-        if: steps.guard.outputs.enabled == 'True'
+        if: steps.plan.outputs.run == 'true'
         uses: anthropics/claude-code-action@v1
         with:
           # Uses your Claude Pro/Max subscription token (NO separate Anthropic API
@@ -47,7 +100,8 @@ jobs:
           prompt: |
             Run the self-improvement stage of the YouTube Skills Tracker.
             Follow IMPROVE.md exactly — it is the authoritative spec, governed by the
-            self_improvement block in config.json.
+            self_improvement block in config.json. This run's mode is "${{ steps.plan.outputs.mode }}"
+            (in first_week_intensive, iterate harder and lower the severity bar).
             CRITICAL: never modify, merge, rescore, recategorize, or delete any FROZEN
             record (slug in data/stars.json, or starred/locked true). Only AUTO-apply
             operations listed in self_improvement.safe_auto; write everything in

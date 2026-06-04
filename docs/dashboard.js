@@ -448,10 +448,15 @@ async function renderNews() {
 function renderDynamicTab(id) {
   const t = state.dynamicTabs.find(x => x.id === id);
   if (!t) return view.innerHTML = empty("This tab is no longer available.");
-  let html = `<div class="card"><h3>${esc(t.title || t.id)}</h3>
+  const isNew = tabIsNew(t);
+  const evCount = (t.evidence_video_ids || []).length;
+  const newUntil = (t.badge_until || "").slice(0, 10);
+  let html = `<div class="card"${isNew ? ' style="border-color:#2b4a7a;box-shadow:inset 3px 0 0 var(--accent)"' : ""}>
+    <h3>${isNew ? '<span class="newbadge">NEW</span> ' : ""}${esc(t.title || t.id)}</h3>
     <div class="sub">${esc(t.description || "")}</div>
-    <p class="hint">Auto-created from a recurring trend across ${(t.evidence_video_ids || []).length}
-    videos. Not useful? Dismiss it from the offline MCP:
+    <p class="hint">Auto-created from a recurring sequence spotted across ${evCount}
+    video${evCount === 1 ? "" : "s"} during the first days of tracking.${isNew && newUntil ? ` Marked NEW until ${esc(newUntil)}.` : ""}
+    Not useful? Dismiss it from the offline MCP:
     <code class="cmd">dismiss_dynamic_tab("${esc(t.id)}")</code>.</p></div>`;
   const items = t.items || [];
   html += items.length ? items.map(it => `<div class="card">
@@ -463,18 +468,27 @@ function renderDynamicTab(id) {
   view.innerHTML = html;
 }
 
-// Add a nav button for each active dynamic tab (with a NEW badge if just created).
+// A dynamic tab wears its NEW badge until `badge_until` (the improve stage sets
+// it to created_at + new_badge_days). Fall back to created_at + 7 days for tabs
+// written before badge_until existed. The badge auto-expires — no human action.
+function tabIsNew(t) {
+  const until = Date.parse(t.badge_until || "");
+  if (!isNaN(until)) return Date.now() < until;
+  const created = Date.parse(t.created_at || "");
+  if (!isNaN(created)) return Date.now() < created + 7 * 24 * 3600 * 1000;
+  return false;
+}
+
+// Add a nav button for each active dynamic tab (with a NEW badge if still fresh).
 function injectDynamicTabs() {
   const nav = document.getElementById("tabs");
   if (!nav) return;
   nav.querySelectorAll("[data-dyntab]").forEach(b => b.remove());
-  const weekAgo = Date.now() - 7 * 24 * 3600 * 1000;
   state.dynamicTabs.forEach(t => {
-    const isNew = Date.parse(t.created_at || "") >= weekAgo;
     const btn = document.createElement("button");
     btn.dataset.tab = "dyn:" + t.id;
     btn.dataset.dyntab = t.id;
-    btn.innerHTML = esc(t.title || t.id) + (isNew ? ' <span class="newbadge">NEW</span>' : "");
+    btn.innerHTML = esc(t.title || t.id) + (tabIsNew(t) ? ' <span class="newbadge">NEW</span>' : "");
     btn.addEventListener("click", () => show(btn.dataset.tab));
     nav.appendChild(btn);
   });
@@ -525,10 +539,12 @@ function renderConnectors(data) {
 
 // ── Tab: Self-Improvement (health + suggestion queue + audit) ─────────────────
 async function renderSelfImprove() {
-  const [health, sugData, apprData, audit, starsData] = await Promise.all([
-    load("health.json"), load("improvement_suggestions.json"),
-    load("approvals.json"), load("improvement_audit.json"), load("stars.json"),
-  ]);
+  const [health, sugData, apprData, audit, starsData, selfCheck, fixTasks, review] =
+    await Promise.all([
+      load("health.json"), load("improvement_suggestions.json"),
+      load("approvals.json"), load("improvement_audit.json"), load("stars.json"),
+      load("self_check.json"), load("improvement_tasks.json"), load("review_findings.json"),
+    ]);
   let html = "";
 
   // Announcement when the self-improvement stage auto-created a new dashboard tab.
@@ -558,6 +574,85 @@ async function renderSelfImprove() {
     html += `</div>`;
   } else {
     html += `<div class="card"><h3>Data health</h3>${empty("No health report yet — runs every few days, or force it with the MCP tool run_improve().")}</div>`;
+  }
+
+  // Reference self-check — how well the system still matches the user's original
+  // "System Prompt" spec (docs/REFERENCE_SPEC.md). The improve stage re-answers all
+  // 50 questions each run and opens a fix task for every gap (loop closes itself).
+  if (selfCheck && selfCheck.ran_at) {
+    const sTotal = Number(selfCheck.total ?? 50);
+    const sCount = Number(selfCheck.score ?? 0);
+    const pct = sTotal ? Math.round((sCount / sTotal) * 100) : 0;
+    const scls = pct >= 80 ? "good" : pct >= 50 ? "warn" : "bad";
+    html += `<div class="card"><h3>Reference self-check</h3>
+      <div class="health"><div class="big ${scls}">${esc(selfCheck.score ?? "?")}<span style="font-size:18px">/${esc(sTotal)}</span></div>
+      <div><div class="sub">Last checked ${esc(selfCheck.ran_at)} · ${esc(selfCheck.improvements_logged ?? 0)} improvements logged</div>
+      <p class="hint">Each run re-answers the ${esc(sTotal)} questions from the original System Prompt spec
+      (<code class="cmd">docs/REFERENCE_SPEC.md</code>) and opens a fix task for every gap.</p></div></div>`;
+    const flagged = (selfCheck.results || []).filter(r =>
+      /\b(no|partial|missing|gap|todo)\b/i.test(String(r.answer || "")));
+    if (flagged.length) {
+      html += `<p><b>Gaps found (${flagged.length}):</b></p>` +
+        flagged.slice(0, 12).map(r =>
+          `<div class="sug"><b>Q${esc(r.n)}</b> <span class="sub">${esc(r.question || "")}</span>
+           <p>${esc(r.answer || "")}${r.evidence ? ` <span class="sub">— ${esc(r.evidence)}</span>` : ""}</p></div>`).join("");
+    }
+    html += `</div>`;
+  }
+
+  // Open self-check fix tasks (Step 1b auto-applies the safe ones next run).
+  const tasks = ((fixTasks && fixTasks.tasks) || []).filter(t => (t.status || "open") !== "done");
+  if (tasks.length) {
+    html += `<div class="card"><h3>Self-check fix tasks (${tasks.length} open)</h3>
+      <p class="hint">The next self-improvement run auto-applies the safe fixes and queues the rest for your approval.</p>` +
+      tasks.slice(0, 15).map(t =>
+        `<div class="sug"><span class="stat st-${esc(t.kind || "needs_approval")}">${esc((t.kind || "task").replace(/_/g, " "))}</span>
+         <b>Q${esc(t.n)}</b> <p>${esc(t.fix || "")}</p></div>`).join("") + `</div>`;
+  }
+
+  // 3-agent review (usability / cut-the-bullshit / deep code bugs) — Claude first,
+  // then an external engine + CodeQL. Read-only summary of data/review_findings.json.
+  if (review && ((review.scores && Object.keys(review.scores).length) || (review.findings || []).length)) {
+    const sc = review.scores || {};
+    const dim = (k, label) => sc[k] != null
+      ? `<span class="metric"><b>${esc(sc[k])}</b>/10 ${esc(label)}</span>` : "";
+    html += `<div class="card"><h3>Latest review <span class="sub">(${esc(review.mode || "weekly")} · ${esc(review.generated_at || "?")})</span></h3>
+      <div class="metrics">${dim("usability", "usability")}${dim("cut_the_bullshit", "cut the bullshit")}${dim("deep_code_bugs", "deep code bugs")}` +
+      (sc.overall != null ? `<span class="metric"><b>${esc(sc.overall)}</b>/10 overall</span>` : "") + `</div>`;
+    const rv = review.reviewers || {};
+    const rbits = [];
+    if (rv.claude) rbits.push(`Claude ${rv.claude.ok === false ? "…" : "✓"}`);
+    if (rv.external) rbits.push(`${esc(rv.external.provider || "external")}: ${esc(rv.external.status || "pending")}`);
+    if (rv.codeql) rbits.push(`CodeQL: ${esc(rv.codeql.status || "—")}`);
+    if (rbits.length) html += `<div class="sub">Reviewers — ${rbits.join(" · ")}</div>`;
+    if ((review.top_actions || []).length)
+      html += `<p><b>Top actions:</b></p><ul>${review.top_actions.map(a => `<li>${esc(a)}</li>`).join("")}</ul>`;
+    html += `</div>`;
+
+    // Competitor benchmark (usability vs Future Tools / TAAFT / Toolify / Product Hunt AI)
+    const bm = review.benchmark || {};
+    if ((bm.we_do_better || []).length || (bm.they_do_better || []).length || (bm.borrow_next || []).length) {
+      const col = (title, arr) => `<div><div class="sub"><b>${esc(title)}</b></div>` +
+        ((arr || []).length ? `<ul>${arr.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : `<p class="sub">—</p>`) + `</div>`;
+      html += `<div class="card"><h3>Competitor benchmark</h3>
+        ${(bm.competitors || []).length ? `<div class="sub">vs ${(bm.competitors || []).map(esc).join(", ")}</div>` : ""}
+        <div class="bench">${col("We do better", bm.we_do_better)}${col("They do better", bm.they_do_better)}${col("Borrow next", bm.borrow_next)}</div></div>`;
+    }
+
+    // Open findings across all three dimensions (external-added ones are tagged).
+    let finds = (review.findings || []).filter(f => (f.status || "open") === "open");
+    if (q()) finds = finds.filter(f => hit(f.dimension, f.detail, f.where, f.suggestion, f.area));
+    if (finds.length) {
+      const sevRank = { high: 0, med: 1, low: 2 };
+      finds.sort((a, b) => (sevRank[a.severity] ?? 3) - (sevRank[b.severity] ?? 3));
+      html += `<div class="card"><h3>Open review findings (${finds.length})</h3>` +
+        finds.slice(0, 25).map(f =>
+          `<div class="sug"><span class="stat st-${esc(f.severity || "low")}">${esc(f.severity || "?")}</span>
+           <b>${esc((f.dimension || "").replace(/_/g, " "))}</b>
+           <span class="sub">${esc(f.where || "")}${f.source === "external" ? " · external" : ""}</span>
+           <p>${esc(f.detail || "")}</p>
+           ${f.suggestion ? `<p class="sub">Fix: ${esc(f.suggestion)}</p>` : ""}</div>`).join("") + `</div>`;
+    }
   }
 
   // Suggestion queue (approve/dismiss are done from the MCP server — read-only here)

@@ -1,0 +1,48 @@
+name: CodeQL (deep code scan)
+
+# The automated "deep code-bug researcher" arm of the review stage (REVIEW.md
+# dimension: deep_code_bugs). CodeQL is GitHub's static analyzer — FREE for public
+# repos — and surfaces real bugs + security issues (crashes, injection, secret
+# leaks) in the Security tab. The Claude reviewer reads these alerts and
+# corroborates them. No tokens, no human setup beyond this file.
+on:
+  push:
+    branches: [main]
+    paths:                     # only re-scan when code actually changes
+      - "src/**"
+      - "docs/**.js"
+      - ".github/workflows/**"
+  schedule:
+    - cron: "0 22 * * 6"       # weekly, just before the Saturday-night review pass
+  workflow_dispatch:
+
+concurrency:
+  group: skills-tracker-codeql-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      security-events: write   # upload CodeQL results to the Security tab
+      actions: read
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        # Interpreted languages — no build step needed.
+        language: [python, javascript-typescript]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-and-quality   # broader than default: bugs + quality + security
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"

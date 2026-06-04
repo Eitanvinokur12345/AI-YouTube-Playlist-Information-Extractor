@@ -1,0 +1,144 @@
+name: Review (3 agents)
+
+# Quality-gate stage: three independent reviewers inspect the whole system and
+# write data/review_findings.json. Claude goes FIRST (reads REVIEW.md, uses the
+# free Pro/Max subscription token), then src/external_review.py asks a DIFFERENT
+# engine (Gemini free tier) for a second opinion (graceful-skip if no key). The
+# automated deep-code arm is CodeQL (codeql.yml). Separate from analyze/improve.
+#
+#   • Weekly deep pass — Saturday 23:00 UTC (~night Israel time, Sun 01:00-02:00).
+#   • First-week intensive — also every other night, but only while we're inside
+#     the first week (guarded; no-ops cheaply afterwards).
+# All free: public-repo Actions + your subscription token + a free external tier.
+on:
+  schedule:
+    - cron: "0 23 * * 6"     # weekly deep pass (always runs)
+    - cron: "0 23 * * 0-5"   # first-week intensive (guard makes it no-op after week 1)
+  workflow_dispatch:
+
+concurrency:
+  group: skills-tracker-review
+  cancel-in-progress: false
+
+permissions:
+  contents: write   # commit data/ findings back to the repo
+  id-token: write   # OIDC token required by claude-code-action
+  security-events: read   # let the code reviewer read CodeQL alerts if present
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      # Decide whether to run. The weekly (Saturday) slot and manual dispatch
+      # always run. The daily slot only runs during the first week, and stamps
+      # data/review_state.json on the very first run so the window is anchored.
+      - name: Plan this run (weekly vs first-week intensive)
+        id: plan
+        env:
+          SCHEDULE: ${{ github.event.schedule }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os, datetime, pathlib
+          cfg = {}
+          try: cfg = json.load(open("config.json"))
+          except Exception: pass
+          review = cfg.get("review", {}) or {}
+          fw = (cfg.get("cadence", {}) or {}).get("first_week", {}) or {}
+          enabled = bool(review.get("enabled", True))
+          schedule = os.environ.get("SCHEDULE", "")
+          event = os.environ.get("EVENT", "")
+          weekly = (schedule == "0 23 * * 6")
+          daily  = (schedule == "0 23 * * 0-5")
+          now = datetime.datetime.now(datetime.timezone.utc)
+          # anchor the first-week window in data/ (not config) on first ever run
+          p = pathlib.Path("data/review_state.json")
+          try: st = json.loads(p.read_text(encoding="utf-8"))
+          except Exception: st = {}
+          if not st.get("first_run_at"):
+              st["first_run_at"] = now.isoformat()
+              p.parent.mkdir(parents=True, exist_ok=True)
+              p.write_text(json.dumps(st, indent=2), encoding="utf-8")
+          first_run = datetime.datetime.fromisoformat(st["first_run_at"])
+          within_first_week = bool(fw.get("enabled", True)) and (now - first_run).days < 7
+          mode = "first_week_intensive" if within_first_week else "weekly"
+          if not enabled:
+              run = False
+          elif event == "workflow_dispatch" or weekly:
+              run = True
+          elif daily:
+              run = within_first_week     # intensive only during week one
+          else:
+              run = False
+          print(f"run={'true' if run else 'false'}")
+          print(f"mode={mode}")
+          PY
+          echo "Plan: run + mode written to outputs."
+
+      - name: Claude review (usability, cut-the-bullshit, deep code bugs)
+        id: claude
+        if: steps.plan.outputs.run == 'true'
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN_REAL }}
+          claude_args: '--allowedTools "Bash,Edit,Write,Read,Glob,Grep,WebFetch,WebSearch,TodoWrite"'
+          prompt: |
+            Run the REVIEW stage of the YouTube Skills Tracker.
+            Follow REVIEW.md exactly — it is the authoritative spec, governed by the
+            review block in config.json. This run's mode is "${{ steps.plan.outputs.mode }}".
+            Review the system across the three dimensions (usability with a competitor
+            benchmark, cut-the-bullshit, deep code bugs), and write the scores, benchmark,
+            findings, and top_actions to data/review_findings.json. You may use WebFetch /
+            WebSearch to look at the competitor sites for usability inspiration. Do NOT edit
+            skills/tools/dashboard content — only write findings (and optionally suggestions
+            to data/improvement_suggestions.json for the user to approve). Never modify a
+            frozen record (data/stars.json). Commit when done.
+
+      # Second opinion from a DIFFERENT engine. Graceful-skip if the (free) key is
+      # absent or the call fails — never fails the run, never blocks Claude's review.
+      - name: External second opinion (Gemini, graceful-skip)
+        if: steps.plan.outputs.run == 'true'
+        env:
+          EXTERNAL_REVIEW_API_KEY: ${{ secrets.EXTERNAL_REVIEW_API_KEY }}
+        run: |
+          python3 -m src.external_review || echo "external review skipped/non-fatal"
+
+      # Record review health for the dashboard (same pattern as analyze.yml).
+      - name: Record review health
+        if: always()
+        env:
+          OUTCOME: ${{ steps.claude.outcome }}
+          RUN: ${{ steps.plan.outputs.run }}
+        run: |
+          python3 - <<'PY'
+          import json, os, pathlib, datetime
+          p = pathlib.Path("data/status.json")
+          try: st = json.loads(p.read_text(encoding="utf-8"))
+          except Exception: st = {}
+          outcome = os.environ.get("OUTCOME", "")
+          now = datetime.datetime.utcnow().isoformat() + "Z"
+          if os.environ.get("RUN") == "true":
+              st["review_ok"] = (outcome in ("success", "", "skipped"))
+              if outcome == "success":
+                  st["last_review_ok_at"] = now
+          p.parent.mkdir(parents=True, exist_ok=True)
+          p.write_text(json.dumps(st, indent=2, ensure_ascii=False), encoding="utf-8")
+          print("review_ok:", st.get("review_ok"), "outcome:", outcome)
+          PY
+
+      - name: Commit any remaining changes
+        if: always()
+        run: |
+          git config user.name "skills-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data docs 2>/dev/null || true
+          git commit -m "review: findings $(date -u +%Y-%m-%dT%H:%MZ)" \
+            || echo "nothing to commit"
+          git pull --rebase --autostash origin main || true
+          git push || echo "push skipped"

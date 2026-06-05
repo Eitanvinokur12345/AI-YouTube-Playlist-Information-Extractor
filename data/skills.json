@@ -2116,6 +2116,48 @@
       ],
       "video_quality_score": 3,
       "low_quality_source": true
+    },
+    {
+      "skill_name": "Claude Code Dynamic Workflows",
+      "slug": "claude-code-dynamic-workflows",
+      "category": "agents",
+      "description": "Claude Code's dynamic workflow feature lets Claude write a JavaScript control program that spawns, coordinates, and verifies multiple sub-agents for a complex task. Instead of one monolithic agent context, work is distributed across focused sub-agents that can use different models, worktrees, and verification loops.",
+      "use_case": "Handling long, complex, or adversarial coding tasks such as flaky test fixes, large refactors, claim verification, source-heavy research, rankings, and tournaments",
+      "output": "A synthesized result from multiple coordinated sub-agents, each assigned a focused job",
+      "quality_score": 8,
+      "model_version": "Opus 4.8",
+      "company": "Anthropic",
+      "country": "USA",
+      "open_source": false,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "Opus 4.8"
+        }
+      ],
+      "multi_tool": false,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=PTpKj5t7xI8",
+      "source_video_id": "PTpKj5t7xI8",
+      "tips": [
+        "Use dynamic workflows for tasks that are long, messy, adversarial, or need independent checks — not for every bug fix.",
+        "Dynamic workflows can choose which model each sub-agent uses, allowing cost/performance tradeoffs per sub-task.",
+        "Use separate worktrees per sub-agent to isolate changes and enable parallel execution without conflict."
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "Distinguish between one-off subagent helpers and a dynamic workflow control system — the control system decides order, loops, and synthesis.",
+        "Have agents verify other agents as an independent check layer, especially for adversarial or accuracy-critical tasks."
+      ],
+      "relevance": "Dynamic workflows represent a leap in autonomous coding capability, enabling Claude to self-organize multi-agent pipelines for tasks that exceed what a single context window can handle reliably.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "PTpKj5t7xI8"
+      ],
+      "video_quality_score": 8,
+      "low_quality_source": false
     }
   ]
 }

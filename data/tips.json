@@ -7,7 +7,10 @@
       "Add the UI/UX Pro Max design skill so Claude reasons about layout instead of guessing.",
       "Use a comprehensive skill/sub-agent setup (181 skills, 47 sub-agents) to accelerate complex software projects dramatically",
       "Use a shared spec file to coordinate multiple Claude Code agents working on different phases of the same workflow",
-      "Separate writer and publisher agent responsibilities so each agent has a focused, reliable scope"
+      "Separate writer and publisher agent responsibilities so each agent has a focused, reliable scope",
+      "Use dynamic workflows for tasks requiring independent verification, parallel sub-tasks, or adversarial checks — not for routine bug fixes.",
+      "Let each sub-agent in a dynamic workflow use the most cost-effective model for its specific job.",
+      "Use separate worktrees per sub-agent to enable safe parallel execution without merge conflicts."
     ],
     "Claude": [
       "Add Nano Banana as a Claude skill plus a Google AI Studio API key to generate and edit images from chat with /banana.",
@@ -71,13 +74,16 @@
       "Layer specialized sub-agents (security, memory, session learning) to handle domain-specific tasks within a larger workflow",
       "Use the Goal-Plan-Tools-Execute-Check-Retry-Finish loop as the core design pattern for autonomous AI agents",
       "Use a shared spec or brief file as a coordination layer between specialized agents instead of direct agent-to-agent messaging",
-      "Assign each agent in a pipeline a single phase of responsibility (draft, review, publish) to keep the workflow robust and easy to debug"
+      "Assign each agent in a pipeline a single phase of responsibility (draft, review, publish) to keep the workflow robust and easy to debug",
+      "Distinguish between a one-off subagent helper and a dynamic workflow control system — the control system manages order, loops, and synthesis.",
+      "Have agents verify other agents as an independent check, especially for accuracy-critical or adversarial tasks."
     ],
     "code": [
       "The harness (Cursor, Claude Code, Codex) matters as much as the model - a cheaper model in a better harness can win.",
       "No-code AI app builders (Base 44) can ship a sellable MVP, including payments, without writing code.",
       "Raw model size is no longer the ultimate metric for software engineering automation — benchmark open-weight alternatives against premium models",
-      "Measure token consumption and wall-clock time alongside code quality when evaluating LLMs for production development workflows"
+      "Measure token consumption and wall-clock time alongside code quality when evaluating LLMs for production development workflows",
+      "For large refactors, assign separate sub-agents to individual modules and use a supervisor agent to merge and verify consistency."
     ],
     "parallel tasks": [
       "Spin up background/parallel agent sessions (/agents) so multiple tasks run at once."

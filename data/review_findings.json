@@ -1,10 +1,232 @@
 {
-  "generated_at": null,
-  "mode": "weekly",
-  "reviewers": {},
-  "scores": {},
-  "benchmark": {},
-  "findings": [],
-  "top_actions": [],
-  "history": []
+  "generated_at": "2026-06-05T09:00:00Z",
+  "mode": "first_week_intensive",
+  "reviewers": {
+    "claude": {
+      "ran_at": "2026-06-05T09:00:00Z",
+      "ok": true
+    },
+    "external": {
+      "provider": "gemini",
+      "status": "pending",
+      "reason": ""
+    },
+    "codeql": {
+      "status": "see GitHub Security tab",
+      "alerts_seen": null
+    }
+  },
+  "scores": {
+    "usability": 6,
+    "cut_the_bullshit": 5,
+    "deep_code_bugs": 6,
+    "overall": 6
+  },
+  "benchmark": {
+    "competitors": [
+      "Future Tools",
+      "There's An AI For That",
+      "Toolify",
+      "Product Hunt AI"
+    ],
+    "we_do_better": [
+      "Techniques vs. tools distinction — we separate reusable methods (Skills) from products (Tools), which no competitor does; this is uniquely valuable for practitioners",
+      "Source transparency — video quality badges, low-quality flags, and endorsement counts let users judge credibility at a glance; competitors show no provenance",
+      "MCP/connector tracking — dedicated Connectors tab covering MCP servers is a niche no competitor addresses",
+      "Live RSS news feed merged with video-sourced news, covering 50+ authoritative AI sources alongside the playlist",
+      "Self-improvement system and open audit trail (merge log, deleted skills, suggestion queue) — competitors are static catalogs that never explain their curation choices",
+      "Fully free, open-source, no ads, no paywall"
+    ],
+    "they_do_better": [
+      "Visual thumbnails and tool logos — Future Tools, Product Hunt AI, and Toolify show product images; our wall of text cards is harder to scan quickly",
+      "Item-count badges per category — Future Tools and TAAFT display count per filter tab; users immediately know scope before clicking",
+      "Simultaneous multi-axis filtering — Toolify lets users filter by category + pricing + rating at once; we only support category filter per tab",
+      "Hero section and featured/trending slots — all four competitors surface a 'start here' section; we drop visitors into an unlabelled card list",
+      "Sort controls — competitors offer newest / top-rated / most-popular sort; our Skills and Tools tabs only sort by quality score with no user control",
+      "User-generated signals — Product Hunt shows upvotes and comments; TAAFT shows verified-user saves; our popularity is editorial (video endorsement counts), not crowd-sourced"
+    ],
+    "borrow_next": [
+      "Add item-count badges to tab buttons (e.g. 'Skills (10)', 'Tools (50)') — one line of JS per tab, high discoverability signal at zero cost",
+      "Add a sort toggle (Quality | Mentions | Newest) to the Skills and Tools tabs — ~15 lines of JS, eliminates the main gap vs Toolify/Future Tools for power users",
+      "Add a 2-sentence 'What is Excavatortron?' tagline beneath the H1, and pin the top-3 starred skills to the top of the Skills tab as a 'Featured' strip — teaches new visitors what they're looking at without a tutorial"
+    ]
+  },
+  "findings": [
+    {
+      "id": "b1c328b3e1",
+      "dimension": "deep_code_bugs",
+      "severity": "high",
+      "area": "engine",
+      "where": "src/analyze_batch.py:20",
+      "detail": "TODAY = datetime(2026, 6, 3, tzinfo=timezone.utc) is hardcoded at module level. The recency penalty function compute_age_months() subtracts video age from this frozen date, so all recency penalties calculated after June 3 2026 are wrong — videos will appear progressively older than they are, inflating penalties and depressing quality scores over time.",
+      "suggestion": "Replace with datetime.now(timezone.utc) (computed inside compute_age_months or at call time, not module level), exactly as src/fetch.py does.",
+      "status": "open"
+    },
+    {
+      "id": "f97aeed26d",
+      "dimension": "deep_code_bugs",
+      "severity": "high",
+      "area": "engine",
+      "where": "src/analyze_batch.py:151-163",
+      "detail": "load_json and save_json open files without encoding='utf-8'. Hebrew transcripts and Unicode tool names (common in this playlist) will cause UnicodeDecodeError/UnicodeEncodeError on non-UTF-8 default-locale runners. src/fetch.py uses encoding='utf-8' consistently; analyze_batch.py does not.",
+      "suggestion": "Add encoding='utf-8' to every open() call in load_json (line 152) and save_json (line 160).",
+      "status": "open"
+    },
+    {
+      "id": "54deb8c37c",
+      "dimension": "cut_the_bullshit",
+      "severity": "high",
+      "area": "data",
+      "where": "data/tools.json — slug: anthropic",
+      "detail": "\"Anthropic\" is catalogued as a tool (6/10, 73× mentions) with the description \"Anthropic is an AI tool by Anthropic. It enhances productivity through AI-powered features and automation.\" Anthropic is the company, not a product. Its tool-card is misleading and inflates the tools count with a non-tool entry.",
+      "suggestion": "Remove the 'anthropic' tool entry; fold its endorsement_video_ids into the 'claude' tool entry (Anthropic's product). Add to improvement_suggestions.json as a safe_auto merge.",
+      "status": "open"
+    },
+    {
+      "id": "0a470a1a0b",
+      "dimension": "cut_the_bullshit",
+      "severity": "high",
+      "area": "data",
+      "where": "data/tools.json — slug: openai",
+      "detail": "\"Openai\" is catalogued as a tool (6/10, 45× mentions) with the same generic description. OpenAI is the company; its relevant products (ChatGPT, DALL-E, GPT-4) already have their own entries. Having 'openai' as a separate tool creates confusion and duplicate credit.",
+      "suggestion": "Remove the 'openai' tool entry; fold its endorsement_video_ids into 'chatgpt'. Raise a suggestion for the improve stage to auto-merge.",
+      "status": "open"
+    },
+    {
+      "id": "299e0a6c6b",
+      "dimension": "cut_the_bullshit",
+      "severity": "high",
+      "area": "data",
+      "where": "data/tools.json — top 10 entries by mention count",
+      "detail": "At least 6 of the top 10 most-mentioned tools share an identical description template: 'X is an AI tool by Y. It enhances productivity through AI-powered features and automation.' The most-mentioned tool (Claude, 396×) has this filler description. This is the first thing new visitors see and it destroys trust.",
+      "suggestion": "The improve stage should regenerate descriptions for all tools whose description matches the template pattern 'enhances productivity through AI-powered features and automation'. These are low-value auto-generated strings that should be replaced with one-sentence factual descriptions from the actual transcripts.",
+      "status": "open"
+    },
+    {
+      "id": "6d21c57d7c",
+      "dimension": "cut_the_bullshit",
+      "severity": "med",
+      "area": "data",
+      "where": "data/weekly_news.json + monthly_news.json",
+      "detail": "52 news entries (1 daily + 22 weekly + 29 monthly) have empty summaries, causing the UI to show '(summary pending)' — which reads as a pipeline failure to users. These are older videos that were classified before the summary-fill logic ran.",
+      "suggestion": "The improve stage's fill_missing_summaries safe_auto module should back-fill these from the stored transcript/description. As a quick win, a one-pass script can fill them from the pending records or existing processed records.",
+      "status": "open"
+    },
+    {
+      "id": "687071aa61",
+      "dimension": "deep_code_bugs",
+      "severity": "med",
+      "area": "engine",
+      "where": "src/analyze_batch.py:635-662",
+      "detail": "MCP connector detection uses a hardcoded list of only 8 specific string patterns (filesystem, browser, github, postgres, sqlite, memory, slack, google drive). Any other MCP server mentioned in a video — including custom, Smithery-hosted, or community servers — is silently ignored. CLAUDE.md Step 8 specifies exhaustive MCP hunting; the batch analyzer provides almost none.",
+      "suggestion": "Broaden detection: capture any pattern matching 'npx .+-mcp', 'uvx .+-mcp', 'mcpServers', 'smithery', or 'mcp.so' in the text as a generic MCP connector, extracting the name from the matched string. Append detected connectors with fields derived from context rather than a static lookup table.",
+      "status": "open"
+    },
+    {
+      "id": "1b7360b612",
+      "dimension": "deep_code_bugs",
+      "severity": "med",
+      "area": "engine",
+      "where": "src/analyze_batch.py:600-613",
+      "detail": "Slash-command regex r'/[a-z][a-z0-9_-]{1,20}\\b' matches URL path segments (/api, /v1, /s3), common prose slashes, and file paths. The exclusion list (line 601) only blocks 14 single-character tokens. Over a playlist of 900+ videos this will accumulate false-positive commands in commands.json.",
+      "suggestion": "Add a context requirement: only record a slash command if it appears adjacent to known AI tool names (Claude Code, claude, /terminal) or follows a clear command-demonstration phrase ('run /...', 'type /...', 'use the /... command'). Also extend the blocklist to common path prefixes (/api, /v1, /v2, /src, /static, /docs).",
+      "status": "open"
+    },
+    {
+      "id": "cdc160ca68",
+      "dimension": "cut_the_bullshit",
+      "severity": "med",
+      "area": "data",
+      "where": "data/tools.json — name: Chatgpt",
+      "detail": "The tool is stored as \"Chatgpt\" (wrong casing) instead of the correct brand name \"ChatGPT\". This is the 3rd most-mentioned tool and the casing error appears in the dashboard for every visitor.",
+      "suggestion": "Rename name to 'ChatGPT' and update slug to 'chatgpt' (slug already correct). One-line fix in data/tools.json.",
+      "status": "open"
+    },
+    {
+      "id": "d1bda56635",
+      "dimension": "deep_code_bugs",
+      "severity": "med",
+      "area": "engine",
+      "where": "src/fetch.py:86",
+      "detail": "fetch_playlist_videos calls request.execute() with no retry or error handling for YouTube API quota exhaustion (HttpError 429/503). If the quota is hit mid-pagination (playlist has 976 items across ~20 pages), the function raises an unhandled exception and the entire fetch run fails, leaving all new videos un-fetched until the next cron.",
+      "suggestion": "Wrap request.execute() in a retry loop with exponential backoff for 429/503, up to 3 attempts, before re-raising. The googleapiclient library provides MediaUploadError/HttpError with .resp.status for this check.",
+      "status": "open"
+    },
+    {
+      "id": "11ed6f494c",
+      "dimension": "usability",
+      "severity": "med",
+      "area": "dashboard",
+      "where": "docs/dashboard.js:303 (renderTools)",
+      "detail": "The most-mentioned tool (Claude, 396×) is shown with a generic template description as the first card on the Tools tab. The highest-traffic entry in the catalog communicates no actual information about Claude.",
+      "suggestion": "Fix the source data (replace template descriptions) AND add a UI guard: if a tool description matches the known template pattern, show a 'Description pending' pill instead of the filler text to signal incompleteness rather than false completeness.",
+      "status": "open"
+    },
+    {
+      "id": "472d907c52",
+      "dimension": "usability",
+      "severity": "med",
+      "area": "dashboard",
+      "where": "docs/index.html — nav tab buttons",
+      "detail": "Tab buttons show no item count. Competitors (Future Tools, TAAFT) display per-category counts that give visitors an immediate sense of catalog scale and density before clicking. Absence makes the tabs feel like placeholders.",
+      "suggestion": "After loading each tab's data in the init() async block, inject item counts into the nav buttons: e.g. 'Skills (10)', 'Tools (50)', 'Connectors (7)'. ~10 lines of JS.",
+      "status": "open"
+    },
+    {
+      "id": "18eea5091e",
+      "dimension": "usability",
+      "severity": "med",
+      "area": "dashboard",
+      "where": "docs/dashboard.js:262-264 (renderSkills) and :310 (renderTools)",
+      "detail": "Skills and Tools tabs have no sort control. Users can only filter by category; they cannot sort by newest, by mentions, or reverse quality order. All four benchmark competitors offer multi-axis sort.",
+      "suggestion": "Add a sort <select> or pill-toggle above the card list: Quality (default) | Mentions | Newest. Implement as a client-side sort on the already-loaded array — no extra fetch needed. ~20 lines of JS.",
+      "status": "open"
+    },
+    {
+      "id": "c1cd6da041",
+      "dimension": "usability",
+      "severity": "low",
+      "area": "dashboard",
+      "where": "docs/index.html — header section",
+      "detail": "No hero tagline or onboarding copy explains what Excavatortron is. First-time visitors see 'Excavatortron — AI Skills Tracker' and then a search box and cards with no context. All four competitors have a 2-3 sentence value proposition above the fold.",
+      "suggestion": "Add one sentence beneath the subtitle: 'Tracks AI techniques, tools, models, and MCP connectors extracted from a curated YouTube playlist — updated automatically, quality-scored, and searchable.' Costs zero developer effort, permanently fixes first-impression clarity.",
+      "status": "open"
+    },
+    {
+      "id": "3d36b750ae",
+      "dimension": "deep_code_bugs",
+      "severity": "low",
+      "area": "workflow",
+      "where": ".github/workflows/analyze.yml:131 and review.yml:126",
+      "detail": "Inline Python in both workflows uses datetime.datetime.utcnow() which is deprecated in Python 3.12+ and will emit DeprecationWarning. When GitHub Actions upgrades the ubuntu-latest Python to 3.13+, this may become a hard error.",
+      "suggestion": "Replace datetime.datetime.utcnow().isoformat() + 'Z' with datetime.datetime.now(datetime.timezone.utc).isoformat() in both workflow inline scripts.",
+      "status": "open"
+    },
+    {
+      "id": "57642db81e",
+      "dimension": "deep_code_bugs",
+      "severity": "low",
+      "area": "security",
+      "where": "docs/dashboard.js:185",
+      "detail": "renderAlert builds el.innerHTML = msg where msg contains raw HTML tags hardcoded in JS alongside esc(status.token_hint). The esc() call protects the dynamic value, but the pattern (mixing safe-markup with partially-escaped content) is fragile — a future maintainer adding another dynamic field may forget esc() and introduce stored XSS. Data comes from repo-committed JSON (low external risk), but the pattern is worth fixing.",
+      "suggestion": "Build the alert using DOM methods (createElement, textContent) rather than innerHTML, or create a dedicated safe-template function that always escapes dynamic values and keeps static HTML separate.",
+      "status": "open"
+    }
+  ],
+  "top_actions": [
+    "Fix the hardcoded TODAY date in src/analyze_batch.py:20 — it corrupts all recency penalty calculations for new videos after June 3 2026. One-line fix with high correctness impact.",
+    "Replace the 6+ generic template tool descriptions ('enhances productivity through AI-powered features and automation') for the top-mentioned tools — these are the first entries visitors see and they destroy credibility. Particularly Claude (396×), ChatGPT (110×), and Gemini (52×).",
+    "Remove 'anthropic' and 'openai' as separate tool entries — they are companies, not products, and their mention counts inflate the tools catalog with misleading non-tools. Merge their endorsement_video_ids into 'claude' and 'chatgpt' respectively.",
+    "Add encoding='utf-8' to all open() calls in src/analyze_batch.py — Hebrew transcripts already in the pipeline will cause silent UnicodeError failures on non-UTF-8 runners.",
+    "Back-fill the 52 empty news summaries via the improve stage's fill_missing_summaries module — '(summary pending)' in the news feed looks like a broken pipeline to users."
+  ],
+  "history": [
+    {
+      "date": "2026-06-05",
+      "usability": 6,
+      "cut_the_bullshit": 5,
+      "deep_code_bugs": 6,
+      "overall": 6
+    }
+  ]
 }

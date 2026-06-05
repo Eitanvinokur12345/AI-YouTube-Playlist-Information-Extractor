@@ -1,0 +1,79 @@
+{
+  "suggestions": [
+    {
+      "id": "8140b97fbc",
+      "type": "engine_fix",
+      "status": "pending",
+      "detail": "Fix hardcoded TODAY date in src/analyze_batch.py line 20 — currently frozen at 2026-06-03, corrupting all recency penalty calculations for future videos. Replace with datetime.now(timezone.utc).",
+      "proposed_change": {
+        "file": "src/analyze_batch.py",
+        "line": 20,
+        "old": "TODAY = datetime(2026, 6, 3, tzinfo=timezone.utc)",
+        "new": "# TODAY is computed at call time inside compute_age_months; this module-level var is removed"
+      },
+      "source": "review",
+      "review_finding_id": "b1c328b3e1",
+      "severity": "high"
+    },
+    {
+      "id": "b9bfdaf0ef",
+      "type": "data_hygiene",
+      "status": "pending",
+      "detail": "Remove 'anthropic' and 'openai' tool entries from data/tools.json — these are company names mistakenly catalogued as tools. Merge their endorsement_video_ids into the 'claude' and 'chatgpt' tool entries respectively, then recompute mentions.",
+      "proposed_change": {
+        "files": ["data/tools.json"],
+        "action": "delete_slugs",
+        "slugs": ["anthropic", "openai"],
+        "merge_endorsements_into": {"anthropic": "claude", "openai": "chatgpt"}
+      },
+      "source": "review",
+      "review_finding_id": "54deb8c37c",
+      "severity": "high"
+    },
+    {
+      "id": "253d755074",
+      "type": "data_hygiene",
+      "status": "pending",
+      "detail": "Fix tool name casing: 'Chatgpt' should be 'ChatGPT' in data/tools.json. The tool slug 'chatgpt' is correct; only the display name field needs correction.",
+      "proposed_change": {
+        "file": "data/tools.json",
+        "action": "rename_field",
+        "slug": "chatgpt",
+        "field": "name",
+        "old_value": "Chatgpt",
+        "new_value": "ChatGPT"
+      },
+      "source": "review",
+      "review_finding_id": "cdc160ca68",
+      "severity": "med"
+    },
+    {
+      "id": "3693c44f40",
+      "type": "ui_change",
+      "status": "pending",
+      "detail": "Add item-count badges to the nav tab buttons after data loads (e.g. 'Skills (10)', 'Tools (50)', 'Connectors (7)'). Gives visitors immediate sense of catalog scale — currently tabs look empty before clicking.",
+      "proposed_change": {
+        "file": "docs/dashboard.js",
+        "area": "init() async block and/or show() function",
+        "description": "After loading skills.json, tools.json, and connectors.json in the init block, update the matching nav button's innerHTML to include a count: e.g. btn.innerHTML = 'Skills <span style=\"font-size:11px;opacity:.7\">(' + (data.skills||[]).length + ')</span>'"
+      },
+      "source": "review",
+      "review_finding_id": "472d907c52",
+      "severity": "med"
+    },
+    {
+      "id": "72e04d9c61",
+      "type": "ui_change",
+      "status": "pending",
+      "detail": "Add a sort toggle ('Quality | Mentions | Newest') to the Skills and Tools tabs. All four benchmark competitors offer multi-axis sort; this is the highest-leverage missing discoverability feature vs. Future Tools and Toolify.",
+      "proposed_change": {
+        "file": "docs/dashboard.js",
+        "area": "renderSkills() and renderTools()",
+        "description": "Add state.skillSort and state.toolSort (default 'quality'). Render pill buttons for Quality/Mentions/Newest above the card list. On click: re-sort the in-memory list by quality_score desc, mentions desc, or max(endorsement_video_ids.publishedAt) desc, then re-render."
+      },
+      "source": "review",
+      "review_finding_id": "18eea5091e",
+      "severity": "med"
+    }
+  ]
+}

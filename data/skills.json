@@ -2032,6 +2032,47 @@
       ],
       "video_quality_score": 6,
       "low_quality_source": false
+    },
+    {
+      "skill_name": "Two-Agent Blog Production Pipeline",
+      "slug": "two-agent-blog-production-pipeline",
+      "category": "agents",
+      "description": "Use two specialized AI agents in sequence to fully automate blog post creation and publishing: one agent drafts content in the author's voice and generates a cover image, while the second agent pushes to the CMS, sets slug and meta tags, rebuilds the cache, and logs the URL. A shared spec file keeps both agents coordinated without direct communication.",
+      "use_case": "Automating the full blog post lifecycle from drafting through publishing with zero manual steps",
+      "output": "A published blog post with cover image, correct CMS metadata, and a logged URL",
+      "quality_score": 5,
+      "model_version": null,
+      "company": null,
+      "country": null,
+      "open_source": false,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": false,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=Mz2wJr-rj4I",
+      "source_video_id": "Mz2wJr-rj4I",
+      "tips": [
+        "Use a shared spec file as the coordination layer between agents so they stay in sync without needing direct agent-to-agent communication",
+        "Separate the writer agent (drafting + image) from the publisher agent (CMS operations) to keep each agent's responsibilities narrow and reliable",
+        "Have the publisher agent log the final URL so there is a verifiable record of each published post"
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "Divide multi-step content workflows across specialized agents, each owning a distinct phase, for more robust and maintainable automation"
+      ],
+      "relevance": "Demonstrates a practical multi-agent workflow pattern for content automation that separates creative and operational concerns across two specialized agents.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "Mz2wJr-rj4I"
+      ],
+      "video_quality_score": 5,
+      "low_quality_source": false
     }
   ]
 }

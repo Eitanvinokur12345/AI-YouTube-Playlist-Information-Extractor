@@ -259,6 +259,115 @@ def extract_links(description: str, denylist: list[str], max_links: int) -> list
     return out
 
 
+# ── "the surroundings": stats, tags, duration, top comments ─────────────────────
+def fetch_video_details(youtube, video_ids: list[str]) -> dict[str, dict]:
+    """
+    Batch `videos.list` (50 IDs/call) to pull what the playlistItems snippet does NOT
+    give us: view/like/comment counts, duration, tags, the AUTHORITATIVE full description
+    (playlistItems can truncate long descriptions), and the YouTube category id.
+
+    Cheap on quota: 1 unit per 50 videos. Returns {video_id: {...}}; missing/private
+    videos are simply absent. Never raises — a failed chunk is logged and skipped.
+    """
+    out: dict[str, dict] = {}
+    if not video_ids:
+        return out
+    for i in range(0, len(video_ids), 50):
+        chunk = video_ids[i : i + 50]
+        try:
+            resp = (
+                youtube.videos()
+                .list(part="statistics,contentDetails,snippet", id=",".join(chunk), maxResults=50)
+                .execute()
+            )
+        except Exception as exc:  # noqa: BLE001 — never let enrichment break the fetch
+            log.warning("videos.list failed for a chunk of %d: %s", len(chunk), exc)
+            continue
+        for item in resp.get("items", []):
+            vid = item.get("id", "")
+            if not vid:
+                continue
+            stats = item.get("statistics", {}) or {}
+            content = item.get("contentDetails", {}) or {}
+            snip = item.get("snippet", {}) or {}
+
+            def _int(v):
+                try:
+                    return int(v)
+                except (TypeError, ValueError):
+                    return None  # likes/comments can be hidden → unknown, not zero
+
+            out[vid] = {
+                "stats": {
+                    "views": _int(stats.get("viewCount")),
+                    "likes": _int(stats.get("likeCount")),
+                    "comments": _int(stats.get("commentCount")),
+                },
+                "duration": content.get("duration", ""),  # ISO-8601, e.g. "PT12M3S"
+                "tags": snip.get("tags", []) or [],
+                "full_description": snip.get("description", "") or "",
+                "category_id": snip.get("categoryId", ""),
+            }
+    return out
+
+
+def fetch_top_comments(youtube, video_id: str, max_comments: int) -> list[dict]:
+    """
+    Pull the most-relevant top-level comments for one video (and the single most-liked
+    creator/other reply per thread when present). Comments routinely hold the REAL tool
+    name, version corrections, pricing, and creator-posted links — i.e. a chunk of
+    "everything the surroundings offer" that the transcript alone misses.
+
+    Graceful by design: comments-disabled, age-restricted, or private videos return [].
+    1 quota unit per call. The transcript is never touched — this is a SEPARATE signal.
+    """
+    if max_comments <= 0:
+        return []
+    out: list[dict] = []
+    try:
+        resp = (
+            youtube.commentThreads()
+            .list(
+                part="snippet,replies",
+                videoId=video_id,
+                order="relevance",
+                maxResults=min(max_comments, 100),
+                textFormat="plainText",
+            )
+            .execute()
+        )
+    except Exception as exc:  # noqa: BLE001 — disabled/age-restricted comments are normal
+        log.info("Comments unavailable for %s: %s", video_id, exc)
+        return []
+    for item in resp.get("items", []):
+        top = (
+            item.get("snippet", {}).get("topLevelComment", {}).get("snippet", {})
+        )
+        if not top:
+            continue
+        entry = {
+            "author": top.get("authorDisplayName", ""),
+            "text": top.get("textDisplay", ""),
+            "likes": int(top.get("likeCount", 0) or 0),
+        }
+        replies = item.get("replies", {}).get("comments", []) or []
+        if replies:
+            best = max(
+                replies,
+                key=lambda r: int(r.get("snippet", {}).get("likeCount", 0) or 0),
+            )
+            rs = best.get("snippet", {})
+            entry["top_reply"] = {
+                "author": rs.get("authorDisplayName", ""),
+                "text": rs.get("textDisplay", ""),
+                "likes": int(rs.get("likeCount", 0) or 0),
+            }
+        out.append(entry)
+        if len(out) >= max_comments:
+            break
+    return out
+
+
 # ── news classification ───────────────────────────────────────────────────────
 def classify_news(videos: list[dict], run_time_utc: datetime) -> tuple[list, list, list]:
     """
@@ -339,6 +448,12 @@ def main() -> None:
     lf_denylist = lf_cfg.get("denylist_domains", [])
     lf_max_links = int(lf_cfg.get("max_links_per_video", 3))
 
+    # "everything the surroundings offer" — stats / tags / duration / top comments
+    ex_cfg = cfg.get("extraction", {}) or {}
+    capture_stats = bool(ex_cfg.get("capture_stats", True))
+    capture_comments = bool(ex_cfg.get("capture_comments", True))
+    max_comments = int(ex_cfg.get("max_comments", 15))
+
     # read API key from env — never hardcode
     api_key = os.environ.get("YOUTUBE_API_KEY", "")
     if not api_key:
@@ -373,6 +488,11 @@ def main() -> None:
         log.info("No new videos found — nothing to process.")
         # still update news classification + status
     else:
+        # One batched videos.list for the whole new set (cheap: 1 unit / 50 videos).
+        details = (
+            fetch_video_details(youtube, [v["video_id"] for v in new_videos])
+            if capture_stats else {}
+        )
         for v in new_videos:
             vid = v["video_id"]
             log.info("Processing video %s: %s", vid, v["title"])
@@ -384,23 +504,41 @@ def main() -> None:
             if source != "transcript":
                 no_transcript_count += 1
 
+            d = details.get(vid, {})
+            # Prefer the authoritative full description from videos.list (playlistItems
+            # can truncate); fall back to the snippet we already have.
+            full_desc = d.get("full_description") or v["description"]
+            top_comments = (
+                fetch_top_comments(youtube, vid, max_comments)
+                if capture_comments else []
+            )
+
             pending_record = {
                 "video_id": vid,
                 "title": v["title"],
-                "description": v["description"],
+                "description": full_desc,
                 "publishedAt": v["publishedAt"],
                 "channel_name": v.get("channel_name", ""),
                 "transcript": transcript,
                 "transcript_lang": lang,
                 "transcript_source": source,
                 "links": (
-                    extract_links(v["description"], lf_denylist, lf_max_links)
+                    extract_links(full_desc, lf_denylist, lf_max_links)
                     if lf_enabled else []
                 ),
+                # "the surroundings" — separate signals; transcript stays verbatim
+                "stats": d.get("stats", {}),
+                "tags": d.get("tags", []),
+                "duration": d.get("duration", ""),
+                "category_id": d.get("category_id", ""),
+                "top_comments": top_comments,
                 "fetched_at": run_time_utc.isoformat(),
             }
             save_json(PENDING_DIR / f"{vid}.json", pending_record)
-            log.info("Wrote pending record for %s (source=%s)", vid, source)
+            log.info(
+                "Wrote pending record for %s (source=%s, comments=%d, views=%s)",
+                vid, source, len(top_comments), d.get("stats", {}).get("views"),
+            )
 
         # update seen IDs
         new_ids = [v["video_id"] for v in new_videos]

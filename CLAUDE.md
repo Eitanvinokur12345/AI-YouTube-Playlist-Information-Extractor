@@ -95,6 +95,11 @@ are analyzed first). Each file contains:
 | `transcript_lang`   | `"en"` / `"he"` / `""` (empty = a description/title fallback)|
 | `transcript_source` | `"transcript"` \| `"description"` \| `"title"`               |
 | `links`             | up to N AI-resource candidate URLs from the description (deny-filtered, may be `[]`) |
+| `stats`             | `{views, likes, comments}` — popularity signal; any value may be `null` (hidden) |
+| `tags`              | YouTube tags (creator keywords); may be `[]`                |
+| `duration`          | ISO-8601 length, e.g. `"PT12M3S"` (a 40-sec Short ≠ a 30-min deep-dive) |
+| `top_comments`      | up to `max_comments` most-relevant comments `{author,text,likes,top_reply?}`; may be `[]` |
+| `category_id`       | YouTube category id (string), may be `""`                   |
 | `fetched_at`        | when the record was created                                  |
 
 If `data/_pending/` is empty, there is nothing to analyze — jump straight to **Step 9**
@@ -196,6 +201,34 @@ is empty, skip this step entirely.
    respect Golden rule #8 (never touch a frozen record).
 
 Everything from this step is committed together with the video in Step 10.
+
+---
+
+## Step 2d — The surroundings (comments, stats, tags)
+
+"Extract everything the video **and its surroundings** offer." Three extra signals now ride
+along on every pending record. Use them — but **never** fold them into the verbatim
+transcript or let them invent facts.
+
+1. **`top_comments` — mine for substance.** Comments routinely carry the *real* tool name,
+   a version correction ("that's Veo **3**, not 2"), pricing, a missing link, or a creator
+   reply naming what they used. Treat a comment as evidence ONLY when it is specific and
+   corroborated (high-liked, or a creator/author reply, or it matches the transcript). From
+   them you may: correct a tool's `model_version`/name, add a `tip`, capture a `/command`,
+   add a connector, or seed a `links`-style URL (run it through Step 2c's relevance test).
+   Tag anything that exists *only* because of a comment with `discovered_via: "video_comment"`.
+   Ignore spam, praise, self-promo, and unverifiable claims.
+2. **`stats` — popularity, not quality.** Use `views`/`likes` as a *tie-breaker and
+   endorsement* signal, never as the main score (a viral Short can be shallow; a 2k-view
+   deep-dive can be excellent). High engagement may nudge `quality_score` by at most +1 when
+   the content already earns it, and counts toward `require_cited_popularity` for star
+   proposals. Carry a compact `popularity` note onto records when notable (e.g. `"312k views"`).
+3. **`tags` + `duration` + `category_id` — context.** Tags help disambiguate the tool/topic
+   and feed `index.json`. Duration sanity-checks depth (a `PT0M45S` Short rarely supports a
+   9–10 content rating; factor into Step 2b). Category is a weak hint only.
+
+If a field is empty/`null` (comments disabled, hidden likes, older record without these
+fields), just skip it — these signals are always optional and must degrade gracefully.
 
 ---
 

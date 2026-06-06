@@ -39,6 +39,11 @@ dashboard. It runs in the cloud for free and improves itself on a schedule, with
 - [[Self-Improvement Loop]] — how the system curates and proposes changes safely.
 - [[Stars and Freezing]] — proven records are frozen and never auto-changed.
 
+## Decisions & rules
+- [[Reference Spec]] — the owner's original blueprint (verbatim) + cloud mapping.
+- [[Locked Decisions]] — settled choices; do not re-ask.
+- [[Standing Constraints]] — the non-negotiables (free, no babysitting, never touch frozen).
+
 ## Reference
 - [[Data Files]] — every `data/*.json` and what it's for.
 - [[Config Reference]] — the important `config.json` blocks.

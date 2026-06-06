@@ -3,7 +3,8 @@
 > **Purpose of this file.** This is a complete, self-contained brief so a brand-new
 > Claude session can continue building **Excavatortron** with zero context loss.
 > Read it top to bottom, then jump to **§12 Pending / Next steps** and resume.
-> Last updated after commit `4dfcb4c` (in sync with origin/main).
+> Last updated after commit `0cba8bc` (in sync with origin/main). Tasks #17 and #6 are
+> DONE; #7 mostly done. See §12 for what changed this session and what's left.
 
 ---
 
@@ -275,33 +276,44 @@ Tasks #1–#16 complete. Recent commits:
 
 ## 12. PENDING / Next steps (resume here)
 
-### Task #17 (in progress) — finish the Obsidian brain vault
-Write the remaining notes referenced by existing wikilinks (so none dangle), then commit
-`brain/` (specific path; NOT make_icon.py). Remaining notes to create in `brain/`:
-- `Pipeline - Analyze.md`, `Pipeline - News.md`, `Pipeline - Improve.md`, `Pipeline - Review.md`
-- `Dynamic Tabs.md`, `Reference Self-Check.md`, `Three-Agent Review.md`, `Stars and Freezing.md`
-- `Self-Improvement Loop.md`, `Config Reference.md`, `Operations and Setup.md`
-- `Obsidian Access (MCP).md` — **must tell the user how to give Claude access to Obsidian**:
-  (Option A, simplest) an MCP server pointed at the vault path in `claude_desktop_config.json`;
-  (Option B) Obsidian **Local REST API** community plugin + an Obsidian MCP server using its
-  API key (key stays local, never in repo). Restart Claude Desktop after editing the config.
-  Flag that community MCP package names evolve — tell the user to verify the current package.
-- `Glossary.md`
-Then: in the home note, confirm the Desktop-mirror story (the local runner syncs `brain/`→Desktop).
+### DONE this session (commits `81ab1fe` → `0cba8bc`)
+- **Extraction "surroundings"** (`81ab1fe`): `fetch.py` now also captures **top comments**
+  (relevance-ordered, with best reply), **view/like/comment stats**, **tags**, **duration**,
+  and the authoritative **full description** — all graceful-skip, transcript stays verbatim.
+  Wired into `config.extraction` (`capture_stats`/`capture_comments`/`max_comments`) and
+  `CLAUDE.md` (new pending fields + **Step 2d** to mine comments for versions/links and use
+  stats as a popularity tie-break, never the main score).
+- **Reference self-check actually runs** (`facbb5a`, `e722621`): ran the 50 questions →
+  `data/self_check.json` + seeded `data/improvement_tasks.json`. Found + **fixed the root
+  cause** it was empty — catch-up *light mode* (and idle early-exit) skipped Step 7c; now the
+  self-check runs on **every** improve invocation (stamped `run_mode` in light mode).
+- **Task #17 DONE — Obsidian brain finished** (`1b6433e`): 25 notes, no dangling links,
+  incl. `Obsidian Access (MCP).md` with concrete steps (filesystem MCP **or** Local REST API).
+- **SKILL.md for all 38 techniques** (`1f273d1`): rendered the 19 missing ones (incl.
+  `seedance-ugc`) from `skills.json` with full reference-spec fields → self-check **47/50**.
+  Also fixed Q27 (added `productivity` to `general_tip_topics`).
+- **Task #6 DONE — local fetch runner** (`0cba8bc`): `sync/fetch-runner.ps1`
+  (pull → `python -m src.fetch` from residential IP → push fetch outputs → mirror `brain/`→
+  Desktop), registered nightly 3 AM in `setup-sync.ps1`; `sync-skills.ps1` mirrors the brain too.
+- **Cleanup:** removed leftover temp files; `make_icon.py`/`.claude/` still untracked.
 
-### Task #6 (pending) — local automated fetch runner (Windows)
-A one-command Task Scheduler setup that: `git pull` → `python -m src.fetch` (residential IP) →
-commit + push the new `data/_pending/*` → also **sync `brain/`→Desktop** and read the user's
-skills folder. Consider enhancing `fetch.py` to also capture **top comments + full description**
-(part of "everything the surroundings offer"). Keep it free, no babysitting.
+### Open self-check items (3) — for the cloud to close
+`data/improvement_tasks.json` holds: **Q10** (vague tool names without versions:
+Claude/ChatGPT/Gemini/Grok/Sora/Veo/Llama → re-derive versions on next analyze) ·
+**Q12** (`multi-llm-combination-workflow` has no tip) · **Q21** (the improve deep pass had not
+completed a scheduled run yet — should self-resolve on the **Sat 20:00 UTC** weekly run, now
+that light-mode no longer skips the self-check).
 
-### Task #7 (pending) — final commit/push + content + cleanup + user instructions
-- Create the missing **10th technique** `seedance-ugc` `SKILL.md` (referenced but absent).
-- Re-check cloud commits, then commit + push everything (specific paths).
-- **Delete temp files:** `C:\Users\eitan\_tmp_*.py`, `_transcript_tmp.jsonl`, `_refspec_raw.txt`.
-- Ensure `make_icon.py` and `.claude/` are NOT committed.
-- Write consolidated **user instructions**: GitHub secrets setup (the 3 keys), enabling GitHub
-  Pages, the external review token, Task Scheduler local runner, and Obsidian access.
+### Task #7 (mostly done) — remaining
+- **Verify the cloud `improve.yml` actually runs.** No `improve: safety commit` exists in
+  history yet (workflow added `4dfcb4c`, 2026-06-04). `gh` is NOT installed locally — next
+  session should install/auth `gh` (or use the Actions UI) to confirm the Sat 20:00 UTC run
+  fired and refreshed `self_check.json` + wrote `data/health.json`. If it failed, read logs.
+- **Consolidated user instructions doc** — fold the brain's `Operations and Setup.md` +
+  `Obsidian Access (MCP).md` into a single top-level `docs/SETUP.md` (GitHub secrets ×3,
+  enable Pages from `/docs`, external review token, Task Scheduler runner, Obsidian access).
+- Optional: a first-week **/loop** to drive local self-improvement iterations (see the chat
+  answer) — only if the user wants it; the steady-state pipeline stays in the cloud.
 
 ---
 

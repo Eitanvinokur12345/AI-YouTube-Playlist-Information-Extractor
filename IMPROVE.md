@@ -71,22 +71,27 @@ with `starred==true` or `locked==true`. Keep this set in mind for ALL later step
 **Catch-up light mode.** If `catch_up.active` is true **and** `config.catch_up.curation ==
 "light_until_caught_up"`, the library is still mid-ingest, so do **not** curate half-finished
 data. This run, perform ONLY the cheap, safe modules — **Step 2 (data hygiene / exact-dup /
-consistency), Step 8 (health report), and Step 9 (audit)** — and **SKIP** Steps 3–7c
-(near-duplicate, ratings calibration, stars, UX self-review, skills-folder learning,
-trend/new-tab detection, feed-health proposals, and the reference self-check). The self-check
-is skipped on purpose: half-finished data would produce misleading no-answers. Still apply
-already-approved suggestions (Step 1) and self-check fix tasks (Step 1b). Record
-`"mode": "light (catch-up)"` in the audit and set `health.json.note` to say curation is paused
-until the backlog clears. Full curation resumes automatically on the next run after catch-up ends.
+consistency), Step 7c (reference self-check), Step 8 (health report), and Step 9 (audit)** —
+and **SKIP** Steps 3–7b (near-duplicate, ratings calibration, stars, UX self-review,
+skills-folder learning, trend/new-tab detection, feed-health proposals). **The reference
+self-check ALWAYS runs — every single invocation, no exception** (the owner requires returning
+to the reference format each run). To avoid treating mid-ingest gaps as regressions, stamp the
+self-check + audit with `"run_mode": "light (catch-up)"`; a `no` answer this run means "pending
+ingest", and Step 1b only auto-applies `safe_auto` fixes (it defers `engine_followup` tasks
+until catch-up ends). Still apply already-approved suggestions (Step 1) and self-check fix
+tasks (Step 1b). Record `"mode": "light (catch-up)"` in the audit and set `health.json.note` to
+say curation is paused until the backlog clears. Full curation resumes automatically on the
+next run after catch-up ends.
 
 **Idle early-exit (token-saver).** If catch-up is *not* active and **nothing has changed**
 since `status.last_improved_at` — no ids in `approvals.approved_ids`; `data/processed/` has not
 grown since the count recorded in the last `improvement_audit.json` run; no news feed has
 crossed the fail-streak threshold since the last run; and the previous health report listed no
 open schema / orphan / exact-duplicate issues — then this is a quiet run. Do ONLY `build_index`
-(Step 2's index), the health report (Step 8) and the audit (Step 9); tag the audit
-`"mode": "idle (no changes)"`; commit and stop. Skip Steps 1 and 3–7b. This keeps a no-work
-day nearly free of tokens.
+(Step 2's index), **the reference self-check (Step 7c — always, even on idle days)**, the health
+report (Step 8) and the audit (Step 9); tag the audit `"mode": "idle (no changes)"`; commit and
+stop. Skip Steps 1 and 3–7b. This keeps a no-work day nearly free of tokens while still
+returning to the reference format every run.
 
 ---
 
@@ -430,7 +435,10 @@ no → task → fixed next run → re-verified.
 
 Never let a self-check fix touch a frozen record. This module only writes `self_check.json` +
 `improvement_tasks.json` (both safe); actual fixes happen through the normal modules under their
-caps. Skipped entirely in catch-up light mode (Step 0).
+caps. **This module runs on EVERY invocation** — including catch-up light mode and idle
+early-exit days (in light mode, stamp `run_mode: "light (catch-up)"` per Step 0 so mid-ingest
+gaps read as "pending", not regressions). The owner's rule is that the system returns to the
+reference format every single run, so `self_check.json` must never be left empty.
 
 ---
 

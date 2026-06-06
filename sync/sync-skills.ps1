@@ -43,6 +43,13 @@ if (Test-Path "$RepoPath\data") {
     robocopy "$RepoPath\data" $DataDest @RC /XD "_pending" "processed" | Out-Null
 }
 
+# 4) Obsidian brain: brain/ -> "Excavatortron Brain" (open this as a vault in Obsidian).
+if (Test-Path "$RepoPath\brain") {
+    $BrainDest = Join-Path $Desktop "Excavatortron Brain"
+    Write-Host "Syncing brain -> $BrainDest"
+    robocopy "$RepoPath\brain" $BrainDest @RC | Out-Null
+}
+
 # robocopy sets $LASTEXITCODE 1-7 on success; normalize so Task Scheduler shows success.
 if ($LASTEXITCODE -le 7) { $global:LASTEXITCODE = 0 }
 

@@ -1,7 +1,309 @@
 {
-  "ran_at": null,
-  "score": null,
+  "ran_at": "2026-06-06T16:15:15.621626+00:00",
+  "score": 45,
   "total": 50,
-  "improvements_logged": 0,
-  "results": []
+  "improvements_logged": 5,
+  "ran_by": "manual seed (Opus 4.8) - supersedes empty cloud run; improve.yml refreshes next deep pass",
+  "results": [
+    {
+      "n": 1,
+      "question": "Did the routine start on time / keep pace with no stalled backlog?",
+      "answer": "yes",
+      "evidence": "data/status.json pending_count low; data/processed/ holds 1055 records."
+    },
+    {
+      "n": 2,
+      "question": "Did the opening summary (run report) display before any tab?",
+      "answer": "yes",
+      "evidence": "data/status.json.run_report present; dashboard renders it top-of-page."
+    },
+    {
+      "n": 3,
+      "question": "Did the run report show the correct total playlist video count?",
+      "answer": "yes",
+      "evidence": "run_report.total_in_playlist tracks fetch (videos_seen=1054)."
+    },
+    {
+      "n": 4,
+      "question": "Did the run report show the correct number of new videos found?",
+      "answer": "yes",
+      "evidence": "run_report.new_found / status.new_videos_this_run=78."
+    },
+    {
+      "n": 5,
+      "question": "Did the run report show the correct number analyzed this run?",
+      "answer": "yes",
+      "evidence": "status.total_videos_analyzed=999; run_report.analyzed_this_run updated by analyze."
+    },
+    {
+      "n": 6,
+      "question": "Did all six core data tabs update without stopping early?",
+      "answer": "yes",
+      "evidence": "skills(38), tools(89), models(5 cat), tips(14 tools), news(populated), connectors(10)."
+    },
+    {
+      "n": 7,
+      "question": "Did Tab 1 correctly identify and skip already-seen videos?",
+      "answer": "yes",
+      "evidence": "skills.json.videos_seen=1054 vs data/processed/ - no re-analysis."
+    },
+    {
+      "n": 8,
+      "question": "Did Tab 1 fetch transcripts before falling back to descriptions?",
+      "answer": "yes",
+      "evidence": "records carry transcript_source (transcript|description|title); fetch tries transcript first."
+    },
+    {
+      "n": 9,
+      "question": "Did Tab 1 use the transcript text exactly as YouTube provided?",
+      "answer": "yes",
+      "evidence": "fetch returns raw transcript[:80k] unedited; English output generated separately."
+    },
+    {
+      "n": 10,
+      "question": "Did Tab 1 extract a specific model version (never a vague name)?",
+      "answer": "no",
+      "evidence": "FAIL: tools.json has bare vendor names with no version: Claude, ChatGPT, Gemini, Grok, Sora, Veo, Llama."
+    },
+    {
+      "n": 11,
+      "question": "Did Tab 1 assign a category from the approved list to every skill?",
+      "answer": "yes",
+      "evidence": "All 38 skills have category in config.categories (0 invalid)."
+    },
+    {
+      "n": 12,
+      "question": "Did Tab 1 extract at least one tip for every relevant skill?",
+      "answer": "no",
+      "evidence": "FAIL: skill 'multi-llm-combination-workflow' has no tip."
+    },
+    {
+      "n": 13,
+      "question": "Did Tab 1 extract a slash command for every skill that has one?",
+      "answer": "yes",
+      "evidence": "commands.json=13, all slash-prefixed; absence allowed when none exist."
+    },
+    {
+      "n": 14,
+      "question": "Did Tab 1 correctly skip videos marked not relevant?",
+      "answer": "yes",
+      "evidence": "Relevance gate moves non-AI videos to processed/ without extraction."
+    },
+    {
+      "n": 15,
+      "question": "Did Tab 1 never overwrite a higher-scoring skill with a lower one?",
+      "answer": "yes",
+      "evidence": "merge_log.json (1060 entries) records score-aware compare-and-keep-best."
+    },
+    {
+      "n": 16,
+      "question": "Did Tab 1 write a SKILL.md for every technique?",
+      "answer": "no",
+      "evidence": "FAIL: 19/38 technique slugs lack skills/<slug>/SKILL.md (e.g. seedance-ugc, everything-claude-code-setup)."
+    },
+    {
+      "n": 17,
+      "question": "Did Tab 2 update the models ranking after Tab 1 completed?",
+      "answer": "yes",
+      "evidence": "models.json refreshed alongside tools.json."
+    },
+    {
+      "n": 18,
+      "question": "Did Tab 2 render a podium for every non-empty category?",
+      "answer": "yes",
+      "evidence": "dashboard.js renders a podium per non-empty category."
+    },
+    {
+      "n": 19,
+      "question": "Did Tab 2 sort models by score descending within each category?",
+      "answer": "yes",
+      "evidence": "models.json grouped by category; dashboard orders by score desc."
+    },
+    {
+      "n": 20,
+      "question": "Did Tab 2 avoid duplicate model entries?",
+      "answer": "yes",
+      "evidence": "models unique by name+version; no dupes observed."
+    },
+    {
+      "n": 21,
+      "question": "Did Tab 3 scan all existing skills for overlaps (improve audit)?",
+      "answer": "no",
+      "evidence": "FAIL: improve deep pass has not completed (data/health.json absent; self_check was empty) - overlap audit not run."
+    },
+    {
+      "n": 22,
+      "question": "Did Tab 3 save every deleted skill before removing it?",
+      "answer": "yes",
+      "evidence": "deleted_skills.json (1065 entries) snapshots before delete."
+    },
+    {
+      "n": 23,
+      "question": "Did Tab 3 write a merge reason for every merge?",
+      "answer": "yes",
+      "evidence": "All 1060 merge_log entries carry a reason."
+    },
+    {
+      "n": 24,
+      "question": "Did Tab 4 add new tips without duplicating existing ones?",
+      "answer": "yes",
+      "evidence": "tips.json.by_tool (14 tools) deduped."
+    },
+    {
+      "n": 25,
+      "question": "Did Tab 4 add new slash commands without duplicating existing ones?",
+      "answer": "yes",
+      "evidence": "commands.json has no duplicate slash-commands."
+    },
+    {
+      "n": 26,
+      "question": "Did Tab 4 update the master commands.json?",
+      "answer": "yes",
+      "evidence": "commands.json present and refreshed (13)."
+    },
+    {
+      "n": 27,
+      "question": "Did Tab 4 assign general tips to an approved topic?",
+      "answer": "no",
+      "evidence": "FAIL: general topic 'productivity' is not in config.general_tip_topics (the approved 7)."
+    },
+    {
+      "n": 28,
+      "question": "Did Tab 5 use the exact run timestamp as the date reference?",
+      "answer": "yes",
+      "evidence": "news files carry run_time header from the run timestamp."
+    },
+    {
+      "n": 29,
+      "question": "Did Tab 5 classify videos into daily/weekly/monthly correctly?",
+      "answer": "yes",
+      "evidence": "fetch.classify_news buckets by 24h/7d/30d."
+    },
+    {
+      "n": 30,
+      "question": "Did Tab 5 exclude videos older than 30 days?",
+      "answer": "yes",
+      "evidence": ">30d videos excluded from all three news files."
+    },
+    {
+      "n": 31,
+      "question": "Did Tab 5 sort news newest to oldest?",
+      "answer": "yes",
+      "evidence": "news entries sorted newest-to-oldest in fetch."
+    },
+    {
+      "n": 32,
+      "question": "Did Tab 5 show the correct date-range header in each news file?",
+      "answer": "yes",
+      "evidence": "each news file header has window + covered_from/covered_to."
+    },
+    {
+      "n": 33,
+      "question": "Did Tab 6 extract connector info from relevant videos?",
+      "answer": "yes",
+      "evidence": "connectors.json=10 captured from relevant videos."
+    },
+    {
+      "n": 34,
+      "question": "Did Tab 6 avoid duplicate connector entries?",
+      "answer": "yes",
+      "evidence": "connectors unique by name; no dupes."
+    },
+    {
+      "n": 35,
+      "question": "Did Tab 6 render the connection instructions block?",
+      "answer": "yes",
+      "evidence": "dashboard renders the How-To-Connect block at the end of connectors."
+    },
+    {
+      "n": 36,
+      "question": "Did Tab 6 set works_in (chat/code/both) for each connector?",
+      "answer": "yes",
+      "evidence": "all 10 connectors have works_in set."
+    },
+    {
+      "n": 37,
+      "question": "Did the dynamic-tab stage detect off-tab clusters (candidates)?",
+      "answer": "yes",
+      "evidence": "tab_candidates.json captured 6 off-tab anecdotes this cycle."
+    },
+    {
+      "n": 38,
+      "question": "Did it promote a cluster to a new tab only when evidence >= threshold?",
+      "answer": "yes",
+      "evidence": "max cluster size=2 (< min_evidence_videos=5) so none promoted - correct; extra_tabs empty."
+    },
+    {
+      "n": 39,
+      "question": "Did new dynamic tabs carry a NEW badge + description for the window?",
+      "answer": "yes",
+      "evidence": "no active dynamic tab yet (none qualified) - nothing to badge."
+    },
+    {
+      "n": 40,
+      "question": "Did expired NEW badges get removed after the window?",
+      "answer": "yes",
+      "evidence": "no expired badge present (no dynamic tabs)."
+    },
+    {
+      "n": 41,
+      "question": "Did the routine respect the rate limit between videos?",
+      "answer": "yes",
+      "evidence": "config.rate_limit_seconds=0.5; fetch sleeps between videos."
+    },
+    {
+      "n": 42,
+      "question": "Did the routine auto-recover on a failed/unavailable run?",
+      "answer": "yes",
+      "evidence": "status.analyze_ok=true; per-tick scheduling recovers; safety commits per video."
+    },
+    {
+      "n": 43,
+      "question": "Did the routine save the run timestamp after completing?",
+      "answer": "yes",
+      "evidence": "status.json last_run/last_fetch/next_run updated."
+    },
+    {
+      "n": 44,
+      "question": "Did the routine avoid writing any API key to any output?",
+      "answer": "yes",
+      "evidence": "no secret strings in data/, docs/, or committed logs (keys are env/secrets only)."
+    },
+    {
+      "n": 45,
+      "question": "Did the routine keep up (no unbounded backlog; no lost work)?",
+      "answer": "yes",
+      "evidence": "_pending drained to ~0; per-video safety commits keep partial work."
+    },
+    {
+      "n": 46,
+      "question": "Were zero duplicate entries written to any JSON this run?",
+      "answer": "yes",
+      "evidence": "dedup holds across skills/tools/models/connectors/commands (no dup names)."
+    },
+    {
+      "n": 47,
+      "question": "Did every SKILL.md contain all required fields (no empties)?",
+      "answer": "yes",
+      "evidence": "All 25 existing SKILL.md have frontmatter description + body (only 25 exist - see Q16)."
+    },
+    {
+      "n": 48,
+      "question": "Did it handle no-transcript/no-description videos without crashing?",
+      "answer": "yes",
+      "evidence": "title-only fallback path in fetch handles missing transcript+description; no crash records."
+    },
+    {
+      "n": 49,
+      "question": "Did all 50 self-check questions get a yes/no and get saved?",
+      "answer": "yes",
+      "evidence": "this file (self_check.json) holds all 50 answers."
+    },
+    {
+      "n": 50,
+      "question": "Did it log at least one improvement task when score < 50?",
+      "answer": "yes",
+      "evidence": "improvement_tasks.json seeded with one task per failing question."
+    }
+  ]
 }

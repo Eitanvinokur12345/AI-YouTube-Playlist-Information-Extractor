@@ -1,3 +1,45 @@
 {
-  "tasks": []
+  "tasks": [
+    {
+      "n": 10,
+      "question": "Did Tab 1 extract a specific model version (never a vague name)?",
+      "fix": "Re-derive exact versions for bare vendor names (Claude, ChatGPT, Gemini, Grok, Sora, Veo, Llama) from each tool's source video/links; never keep a version-less vendor name as a tool record.",
+      "kind": "engine_followup",
+      "status": "open",
+      "created_at": "2026-06-06T16:15:15.621626+00:00"
+    },
+    {
+      "n": 12,
+      "question": "Did Tab 1 extract at least one tip for every relevant skill?",
+      "fix": "On the next analyze pass, extract at least one actionable tip for 'multi-llm-combination-workflow' from its source video/transcript.",
+      "kind": "engine_followup",
+      "status": "open",
+      "created_at": "2026-06-06T16:15:15.621626+00:00"
+    },
+    {
+      "n": 16,
+      "question": "Did Tab 1 write a SKILL.md for every technique?",
+      "fix": "Emit skills/<slug>/SKILL.md for the 19 techniques missing one (start: seedance-ugc). Make analyze write a SKILL.md for every technique it keeps.",
+      "kind": "engine_followup",
+      "status": "open",
+      "created_at": "2026-06-06T16:15:15.621626+00:00"
+    },
+    {
+      "n": 21,
+      "question": "Did Tab 3 scan all existing skills for overlaps (improve audit)?",
+      "fix": "Ensure improve.yml deep pass actually completes (writes health.json + self_check.json + runs overlap/dedup audit). Verify first-week nightly cron 0 20 * * 0-5 is firing; check workflow logs.",
+      "kind": "engine_followup",
+      "status": "open",
+      "created_at": "2026-06-06T16:15:15.621626+00:00"
+    },
+    {
+      "n": 27,
+      "question": "Did Tab 4 assign general tips to an approved topic?",
+      "fix": "Reconcile general-tip topics: move 'productivity' tips under an approved topic, or add 'productivity' to config.general_tip_topics. Pick one and apply consistently.",
+      "kind": "safe_auto",
+      "status": "open",
+      "created_at": "2026-06-06T16:15:15.621626+00:00"
+    }
+  ],
+  "updated_at": "2026-06-06T16:15:15.621626+00:00"
 }

@@ -74,6 +74,48 @@
       "source": "review",
       "review_finding_id": "18eea5091e",
       "severity": "med"
+    },
+    {
+      "id": "f4c2b8e91a",
+      "type": "engine_fix",
+      "status": "pending",
+      "detail": "Add encoding='utf-8' to ALL open() calls in src/analyze_batch.py (lines 152, 160, 402, 725-726, 747-748) AND src/process_video.py (lines 19, 24). Hebrew transcripts and Unicode tool names will cause UnicodeError on non-UTF-8 locales. Three files affected.",
+      "proposed_change": {
+        "files": ["src/analyze_batch.py", "src/process_video.py"],
+        "action": "add_encoding_utf8",
+        "description": "Add encoding='utf-8' to every open() call. In analyze_batch.py: load_json (line 152), save_json (line 160), write_skill_md (line 402), main() pending reads (lines 725-726, 747-748). In process_video.py: load_json (line 19), save_json (line 24). Consider consolidating into a shared src/utils.py to prevent future divergence."
+      },
+      "source": "review",
+      "review_finding_id": "f97aeed26d",
+      "severity": "high"
+    },
+    {
+      "id": "a7d3c6e041",
+      "type": "engine_fix",
+      "status": "pending",
+      "detail": "Investigate and fix 100% transcript fallback: last fetch had no_transcript=78, new_found=78. Every new video fell through to description/title. Likely cause: youtube-transcript-api version incompatibility or YouTube API change. Add a health-check flag in status.json and a dashboard banner when no_transcript/new_found > 0.5.",
+      "proposed_change": {
+        "files": ["src/fetch.py", "docs/dashboard.js"],
+        "action": "add_transcript_health_check",
+        "description": "In fetch.py: after the main loop, if no_transcript_count / max(len(new_videos), 1) > 0.5, set status['transcript_health'] = 'degraded' and status['transcript_fallback_rate'] = rate. In dashboard.js: in renderAlert(), check for status.transcript_health === 'degraded' and show an amber banner 'Transcript fetching is degraded — content quality reduced'."
+      },
+      "source": "review",
+      "review_finding_id": "8a1b5c4d6e",
+      "severity": "high"
+    },
+    {
+      "id": "c9b5e2f731",
+      "type": "engine_fix",
+      "status": "pending",
+      "detail": "Replace describe_tool() template function in src/analyze_batch.py (lines 268-286) with real extraction from transcript. This is the root cause of all 'enhances productivity through AI-powered features and automation' generic descriptions — as long as the function exists, new tools will always get template descriptions.",
+      "proposed_change": {
+        "file": "src/analyze_batch.py",
+        "action": "replace_describe_tool",
+        "description": "Replace describe_tool(name, info) with extract_tool_description(name, text) that: (1) finds sentences in text containing the tool name, (2) picks the most informative 1-2 sentences (length > 30, no hype words), (3) returns them joined, or None if no qualifying sentence. In process_video(), use this function for skill['description'] and fall back to None rather than a template."
+      },
+      "source": "review",
+      "review_finding_id": "e5a3f8b2c7",
+      "severity": "high"
     }
   ]
 }

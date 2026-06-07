@@ -22,7 +22,10 @@
       "Use the Skill Creator meta-skill to build new skills — it asks structured questions before generating, ensuring the skill matches your exact needs.",
       "Use /model opus plan to restrict Opus to planning only — Sonnet 4.6 handles execution at lower token cost.",
       "Run /compact when conversations grow long to compress context history and reduce token burn.",
-      "Use /ultra-plan before large refactors to force better reasoning and prevent hallucinated changes."
+      "Use /ultra-plan before large refactors to force better reasoning and prevent hallucinated changes.",
+      "If Claude Code feels slower but more accurate, reasoning effort may have been changed — high effort is needed for hard coding tasks.",
+      "Long Claude Code sessions can degrade if context is silently dropped; restart or use /compact to avoid the model forgetting earlier instructions.",
+      "Over-optimizing Claude for helpfulness/tone can reduce raw coding ability; expect periodic Anthropic rebalancing."
     ],
     "Claude": [
       "Add Nano Banana as a Claude skill plus a Google AI Studio API key to generate and edit images from chat with /banana.",
@@ -173,7 +176,8 @@
       "Agents with inter-agent messaging and persistent memory can rebuild entire business backends autonomously overnight.",
       "Configure agents to proactively suggest tasks rather than waiting for prompts — shifts AI from reactive tool to proactive assistant.",
       "Use a goals document as persistent context so agents evaluate all actions against your actual objectives.",
-      "The 4 stages of AI adoption: prompting → packaging skills → delegating tasks → orchestrating systems. Most users never leave Stage 1."
+      "The 4 stages of AI adoption: prompting → packaging skills → delegating tasks → orchestrating systems. Most users never leave Stage 1.",
+      "Model regressions can stem from subtle training tradeoffs (helpfulness vs. capability) — watch postmortems to understand version-to-version changes."
     ],
     "code": [
       "The harness (Cursor, Claude Code, Codex) matters as much as the model - a cheaper model in a better harness can win.",

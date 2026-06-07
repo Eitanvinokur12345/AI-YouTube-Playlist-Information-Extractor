@@ -247,6 +247,26 @@ product that ships an applicable, repeatable workflow yields TWO records: the pr
 `tools.json`, and the technique in `skills.json` with `target_tool` pointing at the product.
 When in doubt and it's just a named product → `tools.json`, not here.
 
+> **⛔ Anti-boilerplate gate (MANDATORY — the #1 quality failure to prevent).**
+> NEVER emit a skill that is a generic vendor stub. A candidate skill is **INVALID** and must
+> NOT be written if ANY of these holds:
+> - `skill_name` is a bare product/vendor/model name (`Claude`, `ChatGPT`, `Make`, `Gemini`,
+>   `Anthropic`, `MCP`, `DeepSeek`, `OpenAI`, …) — that is a **tool** (Step 3b), not a skill.
+> - `use_case` is a template like *"Using &lt;X&gt; for productivity/automation tasks."*
+> - `description` is a template like *"&lt;X&gt; is an AI tool by &lt;Y&gt;. It enhances
+>   productivity through AI-powered features…"* with nothing specific from THIS video.
+>
+> A valid skill names a **specific, repeatable method actually shown in the video** — what was
+> done, the concrete steps, the real inputs/outputs. If a video only *mentions* a product
+> without teaching a concrete technique, record the **tool** in `tools.json` and emit **no**
+> skill. When unsure, emit nothing here rather than a stub. (A past catch-up drain flooded the
+> library with ~950 identical vendor stubs that had to be deleted — never again.)
+>
+> **Depth is non-negotiable, including in catch-up.** Catch-up mode changes only batch *order*
+> and *size* — never extraction depth. Every video gets full, specific extraction every time.
+> The same gate applies to `tools.json` descriptions (Step 3b): say what the tool *specifically
+> does*, never the boilerplate "is an AI tool by … enhances productivity" template.
+
 For each genuine **technique** build a skill record:
 
 - `skill_name` — the technique's name (e.g. "Claude Agent Loop", "Context Engineering for

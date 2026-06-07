@@ -3,8 +3,17 @@
 > **Purpose of this file.** This is a complete, self-contained brief so a brand-new
 > Claude session can continue building **Excavatortron** with zero context loss.
 > Read it top to bottom, then jump to **§12 Pending / Next steps** and resume.
-> Last updated after commit `0cba8bc` (in sync with origin/main). Tasks #17 and #6 are
-> DONE; #7 mostly done. See §12 for what changed this session and what's left.
+> Last updated after commit `3ece3c8` (in sync with origin/main).
+>
+> **⚠ HEADLINE (2026-06-06): the root cause of "the library is much smaller than the videos"**
+> is that **only 0.3% of videos ever got a real transcript** — YouTube blocks transcript
+> fetches from datacenter/cloud IPs, so the cloud analyzed 99.7% of videos from their
+> *description* alone. Transcripts DO fetch from a **residential IP**. The live recovery task:
+> run **`python -m src.backfill_transcripts`** (or `sync/fetch-runner.ps1`) from home, in small
+> slow batches, to re-fetch real transcripts → re-queue → deep re-analysis. 30 done, ~1,070 to
+> go. This is now the #1 task. Also done this session: anti-boilerplate engine gate, two-phase
+> retrieval, Tool Rating tab (merged Models+Tools), readability + quick-read mode, UX-agent
+> readability wiring. Tasks #17 and #6 DONE; #7 mostly done. See §12.
 
 ---
 

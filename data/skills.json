@@ -3961,6 +3961,52 @@
       "source_video_id": "-kDEGteAdFA",
       "video_quality_score": 5,
       "low_quality_source": false
+    },
+    {
+      "skill_name": "Claude Code Usage Optimization",
+      "slug": "claude-code-usage-optimization",
+      "category": "productivity",
+      "description": "Three-command workflow for reducing Claude Code token consumption: /model opus plan restricts Opus to planning only with Sonnet for execution; /compact compresses long context windows; /ultra-plan forces deep reasoning before big refactors to prevent hallucinated changes.",
+      "use_case": "Reducing API token spend when working with Claude Code on large or iterative coding tasks.",
+      "output": "Lower token usage, fewer hallucinated code changes, and more efficient model tier usage.",
+      "quality_score": 6,
+      "model_version": null,
+      "company": "Anthropic",
+      "country": "USA",
+      "open_source": false,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude Code",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": false,
+      "tips": [
+        "Run /model opus plan to limit Opus to planning only — Sonnet 4.6 handles code execution at far lower token cost.",
+        "Run /compact when conversations grow long — Claude rereads full history on every message, compressing saves significant tokens.",
+        "Use /ultra-plan before large refactors to force deeper reasoning upfront, preventing hallucinated changes that waste correction cycles."
+      ],
+      "slash_commands": [
+        "/model",
+        "/compact",
+        "/ultra-plan"
+      ],
+      "general_tips": [
+        "Pair a stronger planner model with a cheaper executor model to cut costs without sacrificing output quality.",
+        "Compress context aggressively on long sessions rather than starting new sessions."
+      ],
+      "relevance": "Directly addresses the top pain point for heavy Claude Code users — runaway API costs — with three actionable commands.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "0-p-SuoHCoo"
+      ],
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=0-p-SuoHCoo",
+      "source_video_id": "0-p-SuoHCoo",
+      "video_quality_score": 6,
+      "low_quality_source": false
     }
   ]
 }

@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-06-06T00:00:00Z",
+  "generated_at": "2026-06-07T08:00:00Z",
   "mode": "first_week_intensive",
   "reviewers": {
     "claude": {
-      "ran_at": "2026-06-06T00:00:00Z",
+      "ran_at": "2026-06-07T08:00:00Z",
       "ok": true
     },
     "external": {
@@ -18,7 +18,7 @@
   },
   "scores": {
     "usability": 6,
-    "cut_the_bullshit": 5,
+    "cut_the_bullshit": 4,
     "deep_code_bugs": 4,
     "overall": 5
   },
@@ -46,7 +46,7 @@
       "User-generated signals — Product Hunt shows upvotes and comments; TAAFT shows verified-user saves; our popularity is editorial (video endorsement counts), not crowd-sourced"
     ],
     "borrow_next": [
-      "Add item-count badges to tab buttons (e.g. 'Skills (10)', 'Tools (50)') — one line of JS per tab, high discoverability signal at zero cost",
+      "Add item-count badges to tab buttons (e.g. 'Skills (38)', 'Tools (89)') — one line of JS per tab, high discoverability signal at zero cost",
       "Add a sort toggle (Quality | Mentions | Newest) to the Skills and Tools tabs — ~15 lines of JS, eliminates the main gap vs Toolify/Future Tools for power users",
       "Add a 2-sentence 'What is Excavatortron?' tagline beneath the H1, and pin the top-3 starred skills to the top of the Skills tab as a 'Featured' strip — teaches new visitors what they're looking at without a tutorial"
     ]
@@ -58,7 +58,7 @@
       "severity": "high",
       "area": "engine",
       "where": "src/analyze_batch.py:20",
-      "detail": "TODAY = datetime(2026, 6, 3, tzinfo=timezone.utc) is hardcoded at module level. The recency penalty function compute_age_months() subtracts video age from this frozen date, so all recency penalties calculated after June 3 2026 are wrong — videos will appear progressively older than they are, inflating penalties and depressing quality scores over time.",
+      "detail": "TODAY = datetime(2026, 6, 3, tzinfo=timezone.utc) is hardcoded at module level. The recency penalty function compute_age_months() subtracts video age from this frozen date, so all recency penalties calculated after June 3 2026 are wrong — videos will appear progressively older than they are, inflating penalties and depressing quality scores over time. Still unfixed.",
       "suggestion": "Replace with datetime.now(timezone.utc) (computed inside compute_age_months or at call time, not module level), exactly as src/fetch.py does.",
       "status": "open"
     },
@@ -68,7 +68,7 @@
       "severity": "high",
       "area": "engine",
       "where": "src/analyze_batch.py:151-163",
-      "detail": "load_json and save_json open files without encoding='utf-8'. Hebrew transcripts and Unicode tool names (common in this playlist) will cause UnicodeDecodeError/UnicodeEncodeError on non-UTF-8 default-locale runners. src/fetch.py uses encoding='utf-8' consistently; analyze_batch.py does not.",
+      "detail": "load_json and save_json open files without encoding='utf-8'. Hebrew transcripts and Unicode tool names (common in this playlist) will cause UnicodeDecodeError/UnicodeEncodeError on non-UTF-8 default-locale runners. src/fetch.py uses encoding='utf-8' consistently; analyze_batch.py does not. Still unfixed.",
       "suggestion": "Add encoding='utf-8' to every open() call in load_json (line 152) and save_json (line 160).",
       "status": "open"
     },
@@ -77,9 +77,9 @@
       "dimension": "deep_code_bugs",
       "severity": "high",
       "area": "engine",
-      "where": "src/process_video.py:19,24",
-      "detail": "process_video.py has its own duplicated load_json/save_json (lines 16–28) with the same missing encoding='utf-8' as analyze_batch.py. This file is invoked separately and handles skills dedup and connectors — Hebrew content or Unicode tool names will fail here too. The duplication itself (vs importing from analyze_batch.py) means the fix must be applied in two places.",
-      "suggestion": "Add encoding='utf-8' to both open() calls in process_video.py's load_json (line 19) and save_json (line 24). Then consolidate: move load_json/save_json into a shared src/utils.py to prevent the divergence from recurring.",
+      "where": "src/process_video.py:19,24,318",
+      "detail": "process_video.py has its own duplicated load_json/save_json (lines 16–28) with the same missing encoding='utf-8' as analyze_batch.py. Additionally, _write_skill_md() at line 318 opens the SKILL.md output file with bare open() — no encoding='utf-8'. All three locations will fail on Hebrew-sourced or Unicode-named content. Still unfixed.",
+      "suggestion": "Add encoding='utf-8' to load_json (line 19), save_json (line 24), and _write_skill_md (line 318) in process_video.py. Consolidate load_json/save_json into a shared src/utils.py to prevent the divergence from recurring.",
       "status": "open"
     },
     {
@@ -88,8 +88,8 @@
       "severity": "high",
       "area": "engine",
       "where": "src/fetch.py:153-211 (fetch_transcript) + data/status.json (no_transcript)",
-      "detail": "In the most recent fetch run, no_transcript=78 and new_found=78 — a 100% transcript fallback rate. Every single new video fell through to description or title, meaning the last 78 analyzed videos have quality scores and content extracted from shallow metadata only, not actual transcripts. The broad except-all in fetch_transcript() (line 201) silently swallows any library or API failure; if youtube-transcript-api broke (common after YouTube API changes), the pipeline continues without any alerting, silently degrading all extractions.",
-      "suggestion": "Log the exception at WARNING level before falling back (currently it's logged, but the status.json shows no_transcript counter). Add a health check: if no_transcript / new_found > 0.5 for a run, set a flag in status.json and show an amber banner in the dashboard. Also verify that the installed youtube-transcript-api version matches the dual-API branch in fetch_transcript() (0.6.x vs 1.x path).",
+      "detail": "no_transcript=78, new_found=78 in status.json — a 100% transcript fallback rate. Every single new video from the last fetch fell through to description or title, meaning 78 videos were analyzed from shallow metadata only. The broad except-all in fetch_transcript() silently swallows any library or API failure. Still unfixed.",
+      "suggestion": "Log the exception at WARNING level before falling back. Add a health check: if no_transcript / new_found > 0.5 for a run, set a flag in status.json and show an amber banner in the dashboard. Verify installed youtube-transcript-api version compatibility with the dual-API branch in fetch_transcript().",
       "status": "open"
     },
     {
@@ -97,9 +97,9 @@
       "dimension": "deep_code_bugs",
       "severity": "high",
       "area": "engine",
-      "where": "src/analyze_batch.py:268-286 (describe_tool) and :475 (process_video)",
-      "detail": "describe_tool() is the source-code root cause of every generic tool description in tools.json. It returns a hardcoded category-keyed string (e.g. 'It enhances productivity through AI-powered features and automation.') regardless of video content. Every new tool extracted by the batch analyzer uses this function (line 475: skill['description'] = ... describe_tool(...)), so the same template is injected into both skills.json and tools.json for every new tool. 5 template descriptions still exist in tools.json despite manual cleanup.",
-      "suggestion": "Replace describe_tool() with extraction from the transcript: extract the 1–2 sentences in the video that most concisely describe what the tool does (e.g., the first sentence mentioning the tool). If no sentence qualifies, fall back to a null/empty description rather than a fake one, and show 'Description not yet extracted' in the dashboard.",
+      "where": "src/analyze_batch.py:267-286 (describe_tool) and :475",
+      "detail": "describe_tool() returns a hardcoded category-keyed string regardless of video content. Every new tool extracted uses this function, so the same template is injected into both skills.json and tools.json for every new tool. WORSENED: now 38 of 89 tools (43%) have template descriptions, up from ~5 noted last run — each new analyze run makes this worse. Root cause still unfixed.",
+      "suggestion": "Replace describe_tool() with extraction from the transcript: use the 1–2 sentences in the video that most concisely describe what the tool does. If no sentence qualifies, set description to null and show 'Description not yet extracted' in the dashboard.",
       "status": "open"
     },
     {
@@ -108,7 +108,7 @@
       "severity": "high",
       "area": "data",
       "where": "data/tools.json — slug: anthropic",
-      "detail": "\"Anthropic\" is catalogued as a tool (6/10, 73× mentions) with the description \"Anthropic is an AI tool by Anthropic. It enhances productivity through AI-powered features and automation.\" Anthropic is the company, not a product. Its tool-card is misleading and inflates the tools count with a non-tool entry.",
+      "detail": "'Anthropic' is catalogued as a tool (6/10, 73× mentions) with the description 'Anthropic is an AI tool by Anthropic. It enhances productivity through AI-powered features and automation.' Anthropic is the company, not a product. Its tool-card is misleading and inflates the tools count with a non-tool entry. Still unfixed.",
       "suggestion": "Remove the 'anthropic' tool entry; fold its endorsement_video_ids into the 'claude' tool entry (Anthropic's product). Add to improvement_suggestions.json as a safe_auto merge.",
       "status": "open"
     },
@@ -118,7 +118,7 @@
       "severity": "high",
       "area": "data",
       "where": "data/tools.json — slug: openai",
-      "detail": "\"Openai\" is catalogued as a tool (6/10, 45× mentions) with the same generic description. OpenAI is the company; its relevant products (ChatGPT, DALL-E, GPT-4) already have their own entries. Having 'openai' as a separate tool creates confusion and duplicate credit.",
+      "detail": "'Openai' is catalogued as a tool (6/10, 45× mentions) with the same generic template description. OpenAI is the company; its products (ChatGPT, DALL-E, GPT-4) already have their own entries. Having 'openai' as a separate tool creates confusion and duplicate credit. Still unfixed.",
       "suggestion": "Remove the 'openai' tool entry; fold its endorsement_video_ids into 'chatgpt'. Raise a suggestion for the improve stage to auto-merge.",
       "status": "open"
     },
@@ -127,9 +127,9 @@
       "dimension": "cut_the_bullshit",
       "severity": "high",
       "area": "data",
-      "where": "data/tools.json — 5 remaining template descriptions",
-      "detail": "5 tool entries still use the template description pattern 'It enhances productivity through AI-powered features and automation' (down from 6+ last run, but still present). These are the highest-traffic entries new visitors see. The root cause is describe_tool() in src/analyze_batch.py — as long as that function exists, every newly extracted tool gets a template description. Manual cleanup is a losing race against the pipeline.",
-      "suggestion": "Fix describe_tool() in src/analyze_batch.py to extract real content from transcripts (see finding e5a3f8b2c7). The improve stage's fill_missing_summaries module should also back-fill existing template descriptions with real content where transcripts are available.",
+      "where": "data/tools.json — 38 of 89 entries (43%) have template descriptions",
+      "detail": "38 tool entries now use the describe_tool() template pattern ('It enhances productivity through AI-powered features and automation', 'It assists with software development', 'It automates workflows', etc.). This has WORSENED from ~5 noted last run — the root cause (describe_tool() in src/analyze_batch.py) is still unfixed and every new analyze run injects more fake descriptions. 43% of the Tools tab shows zero real information.",
+      "suggestion": "Fix describe_tool() in src/analyze_batch.py to extract real content from transcripts (see finding e5a3f8b2c7). The improve stage's fill_missing_summaries module should back-fill existing template descriptions with real content where transcripts are available.",
       "status": "open"
     },
     {
@@ -138,8 +138,8 @@
       "severity": "med",
       "area": "data",
       "where": "src/analyze_batch.py:475-493 (skill record generation)",
-      "detail": "Every skill record generated by analyze_batch.py has three hollow template fields: use_case ('Using {tool} for {category} tasks.'), output ('{tool} produces {category}-focused outputs.'), and relevance ('{tool} is featured as an AI tool in this video.'). These add no information and inflate the card view. The CLAUDE.md spec says use_case should be 'primary use case as shown in the video' and relevance should be '1 sentence: why this matters to AI practitioners' — the batch analyzer produces neither.",
-      "suggestion": "Extract use_case and relevance from the transcript using the same sentence-extraction approach as extract_tips(). If no qualifying sentence is found, use null/empty rather than a template. Removing hollow fields from card display is better than keeping them filled with filler.",
+      "detail": "Every skill record generated by analyze_batch.py has three hollow template fields: use_case ('Using {tool} for {category} tasks.'), output ('{tool} produces {category}-focused outputs.'), and relevance ('{tool} is featured as an AI tool in this video.'). These add no information and inflate the card view. The CLAUDE.md spec says use_case should be 'primary use case as shown in the video'. Still unfixed.",
+      "suggestion": "Extract use_case and relevance from the transcript using the same sentence-extraction approach as extract_tips(). If no qualifying sentence is found, use null/empty rather than a template.",
       "status": "open"
     },
     {
@@ -147,9 +147,9 @@
       "dimension": "cut_the_bullshit",
       "severity": "med",
       "area": "data",
-      "where": "data/weekly_news.json (75) + data/monthly_news.json (91) + data/daily_news.json (3)",
-      "detail": "169 video news entries now have empty summaries (up from 52 noted last run), showing '(summary pending)' in the News tab — a growing backlog. The last fetch added 78 new videos with no_transcript=78, so those 78 newly classified news entries have no transcript to summarize from. The trend is worsening: each batch of new videos adds more empty entries than the improve stage fills.",
-      "suggestion": "The improve stage's fill_missing_summaries safe_auto module should prioritize the weekly/monthly backlog. For the 78 new videos with only description/title, generate a 1-sentence summary from the description text. Address the transcript-failure root cause (finding 8a1b5c4d6e) so future fetches have real content to summarize.",
+      "where": "data/weekly_news.json (75 empty) + data/monthly_news.json (91 empty) + data/daily_news.json (3 empty)",
+      "detail": "169 video news entries have empty summaries showing '(summary pending)' in the News tab. This count is UNCHANGED from last run — neither the improve stage's fill_missing_summaries module nor the analyze stage is making progress on the backlog. The root cause (no_transcript=78 for new videos) means 78 newly classified news entries have no transcript to summarize from.",
+      "suggestion": "The improve stage's fill_missing_summaries safe_auto module should prioritize the weekly/monthly backlog. For videos with only description/title, generate a 1-sentence summary from the description text. Address the transcript-failure root cause (finding 8a1b5c4d6e) so future fetches have real content.",
       "status": "open"
     },
     {
@@ -158,8 +158,8 @@
       "severity": "med",
       "area": "engine",
       "where": "src/analyze_batch.py:635-662",
-      "detail": "MCP connector detection uses a hardcoded list of only 8 specific string patterns (filesystem, browser, github, postgres, sqlite, memory, slack, google drive). Any other MCP server mentioned in a video — including custom, Smithery-hosted, or community servers — is silently ignored. CLAUDE.md Step 8 specifies exhaustive MCP hunting; the batch analyzer provides almost none.",
-      "suggestion": "Broaden detection: capture any pattern matching 'npx .+-mcp', 'uvx .+-mcp', 'mcpServers', 'smithery', or 'mcp.so' in the text as a generic MCP connector, extracting the name from the matched string. Append detected connectors with fields derived from context rather than a static lookup table.",
+      "detail": "MCP connector detection uses a hardcoded list of only 8 specific string patterns (filesystem, browser, github, postgres, sqlite, memory, slack, google drive). Any other MCP server mentioned in a video is silently ignored. CLAUDE.md Step 8 specifies exhaustive MCP hunting. Still unfixed.",
+      "suggestion": "Broaden detection: capture any pattern matching 'npx .+-mcp', 'uvx .+-mcp', 'mcpServers', 'smithery', or 'mcp.so' in the text as a generic MCP connector, extracting the name from the matched string.",
       "status": "open"
     },
     {
@@ -168,8 +168,8 @@
       "severity": "med",
       "area": "engine",
       "where": "src/analyze_batch.py:600-613",
-      "detail": "Slash-command regex r'/[a-z][a-z0-9_-]{1,20}\\b' matches URL path segments (/api, /v1, /s3), common prose slashes, and file paths. The exclusion list (line 601) only blocks 14 single-character tokens. Over a playlist of 900+ videos this will accumulate false-positive commands in commands.json.",
-      "suggestion": "Add a context requirement: only record a slash command if it appears adjacent to known AI tool names (Claude Code, claude, /terminal) or follows a clear command-demonstration phrase ('run /...', 'type /...', 'use the /... command'). Also extend the blocklist to common path prefixes (/api, /v1, /v2, /src, /static, /docs).",
+      "detail": "Slash-command regex r'/[a-z][a-z0-9_-]{1,20}\\b' matches URL path segments (/api, /v1, /s3), common prose slashes, and file paths. The exclusion list only blocks 14 single-character tokens. Over a playlist of 900+ videos this accumulates false-positive commands in commands.json. Still unfixed.",
+      "suggestion": "Add a context requirement: only record a slash command if it appears adjacent to known AI tool names or follows a clear command-demonstration phrase. Extend the blocklist to common path prefixes (/api, /v1, /v2, /src, /static, /docs).",
       "status": "open"
     },
     {
@@ -177,9 +177,9 @@
       "dimension": "cut_the_bullshit",
       "severity": "med",
       "area": "data",
-      "where": "data/tools.json — name: Chatgpt (line 595)",
-      "detail": "The tool is stored as \"Chatgpt\" (wrong casing) instead of the correct brand name \"ChatGPT\". This is the 3rd most-mentioned tool and the casing error appears in the dashboard for every visitor.",
-      "suggestion": "Rename name to 'ChatGPT' and update slug to 'chatgpt' (slug already correct). One-line fix in data/tools.json.",
+      "where": "data/tools.json — name: Chatgpt",
+      "detail": "The tool is stored as 'Chatgpt' (wrong casing) instead of the correct brand name 'ChatGPT'. This is the 3rd most-mentioned tool and the casing error appears in the dashboard for every visitor. Still unfixed.",
+      "suggestion": "Rename name to 'ChatGPT' in data/tools.json. One-line fix.",
       "status": "open"
     },
     {
@@ -188,8 +188,8 @@
       "severity": "med",
       "area": "engine",
       "where": "src/fetch.py:86",
-      "detail": "fetch_playlist_videos calls request.execute() with no retry or error handling for YouTube API quota exhaustion (HttpError 429/503). If the quota is hit mid-pagination (playlist has 1054 items across ~21 pages), the function raises an unhandled exception and the entire fetch run fails, leaving all new videos un-fetched until the next cron.",
-      "suggestion": "Wrap request.execute() in a retry loop with exponential backoff for 429/503, up to 3 attempts, before re-raising. The googleapiclient library provides MediaUploadError/HttpError with .resp.status for this check.",
+      "detail": "fetch_playlist_videos calls request.execute() with no retry or error handling for YouTube API quota exhaustion (HttpError 429/503). If the quota is hit mid-pagination (playlist has 1054 items across ~21 pages), the function raises an unhandled exception and the entire fetch run fails. Still unfixed.",
+      "suggestion": "Wrap request.execute() in a retry loop with exponential backoff for 429/503, up to 3 attempts, before re-raising.",
       "status": "open"
     },
     {
@@ -197,9 +197,9 @@
       "dimension": "deep_code_bugs",
       "severity": "med",
       "area": "engine",
-      "where": "src/analyze_batch.py:402 (write_skill_md) + :725-726 + :747-748",
-      "detail": "write_skill_md() at line 402 opens the output SKILL.md file with 'open(path, 'w')' — no encoding='utf-8'. If any skill_name, description, or tip contains non-ASCII characters (common with Hebrew-sourced content), this will silently produce corrupt SKILL.md files or raise UnicodeEncodeError. Additionally, lines 725-726 and 747-748 in main() open pending JSON files without encoding='utf-8'. The encoding bug runs throughout the entire file.",
-      "suggestion": "Add encoding='utf-8' to all remaining open() calls: write_skill_md (line 402), main() pending file reads (lines 725-726, 747-748). Then do a global search for 'open(' in analyze_batch.py and verify each occurrence has explicit encoding.",
+      "where": "src/analyze_batch.py:402 (write_skill_md) + :725-726 + :747-748; src/process_video.py:318",
+      "detail": "write_skill_md() in both analyze_batch.py (line 402) and process_video.py (line 318) opens SKILL.md output files with bare open() — no encoding='utf-8'. Additionally, main() in analyze_batch.py opens pending JSON files (lines 725-726, 747-748) without encoding. Hebrew content or Unicode tool names will cause UnicodeEncodeError on non-UTF-8 runners. The encoding bug runs throughout multiple files.",
+      "suggestion": "Add encoding='utf-8' to all remaining open() calls: analyze_batch.py lines 402, 725-726, 747-748 and process_video.py line 318. Then do a global search for 'open(' in both files and verify each has explicit encoding.",
       "status": "open"
     },
     {
@@ -208,8 +208,8 @@
       "severity": "low",
       "area": "engine",
       "where": "src/analyze_batch.py:710",
-      "detail": "In git_commit_push(), the retry loop calls subprocess.run(['git', 'pull', '--rebase', '--autostash'], ..., capture_output=True) but does not check its return code. If the pull fails (e.g., merge conflict, authentication failure), the code continues and immediately retries 'git push' on a dirty or unrebased state — which will fail again. The loop will exhaust all 3 retries and return 'push failed after retries' with no diagnosis.",
-      "suggestion": "Check the return code of the git pull: if it != 0, log the stderr and break/return early rather than retrying the push on a broken state. Example: pr2 = subprocess.run(...); if pr2.returncode != 0: return f'pull failed: {pr2.stderr[:100]}'.",
+      "detail": "In git_commit_push(), the retry loop calls git pull without checking its return code. If the pull fails (e.g., merge conflict, authentication failure), the code continues and retries git push on a broken state, exhausting all 3 retries with no diagnosis. Still unfixed.",
+      "suggestion": "Check the return code of the git pull: if it != 0, log the stderr and break/return early. Example: pr2 = subprocess.run(...); if pr2.returncode != 0: return f'pull failed: {pr2.stderr[:100]}'.",
       "status": "open"
     },
     {
@@ -218,8 +218,8 @@
       "severity": "med",
       "area": "dashboard",
       "where": "docs/dashboard.js:303 (renderTools)",
-      "detail": "The most-mentioned tool (Claude, 402×) is shown with a generic template description as the first card on the Tools tab. The highest-traffic entry in the catalog communicates no actual information about Claude.",
-      "suggestion": "Fix the source data (replace template descriptions) AND add a UI guard: if a tool description matches the known template pattern, show a 'Description pending' pill instead of the filler text to signal incompleteness rather than false completeness.",
+      "detail": "The most-mentioned tool (Claude, 402×) is shown with a generic template description as the first card on the Tools tab. The highest-traffic entry communicates no actual information. Still unfixed.",
+      "suggestion": "Fix the source data (replace template descriptions) AND add a UI guard: if a tool description matches the known template pattern, show a 'Description pending' pill instead of the filler text.",
       "status": "open"
     },
     {
@@ -228,8 +228,8 @@
       "severity": "med",
       "area": "dashboard",
       "where": "docs/index.html — nav tab buttons",
-      "detail": "Tab buttons show no item count. Competitors (Future Tools, TAAFT) display per-category counts that give visitors an immediate sense of catalog scale and density before clicking. Absence makes the tabs feel like placeholders.",
-      "suggestion": "After loading each tab's data in the init() async block, inject item counts into the nav buttons: e.g. 'Skills (10)', 'Tools (50)', 'Connectors (7)'. ~10 lines of JS.",
+      "detail": "Tab buttons show no item count. Competitors (Future Tools, TAAFT) display per-category counts. The dashboard now shows 38 skills and 89 tools but the nav buttons say nothing, making the catalog feel sparse. Note: status.total_skills is stale (10), so live item counts must be read from the loaded data, not status. Still unfixed.",
+      "suggestion": "After loading each tab's data in the init() async block, inject item counts into nav buttons: e.g. 'Skills (38)', 'Tools (89)', 'Connectors (8)'. ~10 lines of JS. Read counts from loaded JSON arrays, not status.json.",
       "status": "open"
     },
     {
@@ -238,8 +238,8 @@
       "severity": "med",
       "area": "dashboard",
       "where": "docs/dashboard.js:262-264 (renderSkills) and :310 (renderTools)",
-      "detail": "Skills and Tools tabs have no sort control. Users can only filter by category; they cannot sort by newest, by mentions, or reverse quality order. All four benchmark competitors offer multi-axis sort.",
-      "suggestion": "Add a sort <select> or pill-toggle above the card list: Quality (default) | Mentions | Newest. Implement as a client-side sort on the already-loaded array — no extra fetch needed. ~20 lines of JS.",
+      "detail": "Skills and Tools tabs have no sort control. Users can only filter by category; they cannot sort by newest, by mentions, or reverse quality order. All four benchmark competitors offer multi-axis sort. Still unfixed.",
+      "suggestion": "Add a sort <select> or pill-toggle above the card list: Quality (default) | Mentions | Newest. Implement as a client-side sort on the already-loaded array. ~20 lines of JS.",
       "status": "open"
     },
     {
@@ -248,8 +248,8 @@
       "severity": "low",
       "area": "dashboard",
       "where": "docs/index.html — header section",
-      "detail": "No hero tagline or onboarding copy explains what Excavatortron is. First-time visitors see 'Excavatortron — AI Skills Tracker' and then a search box and cards with no context. All four competitors have a 2-3 sentence value proposition above the fold.",
-      "suggestion": "Add one sentence beneath the subtitle: 'Tracks AI techniques, tools, models, and MCP connectors extracted from a curated YouTube playlist — updated automatically, quality-scored, and searchable.' Costs zero developer effort, permanently fixes first-impression clarity.",
+      "detail": "No hero tagline or onboarding copy explains what Excavatortron is. First-time visitors see 'Excavatortron — AI Skills Tracker' and a search box with no context. All four competitors have a 2-3 sentence value proposition above the fold. Still unfixed.",
+      "suggestion": "Add one sentence beneath the subtitle: 'Tracks AI techniques, tools, models, and MCP connectors extracted from a curated YouTube playlist — updated automatically, quality-scored, and searchable.'",
       "status": "open"
     },
     {
@@ -257,8 +257,8 @@
       "dimension": "deep_code_bugs",
       "severity": "low",
       "area": "workflow",
-      "where": ".github/workflows/analyze.yml:130 and review.yml:126",
-      "detail": "Inline Python in both workflows uses datetime.datetime.utcnow() which is deprecated in Python 3.12+ and will emit DeprecationWarning. When GitHub Actions upgrades the ubuntu-latest Python to 3.13+, this may become a hard error.",
+      "where": ".github/workflows/analyze.yml:130 and review.yml:125",
+      "detail": "Inline Python in both workflows uses datetime.datetime.utcnow() which is deprecated in Python 3.12+ and will emit DeprecationWarning. When GitHub Actions upgrades to Python 3.13+, this may become a hard error. Still unfixed.",
       "suggestion": "Replace datetime.datetime.utcnow().isoformat() + 'Z' with datetime.datetime.now(datetime.timezone.utc).isoformat() in both workflow inline scripts.",
       "status": "open"
     },
@@ -268,17 +268,47 @@
       "severity": "low",
       "area": "security",
       "where": "docs/dashboard.js:185",
-      "detail": "renderAlert builds el.innerHTML = msg where msg contains raw HTML tags hardcoded in JS alongside esc(status.token_hint). The esc() call protects the dynamic value, but the pattern (mixing safe-markup with partially-escaped content) is fragile — a future maintainer adding another dynamic field may forget esc() and introduce stored XSS. Data comes from repo-committed JSON (low external risk), but the pattern is worth fixing.",
+      "detail": "renderAlert builds el.innerHTML = msg where msg contains raw HTML tags hardcoded in JS alongside esc(status.token_hint). The esc() call protects the dynamic value, but the pattern (mixing safe-markup with partially-escaped content) is fragile — a future maintainer adding another dynamic field may forget esc() and introduce stored XSS. Data comes from repo-committed JSON (low external risk), but the pattern is worth fixing. Still unfixed.",
       "suggestion": "Build the alert using DOM methods (createElement, textContent) rather than innerHTML, or create a dedicated safe-template function that always escapes dynamic values and keeps static HTML separate.",
+      "status": "open"
+    },
+    {
+      "id": "a7f3d2e8c9",
+      "dimension": "deep_code_bugs",
+      "severity": "med",
+      "area": "engine",
+      "where": "src/analyze_batch.py:736",
+      "detail": "main() always sorts pending records newest-first (reverse=True), regardless of the workflow's order instruction. The analyze.yml workflow passes 'order=oldest_first' during normal mode and only switches to newest_first during catch-up. But analyze_batch.py ignores this entirely — it has no order parameter and always processes newest-first. CLAUDE.md Step 1 specifies oldest_first for the normal default. This causes older pending videos to be processed last indefinitely, and the 'oldest_first' contract with the user is silently violated.",
+      "suggestion": "Add an --order argument to analyze_batch.py (default: 'oldest_first'). When order=='oldest_first', sort by publishedAt ascending. Pass the workflow's order value via the script argument or an environment variable. Update analyze.yml to pass the order to the script.",
+      "status": "open"
+    },
+    {
+      "id": "b8e4c1a5f7",
+      "dimension": "deep_code_bugs",
+      "severity": "med",
+      "area": "engine",
+      "where": "src/analyze_batch.py:719-733",
+      "detail": "/tmp/sorted_pending.json is written on the first call and reused on subsequent calls within the same runner environment. GitHub Actions may reuse warm runners for the */30 sprint crons. If the file exists from a previous run, newly added pending videos are absent from the list and won't be processed until the file is regenerated. The file is never deleted. This is a latent but real correctness hazard for any runner that handles back-to-back analyze jobs.",
+      "suggestion": "Delete /tmp/sorted_pending.json at the start of every main() invocation before checking if it exists, or unconditionally regenerate it on each call. The file serves only to avoid re-scanning _pending/ within one run — rescan on every run is cheap and correct.",
+      "status": "open"
+    },
+    {
+      "id": "c9f2d8b4a1",
+      "dimension": "cut_the_bullshit",
+      "severity": "med",
+      "area": "data",
+      "where": "data/status.json — total_skills field",
+      "detail": "status.total_skills is 10 but skills.json actually contains 38 skills. The dashboard counter 'Total skills' shows 10, which is wrong by 73%. The field is set by fetch.py from the skills file at fetch time, but analyze_batch.py adds skills during the analyze stage without updating status.total_skills. So the counter is always stale and understates the actual count.",
+      "suggestion": "In process_video() (analyze_batch.py and process_video.py), update status['total_skills'] = len(skills_data['skills']) after saving skills.json. Or compute it lazily in the dashboard from the loaded skills array length rather than status.total_skills.",
       "status": "open"
     }
   ],
   "top_actions": [
-    "URGENT — Investigate the 100% transcript fallback rate (no_transcript=78, new_found=78 in last fetch): every video from the last run was analyzed from title/description only, not real transcript. Verify the youtube-transcript-api version compatibility with the dual-API branch in fetch_transcript(), and add alerting when fallback rate exceeds 50%.",
-    "Fix the hardcoded TODAY date in src/analyze_batch.py:20 — it corrupts all recency penalty calculations for new videos after June 3 2026. One-line fix with high correctness impact.",
-    "Replace the describe_tool() template function in src/analyze_batch.py (lines 268-286) — this is the ROOT CAUSE of all generic 'enhances productivity through AI-powered features' descriptions. Fix the source code, not just the data; every new tool will otherwise get a template description.",
-    "Add encoding='utf-8' to ALL open() calls in src/analyze_batch.py AND src/process_video.py AND write_skill_md — Hebrew transcripts and Unicode tool names already in the pipeline will cause UnicodeError on non-UTF-8 runners. Three files affected.",
-    "Back-fill the 169 empty news summaries in weekly/monthly news (growing from 52 last run) — '(summary pending)' in the news feed looks like a broken pipeline. The improve stage's fill_missing_summaries module should process these, and for the 78 description-only videos, generate a 1-sentence summary from the description text."
+    "CRITICAL — Fix describe_tool() in src/analyze_batch.py NOW: 38 of 89 tools (43%) have template descriptions and every new analyze run adds more. This is the root cause. Replace with transcript-based extraction or null; the improve stage's fill_missing_summaries should back-fill existing ones.",
+    "Fix the hardcoded TODAY date (src/analyze_batch.py:20) and add encoding='utf-8' to ALL open() calls in analyze_batch.py and process_video.py — both are high-severity bugs that affect correctness and data integrity on every run.",
+    "Fix analyze_batch.py sort order: add --order argument so the workflow's oldest_first/newest_first instruction is actually respected. Currently it always processes newest-first regardless of the workflow plan step's output.",
+    "Investigate and fix the 100% transcript fallback rate (no_transcript=78, new_found=78): verify youtube-transcript-api version compatibility, add an amber banner when fallback rate > 50%, and back-fill the 169 empty news summaries from available descriptions.",
+    "Quick wins (each ≤20 lines): (1) inject item counts into nav tab buttons from loaded data arrays, not stale status.total_skills; (2) add a one-sentence hero tagline to index.html; (3) fix 'Chatgpt' → 'ChatGPT' and remove 'anthropic'/'openai' company entries from tools.json."
   ],
   "history": [
     {
@@ -292,6 +322,13 @@
       "date": "2026-06-06",
       "usability": 6,
       "cut_the_bullshit": 5,
+      "deep_code_bugs": 4,
+      "overall": 5
+    },
+    {
+      "date": "2026-06-07",
+      "usability": 6,
+      "cut_the_bullshit": 4,
       "deep_code_bugs": 4,
       "overall": 5
     }

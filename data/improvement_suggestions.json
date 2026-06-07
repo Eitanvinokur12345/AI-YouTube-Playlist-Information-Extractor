@@ -116,6 +116,48 @@
       "source": "review",
       "review_finding_id": "e5a3f8b2c7",
       "severity": "high"
+    },
+    {
+      "id": "d1e5f9a2b3",
+      "type": "engine_fix",
+      "status": "pending",
+      "detail": "Fix analyze_batch.py sort order: main() always processes videos newest-first (line 736), ignoring the workflow's order instruction. Normal mode should be oldest_first per CLAUDE.md and analyze.yml plan step. Add --order argument and use it.",
+      "proposed_change": {
+        "file": "src/analyze_batch.py",
+        "action": "add_order_argument",
+        "description": "Change main() to accept a second argument: max_videos = int(sys.argv[1]) if len(sys.argv) > 1 else 1000, order = sys.argv[2] if len(sys.argv) > 2 else 'oldest_first'. Change the sort line (736) to: records.sort(key=lambda x: x['publishedAt'], reverse=(order == 'newest_first')). Update analyze.yml to pass the order value to the script."
+      },
+      "source": "review",
+      "review_finding_id": "a7f3d2e8c9",
+      "severity": "med"
+    },
+    {
+      "id": "e2f6a8b4c5",
+      "type": "engine_fix",
+      "status": "pending",
+      "detail": "Fix /tmp/sorted_pending.json persisting between GitHub Actions runs. The file is written once and reused, so newly added pending videos are invisible until the file is regenerated. Delete or unconditionally regenerate it at the start of every main() call.",
+      "proposed_change": {
+        "file": "src/analyze_batch.py",
+        "action": "remove_tmp_cache",
+        "description": "Remove the if/else block at lines 719-733 that conditionally reuses /tmp/sorted_pending.json. Always regenerate the sorted list from data/_pending/ at the start of main(). The file-scan is cheap (glob + json.load per file) and correctness is worth more than the micro-optimization."
+      },
+      "source": "review",
+      "review_finding_id": "b8e4c1a5f7",
+      "severity": "med"
+    },
+    {
+      "id": "f3a7d9e1b6",
+      "type": "engine_fix",
+      "status": "pending",
+      "detail": "Fix stale status.total_skills counter. status.json shows total_skills: 10 but skills.json has 38 skills. analyze_batch.py never updates this field after adding skills, so the dashboard 'Total skills' counter is permanently stale.",
+      "proposed_change": {
+        "file": "src/analyze_batch.py",
+        "action": "update_total_skills_in_status",
+        "description": "In process_video(), after save_json('data/skills.json', skills_data), add: status['total_skills'] = len(skills_data['skills']). This ensures the counter in status.json tracks the live count. Alternatively, compute it in the dashboard from loaded skills array length rather than trusting status.total_skills."
+      },
+      "source": "review",
+      "review_finding_id": "c9f2d8b4a1",
+      "severity": "med"
     }
   ]
 }

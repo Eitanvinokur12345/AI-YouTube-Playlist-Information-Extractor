@@ -18,6 +18,11 @@ Governed by the `review` block in `config.json`. Read it first; if
    Product Hunt AI) — what do they do better at discovery, scanning, filtering,
    and visual hierarchy, and what should this dashboard borrow? Inspect
    `docs/index.html` + `docs/dashboard.js` + the live data shapes.
+   **Readability is in scope on EVERY tab, not just News** (`usability.readability_scope:
+   "all_tabs"`): judge each tab for scannable hierarchy, spacing, and clear labels against a
+   news-portal bar (Yahoo & co). **Verify the header Quick-read toggle still condenses every
+   tab** (`maintain_quick_read_mode`). For any tab that reads as dense or cluttered, write a
+   concrete `ui_change` suggestion (which tab, what to change, why it's easier to read).
 2. **Cut the bullshit** (`dimension: "cut_the_bullshit"`) — hunt vague, padded,
    hype, or filler content: two-sentence "summaries" that say nothing, duplicate
    tips, marketing adjectives with no substance, scores with no evidence, generic

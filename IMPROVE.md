@@ -95,6 +95,31 @@ returning to the reference format every run.
 
 ---
 
+## Step 0c — Extraction completeness (THE TOP PRIORITY, every run)
+
+`config.self_improvement.top_priority = "extraction_completeness"`. Before curating, make sure
+the library actually reflects what the videos contain — this is the owner's #1 concern (the
+library was once flooded with ~950 boilerplate vendor stubs that hid the real content).
+
+1. **Audit for thin/boilerplate extraction.** Scan recent records + `deleted_skills.json` for
+   the boilerplate signature: a `skill_name` that is a bare vendor (`Claude`, `ChatGPT`,
+   `Make`, …), a `use_case` like *"Using X for productivity/automation tasks."*, or a
+   `description` like *"X is an AI tool by Y. It enhances productivity…"*. Also flag any
+   content-rich video (`processed/<id>.json` with `transcript_source=="transcript"` and a long
+   transcript) that produced **no** skill and only a vendor tool — a likely shallow pass.
+2. **Re-queue for deep re-analysis.** Copy each affected `data/processed/<id>.json` back to
+   `data/_pending/<id>.json` so the analyze stage re-extracts it under the anti-boilerplate
+   gate. Use **`python -m src.requeue --limit N`** (it only re-queues content-rich videos and
+   skips ones already pending). Re-queue in **bounded batches** (e.g. 80/run) so the analyze
+   cron drains them without a giant commit; the next improve run continues until the boilerplate
+   backlog is clear. Never re-queue a video tied to a frozen record.
+3. **Record progress** in `health.json` (`extraction.boilerplate_remaining`,
+   `requeued_this_run`) so the dashboard can show the recovery shrinking over time.
+
+This runs in **every** mode (full, light, idle) — completeness comes before tidiness.
+
+---
+
 ## Step 1 — Apply already-approved suggestions (do this FIRST)
 
 For each suggestion in `improvement_suggestions.json` whose `id` is in

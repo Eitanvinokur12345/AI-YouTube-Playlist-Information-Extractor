@@ -17,8 +17,8 @@
   },
   "link_following": {
     "enabled": true,
-    "max_links_per_video": 3,
-    "max_items_per_resource": 15,
+    "max_links_per_video": 6,
+    "max_items_per_resource": 20,
     "follow_for_low_quality_videos": true,
     "denylist_domains": [
       "youtube.com", "youtu.be", "twitter.com", "x.com", "instagram.com",
@@ -48,7 +48,10 @@
     "enabled": true,
     "cadence": "every_3_days",
     "autonomy": "safe_auto_suggest_risky",
+    "top_priority": "extraction_completeness",
+    "top_priority_note": "The #1 self-improvement task EVERY run: verify retrieval+analysis captured everything. Detect videos whose analysis was thin/boilerplate (only a vendor stub, or no skill+no specifics from a content-rich transcript) and RE-QUEUE them for deep two-phase re-analysis (copy data/processed/<id>.json back to data/_pending/). Run src/requeue.py or follow IMPROVE.md Step 0c.",
     "modules": {
+      "extraction_completeness": true,
       "data_hygiene": true,
       "ratings_and_locking": true,
       "ux_self_review": true,
@@ -129,13 +132,14 @@
   },
   "extraction": {
     "exhaustive": true,
-    "transcript_chars": 80000,
+    "two_phase": true,
+    "transcript_chars": 120000,
     "capture_stats": true,
     "capture_comments": true,
-    "max_comments": 15,
+    "max_comments": 100,
     "capture_tab_candidates": true,
     "tab_candidates_file": "data/tab_candidates.json",
-    "note": "Pull everything the video AND its surroundings offer: verbatim transcript (80k) + full description + up to max_links resolved links + view/like/comment stats + tags + duration + top-relevance comments (with best reply). Comments/stats are SEPARATE signals; the transcript is never edited."
+    "note": "TWO-PHASE (the top extraction priority). Phase 1 RETRIEVE (src/fetch.py): pull EVERYTHING into one complete bundle per video at data/_pending/<id>.json — verbatim transcript (up to transcript_chars) + full description + resolved links + view/like/comment stats + tags + duration + up to max_comments top-relevance comments (with best reply). Phase 2 ANALYZE (CLAUDE.md): read the WHOLE bundle as 'what was actually said', THEN extract; never analyze mid-retrieval, never emit boilerplate vendor stubs (anti-boilerplate gate). Retrieval depth never drops, including in catch-up."
   },
   "news": {
     "enabled": true,

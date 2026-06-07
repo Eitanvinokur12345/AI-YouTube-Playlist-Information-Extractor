@@ -295,57 +295,60 @@ function renderSkills(data) {
 // ── Tab: Tools (auto-tracked catalog of AI tools & models seen in the playlist) ─
 // Skills = techniques you apply; Tools = the products/models themselves. Ranked by
 // how many playlist videos mention each, so the most-talked-about tools float up.
-function renderTools(data) {
-  const items = (data && data.tools) || [];
+// ── Tab: Tool Rating (every tool + model, ranked by category, with what each does) ──
+// Merges the old Tools + Models Ranking tabs (a locked decision). Every tool appears,
+// ranked within its category by quality, each with a "what it does" blurb. A 🥇🥈🥉 podium
+// tops each category; models are badged and filterable via "models only".
+function renderToolRating(toolsData, modelsData) {
+  const items = (toolsData && toolsData.tools) || [];
   if (!items.length) return view.innerHTML = empty("No tools tracked yet.");
+  // Which tools are models? (for the badge + "models only" filter) — from models.json names.
+  const modelNames = new Set();
+  if (modelsData) Object.values(modelsData).forEach(blk =>
+    ((blk && blk.full_ranking) || []).forEach(r => modelNames.add(String(r.name || "").toLowerCase())));
+  const isModel = t => modelNames.has(String(t.name || "").toLowerCase());
+
   const cats = ["all", ...Array.from(new Set(items.map(t => t.category || "other"))).sort()];
   const activeCat = state.toolCategory || "all";
-  let html = `<div class="sub">${items.length} AI tools & models seen across the playlist, ranked by how often they're mentioned.</div>`;
-  html += `<div class="subnav">` + cats.map(c =>
-    `<button class="${activeCat === c ? "active" : ""}" data-tcat="${esc(c)}">${esc(c)}</button>`
-  ).join("") + `</div>`;
+  const modelsOnly = !!state.modelsOnly;
+
   let list = items.slice();
-  if (activeCat !== "all") list = list.filter(t => (t.category || "other") === activeCat);
+  if (modelsOnly) list = list.filter(isModel);
   if (q()) list = list.filter(t => hit(t.name, t.slug, t.company, t.country, t.category, t.description));
-  list.sort((a, b) => ((b.mentions || 0) - (a.mentions || 0)) || ((b.quality_score || 0) - (a.quality_score || 0)));
-  html += list.map(t => `
-    <div class="card ${t.low_quality_source ? "lowq" : ""}">
-      <h3><span class="score">${esc(t.quality_score ?? "?")}/10</span> ${esc(t.name)}
-        <span class="pill">${esc(t.category || "other")}</span>
-        ${t.open_source ? '<span class="pill">open source</span>' : ""}
-        ${t.mentions ? `<span class="mentions" title="How many playlist videos mention this tool">${esc(t.mentions)}× seen</span>` : ""}</h3>
-      ${t.company ? `<div class="sub">${esc(t.company)}${t.country ? " · " + esc(t.country) : ""}${t.model_version ? " · v" + esc(t.model_version) : ""}</div>` : ""}
-      <p>${esc(t.description || "")}</p>
-      ${t.source_url ? `<p><a href="${esc(t.source_url)}" target="_blank" rel="noopener">Source</a></p>`
-        : (t.source_video_id ? `<p><a href="${yt(t.source_video_id)}" target="_blank" rel="noopener">Source video</a></p>` : "")}
-    </div>`).join("");
-  if (!list.length) html += empty(q() ? `No tools match "${esc(state.query)}".` : "No tools in this category.");
+
+  let html = `<div class="sub">${items.length} AI tools &amp; models — ranked within each category by quality, each with what it does. Models are badged; tap “models only” to filter.</div>`;
+  html += `<div class="subnav">` + cats.map(c =>
+      `<button class="${activeCat === c ? "active" : ""}" data-tcat="${esc(c)}">${esc(c)}</button>`).join("")
+    + `<button class="${modelsOnly ? "active" : ""}" data-mo="1">⚙ models only</button></div>`;
+
+  const catList = activeCat === "all" ? cats.filter(c => c !== "all") : [activeCat];
+  let body = "";
+  catList.forEach(cat => {
+    const inCat = list.filter(t => (t.category || "other") === cat);
+    if (!inCat.length) return;
+    inCat.sort((a, b) => ((b.quality_score || 0) - (a.quality_score || 0)) || ((b.mentions || 0) - (a.mentions || 0)));
+    const podium = q() ? "" : podiumHtml(inCat.slice(0, 3).map((t, i) =>
+      ({ rank: i + 1, name: t.name, score: t.quality_score ?? "?", company: t.company })));
+    body += `<section class="cat-section"><h2 class="cat-title">${esc(cat)}<span class="cat-count">${inCat.length}</span></h2>${podium}`;
+    body += inCat.map((t, i) => `
+      <div class="card ${t.low_quality_source ? "lowq" : ""}">
+        <h3><span class="rank">#${i + 1}</span> <span class="score">${esc(t.quality_score ?? "?")}/10</span> ${esc(t.name)}
+          ${isModel(t) ? '<span class="modelpill">model</span>' : ""}
+          ${t.open_source ? '<span class="pill">open source</span>' : ""}
+          ${t.mentions ? `<span class="mentions" title="How many playlist videos mention this">${esc(t.mentions)}× seen</span>` : ""}</h3>
+        ${t.company ? `<div class="sub">${esc(t.company)}${t.country ? " · " + esc(t.country) : ""}${t.model_version ? " · v" + esc(t.model_version) : ""}</div>` : ""}
+        <p>${esc(t.description || "")}</p>
+        ${t.source_url ? `<p><a href="${esc(t.source_url)}" target="_blank" rel="noopener">Source</a></p>`
+          : (t.source_video_id ? `<p><a href="${yt(t.source_video_id)}" target="_blank" rel="noopener">Source video</a></p>` : "")}
+      </div>`).join("");
+    body += `</section>`;
+  });
+  html += body || empty(q() ? `No tools match "${esc(state.query)}".` : "No tools here.");
   view.innerHTML = html;
   view.querySelectorAll("[data-tcat]").forEach(b =>
-    b.addEventListener("click", () => { state.toolCategory = b.dataset.tcat; renderTools(data); }));
-}
-
-// ── Tab: Models Ranking ──────────────────────────────────────────────────────
-function renderModels(data) {
-  if (!data || !Object.keys(data).length) return view.innerHTML = empty("No model rankings yet.");
-  const searching = !!q();
-  const cards = Object.entries(data).map(([cat, blk]) => {
-    let ranking = blk.full_ranking || [];
-    if (searching) ranking = ranking.filter(r => hit(r.name, r.version, r.company, cat));
-    if (searching && !ranking.length) return "";
-    const rows = ranking.map(r => `
-      <tr><td>${esc(r.rank)}</td><td>${esc(r.name)} ${esc(r.version || "")}</td>
-      <td>${esc(r.company || "")}</td><td>${esc(r.score)}</td>
-      <td>${r.open_source ? "yes" : ""}</td></tr>`).join("");
-    // HTML podium rendered from data (Claude no longer writes ascii_podium); fall back to top 3.
-    const podium = searching ? "" :
-      podiumHtml(blk.podium && blk.podium.length ? blk.podium : ranking.slice(0, 3));
-    return `<div class="card"><h3>${esc(cat)}</h3>
-      ${podium}
-      <table><tr><th>#</th><th>Model</th><th>Company</th><th>Score</th><th>OSS</th></tr>
-      ${rows || `<tr><td colspan="5" class="empty">No models.</td></tr>`}</table></div>`;
-  }).join("");
-  view.innerHTML = cards || empty(`No models match "${esc(state.query)}".`);
+    b.addEventListener("click", () => { state.toolCategory = b.dataset.tcat; renderToolRating(toolsData, modelsData); }));
+  const moBtn = view.querySelector("[data-mo]");
+  if (moBtn) moBtn.addEventListener("click", () => { state.modelsOnly = !state.modelsOnly; renderToolRating(toolsData, modelsData); });
 }
 
 // ── Tab: Improvement Log ─────────────────────────────────────────────────────
@@ -707,8 +710,8 @@ async function show(tab) {
     b.classList.toggle("active", b.dataset.tab === tab));
   view.innerHTML = empty("Loading…");
   if (tab === "skills") return renderSkills(await load("skills.json"));
-  if (tab === "tools") return renderTools(await load("tools.json"));
-  if (tab === "models") return renderModels(await load("models.json"));
+  if (tab === "tools" || tab === "models")
+    return renderToolRating(await load("tools.json"), await load("models.json"));
   if (tab === "improvement") return renderImprovement();
   if (tab === "tips") return renderTips();
   if (tab === "news") return renderNews();
@@ -739,6 +742,20 @@ document.querySelectorAll("nav button").forEach(b =>
       clearTimeout(t);
       t = setTimeout(() => { state.query = searchEl.value || ""; show(state.activeTab); }, 180);
     });
+  }
+
+  // Quick-read mode: condense every tab's cards into scannable one-liners. Persisted.
+  const qrBtn = document.getElementById("qr-toggle");
+  if (qrBtn) {
+    const applyQR = on => {
+      document.body.classList.toggle("quickread", on);
+      qrBtn.classList.toggle("active", on);
+      qrBtn.setAttribute("aria-pressed", on ? "true" : "false");
+    };
+    applyQR(localStorage.getItem("excavatortron.quickread") === "1");
+    qrBtn.addEventListener("click", () =>
+      { const on = !document.body.classList.contains("quickread");
+        localStorage.setItem("excavatortron.quickread", on ? "1" : "0"); applyQR(on); });
   }
 
   show("skills");

@@ -1,0 +1,45 @@
+name: Suggest sources
+
+# Grow the playlist when it stalls. Pure Python (no Claude token): once a day it checks how many
+# videos were added to the playlist recently and, if fewer than source_growth.min_new_per_week,
+# proposes ONE high-value channel + recent videos to data/channel_suggestions.json for the owner
+# to approve in the dashboard. Free (read-only YouTube API).
+on:
+  schedule:
+    - cron: "0 6 * * *"     # daily 06:00 UTC
+  workflow_dispatch:
+
+concurrency:
+  group: skills-tracker-sources
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  suggest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install minimal deps
+        run: pip install google-api-python-client
+      - name: Check growth + suggest a channel if stalled
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: python -m src.suggest_channels
+      - name: Commit suggestions
+        if: always()
+        run: |
+          git config user.name "skills-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/channel_suggestions.json data/source_growth.json 2>/dev/null || true
+          git commit -m "sources: growth check $(date -u +%Y-%m-%dT%H:%MZ)" || echo "nothing to commit"
+          git pull --rebase --autostash origin main || true
+          git push || echo "push skipped"

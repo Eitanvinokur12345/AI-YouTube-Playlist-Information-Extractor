@@ -28,7 +28,7 @@ Write-Host "[2b/5] Whisper-transcribing videos (local ASR, light tiny model, sma
 # mode=all upgrades every video to Whisper over time; tiny model + capped threads = gentle on
 # the PC. CPU-bound, so a small batch per night. Skips gracefully if faster-whisper/yt-dlp
 # aren't installed (run sync\install-transcription.ps1 once). No API key, no cost.
-python -m src.transcribe_local --limit 15 --mode all --model tiny --cpu-threads 4
+python -m src.transcribe_local --limit 60 --mode all --model tiny --cpu-threads 4
 
 Write-Host "[3/5] Fetching NEW playlist videos (needs YOUTUBE_API_KEY)..."
 if ($env:YOUTUBE_API_KEY) {

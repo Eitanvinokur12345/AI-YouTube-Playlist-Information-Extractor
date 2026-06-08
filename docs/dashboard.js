@@ -703,6 +703,31 @@ async function renderSelfImprove() {
   view.innerHTML = html;
 }
 
+// ── Tab: Grow Sources (suggest a channel when the playlist stalls) ────────────
+async function renderSources() {
+  const data = await load("channel_suggestions.json");
+  const sugs = (data && data.suggestions) || [];
+  const pending = sugs.filter(s => (s.status || "pending") === "pending");
+  const th = (data && data.threshold) || 25;
+  const wk = data && data.weekly_additions;
+  let html = `<div class="sub">Keeps the playlist growing: when fewer than ${esc(th)} videos are added in a week, Excavatortron proposes one of your highest-value channels for you to approve.</div>`;
+  if (wk != null) {
+    const ok = wk >= th;
+    html += `<div class="card"><h3>${ok ? "✅" : "⚠️"} ${esc(wk)} videos added in the last week <span class="pill">target ${esc(th)}</span></h3>
+      <p class="sub">${ok ? "Growing well — no suggestion needed right now." : "Below target — review the suggested channel below."}</p></div>`;
+  }
+  if (!pending.length) { view.innerHTML = html + empty("No channel suggestions pending."); return; }
+  html += pending.map(s => `
+    <div class="card">
+      <h3>📺 ${esc(s.channel_title || s.channel)} <span class="newbadge">NEEDS YOU</span></h3>
+      <p>${esc(s.reason || "")}</p>
+      <p class="hint">Approve to add these ${esc((s.videos || []).length)} videos to your playlist (they'll then be transcribed + analyzed). <b>Approve:</b> tell Claude “approve ${esc(s.channel)}”, or use the MCP tool <code class="cmd">approve_channel</code>. <b>Skip:</b> “dismiss ${esc(s.channel)}”.</p>
+      <ol class="srcvids">${(s.videos || []).map(v =>
+        `<li><a href="${esc(v.url || yt(v.id))}" target="_blank" rel="noopener">${esc(v.title || v.id)}</a>${v.published ? ` <span class="sub">${esc(String(v.published).slice(0, 10))}</span>` : ""}</li>`).join("")}</ol>
+    </div>`).join("");
+  view.innerHTML = html;
+}
+
 // ── tab router ───────────────────────────────────────────────────────────────
 async function show(tab) {
   state.activeTab = tab;
@@ -716,6 +741,7 @@ async function show(tab) {
   if (tab === "tips") return renderTips();
   if (tab === "news") return renderNews();
   if (tab === "connectors") return renderConnectors(await load("connectors.json"));
+  if (tab === "sources") return renderSources();
   if (tab === "selfimprove") return renderSelfImprove();
   if (tab && tab.startsWith("dyn:")) return renderDynamicTab(tab.slice(4));
 }

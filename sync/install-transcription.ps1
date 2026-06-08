@@ -12,6 +12,6 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 Write-Host ""
-Write-Host "Done. The first transcription downloads the Whisper 'base' model (~150 MB) once."
-Write-Host "Transcribe caption-less videos now:  python -m src.transcribe_local --limit 15"
+Write-Host "Done. The first transcription downloads the light Whisper 'tiny' model (~75 MB) once."
+Write-Host "Transcribe a batch now:  python -m src.transcribe_local --limit 15   (tiny model, all videos)"
 Write-Host "It is already wired into sync\fetch-runner.ps1 to run a small batch nightly."

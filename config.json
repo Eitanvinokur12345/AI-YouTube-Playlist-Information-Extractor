@@ -136,10 +136,10 @@
     "night_window": {
       "enabled": true,
       "tz": "Asia/Jerusalem",
-      "start": "23:00",
+      "start": "01:00",
       "end": "07:00",
       "applies_to": "all",
-      "note": "Heavy Claude work (the analyze stage) runs ONLY during this Israel-time night window, so the SHARED Pro/Max subscription token is not drained during the owner's working hours — he wants overnight runs that finish before he wakes, leaving his Claude quota free to work. workflow_dispatch always overrides. Tune start/end to his real sleep / Claude-login hours. improve.yml + review.yml are already night-scheduled."
+      "note": "Heavy Claude work (the analyze stage) runs ONLY in this Israel-time window so the SHARED Pro/Max token isn't drained during the owner's working hours. Set to his hours: bed 23:00-02:00, wake 07:00, earliest Claude use 11:00 (non-study) / 16:00 (study). 01:00-07:00 runs while he's reliably asleep and ends ~4h before his earliest start so quota is fresh. workflow_dispatch overrides; fails open. Widen the start toward 23:00 if he confirms he isn't on Claude late."
     }
   },
   "extraction": {

@@ -50,6 +50,18 @@ if (Test-Path "$RepoPath\brain") {
     robocopy "$RepoPath\brain" $BrainDest @RC | Out-Null
 }
 
+# 5) Claude skills -> Claude Code's personal skills dir, so EVERY new Claude chat can use them.
+#    Claude Code auto-discovers SKILL.md packages in ~/.claude/skills/<name>/ and loads one
+#    when its description matches your task. (Other tools' skills stay in their own Desktop
+#    "<tool> skills of eitan" folders as a reference library — load them via each tool's own
+#    custom-instructions mechanism.)
+$ClaudeSkillsDir = "$env:USERPROFILE\.claude\skills"
+if (Test-Path "$RepoPath\skills") {
+    New-Item -ItemType Directory -Force -Path $ClaudeSkillsDir | Out-Null
+    Write-Host "Linking Claude skills -> $ClaudeSkillsDir (usable in new Claude chats)"
+    robocopy "$RepoPath\skills" $ClaudeSkillsDir @RC | Out-Null
+}
+
 # robocopy sets $LASTEXITCODE 1-7 on success; normalize so Task Scheduler shows success.
 if ($LASTEXITCODE -le 7) { $global:LASTEXITCODE = 0 }
 

@@ -1,6 +1,34 @@
 {
   "suggestions": [
     {
+      "id": "a1b3c5d7e9",
+      "type": "engine_fix",
+      "status": "pending",
+      "detail": "Reconcile index.json vs skills.json: 41 phantom slugs exist in index.json (110 entries) with no matching skill in skills.json (69 skills). These phantoms silently block those tools from being added in future analyze runs. On main() startup, drop index keys that have no match in skills_data['skills'] and re-save index.json.",
+      "proposed_change": {
+        "file": "src/analyze_batch.py",
+        "action": "reconcile_index_on_startup",
+        "description": "At the start of main(), after loading index_data and skills_data, compute: valid_slugs = {s['slug'] for s in skills_data['skills']}. Then: phantom_keys = [k for k in index_data if k not in valid_slugs]. If phantom_keys: for k in phantom_keys: del index_data[k]; save_json('data/index.json', index_data). Run once to fix current 41 phantoms."
+      },
+      "source": "review",
+      "review_finding_id": "fa52c3b7d1",
+      "severity": "med"
+    },
+    {
+      "id": "b2c4d6e8f0",
+      "type": "engine_fix",
+      "status": "pending",
+      "detail": "Fix create_news_summary() in analyze_batch.py to generate useful summaries even for no-transcript (title-only/description-only) videos. Current fallback '{title}. AI content video featuring tools and techniques.' is generic filler and is the direct cause of the 273-entry empty-summary backlog.",
+      "proposed_change": {
+        "file": "src/analyze_batch.py",
+        "action": "improve_news_summary_fallback",
+        "description": "In create_news_summary(), when only the title is available, build: found = extract_tools_from_text(title + ' ' + description). tools_str = ', '.join(list(found.keys())[:3]). Return f'{title}' if no tools found, or f'{title} — covers {tools_str}.' with any available description sentences. Add a summary_quality field: 'full' (real transcript), 'description' (desc fallback), 'title_only'."
+      },
+      "source": "review",
+      "review_finding_id": "2b9e4f67a3",
+      "severity": "med"
+    },
+    {
       "id": "8140b97fbc",
       "type": "engine_fix",
       "status": "pending",

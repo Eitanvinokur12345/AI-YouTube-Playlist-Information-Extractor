@@ -132,7 +132,15 @@
       "note": "Weekly deep pass at night Israel time: improve.yml at Sat 20:00 UTC (lead-in), review.yml at Sat 23:00 UTC (= Sun ~02:00 Israel). First-week intensive adds nightly runs; both share the data/review_state.json anchor."
     },
     "first_week": { "enabled": true, "started_at": null, "intensive_cadence_hours": 24 },
-    "throughput_target": { "videos": 100, "within_hours": 48 }
+    "throughput_target": { "videos": 100, "within_hours": 48 },
+    "night_window": {
+      "enabled": true,
+      "tz": "Asia/Jerusalem",
+      "start": "23:00",
+      "end": "07:00",
+      "applies_to": "all",
+      "note": "Heavy Claude work (the analyze stage) runs ONLY during this Israel-time night window, so the SHARED Pro/Max subscription token is not drained during the owner's working hours — he wants overnight runs that finish before he wakes, leaving his Claude quota free to work. workflow_dispatch always overrides. Tune start/end to his real sleep / Claude-login hours. improve.yml + review.yml are already night-scheduled."
+    }
   },
   "extraction": {
     "exhaustive": true,

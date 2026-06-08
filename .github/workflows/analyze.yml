@@ -68,10 +68,33 @@ jobs:
               has_work = False          # the sprint cron only works during catch-up
           else:
               has_work = True
+
+          # Night-gate: heavy Claude work runs ONLY in the owner's Israel-time night window,
+          # so the SHARED Pro/Max token isn't drained during his working hours. A daytime cron
+          # still fires but no-ops cheaply; the pending videos wait for tonight. Manual
+          # workflow_dispatch always overrides. (improve/review are already night-scheduled.)
+          nw = (cfg.get("cadence", {}) or {}).get("night_window", {}) or {}
+          gated = False
+          if has_work and nw.get("enabled") and event != "workflow_dispatch":
+              applies = nw.get("applies_to", "all")
+              if applies == "all" or (applies == "heavy_only" and active):
+                  try:
+                      from zoneinfo import ZoneInfo
+                      import datetime as _dt
+                      loc = _dt.datetime.now(ZoneInfo(nw.get("tz", "Asia/Jerusalem")))
+                      sh, sm = (int(x) for x in str(nw.get("start", "23:00")).split(":"))
+                      eh, em = (int(x) for x in str(nw.get("end", "07:00")).split(":"))
+                      cur, s, e = loc.hour * 60 + loc.minute, sh * 60 + sm, eh * 60 + em
+                      in_window = (s <= cur < e) if s < e else (cur >= s or cur < e)
+                  except Exception:
+                      in_window = True   # fail OPEN — never get permanently stuck off
+                  if not in_window:
+                      has_work, gated = False, True
           print(f"pending={pending}")
           print(f"catch_up={'true' if active else 'false'}")
           print(f"batch={batch}")
           print(f"order={order}")
+          print(f"night_gated={'true' if gated else 'false'}")
           print(f"has_work={'true' if has_work else 'false'}")
           PY
           echo "Plan written to outputs (pending / catch_up / batch / order / has_work)."

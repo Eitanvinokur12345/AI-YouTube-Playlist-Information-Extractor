@@ -705,7 +705,8 @@ async function renderSelfImprove() {
 
 // ── Tab: Grow Sources (suggest a channel when the playlist stalls) ────────────
 async function renderSources() {
-  const data = await load("channel_suggestions.json");
+  const [data, gated] = await Promise.all([
+    load("channel_suggestions.json"), load("comment_gated.json")]);
   const sugs = (data && data.suggestions) || [];
   const pending = sugs.filter(s => (s.status || "pending") === "pending");
   const th = (data && data.threshold) || 25;
@@ -716,15 +717,31 @@ async function renderSources() {
     html += `<div class="card"><h3>${ok ? "✅" : "⚠️"} ${esc(wk)} videos added in the last week <span class="pill">target ${esc(th)}</span></h3>
       <p class="sub">${ok ? "Growing well — no suggestion needed right now." : "Below target — review the suggested channel below."}</p></div>`;
   }
-  if (!pending.length) { view.innerHTML = html + empty("No channel suggestions pending."); return; }
-  html += pending.map(s => `
-    <div class="card">
-      <h3>📺 ${esc(s.channel_title || s.channel)} <span class="newbadge">NEEDS YOU</span></h3>
-      <p>${esc(s.reason || "")}</p>
-      <p class="hint">Approve to add these ${esc((s.videos || []).length)} videos to your playlist (they'll then be transcribed + analyzed). <b>Approve:</b> tell Claude “approve ${esc(s.channel)}”, or use the MCP tool <code class="cmd">approve_channel</code>. <b>Skip:</b> “dismiss ${esc(s.channel)}”.</p>
-      <ol class="srcvids">${(s.videos || []).map(v =>
-        `<li><a href="${esc(v.url || yt(v.id))}" target="_blank" rel="noopener">${esc(v.title || v.id)}</a>${v.published ? ` <span class="sub">${esc(String(v.published).slice(0, 10))}</span>` : ""}</li>`).join("")}</ol>
-    </div>`).join("");
+  if (pending.length) {
+    html += pending.map(s => `
+      <div class="card">
+        <h3>📺 ${esc(s.channel_title || s.channel)} <span class="newbadge">NEEDS YOU</span></h3>
+        <p>${esc(s.reason || "")}</p>
+        <p class="hint">Approve to add these ${esc((s.videos || []).length)} videos to your playlist (they'll then be transcribed + analyzed). <b>Approve:</b> tell Claude “approve ${esc(s.channel)}”, or use the MCP tool <code class="cmd">approve_channel</code>. <b>Skip:</b> “dismiss ${esc(s.channel)}”.</p>
+        <ol class="srcvids">${(s.videos || []).map(v =>
+          `<li><a href="${esc(v.url || yt(v.id))}" target="_blank" rel="noopener">${esc(v.title || v.id)}</a>${v.published ? ` <span class="sub">${esc(String(v.published).slice(0, 10))}</span>` : ""}</li>`).join("")}</ol>
+      </div>`).join("");
+  } else {
+    html += empty("No channel suggestions pending.");
+  }
+
+  // Resources hidden behind a comment-wall that we couldn't auto-retrieve (CLAUDE.md Step 2e)
+  const gl = (gated && (gated.items || gated.resources)) || [];
+  if (gl.length) {
+    html += `<h2 class="cat-title">🔒 Behind a comment-wall <span class="cat-count">${esc(gl.length)}</span></h2>
+      <div class="sub">These videos hide their file/link behind a comment (“comment X and I'll send it”) and it wasn't findable automatically — grab these few by hand.</div>`;
+    html += gl.map(g => `
+      <div class="card">
+        <h3>🔒 ${esc(g.title || g.video_id)}</h3>
+        ${g.what_it_is ? `<p>${esc(g.what_it_is)}</p>` : ""}
+        <p class="hint">${g.comment_keyword ? `Comment <code class="cmd">${esc(g.comment_keyword)}</code> on the video to get it.` : "Check the video's comments / pinned comment for the link."} &nbsp;<a href="${esc(g.source_url || yt(g.video_id))}" target="_blank" rel="noopener">Open video ↗</a></p>
+      </div>`).join("");
+  }
   view.innerHTML = html;
 }
 

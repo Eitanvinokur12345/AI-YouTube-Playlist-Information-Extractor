@@ -232,6 +232,28 @@ fields), just skip it — these signals are always optional and must degrade gra
 
 ---
 
+## Step 2e — Comment-gated resources ("comment X to get the file/link")
+
+Many videos demo a tool/repo and say *"the link isn't in the description — comment '<word>'
+and I'll send it"* (or "link in the pinned comment"). The resource (often a GitHub repo) is
+therefore NOT in the description or transcript. Recover it without the owner doing anything:
+
+1. **Detect the gate.** The transcript/description says the file/link is in the comments, a
+   pinned comment, a DM, or behind commenting a keyword.
+2. **Mine the comments you already have** (`top_comments`, fetched relevance-first so the
+   pinned/creator comment usually surfaces). Look in the **creator's own** comments/replies and
+   the most-liked comments for the real URL (GitHub, docs, the tool's site). If found, treat it
+   like a Step 2c link: follow it with `WebFetch`, extract its tools/skills, and tag the records
+   `discovered_via: "video_comment"`.
+3. **If the link genuinely isn't anywhere we can see**, don't drop it — **log it for the owner**
+   to `data/comment_gated.json` (`{video_id, title, source_url(video), gate_phrase,
+   comment_keyword (the word to post, if stated), what_it_is (1 line), added_at}`), de-duped by
+   `video_id`. The dashboard's **Grow Sources** tab surfaces this as a short "resources behind a
+   comment-wall" list so the owner can grab the few that need a human. Still extract whatever the
+   video itself taught.
+
+---
+
 ## Step 3 — Tab: Skills Library  (TECHNIQUES & WORKFLOWS ONLY)
 
 This tab holds **reusable techniques, workflows and packaged skills** — the *methods you
@@ -361,19 +383,25 @@ Only create a SKILL.md package for skills that are genuinely **reusable and usef
 (`quality_score >= 5`)**. (Lower-scored skills still live in `skills.json` and the rankings,
 just without a package folder, to keep the skill folders clean.)
 
-**Routing — which folder the package goes in:**
-- `target_tool == "claude"` (default) → **`skills/<slug>/SKILL.md`** (FLAT — no category
-  subfolders). These sync to the user's `claude skills of eitan` folder.
-- Any other `target_tool` (a packaged skill for another ecosystem — a Gemini Gem, a ChatGPT
-  Custom GPT, etc.) → **`other-skills/<target_tool>/<slug>/SKILL.md`**. These sync to a
-  per-tool folder named `<target_tool> skills of eitan`.
+**Routing — one folder PER TOOL (the owner's rule):** every tool's skills live in their own
+`<tool> skills of eitan` folder; Claude's in `claude skills of eitan`. So:
+- `target_tool` must be the **specific tool the skill is for** — `"claude"`, or a concrete name
+  like `"gemini"`, `"chatgpt"`, `"cursor"`, `"n8n"`, `"midjourney"`, `"perplexity"`, `"flux"`, …
+  **Do NOT use the generic bucket `"other"`** — it lumps unrelated tools into one folder, which
+  the owner explicitly does not want. Use the real tool name so each tool gets its OWN folder.
+- `target_tool == "claude"` (default for Claude/Anthropic skills) → **`skills/<slug>/SKILL.md`**
+  (FLAT). Syncs to **`claude skills of eitan`**.
+- Any other tool → **`other-skills/<tool>/<slug>/SKILL.md`** (e.g. `other-skills/cursor/<slug>/`,
+  `other-skills/midjourney/<slug>/`). Each syncs to its own **`<tool> skills of eitan`** folder.
+- Reserve `target_tool: "other"` ONLY for a genuinely tool-agnostic technique that belongs to
+  no single tool (rare); prefer the real tool name whenever one clearly applies. (Legacy records
+  under `other-skills/other/*` get re-homed to their own tool folder as they're re-analyzed.)
 
 ```
 skills/                         other-skills/
-  prompt-chaining/SKILL.md        gemini/
-  cursor-ai/SKILL.md                deep-research-gem/SKILL.md
-  n8n-automation/SKILL.md         chatgpt/
-  ...                               coding-mentor-gpt/SKILL.md
+  prompt-chaining/SKILL.md        gemini/<slug>/SKILL.md        cursor/<slug>/SKILL.md
+  claude-agent-loop/SKILL.md      chatgpt/<slug>/SKILL.md       midjourney/<slug>/SKILL.md
+  ...                             n8n/<slug>/SKILL.md           ...
 ```
 
 **SKILL.md template:**
@@ -433,6 +461,13 @@ Every named **tool, model, app, platform or service** the video (or a followed l
 goes here → `data/tools.json` (`{"tools":[...]}`, create if missing). This is the catalog of
 *things*, ranked by how often the playlist mentions them. Be exhaustive: if it has a brand name
 and you could go use it, it belongs here — even when it also produced a technique in Step 3.
+
+> **Extract EVERY tool named — breadth is the goal (target hundreds, not dozens).** Roundup /
+> listicle videos ("top 20 AI tools", "100 GitHub repos", "every MCP server") and awesome-list
+> repos name MANY tools — capture **all distinct ones** from the transcript AND from followed
+> links (`link_following.extract_all_named_tools`, raised caps). Don't stop at the few the
+> creator dwells on. A single "100 tools" video should yield ~100 tool records, deduped against
+> what's already there (a repeat just adds an `endorsement_video_id`, growing its mention count).
 
 Tool record:
 - `name` — exact name incl. version where shown (e.g. "Gemini 2.5 Pro", not "Gemini").

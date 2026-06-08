@@ -23,6 +23,12 @@ Write-Host "[2/5] Backfilling real transcripts (residential IP) — the recovery
 # cloud can drain it. Non-fatal: rate-limits / missing captions are expected for some videos.
 python -m src.backfill_transcripts --limit 80 --sleep 1.2
 
+Write-Host "[2b/5] Whisper-transcribing caption-less videos (local ASR, small nightly batch)..."
+# Tier-2: real speech-to-text for videos that have NO caption track. CPU-bound and slow, so a
+# small batch per night. Skips gracefully if faster-whisper/yt-dlp aren't installed
+# (run sync\install-transcription.ps1 once to enable). No API key, no cost.
+python -m src.transcribe_local --limit 15 --model base
+
 Write-Host "[3/5] Fetching NEW playlist videos (needs YOUTUBE_API_KEY)..."
 if ($env:YOUTUBE_API_KEY) {
     python -m src.fetch

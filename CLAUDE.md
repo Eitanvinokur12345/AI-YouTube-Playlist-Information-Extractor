@@ -482,6 +482,11 @@ Tool record:
 - `endorsement_video_ids` — video ids that featured it; initialize `["<video_id>"]`.
 - `mentions` — `len(endorsement_video_ids)` (how many playlist videos reference it).
 - `source_video_id`, `source_url`, `video_quality_score`, `low_quality_source` — as elsewhere.
+- `release_status` — `"released"` (default) **or `"upcoming"`** if the tool is announced but NOT
+  yet publicly available. When upcoming, add `expected_release` (date/quarter string if stated).
+  Upcoming tools render in the separate **Coming Soon** tab, never in the live rankings.
+- `is_open_source` / `is_mcp` — `true` when it's open-source (e.g. a GitHub repo) or an MCP
+  server (feeds the web-discovery emphasis + the connectors view).
 
 **Dedup by `slug` (and obvious name aliases).** If the tool already exists: union
 `endorsement_video_ids` (recompute `mentions`), keep the higher `quality_score`, keep the
@@ -493,6 +498,22 @@ After updating, **re-sort `tools.json` by `mentions` desc, then `quality_score` 
 
 > Models are a *subset* of tools: when a tool is an AI model, ALSO add/update it in
 > `models.json` (Step 4). Tools = the full catalog; Models = the ranked-by-category view.
+
+---
+
+## Step 3c — Tab: Prompts (master / guardrail / creation)
+
+If the video **shows or dictates a reusable prompt** — a big "master"/system prompt, an
+anti-hallucination / "do not lie" guardrail, or a fill-in prompt for creating something — capture
+it to `data/prompts.json` (`{"prompts":[...]}`, create if missing). Skip throwaway one-liners;
+keep prompts worth reusing. Each record:
+- `title` — short name. `category` ∈ `config.prompts.categories` (`master`, `system_guardrail`,
+  `creation`, `coding`, `agents`, `research`, `marketing`, `other`).
+- `purpose` — 1 line on when to use it. `prompt_text` — the prompt **verbatim** as shown
+  (transcribe what's on screen / dictated; lightly fix only obvious ASR typos — do NOT paraphrase).
+- `source_video_id` + `source_url`. `notes` — optional caveats.
+Dedup by near-identical `title`/`prompt_text` (merge, don't duplicate). **Never modify a prompt
+marked `"curated": true`** (the built-in starter set). Renders in the **Prompts** tab.
 
 ---
 

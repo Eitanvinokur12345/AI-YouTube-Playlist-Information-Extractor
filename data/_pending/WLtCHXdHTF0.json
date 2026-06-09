@@ -1,0 +1,443 @@
+{
+  "video_id": "WLtCHXdHTF0",
+  "title": "Google's New AI Architecture Changes Everything (Gemma 4 12B)",
+  "description": "Google DeepMind just released Gemma 4 12B, a new AI model that completely changes how LLMs process pictures and sound. Instead of running three heavy, separate models at once and slowing down your laptop, it cuts out the middleman to read raw pixels and audio waves directly. In this video, we break down exactly how this new architecture works and why it gives you incredibly fast speeds completely offline.\n\n🔗 Relevant Links\nGemma 4 12B: https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemma-4-12b\nTechnical Deep Dive: https://newsletter.maartengrootendorst.com/p/a-visual-guide-to-gemma-4-12b\n\n❤️ More about us\nRadically better observability stack: https://betterstack.com/\nWritten tutorials: https://betterstack.com/community/\nExample projects: https://github.com/BetterStackHQ\n\n📱 Socials\nTwitter: https://twitter.com/betterstackhq\nInstagram: https://www.instagram.com/betterstackhq/\nTikTok: https://www.tiktok.com/@betterstack\nLinkedIn: https://www.linkedin.com/company/betterstack\n\n📌 Chapters:\n0:00 Inside Gemma 4 12B\n0:35 The Old Way: Tape-Gluing AI Models Together\n0:59 The Problem with Vision and Audio Encoders\n1:31 How Gemma 4 Cuts Out the Middleman\n2:07 Deconstructing the 35M Vision Hack\n3:01 Inside the LLM \"Hidden Dimension\"\n3:33 The Audio Hack: Turning Waveforms Into Words\n4:01 Live Performance Test on Apple Silicon\n4:42 Testing Real-Time Vision Offline\n5:40 The Future of Encoder-Free AI Architecture",
+  "publishedAt": "2026-06-08T13:28:00Z",
+  "channel_name": "Better Stack",
+  "transcript": "Google DeepMind just released Gemma 4 12B, a new AI model that completely changes how LLMs process pictures and sound. Instead of running three heavy, separate models at once and slowing down your laptop, it cuts out the middleman to read raw pixels and audio waves directly. In this video, we break down exactly how this new architecture works and why it gives you incredibly fast speeds completely offline.\n\n🔗 Relevant Links\nGemma 4 12B: https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemma-4-12b\nTechnical Deep Dive: https://newsletter.maartengrootendorst.com/p/a-visual-guide-to-gemma-4-12b\n\n❤️ More about us\nRadically better observability stack: https://betterstack.com/\nWritten tutorials: https://betterstack.com/community/\nExample projects: https://github.com/BetterStackHQ\n\n📱 Socials\nTwitter: https://twitter.com/betterstackhq\nInstagram: https://www.instagram.com/betterstackhq/\nTikTok: https://www.tiktok.com/@betterstack\nLinkedIn: https://www.linkedin.com/company/betterstack\n\n📌 Chapters:\n0:00 Inside Gemma 4 12B\n0:35 The Old Way: Tape-Gluing AI Models Together\n0:59 The Problem with Vision and Audio Encoders\n1:31 How Gemma 4 Cuts Out the Middleman\n2:07 Deconstructing the 35M Vision Hack\n3:01 Inside the LLM \"Hidden Dimension\"\n3:33 The Audio Hack: Turning Waveforms Into Words\n4:01 Live Performance Test on Apple Silicon\n4:42 Testing Real-Time Vision Offline\n5:40 The Future of Encoder-Free AI Architecture",
+  "transcript_lang": "",
+  "transcript_source": "description",
+  "links": [
+    "https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemma-4-12b",
+    "https://newsletter.maartengrootendorst.com/p/a-visual-guide-to-gemma-4-12b",
+    "https://betterstack.com/",
+    "https://betterstack.com/community/",
+    "https://github.com/BetterStackHQ"
+  ],
+  "stats": {
+    "views": 52266,
+    "likes": 1745,
+    "comments": 123
+  },
+  "tags": [],
+  "duration": "PT11M2S",
+  "category_id": "28",
+  "top_comments": [
+    {
+      "author": "@arijitgogoi5653",
+      "text": "Everything changes everything everytime",
+      "likes": 257,
+      "top_reply": {
+        "author": "@TruthTeller8888",
+        "text": "😂😂😂 how they going to sell scam videos otherwise 😂",
+        "likes": 14
+      }
+    },
+    {
+      "author": "@Phobos11",
+      "text": "Everything is a game changer, yet nothing changes",
+      "likes": 92,
+      "top_reply": {
+        "author": "@EssenceofSpire",
+        "text": "In your life, you mean? I don’t know about you man, but over the past several months I completely changed my lifestyle due to running models locally again. A lot really has changed. This is just another video on YouTube.",
+        "likes": 4
+      }
+    },
+    {
+      "author": "@ai-context-window",
+      "text": "It's reassuring to see that big companies like Google are investing also in local models that people can run on their own devices. Granted, they might not be as good as the top of the line models, but it might be sufficient for many of the use cases. Not having to worry about token costs for small things that can be handled by a model like this is quite helpful.",
+      "likes": 1
+    },
+    {
+      "author": "@sherpya",
+      "text": "gemma models still struggle with json output and tool calling, the qat q4 does work slightly better",
+      "likes": 25,
+      "top_reply": {
+        "author": "@okolenmi",
+        "text": "This model look more like a testing example. The main concept works, but model is still not polished and need more specific training to really shine. Google is not interested in this, sadly. They will just implement new features in their closed source models instead.",
+        "likes": 2
+      }
+    },
+    {
+      "author": "@HiltonTravis-au",
+      "text": "MTP and MLX?  Awesome!",
+      "likes": 0
+    },
+    {
+      "author": "@probablyjustme77",
+      "text": "The kind of title that makes me summarize it first and 95% of the time I don't click it and give a view to this creator. It's time you learn.",
+      "likes": 5
+    },
+    {
+      "author": "@triho-x3n",
+      "text": "But using raw inputs directly leads to significantly longer sequence lengths for the \"decoder\" to process, isn't it?",
+      "likes": 0
+    },
+    {
+      "author": "@dawid_dahl",
+      "text": "Did it get the airport time table correct?",
+      "likes": 2
+    },
+    {
+      "author": "@nomadsteve007",
+      "text": "This is the future. Small capable models will run locally, then intelligently route requests to the cloud. Why have we not had this so far? The local models are just too big and dumb.\n\nI did a lot of testing this weekend with Gemma 4 31B and damn it slaps.",
+      "likes": 0
+    },
+    {
+      "author": "@syedharis3235",
+      "text": "Everything is changing everything on my youtube feed yet nothing changes everything",
+      "likes": 1
+    },
+    {
+      "author": "@katgod",
+      "text": "Interesting video,",
+      "likes": 0
+    },
+    {
+      "author": "@MaxRoaldEckardt",
+      "text": "genius move to distill the encoders away.",
+      "likes": 0
+    },
+    {
+      "author": "@chronicallychill9979",
+      "text": "I didn't think Google gave us the MTP version in the GGUF, just the TFLite version?",
+      "likes": 1
+    },
+    {
+      "author": "@lmaoidgaf",
+      "text": "can anyone suggest what exact gemma 12 B model to use normally or with harness (hermes,etc.) in 16 GB unified Macbook Air M4",
+      "likes": 0,
+      "top_reply": {
+        "author": "@bertilorickardspelar",
+        "text": "The UD quants from Unsloth are really good. You can go as low as Q3 and still get decent results.\nQwen 3.5 9B is better for coding though.",
+        "likes": 0
+      }
+    },
+    {
+      "author": "@bigglyguy8429",
+      "text": "Everyone goes on about it not needing an encoder, but you still DO need a separate file for vision, so why not just call that an encoder?",
+      "likes": 0
+    },
+    {
+      "author": "@SirHackaL0t.",
+      "text": "Which game are they changing? Kerplunk? Monopoly?",
+      "likes": 0
+    },
+    {
+      "author": "@itsmorphed6416",
+      "text": "Once I changed to the q4 from the q3 in my iPad , although I only get around 13.5 token’s per second, I swear it replied slightly before I hit send lol . The similar qwen 9 b is more tokens 18 tps but responds slower , but good model",
+      "likes": 0,
+      "top_reply": {
+        "author": "@emergnt",
+        "text": "wait you are running an LLM on an iPad?",
+        "likes": 1
+      }
+    },
+    {
+      "author": "@Einimas",
+      "text": "how good is it with writhing X*Y=(prime number) while not hurting the prime number?",
+      "likes": 0
+    },
+    {
+      "author": "@ulrich-tonmoy",
+      "text": "is there any good model that works maybe one for each kind of task than can be run in 8gb 5070 laptop gpu",
+      "likes": 0
+    },
+    {
+      "author": "@aaronperron",
+      "text": "Does this mean we no longer have to load an mmproj file with llama.cpp",
+      "likes": 0
+    },
+    {
+      "author": "@飛天柴犬",
+      "text": "More modern multi-modal models.",
+      "likes": 1
+    },
+    {
+      "author": "@giorgosgernas9698",
+      "text": "So basically they can now fail to reason on images faster ?",
+      "likes": 0
+    },
+    {
+      "author": "@Apotheosys_AI",
+      "text": "one of the best YT channels for AI",
+      "likes": 2
+    },
+    {
+      "author": "@rainsprinkle1965",
+      "text": "What is the hallucination rate?",
+      "likes": 0
+    },
+    {
+      "author": "@aeronwolfe7072",
+      "text": "daaaang. billy corgan is really keeping up with the tech scene huh? ;)",
+      "likes": 21,
+      "top_reply": {
+        "author": "@katgod",
+        "text": "I was going to be a smart ass also but you beat me to it. Good call.",
+        "likes": 1
+      }
+    },
+    {
+      "author": "@Smesla",
+      "text": "Gemini is easy to red team maybe they should be focusing on security instead of giving us things we don’t need.",
+      "likes": 0
+    },
+    {
+      "author": "@NamasenITN",
+      "text": "No major update unless you're interested in multimodal inputs.",
+      "likes": 5,
+      "top_reply": {
+        "author": "@bertilorickardspelar",
+        "text": "Well, it is a big step because of speed. Parsing layouts and screenshots is now significantly faster which can really help many  toolchains and workflows.",
+        "likes": 0
+      }
+    },
+    {
+      "author": "@WhatTheFunctionX",
+      "text": "Wait so is thos built for images and audio or is it built for text and is lighter because it have new vision system?",
+      "likes": 0,
+      "top_reply": {
+        "author": "@klop516",
+        "text": "Encoders are heavy workload like doing convertion of video file, take long time. Now just model intrepecting the data himself make things faster.",
+        "likes": 2
+      }
+    },
+    {
+      "author": "@ahuachapan2",
+      "text": "So ... My energy bill will go down with this ground breaking model?",
+      "likes": 6,
+      "top_reply": {
+        "author": "@Mangini037",
+        "text": "Yes, it will also wash your dishes. 🎉",
+        "likes": 4
+      }
+    },
+    {
+      "author": "@pixtweaks393",
+      "text": "Thank you!",
+      "likes": 0
+    },
+    {
+      "author": "@luisoncpp",
+      "text": "This is not something new, maybe for a local model, but large models have been already encoder-free for a long time",
+      "likes": 0
+    },
+    {
+      "author": "@AmeliaBestWaifu",
+      "text": "It's basically the bitter lesson all over again, huh?",
+      "likes": 2
+    },
+    {
+      "author": "@grimsatan",
+      "text": "Really interesting video man, I didn't have high expectations; the engineering at Google is at a really high level",
+      "likes": 2
+    },
+    {
+      "author": "@AutisticThinker",
+      "text": "\"Game changers\"... So were the other Gemma 4 models released earlier; this one is just a nice fill-in the slot size at 12B.",
+      "likes": 0,
+      "top_reply": {
+        "author": "@bertilorickardspelar",
+        "text": "No. It is more than that. Sure it's a proof of concept model but what it really changes is the speed of processing images and documents. It is significantly faster than most vision capable models.",
+        "likes": 1
+      }
+    },
+    {
+      "author": "@aditya_on_youtube",
+      "text": "Do they use this new method in their larger Gemini models as well?",
+      "likes": 0,
+      "top_reply": {
+        "author": "@rude_people_die_young",
+        "text": "No",
+        "likes": 0
+      }
+    },
+    {
+      "author": "@bilthon",
+      "text": "24 GB or 32 GB?",
+      "likes": 0
+    },
+    {
+      "author": "@MegaLeoben",
+      "text": "but can it count r in strawberry?",
+      "likes": 0,
+      "top_reply": {
+        "author": "@HeWhoWritesCode",
+        "text": "It can!",
+        "likes": 0
+      }
+    },
+    {
+      "author": "@abulka",
+      "text": "So if you are coding and not using image recognition or audio recognition then there is no benefit to this optimisation, presumably.",
+      "likes": 2,
+      "top_reply": {
+        "author": "@TheChidmas",
+        "text": "Coders take screenshots, have images in briefs, PDFs other docs. Videos with audio all means the model uses less resources if you want to run local with multi models. Plus what about the apps with on device ai something way more attainable now due to the multiple advancements",
+        "likes": 0
+      }
+    },
+    {
+      "author": "@okolenmi",
+      "text": "It's always the most logical solution to mimic already existing solution if it's better. That's why you should look how brain works and try to make something as close as you can with reasonable performance. No encoder is a right step in this direction. To fully understand picture you need not only its textual description. There are a lot of things that can not be described easily.",
+      "likes": 2,
+      "top_reply": {
+        "author": "@gidmanone",
+        "text": "don't offer advice on things you don't understand",
+        "likes": 1
+      }
+    },
+    {
+      "author": "@trentoncarr",
+      "text": "It's thick as pig shit, but they have to start somewhere.",
+      "likes": 0
+    },
+    {
+      "author": "@armen_edits_videos",
+      "text": "Your voice needs to be mastered tell that to you video guy !",
+      "likes": 0
+    },
+    {
+      "author": "@KennedyOtisNyaga",
+      "text": "omlx seems to not support this model. How did you get this working with omlx? \n\"Model type gemma4_unified not supported. Error: No module named 'mlx_vlm.speculative.drafters.gemma4_unified'\"",
+      "likes": 0
+    },
+    {
+      "author": "@mcombatti",
+      "text": "Encoderless models are not new.... LFM models for example.",
+      "likes": 0
+    },
+    {
+      "author": "@charliegoo1314",
+      "text": "Most commenters missed the point: the Gemma 4 12B isn’t just another LLM—it’s a **small, fully encoder-free multimodal model** that fits comfortably on edge devices. By stripping away heavy vision and audio encoders and letting the language backbone handle all modalities natively, Google has created what’s effectively a **Medium Multimodal Language Model (MMLM)**. This shift signals a major step toward **terminal-based, non-cloud AI**, where powerful multimodal reasoning happens locally on laptops and phones. The future of edge AI is being shaped right now.",
+      "likes": 12,
+      "top_reply": {
+        "author": "@TheRealOrchestrator",
+        "text": "Thanks chatgpt",
+        "likes": 5
+      }
+    },
+    {
+      "author": "@TnokarKapidya-m7t",
+      "text": "Running multiple heavy networks separately hogs your budget and processing power. Why manage separate AI accounts when Omnely centralizes the entire tech stack? It provides all the best ai models, effortlessly bridging unlimited nano banana pro with Grok.",
+      "likes": 0
+    },
+    {
+      "author": "@curio78",
+      "text": "in my opinion it is wasted. the larger model like 26b is obviously smarter. But 12-14b are the perfect sweet spot to fit into memory for local use. Most waste it by making the model generic instead of specialized like for coding or other things. Ideal case is you build 9B models specialized for specific areas. one can choose to switch them as per use case. So why are they releasing these excellent at nothing but decent at everything models? It is to protect their hosted LLM business.",
+      "likes": 1
+    },
+    {
+      "author": "@TellyT-i5e",
+      "text": "token generation kinda slow",
+      "likes": 0
+    },
+    {
+      "author": "@daniels-mo9ol",
+      "text": "Only thing is that the model suuucks 😂",
+      "likes": 0
+    },
+    {
+      "author": "@Gai-i5x",
+      "text": "This is odd.  On the latest fully updated LM Studio on Windows 11 for a USB4 tech query I get 26.34 tok/sec in 11 secs for gemma 3 12B and 14.81 tok/sec in 23 secs for gemma 4 12B.  Claude: The Speed vs. Quality Trade-off Explained\nThis is the key takeaway for your original observation: Gemma 4 is almost certainly running its thinking mode before generating output, silently spending tokens reasoning through how best to structure the answer. You're not seeing those tokens — but you're seeing the result of them. The ~12 extra seconds (23s vs 11s) is very plausibly the thinking budget being consumed before the first visible token appears. The output quality difference strongly supports this hypothesis.\nBottom line: You're not getting slower inference for the same quality — you're getting noticeably better output that costs more compute to produce. Whether that trade-off is worth it depends on your use case, but for a technical explanation like USB4, Gemma 4 wins by a clear margin.",
+      "likes": 5
+    },
+    {
+      "author": "@TheViktorofgilead",
+      "text": "Who has a laptop with a gpu that has 16 gigs of VRAM?  My desktop only has 12!",
+      "likes": 0
+    },
+    {
+      "author": "@MalikZeeshan-u6s3v",
+      "text": "Big tech keeps releasing amazing local models like Gemma 4, yet we are still drowning in multiple fragmented subscription paywalls for specialized text and video tasks. I skipped the bloat by moving to Omnely. It features all the best ai models, combining unlimited nano banana pro and Veo 3.1.",
+      "likes": 12
+    },
+    {
+      "author": "@devivigpt",
+      "text": "6 months to AGI",
+      "likes": 0,
+      "top_reply": {
+        "author": "@bertilorickardspelar",
+        "text": "Always",
+        "likes": 0
+      }
+    },
+    {
+      "author": "@AK-vx4dy",
+      "text": "What a times... then encoders were to able models to even work, now they are bottleneck or dead weight....",
+      "likes": 0
+    },
+    {
+      "author": "@RandalexK",
+      "text": "It's a game changer? Cool, they invented mods.",
+      "likes": 0
+    },
+    {
+      "author": "@keithncs",
+      "text": "Please chill on the transitions. It's hurting my eyes when I watch it at night. Honestly just want something with fluidity so that I can zone in and focus on what you are saying and learn",
+      "likes": 0
+    },
+    {
+      "author": "@AhriSteezy",
+      "text": "this is stealing from me google and nvidia are on a rampage illegally using my copyrighted and patented work on unified models there is mountains video evidence and code evidence with revision dates of my models that do this predating this and them not crediting me. That being said I find this model to be reductive and not necessarily capable of achieving what my models have because it's not doing everything my models actually do at and it seems to still be slower than my models by a good amount. The encoders were not their problem and were doing the same thing as the thing they made the thing they made just is equivalent to a byte decoder being made fully multimodal which is nice and all but doesn't actually achieve anything special other than high accuracy at a reduced size but the speed benefit you gain is compromised by the decoder being fat in this architecture. There are very simple things that could be done to this model or altered that would make it inherently better that I'm not going to share because I'm sure some thief at google will read this comment.",
+      "likes": 0
+    },
+    {
+      "author": "@laalbujhakkar",
+      "text": "please don’t scream into the mic… your volume goes up and down a lot as you SPEAAK!!!!",
+      "likes": 1
+    },
+    {
+      "author": "@oszi7058",
+      "text": "Google is the only big western AI company that shares research with the public, while OpenAI and Antropic just fill their own wallets, i hope the later 2 go bankrupt",
+      "likes": 1,
+      "top_reply": {
+        "author": "@bertilorickardspelar",
+        "text": "Meta (Llama), OpenAI (Openai-oss), IBM (Granite) and Mistral have also released open weight models. To name a few.",
+        "likes": 0
+      }
+    },
+    {
+      "author": "@samrolfe2563",
+      "text": "Your chapters stopped half way.\nWhat I want as a developer is know how this impacts and works for me - I appreciate you breaking down behind the scenes technology and how it actually functions under the hood, great - don't care.\nWhat does that mean.\nAnd you just skipped the entire Title of your video. \nDissapointing.",
+      "likes": 0
+    },
+    {
+      "author": "@grimsatan",
+      "text": "I have just 16GB of RAM, and Windows eats a lot of it,so I was thinking that maybe I could run Linux on a different drive and try out the Gemma 4 12B quantized 6bits to see if it works; my objective is to use it inside of a set of agents maybe to do Git or write .md; I'm gonna start using Hermes instead of Claude Code, paying OpenCode Go, so I like models like this a lot",
+      "likes": 0,
+      "top_reply": {
+        "author": "@morgantoverux",
+        "text": "You need more RAM on you graphics card (VRAM), not system RAM.",
+        "likes": 1
+      }
+    },
+    {
+      "author": "@manojhp5908",
+      "text": "Congratulations for making a million'nth video on making the big AI change, and everything is same shit. Lol",
+      "likes": 0
+    },
+    {
+      "author": "@nisso4550",
+      "text": "feels like u ran this thing for 2 seconds and talked about the whitepaper.\ntry to spend a little more time with the model so u can give a true user experince.\ndont try to beat the hype and get your video seen first by just turning the white paper into a video, give me a video worth watching next time.",
+      "likes": 0
+    },
+    {
+      "author": "@patgarner",
+      "text": "Thank you for letting me know right out of the gate, as a first time viewer, that there is no reason to continue watching this video or ever watch any videos on your channel again.",
+      "likes": 0
+    },
+    {
+      "author": "@jontpt",
+      "text": "The problem is, it's still crap. They haven't solved that problem yet.",
+      "likes": 0
+    },
+    {
+      "author": "@orangehatmusic225",
+      "text": "They didn't solve shit. they made 3 models and then merged them together to make a new one... fyi their data sets do have stolen intellectual property in them.",
+      "likes": 2
+    }
+  ],
+  "fetched_at": "2026-06-09T09:24:33.195264+00:00"
+}

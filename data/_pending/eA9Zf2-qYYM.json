@@ -1,0 +1,622 @@
+{
+  "video_id": "eA9Zf2-qYYM",
+  "title": "Building AI Agents that actually work (Full Course)",
+  "description": "I sit down with Remy Gaskell to break down how anyone can build AI agents to run entire departments of their business. Remy walks through the core concepts: agent loops, context files, memory, MCP tool connections, and skills. We put everything together by building a fully functional executive assistant live on screen. This is a beginner-friendly crash course that covers Claude Code, Codex, Cowork, Antigravity, Manus, and OpenClaw, showing that once you understand how to \"drive,\" you can jump into any agent platform. By the end, listeners know exactly how to set up markdown-based context files, connect their everyday tools, and create reusable skills that compound over weeks and months.\n\nTimestamps\n00:00 – Intro\n01:35 – Agents vs Chat\n03:22 – The Agent Loop\n05:46 – How Agents work\n06:39 – Demoing Agents (Claude Code, Codex, Antigravity)\n08:52 – Security and Agent Permissions\n10:43 – Comparing Results Across Three Platforms\n13:57 – Startup Idea: Cold Email Website Offer\n14:50 – Folder Structure and Department-Based Agents\n15:52 – Onboarding an Agent Like a Real Employee\n17:05 – Voice-to-Text With Monologue and WhisperFlow\n18:04 – Chat Memory vs. Agent Memory\n19:34 – Building the agents md\n22:20 – Context Engineering Over Prompt Engineering\n24:29 – How Memory Compounds and Reduces Errors\n30:27 – How Big Can memory md Get?\n31:43 – Connecting Tools via MCP (Model Context Protocol)\n34:49 – Working in Claude Code for High-Value Tasks\n37:09 – Why the Real Value Is in Stacking, Not Summarizing\n40:04 – What Are Skills? (SOPs for AI)\n43:08 – Creating Skills\n48:36 – Real-World Example: Ads Analyst Skill: 4-Hour Process in Minutes\n50:37 – Chaining Skills together\n52:01 – Real-World Example: Automated Car Search\n53:34 – OpenClaw and Migrating Agents to More Autonomous Platforms\n55:19 – Which Platform Should Beginners Start With?\n56:28 – Global vs. Project-Level Skills, Context, and MCPs\n\nKey Points\n\n* Agent platforms (Claude Code, Codex, Cowork, Antigravity, Manus, OpenClaw) are all running the same observe-think-act loop under the hood — learning one means you can use any of them.\n* The shift from chat to agents requires moving from prompt engineering to context engineering: load the agent with rich context so simple prompts produce excellent results.\n* A memory md file creates a self-improving loop where the agent learns preferences across sessions and makes fewer errors over time.\n* MCP (Model Context Protocol), built by Anthropic, acts as a universal translator between your agent and every tool it needs — Gmail, Calendar, Stripe, Notion, and more.\n* Skills are reusable SOPs packaged as markdown files; once you explain a process once, you can invoke it repeatedly, and they compound as you add three to five per week.\n* Scheduled tasks turn skills into automated workflows — morning briefs, car searches, ad library analyses — that run on a cron without any manual trigger.\n\nNumbered Section Summaries\n\n1. The Agent Loop in Action\n\nRemy kicks off with a live demo, sending the same prompt — \"build a minimalist portfolio site for Greg Isenberg\" — to Claude Code, Codex, and Antigravity simultaneously. All three platforms run the same observe-think-act loop: research the subject, write the code, spin up a preview, and verify the result with a screenshot. The demo makes it tangible that every agent harness is just a different car with the same engine.\n\n2. Onboarding Your Agent Like a Real Employee\n\nRemy shows that without context, an agent asked to \"write me a cold email\" has no idea who you are or what you sell. The fix is an agents.md (or Claude.md) file — a persistent context document loaded at the start of every session. You fill it with your role, business details, tools, and working preferences, and the result is that a two-word prompt produces a fully informed output.\n\n3. Memory That Compounds\n\nChat models store memory invisibly in the cloud; agents require you to build it intentionally. Remy adds a memory.md file and a simple instruction in the context file: \"When I correct you or you learn something new, update memory.md.\" Preferences like tone, email sign-offs, and design choices persist across sessions, and errors decrease over time.\n\n\nThe #1 tool to find startup ideas/trends - https://www.ideabrowser.com/\n\nLCA helps Fortune 500s and fast-growing startups build their future - from Warner Music to Fortnite to Dropbox. We turn 'what if' into reality with AI, apps, and next-gen products https://latecheckout.agency/\n\nThe Vibe Marketer - Resources for people into vibe marketing/marketing with AI: https://www.thevibemarketer.com/\n\nFIND ME ON SOCIAL\nX/Twitter: https://twitter.com/gregisenberg\nInstagram: https://instagram.com/gregisenberg/\nLinkedIn: https://www.linkedin.com/in/gisenberg/\n\nFIND REMY ON SOCIAL\nX:https://x.com/remy_gaskell\nYoutube: https://www.youtube.com/@aiwithremy\nInstagram: https://www.instagram.com/aiwithremy/",
+  "publishedAt": "2026-06-08T13:32:31Z",
+  "channel_name": "Greg Isenberg",
+  "transcript": "I sit down with Remy Gaskell to break down how anyone can build AI agents to run entire departments of their business. Remy walks through the core concepts: agent loops, context files, memory, MCP tool connections, and skills. We put everything together by building a fully functional executive assistant live on screen. This is a beginner-friendly crash course that covers Claude Code, Codex, Cowork, Antigravity, Manus, and OpenClaw, showing that once you understand how to \"drive,\" you can jump into any agent platform. By the end, listeners know exactly how to set up markdown-based context files, connect their everyday tools, and create reusable skills that compound over weeks and months.\n\nTimestamps\n00:00 – Intro\n01:35 – Agents vs Chat\n03:22 – The Agent Loop\n05:46 – How Agents work\n06:39 – Demoing Agents (Claude Code, Codex, Antigravity)\n08:52 – Security and Agent Permissions\n10:43 – Comparing Results Across Three Platforms\n13:57 – Startup Idea: Cold Email Website Offer\n14:50 – Folder Structure and Department-Based Agents\n15:52 – Onboarding an Agent Like a Real Employee\n17:05 – Voice-to-Text With Monologue and WhisperFlow\n18:04 – Chat Memory vs. Agent Memory\n19:34 – Building the agents md\n22:20 – Context Engineering Over Prompt Engineering\n24:29 – How Memory Compounds and Reduces Errors\n30:27 – How Big Can memory md Get?\n31:43 – Connecting Tools via MCP (Model Context Protocol)\n34:49 – Working in Claude Code for High-Value Tasks\n37:09 – Why the Real Value Is in Stacking, Not Summarizing\n40:04 – What Are Skills? (SOPs for AI)\n43:08 – Creating Skills\n48:36 – Real-World Example: Ads Analyst Skill: 4-Hour Process in Minutes\n50:37 – Chaining Skills together\n52:01 – Real-World Example: Automated Car Search\n53:34 – OpenClaw and Migrating Agents to More Autonomous Platforms\n55:19 – Which Platform Should Beginners Start With?\n56:28 – Global vs. Project-Level Skills, Context, and MCPs\n\nKey Points\n\n* Agent platforms (Claude Code, Codex, Cowork, Antigravity, Manus, OpenClaw) are all running the same observe-think-act loop under the hood — learning one means you can use any of them.\n* The shift from chat to agents requires moving from prompt engineering to context engineering: load the agent with rich context so simple prompts produce excellent results.\n* A memory md file creates a self-improving loop where the agent learns preferences across sessions and makes fewer errors over time.\n* MCP (Model Context Protocol), built by Anthropic, acts as a universal translator between your agent and every tool it needs — Gmail, Calendar, Stripe, Notion, and more.\n* Skills are reusable SOPs packaged as markdown files; once you explain a process once, you can invoke it repeatedly, and they compound as you add three to five per week.\n* Scheduled tasks turn skills into automated workflows — morning briefs, car searches, ad library analyses — that run on a cron without any manual trigger.\n\nNumbered Section Summaries\n\n1. The Agent Loop in Action\n\nRemy kicks off with a live demo, sending the same prompt — \"build a minimalist portfolio site for Greg Isenberg\" — to Claude Code, Codex, and Antigravity simultaneously. All three platforms run the same observe-think-act loop: research the subject, write the code, spin up a preview, and verify the result with a screenshot. The demo makes it tangible that every agent harness is just a different car with the same engine.\n\n2. Onboarding Your Agent Like a Real Employee\n\nRemy shows that without context, an agent asked to \"write me a cold email\" has no idea who you are or what you sell. The fix is an agents.md (or Claude.md) file — a persistent context document loaded at the start of every session. You fill it with your role, business details, tools, and working preferences, and the result is that a two-word prompt produces a fully informed output.\n\n3. Memory That Compounds\n\nChat models store memory invisibly in the cloud; agents require you to build it intentionally. Remy adds a memory.md file and a simple instruction in the context file: \"When I correct you or you learn something new, update memory.md.\" Preferences like tone, email sign-offs, and design choices persist across sessions, and errors decrease over time.\n\n\nThe #1 tool to find startup ideas/trends - https://www.ideabrowser.com/\n\nLCA helps Fortune 500s and fast-growing startups build their future - from Warner Music to Fortnite to Dropbox. We turn 'what if' into reality with AI, apps, and next-gen products https://latecheckout.agency/\n\nThe Vibe Marketer - Resources for people into vibe marketing/marketing with AI: https://www.thevibemarketer.com/\n\nFIND ME ON SOCIAL\nX/Twitter: https://twitter.com/gregisenberg\nInstagram: https://instagram.com/gregisenberg/\nLinkedIn: https://www.linkedin.com/in/gisenberg/\n\nFIND REMY ON SOCIAL\nX:https://x.com/remy_gaskell\nYoutube: https://www.youtube.com/@aiwithremy\nInstagram: https://www.instagram.com/aiwithremy/",
+  "transcript_lang": "",
+  "transcript_source": "description",
+  "links": [
+    "https://www.ideabrowser.com/",
+    "https://latecheckout.agency/",
+    "https://www.thevibemarketer.com/"
+  ],
+  "stats": {
+    "views": 467477,
+    "likes": 11374,
+    "comments": 361
+  },
+  "tags": [
+    "startup ideas",
+    "sip",
+    "entrepreneur podcast",
+    "business ideas",
+    "business trends",
+    "entrepreneur advice",
+    "business advice",
+    "greg isenberg",
+    "my first million",
+    "a16z",
+    "starter story",
+    "1 million business",
+    "saas startup",
+    "startup advice",
+    "ai startup",
+    "ai business",
+    "ai startup idea",
+    "no code tools",
+    "AI Code",
+    "google ai",
+    "google gemini",
+    "ai tech stack",
+    "gemini",
+    "nano banana",
+    "ai",
+    "Google gemini 3",
+    "claude code",
+    "claude",
+    "claude skills",
+    "vibe marketing",
+    "ai marketing",
+    "opus 4.6",
+    "claude opus 4.6",
+    "mcp",
+    "ai agent"
+  ],
+  "duration": "PT58M56S",
+  "category_id": "28",
+  "top_comments": [
+    {
+      "author": "@healthtipsegypt",
+      "text": "The Best and Most Clear AI Agent explaianation i saw so far.",
+      "likes": 45
+    },
+    {
+      "author": "@aiwithremy",
+      "text": "thanks for having me on Greg. it was a blast!",
+      "likes": 135,
+      "top_reply": {
+        "author": "@GregIsenberg",
+        "text": "thanks for the clear explanations, remy!",
+        "likes": 7
+      }
+    },
+    {
+      "author": "@masongothardd",
+      "text": "I got consulting from Remy to help set up Claude for my business, he is the GOAT",
+      "likes": 29
+    },
+    {
+      "author": "@lilwoodzey2013",
+      "text": "He is a very good teacher. I love analogies as well, so maybe that helped. Really enjoyed this one!",
+      "likes": 12
+    },
+    {
+      "author": "@novel_recap",
+      "text": "Based on the intro this is a must watch for any beginner trying to learn about AI.",
+      "likes": 3
+    },
+    {
+      "author": "@stefanosilvani3796",
+      "text": "first tutorial I see that is no BS and actually gives valuable instructions to get started with AI! thanks a lot!",
+      "likes": 0
+    },
+    {
+      "author": "@ai_hnc",
+      "text": "An hour of my time well spend. Thank You both for giving so much valuable and well structured information. I would Love to find more Content Like this on YouTube, but it's been a search. Having the screen on and actually following along with the Visuals was also super helpful. You both helped a Lot of people by creating this. Well done! 🍀",
+      "likes": 5
+    },
+    {
+      "author": "@misapetr",
+      "text": "amazing summary of knowing what AI Agents are and where to start. Excellent job",
+      "likes": 8,
+      "top_reply": {
+        "author": "@GregIsenberg",
+        "text": "appreciate you!",
+        "likes": 1
+      }
+    },
+    {
+      "author": "@yvettefragile2657",
+      "text": "Can you please do a part 2? So helpful! Really great job, guys!",
+      "likes": 5
+    },
+    {
+      "author": "@1mSparky",
+      "text": "Thank you Greg. So glad you got together with Remy and shared what I think is the clearest foundation blueprint for anyone needing a baseline ecosystem to experiment and learn within without worrying about being locked in to a product and being able to scale without losing what you’ve created.",
+      "likes": 0
+    },
+    {
+      "author": "@keathkaza3267",
+      "text": "one the best itw i've listened to when it comes to AI agents. It just broadened my mind, never thought of skill in that way. Good job guys!",
+      "likes": 5
+    },
+    {
+      "author": "@cjt208",
+      "text": "This was dope.  Nice to actually find videos with practical uses of Cowork.",
+      "likes": 3
+    },
+    {
+      "author": "@anacarolinascott5255",
+      "text": "Finally, someone who breaks this down so well! I'm coming from a UX background and NOT a technical coding one...this was so easy to follow along. Thank you!",
+      "likes": 4
+    },
+    {
+      "author": "@DEV.FUTURES",
+      "text": "I genuinely believe this video is going to change my life and the trajectory of my business",
+      "likes": 0
+    },
+    {
+      "author": "@gautamkaushal6817",
+      "text": "great presentation for someone who's just starting out with AI Agents",
+      "likes": 0
+    },
+    {
+      "author": "@NebojsaRadovic",
+      "text": "I am both mindblown and scared for life haha. \n\nGreat and a much needed 101 session. Thank you both!",
+      "likes": 3
+    },
+    {
+      "author": "@raphaelkairycareerai",
+      "text": "I've watched a gazillion videos about Ai agents , I have openclaw up and running , and yet I found so much value in this video, the explanations were so clear and clarified subtle doubts that I had in my mind given all the different tools and frameworks out there. Thanks!",
+      "likes": 2
+    },
+    {
+      "author": "@crispyricekrispies",
+      "text": "Can't wait for Remy to return! So easy to follow along!",
+      "likes": 2
+    },
+    {
+      "author": "@adamelfersmusic",
+      "text": "Thank you so much for this. I’m coming from the arts world & self educating about AI. As someone with a non-technical background after 100 videos, this was by far the most useful high level explanation. \n\nThe slow in-depth style was so much more useful than just another “10 ways to get ahead of 99% of people with AI.” \n\nTruly. Thank you! 🙏",
+      "likes": 0
+    },
+    {
+      "author": "@RyanPitcheralle",
+      "text": "'cowork flow' is the new business workflow. It's the new way work happens. Anything else doesn't scale, won't compound, and silos ip.",
+      "likes": 9
+    },
+    {
+      "author": "@WorldLife3.0",
+      "text": "This was truly one of the most helpful tech videos I’ve ever watched. I’ve been trying to grasp the details of the workflow and reasoning behind AI agents, but the way you explained the process and its components clicked for me, especially the role of context, memory, and skills. Good on, fellas. Massive value. Thank you!",
+      "likes": 0
+    },
+    {
+      "author": "@shreechinnasamy",
+      "text": "Great crash course. More “works” than “words”. I’d really love Remy show how he built the presentation with Excalidraw using Cowork.",
+      "likes": 0
+    },
+    {
+      "author": "@a289738",
+      "text": "Best intro to this topic I have been able to find.  Thank you.",
+      "likes": 0
+    },
+    {
+      "author": "@WanderGodinho",
+      "text": "Sounds like the new school subject; the biology of an AI AGENT. Cheers Remy",
+      "likes": 1
+    },
+    {
+      "author": "@N34R4T0M4T",
+      "text": "Thanks chief. Do more videos with him please and go even more advanced!",
+      "likes": 6
+    },
+    {
+      "author": "@Ayophil395",
+      "text": "Incredible crash course. So methodical and easy to understand",
+      "likes": 3
+    },
+    {
+      "author": "@LowEndNewbie",
+      "text": "This is a really clear explanation for how to setup your AI team. I think a non-techie could follow this. Great presentation.",
+      "likes": 4
+    },
+    {
+      "author": "@wonglokhei_hayden",
+      "text": "This is the kind of content we really need, life changing !",
+      "likes": 0
+    },
+    {
+      "author": "@aaronaslin",
+      "text": "This was super helpful the way it’s broken down simply. Thank you gents",
+      "likes": 0
+    },
+    {
+      "author": "@kintamasis",
+      "text": "Great stuff you open...something... Upload any folder and your agent figures out how to create and run you business in loop. Very simple explanation, thank you",
+      "likes": 0
+    },
+    {
+      "author": "@bigthunder7002",
+      "text": "Thank you Mr.Isenberg. This is educational, thorough, and digestible.",
+      "likes": 2
+    },
+    {
+      "author": "@susanryan4306",
+      "text": "Thank you Remy and Greg, simply explained, expertly applied, thanks for the simplicity.",
+      "likes": 0
+    },
+    {
+      "author": "@lirajain",
+      "text": "This is so helpful! I went through like 30+ videos earlier and was a bit confused about a few things, but this clarified everything for me.",
+      "likes": 0
+    },
+    {
+      "author": "@lourensgoosen5861",
+      "text": "Dudes!!! Thank you for this. It is the best video I have seen on the subject. It really tells me what to do, how to do it, and why it should be done",
+      "likes": 0
+    },
+    {
+      "author": "@ML-NIGHTWORX-v2v",
+      "text": "Remi that is one of the best presentations I’ve seen on Greg’s podcast and elsewhere. You’re an inspiration to all the young kids of Australia. I wish you well and I look forward to seeing more of you and I’ll be following all your channels. Good luck mate. Well done.",
+      "likes": 0
+    },
+    {
+      "author": "@TomGalati-f3x",
+      "text": "Thankful for this, about to start a 2 month intensive in Agentic AI Transforming Orgs, glad I found you Greg and Remy, so well done.",
+      "likes": 1
+    },
+    {
+      "author": "@UPBEAT_MEDIA",
+      "text": "By far the best tutorial I've watched, thanks guys.",
+      "likes": 0
+    },
+    {
+      "author": "@dflt_sttngs",
+      "text": "Amazing explanation probably one of the longest videos I've watched and ENJOYED on YouTube.",
+      "likes": 1
+    },
+    {
+      "author": "@RiftIcon",
+      "text": "Appreciate all your videos man, gave me the confidence to start doing what I'm doing.",
+      "likes": 3
+    },
+    {
+      "author": "@thomasd700",
+      "text": "What a good video! Greg asks the exact questions I have, while I'm thinking about them. And the explanation is really clear and easy to digest for me as a beginner!",
+      "likes": 0
+    },
+    {
+      "author": "@mavericktcvip",
+      "text": "This was very helpful for my understanding of how I want to work with my AI. Thank you",
+      "likes": 1
+    },
+    {
+      "author": "@riyanegi1223",
+      "text": "this is the best video i've come across explaining ai agents and skill. kudos and thankyou",
+      "likes": 0
+    },
+    {
+      "author": "@Homebuyingmadeclear",
+      "text": "As someone who is highly interested in this workflow and ai buildout for my own business, but feeling overwhelmed on where and how to start, this video has given me so much confidence and opened the door for me to finally proceed.  Wow!  Thank you for this one 🙏",
+      "likes": 0
+    },
+    {
+      "author": "@waynewheaton3210",
+      "text": "This is a great video with solid information. Thanks for the drawings. I'm a visual learner, and it really helps!",
+      "likes": 0
+    },
+    {
+      "author": "@csivalesofi",
+      "text": "Gracias totales Greg, y a tu invitado  un suscriptor mas, lo entendi muy clarito todo un abrazo BRO",
+      "likes": 0
+    },
+    {
+      "author": "@TomMarazzo-Author",
+      "text": "This was a really great explanation.  Really well done Remy!",
+      "likes": 0
+    },
+    {
+      "author": "@andre.westberg",
+      "text": "What a gem of a video. Great explanations and examples. Good work!",
+      "likes": 0
+    },
+    {
+      "author": "@SuzChadwick",
+      "text": "EPIC video. So good, learned so much - really appreciate it! Also shout out to the Aussies in the room!",
+      "likes": 1
+    },
+    {
+      "author": "@5JRTs",
+      "text": "Without a doubt, this is the BEST tutorial I have ever seen on your (or any other) channel! Remy is an excellent, methodical, and well-spoken teacher. I am filled with ideas and now feel more confident to dive in and get more productive. Thanks so much, Greg and Remy!",
+      "likes": 46,
+      "top_reply": {
+        "author": "@GregIsenberg",
+        "text": "Boom! Thanks for the kind words",
+        "likes": 2
+      }
+    },
+    {
+      "author": "@amandeepsaini4172",
+      "text": "It was a great session. I was struggling to understand what is this MCP, what is this agent agentic flow, and all of those. I have gone through various videos on YouTube, but they were focused on the results and nobody was explaining the concepts clearly. This video, you have explained everything in detail, so I am very much happy about it, and thank you so much for this beautiful content. It was very informative.",
+      "likes": 0
+    },
+    {
+      "author": "@mikekidder",
+      "text": "great to show relationships of Agents with Claude/Codex projects....",
+      "likes": 4
+    },
+    {
+      "author": "@nathanas64",
+      "text": "This was an awesome and informative technical tutorial/interview.  Thank you !!",
+      "likes": 0
+    },
+    {
+      "author": "@ML-Nightworx",
+      "text": "Well done Remi. Amazing one of the best presentations. I’ve seen. You’re an inspiration to all the young Australian kids and I hope to put my son in touch with you very soon as you certainly have the way forward for the new generation. I’ll be following you all channels and your progress well done Marco.",
+      "likes": 0
+    },
+    {
+      "author": "@paulchen4656",
+      "text": "This is really awesome stuff! Thank you Greg & Remy!",
+      "likes": 0
+    },
+    {
+      "author": "@Best-3",
+      "text": "after wasting time on lot of yt videos, this was a game changer session for me...i wish we had free of cost help line with you guys...:)",
+      "likes": 0
+    },
+    {
+      "author": "@yvettefragile2657",
+      "text": "Stumbled across you and this vid, Greg. New fan and follower. Thanks!",
+      "likes": 0
+    },
+    {
+      "author": "@symphoniez",
+      "text": "This video was INCREDIBLE. Perfect amount of information and pacing was excellent. Super super clear and useful. Thank you Remy and Greg.",
+      "likes": 2,
+      "top_reply": {
+        "author": "@GregIsenberg",
+        "text": "ayeee appreciate you!",
+        "likes": 1
+      }
+    },
+    {
+      "author": "@greg_cassar",
+      "text": "great explanation, well done thanks Remy and Greg",
+      "likes": 1
+    },
+    {
+      "author": "@rod4realestate",
+      "text": "I was going to ask you for this! Perfect timing",
+      "likes": 4,
+      "top_reply": {
+        "author": "@GregIsenberg",
+        "text": "Boom",
+        "likes": 1
+      }
+    },
+    {
+      "author": "@kamozazimba1228",
+      "text": "Thanks guys, this cleared up a lot of clutter over AI.",
+      "likes": 0
+    },
+    {
+      "author": "@zarif-automates",
+      "text": "Full course for free on YouTube? Greg is generous.",
+      "likes": 8
+    },
+    {
+      "author": "@Basswala28",
+      "text": "This is so cool and very practical. \nThanks Greg!",
+      "likes": 2
+    },
+    {
+      "author": "@gargeyabelial",
+      "text": "absolute banger as usual!!!!",
+      "likes": 1
+    },
+    {
+      "author": "@ragaburn",
+      "text": "gaddammit this is the best one i've seen! learned so much! thank you both!",
+      "likes": 0
+    },
+    {
+      "author": "@Jaclynpaige2310",
+      "text": "12/10, fellow Aussie! Thanks heaps Greg & Remy - this was excellent.",
+      "likes": 2,
+      "top_reply": {
+        "author": "@GregIsenberg",
+        "text": "love it",
+        "likes": 0
+      }
+    },
+    {
+      "author": "@RyanStephenAlldridge",
+      "text": "Super actionable, thanks guys!",
+      "likes": 2
+    },
+    {
+      "author": "@David-OnlineStoreCoach",
+      "text": "Excellent info. Very clear. Thank you!",
+      "likes": 2
+    },
+    {
+      "author": "@JustTheoBear",
+      "text": "My boy! Appreciate you for this video. I’ve been watching your stuff while coding with my agent and editing YouTube videos for my main channel. \n\nThanks for all that you do brother, your channel makes this AI stuff less scary and actually make sense 😎",
+      "likes": 0,
+      "top_reply": {
+        "author": "@GregIsenberg",
+        "text": "❤❤❤",
+        "likes": 1
+      }
+    },
+    {
+      "author": "@bryanfrew",
+      "text": "Very well done and presented - fair dinkum presentation",
+      "likes": 1
+    },
+    {
+      "author": "@navotdk",
+      "text": "In TheRanger we manage memory for you. On an agent level and a workflow level. Best practices already implemented. Plus dozens of tool, with hundreds of functions duilt in. And a master agent to build and monitor your agent army.",
+      "likes": 0
+    },
+    {
+      "author": "@ChanceTEK",
+      "text": "Brilliant, illuminating video. Thank you.",
+      "likes": 0
+    },
+    {
+      "author": "@anavujisic2063",
+      "text": "this was amazing episode",
+      "likes": 1
+    },
+    {
+      "author": "@hermionegardiner",
+      "text": "great explainer, finaly understand it a bit better",
+      "likes": 0
+    },
+    {
+      "author": "@binaryswinery5862",
+      "text": "Excellent video, thank you both!",
+      "likes": 0
+    },
+    {
+      "author": "@jdejde4876",
+      "text": "Fantastic informative lesson! Thanks",
+      "likes": 0
+    },
+    {
+      "author": "@JamesTeachesPiano",
+      "text": "Wtf’ing F! Sooo Good. Remy, you are the best tutor.🎉 thank you brotha!",
+      "likes": 2
+    },
+    {
+      "author": "@BarisAtasoy",
+      "text": "amazing video guys! thanks!",
+      "likes": 0
+    },
+    {
+      "author": "@JosePena-g8n",
+      "text": "Super useful! also, you told all 3 to run on the same port, which likely explain why you saw the gemini site in claude code.",
+      "likes": 0
+    },
+    {
+      "author": "@SergeyLesnikov",
+      "text": "Love it! Thank you for this amazing video and gift. Remy mentioned that he added Perplexity via MCP and I don't see it available as a plug-in or connector. Can you please elaborate how to do it? Appreciate this gift Greg!",
+      "likes": 1
+    },
+    {
+      "author": "@TraceHobson",
+      "text": "Greg and Remy - I am deeply neurodivergent and this This video helped me. This relates to Greg's question at 30:38 and whether memory md files cause bloat--they have for me absalutely! Because my brain cannot let go of all the connected details i was building my agents to be the same as me and they got bloated and bogged down creating mediocre outputs. What you guys helped me figure is that A: I need better a rubric system to validate what good looks like (IN SPECIFIC DOMAINS THAT LIMIT BLOAT AND MEMORY BOGG) and B: My onboarding for an agent should not include all the things my intelligence knows, just the areas it needs and no more and no less. Seems so obvious now that I write it, but when my neurodivergent brain is on fire it has been hard to see. Thanks!",
+      "likes": 0
+    },
+    {
+      "author": "@Tiger-Rule",
+      "text": "Good stuff Remy",
+      "likes": 0
+    },
+    {
+      "author": "@satyavarta3392",
+      "text": "This was gold!!!",
+      "likes": 0
+    },
+    {
+      "author": "@shira-s5o",
+      "text": "Well explained!",
+      "likes": 0
+    },
+    {
+      "author": "@lucyprebble2978",
+      "text": "This is great, thanks legend",
+      "likes": 0
+    },
+    {
+      "author": "@ospina86",
+      "text": "sick thanks",
+      "likes": 4
+    },
+    {
+      "author": "@jimifrew6945",
+      "text": "fantastic video",
+      "likes": 2
+    },
+    {
+      "author": "@danielbrasilrj",
+      "text": "Nice content!",
+      "likes": 1
+    },
+    {
+      "author": "@HowMindsWorkYT",
+      "text": "Explained so well...",
+      "likes": 0
+    },
+    {
+      "author": "@YouDidWhatToWhoandWhen",
+      "text": "Thanks for the clear explanations Remy!   For sure the easiest overview explanation I have seen, now sharing this with my team.   I just dropped this video link into Notebook LM and created 4 reports.  Then dropped those reports into Cowork and asked it to build the whole thing for me and boom, done.  I have a folder now called \"Local AI Operating System\" on my desktop, and it's got my sales, marketing, and executive assistant built out, as described in the video.",
+      "likes": 2,
+      "top_reply": {
+        "author": "@aiwithremy",
+        "text": "this is epic.",
+        "likes": 1
+      }
+    },
+    {
+      "author": "@benis999",
+      "text": "Greg, thank you for playing dumb 😂\nNo offense if your follow ups were genuine. They were exactly what has been missing from the 3,000 tutorial videos I’ve watched. You are a legend.  And thank you Remy, for talking down to us peasants 🙏🏻",
+      "likes": 199,
+      "top_reply": {
+        "author": "@GregIsenberg",
+        "text": "before we hit record, remy asked me if i was going to ask questions throughout and i said id ask questions on behalf of the audience!",
+        "likes": 45
+      }
+    },
+    {
+      "author": "@minimalistdog6454",
+      "text": "its been 21 minutes and i still haven't seen anything mind-blowing...",
+      "likes": 0
+    },
+    {
+      "author": "@brainharrington",
+      "text": "This helped guys, at minute 10 it already solved for me what I was missing. Why am I fighting dumb openclaw open source errors when I can use codex and build locally. I didn't realize that the local desktop codex app could do the same thing openclaw is doing. I ran into limits w/ chatgpt and I've built web pages with codex but didn't know codex could do \"local agents\"\n\nThank you!",
+      "likes": 2,
+      "top_reply": {
+        "author": "@ERP_Mastery",
+        "text": "Yeah, a lot of people go down the open source rabbit hole too early. It feels powerful, but you end up fighting tooling instead of building something useful.\nLocal setups like this hit a sweet spot. Enough control without all the overhead.",
+        "likes": 0
+      }
+    },
+    {
+      "author": "@RickKeenan",
+      "text": "I really enjoyed this, thanks chaps. I'm not convinced this Remy guy isn't himself AI, he's triggering the uncanny valley for me",
+      "likes": 0,
+      "top_reply": {
+        "author": "@aiwithremy",
+        "text": "keep it on the downlow pls :) shhh",
+        "likes": 0
+      }
+    },
+    {
+      "author": "@mrhbigga",
+      "text": "I chose mechanical when standing the leading edge of digital, good call, because if my computer can now do what I’d have spent 25-30yrs learning how do instead I can do what our computers can’t. My tools are ready for our personal humanoids.  🛠",
+      "likes": 0
+    },
+    {
+      "author": "@stuartwalsh4974",
+      "text": "This was really good, really interesting and really informative. I was extremely drawn to the wall behind Remy. I hope he will be released from prison soon!",
+      "likes": 0
+    },
+    {
+      "author": "@dockerydesigns",
+      "text": "Would love to see this kind of an update for the new claw code python release. I’m gonna have to watch this video like eight times.",
+      "likes": 0
+    },
+    {
+      "author": "@Jarrod_Macfarlane",
+      "text": "REMY THE AIGOAT",
+      "likes": 2
+    },
+    {
+      "author": "@pedrosoares2726",
+      "text": "Great content",
+      "likes": 0
+    },
+    {
+      "author": "@nimishbatra7724",
+      "text": "This was insane. one quick question though: given there are a ton of skills already out there, what do i do about that though",
+      "likes": 0
+    },
+    {
+      "author": "@YourOrganizedAuntie",
+      "text": "Oh my gosh, the moment you said “Building AI Agents that actually work” my whole brain did a dramatic somersault because wow, that title alone feels like every tech tutorial that has ever personally attacked me. I swear, the first time I tried to build an AI agent, I sat there whispering “Luise, you are a capable woman, you can do this,” while my laptop fan screamed like it was trying to escape the situation. And then, oh boy, halfway through the course I had a full self-dialogue like “Girl, why is this bot smarter than me? Who approved this?” Meanwhile the AI I built kept responding with “I’m sorry, I didn’t understand that,” which honestly felt like emotional sabotage. But here’s the hilarious twist: once I stopped trying to be a tech goddess and actually followed the steps like a normal human, things started working. Suddenly I was debugging with confidence, talking to my code like “Alright sweetheart, don’t embarrass me today,” and celebrating tiny victories like “Nice! It didn’t crash this time.” And sweet goodness, the productivity boost was unreal. Building an AI agent teaches you communication skills you didn’t know you needed. You learn patience, clarity, and the ability to explain things to a machine without sounding like you’re losing your mind. And at last, when your agent finally works, even a little, you feel like a wizard who just unlocked a new dimension. Honestly, it’s chaotic, humbling, hilarious, and wildly empowering all at once.",
+      "likes": 16,
+      "top_reply": {
+        "author": "@JoshDigitalSpaceMarketing",
+        "text": "There's no way your real lol",
+        "likes": 3
+      }
+    }
+  ],
+  "fetched_at": "2026-06-09T09:24:33.195264+00:00"
+}

@@ -271,7 +271,43 @@ def window_entries(items: list[dict], now_utc: datetime) -> tuple[list, list, li
     return order(daily), order(weekly), order(monthly)
 
 
-def build_web_news_file(now_utc: datetime, entries: list[dict], window_label: str) -> dict:
+# ── "most important" digest (pinned at the top of each news window) ────────────
+_TOP_SOURCE_KW = ("openai", "deepmind", "anthropic", "google", "microsoft", "hugging face",
+                  "nvidia", "meta", "the decoder", "techcrunch", "the verge")
+_HOT_KW = ("launch", "released", "release", "announce", "unveil", "introducing", "now available",
+           "gpt-", "gpt5", "gpt-5", "gemini", "claude", "llama", "new model", "breakthrough",
+           "open source", "open-source", "acquires", "raises", "state-of-the-art", "sota")
+
+
+def _digest_score(e: dict) -> int:
+    src = (e.get("source_name") or "").lower()
+    title = (e.get("title") or "").lower()
+    score = 3 if any(k in src for k in _TOP_SOURCE_KW) else 0
+    score += sum(1 for k in _HOT_KW if k in title)
+    return score
+
+
+def make_digest(entries: list[dict], n: int) -> list[dict]:
+    """The few most important items in a window — heuristic (source weight + launch/release
+    keywords + recency). 1 line each: {text, url}. Claude can later overwrite with a judged one."""
+    if not entries or n <= 0:
+        return []
+    ranked = sorted(entries, key=lambda e: (_digest_score(e), e.get("publishedAt", "")), reverse=True)
+    out, seen = [], set()
+    for e in ranked:
+        t = (e.get("title") or "").strip()
+        if not t or t.lower() in seen or _digest_score(e) == 0:
+            continue
+        seen.add(t.lower())
+        src = e.get("source_name", "")
+        out.append({"text": t + (f" — {src}" if src else ""), "url": e.get("url", "")})
+        if len(out) >= n:
+            break
+    return out
+
+
+def build_web_news_file(now_utc: datetime, entries: list[dict], window_label: str,
+                        digest_n: int = 7) -> dict:
     """Mirror fetch.py.build_news_file so the dashboard reads one consistent shape."""
     run_eastern = now_utc.astimezone(EASTERN)
     if entries:
@@ -285,6 +321,7 @@ def build_web_news_file(now_utc: datetime, entries: list[dict], window_label: st
             "window": window_label,
             "covered_from": covered_from,
             "covered_to": covered_to,
+            "digest": make_digest(entries, digest_n),
         },
         "entries": entries,
     }
@@ -366,9 +403,10 @@ def main() -> None:
 
     # 4) Build the three windowed views the dashboard reads.
     daily, weekly, monthly = window_entries(items, now_utc)
-    save_json(DAILY_WEB_JSON, build_web_news_file(now_utc, daily, "last 24 hours"))
-    save_json(WEEKLY_WEB_JSON, build_web_news_file(now_utc, weekly, "last 7 days"))
-    save_json(MONTHLY_WEB_JSON, build_web_news_file(now_utc, monthly, "last 30 days"))
+    dg = (news_cfg.get("digest", {}) or {})
+    save_json(DAILY_WEB_JSON, build_web_news_file(now_utc, daily, "last 24 hours", int(dg.get("daily_items", 5))))
+    save_json(WEEKLY_WEB_JSON, build_web_news_file(now_utc, weekly, "last 7 days", int(dg.get("weekly_items", 7))))
+    save_json(MONTHLY_WEB_JSON, build_web_news_file(now_utc, monthly, "last 30 days", int(dg.get("monthly_items", 10))))
 
     log.info(
         "Web news: %d/%d sources ok, %d items parsed, %d new, store=%d  "

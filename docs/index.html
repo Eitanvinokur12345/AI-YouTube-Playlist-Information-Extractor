@@ -281,6 +281,20 @@
     body.quickread .podium { display:none; }
     body.quickread .cat-section { margin-bottom:12px; }
     body.quickread .tipgroup ul { line-height:1.4; }
+
+    /* Prompts tab */
+    .promptbox { white-space:pre-wrap; background:var(--panel2); border:1px solid var(--line);
+                 border-radius:10px; padding:12px 14px; font-size:13px; line-height:1.55;
+                 max-height:260px; overflow:auto; margin:8px 0; }
+    /* News digest (pinned 'most important' at top of each window) */
+    .card.digest { border-left:4px solid var(--accent); background:#eff6ff; }
+    .card.digest ol { margin:6px 0 0; padding-left:22px; line-height:1.6; }
+    .card.digest li { margin:4px 0; }
+    /* Coming Soon (upcoming tools) */
+    .soonpill { display:inline-block; background:#fef3c7; color:#92400e; border:1px solid #fbbf24;
+                border-radius:999px; padding:1px 9px; font-size:12px; font-weight:800; }
+    .card.upcoming { box-shadow:inset 3px 0 0 #f59e0b, 0 1px 4px rgba(0,0,0,.06); }
+    body.quickread .promptbox { max-height:96px; }
   </style>
 </head>
 <body>
@@ -335,6 +349,8 @@
   <nav id="tabs">
     <button data-tab="skills" class="active">Skills Library</button>
     <button data-tab="tools">Tool Rating</button>
+    <button data-tab="comingsoon">Coming Soon</button>
+    <button data-tab="prompts">Prompts</button>
     <button data-tab="improvement">Improvement Log</button>
     <button data-tab="tips">Tips &amp; Commands</button>
     <button data-tab="news">News Feed</button>

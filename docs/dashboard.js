@@ -427,6 +427,17 @@ async function renderNews() {
   const hdr = (vdata && vdata.header) || (wdata && wdata.header) || {};
   html += `<div class="sub">Window: ${esc(hdr.window || state.newsWindow)} ·
     ${ventries.length} from videos + ${wentries.length} from official sites</div>`;
+  // Pinned "most important" digest (CLAUDE.md/news writes header.digest); shown above the full array.
+  const digest = (vdata && vdata.header && vdata.header.digest)
+    || (wdata && wdata.header && wdata.header.digest) || [];
+  if (digest.length && !q()) {
+    html += `<div class="card digest"><h3>📌 Most important — ${esc(state.newsWindow)}</h3><ol>` +
+      digest.map(d => {
+        const txt = typeof d === "string" ? d : (d.text || d.title || "");
+        const url = d && d.url;
+        return `<li>${esc(txt)}${url ? ` <a href="${esc(url)}" target="_blank" rel="noopener">↗</a>` : ""}</li>`;
+      }).join("") + `</ol></div>`;
+  }
   if (entries.length) {
     html += entries.map(e => {
       const web = e.source_type === "web" || (e.url && !e.video_id);
@@ -745,6 +756,62 @@ async function renderSources() {
   view.innerHTML = html;
 }
 
+// ── Tab: Prompts (master / guardrail / creation prompt library) ──────────────
+function renderPrompts(data) {
+  const items = (data && data.prompts) || [];
+  if (!items.length) return view.innerHTML = empty("No prompts yet — they'll fill in as videos are analyzed.");
+  const LABELS = { master: "Master", system_guardrail: "System / guardrail", creation: "Creation",
+    coding: "Coding", agents: "Agents", research: "Research", marketing: "Marketing", other: "Other" };
+  const cats = ["all", ...Array.from(new Set(items.map(p => p.category || "other")))];
+  const active = state.promptCat || "all";
+  let list = items.slice();
+  if (active !== "all") list = list.filter(p => (p.category || "other") === active);
+  if (q()) list = list.filter(p => hit(p.title, p.purpose, p.prompt_text, p.category));
+  let html = `<div class="sub">${items.length} prompts — master system prompts, anti-hallucination “don't lie” guardrails, and creation prompts. Hit Copy to use one.</div>`;
+  html += `<div class="subnav">` + cats.map(c =>
+    `<button class="${active === c ? "active" : ""}" data-pcat="${esc(c)}">${esc(c === "all" ? "all" : (LABELS[c] || c))}</button>`).join("") + `</div>`;
+  html += list.map((p, i) => `
+    <div class="card">
+      <h3>${esc(p.title || "Prompt")} <span class="pill">${esc(LABELS[p.category] || p.category || "other")}</span>${p.curated ? '<span class="pill">curated</span>' : ""}</h3>
+      ${p.purpose ? `<div class="sub">${esc(p.purpose)}</div>` : ""}
+      <pre class="promptbox" id="pb${i}">${esc(p.prompt_text || "")}</pre>
+      <p><button class="qr-btn" data-copy="pb${i}">Copy</button>${
+        p.source_url ? ` <a href="${esc(p.source_url)}" target="_blank" rel="noopener">Source</a>`
+          : (p.source_video_id ? ` <a href="${yt(p.source_video_id)}" target="_blank" rel="noopener">Source video</a>` : "")
+      }${p.notes ? ` <span class="sub">${esc(p.notes)}</span>` : ""}</p>
+    </div>`).join("");
+  if (!list.length) html += empty("No prompts match.");
+  view.innerHTML = html;
+  view.querySelectorAll("[data-pcat]").forEach(b =>
+    b.addEventListener("click", () => { state.promptCat = b.dataset.pcat; renderPrompts(data); }));
+  view.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", () => {
+    const pre = document.getElementById(b.dataset.copy);
+    if (pre && navigator.clipboard) {
+      navigator.clipboard.writeText(pre.innerText);
+      const o = b.textContent; b.textContent = "Copied ✓"; setTimeout(() => b.textContent = o, 1500);
+    }
+  }));
+}
+
+// ── Tab: Coming Soon (announced but not-yet-released tools) ───────────────────
+function renderComingSoon(data) {
+  const items = ((data && data.tools) || []).filter(t => (t.release_status || "released") === "upcoming");
+  let html = `<div class="sub">AI tools &amp; models that have been <b>announced but not yet released</b> — kept out of the live rankings until they ship.</div>`;
+  let list = items.slice();
+  if (q()) list = list.filter(t => hit(t.name, t.company, t.category, t.description));
+  if (!list.length) return view.innerHTML = html + empty(q() ? "No upcoming tools match." : "No upcoming tools tracked yet — they'll appear here as they're announced.");
+  list.sort((a, b) => String(a.expected_release || "zzzz").localeCompare(String(b.expected_release || "zzzz")) || ((b.quality_score || 0) - (a.quality_score || 0)));
+  html += list.map(t => `
+    <div class="card upcoming">
+      <h3><span class="soonpill">🔜 UPCOMING</span> ${esc(t.name)} <span class="pill">${esc(t.category || "other")}</span></h3>
+      ${(t.company || t.expected_release) ? `<div class="sub">${esc(t.company || "")}${t.country ? " · " + esc(t.country) : ""}${t.expected_release ? " · expected " + esc(t.expected_release) : ""}</div>` : ""}
+      <p>${esc(t.description || "")}</p>
+      ${t.source_url ? `<p><a href="${esc(t.source_url)}" target="_blank" rel="noopener">Announcement ↗</a></p>`
+        : (t.source_video_id ? `<p><a href="${yt(t.source_video_id)}" target="_blank" rel="noopener">Source video ↗</a></p>` : "")}
+    </div>`).join("");
+  view.innerHTML = html;
+}
+
 // ── tab router ───────────────────────────────────────────────────────────────
 async function show(tab) {
   state.activeTab = tab;
@@ -754,6 +821,8 @@ async function show(tab) {
   if (tab === "skills") return renderSkills(await load("skills.json"));
   if (tab === "tools" || tab === "models")
     return renderToolRating(await load("tools.json"), await load("models.json"));
+  if (tab === "comingsoon") return renderComingSoon(await load("tools.json"));
+  if (tab === "prompts") return renderPrompts(await load("prompts.json"));
   if (tab === "improvement") return renderImprovement();
   if (tab === "tips") return renderTips();
   if (tab === "news") return renderNews();

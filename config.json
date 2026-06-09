@@ -174,7 +174,41 @@
     "max_items_per_source": 8,
     "summary_max_chars": 400,
     "store_days": 30,
-    "request_timeout_seconds": 15
+    "request_timeout_seconds": 15,
+    "web_always_on": true,
+    "web_note": "Pull the 50 web sources EVERY cycle (primary input), not only as a fallback when there are no new videos.",
+    "digest": {
+      "enabled": true,
+      "daily_items": 5,
+      "weekly_items": 7,
+      "monthly_items": 10,
+      "note": "A short 'most important' digest pinned at the TOP of each news window (daily/weekly/monthly), above the full array. Claude writes it from the window's items: the few genuinely important releases/updates, 1 line each. The full array stays below."
+    }
+  },
+  "prompts": {
+    "enabled": true,
+    "file": "data/prompts.json",
+    "categories": ["master", "system_guardrail", "creation", "coding", "agents", "research", "marketing", "other"],
+    "seed_curated": true,
+    "note": "A Prompts tab/library. Categories: 'master' (big all-purpose system prompts), 'system_guardrail' (anti-hallucination / 'do not lie' / grounding rules), 'creation' (prompts to make things), plus task topics. Filled from prompts shown in the videos AND a small curated starter set so it's useful immediately. Each prompt: {title, category, purpose, prompt_text, source_video_id|source_url, notes}."
+  },
+  "tool_discovery": {
+    "enabled": true,
+    "mode": "both",
+    "cadence": "weekly_night_deep_pass",
+    "emphasis": ["mcp_servers", "open_source_github"],
+    "directories": ["GitHub Trending", "awesome-lists (incl. awesome-mcp-servers)", "Product Hunt AI", "Hugging Face", "There's An AI For That"],
+    "web_search": true,
+    "max_new_per_run": 60,
+    "results_file": "data/tools.json",
+    "note": "Weekly (night deep pass) Claude+web discovery of AI tools NOT already in tools.json. 'both' = scan the curated directories/GitHub AND run open web searches. Strong coverage of MCP servers + open-source. Tag finds discovered_via:'web_discovery', source_url, and is_open_source/is_mcp where true. Dedup by name. Night-gated (uses the subscription token)."
+  },
+  "upcoming_tools": {
+    "enabled": true,
+    "field": "release_status",
+    "values": ["released", "upcoming"],
+    "tab": "Coming Soon",
+    "note": "Tools announced but NOT yet released get release_status:'upcoming' (+ expected_release if stated). They appear in a separate 'Coming Soon' dashboard tab, not mixed into released rankings."
   },
   "video_quality": {
     "enabled": true,

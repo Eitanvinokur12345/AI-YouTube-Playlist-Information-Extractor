@@ -177,7 +177,7 @@
       "id": "f3a7d9e1b6",
       "type": "engine_fix",
       "status": "pending",
-      "detail": "Fix stale status.total_skills counter. status.json shows total_skills: 10 but skills.json has 38 skills. analyze_batch.py never updates this field after adding skills, so the dashboard 'Total skills' counter is permanently stale.",
+      "detail": "Fix stale status.total_skills counter. status.json shows total_skills: 38 but skills.json has 69 skills. analyze_batch.py never updates this field after adding skills, and fetch.py resets it to the pre-analyze count each run.",
       "proposed_change": {
         "file": "src/analyze_batch.py",
         "action": "update_total_skills_in_status",
@@ -186,6 +186,64 @@
       "source": "review",
       "review_finding_id": "c9f2d8b4a1",
       "severity": "med"
+    },
+    {
+      "id": "9a4e7b2d8f",
+      "type": "engine_fix",
+      "status": "pending",
+      "detail": "Fix fetch.py resetting status.total_skills to stale pre-analyze count (line 648). Every fetch run overwrites total_skills with the count from BEFORE analyze runs, undoing the analyze stage's updates. Remove total_skills from the fetch.py status.update() block and let the analyze stage own it.",
+      "proposed_change": {
+        "file": "src/fetch.py",
+        "action": "remove_total_skills_from_fetch_status_update",
+        "description": "In main(), remove `'total_skills': total_skills,` from the status.update() dict (around line 648). The analyze stage (process_video.py) should own this field and update it after each skill append. If fetch must still show a count, use the existing status['total_skills'] value: `status.get('total_skills', 0)` — preserving whatever analyze last wrote."
+      },
+      "source": "review",
+      "review_finding_id": "7f2e9d4c1a",
+      "severity": "med"
+    },
+    {
+      "id": "3c6d2e8a1f",
+      "type": "ui_change",
+      "status": "pending",
+      "detail": "Quick-read mode hides .card .sub globally, removing provider/source from Connectors cards and date/source from News cards — essential context for those tabs. Only Skills and Tools cards should have .sub hidden in Quick-read; Connectors and News should keep their metadata line.",
+      "proposed_change": {
+        "file": "docs/index.html",
+        "action": "scope_quickread_sub_hiding",
+        "description": "Replace `body.quickread .card .sub { display:none; }` with more targeted rules: `body.quickread .card:not(.newscard):not(.conncard) .sub { display:none; }`. Add class='conncard' to connector cards in renderConnectors(). This keeps the date/source line on News cards and the provider line on Connector cards while still condensing Skills and Tools."
+      },
+      "source": "review",
+      "review_finding_id": "5e3d1b9f8c",
+      "severity": "med"
+    },
+    {
+      "id": "1b7a5c9e3d",
+      "type": "engine_fix",
+      "status": "pending",
+      "detail": "Fix unclosed file handle in src/fetch.py:594. The catch_up.json is opened without a context manager: `cu_state = json.load(open(cu_path, encoding='utf-8'))`. The file descriptor is never explicitly closed — not portable to non-CPython runtimes and flagged by static analysis.",
+      "proposed_change": {
+        "file": "src/fetch.py",
+        "line": 594,
+        "old": "cu_state = json.load(open(cu_path, encoding=\"utf-8\")) if cu_path.exists() else {}",
+        "new": "cu_state = json.loads(cu_path.read_text(encoding=\"utf-8\")) if cu_path.exists() else {}"
+      },
+      "source": "review",
+      "review_finding_id": "4d2c8a7f9e",
+      "severity": "low"
+    },
+    {
+      "id": "8e2f4a6b1c",
+      "type": "engine_fix",
+      "status": "pending",
+      "detail": "Remove dead code in src/analyze_batch.py:550: `key = f\"{display_name}|\"` is assigned and never read. The models lookup immediately below uses a name-only comparison, making this line meaningless.",
+      "proposed_change": {
+        "file": "src/analyze_batch.py",
+        "line": 550,
+        "old": "        key = f\"{display_name}|\"",
+        "new": "        # (line removed)"
+      },
+      "source": "review",
+      "review_finding_id": "6a3b5d1e9c",
+      "severity": "low"
     }
   ]
 }

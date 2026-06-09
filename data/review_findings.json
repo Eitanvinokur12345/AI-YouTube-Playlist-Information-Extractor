@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-06-08T00:00:00Z",
+  "generated_at": "2026-06-08T22:55:00Z",
   "mode": "first_week_intensive",
   "reviewers": {
     "claude": {
-      "ran_at": "2026-06-08T00:00:00Z",
+      "ran_at": "2026-06-08T22:55:00Z",
       "ok": true
     },
     "external": {
@@ -18,7 +18,7 @@
   },
   "scores": {
     "usability": 6,
-    "cut_the_bullshit": 5,
+    "cut_the_bullshit": 4,
     "deep_code_bugs": 4,
     "overall": 5
   },
@@ -48,7 +48,7 @@
     "borrow_next": [
       "Add item-count badges to tab buttons (e.g. 'Skills (69)', 'Tools (121)') — one line of JS per tab, high discoverability signal at zero cost; read from loaded JSON arrays, not stale status.json",
       "Add a sort toggle (Quality | Mentions | Newest) to the Skills and Tools tabs — ~15 lines of JS, eliminates the main gap vs Toolify/Future Tools for power users",
-      "Add a 2-sentence 'What is Excavatortron?' tagline beneath the H1, and pin the top-3 starred skills to the top of the Skills tab as a 'Featured' strip — teaches new visitors what they're looking at without a tutorial"
+      "In Quick-read mode, exempt `.connmeta` and the provider `.sub` on Connectors cards from the display:none rule — provider/source/pricing is essential context even when condensed; add a targeted CSS selector rather than the global `.card .sub { display:none }` override"
     ]
   },
   "findings": [
@@ -88,7 +88,7 @@
       "severity": "high",
       "area": "engine",
       "where": "src/fetch.py:153-211 (fetch_transcript) + data/status.json",
-      "detail": "no_transcript=53, new_found=53 — 100% transcript fallback rate again this run (down from 78 but still 100%). Every new video fell back to description or title. The broad except-all in fetch_transcript() silently swallows failures. The pending backlog is now cleared so absolute numbers fell, but the underlying transcript-fetch failure is not fixed.",
+      "detail": "no_transcript=53, new_found=53 — 100% transcript fallback rate this run (all new videos fell back to description or title). The broad except-all in fetch_transcript() silently swallows failures. Still unfixed.",
       "suggestion": "Log the exception at WARNING before falling back. Add a health flag: if no_transcript / new_found > 0.5, set status['transcript_health'] = 'degraded' and show an amber dashboard banner. Verify youtube-transcript-api version compatibility.",
       "status": "open"
     },
@@ -98,7 +98,7 @@
       "severity": "high",
       "area": "engine",
       "where": "src/analyze_batch.py:267-286 (describe_tool) and :475",
-      "detail": "describe_tool() returns a hardcoded category-keyed string regardless of video content. 36 of 121 tools (29.7%) still have template descriptions — down from 43% last run, but the root cause (describe_tool()) is still unfixed. Every new analyze_batch.py run injects more fakes. The Claude-driven CLAUDE.md path extracts real descriptions, so skills.json is clean, but tools.json has stale templates from earlier batch runs.",
+      "detail": "describe_tool() returns a hardcoded category-keyed string regardless of video content. 38 of 121 tools (31.4%) now have template descriptions — up from 36 (29.7%) last run, worsening each analyze cycle. The Claude-driven CLAUDE.md path extracts real descriptions, so the Claude-processed skills.json is clean, but tools.json keeps accumulating fakes.",
       "suggestion": "Replace describe_tool() with extraction from the transcript: use the 1–2 sentences in the video that most concisely describe what the tool does. If no sentence qualifies, set description to null and show 'Description not yet extracted' in the dashboard.",
       "status": "open"
     },
@@ -127,8 +127,8 @@
       "dimension": "cut_the_bullshit",
       "severity": "high",
       "area": "data",
-      "where": "data/tools.json — 36 of 121 entries (29.7%) have template descriptions",
-      "detail": "36 tool entries use describe_tool() template patterns ('enhances productivity through AI-powered features', 'assists with software development', 'automates workflows', etc.). This is down from 38/89 (43%) last run — the Claude CLAUDE.md path has added 32 new tools with real descriptions — but the root cause (describe_tool() in analyze_batch.py) is still unfixed and will re-infect the catalog if analyze_batch.py ever runs.",
+      "where": "data/tools.json — 38 of 121 entries (31.4%) have template descriptions",
+      "detail": "38 tool entries (up from 36 last run) use describe_tool() template patterns ('enhances productivity through AI-powered features', 'assists with software development', 'automates workflows', etc.). The root cause (describe_tool() in analyze_batch.py) is still unfixed and adds 2+ more fakes per analyze run. The Claude CLAUDE.md path generates real descriptions, but analyze_batch.py keeps re-infecting the catalog.",
       "suggestion": "Fix describe_tool() in src/analyze_batch.py to extract real content from transcripts (see finding e5a3f8b2c7). The improve stage's fill_missing_summaries module should back-fill existing template descriptions where transcripts are available.",
       "status": "open"
     },
@@ -148,7 +148,7 @@
       "severity": "high",
       "area": "data",
       "where": "data/daily_news.json (7 empty) + data/weekly_news.json (109 empty) + data/monthly_news.json (157 empty)",
-      "detail": "273 video news entries now have empty summaries showing '(summary pending)' — WORSENED from 169 last run. The weekly backlog grew from 75→109 and monthly from 91→157. With no_transcript=100% this run, every newly-classified news entry has no real transcript to summarize from. Neither fill_missing_summaries nor the analyze stage is clearing the backlog.",
+      "detail": "273 of 693 video news entries (39%) have empty summaries showing '(summary pending)'. The daily shows 7 empty, weekly 109, monthly 157. Neither fill_missing_summaries nor the analyze stage is clearing the backlog. The root cause is 100% transcript fallback rate: all new videos have no real transcript to summarize.",
       "suggestion": "The improve stage's fill_missing_summaries module should generate 1-sentence summaries from available description text for no-transcript videos. Address the transcript-failure root cause (finding 8a1b5c4d6e) so future fetches have real content.",
       "status": "open"
     },
@@ -168,7 +168,7 @@
       "severity": "med",
       "area": "engine",
       "where": "src/analyze_batch.py:600-613",
-      "detail": "Slash-command regex r'/[a-z][a-z0-9_-]{1,20}\\b' matches URL path segments (/api, /v1), prose slashes, and file paths. The exclusion list only blocks 14 single-character tokens. NOTE: current commands.json (14 entries) shows only real commands (/ultra-plan, /goal, /agents etc.) because the Claude CLAUDE.md path generates them correctly — but if analyze_batch.py runs on raw text it will accumulate false positives. Code bug still present.",
+      "detail": "Slash-command regex r'/[a-z][a-z0-9_-]{1,20}\\b' matches URL path segments (/api, /v1), prose slashes, and file paths. The exclusion list only blocks 14 single-character tokens. Current commands.json (14 entries) shows only real commands because the Claude CLAUDE.md path generates them correctly — but if analyze_batch.py runs on raw text it will accumulate false positives. Code bug still present.",
       "suggestion": "Add a context requirement: only record a slash command if it appears adjacent to known AI tool names or a command-demonstration phrase. Extend blocklist to path prefixes (/api, /v1, /v2, /src, /static, /docs).",
       "status": "open"
     },
@@ -218,7 +218,7 @@
       "severity": "med",
       "area": "dashboard",
       "where": "docs/index.html — nav tab buttons",
-      "detail": "Tab buttons show no item count. Competitors (Future Tools, TAAFT) display per-category counts. The dashboard now shows 69 skills and 121 tools but the nav buttons say nothing. The header counter 'Total skills' shows the stale status.json value (38) rather than the actual 69. Still unfixed.",
+      "detail": "Tab buttons show no item count. Competitors (Future Tools, TAAFT) display per-category counts. The dashboard shows 69 skills and 121 tools but the nav buttons say nothing. The header counter 'Total skills' shows the stale status.json value (38) rather than the actual 69. Still unfixed.",
       "suggestion": "After loading each tab's data in the init() async block, inject item counts into nav buttons from loaded JSON arrays (not status.json): e.g. 'Skills (69)', 'Tools (121)', 'Connectors (18)'. ~10 lines of JS. Already queued as suggestion 3693c44f40.",
       "status": "open"
     },
@@ -247,7 +247,7 @@
       "dimension": "deep_code_bugs",
       "severity": "low",
       "area": "workflow",
-      "where": ".github/workflows/analyze.yml:130 and review.yml:125",
+      "where": ".github/workflows/analyze.yml:153 and review.yml:125",
       "detail": "Inline Python in both workflows uses datetime.datetime.utcnow() which is deprecated in Python 3.12+ and will emit DeprecationWarning. When GitHub Actions upgrades to Python 3.13+, this may become a hard error. Still unfixed.",
       "suggestion": "Replace datetime.datetime.utcnow().isoformat() + 'Z' with datetime.datetime.now(datetime.timezone.utc).isoformat() in both workflow inline scripts.",
       "status": "open"
@@ -287,9 +287,9 @@
       "dimension": "cut_the_bullshit",
       "severity": "med",
       "area": "data",
-      "where": "data/status.json — total_skills field",
-      "detail": "status.total_skills is 38 but skills.json actually contains 69 skills — now a 45% undercount, WORSENED from 73% last run (10 vs 38). The dashboard 'Total skills' counter shows 38, not 69. analyze_batch.py never updates this field after appending skills. Still unfixed.",
-      "suggestion": "In process_video() (analyze_batch.py / process_video.py), after saving skills.json, add: status['total_skills'] = len(skills_data['skills']). Or compute it in the dashboard from the loaded skills array rather than trusting status.total_skills.",
+      "where": "data/status.json — total_skills field + src/fetch.py:648",
+      "detail": "status.total_skills is 38 but skills.json actually contains 69 skills — a 45% undercount. ROOT CAUSE (newly confirmed this run): fetch.py line 648 writes `total_skills: len(skills_data['skills'])` at fetch-stage runtime, before analyze runs. So every fetch resets total_skills to the pre-analyze count. Then analyze (process_video.py) never updates total_skills after appending new skills. The counter is always one full fetch cycle stale. Dashboard 'Total skills' counter shows 38, not 69.",
+      "suggestion": "Two-part fix: (1) In process_video.py, after saving skills.json, add: status['total_skills'] = len(skills_data['skills']). (2) In the dashboard, compute total_skills from the loaded skills array rather than trusting status.total_skills — so it's always accurate even if status.json lags.",
       "status": "open"
     },
     {
@@ -298,8 +298,8 @@
       "severity": "med",
       "area": "engine",
       "where": "data/index.json (110 entries) vs data/skills.json (69 skills)",
-      "detail": "NEW FINDING: index.json has 110 slug entries but skills.json has only 69 skills — 41 phantom slugs exist in the index with no corresponding skill record. When analyze_batch.py processes a video and finds a tool whose slug matches a phantom index entry, it attempts to look up the skill: `next((s for s in skills_data['skills'] if s['slug'] == slug), None)` returns None, and the merge branch falls through without appending the new skill. Result: those 41 tools are silently blocked from ever being added to skills.json even when they appear in new videos.",
-      "suggestion": "On startup in main(), after loading index.json, reconcile it against skills.json: remove any slug from index_data that has no matching entry in skills_data['skills']. One pass: {s['slug'] for s in skills_data['skills']} → drop phantom keys from index_data and re-save. Run this reconciliation once immediately to fix the current 41 phantom entries.",
+      "detail": "WORSENED: index.json now has 110 slug entries but skills.json has only 69 skills — 51 phantom slugs (up from 41 last run, growing by ~10/day). When analyze_batch.py processes a video and finds a tool whose slug matches a phantom index entry, it attempts to look up the skill (next(...) returns None) and the merge branch falls through without appending the new skill. Those 51 tools are silently blocked from being added to skills.json in future runs. The phantom count actively grows each run, compounding the problem.",
+      "suggestion": "On startup in main(), after loading index.json, reconcile it against skills.json: remove any slug from index_data that has no matching entry in skills_data['skills']. One pass: valid = {s['slug'] for s in skills_data['skills']}; index_data = {k: v for k, v in index_data.items() if k in valid}; then re-save. Run this reconciliation once immediately to fix the current 51 phantom entries.",
       "status": "open"
     },
     {
@@ -308,17 +308,57 @@
       "severity": "med",
       "area": "engine",
       "where": "src/analyze_batch.py:317-329 (create_news_summary)",
-      "detail": "NEW FINDING: create_news_summary() generates generic fallback text for videos with no real description: '{title}. AI content video featuring tools and techniques.' With 100% transcript fallback rate (all 53 new videos this run had no real transcript), every news summary written this run is either generic filler or description-scraped text with no human-readable insight. This is the direct engine cause of the 273 empty/low-quality news summaries.",
+      "detail": "create_news_summary() generates generic fallback text for videos with no real description: '{title}. AI content video featuring tools and techniques.' With 100% transcript fallback rate (all new videos have no real transcript), every news summary written this run is either generic filler or description-scraped text with no human-readable insight. This is the direct engine cause of the 273 empty/low-quality news summaries.",
       "suggestion": "For no-transcript videos, generate a 1-sentence summary from the video title and any available tags/description text. Even a concise 'Video about {tools_found}: {title}' is more useful than the generic template. Also add a 'summary_quality' field ('full'/'description'/'title_only') so the news tab can badge thin summaries.",
+      "status": "open"
+    },
+    {
+      "id": "7f2e9d4c1a",
+      "dimension": "deep_code_bugs",
+      "severity": "med",
+      "area": "engine",
+      "where": "src/fetch.py:648 (status.total_skills assignment)",
+      "detail": "NEW FINDING: fetch.py resets status['total_skills'] to the pre-analyze count on every run (line 648: 'total_skills': total_skills, where total_skills = len(skills_data.get('skills', [])) is read at fetch-start before analyze adds anything). Since fetch runs first and analyze runs after, the counter is always one full fetch cycle stale. This is the root cause of the total_skills = 38 vs actual 69 discrepancy in the dashboard header (see also c9f2d8b4a1).",
+      "suggestion": "In fetch.py, remove `total_skills` from the status.update() block (line 648) — let the analyze stage own it (process_video.py should update it after each skill append). Alternatively, load and trust the existing status['total_skills'] instead of recomputing from skills_data at fetch time.",
+      "status": "open"
+    },
+    {
+      "id": "5e3d1b9f8c",
+      "dimension": "usability",
+      "severity": "med",
+      "area": "dashboard",
+      "where": "docs/index.html CSS :line 279 (body.quickread .card .sub { display:none })",
+      "detail": "NEW FINDING: Quick-read mode hides ALL `.card .sub` elements globally. On the Connectors tab this removes the provider/category/source line ('Anthropic · integration · src: Community') which is essential for evaluating a connector — leaving only the name, score badge, and type pill. On the News tab it removes the source name and publication date line, making it impossible to judge recency. REVIEW.md requires Quick-read to work on every tab; this implementation degradeseach tab differently rather than condensing uniformly.",
+      "suggestion": "Replace the global `body.quickread .card .sub { display:none }` with a targeted selector that only hides `.sub` on Skills and Tools cards. Add `body.quickread .newscard .sub`, `body.quickread .connectors-card .sub` as explicit exceptions, or add a `.no-qr-hide` class to sub elements that should always show.",
+      "status": "open"
+    },
+    {
+      "id": "4d2c8a7f9e",
+      "dimension": "deep_code_bugs",
+      "severity": "low",
+      "area": "engine",
+      "where": "src/fetch.py:594",
+      "detail": "NEW FINDING: `cu_state = json.load(open(cu_path, encoding='utf-8'))` opens the file without a context manager (no `with` statement), so the file descriptor is never explicitly closed. In CPython this is collected promptly but it is not safe in PyPy or other runtimes, and static analysis tools flag it.",
+      "suggestion": "Wrap in a with statement: `with open(cu_path, encoding='utf-8') as fh: cu_state = json.load(fh)`.",
+      "status": "open"
+    },
+    {
+      "id": "6a3b5d1e9c",
+      "dimension": "deep_code_bugs",
+      "severity": "low",
+      "area": "engine",
+      "where": "src/analyze_batch.py:550",
+      "detail": "NEW FINDING: `key = f\"{display_name}|\"` is assigned and never read. This dead-code line was presumably introduced when models were keyed by `name|version`, but the lookup now uses a name-only comparison (line 551: `m['name'].lower() == display_name.lower()`). Harmless but misleading.",
+      "suggestion": "Delete line 550 (`key = f\"{display_name}|\"`). No other change needed.",
       "status": "open"
     }
   ],
   "top_actions": [
-    "CRITICAL — Fix the index.json vs skills.json divergence immediately: 41 phantom slugs in index.json (110 entries, 69 skills) silently block those tools from ever being added to skills.json in future runs. Reconcile on startup: drop phantom slug keys from index_data that have no match in skills_data['skills']. Then fix describe_tool() in analyze_batch.py: 36/121 tools (29.7%) still have template descriptions.",
-    "Fix the hardcoded TODAY date (analyze_batch.py:20) and add encoding='utf-8' to ALL open() calls in analyze_batch.py (L153, 161, 402, 725-726, 747-748) and process_video.py (L19, 26, 318) — both are high-severity bugs that corrupt data on every run.",
-    "Address the transcript fallback crisis (100% fallback, 53/53): add an amber dashboard banner when no_transcript/new_found > 0.5; fix create_news_summary() to generate useful 1-sentence summaries from description text for no-transcript videos; tackle the 273-entry news backlog before it grows further.",
-    "Fix analyze_batch.py sort order: add --order flag (currently always newest-first, violating CLAUDE.md oldest_first default); fix the /tmp/sorted_pending.json stale-file bug (unconditionally regenerate on each run).",
-    "Quick wins (each ≤20 lines): (1) reconcile index.json phantoms; (2) inject live item counts into nav tab buttons from loaded JSON arrays; (3) add one-sentence hero tagline to index.html; (4) fix 'Chatgpt'→'ChatGPT' and remove 'Anthropic'/'Openai' company entries from tools.json (suggestions already queued)."
+    "CRITICAL — Reconcile index.json immediately: 51 phantom slugs (up from 41 yesterday) are actively blocking those tools from ever entering skills.json. Fix in analyze_batch.py main(): on startup, drop any index_data key not in {s['slug'] for s in skills_data['skills']} and re-save. Also fix the phantom accumulation root cause so it stops growing.",
+    "Fix the hardcoded TODAY date (analyze_batch.py:20 → use datetime.now(timezone.utc)) and add encoding='utf-8' to ALL bare open() calls in analyze_batch.py (L153, 161, 402, 725-726, 747-748) and process_video.py (L19, 26, 318) — both are high-severity bugs that corrupt data on every run on non-UTF-8 runners.",
+    "Fix the total_skills stale counter (two parts): (1) remove `total_skills` from fetch.py's status.update() block so the fetch stage stops resetting it; (2) add status['total_skills'] = len(skills_data['skills']) in process_video.py after saving skills.json. Also fix describe_tool() in analyze_batch.py: 38/121 tools (31.4%) still have template descriptions — each run adds more.",
+    "Address the transcript fallback crisis (100% fallback, 273/693 news summaries empty): add a degraded-health amber banner when no_transcript/new_found > 0.5; improve create_news_summary() to generate useful 1-sentence summaries from description text; fix the Quick-read .sub hiding so Connectors and News tabs still show provider/date in condensed mode.",
+    "Quick wins (each ≤20 lines of code): (1) delete analyze_batch.py:550 dead code `key = f\"{display_name}|\"`; (2) wrap fetch.py:594 open() in a with statement; (3) inject live item counts into nav tab buttons from loaded JSON arrays; (4) fix 'Chatgpt'→'ChatGPT' casing and remove 'Anthropic'/'Openai' company entries from tools.json (suggestions already queued); (5) add one-sentence hero tagline beneath the H1 subtitle."
   ],
   "history": [
     {
@@ -346,6 +386,13 @@
       "date": "2026-06-08",
       "usability": 6,
       "cut_the_bullshit": 5,
+      "deep_code_bugs": 4,
+      "overall": 5
+    },
+    {
+      "date": "2026-06-08",
+      "usability": 6,
+      "cut_the_bullshit": 4,
       "deep_code_bugs": 4,
       "overall": 5
     }

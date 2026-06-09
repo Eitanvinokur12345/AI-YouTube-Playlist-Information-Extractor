@@ -1,0 +1,72 @@
+name: Discover tools
+
+# Weekly web discovery of NEW AI tools (incl. MCP servers + open-source/GitHub) not yet in
+# data/tools.json. Follows DISCOVER.md, governed by config.tool_discovery. Runs at night Israel
+# time (Sun 01:00 UTC ~ 04:00 Israel), separate from improve/review so it never fights the tree.
+# Free: public web + your Pro/Max subscription token (no paid API).
+on:
+  schedule:
+    - cron: "0 1 * * 0"     # Sunday 01:00 UTC — night Israel time
+  workflow_dispatch:
+
+concurrency:
+  group: skills-tracker-discover
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Should run? (config.tool_discovery.enabled)
+        id: plan
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          try:
+              cfg = json.load(open("config.json"))
+          except Exception:
+              cfg = {}
+          td = cfg.get("tool_discovery", {}) or {}
+          print("run=" + ("true" if td.get("enabled") else "false"))
+          print("cap=" + str(int(td.get("max_new_per_run", 60))))
+          PY
+
+      - name: Discover new AI tools (web + GitHub + MCP)
+        if: steps.plan.outputs.run == 'true'
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN_REAL }}
+          claude_args: '--allowedTools "Bash,Edit,Write,Read,Glob,Grep,WebFetch,WebSearch"'
+          prompt: |
+            Run the web tool-discovery stage. Follow DISCOVER.md exactly — it is the
+            authoritative spec, governed by config.tool_discovery. Find AI tools that are NOT
+            already in data/tools.json (dedup by name), with strong coverage of MCP servers and
+            open-source / GitHub projects, plus general web search ("mode: both"). Add at most
+            ${{ steps.plan.outputs.cap }} net-new tools this run, each with a SPECIFIC 1-2
+            sentence description (apply CLAUDE.md's anti-boilerplate gate — no vendor stubs),
+            a source_url, and the discovered_via / is_open_source / is_mcp / release_status
+            fields. Flag announced-but-unreleased tools release_status:"upcoming". Re-sort
+            tools.json, append to data/discovery_log.json, and commit. NEVER modify frozen/
+            starred records or any data file other than tools.json (+ discovery_log, and
+            connectors.json only if you found a genuine MCP server/connector).
+
+      - name: Safety commit
+        if: always()
+        run: |
+          git config user.name "skills-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data 2>/dev/null || true
+          git commit -m "discover: $(date -u +%Y-%m-%dT%H:%MZ) — new web/GitHub/MCP tools" \
+            || echo "nothing to commit"
+          git pull --rebase --autostash origin main || true
+          git push || echo "push skipped"

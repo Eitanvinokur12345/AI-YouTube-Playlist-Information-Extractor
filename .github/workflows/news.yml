@@ -8,7 +8,7 @@ name: Fetch web news
 # COST: $0 — public RSS feeds, no API keys, no tokens, no paid services.
 on:
   schedule:
-    - cron: "0 */12 * * *"
+    - cron: "0 */6 * * *"     # every 6h — the 50 web sources are a PRIMARY, always-on input
   workflow_dispatch:
 
 # Never run two news fetches at once; queue instead of overlapping.

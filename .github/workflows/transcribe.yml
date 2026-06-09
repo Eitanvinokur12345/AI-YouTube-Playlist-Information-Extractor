@@ -47,7 +47,7 @@ jobs:
         run: |
           python -m src.transcribe_local \
             --limit "${{ github.event.inputs.limit || '30' }}" \
-            --mode all --model tiny --cpu-threads 2
+            --mode gaps --model tiny --cpu-threads 2
 
       - name: Commit transcripts
         if: always()

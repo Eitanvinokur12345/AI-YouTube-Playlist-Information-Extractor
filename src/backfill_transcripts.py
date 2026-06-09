@@ -45,50 +45,82 @@ def _text(fetched) -> str:
     return " ".join(p for p in parts if p)
 
 
-def get_transcript(video_id: str, languages: list[str]) -> tuple[str, str]:
-    """Return (text, lang) or ('','') — works with youtube-transcript-api 1.x and 0.6.x."""
+def _end_seconds(fetched) -> float:
+    """The end timestamp of the last caption snippet = how much of the video the caption covers."""
+    end = 0.0
+    for s in fetched:
+        st = getattr(s, "start", None)
+        du = getattr(s, "duration", None)
+        if st is None and isinstance(s, dict):
+            st, du = s.get("start"), s.get("duration")
+        try:
+            e = float(st or 0) + float(du or 0)
+            end = max(end, e)
+        except (TypeError, ValueError):
+            pass
+    return end
+
+
+def _iso_dur_seconds(iso: str) -> int:
+    """Parse an ISO-8601 duration like 'PT12M3S' to seconds (0 if unknown)."""
+    import re
+    if not iso:
+        return 0
+    m = re.match(r"PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?", iso)
+    if not m:
+        return 0
+    h, mi, s = (int(x) if x else 0 for x in m.groups())
+    return h * 3600 + mi * 60 + s
+
+
+def get_transcript(video_id: str, languages: list[str]) -> tuple[str, str, bool, float]:
+    """(text, lang, is_complete_caption, end_seconds). Prefers the AUTO-generated caption
+    (which always spans the whole video); a manual track may be partial, so the caller checks
+    coverage. Works with youtube-transcript-api 1.x and 0.6.x. ('','',False,0) on miss."""
     try:
         from youtube_transcript_api import YouTubeTranscriptApi
     except Exception:
-        return "", ""
-    # 1.x instance API
-    if not hasattr(YouTubeTranscriptApi, "list_transcripts"):
-        api = YouTubeTranscriptApi()
-        try:
-            tl = api.list(video_id)
-            for lang in languages:
-                for finder in ("find_manually_created_transcript", "find_generated_transcript"):
-                    try:
-                        t = getattr(tl, finder)([lang])
-                        raw = _text(t.fetch())
-                        if raw.strip():
-                            return raw[:MAX_CHARS], lang
-                    except Exception:
-                        pass
-        except Exception:
-            pass
-        try:
-            raw = _text(api.fetch(video_id, languages=languages))
-            if raw.strip():
-                return raw[:MAX_CHARS], (languages[0] if languages else "")
-        except Exception:
-            return "", ""
-        return "", ""
-    # 0.6.x classmethod API
-    try:
-        tl = YouTubeTranscriptApi.list_transcripts(video_id)
+        return "", "", False, 0.0
+
+    def _try(tl):
+        # auto-generated FIRST (full-video); fall back to manual (may be partial -> flagged)
         for lang in languages:
-            for finder in ("find_manually_created_transcript", "find_generated_transcript"):
+            for finder in ("find_generated_transcript", "find_manually_created_transcript"):
                 try:
                     t = getattr(tl, finder)([lang])
-                    raw = _text(t.fetch())
+                    fetched = t.fetch()
+                    raw = _text(fetched)
                     if raw.strip():
-                        return raw[:MAX_CHARS], lang
+                        is_gen = bool(getattr(t, "is_generated", finder.startswith("find_generated")))
+                        return raw[:MAX_CHARS], lang, is_gen, _end_seconds(fetched)
                 except Exception:
                     pass
+        return None
+
+    if not hasattr(YouTubeTranscriptApi, "list_transcripts"):  # 1.x instance API
+        api = YouTubeTranscriptApi()
+        try:
+            r = _try(api.list(video_id))
+            if r:
+                return r
+        except Exception:
+            pass
+        try:  # direct fetch (auto-translated tracks the finders miss) — treat as full-video
+            fetched = api.fetch(video_id, languages=languages)
+            raw = _text(fetched)
+            if raw.strip():
+                return raw[:MAX_CHARS], (languages[0] if languages else ""), True, _end_seconds(fetched)
+        except Exception:
+            return "", "", False, 0.0
+        return "", "", False, 0.0
+
+    try:  # 0.6.x classmethod API
+        r = _try(YouTubeTranscriptApi.list_transcripts(video_id))
+        if r:
+            return r
     except Exception:
-        return "", ""
-    return "", ""
+        return "", "", False, 0.0
+    return "", "", False, 0.0
 
 
 def main() -> None:
@@ -119,26 +151,40 @@ def main() -> None:
         todo = todo[: args.limit]
     print(f"attempting {len(todo)} this run...")
 
-    ok = fail = 0
+    ok = fail = incomplete = 0
     now = datetime.now(timezone.utc).isoformat()
     for r in todo:
         vid = r["video_id"]
         time.sleep(args.sleep)
-        txt, lang = get_transcript(vid, langs)
+        txt, lang, is_complete_caption, end_sec = get_transcript(vid, langs)
         if not txt:
             fail += 1
             continue
+        # The owner's rule: accept a caption ONLY if it is a COMPLETE transcript of the whole
+        # video; otherwise leave it for Whisper. Auto-generated captions span the full video;
+        # a manual track is accepted only if it covers >=90% of the known duration.
+        dur = _iso_dur_seconds(r.get("duration", ""))
+        if is_complete_caption:
+            complete = True
+        elif dur and end_sec:
+            complete = (end_sec / dur) >= 0.90
+        else:
+            complete = False  # manual caption, coverage unverifiable -> Whisper it
+        if not complete:
+            incomplete += 1
+            continue  # leave transcript_source as-is so transcribe (mode=gaps) Whispers it
         r["transcript"] = txt
         r["transcript_lang"] = lang
         r["transcript_source"] = "transcript"
+        r["caption_complete"] = True
         r["backfilled_at"] = now
         ok += 1
         if not args.dry_run:
             with open(PENDING / f"{vid}.json", "w", encoding="utf-8") as fh:
                 json.dump(r, fh, ensure_ascii=False, indent=2)
         if ok <= 12 or ok % 25 == 0:
-            print(f"  {vid}: transcript {len(txt)} chars ({lang})")
-    print(f"\nbackfilled {ok} real transcripts; {fail} still unavailable.")
+            print(f"  {vid}: complete caption {len(txt)} chars ({lang})")
+    print(f"\nbackfilled {ok} COMPLETE captions; {incomplete} incomplete -> Whisper; {fail} no caption -> Whisper.")
     if not args.dry_run and ok:
         print(f"re-queued {ok} into data/_pending/ for deep re-analysis by the cloud.")
 

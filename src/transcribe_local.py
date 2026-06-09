@@ -44,7 +44,7 @@ def caption_status(vid: str, langs: list[str]) -> tuple[str, str, bool]:
     """(text, lang, definitely_absent) — used by --mode gaps to decide if a caption exists."""
     try:
         from src.backfill_transcripts import get_transcript
-        txt, lang = get_transcript(vid, langs)
+        txt, lang, _complete, _end = get_transcript(vid, langs)
         if txt:
             return txt, lang, False
         return "", "", True
@@ -125,8 +125,10 @@ def select(mode: str) -> list[dict]:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=15, help="max videos this run (CPU-bound; keep small)")
-    ap.add_argument("--mode", default="all", choices=["all", "gaps"],
-                    help="all = Whisper every video (default); gaps = only caption-less videos")
+    ap.add_argument("--mode", default="gaps", choices=["all", "gaps"],
+                    help="gaps (default) = Whisper only videos WITHOUT an accepted complete caption "
+                         "(the backfill keeps complete captions; Whisper fills the rest); "
+                         "all = Whisper every video, overriding even complete captions")
     ap.add_argument("--model", default="tiny", help="tiny (default, lightest) | base | small")
     ap.add_argument("--cpu-threads", type=int, default=4, help="CPU threads for Whisper (gentle default)")
     ap.add_argument("--langs", default="en,he")
@@ -147,12 +149,8 @@ def main() -> None:
         for r in todo:
             vid = r["video_id"]
             time.sleep(0.5)
-            # mode=gaps: skip videos that actually have a caption (let backfill handle those)
-            if args.mode == "gaps":
-                _t, _l, absent = caption_status(vid, langs)
-                if not absent:
-                    skip += 1
-                    continue
+            # select() already excludes videos that have an accepted complete transcript, so in
+            # 'gaps' mode every remaining video genuinely needs Whisper (no caption / incomplete).
             try:
                 audio = download_audio(vid, tmp)
                 if not audio:

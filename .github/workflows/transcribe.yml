@@ -1,0 +1,61 @@
+name: Transcribe (cloud Whisper)
+
+# Cloud Whisper ASR — runs faster-whisper on the GitHub runner, so it needs ZERO disk and ZERO
+# CPU on your PC (you're low on local disk). It downloads each video's audio on the runner
+# (deleted right after), transcribes with the light 'tiny' model, and re-queues the transcript
+# to data/_pending for the night-gated analyze stage to re-extract.
+#
+# Free: public-repo Actions. CAVEAT: YouTube sometimes throttles audio downloads from
+# datacenter IPs — runs are best-effort; whatever fails is retried next run, and the local
+# runner (sync/fetch-runner.ps1) can still pick up the rest from your residential IP if needed.
+on:
+  schedule:
+    - cron: "0 */4 * * *"      # every 4h, a small batch
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "How many videos to transcribe this run"
+        default: "30"
+
+concurrency:
+  group: skills-tracker-transcribe
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  transcribe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Whisper + yt-dlp (ffmpeg is preinstalled on the runner)
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install faster-whisper yt-dlp
+
+      - name: Transcribe a batch on the runner
+        run: |
+          python -m src.transcribe_local \
+            --limit "${{ github.event.inputs.limit || '30' }}" \
+            --mode all --model tiny --cpu-threads 2
+
+      - name: Commit transcripts
+        if: always()
+        run: |
+          git config user.name "skills-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/_pending data/processed 2>/dev/null || true
+          git commit -m "transcribe (cloud): $(date -u +%Y-%m-%dT%H:%MZ)" \
+            || echo "nothing to commit"
+          git pull --rebase --autostash origin main || true
+          git push || echo "push skipped"

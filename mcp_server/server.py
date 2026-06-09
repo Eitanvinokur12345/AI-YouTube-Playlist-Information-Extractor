@@ -859,6 +859,44 @@ def dismiss_suggestion(suggestion_id: str) -> str:
     return f"Dismissed '{sid}'. It will not be applied."
 
 
+def _find_channel(data: dict, channel: str):
+    name = channel.strip().lower()
+    for s in data.get("suggestions", []):
+        if str(s.get("channel", "")).lower() == name or str(s.get("channel_title", "")).lower() == name:
+            return s
+    return None
+
+
+@mcp.tool()
+def approve_channel(channel: str) -> str:
+    """Approve a suggested channel by name (from the Grow Sources tab). Its videos get added to
+    your YouTube playlist on the next add-to-playlist run. Writes data/channel_suggestions.json."""
+    data = _load("channel_suggestions.json", {"suggestions": []})
+    hit = _find_channel(data, channel)
+    if not hit:
+        pend = [s.get("channel") for s in data.get("suggestions", []) if s.get("status", "pending") == "pending"]
+        return f"No suggested channel matching '{channel}'. Pending: {', '.join(pend) or '(none)'}."
+    hit["status"] = "approved"
+    err = _write_state("channel_suggestions.json", data, f"approve channel: {hit.get('channel')}")
+    if err:
+        return err
+    n = len(hit.get("videos", []))
+    return (f"Approved channel '{hit.get('channel')}'. Its {n} videos will be added to the playlist "
+            "on the next add-to-playlist run (needs the one-time Google sign-in — sync/oauth_setup.py).")
+
+
+@mcp.tool()
+def dismiss_channel(channel: str) -> str:
+    """Skip a suggested channel by name so its videos are NOT added. Writes channel_suggestions.json."""
+    data = _load("channel_suggestions.json", {"suggestions": []})
+    hit = _find_channel(data, channel)
+    if not hit:
+        return f"No suggested channel matching '{channel}'."
+    hit["status"] = "dismissed"
+    err = _write_state("channel_suggestions.json", data, f"dismiss channel: {hit.get('channel')}")
+    return err or f"Dismissed channel '{hit.get('channel')}'. It won't be added."
+
+
 # ── dynamic trend tabs (auto-created by the self-improvement stage) ──────────────
 def _extra_tabs() -> list[dict]:
     return _load("extra_tabs.json", {"tabs": []}).get("tabs", [])

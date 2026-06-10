@@ -82,6 +82,27 @@ def call_gemini(api_key: str, model: str, prompt: str, timeout: int) -> dict:
     return json.loads(text)
 
 
+def call_openai_compatible(base_url: str, api_key: str, model: str, prompt: str, timeout: int) -> dict:
+    """OpenAI-compatible chat/completions — works for GitHub Models (Claude Sonnet 4.6, free),
+    Cerebras, OpenRouter, DeepSeek, etc. Lets us run CLAUDE-QUALITY extraction for free."""
+    url = base_url.rstrip("/") + "/chat/completions"
+    body = {"model": model, "temperature": 0.2,
+            "messages": [{"role": "user", "content": prompt}],
+            "response_format": {"type": "json_object"}}
+    req = urllib.request.Request(url, data=json.dumps(body).encode("utf-8"),
+                                headers={"Content-Type": "application/json",
+                                         "Authorization": f"Bearer {api_key}"}, method="POST")
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        payload = json.loads(resp.read().decode("utf-8"))
+    return json.loads(payload["choices"][0]["message"]["content"])
+
+
+def extract(provider: str, base_url: str, api_key: str, model: str, prompt: str, timeout: int) -> dict:
+    if provider == "openai_compatible":
+        return call_openai_compatible(base_url, api_key, model, prompt, timeout)
+    return call_gemini(api_key, model, prompt, timeout)
+
+
 def build_prompt(rec: dict, transcript_chars: int) -> str:
     content = (rec.get("transcript") or rec.get("description") or rec.get("title") or "")[:transcript_chars]
     comments = rec.get("top_comments") or []
@@ -211,6 +232,8 @@ def main() -> int:
     bc = cfg.get("bulk_analyze", {}) or {}
     if not bc.get("enabled", True):
         print("bulk_analyze disabled in config."); return 0
+    provider = bc.get("provider", "gemini")            # "gemini" | "openai_compatible"
+    base_url = bc.get("base_url", "")                   # for openai_compatible (e.g. GitHub Models)
     secret = bc.get("secret_name", "EXTERNAL_REVIEW_API_KEY")
     model = bc.get("model", "gemini-2.5-flash")
     tchars = int(cfg.get("extraction", {}).get("transcript_chars", 120000))
@@ -245,7 +268,7 @@ def main() -> int:
         vid = rec.get("video_id", "")
         time.sleep(args.sleep)
         try:
-            result = call_gemini(api_key, model, build_prompt(rec, tchars), timeout)
+            result = extract(provider, base_url, api_key, model, build_prompt(rec, tchars), timeout)
         except Exception as e:  # noqa: BLE001 — never crash the batch
             print(f"  {vid}: gemini error {type(e).__name__}: {str(e)[:80]} (left pending)")
             skip += 1

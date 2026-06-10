@@ -170,10 +170,16 @@
   },
   "bulk_analyze": {
     "enabled": true,
+    "provider": "gemini",
     "secret_name": "EXTERNAL_REVIEW_API_KEY",
     "model": "gemini-2.5-flash",
+    "base_url": "",
     "require_transcript": true,
-    "note": "FREE bulk lane (src/bulk_analyze.py + bulk_analyze.yml). Drains the _pending backlog AND future bursts using Gemini Flash's free tier (~1500 req/day) — ZERO Claude Pro tokens. Reuses the review Gemini key. Claude stays the premium lane for improve/review + optional incremental. Quality is a notch below Claude but far above description-only extraction; the improve pass can re-score the best later."
+    "quality_options": {
+      "fast_free": {"provider": "gemini", "model": "gemini-2.5-flash", "secret_name": "EXTERNAL_REVIEW_API_KEY", "throughput": "~1500/day", "quality": "good, below Claude"},
+      "claude_quality_free": {"provider": "openai_compatible", "model": "<verify in GitHub Models marketplace, e.g. anthropic/claude-sonnet-4.6>", "base_url": "https://models.github.ai/inference", "secret_name": "GITHUB_MODELS_TOKEN", "throughput": "~50/day (rate-limited)", "quality": "= Claude Sonnet 4.6 (FREE, separate from the Pro weekly limit)", "note": "Needs a GitHub PAT with models access stored as the GITHUB_MODELS_TOKEN secret. Verify the exact model id + endpoint in the GitHub Models marketplace before enabling."}
+    },
+    "note": "FREE bulk lane (src/bulk_analyze.py + bulk_analyze.yml). provider=gemini drains the backlog fast (~1500/day, good quality). provider=openai_compatible + base_url can run CLAUDE Sonnet 4.6 via GitHub Models for actual-Claude quality, free, but ~50/day. ZERO Claude-Pro tokens either way. Recommended hybrid: Gemini for bulk speed + Claude-Sonnet for a quality spot-check / the highest-value videos."
   },
   "news": {
     "enabled": true,

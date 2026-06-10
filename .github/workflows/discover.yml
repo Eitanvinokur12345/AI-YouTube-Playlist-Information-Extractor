@@ -6,7 +6,7 @@ name: Discover tools
 # Free: public web + your Pro/Max subscription token (no paid API).
 on:
   schedule:
-    - cron: "0 1 * * 0"     # Sunday 01:00 UTC — night Israel time
+    - cron: "0 1 * * 0,2,4"     # Sun/Tue/Thu 01:00 UTC (~04:00 Israel) — more frequent discovery
   workflow_dispatch:
 
 concurrency:

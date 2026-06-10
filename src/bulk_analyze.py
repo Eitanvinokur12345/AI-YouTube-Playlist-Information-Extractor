@@ -279,17 +279,32 @@ def main() -> int:
     seen = set(skills.get("videos_seen", []))
 
     done = skip = ns = nt = npr = nc = 0
-    for i, (f, rec) in enumerate(todo):
+    ERR_LIMIT = 3                                # drop an engine after this many errors in a row
+    errs = {e["name"]: 0 for e in engines}
+    disabled: set = set()
+    idx = 0
+    for f, rec in todo:
         vid = rec.get("video_id", "")
-        eng = engines[i % len(engines)]          # round-robin → quotas add up, models vary
+        active = [e for e in engines if e["name"] not in disabled]
+        if not active:
+            print("  all engines disabled (rate-limited/forbidden) — stopping; the rest stay pending.")
+            break
+        eng = active[idx % len(active)]          # round-robin among ENGINES THAT STILL WORK
+        idx += 1
         time.sleep(args.sleep)
         try:
             result = extract(eng["provider"], eng["base_url"], eng["key"], eng["model"],
                              build_prompt(rec, tchars), timeout)
         except Exception as e:  # noqa: BLE001 — never crash the batch
-            print(f"  {vid}: {eng['name']} error {type(e).__name__}: {str(e)[:80]} (left pending)")
+            errs[eng["name"]] += 1
+            note = ""
+            if errs[eng["name"]] >= ERR_LIMIT:
+                disabled.add(eng["name"])
+                note = f"  -> dropping {eng['name']} for this run"
+            print(f"  {vid}: {eng['name']} error {type(e).__name__}: {str(e)[:70]} (left pending){note}")
             skip += 1
             continue
+        errs[eng["name"]] = 0                     # a success clears the streak
         per_engine[eng["name"]] += 1
         if result.get("relevant") is not False:
             ns += merge_skills(skills, result.get("skills"), vid)

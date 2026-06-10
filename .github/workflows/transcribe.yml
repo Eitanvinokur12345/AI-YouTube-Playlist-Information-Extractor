@@ -38,12 +38,16 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install Whisper + yt-dlp (ffmpeg is preinstalled on the runner)
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install faster-whisper yt-dlp
+          python -m pip install faster-whisper yt-dlp youtube-transcript-api
 
-      - name: Transcribe a batch on the runner
+      - name: Step 1 - Caption backfill (fast, text-only, works from cloud IPs for most videos)
+        run: |
+          python -m src.backfill_transcripts --limit 200 --sleep 0.5
+
+      - name: Step 2 - Whisper for remaining caption-less videos (CPU ASR, gaps mode)
         run: |
           python -m src.transcribe_local \
             --limit "${{ github.event.inputs.limit || '30' }}" \
@@ -51,9 +55,12 @@ jobs:
 
       - name: Commit transcripts
         if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "skills-tracker-bot"
           git config user.email "actions@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor.git"
           git add data/_pending data/processed 2>/dev/null || true
           git commit -m "transcribe (cloud): $(date -u +%Y-%m-%dT%H:%MZ)" \
             || echo "nothing to commit"

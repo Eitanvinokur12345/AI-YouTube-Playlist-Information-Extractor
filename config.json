@@ -168,6 +168,13 @@
     "growth_file": "data/source_growth.json",
     "note": "When fewer than min_new_per_week videos are added to the playlist in period_days, src/suggest_channels.py proposes ONE high-value channel (ranked by the quality of skills/tools its videos produced) + videos_per_suggestion of its recent uploads not already seen. The owner approves yes/no in the dashboard's 'Grow Sources' tab; on yes, src/add_to_playlist.py inserts them into the real YouTube playlist via OAuth (one-time Google sign-in; refresh token in the YOUTUBE_OAUTH_* secrets). Free, read uses the API key."
   },
+  "bulk_analyze": {
+    "enabled": true,
+    "secret_name": "EXTERNAL_REVIEW_API_KEY",
+    "model": "gemini-2.5-flash",
+    "require_transcript": true,
+    "note": "FREE bulk lane (src/bulk_analyze.py + bulk_analyze.yml). Drains the _pending backlog AND future bursts using Gemini Flash's free tier (~1500 req/day) — ZERO Claude Pro tokens. Reuses the review Gemini key. Claude stays the premium lane for improve/review + optional incremental. Quality is a notch below Claude but far above description-only extraction; the improve pass can re-score the best later."
+  },
   "news": {
     "enabled": true,
     "summary_mode": "verbatim",

@@ -1,0 +1,277 @@
+"""
+src/bulk_analyze.py — FREE bulk analyzer (the two-tier "bulk lane").
+
+Why: deep-reading 1,100 transcripts with the Claude Pro subscription token blows the weekly
+limit. This drains the backlog (and any future big burst) on a FREE model instead — Gemini Flash
+free tier — touching ZERO Claude tokens. Claude stays the premium lane for incremental new
+videos + the improve/review curation.
+
+How: for each video in data/_pending with a REAL transcript, ask Gemini to extract structured
+JSON (skills/tools/prompts/connectors) following the same rules as CLAUDE.md (anti-boilerplate,
+skills-vs-tools). Then deterministic Python MERGES it into the data files (dedup by slug/name,
+union endorsements) and moves the file to data/processed. Stdlib only, graceful on errors.
+
+Key: read from the env var named by config.bulk_analyze.secret_name (default EXTERNAL_REVIEW_API_KEY,
+the Gemini key the review feature already uses). Never printed.
+
+    python -m src.bulk_analyze --limit 200
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import re
+import sys
+import time
+import urllib.error
+import urllib.request
+from datetime import datetime, timezone
+from pathlib import Path
+
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
+
+ROOT = Path(__file__).resolve().parents[1]
+DATA = ROOT / "data"
+PENDING = DATA / "_pending"
+PROCESSED = DATA / "processed"
+CONFIG = ROOT / "config.json"
+NOW = datetime.now(timezone.utc).isoformat()
+CATEGORIES = ["design", "code", "automation", "agents", "image creation", "video creation",
+              "writing", "marketing", "social", "music", "integration", "research",
+              "productivity", "other"]
+PROMPT_CATS = ["master", "system_guardrail", "creation", "coding", "agents", "research", "marketing", "other"]
+
+
+def load(path: Path, default):
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return default
+
+
+def save(path: Path, obj) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(obj, indent=2, ensure_ascii=False), encoding="utf-8")
+
+
+def slugify(s: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", (s or "").lower()).strip("-") or "item"
+
+
+def norm(s: str) -> str:
+    return re.sub(r"\s+", " ", (s or "").strip().lower())
+
+
+# ── Gemini call (stdlib, same shape as src/external_review.py) ──────────────────
+def call_gemini(api_key: str, model: str, prompt: str, timeout: int) -> dict:
+    url = (f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+           f"?key={api_key}")
+    body = {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {"temperature": 0.2, "responseMimeType": "application/json"},
+    }
+    req = urllib.request.Request(url, data=json.dumps(body).encode("utf-8"),
+                                headers={"Content-Type": "application/json"}, method="POST")
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        payload = json.loads(resp.read().decode("utf-8"))
+    text = payload["candidates"][0]["content"]["parts"][0]["text"]
+    return json.loads(text)
+
+
+def build_prompt(rec: dict, transcript_chars: int) -> str:
+    content = (rec.get("transcript") or rec.get("description") or rec.get("title") or "")[:transcript_chars]
+    comments = rec.get("top_comments") or []
+    ctext = "\n".join(f"- {c.get('text','')[:300]}" for c in comments[:15])
+    return (
+        "You extract structured data from an AI YouTube video for a skills/tools dashboard. "
+        "Return STRICT JSON ONLY (no prose) with this shape:\n"
+        '{"relevant":true,'
+        '"skills":[{"skill_name":"","slug":"","category":"","description":"","use_case":"",'
+        '"output":"","quality_score":1,"target_tool":"claude","tips":[],"slash_commands":[]}],'
+        '"tools":[{"name":"","slug":"","category":"","company":"","country":"","open_source":false,'
+        '"description":"","quality_score":1,"model_version":"","release_status":"released",'
+        '"is_open_source":false,"is_mcp":false}],'
+        '"prompts":[{"title":"","category":"","purpose":"","prompt_text":""}],'
+        '"connectors":[{"name":"","source":"","what_it_does":"","works_in":"both","free":true,"url":""}]}\n\n'
+        "RULES:\n"
+        f"- category MUST be one of: {', '.join(CATEGORIES)}.\n"
+        f"- prompt category MUST be one of: {', '.join(PROMPT_CATS)}.\n"
+        "- SKILLS = reusable techniques/workflows (a way of DOING something). TOOLS = products/"
+        "models/apps (a thing that EXISTS). Keep them separate; a product is a TOOL, not a skill.\n"
+        "- ANTI-BOILERPLATE: never output a skill that is just a bare vendor name (e.g. 'Claude', "
+        "'ChatGPT') or a template like 'Using X for productivity'. A skill must be a SPECIFIC "
+        "method actually shown. If the video only mentions a product, put it in tools and emit no skill.\n"
+        "- Extract EVERY distinct tool named (roundup videos name many). Use exact names with version.\n"
+        "- quality_score 1-10 from the evidence. release_status 'upcoming' if announced-but-unreleased.\n"
+        "- If the video is not about AI tools/skills, return {\"relevant\":false}.\n"
+        "- Empty arrays are fine. Do NOT invent facts; use only what the content supports.\n\n"
+        f"TITLE: {rec.get('title','')}\nCHANNEL: {rec.get('channel_name','')}\n"
+        f"TRANSCRIPT (verbatim, may be truncated):\n{content}\n\n"
+        + (f"TOP COMMENTS (may name the real tool/link):\n{ctext}\n" if ctext else "")
+    )
+
+
+# ── merges (deterministic, dedup) ──────────────────────────────────────────────
+def merge_skills(store: dict, items: list, vid: str) -> int:
+    arr = store.setdefault("skills", [])
+    by = {norm(s.get("skill_name")): s for s in arr}
+    by_slug = {s.get("slug") for s in arr}
+    added = 0
+    for it in items or []:
+        name = it.get("skill_name", "").strip()
+        if not name or norm(name) in {"claude", "chatgpt", "gemini", "make", "anthropic", "openai", "mcp"}:
+            continue  # anti-boilerplate guard on our side too
+        key = norm(name)
+        if key in by:
+            ev = by[key].setdefault("endorsement_video_ids", [])
+            if vid not in ev:
+                ev.append(vid)
+            continue
+        slug = slugify(it.get("slug") or name)
+        i = 2
+        while slug in by_slug:
+            slug = f"{slugify(name)}-{i}"; i += 1
+        by_slug.add(slug)
+        rec = {**it, "slug": slug, "endorsement_video_ids": [vid], "source_type": "youtube",
+               "source_video_id": vid, "source_url": f"https://www.youtube.com/watch?v={vid}",
+               "discovered_via": "bulk_analyze (gemini)", "added_at": NOW}
+        if rec.get("category") not in CATEGORIES:
+            rec["category"] = "other"
+        arr.append(rec); by[key] = rec; added += 1
+    return added
+
+
+def merge_tools(store: dict, items: list, vid: str) -> int:
+    arr = store.setdefault("tools", [])
+    by = {norm(t.get("name")): t for t in arr}
+    added = 0
+    for it in items or []:
+        name = it.get("name", "").strip()
+        if not name:
+            continue
+        key = norm(name)
+        if key in by:
+            ev = by[key].setdefault("endorsement_video_ids", [])
+            if vid not in ev:
+                ev.append(vid)
+            by[key]["mentions"] = len(ev)
+            continue
+        rec = {**it, "slug": slugify(it.get("slug") or name), "endorsement_video_ids": [vid],
+               "mentions": 1, "source_video_id": vid, "discovered_via": "bulk_analyze (gemini)",
+               "source_url": it.get("source_url") or f"https://www.youtube.com/watch?v={vid}", "added_at": NOW}
+        if rec.get("category") not in CATEGORIES:
+            rec["category"] = "other"
+        arr.append(rec); by[key] = rec; added += 1
+    return added
+
+
+def merge_prompts(store: dict, items: list, vid: str) -> int:
+    arr = store.setdefault("prompts", [])
+    have = {norm(p.get("title")) for p in arr} | {norm(p.get("prompt_text"))[:80] for p in arr}
+    added = 0
+    for it in items or []:
+        title = it.get("title", "").strip()
+        ptext = it.get("prompt_text", "").strip()
+        if not title or not ptext or norm(title) in have or norm(ptext)[:80] in have:
+            continue
+        cat = it.get("category") if it.get("category") in PROMPT_CATS else "other"
+        arr.append({"title": title, "category": cat, "purpose": it.get("purpose", ""),
+                    "prompt_text": ptext, "source_video_id": vid,
+                    "source_url": f"https://www.youtube.com/watch?v={vid}", "added_at": NOW})
+        have.add(norm(title)); added += 1
+    return added
+
+
+def merge_connectors(store: dict, items: list, vid: str) -> int:
+    arr = store.setdefault("connectors", [])
+    by = {norm(c.get("name")) for c in arr}
+    added = 0
+    for it in items or []:
+        name = it.get("name", "").strip()
+        if not name or norm(name) in by:
+            continue
+        arr.append({"name": name, "source": it.get("source", ""), "what_it_does": it.get("what_it_does", ""),
+                    "works_in": it.get("works_in", "both"), "free": it.get("free", True),
+                    "url": it.get("url", ""), "source_video_id": vid, "added_at": NOW})
+        by.add(norm(name)); added += 1
+    return added
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--limit", type=int, default=200, help="max videos this run (0 = all pending)")
+    ap.add_argument("--sleep", type=float, default=4.5, help="seconds between calls (free-tier RPM)")
+    args = ap.parse_args()
+
+    cfg = load(CONFIG, {})
+    bc = cfg.get("bulk_analyze", {}) or {}
+    if not bc.get("enabled", True):
+        print("bulk_analyze disabled in config."); return 0
+    secret = bc.get("secret_name", "EXTERNAL_REVIEW_API_KEY")
+    model = bc.get("model", "gemini-2.5-flash")
+    tchars = int(cfg.get("extraction", {}).get("transcript_chars", 120000))
+    timeout = int(cfg.get("news", {}).get("request_timeout_seconds", 30))
+    require_transcript = bool(bc.get("require_transcript", True))
+
+    api_key = os.environ.get(secret, "").strip()
+    if not api_key:
+        print(f"No {secret} set — cannot run the free bulk analyzer. Skipped."); return 0
+
+    # pick pending videos (prefer ones with a REAL transcript — that's the whole point)
+    todo = []
+    for f in sorted(PENDING.glob("*.json")):
+        rec = load(f, None)
+        if not rec:
+            continue
+        if require_transcript and rec.get("transcript_source") not in ("transcript", "whisper"):
+            continue
+        todo.append((f, rec))
+    if args.limit > 0:
+        todo = todo[: args.limit]
+    print(f"bulk-analyzing {len(todo)} pending videos with {model} (free)...")
+
+    skills = load(DATA / "skills.json", {"skills": []})
+    tools = load(DATA / "tools.json", {"tools": []})
+    prompts = load(DATA / "prompts.json", {"prompts": []})
+    connectors = load(DATA / "connectors.json", {"connectors": []})
+    seen = set(skills.get("videos_seen", []))
+
+    done = skip = ns = nt = npr = nc = 0
+    for f, rec in todo:
+        vid = rec.get("video_id", "")
+        time.sleep(args.sleep)
+        try:
+            result = call_gemini(api_key, model, build_prompt(rec, tchars), timeout)
+        except Exception as e:  # noqa: BLE001 — never crash the batch
+            print(f"  {vid}: gemini error {type(e).__name__}: {str(e)[:80]} (left pending)")
+            skip += 1
+            continue
+        if result.get("relevant") is not False:
+            ns += merge_skills(skills, result.get("skills"), vid)
+            nt += merge_tools(tools, result.get("tools"), vid)
+            npr += merge_prompts(prompts, result.get("prompts"), vid)
+            nc += merge_connectors(connectors, result.get("connectors"), vid)
+        seen.add(vid)
+        PROCESSED.mkdir(parents=True, exist_ok=True)
+        (PROCESSED / f"{vid}.json").write_text(json.dumps(rec, ensure_ascii=False, indent=2), encoding="utf-8")
+        f.unlink(missing_ok=True)
+        done += 1
+        if done % 25 == 0:
+            print(f"  ...{done} done (+{ns} skills +{nt} tools)")
+
+    skills["videos_seen"] = sorted(seen)
+    save(DATA / "skills.json", skills)
+    save(DATA / "tools.json", tools)
+    save(DATA / "prompts.json", prompts)
+    save(DATA / "connectors.json", connectors)
+    print(f"\nbulk_analyze done: {done} videos | +{ns} skills, +{nt} tools, +{npr} prompts, "
+          f"+{nc} connectors | {skip} left pending. NO Claude tokens used.")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

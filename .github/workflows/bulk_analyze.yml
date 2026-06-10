@@ -1,0 +1,51 @@
+name: Bulk analyze (free, Gemini)
+
+# The FREE "bulk lane". Drains the data/_pending backlog (and any future big burst) using
+# Gemini Flash's FREE tier instead of the Claude Pro subscription token — ZERO Claude usage.
+# Claude stays the premium lane (improve/review + optional incremental). Stdlib only, no pip.
+# Uses the Gemini key the review feature already uses (EXTERNAL_REVIEW_API_KEY secret).
+on:
+  schedule:
+    - cron: "30 */3 * * *"     # every 3h, offset 30m from analyze/news to avoid git contention
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Max videos to analyze this run"
+        default: "200"
+
+concurrency:
+  group: skills-tracker-bulk
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  bulk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Bulk-analyze pending videos with Gemini (free tier)
+        env:
+          EXTERNAL_REVIEW_API_KEY: ${{ secrets.EXTERNAL_REVIEW_API_KEY }}
+        run: python -m src.bulk_analyze --limit "${{ github.event.inputs.limit || '200' }}"
+
+      - name: Commit results
+        if: always()
+        run: |
+          git config user.name "skills-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data 2>/dev/null || true
+          git commit -m "bulk-analyze (gemini, free): $(date -u +%Y-%m-%dT%H:%MZ)" \
+            || echo "nothing to commit"
+          git pull --rebase --autostash origin main || true
+          git push || echo "push skipped"

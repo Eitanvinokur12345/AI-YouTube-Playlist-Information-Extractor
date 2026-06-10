@@ -34,18 +34,23 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Bulk-analyze pending videos with Gemini (free tier)
+      - name: Bulk-analyze pending videos with the free engine pool
         env:
           EXTERNAL_REVIEW_API_KEY: ${{ secrets.EXTERNAL_REVIEW_API_KEY }}
-        run: python -m src.bulk_analyze --limit "${{ github.event.inputs.limit || '200' }}"
+          GH_MODELS_TOKEN: ${{ secrets.GH_MODELS_TOKEN }}
+          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
+        run: python -m src.bulk_analyze --limit "${{ github.event.inputs.limit || '200' }}" --sleep 3.0
 
       - name: Commit results
         if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "skills-tracker-bot"
           git config user.email "actions@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor.git"
           git add data 2>/dev/null || true
-          git commit -m "bulk-analyze (gemini, free): $(date -u +%Y-%m-%dT%H:%MZ)" \
+          git commit -m "bulk-analyze (free pool): $(date -u +%Y-%m-%dT%H:%MZ)" \
             || echo "nothing to commit"
           git pull --rebase --autostash origin main || true
           git push || echo "push skipped"

@@ -812,6 +812,23 @@ function renderComingSoon(data) {
   view.innerHTML = html;
 }
 
+// ── Tab: Developer Construction (full rebuild spec) ──────────────────────────
+async function renderDevConstruction() {
+  const data = await load("dev_construction.json");
+  const secs = (data && data.sections) || [];
+  if (!secs.length) return view.innerHTML = empty("Developer construction doc not generated yet.");
+  let html = `<div class="sub">${esc(data.intro || "")}</div>`;
+  let list = secs;
+  if (q()) list = list.filter(s => hit(s.title, s.body));
+  html += list.map(s => `
+    <div class="card devsec">
+      <h3>${esc(s.title)}</h3>
+      <div class="devbody">${esc(s.body)}</div>
+    </div>`).join("");
+  if (!list.length) html += empty(`No sections match "${esc(state.query)}".`);
+  view.innerHTML = html;
+}
+
 // ── tab router ───────────────────────────────────────────────────────────────
 async function show(tab) {
   state.activeTab = tab;
@@ -823,6 +840,7 @@ async function show(tab) {
     return renderToolRating(await load("tools.json"), await load("models.json"));
   if (tab === "comingsoon") return renderComingSoon(await load("tools.json"));
   if (tab === "prompts") return renderPrompts(await load("prompts.json"));
+  if (tab === "devbuild") return renderDevConstruction();
   if (tab === "improvement") return renderImprovement();
   if (tab === "tips") return renderTips();
   if (tab === "news") return renderNews();

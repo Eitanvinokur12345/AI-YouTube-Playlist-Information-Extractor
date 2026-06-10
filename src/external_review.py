@@ -221,9 +221,10 @@ def main() -> int:
 
     api_key = os.environ.get(secret_name, "").strip()
     if not api_key:
-        msg = f"no {secret_name} secret present"
-        mark_external(findings, "skipped", msg)
-        print(f"{msg}; skipped gracefully (Claude review kept).")
+        mark_external(findings, "skipped", f"no {secret_name} secret present")
+        # Static message — do NOT interpolate the secret-named variable into a log sink
+        # (CodeQL clear-text-logging). It carries the env-var NAME, never the key value.
+        print("external review skipped: API key not set; Claude's review kept.")
         return 0  # graceful: never fail the workflow
 
     try:

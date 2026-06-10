@@ -63,7 +63,9 @@ def slugify(s: str) -> str:
 
 
 def norm(s: str) -> str:
-    return re.sub(r"\s+", " ", (s or "").strip().lower())
+    # alphanumeric-only dedup key so naming variants collapse: "Deep Seek" / "Deepseek" /
+    # "deep-seek" -> "deepseek"; "GPT 5.5" / "GPT-5.5" -> "gpt55". Prevents cross-engine dupes.
+    return re.sub(r"[^a-z0-9]", "", (s or "").lower())
 
 
 # ── Gemini call (stdlib, same shape as src/external_review.py) ──────────────────

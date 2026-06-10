@@ -175,6 +175,12 @@
     "model": "gemini-2.5-flash",
     "base_url": "",
     "require_transcript": true,
+    "engines": [
+      {"name": "claude-sonnet-4.6 (github-models)", "provider": "openai_compatible", "base_url": "https://models.github.ai/inference", "model": "anthropic/claude-sonnet-4.6", "secret_name": "GITHUB_MODELS_TOKEN"},
+      {"name": "gpt-oss-120b (cerebras)", "provider": "openai_compatible", "base_url": "https://api.cerebras.ai/v1", "model": "gpt-oss-120b", "secret_name": "CEREBRAS_API_KEY"},
+      {"name": "gemini-2.5-flash", "provider": "gemini", "base_url": "", "model": "gemini-2.5-flash", "secret_name": "EXTERNAL_REVIEW_API_KEY"}
+    ],
+    "engines_note": "POOL: bulk_analyze round-robins across every engine here whose secret is set, so their free daily quotas ADD UP (faster) and the strongest models are used (better). Add a key -> that engine joins automatically; absent keys are skipped. Verify exact model ids/endpoints in each provider's docs (GitHub Models marketplace / Cerebras) before relying on them. If 'engines' is empty, it falls back to the single provider/model above.",
     "quality_options": {
       "fast_free": {"provider": "gemini", "model": "gemini-2.5-flash", "secret_name": "EXTERNAL_REVIEW_API_KEY", "throughput": "~1500/day", "quality": "good, below Claude"},
       "claude_quality_free": {"provider": "openai_compatible", "model": "<verify in GitHub Models marketplace, e.g. anthropic/claude-sonnet-4.6>", "base_url": "https://models.github.ai/inference", "secret_name": "GITHUB_MODELS_TOKEN", "throughput": "~50/day (rate-limited)", "quality": "= Claude Sonnet 4.6 (FREE, separate from the Pro weekly limit)", "note": "Needs a GitHub PAT with models access stored as the GITHUB_MODELS_TOKEN secret. Verify the exact model id + endpoint in the GitHub Models marketplace before enabling."}

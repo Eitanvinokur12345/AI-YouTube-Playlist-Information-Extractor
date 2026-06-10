@@ -240,9 +240,24 @@ def main() -> int:
     timeout = int(cfg.get("news", {}).get("request_timeout_seconds", 30))
     require_transcript = bool(bc.get("require_transcript", True))
 
-    api_key = os.environ.get(secret, "").strip()
-    if not api_key:
-        print(f"No {secret} set — cannot run the free bulk analyzer. Skipped."); return 0
+    # ENGINE POOL: combine every free engine you have a key for. Their daily quotas ADD UP
+    # (more throughput) and you can list the strongest models (better quality). Engines whose
+    # secret is absent are auto-skipped, so the pool grows as you add keys.
+    engines = []
+    for e in (bc.get("engines") or []):
+        k = os.environ.get(e.get("secret_name", ""), "").strip()
+        if k:
+            engines.append({"name": e.get("name") or e.get("model", "engine"),
+                            "provider": e.get("provider", "gemini"), "base_url": e.get("base_url", ""),
+                            "model": e.get("model", ""), "key": k})
+    if not engines:  # fall back to the single provider block
+        k = os.environ.get(secret, "").strip()
+        if k:
+            engines.append({"name": model, "provider": provider, "base_url": base_url, "model": model, "key": k})
+    if not engines:
+        print("No engine keys present (set EXTERNAL_REVIEW_API_KEY and/or others). Skipped."); return 0
+    print("engine pool:", ", ".join(e["name"] for e in engines))
+    per_engine = {e["name"]: 0 for e in engines}
 
     # pick pending videos (prefer ones with a REAL transcript — that's the whole point)
     todo = []
@@ -264,15 +279,18 @@ def main() -> int:
     seen = set(skills.get("videos_seen", []))
 
     done = skip = ns = nt = npr = nc = 0
-    for f, rec in todo:
+    for i, (f, rec) in enumerate(todo):
         vid = rec.get("video_id", "")
+        eng = engines[i % len(engines)]          # round-robin → quotas add up, models vary
         time.sleep(args.sleep)
         try:
-            result = extract(provider, base_url, api_key, model, build_prompt(rec, tchars), timeout)
+            result = extract(eng["provider"], eng["base_url"], eng["key"], eng["model"],
+                             build_prompt(rec, tchars), timeout)
         except Exception as e:  # noqa: BLE001 — never crash the batch
-            print(f"  {vid}: gemini error {type(e).__name__}: {str(e)[:80]} (left pending)")
+            print(f"  {vid}: {eng['name']} error {type(e).__name__}: {str(e)[:80]} (left pending)")
             skip += 1
             continue
+        per_engine[eng["name"]] += 1
         if result.get("relevant") is not False:
             ns += merge_skills(skills, result.get("skills"), vid)
             nt += merge_tools(tools, result.get("tools"), vid)
@@ -291,8 +309,9 @@ def main() -> int:
     save(DATA / "tools.json", tools)
     save(DATA / "prompts.json", prompts)
     save(DATA / "connectors.json", connectors)
-    print(f"\nbulk_analyze done: {done} videos | +{ns} skills, +{nt} tools, +{npr} prompts, "
-          f"+{nc} connectors | {skip} left pending. NO Claude tokens used.")
+    by_eng = ", ".join(f"{n}:{c}" for n, c in per_engine.items())
+    print(f"\nbulk_analyze done: {done} videos [{by_eng}] | +{ns} skills, +{nt} tools, "
+          f"+{npr} prompts, +{nc} connectors | {skip} left pending. NO Claude-Pro tokens used.")
     return 0
 
 

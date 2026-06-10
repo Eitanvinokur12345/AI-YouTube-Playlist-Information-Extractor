@@ -176,8 +176,8 @@
     "base_url": "",
     "require_transcript": true,
     "engines": [
-      {"name": "claude-sonnet-4.6 (github-models)", "provider": "openai_compatible", "base_url": "https://models.github.ai/inference", "model": "anthropic/claude-sonnet-4.6", "secret_name": "GH_MODELS_TOKEN"},
-      {"name": "gpt-oss-120b (cerebras)", "provider": "openai_compatible", "base_url": "https://api.cerebras.ai/v1", "model": "gpt-oss-120b", "secret_name": "CEREBRAS_API_KEY"},
+      {"name": "gpt-4.1-mini (github-models)", "provider": "openai_compatible", "base_url": "https://models.github.ai/inference", "model": "openai/gpt-4.1-mini", "secret_name": "GH_MODELS_TOKEN"},
+      {"name": "llama-3.3-70b (cerebras)", "provider": "openai_compatible", "base_url": "https://api.cerebras.ai/v1", "model": "llama-3.3-70b", "secret_name": "CEREBRAS_API_KEY"},
       {"name": "gemini-2.5-flash", "provider": "gemini", "base_url": "", "model": "gemini-2.5-flash", "secret_name": "EXTERNAL_REVIEW_API_KEY"}
     ],
     "engines_note": "POOL: bulk_analyze round-robins across every engine here whose secret is set, so their free daily quotas ADD UP (faster) and the strongest models are used (better). Add a key -> that engine joins automatically; absent keys are skipped. Verify exact model ids/endpoints in each provider's docs (GitHub Models marketplace / Cerebras) before relying on them. If 'engines' is empty, it falls back to the single provider/model above.",

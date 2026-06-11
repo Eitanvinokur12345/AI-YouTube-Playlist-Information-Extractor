@@ -2685,7 +2685,7 @@
       "description": "End-to-end workflow for building and publishing a revenue-generating mobile app using Claude Code with no prior coding experience. Covers UI design inspiration, React Native + Expo scaffolding, iterative feature building, and App Store submission.",
       "use_case": "Build a deployable mobile app from a product idea using only natural language prompts and Claude Code",
       "output": "Published iOS/Android app built on React Native + Expo",
-      "quality_score": 7,
+      "quality_score": 8,
       "model_version": null,
       "company": "Anthropic",
       "country": "USA",
@@ -2705,7 +2705,12 @@
       "tips": [
         "Use Dribbble to find UI design references before prompting Claude Code.",
         "Test on a real device using Expo Go app during development.",
-        "Monetize completed apps via Acquire.com or Flippa for quick exits."
+        "Monetize completed apps via Acquire.com or Flippa for quick exits.",
+        "Use Expo + React Native instead of Swift for iOS with Claude Code — LLMs know React much better than Swift",
+        "Install the Expo MCP server so Claude Code agents can autonomously test your app on the iOS simulator",
+        "Use the App Store Connect MCP server for autonomous App Store metadata configuration",
+        "Install Superwall to remotely A/B test different paywalls for conversion optimization after launch",
+        "Use PostHog to monitor how users navigate through your onboarding sequence and where they drop off"
       ],
       "slash_commands": [],
       "general_tips": [
@@ -2716,9 +2721,10 @@
         "Reference app CoinSnap makes $500K a month from one feature"
       ],
       "endorsement_video_ids": [
-        "hDOUzlJwM1E"
+        "hDOUzlJwM1E",
+        "3MHWYCsHkpE"
       ],
-      "video_quality_score": 7,
+      "video_quality_score": 8,
       "low_quality_source": false
     },
     {
@@ -6275,6 +6281,50 @@
         "0jnKJerpEWc"
       ],
       "video_quality_score": 6,
+      "low_quality_source": false
+    },
+    {
+      "slug": "expo-react-native-ios-claude-code",
+      "skill_name": "Expo + React Native iOS Development with Claude Code",
+      "category": "code",
+      "description": "A complete iOS app development workflow using Expo and React Native with Claude Code as the AI coding agent. Uses LLMs' strong React knowledge and MCP servers (Expo, RevenueCat, App Store Connect) to build, test, configure payments, and publish autonomously.",
+      "use_case": "Build and ship a monetized iOS app with Claude Code without Swift expertise, using Expo's React Native toolchain and MCP-enabled autonomous agents.",
+      "output": "A deployable iOS app with integrated payments, paywall A/B testing, user analytics, and App Store configuration — built autonomously.",
+      "quality_score": 8,
+      "model_version": null,
+      "company": null,
+      "country": null,
+      "open_source": false,
+      "target_tool": "claude",
+      "is_claude_skill": false,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": false,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=3MHWYCsHkpE",
+      "source_video_id": "3MHWYCsHkpE",
+      "tips": [
+        "Use Expo + React Native instead of Swift — Claude Code knows React far better than Swift",
+        "Add the Expo MCP server to let Claude Code autonomously test on the iOS simulator without human intervention",
+        "Use RevenueCat for payments — it has both a clean dashboard and an MCP server for agent-controlled configuration",
+        "Add the App Store Connect MCP server so agents can configure all App Store metadata autonomously",
+        "Install Superwall for remote paywall A/B testing to optimize conversion without re-deploying the app",
+        "Add PostHog to measure how users navigate your onboarding and where they convert or drop off"
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "MCP servers for each third-party service let Claude Code configure them autonomously — always check if an MCP exists before manual integration"
+      ],
+      "relevance": "Enables solo developers to ship complete monetized iOS apps without Swift expertise, using Claude Code as the primary developer.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "3MHWYCsHkpE"
+      ],
+      "video_quality_score": 8,
       "low_quality_source": false
     }
   ]

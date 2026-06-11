@@ -4550,7 +4550,7 @@
       "description": "Build a reusable master prompt that encodes your goals, business context, workflow preferences, and communication style so ChatGPT (or any LLM) acts as a trained personal assistant. The framework covers: AI profile, goals/workflow, reusable prompt template, and examples.",
       "use_case": "Save hours on future AI interactions by training the LLM on your specific context once, then reusing the master prompt across projects.",
       "output": "A personalized reusable master prompt template that yields consistently better AI outputs aligned to your goals.",
-      "quality_score": 4,
+      "quality_score": 6,
       "model_version": null,
       "company": null,
       "country": null,
@@ -4577,7 +4577,9 @@
       "source_video_id": "wKGyQFM5utQ",
       "tips": [
         "Include your role, goals, communication style, and desired output format in a master prompt",
-        "Reuse the master prompt at the start of new sessions to skip re-explaining context"
+        "Reuse the master prompt at the start of new sessions to skip re-explaining context",
+        "Use pull prompting to have AI ask you questions and build the master prompt — then save as PDF",
+        "Create a separate master prompt for each role (CEO, parent, marketer) in your life"
       ],
       "slash_commands": [],
       "general_tips": [
@@ -4586,10 +4588,11 @@
       "relevance": "A master prompt that encodes personal context unlocks consistently better AI outputs without repeated setup.",
       "popularity_signals": [],
       "endorsement_video_ids": [
-        "wKGyQFM5utQ"
+        "wKGyQFM5utQ",
+        "0Tch0N5nsRU"
       ],
-      "video_quality_score": 4,
-      "low_quality_source": true
+      "video_quality_score": 6,
+      "low_quality_source": false
     },
     {
       "slug": "notebooklm-course-aggregation",
@@ -5945,6 +5948,158 @@
       "source_url": "https://www.youtube.com/watch?v=3TsH8CO05Xk",
       "discovered_via": "bulk_analyze (gemini)",
       "added_at": "2026-06-10T23:09:12.141728+00:00"
+    },
+    {
+      "slug": "rccf-prompting-framework",
+      "skill_name": "RCCF Prompting Framework",
+      "category": "productivity",
+      "description": "A 4-part prompt structure — Role, Context, Command, Format — that consistently produces higher-quality AI outputs by giving the model clear persona, background information, explicit task, and desired output structure.",
+      "use_case": "Structure any AI prompt to get dramatically better outputs across writing, research, code, and analysis tasks.",
+      "output": "Precisely formatted AI responses aligned to the user's exact needs and use case.",
+      "quality_score": 6,
+      "model_version": null,
+      "company": null,
+      "country": null,
+      "open_source": false,
+      "target_tool": "other",
+      "is_claude_skill": false,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "ChatGPT",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Gemini",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=0Tch0N5nsRU",
+      "source_video_id": "0Tch0N5nsRU",
+      "tips": [
+        "Add a role like 'act as a world-class marketing strategist focused on SaaS conversion' to focus the model on the right domain knowledge",
+        "Upload actual documents (transcripts, specs) as context — give it book-length context before expecting precision",
+        "Specify the exact output format: bullet list, CSV, table, or provide a template the AI must fill"
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "The quality of output never exceeds the quality of your prompt — invest time in structuring input",
+        "Make the implicit explicit: specify every assumption about tone, length, format, and constraints"
+      ],
+      "relevance": "The RCCF framework is the most actionable baseline for any AI practitioner to get consistent, high-quality outputs.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "0Tch0N5nsRU"
+      ],
+      "video_quality_score": 6,
+      "low_quality_source": false
+    },
+    {
+      "slug": "pull-prompting-outcome-based",
+      "skill_name": "Pull Prompting (Outcome-Based Prompting)",
+      "category": "productivity",
+      "description": "Instead of writing out all the steps for AI to follow (push prompting), give AI the desired outcome and ask it to question you to gather what it needs — letting the model drive toward the solution. This mirrors spec-driven development used by professional coders.",
+      "use_case": "Use when you know the result you want but not the exact steps — let AI figure out the best path and extract the details it needs from you.",
+      "output": "A refined deliverable (email sequence, system, plan) built from AI's targeted questions and your answers.",
+      "quality_score": 7,
+      "model_version": null,
+      "company": null,
+      "country": null,
+      "open_source": false,
+      "target_tool": "other",
+      "is_claude_skill": false,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "ChatGPT",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Gemini",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=0Tch0N5nsRU",
+      "source_video_id": "0Tch0N5nsRU",
+      "tips": [
+        "Prompt: 'Ask me all the questions you need to create [X] for me, then give it back to me in [format]' — then answer using voice-to-text",
+        "After receiving a draft: 'Ask me more questions to refine this further' — keep pulling until output is perfect",
+        "Use voice mode to answer AI's clarifying questions faster than typing long responses"
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "Pull prompting shifts 80% of the cognitive work to the AI — you provide direction, it does the heavy lifting",
+        "This approach is the prompting equivalent of GPS navigation vs manual directions"
+      ],
+      "relevance": "Pull prompting dramatically reduces prompt engineering effort while producing more relevant outputs — essential for non-technical users and power users alike.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "0Tch0N5nsRU"
+      ],
+      "video_quality_score": 6,
+      "low_quality_source": false
+    },
+    {
+      "slug": "system-prompt-builder-workflow",
+      "skill_name": "System Prompt Builder Workflow",
+      "category": "productivity",
+      "description": "Use pull prompting to co-create a reusable system prompt with AI: have it ask you questions about the desired behavior, iterate until perfect, then deploy that prompt into a Custom GPT, Claude Project, or Gemini Gem so it runs on repeat without re-instructing every session.",
+      "use_case": "Build dedicated AI assistants for specific recurring tasks — strategic analysis, team workflows, research — that work the same way every time.",
+      "output": "A reusable system prompt deployed in a persistent AI assistant that teammates or clients can use without configuration.",
+      "quality_score": 7,
+      "model_version": null,
+      "company": null,
+      "country": null,
+      "open_source": false,
+      "target_tool": "other",
+      "is_claude_skill": false,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "ChatGPT",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Gemini",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=0Tch0N5nsRU",
+      "source_video_id": "0Tch0N5nsRU",
+      "tips": [
+        "Start with: 'You're an expert AI engineer. Create a system prompt that does X. Ask me all the questions you need.'",
+        "Test the resulting system prompt, then ask AI to refine specific parts before saving it",
+        "Deploy to Custom GPT, Claude Project, or Gemini Gem so you never have to give instructions again"
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "You code system prompts with words — treat iteration like software debugging",
+        "A good system prompt turns a complex AI workflow into a single-click tool anyone can use"
+      ],
+      "relevance": "System prompts transform one-off AI interactions into scalable, shareable tools — the foundation of any AI-powered workflow for teams.",
+      "popularity_signals": [
+        "Perplexity, Notion, Lovable system prompts were leaked on GitHub showing how powerful these can be"
+      ],
+      "endorsement_video_ids": [
+        "0Tch0N5nsRU"
+      ],
+      "video_quality_score": 6,
+      "low_quality_source": false
     }
   ]
 }

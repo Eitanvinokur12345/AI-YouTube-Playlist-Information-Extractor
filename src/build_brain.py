@@ -21,7 +21,7 @@ ROOT = Path(__file__).parent.parent
 DATA = ROOT / "data"
 BRAIN = ROOT / "brain"
 DEFAULT_VAULT = r"C:/Users/eitan/OneDrive/Documents/Excavatortron obsidian brain/Excavatortorn"
-GEN_FOLDERS = ["Skills", "Tools", "Prompts", "Connectors", "Categories", "Tools-hubs", "Project"]
+GEN_FOLDERS = ["Skills", "Tools", "Prompts", "Connectors", "Categories", "Tools-hubs", "Vendors", "Project"]
 
 
 def load(name: str):
@@ -64,7 +64,15 @@ def main() -> None:
     conns = (load("connectors.json") or {}).get("connectors", [])
     cats: set[str] = set()
     toolhubs: set[str] = set()
+    # Member lists so the CENTRAL hubs link OUT to every specific item (more edges = specific
+    # tools/skills are visible from the centre, not buried as single-edge peripheral dots).
+    cat_members: dict[str, list[str]] = {}
+    toolhub_members: dict[str, list[str]] = {}
+    vendor_members: dict[str, list[str]] = {}
     n = 0
+
+    def member(d, key, link):
+        d.setdefault(key, []).append(link)
 
     for s in skills:
         name = title(s.get("skill_name") or s.get("slug") or "skill")
@@ -79,14 +87,21 @@ def main() -> None:
         if s.get("source_url"):
             b.append(f"[Source]({s['source_url']})")
         write(vault, f"Skills/{name}.md", "\n".join(b)); n += 1
+        member(cat_members, cat, wl(name)); member(toolhub_members, tt, wl(name))
 
     for t in tools:
         name = title(t.get("name") or t.get("slug") or "tool")
         cat = (t.get("category") or "other"); cats.add(cat)
         b = ["---", "tags: [tool]", "---", f"# {name}", "", (t.get("description") or "").strip(), "",
              f"Category:: {wl(cat)}"]
-        if t.get("company"):
-            b.append(f"Company: {t.get('company')}{' · ' + t['country'] if t.get('country') else ''}")
+        member(cat_members, cat, wl(name))
+        vend = (t.get("company") or "").strip()
+        if vend:
+            vt = title("Vendor - " + vend)
+            b.append(f"Vendor:: {wl(vt)}{' · ' + t['country'] if t.get('country') else ''}")
+            member(vendor_members, vt, wl(name))   # cluster tools by maker -> a 2nd edge per tool
+        if t.get("model_version"):
+            b.append(f"Version: {t.get('model_version')}")
         if t.get("release_status") == "upcoming":
             b.append("Status: 🔜 upcoming")
         if t.get("source_url"):
@@ -99,6 +114,7 @@ def main() -> None:
         b = ["---", "tags: [prompt]", "---", f"# {name}", "", (p.get("purpose") or "").strip(), "",
              "```", (p.get("prompt_text") or "").strip(), "```", "", f"Category:: {wl(cat)}"]
         write(vault, f"Prompts/{name}.md", "\n".join(b)); n += 1
+        member(cat_members, cat, wl(name))
 
     for c in conns:
         name = title(c.get("name") or "connector")
@@ -110,12 +126,24 @@ def main() -> None:
             b += ["", f"[Link]({c['url']})"]
         write(vault, f"Connectors/{name}.md", "\n".join(b)); n += 1
 
+    # Hubs now LIST their members as wikilinks, so the central nodes radiate edges out to every
+    # specific tool/skill (the owner's request: make specific tools visible from the centre).
+    def hub(folder, key_title, tag, members, blurb):
+        body = ["---", f"tags: [{tag}]", "---", f"# {key_title}", "", blurb, ""]
+        uniq = sorted(set(members))
+        if uniq:
+            body += [f"## Members ({len(uniq)})", *[f"- {m}" for m in uniq]]
+        write(vault, f"{folder}/{title(key_title)}.md", "\n".join(body) + "\n")
+
     for c in sorted(cats):
-        write(vault, f"Categories/{title(c)}.md",
-              f"---\ntags: [category]\n---\n# {title(c)}\n\nCategory hub — skills, tools and prompts in **{c}** link here. Part of [[Home]].\n")
+        hub("Categories", title(c), "category", cat_members.get(c, []),
+            f"Category hub — every skill, tool and prompt in **{c}** links here. Part of [[Home]].")
     for th in sorted(toolhubs):
-        write(vault, f"Tools-hubs/{title(th)}.md",
-              f"---\ntags: [tool-hub]\n---\n# {title(th)}\n\nHub — skills that target **{th}** link here. Part of [[Home]].\n")
+        hub("Tools-hubs", title(th), "tool-hub", toolhub_members.get(th, []),
+            f"Hub — skills that target **{th}** link here. Part of [[Home]].")
+    for v in sorted(vendor_members):
+        hub("Vendors", v, "vendor", vendor_members.get(v, []),
+            f"Vendor hub — tools made by **{v.replace('Vendor - ', '')}** link here. Part of [[Home]].")
     # Connectors hub (so the 42 connectors are linked, not orphans) — also ties to Home.
     write(vault, "Categories/Connectors.md",
           "---\ntags: [hub]\n---\n# Connectors\n\nHub — every MCP server / connector links here. Part of [[Home]].\n")
@@ -131,9 +159,11 @@ def main() -> None:
             "Open the **graph view** (the circle-of-dots icon, top-right) to explore — everything "
             "clusters around its category and tool.", "",
             "## Browse", "- `Skills/`, `Tools/`, `Prompts/`, `Connectors/` — the knowledge base",
-            "- `Categories/`, `Tools-hubs/` — the hubs the graph clusters around",
+            "- `Categories/`, `Tools-hubs/`, `Vendors/` — the hubs the graph clusters around "
+            "(each hub now lists its members, so specific tools are reachable from the centre)",
             "- `Project/` — how Excavatortron itself is built (start at [[Excavatortron Brain]])", "",
             "## Hubs", "- [[Connectors]]", *[f"- {wl(th)}" for th in sorted(toolhubs)], "",
+            "## Vendors", *[f"- {wl(v)}" for v in sorted(vendor_members)], "",
             "## Categories", *[f"- {wl(c)}" for c in sorted(cats)]]
     write(vault, "Home.md", "\n".join(home))
     print(f"Brain built at: {vault}")

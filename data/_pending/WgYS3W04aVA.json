@@ -1,0 +1,292 @@
+{
+  "video_id": "WgYS3W04aVA",
+  "title": "AirLLM enables local 70B AI #airllm #flashattention #llama3",
+  "description": "AirLLM makes it possible to run a 70B-parameter AI model without a supercomputer. The open-source Python library streams model layers from a hard drive instead of loading the entire model into memory at once.\n\nThat layer-by-layer approach, combined with FlashAttention, keeps memory usage nearly flat even for long prompts. As a result, models like LLaMA 3.3 70B can run on a MacBook or gaming PC rather than requiring expensive high-end infrastructure.\n\nFor students, researchers, and indie developers, this lowers the hardware barrier to advanced local AI. The broader shift is clear: large-model inference is becoming more accessible, cheaper, and practical on consumer machines.\n\n#AirLLM #LLaMA33 #LLaMA70B #FlashAttention #OpenSourceAI #PythonLibrary #LocalLLM #AImodels #OnDeviceAI #MacBookAI #GamingPC #LLMinference #AIInfrastructure #Researchers #IndieDevelopers",
+  "publishedAt": "2026-06-12T19:18:30Z",
+  "channel_name": "AI Honeycove",
+  "transcript": "AirLLM makes it possible to run a 70B-parameter AI model without a supercomputer. The open-source Python library streams model layers from a hard drive instead of loading the entire model into memory at once.\n\nThat layer-by-layer approach, combined with FlashAttention, keeps memory usage nearly flat even for long prompts. As a result, models like LLaMA 3.3 70B can run on a MacBook or gaming PC rather than requiring expensive high-end infrastructure.\n\nFor students, researchers, and indie developers, this lowers the hardware barrier to advanced local AI. The broader shift is clear: large-model inference is becoming more accessible, cheaper, and practical on consumer machines.\n\n#AirLLM #LLaMA33 #LLaMA70B #FlashAttention #OpenSourceAI #PythonLibrary #LocalLLM #AImodels #OnDeviceAI #MacBookAI #GamingPC #LLMinference #AIInfrastructure #Researchers #IndieDevelopers",
+  "transcript_lang": "",
+  "transcript_source": "description",
+  "links": [],
+  "stats": {
+    "views": 195860,
+    "likes": 4740,
+    "comments": 81
+  },
+  "tags": [],
+  "duration": "PT38S",
+  "category_id": "22",
+  "top_comments": [
+    {
+      "author": "@datarake7222",
+      "text": "You conveniently \"forget\" to mention that this is a tradeoff of memory and speed. You can run big models, but so slow that you will probably get frustrated.",
+      "likes": 55,
+      "top_reply": {
+        "author": "@MrErmin",
+        "text": "what alternative do you have?",
+        "likes": 4
+      }
+    },
+    {
+      "author": "@miketheleisureman2334",
+      "text": "Where it could make sense : offline jobs where nobody waits. Run it overnight on a stack of documents. Useless where someone is watching a screen, which is every client-facing thing you would build.",
+      "likes": 11
+    },
+    {
+      "author": "@miketheleisureman2334",
+      "text": "A 70B model needs roughly 140GB of memory to run normally, which means data-center GPUs. Tools like AirLLM get around that by never holding the whole model at once. They load one slice, compute, drop it, load the next. So your small machine only ever holds a fraction.",
+      "likes": 34,
+      "top_reply": {
+        "author": "@JulienGordon",
+        "text": "It doesn’t need 140gb. Memory size depends on quantization. Total size depends on context window. Can be run very very well on 128GB  Mac Pro. We need to stop this madness. Rampant consumerism and “More is better” mentality helps only the folks that make the hardware while delivering marginal benefits to all. Most ppl don’t need a 70B parameter model to help them do whatever. 9B that’ll run on most hardware will do a great job at 99% of office type tasks.",
+        "likes": 4
+      }
+    },
+    {
+      "author": "@hypercho",
+      "text": "AirLLM's slice-based approach is genuinely clever — loading model chunks on demand instead of holding the full 70B in memory. For privacy-first local AI builds where the machine is yours alone, the speed tradeoff is worth it. This is the kind of optimization that makes running large models on consumer hardware actually viable.",
+      "likes": 0
+    },
+    {
+      "author": "@BusySlim",
+      "text": "Looks like holidays are back on the menu boys 😂😂🎉🎉🎉🎉😂😂",
+      "likes": 2
+    },
+    {
+      "author": "@miketheleisureman2334",
+      "text": "These matter if you ever run your own open model locally, most likely for a privacy build",
+      "likes": 1
+    },
+    {
+      "author": "@NGOLDA",
+      "text": "Thanks",
+      "likes": 2
+    },
+    {
+      "author": "@07J21F0007",
+      "text": "this is what i am waiting for",
+      "likes": 0,
+      "top_reply": {
+        "author": "@eevvxx80",
+        "text": "Careful it will short the life circle of SSD",
+        "likes": 0
+      }
+    },
+    {
+      "author": "@toby8367",
+      "text": "Oh I heard 7bn model and laughed. 70bn is insane, though.",
+      "likes": 1
+    },
+    {
+      "author": "@nxve18",
+      "text": "It's extremely slow and will decrease your ssd's life span due to multiple write-delete sessions.",
+      "likes": 4,
+      "top_reply": {
+        "author": "@hemanthkumar5438",
+        "text": "Why write?",
+        "likes": 0
+      }
+    },
+    {
+      "author": "@willbutcher5083",
+      "text": "You forgot to mention that a simple prompt would be painfully slow to execute",
+      "likes": 0
+    },
+    {
+      "author": "@Fer-u5v",
+      "text": "Average Joe here, how does this help me 😊",
+      "likes": 0
+    },
+    {
+      "author": "@litbmeinnick",
+      "text": "Was this not always possible by using mmap with llama cpp for example... It loads those weights that are needed, and pages out not needed weights to disk..",
+      "likes": 0
+    },
+    {
+      "author": "@TTBOn00bKiLleR",
+      "text": "Well ot depends. Quantizatiina and context also take up vram. So does the os. You really need some beefy shit for entry level models. Or spend hours to finish a task.",
+      "likes": 0
+    },
+    {
+      "author": "@BeInnovativeToday",
+      "text": "Yeah, two tokens per second",
+      "likes": 1
+    },
+    {
+      "author": "@lelfet3177",
+      "text": "1000 of C64 interconnected 😮😊🎉❤",
+      "likes": 0
+    },
+    {
+      "author": "@DominequeTaylor",
+      "text": "How slow does the model respond?",
+      "likes": 0
+    },
+    {
+      "author": "@is-sam",
+      "text": "You just wait 3 days for the output",
+      "likes": 0
+    },
+    {
+      "author": "@danielckw0206",
+      "text": "So can someone please tell me the performance of these?",
+      "likes": 0
+    },
+    {
+      "author": "@gwitichis1",
+      "text": "hmm. If a RTX 4070 16GB is slow as fug on any decent model fitting on it, doesnt airllm mean it all models were made slow intentionally? Or can it run a 70B model now but at a fraction of token per sec...",
+      "likes": 0
+    },
+    {
+      "author": "@MeMenow-z7e",
+      "text": "Speed trade off i supposed. But in fact it s worth if people dont apply new ML algorithm",
+      "likes": 0
+    },
+    {
+      "author": "@Isaacmellojr",
+      "text": "Como assim? Vou testar",
+      "likes": 0
+    },
+    {
+      "author": "@ThatcherMichelsen",
+      "text": "The project was last updated in 2024…",
+      "likes": 0
+    },
+    {
+      "author": "@misalambasta",
+      "text": "Is anyone tried it?",
+      "likes": 0
+    },
+    {
+      "author": "@eevvxx80",
+      "text": "Careful it will short the life circle of SSD",
+      "likes": 0
+    },
+    {
+      "author": "@JaiSriRam005",
+      "text": "1 token/sec , you can also run 70B on  normal pc by increasing Swap Space (on mac/linux) or Page file (windows)..... but 1 token per second would be absolutely useless....",
+      "likes": 11,
+      "top_reply": {
+        "author": "@tootsie7122",
+        "text": "its main purpose is for research or studies",
+        "likes": 1
+      }
+    },
+    {
+      "author": "@RaxIxor",
+      "text": "At <= 1tok/s, this is practically useless.",
+      "likes": 7,
+      "top_reply": {
+        "author": "@RaxIxor",
+        "text": "​@taken0011 Assume you're going to be computing.. I dunno, let's go with 100k tokens. That's more than a day of constant high-power compute. That would disable most school-tier laptops.\n\nIf you bump that amount to 1M tokens, that's 11 days and change.\n\nOr you could use 5 cents and do it with a hosted model of similar size. Or a MoE and get that price down to less than a cent in some cases.\n\nThis is NOT useful for anything beyond perhaps the most desperate.",
+        "likes": 2
+      }
+    },
+    {
+      "author": "@TheeNathanos",
+      "text": "so, basically to run AI you need to have a lotta RAM and have an expensive PC",
+      "likes": 0
+    },
+    {
+      "author": "@AMBENight",
+      "text": "No magic, it works like shit 😂😂😂😂",
+      "likes": 2
+    },
+    {
+      "author": "@miketheleisureman2334",
+      "text": "you can run a 70B model on normal hardware the same way you can tow a trailer with a sedan. It moves. You would not run a delivery business with it.",
+      "likes": 0
+    },
+    {
+      "author": "@alexanderlyndon8393",
+      "text": "But for the average person barely even learning about AI, how is this information useful for you? \nDoes it help the average joe in their job perhaps? \nLike marketing their company? Automating admin tasks? Helping someone make money? \nOr is this news just for advanced ai users?",
+      "likes": 1
+    },
+    {
+      "author": "@OBGynKenobi",
+      "text": "It's gotta be slow.",
+      "likes": 0
+    },
+    {
+      "author": "@Saketposwalcom",
+      "text": "We have moved ahead... This project is abandoned since it is 2024... How do you make video... Blindly",
+      "likes": 0
+    },
+    {
+      "author": "@MrEnyecz",
+      "text": "And what is the trick here? Llama.cpp can do the same for years. The problem is that it is slooooow like hell.",
+      "likes": 0
+    },
+    {
+      "author": "@miketheleisureman2334",
+      "text": "AirLLM’s layer-swapping is far too slow for a live chat product. It is a proof-of-concept and demo tool, not something you put in front of a client expecting real-time answers. For anything customer-facing, a cloud API still wins on speed and cost at your volume.",
+      "likes": 1
+    },
+    {
+      "author": "@vrajpal-jhala",
+      "text": "What an idiot!",
+      "likes": 1
+    },
+    {
+      "author": "@cheffabbio130",
+      "text": "Or, you just buy a Mac with 128 GB of RAM. Problem solved 😊",
+      "likes": 1
+    },
+    {
+      "author": "@EnviousMods",
+      "text": "I'm an advanced AI researcher and developer who also develops kernel level software for transformers. You're getting it pushed onto a very small space but, your truncating the model so heavily that you're stripping all the intelligence out of it. Okay yeah, you can fit it on something small but, it has no intelligence left. You're saying researchers, developers and students who will be learning from something fundamentally stupid!",
+      "likes": 0
+    },
+    {
+      "author": "@marymekins3546",
+      "text": "Doesnt work, the repo isnt updated. Bad recommendation",
+      "likes": 0
+    },
+    {
+      "author": "@shannonsmith-w5q",
+      "text": "I don’t think this will work",
+      "likes": 0
+    },
+    {
+      "author": "@pixelbat",
+      "text": "Imagine generating an AI presenter and you make it look like this guy. Same script used in multiple videos. shady af.",
+      "likes": 1,
+      "top_reply": {
+        "author": "@Deeznetzia",
+        "text": "He’s disaster to us and his parents",
+        "likes": 0
+      }
+    },
+    {
+      "author": "@miketheleisureman2334",
+      "text": "AirLLM lets you run a big open-weight model on hardware that has no business running it. A 70B model normally needs a serious GPU. AirLLM loads one layer, computes, dumps it, loads the next, so it squeezes through on a small card or even a laptop GPU. The price you pay is speed. You wait, sometimes minutes for one answer.",
+      "likes": 0
+    },
+    {
+      "author": "@ginyilee6538",
+      "text": "Why don’t you make you own clip without stealing someone else work 😅😅",
+      "likes": 0
+    },
+    {
+      "author": "@andrekroth",
+      "text": "3yo project with no active development.",
+      "likes": 0
+    },
+    {
+      "author": "@Akitando",
+      "text": "This is stupid. It's compression. Tokens/sec are excruciatingly slow. Therefore, useless",
+      "likes": 0
+    },
+    {
+      "author": "@TheTrek01",
+      "text": "It’ll take seconds or even minutes to generate a single token - useless setup",
+      "likes": 0
+    },
+    {
+      "author": "@christianpurnielumpierre2662",
+      "text": "looks like it is a dead project... no updates and not maintained for over 2 years? thx for stealing my time",
+      "likes": 0
+    }
+  ],
+  "fetched_at": "2026-06-13T08:47:41.927437+00:00"
+}

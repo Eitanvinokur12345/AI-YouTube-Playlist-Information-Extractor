@@ -9,7 +9,7 @@ and writes findings the improve stage and dashboard then act on / surface.
 Governed by the `review` block in `config.json`. Read it first; if
 `review.enabled` is false, do nothing and exit.
 
-## The three reviewers (different conditions, on purpose)
+## The reviewers (different conditions, on purpose)
 
 1. **Usability / UX** (`dimension: "usability"`) — judge the dashboard the way a
    first-time visitor would: how easy is it to *read* information, *find* what you
@@ -36,6 +36,20 @@ Governed by the `review` block in `config.json`. Read it first; if
    smells (anything that could leak a secret). The automated arm of this reviewer
    is **CodeQL** (`.github/workflows/codeql.yml`, free for public repos); read its
    latest alerts if available and corroborate. Report concrete file:line issues.
+4. **Professional design** (`dimension: "professional_design"`) — a **top-3 priority**
+   (`config.self_improvement.professional_design.target_rank: "top_3"`). Beyond basic
+   usability, judge whether the dashboard looks *genuinely professional and competitive* —
+   typography scale, color system, spacing rhythm, card hierarchy, dark mode, empty/landing
+   states — benchmarked against `review.usability.competitors`, aiming to match or BEAT them.
+   Each run propose ONE concrete, significant redesign step as a `ui_change` (respect
+   `caps.max_ui_changes_per_week`). Score how close the dashboard is to best-in-class.
+5. **Security & data-privacy** (`dimension: "security_and_privacy"`) — the attack surface
+   grows with every new feature/info source, so audit it every run against
+   `config.self_improvement.security_and_privacy.checks`: no secrets in code/commits/logs;
+   workflow `permissions:` least-privilege; the `@claude` workflow stays author-gated on the
+   public repo; third-party data flows carry only PUBLIC data (no PII); no personal data
+   stored/exposed; action/dependency pins are safe. Corroborate with CodeQL. File concrete
+   findings (file:line + the fix); anything risky → `kind:"needs_approval"`.
 
 ## Claude first, then external (`review.claude_first_then_external: true`)
 
@@ -70,7 +84,7 @@ don't lose history or re-raise resolved items. Write:
     "external": { "provider": "gemini", "status": "pending", "reason": "" },
     "codeql":   { "status": "see GitHub Security tab", "alerts_seen": null }
   },
-  "scores": { "usability": 0, "cut_the_bullshit": 0, "deep_code_bugs": 0, "overall": 0 },
+  "scores": { "usability": 0, "professional_design": 0, "security_and_privacy": 0, "cut_the_bullshit": 0, "deep_code_bugs": 0, "overall": 0 },
   "benchmark": {
     "competitors": ["Future Tools", "There's An AI For That", "Toolify", "Product Hunt AI"],
     "we_do_better": [ "..." ],
@@ -78,7 +92,7 @@ don't lose history or re-raise resolved items. Write:
     "borrow_next": [ "1-3 concrete, cheap UX ideas worth copying" ]
   },
   "findings": [
-    { "id": "<stable-hash>", "dimension": "usability|cut_the_bullshit|deep_code_bugs",
+    { "id": "<stable-hash>", "dimension": "usability|professional_design|security_and_privacy|cut_the_bullshit|deep_code_bugs",
       "severity": "high|med|low", "area": "dashboard|engine|data|workflow|security",
       "where": "docs/dashboard.js:512  (or a record slug / tab id)",
       "detail": "Exactly what's wrong, concretely.",
@@ -86,7 +100,7 @@ don't lose history or re-raise resolved items. Write:
       "status": "open" }
   ],
   "top_actions": [ "The 3-5 highest-leverage fixes, plain English." ],
-  "history": [ { "date": "<date>", "usability": 0, "cut_the_bullshit": 0, "deep_code_bugs": 0, "overall": 0 } ]
+  "history": [ { "date": "<date>", "usability": 0, "professional_design": 0, "security_and_privacy": 0, "cut_the_bullshit": 0, "deep_code_bugs": 0, "overall": 0 } ]
 }
 ```
 

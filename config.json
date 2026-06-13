@@ -62,7 +62,32 @@
       "trend_tabs": true,
       "reference_self_check": true,
       "skills_folder_learning": true,
-      "review_agents": true
+      "review_agents": true,
+      "effectiveness_targeting": true,
+      "professional_design": true,
+      "security_and_privacy_check": true,
+      "improve_existing_skills": true
+    },
+    "north_star": "A huge, machine-readable hub of ALL AI knowledge for Eitan AND for future systems — and use that knowledge to improve existing skills, integrate new parts, and test better versions.",
+    "priorities_top3": ["extraction_effectiveness", "professional_design", "use_info_to_improve_skills"],
+    "effectiveness": {
+      "file": "data/effectiveness.json",
+      "regenerate": "python -m src.effectiveness",
+      "action": "Read it every run. For the lowest-effectiveness / highest-rigidity lanes, open improvement_tasks that target their weak_dims. The recurring weak dim 'ease_external' => build a machine-readable hub index/API so EXTERNAL systems can consume the whole library (core to the north star)."
+    },
+    "professional_design": {
+      "target_rank": "top_3",
+      "benchmark_competitors": true,
+      "note": "Treat a significant, professional, competitor-adapted (ideally BETTER) visual design as a TOP-3 self-improvement priority — not a minor UX tweak. Benchmark against review.usability.competitors and propose a concrete redesign each cycle until the dashboard is clearly best-in-class."
+    },
+    "security_and_privacy": {
+      "enabled": true,
+      "note": "Every run, scan for NEW security/data-privacy risks introduced by new info or features — the attack surface grows as the project does. Open improvement_tasks for anything found.",
+      "checks": ["no secrets in code/commits/logs", "workflow permissions least-privilege", "@claude is author-gated on the public repo", "third-party data flows carry only PUBLIC data (no PII)", "no personal data stored or exposed", "action/dependency pins are safe"]
+    },
+    "improve_existing_skills": {
+      "enabled": true,
+      "note": "Use newly extracted AI info to UPGRADE existing skills (newer model versions, new integrations, deprecations), integrate new parts, and flag better tool versions — the hub must self-refresh, not just accrete."
     },
     "safe_auto": ["schema_repair", "orphan_cleanup", "fill_missing_summaries", "exact_duplicate_merge", "cross_tab_consistency", "build_index", "health_report"],
     "suggest_only": ["fuzzy_duplicate_merge", "rescore_outliers", "recategorize", "ui_changes", "star_suggestions", "drop_dead_feed"],
@@ -105,7 +130,7 @@
   },
   "review": {
     "enabled": true,
-    "dimensions": ["usability", "cut_the_bullshit", "deep_code_bugs"],
+    "dimensions": ["usability", "professional_design", "security_and_privacy", "cut_the_bullshit", "deep_code_bugs"],
     "claude_first_then_external": true,
     "usability": {
       "benchmark_competitors": true,

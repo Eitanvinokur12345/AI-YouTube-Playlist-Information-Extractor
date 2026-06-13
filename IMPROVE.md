@@ -324,6 +324,47 @@ pending/dismissed entry (match on the stable `id`). Apply none now — this modu
 
 ---
 
+## Step 6c — Modules 10–13: North-star priorities  (the owner's 2026-06-14 directive)
+
+The project's **north star** (`config.self_improvement.north_star`): *a huge, machine-readable
+hub of ALL AI knowledge — for the owner AND for future systems — that also uses that knowledge
+to improve existing skills, integrate new parts, and test better versions.* The owner's TOP-3
+self-improvement priorities (`priorities_top3`) are **extraction effectiveness, professional
+design, and using the info to improve skills**. Each sub-module below runs only if its
+`modules.*` flag is true; write to `data/improvement_tasks.json` (same envelope as Step 1b) and
+apply only the `safe_auto` ones next run.
+
+**Module 10 — Effectiveness targeting** (`effectiveness_targeting`). Regenerate the scoreboard
+(`python -m src.effectiveness` → `data/effectiveness.json`), then for the **lowest-effectiveness
+/ highest-rigidity lanes**, open an `improvement_task` per weak dimension with a concrete fix.
+The recurring weak dim **`ease_external`** is first-class to the north star: propose/build a
+**machine-readable hub index** (e.g. `data/index.json` + a documented schema, or a tiny read-only
+API) so external systems can consume the whole library. Don't refight known-dead lanes (the cloud
+transcript lane is IP-blocked by design — leave it as the daily safety-net).
+
+**Module 11 — Professional design (TOP-3, competitor-benchmarked)** (`professional_design`).
+Treat the dashboard's visual design as a top-3 priority, not a minor UX tweak. Benchmark against
+`review.usability.competitors`; each cycle, propose ONE concrete, significant redesign step
+(typography scale, color system, spacing rhythm, card hierarchy, dark mode, landing/empty states)
+as a `ui_change` task, until the dashboard is clearly best-in-class. Respect
+`caps.max_ui_changes_per_week`. Keep the per-tab "Updates:" line and Quick-read working.
+
+**Module 12 — Security & data-privacy check** (`security_and_privacy_check`). The attack surface
+grows as features/info grow, so re-scan every run against `config.self_improvement.security_and_privacy.checks`:
+secrets never in code/commits/logs; workflow `permissions:` least-privilege; the `@claude`
+workflow stays author-gated (public repo); third-party data flows carry only PUBLIC data (no PII);
+no personal data stored/exposed; action/dependency pins are safe. File any finding as an
+`improvement_task` with `kind:"needs_approval"` and a one-line fix; CodeQL + REVIEW.md's
+`security_and_privacy` dimension are the deeper arms.
+
+**Module 13 — Use info to improve existing skills** (`improve_existing_skills`). Mine newly
+extracted records/news for signals that an EXISTING skill/tool is now out of date — a newer model
+version, a new integration, a deprecation, or a clearly better alternative tool — and open a
+task to upgrade/annotate it (never silently rewrite a starred/frozen record). This is how the hub
+self-refreshes instead of only accreting. Cap a few per run; dedupe on a stable `id`.
+
+---
+
 ## Step 7 — Module 6: Trend detection & new dashboard tabs  (AUTO-CREATE, announced & capped)
 
 Only if `modules.trend_tabs` is true and `dynamic_tabs.enabled` is true. This is the one place

@@ -812,12 +812,157 @@ function renderComingSoon(data) {
   view.innerHTML = html;
 }
 
-// ── Tab: Developer Construction (full rebuild spec) ──────────────────────────
+// ── Obsidian-style knowledge graph (lives in the Dev Construction tab) ────────
+// Force-directed canvas graph of the WHOLE project, mirroring the Obsidian vault:
+// skills/tools/prompts/connectors → category & tool hubs → Home. Reads data/brain_graph.json
+// (built by src/build_graph.py). Pan = drag background, zoom = wheel, drag a node to move it,
+// hover to focus its neighbours, click a node to open its source. Pure canvas, no libraries.
+const GRAPH_COLORS = {
+  home: "#f59e0b", hub: "#f59e0b", category: "#38bdf8", toolhub: "#a78bfa",
+  skill: "#34d399", tool: "#f472b6", prompt: "#fbbf24", connector: "#60a5fa",
+};
+function ensureGraphCss() {
+  if (document.getElementById("graphcss")) return;
+  const st = document.createElement("style");
+  st.id = "graphcss";
+  st.textContent = `
+    .braingraph{position:relative}
+    .braincanvas{width:100%;height:560px;display:block;border-radius:10px;
+      background:rgba(2,6,23,.45);cursor:grab;touch-action:none}
+    .graphbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px;
+      font-size:12px;color:var(--muted,#94a3b8)}
+    .graphcount{font-weight:600}
+    .graphlegend{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-left:auto}
+    .graphlegend i{display:inline-block;width:10px;height:10px;border-radius:50%;
+      margin-right:3px;vertical-align:middle}
+    .graphsearch,.graphreset{background:rgba(2,6,23,.6);border:1px solid rgba(148,163,184,.3);
+      border-radius:6px;color:inherit;padding:3px 8px;font-size:12px}
+    .graphreset{cursor:pointer}
+    .graphhint{font-size:11px;color:var(--muted,#94a3b8);margin:6px 0 0;opacity:.8}`;
+  document.head.appendChild(st);
+}
+async function mountBrainGraph(host) {
+  ensureGraphCss();
+  const data = await load("brain_graph.json");
+  if (!data || !(data.nodes || []).length)
+    return host.innerHTML = empty("Graph not generated yet — runs from src/build_graph.py in the pipeline.");
+  const c = data.counts || {};
+  host.innerHTML = `
+    <div class="graphbar">
+      <span class="graphcount">${c.nodes || data.nodes.length} nodes · ${c.links || (data.links || []).length} links</span>
+      <input class="graphsearch" placeholder="highlight…" aria-label="highlight nodes" />
+      <button class="graphreset">reset view</button>
+      <span class="graphlegend">
+        <span><i style="background:${GRAPH_COLORS.skill}"></i>skill</span>
+        <span><i style="background:${GRAPH_COLORS.tool}"></i>tool</span>
+        <span><i style="background:${GRAPH_COLORS.prompt}"></i>prompt</span>
+        <span><i style="background:${GRAPH_COLORS.connector}"></i>connector</span>
+        <span><i style="background:${GRAPH_COLORS.category}"></i>category</span>
+        <span><i style="background:${GRAPH_COLORS.toolhub}"></i>tool-hub</span>
+      </span>
+    </div>
+    <canvas class="braincanvas"></canvas>
+    <p class="graphhint">drag background to pan · scroll to zoom · drag a dot to move it · hover to focus · click a dot to open its source</p>`;
+  const canvas = host.querySelector("canvas");
+  const ctx = canvas.getContext("2d");
+  const H = 560;
+  canvas.width = canvas.clientWidth || 800;
+  canvas.height = H;
+  let W = canvas.width;
+
+  const N = data.nodes.map(n => ({ ...n, x: (Math.random() - .5) * W, y: (Math.random() - .5) * H, vx: 0, vy: 0, deg: 0 }));
+  const byId = {}; N.forEach(n => byId[n.id] = n);
+  const L = data.links.map(l => ({ s: byId[l.source], t: byId[l.target] })).filter(l => l.s && l.t);
+  const nbr = {}; N.forEach(n => nbr[n.id] = new Set());
+  L.forEach(l => { l.s.deg++; l.t.deg++; nbr[l.s.id].add(l.t.id); nbr[l.t.id].add(l.s.id); });
+  const isHub = n => n.group === "home" || n.group === "category" || n.group === "toolhub" || n.group === "hub";
+  const rad = n => n.group === "home" ? 9 : isHub(n) ? 6 + Math.min(4, n.deg / 8) : 3 + Math.min(3, n.deg / 3);
+
+  let scale = 0.8, ox = W / 2, oy = H / 2, alpha = 1;
+  let hover = null, drag = null, panning = false, lastX = 0, lastY = 0, hl = "";
+  let raf = null, running = false;
+
+  function tick() {
+    for (let i = 0; i < N.length; i++) { const a = N[i];
+      for (let j = i + 1; j < N.length; j++) { const b = N[j];
+        let dx = a.x - b.x, dy = a.y - b.y, d2 = dx * dx + dy * dy + .01;
+        if (d2 < 40000) { const d = Math.sqrt(d2), f = 200 / d2; dx /= d; dy /= d;
+          a.vx += dx * f; a.vy += dy * f; b.vx -= dx * f; b.vy -= dy * f; } } }
+    for (const l of L) { let dx = l.t.x - l.s.x, dy = l.t.y - l.s.y, d = Math.sqrt(dx * dx + dy * dy) + .01;
+      const f = (d - 62) * .02; dx /= d; dy /= d;
+      l.s.vx += dx * f; l.s.vy += dy * f; l.t.vx -= dx * f; l.t.vy -= dy * f; }
+    for (const n of N) { n.vx += -n.x * .002; n.vy += -n.y * .002;
+      if (n === drag) continue;
+      n.x += n.vx * alpha; n.y += n.vy * alpha; n.vx *= .85; n.vy *= .85; }
+    alpha *= .985;
+  }
+  function draw() {
+    ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, W, H);
+    ctx.setTransform(scale, 0, 0, scale, ox, oy);
+    const focus = hover ? nbr[hover.id] : null;
+    ctx.lineWidth = 1 / scale;
+    for (const l of L) {
+      const on = hover && (l.s === hover || l.t === hover);
+      ctx.strokeStyle = on ? "rgba(148,163,184,.85)" : "rgba(100,116,139,.16)";
+      ctx.beginPath(); ctx.moveTo(l.s.x, l.s.y); ctx.lineTo(l.t.x, l.t.y); ctx.stroke();
+    }
+    ctx.font = (11 / scale) + "px system-ui";
+    for (const n of N) {
+      const dim = (hover && n !== hover && !focus.has(n.id)) ||
+                  (hl && !(n.label || "").toLowerCase().includes(hl));
+      ctx.globalAlpha = dim ? .16 : 1;
+      ctx.fillStyle = GRAPH_COLORS[n.group] || "#94a3b8";
+      ctx.beginPath(); ctx.arc(n.x, n.y, rad(n), 0, 7); ctx.fill();
+      if (n === hover) { ctx.lineWidth = 2 / scale; ctx.strokeStyle = "#fff"; ctx.stroke(); }
+      if (!dim && (isHub(n) || n === hover || scale > 1.6 || hl)) {
+        ctx.globalAlpha = 1; ctx.fillStyle = "#cbd5e1";
+        ctx.fillText(n.label, n.x + rad(n) + 2 / scale, n.y + 3.5 / scale);
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+  function loop() {
+    tick(); draw();
+    if (alpha > .02 && running) raf = requestAnimationFrame(loop);
+    else { running = false; raf = null; }
+  }
+  function start() { if (!running) { running = true; raf = requestAnimationFrame(loop); } }
+  function reheat(a) { alpha = Math.max(alpha, a || .3); start(); }
+  window.__graphStop = () => { running = false; if (raf) cancelAnimationFrame(raf); };
+
+  function world(e) { const r = canvas.getBoundingClientRect();
+    return { x: (e.clientX - r.left - ox) / scale, y: (e.clientY - r.top - oy) / scale }; }
+  function pick(e) { const p = world(e); let best = null, bd = 1e9;
+    for (const n of N) { const dx = n.x - p.x, dy = n.y - p.y, d = dx * dx + dy * dy, rr = (rad(n) + 4) ** 2;
+      if (d < bd && d < rr) { bd = d; best = n; } } return best; }
+  canvas.addEventListener("mousemove", e => {
+    if (drag) { const p = world(e); drag.x = p.x; drag.y = p.y; reheat(.3); }
+    else if (panning) { ox += e.clientX - lastX; oy += e.clientY - lastY; lastX = e.clientX; lastY = e.clientY; if (!running) draw(); }
+    else { const h = pick(e); if (h !== hover) { hover = h; canvas.style.cursor = h ? "pointer" : "grab"; if (!running) draw(); } }
+  });
+  canvas.addEventListener("mousedown", e => { const n = pick(e);
+    if (n) drag = n; else { panning = true; lastX = e.clientX; lastY = e.clientY; canvas.style.cursor = "grabbing"; } });
+  window.addEventListener("mouseup", () => { drag = null; panning = false; canvas.style.cursor = "grab"; });
+  canvas.addEventListener("click", e => { const n = pick(e); if (n && n.url) window.open(n.url, "_blank", "noopener"); });
+  canvas.addEventListener("wheel", e => { e.preventDefault();
+    const r = canvas.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top;
+    const wx = (mx - ox) / scale, wy = (my - oy) / scale;
+    scale = Math.max(.2, Math.min(4, scale * (e.deltaY < 0 ? 1.1 : .9)));
+    ox = mx - wx * scale; oy = my - wy * scale; if (!running) draw(); }, { passive: false });
+  host.querySelector(".graphsearch").addEventListener("input", e => { hl = e.target.value.toLowerCase().trim(); if (!running) draw(); });
+  host.querySelector(".graphreset").addEventListener("click", () => { scale = .8; ox = W / 2; oy = H / 2; reheat(1); });
+  start();
+}
+
+// ── Tab: Developer Construction (rebuild spec + the live knowledge graph) ─────
 async function renderDevConstruction() {
   const data = await load("dev_construction.json");
   const secs = (data && data.sections) || [];
-  if (!secs.length) return view.innerHTML = empty("Developer construction doc not generated yet.");
-  let html = `<div class="sub">${esc(data.intro || "")}</div>`;
+  let html = `<div class="sub">${esc((data && data.intro) || "")}</div>`;
+  html += `<div class="card">
+      <h3>🧠 Project knowledge graph — the Obsidian brain, live</h3>
+      <div id="braingraph" class="braingraph"></div>
+    </div>`;
   let list = secs;
   if (q()) list = list.filter(s => hit(s.title, s.body));
   html += list.map(s => `
@@ -825,13 +970,17 @@ async function renderDevConstruction() {
       <h3>${esc(s.title)}</h3>
       <div class="devbody">${esc(s.body)}</div>
     </div>`).join("");
-  if (!list.length) html += empty(`No sections match "${esc(state.query)}".`);
+  if (!secs.length) html += empty("Developer construction doc not generated yet.");
+  else if (!list.length) html += empty(`No sections match "${esc(state.query)}".`);
   view.innerHTML = html;
+  const gh = document.getElementById("braingraph");
+  if (gh) mountBrainGraph(gh);
 }
 
 // ── tab router ───────────────────────────────────────────────────────────────
 async function show(tab) {
   state.activeTab = tab;
+  if (window.__graphStop) window.__graphStop();   // stop any running graph animation
   document.querySelectorAll("nav button").forEach(b =>
     b.classList.toggle("active", b.dataset.tab === tab));
   view.innerHTML = empty("Loading…");

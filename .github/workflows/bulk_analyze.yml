@@ -43,6 +43,12 @@ jobs:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: python -m src.bulk_analyze --limit "${{ github.event.inputs.limit || '200' }}" --sleep 3.0
 
+      - name: Single-tab guarantee + rebuild knowledge graph (free, mechanical, no Claude)
+        if: always()
+        run: |
+          python -m src.cross_tab_check || true
+          python -m src.build_graph || true
+
       - name: Commit results
         if: always()
         env:

@@ -49,6 +49,10 @@ jobs:
           python -m src.cross_tab_check || true
           python -m src.build_graph || true
 
+      - name: Progress readout (transcripts X/Y, library totals) -> data/health.json
+        if: always()
+        run: python -m src.health || true
+
       - name: Commit results
         if: always()
         env:

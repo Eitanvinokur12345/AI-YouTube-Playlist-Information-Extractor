@@ -20,8 +20,11 @@ git pull --rebase origin $Branch
 
 Write-Host "[2/5] Backfilling real transcripts (residential IP) — the recovery..."
 # No API key needed. Gentle pace to avoid YouTube rate-limiting; bounded batch per run so the
-# cloud can drain it. Non-fatal: rate-limits / missing captions are expected for some videos.
-python -m src.backfill_transcripts --limit 80 --sleep 1.2
+# cloud can drain it. The script auto-STOPS if YouTube starts blocking this IP (a fast burst
+# trips an escalating block), so a bigger limit is safe — it just self-limits. To recover the
+# whole backlog FASTER, schedule this runner a few times a day (not just nightly): the IP block
+# clears within minutes, so several gentle spaced batches recover far more than one big run.
+python -m src.backfill_transcripts --limit 120 --sleep 1.8
 
 Write-Host "[2b/5] Whisper-transcribing videos (local ASR, light tiny model, small nightly batch)..."
 # Whisper is the source of truth for raw spoken content (captions aren't guaranteed complete).
@@ -38,8 +41,11 @@ if ($env:YOUTUBE_API_KEY) {
     Write-Warning "YOUTUBE_API_KEY not set — skipping new-video fetch. Set it with: setx YOUTUBE_API_KEY ""your-key"". (Backfill above still ran.)"
 }
 
+Write-Host "[3b/5] Progress readout -> data/health.json (transcripts X/Y, library totals)..."
+python -m src.health
+
 Write-Host "[4/5] Commit + push (explicit paths only; never -A / secrets / make_icon.py)..."
-git add data/_pending data/skills.json data/status.json data/catch_up.json `
+git add data/_pending data/health.json data/skills.json data/status.json data/catch_up.json `
         data/daily_news.json data/weekly_news.json data/monthly_news.json 2>$null
 $stamp = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mmZ")
 git commit -m "local runner: backfill transcripts + fetch $stamp"

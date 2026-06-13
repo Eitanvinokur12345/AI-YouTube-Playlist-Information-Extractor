@@ -1,4 +1,25 @@
-# Excavatortron — Next-Session Handoff (as of 2026-06-11)
+# Excavatortron — Next-Session Handoff (as of 2026-06-13)
+
+> **⚠ SESSION 2026-06-13 — verified reality via `gh` Actions logs (READ THIS FIRST):**
+> - The cloud **`transcribe.yml` produces EXACTLY 0 transcripts** — YouTube hard-blocks BOTH the
+>   caption API AND yt-dlp audio from GitHub's datacenter IP. It is **NOT throttling**; do NOT
+>   "make it more parallel" (old advice — it's wrong). Already cut to a daily safety-net.
+> - The **only fast free lever is the RESIDENTIAL backfill** (`src/backfill_transcripts.py`) from
+>   Eitan's home IP. A random sample shows **~85–88% of the 1,112 caption-less videos DO have an
+>   English caption** fetchable from home. **But his PC can't be left on**, so the nightly runner
+>   isn't viable — the model is: **drain at the START of every session** (gentle, block-aware);
+>   the cloud free lane analyzes 24/7. See `[[feedback-excavatortron-drain-every-session]]`.
+> - **DON'T BURST**: YouTube's rate-limit ESCALATES; fast batches lock the IP out. Start
+>   `--sleep ~2.0`, small `--limit`, single pass, stop on first block. (Bursting cost the rest of
+>   the day's headroom on 2026-06-13.)
+> - **Proven chain:** drained 50 → free pool produced **+33 skills, +20 tools, +4 prompts**, 0
+>   Claude tokens. Counts now: transcripts **145/1257 (11.5%)**, skills **204**, tools **308**,
+>   connectors 44, prompts 19. Watch the new `data/health.json` climb.
+> - **Unattended PC-free path wired:** `src/supadata_fetch.py` (Step 0 of `transcribe.yml`,
+>   graceful-skip) — Supadata free tier (~100/mo) fetches on their infra. Needs `SUPADATA_API_KEY`.
+> - **Owner TODO (only Eitan can):** add free secrets `OPENROUTER_API_KEY`, `GROQ_API_KEY`
+>   (analysis pool 2→4 engines), re-check `CEREBRAS_API_KEY` (dead, returns 0), optional
+>   `SUPADATA_API_KEY`. Run `gh secret set <NAME>` in the repo.
 
 > Paste the prompt at the bottom into a fresh session. The project lives locally at
 > `C:\Users\eitan\AI-YouTube-Skills` (a git clone of GitHub `Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor`).
@@ -63,8 +84,9 @@ read Actions logs and verify what's ACTUALLY running before changing anything.
 THE PRIORITY IS OUTPUT, NOT SELF-IMPROVEMENT. The library is starved (~7.5% of videos have a
 transcript), so almost nothing has been extracted yet. Do Phase 1 first and don't move on until
 most of the information is actually out:
-  1. Get transcripts draining fast (verify transcribe.yml is producing them; make it more
-     aggressive/parallel if throttled).
+  1. Drain transcripts FIRST thing (the cloud transcribe.yml is hard-IP-blocked and produces 0 —
+     do NOT make it more parallel). Run the RESIDENTIAL backfill gently from this PC:
+     `python -m src.backfill_transcripts --limit 150 --sleep 2.0` (block-aware; never burst).
   2. Speed the FREE analysis lane so the transcripts turn into skills/tools fast (add the free
      OpenRouter/Groq keys; the pool auto-uses them).
   3. Add only a tiny health.json progress readout (counts) so I can watch it climb.

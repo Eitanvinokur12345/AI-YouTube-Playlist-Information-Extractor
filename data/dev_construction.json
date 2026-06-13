@@ -72,6 +72,11 @@
       "id": "gotchas",
       "title": "14. Gotchas & hard-won lessons",
       "body": "- YouTube blocks the caption API AND throttles audio from datacenter IPs -> use the complete-caption rule + Whisper + a residential fallback.\n- The safety-net `git push` in a workflow fails ('Invalid username or token') unless you reset the remote URL with secrets.GITHUB_TOKEN first.\n- GitHub reserves the GITHUB_ secret-name prefix -> use GH_MODELS_TOKEN.\n- GitHub Pages must serve the REPO ROOT (dashboard reads ../data), not /docs.\n- Google AI Studio (Gemini) requires the account to be 18+/verified; GitHub Models + Cerebras do not.\n- On a Pro plan the 5 Claude workflows fight one small weekly bucket -> night-gate analyze, offload bulk to free engines, keep improve/review weekly.\n- Anti-boilerplate gate is essential: without it, dedup collapses ~950 'Claude/ChatGPT' vendor stubs and the library looks empty.\n- Never auto-comment on YouTube to harvest gated files (ToS violation -> account ban, and the files usually arrive by DM anyway). Resolve gated resources by searching the creator's PUBLIC footprint + web instead."
+    },
+    {
+      "id": "brain",
+      "title": "15. The Obsidian brain (knowledge graph)",
+      "body": "src/build_brain.py turns the WHOLE project into a rich Obsidian vault so it can be browsed and SEEN as a graph in the desktop Obsidian app.\n\nWHAT IT MAKES: one note per skill / tool / prompt / connector, each wikilinked to its CATEGORY hub and (for skills) its TOOL hub, plus a Connectors hub, the 25 structural 'how it's built' notes (copied into Project/), and a Home page. ~573 notes, verified 0 ORPHANS — the graph is one fully-connected web that clusters by category and tool.\n\nWHERE / HOW TO VIEW: written to the owner's local vault at OneDrive/Documents/Excavatortron obsidian brain/Excavatortorn. Open that folder as a vault in Obsidian, open Home.md, then open the Graph view. (The web dashboard can't render Obsidian's live graph — the brain is viewed inside Obsidian.) Regenerate any time: python -m src.build_brain \"<vault path>\".\n\nRULE: keep the graph fully connected — any new note type must get a hub link so nothing becomes an orphan. NOTE: this is separate from the repo's brain/ folder, which holds only the 25 structural notes that build_brain copies into Project/."
     }
   ]
 }

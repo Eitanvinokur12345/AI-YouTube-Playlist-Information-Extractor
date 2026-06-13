@@ -46,6 +46,15 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Step 0 - Supadata (UNATTENDED, PC-free; fetches on THEIR infra, AI-fallback for no-caption)
+        # The only cloud path that actually returns transcripts: Supadata fetches the caption (and
+        # AI-transcribes audio when there's none) on their own infra, so YouTube's datacenter-IP
+        # block doesn't apply. Stdlib only, no pip. Graceful-skip if SUPADATA_API_KEY is absent.
+        # Free tier ~100/month -> keep --limit tiny so it lasts (mainly to auto-cover NEW videos).
+        env:
+          SUPADATA_API_KEY: ${{ secrets.SUPADATA_API_KEY }}
+        run: python -m src.supadata_fetch --limit 3 || true
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip

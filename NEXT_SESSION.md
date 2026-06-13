@@ -12,6 +12,8 @@
 - The free lane now **writes SKILL.md packages** (`skills/<slug>/`, `other-skills/<tool>/<slug>/`).
 - **Obsidian brain** generated at `C:\Users\eitan\OneDrive\Documents\Excavatortron obsidian brain\Excavatortorn` (~573 notes, verified **0 orphans** — every note links to a category/tool/Connectors hub → Home → project notes). Regenerate with `python -m src.build_brain "<vault path>"`. **Always keep the graph fully connected (no orphan nodes); if you add a note type, give it a hub link.**
 - Secrets set in GitHub: `YOUTUBE_API_KEY`, `CLAUDE_CODE_OAUTH_TOKEN_REAL` (Pro), `EXTERNAL_REVIEW_API_KEY` (Gemini), `GH_MODELS_TOKEN` (works). Optional/unset: `CEREBRAS_API_KEY` (403 — owner must re-check), `OPENROUTER_API_KEY`, `GROQ_API_KEY`.
+- **Single-tab guarantee** (`src/cross_tab_check.py`): a name/slug must live in exactly ONE tab. Matches on **slug** (not display name) so it catches mismatched names; keeps the genuine skill, removes the duplicate tool (reversible backup in `data/_removed_cross_tab.json`); frozen/starred never touched. Runs every `bulk_analyze` cycle → self-heals. Audit in `data/cross_tab_conflicts.json`.
+- **Live knowledge graph** in the dashboard's **Dev Construction** tab: `src/build_graph.py` → `data/brain_graph.json` (force-directed canvas graph, pan/zoom/drag/hover/click-to-open), regenerated each `bulk_analyze` cycle. It mirrors the Obsidian vault's links (the desktop Obsidian graph remains the full-detail view).
 
 ## PHASE 1 — GET THE OUTPUT OUT (this is ~90% of the value; do it FIRST)
 The whole system is starved: only ~95 of 1,257 videos (7.5%) have a real transcript, and you

@@ -1,3 +1,33 @@
+# Excavatortron — Next-Session Handoff (as of 2026-06-14)
+
+> **SESSION 2026-06-14 — big expansion shipped (owner directive). Done + pushed:**
+> - **Security review + hardening**: repo is PUBLIC; `claude.yml` now requires a trusted
+>   `author_association` (defense-in-depth). Cloud has zero PC access; secrets only in Actions;
+>   3rd-party data flows are public-only. Added a recurring security check to the self-improve loop
+>   (`IMPROVE.md` Module 12 + `REVIEW.md` `security_and_privacy` dimension + config).
+> - **NEW Effectiveness tab + `src/effectiveness.py`**: scores every retrieval/analysis lane
+>   (quality/quantity/form/time/tokens/ease_external/ease_project/ease_user + rigidity) →
+>   `data/effectiveness.json`, recomputed each cycle; self-improve targets the weakest lanes
+>   (`IMPROVE.md` Module 10). Recurring weak dim = **ease_external** → north-star task: build a
+>   machine-readable hub index/API for external systems (NOT built yet — top queued item).
+> - **Self-improve priorities encoded** (`config.self_improvement`): north_star (hub goal),
+>   priorities_top3 (effectiveness, professional **design top-3**, use-info-to-improve-skills),
+>   + Modules 10–13 in `IMPROVE.md`.
+> - **Dashboard**: per-tab "• Updates:" cadence line; Quick-read now really summarizes (first
+>   sentence/~24 words, not just CSS clamp); sw cache v12. (Browser preview harness here is
+>   sandboxed away from the repo — verified via node syntax + functional tests, not a live browser.)
+> - **Brain granularity**: tools now cluster by **Vendor** + every Category/Tool/Vendor hub LISTS
+>   its members, so specific tools are reachable from the centre (`src/build_brain.py`).
+> - **Dev tab**: +3 precise technical sections (transcript reality, effectiveness internals,
+>   security model). It's still a STATIC `data/dev_construction.json` — an **auto-generator is queued**.
+> - Move-off-PC: decided — the repo is 33 MB & already cloud; **keep the tiny local clone** for
+>   session draining. His PC can't stay on, so bulk transcript recovery = drain during sessions.
+>
+> **QUEUED (next sessions):** (1) build the public **hub index/API** (ease_external, north star);
+> (2) a **dev-doc auto-generator** (always-current technical doc from real code/crons/schemas);
+> (3) the **exhaustive every-file review** the owner asked for; (4) first real pass of self-improve
+> Modules 10–13 runs on the weekly improve. **Owner TODO unchanged:** add the 4 free secrets.
+
 # Excavatortron — Next-Session Handoff (as of 2026-06-13)
 
 > **⚠ SESSION 2026-06-13 — verified reality via `gh` Actions logs (READ THIS FIRST):**

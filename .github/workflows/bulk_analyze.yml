@@ -53,6 +53,10 @@ jobs:
         if: always()
         run: python -m src.health || true
 
+      - name: Effectiveness scoreboard (per-lane quality/quantity/.../access) -> data/effectiveness.json
+        if: always()
+        run: python -m src.effectiveness || true
+
       - name: Commit results
         if: always()
         env:

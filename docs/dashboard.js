@@ -72,6 +72,53 @@ const esc = (s) => String(s ?? "").replace(/[&<>"]/g, c =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const empty = (msg) => `<p class="empty">${esc(msg)}</p>`;
 const yt = (id) => `https://www.youtube.com/watch?v=${encodeURIComponent(id || "")}`;
+
+// ── Per-tab "how long until this updates" line (one bullet, lists every update type) ──
+// Derived from the real workflow crons so it's accurate; shown at the top of each tab.
+const TAB_CADENCE = {
+  skills:     "new items within ~3h of a recovered transcript (free analysis lane, every 3h) · deep re-curation weekly (Sat night, Israel)",
+  tools:      "new items within ~3h (free analysis lane, every 3h) · ranking &amp; de-duplication re-curated weekly (Sat night)",
+  models:     "new items within ~3h (free analysis lane, every 3h) · re-ranked weekly (Sat night)",
+  comingsoon: "refreshes with the Tool Rating tab — within ~3h of a new transcript",
+  prompts:    "new prompts within ~3h (free analysis lane, every 3h)",
+  tips:       "new tips &amp; commands within ~3h (free analysis lane, every 3h)",
+  connectors: "new connectors within ~3h (free analysis lane, every 3h)",
+  news:       "web AI news every 6h · daily / weekly / monthly digests roll up on their own cycle",
+  sources:    "new channel suggestions daily (06:00 UTC) · tool discovery Sun/Tue/Thu",
+  improvement:"weekly deep pass (Sat 20:00 UTC) · safe auto-fixes applied on the next run",
+  selfimprove:"self-check + 3-agent review weekly (Sat night) · scores &amp; findings refresh then",
+  effectiveness:"recomputed every analysis cycle (~3h) · the self-improvement system targets the weakest lanes weekly",
+  devbuild:   "regenerated on each weekly deep pass (Sat night) and on code changes",
+};
+function cadenceLine(tab) {
+  const txt = tab && !tab.startsWith("dyn:") && TAB_CADENCE[tab];
+  return txt ? `<div class="cadence-line" title="How often this tab's data updates">&#8226; <b>Updates:</b> ${txt}</div>` : "";
+}
+
+// ── Quick-read: actually CONDENSE text (first sentence / ~24 words), not just CSS-clamp it ──
+function summarizeText(t) {
+  t = (t || "").trim().replace(/\s+/g, " ");
+  if (!t) return t;
+  const end = t.search(/[.!?](\s|$)/);          // first sentence boundary
+  let s = (end > 20) ? t.slice(0, end + 1) : t;  // ignore a too-early period (e.g. "v3.")
+  const w = s.split(" ");
+  if (w.length > 24) s = w.slice(0, 24).join(" ") + "…";
+  return s;
+}
+// Shorten the pure-text description paragraph of every card (skip labelled/structured lines).
+function quickreadSummarize(on) {
+  view.querySelectorAll(".card > p").forEach(p => {
+    if (p.querySelector("b, span, a, code")) return;   // not a plain description
+    if (on) {
+      if (p.dataset.qrFull === undefined) p.dataset.qrFull = p.textContent;
+      const short = summarizeText(p.dataset.qrFull);
+      if (short && short.length < p.dataset.qrFull.length) p.textContent = short;
+    } else if (p.dataset.qrFull !== undefined) {
+      p.textContent = p.dataset.qrFull;
+      delete p.dataset.qrFull;
+    }
+  });
+}
 // Human-readable date: "Jun 3, 2026, 2:30 PM" or "?" if unparseable.
 const fmtDate = (s) => {
   if (!s || s === "?") return s || "?";
@@ -977,6 +1024,41 @@ async function renderDevConstruction() {
   if (gh) mountBrainGraph(gh);
 }
 
+// ── Tab: Effectiveness — how good & how rigid each retrieval/analysis lane is ──
+// Measured scoreboard (data/effectiveness.json) that the self-improvement system targets.
+const DIM_LABEL = { quality: "Quality", quantity: "Quantity", form: "Form", time: "Time",
+  tokens: "Tokens", ease_external: "Ext.access", ease_project: "Proj.access", ease_user: "User access" };
+async function renderEffectiveness() {
+  const d = await load("effectiveness.json");
+  if (!d || !d.lanes) {
+    view.innerHTML = `<div class="card"><h3>Extraction Effectiveness</h3>${empty(
+      "Scoreboard not generated yet — it runs every analysis cycle (~3h).")}</div>`;
+    return;
+  }
+  const dims = d.dimensions || [];
+  let html = `<div class="card"><h3>Extraction Effectiveness &amp; Rigidity</h3>
+    <p class="hint">🎯 ${esc(d.north_star || "")}</p>
+    <p class="sub">Weakest lane: <b>${esc(d.summary.weakest_lane)}</b> (${esc(d.summary.weakest_effectiveness)}/10)
+      · transcript coverage ${esc(d.summary.transcript_coverage_pct)}% · library quality ${esc(d.library_quality)}/10
+      · generated ${esc(fmtDate(d.generated_at))}</p>
+    <p class="sub">Effectiveness = weighted mean of the dimensions (higher better). Rigidity = how brittle/locked-in the lane is (lower better). The self-improvement system focuses on the lowest rows.</p></div>`;
+  html += `<div class="card"><div class="efftable-wrap"><table class="efftable">
+    <thead><tr><th>Lane</th><th title="Weighted effectiveness">Eff</th><th title="Brittleness (lower=better)">Rigid</th>` +
+    dims.map(k => `<th title="${esc(k)}">${esc(DIM_LABEL[k] || k)}</th>`).join("") + `</tr></thead><tbody>`;
+  d.lanes.forEach(L => {
+    const sev = L.effectiveness >= 8 ? "ok" : (L.effectiveness >= 6.5 ? "warn" : "bad");
+    html += `<tr class="eff-${sev}"><td><b>${esc(L.name)}</b><br><span class="sub">${esc(L.engine)} · ${esc(L.kind)}</span></td>
+      <td class="effnum">${esc(L.effectiveness)}</td><td class="effnum">${esc(L.rigidity)}</td>` +
+      dims.map(k => {
+        const v = L.metrics[k];
+        return `<td class="${(L.weak_dims || []).includes(k) ? "weak" : ""}">${esc(v)}</td>`;
+      }).join("") + `</tr>`;
+    html += `<tr class="eff-note"><td colspan="${dims.length + 3}">→ ${esc(L.improve_note)}</td></tr>`;
+  });
+  html += `</tbody></table></div></div>`;
+  view.innerHTML = html;
+}
+
 // ── tab router ───────────────────────────────────────────────────────────────
 async function show(tab) {
   state.activeTab = tab;
@@ -984,6 +1066,15 @@ async function show(tab) {
   document.querySelectorAll("nav button").forEach(b =>
     b.classList.toggle("active", b.dataset.tab === tab));
   view.innerHTML = empty("Loading…");
+  await renderTab(tab);
+  // One bulleted "Updates: …" line at the very top of the tab (lists every update type).
+  const c = cadenceLine(tab);
+  if (c) view.insertAdjacentHTML("afterbegin", c);
+  // If quick-read is on, actually condense the descriptions (not just CSS-clamp them).
+  quickreadSummarize(document.body.classList.contains("quickread"));
+}
+
+async function renderTab(tab) {
   if (tab === "skills") return renderSkills(await load("skills.json"));
   if (tab === "tools" || tab === "models")
     return renderToolRating(await load("tools.json"), await load("models.json"));
@@ -996,6 +1087,7 @@ async function show(tab) {
   if (tab === "connectors") return renderConnectors(await load("connectors.json"));
   if (tab === "sources") return renderSources();
   if (tab === "selfimprove") return renderSelfImprove();
+  if (tab === "effectiveness") return renderEffectiveness();
   if (tab && tab.startsWith("dyn:")) return renderDynamicTab(tab.slice(4));
 }
 
@@ -1030,6 +1122,7 @@ document.querySelectorAll("nav button").forEach(b =>
       document.body.classList.toggle("quickread", on);
       qrBtn.classList.toggle("active", on);
       qrBtn.setAttribute("aria-pressed", on ? "true" : "false");
+      quickreadSummarize(on);   // actually condense the visible descriptions now
     };
     applyQR(localStorage.getItem("excavatortron.quickread") === "1");
     qrBtn.addEventListener("click", () =>

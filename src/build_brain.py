@@ -105,16 +105,20 @@ def main() -> None:
         b = ["---", "tags: [connector]", "---", f"# {name}", "", (c.get("what_it_does") or "").strip(), ""]
         if c.get("works_in"):
             b.append(f"Works in: {c.get('works_in')}")
+        b.append(f"Type:: {wl('Connectors')}")        # link so a connector is never an orphan
         if c.get("url"):
             b += ["", f"[Link]({c['url']})"]
         write(vault, f"Connectors/{name}.md", "\n".join(b)); n += 1
 
     for c in sorted(cats):
         write(vault, f"Categories/{title(c)}.md",
-              f"---\ntags: [category]\n---\n# {title(c)}\n\nCategory hub — skills, tools and prompts in **{c}** link here.\n")
+              f"---\ntags: [category]\n---\n# {title(c)}\n\nCategory hub — skills, tools and prompts in **{c}** link here. Part of [[Home]].\n")
     for th in sorted(toolhubs):
         write(vault, f"Tools-hubs/{title(th)}.md",
-              f"---\ntags: [tool-hub]\n---\n# {title(th)}\n\nHub — skills that target **{th}** link here.\n")
+              f"---\ntags: [tool-hub]\n---\n# {title(th)}\n\nHub — skills that target **{th}** link here. Part of [[Home]].\n")
+    # Connectors hub (so the 42 connectors are linked, not orphans) — also ties to Home.
+    write(vault, "Categories/Connectors.md",
+          "---\ntags: [hub]\n---\n# Connectors\n\nHub — every MCP server / connector links here. Part of [[Home]].\n")
 
     # structural notes (how the project is built)
     if BRAIN.exists():
@@ -129,6 +133,7 @@ def main() -> None:
             "## Browse", "- `Skills/`, `Tools/`, `Prompts/`, `Connectors/` — the knowledge base",
             "- `Categories/`, `Tools-hubs/` — the hubs the graph clusters around",
             "- `Project/` — how Excavatortron itself is built (start at [[Excavatortron Brain]])", "",
+            "## Hubs", "- [[Connectors]]", *[f"- {wl(th)}" for th in sorted(toolhubs)], "",
             "## Categories", *[f"- {wl(c)}" for c in sorted(cats)]]
     write(vault, "Home.md", "\n".join(home))
     print(f"Brain built at: {vault}")

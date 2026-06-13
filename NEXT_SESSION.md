@@ -10,7 +10,7 @@
 - **Free analysis lane WORKS** (`bulk_analyze.yml`, `gpt-4.1-mini` via GitHub Models) — extracts clean, specific records, ZERO Claude-Pro tokens. Pool auto-skips dead engines.
 - Counts (climbing): ~171 skills, ~290 tools, 15 prompts, 42 connectors.
 - The free lane now **writes SKILL.md packages** (`skills/<slug>/`, `other-skills/<tool>/<slug>/`).
-- **Obsidian brain** generated at `C:\Users\eitan\OneDrive\Documents\Excavatortron obsidian brain\Excavatortorn` (~570 notes). Regenerate with `python -m src.build_brain "<vault path>"`.
+- **Obsidian brain** generated at `C:\Users\eitan\OneDrive\Documents\Excavatortron obsidian brain\Excavatortorn` (~573 notes, verified **0 orphans** — every note links to a category/tool/Connectors hub → Home → project notes). Regenerate with `python -m src.build_brain "<vault path>"`. **Always keep the graph fully connected (no orphan nodes); if you add a note type, give it a hub link.**
 - Secrets set in GitHub: `YOUTUBE_API_KEY`, `CLAUDE_CODE_OAUTH_TOKEN_REAL` (Pro), `EXTERNAL_REVIEW_API_KEY` (Gemini), `GH_MODELS_TOKEN` (works). Optional/unset: `CEREBRAS_API_KEY` (403 — owner must re-check), `OPENROUTER_API_KEY`, `GROQ_API_KEY`.
 
 ## The real problems to fix (in priority order)

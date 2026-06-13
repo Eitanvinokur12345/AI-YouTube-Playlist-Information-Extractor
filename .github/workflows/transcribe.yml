@@ -10,7 +10,15 @@ name: Transcribe (cloud Whisper)
 # runner (sync/fetch-runner.ps1) can still pick up the rest from your residential IP if needed.
 on:
   schedule:
-    - cron: "0 */2 * * *"      # every 2h — drive the transcript backlog down fast (free Actions)
+    # SAFETY-NET ONLY (once/day). VERIFIED 2026-06-13 via Actions logs: from GitHub's datacenter
+    # IP this produces EXACTLY 0 transcripts — YouTube hard-blocks BOTH the caption API
+    # ("backfilled 0 ... 400 no caption") AND yt-dlp audio ("whispered 0, skipped 60"). It is NOT
+    # throttling, so running it more often just wastes Actions minutes. The only working lever is
+    # the RESIDENTIAL backfill (src/backfill_transcripts.py, run from a home IP). This stays daily
+    # purely to auto-recover IF YouTube ever stops blocking the cloud IP. To make the CLOUD fetch
+    # transcripts unattended, the path is a 3rd-party transcript API with a free tier (their infra
+    # fetches the captions) — add a step here keyed off a graceful-skip secret.
+    - cron: "0 4 * * *"        # once/day, 04:00 UTC (~07:00 Israel)
   workflow_dispatch:
     inputs:
       limit:

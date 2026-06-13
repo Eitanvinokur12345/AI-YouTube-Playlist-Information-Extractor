@@ -34,6 +34,22 @@ PENDING = DATA / "_pending"
 PROCESSED = DATA / "processed"
 MAX_CHARS = 120000
 
+# Errors that mean "YouTube is throttling THIS IP" (not "this video has no caption"). The
+# residential IP works, but only at a sustainable pace — a fast burst gets the IP temporarily
+# blocked. When we see one of these we STOP the run: hammering deepens the block and would
+# falsely mark recoverable videos as caption-less. The scheduler just retries next run.
+_BLOCK_ERRORS = ("IpBlocked", "TooManyRequests", "RequestBlocked",
+                 "YouTubeRequestFailed", "ReceivedErrorResponse")
+
+
+class RateLimited(Exception):
+    pass
+
+
+def _raise_if_block(exc: Exception) -> None:
+    if type(exc).__name__ in _BLOCK_ERRORS:
+        raise RateLimited(type(exc).__name__)
+
 
 def _text(fetched) -> str:
     parts = []
@@ -93,24 +109,55 @@ def get_transcript(video_id: str, languages: list[str]) -> tuple[str, str, bool,
                     if raw.strip():
                         is_gen = bool(getattr(t, "is_generated", finder.startswith("find_generated")))
                         return raw[:MAX_CHARS], lang, is_gen, _end_seconds(fetched)
-                except Exception:
-                    pass
+                except Exception as e:
+                    _raise_if_block(e)
+        return None
+
+    def _translate(tl):
+        # No en/he track, but a foreign AUTO-caption exists -> translate it to English.
+        # YouTube auto-captions span the whole video, so a translated one is full-coverage too.
+        # This recovers the foreign-only videos (Telugu/Indonesian/Hindi/Russian/...) that the
+        # cloud counted as "no caption". English is the owner's required output language.
+        for t in tl:
+            try:
+                if not getattr(t, "is_translatable", False):
+                    continue
+                codes = []
+                for x in (getattr(t, "translation_languages", []) or []):
+                    codes.append(x.get("language_code", "") if isinstance(x, dict)
+                                 else getattr(x, "language_code", ""))
+                if not any(str(c).startswith("en") for c in codes):
+                    continue
+                fetched = t.translate("en").fetch()
+                raw = _text(fetched)
+                if raw.strip():
+                    return raw[:MAX_CHARS], f"en<-{t.language_code}", True, _end_seconds(fetched)
+            except Exception as e:
+                _raise_if_block(e)
+                continue
         return None
 
     if not hasattr(YouTubeTranscriptApi, "list_transcripts"):  # 1.x instance API
         api = YouTubeTranscriptApi()
         try:
-            r = _try(api.list(video_id))
+            tl = api.list(video_id)        # one network call, reused for native + translation
+        except Exception as e:
+            _raise_if_block(e)
+            tl = None
+        if tl is not None:
+            r = _try(tl)                   # native en/he (generated first, then manual)
             if r:
                 return r
-        except Exception:
-            pass
-        try:  # direct fetch (auto-translated tracks the finders miss) — treat as full-video
+            r = _translate(tl)             # foreign auto-caption -> English
+            if r:
+                return r
+        try:  # last resort: direct fetch (auto-translated tracks the finders miss)
             fetched = api.fetch(video_id, languages=languages)
             raw = _text(fetched)
             if raw.strip():
                 return raw[:MAX_CHARS], (languages[0] if languages else ""), True, _end_seconds(fetched)
-        except Exception:
+        except Exception as e:
+            _raise_if_block(e)
             return "", "", False, 0.0
         return "", "", False, 0.0
 
@@ -127,8 +174,9 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=120, help="max videos this run (0 = all)")
     ap.add_argument("--langs", default="en,he")
-    ap.add_argument("--sleep", type=float, default=1.0,
-                    help="seconds between videos; raise if YouTube rate-limits (fails spike after a burst)")
+    ap.add_argument("--sleep", type=float, default=1.5,
+                    help="seconds between videos; a fast burst gets the IP temporarily blocked, so "
+                         "keep this >=1.0 for sustained runs (the run auto-stops on a block anyway)")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
     langs = [x.strip() for x in args.langs.split(",") if x.strip()]
@@ -156,7 +204,13 @@ def main() -> None:
     for r in todo:
         vid = r["video_id"]
         time.sleep(args.sleep)
-        txt, lang, is_complete_caption, end_sec = get_transcript(vid, langs)
+        try:
+            txt, lang, is_complete_caption, end_sec = get_transcript(vid, langs)
+        except RateLimited as e:
+            print(f"\n[!] YouTube is rate-limiting this IP ({e}) after {ok+fail+incomplete} videos. "
+                  f"Stopping this run so the block doesn't deepen; the rest stay pending and retry "
+                  f"next run. Raise --sleep or run smaller batches if this happens early.")
+            break
         if not txt:
             fail += 1
             continue

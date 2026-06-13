@@ -10,7 +10,7 @@ name: Transcribe (cloud Whisper)
 # runner (sync/fetch-runner.ps1) can still pick up the rest from your residential IP if needed.
 on:
   schedule:
-    - cron: "0 */4 * * *"      # every 4h, a small batch
+    - cron: "0 */2 * * *"      # every 2h — drive the transcript backlog down fast (free Actions)
   workflow_dispatch:
     inputs:
       limit:
@@ -43,14 +43,14 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install faster-whisper yt-dlp youtube-transcript-api
 
-      - name: Step 1 - Caption backfill (fast, text-only, works from cloud IPs for most videos)
+      - name: Step 1 - Caption backfill (fast, text-only, works from cloud IPs for many videos)
         run: |
-          python -m src.backfill_transcripts --limit 200 --sleep 0.5
+          python -m src.backfill_transcripts --limit 400 --sleep 0.4
 
       - name: Step 2 - Whisper for remaining caption-less videos (CPU ASR, gaps mode)
         run: |
           python -m src.transcribe_local \
-            --limit "${{ github.event.inputs.limit || '30' }}" \
+            --limit "${{ github.event.inputs.limit || '60' }}" \
             --mode gaps --model tiny --cpu-threads 2
 
       - name: Commit transcripts

@@ -62,6 +62,40 @@ def slugify(s: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", (s or "").lower()).strip("-") or "item"
 
 
+def write_skill_md(s: dict) -> None:
+    """Write a SKILL.md package for a useful skill (quality>=5). Claude skills go to
+    skills/<slug>/; any other tool gets its OWN other-skills/<tool>/<slug>/ folder (-> syncs to
+    '<tool> skills of eitan' on the Desktop). This is what fills the skills folder."""
+    if (s.get("quality_score") or 0) < 5:
+        return
+    slug = s.get("slug") or slugify(s.get("skill_name", ""))
+    tool = (s.get("target_tool") or "claude").strip().lower()
+    folder = (ROOT / "skills" / slug) if tool in ("", "claude") else (ROOT / "other-skills" / slugify(tool) / slug)
+    md = folder / "SKILL.md"
+    if md.exists():
+        return
+    desc = (s.get("use_case") or s.get("description") or "").replace('"', "'").replace("\n", " ")[:200]
+    out = ["---", f"name: {slug}", f'description: "{desc}"', "---", "",
+           f"# {s.get('skill_name', slug)}", "", "## Overview", (s.get("description") or "").strip(), ""]
+    if s.get("use_case"):
+        out += [f"**Use case:** {s['use_case'].strip()}", ""]
+    tips = s.get("tips") or []
+    if tips:
+        out += ["## Key steps"] + [f"{i}. {str(t).strip()}" for i, t in enumerate(tips, 1)] + [""]
+    cmds = s.get("slash_commands") or []
+    if cmds:
+        out += ["## Slash commands"] + [f"- `{c}`" for c in cmds] + [""]
+    out += ["## Details",
+            f"- **Category:** {s.get('category', 'other')}",
+            f"- **Tool:** {s.get('target_tool', 'claude')}  ·  **Quality:** {s.get('quality_score', '?')}/10",
+            "", "## Source", f"Extracted from: {s.get('source_url', '')}", ""]
+    try:
+        folder.mkdir(parents=True, exist_ok=True)
+        md.write_text("\n".join(out), encoding="utf-8")
+    except OSError:
+        pass
+
+
 def norm(s: str) -> str:
     # alphanumeric-only dedup key so naming variants collapse: "Deep Seek" / "Deepseek" /
     # "deep-seek" -> "deepseek"; "GPT 5.5" / "GPT-5.5" -> "gpt55". Prevents cross-engine dupes.
@@ -165,6 +199,7 @@ def merge_skills(store: dict, items: list, vid: str) -> int:
         if rec.get("category") not in CATEGORIES:
             rec["category"] = "other"
         arr.append(rec); by[key] = rec; added += 1
+        write_skill_md(rec)              # create the SKILL.md package + per-tool folder
     return added
 
 
@@ -275,6 +310,16 @@ def main() -> int:
     print(f"bulk-analyzing {len(todo)} pending videos with {model} (free)...")
 
     skills = load(DATA / "skills.json", {"skills": []})
+    # One-time backfill: ensure every existing high-quality skill has a SKILL.md package folder
+    # (earlier free-lane runs added to skills.json without writing the package). Idempotent.
+    md_back = 0
+    for s in skills.get("skills", []):
+        before = (ROOT / "skills" / (s.get("slug") or "")).exists()
+        write_skill_md(s)
+        if not before and (s.get("quality_score") or 0) >= 5:
+            md_back += 1
+    if md_back:
+        print(f"backfilled {md_back} missing SKILL.md packages.")
     tools = load(DATA / "tools.json", {"tools": []})
     prompts = load(DATA / "prompts.json", {"prompts": []})
     connectors = load(DATA / "connectors.json", {"connectors": []})

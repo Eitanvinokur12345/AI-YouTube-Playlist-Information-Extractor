@@ -51,7 +51,7 @@ jobs:
           git config user.name "skills-tracker-bot"
           git config user.email "actions@users.noreply.github.com"
           git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor.git"
-          git add data 2>/dev/null || true
+          git add data skills other-skills 2>/dev/null || true
           git commit -m "bulk-analyze (free pool): $(date -u +%Y-%m-%dT%H:%MZ)" \
             || echo "nothing to commit"
           git pull --rebase --autostash origin main || true

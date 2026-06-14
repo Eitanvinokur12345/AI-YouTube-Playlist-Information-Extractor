@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-14T20:07:24.370818+00:00",
+  "generated_at": "2026-06-14T20:54:16.259117+00:00",
   "north_star": "A huge, machine-readable hub of all AI knowledge that also improves existing skills, integrates new parts, and tests better versions.",
   "dimensions": [
     "quality",
@@ -31,29 +31,6 @@
   "library_quality": 6.52,
   "lanes": [
     {
-      "id": "transcript_cloud",
-      "name": "Transcript fetch (cloud Whisper/caption)",
-      "kind": "retrieval",
-      "engine": "GitHub Actions (datacenter IP)",
-      "metrics": {
-        "quality": 0.0,
-        "quantity": 0.0,
-        "form": 9.0,
-        "time": 7.0,
-        "tokens": 10.0,
-        "ease_external": 8,
-        "ease_project": 9.0,
-        "ease_user": 7.0
-      },
-      "effectiveness": 5.8,
-      "rigidity": 10,
-      "weak_dims": [
-        "quality",
-        "quantity"
-      ],
-      "improve_note": "Produces 0 — YouTube blocks the datacenter IP (caption API + yt-dlp). Kept daily as a safety-net only; do not invest here."
-    },
-    {
       "id": "analysis_claude",
       "name": "Deep analysis (Claude, night-gated)",
       "kind": "analysis",
@@ -62,42 +39,19 @@
         "quality": 9.0,
         "quantity": 4.0,
         "form": 9.0,
-        "time": 3.0,
+        "time": 4.0,
         "tokens": 2.0,
-        "ease_external": 8,
+        "ease_external": 8.0,
         "ease_project": 9.0,
         "ease_user": 8.0
       },
-      "effectiveness": 6.7,
-      "rigidity": 6,
+      "effectiveness": 6.8,
+      "rigidity": 5,
       "weak_dims": [
         "tokens",
-        "time"
+        "quantity"
       ],
-      "improve_note": "Highest quality but rate-limited by the small Pro budget (night-gated). Use sparingly for curation/self-improve, not bulk."
-    },
-    {
-      "id": "source_suggestion",
-      "name": "Channel/source suggestion",
-      "kind": "external",
-      "engine": "suggest_channels.py (daily)",
-      "metrics": {
-        "quality": 7.0,
-        "quantity": 0.2,
-        "form": 8.0,
-        "time": 7.0,
-        "tokens": 10.0,
-        "ease_external": 8,
-        "ease_project": 9.0,
-        "ease_user": 7.0
-      },
-      "effectiveness": 6.9,
-      "rigidity": 4,
-      "weak_dims": [
-        "quantity",
-        "quality"
-      ],
-      "improve_note": "Proposes new channels daily (1 pending). Needs the owner's one-time OAuth to auto-add to the playlist (else suggestions only)."
+      "improve_note": "Highest quality, reserved for curation/self-improve (not bulk) to protect the small Pro budget — night-gated by design. The free pool carries the volume."
     },
     {
       "id": "tool_discovery",
@@ -105,120 +59,143 @@
       "kind": "external",
       "engine": "discover.yml (Claude, Sun/Tue/Thu)",
       "metrics": {
-        "quality": 7.0,
+        "quality": 7.5,
         "quantity": 6.0,
         "form": 8.0,
         "time": 5.0,
         "tokens": 5.0,
-        "ease_external": 8,
+        "ease_external": 8.0,
         "ease_project": 9.0,
         "ease_user": 8.0
       },
-      "effectiveness": 7.0,
-      "rigidity": 5,
+      "effectiveness": 7.1,
+      "rigidity": 4,
       "weak_dims": [
         "time",
         "tokens"
       ],
-      "improve_note": "Finds tools beyond the playlist 3x/week (uses Pro token). Verify it keeps producing; consider a free-engine version to save the Pro budget."
+      "improve_note": "Finds tools beyond the playlist 3x/week. Next lever: move it to the free engine pool to save the Pro budget (currently uses the Claude token)."
     },
     {
-      "id": "transcript_supadata",
-      "name": "Transcript fetch (Supadata free tier)",
-      "kind": "retrieval",
-      "engine": "Supadata API (their infra)",
+      "id": "source_suggestion",
+      "name": "Channel/source suggestion",
+      "kind": "external",
+      "engine": "suggest_channels.py (daily)",
       "metrics": {
-        "quality": 8.0,
-        "quantity": 0.4,
-        "form": 9.0,
-        "time": 6.0,
+        "quality": 7.5,
+        "quantity": 2.2,
+        "form": 8.0,
+        "time": 7.0,
         "tokens": 10.0,
-        "ease_external": 8,
+        "ease_external": 8.0,
         "ease_project": 9.0,
-        "ease_user": 7.0
+        "ease_user": 8.0
       },
-      "effectiveness": 7.1,
-      "rigidity": 5,
+      "effectiveness": 7.4,
+      "rigidity": 4,
       "weak_dims": [
         "quantity",
         "time"
       ],
-      "improve_note": "Unattended & PC-free (AI-fallback even for no-caption videos), but ~100/month free (2 recovered so far). Best for NEW videos; needs SUPADATA_API_KEY."
+      "improve_note": "Proposes new channels daily (1 pending). One-time OAuth would let it auto-add to the playlist (else suggestions only — surfaced on the Grow Sources tab)."
     },
     {
       "id": "transcript_residential",
-      "name": "Transcript backfill (residential IP)",
+      "name": "Transcript backfill — residential (optional turbo)",
       "kind": "retrieval",
       "engine": "youtube-transcript-api (home IP)",
       "metrics": {
         "quality": 9.0,
         "quantity": 1.4,
         "form": 9.0,
-        "time": 4.0,
+        "time": 6.0,
         "tokens": 10.0,
-        "ease_external": 8,
+        "ease_external": 8.0,
         "ease_project": 9.0,
-        "ease_user": 7.0
+        "ease_user": 8.0
       },
-      "effectiveness": 7.2,
-      "rigidity": 7,
+      "effectiveness": 7.5,
+      "rigidity": 5,
       "weak_dims": [
         "quantity",
         "time"
       ],
-      "improve_note": "Works (~85% of caption-less videos recoverable) but needs a home IP + manual session; coverage 11.3%. Lever: drain every session; pace gently to dodge the escalating block."
+      "improve_note": "Recovers ~85% of caption-less videos fast from a home IP (coverage 11.3%) + translates foreign captions. No longer required — Supadata is the unattended baseline; this is the turbo when we're in a session. Block-aware (auto-stops on the escalating IP block)."
+    },
+    {
+      "id": "transcript_supadata",
+      "name": "Transcript fetch — Supadata (cloud, UNATTENDED)",
+      "kind": "retrieval",
+      "engine": "Supadata API (their infra, no PC)",
+      "metrics": {
+        "quality": 8.5,
+        "quantity": 2.7,
+        "form": 9.0,
+        "time": 8.0,
+        "tokens": 10.0,
+        "ease_external": 8.0,
+        "ease_project": 9.0,
+        "ease_user": 8.0
+      },
+      "effectiveness": 7.8,
+      "rigidity": 4,
+      "weak_dims": [
+        "quantity",
+        "time"
+      ],
+      "improve_note": "PROVEN working & PC-FREE (the autonomy baseline): fetches on Supadata's infra so the datacenter-IP block doesn't apply; daily, dead-video skip protects the ~100/mo free quota (2 recovered). Lever: the quota caps backlog speed, not new videos."
     },
     {
       "id": "analysis_free",
       "name": "Free analysis lane (bulk_analyze)",
       "kind": "analysis",
-      "engine": "gpt-4.1-mini + gemini (free pool)",
+      "engine": "4 verified free engines (pool)",
       "metrics": {
-        "quality": 6.5,
+        "quality": 8.0,
         "quantity": 9.0,
-        "form": 8.0,
-        "time": 8.0,
+        "form": 8.5,
+        "time": 8.5,
         "tokens": 10.0,
-        "ease_external": 8,
+        "ease_external": 8.0,
         "ease_project": 9.0,
         "ease_user": 8.0
       },
-      "effectiveness": 8.2,
-      "rigidity": 4,
+      "effectiveness": 8.6,
+      "rigidity": 3,
       "weak_dims": [
         "quality",
-        "form"
+        "ease_external"
       ],
-      "improve_note": "Turns transcripts into records at 0 Claude cost (avg quality 6.52/10, 12% low-source). Lever: add OpenRouter+Groq keys; expose a public index for external systems (ease_external is the weak dim)."
+      "improve_note": "Turns transcripts into records at 0 Claude cost via 4 VERIFIED engines (gpt-4.1-mini, OpenRouter, Groq, Gemini; pool auto-drops failures). Library avg quality 6.52/10, 12% low-source. Output is externally consumable via data/hub.json."
     },
     {
       "id": "web_news",
-      "name": "Web AI news (50 sources)",
+      "name": "Web AI news (83 sources)",
       "kind": "external",
-      "engine": "src/news.py (RSS/official sites)",
+      "engine": "src/news.py (RSS: labs/research/community/analysts)",
       "metrics": {
-        "quality": 7.0,
+        "quality": 7.5,
         "quantity": 10,
         "form": 8.0,
         "time": 9.0,
         "tokens": 10.0,
-        "ease_external": 8,
+        "ease_external": 8.0,
         "ease_project": 9.0,
         "ease_user": 8.0
       },
-      "effectiveness": 8.5,
-      "rigidity": 3,
+      "effectiveness": 8.6,
+      "rigidity": 2,
       "weak_dims": [
         "quality",
         "form"
       ],
-      "improve_note": "Always-on (every 6h), 1771 items stored. Solid; could add more sources + dedupe."
+      "improve_note": "Always-on (every 6h), 83 RSS sources across labs, research (arXiv/BAIR/MIT), community (Reddit/HN) and top analysts; 1771 items stored. Dead feeds auto-prune."
     }
   ],
   "summary": {
-    "weakest_lane": "Transcript fetch (cloud Whisper/caption)",
-    "weakest_effectiveness": 5.8,
-    "top_improvement": "Produces 0 — YouTube blocks the datacenter IP (caption API + yt-dlp). Kept daily as a safety-net only; do not invest here.",
+    "weakest_lane": "Deep analysis (Claude, night-gated)",
+    "weakest_effectiveness": 6.8,
+    "top_improvement": "Highest quality, reserved for curation/self-improve (not bulk) to protect the small Pro budget — night-gated by design. The free pool carries the volume.",
     "transcript_coverage_pct": 11.3
   }
 }

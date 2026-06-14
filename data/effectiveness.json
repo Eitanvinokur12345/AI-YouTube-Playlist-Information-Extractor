@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-13T22:40:45.546455+00:00",
+  "generated_at": "2026-06-14T05:17:07.129919+00:00",
   "north_star": "A huge, machine-readable hub of all AI knowledge that also improves existing skills, integrates new parts, and tests better versions.",
   "dimensions": [
     "quality",
@@ -22,13 +22,13 @@
     "ease_user": 1.1
   },
   "transcript_sources": {
-    "transcript": 135,
+    "transcript": 145,
     "whisper": 0,
     "supadata": 0,
-    "description_only": 1198,
+    "description_only": 1188,
     "total": 1333
   },
-  "library_quality": 6.49,
+  "library_quality": 6.4,
   "lanes": [
     {
       "id": "transcript_cloud",
@@ -166,7 +166,7 @@
         "quantity",
         "time"
       ],
-      "improve_note": "Works (~85% of caption-less videos recoverable) but needs a home IP + manual session; coverage 11.5%. Lever: drain every session; pace gently to dodge the escalating block."
+      "improve_note": "Works (~85% of caption-less videos recoverable) but needs a home IP + manual session; coverage 11.2%. Lever: drain every session; pace gently to dodge the escalating block."
     },
     {
       "id": "analysis_free",
@@ -174,7 +174,7 @@
       "kind": "analysis",
       "engine": "gpt-4.1-mini + gemini (free pool)",
       "metrics": {
-        "quality": 6.5,
+        "quality": 6.4,
         "quantity": 9.0,
         "form": 8.0,
         "time": 8.0,
@@ -183,13 +183,13 @@
         "ease_project": 9.0,
         "ease_user": 8.0
       },
-      "effectiveness": 8.0,
+      "effectiveness": 7.9,
       "rigidity": 4,
       "weak_dims": [
         "ease_external",
         "quality"
       ],
-      "improve_note": "Turns transcripts into records at 0 Claude cost (avg quality 6.49/10, 10% low-source). Lever: add OpenRouter+Groq keys; expose a public index for external systems (ease_external is the weak dim)."
+      "improve_note": "Turns transcripts into records at 0 Claude cost (avg quality 6.4/10, 13% low-source). Lever: add OpenRouter+Groq keys; expose a public index for external systems (ease_external is the weak dim)."
     },
     {
       "id": "web_news",
@@ -212,13 +212,13 @@
         "ease_external",
         "quality"
       ],
-      "improve_note": "Always-on (every 6h), 1709 items stored. Solid; could add more sources + dedupe."
+      "improve_note": "Always-on (every 6h), 1728 items stored. Solid; could add more sources + dedupe."
     }
   ],
   "summary": {
     "weakest_lane": "Transcript fetch (cloud Whisper/caption)",
     "weakest_effectiveness": 5.7,
     "top_improvement": "Produces 0 — YouTube blocks the datacenter IP (caption API + yt-dlp). Kept daily as a safety-net only; do not invest here.",
-    "transcript_coverage_pct": 11.5
+    "transcript_coverage_pct": 11.2
   }
 }

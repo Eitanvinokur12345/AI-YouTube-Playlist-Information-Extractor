@@ -1686,11 +1686,11 @@
     },
     {
       "slug": "claude-design-motion",
-      "skill_name": "Claude Design (Motion Graphics)",
+      "skill_name": "Claude Design Motion Graphics Pipeline",
       "category": "design",
-      "description": "Claude's prototype 'Design' mode can generate motion-graphic animations directly in chat, though it can't yet export MP4. Paired with the Viralo connector for real-time short-form trend data, it becomes a content-creation pipeline for social video.",
-      "use_case": "Create motion-graphic content and ride current short-form trends.",
-      "output": "Motion-graphic animations and trend-informed content ideas.",
+      "description": "A full pipeline for generating branded motion-graphic animations and map animations using Claude Design's prototype mode: create a brand style guide PDF, attach screenshots of desired animation styles, and paste your video script to get a 5–10 minute render. Since Claude Design cannot export MP4 yet, screen-record the animation playing in a new tab.",
+      "use_case": "Create branded motion graphics and map animations for social/video content without editing software.",
+      "output": "Motion-graphic animations (HTML/prototype), map animations, and static visual slides matched to a video script.",
       "quality_score": 7,
       "model_version": null,
       "company": "Anthropic",
@@ -1709,13 +1709,106 @@
       "source_url": "https://www.youtube.com/watch?v=60Rt5s7sh3o",
       "source_video_id": "60Rt5s7sh3o",
       "tips": [
-        "Use Claude Design's prototype mode for motion graphics (no MP4 export yet).",
-        "Add the Viralo connector to pull live short-form trends.",
-        "Screen-record output until native video export ships."
+        "First create a brand style guide PDF in Claude (include colors, fonts, niche, and vibe) — reuse it on every Claude Design prompt.",
+        "In Claude Design, select 'prototype' mode, name the project, then drop the full prompt + brand guide PDF + style screenshots into the chat.",
+        "Motion graphics render in 5–10 minutes; map animations take longer because of higher complexity and self-correction iterations.",
+        "No MP4 export yet — open the animation in a new tab, hit play, and screen-record it.",
+        "For static visuals, skip Claude Design entirely — drop the script segment + brand PDF into regular Claude and get a polished visual in minutes."
       ],
       "slash_commands": [],
-      "general_tips": [],
-      "relevance": "Points to Claude moving into native content and motion creation.",
+      "general_tips": [
+        "Attach reference screenshots of the animation style you want alongside the prompt to dramatically improve output quality.",
+        "Use the same brand style guide PDF across every content-creation prompt to maintain visual consistency."
+      ],
+      "relevance": "Enables solo content creators to produce professional motion graphics and map animations without a video editor or designer.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "60Rt5s7sh3o"
+      ],
+      "video_quality_score": 7,
+      "low_quality_source": false
+    },
+    {
+      "slug": "claude-brand-style-guide-content",
+      "skill_name": "Claude Brand Style Guide for Consistent Content",
+      "category": "design",
+      "description": "Use Claude to generate a reusable brand style guide PDF by providing your colors, fonts, niche, and overall vibe. This PDF then acts as a persistent context file attached to every subsequent Claude Design prompt, ensuring all generated animations and visuals stay on-brand.",
+      "use_case": "Bootstrap a personal or client brand style guide and reuse it across all AI-generated content outputs.",
+      "output": "A brand style guide document (PDF) encoding visual identity for use in follow-on Claude Design prompts.",
+      "quality_score": 7,
+      "model_version": null,
+      "company": "Anthropic",
+      "country": "USA",
+      "open_source": false,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": false,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=60Rt5s7sh3o",
+      "source_video_id": "60Rt5s7sh3o",
+      "tips": [
+        "Fill in brackets in the brand guide prompt with your colors, fonts, niche, and vibe — Claude generates the full PDF.",
+        "Attach the brand guide PDF to every Claude Design prompt so animations are visually consistent across all content."
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "Treat the brand style guide as a context file: create it once, then attach it to every AI content generation request."
+      ],
+      "relevance": "Solves the #1 problem with AI-generated content (inconsistency) by giving Claude a reusable brand identity reference.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "60Rt5s7sh3o"
+      ],
+      "video_quality_score": 7,
+      "low_quality_source": false
+    },
+    {
+      "slug": "ai-persona-image-slideshow",
+      "skill_name": "AI Persona Image Pipeline for Slideshow Posts",
+      "category": "social",
+      "description": "A pipeline for creating realistic persona-based slideshow posts using AI-generated images: gather 10–20 aesthetic reference images, drop them into Claude to get ready-to-use image generation prompts, then generate in GPT Image tool. For face-consistent images, include reference photos and a short description of facial features in the prompt.",
+      "use_case": "Generate persona-consistent AI image sets for Instagram/TikTok slideshow carousel posts without real photography.",
+      "output": "A set of on-brand AI-generated images (5+ usable from every batch of 20) ready to assemble into a slideshow post.",
+      "quality_score": 6,
+      "model_version": null,
+      "company": "Anthropic",
+      "country": "USA",
+      "open_source": false,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "ChatGPT",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=60Rt5s7sh3o",
+      "source_video_id": "60Rt5s7sh3o",
+      "tips": [
+        "Collect 10–20 reference images (mix of person shots and environment/aesthetic shots) before starting.",
+        "Drop all references into Claude together with the prompt — Claude outputs ready-to-use GPT Image prompts for each slide.",
+        "For images with your face: attach clear reference photos and add a short, precise description of your facial features in the prompt's face reference section.",
+        "Generate 20 images at a time — expect ~5 to be usable; keep regenerating until you have enough.",
+        "For slides without a person, drop the prompt as-is without face references."
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "Better reference images → more accurate and realistic AI face generation.",
+        "Use Claude as a prompt engineer step between your idea and the image generator to get better outputs."
+      ],
+      "relevance": "Lets solo creators build professional-looking personal-brand slideshows entirely with AI, eliminating the need for a photographer.",
       "popularity_signals": [],
       "endorsement_video_ids": [
         "60Rt5s7sh3o"

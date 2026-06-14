@@ -58,7 +58,14 @@ def fetch_transcript(video_id: str, key: str, timeout: int = 45) -> tuple[str, s
         "text": "true",
         "mode": "native",   # existing captions only = 1 credit each (88% of videos have them);
     })                       # stays inside the ~100/month free tier far longer than AI-gen.
-    req = urllib.request.Request(url, headers={"x-api-key": key, "Accept": "application/json"})
+    # Supadata's API is behind Cloudflare, which 1010-blocks urllib's default "Python-urllib"
+    # User-Agent. A normal browser UA gets through (it's not an auth issue).
+    req = urllib.request.Request(url, headers={
+        "x-api-key": key,
+        "Accept": "application/json",
+        "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                       "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"),
+    })
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             if resp.status == 202:          # async AI job queued — skip; native mode shouldn't hit this

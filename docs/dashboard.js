@@ -242,13 +242,18 @@ function renderHeader(status) {
     `Last analyze: ${fmtDate(status.last_analyze)} • ` +
     `Next run: ${fmtDate(status.next_run)}`;
 
+  // Lead with the HUB'S SCALE (what AI directories / info-center apps show first), not pipeline
+  // internals — the size of the knowledge base is the headline. Pulled from health.json.
+  const lib = (state.health || {}).library || {};
+  const vid = (state.health || {}).videos || {};
+  const nsrc = ((state.config || {}).news_sources || []).length;
   const c = [
-    ["Analyzed this run", rr.analyzed_this_run ?? 0, true],
-    ["Total analyzed (all time)", status.total_videos_analyzed ?? 0, true],
-    ["Total skills", status.total_skills ?? 0, false],
-    ["Videos seen", status.videos_seen ?? 0, false],
-    ["New found (last fetch)", rr.new_found ?? 0, false],
-    ["Pending to analyze", rr.pending_to_analyze ?? 0, false],
+    ["Skills", lib.skills ?? status.total_skills ?? 0, true],
+    ["Tools", lib.tools ?? 0, true],
+    ["Connectors", lib.connectors ?? 0, false],
+    ["Prompts", lib.prompts ?? 0, false],
+    ["News sources", nsrc || 0, false],
+    ["Videos indexed", vid.total ?? status.videos_seen ?? 0, false],
   ];
   countersEl.innerHTML = c.map(([l, n, hl]) =>
     `<div class="counter ${hl ? "hl" : ""}"><div class="n">${esc(n)}</div>
@@ -1112,10 +1117,12 @@ document.querySelectorAll("nav button").forEach(b =>
   b.addEventListener("click", () => show(b.dataset.tab)));
 
 (async () => {
-  const [status, stars, extra, config] = await Promise.all([
-    load("status.json"), load("stars.json"), load("extra_tabs.json"), loadRoot("config.json")]);
+  const [status, stars, extra, config, health] = await Promise.all([
+    load("status.json"), load("stars.json"), load("extra_tabs.json"), loadRoot("config.json"),
+    load("health.json")]);
   state.status = status;
   state.config = config;
+  state.health = health;
   state.stars = new Set(((stars && stars.starred) || []).map(e => String(e.slug || "").toLowerCase()));
   // Only show active (not dismissed) auto-created trend tabs.
   state.dynamicTabs = (((extra && extra.tabs) || []).filter(t => (t.status || "active") === "active"));

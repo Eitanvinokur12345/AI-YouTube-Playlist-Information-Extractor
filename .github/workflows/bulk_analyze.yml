@@ -61,6 +61,10 @@ jobs:
         if: always()
         run: python -m src.build_hub_index || true
 
+      - name: Dev doc — refresh technical reference (workflows/modules/schemas) from the real repo
+        if: always()
+        run: python -m src.build_dev_doc || true
+
       - name: Commit results
         if: always()
         env:

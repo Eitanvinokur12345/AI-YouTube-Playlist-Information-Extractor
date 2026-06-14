@@ -244,6 +244,62 @@
       "source": "review",
       "review_finding_id": "6a3b5d1e9c",
       "severity": "low"
+    },
+    {
+      "id": "c4d8e2f1a7",
+      "type": "engine_fix",
+      "status": "pending",
+      "detail": "Full index.json reconciliation: existing suggestion a1b3c5d7e9 only drops phantoms. NEW issue: 94 valid skills in skills.json are NOT in index.json (55% coverage). On next analyze_batch.py run these 94 slugs will be seen as 'absent' → duplicate records appended. Fix: in main() startup, after dropping phantoms, also ADD all missing valid slugs.",
+      "proposed_change": {
+        "file": "src/analyze_batch.py",
+        "action": "full_index_reconcile",
+        "description": "In main(), after loading index_data and skills_data, run both passes in one block: valid_slugs = {s['slug'] for s in skills_data['skills']}. (1) Remove phantoms: [del index_data[k] for k in list(index_data) if k not in valid_slugs]. (2) Add missing: for s in skills_data['skills']: if s['slug'] not in index_data: index_data[s['slug']] = {'score': s.get('quality_score',0), 'video_quality_score': s.get('video_quality_score'), 'starred': s.get('starred',False), 'target_tool': s.get('target_tool','claude')}. Then save_json('data/index.json', index_data)."
+      },
+      "source": "review",
+      "review_finding_id": "f1a8b3c6d9",
+      "severity": "high"
+    },
+    {
+      "id": "d7e1f3a9b2",
+      "type": "engine_fix",
+      "status": "pending",
+      "detail": "Fix total_tools and total_connectors counters in status.json (also stale, like total_skills). status shows tools=290 vs actual 312, connectors=41 vs actual 48. The same fetch.py overwrite root cause applies. Extend the fix to all three counters.",
+      "proposed_change": {
+        "file": "src/fetch.py + src/analyze_batch.py",
+        "action": "fix_all_status_counters",
+        "description": "In fetch.py status.update(): remove 'total_tools' and 'total_connectors' alongside 'total_skills'. In the analyze stage: after saving tools.json, add status['total_tools'] = len(tools_data['tools']); after saving connectors.json, add status['total_connectors'] = len(conns_data['connectors']). Write status.json after each such update."
+      },
+      "source": "review",
+      "review_finding_id": "c9f2d8b4a1",
+      "severity": "med"
+    },
+    {
+      "id": "e5f2c8a4b9",
+      "type": "ui_change",
+      "status": "pending",
+      "detail": "Professional design step: add color-coded left-border to skill and tool cards by quality score band. This costs one CSS rule per band and gives the card list immediate visual hierarchy — distinguishing a 9/10 skill from a 3/10 one at a glance, without requiring tool logos or images.",
+      "proposed_change": {
+        "file": "docs/index.html (CSS section)",
+        "action": "add_score_band_borders",
+        "description": "Add three CSS rules inside <style>: .card.score-high { box-shadow: inset 3px 0 0 #16a34a, 0 1px 4px rgba(0,0,0,.06); } .card.score-mid { box-shadow: inset 3px 0 0 #d97706, 0 1px 4px rgba(0,0,0,.06); } .card.score-low { box-shadow: inset 3px 0 0 #9ca3af, 0 1px 4px rgba(0,0,0,.06); }. In renderSkills() and renderToolRating(), add the class to each card div: const sc = s.quality_score || 0; const band = sc >= 8 ? 'score-high' : sc >= 6 ? 'score-mid' : 'score-low';."
+      },
+      "source": "review",
+      "review_finding_id": "a2c4e6f8b0",
+      "severity": "med"
+    },
+    {
+      "id": "b3a7d1f5e8",
+      "type": "engine_fix",
+      "status": "pending",
+      "detail": "Emergency: daily_news.json is now 100% empty summaries (59/59). The improve stage must prioritize back-filling daily news entries from description text before back-filling weekly or monthly. Add a daily-first pass in fill_missing_summaries.",
+      "proposed_change": {
+        "file": "src (improve stage, fill_missing_summaries module)",
+        "action": "priority_daily_news_backfill",
+        "description": "In the improve stage's fill_missing_summaries: process data/daily_news.json FIRST (before weekly and monthly), filling up to 30 empty entries from the video's description or title (load the matching data/_pending or data/processed record). Use: summary = description[:200].split('.')[0] + '.' if description else title. Set summary_quality='description' or 'title_only'. Then repeat for weekly (up to 50) and monthly (up to 100). This clears the most-visible gap first."
+      },
+      "source": "review",
+      "review_finding_id": "d4f2e1a8b5",
+      "severity": "high"
     }
   ]
 }

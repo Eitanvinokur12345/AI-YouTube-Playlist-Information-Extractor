@@ -874,18 +874,22 @@ function ensureGraphCss() {
   st.id = "graphcss";
   st.textContent = `
     .braingraph{position:relative}
-    .braincanvas{width:100%;height:560px;display:block;border-radius:10px;
-      background:rgba(2,6,23,.45);cursor:grab;touch-action:none}
-    .graphbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px;
+    .braincanvas{width:100%;height:600px;display:block;border-radius:14px;
+      background:#000;cursor:grab;touch-action:none;
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow:0 18px 50px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.05)}
+    .graphbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;
       font-size:12px;color:var(--muted,#94a3b8)}
-    .graphcount{font-weight:600}
-    .graphlegend{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-left:auto}
-    .graphlegend i{display:inline-block;width:10px;height:10px;border-radius:50%;
-      margin-right:3px;vertical-align:middle}
-    .graphsearch,.graphreset{background:rgba(2,6,23,.6);border:1px solid rgba(148,163,184,.3);
-      border-radius:6px;color:inherit;padding:3px 8px;font-size:12px}
-    .graphreset{cursor:pointer}
-    .graphhint{font-size:11px;color:var(--muted,#94a3b8);margin:6px 0 0;opacity:.8}`;
+    .graphcount{font-weight:700;letter-spacing:.01em}
+    .graphlegend{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-left:auto}
+    .graphlegend i{display:inline-block;width:9px;height:9px;border-radius:50%;
+      margin-right:4px;vertical-align:middle;box-shadow:0 0 6px currentColor}
+    .graphsearch,.graphreset{background:#0b0e17;border:1px solid rgba(255,255,255,.16);
+      border-radius:7px;color:#e5e7eb;padding:4px 9px;font-size:12px}
+    .graphsearch::placeholder{color:#64748b}
+    .graphreset{cursor:pointer;transition:border-color .15s,background .15s}
+    .graphreset:hover{border-color:rgba(255,255,255,.4);background:#11151f}
+    .graphhint{font-size:11px;color:var(--muted,#94a3b8);margin:7px 0 0;opacity:.75}`;
   document.head.appendChild(st);
 }
 async function mountBrainGraph(host) {
@@ -900,19 +904,19 @@ async function mountBrainGraph(host) {
       <input class="graphsearch" placeholder="highlight…" aria-label="highlight nodes" />
       <button class="graphreset">reset view</button>
       <span class="graphlegend">
-        <span><i style="background:${GRAPH_COLORS.skill}"></i>skill</span>
-        <span><i style="background:${GRAPH_COLORS.tool}"></i>tool</span>
-        <span><i style="background:${GRAPH_COLORS.prompt}"></i>prompt</span>
-        <span><i style="background:${GRAPH_COLORS.connector}"></i>connector</span>
-        <span><i style="background:${GRAPH_COLORS.category}"></i>category</span>
-        <span><i style="background:${GRAPH_COLORS.toolhub}"></i>tool-hub</span>
+        <span><i style="background:${GRAPH_COLORS.skill};color:${GRAPH_COLORS.skill}"></i>skill</span>
+        <span><i style="background:${GRAPH_COLORS.tool};color:${GRAPH_COLORS.tool}"></i>tool</span>
+        <span><i style="background:${GRAPH_COLORS.prompt};color:${GRAPH_COLORS.prompt}"></i>prompt</span>
+        <span><i style="background:${GRAPH_COLORS.connector};color:${GRAPH_COLORS.connector}"></i>connector</span>
+        <span><i style="background:${GRAPH_COLORS.category};color:${GRAPH_COLORS.category}"></i>category</span>
+        <span><i style="background:${GRAPH_COLORS.toolhub};color:${GRAPH_COLORS.toolhub}"></i>tool-hub</span>
       </span>
     </div>
     <canvas class="braincanvas"></canvas>
     <p class="graphhint">drag background to pan · scroll to zoom · drag a dot to move it · hover to focus · click a dot to open its source</p>`;
   const canvas = host.querySelector("canvas");
   const ctx = canvas.getContext("2d");
-  const H = 560;
+  const H = 600;
   canvas.width = canvas.clientWidth || 800;
   canvas.height = H;
   let W = canvas.width;
@@ -947,26 +951,38 @@ async function mountBrainGraph(host) {
     ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, W, H);
     ctx.setTransform(scale, 0, 0, scale, ox, oy);
     const focus = hover ? nbr[hover.id] : null;
-    ctx.lineWidth = 1 / scale;
+    const settled = !running;                          // glow only when not animating (perf-safe)
+    // edges — WHITE on black; highlighted neighbours brighten, the rest recede
     for (const l of L) {
       const on = hover && (l.s === hover || l.t === hover);
-      ctx.strokeStyle = on ? "rgba(148,163,184,.85)" : "rgba(100,116,139,.16)";
+      const fade = (hl || (hover && !on)) ? .045 : .12;
+      ctx.strokeStyle = on ? "rgba(255,255,255,.95)" : `rgba(255,255,255,${fade})`;
+      ctx.lineWidth = (on ? 1.5 : .7) / scale;
       ctx.beginPath(); ctx.moveTo(l.s.x, l.s.y); ctx.lineTo(l.t.x, l.t.y); ctx.stroke();
     }
-    ctx.font = (11 / scale) + "px system-ui";
+    ctx.font = (11 / scale) + "px ui-sans-serif, system-ui";
     for (const n of N) {
       const dim = (hover && n !== hover && !focus.has(n.id)) ||
                   (hl && !(n.label || "").toLowerCase().includes(hl));
-      ctx.globalAlpha = dim ? .16 : 1;
-      ctx.fillStyle = GRAPH_COLORS[n.group] || "#94a3b8";
+      ctx.globalAlpha = dim ? .12 : 1;
+      const col = GRAPH_COLORS[n.group] || "#94a3b8";
+      ctx.fillStyle = col;
+      // soft glow on the anchors (hubs) + the hovered node = premium "constellation" feel
+      if (settled && !dim && (isHub(n) || n === hover)) { ctx.shadowColor = col; ctx.shadowBlur = isHub(n) ? 16 : 11; }
       ctx.beginPath(); ctx.arc(n.x, n.y, rad(n), 0, 7); ctx.fill();
+      ctx.shadowBlur = 0;
       if (n === hover) { ctx.lineWidth = 2 / scale; ctx.strokeStyle = "#fff"; ctx.stroke(); }
       if (!dim && (isHub(n) || n === hover || scale > 1.6 || hl)) {
-        ctx.globalAlpha = 1; ctx.fillStyle = "#cbd5e1";
+        ctx.globalAlpha = 1; ctx.fillStyle = isHub(n) ? "#ffffff" : "#cbd5e1";
         ctx.fillText(n.label, n.x + rad(n) + 2 / scale, n.y + 3.5 / scale);
       }
     }
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha = 1; ctx.shadowBlur = 0;
+    // depth vignette (screen space) — black at the rim so the graph reads as a lit core
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    const vg = ctx.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.28, W / 2, H / 2, Math.max(W, H) * 0.72);
+    vg.addColorStop(0, "rgba(0,0,0,0)"); vg.addColorStop(1, "rgba(0,0,0,0.5)");
+    ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
   }
   function loop() {
     tick(); draw();

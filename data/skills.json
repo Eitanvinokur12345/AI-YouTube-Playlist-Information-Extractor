@@ -9071,6 +9071,119 @@
       ],
       "video_quality_score": 5,
       "low_quality_source": false
+    },
+    {
+      "skill_name": "Prompt Contract Framework",
+      "slug": "prompt-contract-framework",
+      "category": "agents",
+      "description": "A four-section agent prompt structure (Goal, Constraints, Format, Failure) that converts vague chatbot prompts into precise agent contracts the model can deliver against. The Goal states the outcome with a clear finish line, Constraints define what the agent must NOT do, Format specifies the exact shape of the deliverable, and Failure instructs what to do when stuck — preventing token-burning loops.",
+      "use_case": "Writing agent prompts that reliably execute multi-step tasks without going off-rails, wasting tokens, or producing unwanted outputs.",
+      "output": "Agent runs that complete tasks according to specification, produce deliverables in the exact format requested, and stop cleanly when stuck rather than looping.",
+      "quality_score": 8,
+      "model_version": null,
+      "company": null,
+      "country": null,
+      "open_source": false,
+      "target_tool": "other",
+      "is_claude_skill": false,
+      "compatibility": [
+        {"tool": "Claude", "up_to_version": "any"},
+        {"tool": "ChatGPT", "up_to_version": "any"},
+        {"tool": "Gemini", "up_to_version": "any"}
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=4TvH-OZhwxI",
+      "source_video_id": "4TvH-OZhwxI",
+      "tips": [
+        "Write 'Goal' as an outcome with a clear finish line, not just an action — the agent needs to know when it's done.",
+        "Always include a 'Failure' section: tell the agent whether to stop and ask, stop and report, or make a best-guess and flag it — otherwise it loops and burns tokens.",
+        "The 'Constraints' section grows over time — every mistake an agent makes becomes a new constraint in your next prompt ('your constraint list is your scar tissue')."
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "A chatbot prompt is a description of what you want; an agent prompt is a contract the model must deliver against — treat them differently.",
+        "If you cannot describe the output format in one sentence, you don't know what you want yet — clarify before hitting enter."
+      ],
+      "relevance": "The single most impactful pattern for anyone deploying AI agents — prevents the most common failure mode of agents going off-rails and burning expensive tokens.",
+      "popularity_signals": [],
+      "endorsement_video_ids": ["4TvH-OZhwxI"],
+      "video_quality_score": 8,
+      "low_quality_source": false
+    },
+    {
+      "skill_name": "Agent Memory File Pattern",
+      "slug": "agent-memory-file-pattern",
+      "category": "agents",
+      "description": "A technique of maintaining a plain-text memory file (claude.md, agents.md, or equivalent) in the root of a project that the agent reads at the start of every session, giving it persistent rules, preferences, and learned behaviors across sessions. The file can be made self-modifying by instructing the agent to append new rules whenever it makes a corrected mistake, accumulating 'scar tissue' automatically.",
+      "use_case": "Preventing agents from repeating the same mistakes across sessions and carrying your preferences, project context, and learned rules without re-explaining each time.",
+      "output": "An agent that never makes the same preference mistake twice, maintains consistent behavior across sessions, and self-improves by writing its own rules.",
+      "quality_score": 8,
+      "model_version": null,
+      "company": null,
+      "country": null,
+      "open_source": false,
+      "target_tool": "other",
+      "is_claude_skill": false,
+      "compatibility": [
+        {"tool": "Claude", "up_to_version": "any"},
+        {"tool": "ChatGPT", "up_to_version": "any"},
+        {"tool": "Gemini", "up_to_version": "any"}
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=4TvH-OZhwxI",
+      "source_video_id": "4TvH-OZhwxI",
+      "tips": [
+        "Drop a memory file (claude.md, agents.md) in the root of every project — whatever is in it becomes a permanent rule the agent follows every session.",
+        "Make the memory file self-modifying: tell the agent 'if I corrected you or you hit a bug from a wrong assumption, append a new rule to the learned rules section at the bottom of this file.'",
+        "Start with 3 rules, let the agent grow it — by session 20 the agent will rarely make a preference mistake because it has been writing its own scar tissue."
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "Every agent platform has this feature under a different file name — Claude Code reads claude.md, OpenClaw reads agents.md, Antigravity has its own version. Same pattern applies everywhere."
+      ],
+      "relevance": "Gives AI agents long-term memory without fine-tuning or complex backends — one plain-text file eliminates the most common source of repeated agent mistakes.",
+      "popularity_signals": [],
+      "endorsement_video_ids": ["4TvH-OZhwxI"],
+      "video_quality_score": 8,
+      "low_quality_source": false
+    },
+    {
+      "skill_name": "Agent Platform Selection Rule",
+      "slug": "agent-platform-selection-rule",
+      "category": "agents",
+      "description": "A decision rule for matching agent tasks to the right platform: use Claude Code for complex reasoning and code where you want to watch the model think and steer mid-flight; use OpenAI Codex for lowest-friction entry if you already pay for ChatGPT; use OpenClaw for life automation tasks via messaging apps; use Google Antigravity for visual, front-end, and design tasks that require multimodal reasoning.",
+      "use_case": "Choosing the right agent platform for a given task type to avoid over-engineering or picking a tool that doesn't fit the job.",
+      "output": "Clear platform recommendation based on task category, reducing setup time and improving agent reliability.",
+      "quality_score": 7,
+      "model_version": null,
+      "company": null,
+      "country": null,
+      "open_source": false,
+      "target_tool": "other",
+      "is_claude_skill": false,
+      "compatibility": [
+        {"tool": "Claude", "up_to_version": "any"},
+        {"tool": "ChatGPT", "up_to_version": "any"},
+        {"tool": "Gemini", "up_to_version": "any"}
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=4TvH-OZhwxI",
+      "source_video_id": "4TvH-OZhwxI",
+      "tips": [
+        "Use Claude Code when you need interpretable step-by-step reasoning and want to steer the agent mid-task — it's the thinking partner, not a missile.",
+        "Use OpenClaw for email triage, reminders, and life automation via Telegram/WhatsApp — it's the agent that feels like a real assistant living in apps you already use.",
+        "Use Google Antigravity for anything visual — UI mock-ups, design iteration, hero images — where the agent needs to see and reason about what it's generating."
+      ],
+      "slash_commands": [],
+      "general_tips": [],
+      "relevance": "Saves practitioners from picking the wrong agent tool and wasting setup time — each platform has a clear winning use case.",
+      "popularity_signals": [],
+      "endorsement_video_ids": ["4TvH-OZhwxI"],
+      "video_quality_score": 8,
+      "low_quality_source": false
     }
   ]
 }

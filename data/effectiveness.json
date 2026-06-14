@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-14T18:01:36.235222+00:00",
+  "generated_at": "2026-06-14T18:19:56.509148+00:00",
   "north_star": "A huge, machine-readable hub of all AI knowledge that also improves existing skills, integrates new parts, and tests better versions.",
   "dimensions": [
     "quality",
@@ -24,11 +24,11 @@
   "transcript_sources": {
     "transcript": 145,
     "whisper": 0,
-    "supadata": 0,
-    "description_only": 1188,
+    "supadata": 1,
+    "description_only": 1187,
     "total": 1333
   },
-  "library_quality": 6.51,
+  "library_quality": 6.52,
   "lanes": [
     {
       "id": "transcript_cloud",
@@ -100,29 +100,6 @@
       "improve_note": "Proposes new channels daily (1 pending). Needs the owner's one-time OAuth to auto-add to the playlist (else suggestions only)."
     },
     {
-      "id": "transcript_supadata",
-      "name": "Transcript fetch (Supadata free tier)",
-      "kind": "retrieval",
-      "engine": "Supadata API (their infra)",
-      "metrics": {
-        "quality": 8.0,
-        "quantity": 0.0,
-        "form": 9.0,
-        "time": 6.0,
-        "tokens": 10.0,
-        "ease_external": 8,
-        "ease_project": 9.0,
-        "ease_user": 7.0
-      },
-      "effectiveness": 7.0,
-      "rigidity": 5,
-      "weak_dims": [
-        "quantity",
-        "time"
-      ],
-      "improve_note": "Unattended & PC-free (AI-fallback even for no-caption videos), but ~100/month free (0 recovered so far). Best for NEW videos; needs SUPADATA_API_KEY."
-    },
-    {
       "id": "tool_discovery",
       "name": "Tool discovery (off-playlist)",
       "kind": "external",
@@ -146,6 +123,29 @@
       "improve_note": "Finds tools beyond the playlist 3x/week (uses Pro token). Verify it keeps producing; consider a free-engine version to save the Pro budget."
     },
     {
+      "id": "transcript_supadata",
+      "name": "Transcript fetch (Supadata free tier)",
+      "kind": "retrieval",
+      "engine": "Supadata API (their infra)",
+      "metrics": {
+        "quality": 8.0,
+        "quantity": 0.2,
+        "form": 9.0,
+        "time": 6.0,
+        "tokens": 10.0,
+        "ease_external": 8,
+        "ease_project": 9.0,
+        "ease_user": 7.0
+      },
+      "effectiveness": 7.1,
+      "rigidity": 5,
+      "weak_dims": [
+        "quantity",
+        "time"
+      ],
+      "improve_note": "Unattended & PC-free (AI-fallback even for no-caption videos), but ~100/month free (1 recovered so far). Best for NEW videos; needs SUPADATA_API_KEY."
+    },
+    {
       "id": "transcript_residential",
       "name": "Transcript backfill (residential IP)",
       "kind": "retrieval",
@@ -166,7 +166,7 @@
         "quantity",
         "time"
       ],
-      "improve_note": "Works (~85% of caption-less videos recoverable) but needs a home IP + manual session; coverage 11.2%. Lever: drain every session; pace gently to dodge the escalating block."
+      "improve_note": "Works (~85% of caption-less videos recoverable) but needs a home IP + manual session; coverage 11.3%. Lever: drain every session; pace gently to dodge the escalating block."
     },
     {
       "id": "analysis_free",
@@ -189,7 +189,7 @@
         "quality",
         "form"
       ],
-      "improve_note": "Turns transcripts into records at 0 Claude cost (avg quality 6.51/10, 12% low-source). Lever: add OpenRouter+Groq keys; expose a public index for external systems (ease_external is the weak dim)."
+      "improve_note": "Turns transcripts into records at 0 Claude cost (avg quality 6.52/10, 12% low-source). Lever: add OpenRouter+Groq keys; expose a public index for external systems (ease_external is the weak dim)."
     },
     {
       "id": "web_news",
@@ -219,6 +219,6 @@
     "weakest_lane": "Transcript fetch (cloud Whisper/caption)",
     "weakest_effectiveness": 5.8,
     "top_improvement": "Produces 0 — YouTube blocks the datacenter IP (caption API + yt-dlp). Kept daily as a safety-net only; do not invest here.",
-    "transcript_coverage_pct": 11.2
+    "transcript_coverage_pct": 11.3
   }
 }

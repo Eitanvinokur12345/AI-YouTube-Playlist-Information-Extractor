@@ -31,7 +31,7 @@ DATA = ROOT / "data"
 PENDING = DATA / "_pending"
 PROCESSED = DATA / "processed"
 MAX_CHARS = 120000
-ENDPOINT = "https://api.supadata.ai/v1/transcript"
+ENDPOINT = "https://api.supadata.ai/v1/youtube/transcript"
 
 
 def _text_from_content(content) -> str:
@@ -56,17 +56,25 @@ def fetch_transcript(video_id: str, key: str, timeout: int = 45) -> tuple[str, s
         "url": f"https://www.youtube.com/watch?v={video_id}",
         "lang": "en",
         "text": "true",
-    })
+        "mode": "native",   # existing captions only = 1 credit each (88% of videos have them);
+    })                       # stays inside the ~100/month free tier far longer than AI-gen.
     req = urllib.request.Request(url, headers={"x-api-key": key, "Accept": "application/json"})
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
+            if resp.status == 202:          # async AI job queued — skip; native mode shouldn't hit this
+                return "", "", "async"
             body = json.loads(resp.read().decode("utf-8", "replace"))
     except urllib.error.HTTPError as e:
         if e.code in (402, 429):           # payment required / rate-limited = out of free credits
             return "", "", "quota"
-        return "", "", f"error:{e.code}"
-    except Exception:
-        return "", "", "error:net"
+        detail = ""
+        try:
+            detail = e.read().decode("utf-8", "replace")[:160].replace("\n", " ")
+        except Exception:
+            pass
+        return "", "", f"error:{e.code} {detail}".strip()
+    except Exception as e:
+        return "", "", f"error:net {type(e).__name__}"
     # Long AI-fallback transcriptions can come back as an async job — skip; retried next run.
     if isinstance(body, dict) and body.get("jobId") and not (body.get("content") or body.get("text")):
         return "", "", "async"
@@ -118,6 +126,8 @@ def main() -> int:
                 empty += 1
             else:
                 err += 1
+                if err <= 2:                       # surface the real cause for diagnosis
+                    print(f"  {vid}: {status}")
             continue
         r["transcript"] = text
         r["transcript_lang"] = lang

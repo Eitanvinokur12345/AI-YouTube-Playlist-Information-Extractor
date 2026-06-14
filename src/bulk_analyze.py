@@ -125,9 +125,15 @@ def call_openai_compatible(base_url: str, api_key: str, model: str, prompt: str,
     body = {"model": model, "temperature": 0.2,
             "messages": [{"role": "user", "content": prompt}],
             "response_format": {"type": "json_object"}}
+    # Groq/Cerebras/OpenRouter sit behind Cloudflare, which 403/1010-blocks urllib's default
+    # "Python-urllib" User-Agent. A normal browser UA gets through (it is not an auth issue).
     req = urllib.request.Request(url, data=json.dumps(body).encode("utf-8"),
                                 headers={"Content-Type": "application/json",
-                                         "Authorization": f"Bearer {api_key}"}, method="POST")
+                                         "Authorization": f"Bearer {api_key}",
+                                         "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                                                        "AppleWebKit/537.36 (KHTML, like Gecko) "
+                                                        "Chrome/120.0.0.0 Safari/537.36")},
+                                method="POST")
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         payload = json.loads(resp.read().decode("utf-8"))
     return json.loads(payload["choices"][0]["message"]["content"])

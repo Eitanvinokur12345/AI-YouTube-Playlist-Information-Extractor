@@ -1038,6 +1038,7 @@ async function renderEffectiveness() {
   const dims = d.dimensions || [];
   let html = `<div class="card"><h3>Extraction Effectiveness &amp; Rigidity</h3>
     <p class="hint">🎯 ${esc(d.north_star || "")}</p>
+    <p class="sub">🌐 <b>Public hub API</b> (for external/future systems): <a href="../data/hub.json">data/hub.json</a> — a CORS-open, machine-readable manifest of every dataset · <a href="../HUB_API.md">HUB_API.md</a></p>
     <p class="sub">Weakest lane: <b>${esc(d.summary.weakest_lane)}</b> (${esc(d.summary.weakest_effectiveness)}/10)
       · transcript coverage ${esc(d.summary.transcript_coverage_pct)}% · library quality ${esc(d.library_quality)}/10
       · generated ${esc(fmtDate(d.generated_at))}</p>

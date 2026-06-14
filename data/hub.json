@@ -1,0 +1,251 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-06-14T12:49:27.540769+00:00",
+  "project": "Excavatortron — AI knowledge hub",
+  "north_star": "A huge, machine-readable hub of ALL AI knowledge for humans AND future systems; the data is also used to improve existing skills, integrate new parts, and test better versions.",
+  "source": "A curated YouTube AI playlist + 50 web news sources, extracted by a free cloud pipeline.",
+  "license": "Derived from PUBLIC content; transcripts are quoted verbatim. No personal data.",
+  "base_url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/",
+  "cors": "open (GitHub Pages sends Access-Control-Allow-Origin: *)",
+  "totals": {
+    "videos_total": 1297,
+    "videos_with_transcript": 145,
+    "transcript_pct": 11.2,
+    "skills": 226,
+    "tools": 392,
+    "models": 0,
+    "connectors": 63,
+    "prompts": 19,
+    "commands": 23,
+    "daily_news": 77,
+    "weekly_news": 871,
+    "monthly_news": 793,
+    "effectiveness": 8
+  },
+  "library_quality": 6.51,
+  "datasets": [
+    {
+      "id": "skills",
+      "file": "skills.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/skills.json",
+      "root_key": "skills",
+      "count": 226,
+      "fields": [
+        "slug",
+        "skill_name",
+        "category",
+        "description",
+        "use_case",
+        "output",
+        "quality_score",
+        "model_version",
+        "company",
+        "country",
+        "open_source",
+        "target_tool",
+        "is_claude_skill",
+        "compatibility",
+        "multi_tool",
+        "source_type",
+        "source_url",
+        "source_video_id",
+        "tips",
+        "slash_commands",
+        "general_tips",
+        "relevance",
+        "popularity_signals",
+        "endorsement_video_ids",
+        "video_quality_score",
+        "low_quality_source"
+      ],
+      "description": "Techniques / skills — things you DO with AI."
+    },
+    {
+      "id": "tools",
+      "file": "tools.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/tools.json",
+      "root_key": "tools",
+      "count": 392,
+      "fields": [
+        "name",
+        "slug",
+        "category",
+        "company",
+        "country",
+        "open_source",
+        "description",
+        "quality_score",
+        "model_version",
+        "target_tool",
+        "mentions",
+        "endorsement_video_ids",
+        "source_video_id",
+        "source_url",
+        "video_quality_score",
+        "low_quality_source",
+        "release_status",
+        "is_open_source",
+        "is_mcp",
+        "discovered_via",
+        "added_at"
+      ],
+      "description": "Products / tools — things that EXIST."
+    },
+    {
+      "id": "models",
+      "file": "models.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/models.json",
+      "root_key": "models",
+      "count": 0,
+      "fields": [],
+      "description": "AI models (a ranked subset of tools)."
+    },
+    {
+      "id": "connectors",
+      "file": "connectors.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/connectors.json",
+      "root_key": "connectors",
+      "count": 63,
+      "fields": [
+        "name",
+        "type",
+        "provider",
+        "category",
+        "what_it_does",
+        "install_or_source",
+        "official",
+        "quality_score",
+        "source",
+        "url",
+        "free",
+        "free_tokens",
+        "paid_version",
+        "works_in",
+        "source_video",
+        "source_url",
+        "video_quality_score",
+        "low_quality_source",
+        "source_video_id",
+        "added_at",
+        "discovered_via",
+        "discovered_at"
+      ],
+      "description": "MCP servers / connectors."
+    },
+    {
+      "id": "prompts",
+      "file": "prompts.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/prompts.json",
+      "root_key": "prompts",
+      "count": 19,
+      "fields": [
+        "title",
+        "category",
+        "purpose",
+        "prompt_text",
+        "source",
+        "notes",
+        "curated",
+        "source_video_id",
+        "source_url",
+        "added_at"
+      ],
+      "description": "Reusable prompts."
+    },
+    {
+      "id": "commands",
+      "file": "commands.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/commands.json",
+      "root_key": "commands",
+      "count": 23,
+      "fields": [
+        "command",
+        "description",
+        "tool",
+        "source_video"
+      ],
+      "description": "Slash commands / CLI commands."
+    },
+    {
+      "id": "daily_news",
+      "file": "daily_web_news.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/daily_web_news.json",
+      "root_key": "entries",
+      "count": 77,
+      "fields": [
+        "url",
+        "title",
+        "source_name",
+        "publishedAt",
+        "summary",
+        "source_type"
+      ],
+      "description": "AI news (50 web sources) — daily window."
+    },
+    {
+      "id": "weekly_news",
+      "file": "weekly_web_news.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/weekly_web_news.json",
+      "root_key": "entries",
+      "count": 871,
+      "fields": [
+        "url",
+        "title",
+        "source_name",
+        "publishedAt",
+        "summary",
+        "source_type"
+      ],
+      "description": "AI news (50 web sources) — weekly window."
+    },
+    {
+      "id": "monthly_news",
+      "file": "monthly_web_news.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/monthly_web_news.json",
+      "root_key": "entries",
+      "count": 793,
+      "fields": [
+        "url",
+        "title",
+        "source_name",
+        "publishedAt",
+        "summary",
+        "source_type"
+      ],
+      "description": "AI news (50 web sources) — monthly window."
+    },
+    {
+      "id": "effectiveness",
+      "file": "effectiveness.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/effectiveness.json",
+      "root_key": "lanes",
+      "count": 8,
+      "fields": [
+        "id",
+        "name",
+        "kind",
+        "engine",
+        "metrics",
+        "effectiveness",
+        "rigidity",
+        "weak_dims",
+        "improve_note"
+      ],
+      "description": "Per-lane effectiveness/rigidity scoreboard."
+    },
+    {
+      "id": "health",
+      "file": "health.json",
+      "url": "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/health.json",
+      "root_key": null,
+      "count": null,
+      "fields": [
+        "generated_at",
+        "videos",
+        "library"
+      ],
+      "description": "Live counts: transcripts X/Y + library totals."
+    }
+  ],
+  "how_to_consume": "GET base_url + <dataset.file>. Each content file is a JSON object {root_key: [items]} (see each dataset's root_key/fields). All files are CORS-open. Poll hub.json's generated_at (or any file) to detect updates — the pipeline refreshes every ~3h. Stable IDs: items carry a 'slug' (skills/tools/connectors) you can use as a key."
+}

@@ -57,6 +57,10 @@ jobs:
         if: always()
         run: python -m src.effectiveness || true
 
+      - name: Public hub index (machine-readable manifest for external systems) -> data/hub.json
+        if: always()
+        run: python -m src.build_hub_index || true
+
       - name: Commit results
         if: always()
         env:

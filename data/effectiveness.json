@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-14T10:04:24.524950+00:00",
+  "generated_at": "2026-06-14T12:49:27.289784+00:00",
   "north_star": "A huge, machine-readable hub of all AI knowledge that also improves existing skills, integrates new parts, and tests better versions.",
   "dimensions": [
     "quality",
@@ -41,11 +41,11 @@
         "form": 9.0,
         "time": 7.0,
         "tokens": 10.0,
-        "ease_external": 7.0,
+        "ease_external": 8,
         "ease_project": 9.0,
         "ease_user": 7.0
       },
-      "effectiveness": 5.7,
+      "effectiveness": 5.8,
       "rigidity": 10,
       "weak_dims": [
         "quality",
@@ -64,11 +64,11 @@
         "form": 9.0,
         "time": 3.0,
         "tokens": 2.0,
-        "ease_external": 6.0,
+        "ease_external": 8,
         "ease_project": 9.0,
         "ease_user": 8.0
       },
-      "effectiveness": 6.4,
+      "effectiveness": 6.7,
       "rigidity": 6,
       "weak_dims": [
         "tokens",
@@ -87,40 +87,17 @@
         "form": 8.0,
         "time": 7.0,
         "tokens": 10.0,
-        "ease_external": 6.0,
+        "ease_external": 8,
         "ease_project": 9.0,
         "ease_user": 7.0
       },
-      "effectiveness": 6.6,
+      "effectiveness": 6.9,
       "rigidity": 4,
       "weak_dims": [
         "quantity",
-        "ease_external"
+        "quality"
       ],
       "improve_note": "Proposes new channels daily (1 pending). Needs the owner's one-time OAuth to auto-add to the playlist (else suggestions only)."
-    },
-    {
-      "id": "tool_discovery",
-      "name": "Tool discovery (off-playlist)",
-      "kind": "external",
-      "engine": "discover.yml (Claude, Sun/Tue/Thu)",
-      "metrics": {
-        "quality": 7.0,
-        "quantity": 6.0,
-        "form": 8.0,
-        "time": 5.0,
-        "tokens": 5.0,
-        "ease_external": 6.0,
-        "ease_project": 9.0,
-        "ease_user": 8.0
-      },
-      "effectiveness": 6.8,
-      "rigidity": 5,
-      "weak_dims": [
-        "time",
-        "tokens"
-      ],
-      "improve_note": "Finds tools beyond the playlist 3x/week (uses Pro token). Verify it keeps producing; consider a free-engine version to save the Pro budget."
     },
     {
       "id": "transcript_supadata",
@@ -133,17 +110,40 @@
         "form": 9.0,
         "time": 6.0,
         "tokens": 10.0,
-        "ease_external": 7.0,
+        "ease_external": 8,
         "ease_project": 9.0,
         "ease_user": 7.0
       },
-      "effectiveness": 6.9,
+      "effectiveness": 7.0,
       "rigidity": 5,
       "weak_dims": [
         "quantity",
         "time"
       ],
       "improve_note": "Unattended & PC-free (AI-fallback even for no-caption videos), but ~100/month free (0 recovered so far). Best for NEW videos; needs SUPADATA_API_KEY."
+    },
+    {
+      "id": "tool_discovery",
+      "name": "Tool discovery (off-playlist)",
+      "kind": "external",
+      "engine": "discover.yml (Claude, Sun/Tue/Thu)",
+      "metrics": {
+        "quality": 7.0,
+        "quantity": 6.0,
+        "form": 8.0,
+        "time": 5.0,
+        "tokens": 5.0,
+        "ease_external": 8,
+        "ease_project": 9.0,
+        "ease_user": 8.0
+      },
+      "effectiveness": 7.0,
+      "rigidity": 5,
+      "weak_dims": [
+        "time",
+        "tokens"
+      ],
+      "improve_note": "Finds tools beyond the playlist 3x/week (uses Pro token). Verify it keeps producing; consider a free-engine version to save the Pro budget."
     },
     {
       "id": "transcript_residential",
@@ -156,11 +156,11 @@
         "form": 9.0,
         "time": 4.0,
         "tokens": 10.0,
-        "ease_external": 7.0,
+        "ease_external": 8,
         "ease_project": 9.0,
         "ease_user": 7.0
       },
-      "effectiveness": 7.1,
+      "effectiveness": 7.2,
       "rigidity": 7,
       "weak_dims": [
         "quantity",
@@ -179,15 +179,15 @@
         "form": 8.0,
         "time": 8.0,
         "tokens": 10.0,
-        "ease_external": 6.0,
+        "ease_external": 8,
         "ease_project": 9.0,
         "ease_user": 8.0
       },
-      "effectiveness": 8.0,
+      "effectiveness": 8.2,
       "rigidity": 4,
       "weak_dims": [
-        "ease_external",
-        "quality"
+        "quality",
+        "form"
       ],
       "improve_note": "Turns transcripts into records at 0 Claude cost (avg quality 6.51/10, 12% low-source). Lever: add OpenRouter+Groq keys; expose a public index for external systems (ease_external is the weak dim)."
     },
@@ -202,22 +202,22 @@
         "form": 8.0,
         "time": 9.0,
         "tokens": 10.0,
-        "ease_external": 6.0,
+        "ease_external": 8,
         "ease_project": 9.0,
         "ease_user": 8.0
       },
-      "effectiveness": 8.3,
+      "effectiveness": 8.5,
       "rigidity": 3,
       "weak_dims": [
-        "ease_external",
-        "quality"
+        "quality",
+        "form"
       ],
       "improve_note": "Always-on (every 6h), 1741 items stored. Solid; could add more sources + dedupe."
     }
   ],
   "summary": {
     "weakest_lane": "Transcript fetch (cloud Whisper/caption)",
-    "weakest_effectiveness": 5.7,
+    "weakest_effectiveness": 5.8,
     "top_improvement": "Produces 0 — YouTube blocks the datacenter IP (caption API + yt-dlp). Kept daily as a safety-net only; do not invest here.",
     "transcript_coverage_pct": 11.2
   }

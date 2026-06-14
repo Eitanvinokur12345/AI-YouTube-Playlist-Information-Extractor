@@ -185,6 +185,15 @@ def main() -> int:
         note=f"Proposes new channels daily ({chan_n} pending). Needs the owner's one-time OAuth to "
              f"auto-add to the playlist (else suggestions only)."))
 
+    # The public hub index (data/hub.json) makes every lane's output externally consumable —
+    # raise ease_external accordingly so the scoreboard reflects the infrastructure that exists.
+    if (DATA / "hub.json").exists():
+        for L in lanes:
+            if L["metrics"].get("ease_external", 0) < 8:
+                L["metrics"]["ease_external"] = 8
+                L["effectiveness"] = _eff(L["metrics"])
+                L["weak_dims"] = sorted(L["metrics"], key=lambda k: L["metrics"][k])[:2]
+
     lanes.sort(key=lambda L: L["effectiveness"])
     weakest = lanes[0] if lanes else None
     out = {

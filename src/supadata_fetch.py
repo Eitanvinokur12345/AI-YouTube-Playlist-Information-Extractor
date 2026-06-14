@@ -30,8 +30,23 @@ ROOT = Path(__file__).parent.parent
 DATA = ROOT / "data"
 PENDING = DATA / "_pending"
 PROCESSED = DATA / "processed"
+DEAD = DATA / "dead_videos.json"   # permanently-unavailable videos (deleted/private) — never retry
 MAX_CHARS = 120000
 ENDPOINT = "https://api.supadata.ai/v1/youtube/transcript"
+
+
+def _load_dead() -> set:
+    try:
+        return set(json.load(open(DEAD, encoding="utf-8")).get("video_ids", []))
+    except Exception:
+        return set()
+
+
+def _save_dead(ids: set) -> None:
+    json.dump({"video_ids": sorted(ids),
+               "note": "Videos that returned 404/not-found (deleted/private) — skipped so the "
+                       "scarce Supadata free quota and residential fetches aren't wasted retrying them."},
+              open(DEAD, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 
 
 def _text_from_content(content) -> str:
@@ -105,6 +120,7 @@ def main() -> int:
         return 0
 
     PENDING.mkdir(parents=True, exist_ok=True)
+    dead = _load_dead()
     todo = []
     for f in sorted(glob.glob(str(PROCESSED / "*.json"))):
         try:
@@ -114,12 +130,14 @@ def main() -> int:
         if r.get("transcript_source") in ("transcript", "whisper"):
             continue
         vid = r.get("video_id")
-        if vid and not (PENDING / f"{vid}.json").exists():
+        if vid and vid not in dead and not (PENDING / f"{vid}.json").exists():
             todo.append(r)
-    print(f"videos lacking a real transcript: {len(todo)}; attempting up to {args.limit} via Supadata")
+    print(f"videos lacking a real transcript: {len(todo)} ({len(dead)} known-dead skipped); "
+          f"attempting up to {args.limit} via Supadata")
     todo = todo[: max(args.limit, 0)]
 
     ok = empty = err = 0
+    dead_added = 0
     now = datetime.now(timezone.utc).isoformat()
     for r in todo:
         vid = r["video_id"]
@@ -128,6 +146,8 @@ def main() -> int:
         if status == "quota":
             print("  Supadata free credits exhausted for this period — stopping (resets monthly).")
             break
+        if status.startswith("error:404") or "not-found" in status:
+            dead.add(vid); dead_added += 1   # deleted/private — never waste quota on it again
         if status != "ok" or not text:
             if status in ("empty", "async"):
                 empty += 1
@@ -147,7 +167,10 @@ def main() -> int:
             with open(PENDING / f"{vid}.json", "w", encoding="utf-8") as fh:
                 json.dump(r, fh, ensure_ascii=False, indent=2)
         print(f"  {vid}: {len(text)} chars ({lang}) via Supadata")
-    print(f"\nSupadata recovered {ok}; {empty} empty/async; {err} errors. "
+    if dead_added and not args.dry_run:
+        _save_dead(dead)
+    print(f"\nSupadata recovered {ok}; {empty} empty/async; {err} errors "
+          f"({dead_added} newly marked dead). "
           f"{'re-queued to data/_pending for the free analysis lane.' if ok else ''}")
     return 0
 

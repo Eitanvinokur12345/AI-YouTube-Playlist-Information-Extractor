@@ -263,6 +263,8 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=200, help="max videos this run (0 = all pending)")
     ap.add_argument("--sleep", type=float, default=4.5, help="seconds between calls (free-tier RPM)")
+    ap.add_argument("--selftest", action="store_true",
+                    help="ping each engine in the pool once and report OK/FAIL — verifies every key")
     args = ap.parse_args()
 
     cfg = load(CONFIG, {})
@@ -294,6 +296,23 @@ def main() -> int:
     if not engines:
         print("No engine keys present (set EXTERNAL_REVIEW_API_KEY and/or others). Skipped."); return 0
     print("engine pool:", ", ".join(e["name"] for e in engines))
+
+    if args.selftest:                                  # verify every key actually returns content
+        prompt = 'Return this exact JSON and nothing else: {"ok": true}'
+        all_ok = True
+        for e in engines:
+            try:
+                r = extract(e["provider"], e["base_url"], e["key"], e["model"], prompt, timeout)
+                ok = isinstance(r, dict)
+                print(f"  [{'OK ' if ok else 'BAD'}] {e['name']} -> {str(r)[:60]}")
+                all_ok = all_ok and ok
+            except Exception as ex:                    # noqa: BLE001
+                print(f"  [FAIL] {e['name']} -> {type(ex).__name__}: {str(ex)[:120]}")
+                all_ok = False
+            time.sleep(1.0)
+        print("selftest:", "ALL ENGINES OK" if all_ok else "some engines failed (see above)")
+        return 0 if all_ok else 1
+
     per_engine = {e["name"]: 0 for e in engines}
 
     # pick pending videos (prefer ones with a REAL transcript — that's the whole point)

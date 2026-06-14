@@ -182,6 +182,10 @@ def main() -> None:
     langs = [x.strip() for x in args.langs.split(",") if x.strip()]
     PENDING.mkdir(parents=True, exist_ok=True)
 
+    try:   # shared skip-list of deleted/private videos (populated by src.supadata_fetch)
+        dead = set(json.load(open(DATA / "dead_videos.json", encoding="utf-8")).get("video_ids", []))
+    except Exception:
+        dead = set()
     todo = []
     for f in sorted(glob.glob(str(PROCESSED / "*.json"))):
         try:
@@ -191,10 +195,10 @@ def main() -> None:
         if r.get("transcript_source") == "transcript":
             continue
         vid = r.get("video_id")
-        if not vid or (PENDING / f"{vid}.json").exists():
+        if not vid or vid in dead or (PENDING / f"{vid}.json").exists():
             continue
         todo.append(r)
-    print(f"videos lacking a real transcript: {len(todo)}")
+    print(f"videos lacking a real transcript: {len(todo)} ({len(dead)} known-dead skipped)")
     if args.limit and args.limit > 0:
         todo = todo[: args.limit]
     print(f"attempting {len(todo)} this run...")

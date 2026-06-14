@@ -65,6 +65,10 @@ jobs:
         if: always()
         run: python -m src.build_dev_doc || true
 
+      - name: Reference self-check (50 questions, MECHANICAL — no Claude) -> data/self_check.json
+        if: always()
+        run: python -m src.self_check || true
+
       - name: Commit results
         if: always()
         env:

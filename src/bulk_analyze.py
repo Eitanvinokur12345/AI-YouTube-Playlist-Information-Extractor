@@ -313,7 +313,13 @@ def main() -> int:
                 print(f"  [{'OK ' if ok else 'BAD'}] {e['name']} -> {str(r)[:60]}")
                 all_ok = all_ok and ok
             except Exception as ex:                    # noqa: BLE001
-                print(f"  [FAIL] {e['name']} -> {type(ex).__name__}: {str(ex)[:120]}")
+                detail = str(ex)[:120]
+                if isinstance(ex, urllib.error.HTTPError):
+                    try:
+                        detail = f"HTTP {ex.code}: " + ex.read().decode("utf-8", "replace")[:180].replace("\n", " ")
+                    except Exception:
+                        pass
+                print(f"  [FAIL] {e['name']} -> {detail}")
                 all_ok = False
             time.sleep(1.0)
         print("selftest:", "ALL ENGINES OK" if all_ok else "some engines failed (see above)")

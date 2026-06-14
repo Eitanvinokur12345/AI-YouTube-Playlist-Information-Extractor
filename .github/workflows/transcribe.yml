@@ -1,29 +1,26 @@
-name: Transcribe (cloud Whisper)
+name: Transcribe (cloud, Supadata — unattended)
 
-# Cloud Whisper ASR — runs faster-whisper on the GitHub runner, so it needs ZERO disk and ZERO
-# CPU on your PC (you're low on local disk). It downloads each video's audio on the runner
-# (deleted right after), transcribes with the light 'tiny' model, and re-queues the transcript
-# to data/_pending for the night-gated analyze stage to re-extract.
+# UNATTENDED, PC-FREE transcript recovery — this is what makes Excavatortron self-run WITHOUT
+# Eitan's computer being on (the project's whole point: no intervention).
 #
-# Free: public-repo Actions. CAVEAT: YouTube sometimes throttles audio downloads from
-# datacenter IPs — runs are best-effort; whatever fails is retried next run, and the local
-# runner (sync/fetch-runner.ps1) can still pick up the rest from your residential IP if needed.
+# Why this is the only thing that works from the cloud: YouTube hard-blocks GitHub's datacenter IP
+# for BOTH the caption API and yt-dlp audio (verified in Actions logs: it returned 0). Supadata
+# fetches the caption on THEIR infrastructure (mode=native, existing captions = ~1 credit), so the
+# IP block doesn't apply. Free tier ~100/month -> --limit 3/day ≈ 90/month, which keeps up with new
+# playlist videos and slowly drains the backlog with ZERO human involvement. Graceful-skip if
+# SUPADATA_API_KEY is absent. Stdlib only, no pip — the run is ~40s.
+#
+# The residential backfill (src/backfill_transcripts.py via sync/fetch-runner.ps1 OR during a
+# Claude session) is an OPTIONAL accelerator that recovers transcripts far faster from a home IP —
+# but it is no longer REQUIRED; this workflow is the autonomous baseline.
 on:
   schedule:
-    # SAFETY-NET ONLY (once/day). VERIFIED 2026-06-13 via Actions logs: from GitHub's datacenter
-    # IP this produces EXACTLY 0 transcripts — YouTube hard-blocks BOTH the caption API
-    # ("backfilled 0 ... 400 no caption") AND yt-dlp audio ("whispered 0, skipped 60"). It is NOT
-    # throttling, so running it more often just wastes Actions minutes. The only working lever is
-    # the RESIDENTIAL backfill (src/backfill_transcripts.py, run from a home IP). This stays daily
-    # purely to auto-recover IF YouTube ever stops blocking the cloud IP. To make the CLOUD fetch
-    # transcripts unattended, the path is a 3rd-party transcript API with a free tier (their infra
-    # fetches the captions) — add a step here keyed off a graceful-skip secret.
     - cron: "0 4 * * *"        # once/day, 04:00 UTC (~07:00 Israel)
   workflow_dispatch:
     inputs:
       limit:
-        description: "How many videos to transcribe this run"
-        default: "30"
+        description: "How many videos to fetch via Supadata this run (mind the ~100/month free tier)"
+        default: "3"
 
 concurrency:
   group: skills-tracker-transcribe
@@ -35,7 +32,7 @@ permissions:
 jobs:
   transcribe:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
@@ -46,29 +43,10 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Step 0 - Supadata (UNATTENDED, PC-free; fetches on THEIR infra, AI-fallback for no-caption)
-        # The only cloud path that actually returns transcripts: Supadata fetches the caption (and
-        # AI-transcribes audio when there's none) on their own infra, so YouTube's datacenter-IP
-        # block doesn't apply. Stdlib only, no pip. Graceful-skip if SUPADATA_API_KEY is absent.
-        # Free tier ~100/month -> keep --limit tiny so it lasts (mainly to auto-cover NEW videos).
+      - name: Fetch transcripts via Supadata (their infra → bypasses YouTube's datacenter-IP block)
         env:
           SUPADATA_API_KEY: ${{ secrets.SUPADATA_API_KEY }}
-        run: python -m src.supadata_fetch --limit 3 || true
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install faster-whisper yt-dlp youtube-transcript-api
-
-      - name: Step 1 - Caption backfill (fast, text-only, works from cloud IPs for many videos)
-        run: |
-          python -m src.backfill_transcripts --limit 400 --sleep 0.4
-
-      - name: Step 2 - Whisper for remaining caption-less videos (CPU ASR, gaps mode)
-        run: |
-          python -m src.transcribe_local \
-            --limit "${{ github.event.inputs.limit || '60' }}" \
-            --mode gaps --model tiny --cpu-threads 2
+        run: python -m src.supadata_fetch --limit "${{ github.event.inputs.limit || '3' }}" || true
 
       - name: Commit transcripts
         if: always()
@@ -79,7 +57,7 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor.git"
           git add data/_pending data/processed 2>/dev/null || true
-          git commit -m "transcribe (cloud): $(date -u +%Y-%m-%dT%H:%MZ)" \
+          git commit -m "transcribe (supadata): $(date -u +%Y-%m-%dT%H:%MZ)" \
             || echo "nothing to commit"
           git pull --rebase --autostash origin main || true
           git push || echo "push skipped"

@@ -9537,6 +9537,70 @@
       ],
       "video_quality_score": 4,
       "low_quality_source": true
+    },
+    {
+      "slug": "tiered-model-execution",
+      "skill_name": "Tiered Model Execution Workflow",
+      "category": "agents",
+      "description": "A cost-optimization workflow where the most capable (expensive) frontier model audits the codebase and writes detailed, self-contained execution plans with file paths, code excerpts, and verification commands. Cheaper, faster models then carry out the plans step-by-step, achieving frontier-quality results at a fraction of the token cost.",
+      "use_case": "Reduce AI coding costs without sacrificing plan quality by separating the intelligence-intensive planning phase from the mechanical execution phase.",
+      "output": "A fully executed codebase change driven by a frontier-written plan, implemented by a cost-efficient model.",
+      "quality_score": 8,
+      "model_version": null,
+      "company": "shadcn",
+      "country": "USA",
+      "open_source": true,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "ChatGPT",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Gemini",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": true,
+      "source_type": "linked_resource",
+      "source_url": "https://github.com/shadcn/improve",
+      "source_video_id": "QZk0VAhapP8",
+      "discovered_via": "video_description_link",
+      "via_video_id": "QZk0VAhapP8",
+      "tips": [
+        "Reserve your frontier model (Claude Sonnet, GPT-4, Gemini Pro) for planning and auditing — where intelligence compounds.",
+        "Let the cheaper, faster model handle execution using the self-contained plan with verification commands.",
+        "Use /improve plan <description> to generate a new plan, then /improve execute <plan> with a budget model.",
+        "Plans include verification gates — each step ends with a command and expected output so failures are caught immediately.",
+        "Run /improve deep for exhaustive audits across nine categories: correctness, security, performance, test coverage, tech debt, dependencies, DX, docs, and feature direction."
+      ],
+      "slash_commands": [
+        "/improve",
+        "/improve quick",
+        "/improve deep",
+        "/improve security",
+        "/improve branch",
+        "/improve next",
+        "/improve plan",
+        "/improve execute",
+        "/improve reconcile"
+      ],
+      "general_tips": [
+        "Split AI coding tasks into plan (frontier model) and execute (cheap model) phases to cut costs without sacrificing quality.",
+        "Self-contained execution plans with inline file paths and verification commands enable safe delegation to less capable models."
+      ],
+      "relevance": "Tiered model execution is a key cost-engineering pattern for production AI coding workflows, enabling frontier-quality output at cheap-model cost.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "QZk0VAhapP8"
+      ],
+      "video_quality_score": 4,
+      "low_quality_source": false
     }
   ]
 }

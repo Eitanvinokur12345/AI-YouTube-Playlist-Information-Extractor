@@ -224,6 +224,18 @@
     "Cinema Studio 2": [
       "Use character sheets in Cinema Studio 2 to keep characters visually consistent across AI-generated shots.",
       "Combine Handheld Camera mode with a Horror genre preset to drastically shift mood without rewriting prompts."
+    ],
+    "Claude Fable 5": [
+      "Keep prompts short — Claude Fable 5 follows brief instructions more reliably than verbose ones",
+      "Explain WHY you need something, not just what — context unlocks significantly better outputs",
+      "Use effort levels: high for most tasks, xhigh for capability-sensitive work, low/medium for routine",
+      "Add a progress-grounding instruction: 'Before reporting progress, audit each claim against a tool result from this session'",
+      "Define exact checkpoint criteria: pause only for destructive actions, scope changes, or user-only inputs",
+      "Implement send_to_user tool for async agents to deliver verbatim content without ending the agent turn",
+      "Provide a markdown memory file for persistent lessons across sessions; bootstrap by reviewing past session history",
+      "Do not instruct the model to reproduce its reasoning in the response — this triggers refusal on Fable 5",
+      "Avoid surfacing explicit context-budget counts to the model; add a reassurance like 'you have ample context remaining'",
+      "Use separate fresh-context verifier subagents instead of self-critique for long-run verification"
     ]
   },
   "general": {

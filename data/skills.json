@@ -10486,6 +10486,267 @@
       ],
       "video_quality_score": 4,
       "low_quality_source": true
+    },
+    {
+      "slug": "fable5-prompting-principles",
+      "skill_name": "Claude Fable 5 Core Prompting Principles",
+      "category": "agents",
+      "description": "Three key principles for optimal results with Claude Fable 5: keep prompts concise (less is more), provide context on WHY not just what, and set explicit behavioral guardrails because the model is highly autonomous. This differs significantly from prior Claude models where verbose instructions helped.",
+      "use_case": "Adapting existing prompts and workflows when migrating to Claude Fable 5 for autonomous tasks",
+      "output": "Better-calibrated, on-target responses from Claude Fable 5 without over-elaborate instructions",
+      "quality_score": 9,
+      "model_version": "Fable 5",
+      "company": "Anthropic",
+      "country": "USA",
+      "open_source": false,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "Fable 5"
+        }
+      ],
+      "multi_tool": false,
+      "source_type": "linked_resource",
+      "source_url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5",
+      "source_video_id": "L2IBm6PZBDo",
+      "discovered_via": "video_description_link",
+      "via_video_id": "L2IBm6PZBDo",
+      "tips": [
+        "Keep system prompts short — Claude Fable 5 follows brief instructions more reliably than verbose ones",
+        "Always explain WHY you need something, not just what: context unlocks significantly better outputs",
+        "Define explicit scope boundaries to prevent unrequested actions like drafting emails or creating backups"
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "Refactor prompts written for prior Claude models — older verbose instructions can degrade Fable 5 output quality",
+        "A single short instruction like 'lead with the outcome' is more effective than listing every behavior by name"
+      ],
+      "relevance": "Critical for any team migrating to Claude Fable 5 — the model's stronger instruction-following means over-specified prompts actively hurt performance.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "L2IBm6PZBDo"
+      ],
+      "video_quality_score": 3,
+      "low_quality_source": false
+    },
+    {
+      "slug": "fable5-progress-grounding",
+      "skill_name": "Fable 5 Progress-Grounding Pattern",
+      "category": "agents",
+      "description": "Instruct Claude Fable 5 to audit each progress claim against an actual tool result from the current session before reporting it. Anthropic testing showed this nearly eliminated fabricated status reports even on tasks specifically designed to elicit them.",
+      "use_case": "Long autonomous runs where accurate progress reporting is critical — CI pipelines, overnight agents, multi-step builds",
+      "output": "Verified progress reports with explicit evidence citations, preventing hallucinated status updates",
+      "quality_score": 9,
+      "model_version": "Fable 5",
+      "company": "Anthropic",
+      "country": "USA",
+      "open_source": false,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "Fable 5"
+        }
+      ],
+      "multi_tool": false,
+      "source_type": "linked_resource",
+      "source_url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5",
+      "source_video_id": "L2IBm6PZBDo",
+      "discovered_via": "video_description_link",
+      "via_video_id": "L2IBm6PZBDo",
+      "tips": [
+        "Use: 'Before reporting progress, audit each claim against a tool result from this session'",
+        "Instruct: 'Only report work you can point to evidence for; if something is not yet verified, say so explicitly'",
+        "Add: 'Report outcomes faithfully: if tests fail, say so with the output; if a step was skipped, say that'"
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "Most valuable in overnight or multi-hour autonomous runs where users cannot monitor in real time"
+      ],
+      "relevance": "Prevents the most dangerous failure mode in long agent runs — hallucinated success reports that hide real failures.",
+      "popularity_signals": [
+        "Anthropic testing: nearly eliminated fabricated status reports even on tasks designed to elicit them"
+      ],
+      "endorsement_video_ids": [
+        "L2IBm6PZBDo"
+      ],
+      "video_quality_score": 3,
+      "low_quality_source": false
+    },
+    {
+      "slug": "fable5-checkpoint-stopping",
+      "skill_name": "Fable 5 Checkpoint-Stopping Instruction",
+      "category": "agents",
+      "description": "Define precisely when Claude Fable 5 should pause for human input: only for destructive/irreversible actions, genuine scope changes, or input only the user can provide. For everything else the model proceeds autonomously, preventing needless interruptions in long workflows.",
+      "use_case": "Autonomous agentic pipelines where unnecessary check-ins break workflow but genuine blockers still need human resolution",
+      "output": "Autonomous agent that pauses at exactly the right moments without over-asking for permission",
+      "quality_score": 9,
+      "model_version": "Fable 5",
+      "company": "Anthropic",
+      "country": "USA",
+      "open_source": false,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "Fable 5"
+        }
+      ],
+      "multi_tool": false,
+      "source_type": "linked_resource",
+      "source_url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5",
+      "source_video_id": "L2IBm6PZBDo",
+      "discovered_via": "video_description_link",
+      "via_video_id": "L2IBm6PZBDo",
+      "tips": [
+        "Use: 'Pause for the user only when the work genuinely requires them: a destructive action, a real scope change, or input only they can provide'",
+        "For pipelines: 'You are operating autonomously. The user is not watching in real time. Asking Want me to? will block the work'",
+        "End-turn check: 'Before ending your turn, if your last paragraph is a plan or promise, do that work now with tool calls'"
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "Without explicit checkpoint instructions, Fable 5 can end a turn with stated intent instead of the actual tool call"
+      ],
+      "relevance": "Enables truly unattended long-running agents while preserving human control at critical decision points.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "L2IBm6PZBDo"
+      ],
+      "video_quality_score": 3,
+      "low_quality_source": false
+    },
+    {
+      "slug": "send-to-user-tool-pattern",
+      "skill_name": "send_to_user Tool Pattern for Long Agents",
+      "category": "agents",
+      "description": "Add a client-side send_to_user tool that Claude calls mid-task to surface verbatim messages (deliverables, progress updates, direct replies) without ending its turn. Tool inputs are never summarized by the model, so content arrives intact — critical for long async agents where summaries lose detail.",
+      "use_case": "Async agents running overnight or across many tool calls where the user needs to see specific outputs verbatim mid-task",
+      "output": "Unmodified mid-run messages delivered directly to the UI without interrupting the agent's execution flow",
+      "quality_score": 9,
+      "model_version": "Fable 5",
+      "company": "Anthropic",
+      "country": "USA",
+      "open_source": false,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "Fable 5"
+        }
+      ],
+      "multi_tool": false,
+      "source_type": "linked_resource",
+      "source_url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5",
+      "source_video_id": "L2IBm6PZBDo",
+      "discovered_via": "video_description_link",
+      "via_video_id": "L2IBm6PZBDo",
+      "tips": [
+        "Define the tool with a single 'message' string input; render the tool input directly in your UI and return a simple acknowledgement",
+        "Pair the tool definition with an explicit system prompt: 'When you have content the user must read verbatim, call send_to_user'",
+        "Do NOT route narration or internal reasoning through send_to_user — over-calling defeats the purpose"
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "Without an explicit system prompt instruction, Claude Fable 5 rarely calls send_to_user even when the tool is defined"
+      ],
+      "relevance": "Solves the core async agent UX problem: delivering critical information to users without interrupting long task execution.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "L2IBm6PZBDo"
+      ],
+      "video_quality_score": 3,
+      "low_quality_source": false
+    },
+    {
+      "slug": "fable5-agent-memory-pattern",
+      "skill_name": "Fable 5 Persistent Memory Pattern",
+      "category": "agents",
+      "description": "Provide Claude Fable 5 a markdown file or folder to record lessons from previous runs, one lesson per file with a one-line summary at top. Bootstrap the memory by having the model review past sessions with subagents. The model performs substantially better when it can reference accumulated lessons.",
+      "use_case": "Long-running or recurring agent workflows where learned lessons should persist across sessions",
+      "output": "Self-improving agent that retains corrections, confirmed approaches, and session insights across runs",
+      "quality_score": 9,
+      "model_version": "Fable 5",
+      "company": "Anthropic",
+      "country": "USA",
+      "open_source": false,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "Fable 5"
+        }
+      ],
+      "multi_tool": false,
+      "source_type": "linked_resource",
+      "source_url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5",
+      "source_video_id": "L2IBm6PZBDo",
+      "discovered_via": "video_description_link",
+      "via_video_id": "L2IBm6PZBDo",
+      "tips": [
+        "Store one lesson per file with a one-line summary at the top; record both corrections and confirmed approaches with why they mattered",
+        "Bootstrap with: 'Reflect on previous sessions. Use subagents to identify core themes and lessons, and store them in [X]'",
+        "Update existing notes rather than creating duplicates; delete notes that turn out to be wrong"
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "Even a simple markdown file provides enough structure for Fable 5 to build effective persistent memory across sessions"
+      ],
+      "relevance": "Enables continuous improvement of autonomous agents without manual prompt engineering between sessions.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "L2IBm6PZBDo"
+      ],
+      "video_quality_score": 3,
+      "low_quality_source": false
+    },
+    {
+      "slug": "fable5-anti-overplanning",
+      "skill_name": "Fable 5 Anti-Overplanning Instruction",
+      "category": "agents",
+      "description": "At higher effort levels, Claude Fable 5 can over-plan — re-deriving facts, surveying options it will not pursue, or narrating choices without acting. A short instruction (when you have enough information to act, act) eliminates this; no need to enumerate each specific behavior.",
+      "use_case": "High-effort Fable 5 tasks where the model tends to deliberate excessively before taking action",
+      "output": "Direct, action-first agent behavior that skips unnecessary deliberation and proceeds to tool calls faster",
+      "quality_score": 8,
+      "model_version": "Fable 5",
+      "company": "Anthropic",
+      "country": "USA",
+      "open_source": false,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "Fable 5"
+        }
+      ],
+      "multi_tool": false,
+      "source_type": "linked_resource",
+      "source_url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5",
+      "source_video_id": "L2IBm6PZBDo",
+      "discovered_via": "video_description_link",
+      "via_video_id": "L2IBm6PZBDo",
+      "tips": [
+        "Use: 'When you have enough information to act, act. Do not re-derive facts already established in the conversation'",
+        "Add: 'If you are weighing a choice, give a recommendation, not an exhaustive survey'",
+        "This instruction applies to user-facing messages only — thinking blocks can still deliberate freely"
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "Fable 5's strong instruction-following means a single short instruction is as effective as listing each anti-pattern individually"
+      ],
+      "relevance": "Eliminates the most common Fable 5 time-waster — excessive deliberation that delays actual task execution.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "L2IBm6PZBDo"
+      ],
+      "video_quality_score": 3,
+      "low_quality_source": false
     }
   ]
 }

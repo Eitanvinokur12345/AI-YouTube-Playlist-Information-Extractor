@@ -10829,6 +10829,56 @@
       ],
       "video_quality_score": 3,
       "low_quality_source": true
+    },
+    {
+      "slug": "progressive-disclosure-agent-context",
+      "skill_name": "Progressive Disclosure Context Engineering for Coding Agents",
+      "category": "agents",
+      "description": "Structure a coding agent's context using a CLAUDE.md or agents.md trunk file that auto-loads every session, then progressively disclose skills, scripts, MCP tools, and workflows as branches that the agent only loads when a task actually needs them. This prevents context overload while still giving the agent access to hundreds of tools.",
+      "use_case": "Giving a coding agent (Claude Code or similar) access to a large toolkit without flooding its context window on every task.",
+      "output": "An agent that loads only relevant context per task, staying within token limits while retaining full capability across its skill set.",
+      "quality_score": 7,
+      "model_version": null,
+      "company": "Anthropic",
+      "country": "USA",
+      "open_source": false,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude Code",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "ChatGPT",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Gemini",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=r9rxEd3d7sQ",
+      "source_video_id": "r9rxEd3d7sQ",
+      "tips": [
+        "Use CLAUDE.md or agents.md as your trunk file — it loads automatically every session and acts as the index of everything the agent can do.",
+        "Point from the trunk to skills, scripts, MCP tools, and workflows as branch references; the agent follows breadcrumbs and loads only what the current task needs.",
+        "Remember: anything that does NOT reach the context window literally does not exist to the agent — structure your files so the right context always gets in."
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "Progressive disclosure is the key mental model: expose tools incrementally based on task needs rather than loading everything upfront.",
+        "A coding agent is an LLM + a context window — the harness (like Claude Code) overlays a system prompt you cannot edit, so your custom context files are your only lever."
+      ],
+      "relevance": "Solves the fundamental challenge of giving agents large toolkits without hitting context limits, applicable to any LLM-based coding agent.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "r9rxEd3d7sQ"
+      ],
+      "video_quality_score": 7,
+      "low_quality_source": false
     }
   ]
 }

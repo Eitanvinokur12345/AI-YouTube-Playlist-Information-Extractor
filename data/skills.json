@@ -10924,6 +10924,51 @@
       ],
       "video_quality_score": 6,
       "low_quality_source": false
+    },
+    {
+      "slug": "claude-code-codex-orchestration-pattern",
+      "skill_name": "Claude Code + Codex Orchestration Pattern",
+      "category": "agents",
+      "description": "A multi-agent coding pattern where Claude Code handles orchestration and multi-agent planning while OpenAI Codex handles actual code execution, connected via a plugin. This splits cost and capability: the expensive, capable model (Claude) plans and orchestrates, while the token-efficient model (Codex) writes production-ready surgical code.",
+      "use_case": "Reducing cost per good code output in multi-step coding tasks by routing planning to Claude Code and execution to Codex.",
+      "output": "Production-ready code with less tech debt, generated at lower cost per unit by routing planning and execution to different models.",
+      "quality_score": 7,
+      "model_version": null,
+      "company": null,
+      "country": null,
+      "open_source": false,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude Code",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Codex",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=szGK-RYFVOQ",
+      "source_video_id": "szGK-RYFVOQ",
+      "tips": [
+        "Use Claude Code for orchestration and multi-agent planning — it is stronger at reasoning about tasks, dependencies, and sequencing.",
+        "Route actual code execution to Codex — it provides more token runway and writes more surgical, production-ready code with less tech debt.",
+        "A plugin connects Claude Code to Codex directly, enabling seamless handoff from planning to execution without manual switching."
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "In multi-agent coding setups, always assign the expensive model to planning and the efficient model to execution to minimize cost per good output."
+      ],
+      "relevance": "Demonstrates how to cut costs in complex coding workflows by intelligently routing tasks to the most appropriate and cost-effective model.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "szGK-RYFVOQ"
+      ],
+      "video_quality_score": 7,
+      "low_quality_source": false
     }
   ]
 }

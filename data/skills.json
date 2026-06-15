@@ -10788,6 +10788,47 @@
       ],
       "video_quality_score": 5,
       "low_quality_source": false
+    },
+    {
+      "slug": "cli-tools-over-mcp-context-savings",
+      "skill_name": "CLI Tools Over MCP for Context Efficiency",
+      "category": "agents",
+      "description": "Replace MCP servers with CLI tools in Claude Code to reduce context window consumption by ~40%, since MCP tools inject full JSON schemas on every call while CLI tools generate compact bash commands at ~10x fewer tokens. Use repos like CLI-anything or open-CLI to wrap any API or website into an agent-callable CLI interface.",
+      "use_case": "Optimizing Claude Code agent token usage by swapping MCP server integrations for equivalent CLI tool wrappers.",
+      "output": "A more context-efficient Claude Code agent setup with lower per-call token costs and faster execution.",
+      "quality_score": 3,
+      "model_version": null,
+      "company": "James Goldbach",
+      "country": "USA",
+      "open_source": true,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude Code",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": false,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=AaWPmHiABic",
+      "source_video_id": "AaWPmHiABic",
+      "tips": [
+        "CLI tools dynamically generate bash commands at ~10x fewer tokens per call vs MCP JSON schema overhead.",
+        "Use CLI-anything or open-CLI repos to quickly convert any API or website into an agent-callable CLI.",
+        "Build a library of 30+ CLI tool wrappers that cover the most common MCP server use cases."
+      ],
+      "slash_commands": [],
+      "general_tips": [],
+      "relevance": "Directly addresses the context window tax of MCP integrations, a core bottleneck for Claude Code agent workflows.",
+      "popularity_signals": [
+        "saved an average of 40% of my context window"
+      ],
+      "endorsement_video_ids": [
+        "AaWPmHiABic"
+      ],
+      "video_quality_score": 3,
+      "low_quality_source": true
     }
   ]
 }

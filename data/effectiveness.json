@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-15T19:12:59.853627+00:00",
+  "generated_at": "2026-06-15T23:18:41.385216+00:00",
   "north_star": "A huge, machine-readable hub of all AI knowledge that also improves existing skills, integrates new parts, and tests better versions.",
   "dimensions": [
     "quality",
@@ -24,11 +24,11 @@
   "transcript_sources": {
     "transcript": 145,
     "whisper": 0,
-    "supadata": 2,
-    "description_only": 1232,
+    "supadata": 3,
+    "description_only": 1231,
     "total": 1379
   },
-  "library_quality": 6.54,
+  "library_quality": 6.5,
   "lanes": [
     {
       "id": "analysis_claude",
@@ -120,7 +120,7 @@
         "quantity",
         "time"
       ],
-      "improve_note": "Recovers ~85% of caption-less videos fast from a home IP (coverage 11.1%) + translates foreign captions. No longer required — Supadata is the unattended baseline; this is the turbo when we're in a session. Block-aware (auto-stops on the escalating IP block)."
+      "improve_note": "Recovers ~85% of caption-less videos fast from a home IP (coverage 11.0%) + translates foreign captions. No longer required — Supadata is the unattended baseline; this is the turbo when we're in a session. Block-aware (auto-stops on the escalating IP block)."
     },
     {
       "id": "transcript_supadata",
@@ -129,7 +129,7 @@
       "engine": "Supadata API (their infra, no PC)",
       "metrics": {
         "quality": 8.5,
-        "quantity": 2.7,
+        "quantity": 3.0,
         "form": 9.0,
         "time": 8.0,
         "tokens": 10.0,
@@ -143,7 +143,7 @@
         "quantity",
         "time"
       ],
-      "improve_note": "PROVEN working & PC-FREE (the autonomy baseline): fetches on Supadata's infra so the datacenter-IP block doesn't apply; daily, dead-video skip protects the ~100/mo free quota (2 recovered). Lever: the quota caps backlog speed, not new videos."
+      "improve_note": "PROVEN working & PC-FREE (the autonomy baseline): fetches on Supadata's infra so the datacenter-IP block doesn't apply; daily, dead-video skip protects the ~100/mo free quota (3 recovered). Lever: the quota caps backlog speed, not new videos."
     },
     {
       "id": "analysis_free",
@@ -166,7 +166,7 @@
         "quality",
         "ease_external"
       ],
-      "improve_note": "Turns transcripts into records at 0 Claude cost via 4 VERIFIED engines (gpt-4.1-mini, OpenRouter, Groq, Gemini; pool auto-drops failures). Library avg quality 6.54/10, 11% low-source. Output is externally consumable via data/hub.json."
+      "improve_note": "Turns transcripts into records at 0 Claude cost via 4 VERIFIED engines (gpt-4.1-mini, OpenRouter, Groq, Gemini; pool auto-drops failures). Library avg quality 6.5/10, 12% low-source. Output is externally consumable via data/hub.json."
     },
     {
       "id": "web_news",
@@ -189,13 +189,13 @@
         "quality",
         "form"
       ],
-      "improve_note": "Always-on (every 6h), 83 RSS sources across labs, research (arXiv/BAIR/MIT), community (Reddit/HN) and top analysts; 1907 items stored. Dead feeds auto-prune."
+      "improve_note": "Always-on (every 6h), 83 RSS sources across labs, research (arXiv/BAIR/MIT), community (Reddit/HN) and top analysts; 1960 items stored. Dead feeds auto-prune."
     }
   ],
   "summary": {
     "weakest_lane": "Deep analysis (Claude, night-gated)",
     "weakest_effectiveness": 6.8,
     "top_improvement": "Highest quality, reserved for curation/self-improve (not bulk) to protect the small Pro budget — night-gated by design. The free pool carries the volume.",
-    "transcript_coverage_pct": 11.1
+    "transcript_coverage_pct": 11.0
   }
 }

@@ -130,6 +130,45 @@ const fmtDate = (s) => {
   } catch { return String(s); }
 };
 
+// ── "How do I actually USE this in my tool?" — make the catalogue ACTIONABLE ──────────
+// The project catalogues skills as SKILL.md, but to use one you must get it INTO the tool's
+// session. This generates a tool-specific deploy instruction + a ready-to-paste block so the
+// skill works "as if uploaded to the environment" — paste it and the tool follows it.
+function deployHowto(tool) {
+  const t = (tool || "").toLowerCase();
+  if (t.includes("claude"))
+    return `Claude: save the SKILL.md to your skills folder — <code>~/.claude/skills/&lt;slug&gt;/SKILL.md</code> (Claude Code) or upload it under Settings → Capabilities → Skills on claude.ai. Claude auto-loads it when relevant. Or paste the block below into a Project's custom instructions.`;
+  if (t.includes("chatgpt") || t.includes("openai") || t.includes("gpt"))
+    return `ChatGPT: create a Custom GPT (or open a Project) and paste the block below as its instructions — or paste it as your first message in a normal chat.`;
+  if (t.includes("cursor") || t.includes("windsurf"))
+    return `Cursor / Windsurf: add the block below to your project rules (<code>.cursor/rules</code> or <code>.windsurfrules</code>) — or paste it into the chat.`;
+  if (t.includes("gemini"))
+    return `Gemini: create a Gem with the block below as its instructions, or paste it into the chat.`;
+  if (t.includes("copilot"))
+    return `GitHub Copilot: add the block below to <code>.github/copilot-instructions.md</code>, or paste it into Copilot Chat.`;
+  return `Paste the block below into the tool's system prompt (or your first message). That loads the skill into the session — as if it were installed in the environment.`;
+}
+function skillPrompt(s) {
+  const lines = [`# ${s.skill_name || s.slug}`, "", (s.description || "").trim()];
+  if (s.use_case) lines.push("", `When to use: ${String(s.use_case).trim()}`);
+  if (s.output) lines.push("", `What it produces: ${String(s.output).trim()}`);
+  const tips = [].concat(s.tips || [], s.general_tips || []).filter(Boolean);
+  if (tips.length) { lines.push("", "Tips:"); tips.slice(0, 6).forEach(t => lines.push(`- ${t}`)); }
+  if ((s.compatibility || []).length)
+    lines.push("", "Works with: " + s.compatibility.map(c => (c.tool || "") +
+      (c.up_to_version && c.up_to_version !== "any" ? ` (${c.up_to_version})` : "")).join(", "));
+  if ((s.slash_commands || []).length) lines.push("", "Commands: " + s.slash_commands.join(" "));
+  if (s.source_url) lines.push("", `Source: ${s.source_url}`);
+  return lines.join("\n");
+}
+function useBox(s) {
+  return `<details class="usebox"><summary>⌁ Use this skill</summary>
+    <p class="howto">${deployHowto(s.target_tool)}</p>
+    <div class="copyrow"><button class="copybtn" type="button">Copy ready-to-paste block</button>
+      ${s.slug ? `<a class="mdlink" href="../skills/${esc(s.slug)}/SKILL.md" title="The full SKILL.md package">SKILL.md ↗</a>` : ""}</div>
+    <pre class="useprompt">${esc(skillPrompt(s))}</pre></details>`;
+}
+
 // Fetch a repo-root file (e.g. config.json). Same offline/origin assumption as ../data/.
 async function loadRoot(file) {
   try {
@@ -332,6 +371,7 @@ function renderSkills(data) {
       ${(s.compatibility && s.compatibility.length) ? `<p class="compatline"><b>Works with:</b> ${s.compatibility.map(c => `<span class="compat">${compatLabel(c)}</span>`).join(" ")}</p>` : ""}
       ${(s.tips && s.tips.length) ? `<p><b>Tips:</b> ${s.tips.map(esc).join(" · ")}</p>` : ""}
       ${sourceLine(s)}
+      ${useBox(s)}
     </div>`).join("");
   if (!list.length) html += empty(q() ? `No skills match "${esc(state.query)}".` : "No skills in this view.");
 
@@ -1153,6 +1193,19 @@ document.querySelectorAll("nav button").forEach(b =>
       { const on = !document.body.classList.contains("quickread");
         localStorage.setItem("excavatortron.quickread", on ? "1" : "0"); applyQR(on); });
   }
+
+  // Copy the ready-to-paste skill block (delegated — works for every re-render).
+  view.addEventListener("click", (e) => {
+    const btn = e.target.closest(".copybtn");
+    if (!btn) return;
+    const box = btn.closest(".usebox");
+    const txt = box ? (box.querySelector(".useprompt") || {}).textContent || "" : "";
+    const done = (ok) => { const old = btn.textContent;
+      btn.textContent = ok ? "✓ Copied" : "Press Ctrl+C"; btn.classList.toggle("ok", ok);
+      setTimeout(() => { btn.textContent = old; btn.classList.remove("ok"); }, 1600); };
+    if (navigator.clipboard) navigator.clipboard.writeText(txt).then(() => done(true)).catch(() => done(false));
+    else done(false);
+  });
 
   show("skills");
 })();

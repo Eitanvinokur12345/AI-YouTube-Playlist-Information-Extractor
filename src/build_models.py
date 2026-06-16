@@ -50,14 +50,20 @@ def _is_model(t: dict) -> bool:
 
 def main() -> int:
     tools = (json.load(open(DATA / "tools.json", encoding="utf-8")) if (DATA / "tools.json").exists() else {}).get("tools", [])
-    seen, models = set(), []
+    # dedup by IDENTITY = name+version (what makes a model unique), keeping the highest quality
+    best = {}
     for t in tools:
         if not _is_model(t):
             continue
-        slug = (t.get("slug") or (t.get("name") or "").lower().replace(" ", "-")).lower()
-        if slug in seen:
+        ident = (str(t.get("name") or "").lower().strip(), str(t.get("model_version") or "").lower().strip())
+        if ident == ("", ""):
             continue
-        seen.add(slug)
+        cur = best.get(ident)
+        if cur is None or (t.get("quality_score") or 0) > (cur.get("quality_score") or 0):
+            best[ident] = t
+    models = []
+    for t in best.values():
+        slug = (t.get("slug") or (t.get("name") or "").lower().replace(" ", "-")).lower()
         models.append({
             "name": t.get("name"), "slug": slug, "category": t.get("category") or "other",
             "model_version": t.get("model_version", ""), "company": t.get("company", ""),

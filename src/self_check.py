@@ -104,7 +104,7 @@ def CHECKS():
      (17, "Models ranking refreshed", lambda c: (len(c["models"]) > 0, f"models={len(c['models'])}")),
      (18, "Podium per non-empty category", lambda c: (len(c["models"]) > 0, "needs models")),
      (19, "Models sorted by score desc", lambda c: (True, "dashboard sorts client-side") if not c["models"] else (all((c["models"][i].get("quality_score",0) or 0) >= (c["models"][i+1].get("quality_score",0) or 0) for i in range(len(c["models"])-1)), "ordering")),
-     (20, "No duplicate model entries", lambda c: (_dups(c["models"], lambda m: (str(m.get("name") or "") + str(m.get("model_version") or "")).lower()) == 0, "unique")),
+     (20, "No duplicate model entries", lambda c: (lambda d: (d == 0, "unique" if d == 0 else f"{d} dup(s)"))(_dups(c["models"], lambda m: (str(m.get("name") or "") + str(m.get("model_version") or "")).lower()))),
      (21, "Dedup pass ran (overlaps scanned)", lambda c: (len(c["merges"]) > 0 or bool(c["deleted"]), f"{len(c['merges'])} merges logged")),
      (22, "Deleted skills snapshotted", lambda c: (c["deleted"] is not None, "deleted_skills.json present")),
      (23, "Every merge has a reason", lambda c: _frac_ok(c["merges"], lambda m: bool(m.get("reason")), 0.9) if c["merges"] else (True, "no merges")),

@@ -32,6 +32,7 @@ dashboard. It runs in the cloud for free and improves itself on a schedule, with
 - [[Engines]] — `CLAUDE.md`, `IMPROVE.md`, `REVIEW.md`, `REFERENCE_SPEC.md`.
 
 ## Key systems
+- [[Systems and Protocols]] — **the full list of every system & protocol** (transcripts, engine pool, hub API, the activator, self-check, security, …) in one place.
 - [[Cadence]] — high-frequency ingest + one weekly deep pass at night Israel time.
 - [[Dynamic Tabs]] — the dashboard grows new tabs from recurring anecdotes.
 - [[Reference Self-Check]] — the 50-question loop that keeps us true to the original spec.

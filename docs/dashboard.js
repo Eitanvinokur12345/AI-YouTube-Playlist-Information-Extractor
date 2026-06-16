@@ -168,6 +168,15 @@ function useBox(s) {
       ${s.slug ? `<a class="mdlink" href="../skills/${esc(s.slug)}/SKILL.md" title="The full SKILL.md package">SKILL.md ↗</a>` : ""}</div>
     <pre class="useprompt">${esc(skillPrompt(s))}</pre></details>`;
 }
+// Connectors are MCP servers — "using" one means registering it in your MCP client's config.
+function connectorUseBox(c) {
+  return `<details class="usebox"><summary>⌁ How to add this connector</summary>
+    <p class="howto">It's an MCP connector — register it in your client, then restart and its tools appear in the session.
+      <b>Claude Desktop:</b> add it under <code>claude_desktop_config.json → mcpServers</code>.
+      <b>Claude Code:</b> <code>claude mcp add</code> (or a project <code>.mcp.json</code>).
+      <b>Cursor / other MCP clients:</b> their MCP settings.${c.install_or_source ? ` <br><b>This one:</b> ${esc(c.install_or_source)}` : ""}</p>
+    ${c.url ? `<div class="copyrow"><a class="mdlink" href="${esc(c.url)}" target="_blank" rel="noopener">Website / repo ↗</a></div>` : ""}</details>`;
+}
 
 // Fetch a repo-root file (e.g. config.json). Same offline/origin assumption as ../data/.
 async function loadRoot(file) {
@@ -639,6 +648,7 @@ function renderConnectors(data) {
     ${c.install_or_source ? `<p><b>Install / source:</b> ${esc(c.install_or_source)}</p>` : ""}
     ${urlLine}
     ${srcLine}
+    ${connectorUseBox(c)}
   </div>`;
   }).join("") || empty(`No connectors match "${esc(state.query)}".`);
 }

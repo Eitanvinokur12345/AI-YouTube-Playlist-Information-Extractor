@@ -9,7 +9,7 @@
 //
 // Bump SHELL_CACHE to force the shell to refresh (after changing index.html/dashboard.js).
 // DATA_CACHE version is independent; bump it to purge old data caches.
-const SHELL_CACHE = "ai-skills-shell-v17";
+const SHELL_CACHE = "ai-skills-shell-v18";
 const DATA_CACHE  = "ai-skills-data-v1";
 const SHELL = [
   "./", "./index.html", "./dashboard.js", "./manifest.webmanifest", "./icon.png",

@@ -86,7 +86,13 @@ def main() -> int:
             s = _score(blob, terms)
             if s:
                 scored.append((s, x))
-        scored.sort(key=lambda z: (z[0], z[1].get("quality_score", 0) or 0), reverse=True)
+        # Rank = QUALITY-dominant, then installable (has a SKILL.md slug), then keyword fit.
+        def _rank(z):
+            s, x = z
+            q = x.get("quality_score", 0) or 0
+            installable = 2 if (key == "skills" and (x.get("slug") or x.get("skill_name"))) else 0
+            return q * 2 + installable + min(s, 6)
+        scored.sort(key=_rank, reverse=True)
         out[key] = [{
             "name": x.get(nk), "slug": x.get("slug") or _slug(str(x.get(nk, ""))), "score": s,
             "quality": x.get("quality_score"), "target_tool": x.get("target_tool", ""),

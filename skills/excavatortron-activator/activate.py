@@ -1,20 +1,26 @@
 """
 activate.py — ACTIVATE a chosen item from the Excavatortron hub (not copy-paste).
 
-  python activate.py skill <slug>                 # install SKILL.md into ~/.claude/skills/<slug>/ (live in Claude)
-  python activate.py connector <slug>             # print the mcpServers JSON + how to add it
-  python activate.py paste skill <slug> [--tool X]  # emit a deploy block for any tool (ChatGPT/Gemini/Cursor/Antigravity/…)
-  python activate.py paste tool|prompt|command <slug>
+  python activate.py skill <slug>                      # install SKILL.md into ~/.claude/skills/<slug>/ (live in Claude)
+  python activate.py connector <slug>                  # print the mcpServers JSON + how to add it
+  python activate.py deploy skill <slug> --tool "X"    # WRITE a native artifact for ANY tool (Cursor .mdc / Copilot /
+                                                       #   ChatGPT / Gemini / Antigravity / Stitch / Gamma / Omni / Midjourney / …)
+  python activate.py deploy tool|prompt|command <slug> --tool "X"
+  python activate.py manifest                          # list everything you've activated (so you can swap/uninstall)
 
 Reads the hub locally (inside the repo) or from the public API. Stdlib only.
 """
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import sys
 import urllib.request
+from datetime import datetime, timezone
 from pathlib import Path
+
+MANIFEST = Path.home() / ".claude" / "excavatortron-activated.json"
 
 BASE = "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/"
 RAW = "https://raw.githubusercontent.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/main/"
@@ -103,35 +109,90 @@ def show_connector(slug: str) -> int:
     return 0
 
 
-def paste(kind: str, slug: str, tool: str) -> int:
-    name_key = {"skill": ("skills.json", "skills", "skill_name"), "tool": ("tools.json", "tools", "name"),
-                "prompt": ("prompts.json", "prompts", "title"), "command": ("commands.json", "commands", "command")}.get(kind)
-    if not name_key:
-        print("kind must be skill|tool|prompt|command"); return 2
-    x = _find(name_key[0], name_key[1], slug)
-    if not x:
-        print(f"{kind} '{slug}' not found."); return 1
-    t = (tool or x.get("target_tool") or "").lower()
-    how = "Paste this into the tool's system prompt or first message — it loads the capability into the session."
-    if "chatgpt" in t or "gpt" in t:
-        how = "ChatGPT: paste as a Custom GPT's / Project's instructions, or as your first message."
-    elif "gemini" in t:
-        how = "Gemini: paste as a Gem's instructions, or into the chat."
-    elif "cursor" in t or "windsurf" in t:
-        how = "Cursor/Windsurf: add to your rules file (.cursor/rules / .windsurfrules), or paste in chat."
-    elif "antigravity" in t or "stitch" in t or "gamma" in t or "omni" in t:
-        how = f"{tool}: paste into its instruction / brief field (or first prompt)."
-    body = [f"# {x.get(name_key[2], slug)}", "", str(x.get("description") or x.get("purpose") or x.get("what_it_does") or "").strip()]
+_KINDS = {"skill": ("skills.json", "skills", "skill_name"), "tool": ("tools.json", "tools", "name"),
+          "prompt": ("prompts.json", "prompts", "title"), "command": ("commands.json", "commands", "command")}
+
+
+def _block(kind: str, x: dict) -> tuple[str, str]:
+    """(title, instruction-block text) — the portable capability, ready for any tool."""
+    nk = _KINDS[kind][2]
+    title = str(x.get(nk) or x.get("slug") or kind)
+    body = [f"# {title}", "", str(x.get("description") or x.get("purpose") or x.get("what_it_does") or "").strip()]
     if x.get("use_case"):
         body += ["", f"When to use: {x['use_case']}"]
+    if x.get("output"):
+        body += ["", f"What it produces: {x['output']}"]
     if x.get("prompt_text"):
         body += ["", x["prompt_text"]]
-    for tip in (x.get("tips") or [])[:6]:
-        body.append(f"- {tip}")
+    tips = (x.get("tips") or []) + (x.get("general_tips") or [])
+    if tips:
+        body += ["", "Guidance:"] + [f"- {t}" for t in tips[:8]]
+    if x.get("slash_commands"):
+        body += ["", "Commands: " + " ".join(x["slash_commands"])]
     if x.get("source_url"):
         body += ["", f"Source: {x['source_url']}"]
-    print(f"## How to deploy ({tool or x.get('target_tool') or 'any tool'}):\n{how}\n")
-    print("## Ready-to-paste block:\n" + "\n".join(body))
+    return title, "\n".join(body)
+
+
+# Known NATIVE formats. For everything else (any current/future tool) we still write a portable
+# instructions file — so the activator works for EVERY tool, not a fixed list.
+_NATIVE = {
+    "cursor": (".cursor/rules/{slug}.mdc", "Cursor rule — move into your project's .cursor/rules/."),
+    "windsurf": (".windsurf/rules/{slug}.md", "Windsurf rule — move into .windsurf/rules/."),
+    "copilot": (".github/copilot-instructions.md", "GitHub Copilot — repo-level instructions."),
+    "chatgpt": ("chatgpt/{slug}.instructions.md", "ChatGPT — paste as a Custom GPT's / Project's instructions."),
+    "gpt": ("chatgpt/{slug}.instructions.md", "ChatGPT — paste as a Custom GPT's / Project's instructions."),
+    "gemini": ("gemini/{slug}.gem.md", "Gemini — paste as a Gem's instructions."),
+}
+
+
+def _native_for(tool: str):
+    t = (tool or "").lower().strip()
+    for k, v in _NATIVE.items():
+        if k in t:
+            return v
+    safe = re.sub(r"[^a-z0-9]+", "-", t).strip("-") or "any-tool"
+    return (safe + "/{slug}.instructions.md",
+            f"{tool or 'This tool'} — paste this into its instruction / system-prompt / brief field "
+            f"(its equivalent of a 'skill' loaded into the environment).")
+
+
+def _manifest_add(entry: dict) -> None:
+    try:
+        data = json.loads(MANIFEST.read_text(encoding="utf-8")) if MANIFEST.exists() else {}
+    except Exception:
+        data = {}
+    data.setdefault("activated", [])
+    entry["at"] = datetime.now(timezone.utc).isoformat()
+    data["activated"].append(entry)
+    MANIFEST.parent.mkdir(parents=True, exist_ok=True)
+    MANIFEST.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def deploy(kind: str, slug: str, tool: str) -> int:
+    if kind not in _KINDS:
+        print("kind must be skill|tool|prompt|command"); return 2
+    x = _find(_KINDS[kind][0], _KINDS[kind][1], slug)
+    if not x:
+        print(f"{kind} '{slug}' not found in the hub."); return 1
+    title, content = _block(kind, x)
+    pathtpl, header = _native_for(tool)
+    rel = pathtpl.format(slug=_slug(slug))
+    dest = Path.cwd() / "excavatortron-deploy" / rel
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_text(f"<!-- {header} -->\n\n{content}\n", encoding="utf-8")
+    print(f"OK: wrote a native '{tool or 'portable'}' artifact -> {dest}")
+    print(f"   {header}")
+    _manifest_add({"type": kind, "slug": _slug(slug), "tool": tool or "portable", "artifact": str(dest)})
+    return 0
+
+
+def show_manifest() -> int:
+    if not MANIFEST.exists():
+        print("Nothing activated yet."); return 0
+    data = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    for e in data.get("activated", []):
+        print(f"  [{e.get('at','')[:19]}] {e.get('type')} {e.get('slug')} -> {e.get('tool')}  {e.get('artifact','')}")
     return 0
 
 
@@ -148,11 +209,17 @@ def main() -> int:
     if "--tool" in a:
         i = a.index("--tool"); tool = a[i + 1] if i + 1 < len(a) else ""; a = a[:i] + a[i + 2:]
     if cmd == "skill" and len(a) >= 2:
-        return install_skill(a[1])
+        rc = install_skill(a[1])
+        if rc == 0:
+            _manifest_add({"type": "skill", "slug": _slug(a[1]), "tool": "claude",
+                           "artifact": str(Path.home() / ".claude" / "skills" / _slug(a[1]) / "SKILL.md")})
+        return rc
     if cmd == "connector" and len(a) >= 2:
         return show_connector(a[1])
-    if cmd == "paste" and len(a) >= 3:
-        return paste(a[1], a[2], tool)
+    if cmd == "deploy" and len(a) >= 3:
+        return deploy(a[1], a[2], tool)
+    if cmd in ("manifest", "list"):
+        return show_manifest()
     print(__doc__); return 2
 
 

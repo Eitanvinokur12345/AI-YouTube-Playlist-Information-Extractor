@@ -41,12 +41,15 @@ This skill folder ships two scripts. Always FIND first, then ACTIVATE the user's
      Prints the `mcpServers` JSON to add to `claude_desktop_config.json` (Desktop) or the
      `claude mcp add …` command (Claude Code), plus the install/source. Then: restart → its tools
      appear in the session.
-   - **Tool / prompt / command →** `python activate.py paste tool|prompt|command <slug>`
-     Emits the ready-to-use text + source so it can be applied immediately.
-   - **Any OTHER tool** (ChatGPT, Gemini, Cursor, GitHub Copilot, Google Antigravity, Stitch, Gamma,
-     Omni, …) → `python activate.py paste skill <slug> --tool "<tool name>"`
-     Emits a deploy block formatted for THAT tool's instruction/rules surface (custom GPT, Gem,
-     rules file, system prompt) — the "as if uploaded to the environment" equivalent.
+   - **ANY OTHER TOOL** (ChatGPT, Gemini, Cursor, GitHub Copilot, Google Antigravity, Stitch, Gamma,
+     Omni, Midjourney, Higgsfield, AIR — anything that exists or will exist) →
+     `python activate.py deploy skill|tool|prompt|command <slug> --tool "<tool name>"`
+     It WRITES the real NATIVE artifact for that tool under `./excavatortron-deploy/` — a Cursor
+     `.cursor/rules/<slug>.mdc`, a Copilot `.github/copilot-instructions.md`, a ChatGPT/Gemini
+     instructions file, or (for any tool without a known native format) a portable
+     `<tool>/<slug>.instructions.md`. This is the "skills system, but inside each tool."
+   - Every activation is logged to `~/.claude/excavatortron-activated.json`; `python activate.py
+     manifest` lists what's active (so it can later be swapped/uninstalled).
 
 4. **Confirm** it's active. If it's a skill, optionally demonstrate it on the user's task right away.
 

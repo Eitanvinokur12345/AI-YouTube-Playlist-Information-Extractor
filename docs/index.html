@@ -17,13 +17,19 @@
   <meta property="og:description" content="Self-improving AI Skills tracker: skills library, model rankings, daily news, MCP connectors." />
   <meta property="og:type" content="website" />
   <style>
-    :root { --bg:#f5f6fa; --panel:#ffffff; --panel2:#f0f2f7; --line:#e1e4ed;
-            --text:#1a1d27; --muted:#6b7280; --accent:#2563eb; --good:#16a34a;
-            --warn:#d97706; --warnbg:#fffbeb; --bad:#dc2626; }
+    :root { --bg:#eceff5; --panel:#ffffff; --panel2:#f2f5fb; --line:#e2e7f0;
+            --text:#0f1729; --muted:#64708a; --accent:#4f46e5; --accent-ink:#3730a3;
+            --accent-soft:#eef0ff; --good:#16a34a; --warn:#d97706; --warnbg:#fffbeb;
+            --bad:#dc2626; --radius:14px;
+            --shadow:0 1px 3px rgba(15,23,42,.05), 0 12px 28px -16px rgba(15,23,42,.18); }
     * { box-sizing: border-box; }
-    body { font-family: system-ui, -apple-system, Segoe UI, sans-serif; margin:0;
-           background:var(--bg); color:var(--text);
-           font-size:15.5px; line-height:1.6; -webkit-font-smoothing:antialiased; }
+    body { font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; margin:0;
+           background:
+             radial-gradient(1200px 480px at 50% -120px, #e6e9f5 0%, rgba(230,233,245,0) 70%),
+             var(--bg);
+           color:var(--text);
+           font-size:15.5px; line-height:1.6; -webkit-font-smoothing:antialiased;
+           text-rendering:optimizeLegibility; }
 
     /* Header — centered, bold blue top stripe */
     header { padding:28px 28px 18px; background:var(--panel);
@@ -96,11 +102,12 @@
     /* Nav */
     nav { display:flex; gap:8px; padding:12px 28px; background:var(--panel2);
           border-bottom:1px solid var(--line); flex-wrap:wrap; }
-    nav button { background:var(--panel); color:#374151; border:1.5px solid var(--line);
-                 padding:8px 16px; border-radius:8px; cursor:pointer; font-size:14px;
-                 font-weight:500; transition:border-color .15s, color .15s; }
-    nav button:hover { border-color:var(--accent); color:var(--accent); }
-    nav button.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+    nav button { background:var(--panel); color:#3a4257; border:1.5px solid var(--line);
+                 padding:8px 16px; border-radius:999px; cursor:pointer; font-size:14px;
+                 font-weight:500; transition:border-color .15s, color .15s, box-shadow .15s, background .15s; }
+    nav button:hover { border-color:var(--accent); color:var(--accent); background:var(--accent-soft); }
+    nav button.active { background:var(--accent); color:#fff; border-color:var(--accent);
+                        box-shadow:0 6px 16px -4px rgba(79,70,229,.45); }
 
     main { padding:24px 28px; max-width:1100px; }
     .empty { color:var(--muted); }
@@ -110,16 +117,18 @@
     .subnav button.active { background:var(--accent); color:#fff; border-color:var(--accent); }
 
     /* Cards */
-    .card { background:var(--panel); border:1px solid var(--line); border-radius:14px;
-            padding:18px 20px; margin-bottom:14px;
-            box-shadow:0 1px 4px rgba(0,0,0,.06); }
-    .card h3 { margin:0 0 6px; font-size:16px; color:var(--text); }
+    .card { background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+            padding:18px 20px; margin-bottom:14px; box-shadow:var(--shadow);
+            transition:box-shadow .18s ease, transform .18s ease, border-color .18s ease; }
+    .card:hover { box-shadow:0 2px 6px rgba(15,23,42,.07), 0 18px 40px -20px rgba(79,70,229,.28);
+                  border-color:#d4d9e6; }
+    .card h3 { margin:0 0 6px; font-size:16px; color:var(--text); font-weight:650; letter-spacing:-.1px; }
     .card .sub { color:var(--muted); font-size:13px; margin-bottom:8px; }
     .card p { margin:6px 0; line-height:1.5; }
 
     /* Badges & pills */
-    .score { display:inline-block; background:#dbeafe; color:#1d4ed8;
-             border:1px solid #93c5fd; border-radius:6px; padding:1px 8px;
+    .score { display:inline-block; background:var(--accent-soft); color:var(--accent-ink);
+             border:1px solid #c7c9f5; border-radius:6px; padding:1px 8px;
              font-weight:700; font-size:13px; }
     .pill { display:inline-block; background:var(--panel2); color:#4b5563;
             border:1px solid var(--line); border-radius:999px; padding:1px 9px;

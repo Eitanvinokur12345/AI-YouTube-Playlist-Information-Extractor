@@ -17,27 +17,30 @@
   <meta property="og:description" content="Self-improving AI Skills tracker: skills library, model rankings, daily news, MCP connectors." />
   <meta property="og:type" content="website" />
   <style>
-    :root { --bg:#eceff5; --panel:#ffffff; --panel2:#f2f5fb; --line:#e2e7f0;
-            --text:#0f1729; --muted:#64708a; --accent:#4f46e5; --accent-ink:#3730a3;
-            --accent-soft:#eef0ff; --good:#16a34a; --warn:#d97706; --warnbg:#fffbeb;
-            --bad:#dc2626; --radius:14px;
-            --shadow:0 1px 3px rgba(15,23,42,.05), 0 12px 28px -16px rgba(15,23,42,.18); }
+    /* "Field archive" — warm tinted neutrals (never pure #000/#fff) + a clay/ember accent.
+       Deliberately NOT the AI-tool blue/indigo reflex. OKLCH for even, controlled tints. */
+    :root { --bg:oklch(0.967 0.006 74); --panel:oklch(0.995 0.0035 86); --panel2:oklch(0.952 0.009 76);
+            --line:oklch(0.901 0.011 76); --text:oklch(0.255 0.017 58); --muted:oklch(0.522 0.015 60);
+            --accent:oklch(0.565 0.137 47); --accent-ink:oklch(0.455 0.118 44); --accent-soft:oklch(0.949 0.030 64);
+            --good:oklch(0.62 0.12 150); --warn:oklch(0.66 0.13 66); --warnbg:oklch(0.962 0.034 78);
+            --bad:oklch(0.575 0.16 28); --radius:13px;
+            --shadow:0 1px 2px oklch(0.30 0.02 58 / .05), 0 14px 30px -18px oklch(0.30 0.04 50 / .26); }
     * { box-sizing: border-box; }
-    body { font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; margin:0;
+    body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; margin:0;
            background:
-             radial-gradient(1200px 480px at 50% -120px, #e6e9f5 0%, rgba(230,233,245,0) 70%),
+             radial-gradient(1100px 460px at 50% -140px, oklch(0.94 0.035 64) 0%, oklch(0.967 0.006 74 / 0) 72%),
              var(--bg);
            color:var(--text);
-           font-size:15.5px; line-height:1.6; -webkit-font-smoothing:antialiased;
+           font-size:15.5px; line-height:1.62; -webkit-font-smoothing:antialiased;
            text-rendering:optimizeLegibility; }
 
     /* Header — centered, bold blue top stripe */
     header { padding:28px 28px 18px; background:var(--panel);
              border-top:4px solid var(--accent); border-bottom:1px solid var(--line);
              text-align:center; }
-    h1 { margin:0; font-size:28px; font-weight:800; letter-spacing:-.5px; color:var(--text); }
-    .subtitle { font-size:11px; color:var(--accent); font-weight:700; letter-spacing:1.2px;
-                text-transform:uppercase; margin-top:4px; }
+    h1 { margin:0; font-size:31px; font-weight:800; letter-spacing:-.7px; color:var(--text); }
+    .subtitle { font-size:11px; color:var(--accent); font-weight:600; letter-spacing:1.6px;
+                text-transform:uppercase; margin-top:5px; }
     .meta { color:var(--muted); font-size:12px; margin-top:8px; }
 
     /* Big counters */
@@ -63,13 +66,13 @@
     .tokenwarn code { background:#1a1a1a; color:#7ee787; padding:1px 6px; border-radius:5px; }
 
     /* Catch-up banner */
-    .catchup { margin:0; padding:12px 28px; background:#eff6ff; color:#1e40af;
+    .catchup { margin:0; padding:12px 28px; background:var(--accent-soft); color:var(--accent-ink);
                border-bottom:2px solid var(--accent); }
-    .catchup .badge { display:inline-block; background:var(--accent); color:#fff;
-               font-weight:800; font-size:12px; letter-spacing:.5px; padding:3px 8px;
+    .catchup .badge { display:inline-block; background:var(--accent); color:var(--panel);
+               font-weight:700; font-size:12px; letter-spacing:.5px; padding:3px 8px;
                border-radius:6px; margin-right:8px; }
-    .catchup b { color:#1e3a8a; }
-    .catchup .cusub { display:block; color:#3b82f6; font-size:12px; margin-top:4px; }
+    .catchup b { color:var(--accent-ink); }
+    .catchup .cusub { display:block; color:var(--muted); font-size:12px; margin-top:4px; }
 
     /* Reliability alert banner */
     .alert { margin:0; padding:14px 28px; border-bottom:2px solid var(--line); font-size:14px; }
@@ -128,7 +131,7 @@
 
     /* Badges & pills */
     .score { display:inline-block; background:var(--accent-soft); color:var(--accent-ink);
-             border:1px solid #c7c9f5; border-radius:6px; padding:1px 8px;
+             border:1px solid oklch(0.86 0.045 58); border-radius:6px; padding:1px 8px;
              font-weight:700; font-size:13px; }
     .pill { display:inline-block; background:var(--panel2); color:#4b5563;
             border:1px solid var(--line); border-radius:999px; padding:1px 9px;
@@ -231,7 +234,7 @@
     .metric { background:var(--panel2); border:1px solid var(--line); border-radius:8px;
               padding:6px 10px; font-size:13px; }
     .metric b { color:var(--text); }
-    .sug { border-left:3px solid var(--line); padding:4px 0 4px 12px; margin:8px 0; }
+    .sug { padding:6px 0 6px 14px; margin:8px 0; border-bottom:1px solid var(--line); }
     .stat { display:inline-block; border-radius:999px; padding:1px 9px; font-size:12px;
             font-weight:700; margin-right:6px; }
     .st-pending { background:#fef3c7; color:#92400e; border:1px solid #fbbf24; }
@@ -296,7 +299,7 @@
                  border-radius:10px; padding:12px 14px; font-size:13px; line-height:1.55;
                  max-height:260px; overflow:auto; margin:8px 0; }
     /* News digest (pinned 'most important' at top of each window) */
-    .card.digest { border-left:4px solid var(--accent); background:#eff6ff; }
+    .card.digest { border:1px solid var(--accent); background:var(--accent-soft); }
     .card.digest ol { margin:6px 0 0; padding-left:22px; line-height:1.6; }
     .card.digest li { margin:4px 0; }
     /* Coming Soon (upcoming tools) */
@@ -312,9 +315,9 @@
     body.quickread .devbody { display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
 
     /* Per-tab "Updates: …" cadence line (one bullet at the top of each tab) */
-    .cadence-line { font-size:12.5px; color:#5b6472; background:#f1f5fb; border:1px solid #e2e8f0;
-      border-left:3px solid var(--accent,#2b6cb0); border-radius:6px; padding:6px 11px; margin:0 0 12px; }
-    .cadence-line b { color:#374151; }
+    .cadence-line { font-size:12.5px; color:var(--muted); background:var(--accent-soft);
+      border:1px solid var(--line); border-radius:8px; padding:7px 12px; margin:0 0 14px; }
+    .cadence-line b { color:var(--accent-ink); }
 
     /* Effectiveness scoreboard table */
     .efftable-wrap { overflow-x:auto; }

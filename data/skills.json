@@ -12370,6 +12370,105 @@
       ],
       "video_quality_score": 5,
       "low_quality_source": false
+    },
+    {
+      "skill_name": "Production System Prompt Design",
+      "slug": "production-system-prompt-design",
+      "category": "agents",
+      "description": "Write system prompts that reliably constrain model behavior for production use, going beyond chat-style prompting to achieve consistent, predictable outputs at scale. The goal is to make models behave the same way every time — not just once, but in live production codebases.",
+      "use_case": "Ensuring AI models in production applications produce reliable, consistent results that don't vary unpredictably between requests.",
+      "output": "Consistent, constrained model behavior in production — same inputs always produce structured, predictable outputs",
+      "quality_score": 7,
+      "model_version": null,
+      "company": null,
+      "country": null,
+      "open_source": false,
+      "target_tool": "other",
+      "is_claude_skill": false,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "ChatGPT",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Gemini",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v/_WwfE5feS8w",
+      "source_video_id": "_WwfE5feS8w",
+      "tips": [
+        "Write system prompts that constrain behavior — not just describe, but actively restrict what the model can and cannot do",
+        "Test your system prompts against adversarial inputs to verify they truly constrain behavior",
+        "Include explicit output format requirements in the system prompt for production reliability"
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "Getting reliable output in production is fundamentally different from getting decent responses in chat",
+        "System prompts must be treated as code — version controlled, tested, and reviewed"
+      ],
+      "relevance": "Production AI systems fail or produce inconsistent outputs when system prompts are not carefully engineered — this is the core skill distinguishing AI engineers from casual users.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "_WwfE5feS8w"
+      ],
+      "video_quality_score": 7,
+      "low_quality_source": false
+    },
+    {
+      "skill_name": "Function Calling for Structured AI Output",
+      "slug": "function-calling-structured-output",
+      "category": "code",
+      "description": "Use AI function calling / tool use to force models to return structured data your application code can directly consume, instead of parsing freeform text. This replaces brittle text parsing with reliable, schema-defined outputs that integrate cleanly into production codebases.",
+      "use_case": "Building AI integrations where the application needs to receive machine-parsable data (JSON objects, typed values) rather than natural language responses.",
+      "output": "Structured data objects (JSON) that match a predefined schema — directly usable in application code without parsing",
+      "quality_score": 8,
+      "model_version": null,
+      "company": null,
+      "country": null,
+      "open_source": false,
+      "target_tool": "other",
+      "is_claude_skill": false,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "ChatGPT",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Gemini",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v/_WwfE5feS8w",
+      "source_video_id": "_WwfE5feS8w",
+      "tips": [
+        "Define a function schema with the exact fields your application needs — the model fills them in",
+        "Use function calling instead of asking the model to 'return JSON' in plain text — it's more reliable",
+        "Validate the returned structured data against your schema before using it in production code"
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "Function calling / tool use is the standard mechanism for getting structured output from LLMs in production"
+      ],
+      "relevance": "Function calling turns AI models from chat interfaces into structured data APIs, enabling reliable integration into production systems.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "_WwfE5feS8w"
+      ],
+      "video_quality_score": 7,
+      "low_quality_source": false
     }
   ]
 }

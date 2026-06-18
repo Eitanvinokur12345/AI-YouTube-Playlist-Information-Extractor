@@ -11903,6 +11903,49 @@
       ],
       "video_quality_score": 7,
       "low_quality_source": false
+    },
+    {
+      "skill_name": "Claude Canary Trick: Early Hallucination Detection",
+      "slug": "claude-canary-hallucination-detection",
+      "category": "agents",
+      "description": "A small sentinel instruction added to CLAUDE.md that acts as a canary in a coal mine: it causes Claude to signal when a session begins degrading before it wastes hours on bad output. Based on Peter Steinberger's agentic engineering playbook, this technique catches drift early so you can reset the context window.",
+      "use_case": "Detecting context-window degradation in long Claude Code sessions before hallucinations compound into hours of wasted work",
+      "output": "An early warning signal in the agent session indicating the canary instruction was not followed, prompting a manual context reset",
+      "quality_score": 8,
+      "model_version": null,
+      "company": "Anthropic",
+      "country": "USA",
+      "open_source": false,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": false,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=C7Bm4ckgyuA",
+      "source_video_id": "C7Bm4ckgyuA",
+      "tips": [
+        "Add a canary instruction to your CLAUDE.md that Claude must acknowledge at the start of every response — its absence signals session degradation",
+        "Reset the context window as soon as the canary fails rather than continuing and compounding bad output",
+        "Based on Peter Steinberger's agentic engineering playbook — sessions don't fail suddenly; they degrade gradually"
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "Claude sessions degrade gradually, not suddenly — a canary lets you catch the early signs before hours are wasted"
+      ],
+      "relevance": "Long autonomous Claude Code sessions are the new norm; catching degradation early is essential for reliable agentic outputs",
+      "popularity_signals": [
+        "789 likes on a 50-second Short — high engagement for the technique's specificity"
+      ],
+      "endorsement_video_ids": [
+        "C7Bm4ckgyuA"
+      ],
+      "video_quality_score": 7,
+      "low_quality_source": false
     }
   ]
 }

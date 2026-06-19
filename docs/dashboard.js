@@ -1142,6 +1142,57 @@ async function renderEffectiveness() {
   view.innerHTML = html;
 }
 
+// ── Global fuzzy search — closest match across EVERY tab, even without the exact name ──
+function _bigrams(s) { s = (s || "").toLowerCase(); const g = new Set();
+  for (let i = 0; i < s.length - 1; i++) g.add(s.slice(i, i + 2)); return g; }
+function _sim(a, b) { const A = _bigrams(a), B = _bigrams(b); if (!A.size || !B.size) return 0;
+  let inter = 0; A.forEach(x => { if (B.has(x)) inter++; }); return (2 * inter) / (A.size + B.size); }
+function _scoreItem(ql, name, blob) {
+  const nl = (name || "").toLowerCase(), bl = ((name || "") + " " + (blob || "")).toLowerCase();
+  let s = 0;
+  if (nl === ql) s += 20; else if (nl.includes(ql)) s += 12;
+  if ((blob || "").toLowerCase().includes(ql)) s += 3;
+  s += ql.split(/\s+/).filter(w => w.length > 2).reduce((a, w) => a + (bl.includes(w) ? 2 : 0), 0);
+  s += _sim(ql, nl) * 6;                       // fuzzy closeness so a near-name still ranks
+  return s;
+}
+async function renderSearchAll() {
+  const query = (state.query || "").trim();
+  if (!query) return view.innerHTML = empty("Type in the search box and press Enter to search across every tab — closest matches first, even if you don't know the exact name.");
+  const [sk, to, mo, co, pr, cm] = await Promise.all([load("skills.json"), load("tools.json"),
+    load("models.json"), load("connectors.json"), load("prompts.json"), load("commands.json")]);
+  const ql = query.toLowerCase();
+  const sets = [
+    ["skill", "skills", (sk && sk.skills) || [], x => x.skill_name || x.slug, x => `${x.description || ""} ${x.use_case || ""} ${x.category || ""}`, x => x.source_url],
+    ["tool", "tools", (to && to.tools) || [], x => x.name, x => `${x.description || ""} ${x.category || ""} ${x.company || ""}`, x => x.source_url],
+    ["model", "tools", (mo && mo.models) || [], x => x.name, x => `${x.description || ""} ${x.category || ""}`, x => x.source_url],
+    ["connector", "connectors", (co && co.connectors) || [], x => x.name, x => `${x.what_it_does || ""} ${x.category || ""}`, x => x.url || x.source_url],
+    ["prompt", "prompts", (pr && pr.prompts) || [], x => x.title, x => `${x.purpose || ""} ${x.category || ""}`, x => ""],
+    ["command", "tips", (cm && cm.commands) || [], x => x.command || x.name, x => x.description || "", x => ""],
+  ];
+  const tabFor = { skill: "skills", tool: "tools", model: "tools", connector: "connectors", prompt: "prompts", command: "tips" };
+  let results = [];
+  for (const [type, , arr, nameF, blobF, urlF] of sets)
+    for (const x of arr) {
+      const name = String(nameF(x) || ""); if (!name) continue;
+      const blob = String(blobF(x) || ""); const score = _scoreItem(ql, name, blob);
+      if (score > 1.6) results.push({ type, name, blob: blob.slice(0, 170), score, url: urlF(x) || "" });
+    }
+  results.sort((a, b) => b.score - a.score); results = results.slice(0, 40);
+  let html = `<div class="cadence-line">&#8226; <b>Search:</b> closest matches across every tab for &ldquo;${esc(query)}&rdquo; (${results.length})</div>`;
+  if (!results.length) html += empty(`Nothing close to "${esc(query)}" yet — try fewer / different words.`);
+  html += results.map(r => `<div class="card srch">
+    <h3><span class="pill">${esc(r.type)}</span> ${esc(r.name)}
+      <span class="sub" style="font-weight:400">&rarr; <a href="#" data-goto="${esc(tabFor[r.type])}">open ${esc(tabFor[r.type])} tab</a></span></h3>
+    ${r.blob ? `<p>${esc(r.blob)}</p>` : ""}
+    ${r.url ? `<p class="sourceline"><a href="${esc(r.url)}" target="_blank" rel="noopener">source</a></p>` : ""}
+  </div>`).join("");
+  view.innerHTML = html;
+  view.querySelectorAll("[data-goto]").forEach(a => a.addEventListener("click", e => {
+    e.preventDefault(); show(a.dataset.goto);
+  }));
+}
+
 // ── tab router ───────────────────────────────────────────────────────────────
 async function show(tab) {
   state.activeTab = tab;
@@ -1171,6 +1222,7 @@ async function renderTab(tab) {
   if (tab === "sources") return renderSources();
   if (tab === "selfimprove") return renderSelfImprove();
   if (tab === "effectiveness") return renderEffectiveness();
+  if (tab === "search") return renderSearchAll();
   if (tab && tab.startsWith("dyn:")) return renderDynamicTab(tab.slice(4));
 }
 
@@ -1197,6 +1249,10 @@ document.querySelectorAll("nav button").forEach(b =>
     searchEl.addEventListener("input", () => {
       clearTimeout(t);
       t = setTimeout(() => { state.query = searchEl.value || ""; show(state.activeTab); }, 180);
+    });
+    // Enter = search EVERYTHING (closest matches across all tabs, even without the exact name).
+    searchEl.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") { state.query = searchEl.value || ""; show("search"); }
     });
   }
 

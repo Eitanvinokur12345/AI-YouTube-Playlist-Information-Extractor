@@ -610,7 +610,15 @@ function injectDynamicTabs() {
 }
 
 // ── Tab: Connectors ──────────────────────────────────────────────────────────
-function renderConnectors(data) {
+const _slugify = (s) => String(s || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+function safetyPill(rating, reasons) {
+  if (!rating) return "";
+  const map = { safe: ["safe", "saf-ok"], caution: ["caution", "saf-warn"], risky: ["risky", "saf-bad"] };
+  const m = map[rating]; if (!m) return "";
+  return `<span class="safpill ${m[1]}" title="${esc((reasons || []).join(" · "))}"><i class="dot"></i>${m[0]}</span>`;
+}
+async function renderConnectors(data) {
+  const safety = ((await load("safety.json")) || {}).connectors || {};
   let items = (data && data.connectors) || [];
   if (!items.length) return view.innerHTML = empty("No connectors or MCP servers tracked yet.");
   if (q()) items = items.filter(c => hit(c.name, c.provider, c.what_it_does, c.category, c.type));
@@ -629,6 +637,8 @@ function renderConnectors(data) {
     const fm = freeMap[freeRaw];
     const freePill = fm ? `<span class="freepill ${fm[1]}">${fm[0]}</span>` : "";
     const works = c.works_in ? `<span class="workspill" title="Which Claude surface this runs in">${esc(c.works_in)}</span>` : "";
+    const saf = safety[c.slug || _slugify(c.name)];
+    const safPill = saf ? safetyPill(saf.rating, saf.reasons) : "";
     const metaBits = [];
     if (c.free_tokens) metaBits.push(`<span class="metapill"><b>Free tier:</b> ${esc(c.free_tokens)}</span>`);
     if (c.paid_version) metaBits.push(`<span class="metapill"><b>Paid:</b> ${esc(c.paid_version)}</span>`);
@@ -637,6 +647,7 @@ function renderConnectors(data) {
     return `<div class="card ${isStarred(c) ? "starred" : ""}">
     <h3>${isStarred(c) ? '<span class="star" title="Starred — frozen, never auto-changed">&#9733;</span>' : ""}<span class="score">${esc(c.quality_score ?? "?")}/10</span> ${esc(c.name)}
       <span class="pill">${esc(c.type || "")}</span>
+      ${safPill}
       ${freePill}
       ${works}
       ${c.official ? '<span class="official">official</span>' : ""}

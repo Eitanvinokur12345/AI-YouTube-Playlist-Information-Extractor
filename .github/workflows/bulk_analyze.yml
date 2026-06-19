@@ -70,6 +70,10 @@ jobs:
         if: always()
         run: python -m src.self_check || true
 
+      - name: Safety ratings for connectors/skills (safe/caution/risky) -> data/safety.json
+        if: always()
+        run: python -m src.safety_check || true
+
       - name: Commit results
         if: always()
         env:

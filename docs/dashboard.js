@@ -958,25 +958,23 @@ function ensureGraphCss() {
     .graphhint{font-size:11px;color:var(--muted,#94a3b8);margin:7px 0 0;opacity:.75}`;
   document.head.appendChild(st);
 }
-async function mountBrainGraph(host) {
+function legendItem(color, label) { return `<span><i style="background:${color};color:${color}"></i>${label}</span>`; }
+async function mountBrainGraph(host, file = "brain_graph.json", legend = null) {
   ensureGraphCss();
-  const data = await load("brain_graph.json");
+  const data = await load(file);
   if (!data || !(data.nodes || []).length)
-    return host.innerHTML = empty("Graph not generated yet — runs from src/build_graph.py in the pipeline.");
+    return host.innerHTML = empty("Graph not generated yet — built in the pipeline.");
   const c = data.counts || {};
+  const defaultLegend =
+    legendItem(GRAPH_COLORS.skill, "skill") + legendItem(GRAPH_COLORS.tool, "tool") +
+    legendItem(GRAPH_COLORS.prompt, "prompt") + legendItem(GRAPH_COLORS.connector, "connector") +
+    legendItem(GRAPH_COLORS.category, "category") + legendItem(GRAPH_COLORS.toolhub, "tool-hub");
   host.innerHTML = `
     <div class="graphbar">
       <span class="graphcount">${c.nodes || data.nodes.length} nodes · ${c.links || (data.links || []).length} links</span>
       <input class="graphsearch" placeholder="highlight…" aria-label="highlight nodes" />
       <button class="graphreset">reset view</button>
-      <span class="graphlegend">
-        <span><i style="background:${GRAPH_COLORS.skill};color:${GRAPH_COLORS.skill}"></i>skill</span>
-        <span><i style="background:${GRAPH_COLORS.tool};color:${GRAPH_COLORS.tool}"></i>tool</span>
-        <span><i style="background:${GRAPH_COLORS.prompt};color:${GRAPH_COLORS.prompt}"></i>prompt</span>
-        <span><i style="background:${GRAPH_COLORS.connector};color:${GRAPH_COLORS.connector}"></i>connector</span>
-        <span><i style="background:${GRAPH_COLORS.category};color:${GRAPH_COLORS.category}"></i>category</span>
-        <span><i style="background:${GRAPH_COLORS.toolhub};color:${GRAPH_COLORS.toolhub}"></i>tool-hub</span>
-      </span>
+      <span class="graphlegend">${legend || defaultLegend}</span>
     </div>
     <canvas class="braincanvas"></canvas>
     <p class="graphhint">drag background to pan · scroll to zoom · drag a dot to move it · hover to focus · click a dot to open its source</p>`;
@@ -1057,7 +1055,8 @@ async function mountBrainGraph(host) {
   }
   function start() { if (!running) { running = true; raf = requestAnimationFrame(loop); } }
   function reheat(a) { alpha = Math.max(alpha, a || .3); start(); }
-  window.__graphStop = () => { running = false; if (raf) cancelAnimationFrame(raf); };
+  const _prevStop = window.__graphStop;   // chain so multiple graphs (knowledge + pipeline) all stop
+  window.__graphStop = () => { running = false; if (raf) cancelAnimationFrame(raf); if (_prevStop) _prevStop(); };
 
   function world(e) { const r = canvas.getBoundingClientRect();
     return { x: (e.clientX - r.left - ox) / scale, y: (e.clientY - r.top - oy) / scale }; }
@@ -1089,8 +1088,14 @@ async function renderDevConstruction() {
   const secs = (data && data.sections) || [];
   let html = `<div class="sub">${esc((data && data.intro) || "")}</div>`;
   html += `<div class="card">
-      <h3>🧠 Project knowledge graph — the Obsidian brain, live</h3>
+      <h3>🧠 Brain 1 — knowledge graph (what the project KNOWS)</h3>
+      <p class="sub">Every skill, tool, prompt and connector clustered by category and tool.</p>
       <div id="braingraph" class="braingraph"></div>
+    </div>`;
+  html += `<div class="card">
+      <h3>🛠 Brain 2 — system orchestration (how the project WORKS)</h3>
+      <p class="sub">Every internal system/protocol and what depends on what. The big amber node, <b>data/ hub</b>, is the main one everything feeds and reads from (like an n8n flow).</p>
+      <div id="pipegraph" class="braingraph"></div>
     </div>`;
   let list = secs;
   if (q()) list = list.filter(s => hit(s.title, s.body));
@@ -1104,6 +1109,14 @@ async function renderDevConstruction() {
   view.innerHTML = html;
   const gh = document.getElementById("braingraph");
   if (gh) mountBrainGraph(gh);
+  const pg = document.getElementById("pipegraph");
+  if (pg) {
+    const pipeLegend =
+      legendItem(GRAPH_COLORS.home, "the hub (main)") + legendItem(GRAPH_COLORS.connector, "source") +
+      legendItem(GRAPH_COLORS.tool, "transcripts") + legendItem(GRAPH_COLORS.skill, "analysis") +
+      legendItem(GRAPH_COLORS.toolhub, "quality/self-improve") + legendItem(GRAPH_COLORS.category, "output");
+    mountBrainGraph(pg, "pipeline_graph.json", pipeLegend);
+  }
 }
 
 // ── Tab: Effectiveness — how good & how rigid each retrieval/analysis lane is ──

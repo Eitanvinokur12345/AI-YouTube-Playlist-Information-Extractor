@@ -1,0 +1,266 @@
+{
+  "generated_at": "2026-06-19T22:01:22.401188+00:00",
+  "main": "hub",
+  "counts": {
+    "nodes": 23,
+    "links": 29
+  },
+  "nodes": [
+    {
+      "id": "hub",
+      "label": "data/ hub (the store)",
+      "group": "home",
+      "deg": 27
+    },
+    {
+      "id": "fetch",
+      "label": "Playlist fetch",
+      "group": "connector",
+      "deg": 2
+    },
+    {
+      "id": "news",
+      "label": "Web news (83 feeds)",
+      "group": "connector",
+      "deg": 2
+    },
+    {
+      "id": "discover",
+      "label": "Tool discovery",
+      "group": "connector",
+      "deg": 1
+    },
+    {
+      "id": "sources",
+      "label": "Channel growth",
+      "group": "connector",
+      "deg": 1
+    },
+    {
+      "id": "supadata",
+      "label": "Supadata transcripts (cloud)",
+      "group": "tool",
+      "deg": 1
+    },
+    {
+      "id": "residential",
+      "label": "Residential backfill",
+      "group": "tool",
+      "deg": 1
+    },
+    {
+      "id": "freepool",
+      "label": "Free engine pool (analyze)",
+      "group": "skill",
+      "deg": 2
+    },
+    {
+      "id": "claude",
+      "label": "Claude deep (night)",
+      "group": "skill",
+      "deg": 2
+    },
+    {
+      "id": "mine",
+      "label": "Mine feeds",
+      "group": "skill",
+      "deg": 2
+    },
+    {
+      "id": "resolver",
+      "label": "Comment resolver",
+      "group": "skill",
+      "deg": 1
+    },
+    {
+      "id": "selfcheck",
+      "label": "Self-check (50Q)",
+      "group": "toolhub",
+      "deg": 2
+    },
+    {
+      "id": "effectiveness",
+      "label": "Effectiveness scoreboard",
+      "group": "toolhub",
+      "deg": 2
+    },
+    {
+      "id": "review",
+      "label": "3-agent review",
+      "group": "toolhub",
+      "deg": 2
+    },
+    {
+      "id": "safety",
+      "label": "Safety ratings",
+      "group": "toolhub",
+      "deg": 2
+    },
+    {
+      "id": "dedup",
+      "label": "Dedup / models / graph",
+      "group": "toolhub",
+      "deg": 2
+    },
+    {
+      "id": "improve",
+      "label": "Self-improve (weekly)",
+      "group": "toolhub",
+      "deg": 2
+    },
+    {
+      "id": "dashboard",
+      "label": "Dashboard (Pages)",
+      "group": "category",
+      "deg": 1
+    },
+    {
+      "id": "hubapi",
+      "label": "Hub API (hub.json)",
+      "group": "category",
+      "deg": 1
+    },
+    {
+      "id": "brain",
+      "label": "Obsidian brain",
+      "group": "category",
+      "deg": 1
+    },
+    {
+      "id": "activator",
+      "label": "Activator skill",
+      "group": "category",
+      "deg": 1
+    },
+    {
+      "id": "bulk_analyze",
+      "label": "bulk analyze",
+      "group": "connector",
+      "deg": 0
+    },
+    {
+      "id": "transcribe",
+      "label": "transcribe",
+      "group": "connector",
+      "deg": 0
+    }
+  ],
+  "links": [
+    {
+      "source": "sources",
+      "target": "fetch"
+    },
+    {
+      "source": "fetch",
+      "target": "hub"
+    },
+    {
+      "source": "supadata",
+      "target": "hub"
+    },
+    {
+      "source": "residential",
+      "target": "hub"
+    },
+    {
+      "source": "hub",
+      "target": "freepool"
+    },
+    {
+      "source": "freepool",
+      "target": "hub"
+    },
+    {
+      "source": "hub",
+      "target": "claude"
+    },
+    {
+      "source": "claude",
+      "target": "hub"
+    },
+    {
+      "source": "news",
+      "target": "mine"
+    },
+    {
+      "source": "mine",
+      "target": "hub"
+    },
+    {
+      "source": "discover",
+      "target": "hub"
+    },
+    {
+      "source": "resolver",
+      "target": "hub"
+    },
+    {
+      "source": "news",
+      "target": "hub"
+    },
+    {
+      "source": "hub",
+      "target": "selfcheck"
+    },
+    {
+      "source": "selfcheck",
+      "target": "hub"
+    },
+    {
+      "source": "hub",
+      "target": "effectiveness"
+    },
+    {
+      "source": "effectiveness",
+      "target": "hub"
+    },
+    {
+      "source": "hub",
+      "target": "review"
+    },
+    {
+      "source": "review",
+      "target": "hub"
+    },
+    {
+      "source": "hub",
+      "target": "safety"
+    },
+    {
+      "source": "safety",
+      "target": "hub"
+    },
+    {
+      "source": "hub",
+      "target": "dedup"
+    },
+    {
+      "source": "dedup",
+      "target": "hub"
+    },
+    {
+      "source": "hub",
+      "target": "improve"
+    },
+    {
+      "source": "improve",
+      "target": "hub"
+    },
+    {
+      "source": "hub",
+      "target": "dashboard"
+    },
+    {
+      "source": "hub",
+      "target": "hubapi"
+    },
+    {
+      "source": "hub",
+      "target": "brain"
+    },
+    {
+      "source": "hub",
+      "target": "activator"
+    }
+  ]
+}

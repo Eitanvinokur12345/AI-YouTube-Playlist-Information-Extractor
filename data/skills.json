@@ -13345,6 +13345,47 @@
       ],
       "video_quality_score": 5,
       "low_quality_source": false
+    },
+    {
+      "slug": "claude-code-context-reset-on-failure",
+      "skill_name": "Claude Code Context Reset on Repeated Failure",
+      "category": "code",
+      "description": "When Claude Code fails twice in a row on the same problem, each failed fix accumulates in the context window, causing subsequent corrections to be grounded in failure rather than fresh reasoning. The solution is to clear the context completely and rewrite the prompt using the specific lessons learned from the two failures.",
+      "use_case": "Escaping Claude Code debugging spirals where each correction makes the problem worse rather than better.",
+      "output": "A fresh Claude Code session with a precisely targeted prompt that avoids the failed approaches, leading to a correct solution faster.",
+      "quality_score": 6,
+      "model_version": null,
+      "company": "Sebastian Hardy",
+      "country": null,
+      "open_source": false,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": false,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=1lHRsMg0VCI",
+      "source_video_id": "1lHRsMg0VCI",
+      "tips": [
+        "If Claude Code fails on the same problem twice, stop and clear the context — don't make a third correction in the same session.",
+        "Use what the two failures taught you to write a more specific, targeted prompt in the fresh context.",
+        "Every failed fix stays in the context and pollutes future corrections — treat repeated failure as a signal to reset, not to keep trying."
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "When any AI agent enters a correction spiral (fixing the fix that fixed the fix), clearing context and rewriting beats iterating in the same session."
+      ],
+      "relevance": "Prevents multi-hour debugging spirals in Claude Code by providing a clear trigger and protocol for context reset.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "1lHRsMg0VCI"
+      ],
+      "video_quality_score": 6,
+      "low_quality_source": false
     }
   ]
 }

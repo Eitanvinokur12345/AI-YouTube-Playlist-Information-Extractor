@@ -10995,7 +10995,8 @@
       "relevance": "Demonstrates how to cut costs in complex coding workflows by intelligently routing tasks to the most appropriate and cost-effective model.",
       "popularity_signals": [],
       "endorsement_video_ids": [
-        "szGK-RYFVOQ"
+        "szGK-RYFVOQ",
+        "nuNf4HON3U0"
       ],
       "video_quality_score": 7,
       "low_quality_source": false
@@ -12595,6 +12596,53 @@
         "bJFccKbnmwE"
       ],
       "video_quality_score": 9,
+      "low_quality_source": false
+    },
+    {
+      "skill_name": "Cross-Harness Skill Porting",
+      "slug": "cross-harness-skill-porting",
+      "category": "agents",
+      "description": "Technique for sharing AI agent configuration between Claude Code and OpenAI Codex using a canonical agents.md file and consistent YAML frontmatter in skill definitions. Skills live in .agents (Codex) vs .claude (Claude Code) folders but use identical yaml frontmatter, and a /duplicate command ports any skill from one harness to the other.",
+      "use_case": "Maintain one source of truth for agent instructions and skills that works across both Claude Code and Codex harnesses",
+      "output": "A portable multi-harness agent workspace where skills created for one coding AI can be reused in another",
+      "quality_score": 6,
+      "model_version": null,
+      "company": "James Goldbach",
+      "country": null,
+      "open_source": false,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude Code",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Codex",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v/nuNf4HON3U0",
+      "source_video_id": "nuNf4HON3U0",
+      "tips": [
+        "Use agents.md as the canonical instruction file and import it into CLAUDE.md",
+        "Store skills in .agents/ for Codex and .claude/ for Claude Code but keep the same YAML frontmatter",
+        "Use the /duplicate command to port a skill from one harness to the other in one shot"
+      ],
+      "slash_commands": [
+        "/duplicate"
+      ],
+      "general_tips": [
+        "Shared memory in plain markdown + an external knowledge base lets both agents read the same context"
+      ],
+      "relevance": "Enables practitioners to build skills once and use them across both Claude Code and Codex, avoiding duplicate maintenance",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "nuNf4HON3U0"
+      ],
+      "video_quality_score": 6,
       "low_quality_source": false
     }
   ]

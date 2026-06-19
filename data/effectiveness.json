@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-19T05:34:49.106779+00:00",
+  "generated_at": "2026-06-19T11:11:05.163908+00:00",
   "north_star": "A huge, machine-readable hub of all AI knowledge that also improves existing skills, integrates new parts, and tests better versions.",
   "dimensions": [
     "quality",
@@ -24,9 +24,9 @@
   "transcript_sources": {
     "transcript": 145,
     "whisper": 0,
-    "supadata": 7,
-    "description_only": 1305,
-    "total": 1457
+    "supadata": 8,
+    "description_only": 1342,
+    "total": 1495
   },
   "library_quality": 6.05,
   "lanes": [
@@ -120,7 +120,7 @@
         "quantity",
         "time"
       ],
-      "improve_note": "Recovers ~85% of caption-less videos fast from a home IP (coverage 10.4%) + translates foreign captions. No longer required — Supadata is the unattended baseline; this is the turbo when we're in a session. Block-aware (auto-stops on the escalating IP block)."
+      "improve_note": "Recovers ~85% of caption-less videos fast from a home IP (coverage 10.6%) + translates foreign captions. No longer required — Supadata is the unattended baseline; this is the turbo when we're in a session. Block-aware (auto-stops on the escalating IP block)."
     },
     {
       "id": "transcript_supadata",
@@ -129,7 +129,7 @@
       "engine": "Supadata API (their infra, no PC)",
       "metrics": {
         "quality": 8.5,
-        "quantity": 4.3,
+        "quantity": 4.7,
         "form": 9.0,
         "time": 8.0,
         "tokens": 10.0,
@@ -137,13 +137,13 @@
         "ease_project": 9.0,
         "ease_user": 8.0
       },
-      "effectiveness": 8.0,
+      "effectiveness": 8.1,
       "rigidity": 4,
       "weak_dims": [
         "quantity",
         "time"
       ],
-      "improve_note": "PROVEN working & PC-FREE (the autonomy baseline): fetches on Supadata's infra so the datacenter-IP block doesn't apply; daily, dead-video skip protects the ~100/mo free quota (7 recovered). Lever: the quota caps backlog speed, not new videos."
+      "improve_note": "PROVEN working & PC-FREE (the autonomy baseline): fetches on Supadata's infra so the datacenter-IP block doesn't apply; daily, dead-video skip protects the ~100/mo free quota (8 recovered). Lever: the quota caps backlog speed, not new videos."
     },
     {
       "id": "analysis_free",
@@ -189,13 +189,13 @@
         "quality",
         "form"
       ],
-      "improve_note": "Always-on (every 6h), 83 RSS sources across labs, research (arXiv/BAIR/MIT), community (Reddit/HN) and top analysts; 2576 items stored. Dead feeds auto-prune."
+      "improve_note": "Always-on (every 6h), 83 RSS sources across labs, research (arXiv/BAIR/MIT), community (Reddit/HN) and top analysts; 2590 items stored. Dead feeds auto-prune."
     }
   ],
   "summary": {
     "weakest_lane": "Deep analysis (Claude, night-gated)",
     "weakest_effectiveness": 6.8,
     "top_improvement": "Highest quality, reserved for curation/self-improve (not bulk) to protect the small Pro budget — night-gated by design. The free pool carries the volume.",
-    "transcript_coverage_pct": 10.4
+    "transcript_coverage_pct": 10.6
   }
 }

@@ -1,0 +1,63 @@
+name: Gemini video analysis (watch videos directly — no transcript)
+
+# THE backlog unblock. YouTube blocks transcript/audio from the datacenter IP, but the Gemini API
+# accepts a YouTube URL as video input and Google fetches it server-side. So Gemini WATCHES each
+# video (audio + on-screen visuals) and extracts skills/tools/connectors — no transcript, no IP
+# block. Free tier ~8h of YouTube/day; the script tracks a daily-minutes budget to stay inside it.
+# Uses the existing Gemini key (EXTERNAL_REVIEW_API_KEY). ZERO Claude-Pro tokens.
+on:
+  schedule:
+    - cron: "0 5 * * *"      # daily 05:00 UTC (its own slot)
+    - cron: "0 17 * * *"     # and 17:00 UTC, to use more of the daily free quota
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Max videos to watch this run"
+        default: "20"
+
+concurrency:
+  group: skills-tracker-gemini-video
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Watch videos with Gemini (audio + visual) -> skills/tools/connectors
+        env:
+          EXTERNAL_REVIEW_API_KEY: ${{ secrets.EXTERNAL_REVIEW_API_KEY }}
+        run: python -m src.gemini_video_analyze --limit "${{ github.event.inputs.limit || '20' }}" --sleep 2.0
+
+      - name: Keep derived data consistent + readouts (free, mechanical)
+        if: always()
+        run: |
+          python -m src.cross_tab_check || true
+          python -m src.build_models || true
+          python -m src.health || true
+          python -m src.effectiveness || true
+          python -m src.build_hub_index || true
+
+      - name: Commit results
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "skills-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor.git"
+          git add data skills other-skills 2>/dev/null || true
+          git commit -m "gemini-video (watch & extract): $(date -u +%Y-%m-%dT%H:%MZ)" || echo "nothing to commit"
+          git pull --rebase --autostash origin main || true
+          git push || echo "push skipped"

@@ -672,7 +672,39 @@ async function renderSelfImprove() {
       load("approvals.json"), load("improvement_audit.json"), load("stars.json"),
       load("self_check.json"), load("improvement_tasks.json"), load("review_findings.json"),
     ]);
+  if (window.__improveTimer) clearInterval(window.__improveTimer);
   let html = "";
+
+  // ── Countdown to the next self-improvement run + proof of what it last changed ──
+  const nextImprove = (() => {
+    const n = new Date();
+    const d = new Date(Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), n.getUTCDate(), 20, 0, 0));
+    let add = (6 - d.getUTCDay() + 7) % 7;                  // days until Saturday
+    if (add === 0 && n.getTime() > d.getTime()) add = 7;    // today's 20:00 already passed
+    d.setUTCDate(d.getUTCDate() + add);
+    return d;
+  })();
+  const lastSC = (selfCheck && selfCheck.ran_at) ? fmtDate(selfCheck.ran_at) : "—";
+  const scScore = selfCheck ? `${selfCheck.score}/${selfCheck.total || 50}` : "—";
+  const openTasks = (fixTasks && (fixTasks.tasks || []).filter(t => (t.status || "open") !== "done").length) || 0;
+  const lastReview = (review && review.generated_at) ? fmtDate(review.generated_at) : "—";
+  const lastEff = (await load("effectiveness.json"));
+  const effLine = lastEff ? `${lastEff.lanes ? lastEff.lanes.length : 0} lanes scored, weakest = ${esc((lastEff.summary || {}).weakest_lane || "?")}` : "—";
+  html += `<div class="card improve-clock">
+    <h3>⏱ Self-improvement</h3>
+    <div class="ic-row">
+      <div class="ic-timer"><div class="ic-label">Next deep pass in</div>
+        <div class="ic-count" id="improve-countdown">…</div>
+        <div class="sub">weekly · Sat 20:00 UTC (${esc(fmtDate(nextImprove.toISOString()))})</div></div>
+      <div class="ic-last">
+        <div class="sub" style="margin-bottom:6px"><b>What it last did</b> (so you can verify it's actually running):</div>
+        <ul class="ic-changes">
+          <li>Reference self-check ran <b>${esc(lastSC)}</b> &rarr; score <b>${esc(scScore)}</b></li>
+          <li><b>${esc(openTasks)}</b> open improvement task(s) queued for auto-fix</li>
+          <li>Effectiveness scoreboard: ${effLine}</li>
+          <li>3-agent review last ran <b>${esc(lastReview)}</b></li>
+        </ul></div>
+    </div></div>`;
 
   // Announcement when the self-improvement stage auto-created a new dashboard tab.
   if (health && health.new_tab_announcement) {
@@ -825,6 +857,16 @@ async function renderSelfImprove() {
   }
 
   view.innerHTML = html;
+  // live countdown to the next self-improvement run
+  const tickImprove = () => {
+    const el = document.getElementById("improve-countdown");
+    if (!el) { clearInterval(window.__improveTimer); return; }
+    let ms = nextImprove.getTime() - Date.now(); if (ms < 0) ms = 0;
+    const d = Math.floor(ms / 86400000), h = Math.floor(ms / 3600000) % 24,
+          m = Math.floor(ms / 60000) % 60, s = Math.floor(ms / 1000) % 60;
+    el.textContent = `${d}d ${h}h ${m}m ${s}s`;
+  };
+  tickImprove(); window.__improveTimer = setInterval(tickImprove, 1000);
 }
 
 // ── Tab: Grow Sources (suggest a channel when the playlist stalls) ────────────

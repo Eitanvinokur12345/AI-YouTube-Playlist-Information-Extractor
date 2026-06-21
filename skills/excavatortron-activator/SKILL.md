@@ -63,9 +63,35 @@ This skill folder ships two scripts. Always FIND first, then ACTIVATE the user's
 
 4. **Confirm** it's active. If it's a skill, optionally demonstrate it on the user's task right away.
 
+## Reading across EVERY tab
+`find.py` searches the WHOLE hub — skills, tools, **models**, connectors, prompts, commands — not a
+single category. Always consider the full picture: a task may be best served by a skill, by a tool,
+by wiring an MCP connector, by choosing a particular **model**, by a prompt or command, or (usually)
+by a COMBINATION of these. Use the `recipe` to assemble that combination across tabs.
+
+## Choosing vs. asking (the options protocol)
+After `find.py`, decide whether the best path is clear:
+
+- **One clearly-best approach** → just do it. Show the `recipe`, activate it, confirm.
+- **No single best answer** — several viable approaches, an ambiguous goal, or a real trade-off the
+  existing data can't settle → DON'T silently guess. Present **2–4 concrete options**, each with a
+  one-line **explanation** of what it gives up and gains, then ask the user to pick with a
+  multiple-choice question (an "American-style" choice — use the `AskUserQuestion` tool, each option
+  = one viable recipe/approach). Recommend one and mark it. Then activate whatever they choose.
+
+  Good triggers for options: "find me a way to do X" where X maps to 2+ strong but different stacks
+  (e.g. a no-code path vs a coded MCP path), or where free-vs-paid / simple-vs-powerful genuinely
+  diverge.
+
+- **NOSG override** — if the user's message ends with **`NOSG`** (No Options, Skip Guessing — "choose
+  what's best yourself"), NEVER present options. Pick the single best approach on the user's behalf,
+  activate it, and just report what you chose and why in one line. Strip the `NOSG` token before
+  acting on the request.
+
 ## Rules
-- NEVER invent a skill/tool/connector — only activate what `find.py` returns from the real hub.
-- Prefer the highest-`quality` match; surface 2–3 so the user can choose.
+- NEVER invent a skill/tool/connector/model — only activate what `find.py` returns from the real hub.
+- Lead with the assembled `recipe` (the combination), then surface 2–3 alternatives per type so any
+  component can be swapped.
 - For Claude, installing the SKILL.md (or adding the MCP server) IS the activation. For every other
   tool, the deploy block is the equivalent — paste it into that tool's instruction surface.
 - If a script errors (offline, etc.), fall back to reading the hub JSON directly and proceed.

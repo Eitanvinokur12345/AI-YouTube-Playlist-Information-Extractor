@@ -113,6 +113,11 @@ def build_recipe(out: dict) -> dict:
                 f'python activate.py deploy tool {t.get("slug")} --tool "claude"', floor=2):
             sup += 1
 
+    # 3b) MODEL — the best-fit model to run it on (recommended, not "installed").
+    for m in out.get("models", []):
+        if take("model", m, "model", "the recommended model to run this on", None, floor=2):
+            break
+
     # 4) COMMAND + PROMPT — only if they're clearly on-topic for this task.
     for cmd_item in out.get("commands", []):
         if take("command", cmd_item, "command", "a ready slash-command for the workflow", None, floor=2):
@@ -141,9 +146,12 @@ def main() -> int:
         return 2
     terms = [w for w in re.findall(r"[a-z0-9][a-z0-9\-]+", query.lower()) if len(w) > 2 and w not in STOP]
     out, rel = {}, {}
+    # Search EVERY tab of the hub, not a fixed subset — skills, tools, models, connectors,
+    # prompts, commands — so the activator can answer with anything the project knows.
     specs = [
         ("skills.json", "skills", "skill_name", ["use_case", "category", "target_tool"], "description"),
         ("tools.json", "tools", "name", ["category", "company"], "description"),
+        ("models.json", "models", "name", ["model_version", "category", "company"], "description"),
         ("connectors.json", "connectors", "name", ["works_in", "category"], "what_it_does"),
         ("prompts.json", "prompts", "title", ["category"], "purpose"),
         ("commands.json", "commands", "command", ["description"], "description"),

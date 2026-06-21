@@ -1,159 +1,23 @@
 {
-<<<<<<< Updated upstream
-  "updated_at": "2026-06-21T20:13:18.989653+00:00",
-=======
-  "updated_at": "2026-06-21T20:18:22.429997+00:00",
->>>>>>> Stashed changes
+  "updated_at": "2026-06-21T20:43:02.851559+00:00",
   "tasks": [
-    {
-      "n": 10,
-      "question": "Did Tab 1 extract a specific model version (never a vague name)?",
-      "fix": "Re-derive exact versions for bare vendor names (Claude, ChatGPT, Gemini, Grok, Sora, Veo, Llama) from each tool's source video/links; never keep a version-less vendor name as a tool record.",
-      "kind": "engine_followup",
-      "status": "open",
-      "created_at": "2026-06-06T16:15:15.621626+00:00"
-    },
-    {
-      "n": 12,
-      "question": "Did Tab 1 extract at least one tip for every relevant skill?",
-      "fix": "On the next analyze pass, extract at least one actionable tip for 'multi-llm-combination-workflow' from its source video/transcript.",
-      "kind": "engine_followup",
-      "status": "open",
-      "created_at": "2026-06-06T16:15:15.621626+00:00"
-    },
-    {
-      "n": 16,
-      "question": "Did Tab 1 write a SKILL.md for every technique?",
-      "fix": "Emit skills/<slug>/SKILL.md for the 19 techniques missing one (start: seedance-ugc). Make analyze write a SKILL.md for every technique it keeps.",
-      "kind": "engine_followup",
-      "status": "fixed",
-      "created_at": "2026-06-06T16:15:15.621626+00:00",
-      "fixed_at": "2026-06-06T00:00:00Z"
-    },
-    {
-      "n": 21,
-      "question": "Did Tab 3 scan all existing skills for overlaps (improve audit)?",
-      "fix": "Ensure improve.yml deep pass actually completes (writes health.json + self_check.json + runs overlap/dedup audit). Verify first-week nightly cron 0 20 * * 0-5 is firing; check workflow logs.",
-      "kind": "engine_followup",
-      "status": "open",
-      "created_at": "2026-06-06T16:15:15.621626+00:00"
-    },
-    {
-      "n": 27,
-      "question": "Did Tab 4 assign general tips to an approved topic?",
-      "fix": "Reconcile general-tip topics: move 'productivity' tips under an approved topic, or add 'productivity' to config.general_tip_topics. Pick one and apply consistently.",
-      "kind": "safe_auto",
-      "status": "fixed",
-      "created_at": "2026-06-06T16:15:15.621626+00:00",
-      "fixed_at": "2026-06-06T00:00:00Z"
-    },
-    {
-      "id": "selfcheck-q10",
-      "n": 10,
-      "question": "Specific model version + correct routing",
-      "fix": "6/229",
-      "kind": "engine_followup",
-      "status": "open",
-      "created_at": "2026-06-14T21:12:24.115799+00:00"
-    },
-    {
-      "id": "selfcheck-q17",
-      "n": 17,
-      "question": "Models ranking refreshed",
-      "fix": "models=0",
-      "kind": "engine_followup",
-      "status": "open",
-      "created_at": "2026-06-14T21:12:24.115799+00:00"
-    },
-    {
-      "id": "selfcheck-q18",
-      "n": 18,
-      "question": "Podium per non-empty category",
-      "fix": "needs models",
-      "kind": "engine_followup",
-      "status": "open",
-      "created_at": "2026-06-14T21:12:24.115799+00:00"
-    },
-    {
-      "id": "selfcheck-q21",
-      "n": 21,
-      "question": "Dedup pass ran (overlaps scanned)",
-      "fix": "check error: AttributeError",
-      "kind": "engine_followup",
-      "status": "open",
-      "created_at": "2026-06-14T21:12:24.115799+00:00"
-    },
-    {
-      "id": "selfcheck-q23",
-      "n": 23,
-      "question": "Every merge has a reason",
-      "fix": "check error: AttributeError",
-      "kind": "engine_followup",
-      "status": "open",
-      "created_at": "2026-06-14T21:12:24.115799+00:00"
-    },
-    {
-      "id": "selfcheck-q46",
-      "n": 46,
-      "question": "Zero duplicate records this run",
-      "fix": "slug-unique",
-      "kind": "engine_followup",
-      "status": "open",
-      "created_at": "2026-06-14T21:12:24.115799+00:00"
-    },
-    {
-      "id": "selfcheck-q20",
-      "n": 20,
-      "question": "No duplicate model entries",
-      "fix": "check error: TypeError",
-      "kind": "engine_followup",
-      "status": "open",
-      "created_at": "2026-06-16T10:34:01.664697+00:00"
-    },
-    {
-      "id": "selfcheck-q16",
-      "n": 16,
-      "question": "SKILL.md exists per technique",
-      "fix": "191/275",
-      "kind": "engine_followup",
-      "status": "open",
-      "created_at": "2026-06-17T16:24:35.678263+00:00"
-    },
-    {
-      "id": "selfcheck-q24",
-      "n": 24,
-      "question": "Tips de-duplicated",
-      "fix": "by_tool dedup",
-      "kind": "engine_followup",
-      "status": "open",
-      "created_at": "2026-06-19T22:31:36.742682+00:00"
-    },
-    {
-      "id": "selfcheck-q47",
-      "n": 47,
-      "question": "SKILL.md fields complete",
-      "fix": "234/402",
-      "kind": "engine_followup",
-      "status": "open",
-      "created_at": "2026-06-20T09:27:16.256063+00:00"
-    },
     {
       "trend_key": "tab:coding",
       "kind": "trend",
-      "question": "[trend] 'coding' is a large, distinct cluster (595 items) with no dedicated tab",
+      "question": "[trend] 'coding' is a large, distinct cluster (602 items) with no dedicated tab",
       "fix": "Add a 'Coding' tab/filter so this cluster is browsable on its own  (serves G5: Activate — put the info to use inside ANY tool (the activator))",
       "goal": "G5",
       "status": "open",
-      "created_at": "2026-06-21T20:18:22.084662+00:00"
+      "created_at": "2026-06-21T20:42:40.648554+00:00"
     },
     {
       "trend_key": "tab:browser_cua",
       "kind": "trend",
-      "question": "[trend] 'browser/cua' is a large, distinct cluster (199 items) with no dedicated tab",
+      "question": "[trend] 'browser/cua' is a large, distinct cluster (201 items) with no dedicated tab",
       "fix": "Add a 'Browser/Cua' tab/filter so this cluster is browsable on its own  (serves G3: Integrate skills/tools/MCPs/commands into working combinations)",
       "goal": "G3",
       "status": "open",
-      "created_at": "2026-06-21T20:18:22.084662+00:00"
+      "created_at": "2026-06-21T20:42:40.648554+00:00"
     },
     {
       "trend_key": "tab:memory_rag",
@@ -162,16 +26,16 @@
       "fix": "Add a 'Memory/Rag' tab/filter so this cluster is browsable on its own  (serves G1: Retrieve & analyze ALL AI info into a huge machine-readable hub)",
       "goal": "G1",
       "status": "open",
-      "created_at": "2026-06-21T20:18:22.084662+00:00"
+      "created_at": "2026-06-21T20:42:40.648554+00:00"
     },
     {
       "trend_key": "tab:data",
       "kind": "trend",
-      "question": "[trend] 'data' is a large, distinct cluster (142 items) with no dedicated tab",
+      "question": "[trend] 'data' is a large, distinct cluster (144 items) with no dedicated tab",
       "fix": "Add a 'Data' tab/filter so this cluster is browsable on its own  (serves G1: Retrieve & analyze ALL AI info into a huge machine-readable hub)",
       "goal": "G1",
       "status": "open",
-      "created_at": "2026-06-21T20:18:22.084662+00:00"
+      "created_at": "2026-06-21T20:42:40.648554+00:00"
     },
     {
       "trend_key": "tab:local_models",
@@ -180,7 +44,7 @@
       "fix": "Add a 'Local/Models' tab/filter so this cluster is browsable on its own  (serves G4: Evaluate & test tool/model versions — surface what actually works)",
       "goal": "G4",
       "status": "open",
-      "created_at": "2026-06-21T20:18:22.084662+00:00"
+      "created_at": "2026-06-21T20:42:40.648554+00:00"
     },
     {
       "maint_key": "brain:Empty-body items render as blank 'white'",
@@ -188,7 +52,7 @@
       "question": "[maintenance/brain] Empty-body items render as blank 'white' nodes in the brain graph (70)",
       "fix": "Skip empty-body items from the brain (or backfill a one-line description) so they stop appearing as contentless dots.",
       "status": "open",
-      "created_at": "2026-06-21T20:18:22.429997+00:00"
+      "created_at": "2026-06-21T20:42:40.727331+00:00"
     },
     {
       "maint_key": "brain:Title collisions: distinct items share o",
@@ -196,7 +60,43 @@
       "question": "[maintenance/brain] Title collisions: distinct items share one note name and overwrite each other (10)",
       "fix": "De-duplicate or suffix colliding titles so each item is its own note.",
       "status": "open",
-      "created_at": "2026-06-21T20:18:22.429997+00:00"
+      "created_at": "2026-06-21T20:42:40.727331+00:00"
+    },
+    {
+      "id": "selfcheck-q10",
+      "n": 10,
+      "question": "Specific model version + correct routing",
+      "fix": "26/428",
+      "kind": "engine_followup",
+      "status": "open",
+      "created_at": "2026-06-21T20:43:02.851559+00:00"
+    },
+    {
+      "id": "selfcheck-q16",
+      "n": 16,
+      "question": "SKILL.md exists per technique",
+      "fix": "247/428",
+      "kind": "engine_followup",
+      "status": "open",
+      "created_at": "2026-06-21T20:43:02.851559+00:00"
+    },
+    {
+      "id": "selfcheck-q24",
+      "n": 24,
+      "question": "Tips de-duplicated",
+      "fix": "by_tool dedup",
+      "kind": "engine_followup",
+      "status": "open",
+      "created_at": "2026-06-21T20:43:02.851559+00:00"
+    },
+    {
+      "id": "selfcheck-q47",
+      "n": 47,
+      "question": "SKILL.md fields complete",
+      "fix": "247/428",
+      "kind": "engine_followup",
+      "status": "open",
+      "created_at": "2026-06-21T20:43:02.851559+00:00"
     }
   ]
 }

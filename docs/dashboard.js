@@ -95,27 +95,65 @@ function cadenceLine(tab) {
   return txt ? `<div class="cadence-line" title="How often this tab's data updates">&#8226; <b>Updates:</b> ${txt}</div>` : "";
 }
 
-// ── Quick-read: actually CONDENSE text (first sentence / ~24 words), not just CSS-clamp it ──
+// ── Quick-read: real content PROCESSING, not just tighter line-spacing ──
+// Extractive summary: score each sentence by how much of the text's signal it carries (term
+// frequency, stopwords removed, length-normalised) and surface the MOST informative one — which is
+// often buried mid-paragraph, not the first. Then bold the single most salient term so the eye
+// lands on the topic instantly. This processes the content for the reader instead of truncating.
+const QR_STOP = new Set(("the a an and or but for with you your this that these those is are be to of in "
+  + "on it its as at by from can will would could using use used make makes more most very our we they "
+  + "their them then than so if not no yes new also just like into out over all any each which what how "
+  + "when who why was were has have had do does done about across via per up down off").split(" "));
+function _qrFreq(t) {
+  const f = Object.create(null);
+  (t.toLowerCase().match(/[a-z0-9][a-z0-9\-]{2,}/g) || []).forEach(w => {
+    if (!QR_STOP.has(w)) f[w] = (f[w] || 0) + 1;
+  });
+  return f;
+}
 function summarizeText(t) {
   t = (t || "").trim().replace(/\s+/g, " ");
   if (!t) return t;
-  const end = t.search(/[.!?](\s|$)/);          // first sentence boundary
-  let s = (end > 20) ? t.slice(0, end + 1) : t;  // ignore a too-early period (e.g. "v3.")
+  const sents = t.match(/[^.!?]+[.!?]?/g) || [t];
+  if (sents.length === 1 && t.split(" ").length <= 26) return t;
+  const f = _qrFreq(t);
+  let best = sents[0], bestScore = -1;
+  for (const s of sents) {
+    const words = (s.toLowerCase().match(/[a-z0-9][a-z0-9\-]{2,}/g) || []).filter(w => !QR_STOP.has(w));
+    if (words.length < 2) continue;
+    const score = words.reduce((a, w) => a + (f[w] || 0), 0) / Math.sqrt(words.length); // signal density
+    if (score > bestScore) { bestScore = score; best = s; }
+  }
+  let s = best.trim();
   const w = s.split(" ");
-  if (w.length > 24) s = w.slice(0, 24).join(" ") + "…";
-  return s;
+  if (w.length > 28) s = w.slice(0, 28).join(" ") + "…";
+  // bold the most salient term so the topic pops
+  const top = Object.keys(f).sort((a, b) => f[b] - f[a])[0];
+  return { text: s, top };
 }
-// Shorten the pure-text description paragraph of every card (skip labelled/structured lines).
+// In quick-read: replace each card's description with its extracted essence AND hide the secondary
+// lines (extra paragraphs, sub-labels) so the card collapses to title + one scannable point.
 function quickreadSummarize(on) {
-  view.querySelectorAll(".card > p").forEach(p => {
-    if (p.querySelector("b, span, a, code")) return;   // not a plain description
+  view.querySelectorAll(".card").forEach(card => {
+    const ps = [...card.querySelectorAll(":scope > p")].filter(p => !p.querySelector("b, span, a, code"));
+    const first = ps[0];
     if (on) {
-      if (p.dataset.qrFull === undefined) p.dataset.qrFull = p.textContent;
-      const short = summarizeText(p.dataset.qrFull);
-      if (short && short.length < p.dataset.qrFull.length) p.textContent = short;
-    } else if (p.dataset.qrFull !== undefined) {
-      p.textContent = p.dataset.qrFull;
-      delete p.dataset.qrFull;
+      if (first) {
+        if (first.dataset.qrFull === undefined) first.dataset.qrFull = first.textContent;
+        const r = summarizeText(first.dataset.qrFull);
+        const out = typeof r === "string" ? { text: r, top: "" } : r;
+        if (out.text) {
+          const safe = out.text.replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+          first.innerHTML = out.top
+            ? safe.replace(new RegExp(`\\b(${out.top})\\b`, "i"), "<b>$1</b>") : safe;
+        }
+      }
+      ps.slice(1).forEach(p => { p.dataset.qrHidden = "1"; p.style.display = "none"; });
+    } else {
+      if (first && first.dataset.qrFull !== undefined) {
+        first.textContent = first.dataset.qrFull; delete first.dataset.qrFull;
+      }
+      card.querySelectorAll('[data-qr-hidden="1"]').forEach(p => { p.style.display = ""; delete p.dataset.qrHidden; });
     }
   });
 }
@@ -519,7 +557,8 @@ async function renderNews() {
   const wfiles = { daily: "daily_web_news.json", weekly: "weekly_web_news.json", monthly: "monthly_web_news.json" };
   let html = `<div class="subnav">` + ["daily", "weekly", "monthly"].map(w =>
     `<button class="${state.newsWindow === w ? "active" : ""}" data-news="${w}">${w}</button>`).join("") + `</div>`;
-  const [vdata, wdata] = await Promise.all([load(vfiles[state.newsWindow]), load(wfiles[state.newsWindow])]);
+  const [vdata, wdata, digestData] = await Promise.all([
+    load(vfiles[state.newsWindow]), load(wfiles[state.newsWindow]), load("news_digest.json")]);
   const ventries = (vdata && vdata.entries) || [];
   const wentries = (wdata && wdata.entries) || [];
   const ts = (s) => { const d = Date.parse(s || ""); return isNaN(d) ? 0 : d; };
@@ -528,6 +567,16 @@ async function renderNews() {
   const hdr = (vdata && vdata.header) || (wdata && wdata.header) || {};
   html += `<div class="sub">Window: ${esc(hdr.window || state.newsWindow)} ·
     ${ventries.length} from videos + ${wentries.length} from official sites</div>`;
+  // The system's OWN synthesized brief (src/news_digest.py) — a real summary, grouped into themes,
+  // not a list of headlines. Shown first when available for this window.
+  const syn = digestData && digestData.windows && digestData.windows[state.newsWindow];
+  if (syn && syn.summary && !q()) {
+    html += `<div class="card news-brief"><h3>📰 The brief <span class="sub">— our summary of ${esc(state.newsWindow)} AI news</span></h3>
+      <p class="brief-lede">${esc(syn.summary)}</p>` +
+      ((syn.themes || []).length ? `<div class="brief-themes">` + syn.themes.map(t =>
+        `<div class="brief-theme"><b>${esc(t.theme)}</b><span>${esc(t.detail)}</span></div>`).join("") + `</div>` : "") +
+      `<p class="hint">Synthesized free from ${esc(syn.n_sources || 0)} sources${syn.engine ? ` · ${esc(syn.engine)}` : ""}. Headlines below.</p></div>`;
+  }
   // Pinned "most important" digest (CLAUDE.md/news writes header.digest); shown above the full array.
   const digest = (vdata && vdata.header && vdata.header.digest)
     || (wdata && wdata.header && wdata.header.digest) || [];

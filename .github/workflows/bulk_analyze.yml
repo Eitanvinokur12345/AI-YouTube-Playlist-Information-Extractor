@@ -51,6 +51,13 @@ jobs:
           python -m src.build_graph || true
           python -m src.build_pipeline_graph || true
 
+      - name: Self-improvement protocols — trend watch, maintenance sweep, live status (free)
+        if: always()
+        run: |
+          python -m src.trend_watch || true
+          python -m src.maintenance_check || true
+          python -m src.pipeline_status || true
+
       - name: Progress readout (transcripts X/Y, library totals) -> data/health.json
         if: always()
         run: python -m src.health || true

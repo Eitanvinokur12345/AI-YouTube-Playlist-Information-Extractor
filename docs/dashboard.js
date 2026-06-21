@@ -1125,10 +1125,47 @@ async function mountBrainGraph(host, file = "brain_graph.json", legend = null) {
 }
 
 // ── Tab: Developer Construction (rebuild spec + the live knowledge graph) ─────
+// ── Live Pipeline monitor — proof that retrieval + analysis is actually running ──
+// Reads data/pipeline_status.json (regenerated every workflow). Each lane's heartbeat
+// comes from the git commit history, so a green row = that lane really committed recently.
+function _ageAgo(h) {
+  if (h == null) return "never";
+  if (h < 1) return "&lt;1h ago";
+  if (h < 48) return `${Math.round(h)}h ago`;
+  return `${Math.round(h / 24)}d ago`;
+}
+async function pipelinePanel() {
+  const p = await load("pipeline_status.json");
+  if (!p || !p.lanes) return "";
+  const OV = { live: ["pl-live", "● LIVE — data is flowing"], slow: ["pl-slow", "● SLOWING — some lanes overdue"],
+               stale: ["pl-stale", "● STALLED — lanes not running"] };
+  const ov = OV[p.overall] || OV.stale;
+  const d = p.deltas_since_last || {};
+  const moved = Object.keys(d).filter(k => d[k] > 0).map(k => `+${d[k]} ${k.replace("videos_with_transcript", "transcripts")}`);
+  const movedLine = moved.length ? moved.join(" · ") : "steady (no new items since last refresh)";
+  const snap = p.snapshot || {};
+  const tg = snap.videos_total ? Math.round(100 * (snap.videos_with_transcript || 0) / snap.videos_total) : 0;
+  let rows = p.lanes.map(L => `
+    <div class="pl-row">
+      <span class="pl-dot pl-${L.status}" title="${esc(L.status)}"></span>
+      <div class="pl-main"><b>${esc(L.label)}</b><span class="pl-what">${esc(L.what)}</span></div>
+      <div class="pl-meta"><span class="pl-age">ran ${_ageAgo(L.age_hours)}</span><span class="pl-runs">${L.runs_7d}× / 7d</span></div>
+    </div>`).join("");
+  return `<div class="card pipe-panel">
+      <div class="pipe-head"><h3>📡 Live Pipeline</h3><span class="pl-badge ${ov[0]}">${ov[1]}</span></div>
+      <p class="sub">Is retrieval &amp; analysis actually running? Each lane's heartbeat is its real commit time — green means it committed within its expected cadence.</p>
+      <div class="pl-since">Since last refresh (${_ageAgo((Date.now() - new Date(p.since || p.generated_at).getTime()) / 3.6e6)}): <b>${esc(movedLine)}</b></div>
+      <div class="pl-prog"><span>Transcripts ${snap.videos_with_transcript || 0} / ${snap.videos_total || 0} (${tg}%)</span><span class="pl-bar"><i style="width:${tg}%"></i></span></div>
+      <div class="pl-rows">${rows}</div>
+      <p class="hint">Updated ${esc(fmtDate(p.generated_at))}. Library now: ${snap.skills || 0} skills · ${snap.tools || 0} tools · ${snap.models || 0} models · ${snap.connectors || 0} connectors.</p>
+    </div>`;
+}
+
 async function renderDevConstruction() {
   const data = await load("dev_construction.json");
   const secs = (data && data.sections) || [];
   let html = `<div class="sub">${esc((data && data.intro) || "")}</div>`;
+  html += await pipelinePanel();
   html += `<div class="card">
       <h3>🧠 Brain 1 — knowledge graph (what the project KNOWS)</h3>
       <p class="sub">Every skill, tool, prompt and connector clustered by category and tool.</p>

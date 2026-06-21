@@ -1,153 +1,202 @@
 {
+<<<<<<< Updated upstream
   "generated_at": "2026-06-21T20:13:18.469981+00:00",
+=======
+  "generated_at": "2026-06-21T20:22:17.088387+00:00",
+>>>>>>> Stashed changes
   "main": "hub",
+  "goals": {
+    "G1": "Retrieve & analyze",
+    "G2": "Self-improve",
+    "G3": "Integrate",
+    "G4": "Evaluate/test",
+    "G5": "Activate"
+  },
   "counts": {
-    "nodes": 24,
-    "links": 29
+    "nodes": 26,
+    "links": 34
   },
   "nodes": [
     {
       "id": "hub",
       "label": "data/ hub (the store)",
       "group": "home",
-      "deg": 27
+      "goal": "G1",
+      "deg": 30
     },
     {
       "id": "fetch",
       "label": "Playlist fetch",
       "group": "connector",
+      "goal": "G1",
       "deg": 2
     },
     {
       "id": "news",
-      "label": "Web news (83 feeds)",
+      "label": "Web/news discovery (83 feeds)",
       "group": "connector",
+      "goal": "G1",
       "deg": 2
     },
     {
       "id": "discover",
-      "label": "Tool discovery",
+      "label": "GitHub/web tool & MCP discovery",
       "group": "connector",
+      "goal": "G1",
       "deg": 1
     },
     {
       "id": "sources",
       "label": "Channel growth",
       "group": "connector",
+      "goal": "G1",
       "deg": 1
     },
     {
       "id": "supadata",
       "label": "Supadata transcripts (cloud)",
       "group": "tool",
+      "goal": "G1",
       "deg": 1
     },
     {
       "id": "residential",
       "label": "Residential backfill",
       "group": "tool",
+      "goal": "G1",
+      "deg": 1
+    },
+    {
+      "id": "gemini_video",
+      "label": "Gemini watch (audio+visual)",
+      "group": "tool",
+      "goal": "G1",
       "deg": 1
     },
     {
       "id": "freepool",
       "label": "Free engine pool (analyze)",
       "group": "skill",
+      "goal": "G1",
       "deg": 2
     },
     {
       "id": "claude",
       "label": "Claude deep (night)",
       "group": "skill",
+      "goal": "G1",
       "deg": 2
     },
     {
       "id": "mine",
       "label": "Mine feeds",
       "group": "skill",
+      "goal": "G1",
       "deg": 2
     },
     {
       "id": "resolver",
       "label": "Comment resolver",
       "group": "skill",
+      "goal": "G1",
       "deg": 1
     },
     {
       "id": "selfcheck",
       "label": "Self-check (50Q)",
       "group": "toolhub",
+      "goal": "G2",
       "deg": 2
     },
     {
       "id": "effectiveness",
       "label": "Effectiveness scoreboard",
       "group": "toolhub",
+      "goal": "G2",
       "deg": 2
     },
     {
       "id": "review",
       "label": "3-agent review",
       "group": "toolhub",
+      "goal": "G2",
       "deg": 2
     },
     {
       "id": "safety",
-      "label": "Safety ratings",
+      "label": "Security/safety gate (rates connectors)",
       "group": "toolhub",
+      "goal": "G2",
+      "deg": 2
+    },
+    {
+      "id": "trend",
+      "label": "Trend watch → proposes new tabs/features",
+      "group": "toolhub",
+      "goal": "G2",
+      "deg": 2
+    },
+    {
+      "id": "maintenance",
+      "label": "Maintenance / integrity sweep",
+      "group": "toolhub",
+      "goal": "G2",
       "deg": 2
     },
     {
       "id": "dedup",
       "label": "Dedup / models / graph",
       "group": "toolhub",
+      "goal": "G4",
       "deg": 2
     },
     {
       "id": "improve",
       "label": "Self-improve (weekly)",
       "group": "toolhub",
-      "deg": 2
+      "goal": "G2",
+      "deg": 4
     },
     {
       "id": "dashboard",
       "label": "Dashboard (Pages)",
       "group": "category",
+      "goal": "G1",
       "deg": 1
     },
     {
       "id": "hubapi",
       "label": "Hub API (hub.json)",
       "group": "category",
+      "goal": "G1",
       "deg": 1
     },
     {
       "id": "brain",
       "label": "Obsidian brain",
       "group": "category",
+      "goal": "G1",
       "deg": 1
     },
     {
       "id": "activator",
-      "label": "Activator skill",
+      "label": "Activator skill (find+combine+activate)",
       "group": "category",
+      "goal": "G5",
       "deg": 1
     },
     {
       "id": "bulk_analyze",
       "label": "bulk analyze",
       "group": "connector",
-      "deg": 0
-    },
-    {
-      "id": "gemini_video",
-      "label": "gemini video",
-      "group": "connector",
+      "goal": "G1",
       "deg": 0
     },
     {
       "id": "transcribe",
       "label": "transcribe",
       "group": "connector",
+      "goal": "G1",
       "deg": 0
     }
   ],
@@ -166,6 +215,10 @@
     },
     {
       "source": "residential",
+      "target": "hub"
+    },
+    {
+      "source": "gemini_video",
       "target": "hub"
     },
     {
@@ -235,6 +288,22 @@
     {
       "source": "safety",
       "target": "hub"
+    },
+    {
+      "source": "hub",
+      "target": "trend"
+    },
+    {
+      "source": "trend",
+      "target": "improve"
+    },
+    {
+      "source": "hub",
+      "target": "maintenance"
+    },
+    {
+      "source": "maintenance",
+      "target": "improve"
     },
     {
       "source": "hub",

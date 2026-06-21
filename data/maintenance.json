@@ -1,0 +1,77 @@
+{
+  "generated_at": "2026-06-21T20:18:22.429997+00:00",
+  "health_score": 49,
+  "grade": "D",
+  "issue_count": 5,
+  "issues": [
+    {
+      "severity": "high",
+      "area": "brain",
+      "issue": "Empty-body items render as blank 'white' nodes in the brain graph",
+      "count": 70,
+      "fix": "Skip empty-body items from the brain (or backfill a one-line description) so they stop appearing as contentless dots.",
+      "sample": [
+        "Amazon Echo Dot Max",
+        "Android Auto",
+        "ATProto",
+        "Cloud Sonic",
+        "CloudWatch"
+      ]
+    },
+    {
+      "severity": "high",
+      "area": "brain",
+      "issue": "Title collisions: distinct items share one note name and overwrite each other",
+      "count": 10,
+      "fix": "De-duplicate or suffix colliding titles so each item is its own note.",
+      "sample": [
+        "Codebase Knowledge Graph for Claude Code Token Savings",
+        "Higgsfield AI",
+        "Claude Opus 4.8",
+        "Llama",
+        "Hermes"
+      ]
+    },
+    {
+      "severity": "medium",
+      "area": "brain",
+      "issue": "Oversized category hubs become hairballs in the graph view",
+      "count": 689,
+      "fix": "Sub-bucket big categories (cap members per hub, add sub-hubs) so the graph stays readable.",
+      "sample": [
+        "productivity (193)",
+        "code (186)",
+        "research (133)",
+        "agents (177)"
+      ]
+    },
+    {
+      "severity": "medium",
+      "area": "data",
+      "issue": "Version-less bare vendor names kept as tools",
+      "count": 8,
+      "fix": "Re-derive an exact version for each, or fold into the proper product record.",
+      "sample": [
+        "Claude",
+        "Gemini",
+        "Grok",
+        "Llama",
+        "Sora"
+      ]
+    },
+    {
+      "severity": "low",
+      "area": "data",
+      "issue": "Connectors with no URL/source can't be installed or verified",
+      "count": 10,
+      "fix": "Resolve each connector's repo/package URL (or drop it).",
+      "sample": [
+        "Alexa + Claude Integration",
+        "Recall Chrome extension",
+        "Claude Co-work Slack Integration",
+        "Claude Co-work Notion Integration",
+        "Canva Connector for Claude"
+      ]
+    }
+  ]
+}

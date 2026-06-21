@@ -666,11 +666,12 @@ async function renderConnectors(data) {
 
 // ── Tab: Self-Improvement (health + suggestion queue + audit) ─────────────────
 async function renderSelfImprove() {
-  const [health, sugData, apprData, audit, starsData, selfCheck, fixTasks, review] =
+  const [health, sugData, apprData, audit, starsData, selfCheck, fixTasks, review, trends, maint] =
     await Promise.all([
       load("health.json"), load("improvement_suggestions.json"),
       load("approvals.json"), load("improvement_audit.json"), load("stars.json"),
       load("self_check.json"), load("improvement_tasks.json"), load("review_findings.json"),
+      load("trends.json"), load("maintenance.json"),
     ]);
   if (window.__improveTimer) clearInterval(window.__improveTimer);
   let html = "";
@@ -705,6 +706,34 @@ async function renderSelfImprove() {
           <li>3-agent review last ran <b>${esc(lastReview)}</b></li>
         </ul></div>
     </div></div>`;
+
+  // ── Trend watch — surging topics the system proposes turning into tabs/features ──
+  if (trends && (trends.proposals || []).length) {
+    const goals = trends.goals || {};
+    const top = trends.proposals.slice(0, 6);
+    html += `<div class="card trend-card"><h3>📈 Trend watch <span class="sub">→ new tabs &amp; features</span></h3>
+      <p class="sub">The system watches its own library for surging topics and proposes features, scored 1–10 and tied to one of the 5 goals. Strong ones are auto-queued for self-improvement.</p>
+      <div class="trend-rows">` +
+      top.map(p => `<div class="trend-row">
+        <span class="trend-score s-${p.score >= 8 ? "hi" : p.score >= 6 ? "mid" : "lo"}">${esc(p.score)}</span>
+        <div class="trend-main"><b>${esc(p.proposed_feature)}</b><span class="trend-why">${esc(p.trend)}</span></div>
+        <span class="trend-goal" title="${esc(goals[p.goal] || "")}">${esc(p.goal)}</span>
+      </div>`).join("") +
+      `</div></div>`;
+  }
+
+  // ── Maintenance sweep — system integrity, incl. the brain "white lines" fix ──
+  if (maint && (maint.issues || []).length !== undefined) {
+    const g = maint.grade || "?";
+    const gcls = g === "A" ? "good" : (g === "B" || g === "C") ? "warn" : "bad";
+    html += `<div class="card"><h3>🧹 Maintenance sweep</h3>
+      <div class="health"><div class="big ${gcls}">${esc(g)}<span style="font-size:18px"> · ${esc(maint.health_score)}/100</span></div>
+      <div><div class="sub">Integrity of the brain + whole data layer · generated ${esc(fmtDate(maint.generated_at))}</div>
+      <ul class="ic-changes" style="margin-top:8px">` +
+      (maint.issues || []).slice(0, 6).map(i =>
+        `<li><b class="sev-${esc(i.severity)}">${esc(i.severity)}</b> — ${esc(i.issue)} <b>(${esc(i.count)})</b><br><span class="sub">→ ${esc(i.fix)}</span></li>`).join("") +
+      `</ul></div></div></div>`;
+  }
 
   // Announcement when the self-improvement stage auto-created a new dashboard tab.
   if (health && health.new_tab_announcement) {
@@ -973,7 +1002,7 @@ function renderComingSoon(data) {
 // (built by src/build_graph.py). Pan = drag background, zoom = wheel, drag a node to move it,
 // hover to focus its neighbours, click a node to open its source. Pure canvas, no libraries.
 const GRAPH_COLORS = {
-  home: "#f59e0b", hub: "#f59e0b", category: "#38bdf8", toolhub: "#a78bfa",
+  home: "#d4a72c", hub: "#d4a72c", category: "#38bdf8", toolhub: "#a78bfa",
   skill: "#34d399", tool: "#f472b6", prompt: "#fbbf24", connector: "#60a5fa",
 };
 function ensureGraphCss() {
@@ -1173,7 +1202,7 @@ async function renderDevConstruction() {
     </div>`;
   html += `<div class="card">
       <h3>🛠 Brain 2 — system orchestration (how the project WORKS)</h3>
-      <p class="sub">Every internal system/protocol and what depends on what. The big amber node, <b>data/ hub</b>, is the main one everything feeds and reads from (like an n8n flow).</p>
+      <p class="sub">Every internal system/protocol and what depends on what. The big gold node, <b>data/ hub</b>, is the main one everything feeds and reads from (like an n8n flow). Nodes are tinted by which of the 5 goals they serve.</p>
       <div id="pipegraph" class="braingraph"></div>
     </div>`;
   let list = secs;

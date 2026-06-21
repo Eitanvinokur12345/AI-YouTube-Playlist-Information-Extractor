@@ -22,6 +22,11 @@
     :root { --bg:oklch(0.967 0.006 74); --panel:oklch(0.995 0.0035 86); --panel2:oklch(0.952 0.009 76);
             --line:oklch(0.901 0.011 76); --text:oklch(0.255 0.017 58); --muted:oklch(0.522 0.015 60);
             --accent:oklch(0.55 0.105 172); --accent-ink:oklch(0.44 0.092 172); --accent-soft:oklch(0.95 0.035 168);
+            /* Gold — a luxe metallic accent threaded through every area as a highlight (NOT the base
+               palette). Used for #1 ranks, active nav, badges, key numbers, hub node, hairlines. */
+            --gold:oklch(0.80 0.118 86); --gold-deep:oklch(0.60 0.10 80); --gold-ink:oklch(0.50 0.085 78);
+            --gold-soft:oklch(0.95 0.045 88); --gold-line:oklch(0.86 0.085 86);
+            --gold-grad:linear-gradient(135deg, oklch(0.86 0.10 92) 0%, oklch(0.74 0.13 78) 55%, oklch(0.64 0.11 72) 100%);
             --good:oklch(0.62 0.12 150); --warn:oklch(0.66 0.13 66); --warnbg:oklch(0.962 0.034 78);
             --bad:oklch(0.575 0.16 28); --radius:13px;
             --shadow:0 1px 2px oklch(0.30 0.02 58 / .05), 0 14px 30px -18px oklch(0.30 0.04 50 / .26); }
@@ -124,15 +129,17 @@
                  padding:8px 16px; border-radius:999px; cursor:pointer; font-size:14px;
                  font-weight:500; transition:border-color .15s, color .15s, box-shadow .15s, background .15s; }
     nav button:hover { border-color:var(--accent); color:var(--accent); background:var(--accent-soft); }
-    nav button.active { background:var(--accent); color:#fff; border-color:var(--accent);
-                        box-shadow:0 6px 16px -4px rgba(79,70,229,.45); }
+    nav button.active { background:var(--accent); color:#fff; border-color:var(--gold);
+                        box-shadow:0 6px 16px -5px oklch(0.44 0.092 172 / .5), inset 0 0 0 1px oklch(0.85 0.09 86 / .55); }
+    nav button.active::after { content:""; display:block; height:2px; margin:6px -4px -3px;
+                        border-radius:2px; background:var(--gold-grad); }
 
     main { padding:24px 28px; max-width:1100px; }
     .empty { color:var(--muted); }
     .subnav { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
     .subnav button { background:var(--panel); color:#374151; border:1.5px solid var(--line);
                  padding:5px 14px; border-radius:999px; cursor:pointer; font-size:13px; }
-    .subnav button.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+    .subnav button.active { background:var(--accent); color:#fff; border-color:var(--gold); }
 
     /* Cards */
     .card { background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
@@ -143,6 +150,13 @@
     .card h3 { margin:0 0 6px; font-size:16px; color:var(--text); font-weight:650; letter-spacing:-.1px; }
     .card .sub { color:var(--muted); font-size:13px; margin-bottom:8px; }
     .card p { margin:6px 0; line-height:1.5; }
+    /* Gold thread — structural PANEL cards carry a fine gold top-rule + a short gold kicker under
+       the title, so the metallic accent recurs in every area without flooding the item cards. */
+    .improve-clock, .pipe-panel, .trend-card, .hubapi-card {
+      border-top:2px solid var(--gold); }
+    .improve-clock > h3::after, .pipe-panel .pipe-head h3::after, .trend-card > h3::after {
+      content:""; display:block; width:34px; height:2px; margin:7px 0 1px;
+      border-radius:2px; background:var(--gold-grad); }
 
     /* Badges & pills */
     .score { display:inline-block; background:var(--accent-soft); color:var(--accent-ink);
@@ -199,13 +213,16 @@
     .podium { display:flex; gap:10px; align-items:flex-end; margin:6px 0 12px; }
     .podslot { flex:1; text-align:center; background:var(--panel2); border:1.5px solid var(--line);
                border-radius:12px 12px 0 0; padding:10px 8px; }
-    .podslot.pod1 { padding-top:26px; border-color:#fbbf24;
-                    box-shadow:inset 0 4px 0 #f59e0b; }
+    .podslot.pod1 { padding-top:26px; border-color:var(--gold-line);
+                    background:linear-gradient(var(--gold-soft), var(--panel2));
+                    border-top:4px solid var(--gold); }
     .podslot.pod2 { padding-top:18px; }
     .podslot.pod3 { padding-top:12px; }
     .podmedal { font-size:26px; line-height:1; }
     .podrank { font-size:12px; color:var(--muted); font-weight:700; }
+    .podslot.pod1 .podrank { color:var(--gold-ink); }
     .podscore { font-size:22px; font-weight:800; color:var(--accent); }
+    .podslot.pod1 .podscore { color:var(--gold-deep); }
     .podten { font-size:12px; color:var(--muted); font-weight:600; }
     .podname { font-size:13px; margin-top:2px; word-break:break-word; color:var(--text); font-weight:600; }
     .podco { font-size:11px; color:var(--muted); margin-top:2px; }
@@ -235,7 +252,7 @@
     .newscard .newsum { color:#374151; }
 
     /* NEW badge */
-    .newbadge { display:inline-block; background:var(--good); color:#fff; font-weight:800;
+    .newbadge { display:inline-block; background:var(--gold-grad); color:oklch(0.30 0.05 70); font-weight:800;
                 font-size:10px; letter-spacing:.5px; padding:1px 6px; border-radius:5px;
                 margin-left:4px; vertical-align:middle; }
 
@@ -413,6 +430,24 @@
     .pl-meta { text-align:right; flex:none; font-variant-numeric:tabular-nums; }
     .pl-age { display:block; font-size:13px; font-weight:600; color:var(--text); }
     .pl-runs { display:block; font-size:11.5px; color:var(--muted); }
+    /* ── Trend watch ── */
+    .trend-card h3 .sub { font-weight:400; font-size:13px; }
+    .trend-rows { display:flex; flex-direction:column; gap:2px; margin-top:8px; }
+    .trend-row { display:flex; align-items:center; gap:13px; padding:9px 4px; border-bottom:1px solid var(--line); }
+    .trend-row:last-child { border-bottom:0; }
+    .trend-score { flex:none; width:30px; height:30px; border-radius:8px; display:grid; place-items:center;
+      font-weight:800; font-size:14px; font-variant-numeric:tabular-nums; color:#fff; }
+    .trend-score.s-hi  { background:var(--gold-grad); color:oklch(0.30 0.05 70); box-shadow:0 1px 5px oklch(0.7 0.12 80 / .5); }
+    .trend-score.s-mid { background:var(--accent); }
+    .trend-score.s-lo  { background:var(--muted); }
+    .trend-main { flex:1; min-width:0; }
+    .trend-main b { font-size:14px; }
+    .trend-why { display:block; font-size:12px; color:var(--muted); }
+    .trend-goal { flex:none; font-weight:700; font-size:12px; color:var(--gold-ink); background:var(--gold-soft);
+      border:1px solid var(--gold-line); border-radius:999px; padding:3px 10px; }
+    .sev-high { color:var(--bad); text-transform:uppercase; font-size:11px; letter-spacing:.04em; }
+    .sev-medium { color:var(--gold-deep); text-transform:uppercase; font-size:11px; letter-spacing:.04em; }
+    .sev-low { color:var(--muted); text-transform:uppercase; font-size:11px; letter-spacing:.04em; }
   </style>
 </head>
 <body>

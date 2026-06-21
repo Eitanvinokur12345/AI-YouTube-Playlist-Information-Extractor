@@ -6,6 +6,8 @@ activate.py — ACTIVATE a chosen item from the Excavatortron hub (not copy-past
   python activate.py deploy skill <slug> --tool "X"    # WRITE a native artifact for ANY tool (Cursor .mdc / Copilot /
                                                        #   ChatGPT / Gemini / Antigravity / Stitch / Gamma / Omni / Midjourney / …)
   python activate.py deploy tool|prompt|command <slug> --tool "X"
+  python activate.py combo skill:<slug> connector:<slug> tool:<slug> --tool "X"   # activate a whole recommended COMBINATION at once
+  python activate.py paste skill|tool|prompt|command <slug>                       # print the portable capability block to stdout
   python activate.py manifest                          # list everything you've activated (so you can swap/uninstall)
 
 Reads the hub locally (inside the repo) or from the public API. Stdlib only.
@@ -187,6 +189,48 @@ def deploy(kind: str, slug: str, tool: str) -> int:
     return 0
 
 
+def paste(kind: str, slug: str) -> int:
+    """Print the portable capability block to stdout — for a skill with no packaged SKILL.md,
+    or any item you want to drop straight into a tool's instruction field."""
+    if kind not in _KINDS:
+        print("kind must be skill|tool|prompt|command"); return 2
+    x = _find(_KINDS[kind][0], _KINDS[kind][1], slug)
+    if not x:
+        print(f"{kind} '{slug}' not found in the hub."); return 1
+    _title, content = _block(kind, x)
+    print(content)
+    return 0
+
+
+def combo(specs: list[str], tool: str) -> int:
+    """Activate a whole recommended COMBINATION at once.
+    specs look like:  skill:<slug>  connector:<slug>  tool:<slug>  prompt:<slug>  command:<slug>
+    (exactly what find.py's recipe.activate_all emits). Each is activated by its kind."""
+    if not specs:
+        print("usage: activate.py combo skill:<slug> connector:<slug> tool:<slug> [...] --tool \"X\"")
+        return 2
+    rc = 0
+    for spec in specs:
+        kind, _, slug = spec.partition(":")
+        if not slug:
+            print(f"  skip malformed '{spec}'"); continue
+        print(f"\n=== {kind}: {slug} ===")
+        if kind == "skill":
+            r = install_skill(slug)
+            if r == 0:
+                _manifest_add({"type": "skill", "slug": _slug(slug), "tool": "claude",
+                               "artifact": str(Path.home() / ".claude" / "skills" / _slug(slug) / "SKILL.md")})
+        elif kind == "connector":
+            r = show_connector(slug)
+        elif kind in _KINDS:
+            r = deploy(kind, slug, tool or "claude")
+        else:
+            print(f"  unknown kind '{kind}'"); r = 1
+        rc = rc or r
+    print("\nCombination activated. Run 'python activate.py manifest' to see everything active.")
+    return rc
+
+
 def show_manifest() -> int:
     if not MANIFEST.exists():
         print("Nothing activated yet."); return 0
@@ -218,6 +262,10 @@ def main() -> int:
         return show_connector(a[1])
     if cmd == "deploy" and len(a) >= 3:
         return deploy(a[1], a[2], tool)
+    if cmd == "paste" and len(a) >= 3:
+        return paste(a[1], a[2])
+    if cmd == "combo" and len(a) >= 2:
+        return combo(a[1:], tool)
     if cmd in ("manifest", "list"):
         return show_manifest()
     print(__doc__); return 2

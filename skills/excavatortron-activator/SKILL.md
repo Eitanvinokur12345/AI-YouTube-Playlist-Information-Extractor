@@ -27,10 +27,20 @@ This skill folder ships two scripts. Always FIND first, then ACTIVATE the user's
    python find.py "<the user's task in their own words>"
    ```
    It searches the hub and prints JSON: the top skills, tools, MCP connectors, prompts and commands
-   for the task, each with `slug`, `score`, `quality`, `target_tool`, `url`, and a short `desc`.
+   for the task, each with `slug`, `score`, `quality`, `target_tool`, `url`, and a short `desc` —
+   PLUS a `recipe` object: the assembled **combination** for the task (`components` with a `role`
+   each — primary / connector / supporting / command / prompt), a one-line `why`, an ordered
+   `activation_plan`, and `activate_all` (a single command that activates the whole combination).
 
-2. **Show** the user the top 2–3 matches per relevant type, with one line each, and ask which to
-   activate (or activate the clear best one if they said "just set me up").
+2. **Show** the user the `recipe` first — "for this task, use **A** (the technique) + **B** (the MCP
+   connector it needs) + **C** (a supporting tool)" — that combination is the point. Then list the
+   2–3 alternatives per type so they can swap any component. Ask which to activate, or if they said
+   "just set me up", run the recipe's `activate_all`.
+
+   - **Activate the whole combination at once →** run the recipe's `activate_all`, e.g.
+     `python activate.py combo skill:<slug> connector:<slug> tool:<slug> --tool "claude"`.
+     It installs the skill, prints the MCP connector setup, and deploys the supporting tool(s) —
+     all logged to the manifest. Use this when the user wants the combination, not one item.
 
 3. **Activate** the chosen item by type:
    - **Skill (technique) →** `python activate.py skill <slug>`

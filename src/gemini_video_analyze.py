@@ -119,6 +119,19 @@ def main() -> int:
         vid = r["video_id"]
         time.sleep(args.sleep)
         res = analyze_video(vid, key)
+        # TRANSIENT rate-limit / overload (429/503) -> exponential backoff + retry the SAME video.
+        # The free tier has a low requests-per-minute cap, so a short burst trips 429; waiting clears
+        # it. Without this, a couple of 429s used to kill the whole run.
+        backoff, tries = max(args.sleep, 4.0), 0
+        while (isinstance(res, dict) and res.get("_error") and tries < 4
+               and any(c in res["_error"] for c in ("429", "503", "Too Many", "Unavailable",
+                                                    "timed out", "timeout", "500"))):
+            backoff = min(backoff * 2 + 6, 90)
+            if tries == 0:
+                print(f"  {vid}: transient ({res['_error']}) — backing off up to {backoff:.0f}s")
+            time.sleep(backoff)
+            res = analyze_video(vid, key)
+            tries += 1
         if not isinstance(res, dict) or res.get("_error"):
             emsg = res.get("_error", "") if isinstance(res, dict) else "bad response"
             # Per-VIDEO failure (this video isn't fetchable) -> skip it forever, keep going.
@@ -131,8 +144,8 @@ def main() -> int:
             err += 1; consecutive += 1
             if err <= 3:
                 print(f"  {vid}: systemic error ({emsg})")
-            if consecutive >= 8:
-                print("  too many consecutive systemic errors (likely quota/auth) — stopping."); break
+            if consecutive >= 4:      # each already retried w/ backoff, so 4 in a row = quota spent
+                print("  persistent systemic errors after backoff (daily quota/auth) — stopping."); break
             continue
         done.add(vid); used_today += mins; ok += 1; consecutive = 0
         if not res.get("relevant", True):

@@ -40,7 +40,7 @@ jobs:
       - name: Watch videos with Gemini (audio + visual) -> skills/tools/connectors
         env:
           EXTERNAL_REVIEW_API_KEY: ${{ secrets.EXTERNAL_REVIEW_API_KEY }}
-        run: python -m src.gemini_video_analyze --limit "${{ github.event.inputs.limit || '50' }}" --sleep 2.0
+        run: python -m src.gemini_video_analyze --limit "${{ github.event.inputs.limit || '50' }}" --sleep 5.0
 
       - name: Keep derived data consistent + readouts (free, mechanical)
         if: always()

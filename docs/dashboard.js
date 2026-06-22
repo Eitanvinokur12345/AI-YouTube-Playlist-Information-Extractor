@@ -1053,6 +1053,7 @@ function renderComingSoon(data) {
 const GRAPH_COLORS = {
   home: "#d4a72c", hub: "#d4a72c", category: "#38bdf8", toolhub: "#a78bfa",
   skill: "#34d399", tool: "#f472b6", prompt: "#fbbf24", connector: "#60a5fa",
+  star: "#f5c542", combo: "#fb923c",      // gold anchors ("don't change") + orange combinations
 };
 function ensureGraphCss() {
   if (document.getElementById("graphcss")) return;
@@ -1088,7 +1089,8 @@ async function mountBrainGraph(host, file = "brain_graph.json", legend = null) {
   const defaultLegend =
     legendItem(GRAPH_COLORS.skill, "skill") + legendItem(GRAPH_COLORS.tool, "tool") +
     legendItem(GRAPH_COLORS.prompt, "prompt") + legendItem(GRAPH_COLORS.connector, "connector") +
-    legendItem(GRAPH_COLORS.category, "category") + legendItem(GRAPH_COLORS.toolhub, "tool-hub");
+    legendItem(GRAPH_COLORS.category, "category") + legendItem(GRAPH_COLORS.toolhub, "tool-hub") +
+    legendItem(GRAPH_COLORS.star, "★ anchor (doesn't change)") + legendItem(GRAPH_COLORS.combo, "combo (used together)");
   host.innerHTML = `
     <div class="graphbar">
       <span class="graphcount">${c.nodes || data.nodes.length} nodes · ${c.links || (data.links || []).length} links</span>
@@ -1110,8 +1112,10 @@ async function mountBrainGraph(host, file = "brain_graph.json", legend = null) {
   const L = data.links.map(l => ({ s: byId[l.source], t: byId[l.target] })).filter(l => l.s && l.t);
   const nbr = {}; N.forEach(n => nbr[n.id] = new Set());
   L.forEach(l => { l.s.deg++; l.t.deg++; nbr[l.s.id].add(l.t.id); nbr[l.t.id].add(l.s.id); });
-  const isHub = n => n.group === "home" || n.group === "category" || n.group === "toolhub" || n.group === "hub";
-  const rad = n => n.group === "home" ? 9 : isHub(n) ? 6 + Math.min(4, n.deg / 8) : 3 + Math.min(3, n.deg / 3);
+  const isHub = n => n.group === "home" || n.group === "category" || n.group === "toolhub" || n.group === "hub" || n.group === "combo";
+  const rad = n => n.group === "home" ? 9 : n.group === "star" ? 5.5 : isHub(n) ? 6 + Math.min(4, n.deg / 8) : 3 + Math.min(3, n.deg / 3);
+  const charge = n => isHub(n) ? 1500 : (n.group === "star" ? 720 : 560);   // hubs push others away harder
+  N.forEach(n => n.q1 = charge(n));
 
   let scale = 0.8, ox = W / 2, oy = H / 2, alpha = 1;
   let hover = null, drag = null, panning = false, lastX = 0, lastY = 0, hl = "";
@@ -1121,12 +1125,12 @@ async function mountBrainGraph(host, file = "brain_graph.json", legend = null) {
     for (let i = 0; i < N.length; i++) { const a = N[i];
       for (let j = i + 1; j < N.length; j++) { const b = N[j];
         let dx = a.x - b.x, dy = a.y - b.y, d2 = dx * dx + dy * dy + .01;
-        if (d2 < 40000) { const d = Math.sqrt(d2), f = 200 / d2; dx /= d; dy /= d;
+        if (d2 < 160000) { const d = Math.sqrt(d2), f = (a.q1 + b.q1) / d2; dx /= d; dy /= d;
           a.vx += dx * f; a.vy += dy * f; b.vx -= dx * f; b.vy -= dy * f; } } }
     for (const l of L) { let dx = l.t.x - l.s.x, dy = l.t.y - l.s.y, d = Math.sqrt(dx * dx + dy * dy) + .01;
-      const f = (d - 62) * .02; dx /= d; dy /= d;
+      const f = (d - 70) * .018; dx /= d; dy /= d;
       l.s.vx += dx * f; l.s.vy += dy * f; l.t.vx -= dx * f; l.t.vy -= dy * f; }
-    for (const n of N) { n.vx += -n.x * .002; n.vy += -n.y * .002;
+    for (const n of N) { n.vx += -n.x * .0016; n.vy += -n.y * .0016;
       if (n === drag) continue;
       n.x += n.vx * alpha; n.y += n.vy * alpha; n.vx *= .85; n.vy *= .85; }
     alpha *= .985;
@@ -1151,9 +1155,19 @@ async function mountBrainGraph(host, file = "brain_graph.json", legend = null) {
       ctx.globalAlpha = dim ? .12 : 1;
       const col = GRAPH_COLORS[n.group] || "#94a3b8";
       ctx.fillStyle = col;
-      // soft glow on the anchors (hubs) + the hovered node = premium "constellation" feel
-      if (settled && !dim && (isHub(n) || n === hover)) { ctx.shadowColor = col; ctx.shadowBlur = isHub(n) ? 16 : 11; }
-      ctx.beginPath(); ctx.arc(n.x, n.y, rad(n), 0, 7); ctx.fill();
+      // soft glow on the anchors (hubs), stars + the hovered node = premium "constellation" feel
+      if (settled && !dim && (isHub(n) || n.group === "star" || n === hover)) {
+        ctx.shadowColor = col; ctx.shadowBlur = isHub(n) ? 16 : (n.group === "star" ? 13 : 11); }
+      if (n.group === "star") {                          // gold 5-point star = an anchor that doesn't change
+        const R = rad(n) + 2.5 / scale, r = R * .46; ctx.beginPath();
+        for (let k = 0; k < 10; k++) { const ang = -Math.PI / 2 + k * Math.PI / 5, rr = k % 2 ? r : R;
+          ctx[k ? "lineTo" : "moveTo"](n.x + Math.cos(ang) * rr, n.y + Math.sin(ang) * rr); }
+        ctx.closePath(); ctx.fill();
+      } else {
+        ctx.beginPath(); ctx.arc(n.x, n.y, rad(n), 0, 7); ctx.fill();
+        if (n.group === "combo") { ctx.lineWidth = 1.4 / scale; ctx.strokeStyle = col; ctx.globalAlpha *= .8;
+          ctx.beginPath(); ctx.arc(n.x, n.y, rad(n) + 3 / scale, 0, 7); ctx.stroke(); ctx.globalAlpha = dim ? .12 : 1; }
+      }
       ctx.shadowBlur = 0;
       if (n === hover) { ctx.lineWidth = 2 / scale; ctx.strokeStyle = "#fff"; ctx.stroke(); }
       if (!dim && (isHub(n) || n === hover || scale > 1.6 || hl)) {
@@ -1246,7 +1260,7 @@ async function renderDevConstruction() {
   html += await pipelinePanel();
   html += `<div class="card">
       <h3>🧠 Brain 1 — knowledge graph (what the project KNOWS)</h3>
-      <p class="sub">Every skill, tool, prompt and connector clustered by category and tool.</p>
+      <p class="sub">The best skills, tools, prompts and connectors clustered by category and tool (the full set lives in the tabs). Gold ★ = anchor skills that don't change; orange rings = combinations used together in the same video.</p>
       <div id="braingraph" class="braingraph"></div>
     </div>`;
   html += `<div class="card">

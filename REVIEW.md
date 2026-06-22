@@ -23,6 +23,15 @@ Governed by the `review` block in `config.json`. Read it first; if
    news-portal bar (Yahoo & co). **Verify the header Quick-read toggle still condenses every
    tab** (`maintain_quick_read_mode`). For any tab that reads as dense or cluttered, write a
    concrete `ui_change` suggestion (which tab, what to change, why it's easier to read).
+   **UI/UX is now in scope beyond readability — cosmetic AND structural.** Each review, propose at
+   least one *visual/cosmetic* improvement (spacing rhythm, the gold-accent thread from
+   `docs/DESIGN.md`, typography hierarchy, motion, empty states, the bento hero) AND consider one
+   *larger* structural improvement (a tab that should be reorganised, a chart that would beat a
+   table, a graph that's hard to read). Follow the `impeccable` design laws in `docs/DESIGN.md`
+   (Restrained gold, no side-stripe borders, no gradient text, no em dashes). Write each as a
+   `ui_change` with `kind: "cosmetic"` or `kind: "structural"`; the **improve stage applies approved
+   `ui_change`s to `docs/index.html` / `docs/dashboard.js`**, so self-improvement actually upgrades
+   how the dashboard looks over time, not only what it says.
 2. **Cut the bullshit** (`dimension: "cut_the_bullshit"`) — hunt vague, padded,
    hype, or filler content: two-sentence "summaries" that say nothing, duplicate
    tips, marketing adjectives with no substance, scores with no evidence, generic

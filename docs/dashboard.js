@@ -722,6 +722,7 @@ async function renderSelfImprove() {
       load("self_check.json"), load("improvement_tasks.json"), load("review_findings.json"),
       load("trends.json"), load("maintenance.json"),
     ]);
+  const [improveLog, tokenTips] = await Promise.all([load("improve_log.json"), load("token_tips.json")]);
   if (window.__improveTimer) clearInterval(window.__improveTimer);
   let html = "";
 
@@ -755,6 +756,27 @@ async function renderSelfImprove() {
           <li>3-agent review last ran <b>${esc(lastReview)}</b></li>
         </ul></div>
     </div></div>`;
+
+  // ── Recent self-improvement activity — a short line after each cycle (proof it's running) ──
+  if (improveLog && (improveLog.entries || []).length) {
+    const rows = improveLog.entries.slice(-8).reverse().map(e =>
+      `<li><span class="il-when">${esc(fmtDate(e.at))}</span> ${esc(e.text)}</li>`).join("");
+    html += `<div class="card improve-clock"><h3>📝 Recent self-improvement activity</h3>
+      <p class="sub">One short line each time the self-improvement system runs, so you can see it's working.</p>
+      <ul class="il-list">${rows}</ul></div>`;
+  }
+
+  // ── Token savers — skills the hub holds for using fewer/better tokens in Claude ──
+  if (tokenTips && (tokenTips.skills || []).length) {
+    const sk = tokenTips.skills.slice(0, 6).map(s =>
+      `<li><b>${esc(s.name)}</b>${s.quality ? ` <span class="pill">q${esc(s.quality)}</span>` : ""}${s.why ? `<br><span class="sub">${esc(s.why)}</span>` : ""}</li>`).join("");
+    const cmds = (tokenTips.commands || []).map(c => `<code>${esc(c.command)}</code>`).join(" · ");
+    html += `<div class="card"><h3>🎟 Token savers <span class="sub">— use fewer tokens in Claude</span></h3>
+      <p class="sub">${esc(tokenTips.count || 0)} token-efficiency skills are catalogued. Top picks:</p>
+      <ul class="tok-list">${sk}</ul>
+      ${cmds ? `<p class="hint">Handy commands: ${cmds}</p>` : ""}
+      <p class="hint">${esc(tokenTips.activator_hint || "")}</p></div>`;
+  }
 
   // ── Trend watch — surging topics the system proposes turning into tabs/features ──
   if (trends && (trends.proposals || []).length) {

@@ -140,9 +140,11 @@ def main() -> int:
         sys.stdout.reconfigure(encoding="utf-8")   # Windows console is cp1252 by default
     except Exception:
         pass
-    query = " ".join(sys.argv[1:]).strip()
+    args = sys.argv[1:]
+    lean = "--lean" in args                 # token-frugal: print ONLY the recipe (cheapest output)
+    query = " ".join(a for a in args if a != "--lean").strip()
     if not query:
-        print('usage: python find.py "<task description>"')
+        print('usage: python find.py "<task description>" [--lean]')
         return 2
     terms = [w for w in re.findall(r"[a-z0-9][a-z0-9\-]+", query.lower()) if len(w) > 2 and w not in STOP]
     out, rel = {}, {}
@@ -176,16 +178,24 @@ def main() -> int:
                 "name": x.get(nk), "slug": x.get("slug") or _slug(str(x.get(nk, ""))), "score": s,
                 "quality": x.get("quality_score"), "target_tool": x.get("target_tool", ""),
                 "url": x.get("url") or x.get("source_url", ""),
-                "desc": (str(x.get(descf, "")) or "")[:160],
+                "desc": (str(x.get(descf, "")) or "")[:110],
             } for s, x in pairs]
-        # Browse lists: QUALITY-dominant (good for exploring the catalogue).
+        # Browse lists: QUALITY-dominant (good for exploring the catalogue). Kept SHORT (top 3,
+        # trimmed desc) so reading this output costs few tokens — the recipe is the real payload.
         scored.sort(key=_rank, reverse=True)
-        out[key] = _fmt(scored[:4])
+        out[key] = _fmt(scored[:3])
         # Recipe source: RELEVANCE-first (score), quality only as a tiebreaker — so a combination
         # never pulls in a high-quality-but-off-topic item (e.g. Canva for a memory setup).
         rel[key] = _fmt(sorted(scored, key=lambda z: (z[0], z[1].get("quality_score", 0) or 0),
                                reverse=True)[:6])
-    out["recipe"] = build_recipe(rel)      # the assembled combination + one-shot activation plan
+    recipe = build_recipe(rel)             # the assembled combination + one-shot activation plan
+    if lean:                               # smallest possible footprint — just the combination
+        print(json.dumps({"recipe": {"why": recipe["why"], "activate_all": recipe["activate_all"],
+                                     "components": [{"role": c["role"], "type": c["type"], "name": c["name"]}
+                                                    for c in recipe["components"]]}},
+                         ensure_ascii=False))
+        return 0
+    out["recipe"] = recipe
     print(json.dumps(out, ensure_ascii=False, indent=2))
     return 0
 

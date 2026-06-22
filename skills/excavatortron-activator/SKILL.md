@@ -88,6 +88,14 @@ After `find.py`, decide whether the best path is clear:
   activate it, and just report what you chose and why in one line. Strip the `NOSG` token before
   acting on the request.
 
+## Token frugality (important)
+This skill must NOT eat the user's token budget. Keep it cheap:
+- Run `find.py "<task>" --lean` by default — it prints ONLY the recipe (the combination + one
+  activation command), not the full per-type lists. Use the full (non-lean) output only when the
+  user explicitly wants to browse alternatives.
+- Don't paste raw JSON back to the user; report the recipe in one or two short lines.
+- Activate, then stop. Don't re-run `find.py` repeatedly for the same task.
+
 ## Rules
 - NEVER invent a skill/tool/connector/model — only activate what `find.py` returns from the real hub.
 - Lead with the assembled `recipe` (the combination), then surface 2–3 alternatives per type so any

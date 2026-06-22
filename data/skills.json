@@ -15239,6 +15239,55 @@
       ],
       "video_quality_score": 3,
       "low_quality_source": true
+    },
+    {
+      "slug": "claude-code-model-router-workflow",
+      "skill_name": "Claude Code Cost-Reduction via Model Router",
+      "category": "code",
+      "description": "A workflow that replaces the Claude API backend in Claude Code with cheaper alternatives (DeepSeek, Kimi, GLM, or local Ollama) by routing requests through a GitHub proxy project. This preserves the Claude Code UI and agent loop while dramatically cutting API costs for daily development use.",
+      "use_case": "Reducing Claude Code API costs by substituting Claude's models with open-source or lower-cost alternatives while keeping the same coding interface.",
+      "output": "A fully functional Claude Code-style agentic coding environment running on cheaper models.",
+      "quality_score": 3,
+      "model_version": null,
+      "company": null,
+      "country": null,
+      "open_source": true,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude Code",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "DeepSeek",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Ollama",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v/A5rXgA37fkk",
+      "source_video_id": "A5rXgA37fkk",
+      "tips": [
+        "Install the GitHub router repo, choose a provider (DeepSeek, Kimi, GLM, or Ollama), connect your API key or local model, then use Claude Code as normal.",
+        "Local Ollama models require no external API key and run fully offline.",
+        "For daily dev work, switching to DeepSeek via this router can reduce costs significantly."
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "A proxy layer between Claude Code and the underlying model lets you swap providers without changing your workflow."
+      ],
+      "relevance": "Enables developers to maintain a high-quality agentic coding workflow at a fraction of the cost.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "A5rXgA37fkk"
+      ],
+      "video_quality_score": 3,
+      "low_quality_source": true
     }
   ]
 }

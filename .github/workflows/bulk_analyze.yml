@@ -56,6 +56,7 @@ jobs:
         run: |
           python -m src.trend_watch || true
           python -m src.maintenance_check || true
+          python -m src.backup_system || true
           python -m src.pipeline_status || true
 
       - name: Synthesize the AI-news digest (the system's own summary, free engine pool)
@@ -99,7 +100,7 @@ jobs:
           git config user.name "skills-tracker-bot"
           git config user.email "actions@users.noreply.github.com"
           git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor.git"
-          git add data skills other-skills 2>/dev/null || true
+          git add data skills other-skills backups 2>/dev/null || true
           git commit -m "bulk-analyze (free pool): $(date -u +%Y-%m-%dT%H:%MZ)" \
             || echo "nothing to commit"
           git pull --rebase --autostash origin main || true

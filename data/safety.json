@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-22T05:43:00.550468+00:00",
+  "generated_at": "2026-06-22T12:05:23.128226+00:00",
   "policy": "activator gate: safe = auto-activate, caution = warn, risky = block until confirmed",
   "summary": {
     "safe": 50,
-    "caution": 35,
-    "risky": 5
+    "caution": 37,
+    "risky": 6
   },
   "connectors": {
     "perplexity-mcp": {
@@ -670,6 +670,28 @@
       "reasons": [
         "third-party (not an official vendor connector)"
       ]
+    },
+    "claude-app-integrations": {
+      "name": "Claude App Integrations",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "claude-code-terminal-integration": {
+      "name": "Claude Code Terminal Integration",
+      "rating": "risky",
+      "reasons": [
+        "requests broad system/shell/file access",
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "claude-code-ide-extension": {
+      "name": "Claude Code IDE Extension",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
     }
   },
   "skills_flagged": {
@@ -766,6 +788,13 @@
     },
     "claude-code-autonomous-operation": {
       "name": "Claude Code Autonomous Operation",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "agentic-ai-coding-automation": {
+      "name": "Agentic AI Coding/Automation",
       "rating": "caution",
       "reasons": [
         "the technique runs system/shell/file operations — review what it executes"

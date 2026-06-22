@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-06-22T12:35:16.850886+00:00",
+  "generated_at": "2026-06-22T18:57:09.779213+00:00",
   "health_score": 48,
   "grade": "D",
-  "issue_count": 6,
+  "issue_count": 5,
   "issues": [
     {
       "severity": "high",
       "area": "brain",
       "issue": "Empty-body items render as blank 'white' nodes in the brain graph",
-      "count": 70,
+      "count": 90,
       "fix": "Skip empty-body items from the brain (or backfill a one-line description) so they stop appearing as contentless dots.",
       "sample": [
         "ATProto",
@@ -33,26 +33,16 @@
       ]
     },
     {
-      "severity": "high",
-      "area": "pipeline",
-      "issue": "Pipeline lanes overdue — retrieval/analysis may have stalled",
-      "count": 1,
-      "fix": "Check the workflow logs for these lanes; re-dispatch if blocked.",
-      "sample": [
-        "External mining"
-      ]
-    },
-    {
       "severity": "medium",
       "area": "brain",
       "issue": "Oversized category hubs become hairballs in the graph view",
-      "count": 723,
+      "count": 738,
       "fix": "Sub-bucket big categories (cap members per hub, add sub-hubs) so the graph stays readable.",
       "sample": [
         "productivity (208)",
-        "code (194)",
-        "research (136)",
-        "agents (185)"
+        "code (199)",
+        "research (139)",
+        "agents (192)"
       ]
     },
     {
@@ -73,7 +63,7 @@
       "severity": "low",
       "area": "data",
       "issue": "Connectors with no URL/source can't be installed or verified",
-      "count": 12,
+      "count": 13,
       "fix": "Resolve each connector's repo/package URL (or drop it).",
       "sample": [
         "Alexa + Claude Integration",

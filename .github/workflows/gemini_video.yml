@@ -8,12 +8,14 @@ name: Gemini video analysis (watch videos directly — no transcript)
 on:
   schedule:
     - cron: "0 5 * * *"      # daily 05:00 UTC (its own slot)
+    - cron: "0 11 * * *"     # midday
     - cron: "0 17 * * *"     # and 17:00 UTC, to use more of the daily free quota
+    - cron: "0 23 * * *"     # 4 slots/day so the daily-minutes budget is actually spent
   workflow_dispatch:
     inputs:
       limit:
         description: "Max videos to watch this run"
-        default: "20"
+        default: "50"
 
 concurrency:
   group: skills-tracker-gemini-video
@@ -38,7 +40,7 @@ jobs:
       - name: Watch videos with Gemini (audio + visual) -> skills/tools/connectors
         env:
           EXTERNAL_REVIEW_API_KEY: ${{ secrets.EXTERNAL_REVIEW_API_KEY }}
-        run: python -m src.gemini_video_analyze --limit "${{ github.event.inputs.limit || '20' }}" --sleep 2.0
+        run: python -m src.gemini_video_analyze --limit "${{ github.event.inputs.limit || '50' }}" --sleep 2.0
 
       - name: Keep derived data consistent + readouts (free, mechanical)
         if: always()

@@ -87,6 +87,7 @@ def main() -> int:
 
     st = load(STATE, {}) or {}
     done = set(st.get("video_ids", []))
+    failed = set(st.get("failed_ids", []))      # videos Gemini can't fetch (403/404) — never retry
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     used_today = (st.get("daily", {}) or {}).get(today, 0)
 
@@ -96,18 +97,20 @@ def main() -> int:
         if not isinstance(r, dict):
             continue
         vid = r.get("video_id")
-        if not vid or vid in done:
+        if not vid or vid in done or vid in failed:
             continue
         # prioritise videos with NO real transcript (no analysis at all)
         todo.append((0 if r.get("transcript_source") != "transcript" else 1, r))
     todo.sort(key=lambda x: x[0])
     todo = [r for _, r in todo]
-    print(f"gemini-video: {len(todo)} candidates, {used_today}m of ~{DAILY_MINUTES}m used today")
+    print(f"gemini-video: {len(todo)} candidates ({len(failed)} known-unfetchable skipped), "
+          f"{used_today}m of ~{DAILY_MINUTES}m used today")
 
     tools = load(DATA / "tools.json", {"tools": []})
     conns = load(DATA / "connectors.json", {"connectors": []})
     skills = load(DATA / "skills.json", {"skills": []})
-    ns = nt = nc = ok = err = 0
+    ns = nt = nc = ok = err = skip = 0
+    consecutive = 0          # consecutive SYSTEMIC errors (quota/auth); a few bad videos don't count
     visual = st.get("visual_notes", [])
     for r in todo[: max(args.limit, 0)]:
         mins = _iso_minutes(r.get("duration", ""))
@@ -117,13 +120,21 @@ def main() -> int:
         time.sleep(args.sleep)
         res = analyze_video(vid, key)
         if not isinstance(res, dict) or res.get("_error"):
-            err += 1
-            if err <= 2:
-                print(f"  {vid}: {res.get('_error') if isinstance(res, dict) else 'bad response'}")
-            if err >= 5:
-                print("  too many errors — stopping."); break
+            emsg = res.get("_error", "") if isinstance(res, dict) else "bad response"
+            # Per-VIDEO failure (this video isn't fetchable) -> skip it forever, keep going.
+            if any(c in emsg for c in ("403", "404", "Forbidden", "Not Found", "PERMISSION_DENIED")):
+                failed.add(vid); skip += 1; consecutive = 0
+                if skip <= 3:
+                    print(f"  {vid}: unfetchable ({emsg}) — skipping permanently.")
+                continue
+            # SYSTEMIC failure (quota/auth/network) -> back off; stop only if it persists.
+            err += 1; consecutive += 1
+            if err <= 3:
+                print(f"  {vid}: systemic error ({emsg})")
+            if consecutive >= 8:
+                print("  too many consecutive systemic errors (likely quota/auth) — stopping."); break
             continue
-        done.add(vid); used_today += mins; ok += 1
+        done.add(vid); used_today += mins; ok += 1; consecutive = 0
         if not res.get("relevant", True):
             continue
         url = f"https://www.youtube.com/watch?v={vid}"
@@ -143,10 +154,10 @@ def main() -> int:
         save(DATA / "connectors.json", conns)
     daily = st.get("daily", {}) or {}
     daily[today] = used_today
-    save(STATE, {"updated_at": NOW, "video_ids": sorted(done), "daily": daily,
-                 "visual_notes": visual[-500:]})
+    save(STATE, {"updated_at": NOW, "video_ids": sorted(done), "failed_ids": sorted(failed),
+                 "daily": daily, "visual_notes": visual[-500:]})
     print(f"gemini-video: watched {ok} videos -> +{ns} skills, +{nt} tools, +{nc} connectors "
-          f"({err} errors). NO Claude-Pro tokens used.")
+          f"({skip} unfetchable skipped, {err} systemic errors). NO Claude-Pro tokens used.")
     return 0
 
 

@@ -52,9 +52,13 @@ def analyze_video(video_id: str, key: str, timeout: int = 180) -> dict | None:
         '"skills":[{"skill_name":"","slug":"","category":"","description":"","use_case":"","quality_score":1,"target_tool":"claude","tips":[]}],'
         '"tools":[{"name":"","slug":"","category":"","company":"","open_source":false,"description":"","quality_score":1,"model_version":"","release_status":"released"}],'
         '"connectors":[{"name":"","what_it_does":"","works_in":"both","free":true,"url":""}],'
+        '"prompts":[{"title":"","purpose":"","prompt_text":"","category":""}],'
+        '"commands":[{"command":"","description":""}],'
         '"visual_notes":["short notes on things seen on screen but not said"]}\n'
         f"- category MUST be one of: {', '.join(CATEGORIES)}.\n"
         "- SKILLS = techniques you DO; TOOLS = products that EXIST. A product is a TOOL not a skill.\n"
+        "- PROMPTS = reusable prompt text shown/dictated; COMMANDS = exact slash-commands or CLI "
+        "commands shown on screen (e.g. '/compact', 'claude mcp add ...'). Capture them verbatim.\n"
         "- Capture EXACT tool names + versions seen on screen. Never invent. Empty arrays are fine.\n"
         'If not about AI tools/skills, return {"relevant":false}.'
     )
@@ -109,7 +113,9 @@ def main() -> int:
     tools = load(DATA / "tools.json", {"tools": []})
     conns = load(DATA / "connectors.json", {"connectors": []})
     skills = load(DATA / "skills.json", {"skills": []})
-    ns = nt = nc = ok = err = skip = 0
+    prompts = load(DATA / "prompts.json", {"prompts": []})
+    cmds = load(DATA / "commands.json", {"commands": []})
+    ns = nt = nc = npr = ncm = ok = err = skip = 0
     consecutive = 0          # consecutive SYSTEMIC errors (quota/auth); a few bad videos don't count
     visual = st.get("visual_notes", [])
     for r in todo[: max(args.limit, 0)]:
@@ -154,6 +160,8 @@ def main() -> int:
         ns += merge(skills, "skills", "skill_name", res.get("skills"), url, "gemini-video")
         nt += merge(tools, "tools", "name", res.get("tools"), url, "gemini-video")
         nc += merge(conns, "connectors", "name", res.get("connectors"), url, "gemini-video")
+        npr += merge(prompts, "prompts", "title", res.get("prompts"), url, "gemini-video")
+        ncm += merge(cmds, "commands", "command", res.get("commands"), url, "gemini-video")
         for v in (res.get("visual_notes") or [])[:3]:
             visual.append({"video_id": vid, "note": str(v)[:200], "at": NOW})
         r["gemini_video_analyzed"] = True            # mark covered even without a transcript
@@ -165,12 +173,17 @@ def main() -> int:
         save(DATA / "tools.json", tools)
     if nc:
         save(DATA / "connectors.json", conns)
+    if npr:
+        save(DATA / "prompts.json", prompts)
+    if ncm:
+        save(DATA / "commands.json", cmds)
     daily = st.get("daily", {}) or {}
     daily[today] = used_today
     save(STATE, {"updated_at": NOW, "video_ids": sorted(done), "failed_ids": sorted(failed),
                  "daily": daily, "visual_notes": visual[-500:]})
-    print(f"gemini-video: watched {ok} videos -> +{ns} skills, +{nt} tools, +{nc} connectors "
-          f"({skip} unfetchable skipped, {err} systemic errors). NO Claude-Pro tokens used.")
+    print(f"gemini-video: watched {ok} videos -> +{ns} skills, +{nt} tools, +{nc} connectors, "
+          f"+{npr} prompts, +{ncm} commands ({skip} unfetchable skipped, {err} systemic errors). "
+          f"NO Claude-Pro tokens used.")
     return 0
 
 

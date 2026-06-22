@@ -116,6 +116,21 @@ def main() -> int:
     prev_at = prev.get("generated_at")
     deltas = {k: cur.get(k, 0) - prev_snap.get(k, cur.get(k, 0)) for k in cur}
 
+    # Rolling 24h history so the dashboard can show "retrieved in the last 24h" instead of "since the
+    # last run a few minutes ago" (which is almost always zero). Keep ~120 snapshots.
+    hist = [h for h in (prev.get("history") or []) if isinstance(h, dict)]
+    hist.append({"at": NOW.isoformat(), "counts": cur})
+    hist = hist[-120:]
+    base = None
+    for h in hist:                                      # oldest snapshot still within the last 24h
+        try:
+            if (NOW - datetime.fromisoformat(h["at"])).total_seconds() <= 24 * 3600:
+                base = h; break
+        except Exception:
+            continue
+    base_counts = (base or hist[0]).get("counts", cur)
+    d24 = {k: cur.get(k, 0) - base_counts.get(k, cur.get(k, 0)) for k in cur}
+
     live = sum(1 for l in lanes if l["status"] == "live")
     overall = "live" if live >= 3 else ("slow" if live >= 1 else "stale")
 
@@ -125,10 +140,12 @@ def main() -> int:
         "lanes": lanes,
         "snapshot": cur,
         "deltas_since_last": deltas,
+        "deltas_24h": d24,
         "since": prev_at,
+        "history": hist,
     }, ensure_ascii=False, indent=2), encoding="utf-8")
-    moved = ", ".join(f"+{v} {k}" for k, v in deltas.items() if v > 0) or "no change"
-    print(f"pipeline_status: overall={overall}, {live}/{len(lanes)} lanes live; since last: {moved}")
+    moved = ", ".join(f"+{v} {k}" for k, v in d24.items() if v > 0) or "no change"
+    print(f"pipeline_status: overall={overall}, {live}/{len(lanes)} lanes live; last 24h: {moved}")
     return 0
 
 

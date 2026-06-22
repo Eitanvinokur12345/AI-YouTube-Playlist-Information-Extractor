@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-22T12:35:16.729304+00:00",
+  "generated_at": "2026-06-22T18:55:29.883801+00:00",
   "main": "hub",
   "goals": {
     "G1": "Retrieve & analyze",
@@ -9,8 +9,8 @@
     "G5": "Activate"
   },
   "counts": {
-    "nodes": 26,
-    "links": 34
+    "nodes": 35,
+    "links": 52
   },
   "nodes": [
     {
@@ -18,7 +18,7 @@
       "label": "data/ hub (the store)",
       "group": "home",
       "goal": "G1",
-      "deg": 30
+      "deg": 42
     },
     {
       "id": "fetch",
@@ -140,25 +140,88 @@
       "deg": 2
     },
     {
+      "id": "crosstab",
+      "label": "Cross-tab consistency check",
+      "group": "toolhub",
+      "goal": "G2",
+      "deg": 2
+    },
+    {
+      "id": "requeue",
+      "label": "Requeue shallow videos (deep re-run)",
+      "group": "toolhub",
+      "goal": "G2",
+      "deg": 2
+    },
+    {
+      "id": "status",
+      "label": "Pipeline heartbeat / live status",
+      "group": "toolhub",
+      "goal": "G4",
+      "deg": 2
+    },
+    {
+      "id": "backup",
+      "label": "Backup + regression guard",
+      "group": "toolhub",
+      "goal": "G2",
+      "deg": 2
+    },
+    {
       "id": "dedup",
-      "label": "Dedup / models / graph",
+      "label": "Dedup (merge duplicates)",
       "group": "toolhub",
       "goal": "G4",
       "deg": 2
     },
     {
       "id": "improve",
-      "label": "Self-improve (weekly)",
+      "label": "Self-improve (weekly + UI/UX)",
       "group": "toolhub",
       "goal": "G2",
-      "deg": 4
+      "deg": 5
+    },
+    {
+      "id": "rating",
+      "label": "Tool-rating / podium (quality ranking)",
+      "group": "toolhub",
+      "goal": "G4",
+      "deg": 3
+    },
+    {
+      "id": "models",
+      "label": "Models ranking (build_models)",
+      "group": "toolhub",
+      "goal": "G4",
+      "deg": 2
+    },
+    {
+      "id": "digest",
+      "label": "News digest synthesis (themes)",
+      "group": "skill",
+      "goal": "G1",
+      "deg": 2
+    },
+    {
+      "id": "graph",
+      "label": "Knowledge-graph builder (Brain 1)",
+      "group": "category",
+      "goal": "G1",
+      "deg": 2
+    },
+    {
+      "id": "devdoc",
+      "label": "Dev-doc builder (auto Dev tab)",
+      "group": "category",
+      "goal": "G3",
+      "deg": 2
     },
     {
       "id": "dashboard",
       "label": "Dashboard (Pages)",
       "group": "category",
       "goal": "G1",
-      "deg": 1
+      "deg": 4
     },
     {
       "id": "hubapi",
@@ -172,7 +235,7 @@
       "label": "Obsidian brain",
       "group": "category",
       "goal": "G1",
-      "deg": 1
+      "deg": 2
     },
     {
       "id": "activator",
@@ -303,6 +366,38 @@
     },
     {
       "source": "hub",
+      "target": "crosstab"
+    },
+    {
+      "source": "crosstab",
+      "target": "hub"
+    },
+    {
+      "source": "hub",
+      "target": "requeue"
+    },
+    {
+      "source": "requeue",
+      "target": "hub"
+    },
+    {
+      "source": "hub",
+      "target": "status"
+    },
+    {
+      "source": "status",
+      "target": "dashboard"
+    },
+    {
+      "source": "hub",
+      "target": "backup"
+    },
+    {
+      "source": "backup",
+      "target": "improve"
+    },
+    {
+      "source": "hub",
       "target": "dedup"
     },
     {
@@ -316,6 +411,46 @@
     {
       "source": "improve",
       "target": "hub"
+    },
+    {
+      "source": "hub",
+      "target": "rating"
+    },
+    {
+      "source": "rating",
+      "target": "dashboard"
+    },
+    {
+      "source": "hub",
+      "target": "models"
+    },
+    {
+      "source": "models",
+      "target": "rating"
+    },
+    {
+      "source": "hub",
+      "target": "digest"
+    },
+    {
+      "source": "digest",
+      "target": "hub"
+    },
+    {
+      "source": "hub",
+      "target": "graph"
+    },
+    {
+      "source": "graph",
+      "target": "brain"
+    },
+    {
+      "source": "hub",
+      "target": "devdoc"
+    },
+    {
+      "source": "devdoc",
+      "target": "dashboard"
     },
     {
       "source": "hub",

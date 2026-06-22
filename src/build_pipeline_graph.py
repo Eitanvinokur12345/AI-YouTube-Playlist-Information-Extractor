@@ -50,9 +50,19 @@ NODES = [
     ("safety", "Security/safety gate (rates connectors)", "toolhub", "G2"),
     ("trend", "Trend watch → proposes new tabs/features", "toolhub", "G2"),
     ("maintenance", "Maintenance / integrity sweep", "toolhub", "G2"),
-    ("dedup", "Dedup / models / graph", "toolhub", "G4"),
-    ("improve", "Self-improve (weekly)", "toolhub", "G2"),
-    # ── OUTPUT (G3/G5): the surfaces that USE the knowledge ──
+    ("crosstab", "Cross-tab consistency check", "toolhub", "G2"),
+    ("requeue", "Requeue shallow videos (deep re-run)", "toolhub", "G2"),
+    ("status", "Pipeline heartbeat / live status", "toolhub", "G4"),
+    ("backup", "Backup + regression guard", "toolhub", "G2"),
+    ("dedup", "Dedup (merge duplicates)", "toolhub", "G4"),
+    ("improve", "Self-improve (weekly + UI/UX)", "toolhub", "G2"),
+    # ── EVALUATE / RANK (G4): the podium ranking the owner asked for ──
+    ("rating", "Tool-rating / podium (quality ranking)", "toolhub", "G4"),
+    ("models", "Models ranking (build_models)", "toolhub", "G4"),
+    # ── OUTPUT (G1/G3/G5): the surfaces that USE the knowledge ──
+    ("digest", "News digest synthesis (themes)", "skill", "G1"),
+    ("graph", "Knowledge-graph builder (Brain 1)", "category", "G1"),
+    ("devdoc", "Dev-doc builder (auto Dev tab)", "category", "G3"),
     ("dashboard", "Dashboard (Pages)", "category", "G1"),
     ("hubapi", "Hub API (hub.json)", "category", "G1"),
     ("brain", "Obsidian brain", "category", "G1"),
@@ -66,7 +76,12 @@ EDGES = [
     ("hub", "selfcheck"), ("selfcheck", "hub"), ("hub", "effectiveness"), ("effectiveness", "hub"),
     ("hub", "review"), ("review", "hub"), ("hub", "safety"), ("safety", "hub"),
     ("hub", "trend"), ("trend", "improve"), ("hub", "maintenance"), ("maintenance", "improve"),
+    ("hub", "crosstab"), ("crosstab", "hub"), ("hub", "requeue"), ("requeue", "hub"),
+    ("hub", "status"), ("status", "dashboard"), ("hub", "backup"), ("backup", "improve"),
     ("hub", "dedup"), ("dedup", "hub"), ("hub", "improve"), ("improve", "hub"),
+    ("hub", "rating"), ("rating", "dashboard"), ("hub", "models"), ("models", "rating"),
+    ("hub", "digest"), ("digest", "hub"), ("hub", "graph"), ("graph", "brain"),
+    ("hub", "devdoc"), ("devdoc", "dashboard"),
     ("hub", "dashboard"), ("hub", "hubapi"), ("hub", "brain"), ("hub", "activator"),
 ]
 

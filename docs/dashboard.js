@@ -1226,30 +1226,62 @@ function _ageAgo(h) {
   if (h < 48) return `${Math.round(h)}h ago`;
   return `${Math.round(h / 24)}d ago`;
 }
+// Live per-lane countdowns + an online/offline sign. Runs after the panel is in the DOM.
+function mountPipelineTimers() {
+  if (window.__pipeTimer) clearInterval(window.__pipeTimer);
+  const tick = () => {
+    const net = document.getElementById("pl-net");
+    if (!net) { clearInterval(window.__pipeTimer); window.__pipeTimer = null; return; }
+    const online = navigator.onLine;
+    net.className = "pl-net " + (online ? "pl-on" : "pl-off");
+    net.innerHTML = online
+      ? '<span class="pl-netdot"></span>ONLINE · live'
+      : '<span class="pl-netdot"></span>OFFLINE · showing last saved data';
+    document.querySelectorAll(".pl-next[data-next]").forEach(el => {
+      const next = Number(el.dataset.next);
+      if (!next) { el.textContent = "next: unknown"; return; }
+      let ms = next - Date.now();
+      if (ms <= 0) { el.textContent = "due now"; el.classList.add("pl-due"); return; }
+      el.classList.remove("pl-due");
+      const h = Math.floor(ms / 3.6e6), m = Math.floor(ms / 6e4) % 60, s = Math.floor(ms / 1e3) % 60;
+      el.textContent = h > 0 ? `next in ${h}h ${m}m` : `next in ${m}m ${s}s`;
+    });
+  };
+  tick(); window.__pipeTimer = setInterval(tick, 1000);
+  window.addEventListener("online", tick); window.addEventListener("offline", tick);
+}
 async function pipelinePanel() {
   const p = await load("pipeline_status.json");
   if (!p || !p.lanes) return "";
   const OV = { live: ["pl-live", "● LIVE — data is flowing"], slow: ["pl-slow", "● SLOWING — some lanes overdue"],
                stale: ["pl-stale", "● STALLED — lanes not running"] };
   const ov = OV[p.overall] || OV.stale;
-  const d = p.deltas_since_last || {};
-  const moved = Object.keys(d).filter(k => d[k] > 0).map(k => `+${d[k]} ${k.replace("videos_with_transcript", "transcripts")}`);
-  const movedLine = moved.length ? moved.join(" · ") : "steady (no new items since last refresh)";
+  const d = p.deltas_24h || p.deltas_since_last || {};
+  const order = ["tools", "skills", "videos_with_transcript", "models", "connectors", "prompts", "commands"];
+  const moved = order.filter(k => d[k] > 0).map(k => `+${d[k]} ${k.replace("videos_with_transcript", "transcripts")}`);
+  const movedLine = moved.length ? moved.join(" · ") : "no new items in the last 24h (lanes may be between runs)";
   const snap = p.snapshot || {};
-  const tg = snap.videos_total ? Math.round(100 * (snap.videos_with_transcript || 0) / snap.videos_total) : 0;
-  let rows = p.lanes.map(L => `
+  const pct = snap.videos_total ? (100 * (snap.videos_with_transcript || 0) / snap.videos_total) : 0;
+  const tg = pct.toFixed(2);                              // general numbers to 2 decimals
+  let rows = p.lanes.map(L => {
+    const next = L.last_run ? (new Date(L.last_run).getTime() + (L.cadence_h || 12) * 3.6e6) : 0;
+    return `
     <div class="pl-row">
       <span class="pl-dot pl-${L.status}" title="${esc(L.status)}"></span>
       <div class="pl-main"><b>${esc(L.label)}</b><span class="pl-what">${esc(L.what)}</span></div>
-      <div class="pl-meta"><span class="pl-age">ran ${_ageAgo(L.age_hours)}</span><span class="pl-runs">${L.runs_7d}× / 7d</span></div>
-    </div>`).join("");
+      <div class="pl-meta"><span class="pl-age">ran ${_ageAgo(L.age_hours)}</span>
+        <span class="pl-next" data-next="${next}">next…</span>
+        <span class="pl-runs">${L.runs_7d}× / 7d · every ~${L.cadence_h}h</span></div>
+    </div>`;
+  }).join("");
   return `<div class="card pipe-panel">
-      <div class="pipe-head"><h3>📡 Live Pipeline</h3><span class="pl-badge ${ov[0]}">${ov[1]}</span></div>
-      <p class="sub">Is retrieval &amp; analysis actually running? Each lane's heartbeat is its real commit time — green means it committed within its expected cadence.</p>
-      <div class="pl-since">Since last refresh (${_ageAgo((Date.now() - new Date(p.since || p.generated_at).getTime()) / 3.6e6)}): <b>${esc(movedLine)}</b></div>
+      <div class="pipe-head"><h3>📡 Live Pipeline</h3><span class="pl-badge ${ov[0]}">${ov[1]}</span>
+        <span id="pl-net" class="pl-net pl-on"><span class="pl-netdot"></span>…</span></div>
+      <p class="sub">Is retrieval &amp; analysis actually running? Each lane shows its real last-commit time and a live countdown to the next expected run. Works offline (shows the last saved snapshot); the sign above flips to ONLINE when a live connection is back.</p>
+      <div class="pl-since"><b>Retrieved in the last 24h:</b> ${esc(movedLine)}<br>
+        <span class="sub">snapshot from ${esc(fmtDate(p.generated_at))} · library: ${snap.skills || 0} skills · ${snap.tools || 0} tools · ${snap.models || 0} models · ${snap.connectors || 0} connectors · ${snap.prompts || 0} prompts</span></div>
       <div class="pl-prog"><span>Transcripts ${snap.videos_with_transcript || 0} / ${snap.videos_total || 0} (${tg}%)</span><span class="pl-bar"><i style="width:${tg}%"></i></span></div>
       <div class="pl-rows">${rows}</div>
-      <p class="hint">Updated ${esc(fmtDate(p.generated_at))}. Library now: ${snap.skills || 0} skills · ${snap.tools || 0} tools · ${snap.models || 0} models · ${snap.connectors || 0} connectors.</p>
     </div>`;
 }
 
@@ -1278,6 +1310,7 @@ async function renderDevConstruction() {
   if (!secs.length) html += empty("Developer construction doc not generated yet.");
   else if (!list.length) html += empty(`No sections match "${esc(state.query)}".`);
   view.innerHTML = html;
+  mountPipelineTimers();
   const gh = document.getElementById("braingraph");
   if (gh) mountBrainGraph(gh);
   const pg = document.getElementById("pipegraph");

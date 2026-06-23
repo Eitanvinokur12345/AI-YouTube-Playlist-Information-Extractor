@@ -22,10 +22,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
 DATA = ROOT / "data"
-CAP_PER_HUB = 14          # top items shown individually per category (keeps the layout readable)
-CONN_CAP = 36             # top connectors shown
-STARS_PER_CAT = 2         # top-quality anchors per category promoted to gold "star" nodes
-MAX_COMBOS = 16           # co-occurrence combinations drawn
+# Owner wants a BIG constellation. The grid-based force engine in the dashboard scales to ~1k+
+# nodes, so we plot generously while STILL ranking by quality (dedup/quality gate unchanged).
+CAP_PER_HUB = 55          # top items shown individually per category (quality-ranked)
+CONN_CAP = 80             # top connectors shown
+STARS_PER_CAT = 3         # top-quality anchors per category promoted to gold "star" nodes
+MAX_COMBOS = 36           # co-occurrence combinations drawn
 
 
 def _load(name):

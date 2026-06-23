@@ -1129,7 +1129,8 @@ async function mountBrainGraph(host, file = "brain_graph.json", legend = null) {
   canvas.height = H;
   let W = canvas.width;
 
-  const N = data.nodes.map(n => ({ ...n, x: (Math.random() - .5) * W, y: (Math.random() - .5) * H, vx: 0, vy: 0, deg: 0 }));
+  const _spread = data.nodes.length > 360 ? 2.2 : 1;     // huge graphs start dispersed, not piled up
+  const N = data.nodes.map(n => ({ ...n, x: (Math.random() - .5) * W * _spread, y: (Math.random() - .5) * H * _spread, vx: 0, vy: 0, deg: 0 }));
   const byId = {}; N.forEach(n => byId[n.id] = n);
   const L = data.links.map(l => ({ s: byId[l.source], t: byId[l.target] })).filter(l => l.s && l.t);
   const nbr = {}; N.forEach(n => nbr[n.id] = new Set());
@@ -1139,35 +1140,55 @@ async function mountBrainGraph(host, file = "brain_graph.json", legend = null) {
   const charge = n => isHub(n) ? 1500 : (n.group === "star" ? 720 : 560);   // hubs push others away harder
   N.forEach(n => n.q1 = charge(n));
 
-  let scale = 0.8, ox = W / 2, oy = H / 2, alpha = 1;
+  const big = N.length > 360;                 // huge graphs: spread wider, faint edges, grid physics
+  let scale = big ? 0.42 : 0.8, ox = W / 2, oy = H / 2, alpha = 1;
   let hover = null, drag = null, panning = false, lastX = 0, lastY = 0, hl = "";
   let raf = null, running = false;
-
+  // Spatial-hash repulsion: each node only pushes against nodes in nearby cells -> ~O(n) per tick,
+  // so a 1000-node constellation stays fast AND actually spreads (no collapse into a white streak).
+  const CELL = 150, REACH = CELL * 2;
   function tick() {
-    for (let i = 0; i < N.length; i++) { const a = N[i];
-      for (let j = i + 1; j < N.length; j++) { const b = N[j];
-        let dx = a.x - b.x, dy = a.y - b.y, d2 = dx * dx + dy * dy + .01;
-        if (d2 < 160000) { const d = Math.sqrt(d2), f = (a.q1 + b.q1) / d2; dx /= d; dy /= d;
-          a.vx += dx * f; a.vy += dy * f; b.vx -= dx * f; b.vy -= dy * f; } } }
+    const grid = new Map();
+    for (const n of N) {
+      n._cx = Math.floor(n.x / CELL); n._cy = Math.floor(n.y / CELL);
+      const k = n._cx + ":" + n._cy; let c = grid.get(k); if (!c) { c = []; grid.set(k, c); } c.push(n);
+    }
+    for (const a of N) {
+      for (let gx = a._cx - 1; gx <= a._cx + 1; gx++)
+        for (let gy = a._cy - 1; gy <= a._cy + 1; gy++) {
+          const cell = grid.get(gx + ":" + gy); if (!cell) continue;
+          for (const b of cell) {
+            if (b === a) continue;
+            let dx = a.x - b.x, dy = a.y - b.y, d2 = dx * dx + dy * dy + .01;
+            if (d2 < REACH * REACH) {                 // apply to a only; b gets its turn -> symmetric
+              const d = Math.sqrt(d2), f = (a.q1 + b.q1) / d2 / 2; dx /= d; dy /= d;
+              a.vx += dx * f; a.vy += dy * f;
+            }
+          }
+        }
+    }
     for (const l of L) { let dx = l.t.x - l.s.x, dy = l.t.y - l.s.y, d = Math.sqrt(dx * dx + dy * dy) + .01;
-      const f = (d - 70) * .018; dx /= d; dy /= d;
+      const f = (d - 78) * .017; dx /= d; dy /= d;
       l.s.vx += dx * f; l.s.vy += dy * f; l.t.vx -= dx * f; l.t.vy -= dy * f; }
-    for (const n of N) { n.vx += -n.x * .0016; n.vy += -n.y * .0016;
+    const ctr = big ? .0008 : .0016;            // weak centering on big graphs so it spreads out wide
+    for (const n of N) { n.vx += -n.x * ctr; n.vy += -n.y * ctr;
       if (n === drag) continue;
       n.x += n.vx * alpha; n.y += n.vy * alpha; n.vx *= .85; n.vy *= .85; }
-    alpha *= .985;
+    alpha *= .986;
   }
   function draw() {
     ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, W, H);
     ctx.setTransform(scale, 0, 0, scale, ox, oy);
     const focus = hover ? nbr[hover.id] : null;
     const settled = !running;                          // glow only when not animating (perf-safe)
-    // edges — WHITE on black; highlighted neighbours brighten, the rest recede
+    // edges — WHITE on black; highlighted neighbours brighten, the rest recede. On big graphs the
+    // base opacity is very low so ~1200 lines read as a faint web, not a solid white blob.
+    const baseFade = big ? .05 : .12, dimFade = big ? .02 : .045;
     for (const l of L) {
       const on = hover && (l.s === hover || l.t === hover);
-      const fade = (hl || (hover && !on)) ? .045 : .12;
+      const fade = (hl || (hover && !on)) ? dimFade : baseFade;
       ctx.strokeStyle = on ? "rgba(255,255,255,.95)" : `rgba(255,255,255,${fade})`;
-      ctx.lineWidth = (on ? 1.5 : .7) / scale;
+      ctx.lineWidth = (on ? 1.5 : .6) / scale;
       ctx.beginPath(); ctx.moveTo(l.s.x, l.s.y); ctx.lineTo(l.t.x, l.t.y); ctx.stroke();
     }
     ctx.font = (11 / scale) + "px ui-sans-serif, system-ui";

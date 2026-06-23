@@ -77,15 +77,24 @@ def _counts():
     for fname, key in DATASETS:
         d = _load(DATA / fname, {})
         c[key] = len(d.get(key, [])) if isinstance(d, dict) else (len(d) if isinstance(d, list) else 0)
-    # transcripts
-    tot = have = 0
+    # coverage — transcript fetched OR watched by Gemini (both yield real analysis). The
+    # "analyzed" number is the honest one: it rises whenever ANY lane processes a video, even
+    # when no caption exists, so it climbs as work happens (transcript-only can dip when new
+    # videos arrive faster than captions are fetched).
+    tot = have = analyzed = 0
     for f in glob.glob(str(DATA / "processed" / "*.json")):
         tot += 1
         r = _load(Path(f), None)
-        if isinstance(r, dict) and r.get("transcript_source") == "transcript":
+        if not isinstance(r, dict):
+            continue
+        has_t = r.get("transcript_source") == "transcript"
+        if has_t:
             have += 1
+        if has_t or r.get("gemini_video_analyzed"):
+            analyzed += 1
     c["videos_total"] = tot
     c["videos_with_transcript"] = have
+    c["videos_analyzed"] = analyzed
     return c
 
 

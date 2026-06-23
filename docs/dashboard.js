@@ -1248,17 +1248,51 @@ function _ageAgo(h) {
   if (h < 48) return `${Math.round(h)}h ago`;
   return `${Math.round(h / 24)}d ago`;
 }
-// Live per-lane countdowns + an online/offline sign. Runs after the panel is in the DOM.
+const PIPE_REFRESH_MS = 180000;   // auto re-pull the live data every 3 minutes
+function _movedLine(p) {
+  const d = (p && (p.deltas_24h || p.deltas_since_last)) || {};
+  const order = ["tools", "skills", "videos_analyzed", "videos_with_transcript", "models", "connectors", "prompts", "commands"];
+  const moved = order.filter(k => d[k] > 0).map(k => `+${d[k]} ${k.replace("videos_analyzed", "analyzed").replace("videos_with_transcript", "transcripts")}`);
+  return moved.length ? moved.join(" · ") : "no new items in the last 24h (lanes may be between runs)";
+}
+// Push fresh numbers into the panel in place — so the percentages climb without a full re-render.
+function applyPipeNumbers(p) {
+  const snap = (p && p.snapshot) || {};
+  const tot = snap.videos_total || 0;
+  const anz = snap.videos_analyzed != null ? snap.videos_analyzed : (snap.videos_with_transcript || 0);
+  const ag = tot ? (100 * anz / tot).toFixed(2) : "0.00";
+  const tg = tot ? (100 * (snap.videos_with_transcript || 0) / tot).toFixed(2) : "0.00";
+  const set = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+  const wid = (id, v) => { const e = document.getElementById(id); if (e) e.style.width = v + "%"; };
+  set("pl-anz", anz); set("pl-anzpct", ag); wid("pl-anzbar", ag);
+  set("pl-tx", snap.videos_with_transcript || 0); set("pl-txpct", tg); wid("pl-txbar", tg);
+  set("pl-since-line", _movedLine(p)); set("pl-snap-at", fmtDate(p.generated_at));
+  set("pl-lib", `${snap.skills || 0} skills · ${snap.tools || 0} tools · ${snap.models || 0} models · ${snap.connectors || 0} connectors · ${snap.prompts || 0} prompts`);
+}
+// Live per-lane countdowns, an online/offline sign, and a 3-minute auto-refresh of the numbers.
 function mountPipelineTimers() {
   if (window.__pipeTimer) clearInterval(window.__pipeTimer);
+  window.__pipeNextRefresh = Date.now() + PIPE_REFRESH_MS;
+  let refreshing = false;
+  const doRefresh = async () => {
+    if (refreshing) return; refreshing = true;
+    try { const fresh = await load("pipeline_status.json"); if (fresh) applyPipeNumbers(fresh); } catch (e) {}
+    window.__pipeNextRefresh = Date.now() + PIPE_REFRESH_MS; refreshing = false;
+  };
   const tick = () => {
     const net = document.getElementById("pl-net");
     if (!net) { clearInterval(window.__pipeTimer); window.__pipeTimer = null; return; }
     const online = navigator.onLine;
     net.className = "pl-net " + (online ? "pl-on" : "pl-off");
-    net.innerHTML = online
-      ? '<span class="pl-netdot"></span>ONLINE · live'
-      : '<span class="pl-netdot"></span>OFFLINE · showing last saved data';
+    net.innerHTML = online ? '<span class="pl-netdot"></span>ONLINE · live'
+                           : '<span class="pl-netdot"></span>OFFLINE · showing last saved data';
+    const rf = document.getElementById("pl-refresh");
+    if (rf) {
+      let ms = window.__pipeNextRefresh - Date.now();
+      if (ms <= 0) { rf.textContent = "refreshing…"; if (online) doRefresh(); }
+      else { const m = Math.floor(ms / 6e4), s = Math.floor(ms / 1e3) % 60;
+        rf.textContent = `auto-refresh in ${m}:${String(s).padStart(2, "0")}`; }
+    }
     document.querySelectorAll(".pl-next[data-next]").forEach(el => {
       const next = Number(el.dataset.next);
       if (!next) { el.textContent = "next: unknown"; return; }
@@ -1278,13 +1312,11 @@ async function pipelinePanel() {
   const OV = { live: ["pl-live", "● LIVE — data is flowing"], slow: ["pl-slow", "● SLOWING — some lanes overdue"],
                stale: ["pl-stale", "● STALLED — lanes not running"] };
   const ov = OV[p.overall] || OV.stale;
-  const d = p.deltas_24h || p.deltas_since_last || {};
-  const order = ["tools", "skills", "videos_with_transcript", "models", "connectors", "prompts", "commands"];
-  const moved = order.filter(k => d[k] > 0).map(k => `+${d[k]} ${k.replace("videos_with_transcript", "transcripts")}`);
-  const movedLine = moved.length ? moved.join(" · ") : "no new items in the last 24h (lanes may be between runs)";
   const snap = p.snapshot || {};
-  const pct = snap.videos_total ? (100 * (snap.videos_with_transcript || 0) / snap.videos_total) : 0;
-  const tg = pct.toFixed(2);                              // general numbers to 2 decimals
+  const tot = snap.videos_total || 0;
+  const anz = snap.videos_analyzed != null ? snap.videos_analyzed : (snap.videos_with_transcript || 0);
+  const ag = tot ? (100 * anz / tot).toFixed(2) : "0.00";       // the number that CLIMBS as we analyze
+  const tg = tot ? (100 * (snap.videos_with_transcript || 0) / tot).toFixed(2) : "0.00";
   let rows = p.lanes.map(L => {
     const next = L.last_run ? (new Date(L.last_run).getTime() + (L.cadence_h || 12) * 3.6e6) : 0;
     return `
@@ -1298,11 +1330,13 @@ async function pipelinePanel() {
   }).join("");
   return `<div class="card pipe-panel">
       <div class="pipe-head"><h3>📡 Live Pipeline</h3><span class="pl-badge ${ov[0]}">${ov[1]}</span>
-        <span id="pl-net" class="pl-net pl-on"><span class="pl-netdot"></span>…</span></div>
-      <p class="sub">Is retrieval &amp; analysis actually running? Each lane shows its real last-commit time and a live countdown to the next expected run. Works offline (shows the last saved snapshot); the sign above flips to ONLINE when a live connection is back.</p>
-      <div class="pl-since"><b>Retrieved in the last 24h:</b> ${esc(movedLine)}<br>
-        <span class="sub">snapshot from ${esc(fmtDate(p.generated_at))} · library: ${snap.skills || 0} skills · ${snap.tools || 0} tools · ${snap.models || 0} models · ${snap.connectors || 0} connectors · ${snap.prompts || 0} prompts</span></div>
-      <div class="pl-prog"><span>Transcripts ${snap.videos_with_transcript || 0} / ${snap.videos_total || 0} (${tg}%)</span><span class="pl-bar"><i style="width:${tg}%"></i></span></div>
+        <span id="pl-net" class="pl-net pl-on"><span class="pl-netdot"></span>…</span>
+        <span id="pl-refresh" class="pl-refresh">auto-refresh…</span></div>
+      <p class="sub">Is retrieval &amp; analysis actually running? Each lane shows its real last-commit time and a live countdown to its next run; the numbers auto-refresh every 3 minutes (no manual reload), and work offline from the last saved snapshot.</p>
+      <div class="pl-since"><b>Retrieved in the last 24h:</b> <span id="pl-since-line">${esc(_movedLine(p))}</span><br>
+        <span class="sub">snapshot from <span id="pl-snap-at">${esc(fmtDate(p.generated_at))}</span> · library: <span id="pl-lib">${snap.skills || 0} skills · ${snap.tools || 0} tools · ${snap.models || 0} models · ${snap.connectors || 0} connectors · ${snap.prompts || 0} prompts</span></span></div>
+      <div class="pl-prog"><span><b>Analyzed</b> <span id="pl-anz">${anz}</span> / ${tot} (<span id="pl-anzpct">${ag}</span>%) <span class="sub">— transcript OR Gemini-watched; this climbs as work happens</span></span><span class="pl-bar"><i id="pl-anzbar" style="width:${ag}%"></i></span></div>
+      <div class="pl-prog pl-prog2"><span>Transcripts <span id="pl-tx">${snap.videos_with_transcript || 0}</span> / ${tot} (<span id="pl-txpct">${tg}</span>%) <span class="sub">— captions only (rate-limited)</span></span><span class="pl-bar"><i id="pl-txbar" style="width:${tg}%"></i></span></div>
       <div class="pl-rows">${rows}</div>
     </div>`;
 }

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-23T04:42:15.233197+00:00",
+  "generated_at": "2026-06-23T08:46:10.293044+00:00",
   "main": "hub",
   "goals": {
     "G1": "Retrieve & analyze",
@@ -9,27 +9,27 @@
     "G5": "Activate"
   },
   "counts": {
-    "nodes": 35,
+    "nodes": 36,
     "links": 52
   },
   "nodes": [
     {
       "id": "hub",
-      "label": "data/ hub (the store)",
+      "label": "data/ hub — the shared JSON store",
       "group": "home",
       "goal": "G1",
       "deg": 42
     },
     {
       "id": "fetch",
-      "label": "Playlist fetch",
+      "label": "Playlist fetch (ingest new videos)",
       "group": "connector",
       "goal": "G1",
       "deg": 2
     },
     {
       "id": "news",
-      "label": "Web/news discovery (83 feeds)",
+      "label": "Web/news discovery (83 official feeds)",
       "group": "connector",
       "goal": "G1",
       "deg": 2
@@ -43,77 +43,77 @@
     },
     {
       "id": "sources",
-      "label": "Channel growth",
+      "label": "Channel growth (suggest + add sources)",
       "group": "connector",
       "goal": "G1",
       "deg": 1
     },
     {
       "id": "supadata",
-      "label": "Supadata transcripts (cloud)",
+      "label": "Supadata transcripts (cloud captions)",
       "group": "tool",
       "goal": "G1",
       "deg": 1
     },
     {
       "id": "residential",
-      "label": "Residential backfill",
+      "label": "Residential backfill (home-IP captions)",
       "group": "tool",
       "goal": "G1",
       "deg": 1
     },
     {
       "id": "gemini_video",
-      "label": "Gemini watch (audio+visual)",
+      "label": "Gemini watch (video audio + on-screen)",
       "group": "tool",
       "goal": "G1",
       "deg": 1
     },
     {
       "id": "freepool",
-      "label": "Free engine pool (analyze)",
+      "label": "Free engine pool (transcript → skills/tools)",
       "group": "skill",
       "goal": "G1",
       "deg": 2
     },
     {
       "id": "claude",
-      "label": "Claude deep (night)",
+      "label": "Claude deep analysis (night-gated)",
       "group": "skill",
       "goal": "G1",
       "deg": 2
     },
     {
       "id": "mine",
-      "label": "Mine feeds",
+      "label": "Mine 83 web feeds → new tools/skills/MCPs",
       "group": "skill",
       "goal": "G1",
       "deg": 2
     },
     {
       "id": "resolver",
-      "label": "Comment resolver",
+      "label": "Comment-gated resolver (find the named resource)",
       "group": "skill",
       "goal": "G1",
       "deg": 1
     },
     {
       "id": "selfcheck",
-      "label": "Self-check (50Q)",
+      "label": "Self-check (50-question spec audit)",
       "group": "toolhub",
       "goal": "G2",
       "deg": 2
     },
     {
       "id": "effectiveness",
-      "label": "Effectiveness scoreboard",
+      "label": "Effectiveness scoreboard (per-lane quality)",
       "group": "toolhub",
       "goal": "G2",
       "deg": 2
     },
     {
       "id": "review",
-      "label": "3-agent review",
+      "label": "3-agent review (usability/bullshit/bugs + UI/UX)",
       "group": "toolhub",
       "goal": "G2",
       "deg": 2
@@ -243,6 +243,13 @@
       "group": "category",
       "goal": "G5",
       "deg": 1
+    },
+    {
+      "id": "analyze",
+      "label": "analyze",
+      "group": "connector",
+      "goal": "G1",
+      "deg": 0
     },
     {
       "id": "bulk_analyze",

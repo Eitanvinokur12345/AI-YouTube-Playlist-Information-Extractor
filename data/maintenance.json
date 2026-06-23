@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-06-23T10:11:44.574598+00:00",
-  "health_score": 48,
+  "generated_at": "2026-06-23T14:05:26.416618+00:00",
+  "health_score": 47,
   "grade": "D",
-  "issue_count": 5,
+  "issue_count": 6,
   "issues": [
     {
       "severity": "high",
       "area": "brain",
       "issue": "Empty-body items render as blank 'white' nodes in the brain graph",
-      "count": 90,
+      "count": 98,
       "fix": "Skip empty-body items from the brain (or backfill a one-line description) so they stop appearing as contentless dots.",
       "sample": [
         "AITER v3",
@@ -33,17 +33,27 @@
       ]
     },
     {
+      "severity": "high",
+      "area": "pipeline",
+      "issue": "Pipeline lanes overdue — retrieval/analysis may have stalled",
+      "count": 1,
+      "fix": "Check the workflow logs for these lanes; re-dispatch if blocked.",
+      "sample": [
+        "External mining"
+      ]
+    },
+    {
       "severity": "medium",
       "area": "brain",
       "issue": "Oversized category hubs become hairballs in the graph view",
-      "count": 921,
+      "count": 939,
       "fix": "Sub-bucket big categories (cap members per hub, add sub-hubs) so the graph stays readable.",
       "sample": [
-        "productivity (233)",
-        "code (212)",
-        "automation (121)",
-        "research (147)",
-        "agents (208)"
+        "productivity (239)",
+        "code (216)",
+        "automation (124)",
+        "research (151)",
+        "agents (209)"
       ]
     },
     {

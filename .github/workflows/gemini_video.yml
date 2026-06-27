@@ -39,7 +39,12 @@ jobs:
 
       - name: Watch videos with Gemini (audio + visual) -> skills/tools/connectors
         env:
+          # Add more free Gemini keys as secrets to multiply the daily free quota (round-robined).
           EXTERNAL_REVIEW_API_KEY: ${{ secrets.EXTERNAL_REVIEW_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY_2: ${{ secrets.GEMINI_API_KEY_2 }}
+          GEMINI_API_KEY_3: ${{ secrets.GEMINI_API_KEY_3 }}
+          GEMINI_API_KEY_4: ${{ secrets.GEMINI_API_KEY_4 }}
         run: python -m src.gemini_video_analyze --limit "${{ github.event.inputs.limit || '50' }}" --sleep 5.0
 
       - name: Keep derived data consistent + readouts (free, mechanical)

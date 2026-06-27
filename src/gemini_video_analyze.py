@@ -85,9 +85,18 @@ def main() -> int:
     ap.add_argument("--limit", type=int, default=20, help="max videos this run")
     ap.add_argument("--sleep", type=float, default=2.0)
     args = ap.parse_args()
-    key = (os.environ.get("EXTERNAL_REVIEW_API_KEY") or os.environ.get("GEMINI_API_KEY") or "").strip()
-    if not key:
-        print("No Gemini key (EXTERNAL_REVIEW_API_KEY) — skipped (graceful)."); return 0
+    # MULTI-KEY (free throughput multiplier): each free Gemini key has its own ~8h/day video quota,
+    # so round-robining N keys multiplies the daily free budget by N — $0. Add keys as secrets named
+    # EXTERNAL_REVIEW_API_KEY, GEMINI_API_KEY, GEMINI_API_KEY_2, GEMINI_API_KEY_3, … (any number).
+    keys = []
+    for n in ["EXTERNAL_REVIEW_API_KEY", "GEMINI_API_KEY"] + [f"GEMINI_API_KEY_{i}" for i in range(2, 9)]:
+        v = (os.environ.get(n) or "").strip()
+        if v and v not in keys:
+            keys.append(v)
+    if not keys:
+        print("No Gemini key (EXTERNAL_REVIEW_API_KEY / GEMINI_API_KEY[_n]) — skipped (graceful)."); return 0
+    daily_budget = DAILY_MINUTES * len(keys)    # each key carries its own free quota
+    ki = 0                                       # round-robin index across keys
 
     st = load(STATE, {}) or {}
     done = set(st.get("video_ids", []))
@@ -108,7 +117,7 @@ def main() -> int:
     todo.sort(key=lambda x: x[0])
     todo = [r for _, r in todo]
     print(f"gemini-video: {len(todo)} candidates ({len(failed)} known-unfetchable skipped), "
-          f"{used_today}m of ~{DAILY_MINUTES}m used today")
+          f"{used_today}m of ~{daily_budget}m used today across {len(keys)} key(s)")
 
     tools = load(DATA / "tools.json", {"tools": []})
     conns = load(DATA / "connectors.json", {"connectors": []})
@@ -120,23 +129,24 @@ def main() -> int:
     visual = st.get("visual_notes", [])
     for r in todo[: max(args.limit, 0)]:
         mins = _iso_minutes(r.get("duration", ""))
-        if used_today + mins > DAILY_MINUTES:
-            print("  daily free quota reached — stopping; resumes tomorrow."); break
+        if used_today + mins > daily_budget:
+            print("  daily free quota reached across all keys — stopping; resumes tomorrow."); break
         vid = r["video_id"]
         time.sleep(args.sleep)
-        res = analyze_video(vid, key)
-        # TRANSIENT rate-limit / overload (429/503) -> exponential backoff + retry the SAME video.
-        # The free tier has a low requests-per-minute cap, so a short burst trips 429; waiting clears
-        # it. Without this, a couple of 429s used to kill the whole run.
+        ki = (ki + 1) % len(keys)                 # round-robin keys to spread the load/quota
+        res = analyze_video(vid, keys[ki])
+        # TRANSIENT rate-limit / overload (429/503) -> rotate to the NEXT key first (its quota is
+        # separate), then exponential backoff + retry. So one key hitting its limit doesn't stall us.
         backoff, tries = max(args.sleep, 4.0), 0
         while (isinstance(res, dict) and res.get("_error") and tries < 4
                and any(c in res["_error"] for c in ("429", "503", "Too Many", "Unavailable",
                                                     "timed out", "timeout", "500"))):
+            ki = (ki + 1) % len(keys)
             backoff = min(backoff * 2 + 6, 90)
             if tries == 0:
-                print(f"  {vid}: transient ({res['_error']}) — backing off up to {backoff:.0f}s")
-            time.sleep(backoff)
-            res = analyze_video(vid, key)
+                print(f"  {vid}: transient ({res['_error']}) — next key + backing off up to {backoff:.0f}s")
+            time.sleep(backoff if len(keys) == 1 else min(backoff, 8))   # with >1 key, mostly just rotate
+            res = analyze_video(vid, keys[ki])
             tries += 1
         if not isinstance(res, dict) or res.get("_error"):
             emsg = res.get("_error", "") if isinstance(res, dict) else "bad response"

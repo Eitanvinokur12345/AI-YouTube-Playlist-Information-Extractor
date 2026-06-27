@@ -72,6 +72,22 @@ const esc = (s) => String(s ?? "").replace(/[&<>"]/g, c =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const empty = (msg) => `<p class="empty">${esc(msg)}</p>`;
 const yt = (id) => `https://www.youtube.com/watch?v=${encodeURIComponent(id || "")}`;
+const _ytid = (u) => { const m = String(u || "").match(/[?&]v=([\w-]+)/); return m ? m[1] : ""; };
+// Real, usable links for any item: Website / GitHub / Open-in-Codespaces (already-runnable) / Source
+// videos. The "Source" is the bundle of videos it came from — separate from the tool's own links.
+function linksRow(it) {
+  const out = [];
+  const home = it.homepage || ((it.url && !/youtube\.com|youtu\.be/.test(it.url)) ? it.url : "");
+  if (home) out.push(`<a class="lnk lnk-web" href="${esc(home)}" target="_blank" rel="noopener">Website ↗</a>`);
+  if (it.github) out.push(`<a class="lnk lnk-gh" href="${esc(it.github)}" target="_blank" rel="noopener">GitHub ↗</a>`);
+  if (it.run_url) out.push(`<a class="lnk lnk-run" href="${esc(it.run_url)}" target="_blank" rel="noopener">▶ Open in Codespaces ↗</a>`);
+  if (it.install_or_source && !it.github) out.push(`<span class="lnk lnk-mcp">install: <code>${esc(String(it.install_or_source).slice(0,60))}</code></span>`);
+  const vids = ((it.endorsement_video_ids || []).length ? it.endorsement_video_ids
+    : [it.source_video_id || _ytid(it.source_url)]).filter(Boolean);
+  if (vids.length) out.push(`<a class="lnk lnk-src" href="${yt(vids[0])}" target="_blank" rel="noopener">Source${vids.length > 1 ? ` (${vids.length} videos)` : " video"} ↗</a>`);
+  const noReal = !home && !it.github && !it.run_url && !it.install_or_source;
+  return `<div class="links">${out.join("")}${noReal ? '<span class="lnk-pending" title="No verified link yet — the links protocol resolves these each cycle">link pending</span>' : ""}</div>`;
+}
 
 // ── Per-tab "how long until this updates" line (one bullet, lists every update type) ──
 // Derived from the real workflow crons so it's accurate; shown at the top of each tab.
@@ -477,8 +493,7 @@ function renderToolRating(toolsData, modelsData) {
           ${t.mentions ? `<span class="mentions" title="How many playlist videos mention this">${esc(t.mentions)}× seen</span>` : ""}</h3>
         ${t.company ? `<div class="sub">${esc(t.company)}${t.country ? " · " + esc(t.country) : ""}${t.model_version ? " · v" + esc(t.model_version) : ""}</div>` : ""}
         <p>${esc(t.description || "")}</p>
-        ${t.source_url ? `<p><a href="${esc(t.source_url)}" target="_blank" rel="noopener">Source</a></p>`
-          : (t.source_video_id ? `<p><a href="${yt(t.source_video_id)}" target="_blank" rel="noopener">Source video</a></p>` : "")}
+        ${linksRow(t)}
       </div>`).join("");
     body += `</section>`;
   });

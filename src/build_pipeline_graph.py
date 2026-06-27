@@ -43,6 +43,7 @@ NODES = [
     ("claude", "Claude deep analysis (night-gated)", "skill", "G1"),
     ("mine", "Mine 83 web feeds → new tools/skills/MCPs", "skill", "G1"),
     ("resolver", "Comment-gated resolver (find the named resource)", "skill", "G1"),
+    ("links", "Link resolver + verifier (real site/GitHub/Codespaces)", "skill", "G3"),
     # ── SELF-IMPROVEMENT (G2): watch, check, maintain, improve ──
     ("selfcheck", "Self-check (50-question spec audit)", "toolhub", "G2"),
     ("effectiveness", "Effectiveness scoreboard (per-lane quality)", "toolhub", "G2"),
@@ -73,6 +74,7 @@ EDGES = [
     ("supadata", "hub"), ("residential", "hub"), ("gemini_video", "hub"),
     ("hub", "freepool"), ("freepool", "hub"), ("hub", "claude"), ("claude", "hub"),
     ("news", "mine"), ("mine", "hub"), ("discover", "hub"), ("resolver", "hub"), ("news", "hub"),
+    ("hub", "links"), ("links", "hub"),
     ("hub", "selfcheck"), ("selfcheck", "hub"), ("hub", "effectiveness"), ("effectiveness", "hub"),
     ("hub", "review"), ("review", "hub"), ("hub", "safety"), ("safety", "hub"),
     ("hub", "trend"), ("trend", "improve"), ("hub", "maintenance"), ("maintenance", "improve"),

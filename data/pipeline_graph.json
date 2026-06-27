@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-27T16:40:14.525202+00:00",
+  "generated_at": "2026-06-27T18:23:21.931260+00:00",
   "main": "hub",
   "goals": {
     "G1": "Retrieve & analyze",
@@ -9,8 +9,8 @@
     "G5": "Activate"
   },
   "counts": {
-    "nodes": 36,
-    "links": 52
+    "nodes": 37,
+    "links": 54
   },
   "nodes": [
     {
@@ -18,7 +18,7 @@
       "label": "data/ hub — the shared JSON store",
       "group": "home",
       "goal": "G1",
-      "deg": 42
+      "deg": 44
     },
     {
       "id": "fetch",
@@ -96,6 +96,13 @@
       "group": "skill",
       "goal": "G1",
       "deg": 1
+    },
+    {
+      "id": "links",
+      "label": "Link resolver + verifier (real site/GitHub/Codespaces)",
+      "group": "skill",
+      "goal": "G3",
+      "deg": 2
     },
     {
       "id": "selfcheck",
@@ -321,6 +328,14 @@
     },
     {
       "source": "news",
+      "target": "hub"
+    },
+    {
+      "source": "hub",
+      "target": "links"
+    },
+    {
+      "source": "links",
       "target": "hub"
     },
     {

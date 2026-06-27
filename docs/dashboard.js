@@ -1400,6 +1400,7 @@ async function renderDevConstruction() {
   html += `<div class="card">
       <h3>🧠 Brain 1 — knowledge graph (what the project KNOWS)</h3>
       <p class="sub">The best skills, tools, prompts and connectors clustered by category and tool (the full set lives in the tabs). Gold ★ = anchor skills that don't change; orange rings = combinations used together in the same video.</p>
+      <p class="hint">Want the WHOLE brain (3,000+ nodes)? Download <a href="../data/brain.graphml">brain.graphml</a> and open it in <b>Graphify</b> / Gephi / Neo4j, or read the <a href="../docs/BIGGER_BRAIN.md">Obsidian + Graphify guide</a>.</p>
       <div id="braingraph" class="braingraph"></div>
     </div>`;
   html += `<div class="card">

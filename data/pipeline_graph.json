@@ -1,16 +1,17 @@
 {
-  "generated_at": "2026-06-27T18:37:43.766149+00:00",
+  "generated_at": "2026-06-27T19:22:05.979631+00:00",
   "main": "hub",
   "goals": {
     "G1": "Retrieve & analyze",
     "G2": "Self-improve",
     "G3": "Integrate",
     "G4": "Evaluate/test",
-    "G5": "Activate"
+    "G5": "Activate",
+    "G6": "Agentic OS"
   },
   "counts": {
-    "nodes": 37,
-    "links": 54
+    "nodes": 38,
+    "links": 57
   },
   "nodes": [
     {
@@ -18,7 +19,7 @@
       "label": "data/ hub — the shared JSON store",
       "group": "home",
       "goal": "G1",
-      "deg": 44
+      "deg": 45
     },
     {
       "id": "fetch",
@@ -186,7 +187,7 @@
       "label": "Self-improve (weekly + UI/UX)",
       "group": "toolhub",
       "goal": "G2",
-      "deg": 5
+      "deg": 6
     },
     {
       "id": "rating",
@@ -249,7 +250,14 @@
       "label": "Activator skill (find+combine+activate)",
       "group": "category",
       "goal": "G5",
-      "deg": 1
+      "deg": 2
+    },
+    {
+      "id": "agentic_os",
+      "label": "Agentic OS — 6th goal (spec; orchestrates all)",
+      "group": "home",
+      "goal": "G6",
+      "deg": 3
     },
     {
       "id": "analyze",
@@ -489,6 +497,18 @@
     {
       "source": "hub",
       "target": "activator"
+    },
+    {
+      "source": "activator",
+      "target": "agentic_os"
+    },
+    {
+      "source": "hub",
+      "target": "agentic_os"
+    },
+    {
+      "source": "improve",
+      "target": "agentic_os"
     }
   ]
 }

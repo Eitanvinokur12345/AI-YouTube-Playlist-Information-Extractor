@@ -68,6 +68,7 @@ NODES = [
     ("hubapi", "Hub API (hub.json)", "category", "G1"),
     ("brain", "Obsidian brain", "category", "G1"),
     ("activator", "Activator skill (find+combine+activate)", "category", "G5"),
+    ("agentic_os", "Agentic OS — 6th goal (spec; orchestrates all)", "home", "G6"),
 ]
 EDGES = [
     ("sources", "fetch"), ("fetch", "hub"),
@@ -85,6 +86,7 @@ EDGES = [
     ("hub", "digest"), ("digest", "hub"), ("hub", "graph"), ("graph", "brain"),
     ("hub", "devdoc"), ("devdoc", "dashboard"),
     ("hub", "dashboard"), ("hub", "hubapi"), ("hub", "brain"), ("hub", "activator"),
+    ("activator", "agentic_os"), ("hub", "agentic_os"), ("improve", "agentic_os"),
 ]
 
 
@@ -106,7 +108,7 @@ def main() -> int:
         deg[a] = deg.get(a, 0) + 1
         deg[b] = deg.get(b, 0) + 1
     GOAL_TEXT = {"G1": "Retrieve & analyze", "G2": "Self-improve", "G3": "Integrate",
-                 "G4": "Evaluate/test", "G5": "Activate"}
+                 "G4": "Evaluate/test", "G5": "Activate", "G6": "Agentic OS"}
     out = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "main": "hub",

@@ -42,7 +42,7 @@ CONFIG = ROOT / "config.json"
 NOW = datetime.now(timezone.utc).isoformat()
 CATEGORIES = ["design", "code", "automation", "agents", "image creation", "video creation",
               "writing", "marketing", "social", "music", "integration", "research",
-              "productivity", "other"]
+              "productivity", "robotics", "voice", "3d", "data", "security", "other"]
 PROMPT_CATS = ["master", "system_guardrail", "creation", "coding", "agents", "research", "marketing", "other"]
 
 

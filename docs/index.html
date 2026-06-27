@@ -459,6 +459,17 @@
     .lnk-src { color:var(--muted); background:transparent; }
     .lnk-pending { font-size:11px; color:var(--gold-deep); background:var(--gold-soft);
       border:1px dashed var(--gold-line); border-radius:999px; padding:3px 9px; }
+    /* Top priorities */
+    .prio-rows { display:flex; flex-direction:column; gap:2px; margin-top:8px; }
+    .prio-row { display:flex; align-items:center; gap:12px; padding:8px 4px; border-bottom:1px solid var(--line); }
+    .prio-row:last-child { border-bottom:0; }
+    .prio-rank { flex:none; width:24px; height:24px; border-radius:7px; display:grid; place-items:center;
+      font-weight:800; font-size:13px; color:#fff; background:var(--muted); }
+    .prio-rank.sev-high { background:var(--bad); } .prio-rank.sev-medium { background:var(--gold-deep); }
+    .prio-rank.sev-low { background:var(--accent); }
+    .prio-main { flex:1; min-width:0; } .prio-main b { font-size:14px; }
+    .prio-area { flex:none; font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted);
+      background:var(--panel2); border-radius:999px; padding:3px 10px; }
     /* ── Trend watch ── */
     .trend-card h3 .sub { font-weight:400; font-size:13px; }
     .trend-rows { display:flex; flex-direction:column; gap:2px; margin-top:8px; }

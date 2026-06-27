@@ -63,6 +63,7 @@ jobs:
         if: always()
         run: |
           python -m src.cross_tab_check || true
+          python -m src.recategorize || true
           python -m src.build_models || true
           python -m src.build_graph || true
           python -m src.build_pipeline_graph || true
@@ -70,10 +71,12 @@ jobs:
       - name: Self-improvement protocols — trend watch, maintenance sweep, live status (free)
         if: always()
         run: |
+          python -m src.token_startup || true
           python -m src.trend_watch || true
           python -m src.maintenance_check || true
           python -m src.backup_system || true
           python -m src.token_tips || true
+          python -m src.priorities || true
           python -m src.pipeline_status || true
           python -m src.improve_log || true
 

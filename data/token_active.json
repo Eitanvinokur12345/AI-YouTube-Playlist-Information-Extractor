@@ -1,0 +1,74 @@
+{
+  "generated_at": "2026-06-27T19:12:41.504985+00:00",
+  "status": "active",
+  "count": 16,
+  "core_reducers": [
+    {
+      "name": "Lean tool output",
+      "technique": "Run scripts with their --lean/quiet flags; never paste raw JSON or full file dumps into context."
+    },
+    {
+      "name": "Read only what's needed",
+      "technique": "Read specific line ranges, not whole files; don't re-read a file already in context."
+    },
+    {
+      "name": "Compact often",
+      "technique": "Summarize and drop stale context (/compact-style) before it bloats; keep only the working set."
+    },
+    {
+      "name": "Batch independent work",
+      "technique": "Do independent reads/edits in one pass; avoid back-and-forth round-trips."
+    },
+    {
+      "name": "Prefer mechanical over Claude",
+      "technique": "Use the free Python protocols + free engine pool for anything that doesn't need Claude; reserve Claude for judgement."
+    },
+    {
+      "name": "Terse writing",
+      "technique": "No restated headings, no filler, no marketing words; every sentence earns its place."
+    },
+    {
+      "name": "Cache & reuse",
+      "technique": "Reuse prior results and the hub data instead of re-deriving; don't recompute what's stored."
+    },
+    {
+      "name": "Delegate huge context",
+      "technique": "For large-context jobs, dispatch a focused sub-agent with only the slice it needs, not the whole history."
+    }
+  ],
+  "catalogued_skills": [
+    {
+      "name": "Brand-aligned Design Generation with Claude & Canva",
+      "why": "Creating on-brand visual content and communications efficiently."
+    },
+    {
+      "name": "Fable 5 Persistent Memory Pattern",
+      "why": "Long-running or recurring agent workflows where learned lessons should persist across sessions"
+    },
+    {
+      "name": "Rufflow",
+      "why": "Run large multi-step builds in Claude Code by delegating to a swarm of cooperating agents instead of one."
+    },
+    {
+      "name": "Harness Engineering for AI Agents",
+      "why": "Building production-grade AI agents that reliably handle complex, long-running tasks without silent failures or runaway costs"
+    },
+    {
+      "name": "Implementing AI Workflows for Small Businesses",
+      "why": "Automating business processes for small and local businesses to improve efficiency and reduce manual effort."
+    },
+    {
+      "name": "Claude Code Token Cost Optimization",
+      "why": "Reducing Claude Code API costs by eliminating token leaks in prompts"
+    },
+    {
+      "name": "Prompt Contract Framework",
+      "why": "Writing agent prompts that reliably execute multi-step tasks without going off-rails, wasting tokens, or producing unwanted outputs."
+    },
+    {
+      "name": "Tiered Model Execution Workflow",
+      "why": "Reduce AI coding costs without sacrificing plan quality by separating the intelligence-intensive planning phase from the mechanical execution phase."
+    }
+  ],
+  "directive": "TOKEN BUDGET MODE (always on). Spend the fewest Claude tokens possible:\n- Lean tool output: Run scripts with their --lean/quiet flags; never paste raw JSON or full file dumps into context.\n- Read only what's needed: Read specific line ranges, not whole files; don't re-read a file already in context.\n- Compact often: Summarize and drop stale context (/compact-style) before it bloats; keep only the working set.\n- Batch independent work: Do independent reads/edits in one pass; avoid back-and-forth round-trips.\n- Prefer mechanical over Claude: Use the free Python protocols + free engine pool for anything that doesn't need Claude; reserve Claude for judgement.\n- Terse writing: No restated headings, no filler, no marketing words; every sentence earns its place.\n- Cache & reuse: Reuse prior results and the hub data instead of re-deriving; don't recompute what's stored.\n- Delegate huge context: For large-context jobs, dispatch a focused sub-agent with only the slice it needs, not the whole history.\nAlso apply the techniques from these catalogued token-saver skills: Brand-aligned Design Generation with Claude & Canva, Fable 5 Persistent Memory Pattern, Rufflow, Harness Engineering for AI Agents, Implementing AI Workflows for Small Businesses, Claude Code Token Cost Optimization, Prompt Contract Framework, Tiered Model Execution Workflow."
+}

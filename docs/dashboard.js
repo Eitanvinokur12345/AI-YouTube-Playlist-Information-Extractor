@@ -737,9 +737,10 @@ async function renderSelfImprove() {
       load("self_check.json"), load("improvement_tasks.json"), load("review_findings.json"),
       load("trends.json"), load("maintenance.json"),
     ]);
-  const [improveLog, tokenTips] = await Promise.all([load("improve_log.json"), load("token_tips.json")]);
+  const [improveLog, tokenActive] = await Promise.all([load("improve_log.json"), load("token_active.json")]);
   if (window.__improveTimer) clearInterval(window.__improveTimer);
   let html = "";
+  html += await prioritiesPanel();
 
   // ── Countdown to the next self-improvement run + proof of what it last changed ──
   const nextImprove = (() => {
@@ -781,16 +782,15 @@ async function renderSelfImprove() {
       <ul class="il-list">${rows}</ul></div>`;
   }
 
-  // ── Token savers — skills the hub holds for using fewer/better tokens in Claude ──
-  if (tokenTips && (tokenTips.skills || []).length) {
-    const sk = tokenTips.skills.slice(0, 6).map(s =>
-      `<li><b>${esc(s.name)}</b>${s.quality ? ` <span class="pill">q${esc(s.quality)}</span>` : ""}${s.why ? `<br><span class="sub">${esc(s.why)}</span>` : ""}</li>`).join("");
-    const cmds = (tokenTips.commands || []).map(c => `<code>${esc(c.command)}</code>`).join(" · ");
-    html += `<div class="card"><h3>🎟 Token savers <span class="sub">— use fewer tokens in Claude</span></h3>
-      <p class="sub">${esc(tokenTips.count || 0)} token-efficiency skills are catalogued. Top picks:</p>
-      <ul class="tok-list">${sk}</ul>
-      ${cmds ? `<p class="hint">Handy commands: ${cmds}</p>` : ""}
-      <p class="hint">${esc(tokenTips.activator_hint || "")}</p></div>`;
+  // ── Token-reduction PROTOCOL — runs every startup, applies all reducers to the Claude lanes ──
+  if (tokenActive && tokenActive.status === "active") {
+    const reducers = (tokenActive.core_reducers || []).map(r =>
+      `<li><b>${esc(r.name)}</b><br><span class="sub">${esc(r.technique)}</span></li>`).join("");
+    html += `<div class="card improve-clock"><h3>🎟 Token-reduction protocol
+        <span class="pl-badge pl-live" style="margin-left:8px">● ACTIVE</span></h3>
+      <p class="sub">Runs on every cycle so the Claude lanes (deep analysis + the 2×/week review) spend as few Pro tokens as possible. <b>${esc(tokenActive.count || 0)}</b> reducers active · refreshed ${esc(fmtDate(tokenActive.generated_at))}.</p>
+      <details><summary class="sub" style="cursor:pointer">Show the active reducers</summary>
+        <ul class="tok-list">${reducers}</ul></details></div>`;
   }
 
   // ── Trend watch — surging topics the system proposes turning into tabs/features ──
@@ -1342,6 +1342,20 @@ function mountPipelineTimers() {
   tick(); window.__pipeTimer = setInterval(tick, 1000);
   window.addEventListener("online", tick); window.addEventListener("offline", tick);
 }
+// Top priorities right now — auto-ranked from the live state, shown atop the key tabs.
+async function prioritiesPanel() {
+  const p = await load("priorities.json");
+  if (!p || !(p.priorities || []).length) return "";
+  const rows = p.priorities.slice(0, 6).map(x => {
+    const sev = x.impact >= 85 ? "sev-high" : x.impact >= 55 ? "sev-medium" : "sev-low";
+    return `<div class="prio-row"><span class="prio-rank ${sev}">${x.rank}</span>
+      <div class="prio-main"><b>${esc(x.title)}</b><span class="pl-what">${esc(x.detail)}</span></div>
+      <span class="prio-area">${esc(x.area)}</span></div>`;
+  }).join("");
+  return `<div class="card improve-clock"><h3>🎯 Top priorities right now</h3>
+    <p class="sub">Auto-ranked by impact from the live system state — it re-orders itself as things change (links resolved, a lane stalls, a regression appears).</p>
+    <div class="prio-rows">${rows}</div></div>`;
+}
 async function pipelinePanel() {
   const p = await load("pipeline_status.json");
   if (!p || !p.lanes) return "";
@@ -1381,6 +1395,7 @@ async function renderDevConstruction() {
   const data = await load("dev_construction.json");
   const secs = (data && data.sections) || [];
   let html = `<div class="sub">${esc((data && data.intro) || "")}</div>`;
+  html += await prioritiesPanel();
   html += await pipelinePanel();
   html += `<div class="card">
       <h3>🧠 Brain 1 — knowledge graph (what the project KNOWS)</h3>
@@ -1427,7 +1442,8 @@ async function renderEffectiveness() {
     return;
   }
   const dims = d.dimensions || [];
-  let html = `<div class="card"><h3>Extraction Effectiveness &amp; Rigidity</h3>
+  let html = await prioritiesPanel();
+  html += `<div class="card"><h3>Extraction Effectiveness &amp; Rigidity</h3>
     <p class="hint">🎯 ${esc(d.north_star || "")}</p>
     <p class="sub">🌐 <b>Public hub API</b> (for external/future systems): <a href="../data/hub.json">data/hub.json</a> — a CORS-open, machine-readable manifest of every dataset · <a href="../HUB_API.md">HUB_API.md</a></p>
     <p class="sub">Weakest lane: <b>${esc(d.summary.weakest_lane)}</b> (${esc(d.summary.weakest_effectiveness)}/10)

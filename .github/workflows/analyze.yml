@@ -201,6 +201,10 @@ jobs:
 
       # Safety net: commit anything Claude changed but did not push (partial work) plus the
       # updated catch-up state.
+      - name: Data guard — restore from snapshot if any data file collapsed
+        if: always()
+        run: python -m src.data_guard || true
+
       - name: Commit any remaining changes
         if: always()
         run: |

@@ -60,6 +60,10 @@ jobs:
           python -m src.maintenance_check || true
           python -m src.pipeline_status || true
 
+      - name: Data guard — restore from snapshot if any data file collapsed
+        if: always()
+        run: python -m src.data_guard || true
+
       - name: Commit results
         if: always()
         env:

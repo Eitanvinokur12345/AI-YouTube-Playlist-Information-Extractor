@@ -1414,12 +1414,23 @@ async function pipelinePanel() {
     </div>`;
 }
 
+async function scoutPanel() {
+  const s = await load("pipeline_scout.json");
+  if (!s || !(s.roles || []).length) return "";
+  const rows = s.roles.map(r => `<div class="prio-row">
+      <div class="prio-main"><b>${esc(r.role)}</b><span class="pl-what">${esc(r.why_this_role_helps)}</span></div>
+      <span class="prio-area">${r.recommended ? esc(r.recommended) : "—"}</span></div>`).join("");
+  return `<div class="card"><h3>🔭 Pipeline scout <span class="sub">— tools that could improve the system</span></h3>
+    <p class="sub">5 role-based scouts propose process-helpers (web retrieval, browser, transcripts, MCP, QA). These are <b>proposals — approve to integrate</b>, nothing auto-added.</p>
+    <div class="prio-rows">${rows}</div></div>`;
+}
 async function renderDevConstruction() {
   const data = await load("dev_construction.json");
   const secs = (data && data.sections) || [];
   let html = `<div class="sub">${esc((data && data.intro) || "")}</div>`;
   html += await prioritiesPanel();
   html += await pipelinePanel();
+  html += await scoutPanel();
   html += `<div class="card">
       <h3>🧠 Brain 1 — knowledge graph (what the project KNOWS)</h3>
       <p class="sub">The best skills, tools, prompts and connectors clustered by category and tool (the full set lives in the tabs). Gold ★ = anchor skills that don't change; orange rings = combinations used together in the same video.</p>

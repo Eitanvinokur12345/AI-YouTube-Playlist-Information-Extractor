@@ -50,7 +50,7 @@ def analyze_video(video_id: str, key: str, timeout: int = 180) -> dict | None:
         "browser, terminal commands, websites visited) that narration may not say. STRICT JSON ONLY:\n"
         '{"relevant":true,'
         '"skills":[{"skill_name":"","slug":"","category":"","description":"","use_case":"","quality_score":1,"target_tool":"claude","tips":[]}],'
-        '"tools":[{"name":"","slug":"","category":"","company":"","open_source":false,"description":"","quality_score":1,"model_version":"","release_status":"released"}],'
+        '"tools":[{"name":"","slug":"","category":"","company":"","open_source":false,"description":"","quality_score":1,"model_version":"","release_status":"released","homepage":"","github":""}],'
         '"connectors":[{"name":"","what_it_does":"","works_in":"both","free":true,"url":""}],'
         '"prompts":[{"title":"","purpose":"","prompt_text":"","category":""}],'
         '"commands":[{"command":"","description":""}],'
@@ -60,6 +60,8 @@ def analyze_video(video_id: str, key: str, timeout: int = 180) -> dict | None:
         "- PROMPTS = reusable prompt text shown/dictated; COMMANDS = exact slash-commands or CLI "
         "commands shown on screen (e.g. '/compact', 'claude mcp add ...'). Capture them verbatim.\n"
         "- Capture EXACT tool names + versions seen on screen. Never invent. Empty arrays are fine.\n"
+        "- homepage/github: fill ONLY with a URL ACTUALLY VISIBLE on screen (browser bar, terminal, "
+        "description shown). If no real URL is shown, leave them empty. NEVER guess a URL.\n"
         'If not about AI tools/skills, return {"relevant":false}.'
     )
     body = {

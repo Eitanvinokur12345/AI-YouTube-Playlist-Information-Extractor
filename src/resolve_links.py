@@ -129,8 +129,19 @@ def main() -> int:
             if checked >= args.limit:
                 break
             ident = f"{key}:{it.get('slug') or it.get(nk)}"
-            if ident in done or it.get("homepage") or it.get("links_verified_at"):
+            if ident in done or it.get("links_verified_at"):
                 continue
+            # Inline-extracted links (e.g. URLs seen on screen) must be VERIFIED, not trusted.
+            if it.get("homepage") or it.get("github"):
+                if it.get("github") and not verify(it["github"]):
+                    it.pop("github", None); it.pop("deploy_url", None)
+                elif it.get("github"):
+                    it["deploy_url"] = f"https://vercel.com/new/clone?repository-url={it['github']}"
+                if it.get("homepage") and not verify(it["homepage"]):
+                    it.pop("homepage", None)
+                if it.get("homepage") or it.get("github"):
+                    it["links_verified_at"] = NOW; done.add(ident); checked += 1; fixed += 1
+                    changed = True; continue
             name = str(it.get(nk) or it.get("slug") or "").strip()
             if not name:
                 continue

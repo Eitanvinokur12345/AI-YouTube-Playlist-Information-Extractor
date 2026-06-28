@@ -82,9 +82,15 @@ function linksRow(it) {
   if (it.github) out.push(`<a class="lnk lnk-gh" href="${esc(it.github)}" target="_blank" rel="noopener">GitHub ↗</a>`);
   if (it.run_url) out.push(`<a class="lnk lnk-run" href="${esc(it.run_url)}" target="_blank" rel="noopener">▶ Open in Codespaces ↗</a>`);
   if (it.install_or_source && !it.github) out.push(`<span class="lnk lnk-mcp">install: <code>${esc(String(it.install_or_source).slice(0,60))}</code></span>`);
-  const vids = ((it.endorsement_video_ids || []).length ? it.endorsement_video_ids
-    : [it.source_video_id || _ytid(it.source_url)]).filter(Boolean);
-  if (vids.length) out.push(`<a class="lnk lnk-src" href="${yt(vids[0])}" target="_blank" rel="noopener">Source${vids.length > 1 ? ` (${vids.length} videos)` : " video"} ↗</a>`);
+  // Source bundle, earliest-first: first link = the video that first revealed it.
+  const sv = (it.source_videos || []);
+  if (sv.length) {
+    out.push(`<a class="lnk lnk-src" href="${esc(sv[0].url)}" target="_blank" rel="noopener" title="First revealed here${sv[0].title ? ": " + esc(sv[0].title) : ""}">Source${sv.length > 1 ? ` (${sv.length} videos)` : " video"} ↗</a>`);
+  } else {
+    const vids = ((it.endorsement_video_ids || []).length ? it.endorsement_video_ids
+      : [it.source_video_id || _ytid(it.source_url)]).filter(Boolean);
+    if (vids.length) out.push(`<a class="lnk lnk-src" href="${yt(vids[0])}" target="_blank" rel="noopener">Source${vids.length > 1 ? ` (${vids.length} videos)` : " video"} ↗</a>`);
+  }
   const noReal = !home && !it.github && !it.run_url && !it.install_or_source;
   return `<div class="links">${out.join("")}${noReal ? '<span class="lnk-pending" title="No verified link yet — the links protocol resolves these each cycle">link pending</span>' : ""}</div>`;
 }

@@ -64,6 +64,7 @@ jobs:
         run: |
           python -m src.cross_tab_check || true
           python -m src.recategorize || true
+          python -m src.source_bundles || true
           python -m src.build_models || true
           python -m src.build_graph || true
           python -m src.export_graphml || true

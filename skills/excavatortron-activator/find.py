@@ -177,7 +177,10 @@ def main() -> int:
             return [{
                 "name": x.get(nk), "slug": x.get("slug") or _slug(str(x.get(nk, ""))), "score": s,
                 "quality": x.get("quality_score"), "target_tool": x.get("target_tool", ""),
-                "url": x.get("url") or x.get("source_url", ""),
+                # REAL access links so the activator can actually use it, not just name it:
+                "homepage": x.get("homepage") or "", "github": x.get("github") or "",
+                "deploy": x.get("deploy_url") or "", "install": x.get("install_or_source") or "",
+                "source": ((x.get("source_videos") or [{}])[0].get("url", "")) or x.get("source_url", ""),
                 "desc": (str(x.get(descf, "")) or "")[:110],
             } for s, x in pairs]
         # Browse lists: QUALITY-dominant (good for exploring the catalogue). Kept SHORT (top 3,

@@ -96,6 +96,13 @@ This skill must NOT eat the user's token budget. Keep it cheap:
 - Don't paste raw JSON back to the user; report the recipe in one or two short lines.
 - Activate, then stop. Don't re-run `find.py` repeatedly for the same task.
 
+## Real access (give working links, never just a name)
+Each `find.py` result now carries real links: `homepage`, `github`, `deploy` (one-click deploy),
+`install` (for MCP/CLI), and `source` (the first video that revealed it). ALWAYS hand the user the
+real access for whatever you recommend — the homepage to read, the GitHub to clone, the deploy link
+to run it, or the install command for an MCP. If a result has none yet (links still resolving), say
+so and point to the `source` video. This is the difference between a usable tool and a dead name.
+
 ## Rules
 - NEVER invent a skill/tool/connector/model — only activate what `find.py` returns from the real hub.
 - Lead with the assembled `recipe` (the combination), then surface 2–3 alternatives per type so any

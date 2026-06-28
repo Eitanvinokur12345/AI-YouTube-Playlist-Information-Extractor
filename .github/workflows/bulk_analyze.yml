@@ -6,7 +6,7 @@ name: Bulk analyze (free, Gemini)
 # Uses the Gemini key the review feature already uses (EXTERNAL_REVIEW_API_KEY secret).
 on:
   schedule:
-    - cron: "30 */3 * * *"     # every 3h, offset 30m from analyze/news to avoid git contention
+    - cron: "30 */2 * * *"     # every 2h (more frequent = faster link coverage), offset 30m to avoid git contention
   workflow_dispatch:
     inputs:
       limit:

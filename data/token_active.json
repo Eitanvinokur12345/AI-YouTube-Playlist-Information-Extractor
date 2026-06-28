@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-06-28T19:57:52.755494+00:00",
+  "generated_at": "2026-06-28T20:00:41.675556+00:00",
   "status": "active",
-  "count": 8,
+  "count": 10,
   "core_reducers": [
     {
       "name": "Lean tool output",
@@ -36,6 +36,15 @@
       "technique": "For large-context jobs, dispatch a focused sub-agent with only the slice it needs, not the whole history."
     }
   ],
-  "catalogued_skills": [],
-  "directive": "TOKEN BUDGET MODE (always on). Spend the fewest Claude tokens possible:\n- Lean tool output: Run scripts with their --lean/quiet flags; never paste raw JSON or full file dumps into context.\n- Read only what's needed: Read specific line ranges, not whole files; don't re-read a file already in context.\n- Compact often: Summarize and drop stale context (/compact-style) before it bloats; keep only the working set.\n- Batch independent work: Do independent reads/edits in one pass; avoid back-and-forth round-trips.\n- Prefer mechanical over Claude: Use the free Python protocols + free engine pool for anything that doesn't need Claude; reserve Claude for judgement.\n- Terse writing: No restated headings, no filler, no marketing words; every sentence earns its place.\n- Cache & reuse: Reuse prior results and the hub data instead of re-deriving; don't recompute what's stored.\n- Delegate huge context: For large-context jobs, dispatch a focused sub-agent with only the slice it needs, not the whole history."
+  "catalogued_skills": [
+    {
+      "name": "Using Claude code to automate computer tasks",
+      "why": "Automating repetitive or time-consuming computer maintenance tasks."
+    },
+    {
+      "name": "Fast Mode",
+      "why": "Executing tasks quickly and cost-effectively, especially for less complex or time-sensitive operations."
+    }
+  ],
+  "directive": "TOKEN BUDGET MODE (always on). Spend the fewest Claude tokens possible:\n- Lean tool output: Run scripts with their --lean/quiet flags; never paste raw JSON or full file dumps into context.\n- Read only what's needed: Read specific line ranges, not whole files; don't re-read a file already in context.\n- Compact often: Summarize and drop stale context (/compact-style) before it bloats; keep only the working set.\n- Batch independent work: Do independent reads/edits in one pass; avoid back-and-forth round-trips.\n- Prefer mechanical over Claude: Use the free Python protocols + free engine pool for anything that doesn't need Claude; reserve Claude for judgement.\n- Terse writing: No restated headings, no filler, no marketing words; every sentence earns its place.\n- Cache & reuse: Reuse prior results and the hub data instead of re-deriving; don't recompute what's stored.\n- Delegate huge context: For large-context jobs, dispatch a focused sub-agent with only the slice it needs, not the whole history.\nAlso apply the techniques from these catalogued token-saver skills: Using Claude code to automate computer tasks, Fast Mode."
 }

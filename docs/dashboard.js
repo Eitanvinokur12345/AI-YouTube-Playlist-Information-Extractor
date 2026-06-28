@@ -80,7 +80,8 @@ function linksRow(it) {
   const home = it.homepage || ((it.url && !/youtube\.com|youtu\.be/.test(it.url)) ? it.url : "");
   if (home) out.push(`<a class="lnk lnk-web" href="${esc(home)}" target="_blank" rel="noopener">Website ↗</a>`);
   if (it.github) out.push(`<a class="lnk lnk-gh" href="${esc(it.github)}" target="_blank" rel="noopener">GitHub ↗</a>`);
-  if (it.run_url) out.push(`<a class="lnk lnk-run" href="${esc(it.run_url)}" target="_blank" rel="noopener">▶ Open in Codespaces ↗</a>`);
+  const deploy = it.deploy_url || (it.github ? `https://vercel.com/new/clone?repository-url=${it.github}` : "");
+  if (deploy) out.push(`<a class="lnk lnk-run" href="${esc(deploy)}" target="_blank" rel="noopener" title="One-click deploy this repo (web apps)">▶ Deploy ↗</a>`);
   if (it.install_or_source && !it.github) out.push(`<span class="lnk lnk-mcp">install: <code>${esc(String(it.install_or_source).slice(0,60))}</code></span>`);
   // Source bundle, earliest-first: first link = the video that first revealed it.
   const sv = (it.source_videos || []);
@@ -91,7 +92,7 @@ function linksRow(it) {
       : [it.source_video_id || _ytid(it.source_url)]).filter(Boolean);
     if (vids.length) out.push(`<a class="lnk lnk-src" href="${yt(vids[0])}" target="_blank" rel="noopener">Source${vids.length > 1 ? ` (${vids.length} videos)` : " video"} ↗</a>`);
   }
-  const noReal = !home && !it.github && !it.run_url && !it.install_or_source;
+  const noReal = !home && !it.github && !it.install_or_source;
   return `<div class="links">${out.join("")}${noReal ? '<span class="lnk-pending" title="No verified link yet — the links protocol resolves these each cycle">link pending</span>' : ""}</div>`;
 }
 

@@ -142,7 +142,10 @@ def main() -> int:
             got = False
             if gh and "github.com" in gh and verify(gh):
                 it["github"] = gh
-                it["run_url"] = codespace(gh)            # one-click "open in Codespaces"
+                # owner chose a DEPLOY BUTTON (not Codespaces, which billed his account). Vercel's
+                # clone URL is the most general one-click deploy for a repo.
+                it["deploy_url"] = f"https://vercel.com/new/clone?repository-url={gh}"
+                it.pop("run_url", None)
                 got = True
             if site and verify(site):
                 it["homepage"] = site

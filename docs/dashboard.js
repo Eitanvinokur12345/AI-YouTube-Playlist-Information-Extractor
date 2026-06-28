@@ -747,6 +747,7 @@ async function renderSelfImprove() {
   const [improveLog, tokenActive] = await Promise.all([load("improve_log.json"), load("token_active.json")]);
   if (window.__improveTimer) clearInterval(window.__improveTimer);
   let html = "";
+  html += await goalsPanel();
   html += await prioritiesPanel();
 
   // ── Countdown to the next self-improvement run + proof of what it last changed ──
@@ -1348,6 +1349,21 @@ function mountPipelineTimers() {
   };
   tick(); window.__pipeTimer = setInterval(tick, 1000);
   window.addEventListener("online", tick); window.addEventListener("offline", tick);
+}
+// North Star — the 6 main goals + live conformance. Shown atop self-improvement.
+async function goalsPanel() {
+  const g = await load("goals_status.json");
+  if (!g || !(g.goals || []).length) return "";
+  const rows = g.goals.map(o => {
+    const sev = o.status === "met" ? "sev-low" : o.status === "at-risk" ? "sev-medium" : "sev-high";
+    return `<div class="prio-row"><span class="prio-rank ${sev}">${o.id}</span>
+      <div class="prio-main"><b>${esc(o.name)}</b> <span class="pl-runs">${o.score}/100 · ${esc(o.status)}</span>
+        <span class="pl-what">${esc(o.gap)}</span></div></div>`;
+  }).join("");
+  return `<div class="card improve-clock"><h3>🌟 North Star — main goals (above all else)
+      <span class="pl-badge ${g.overall >= 75 ? "pl-live" : g.overall >= 45 ? "pl-slow" : "pl-stale"}">${g.overall}/100</span></h3>
+    <p class="sub">Every cycle the system scores itself against these 6 goals and queues a fix for any that aren't met. Concepts, not features.</p>
+    <div class="prio-rows">${rows}</div></div>`;
 }
 // Top priorities right now — auto-ranked from the live state, shown atop the key tabs.
 async function prioritiesPanel() {

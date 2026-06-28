@@ -34,6 +34,9 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Data guard FIRST — restore any data file that collapsed in a prior run
+        run: python -m src.data_guard || true
+
       - name: Bulk-analyze pending videos with the free engine pool
         env:
           EXTERNAL_REVIEW_API_KEY: ${{ secrets.EXTERNAL_REVIEW_API_KEY }}
@@ -120,6 +123,10 @@ jobs:
       - name: Safety ratings for connectors/skills (safe/caution/risky) -> data/safety.json
         if: always()
         run: python -m src.safety_check || true
+
+      - name: Data guard LAST — restore from snapshot if any file collapsed during this run
+        if: always()
+        run: python -m src.data_guard || true
 
       - name: Commit results
         if: always()

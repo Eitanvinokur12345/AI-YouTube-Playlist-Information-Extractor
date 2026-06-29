@@ -76,7 +76,9 @@ jobs:
           GEMINI_API_KEY_6: ${{ secrets.GEMINI_API_KEY_6 }}
           GROQ_API_KEY_2: ${{ secrets.GROQ_API_KEY_2 }}
           CEREBRAS_API_KEY_2: ${{ secrets.CEREBRAS_API_KEY_2 }}
-        run: python -m src.resolve_links --limit 300 --sleep 0.8
+        run: |
+          python -m src.resolve_links --limit 300 --sleep 0.8 || true
+          python -m src.build_memory --limit 250 --sleep 0.4 || true
 
       - name: Single-tab guarantee + rebuild knowledge graph + mirror models (free, mechanical)
         if: always()
@@ -137,6 +139,7 @@ jobs:
         run: |
           python -m src.safety_check || true
           python -m src.security_scan || true
+          python -m src.excava || true
 
       - name: Data guard LAST — restore from snapshot if any file collapsed during this run
         if: always()

@@ -157,6 +157,7 @@ def main() -> int:
         ("connectors.json", "connectors", "name", ["works_in", "category"], "what_it_does"),
         ("prompts.json", "prompts", "title", ["category"], "purpose"),
         ("commands.json", "commands", "command", ["description"], "description"),
+        ("designs.json", "designs", "name", ["kind", "tech"], "look"),
     ]
     for name, key, nk, extra, descf in specs:
         scored = []

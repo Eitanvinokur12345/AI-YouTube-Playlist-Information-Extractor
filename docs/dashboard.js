@@ -1586,6 +1586,24 @@ async function show(tab) {
   quickreadSummarize(document.body.classList.contains("quickread"));
 }
 
+// Designs — website/app/UI looks captured from videos, so you can build like them.
+function renderDesigns(d) {
+  let list = (d && d.designs) || [];
+  if (q()) list = list.filter(x => hit(x.name, x.look, (x.kind || ""), (x.tech || []).join(" ")));
+  let html = `<div class="card"><h3>🎨 Designs to build like</h3>
+    <p class="sub">Website/app/dashboard looks captured from the videos — layout, style, components, and how to rebuild them. Ask the activator "build me something like &lt;name&gt;" to assemble the tools.</p></div>`;
+  if (!list.length) return void (view.innerHTML = html + empty(q() ? `No designs match "${esc(state.query)}".`
+    : "No designs captured yet — Gemini-watch adds website/app/UI references as it watches build/design videos."));
+  html += list.map(x => `
+    <div class="card">
+      <h3>${esc(x.name || "Design")} ${x.kind ? `<span class="pill">${esc(x.kind)}</span>` : ""}</h3>
+      ${x.look ? `<p>${esc(x.look)}</p>` : ""}
+      ${(x.tech || []).length ? `<div class="sub">Tech: ${(x.tech || []).map(t => esc(t)).join(" · ")}</div>` : ""}
+      ${(x.rebuild_with || []).length ? `<div class="sub">Rebuild with: ${(x.rebuild_with || []).map(t => esc(t)).join(" · ")}</div>` : ""}
+      ${linksRow(x)}
+    </div>`).join("");
+  view.innerHTML = html;
+}
 async function renderTab(tab) {
   if (tab === "skills") return renderSkills(await load("skills.json"));
   if (tab === "tools" || tab === "models")
@@ -1596,6 +1614,7 @@ async function renderTab(tab) {
   if (tab === "improvement") return renderImprovement();
   if (tab === "tips") return renderTips();
   if (tab === "news") return renderNews();
+  if (tab === "designs") return renderDesigns(await load("designs.json"));
   if (tab === "connectors") return renderConnectors(await load("connectors.json"));
   if (tab === "sources") return renderSources();
   if (tab === "selfimprove") return renderSelfImprove();

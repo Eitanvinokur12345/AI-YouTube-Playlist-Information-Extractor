@@ -54,7 +54,10 @@ def analyze_video(video_id: str, key: str, timeout: int = 180) -> dict | None:
         '"connectors":[{"name":"","what_it_does":"","works_in":"both","free":true,"url":""}],'
         '"prompts":[{"title":"","purpose":"","prompt_text":"","category":""}],'
         '"commands":[{"command":"","description":""}],'
+        '"designs":[{"name":"","kind":"website|app|dashboard|landing|system","look":"describe the visual design: layout, colors, typography, components, vibe","tech":[],"rebuild_with":["tools/skills to build something like it"]}],'
         '"visual_notes":["short notes on things seen on screen but not said"]}\n'
+        "- DESIGNS = whenever the video SHOWS a website/app/dashboard/UI worth replicating, capture its "
+        "look (layout/colors/typography/components/vibe) + how to rebuild it. This is for cloning good UIs.\n"
         f"- category MUST be one of: {', '.join(CATEGORIES)}.\n"
         "- SKILLS = techniques you DO; TOOLS = products that EXIST. A product is a TOOL not a skill.\n"
         "- PROMPTS = reusable prompt text shown/dictated; COMMANDS = exact slash-commands or CLI "
@@ -126,7 +129,8 @@ def main() -> int:
     skills = load(DATA / "skills.json", {"skills": []})
     prompts = load(DATA / "prompts.json", {"prompts": []})
     cmds = load(DATA / "commands.json", {"commands": []})
-    ns = nt = nc = npr = ncm = ok = err = skip = 0
+    designs = load(DATA / "designs.json", {"designs": []})
+    ns = nt = nc = npr = ncm = nd = ok = err = skip = 0
     consecutive = 0          # consecutive SYSTEMIC errors (quota/auth); a few bad videos don't count
     visual = st.get("visual_notes", [])
     for r in todo[: max(args.limit, 0)]:
@@ -174,6 +178,7 @@ def main() -> int:
         nc += merge(conns, "connectors", "name", res.get("connectors"), url, "gemini-video")
         npr += merge(prompts, "prompts", "title", res.get("prompts"), url, "gemini-video")
         ncm += merge(cmds, "commands", "command", res.get("commands"), url, "gemini-video")
+        nd += merge(designs, "designs", "name", res.get("designs"), url, "gemini-video")
         for v in (res.get("visual_notes") or [])[:3]:
             visual.append({"video_id": vid, "note": str(v)[:200], "at": NOW})
         r["gemini_video_analyzed"] = True            # mark covered even without a transcript
@@ -189,12 +194,14 @@ def main() -> int:
         save(DATA / "prompts.json", prompts)
     if ncm:
         save(DATA / "commands.json", cmds)
+    if nd:
+        save(DATA / "designs.json", designs)
     daily = st.get("daily", {}) or {}
     daily[today] = used_today
     save(STATE, {"updated_at": NOW, "video_ids": sorted(done), "failed_ids": sorted(failed),
                  "daily": daily, "visual_notes": visual[-500:]})
     print(f"gemini-video: watched {ok} videos -> +{ns} skills, +{nt} tools, +{nc} connectors, "
-          f"+{npr} prompts, +{ncm} commands ({skip} unfetchable skipped, {err} systemic errors). "
+          f"+{npr} prompts, +{ncm} commands, +{nd} designs ({skip} unfetchable skipped, {err} systemic errors). "
           f"NO Claude-Pro tokens used.")
     return 0
 

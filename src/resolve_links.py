@@ -113,6 +113,43 @@ def web_find(name: str, timeout: int = 12) -> dict:
     return out
 
 
+def _gemini_keys() -> list[str]:
+    ks = []
+    for n in ["EXTERNAL_REVIEW_API_KEY", "GEMINI_API_KEY"] + [f"GEMINI_API_KEY_{i}" for i in range(2, 9)]:
+        v = (os.environ.get(n) or "").strip()
+        if v and v not in ks:
+            ks.append(v)
+    return ks
+
+
+def gemini_grounded(name: str, desc: str, keys: list, timeout: int = 30) -> dict:
+    """Use Gemini WITH Google-Search grounding to find the REAL site + repo. The search runs on
+    Google's servers, so it works from the datacenter IP (unlike scraping DuckDuckGo). Best fix for
+    the niche tools plain LLM-recall doesn't know. Extracts URLs from the grounded answer + sources."""
+    if not keys:
+        return {}
+    prompt = (f"Search the web for the AI tool/product called \"{name}\" ({desc[:120]}). "
+              "Reply with ONLY its real official website URL and GitHub repo URL (if open source), "
+              "each on its own line as 'website: <url>' and 'github: <url>'. Use real URLs from the "
+              "search results only; if unknown, write null. Never invent a URL.")
+    body = {"contents": [{"parts": [{"text": prompt}]}], "tools": [{"google_search": {}}],
+            "generationConfig": {"temperature": 0}}
+    for key in keys[:3]:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={key}"
+        try:
+            req = urllib.request.Request(url, data=json.dumps(body).encode(), method="POST",
+                                         headers={"Content-Type": "application/json"})
+            payload = json.loads(urllib.request.urlopen(req, timeout=timeout).read().decode("utf-8", "replace"))
+            txt = payload["candidates"][0]["content"]["parts"][0]["text"]
+            gh = GH_RE.search(txt)
+            site = re.search(r"https?://[^\s)\"']+", re.sub(r"github\.com/\S+", "", txt))
+            return {"website": site.group(0) if site else None,
+                    "github": f"https://github.com/{gh.group(1)}/{gh.group(2)}" if gh else None}
+        except Exception:
+            continue
+    return {}
+
+
 def ask_links(name: str, desc: str, engines: list, timeout: int = 30) -> dict:
     prompt = (
         f"Tool/product name: {name}\nWhat it is: {desc[:200]}\n\n"
@@ -143,6 +180,7 @@ def main() -> int:
     st = _load(STATE, {}) or {}
     done = set()            # per-RUN only (no permanent skip — un-resolved items get retried)
     MAX_TRIES = 4           # retry a hard item up to this many runs as search sources improve
+    gkeys = _gemini_keys()  # for Gemini google-search grounding (works from datacenter IPs)
     fixed = checked = 0
 
     for fname, key, nk in SETS:
@@ -179,8 +217,10 @@ def main() -> int:
             time.sleep(args.sleep)
             res = ask_links(name, str(it.get("description") or it.get("what_it_does") or ""), engines)
             site, gh = (res.get("website") or "").strip(), (res.get("github") or "").strip()
-            if not (site or gh):                       # LLM didn't know it -> free web-search fallback
-                wf = web_find(name)
+            if not (site or gh):                       # LLM didn't know it -> real web SEARCH
+                wf = gemini_grounded(name, str(it.get("description") or it.get("what_it_does") or ""), gkeys)
+                if not (wf.get("website") or wf.get("github")):
+                    wf = web_find(name)                 # last resort (may be IP-blocked in cloud)
                 site, gh = (wf.get("website") or "").strip(), (wf.get("github") or "").strip()
             got = False
             if gh and "github.com" in gh and verify(gh):

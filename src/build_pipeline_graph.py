@@ -68,7 +68,7 @@ NODES = [
     ("hubapi", "Hub API (hub.json)", "category", "G1"),
     ("brain", "Obsidian brain", "category", "G1"),
     ("activator", "Activator skill (find+combine+activate)", "category", "G5"),
-    ("agentic_os", "Agentic OS — 6th goal (PLANNED, not built yet)", "home", "G6"),
+    ("agentic_os", "EXCAVA — agentic OS (operator live; creator gated)", "home", "G6"),
 ]
 EDGES = [
     ("sources", "fetch"), ("fetch", "hub"),

@@ -1425,10 +1425,27 @@ async function scoutPanel() {
     <p class="sub">Scans every catalogue type across 12 pipeline processes, ranks by quality, and queues the best into self-improvement. <b>Proposals — approve to integrate</b> (some matches are tangential; pick the genuinely free + useful ones).</p>
     <div class="prio-rows">${rows}</div></div>`;
 }
+async function excavaPanel() {
+  const e = await load("excava_status.json");
+  if (!e || !e.gate) return "";
+  const g = e.gate;
+  const stack = (e.tool_stack || []).map(t =>
+    `<div class="prio-row"><span class="prio-area">${esc(t.status)}</span>
+      <div class="prio-main"><b>${esc(t.role)}</b><span class="pl-what">${esc(t.tool)}</span></div></div>`).join("");
+  return `<div class="card improve-clock"><h3>🛰 EXCAVA — the agentic OS
+      <span class="pl-badge ${g.internal_allowed ? "pl-live" : "pl-stale"}">internal ${g.internal_allowed ? "OPEN" : "CLOSED"}</span>
+      <span class="pl-badge ${g.outward_allowed ? "pl-live" : "pl-slow"}">outward ${g.outward_allowed ? "OPEN" : "CLOSED"}</span></h3>
+    <p class="sub">${esc(e.phase || "")}. Verification gate (focused checkers) must be green before it acts; outward create/publish also needs G3≥70 + your approval — so it never acts on bad data.</p>
+    <div class="pl-since"><b>Next action:</b> ${esc((e.next_action || {}).do || "—")} <span class="sub">(${esc((e.next_action || {}).type || "")})</span><br>
+      <span class="sub">gate: data ${g.checks.data_guard_ok ? "ok" : "BAD"} · security ${g.checks.security_clean ? "clean" : "LEAK"} · truth/access G3 ${esc(g.checks.truth_access_G3)}/100 · holding ${(e.holding || []).length} outward action(s)</span></div>
+    <details><summary class="sub" style="cursor:pointer">Tool stack (${(e.tool_stack || []).length})</summary><div class="prio-rows">${stack}</div>
+      <p class="hint">${esc((e.stack_review || {}).note || "")}</p></details></div>`;
+}
 async function renderDevConstruction() {
   const data = await load("dev_construction.json");
   const secs = (data && data.sections) || [];
   let html = `<div class="sub">${esc((data && data.intro) || "")}</div>`;
+  html += await excavaPanel();
   html += await prioritiesPanel();
   html += await pipelinePanel();
   html += await scoutPanel();

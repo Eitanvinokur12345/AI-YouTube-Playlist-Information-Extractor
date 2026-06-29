@@ -1,0 +1,79 @@
+{
+  "generated_at": "2026-06-29T09:17:08.580554+00:00",
+  "name": "EXCAVA",
+  "phase": "OS-1 operator (live); OS-2 creator + OS-3 self-coder gated",
+  "gate": {
+    "checks": {
+      "data_guard_ok": true,
+      "security_clean": true,
+      "truth_access_G3": 16,
+      "G3_ready_for_outward": false
+    },
+    "internal_allowed": true,
+    "outward_allowed": false,
+    "outward_needs": "data_guard ok + security clean + G3>=70 + owner approval"
+  },
+  "next_action": {
+    "do": "2103 tools/skills still have no real link (83.6%)",
+    "area": "access",
+    "detail": "The link-resolver runs each cycle; this falls as it works. Add Gemini keys to speed it.",
+    "type": "internal"
+  },
+  "holding": [],
+  "tool_stack": [
+    {
+      "role": "mind (orchestrator)",
+      "tool": "src/excava.py",
+      "status": "active"
+    },
+    {
+      "role": "verification agents (the gate)",
+      "tool": "data_guard + security_scan + goals_check + link-coverage",
+      "status": "active"
+    },
+    {
+      "role": "hands",
+      "tool": "activator (excavatortron-activator)",
+      "status": "active"
+    },
+    {
+      "role": "reflexes (protocols)",
+      "tool": "resolve_links, trend, maintenance, backup, priorities, ...",
+      "status": "active"
+    },
+    {
+      "role": "memory",
+      "tool": "Gemini embeddings + vector index (free)",
+      "status": "building"
+    },
+    {
+      "role": "nervous system (routing)",
+      "tool": "LiteLLM over the 16-engine pool",
+      "status": "planned"
+    },
+    {
+      "role": "web senses",
+      "tool": "Bright Data MCP (free 5k/mo)",
+      "status": "needs key: BRIGHTDATA_API_TOKEN"
+    },
+    {
+      "role": "creation",
+      "tool": "hub create tools (image/video/code/writing)",
+      "status": "gated (OS-2)"
+    },
+    {
+      "role": "promotion / publish",
+      "tool": "hub promote + deploy tools",
+      "status": "gated (OS-2, approval)"
+    },
+    {
+      "role": "self-coding",
+      "tool": "hub agentic-coding tools",
+      "status": "gated (OS-3, tests+approval)"
+    }
+  ],
+  "stack_review": {
+    "candidates_available": 0,
+    "note": "EXCAVA reviews its stack each cycle: integrate the best free per-process tool, combine overlaps, offload weak ones. Top open process gaps: "
+  }
+}

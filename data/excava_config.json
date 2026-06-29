@@ -1,0 +1,27 @@
+{
+  "name": "EXCAVA",
+  "tagline": "the agentic OS that operates Excavatortron toward the 6 goals",
+  "updated_at": "2026-06-29",
+  "phases": {
+    "OS-1 operator": "live — reads goals+priorities+memory, runs the safe internal work, reports",
+    "OS-2 creator": "gated — wires the hub's create/promote/publish tools; outward actions need the gate green + owner approval",
+    "OS-3 self-coder": "gated — writes its own new protocols, behind tests + data_guard + owner approval"
+  },
+  "tool_stack": [
+    {"role": "mind (orchestrator)", "tool": "src/excava.py", "status": "active"},
+    {"role": "verification agents (the gate)", "tool": "data_guard + security_scan + goals_check + link-coverage", "status": "active"},
+    {"role": "hands", "tool": "activator (excavatortron-activator)", "status": "active"},
+    {"role": "reflexes (protocols)", "tool": "resolve_links, trend, maintenance, backup, priorities, ...", "status": "active"},
+    {"role": "memory", "tool": "Gemini embeddings + vector index (free)", "status": "building"},
+    {"role": "nervous system (routing)", "tool": "LiteLLM over the 16-engine pool", "status": "planned"},
+    {"role": "web senses", "tool": "Bright Data MCP (free 5k/mo)", "status": "needs key: BRIGHTDATA_API_TOKEN"},
+    {"role": "creation", "tool": "hub create tools (image/video/code/writing)", "status": "gated (OS-2)"},
+    {"role": "promotion / publish", "tool": "hub promote + deploy tools", "status": "gated (OS-2, approval)"},
+    {"role": "self-coding", "tool": "hub agentic-coding tools", "status": "gated (OS-3, tests+approval)"}
+  ],
+  "gate": {
+    "internal_actions": "allowed when data_guard ok + no security leaks",
+    "outward_actions (create/publish/self-edit)": "require ALL: data_guard ok, security clean, goal G3 (truth/access) >= 70, owner approval"
+  },
+  "self_optimize": "every cycle EXCAVA reviews its own tool stack via pipeline_scout: find better/more tools, combine overlapping ones, offload weak ones, and queue the changes to self-improvement."
+}

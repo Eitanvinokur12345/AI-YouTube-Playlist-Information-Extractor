@@ -1,10 +1,16 @@
 {
+<<<<<<< Updated upstream
   "generated_at": "2026-06-29T05:46:24.256015+00:00",
+=======
+  "generated_at": "2026-06-29T05:59:01.728957+00:00",
+>>>>>>> Stashed changes
   "status": "proposals — approve to integrate",
-  "roles": [
+  "total_candidates": 698,
+  "processes": [
     {
-      "role": "Researcher — web retrieval",
-      "why_this_role_helps": "find real tool/site links the LLM doesn't know (helps G3 link resolution)",
+      "process": "Retrieval: web search/scrape",
+      "goal": "G1",
+      "count": 50,
       "recommended": "Bright Data MCP",
       "finds": [
         {
@@ -12,34 +18,127 @@
           "kind": "tool",
           "quality": 9,
           "link": "",
-          "desc": "Official MCP server that gives AI agents access to Bright Data's full proxy and scraping stack — Web Unlocker, SERP API,"
+          "desc": "Official MCP server that gives AI agents access to Bright Data's full proxy and scraping stack — Web Unlocker,"
         },
         {
           "name": "Exa",
           "kind": "tool",
           "quality": 9,
           "link": "https://exa.com",
-          "desc": "Semantic search engine and API built for AI agents — uses neural embeddings rather than keyword matching, returning conc"
+          "desc": "Semantic search engine and API built for AI agents — uses neural embeddings rather than keyword matching, retu"
         },
         {
           "name": "Exa MCP",
           "kind": "tool",
           "quality": 9,
           "link": "",
-          "desc": "Official MCP server for Exa's semantic search API — the most-used search MCP server in 2026, enabling AI agents to perfo"
+          "desc": "Official MCP server for Exa's semantic search API — the most-used search MCP server in 2026, enabling AI agent"
         },
         {
           "name": "Firecrawl",
           "kind": "tool",
           "quality": 9,
           "link": "https://firecrawl.com",
-          "desc": "Web scraping API that converts any website — including JavaScript-rendered pages — into clean LLM-ready markdown using ~"
+          "desc": "Web scraping API that converts any website — including JavaScript-rendered pages — into clean LLM-ready markdo"
+        },
+        {
+          "name": "Firecrawl MCP Server",
+          "kind": "tool",
+          "quality": 9,
+          "link": "",
+          "desc": "Official Firecrawl MCP server that adds powerful web scraping and search to Cursor, Claude, and other LLM clie"
+        },
+        {
+          "name": "Gemini CLI",
+          "kind": "tool",
+          "quality": 9,
+          "link": "",
+          "desc": "Google's open-source terminal AI agent powered by Gemini 2.5 Pro with a 1M-token context window, enabling agen"
+        },
+        {
+          "name": "Bright Data",
+          "kind": "tool",
+          "quality": 8,
+          "link": "https://brightdata.com",
+          "desc": "Enterprise web data platform with the world's largest proxy network — provides Web Unlocker, SERP API, dataset"
+        },
+        {
+          "name": "Tavily MCP Server",
+          "kind": "tool",
+          "quality": 8,
+          "link": "",
+          "desc": "AI agent-optimized search engine exposed as an MCP tool — specializes in multi-step research planning rather t"
         }
       ]
     },
     {
-      "role": "Automation Engineer — browser",
-      "why_this_role_helps": "fetch pages/transcripts blocked from datacenter IPs; verify links live",
+      "process": "Retrieval: transcripts/audio",
+      "goal": "G1",
+      "count": 32,
+      "recommended": "Gemini 3.1 Ultra",
+      "finds": [
+        {
+          "name": "Gemini 3.1 Ultra",
+          "kind": "tool",
+          "quality": 9,
+          "link": "",
+          "desc": "Google's flagship multimodal model released April 2026 with a 2-million token context window — the largest of "
+        },
+        {
+          "name": "OpenAI Realtime API",
+          "kind": "tool",
+          "quality": 9,
+          "link": "",
+          "desc": "General availability real-time audio API from OpenAI featuring GPT-Realtime-2 (ultra-low latency conversation)"
+        },
+        {
+          "name": "Agentic Video Production Pipeline",
+          "kind": "skill",
+          "quality": 9,
+          "link": "",
+          "desc": "Use AI coding assistants (Claude Code, Cursor, Copilot) with Open Montage to run a complete end-to-end video p"
+        },
+        {
+          "name": "Quiet Interfaces AI Toolkit",
+          "kind": "tool",
+          "quality": 8,
+          "link": "",
+          "desc": "A compact AI toolkit that converts text to speech, handwriting to print, gestures to actions, and provides acc"
+        },
+        {
+          "name": "AssemblyAI",
+          "kind": "tool",
+          "quality": 8,
+          "link": "https://www.assemblyai.com",
+          "desc": "Speech-to-text API with built-in diarization, sentiment analysis, entity detection, and the LeMUR LLM layer fo"
+        },
+        {
+          "name": "Deepgram",
+          "kind": "tool",
+          "quality": 8,
+          "link": "https://www.deepgram.com",
+          "desc": "Real-time speech-to-text and text-to-speech API delivering sub-300ms latency with the Nova-3 model — the produ"
+        },
+        {
+          "name": "Descript",
+          "kind": "tool",
+          "quality": 8,
+          "link": "https://www.descript.com",
+          "desc": "AI video and podcast editor centered on text-based editing — edit video by editing the auto-generated transcri"
+        },
+        {
+          "name": "Granola MCP",
+          "kind": "tool",
+          "quality": 8,
+          "link": "",
+          "desc": "Connects Claude, ChatGPT, and other MCP-compatible AI tools directly to your Granola meeting notes so agents c"
+        }
+      ]
+    },
+    {
+      "process": "Retrieval: browser automation",
+      "goal": "G1",
+      "count": 29,
       "recommended": "Playwright MCP",
       "finds": [
         {
@@ -47,7 +146,14 @@
           "kind": "connector",
           "quality": 9,
           "link": "https://playwright.dev/",
-          "desc": "Lets Claude Code drive a real browser: navigate, click, fill forms, run tests and upload files. Turns the agent into a b"
+          "desc": "Lets Claude Code drive a real browser: navigate, click, fill forms, run tests and upload files. Turns the agen"
+        },
+        {
+          "name": "Automated Testing with Playwright CLI",
+          "kind": "skill",
+          "quality": 9,
+          "link": "",
+          "desc": "A skill to have Claude spin up browser instances and automate testing workflows using Playwright CLI, saving t"
         },
         {
           "name": "Playwright CLI",
@@ -61,55 +167,106 @@
           "kind": "tool",
           "quality": 8,
           "link": "https://github.com/Significant-Gravitas/Auto-GPT",
-          "desc": "Open-source Python library letting LLM agents browse the web autonomously using real browser sessions with full DOM acce"
+          "desc": "Open-source Python library letting LLM agents browse the web autonomously using real browser sessions with ful"
         },
         {
           "name": "Browserbase",
           "kind": "tool",
           "quality": 8,
           "link": "https://browserbase.com",
-          "desc": "Cloud-based headless browser platform for AI agents — provides MCP server access to fully managed, scalable browser auto"
+          "desc": "Cloud-based headless browser platform for AI agents — provides MCP server access to fully managed, scalable br"
+        },
+        {
+          "name": "Holo 3.1",
+          "kind": "tool",
+          "quality": 8,
+          "link": "",
+          "desc": "H Company's vision-language navigation model for cross-platform computer use — controls web browsers, desktop "
+        },
+        {
+          "name": "Puppeteer MCP Server",
+          "kind": "tool",
+          "quality": 8,
+          "link": "",
+          "desc": "MCP reference server for Puppeteer that gives AI agents headless Chrome browser control: web navigation, DOM s"
+        },
+        {
+          "name": "Skyvern",
+          "kind": "tool",
+          "quality": 8,
+          "link": "",
+          "desc": "Vision-driven browser automation agent using LLMs and computer vision to navigate and interact with websites t"
         }
       ]
     },
     {
-      "role": "Data Engineer — transcripts/extract",
-      "why_this_role_helps": "recover the captions YouTube blocks (helps G1 coverage)",
-      "recommended": "Gemini 3.1 Ultra",
+      "process": "Analysis: structured extraction",
+      "goal": "G1",
+      "count": 48,
+      "recommended": "Bright Data MCP",
       "finds": [
         {
-          "name": "Gemini 3.1 Ultra",
+          "name": "Bright Data MCP",
           "kind": "tool",
           "quality": 9,
           "link": "",
-          "desc": "Google's flagship multimodal model released April 2026 with a 2-million token context window — the largest of any public"
+          "desc": "Official MCP server that gives AI agents access to Bright Data's full proxy and scraping stack — Web Unlocker,"
         },
         {
-          "name": "OpenAI Realtime API",
+          "name": "Firecrawl",
+          "kind": "tool",
+          "quality": 9,
+          "link": "https://firecrawl.com",
+          "desc": "Web scraping API that converts any website — including JavaScript-rendered pages — into clean LLM-ready markdo"
+        },
+        {
+          "name": "MAI-Thinking-1",
           "kind": "tool",
           "quality": 9,
           "link": "",
-          "desc": "General availability real-time audio API from OpenAI featuring GPT-Realtime-2 (ultra-low latency conversation), GPT-Real"
+          "desc": "Microsoft's first in-house reasoning model (35B active params, ~1T total via sparse MoE, 256K context), announ"
         },
         {
-          "name": "Quiet Interfaces AI Toolkit",
+          "name": "MCP Toolbox for Databases",
           "kind": "tool",
           "quality": 8,
           "link": "",
-          "desc": "A compact AI toolkit that converts text to speech, handwriting to print, gestures to actions, and provides accessible in"
+          "desc": "Google's open-source MCP server that connects AI agents, IDEs, and LLM applications directly to enterprise dat"
         },
         {
-          "name": "AssemblyAI",
+          "name": "Milvus",
           "kind": "tool",
           "quality": 8,
-          "link": "https://www.assemblyai.com",
-          "desc": "Speech-to-text API with built-in diarization, sentiment analysis, entity detection, and the LeMUR LLM layer for AI-power"
+          "link": "https://github.com/milvus-io/milvus",
+          "desc": "Cloud-native distributed vector database from Zilliz (v2.6, Milvus 3.0 RC May 2026) — handles billion-scale hy"
+        },
+        {
+          "name": "Mixpanel MCP",
+          "kind": "tool",
+          "quality": 8,
+          "link": "",
+          "desc": "MCP server for Mixpanel product analytics that exposes events, funnels, retention cohorts, dashboards, and Lex"
+        },
+        {
+          "name": "PaddleOCR v6",
+          "kind": "tool",
+          "quality": 8,
+          "link": "https://github.com/PaddlePaddle/PaddleOCR",
+          "desc": "Baidu's PaddleOCR v6 multilingual document OCR model with improved accuracy on complex layouts, tables, formul"
+        },
+        {
+          "name": "Postgres MCP Server",
+          "kind": "tool",
+          "quality": 8,
+          "link": "",
+          "desc": "Official reference MCP server for PostgreSQL that lets Claude run read-only SQL queries and introspect schemas"
         }
       ]
     },
     {
-      "role": "Integrations Scout — MCP",
-      "why_this_role_helps": "wire useful capabilities straight into Claude/the activator",
+      "process": "Activator: embeddings/RAG/search",
+      "goal": "G2",
+      "count": 46,
       "recommended": "AnythingLLM",
       "finds": [
         {
@@ -117,63 +274,469 @@
           "kind": "tool",
           "quality": 9,
           "link": "",
-          "desc": "All-in-one self-hosted AI app with built-in RAG, multi-agent support, MCP server connections, and support for any LLM pr"
+          "desc": "All-in-one self-hosted AI app with built-in RAG, multi-agent support, MCP server connections, and support for "
         },
         {
-          "name": "Azure MCP Server",
+          "name": "Dify",
+          "kind": "tool",
+          "quality": 9,
+          "link": "https://dify.ai",
+          "desc": "Open-source LLM app and agent workflow platform with a visual canvas builder — 144K+ GitHub stars, supports al"
+        },
+        {
+          "name": "Exa",
+          "kind": "tool",
+          "quality": 9,
+          "link": "https://exa.com",
+          "desc": "Semantic search engine and API built for AI agents — uses neural embeddings rather than keyword matching, retu"
+        },
+        {
+          "name": "Exa MCP",
           "kind": "tool",
           "quality": 9,
           "link": "",
-          "desc": "Microsoft's official MCP implementation connecting AI agents to 40+ Azure services including Blob Storage, Cosmos DB, Ke"
+          "desc": "Official MCP server for Exa's semantic search API — the most-used search MCP server in 2026, enabling AI agent"
         },
         {
-          "name": "Bright Data MCP",
+          "name": "Flowise",
+          "kind": "tool",
+          "quality": 9,
+          "link": "https://flowiseai.com",
+          "desc": "Open-source drag-and-drop builder for LLM apps and agent workflows — lets non-coders visually assemble RAG pip"
+        },
+        {
+          "name": "LangChain",
+          "kind": "tool",
+          "quality": 9,
+          "link": "https://langchain.com",
+          "desc": "Foundational open-source LLM application framework that popularized chains, agents, and RAG pipelines — the pa"
+        },
+        {
+          "name": "Adobe Firefly 3",
+          "kind": "tool",
+          "quality": 8,
+          "link": "",
+          "desc": "Adobe's commercially safe AI image generator trained exclusively on licensed and public-domain content — integ"
+        },
+        {
+          "name": "Arize Phoenix",
+          "kind": "tool",
+          "quality": 8,
+          "link": "",
+          "desc": "Open-source AI observability platform built on OpenTelemetry for framework-agnostic tracing of prompts, respon"
+        }
+      ]
+    },
+    {
+      "process": "Dedup/entity resolution",
+      "goal": "G2",
+      "count": 3,
+      "recommended": "everyrow",
+      "finds": [
+        {
+          "name": "everyrow",
+          "kind": "tool",
+          "quality": 7,
+          "link": "",
+          "desc": "SDK that runs LLM agent actions on every row of a pandas DataFrame, ideal for screening, classifying, and dedu"
+        },
+        {
+          "name": "AI Video Editing Pipeline (Claude + Remotion + Whisper)",
+          "kind": "skill",
+          "quality": 6,
+          "link": "",
+          "desc": "A no-editor video production workflow where Claude orchestrates audio normalization, Remotion handles clip mer"
+        },
+        {
+          "name": "Cross-Harness Skill Porting",
+          "kind": "skill",
+          "quality": 6,
+          "link": "",
+          "desc": "Technique for sharing AI agent configuration between Claude Code and OpenAI Codex using a canonical agents.md "
+        }
+      ]
+    },
+    {
+      "process": "Validation / QA / guardrails",
+      "goal": "G3",
+      "count": 16,
+      "recommended": "Portkey Gateway",
+      "finds": [
+        {
+          "name": "Portkey Gateway",
+          "kind": "tool",
+          "quality": 9,
+          "link": "https://portkey.ai",
+          "desc": "Blazing-fast AI gateway routing requests to 1600+ LLMs through one unified API — adds caching, retry, fallback"
+        },
+        {
+          "name": "Claude Fable 5 Core Prompting Principles",
+          "kind": "skill",
+          "quality": 9,
+          "link": "",
+          "desc": "Three key principles for optimal results with Claude Fable 5: keep prompts concise (less is more), provide con"
+        },
+        {
+          "name": "Pydantic AI",
+          "kind": "tool",
+          "quality": 8,
+          "link": "",
+          "desc": "Type-safe Python agent framework bringing FastAPI-style ergonomics — strict types, dependency injection, and s"
+        },
+        {
+          "name": "Guardrails AI",
+          "kind": "tool",
+          "quality": 7,
+          "link": "",
+          "desc": "Open-source framework that enforces structural output guarantees from LLMs — validates JSON schemas, filters u"
+        },
+        {
+          "name": "NeMo Guardrails",
+          "kind": "tool",
+          "quality": 7,
+          "link": "https://github.com/NVIDIA/NeMo-Guardrails",
+          "desc": "NVIDIA's open-source library for adding programmable safety guardrails to LLM applications — configure topical"
+        },
+        {
+          "name": "Chrome DevTools MCP + Playwright MCP Agentic Frontend Testing Loop",
+          "kind": "skill",
+          "quality": 7,
+          "link": "",
+          "desc": "Combines Chrome DevTools MCP (browser log inspection) with Playwright MCP (browser navigation and interaction)"
+        },
+        {
+          "name": "AI System Architecture",
+          "kind": "skill",
+          "quality": 5,
+          "link": "",
+          "desc": "Designing the intent and guardrails for AI-driven systems, focusing on high-level objectives and constraints."
+        },
+        {
+          "name": "Run end-to-end tests",
+          "kind": "skill",
+          "quality": 5,
+          "link": "",
+          "desc": "Executing end-to-end tests for comprehensive system validation."
+        }
+      ]
+    },
+    {
+      "process": "Agents / orchestration (the OS)",
+      "goal": "G6",
+      "count": 291,
+      "recommended": "OpenAI Codex",
+      "finds": [
+        {
+          "name": "OpenAI Codex",
           "kind": "tool",
           "quality": 9,
           "link": "",
-          "desc": "Official MCP server that gives AI agents access to Bright Data's full proxy and scraping stack — Web Unlocker, SERP API,"
+          "desc": "OpenAI's AI coding agent for software development tasks, competing with Claude Code for terminal-based agentic"
+        },
+        {
+          "name": "Claude Mythos 5",
+          "kind": "tool",
+          "quality": 9,
+          "link": "",
+          "desc": "Anthropic's most powerful model in the Fable 5 generation, designed for the most demanding long-horizon autono"
+        },
+        {
+          "name": "Luma's new creative agents",
+          "kind": "tool",
+          "quality": 9,
+          "link": "",
+          "desc": "An AI platform featuring creative agents that orchestrate and perform multiple tasks in parallel to generate a"
+        },
+        {
+          "name": "Open Montage",
+          "kind": "tool",
+          "quality": 9,
+          "link": "",
+          "desc": "The world's first open-source agentic video production system with 12 pipelines, 52 tools, and 500+ agent skil"
+        },
+        {
+          "name": "AnythingLLM",
+          "kind": "tool",
+          "quality": 9,
+          "link": "",
+          "desc": "All-in-one self-hosted AI app with built-in RAG, multi-agent support, MCP server connections, and support for "
         },
         {
           "name": "Claude Agent SDK",
           "kind": "tool",
           "quality": 9,
           "link": "",
-          "desc": "Anthropic's official TypeScript and Python SDK for building multi-agent systems that integrate native MCP servers and su"
+          "desc": "Anthropic's official TypeScript and Python SDK for building multi-agent systems that integrate native MCP serv"
+        },
+        {
+          "name": "CrewAI",
+          "kind": "tool",
+          "quality": 9,
+          "link": "",
+          "desc": "Open-source multi-agent framework for orchestrating role-based autonomous AI teams — 52K+ GitHub stars, 5.2M m"
+        },
+        {
+          "name": "Dify",
+          "kind": "tool",
+          "quality": 9,
+          "link": "https://dify.ai",
+          "desc": "Open-source LLM app and agent workflow platform with a visual canvas builder — 144K+ GitHub stars, supports al"
         }
       ]
     },
     {
-      "role": "QA — validation",
-      "why_this_role_helps": "keep links + data correct (helps G3 truth)",
-      "recommended": "Guardrails AI",
+      "process": "Storage: vector / graph DB",
+      "goal": "G6",
+      "count": 20,
+      "recommended": "LangChain",
       "finds": [
         {
-          "name": "Guardrails AI",
+          "name": "LangChain",
           "kind": "tool",
+          "quality": 9,
+          "link": "https://langchain.com",
+          "desc": "Foundational open-source LLM application framework that popularized chains, agents, and RAG pipelines — the pa"
+        },
+        {
+          "name": "Memory MCP Server",
+          "kind": "tool",
+          "quality": 9,
+          "link": "",
+          "desc": "Official Anthropic MCP server that maintains a persistent knowledge graph of entities and relationships across"
+        },
+        {
+          "name": "Haystack",
+          "kind": "tool",
+          "quality": 8,
+          "link": "https://haystack.deepset.ai/",
+          "desc": "Production-grade LLM orchestration framework for building customizable RAG pipelines, question-answering syste"
+        },
+        {
+          "name": "LangFlow",
+          "kind": "tool",
+          "quality": 8,
+          "link": "https://github.com/logspace-ai/langflow",
+          "desc": "Low-code visual drag-and-drop builder for AI agents and RAG pipelines — connects prompts, tools, LLMs, and vec"
+        },
+        {
+          "name": "Milvus",
+          "kind": "tool",
+          "quality": 8,
+          "link": "https://github.com/milvus-io/milvus",
+          "desc": "Cloud-native distributed vector database from Zilliz (v2.6, Milvus 3.0 RC May 2026) — handles billion-scale hy"
+        },
+        {
+          "name": "Pinecone",
+          "kind": "tool",
+          "quality": 8,
+          "link": "https://pinecone.io",
+          "desc": "Managed serverless vector database with automatic scaling and pay-per-query pricing — the leading hosted optio"
+        },
+        {
+          "name": "Qdrant",
+          "kind": "tool",
+          "quality": 8,
+          "link": "https://qdrant.io",
+          "desc": "Open-source vector database built in Rust for high-performance similarity search, supporting filtering, payloa"
+        },
+        {
+          "name": "Weaviate",
+          "kind": "tool",
+          "quality": 8,
+          "link": "https://weaviate.io",
+          "desc": "Cloud-native open-source vector database with semantic search, hybrid BM25+vector ranking, real-time indexing,"
+        }
+      ]
+    },
+    {
+      "process": "Observability / eval",
+      "goal": "G2",
+      "count": 84,
+      "recommended": "Cursor",
+      "finds": [
+        {
+          "name": "Cursor",
+          "kind": "tool",
+          "quality": 9,
+          "link": "https://www.cursor.so",
+          "desc": "Cursor's in-house agentic coding model (Composer 2.5), built on a mixture-of-experts architecture derived from"
+        },
+        {
+          "name": "GPT 5.5",
+          "kind": "tool",
+          "quality": 9,
+          "link": "",
+          "desc": "An AI model used as a benchmark for pricing comparison, with higher token costs than Deepseek V4."
+        },
+        {
+          "name": "Claude Agent SDK",
+          "kind": "tool",
+          "quality": 9,
+          "link": "",
+          "desc": "Anthropic's official TypeScript and Python SDK for building multi-agent systems that integrate native MCP serv"
+        },
+        {
+          "name": "LangChain",
+          "kind": "tool",
+          "quality": 9,
+          "link": "https://langchain.com",
+          "desc": "Foundational open-source LLM application framework that popularized chains, agents, and RAG pipelines — the pa"
+        },
+        {
+          "name": "OpenAI Agents SDK",
+          "kind": "tool",
+          "quality": 9,
+          "link": "",
+          "desc": "OpenAI's official Python framework for building production-ready AI agents — provides primitives for agent loo"
+        },
+        {
+          "name": "Claude Opus 4.8",
+          "kind": "tool",
+          "quality": 8,
+          "link": "",
+          "desc": "Claude Opus 4.8 is Anthropic's flagship large language model with advanced reasoning capabilities. In a benchm"
+        },
+        {
+          "name": "Arize Phoenix",
+          "kind": "tool",
+          "quality": 8,
+          "link": "",
+          "desc": "Open-source AI observability platform built on OpenTelemetry for framework-agnostic tracing of prompts, respon"
+        },
+        {
+          "name": "Google ADK",
+          "kind": "tool",
+          "quality": 8,
+          "link": "",
+          "desc": "Google's open-source Agent Development Kit — a flexible framework for building multi-agent AI applications wit"
+        }
+      ]
+    },
+    {
+      "process": "Token / cost optimization",
+      "goal": "G4",
+      "count": 69,
+      "recommended": "Claude Opus 4.6",
+      "finds": [
+        {
+          "name": "Claude Opus 4.6",
+          "kind": "tool",
+          "quality": 9,
+          "link": "",
+          "desc": "An AI model on a similar level to Deepseek V4, but with higher token pricing."
+        },
+        {
+          "name": "Deepseek V4",
+          "kind": "tool",
+          "quality": 9,
+          "link": "",
+          "desc": "Nearly state-of-the-art open-source AI model with a 1 million token context length and highly competitive pric"
+        },
+        {
+          "name": "GPT 5.4",
+          "kind": "tool",
+          "quality": 9,
+          "link": "",
+          "desc": "An AI model roughly comparable in quality to Deepseek V4, but with higher token pricing."
+        },
+        {
+          "name": "GPT 5.5",
+          "kind": "tool",
+          "quality": 9,
+          "link": "",
+          "desc": "An AI model used as a benchmark for pricing comparison, with higher token costs than Deepseek V4."
+        },
+        {
+          "name": "Firecrawl",
+          "kind": "tool",
+          "quality": 9,
+          "link": "https://firecrawl.com",
+          "desc": "Web scraping API that converts any website — including JavaScript-rendered pages — into clean LLM-ready markdo"
+        },
+        {
+          "name": "Gemini 3.1 Ultra",
+          "kind": "tool",
+          "quality": 9,
+          "link": "",
+          "desc": "Google's flagship multimodal model released April 2026 with a 2-million token context window — the largest of "
+        },
+        {
+          "name": "Gemini CLI",
+          "kind": "tool",
+          "quality": 9,
+          "link": "",
+          "desc": "Google's open-source terminal AI agent powered by Gemini 2.5 Pro with a 1M-token context window, enabling agen"
+        },
+        {
+          "name": "Claude Opus 4.8",
+          "kind": "tool",
+          "quality": 8,
+          "link": "",
+          "desc": "Claude Opus 4.8 is Anthropic's flagship large language model with advanced reasoning capabilities. In a benchm"
+        }
+      ]
+    },
+    {
+      "process": "Brain / graph visualization",
+      "goal": "G6",
+      "count": 10,
+      "recommended": "Obsidian",
+      "finds": [
+        {
+          "name": "Obsidian",
+          "kind": "tool",
+          "quality": 8,
+          "link": "https://obsidian.md",
+          "desc": "A personal knowledge base and note-taking app that organizes notes in folders and supports tagging and linking"
+        },
+        {
+          "name": "Claude Auto-Filing Knowledge Wiki",
+          "kind": "skill",
+          "quality": 8,
+          "link": "",
+          "desc": "Pipe voice notes, saved articles, and watched videos into Claude, which automatically files each item and link"
+        },
+        {
+          "name": "Building a personal knowledge base with Claude Code and Claude Co-work",
+          "kind": "skill",
           "quality": 7,
           "link": "",
-          "desc": "Open-source framework that enforces structural output guarantees from LLMs — validates JSON schemas, filters unsafe cont"
+          "desc": "Setting up a personal knowledge base using tools like Obsidian or Notion and integrating Claude Code or Claude"
         },
         {
-          "name": "Mixo",
+          "name": "Graphify",
           "kind": "tool",
-          "quality": 7,
-          "link": "https://mixo.ai",
-          "desc": "AI website builder that generates a complete landing page—copy, design, and email capture—from a single sentence descrip"
+          "quality": 6,
+          "link": "",
+          "desc": "Free, open-source tool that converts any repository into a knowledge graph, reducing the tokens Claude Code ne"
         },
         {
-          "name": "Qodo",
+          "name": "Hermes Agent",
           "kind": "tool",
-          "quality": 7,
-          "link": "https://qodo.ai",
-          "desc": "AI code review platform that validates changes against surrounding context — analyzes test coverage, logic correctness, "
+          "quality": 6,
+          "link": "",
+          "desc": "AI agent platform that supports distinct profiles with persistent memory, automatically logging conversations "
         },
         {
-          "name": "Bun",
-          "kind": "tool",
+          "name": "Obsidian as Free Local Knowledge Base",
+          "kind": "skill",
+          "quality": 6,
+          "link": "",
+          "desc": "Uses Obsidian's graph view and bidirectional backlinks as a zero-cost local knowledge base alternative to vect"
+        },
+        {
+          "name": "Codebase Knowledge Graph for Claude Code Token Savings",
+          "kind": "skill",
+          "quality": 6,
+          "link": "",
+          "desc": "Build a queryable code graph (using a tool like Graphify) that lets Claude Code answer codebase questions with"
+        },
+        {
+          "name": "Personal Knowledge Management (PKM) with Obsidian",
+          "kind": "skill",
           "quality": 5,
-          "link": "https://bun.sh",
-          "desc": "A fast all-in-one JavaScript runtime, package manager, bundler, and test runner."
+          "link": "",
+          "desc": "Organizing notes, ideas, and personal thinking in plain text files within Obsidian, forming the 'Ideaverse' co"
         }
       ]
     }

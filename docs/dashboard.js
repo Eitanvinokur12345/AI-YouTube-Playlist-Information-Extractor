@@ -1416,12 +1416,13 @@ async function pipelinePanel() {
 
 async function scoutPanel() {
   const s = await load("pipeline_scout.json");
-  if (!s || !(s.roles || []).length) return "";
-  const rows = s.roles.map(r => `<div class="prio-row">
-      <div class="prio-main"><b>${esc(r.role)}</b><span class="pl-what">${esc(r.why_this_role_helps)}</span></div>
-      <span class="prio-area">${r.recommended ? esc(r.recommended) : "—"}</span></div>`).join("");
-  return `<div class="card"><h3>🔭 Pipeline scout <span class="sub">— tools that could improve the system</span></h3>
-    <p class="sub">5 role-based scouts propose process-helpers (web retrieval, browser, transcripts, MCP, QA). These are <b>proposals — approve to integrate</b>, nothing auto-added.</p>
+  if (!s || !(s.processes || []).length) return "";
+  const rows = s.processes.map(r => `<div class="prio-row">
+      <span class="prio-rank sev-low">${r.count}</span>
+      <div class="prio-main"><b>${esc(r.process)}</b><span class="pl-what">top free pick: ${r.recommended ? esc(r.recommended) : "—"}</span></div>
+      <span class="prio-area">${esc(r.goal)}</span></div>`).join("");
+  return `<div class="card"><h3>🔭 Pipeline scout <span class="sub">— ${esc(s.total_candidates || 0)} catalogue tools that could improve the system</span></h3>
+    <p class="sub">Scans every catalogue type across 12 pipeline processes, ranks by quality, and queues the best into self-improvement. <b>Proposals — approve to integrate</b> (some matches are tangential; pick the genuinely free + useful ones).</p>
     <div class="prio-rows">${rows}</div></div>`;
 }
 async function renderDevConstruction() {

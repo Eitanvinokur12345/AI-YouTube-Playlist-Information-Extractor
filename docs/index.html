@@ -465,6 +465,12 @@
     .design-shot { width:100%; max-height:300px; object-fit:cover; object-position:top; border-radius:10px;
       border:1px solid var(--line); margin-bottom:10px; background:var(--panel2); display:block; }
     .design-card { overflow:hidden; }
+    /* Full-page design capture: the whole page, scrollable inside the card, so you can react to every part */
+    .design-fullpage { display:block; position:relative; max-height:520px; overflow-y:auto; overflow-x:hidden;
+      border:1px solid var(--line); border-radius:10px; margin-bottom:10px; background:var(--panel2); scrollbar-width:thin; }
+    .design-fullpage img { width:100%; height:auto; display:block; }
+    .design-fullpage .fp-hint { position:sticky; bottom:0; left:0; display:block; text-align:center; font-size:11px;
+      color:var(--muted); background:linear-gradient(transparent, var(--panel) 70%); padding:14px 0 5px; pointer-events:none; }
     .lnk-pending { font-size:11px; color:var(--gold-deep); background:var(--gold-soft);
       border:1px dashed var(--gold-line); border-radius:999px; padding:3px 9px; }
     /* Top priorities */

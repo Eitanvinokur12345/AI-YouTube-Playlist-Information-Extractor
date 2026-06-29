@@ -1,0 +1,193 @@
+"""
+src/collect_designs.py — DESIGNS-ONLY collector for the Designs tab.
+
+The owner: the Designs tab must hold DESIGNS, not tools/skills — real visual looks from AI websites
+and from videos, shown as a full-page capture so he can react to every part. This builds a clean
+designs.json from:
+  1. MIGRATE the old file: keep only entries that are an actual viewable design (have a live URL or a
+     described look); DROP repo/tool entries (the "tools in the designs tab" problem).
+  2. AI-PRODUCT homepages already resolved in the hub (tools/connectors/models) — the design of a real
+     AI website. Deduped by domain, top-quality first.
+  3. A curated SEED list of real AI-builder galleries + exemplar AI product sites + design galleries.
+  4. SCREEN URLs surfaced by the visual protocol (data/screen_urls.json) — sites SHOWN in the videos.
+
+No GitHub-repo-as-tool entries, no deploy-as-tool. Each entry carries a live `source_url` the dashboard
+screenshots full-page (free mShots). Style is left for the Arena to learn when unknown. Free, stdlib.
+
+Run:  python -m src.collect_designs
+"""
+from __future__ import annotations
+
+import json
+import os
+import re
+import urllib.parse
+from datetime import datetime, timezone
+from pathlib import Path
+
+ROOT = Path(__file__).parent.parent
+DATA = ROOT / "data"
+OUT = DATA / "designs.json"
+SCREEN = DATA / "screen_urls.json"
+NOW = datetime.now(timezone.utc).isoformat()
+
+STYLE_ALLOWED = {"bold", "colorful", "playful", "brutalist", "minimal", "retro", "glassy", "dark", "gradient"}
+
+# Curated, real, public sources — exemplar AI sites/builders that screenshot as actual designs,
+# plus a few gallery hubs to browse more. (name, url, style_tags, source_type)
+SEEDS = [
+    # AI builders (their own UIs are bold reference designs)
+    ("v0 by Vercel", "https://v0.dev", ["bold", "dark", "minimal"], "ai-builder"),
+    ("Lovable", "https://lovable.dev", ["bold", "gradient"], "ai-builder"),
+    ("Bolt.new", "https://bolt.new", ["bold", "dark"], "ai-builder"),
+    ("Replit", "https://replit.com", ["bold", "colorful"], "ai-builder"),
+    ("Framer", "https://www.framer.com", ["bold", "playful"], "ai-builder"),
+    ("Readdy", "https://readdy.ai", ["colorful", "gradient"], "ai-builder"),
+    ("Create.xyz", "https://www.create.xyz", ["bold", "playful"], "ai-builder"),
+    # AI product homepages (real, polished designs)
+    ("Midjourney", "https://www.midjourney.com", ["dark", "bold"], "ai-product"),
+    ("ElevenLabs", "https://elevenlabs.io", ["bold", "gradient"], "ai-product"),
+    ("Perplexity", "https://www.perplexity.ai", ["minimal", "dark"], "ai-product"),
+    ("Linear", "https://linear.app", ["minimal", "dark", "glassy"], "ai-product"),
+    ("Cursor", "https://www.cursor.com", ["dark", "bold"], "ai-product"),
+    ("Runway", "https://runwayml.com", ["bold", "dark"], "ai-product"),
+    ("Suno", "https://suno.com", ["bold", "colorful"], "ai-product"),
+    ("Krea", "https://www.krea.ai", ["colorful", "playful"], "ai-product"),
+    ("Pika", "https://pika.art", ["playful", "colorful"], "ai-product"),
+    ("Vercel", "https://vercel.com", ["minimal", "bold", "dark"], "ai-product"),
+    # Design galleries (browse many more)
+    ("Awwwards", "https://www.awwwards.com/websites/", ["bold"], "gallery"),
+    ("Godly", "https://godly.website", ["bold", "brutalist"], "gallery"),
+    ("Land-book", "https://land-book.com", ["bold", "minimal"], "gallery"),
+    ("Lapa Ninja", "https://www.lapa.ninja", ["bold"], "gallery"),
+    ("httpster", "https://httpster.net", ["brutalist", "bold"], "gallery"),
+    ("SiteInspire", "https://www.siteinspire.com", ["minimal", "bold"], "gallery"),
+    ("One Page Love", "https://onepagelove.com", ["bold"], "gallery"),
+    ("Brutalist Websites", "https://brutalistwebsites.com", ["brutalist"], "gallery"),
+    # Designer concepts
+    ("Dribbble — Web Design", "https://dribbble.com/shots/popular/web-design", ["colorful", "playful"], "dribbble"),
+    ("Behance — UI/UX", "https://www.behance.net/galleries/ui-ux", ["bold", "colorful"], "dribbble"),
+]
+
+
+def _slug(s: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", str(s).lower()).strip("-")[:80] or "design"
+
+
+def _domain(u: str) -> str:
+    try:
+        n = urllib.parse.urlparse(u).netloc.lower()
+        return n[4:] if n.startswith("www.") else n
+    except Exception:
+        return u.lower()
+
+
+def _norm(u: str) -> str:
+    u = (u or "").strip()
+    if not u:
+        return ""
+    u = re.sub(r"#.*$", "", u).rstrip("/")
+    return u.lower()
+
+
+def _is_design_url(u: str) -> bool:
+    u = (u or "").lower()
+    return u.startswith(("http://", "https://")) and not any(
+        b in u for b in ("youtube.com", "youtu.be", "github.com", "google.com/search", "/login", "/signup"))
+
+
+def _entry(name, url, styles, source_type, look="", origin="", github=""):
+    styles = [s for s in (styles or []) if s in STYLE_ALLOWED]
+    e = {"name": name or _domain(url), "slug": _slug(github or url or name),
+         "source_url": url, "source_type": source_type, "style_tags": styles,
+         "look": look or "", "origin": origin or "", "added_at": NOW}
+    if github:
+        e["github"] = github
+    return e
+
+
+def main() -> int:
+    d = json.load(open(OUT, encoding="utf-8")) if OUT.exists() else {"designs": []}
+    old = d.get("designs", []) if isinstance(d, dict) else []
+    out, seen_url, seen_dom = [], set(), set()
+
+    def add(e):
+        live = e.get("source_url") or ""
+        key = _norm(live)
+        if key:
+            if key in seen_url:
+                return False
+            seen_url.add(key)
+        elif not e.get("look"):
+            return False                      # nothing to show (no url, no described look)
+        # one entry per domain for product/gallery sources (avoid 5 pages of the same site)
+        if live and e.get("source_type") in ("ai-product", "ai-builder", "gallery", "dribbble"):
+            dom = _domain(live)
+            if dom in seen_dom:
+                return False
+            seen_dom.add(dom)
+        out.append(e)
+        return True
+
+    # 1) MIGRATE old designs — keep real designs, drop repo/tool entries
+    kept = dropped = 0
+    for x in old:
+        live = x.get("source_url") or x.get("homepage") or ""
+        if not _is_design_url(live):
+            live = ""
+        is_repo_only = (not live) and (x.get("github") or x.get("source_type") == "github-designs")
+        if is_repo_only:
+            dropped += 1
+            continue
+        styles = [s for s in (x.get("style_tags") or []) if s in STYLE_ALLOWED]
+        st = x.get("source_type") or ("video" if str(x.get("source") or "").startswith("gemini") else "oss")
+        e = _entry(x.get("name"), live, styles, st, look=x.get("look") or "",
+                   origin=x.get("origin") or "", github=x.get("github") if live else "")
+        if add(e):
+            kept += 1
+
+    # 2) AI-PRODUCT homepages already in the hub = the design of real AI websites
+    prod = 0
+    for fname, key, nk in [("tools.json", "tools", "name"), ("connectors.json", "connectors", "name"),
+                           ("models.json", "models", "name")]:
+        p = DATA / fname
+        if not p.exists():
+            continue
+        items = (json.load(open(p, encoding="utf-8")) or {}).get(key, [])
+        items = sorted(items, key=lambda z: z.get("quality_score", 0) or 0, reverse=True)
+        for it in items:
+            if prod >= 160:
+                break
+            home = it.get("homepage") or ""
+            if not _is_design_url(home):
+                continue
+            if add(_entry(it.get(nk), home, [], "ai-product",
+                          look=(it.get("description") or "")[:160], origin=fname)):
+                prod += 1
+
+    # 3) curated seeds
+    for name, url, styles, st in SEEDS:
+        add(_entry(name, url, styles, st, origin="seed"))
+
+    # 4) URLs SHOWN in videos (from the visual protocol)
+    scr = 0
+    if SCREEN.exists():
+        for u in (json.load(open(SCREEN, encoding="utf-8")) or {}).get("urls", []):
+            url = u.get("url") if isinstance(u, dict) else u
+            if _is_design_url(url) and add(_entry(
+                    (u.get("name") if isinstance(u, dict) else "") or _domain(url), url,
+                    (u.get("style_tags") if isinstance(u, dict) else []) or [], "video",
+                    look=(u.get("look") if isinstance(u, dict) else "") or "",
+                    origin=(u.get("from_video") if isinstance(u, dict) else "") or "")):
+                scr += 1
+
+    d["designs"] = out
+    d["updated_at"] = NOW
+    OUT.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"collect_designs: {len(out)} designs (kept {kept} / dropped {dropped} repo-only; "
+          f"+{prod} AI-product, +{len(SEEDS)} seeds, +{scr} shown-in-video). designs-only, no tools.")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

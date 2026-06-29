@@ -77,11 +77,15 @@ const _ytid = (u) => { const m = String(u || "").match(/[?&]v=([\w-]+)/); return
 // videos. The "Source" is the bundle of videos it came from — separate from the tool's own links.
 function linksRow(it) {
   const out = [];
-  const home = it.homepage || ((it.url && !/youtube\.com|youtu\.be/.test(it.url)) ? it.url : "");
-  if (home) out.push(`<a class="lnk lnk-web" href="${esc(home)}" target="_blank" rel="noopener">Website ↗</a>`);
+  const cand = it.homepage || it.source_url || it.url || "";
+  const home = (cand && !/youtube\.com|youtu\.be/.test(cand)) ? cand : "";
+  if (home) out.push(`<a class="lnk lnk-web" href="${esc(home)}" target="_blank" rel="noopener" title="Open the live site/app">Website ↗</a>`);
   if (it.github) out.push(`<a class="lnk lnk-gh" href="${esc(it.github)}" target="_blank" rel="noopener">GitHub ↗</a>`);
-  const deploy = it.deploy_url || (it.github ? `https://vercel.com/new/clone?repository-url=${it.github}` : "");
-  if (deploy) out.push(`<a class="lnk lnk-run" href="${esc(deploy)}" target="_blank" rel="noopener" title="One-click deploy this repo (web apps)">▶ Deploy ↗</a>`);
+  // "Run it" = open it actually RUNNING. A repo boots live in-browser (StackBlitz, no signup) instead
+  // of a deploy signup-wall; we only fall back to a deploy page when there's no live site at all.
+  const g = String(it.github || "").match(/github\.com\/([\w.-]+)\/([\w.-]+)/);
+  if (g) out.push(`<a class="lnk lnk-run" href="https://stackblitz.com/github/${g[1]}/${g[2].replace(/\.git$/, "")}" target="_blank" rel="noopener" title="Boots the project live in your browser — no signup">⚡ Run in browser ↗</a>`);
+  else if (!home && it.deploy_url) out.push(`<a class="lnk lnk-run" href="${esc(it.deploy_url)}" target="_blank" rel="noopener" title="Opens a one-click deploy page (may ask you to sign in)">⬆ Deploy your own ↗</a>`);
   if (it.install_or_source && !it.github) out.push(`<span class="lnk lnk-mcp">install: <code>${esc(String(it.install_or_source).slice(0,60))}</code></span>`);
   // Source bundle, earliest-first: first link = the video that first revealed it.
   const sv = (it.source_videos || []);
@@ -1588,7 +1592,7 @@ async function show(tab) {
 
 // Designs — AI-made / open-source website+app looks, tailored to your taste, with screenshots.
 // Includes a Design ARENA (Are.na-inspired): pick what you like, and the project learns your taste.
-const _shot = (u) => u ? `https://s.wordpress.com/mshots/v1/${encodeURIComponent(u)}?w=560` : "";
+const _shot = (u, w = 1200) => u ? `https://s.wordpress.com/mshots/v1/${encodeURIComponent(u)}?w=${w}` : "";
 function _arena() { try { return JSON.parse(localStorage.getItem("excavatortron.arena") || "{}"); } catch { return {}; } }
 function _arenaTaste(a) {
   const s = a.styles || {}; return Object.keys(s).sort((x, y) => s[y] - s[x]).filter(k => s[k] > 0);
@@ -1608,40 +1612,41 @@ function renderDesigns(d) {
   if (styleFilter !== "all") list = list.filter(x => (x.style_tags || []).includes(styleFilter));
   if (q()) list = list.filter(x => hit(x.name, x.look, (x.kind || ""), (x.tech || []).join(" "), (x.style_tags || []).join(" ")));
   const taste = _arenaTaste(a);
-  const STYLES = ["all", "bold", "colorful", "playful", "brutalist", "minimal"];
+  const STYLES = ["all", "bold", "colorful", "playful", "brutalist", "minimal", "retro", "dark", "gradient"];
   let html = `<div class="card"><h3>🎨 Designs <span class="sub">— tuned to your taste</span>
       <span class="pl-badge ${mode === "arena" ? "pl-live" : "pl-slow"}" style="margin-left:8px">${mode === "arena" ? "ARENA" : "GALLERY"}</span></h3>
-    <p class="sub">AI-made + open-source website/app looks with live demos + source, and "build like this" via the activator (it keeps the real style, not a generic AI look).</p>
+    <p class="sub">Designs only — real looks from AI websites &amp; the videos, captured full-page so you can react to every part. ⚔ Arena learns what you like; "build like this" via the activator keeps the real style.</p>
     <div class="subnav"><button class="${mode === "gallery" ? "active" : ""}" data-mode="gallery">Gallery</button>
       <button class="${mode === "arena" ? "active" : ""}" data-mode="arena">⚔ Arena</button></div>
     ${taste.length ? `<p class="hint">Your taste so far (${a.total || 0} votes): <b>${taste.slice(0, 4).map(esc).join(" · ")}</b></p>` : ""}
     ${mode === "gallery" ? `<div class="subnav">` + STYLES.map(s => `<button class="${styleFilter === s ? "active" : ""}" data-style="${s}">${s}</button>`).join("") + `</div>` : ""}</div>`;
 
   if (mode === "arena") {
-    const pool = list.filter(x => _shot(x.homepage || x.github));
-    if (pool.length < 2) { view.innerHTML = html + empty("Need a couple more designs with previews for the arena — the miner is adding them."); _designHooks(); return; }
+    const pool = list.filter(x => (x.source_url || x.homepage));
+    if (pool.length < 2) { view.innerHTML = html + empty("Need a couple more designs with previews for the arena — the visual protocol is adding them."); _designHooks(); return; }
     const i = Math.floor(Math.random() * pool.length); let j = Math.floor(Math.random() * pool.length);
     while (j === i) j = Math.floor(Math.random() * pool.length);
     html += `<p class="sub" style="text-align:center;margin:6px 0">Which do you like more? Click it. The project learns your taste.</p>
       <div class="arena-pair">${[pool[i], pool[j]].map(x => `
         <div class="card arena-card" data-pick="${esc(x.slug)}" data-tags="${esc((x.style_tags || []).join(","))}">
-          <img class="design-shot" loading="lazy" src="${_shot(x.homepage || x.github)}" alt="${esc(x.name)}">
+          <img class="design-shot" loading="lazy" src="${_shot(x.source_url || x.homepage, 700)}" alt="${esc(x.name)}">
           <h3>${esc(x.name)} ${(x.style_tags || []).map(t => `<span class="pill">${esc(t)}</span>`).join("")}</h3>
           <p class="sub">${esc((x.look || "").slice(0, 90))}</p></div>`).join("")}</div>
       <div style="text-align:center;margin-top:10px"><button class="qr-btn" data-pick="">Skip / both meh →</button></div>`;
     view.innerHTML = html; _designHooks(); return;
   }
 
-  list.sort((x, y) => _pscore(y, a) - _pscore(x, a));   // gallery: rank by YOUR taste, then stars
-  if (!list.length) { view.innerHTML = html + empty(q() ? `No designs match "${esc(state.query)}".` : "No designs yet — the miner pulls AI/OSS UIs + Gemini-watch adds ones from videos."); _designHooks(); return; }
+  list.sort((x, y) => _pscore(y, a) - _pscore(x, a));   // gallery: rank by YOUR taste
+  if (!list.length) { view.innerHTML = html + empty(q() ? `No designs match "${esc(state.query)}".` : "No designs yet — the visual protocol watches the videos and collect_designs pulls AI websites each cycle."); _designHooks(); return; }
+  const SRC = { "ai-product": "AI product", "ai-builder": "AI builder", "gallery": "gallery", "dribbble": "concept", "video": "shown in video", "oss": "open-source" };
   html += list.map(x => {
-    const shot = _shot(x.homepage || x.github), liked = (a.wins || {})[x.slug];
+    const live = x.source_url || x.homepage || "", shot = _shot(live, 1200), liked = (a.wins || {})[x.slug];
+    const src = SRC[x.source_type] || x.source_type || "";
     return `<div class="card design-card">
-      ${shot ? `<a href="${esc(x.homepage || x.github)}" target="_blank" rel="noopener"><img class="design-shot" loading="lazy" src="${shot}" alt="${esc(x.name)}"></a>` : ""}
-      <h3>${esc(x.name || "Design")} ${(x.style_tags || []).map(t => `<span class="pill">${esc(t)}</span>`).join("")}${x.stars ? `<span class="mentions">★ ${esc(x.stars)}</span>` : ""}
+      ${shot ? `<a class="design-fullpage" href="${esc(live)}" target="_blank" rel="noopener" title="Open the live design"><img loading="lazy" src="${shot}" alt="${esc(x.name)}"><span class="fp-hint">full page — scroll ↓ · click to open live</span></a>` : ""}
+      <h3>${esc(x.name || "Design")} ${(x.style_tags || []).map(t => `<span class="pill">${esc(t)}</span>`).join("")}${src ? `<span class="mentions">${esc(src)}</span>` : ""}
         <button class="qr-btn ${liked ? "active" : ""}" data-like="${esc(x.slug)}" data-tags="${esc((x.style_tags || []).join(","))}" title="I like this">♥${liked ? " " + liked : ""}</button></h3>
       ${x.look ? `<p>${esc(x.look)}</p>` : ""}
-      ${(x.tech || []).filter(Boolean).length ? `<div class="sub">Tech: ${(x.tech || []).filter(Boolean).map(t => esc(t)).join(" · ")}</div>` : ""}
       <div class="sub">Build: <code>activator: build a site like "${esc(x.name)}"</code></div>
       ${linksRow(x)}
     </div>`;

@@ -24,7 +24,8 @@ SNAP = ROOT / "backups" / "snapshot"
 OUT = DATA / "data_guard.json"
 NOW = datetime.now(timezone.utc).isoformat()
 FILES = [("tools.json", "tools"), ("skills.json", "skills"), ("models.json", "models"),
-         ("connectors.json", "connectors"), ("prompts.json", "prompts"), ("commands.json", "commands")]
+         ("connectors.json", "connectors"), ("prompts.json", "prompts"), ("commands.json", "commands"),
+         ("designs.json", "designs"), ("formats.json", "formats")]
 FLOOR = 0.55          # a file under 55% of its snapshot count = catastrophic collapse
 MIN_GUARD = 50        # only guard files that were sizable, so early growth isn't blocked
 

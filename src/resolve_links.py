@@ -141,7 +141,8 @@ def main() -> int:
         print("resolve_links: no engine key present — skipped (graceful)."); return 0
 
     st = _load(STATE, {}) or {}
-    done = set(st.get("done", []))
+    done = set()            # per-RUN only (no permanent skip — un-resolved items get retried)
+    MAX_TRIES = 4           # retry a hard item up to this many runs as search sources improve
     fixed = checked = 0
 
     for fname, key, nk in SETS:
@@ -154,7 +155,10 @@ def main() -> int:
             if checked >= args.limit:
                 break
             ident = f"{key}:{it.get('slug') or it.get(nk)}"
-            if ident in done or it.get("links_verified_at"):
+            has_link = it.get("homepage") or it.get("github") or it.get("install_or_source")
+            # skip if already linked, or tried hard enough already (else RETRY — coverage was stuck
+            # at 15% because un-resolved items used to be skipped forever after one attempt)
+            if ident in done or has_link or (it.get("link_tries") or 0) >= MAX_TRIES:
                 continue
             # Inline-extracted links (e.g. URLs seen on screen) must be VERIFIED, not trusted.
             if it.get("homepage") or it.get("github"):
@@ -192,13 +196,15 @@ def main() -> int:
             # if the existing url field is already real, keep it as homepage
             if not it.get("homepage") and it.get("url") and verify(it["url"]):
                 it["homepage"] = it["url"]; got = True
-            it["links_verified_at"] = NOW
             if got:
-                fixed += 1; changed = True
+                it["links_verified_at"] = NOW; it.pop("link_tries", None); fixed += 1
+            else:
+                it["link_tries"] = (it.get("link_tries") or 0) + 1   # retry next run, not skip forever
+            changed = True
         if changed:
             _save(DATA / fname, d)
 
-    _save(STATE, {"updated_at": NOW, "done": sorted(done)})
+    _save(STATE, {"updated_at": NOW, "processed_this_run": len(done)})
     print(f"resolve_links: checked {checked} items, gave {fixed} REAL verified links "
           f"(website/github/codespaces). {len(done)} total resolved so far.")
     return 0

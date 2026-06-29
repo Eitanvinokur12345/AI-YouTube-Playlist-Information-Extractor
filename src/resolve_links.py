@@ -88,6 +88,31 @@ def codespace(github_url: str) -> str:
     return f"https://codespaces.new/{m.group(1)}/{m.group(2).removesuffix('.git')}" if m else ""
 
 
+def web_find(name: str, timeout: int = 12) -> dict:
+    """Free, no-key fallback: search DuckDuckGo for the tool's real site + GitHub. Best-effort —
+    if the datacenter IP gets blocked it just returns {} (the Bright Data token makes this reliable)."""
+    import urllib.parse
+    out = {}
+    try:
+        q = urllib.parse.quote(f"{name} official site github")
+        req = urllib.request.Request(f"https://html.duckduckgo.com/html/?q={q}",
+                                     headers={"User-Agent": UA})
+        html = urllib.request.urlopen(req, timeout=timeout).read().decode("utf-8", "replace")
+        # DDG wraps results as ...uddg=<encoded real url>...
+        urls = [urllib.parse.unquote(u) for u in re.findall(r"uddg=([^&\"]+)", html)]
+        for u in urls:
+            if "github.com/" in u and "github" not in out and GH_RE.search(u):
+                out["github"] = "https://github.com/" + GH_RE.search(u).group(1) + "/" + GH_RE.search(u).group(2)
+            elif u.startswith("http") and "website" not in out and not any(
+                    b in u for b in ("duckduckgo", "youtube.com", "reddit.com", "wikipedia.org", "github.com")):
+                out["website"] = u
+            if "github" in out and "website" in out:
+                break
+    except Exception:
+        pass
+    return out
+
+
 def ask_links(name: str, desc: str, engines: list, timeout: int = 30) -> dict:
     prompt = (
         f"Tool/product name: {name}\nWhat it is: {desc[:200]}\n\n"
@@ -150,6 +175,9 @@ def main() -> int:
             time.sleep(args.sleep)
             res = ask_links(name, str(it.get("description") or it.get("what_it_does") or ""), engines)
             site, gh = (res.get("website") or "").strip(), (res.get("github") or "").strip()
+            if not (site or gh):                       # LLM didn't know it -> free web-search fallback
+                wf = web_find(name)
+                site, gh = (wf.get("website") or "").strip(), (wf.get("github") or "").strip()
             got = False
             if gh and "github.com" in gh and verify(gh):
                 it["github"] = gh

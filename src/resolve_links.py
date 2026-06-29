@@ -122,7 +122,7 @@ def _gemini_keys() -> list[str]:
     return ks
 
 
-def gemini_grounded(name: str, desc: str, keys: list, timeout: int = 30) -> dict:
+def gemini_grounded(name: str, desc: str, keys: list, timeout: int = 14) -> dict:
     """Use Gemini WITH Google-Search grounding to find the REAL site + repo. The search runs on
     Google's servers, so it works from the datacenter IP (unlike scraping DuckDuckGo). Best fix for
     the niche tools plain LLM-recall doesn't know. Extracts URLs from the grounded answer + sources."""

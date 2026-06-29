@@ -1587,38 +1587,72 @@ async function show(tab) {
 }
 
 // Designs — AI-made / open-source website+app looks, tailored to your taste, with screenshots.
+// Includes a Design ARENA (Are.na-inspired): pick what you like, and the project learns your taste.
 const _shot = (u) => u ? `https://s.wordpress.com/mshots/v1/${encodeURIComponent(u)}?w=560` : "";
+function _arena() { try { return JSON.parse(localStorage.getItem("excavatortron.arena") || "{}"); } catch { return {}; } }
+function _arenaTaste(a) {
+  const s = a.styles || {}; return Object.keys(s).sort((x, y) => s[y] - s[x]).filter(k => s[k] > 0);
+}
+function _pscore(x, a) {
+  const s = a.styles || {}, w = a.wins || {};
+  return (x.style_tags || []).reduce((t, k) => t + (s[k] || 0), 0) * 3 + (w[x.slug] || 0) * 5 + (x.stars || 0) / 1000;
+}
+window.arenaVote = function (slug, tags) {
+  const a = _arena(); a.styles = a.styles || {}; a.wins = a.wins || {}; a.total = (a.total || 0) + 1;
+  if (slug) { a.wins[slug] = (a.wins[slug] || 0) + 1; (tags || []).forEach(t => a.styles[t] = (a.styles[t] || 0) + 1); }
+  localStorage.setItem("excavatortron.arena", JSON.stringify(a)); renderTab("designs");
+};
 function renderDesigns(d) {
   let list = (d && d.designs) || [];
-  const styleFilter = state.designStyle || "all";
+  const a = _arena(), mode = state.designMode || "gallery", styleFilter = state.designStyle || "all";
   if (styleFilter !== "all") list = list.filter(x => (x.style_tags || []).includes(styleFilter));
   if (q()) list = list.filter(x => hit(x.name, x.look, (x.kind || ""), (x.tech || []).join(" "), (x.style_tags || []).join(" ")));
-  list.sort((a, b) => (b.stars || 0) - (a.stars || 0));
+  const taste = _arenaTaste(a);
   const STYLES = ["all", "bold", "colorful", "playful", "brutalist", "minimal"];
-  let html = `<div class="card"><h3>🎨 Designs to build like <span class="sub">— tuned to your taste (bold · playful · brutalist)</span></h3>
-    <p class="sub">AI-made + open-source website/app looks with live demos, source, and a one-click "build like this" via the activator (it reproduces the real style, not a generic AI look).</p>
-    <div class="subnav">` + STYLES.map(s =>
-      `<button class="${styleFilter === s ? "active" : ""}" data-style="${s}">${s}</button>`).join("") + `</div></div>`;
-  if (!list.length) return void (view.innerHTML = html + empty(q() ? `No designs match "${esc(state.query)}".`
-    : "No designs yet — the designs miner pulls AI/open-source UIs and Gemini-watch adds ones shown in videos.") + _designHooks());
+  let html = `<div class="card"><h3>🎨 Designs <span class="sub">— tuned to your taste</span>
+      <span class="pl-badge ${mode === "arena" ? "pl-live" : "pl-slow"}" style="margin-left:8px">${mode === "arena" ? "ARENA" : "GALLERY"}</span></h3>
+    <p class="sub">AI-made + open-source website/app looks with live demos + source, and "build like this" via the activator (it keeps the real style, not a generic AI look).</p>
+    <div class="subnav"><button class="${mode === "gallery" ? "active" : ""}" data-mode="gallery">Gallery</button>
+      <button class="${mode === "arena" ? "active" : ""}" data-mode="arena">⚔ Arena</button></div>
+    ${taste.length ? `<p class="hint">Your taste so far (${a.total || 0} votes): <b>${taste.slice(0, 4).map(esc).join(" · ")}</b></p>` : ""}
+    ${mode === "gallery" ? `<div class="subnav">` + STYLES.map(s => `<button class="${styleFilter === s ? "active" : ""}" data-style="${s}">${s}</button>`).join("") + `</div>` : ""}</div>`;
+
+  if (mode === "arena") {
+    const pool = list.filter(x => _shot(x.homepage || x.github));
+    if (pool.length < 2) { view.innerHTML = html + empty("Need a couple more designs with previews for the arena — the miner is adding them."); _designHooks(); return; }
+    const i = Math.floor(Math.random() * pool.length); let j = Math.floor(Math.random() * pool.length);
+    while (j === i) j = Math.floor(Math.random() * pool.length);
+    html += `<p class="sub" style="text-align:center;margin:6px 0">Which do you like more? Click it. The project learns your taste.</p>
+      <div class="arena-pair">${[pool[i], pool[j]].map(x => `
+        <div class="card arena-card" data-pick="${esc(x.slug)}" data-tags="${esc((x.style_tags || []).join(","))}">
+          <img class="design-shot" loading="lazy" src="${_shot(x.homepage || x.github)}" alt="${esc(x.name)}">
+          <h3>${esc(x.name)} ${(x.style_tags || []).map(t => `<span class="pill">${esc(t)}</span>`).join("")}</h3>
+          <p class="sub">${esc((x.look || "").slice(0, 90))}</p></div>`).join("")}</div>
+      <div style="text-align:center;margin-top:10px"><button class="qr-btn" data-pick="">Skip / both meh →</button></div>`;
+    view.innerHTML = html; _designHooks(); return;
+  }
+
+  list.sort((x, y) => _pscore(y, a) - _pscore(x, a));   // gallery: rank by YOUR taste, then stars
+  if (!list.length) { view.innerHTML = html + empty(q() ? `No designs match "${esc(state.query)}".` : "No designs yet — the miner pulls AI/OSS UIs + Gemini-watch adds ones from videos."); _designHooks(); return; }
   html += list.map(x => {
-    const shot = _shot(x.homepage || x.github);
+    const shot = _shot(x.homepage || x.github), liked = (a.wins || {})[x.slug];
     return `<div class="card design-card">
       ${shot ? `<a href="${esc(x.homepage || x.github)}" target="_blank" rel="noopener"><img class="design-shot" loading="lazy" src="${shot}" alt="${esc(x.name)}"></a>` : ""}
-      <h3>${esc(x.name || "Design")} ${(x.style_tags || []).map(t => `<span class="pill">${esc(t)}</span>`).join("")}${x.stars ? `<span class="mentions">★ ${esc(x.stars)}</span>` : ""}</h3>
+      <h3>${esc(x.name || "Design")} ${(x.style_tags || []).map(t => `<span class="pill">${esc(t)}</span>`).join("")}${x.stars ? `<span class="mentions">★ ${esc(x.stars)}</span>` : ""}
+        <button class="qr-btn ${liked ? "active" : ""}" data-like="${esc(x.slug)}" data-tags="${esc((x.style_tags || []).join(","))}" title="I like this">♥${liked ? " " + liked : ""}</button></h3>
       ${x.look ? `<p>${esc(x.look)}</p>` : ""}
       ${(x.tech || []).filter(Boolean).length ? `<div class="sub">Tech: ${(x.tech || []).filter(Boolean).map(t => esc(t)).join(" · ")}</div>` : ""}
-      <div class="sub">Build like this: <code>activator: build a site like "${esc(x.name)}"</code> — keeps its exact style.</div>
+      <div class="sub">Build: <code>activator: build a site like "${esc(x.name)}"</code></div>
       ${linksRow(x)}
     </div>`;
   }).join("");
-  view.innerHTML = html;
-  _designHooks();
+  view.innerHTML = html; _designHooks();
 }
 function _designHooks() {
-  view.querySelectorAll("[data-style]").forEach(b => b.addEventListener("click", () => {
-    state.designStyle = b.dataset.style; renderTab("designs");
-  }));
+  view.querySelectorAll("[data-style]").forEach(b => b.addEventListener("click", () => { state.designStyle = b.dataset.style; renderTab("designs"); }));
+  view.querySelectorAll("[data-mode]").forEach(b => b.addEventListener("click", () => { state.designMode = b.dataset.mode; renderTab("designs"); }));
+  view.querySelectorAll("[data-pick]").forEach(b => b.addEventListener("click", () => window.arenaVote(b.dataset.pick, (b.dataset.tags || "").split(",").filter(Boolean))));
+  view.querySelectorAll("[data-like]").forEach(b => b.addEventListener("click", () => window.arenaVote(b.dataset.like, (b.dataset.tags || "").split(",").filter(Boolean))));
   return "";
 }
 async function renderTab(tab) {

@@ -35,6 +35,14 @@ QUERIES = [
     ("topic:awwwards stars:>60", ["bold"]),
     ("topic:landing-page stars:>500", ["bold"]),
     ("topic:dashboard topic:tailwindcss stars:>400", ["bold"]),
+    ("gradient animated in:name,description topic:react stars:>150", ["colorful", "bold"]),
+    ("topic:webgl creative in:description stars:>200", ["bold", "playful"]),
+    ("topic:three-js portfolio stars:>150", ["bold", "playful"]),
+    ("topic:awesome-design-tools stars:>300", ["bold"]),
+    ("retro pixel ui in:name,description stars:>100", ["playful", "colorful"]),
+    ("topic:shadcn-ui stars:>500", ["minimal", "bold"]),
+    ("topic:framer-motion showcase stars:>120", ["bold", "playful"]),
+    ("vibrant colorful saas template in:name,description stars:>120", ["colorful", "bold"]),
 ]
 
 

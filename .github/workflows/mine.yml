@@ -53,6 +53,7 @@ jobs:
       - name: Keep derived data consistent (dedup, models, graph, readouts) — free, mechanical
         if: always()
         run: |
+          python -m src.mine_designs || true
           python -m src.cross_tab_check || true
           python -m src.build_models || true
           python -m src.build_graph || true

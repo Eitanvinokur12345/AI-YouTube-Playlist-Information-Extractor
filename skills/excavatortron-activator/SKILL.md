@@ -103,6 +103,13 @@ real access for whatever you recommend — the homepage to read, the GitHub to c
 to run it, or the install command for an MCP. If a result has none yet (links still resolving), say
 so and point to the `source` video. This is the difference between a usable tool and a dead name.
 
+## Building from a Design (the Designs tab)
+When the user says "build something like <design>", find it in `designs.json` and reproduce its
+ACTUAL style — its colors, typography, layout, components and vibe (and `style_tags`: the owner
+likes bold / colorful / maximalist + playful / retro / brutalist). Do NOT output a generic AI look.
+Pull the real reference: open its `homepage`/`github`, match that aesthetic faithfully, and use the
+`impeccable` / `frontend-design` skills to execute it. The point is "looks like THAT," not "looks AI-made."
+
 ## Rules
 - NEVER invent a skill/tool/connector/model — only activate what `find.py` returns from the real hub.
 - Lead with the assembled `recipe` (the combination), then surface 2–3 alternatives per type so any

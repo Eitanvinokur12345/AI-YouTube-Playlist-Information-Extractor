@@ -1586,23 +1586,40 @@ async function show(tab) {
   quickreadSummarize(document.body.classList.contains("quickread"));
 }
 
-// Designs — website/app/UI looks captured from videos, so you can build like them.
+// Designs — AI-made / open-source website+app looks, tailored to your taste, with screenshots.
+const _shot = (u) => u ? `https://s.wordpress.com/mshots/v1/${encodeURIComponent(u)}?w=560` : "";
 function renderDesigns(d) {
   let list = (d && d.designs) || [];
-  if (q()) list = list.filter(x => hit(x.name, x.look, (x.kind || ""), (x.tech || []).join(" ")));
-  let html = `<div class="card"><h3>🎨 Designs to build like</h3>
-    <p class="sub">Website/app/dashboard looks captured from the videos — layout, style, components, and how to rebuild them. Ask the activator "build me something like &lt;name&gt;" to assemble the tools.</p></div>`;
+  const styleFilter = state.designStyle || "all";
+  if (styleFilter !== "all") list = list.filter(x => (x.style_tags || []).includes(styleFilter));
+  if (q()) list = list.filter(x => hit(x.name, x.look, (x.kind || ""), (x.tech || []).join(" "), (x.style_tags || []).join(" ")));
+  list.sort((a, b) => (b.stars || 0) - (a.stars || 0));
+  const STYLES = ["all", "bold", "colorful", "playful", "brutalist", "minimal"];
+  let html = `<div class="card"><h3>🎨 Designs to build like <span class="sub">— tuned to your taste (bold · playful · brutalist)</span></h3>
+    <p class="sub">AI-made + open-source website/app looks with live demos, source, and a one-click "build like this" via the activator (it reproduces the real style, not a generic AI look).</p>
+    <div class="subnav">` + STYLES.map(s =>
+      `<button class="${styleFilter === s ? "active" : ""}" data-style="${s}">${s}</button>`).join("") + `</div></div>`;
   if (!list.length) return void (view.innerHTML = html + empty(q() ? `No designs match "${esc(state.query)}".`
-    : "No designs captured yet — Gemini-watch adds website/app/UI references as it watches build/design videos."));
-  html += list.map(x => `
-    <div class="card">
-      <h3>${esc(x.name || "Design")} ${x.kind ? `<span class="pill">${esc(x.kind)}</span>` : ""}</h3>
+    : "No designs yet — the designs miner pulls AI/open-source UIs and Gemini-watch adds ones shown in videos.") + _designHooks());
+  html += list.map(x => {
+    const shot = _shot(x.homepage || x.github);
+    return `<div class="card design-card">
+      ${shot ? `<a href="${esc(x.homepage || x.github)}" target="_blank" rel="noopener"><img class="design-shot" loading="lazy" src="${shot}" alt="${esc(x.name)}"></a>` : ""}
+      <h3>${esc(x.name || "Design")} ${(x.style_tags || []).map(t => `<span class="pill">${esc(t)}</span>`).join("")}${x.stars ? `<span class="mentions">★ ${esc(x.stars)}</span>` : ""}</h3>
       ${x.look ? `<p>${esc(x.look)}</p>` : ""}
-      ${(x.tech || []).length ? `<div class="sub">Tech: ${(x.tech || []).map(t => esc(t)).join(" · ")}</div>` : ""}
-      ${(x.rebuild_with || []).length ? `<div class="sub">Rebuild with: ${(x.rebuild_with || []).map(t => esc(t)).join(" · ")}</div>` : ""}
+      ${(x.tech || []).filter(Boolean).length ? `<div class="sub">Tech: ${(x.tech || []).filter(Boolean).map(t => esc(t)).join(" · ")}</div>` : ""}
+      <div class="sub">Build like this: <code>activator: build a site like "${esc(x.name)}"</code> — keeps its exact style.</div>
       ${linksRow(x)}
-    </div>`).join("");
+    </div>`;
+  }).join("");
   view.innerHTML = html;
+  _designHooks();
+}
+function _designHooks() {
+  view.querySelectorAll("[data-style]").forEach(b => b.addEventListener("click", () => {
+    state.designStyle = b.dataset.style; renderTab("designs");
+  }));
+  return "";
 }
 async function renderTab(tab) {
   if (tab === "skills") return renderSkills(await load("skills.json"));

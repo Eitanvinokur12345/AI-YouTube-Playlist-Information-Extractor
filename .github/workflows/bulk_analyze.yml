@@ -134,7 +134,9 @@ jobs:
 
       - name: Safety ratings for connectors/skills (safe/caution/risky) -> data/safety.json
         if: always()
-        run: python -m src.safety_check || true
+        run: |
+          python -m src.safety_check || true
+          python -m src.security_scan || true
 
       - name: Data guard LAST — restore from snapshot if any file collapsed during this run
         if: always()

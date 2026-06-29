@@ -24,8 +24,8 @@ ROOT = Path(__file__).parent.parent
 DATA = ROOT / "data"
 OUT = DATA / "memory_index.json"
 NOW = datetime.now(timezone.utc).isoformat()
-MODEL = "text-embedding-004"
-DIM = 256
+MODEL = os.environ.get("EMBED_MODEL", "gemini-embedding-001")   # text-embedding-004 retired; this is current
+DIM = 768
 CAP = 1400          # embed the top-quality items; keeps the index small + relevant
 
 
@@ -88,8 +88,10 @@ def main() -> int:
             vecs[ident] = v; meta[ident] = {"name": name, "type": typ}; done += 1
         else:
             err += 1
+            if err == 1:
+                print(f"  embed error: {v.get('_err') if isinstance(v, dict) else v}")  # surface the real cause
             if err >= 8:
-                print("  many embed errors — stopping (quota?)."); break
+                print("  many embed errors — stopping."); break
     idx.update({"dim": DIM, "model": MODEL, "vectors": vecs, "meta": meta, "updated_at": NOW})
     OUT.write_text(json.dumps(idx, ensure_ascii=False), encoding="utf-8")
     print(f"build_memory: +{done} embeddings ({err} errors); index now {len(vecs)}/{len(items)} items.")

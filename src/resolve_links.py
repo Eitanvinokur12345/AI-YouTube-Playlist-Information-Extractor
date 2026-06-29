@@ -68,7 +68,7 @@ def _pool():
     return eng
 
 
-def verify(url: str, timeout: int = 12) -> bool:
+def verify(url: str, timeout: int = 5) -> bool:
     """True only if the URL really resolves (so we never store a fake/dead link)."""
     if not url or not url.startswith(("http://", "https://")):
         return False
@@ -134,7 +134,7 @@ def gemini_grounded(name: str, desc: str, keys: list, timeout: int = 30) -> dict
               "search results only; if unknown, write null. Never invent a URL.")
     body = {"contents": [{"parts": [{"text": prompt}]}], "tools": [{"google_search": {}}],
             "generationConfig": {"temperature": 0}}
-    for key in keys[:3]:
+    for key in keys[:2]:                               # cap (speed)
         url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={key}"
         try:
             req = urllib.request.Request(url, data=json.dumps(body).encode(), method="POST",
@@ -158,7 +158,7 @@ def ask_links(name: str, desc: str, engines: list, timeout: int = 30) -> dict:
         "Use null for any you are not confident is the genuine official link. Never guess or invent a "
         "URL. If it is not open-source, github is null."
     )
-    for e in engines:
+    for e in engines[:3]:                              # cap engines tried (speed — was looping all 16)
         try:
             r = extract(e["provider"], e["base_url"], e["key"], e["model"], prompt, timeout)
             if isinstance(r, dict) and ("website" in r or "github" in r):
@@ -217,11 +217,10 @@ def main() -> int:
             time.sleep(args.sleep)
             res = ask_links(name, str(it.get("description") or it.get("what_it_does") or ""), engines)
             site, gh = (res.get("website") or "").strip(), (res.get("github") or "").strip()
-            if not (site or gh):                       # LLM didn't know it -> real web SEARCH
+            if not (site or gh):                       # LLM didn't know it -> Gemini google-search grounding
                 wf = gemini_grounded(name, str(it.get("description") or it.get("what_it_does") or ""), gkeys)
-                if not (wf.get("website") or wf.get("github")):
-                    wf = web_find(name)                 # last resort (may be IP-blocked in cloud)
                 site, gh = (wf.get("website") or "").strip(), (wf.get("github") or "").strip()
+                # (web_find/DDG dropped from the cloud path — it's IP-blocked from datacenter + wastes ~12s/item)
             got = False
             if gh and "github.com" in gh and verify(gh):
                 it["github"] = gh

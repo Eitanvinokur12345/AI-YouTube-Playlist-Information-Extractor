@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v51";
+const APP_BUILD = "v52";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1663,10 +1663,11 @@ function _liveHTML(live) {
 function _designMedia(x, w, liveDefault) {
   const live = x.source_url || x.homepage || "";
   if (!live) return x.look ? `<div class="dnopreview">No live URL captured — described look below.</div>` : "";
-  const body = liveDefault ? _liveHTML(live) : _previewHTML(live, w, x.name);
+  const useLive = liveDefault && !x.no_embed;   // sites that block embedding → show the screenshot, not a blank frame
+  const body = useLive ? _liveHTML(live) : _previewHTML(live, w, x.name);
   return `<div class="design-media" data-live="${esc(live)}" data-w="${w}" data-name="${esc(x.name || "")}">
-    <div class="dview-tabs"><button class="${liveDefault ? "" : "active"}" data-dview="preview" title="Preview image">🖼 Preview</button>
-      <button class="${liveDefault ? "active" : ""}" data-dview="live" title="Show the whole live site, embedded">🔍 Full site</button></div>
+    <div class="dview-tabs"><button class="${useLive ? "" : "active"}" data-dview="preview" title="Preview image">🖼 Preview</button>
+      <button class="${useLive ? "active" : ""}" data-dview="live" title="Show the whole live site, embedded">🔍 Full site</button></div>
     <div class="dview-body">${body}</div></div>`;
 }
 // Screenshot loader with PROVIDER FALLBACK. Real full-page shot = tall; short/blank = not-ready → advance:

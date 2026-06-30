@@ -23,6 +23,7 @@ import os
 import re
 import urllib.parse
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -43,6 +44,39 @@ def verify(url: str, timeout: int = 5) -> bool:
         except Exception:
             continue
     return False
+
+
+# domain parkers (JungleTrade etc. land on these) + for-sale text → these are NOT designs, drop them
+PARKER_HOSTS = ("hugedomains.com", "sedo.com", "sedoparking.com", "parkingcrew.net", "afternic.com",
+                "domainmarket.com", "dan.com", "bodis.com", "above.com", "godaddy.com")
+PARKED_TEXT = ("buy this domain", "this domain is for sale", "domain is for sale", "domain for sale",
+               "the domain you're looking for", "this domain has expired", "is parked free",
+               "checkout the full domain details", "domain may be for sale")
+
+
+def check_url(url: str, timeout: int = 6) -> dict:
+    """Persisted liveness check: returns {status: ok|dead|parked, no_embed}. Parked = a for-sale/parking
+    page (resolves 200 but is junk). no_embed = the site blocks being shown in an iframe (X-Frame-Options
+    / CSP frame-ancestors) so the dashboard shows its screenshot instead of a blank frame."""
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": UA})
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            if not (200 <= r.status < 400):
+                return {"status": "dead", "no_embed": False}
+            final = (r.geturl() or "").lower()
+            xfo = (r.headers.get("X-Frame-Options") or "").lower()
+            csp = (r.headers.get("Content-Security-Policy") or "").lower()
+            no_embed = bool(xfo) or ("frame-ancestors" in csp)
+            host = urllib.parse.urlparse(final).netloc.lower()
+            if any(p in host for p in PARKER_HOSTS):
+                return {"status": "parked", "no_embed": no_embed}
+            body = r.read(45000).decode("utf-8", "replace").lower()
+        if any(t in body for t in PARKED_TEXT):
+            return {"status": "parked", "no_embed": no_embed}
+        return {"status": "ok", "no_embed": no_embed}
+    except Exception:
+        return {"status": "dead", "no_embed": False}
+
 
 ROOT = Path(__file__).parent.parent
 DATA = ROOT / "data"
@@ -214,11 +248,37 @@ def main() -> int:
                     origin=(u.get("from_video") if isinstance(u, dict) else "") or "")):
                 scr += 1
 
+    # 5) LIVENESS + PARKED check (persisted + cached): drop dead/parked URLs, flag embed-blocked ones.
+    cache = {}
+    for x in old:
+        u = _norm(x.get("source_url") or x.get("homepage") or "")
+        if u and x.get("url_status"):
+            cache[u] = (x.get("url_status"), bool(x.get("no_embed")), x.get("url_checked_at"))
+    need = []
+    for e in out:
+        u = _norm(e.get("source_url") or "")
+        if not u:
+            continue
+        if u in cache:
+            e["url_status"], e["no_embed"], e["url_checked_at"] = cache[u]
+        else:
+            need.append(e)
+    checked = 0
+    if need:
+        batch = need[:200]                                   # cap per run; the rest get checked next cycle
+        with ThreadPoolExecutor(max_workers=16) as ex:
+            results = list(ex.map(lambda e: check_url(e["source_url"]), batch))
+        for e, r in zip(batch, results):
+            e["url_status"], e["no_embed"], e["url_checked_at"] = r["status"], r["no_embed"], NOW
+        checked = len(batch)
+    bad = [e for e in out if e.get("url_status") in ("dead", "parked")]
+    out = [e for e in out if e.get("url_status") not in ("dead", "parked")]
+
     d["designs"] = out
     d["updated_at"] = NOW
     OUT.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"collect_designs: {len(out)} designs (kept {kept} / dropped {dropped} repo-only; "
-          f"+{prod} AI-product, +{len(SEEDS)} seeds, +{scr} shown-in-video). designs-only, no tools.")
+    print(f"collect_designs: {len(out)} designs (kept {kept} / dropped {dropped} repo-only + {len(bad)} dead/parked; "
+          f"+{prod} AI-product, +{len(SEEDS)} seeds, +{scr} shown-in-video; url-checked {checked} this run). designs-only.")
     return 0
 
 

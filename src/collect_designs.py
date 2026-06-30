@@ -86,6 +86,12 @@ NOW = datetime.now(timezone.utc).isoformat()
 
 STYLE_ALLOWED = {"bold", "colorful", "playful", "brutalist", "minimal", "retro", "glassy", "dark", "gradient"}
 
+# NOT AI website designs: physical/hardware/robots, dev IDEs/compilers, default builder template pages.
+NON_DESIGN_RE = re.compile(
+    r"\b(robot|robots|robotic|humanoid|quadruped|drone|compiler|ide|firmware|microcontroller|"
+    r"arduino|raspberry pi|cnc|3d printer|soldering|servo|actuator|lidar)\b")
+JUNK_HOSTS = ("sites.google.com", "default-domain", "example.com")
+
 # Curated, real, public sources — exemplar AI sites/builders that screenshot as actual designs,
 # plus a few gallery hubs to browse more. (name, url, style_tags, source_type)
 SEEDS = [
@@ -146,7 +152,8 @@ def _norm(u: str) -> str:
 def _is_design_url(u: str) -> bool:
     u = (u or "").lower()
     return u.startswith(("http://", "https://")) and not any(
-        b in u for b in ("youtube.com", "youtu.be", "github.com", "google.com/search", "/login", "/signup"))
+        b in u for b in ("youtube.com", "youtu.be", "github.com", "google.com/search", "/login", "/signup",
+                         "sites.google.com"))
 
 
 def _entry(name, url, styles, source_type, look="", origin="", github=""):
@@ -248,6 +255,17 @@ def main() -> int:
                     origin=(u.get("from_video") if isinstance(u, dict) else "") or "")):
                 scr += 1
 
+    # 4b) FILTER non-AI-design junk (robots, IDEs, default builder pages) — these aren't website designs.
+    nj, keep = 0, []
+    for e in out:
+        blob = (str(e.get("name") or "") + " " + str(e.get("look") or "")).lower()
+        host = _domain(e.get("source_url") or "")
+        if NON_DESIGN_RE.search(blob) or any(h in host for h in JUNK_HOSTS):
+            nj += 1
+        else:
+            keep.append(e)
+    out = keep
+
     # 5) LIVENESS + PARKED check (persisted + cached): drop dead/parked URLs, flag embed-blocked ones.
     cache = {}
     for x in old:
@@ -277,8 +295,8 @@ def main() -> int:
     d["designs"] = out
     d["updated_at"] = NOW
     OUT.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"collect_designs: {len(out)} designs (kept {kept} / dropped {dropped} repo-only + {len(bad)} dead/parked; "
-          f"+{prod} AI-product, +{len(SEEDS)} seeds, +{scr} shown-in-video; url-checked {checked} this run). designs-only.")
+    print(f"collect_designs: {len(out)} designs (kept {kept} / dropped {dropped} repo-only + {len(bad)} dead/parked "
+          f"+ {nj} non-design; +{prod} AI-product, +{len(SEEDS)} seeds, +{scr} shown-in-video; url-checked {checked}). designs-only.")
     return 0
 
 

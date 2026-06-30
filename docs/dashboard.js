@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v53";
+const APP_BUILD = "v54";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1656,9 +1656,26 @@ function _previewHTML(live, w, name) {
     <span class="fp-hint">full page — scroll ↓ · click to open live</span></a>`;
 }
 function _liveHTML(live) {
-  return `<div class="design-live"><iframe src="${esc(live)}" loading="lazy" referrerpolicy="no-referrer"
+  return `<div class="design-live"><iframe class="livefr" src="${esc(live)}" loading="lazy" referrerpolicy="no-referrer"
       sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
-    <span class="fp-hint">live site — some sites block embedding · <a href="${esc(live)}" target="_blank" rel="noopener">open ↗</a></span></div>`;
+    <span class="fp-hint">live site — if blank, <a href="${esc(live)}" target="_blank" rel="noopener">open ↗</a></span></div>`;
+}
+// WAY 3 (client safety net): if a live iframe errors or never loads (blocked/dead), swap it for the
+// reliable full-page screenshot. Catches the cases server-side header detection misses.
+function _liveFallback(fr) {
+  const media = fr.closest(".design-media"); if (!media) return;
+  const body = media.querySelector(".dview-body"); if (!body) return;
+  const live = media.dataset.live || "", w = +media.dataset.w || 1200, name = media.dataset.name || "";
+  body.innerHTML = `<div class="dnopreview">Can't embed this one live — <a href="${esc(live)}" target="_blank" rel="noopener">open live ↗</a>. Full screenshot:</div>` + _previewHTML(live, w, name);
+  _wireMshots(media);
+}
+function _wireLive(scope) {
+  (scope || view).querySelectorAll("iframe.livefr:not([data-wired])").forEach(fr => {
+    fr.dataset.wired = "1"; let loaded = false;
+    fr.addEventListener("load", () => { loaded = true; });
+    fr.addEventListener("error", () => _liveFallback(fr));
+    setTimeout(() => { if (!loaded) _liveFallback(fr); }, 5000);   // never fired load → blocked/dead → screenshot
+  });
 }
 function _designMedia(x, w, liveDefault) {
   const live = x.source_url || x.homepage || "";
@@ -1761,12 +1778,13 @@ function _designHooks() {
     const body = media.querySelector(".dview-body"), live = media.dataset.live || "", w = +media.dataset.w || 1200;
     media.querySelectorAll(".dview-tabs button").forEach(x => x.classList.toggle("active", x === b));
     if (b.dataset.dview === "live") {
-      if (media.dataset.embed === "1") { body.innerHTML = _liveHTML(live); }
+      if (media.dataset.embed === "1") { body.innerHTML = _liveHTML(live); _wireLive(media); }
       else { body.innerHTML = `<div class="dnopreview">This site blocks live embedding — <a href="${esc(live)}" target="_blank" rel="noopener">open live ↗</a>. Showing its full screenshot:</div>` + _previewHTML(live, w, media.dataset.name || ""); _wireMshots(media); }
     }
     else { body.innerHTML = _previewHTML(live, w, media.dataset.name || ""); _wireMshots(media); }
   }));
   _wireMshots();
+  _wireLive();
   return "";
 }
 async function renderTab(tab) {

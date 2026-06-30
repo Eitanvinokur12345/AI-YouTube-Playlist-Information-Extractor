@@ -265,8 +265,8 @@ def main() -> int:
             need.append(e)
     checked = 0
     if need:
-        batch = need[:200]                                   # cap per run; the rest get checked next cycle
-        with ThreadPoolExecutor(max_workers=16) as ex:
+        batch = need[:400]                                   # cap per run; the rest get checked next cycle
+        with ThreadPoolExecutor(max_workers=24) as ex:
             results = list(ex.map(lambda e: check_url(e["source_url"]), batch))
         for e, r in zip(batch, results):
             e["url_status"], e["no_embed"], e["url_checked_at"] = r["status"], r["no_embed"], NOW

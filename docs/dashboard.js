@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v52";
+const APP_BUILD = "v53";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1663,11 +1663,14 @@ function _liveHTML(live) {
 function _designMedia(x, w, liveDefault) {
   const live = x.source_url || x.homepage || "";
   if (!live) return x.look ? `<div class="dnopreview">No live URL captured — described look below.</div>` : "";
-  const useLive = liveDefault && !x.no_embed;   // sites that block embedding → show the screenshot, not a blank frame
+  // Only embed sites we've VERIFIED resolve AND don't block framing. Everything else (unverified, blocked,
+  // or dead) shows the full-page screenshot — still the whole site, but never a blank/broken iframe.
+  const canEmbed = x.url_status === "ok" && x.no_embed === false;
+  const useLive = liveDefault && canEmbed;
   const body = useLive ? _liveHTML(live) : _previewHTML(live, w, x.name);
-  return `<div class="design-media" data-live="${esc(live)}" data-w="${w}" data-name="${esc(x.name || "")}">
-    <div class="dview-tabs"><button class="${useLive ? "" : "active"}" data-dview="preview" title="Preview image">🖼 Preview</button>
-      <button class="${useLive ? "active" : ""}" data-dview="live" title="Show the whole live site, embedded">🔍 Full site</button></div>
+  return `<div class="design-media" data-live="${esc(live)}" data-w="${w}" data-name="${esc(x.name || "")}" data-embed="${canEmbed ? "1" : "0"}">
+    <div class="dview-tabs"><button class="${liveDefault ? "" : "active"}" data-dview="preview" title="Preview image">🖼 Preview</button>
+      <button class="${liveDefault ? "active" : ""}" data-dview="live" title="Live site if it allows embedding, else its full screenshot">🔍 Full site</button></div>
     <div class="dview-body">${body}</div></div>`;
 }
 // Screenshot loader with PROVIDER FALLBACK. Real full-page shot = tall; short/blank = not-ready → advance:
@@ -1757,7 +1760,10 @@ function _designHooks() {
     const media = b.closest(".design-media"); if (!media) return;
     const body = media.querySelector(".dview-body"), live = media.dataset.live || "", w = +media.dataset.w || 1200;
     media.querySelectorAll(".dview-tabs button").forEach(x => x.classList.toggle("active", x === b));
-    if (b.dataset.dview === "live") { body.innerHTML = _liveHTML(live); }
+    if (b.dataset.dview === "live") {
+      if (media.dataset.embed === "1") { body.innerHTML = _liveHTML(live); }
+      else { body.innerHTML = `<div class="dnopreview">This site blocks live embedding — <a href="${esc(live)}" target="_blank" rel="noopener">open live ↗</a>. Showing its full screenshot:</div>` + _previewHTML(live, w, media.dataset.name || ""); _wireMshots(media); }
+    }
     else { body.innerHTML = _previewHTML(live, w, media.dataset.name || ""); _wireMshots(media); }
   }));
   _wireMshots();

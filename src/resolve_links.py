@@ -16,6 +16,7 @@ Run:  python -m src.resolve_links --limit 300
 from __future__ import annotations
 
 import argparse
+import itertools
 import json
 import os
 import re
@@ -38,7 +39,7 @@ SETS = [("tools.json", "tools", "name"), ("connectors.json", "connectors", "name
         ("skills.json", "skills", "skill_name")]
 BATCH = 25            # items resolved per LLM call
 MAX_TRIES = 4         # retry a hard item up to this many runs
-GROUND_CAP = 15       # max slow grounded-search calls per run (the residue only)
+GROUND_CAP = 120      # grounded-search calls per run (the residue) — now parallel across keys, so affordable
 FAST = ("cerebras", "groq", "sambanova")   # providers to try first (very high tok/s)
 
 
@@ -228,20 +229,29 @@ def main() -> int:
             else:
                 residue.append((it, name))
 
-    # ── residue → grounded Google search (slow; small budget) ──
+    # ── residue → grounded Google search, PARALLEL across keys. Grounding is the STRONG resolver (it
+    #    actually finds the obscure ones); the fast batch made runs cheap, so we can afford many now.
+    #    Each job uses its own key (round-robin) to spread load and dodge per-key rate limits.
     grounded = 0
-    for it, name in residue:
-        if grounded >= GROUND_CAP:
-            it["link_tries"] = (it.get("link_tries") or 0) + 1
-            continue
-        grounded += 1
-        wf = gemini_grounded(name, str(it.get("description") or it.get("what_it_does") or ""), gkeys)
-        site = wf.get("website") if verify(wf.get("website", "")) else ""
-        gh = wf.get("github") if verify(wf.get("github", "")) else ""
-        if _store(it, site, gh):
-            fixed += 1
-        else:
-            it["link_tries"] = (it.get("link_tries") or 0) + 1
+    work = residue[:GROUND_CAP] if gkeys else []
+    if work:
+        keycycle = itertools.cycle(gkeys)
+        jobs = [(it, name, next(keycycle)) for it, name in work]
+
+        def _ground(job):
+            it, name, key = job
+            wf = gemini_grounded(name, str(it.get("description") or it.get("what_it_does") or ""), [key])
+            site = wf.get("website") if verify(wf.get("website", "")) else ""
+            gh = wf.get("github") if verify(wf.get("github", "")) else ""
+            return it, site, gh
+
+        with ThreadPoolExecutor(max_workers=min(max(len(gkeys), 1) * 2, 12)) as ex:
+            for it, site, gh in ex.map(_ground, jobs):
+                grounded += 1
+                if _store(it, site, gh):
+                    fixed += 1
+                else:
+                    it["link_tries"] = (it.get("link_tries") or 0) + 1
 
     for fname, key, nk in SETS:
         if fname in loaded:

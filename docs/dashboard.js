@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v50";
+const APP_BUILD = "v51";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1660,13 +1660,14 @@ function _liveHTML(live) {
       sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
     <span class="fp-hint">live site — some sites block embedding · <a href="${esc(live)}" target="_blank" rel="noopener">open ↗</a></span></div>`;
 }
-function _designMedia(x, w) {
+function _designMedia(x, w, liveDefault) {
   const live = x.source_url || x.homepage || "";
   if (!live) return x.look ? `<div class="dnopreview">No live URL captured — described look below.</div>` : "";
+  const body = liveDefault ? _liveHTML(live) : _previewHTML(live, w, x.name);
   return `<div class="design-media" data-live="${esc(live)}" data-w="${w}" data-name="${esc(x.name || "")}">
-    <div class="dview-tabs"><button class="active" data-dview="preview" title="Preview image">🖼 Preview</button>
-      <button data-dview="live" title="Show the whole live site, embedded">🔍 Full site</button></div>
-    <div class="dview-body">${_previewHTML(live, w, x.name)}</div></div>`;
+    <div class="dview-tabs"><button class="${liveDefault ? "" : "active"}" data-dview="preview" title="Preview image">🖼 Preview</button>
+      <button class="${liveDefault ? "active" : ""}" data-dview="live" title="Show the whole live site, embedded">🔍 Full site</button></div>
+    <div class="dview-body">${body}</div></div>`;
 }
 // Screenshot loader with PROVIDER FALLBACK. Real full-page shot = tall; short/blank = not-ready → advance:
 // re-poll mShots (it's async), then switch to thum.io, then show a graceful open-live tile.
@@ -1715,7 +1716,7 @@ function renderDesigns(d) {
     html += `<p class="sub" style="text-align:center;margin:6px 0">Which do you like more? Pick it — the project learns your taste. (🔍 Full site shows it live.)</p>
       <div class="arena-pair">${[pool[i], pool[j]].map(x => `
         <div class="card arena-card">
-          ${_designMedia(x, 900)}
+          ${_designMedia(x, 900, true)}
           <h3>${esc(x.name)} ${(x.style_tags || []).map(t => `<span class="pill">${esc(t)}</span>`).join("")}</h3>
           <p class="sub">${esc((x.look || "").slice(0, 90))}</p>
           <button class="qr-btn pick-btn" data-pick="${esc(x.slug)}" data-tags="${esc((x.style_tags || []).join(","))}">👍 I like this</button></div>`).join("")}</div>

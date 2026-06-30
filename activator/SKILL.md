@@ -8,13 +8,16 @@ description: Find and ACTIVATE the best AI skill, tool, MCP connector, prompt, o
 Your job is to take the user from **"I want to do X"** to **X is set up and usable in their tools**, in this session. Do the setup; only hand over a link for the one step you genuinely cannot do for them (a hosted product's sign-in or an API key).
 
 ## 1. Find the capability
-Prefer the activation engine — it reads each hub item's machine-readable `setup` recipe:
+Run the bundled engine (in this skill folder). It reads each hub item's machine-readable `setup` recipe and **fetches the public hub automatically — no repo needed**:
 
-- If the Excavatortron repo is available: `python -m src.activate "<the user's request>" --top 3 --json`
-- Otherwise fetch and match by name across these (read each match's `setup` field):
-  `https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/{tools,skills,connectors}.json`
+```
+python activate.py "<the user's request>" --top 3 --json
+```
 
-Pick the best match. **Prefer a Claude skill or MCP connector** (directly usable inside the user's tools) over a raw repo, unless the user explicitly wants the source. Show the runner-up matches so the user can redirect.
+(Fallback if Python is unavailable: fetch and match by name across
+`https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/{tools,skills,connectors}.json`, reading each match's `setup` field.)
+
+The engine already **prefers a Claude skill or MCP connector** (directly usable in your tools) over a raw repo, and lists runner-up matches so you can redirect. Pick the best for the user's actual tool.
 
 ## 2. Do the setup in-session (ask permission before anything that writes or installs)
 Act on the item's `setup.kind`:

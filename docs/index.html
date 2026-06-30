@@ -485,6 +485,15 @@
     .pick-btn { width:100%; margin-top:8px; }
     .dnopreview { padding:22px 14px; text-align:center; font-size:12.5px; color:var(--muted);
       border:1px dashed var(--line); border-radius:10px; background:var(--panel2); margin-bottom:10px; }
+    /* Build badge + in-project setup recipe */
+    .build-badge { font-size:11px; color:var(--muted); border:1px solid var(--line); border-radius:999px; padding:2px 8px; margin-left:8px; opacity:.85; }
+    .setup { display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-top:7px; padding:7px 9px;
+      background:var(--panel2); border:1px solid var(--line); border-radius:9px; }
+    .setup-k { font-size:11px; font-weight:600; color:var(--gold-deep); text-transform:uppercase; letter-spacing:.04em; }
+    .setup-cmd { font-size:11.5px; color:var(--text); background:transparent; padding:0; overflow-x:auto; max-width:100%; white-space:nowrap; }
+    .copy-btn { font-size:11px; padding:2px 9px; border-radius:999px; border:1px solid var(--line); background:var(--panel); color:var(--muted); cursor:pointer; }
+    .copy-btn:hover { border-color:var(--gold); color:var(--text); }
+    .setup-key { font-size:10.5px; color:var(--gold-deep); background:var(--gold-soft); border:1px solid var(--gold-line); border-radius:999px; padding:1px 7px; }
     .lnk-pending { font-size:11px; color:var(--gold-deep); background:var(--gold-soft);
       border:1px dashed var(--gold-line); border-radius:999px; padding:3px 9px; }
     /* Top priorities */
@@ -534,6 +543,7 @@
       <h1>Excavatortron</h1>
       <p class="hero-sub">Every AI skill, tool, model &amp; MCP connector worth knowing &mdash; mined from the world's AI videos, ranked, and ready to deploy into any tool.</p>
       <div class="meta" id="meta">Loading…</div>
+      <span class="build-badge" id="build-badge" title="Build version — if this matches the latest, you're on the newest dashboard"></span>
     </div>
     <div class="tile tile-act">
       <div class="search-wrap"><input id="search" type="search" autocomplete="off"

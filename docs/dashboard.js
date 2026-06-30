@@ -2,6 +2,17 @@
 // Reads the committed JSON files from ../data (GitHub Pages must serve from repo root).
 const DATA = "../data/";
 const view = document.getElementById("view");
+// Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
+// on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
+const APP_BUILD = "v48";
+{ const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
+// One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
+document.addEventListener("click", (e) => {
+  const b = e.target.closest && e.target.closest("[data-copy]"); if (!b) return;
+  e.preventDefault();
+  try { navigator.clipboard.writeText(b.dataset.copy || ""); } catch (_) {}
+  const t = b.textContent; b.textContent = "✓ copied"; setTimeout(() => { b.textContent = t; }, 1200);
+});
 const meta = document.getElementById("meta");
 const countersEl = document.getElementById("counters");
 
@@ -100,7 +111,14 @@ function linksRow(it) {
     if (vids.length) out.push(`<a class="lnk lnk-src" href="${yt(vids[0])}" target="_blank" rel="noopener">Source${vids.length > 1 ? ` (${vids.length} videos)` : " video"} ↗</a>`);
   }
   const noReal = !home && !it.github && !it.install_or_source;
-  return `<div class="links">${out.join("")}${noReal ? '<span class="lnk-pending" title="No verified link yet — the links protocol resolves these each cycle">link pending</span>' : ""}</div>`;
+  // ⚙ In-project SETUP recipe — what to actually run so it's set up WITHIN your tools (the future
+  // activator/EXCAVA executes this; no link-out). Only shows when the item has a real recipe.
+  const su = it.setup, cmd = su && (su.command || (su.steps || []).join(" && "));
+  const setupBlock = cmd ? `<div class="setup"><span class="setup-k">⚙ ${esc(su.kind || "setup")}</span>
+    <code class="setup-cmd">${esc(cmd)}</code>
+    <button class="copy-btn" data-copy="${esc(cmd)}" title="Copy this setup command">copy</button>
+    ${su.needs_key ? '<span class="setup-key" title="Needs an API key / sign-in for the external service">needs key</span>' : ""}</div>` : "";
+  return `<div class="links">${out.join("")}${noReal ? '<span class="lnk-pending" title="No verified link yet — the links protocol resolves these each cycle">link pending</span>' : ""}</div>${setupBlock}`;
 }
 
 // ── Per-tab "how long until this updates" line (one bullet, lists every update type) ──

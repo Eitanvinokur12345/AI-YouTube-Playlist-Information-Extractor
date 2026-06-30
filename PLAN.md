@@ -13,7 +13,7 @@ Actions) and is meant to *do*, not just list.
 |---|---|---|
 | G1 Omniscience | know every capability, current | ~22% (349/1555 videos analyzed) |
 | G2 Zero friction (know→do) | one step to activate in any tool | ~15% (activator emits text/links, doesn't *do* setup) |
-| G3 Truth & access | every entry real, verified, usable | ~18% (≈4 of 5 items have no working link) |
+| G3 Truth & access | every entry real, verified, usable | ~25% (was 15%; resolver now fast — climbing) |
 | G4 Autonomy | runs/grows/self-corrects free | ~80% — works (the win) |
 | G5 Leverage | makes you faster to build | ~10% — not yet built *through* |
 | G6 Open infrastructure | machine-readable platform | ~50% (JSON exists; only the dashboard consumes it) |
@@ -55,6 +55,22 @@ bottlenecks:
 - **Per-tab self-improvement** + a **new-source-hunting** protocol.
 - Split token-reduction into 2 skills (heavy/light).
 - Deep EXCAVA-integration design conversation (it changes the whole structure).
+
+## Original plan (P0–P7) — reconciled 2026-06-30 (only what's LEFT)
+**Closed this arc:** P4 — dedicated `visual_extract` protocol + designs-ONLY tab (Arena taste-learning,
+full-page capture, Preview/Live toggle, github.dev "Open code"). P6 semantic memory — **1005 vectors**,
+EXCAVA wired to recall by meaning. P1 speed — resolver does **400 items in ~4 min** (batch + parallel +
+fast-engine). P0 access — real Website/GitHub/Open-code links + setup recipes on 1,637 items; the
+"activator 404" is addressed (instant github.dev + verified links).
+
+**Still open (priority order):**
+- **Links → ~100%** — coverage 25% (was 15%). Speed solved; next: raise grounding budget (it's cheap now)
+  + transcript lane. THE gate — unlocks G3/G5 and EXCAVA OS-2.
+- **Transcript lane (Bright Data)** — fixes the *analysis* slowness (videos 22%) the same way.
+- **LiteLLM routing** (429 waste) — partly mitigated by fast-engine-first; proper routing not done.
+- **EXCAVA OS-2 (creator)** — wired but gated until G3≥70 + your approval.
+- **P6 leftovers** — auto-test tools, version-tracking, public SDK (only `hub.json` today), weekly digest.
+- **Activator overhaul** (do-setup-in-session + 30 questions + live examples) — = F2 + roadmap.
 
 ## Principles
 - Make it **work** (access + completeness) before adding surface.

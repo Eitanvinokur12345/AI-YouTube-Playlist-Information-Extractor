@@ -83,10 +83,11 @@ function linksRow(it) {
   if (it.github) out.push(`<a class="lnk lnk-gh" href="${esc(it.github)}" target="_blank" rel="noopener">GitHub ↗</a>`);
   // "Run it" = open it actually RUNNING. A repo boots live in-browser (StackBlitz, no signup) instead
   // of a deploy signup-wall; we only fall back to a deploy page when there's no live site at all.
-  // The real "use it now" is the live Website above. For source repos we offer an online editor
-  // (StackBlitz), labeled honestly — it clones + boots (~30–60s, best for Vite/Node projects).
+  // "Use it now" = the live Website above. For source repos, open the code in github.dev — GitHub's
+  // INSTANT in-browser editor (no clone, no build wait; the repo is just there). This replaced the
+  // StackBlitz boot, which cloned on click and was slow/flaky ("the activation process is not working").
   const g = String(it.github || "").match(/github\.com\/([\w.-]+)\/([\w.-]+)/);
-  if (g) out.push(`<a class="lnk lnk-run" href="https://stackblitz.com/github/${g[1]}/${g[2].replace(/\.git$/, "")}" target="_blank" rel="noopener" title="Opens the code in an online editor — clones + boots in ~30–60s; best for Vite/Node projects">⌨ Open in editor ↗</a>`);
+  if (g) out.push(`<a class="lnk lnk-run" href="https://github.dev/${g[1]}/${g[2].replace(/\.git$/, "")}" target="_blank" rel="noopener" title="Opens the repo instantly in github.dev (in-browser VS Code) — nothing to clone, nothing builds on click">⌨ Open code ↗</a>`);
   else if (!home && it.deploy_url) out.push(`<a class="lnk lnk-run" href="${esc(it.deploy_url)}" target="_blank" rel="noopener" title="Opens a one-click deploy page (may ask you to sign in)">⬆ Deploy your own ↗</a>`);
   if (it.install_or_source && !it.github) out.push(`<span class="lnk lnk-mcp">install: <code>${esc(String(it.install_or_source).slice(0,60))}</code></span>`);
   // Source bundle, earliest-first: first link = the video that first revealed it.

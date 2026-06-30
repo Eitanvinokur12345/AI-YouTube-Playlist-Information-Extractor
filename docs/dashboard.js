@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v48";
+const APP_BUILD = "v49";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1618,6 +1618,21 @@ function _arena() { try { return JSON.parse(localStorage.getItem("excavatortron.
 function _arenaTaste(a) {
   const s = a.styles || {}; return Object.keys(s).sort((x, y) => s[y] - s[x]).filter(k => s[k] > 0);
 }
+function _tasteWeights(a) {
+  const s = a.styles || {}, keys = Object.keys(s).filter(k => s[k] > 0).sort((x, y) => s[y] - s[x]);
+  const max = Math.max(1, ...keys.map(k => s[k]));
+  return keys.map(k => ({ k, v: s[k], pct: Math.round(100 * s[k] / max) }));
+}
+// Where your Arena votes ACTUALLY show up: a visible panel (here), the gallery re-rank (_pscore),
+// the "♥ your taste" badge per design, and the build command (your styles get injected into it).
+function _tastePanel(a) {
+  const w = _tasteWeights(a), votes = a.total || 0;
+  if (!votes) return `<div class="taste-panel"><b>⚔ Your taste</b> <span class="sub">— pick designs in the Arena and this whole tab re-ranks to what YOU like (0 votes yet). Your top styles also flow into the "build" command on each card.</span></div>`;
+  return `<div class="taste-panel"><div class="taste-head"><b>⚔ Your taste</b>
+      <span class="sub">${votes} vote${votes > 1 ? "s" : ""} · gallery ranked for you · styles feed the build command</span>
+      <button class="qr-btn" data-arena-reset title="Clear your taste votes">reset</button></div>
+    <div class="taste-bars">${w.slice(0, 6).map(t => `<div class="taste-bar"><span>${esc(t.k)}</span><i style="width:${t.pct}%"></i><b>${t.v}</b></div>`).join("")}</div></div>`;
+}
 function _pscore(x, a) {
   const s = a.styles || {}, w = a.wins || {};
   return (x.style_tags || []).reduce((t, k) => t + (s[k] || 0), 0) * 3 + (w[x.slug] || 0) * 5 + (x.stars || 0) / 1000;
@@ -1676,7 +1691,7 @@ function renderDesigns(d) {
     <p class="sub">Designs only — real looks from AI websites &amp; the videos, captured full-page so you can react to every part. ⚔ Arena learns what you like; "build like this" via the activator keeps the real style.</p>
     <div class="subnav"><button class="${mode === "gallery" ? "active" : ""}" data-mode="gallery">Gallery</button>
       <button class="${mode === "arena" ? "active" : ""}" data-mode="arena">⚔ Arena</button></div>
-    ${taste.length ? `<p class="hint">Your taste so far (${a.total || 0} votes): <b>${taste.slice(0, 4).map(esc).join(" · ")}</b></p>` : ""}
+    ${_tastePanel(a)}
     ${mode === "gallery" ? `<div class="subnav">` + STYLES.map(s => `<button class="${styleFilter === s ? "active" : ""}" data-style="${s}">${s}</button>`).join("") + `</div>` : ""}</div>`;
 
   if (mode === "arena") {
@@ -1701,12 +1716,15 @@ function renderDesigns(d) {
   html += list.map(x => {
     const liked = (a.wins || {})[x.slug];
     const src = SRC[x.source_type] || x.source_type || "";
+    const match = taste.length && (x.style_tags || []).some(t => taste.slice(0, 3).includes(t));
+    const styleBit = taste.length ? ` in my style: ${taste.slice(0, 3).join(", ")}` : "";
+    const buildCmd = `activator: build a site like "${x.name}"${styleBit}`;
     return `<div class="card design-card">
       ${_designMedia(x, 1200)}
-      <h3>${esc(x.name || "Design")} ${(x.style_tags || []).map(t => `<span class="pill">${esc(t)}</span>`).join("")}${src ? `<span class="mentions">${esc(src)}</span>` : ""}
+      <h3>${esc(x.name || "Design")} ${(x.style_tags || []).map(t => `<span class="pill">${esc(t)}</span>`).join("")}${match ? `<span class="taste-match" title="matches your Arena taste">♥ your taste</span>` : ""}${src ? `<span class="mentions">${esc(src)}</span>` : ""}
         <button class="qr-btn ${liked ? "active" : ""}" data-like="${esc(x.slug)}" data-tags="${esc((x.style_tags || []).join(","))}" title="I like this">♥${liked ? " " + liked : ""}</button></h3>
       ${x.look ? `<p>${esc(x.look)}</p>` : ""}
-      <div class="sub">Build: <code>activator: build a site like "${esc(x.name)}"</code></div>
+      <div class="sub">Build: <code>${esc(buildCmd)}</code> <button class="copy-btn" data-copy="${esc(buildCmd)}" title="Copy build command">copy</button></div>
       ${linksRow(x)}
     </div>`;
   }).join("");
@@ -1717,6 +1735,7 @@ function _designHooks() {
   view.querySelectorAll("[data-mode]").forEach(b => b.addEventListener("click", () => { state.designMode = b.dataset.mode; renderTab("designs"); }));
   view.querySelectorAll("[data-pick]").forEach(b => b.addEventListener("click", () => window.arenaVote(b.dataset.pick, (b.dataset.tags || "").split(",").filter(Boolean))));
   view.querySelectorAll("[data-like]").forEach(b => b.addEventListener("click", () => window.arenaVote(b.dataset.like, (b.dataset.tags || "").split(",").filter(Boolean))));
+  view.querySelectorAll("[data-arena-reset]").forEach(b => b.addEventListener("click", () => { localStorage.removeItem("excavatortron.arena"); renderTab("designs"); }));
   // Preview <-> Full-site toggle (gallery + arena). stopPropagation so it never triggers an arena vote.
   view.querySelectorAll("[data-dview]").forEach(b => b.addEventListener("click", (e) => {
     e.preventDefault(); e.stopPropagation();

@@ -22,8 +22,27 @@ import json
 import os
 import re
 import urllib.parse
+import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
+
+UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+      "(KHTML, like Gecko) Chrome/124.0 Safari/537.36")
+
+
+def verify(url: str, timeout: int = 5) -> bool:
+    """True only if the URL really resolves — so dead demo homepages (the 404 preview tiles) are dropped."""
+    if not url or not url.startswith(("http://", "https://")):
+        return False
+    for method in ("HEAD", "GET"):
+        try:
+            req = urllib.request.Request(url, method=method, headers={"User-Agent": UA})
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                if 200 <= r.status < 400:
+                    return True
+        except Exception:
+            continue
+    return False
 
 ROOT = Path(__file__).parent.parent
 DATA = ROOT / "data"
@@ -140,7 +159,21 @@ def main() -> int:
             dropped += 1
             continue
         styles = [s for s in (x.get("style_tags") or []) if s in STYLE_ALLOWED]
-        st = x.get("source_type") or ("video" if str(x.get("source") or "").startswith("gemini") else "oss")
+        st = x.get("source_type")
+        if st == "github-designs":
+            st = "oss"
+        if not st:
+            src = str(x.get("source") or "")
+            if src.startswith(("gemini", "visual")):
+                st = "video"
+            elif x.get("github") or live:
+                st = "oss"
+            else:
+                st = "video"        # no url + no repo → it was described from a video
+        # legacy OSS/demo homepages often 404 (the "preview unavailable" / yellow-404 tiles) — verify + drop dead ones
+        if st == "oss" and live and not verify(live):
+            dropped += 1
+            continue
         e = _entry(x.get("name"), live, styles, st, look=x.get("look") or "",
                    origin=x.get("origin") or "", github=x.get("github") if live else "")
         if add(e):

@@ -471,6 +471,20 @@
     .design-fullpage img { width:100%; height:auto; display:block; }
     .design-fullpage .fp-hint { position:sticky; bottom:0; left:0; display:block; text-align:center; font-size:11px;
       color:var(--muted); background:linear-gradient(transparent, var(--panel) 70%); padding:14px 0 5px; pointer-events:none; }
+    /* Preview <-> Full-site toggle + embedded live view (gallery + arena) */
+    .design-media { margin-bottom:10px; }
+    .dview-tabs { display:flex; gap:6px; margin-bottom:6px; }
+    .dview-tabs button { font-size:11px; padding:3px 11px; border-radius:999px; border:1px solid var(--line);
+      background:var(--panel2); color:var(--muted); cursor:pointer; }
+    .dview-tabs button.active { border-color:var(--gold); color:var(--text); background:var(--gold-soft); }
+    .design-live { position:relative; height:520px; border:1px solid var(--line); border-radius:10px; overflow:hidden; background:#fff; }
+    .design-live iframe { width:100%; height:100%; border:0; display:block; }
+    .design-live .fp-hint { position:absolute; bottom:0; left:0; right:0; pointer-events:auto; }
+    .arena-card .design-fullpage { max-height:300px; }
+    .arena-card .design-live { height:300px; }
+    .pick-btn { width:100%; margin-top:8px; }
+    .dnopreview { padding:22px 14px; text-align:center; font-size:12.5px; color:var(--muted);
+      border:1px dashed var(--line); border-radius:10px; background:var(--panel2); margin-bottom:10px; }
     .lnk-pending { font-size:11px; color:var(--gold-deep); background:var(--gold-soft);
       border:1px dashed var(--gold-line); border-radius:999px; padding:3px 9px; }
     /* Top priorities */

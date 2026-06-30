@@ -83,8 +83,10 @@ function linksRow(it) {
   if (it.github) out.push(`<a class="lnk lnk-gh" href="${esc(it.github)}" target="_blank" rel="noopener">GitHub ↗</a>`);
   // "Run it" = open it actually RUNNING. A repo boots live in-browser (StackBlitz, no signup) instead
   // of a deploy signup-wall; we only fall back to a deploy page when there's no live site at all.
+  // The real "use it now" is the live Website above. For source repos we offer an online editor
+  // (StackBlitz), labeled honestly — it clones + boots (~30–60s, best for Vite/Node projects).
   const g = String(it.github || "").match(/github\.com\/([\w.-]+)\/([\w.-]+)/);
-  if (g) out.push(`<a class="lnk lnk-run" href="https://stackblitz.com/github/${g[1]}/${g[2].replace(/\.git$/, "")}" target="_blank" rel="noopener" title="Boots the project live in your browser — no signup">⚡ Run in browser ↗</a>`);
+  if (g) out.push(`<a class="lnk lnk-run" href="https://stackblitz.com/github/${g[1]}/${g[2].replace(/\.git$/, "")}" target="_blank" rel="noopener" title="Opens the code in an online editor — clones + boots in ~30–60s; best for Vite/Node projects">⌨ Open in editor ↗</a>`);
   else if (!home && it.deploy_url) out.push(`<a class="lnk lnk-run" href="${esc(it.deploy_url)}" target="_blank" rel="noopener" title="Opens a one-click deploy page (may ask you to sign in)">⬆ Deploy your own ↗</a>`);
   if (it.install_or_source && !it.github) out.push(`<span class="lnk lnk-mcp">install: <code>${esc(String(it.install_or_source).slice(0,60))}</code></span>`);
   // Source bundle, earliest-first: first link = the video that first revealed it.
@@ -1606,6 +1608,43 @@ window.arenaVote = function (slug, tags) {
   if (slug) { a.wins[slug] = (a.wins[slug] || 0) + 1; (tags || []).forEach(t => a.styles[t] = (a.styles[t] || 0) + 1); }
   localStorage.setItem("excavatortron.arena", JSON.stringify(a)); renderTab("designs");
 };
+// Preview vs. full live-site view, per design (default = full-page preview image). mShots is async and
+// sometimes returns a "Generating Preview" / 404 placeholder, so we retry the short ones and fall back
+// gracefully. The toggle appears in BOTH the gallery and the arena.
+function _previewHTML(live, shot, name) {
+  return `<a class="design-fullpage" href="${esc(live)}" target="_blank" rel="noopener" title="Open the live design">
+    <img class="mshot" loading="lazy" src="${shot}" data-base="${esc(shot)}" alt="${esc(name || "")}">
+    <span class="fp-hint">full page — scroll ↓ · click to open live</span></a>`;
+}
+function _liveHTML(live) {
+  return `<div class="design-live"><iframe src="${esc(live)}" loading="lazy" referrerpolicy="no-referrer"
+      sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
+    <span class="fp-hint">live site — some sites block embedding · <a href="${esc(live)}" target="_blank" rel="noopener">open ↗</a></span></div>`;
+}
+function _designMedia(x, w) {
+  const live = x.source_url || x.homepage || "";
+  if (!live) return x.look ? `<div class="dnopreview">No live URL captured — described look below.</div>` : "";
+  return `<div class="design-media" data-live="${esc(live)}" data-w="${w}" data-name="${esc(x.name || "")}">
+    <div class="dview-tabs"><button class="active" data-dview="preview" title="Preview image">🖼 Preview</button>
+      <button data-dview="live" title="Show the whole live site, embedded">🔍 Full site</button></div>
+    <div class="dview-body">${_previewHTML(live, _shot(live, w), x.name)}</div></div>`;
+}
+function _wireMshots(scope) {
+  (scope || view).querySelectorAll("img.mshot:not([data-wired])").forEach(img => {
+    img.dataset.wired = "1"; if (!img.dataset.try) img.dataset.try = "0";
+    img.addEventListener("load", () => {
+      if (img.naturalHeight > img.naturalWidth * 1.15) return;        // tall = a real full-page screenshot
+      const t = +img.dataset.try;
+      if (t >= 4) {                                                   // still short after retries → placeholder/404
+        const a = img.closest(".design-fullpage");
+        if (a) a.outerHTML = `<div class="dnopreview">Preview still rendering or blocked — <a href="${a.href}" target="_blank" rel="noopener">open live ↗</a>, or hit 🔍 Full site.</div>`;
+        return;
+      }
+      img.dataset.try = String(t + 1);                               // mShots generates async — re-fetch shortly
+      setTimeout(() => { img.src = (img.dataset.base || img.src).split("&r=")[0] + "&r=" + (t + 1); }, 3500 + t * 3000);
+    });
+  });
+}
 function renderDesigns(d) {
   let list = (d && d.designs) || [];
   const a = _arena(), mode = state.designMode || "gallery", styleFilter = state.designStyle || "all";
@@ -1626,24 +1665,25 @@ function renderDesigns(d) {
     if (pool.length < 2) { view.innerHTML = html + empty("Need a couple more designs with previews for the arena — the visual protocol is adding them."); _designHooks(); return; }
     const i = Math.floor(Math.random() * pool.length); let j = Math.floor(Math.random() * pool.length);
     while (j === i) j = Math.floor(Math.random() * pool.length);
-    html += `<p class="sub" style="text-align:center;margin:6px 0">Which do you like more? Click it. The project learns your taste.</p>
+    html += `<p class="sub" style="text-align:center;margin:6px 0">Which do you like more? Pick it — the project learns your taste. (🔍 Full site shows it live.)</p>
       <div class="arena-pair">${[pool[i], pool[j]].map(x => `
-        <div class="card arena-card" data-pick="${esc(x.slug)}" data-tags="${esc((x.style_tags || []).join(","))}">
-          <img class="design-shot" loading="lazy" src="${_shot(x.source_url || x.homepage, 700)}" alt="${esc(x.name)}">
+        <div class="card arena-card">
+          ${_designMedia(x, 900)}
           <h3>${esc(x.name)} ${(x.style_tags || []).map(t => `<span class="pill">${esc(t)}</span>`).join("")}</h3>
-          <p class="sub">${esc((x.look || "").slice(0, 90))}</p></div>`).join("")}</div>
+          <p class="sub">${esc((x.look || "").slice(0, 90))}</p>
+          <button class="qr-btn pick-btn" data-pick="${esc(x.slug)}" data-tags="${esc((x.style_tags || []).join(","))}">👍 I like this</button></div>`).join("")}</div>
       <div style="text-align:center;margin-top:10px"><button class="qr-btn" data-pick="">Skip / both meh →</button></div>`;
     view.innerHTML = html; _designHooks(); return;
   }
 
   list.sort((x, y) => _pscore(y, a) - _pscore(x, a));   // gallery: rank by YOUR taste
   if (!list.length) { view.innerHTML = html + empty(q() ? `No designs match "${esc(state.query)}".` : "No designs yet — the visual protocol watches the videos and collect_designs pulls AI websites each cycle."); _designHooks(); return; }
-  const SRC = { "ai-product": "AI product", "ai-builder": "AI builder", "gallery": "gallery", "dribbble": "concept", "video": "shown in video", "oss": "open-source" };
+  const SRC = { "ai-product": "AI product", "ai-builder": "AI builder", "gallery": "gallery", "dribbble": "concept", "video": "from video", "visual": "from video", "oss": "open-source" };
   html += list.map(x => {
-    const live = x.source_url || x.homepage || "", shot = _shot(live, 1200), liked = (a.wins || {})[x.slug];
+    const liked = (a.wins || {})[x.slug];
     const src = SRC[x.source_type] || x.source_type || "";
     return `<div class="card design-card">
-      ${shot ? `<a class="design-fullpage" href="${esc(live)}" target="_blank" rel="noopener" title="Open the live design"><img loading="lazy" src="${shot}" alt="${esc(x.name)}"><span class="fp-hint">full page — scroll ↓ · click to open live</span></a>` : ""}
+      ${_designMedia(x, 1200)}
       <h3>${esc(x.name || "Design")} ${(x.style_tags || []).map(t => `<span class="pill">${esc(t)}</span>`).join("")}${src ? `<span class="mentions">${esc(src)}</span>` : ""}
         <button class="qr-btn ${liked ? "active" : ""}" data-like="${esc(x.slug)}" data-tags="${esc((x.style_tags || []).join(","))}" title="I like this">♥${liked ? " " + liked : ""}</button></h3>
       ${x.look ? `<p>${esc(x.look)}</p>` : ""}
@@ -1658,6 +1698,16 @@ function _designHooks() {
   view.querySelectorAll("[data-mode]").forEach(b => b.addEventListener("click", () => { state.designMode = b.dataset.mode; renderTab("designs"); }));
   view.querySelectorAll("[data-pick]").forEach(b => b.addEventListener("click", () => window.arenaVote(b.dataset.pick, (b.dataset.tags || "").split(",").filter(Boolean))));
   view.querySelectorAll("[data-like]").forEach(b => b.addEventListener("click", () => window.arenaVote(b.dataset.like, (b.dataset.tags || "").split(",").filter(Boolean))));
+  // Preview <-> Full-site toggle (gallery + arena). stopPropagation so it never triggers an arena vote.
+  view.querySelectorAll("[data-dview]").forEach(b => b.addEventListener("click", (e) => {
+    e.preventDefault(); e.stopPropagation();
+    const media = b.closest(".design-media"); if (!media) return;
+    const body = media.querySelector(".dview-body"), live = media.dataset.live || "", w = +media.dataset.w || 1200;
+    media.querySelectorAll(".dview-tabs button").forEach(x => x.classList.toggle("active", x === b));
+    if (b.dataset.dview === "live") { body.innerHTML = _liveHTML(live); }
+    else { body.innerHTML = _previewHTML(live, _shot(live, w), media.dataset.name || ""); _wireMshots(media); }
+  }));
+  _wireMshots();
   return "";
 }
 async function renderTab(tab) {

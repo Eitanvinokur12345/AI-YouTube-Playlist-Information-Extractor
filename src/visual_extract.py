@@ -26,7 +26,7 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
-from src.bulk_analyze import load, save, NOW
+from src.bulk_analyze import load, save, NOW, CATEGORIES
 from src.mine_feeds import merge
 
 ROOT = Path(__file__).parent.parent
@@ -39,20 +39,29 @@ DAILY_MINUTES = 300          # leave headroom under the ~8h/day free quota for t
 STYLE_ALLOWED = ["bold", "colorful", "playful", "brutalist", "minimal", "retro", "glassy", "dark", "gradient"]
 
 PROMPT = (
-    "WATCH this video for VISUAL information only (the pixels on screen). Ignore narration unless it "
-    "labels something shown. Extract, as STRICT JSON ONLY:\n"
+    "WATCH this video for VISUAL information (the pixels on screen). Capture things SHOWN on screen that "
+    "the narration may NOT say — tool names in the browser/UI, terminal commands, websites visited, "
+    "dashboards and app UIs. Extract, as STRICT JSON ONLY:\n"
     '{"designs":[{"name":"","source_url":"exact URL shown for this site/app or empty","look":"concrete: '
     'layout, colors, typography, components, spacing, motion, vibe","style_tags":[],"section":"hero|landing|'
     'dashboard|pricing|app|portfolio|other"}],'
     '"formats":[{"name":"","kind":"layout|section|component|flow","description":"the reusable UI/layout '
     'pattern seen","rebuild_hint":"how to recreate the look"}],'
+    '"tools":[{"name":"","slug":"","category":"","description":"what it does (from what is shown)","quality_score":1,"homepage":"","github":""}],'
+    '"skills":[{"skill_name":"","slug":"","category":"","description":"","quality_score":1,"target_tool":"claude"}],'
+    '"connectors":[{"name":"","what_it_does":"","works_in":"both","free":true,"url":""}],'
+    '"commands":[{"command":"","description":""}],'
     '"screen_urls":[""],'
     '"tool_ui":[{"name":"","url":"the tool site/app URL shown on screen or empty"}]}\n'
-    "- designs = any website/app/dashboard/UI SHOWN that's worth replicating; describe what you SEE.\n"
+    "- designs = any website/app/dashboard/UI SHOWN worth replicating; describe what you SEE.\n"
+    "- tools/skills/connectors/commands = capture ones VISIBLE on screen (browser, terminal, slide) even "
+    "if not spoken. A product that EXISTS is a TOOL; a technique you DO is a SKILL; exact CLI/slash text is "
+    "a COMMAND. Empty arrays are fine.\n"
+    f"- category MUST be one of: {', '.join(CATEGORIES)}.\n"
     f"- style_tags only from this list: {', '.join(STYLE_ALLOWED)}.\n"
-    "- URLs (source_url / screen_urls / tool_ui.url): ONLY ones ACTUALLY VISIBLE on screen (browser bar, "
-    "terminal, overlays). Never invent a URL. Empty arrays/strings are fine.\n"
-    'If the video shows nothing visual worth capturing, return {"designs":[],"formats":[],"screen_urls":[],"tool_ui":[]}.'
+    "- URLs (source_url / screen_urls / tool_ui.url / homepage / github): ONLY ones ACTUALLY VISIBLE on "
+    "screen. Never invent a URL. Empty arrays/strings are fine.\n"
+    "If the video shows nothing visual worth capturing, return all empty arrays."
 )
 
 
@@ -116,9 +125,13 @@ def main() -> int:
 
     designs = load(DATA / "designs.json", {"designs": []})
     formats = load(DATA / "formats.json", {"formats": []})
+    tools = load(DATA / "tools.json", {"tools": []})
+    skills = load(DATA / "skills.json", {"skills": []})
+    conns = load(DATA / "connectors.json", {"connectors": []})
+    cmds = load(DATA / "commands.json", {"commands": []})
     screen = load(SCREEN, {"urls": []})
     have_url = {(u.get("url") if isinstance(u, dict) else u) for u in screen.get("urls", [])}
-    nd = nf = nu = ok = skip = err = 0
+    nd = nf = nu = nt = ns = nc = ncm = ok = skip = err = 0
     consecutive = 0
 
     for r in todo[: max(args.limit, 0)]:
@@ -152,6 +165,11 @@ def main() -> int:
             ds["style_tags"] = [s for s in (ds.get("style_tags") or []) if s in STYLE_ALLOWED]
         nd += merge(designs, "designs", "name", res.get("designs"), url, "visual")
         nf += merge(formats, "formats", "name", res.get("formats"), url, "visual")
+        # things SHOWN on screen (not necessarily spoken) → route to their own tabs too
+        nt += merge(tools, "tools", "name", res.get("tools"), url, "visual-seen")
+        ns += merge(skills, "skills", "skill_name", res.get("skills"), url, "visual-seen")
+        nc += merge(conns, "connectors", "name", res.get("connectors"), url, "visual-seen")
+        ncm += merge(cmds, "commands", "command", res.get("commands"), url, "visual-seen")
         # screen URLs queue (+ tool UI urls) — feeds collect_designs + resolve_links
         urls = list(res.get("screen_urls") or [])
         urls += [t.get("url") for t in (res.get("tool_ui") or []) if isinstance(t, dict) and t.get("url")]
@@ -167,14 +185,22 @@ def main() -> int:
         save(DATA / "designs.json", designs)
     if nf:
         save(DATA / "formats.json", formats)
+    if nt:
+        save(DATA / "tools.json", tools)
+    if ns:
+        save(DATA / "skills.json", skills)
+    if nc:
+        save(DATA / "connectors.json", conns)
+    if ncm:
+        save(DATA / "commands.json", cmds)
     if nu:
         screen["urls"] = screen["urls"][-4000:]
         save(SCREEN, screen)
     daily = st.get("daily", {}) or {}
     daily[today] = used
     save(STATE, {"updated_at": NOW, "video_ids": sorted(done), "failed_ids": sorted(failed), "daily": daily})
-    print(f"visual_extract: watched {ok} videos -> +{nd} designs, +{nf} formats, +{nu} screen-URLs "
-          f"({skip} unfetchable, {err} systemic errors). NO Claude tokens.")
+    print(f"visual_extract: watched {ok} videos -> +{nd} designs, +{nf} formats, +{nt} tools, +{ns} skills, "
+          f"+{nc} connectors, +{ncm} commands, +{nu} screen-URLs ({skip} unfetchable, {err} errors). NO Claude tokens.")
     return 0
 
 

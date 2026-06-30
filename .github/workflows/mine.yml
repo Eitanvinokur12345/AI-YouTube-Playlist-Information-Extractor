@@ -54,6 +54,7 @@ jobs:
         if: always()
         run: |
           python -m src.collect_designs || true
+          python -m src.warm_shots || true
           python -m src.build_recipes || true
           python -m src.cross_tab_check || true
           python -m src.build_models || true

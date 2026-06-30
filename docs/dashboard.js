@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v54";
+const APP_BUILD = "v55";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1698,10 +1698,10 @@ function _wireMshots(scope) {
     const advance = () => {
       const t = (+img.dataset.try || 0) + 1; img.dataset.try = String(t);
       const u = img.dataset.url, w = img.dataset.w || 1200;
-      if (t <= 2) {                                  // mShots is async — re-poll the same job shortly
-        setTimeout(() => { img.src = _shotURL("mshots", u, w) + "&r=" + t; }, 3000 + t * 2500);
-      } else if (t <= 4) {                           // give up on mShots → second provider (thum.io)
-        setTimeout(() => { img.src = _shotURL("thum", u, w) + "?r=" + t; }, 1200);
+      if (t <= 1) {                                  // mShots is async — re-poll once, quickly
+        setTimeout(() => { img.src = _shotURL("mshots", u, w) + "&r=" + t; }, 2000);
+      } else if (t <= 3) {                           // switch to the faster provider (thum.io) sooner
+        setTimeout(() => { img.src = _shotURL("thum", u, w) + "?r=" + t; }, 700);
       } else {                                       // both failed → graceful open-live tile
         const a = img.closest(".design-fullpage");
         if (a) a.outerHTML = `<div class="dnopreview">Preview unavailable — <a href="${a.href}" target="_blank" rel="noopener">open live ↗</a>, or hit 🔍 Full site.</div>`;

@@ -71,6 +71,8 @@ def check_url(url: str, timeout: int = 6) -> dict:
             if any(p in host for p in PARKER_HOSTS):
                 return {"status": "parked", "no_embed": no_embed}
             body = r.read(45000).decode("utf-8", "replace").lower()
+        if any(t in body for t in NOTFOUND_TEXT):
+            return {"status": "dead", "no_embed": no_embed}
         if any(t in body for t in PARKED_TEXT):
             return {"status": "parked", "no_embed": no_embed}
         return {"status": "ok", "no_embed": no_embed}
@@ -91,6 +93,11 @@ NON_DESIGN_RE = re.compile(
     r"\b(robot|robots|robotic|humanoid|quadruped|drone|compiler|ide|firmware|microcontroller|"
     r"arduino|raspberry pi|cnc|3d printer|soldering|servo|actuator|lidar)\b")
 JUNK_HOSTS = ("sites.google.com", "default-domain", "example.com")
+DATA_FILE_ORIGINS = {"tools.json", "connectors.json", "models.json"}   # tool homepages, NOT designs
+# soft-404 pages return HTTP 200 but say "not found" (e.g. the Grok URL) — treat as dead.
+NOTFOUND_TEXT = ("page not found", "404 not found", "this page could not be found", "page introuvable",
+                 "ページが見つかりません", "página no encontrada", "page doesn't exist", "404 error",
+                 "the page you requested", "page you are looking for")
 
 # Curated, real, public sources — exemplar AI sites/builders that screenshot as actual designs,
 # plus a few gallery hubs to browse more. (name, url, style_tags, source_type)
@@ -199,6 +206,9 @@ def main() -> int:
         if is_repo_only:
             dropped += 1
             continue
+        if str(x.get("origin") or "") in DATA_FILE_ORIGINS:   # a tool's homepage pulled before → Tools, not Designs
+            dropped += 1
+            continue
         styles = [s for s in (x.get("style_tags") or []) if s in STYLE_ALLOWED]
         st = x.get("source_type")
         if st == "github-designs":
@@ -220,27 +230,20 @@ def main() -> int:
         if add(e):
             kept += 1
 
-    # 2) AI-PRODUCT homepages already in the hub = the design of real AI websites
+    # 2) DESIGNS are curated SEPARATELY from tools (the owner's two-protocol split): we do NOT pull every
+    #    tool's homepage as a "design". Designs come from the visual protocol (sites shown in videos),
+    #    curated seeds, and OSS demos. Here we only build a domain->description map for the junk filter.
     prod = 0
-    desc_by_dom = {}        # domain -> source description, so the junk filter can judge URL-only designs
+    desc_by_dom = {}
     for fname, key, nk in [("tools.json", "tools", "name"), ("connectors.json", "connectors", "name"),
                            ("models.json", "models", "name")]:
         p = DATA / fname
         if not p.exists():
             continue
-        items = (json.load(open(p, encoding="utf-8")) or {}).get(key, [])
-        items = sorted(items, key=lambda z: z.get("quality_score", 0) or 0, reverse=True)
-        for it in items:
-            home = it.get("homepage") or ""
-            if home:
-                desc_by_dom.setdefault(_domain(home), (it.get("description") or "")[:200])
-            if prod >= 160 or not _is_design_url(home):
-                continue
-            if NON_DESIGN_RE.search((str(it.get(nk) or "") + " " + str(it.get("description") or "")).lower()):
-                continue                                  # skip robots / IDEs / hardware at intake
-            if add(_entry(it.get(nk), home, [], "ai-product",
-                          look=(it.get("description") or "")[:160], origin=fname)):
-                prod += 1
+        for it in (json.load(open(p, encoding="utf-8")) or {}).get(key, []):
+            h = it.get("homepage") or ""
+            if h:
+                desc_by_dom.setdefault(_domain(h), (it.get("description") or "")[:200])
 
     # 3) curated seeds
     for name, url, styles, st in SEEDS:

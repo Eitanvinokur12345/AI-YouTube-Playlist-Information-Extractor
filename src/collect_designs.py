@@ -222,6 +222,7 @@ def main() -> int:
 
     # 2) AI-PRODUCT homepages already in the hub = the design of real AI websites
     prod = 0
+    desc_by_dom = {}        # domain -> source description, so the junk filter can judge URL-only designs
     for fname, key, nk in [("tools.json", "tools", "name"), ("connectors.json", "connectors", "name"),
                            ("models.json", "models", "name")]:
         p = DATA / fname
@@ -230,11 +231,13 @@ def main() -> int:
         items = (json.load(open(p, encoding="utf-8")) or {}).get(key, [])
         items = sorted(items, key=lambda z: z.get("quality_score", 0) or 0, reverse=True)
         for it in items:
-            if prod >= 160:
-                break
             home = it.get("homepage") or ""
-            if not _is_design_url(home):
+            if home:
+                desc_by_dom.setdefault(_domain(home), (it.get("description") or "")[:200])
+            if prod >= 160 or not _is_design_url(home):
                 continue
+            if NON_DESIGN_RE.search((str(it.get(nk) or "") + " " + str(it.get("description") or "")).lower()):
+                continue                                  # skip robots / IDEs / hardware at intake
             if add(_entry(it.get(nk), home, [], "ai-product",
                           look=(it.get("description") or "")[:160], origin=fname)):
                 prod += 1
@@ -258,9 +261,13 @@ def main() -> int:
     # 4b) FILTER non-AI-design junk (robots, IDEs, default builder pages) — these aren't website designs.
     nj, keep = 0, []
     for e in out:
-        blob = (str(e.get("name") or "") + " " + str(e.get("look") or "")).lower()
         host = _domain(e.get("source_url") or "")
-        if NON_DESIGN_RE.search(blob) or any(h in host for h in JUNK_HOSTS):
+        blob = (str(e.get("name") or "") + " " + str(e.get("look") or "") + " " + desc_by_dom.get(host, "")).lower()
+        # uninformative = a scraped homepage we know NOTHING about (no description, no style) — low-value junk
+        # like the misfiled "CODEBLOCK". Curated seeds are always kept.
+        uninformative = (e.get("source_type") in ("ai-product", "video", "oss")
+                         and not str(e.get("look") or "").strip() and not e.get("style_tags"))
+        if NON_DESIGN_RE.search(blob) or any(h in host for h in JUNK_HOSTS) or uninformative:
             nj += 1
         else:
             keep.append(e)

@@ -136,6 +136,14 @@ jobs:
 
       - name: Safety ratings for connectors/skills (safe/caution/risky) -> data/safety.json
         if: always()
+        env:                                  # EXCAVA embeds the task to recall tools by meaning
+          EXTERNAL_REVIEW_API_KEY: ${{ secrets.EXTERNAL_REVIEW_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY_2: ${{ secrets.GEMINI_API_KEY_2 }}
+          GEMINI_API_KEY_3: ${{ secrets.GEMINI_API_KEY_3 }}
+          GEMINI_API_KEY_4: ${{ secrets.GEMINI_API_KEY_4 }}
+          GEMINI_API_KEY_5: ${{ secrets.GEMINI_API_KEY_5 }}
+          GEMINI_API_KEY_6: ${{ secrets.GEMINI_API_KEY_6 }}
         run: |
           python -m src.safety_check || true
           python -m src.security_scan || true

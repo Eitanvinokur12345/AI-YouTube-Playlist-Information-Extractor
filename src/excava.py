@@ -18,9 +18,13 @@ Run:  python -m src.excava
 """
 from __future__ import annotations
 
+import argparse
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
+
+from src.build_memory import embed as _embed, search as _search
 
 ROOT = Path(__file__).parent.parent
 DATA = ROOT / "data"
@@ -38,7 +42,38 @@ def _load(name, d=None):
         return d if d is not None else {}
 
 
+def _keys() -> list:
+    ks = []
+    for n in ["EXTERNAL_REVIEW_API_KEY", "GEMINI_API_KEY"] + [f"GEMINI_API_KEY_{i}" for i in range(2, 9)]:
+        v = (os.environ.get(n) or "").strip()
+        if v and v not in ks:
+            ks.append(v)
+    return ks
+
+
+def semantic_recall(query: str, idx: dict, keys: list, k: int = 6) -> list:
+    """EXCAVA's MEANING-based recall: embed the task and return the hub items closest in meaning (not
+    just keyword match). This is what 'point EXCAVA at the semantic memory' buys — grounded tool
+    selection. Free + graceful: with no key or empty index it returns [] (so the cron never breaks)."""
+    if not query or not keys or not idx.get("vectors"):
+        return []
+    emb = _embed(query, keys[0])
+    if not isinstance(emb, list):
+        return []
+    return _search(emb, idx, k)
+
+
 def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--recall", default="", help="print the hub items semantically closest to a task, then exit")
+    args, _ = ap.parse_known_args()
+    mem = _load("memory_index.json", {})
+    keys = _keys()
+    if args.recall:                                  # manual / activator probe of the semantic memory
+        for h in semantic_recall(args.recall, mem, keys, 10):
+            print(f"  {h['score']:.3f}  {h.get('type')}: {h.get('name')}  [{h['id']}]")
+        return 0
+
     guard = _load("data_guard.json", {})
     sec = _load("security.json", {})
     goals = {g["id"]: g for g in _load("goals_status.json", {}).get("goals", [])}
@@ -72,6 +107,13 @@ def main() -> int:
         action = {"do": "HOLD ALL — verification gate failing", "type": "blocked",
                   "detail": "fix data_guard/security before EXCAVA acts"}
 
+    # ── point EXCAVA at the SEMANTIC MEMORY: ground the chosen action in the right hub items ──
+    if action and action.get("do"):
+        q = " ".join(x for x in [action.get("do"), action.get("detail")] if x)
+        action["use_tools"] = [{"id": h["id"], "name": h.get("name"), "type": h.get("type"),
+                                "score": h["score"]} for h in semantic_recall(q, mem, keys, 6)]
+    mem_wired = bool(keys and mem.get("vectors"))
+
     # ── self-optimize the tool stack ──
     stack_review = {
         "candidates_available": scout.get("total_candidates", 0),
@@ -85,11 +127,13 @@ def main() -> int:
         "phase": "OS-1 operator (live); OS-2 creator + OS-3 self-coder gated",
         "gate": {"checks": checks, "internal_allowed": internal_ok, "outward_allowed": outward_ok,
                  "outward_needs": "data_guard ok + security clean + G3>=70 + owner approval"},
+        "memory": {"vectors": len(mem.get("vectors", {})), "model": mem.get("model"), "wired": mem_wired},
         "next_action": action, "holding": holding[:6],
         "tool_stack": cfg.get("tool_stack", []), "stack_review": stack_review,
     }, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"EXCAVA: gate internal={'open' if internal_ok else 'CLOSED'} outward={'open' if outward_ok else 'closed (G3=' + str(g3) + ')'}; "
-          f"next = {action['do'] if action else 'none'}; holding {len(holding)} outward action(s).")
+          f"next = {action['do'] if action else 'none'} ({len((action or {}).get('use_tools', []))} tools recalled); "
+          f"memory {'wired ' + str(len(mem.get('vectors', {}))) + ' vecs' if mem_wired else 'not wired (no key)'}; holding {len(holding)}.")
     return 0
 
 

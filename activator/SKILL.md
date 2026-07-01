@@ -36,6 +36,12 @@ Give each plan a one‑line **trade‑off** (free vs paid, no‑code vs coded, s
 - **Default:** present the 2–4 plans as an American‑style choice (use `AskUserQuestion` if available, else a numbered list), recommend one, and let the user pick. Don't silently guess when approaches genuinely diverge.
 - **`NOSG` override** (No Options, Skip Guessing): if the user's message ends with `NOSG`, do **not** present options or advise — silently pick the single best plan, run it, and report what you chose in one line. Strip `NOSG` before acting.
 
+## Step 3.5 — Security pre-flight (MANDATORY — we do NOT trust the creators)
+Before you install or run ANY item, treat it as UNTRUSTED and check what would actually execute:
+- If it has a GitHub repo: run `python -m src.security_preflight {github-url}` (Claude Code), or fetch its `package.json` + README yourself and scan for: pre/post-install scripts, `curl|bash`, reading `~/.ssh` / `.aws` / `.env` / credentials, obfuscated `eval` / base64 execution, keylogging / clipboard capture, or sending env/secrets over the network.
+- **safe** → proceed. **caution / dangerous / unknown** → do NOT auto-run: warn the user with the specific reasons, require explicit approval, and run it in an ISOLATED sandbox (a container / disposable environment with NO secrets and NO network to their data). Use throwaway API keys only until it's proven safe.
+- Never paste real credentials into an unvetted tool. Hosted products (no local code) → still confirm it's the real official site before signing in.
+
 ## Step 4 — activate the chosen plan (per component; ask permission before installing/writing)
 - **Claude skill** → write its `SKILL.md` to `~/.claude/skills/<slug>/SKILL.md` (Claude Code) or tell the user to upload it (chat/cowork); reload.
 - **MCP connector** → run `claude mcp add <slug> -- npx -y <package>` (Claude Code) or give that exact command; confirm with `claude mcp list`.

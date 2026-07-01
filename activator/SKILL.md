@@ -1,11 +1,19 @@
 ---
 name: excavatortron-activator
-description: Find and ACTIVATE the best AI skill, tool, MCP connector, model, prompt, or command — or a COMBINATION of them — from the Excavatortron hub for any task, and set it up right where you are. Portable across Claude chat, cowork, and Claude Code, and writes native artifacts for other tools (Cursor, GitHub Copilot, ChatGPT, Gemini, …). Triggers on "activate X", "set me up with X", "set me up to do X", "is there a skill/tool/connector for X", "what's the best way to <task> with AI", or "install X from Excavatortron".
+description: Find and ACTIVATE the best AI skill, tool, MCP connector, model, prompt, or command — or a COMBINATION of them — from the Excavatortron hub for any task, and set it up right where you are. One universal skill that works in Claude chat, cowork, and Claude Code, and pastes into any other AI tool (Cursor, GitHub Copilot, ChatGPT, Gemini, and more). Triggers on "activate X", "set me up with X", "set me up to do a task", "is there a skill/tool/connector for X", "what is the best way to do something with AI", or "install X from Excavatortron".
 ---
 
 # Excavatortron Activator
 
 Turn **"I want to do X"** into **"X — and the stack it needs — is set up and usable in the tool I'm in right now."** Assemble the best combination for the task, set it up where you can, give an exact copy‑paste command/artifact where you can't. Only hand over a link for the one step you genuinely cannot do (a hosted product's sign‑in or an API key).
+
+## Put this ONE skill on any tool (no per-tool versions)
+This is a single universal file — the SAME `SKILL.md` goes everywhere:
+- **Claude Code** → drop it in `~/.claude/skills/excavatortron-activator/`.
+- **Claude chat / cowork** → upload it as a Skill.
+- **Cursor** → save its text as `.cursor/rules/excavatortron-activator.mdc`.
+- **ChatGPT / Gemini / any other tool** → paste its text into that tool's custom-instructions / system-prompt box.
+Same content, everywhere. Update it once, re-drop or re-paste to refresh.
 
 ## Step 0 — sense the environment (decides what you can do)
 - **Shell + file write** (e.g. Claude Code): **perform** the setup.

@@ -45,7 +45,7 @@ Give each plan a one‑line **trade‑off** (free vs paid, no‑code vs coded, s
   - Cursor → `.cursor/rules/<slug>.mdc`
   - GitHub Copilot → `.github/copilot-instructions.md`
   - ChatGPT / Gemini / other → `<tool>/<slug>.instructions.md` (portable paste‑in)
-  This is "the skills system, inside each tool."
+  This is "the skills system, inside each tool." **Exact templates + 2 worked combination examples are in `REFERENCE.md` (this folder)** — load it when you need the precise format for a tool.
 
 ## Step 5 — verify + report
 Confirm where possible (skill file exists / `claude mcp list` shows it / repo cloned / artifact written) and state the ONE next action for the user (reload / sign in / run). If nothing matched, say so and give the closest alternatives.

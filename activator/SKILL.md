@@ -1,43 +1,52 @@
 ---
 name: excavatortron-activator
-description: Find and ACTIVATE the best AI skill, tool, MCP connector, prompt, or command from the Excavatortron hub for any task, and set it up right where you are. Portable — works in Claude chat, cowork, and Claude Code, and can be adapted to other AI tools. Triggers on "activate X", "set me up with X", "set me up to do X", "is there a skill/tool/connector for X", or "install X from Excavatortron".
+description: Find and ACTIVATE the best AI skill, tool, MCP connector, model, prompt, or command — or a COMBINATION of them — from the Excavatortron hub for any task, and set it up right where you are. Portable across Claude chat, cowork, and Claude Code, and writes native artifacts for other tools (Cursor, GitHub Copilot, ChatGPT, Gemini, …). Triggers on "activate X", "set me up with X", "set me up to do X", "is there a skill/tool/connector for X", "what's the best way to <task> with AI", or "install X from Excavatortron".
 ---
 
 # Excavatortron Activator
 
-Take the user from **"I want to do X"** to **X is set up and usable in the tool they're in right now**. Do the setup where you can; give an exact copy‑paste command where you can't. Only hand over a link for the one step you genuinely cannot do (a hosted product's sign‑in or an API key).
+Turn **"I want to do X"** into **"X — and the stack it needs — is set up and usable in the tool I'm in right now."** Assemble the best combination for the task, set it up where you can, give an exact copy‑paste command/artifact where you can't. Only hand over a link for the one step you genuinely cannot do (a hosted product's sign‑in or an API key).
 
-## Step 0 — sense the environment (this decides what you can do)
-- **Can run shell commands + write files** (e.g. Claude Code): you will **perform** the setup.
-- **Chat / cowork / another tool** (no shell): you will **output the exact command(s)** for the user to paste, and open the live tool.
+## Step 0 — sense the environment (decides what you can do)
+- **Shell + file write** (e.g. Claude Code): **perform** the setup.
+- **Chat / cowork / another tool** (no shell): **output** the exact command(s) / native artifact to paste, and open the live tool.
 
-## Step 1 — find the capability
-Try these in order; use the first that works in your environment:
-1. **Bundled engine** (Claude Code, this skill folder present): `python activate.py "<request>" --top 3 --json`
-2. **Fetch the public hub** (if you can fetch URLs): read and name‑match across
-   `https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/tools.json`, `/skills.json`, `/connectors.json` — each match has a `setup` recipe.
-3. **Your own knowledge** (chat with no fetch): if you already know the tool, proceed from what you know.
+## Step 1 — find (hybrid — use the first that works)
+1. **Bundled engine** (Claude Code, this folder present): `python activate.py "<task>" --top 5 --json`
+2. **Fetch the public hub** (if you can fetch URLs): name‑match across
+   `https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/{tools,skills,connectors,models,prompts,commands}.json` — each match carries a `setup` recipe + real links.
+3. **Your own knowledge** (chat with no fetch): if you already know the tools, proceed.
 
-Prefer a **Claude skill or MCP connector** (directly usable in the user's tools) over a raw repo, unless they want the source. Mention 1–2 runner‑up matches.
+Search the **WHOLE hub**, not one tab — the best answer is usually a **combination** across tabs (a technique + the MCP it needs + a supporting tool + a prompt/command).
 
-## Step 2 — determine the setup (from the item's `setup.kind`, or infer)
-- **claude skill** → the skill's `SKILL.md` goes in `~/.claude/skills/<slug>/SKILL.md`.
-- **mcp connector** → `claude mcp add <slug> -- npx -y <package>` (use the recipe's exact command).
-- **open‑source tool** → `git clone <github>` then install/run per its README.
-- **hosted product** → no local install; open its site and (if needed) sign in / add an API key.
+## Step 2 — assemble a FEW combination plans
+Build **2–4 candidate plans**, each a recipe with roles:
+- **primary** (does the core job) · **connector** (the MCP it needs, if any) · **supporting** (a tool/model that helps) · **prompt/command** (if one fits).
+Give each plan a one‑line **trade‑off** (free vs paid, no‑code vs coded, simple vs powerful) and mark the one you recommend.
 
-## Step 3 — act
-- **If you can run commands:** ask permission, then do it (write the skill file / run `claude mcp add` / clone+install). 
-- **If you can't:** print the single exact command in a code block and say "paste this in Claude Code" (or the relevant tool), plus the live link.
-- If `setup.needs_key` is true, tell them exactly which key/sign‑in and where — never enter credentials yourself.
+## Step 3 — choose (options UNLESS `NOSG`)
+- **Default:** present the 2–4 plans as an American‑style choice (use `AskUserQuestion` if available, else a numbered list), recommend one, and let the user pick. Don't silently guess when approaches genuinely diverge.
+- **`NOSG` override** (No Options, Skip Guessing): if the user's message ends with `NOSG`, do **not** present options or advise — silently pick the single best plan, run it, and report what you chose in one line. Strip `NOSG` before acting.
 
-## Step 4 — verify + report
-Confirm the result where possible (`claude mcp list`, the skill file exists, repo cloned) and state the one next action for the user (reload / sign in / run). If nothing matched, say so and give the closest alternatives.
+## Step 4 — activate the chosen plan (per component; ask permission before installing/writing)
+- **Claude skill** → write its `SKILL.md` to `~/.claude/skills/<slug>/SKILL.md` (Claude Code) or tell the user to upload it (chat/cowork); reload.
+- **MCP connector** → run `claude mcp add <slug> -- npx -y <package>` (Claude Code) or give that exact command; confirm with `claude mcp list`.
+- **Open‑source tool** → `git clone <github>` + install/run per its README.
+- **Hosted product** → open its site; if `setup.needs_key`, say exactly which key and where (never enter it yourself).
+- **ANY OTHER TOOL** (Cursor, Copilot, ChatGPT, Gemini, Antigravity, Stitch, Gamma, …) → **write the native artifact** for that tool under `./excavatortron-deploy/`:
+  - Cursor → `.cursor/rules/<slug>.mdc`
+  - GitHub Copilot → `.github/copilot-instructions.md`
+  - ChatGPT / Gemini / other → `<tool>/<slug>.instructions.md` (portable paste‑in)
+  This is "the skills system, inside each tool."
 
-## Test me (30 seconds)
-Type: **`activate n8n`** → I should return (and run, if I can) `claude mcp add n8n -- npx -y n8n`, and offer the n8n repo as an alternative.
-Or: **`set me up with Playwright`** → the Playwright MCP connector, with the exact `claude mcp add` command.
+## Step 5 — verify + report
+Confirm where possible (skill file exists / `claude mcp list` shows it / repo cloned / artifact written) and state the ONE next action for the user (reload / sign in / run). If nothing matched, say so and give the closest alternatives.
 
-## Notes
-- Portable: the steps above are generic — the same skill works in Claude chat, cowork, Claude Code, Cursor, etc.
-- The Excavatortron **OS (EXCAVA)** can also run activations inside the project itself — that's a separate, project‑side path (not required for this skill to work).
+## Build from a Design (Designs tab)
+"Build something like <design>" → find it in `designs.json` and reproduce its REAL style — colors, typography, layout, components, vibe (owner likes **bold / colorful / maximalist + playful / retro / brutalist**) — using the `frontend-design` / `impeccable` skills. Not a generic AI look.
+
+## Rules
+- Never invent an item — only activate what the hub returns (or you genuinely know).
+- Lead with the recommended plan; stay token‑frugal (report the recipe in 1–2 lines, don't paste raw JSON).
+- Prefer directly‑usable kinds (Claude skill / MCP connector) over a raw repo unless the user wants the source.
+- Test: `activate n8n` → `claude mcp add n8n -- npx -y n8n` (+ alternatives). `set me up to <task> NOSG` → just build+run the best stack, one‑line report.

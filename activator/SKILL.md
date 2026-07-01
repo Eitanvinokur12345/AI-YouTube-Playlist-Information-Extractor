@@ -45,13 +45,40 @@ Give each plan a one‑line **trade‑off** (free vs paid, no‑code vs coded, s
   - Cursor → `.cursor/rules/<slug>.mdc`
   - GitHub Copilot → `.github/copilot-instructions.md`
   - ChatGPT / Gemini / other → `<tool>/<slug>.instructions.md` (portable paste‑in)
-  This is "the skills system, inside each tool." **Exact templates + 2 worked combination examples are in `REFERENCE.md` (this folder)** — load it when you need the precise format for a tool.
+  This is "the skills system, inside each tool." (Exact templates are in the Reference section below.)
 
 ## Step 5 — verify + report
 Confirm where possible (skill file exists / `claude mcp list` shows it / repo cloned / artifact written) and state the ONE next action for the user (reload / sign in / run). If nothing matched, say so and give the closest alternatives.
 
 ## Build from a Design (Designs tab)
 "Build something like <design>" → find it in `designs.json` and reproduce its REAL style — colors, typography, layout, components, vibe (owner likes **bold / colorful / maximalist + playful / retro / brutalist**) — using the `frontend-design` / `impeccable` skills. Not a generic AI look.
+
+## Reference — worked examples + per-tool templates
+
+**Worked example 1 — "scrape a website into Notion" (a combination):** primary = Firecrawl (web-scraping MCP), connector = Notion MCP.
+```
+claude mcp add firecrawl -- npx -y firecrawl-mcp
+claude mcp add notion    -- npx -y @notionhq/notion-mcp-server
+claude mcp list
+```
+Then: "scrape {url} and create a Notion page with the result." Alt plan (no-code): an n8n/Zapier flow — no coding, less control.
+
+**Worked example 2 — "build a landing page like a design":** primary = the frontend-design / impeccable skill, supporting = a match from `designs.json` (open its live URL, copy its REAL colors/type/layout/vibe). Prompt: "build a landing page in the style of {design}: {its style_tags}".
+
+**Native-artifact templates** (when activating a found item into a NON-Claude tool — write under `./excavatortron-deploy/{tool}/`):
+- **Cursor** → `.cursor/rules/{slug}.mdc`:
+  ```
+  ---
+  description: {one line}
+  alwaysApply: false
+  ---
+  {the instructions, adapted}
+  ```
+- **GitHub Copilot** → `.github/copilot-instructions.md` — `# {name}` then the instructions.
+- **ChatGPT / Gemini / any other** → `{tool}/{slug}.instructions.md` — markdown to paste into that tool's custom-instructions / system-prompt box.
+- **Universal fallback** (any tool without a known format) → a plain `{slug}.instructions.md` to paste into whatever instruction surface it has.
+
+**Deriving the connector command** (when a recipe lacks the package): 1) use `setup.command` if present; 2) else `claude mcp add {slug} -- npx -y {repo-name}` from the GitHub repo (or `uvx {repo}` for Python); 3) else read its homepage/README for the exact command, or give the homepage + "add per its README".
 
 ## Rules
 - Never invent an item — only activate what the hub returns (or you genuinely know).

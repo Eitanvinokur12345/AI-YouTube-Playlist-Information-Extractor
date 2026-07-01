@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v56";
+const APP_BUILD = "v57";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1407,6 +1407,8 @@ async function prioritiesPanel() {
 async function pipelinePanel() {
   const p = await load("pipeline_status.json");
   if (!p || !p.lanes) return "";
+  const cov = await load("coverage_log.json"), cl = (cov && cov.latest) || {};
+  const cpct = cl.pct != null ? cl.pct : 0, cdelta = cov ? cov.delta_pct_vs_prev_day : null;
   const OV = { live: ["pl-live", "● LIVE — data is flowing"], slow: ["pl-slow", "● SLOWING — some lanes overdue"],
                stale: ["pl-stale", "● STALLED — lanes not running"] };
   const ov = OV[p.overall] || OV.stale;
@@ -1435,6 +1437,7 @@ async function pipelinePanel() {
         <span class="sub">snapshot from <span id="pl-snap-at">${esc(fmtDate(p.generated_at))}</span> · library: <span id="pl-lib">${snap.skills || 0} skills · ${snap.tools || 0} tools · ${snap.models || 0} models · ${snap.connectors || 0} connectors · ${snap.prompts || 0} prompts</span></span></div>
       <div class="pl-prog"><span><b>Analyzed</b> <span id="pl-anz">${anz}</span> / ${tot} (<span id="pl-anzpct">${ag}</span>%) <span class="sub">— transcript OR Gemini-watched; this climbs as work happens</span></span><span class="pl-bar"><i id="pl-anzbar" style="width:${ag}%"></i></span></div>
       <div class="pl-prog pl-prog2"><span>Transcripts <span id="pl-tx">${snap.videos_with_transcript || 0}</span> / ${tot} (<span id="pl-txpct">${tg}</span>%) <span class="sub">— captions only (rate-limited)</span></span><span class="pl-bar"><i id="pl-txbar" style="width:${tg}%"></i></span></div>
+      <div class="pl-prog pl-prog2"><span><b>Links</b> ${cl.linked || 0} / ${cl.total || 0} (${cpct}%) <span class="sub">— real, working links${cdelta != null ? ` · ${cdelta >= 0 ? "+" : ""}${cdelta}%/day (target +5%)` : ""}</span></span><span class="pl-bar"><i style="width:${cpct}%"></i></span></div>
       <div class="pl-rows">${rows}</div>
     </div>`;
 }

@@ -1,0 +1,57 @@
+{
+  "video_id": "lKEXpctecQ4",
+  "title": "The Internet Has a Secret Speed Limit",
+  "description": "The internet has a hidden speed limit, and TCP slow start is the reason your app feels slow on the very first load. On the first round trip, the server can only send about 14KB — fit your critical code inside it and the page paints instantly.\n\n\nThis is the 14KB rule. Because of TCP slow start, the first round trip carries roughly 14 kilobytes before the connection ramps up. Every extra byte of JavaScript, CSS, and fonts is another tax you charge your users in patience — you aren't shipping code, you're shipping waiting time. Stop counting megabytes and start counting round trips. The architecture is the invoice.\n\n━━━━━━━━━━━━━━━━━━\nRELATED VIDEO FROM THE CHANNEL\n━━━━━━━━━━━━━━━━━━\nThis Short is the teaser. The full breakdown — measured on real users, real numbers — is here:\n▸ \"I Shipped 14MB to Real Users. Here's the Damage Report\"\n\n━━━━━━━━━━━━━━━━━━\nFAQ\n━━━━━━━━━━━━━━━━━━\nWhat is the 14KB rule? Because of TCP slow start, the first round trip of a new connection can send only ~14KB. If your critical content fits in that window, it renders after a single round trip.\n\nWhat is TCP slow start? A congestion-control mechanism: a new connection starts conservatively (a small initial congestion window) and doubles the data it sends each successful round trip, instead of blasting full speed immediately.\n\nWhy is the first round trip the slow one? The initial congestion window is small (~10 packets ≈ 14KB). Anything beyond that waits for additional round trips, and each round trip costs real latency — so the first paint is what hurts.\n\nDoes the 14KB rule still matter with HTTP/2 or HTTP/3? Yes. Slow start is a transport-layer (TCP/QUIC) behavior, not an HTTP one. The initial congestion window still gates how much your first round trip delivers.\n\n#Shorts #WebPerformance #TCP #ProgrammingDeepDive #WebDev",
+  "publishedAt": "2026-06-30T07:50:01Z",
+  "channel_name": "Macro Lens",
+  "transcript": "The internet has a hidden speed limit, and TCP slow start is the reason your app feels slow on the very first load. On the first round trip, the server can only send about 14KB — fit your critical code inside it and the page paints instantly.\n\n\nThis is the 14KB rule. Because of TCP slow start, the first round trip carries roughly 14 kilobytes before the connection ramps up. Every extra byte of JavaScript, CSS, and fonts is another tax you charge your users in patience — you aren't shipping code, you're shipping waiting time. Stop counting megabytes and start counting round trips. The architecture is the invoice.\n\n━━━━━━━━━━━━━━━━━━\nRELATED VIDEO FROM THE CHANNEL\n━━━━━━━━━━━━━━━━━━\nThis Short is the teaser. The full breakdown — measured on real users, real numbers — is here:\n▸ \"I Shipped 14MB to Real Users. Here's the Damage Report\"\n\n━━━━━━━━━━━━━━━━━━\nFAQ\n━━━━━━━━━━━━━━━━━━\nWhat is the 14KB rule? Because of TCP slow start, the first round trip of a new connection can send only ~14KB. If your critical content fits in that window, it renders after a single round trip.\n\nWhat is TCP slow start? A congestion-control mechanism: a new connection starts conservatively (a small initial congestion window) and doubles the data it sends each successful round trip, instead of blasting full speed immediately.\n\nWhy is the first round trip the slow one? The initial congestion window is small (~10 packets ≈ 14KB). Anything beyond that waits for additional round trips, and each round trip costs real latency — so the first paint is what hurts.\n\nDoes the 14KB rule still matter with HTTP/2 or HTTP/3? Yes. Slow start is a transport-layer (TCP/QUIC) behavior, not an HTTP one. The initial congestion window still gates how much your first round trip delivers.\n\n#Shorts #WebPerformance #TCP #ProgrammingDeepDive #WebDev",
+  "transcript_lang": "",
+  "transcript_source": "description",
+  "links": [],
+  "stats": {
+    "views": 10279,
+    "likes": 289,
+    "comments": 8
+  },
+  "tags": [],
+  "duration": "PT32S",
+  "category_id": "28",
+  "top_comments": [
+    {
+      "author": "@greenice5678",
+      "text": "@MacroLens Your channel is the gold nugget 😎🙏",
+      "likes": 2
+    },
+    {
+      "author": "@xYanotoshi",
+      "text": "HTTP/3?",
+      "likes": 0
+    },
+    {
+      "author": "@iluan_",
+      "text": "So, should we use UDP?",
+      "likes": 1,
+      "top_reply": {
+        "author": "@hatter1290",
+        "text": "http/3 (quic) does exactly this",
+        "likes": 0
+      }
+    },
+    {
+      "author": "@overclucker",
+      "text": "Websockets fix this, and UDP with properly planned datagrams is can function similarly without tcp overhead.",
+      "likes": 0,
+      "top_reply": {
+        "author": "@zous2210",
+        "text": "Well before your page starts websockets, your server need to transfer js, html and css through tcp",
+        "likes": 3
+      }
+    },
+    {
+      "author": "@WillEhrendreich",
+      "text": "If only you could use a hypermedia framework to get all the SPA like functionality without having to toss megabytes of Javascript across the network.\n\nDatastar for the win.",
+      "likes": 0
+    }
+  ],
+  "fetched_at": "2026-07-01T09:30:00.584882+00:00"
+}

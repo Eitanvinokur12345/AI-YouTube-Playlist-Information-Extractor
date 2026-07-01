@@ -1,38 +1,43 @@
 ---
 name: excavatortron-activator
-description: Find and ACTIVATE the best AI skill, tool, MCP connector, prompt, or command from the Excavatortron hub for any task — and actually SET IT UP in-session (install the Claude skill, add the MCP connector, clone+run the repo), not just hand over a link. Use whenever the user asks "is there a skill/tool/connector for X", "set me up to do X", "activate X", or wants to apply something from Excavatortron.
+description: Find and ACTIVATE the best AI skill, tool, MCP connector, prompt, or command from the Excavatortron hub for any task, and set it up right where you are. Portable — works in Claude chat, cowork, and Claude Code, and can be adapted to other AI tools. Triggers on "activate X", "set me up with X", "set me up to do X", "is there a skill/tool/connector for X", or "install X from Excavatortron".
 ---
 
-# Excavatortron Activator — find the right capability AND set it up
+# Excavatortron Activator
 
-Your job is to take the user from **"I want to do X"** to **X is set up and usable in their tools**, in this session. Do the setup; only hand over a link for the one step you genuinely cannot do for them (a hosted product's sign-in or an API key).
+Take the user from **"I want to do X"** to **X is set up and usable in the tool they're in right now**. Do the setup where you can; give an exact copy‑paste command where you can't. Only hand over a link for the one step you genuinely cannot do (a hosted product's sign‑in or an API key).
 
-## 1. Find the capability
-Run the bundled engine (in this skill folder). It reads each hub item's machine-readable `setup` recipe and **fetches the public hub automatically — no repo needed**:
+## Step 0 — sense the environment (this decides what you can do)
+- **Can run shell commands + write files** (e.g. Claude Code): you will **perform** the setup.
+- **Chat / cowork / another tool** (no shell): you will **output the exact command(s)** for the user to paste, and open the live tool.
 
-```
-python activate.py "<the user's request>" --top 3 --json
-```
+## Step 1 — find the capability
+Try these in order; use the first that works in your environment:
+1. **Bundled engine** (Claude Code, this skill folder present): `python activate.py "<request>" --top 3 --json`
+2. **Fetch the public hub** (if you can fetch URLs): read and name‑match across
+   `https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/tools.json`, `/skills.json`, `/connectors.json` — each match has a `setup` recipe.
+3. **Your own knowledge** (chat with no fetch): if you already know the tool, proceed from what you know.
 
-(Fallback if Python is unavailable: fetch and match by name across
-`https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data/{tools,skills,connectors}.json`, reading each match's `setup` field.)
+Prefer a **Claude skill or MCP connector** (directly usable in the user's tools) over a raw repo, unless they want the source. Mention 1–2 runner‑up matches.
 
-The engine already **prefers a Claude skill or MCP connector** (directly usable in your tools) over a raw repo, and lists runner-up matches so you can redirect. Pick the best for the user's actual tool.
+## Step 2 — determine the setup (from the item's `setup.kind`, or infer)
+- **claude skill** → the skill's `SKILL.md` goes in `~/.claude/skills/<slug>/SKILL.md`.
+- **mcp connector** → `claude mcp add <slug> -- npx -y <package>` (use the recipe's exact command).
+- **open‑source tool** → `git clone <github>` then install/run per its README.
+- **hosted product** → no local install; open its site and (if needed) sign in / add an API key.
 
-## 2. Do the setup in-session (ask permission before anything that writes or installs)
-Act on the item's `setup.kind`:
+## Step 3 — act
+- **If you can run commands:** ask permission, then do it (write the skill file / run `claude mcp add` / clone+install). 
+- **If you can't:** print the single exact command in a code block and say "paste this in Claude Code" (or the relevant tool), plus the live link.
+- If `setup.needs_key` is true, tell them exactly which key/sign‑in and where — never enter credentials yourself.
 
-- **claude skill** → create `~/.claude/skills/<slug>/SKILL.md` (fetch the skill's content from its source repo/homepage), then tell the user to reload Claude Code. Verify the file exists.
-- **mcp connector** → run the recipe's command (`claude mcp add <slug> -- npx -y <package>`), then confirm with `claude mcp list`.
-- **open-source tool** → `git clone <github>` and install/run per its README.
-- **hosted web product** → you cannot install it; give the homepage link and note it needs sign-in / an API key.
+## Step 4 — verify + report
+Confirm the result where possible (`claude mcp list`, the skill file exists, repo cloned) and state the one next action for the user (reload / sign in / run). If nothing matched, say so and give the closest alternatives.
 
-If `setup.needs_key` is true, tell the user exactly which key/sign-in is required and where — do **not** enter credentials yourself.
+## Test me (30 seconds)
+Type: **`activate n8n`** → I should return (and run, if I can) `claude mcp add n8n -- npx -y n8n`, and offer the n8n repo as an alternative.
+Or: **`set me up with Playwright`** → the Playwright MCP connector, with the exact `claude mcp add` command.
 
-## 3. Verify + report
-Confirm the result (skill file present / `claude mcp list` shows it / repo cloned + deps installed). Report what's now set up and the single next action for the user (reload, sign in, or run). If nothing matched, say so and suggest the closest alternatives from the hub.
-
-## Principles
-- **Setup happens here, not via a link.** A link is the exception (signup/keys), not the default.
-- Match the user's actual tool (Claude, Cursor, ChatGPT, Gemini-CLI…) when choosing skill vs connector vs repo.
-- Every hub item already carries a `setup` recipe — use it as the source of truth.
+## Notes
+- Portable: the steps above are generic — the same skill works in Claude chat, cowork, Claude Code, Cursor, etc.
+- The Excavatortron **OS (EXCAVA)** can also run activations inside the project itself — that's a separate, project‑side path (not required for this skill to work).

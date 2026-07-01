@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v55";
+const APP_BUILD = "v56";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1698,13 +1698,15 @@ function _wireMshots(scope) {
     const advance = () => {
       const t = (+img.dataset.try || 0) + 1; img.dataset.try = String(t);
       const u = img.dataset.url, w = img.dataset.w || 1200;
-      if (t <= 1) {                                  // mShots is async — re-poll once, quickly
-        setTimeout(() => { img.src = _shotURL("mshots", u, w) + "&r=" + t; }, 2000);
-      } else if (t <= 3) {                           // switch to the faster provider (thum.io) sooner
-        setTimeout(() => { img.src = _shotURL("thum", u, w) + "?r=" + t; }, 700);
-      } else {                                       // both failed → graceful open-live tile
+      if (t === 1) {                                 // try the faster provider first (thum.io)
+        setTimeout(() => { img.src = _shotURL("thum", u, w) + "?r=" + t; }, 800);
+      } else if (t <= 5) {                           // poll mShots as it generates async (can take 5–15s) — be patient
+        setTimeout(() => { img.src = _shotURL("mshots", u, w) + "&r=" + t; }, 2500 + t * 1200);
+      } else if (t <= 7) {                           // one more thum.io pass
+        setTimeout(() => { img.src = _shotURL("thum", u, w) + "?r=" + t; }, 1500);
+      } else {                                       // exhausted → graceful open-live tile
         const a = img.closest(".design-fullpage");
-        if (a) a.outerHTML = `<div class="dnopreview">Preview unavailable — <a href="${a.href}" target="_blank" rel="noopener">open live ↗</a>, or hit 🔍 Full site.</div>`;
+        if (a) a.outerHTML = `<div class="dnopreview">Preview still generating — <a href="${a.href}" target="_blank" rel="noopener">open live ↗</a>.</div>`;
       }
     };
     img.addEventListener("load", () => {

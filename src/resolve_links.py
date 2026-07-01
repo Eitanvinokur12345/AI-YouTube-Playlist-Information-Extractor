@@ -38,8 +38,8 @@ GH_RE = re.compile(r"github\.com/([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+)")
 SETS = [("tools.json", "tools", "name"), ("connectors.json", "connectors", "name"),
         ("skills.json", "skills", "skill_name")]
 BATCH = 25            # items resolved per LLM call
-MAX_TRIES = 4         # retry a hard item up to this many runs
-GROUND_CAP = 120      # grounded-search calls per run (the residue) — now parallel across keys, so affordable
+MAX_TRIES = 6         # retry a hard item up to this many runs (more attempts → more eventually resolve)
+GROUND_CAP = 200      # grounded-search calls per run (the residue) — parallel across keys; push coverage +5%/day
 FAST = ("cerebras", "groq", "sambanova")   # providers to try first (very high tok/s)
 
 

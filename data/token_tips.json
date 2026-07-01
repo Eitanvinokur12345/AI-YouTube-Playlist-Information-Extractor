@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-01T15:23:36.246108+00:00",
-  "count": 132,
+  "generated_at": "2026-07-01T18:26:39.573030+00:00",
+  "count": 133,
   "skills": [
     {
       "name": "Brand-aligned Design Generation with Claude & Canva",
@@ -93,6 +93,10 @@
     {
       "command": "/Upgrade",
       "description": "Make this stronger, clearer, more persuasive, and more useful."
+    },
+    {
+      "command": "You are Claude Code. I have approved the marketing agent duties brief. Now set the autonomous instruction files for my 7 Marketing AI Agents so they can run independently without my input. Do the following: 1. Create a folder structure at `./agents/marketing-team/` with one subfolder per agent: `seo-content/`, `cro/`, `content-copy/`, `paid-measurement/`, `growth-retention/`, `sales-gtm/`, `strategy/` 2. Inside each agent folder, create an `INSTRUCTIONS.md` file that contains: - The agent's role and specialty - A directive to always read `./agents/skills/product-marketing-context` first - Daily task checklist (auto-run without prompting) - Weekly task checklist - Output format and where to save deliverables (e.g. `./agents/outputs/[agent-name]/`) - Handoff instructions specifying which agent receives their output next - Escalation rule: only surface to me if a blocker is encountered or a decision requires budget approval 3. Create a master `ORCHESTRATOR.md` at `./agents/marketing-team/ORCHESTRATOR.md` that: - Lists all 7 agents and their run order - Defines the daily trigger sequence (which agent runs first through last) - Defines the weekly trigger sequence - Specifies that agents run in parallel where there are no dependencies. - Includes a DONE condition for each agent so the orchestrator knows when to move to the next 4. Create a `RUNBOOK.md` at the project root that explains: - How to trigger the full team with a single command - How to trigger a single agent in isolation - How to review outputs",
+      "description": "A prompt instructing Claude Code to set up the necessary file structure, individual agent instruction files (including r"
     }
   ],
   "activator_hint": "Run the activator: ask it to \"set me up to use fewer tokens in Claude\" and it assembles a token-saving combination (skill + /compact + memory MCP)."

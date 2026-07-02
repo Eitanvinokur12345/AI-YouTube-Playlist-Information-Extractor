@@ -150,6 +150,19 @@ P3: 10,11,15,28,34,47 · P4: 13,43,connectors · P5: 3,10,20,22,23,29,38 · P6: 
 P7: 25,26,31,35,41,44,45,48,49,50 · P8: North-Star/G9, P6-leftovers, formats, brain-cleanup. (5 = the
 graphify self-graph, seeded P0, finished P4.)
 
+## ASK-CHECKPOINTS (built into the plan — NON-BLOCKING; proceed on the default if no answer)
+Eitan wants questions asked at the right moments but does NOT want to babysit. So each phase has a
+checkpoint: ask (park in QUESTIONS.md), proceed on the stated default, adjust when he answers.
+- **P0 start:** D1 — cron-heartbeat (default) vs always-on.
+- **P1:** which action categories always require approval? _Default: external + spend._
+- **P2:** the hard free ceilings (quota caps). _Default: current per-key free budgets._
+- **P3:** Creators review-queue UX + what may auto-ship. _Default: self-test + canary + your 1-click; nothing auto-ships._
+- **P4:** confirm the connectors tab shrinks to verified-only (D5). _Default: yes._
+- **P5:** special-visitor triggers + per-department animation vocabulary. _Default: my picks, tune on feedback._
+- **P6:** name 2-3 of your "10 systems" (D2). _Default: my proposed 10._
+- **P7:** which linked project to make the harness portable to first. _Default: Budoaris._
+- **P8:** the G9 goal name + whether to re-weight the North Star. _Default: "Agency/Orchestration", equal weight._
+
 ## OPEN DECISIONS (answer any; work can start on P0 regardless)
 - **D1 (biggest):** cron-heartbeat 24/7 (free, recommended) or pursue an always-on runner?
 - **D2:** name 2-3 of your "10 systems" so I finalize the set (Phase 6.2).

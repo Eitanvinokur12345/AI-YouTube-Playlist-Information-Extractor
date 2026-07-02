@@ -28,6 +28,9 @@ Excavatortron as its database). Free on GitHub Actions. "LIV" = *live, together*
 systems → P7 portability + breadth → P8 North-Star G9 + cleanup. **56 goals** (52 + G53-56 gap-audit),
 each mapped to a phase. Core insight: EXCAVA today is a "tab pile," not an OS — build the hand-off +
 shared-memory layer before more visual polish. **D1-D5 gate the start.**
+Explicitly covered (were implicit, added 2026-07-02b): **dynamic departments** (fully autonomous — P0/P3/P5),
+**crystallize repeated patterns into skills** (P3), **beyond-project capabilities** (build MY things=P7,
+research & briefs=P3, daily ops/digests=G50/G36). Full coverage audit is in EXCAVA_PROGRAM.md.
 
 ## 4. STANDING RULES (non-negotiable)
 - **Free only, forever** — "free tier that needs a card on file" = PAID → skip (Bright Data proxy declined).

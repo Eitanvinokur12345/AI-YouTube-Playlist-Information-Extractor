@@ -236,6 +236,18 @@ roadmap. Gaps found and now closed:
 - **F2 activation "actually does setup"** — its CORE (SKILL.md/activator working) is on the **Opus 4.8
   track**; EXCAVA's orchestration (Phase 3) drives it once Opus makes the activator function.
 
-**Result: all 52 goals + G53-56 + the P/F plans + every remember-later item now have an explicit home.**
+### Coverage audit — ROUND 2 (2026-07-02b): 3 more that were implicit, now explicit
+- **Dynamic departments (FULLY AUTONOMOUS)** — your installment-2 answer; EXCAVA opens/closes departments
+  itself within resource limits. → **P0** (agents registry supports spawn/retire) + **P3** (it decides
+  when a new dept is needed, within the lease ceilings) + **P5** (visible birth/death on the floor).
+- **Crystallize repeated patterns into skills** — roadmap behavior: any system/suggestion used a lot gets
+  turned into an auto-running skill, and EXCAVA keeps producing+running such skills as it progresses. →
+  **P3 Creators** (a standing generator, not just gap-filling).
+- **Beyond-the-project capabilities** (installment-1: the OS does "a lot of other things") — **build MY
+  things** (Budoaris/FreeDup/new ideas, via the G12 12-phase pattern) → **P7**; **research & briefs** →
+  **P3**; **daily ops** (digests/monitoring/reminders) → **G50 + G36** (P2/P7). Content/publishing stays
+  gated (not selected).
+
+**Result: all 52 goals + G53-56 + the P/F plans + every remember-later item + all scattered requests now have an explicit home.**
 The only intentionally-unbuilt items are the two above (OTel, A2A) with stated reasons, and anything
 gated on decision **D1** (always-on) for full remote control (G4).

@@ -1,0 +1,73 @@
+{
+  "generated_at": "2026-07-02T12:21:49.754014+00:00",
+  "in_ci": true,
+  "resources": {
+    "engine_keys": {
+      "ok": true,
+      "have": 15,
+      "note": "15 engine keys visible (6 Gemini, 5 fast)"
+    },
+    "gemini_video_quota": {
+      "ok": true,
+      "note": "watch 163/2640m + visual 56/1800m used today"
+    },
+    "yt_proxy": {
+      "ok": false,
+      "note": "MISSING — add secret YT_PROXY_URL to unlock the transcript lane (~100x analysis)"
+    },
+    "brightdata": {
+      "ok": true,
+      "note": "Bright Data web token (5k req/mo free)"
+    },
+    "github_token": {
+      "ok": false,
+      "note": "commit/push from CI"
+    },
+    "library": {
+      "ok": true,
+      "note": "data library intact"
+    },
+    "semantic_memory": {
+      "ok": true,
+      "note": "1411 vectors"
+    }
+  },
+  "can_do": {
+    "resolve-links": {
+      "ok": true,
+      "needs": "any engine key"
+    },
+    "analyze-videos": {
+      "ok": true,
+      "needs": "Gemini key + daily video quota"
+    },
+    "visual-extract": {
+      "ok": true,
+      "needs": "Gemini key + visual quota"
+    },
+    "fetch-transcripts": {
+      "ok": false,
+      "needs": "YT_PROXY_URL secret (residential proxy)"
+    },
+    "embed-memory": {
+      "ok": true,
+      "needs": "Gemini key"
+    },
+    "mine-competitors": {
+      "ok": true,
+      "needs": "network only (free)"
+    },
+    "screenshots-designs": {
+      "ok": true,
+      "needs": "free screenshot services"
+    },
+    "create-drafts": {
+      "ok": true,
+      "needs": "engine pool + intact library"
+    }
+  },
+  "missing": [
+    "yt_proxy",
+    "github_token"
+  ]
+}

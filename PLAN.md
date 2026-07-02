@@ -35,7 +35,7 @@ bottlenecks:
 ## Plan — "MAKE IT WORK" (freeze new features until F1+F2 done)
 ### F1 — Speed / throughput (in progress)
 - [x] Resolver rewrite: batch 25/call + parallel verify + fast-engine-first (grounding = residue only).
-- [ ] Transcript lane via Bright Data → fast text analysis instead of watching video (needs cloud verify).
+- [x] ~~Transcript lane via Bright Data~~ — DECLINED (2026-07-02): needs a card on file even for the free tier, conflicts with free-only. Staying on the Gemini-watches-video free path (already running, just slower per video). Not revisited unless a genuinely-free proxy option turns up.
 - [ ] Raise per-run limits / cadence once per-item cost is low.
 - **Targets:** link coverage 18% → 90%; videos 22% → 80% — in weeks, not months.
 
@@ -77,9 +77,9 @@ fast-engine). P0 access — real Website/GitHub/Open-code links + setup recipes 
 "activator 404" is addressed (instant github.dev + verified links).
 
 **Still open (priority order):**
-- **Links → ~100%** — coverage 25% (was 15%). Speed solved; next: raise grounding budget (it's cheap now)
-  + transcript lane. THE gate — unlocks G3/G5 and EXCAVA OS-2.
-- **Transcript lane (Bright Data)** — fixes the *analysis* slowness (videos 22%) the same way.
+- **Links → ~100%** — coverage 25% (was 15%). Speed solved; next: raise grounding budget (it's cheap now).
+  THE gate — unlocks G3/G5 and EXCAVA OS-2.
+- ~~Transcript lane (Bright Data)~~ DECLINED — needs a paid card; staying on the free Gemini-watch path.
 - **LiteLLM routing** (429 waste) — partly mitigated by fast-engine-first; proper routing not done.
 - **EXCAVA OS-2 (creator)** — wired but gated until G3≥70 + your approval.
 - **P6 leftovers** — auto-test tools, version-tracking, public SDK (only `hub.json` today), weekly digest.

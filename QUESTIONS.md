@@ -21,7 +21,7 @@ The 6 goals miss two things we now actually build for:
 ## D. Program gaps I found (will do unless you object)
 10. `formats.json` is collected but has no tab — fold formats INTO the Designs tab as a "Formats" filter? _Default: yes._
 11. Brain graph still has ~191 empty "white" nodes + 10 title collisions — clean next maintenance pass? _Default: yes._
-12. Transcript lane still blocked on the `YT_PROXY_URL` secret (residential proxy) — add it when you can; analysis (23%) roughly 100×'s once it's in.
+12. ~~Transcript lane blocked on `YT_PROXY_URL`~~ — RESOLVED 2026-07-02: Bright Data's residential-proxy tier needs a card on file even for free credits, which conflicts with the free-only rule, so declined. Not a blocker — Gemini-watches-video (already running) is the free analysis path, just slower per video than a transcript read would be. Cockpit now shows this as an optional "(skipped by choice)" chip, not a red MISSING.
 
 ## E. Working mode
 13. Confirm: keep doing big autonomous chunks on Fable (all visuals), Opus only for your own refinement passes; questions parked here. _Default: yes._

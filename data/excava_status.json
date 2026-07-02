@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-07-02T07:14:15.213824+00:00",
+  "generated_at": "2026-07-02T09:44:35.259768+00:00",
   "name": "EXCAVA",
   "phase": "OS-1 operator (live); OS-2 creator + OS-3 self-coder gated",
   "gate": {
     "checks": {
       "data_guard_ok": true,
       "security_clean": true,
-      "truth_access_G3": 50,
+      "truth_access_G3": 49,
       "G3_ready_for_outward": false
     },
     "internal_allowed": true,
@@ -14,16 +14,53 @@
     "outward_needs": "data_guard ok + security clean + G3>=70 + owner approval"
   },
   "memory": {
-    "vectors": 1407,
+    "vectors": 1411,
     "model": "gemini-embedding-001",
-    "wired": false
+    "wired": true
   },
   "next_action": {
     "do": "Push link coverage toward 100% at +5%/day (the access gate)",
     "area": "owner-inbox",
     "type": "internal",
     "source": "inbox",
-    "use_tools": []
+    "use_tools": [
+      {
+        "id": "skills:zone-of-obsession",
+        "name": "Zone of Obsession",
+        "type": "skills",
+        "score": 0.583
+      },
+      {
+        "id": "skills:content-planning",
+        "name": "Content Planning (Gap Analysis, Clustering, Prioritization)",
+        "type": "skills",
+        "score": 0.58
+      },
+      {
+        "id": "skills:ce-work",
+        "name": "CE Work",
+        "type": "skills",
+        "score": 0.575
+      },
+      {
+        "id": "skills:investor-outreach",
+        "name": "Investor Outreach",
+        "type": "skills",
+        "score": 0.572
+      },
+      {
+        "id": "skills:seo-optimization",
+        "name": "SEO Optimization",
+        "type": "skills",
+        "score": 0.569
+      },
+      {
+        "id": "skills:codebase-knowledge-graph-token-savings",
+        "name": "Codebase Knowledge Graph for Claude Code Token Savings",
+        "type": "skills",
+        "score": 0.564
+      }
+    ]
   },
   "holding": [],
   "tool_stack": [
@@ -79,7 +116,7 @@
     }
   ],
   "stack_review": {
-    "candidates_available": 973,
+    "candidates_available": 993,
     "note": "EXCAVA reviews its stack each cycle: integrate the best free per-process tool, combine overlaps, offload weak ones. Top open process gaps: Dedup/entity resolution"
   }
 }

@@ -64,6 +64,33 @@ def main() -> int:
                "hub.json is live + machine-readable" if hub.get("generated_at") else "hub.json missing"),
     }
 
+    # G7 Security & trust — scan clean + pre-flight scanner + activator security gate all in place
+    sec = _load("security.json", {})
+    g7 = 0
+    g7 += 40 if not sec.get("secret_leaks") else 0
+    g7 += 30 if (ROOT / "src" / "security_preflight.py").exists() else 0
+    try:
+        act = (ROOT / "activator" / "SKILL.md").read_text(encoding="utf-8")
+    except Exception:
+        act = ""
+    g7 += 30 if "Security pre-flight" in act else 0
+    sig["G7"] = (g7, f"scan {'clean' if not sec.get('secret_leaks') else 'LEAKS FOUND'}; "
+                     f"pre-flight scanner {'present' if g7 >= 70 else 'missing'}; activator gate "
+                     f"{'wired' if 'Security pre-flight' in act else 'missing'} (behavioral sandbox = next level)")
+
+    # G8 Personal fit — taste-tagged designs + Arena taste-learning + NOSG protocol
+    designs = _items("designs.json", "designs")
+    tagged = sum(1 for x in designs if x.get("style_tags"))
+    tag_pct = round(100 * tagged / max(len(designs), 1))
+    try:
+        dash = (ROOT / "docs" / "dashboard.js").read_text(encoding="utf-8")
+    except Exception:
+        dash = ""
+    g8 = (40 * tag_pct // 100) + (30 if "arenaVote" in dash else 0) + (30 if "NOSG" in act else 0)
+    sig["G8"] = (g8, f"{tag_pct}% of designs taste-tagged; Arena learning "
+                     f"{'live' if 'arenaVote' in dash else 'missing'}; NOSG "
+                     f"{'wired' if 'NOSG' in act else 'missing'} (next: taste beyond designs)")
+
     out = []
     for g in ns:
         score, gap = sig.get(g["id"], (50, ""))

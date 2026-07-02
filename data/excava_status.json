@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-07-02T04:45:01.543348+00:00",
+  "generated_at": "2026-07-02T07:14:15.213824+00:00",
   "name": "EXCAVA",
   "phase": "OS-1 operator (live); OS-2 creator + OS-3 self-coder gated",
   "gate": {
     "checks": {
       "data_guard_ok": true,
       "security_clean": true,
-      "truth_access_G3": 49,
+      "truth_access_G3": 50,
       "G3_ready_for_outward": false
     },
     "internal_allowed": true,
@@ -16,51 +16,14 @@
   "memory": {
     "vectors": 1407,
     "model": "gemini-embedding-001",
-    "wired": true
+    "wired": false
   },
   "next_action": {
-    "do": "1713 tools/skills still have no real link (50.1%)",
-    "area": "access",
-    "detail": "The link-resolver runs each cycle; this falls as it works. Add Gemini keys to speed it.",
+    "do": "Push link coverage toward 100% at +5%/day (the access gate)",
+    "area": "owner-inbox",
     "type": "internal",
-    "use_tools": [
-      {
-        "id": "skills:addy-osmani-agent-skills-library",
-        "name": "Addy Osmani Agent-Skills Library",
-        "type": "skills",
-        "score": 0.642
-      },
-      {
-        "id": "skills:doubt-driven-agent-development",
-        "name": "Doubt-Driven Agent Development",
-        "type": "skills",
-        "score": 0.632
-      },
-      {
-        "id": "skills:claude-skills-leaderboard-discovery",
-        "name": "Claude Code Skills Leaderboard Discovery",
-        "type": "skills",
-        "score": 0.625
-      },
-      {
-        "id": "tools:agent-skills",
-        "name": "agent-skills (Addy Osmani)",
-        "type": "tools",
-        "score": 0.621
-      },
-      {
-        "id": "skills:claude-self-improvement-skills",
-        "name": "Claude Self-Improvement Skill Pack",
-        "type": "skills",
-        "score": 0.611
-      },
-      {
-        "id": "skills:codebase-knowledge-graph-token-savings",
-        "name": "Codebase Knowledge Graph for Claude Code Token Savings",
-        "type": "skills",
-        "score": 0.609
-      }
-    ]
+    "source": "inbox",
+    "use_tools": []
   },
   "holding": [],
   "tool_stack": [

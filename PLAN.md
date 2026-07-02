@@ -44,8 +44,21 @@ bottlenecks:
   links only for unavoidable external steps (signup/API key). Prove "know → do" end-to-end on the now-linked items.
 
 ### F3 — Resume the rest (only after F1+F2)
-- Competitor-directory ingestion (fast way to fill coverage; dedup hard).
+- Competitor-directory ingestion ✅ (awesome-lists lane live).
 - Designs polish; EXCAVA real autonomy — stays gated until **G3 ≥ 70** (its own rule).
+
+### F4 — EXCAVA visual integration + 8-goal law (added 2026-07-01, owner-approved)
+- [x] "Heavy Machinery" visual base (hazard-yellow + ink neobrutalism, Archivo Black) — shipped v58.
+- [x] North Star expanded to **8 goals**: +G7 Security/Trust, +G8 Personal Fit — scored every cycle.
+- [x] **EXCAVA cockpit = dashboard HOME**: the living floor (departments as stations w/ real lane
+      status, worker bots carrying each department's current work, pulsing core), task inbox,
+      now/next + holds; EXCAVA presence strip on every other tab. Shipped v59.
+- [x] **Task inbox**: owner sends tasks (tell Claude "EXCAVA: <task>" or edit data/excava_inbox.json);
+      EXCAVA outranks auto-priorities with them, works internal ones autonomously, holds outward ones.
+- [ ] Iterate the daemon visuals (per-tab accents, department detail views, creature variety) —
+      inspiration: CORTEX-OS-style living OS UIs from the videos.
+- [ ] The MASSIVE EXCAVA integration conversation (creators department, departments model, what the
+      OS may do beyond the project) — heavy Q&A with Eitan; see QUESTIONS.md C + memory roadmap.
 
 ## Deferred (build after the program; see memory `project-excava-roadmap`)
 - **EXCAVA "HORSE":** on activation, fan out ~10 agents w/ different tool-sets → merge best parts by base

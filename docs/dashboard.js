@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v58";
+const APP_BUILD = "v59";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -47,7 +47,7 @@ function triggerInstall() {
 
 const state = { status: null, config: null, selectedCategory: "all", newsWindow: "weekly",
   stars: new Set(), hideLowQuality: false, multiToolOnly: false, dynamicTabs: [],
-  query: "", activeTab: "skills" };
+  query: "", activeTab: "excava" };
 
 // True if a skill/connector slug is starred (frozen, best-in-class — never auto-changed).
 const isStarred = (s) =>
@@ -1599,6 +1599,72 @@ async function renderSearchAll() {
   }));
 }
 
+// ── EXCAVA: the OS you can SEE working (cockpit home + a live presence strip on every tab) ──
+const EX_ICONS = { gemini: "📺", transcript: "📜", analysis: "⚙️", mining: "⛏️", external: "⛏️",
+  news: "📰", links: "🔗", memory: "🧠", visual: "🎨", deep: "🔬", improve: "🧬", security: "🛡️" };
+function _exIcon(label) {
+  const l = (label || "").toLowerCase();
+  for (const k in EX_ICONS) if (l.includes(k)) return EX_ICONS[k];
+  return "🤖";
+}
+async function excavaStrip() {
+  const ex = await load("excava_status.json");
+  if (!ex || !ex.gate) return "";
+  const g = ex.gate, act = (ex.next_action || {}).do || "idle";
+  return `<div class="ex-strip"><b>🦾 EXCAVA</b>
+    <span><span class="ex-lamp ${g.internal_allowed ? "on" : "off"}"></span> internal</span>
+    <span><span class="ex-lamp ${g.outward_allowed ? "on" : "off"}"></span> outward</span>
+    <span>working: ${esc(String(act).slice(0, 60))}</span>
+    <a data-goto="excava">open cockpit →</a></div>`;
+}
+async function renderExcava() {
+  const [ex, ps, inbox, gs] = await Promise.all([load("excava_status.json"), load("pipeline_status.json"),
+    load("excava_inbox.json"), load("goals_status.json")]);
+  const gate = (ex && ex.gate) || {}, mem = (ex && ex.memory) || {};
+  const lanes = ((ps && ps.lanes) || []).slice(0, 8);
+  const act = (ex && ex.next_action) || {};
+  const tasks = (inbox && inbox.tasks) || [];
+  const goals = (gs && gs.goals) || [];
+  // department stations around the core (percent coords on the floor)
+  const POS = [[16, 22], [50, 14], [84, 22], [10, 62], [90, 62], [25, 86], [50, 90], [75, 86]];
+  const stations = lanes.map((L, i) => ({ ...L, x: POS[i % POS.length][0], y: POS[i % POS.length][1] }));
+  const stHTML = stations.map(s => `
+    <div class="ex-station ${s.status === "stale" ? "stale" : ""}" style="left:${s.x}%;top:${s.y}%">
+      <span class="lamp ${esc(s.status || "stale")}"></span>
+      <div class="ic">${_exIcon(s.label)}</div><div class="nm">${esc(s.label || "")}</div>
+      <div class="st">${s.status === "live" ? "working" : s.status === "slow" ? "due" : "idle"} · ran ${_ageAgo(s.age_hours)}</div>
+    </div>`).join("");
+  // worker bots: one per non-stale department, walking core <-> station with a task chip
+  const bots = stations.filter(s => s.status !== "stale").map((s, i) => {
+    const word = (s.what || s.label || "task").split(" ").slice(0, 2).join(" ");
+    return `<div class="ex-bot" style="--sx:50%;--sy:45%;--ex:${s.x}%;--ey:${s.y}%;--dur:${5.5 + (i % 4) * 1.6}s;--delay:${-i * 1.7}s">
+      <span class="ex-chip">${esc(word)}</span></div>`;
+  }).join("");
+  const taskHTML = tasks.length ? tasks.map(t => `<div class="ex-task">
+      <span class="tk ${t.status === "working" ? "w" : t.status === "held" ? "h" : "q"}">${esc((t.status || "queued").toUpperCase())}</span>
+      <span>${esc(t.task || "")}</span></div>`).join("")
+    : `<p class="sub">No tasks in the inbox. Send EXCAVA a task by telling Claude "EXCAVA: <task>" or editing <code>data/excava_inbox.json</code> — it works the queue on its own, holding anything outward until the gate is green.</p>`;
+  const goalsMini = goals.map(g => `<span class="pill" title="${esc(g.gap || "")}">${esc(g.id)} ${g.score}</span>`).join(" ");
+  view.innerHTML = `
+    <div class="card" style="border-top:3px solid var(--gold)">
+      <h3>🦾 EXCAVA <span class="sub">— the agentic OS running this project</span>
+        <span class="pl-badge ${gate.internal_allowed ? "pl-live" : "pl-stale"}">${gate.internal_allowed ? "OPERATING" : "GATE CLOSED"}</span></h3>
+      <p class="sub">Phase: ${esc(ex && ex.phase || "OS-1 operator")} · memory: <b>${mem.vectors || 0}</b> vectors ·
+        outward actions ${gate.outward_allowed ? "OPEN" : `held (${esc((gate.checks || {}).truth_access_G3 ?? "?")} / 70 truth&access)`} · goals: ${goalsMini}</p>
+      <div class="ex-floor">${stHTML}${bots}<div class="ex-core">EXCAVA<small>AGENTIC CORE</small></div></div>
+      <p class="sub" style="margin-top:8px">The floor is LIVE: each station is a real pipeline department (lamp = its actual status), each bot carries that department's current work between the core and its station. Stale departments dim until their next run.</p>
+    </div>
+    <div class="ex-grid">
+      <div class="card"><h3>📥 Task inbox <span class="sub">— send EXCAVA work</span></h3>${taskHTML}</div>
+      <div class="card"><h3>🎯 Now / next</h3>
+        <div class="ex-task"><span class="tk w">NOW</span><span>${esc(act.do || "idle")}</span></div>
+        ${(act.use_tools || []).length ? `<p class="sub">using (recalled by meaning): ${act.use_tools.map(t => esc(t.name)).join(" · ")}</p>` : ""}
+        ${((ex && ex.holding) || []).map(h => `<div class="ex-task"><span class="tk h">HELD</span><span>${esc(h.priority || "")} <span class="sub">${esc(h.why_held || "")}</span></span></div>`).join("")}
+      </div>
+    </div>`;
+  view.querySelectorAll("[data-goto]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); show(a.dataset.goto); }));
+}
+
 // ── tab router ───────────────────────────────────────────────────────────────
 async function show(tab) {
   state.activeTab = tab;
@@ -1610,6 +1676,15 @@ async function show(tab) {
   // One bulleted "Updates: …" line at the very top of the tab (lists every update type).
   const c = cadenceLine(tab);
   if (c) view.insertAdjacentHTML("afterbegin", c);
+  // EXCAVA presence on every tab: the OS strip (gate lamps + what it's working on right now).
+  if (tab !== "excava") {
+    const s = await excavaStrip();
+    if (s) {
+      view.insertAdjacentHTML("afterbegin", s);
+      view.querySelectorAll(".ex-strip [data-goto]").forEach(a =>
+        a.addEventListener("click", e => { e.preventDefault(); show(a.dataset.goto); }));
+    }
+  }
   // If quick-read is on, actually condense the descriptions (not just CSS-clamp them).
   quickreadSummarize(document.body.classList.contains("quickread"));
 }
@@ -1793,6 +1868,7 @@ function _designHooks() {
   return "";
 }
 async function renderTab(tab) {
+  if (tab === "excava") return renderExcava();
   if (tab === "skills") return renderSkills(await load("skills.json"));
   if (tab === "tools" || tab === "models")
     return renderToolRating(await load("tools.json"), await load("models.json"));
@@ -1869,5 +1945,5 @@ document.querySelectorAll("nav button").forEach(b =>
     else done(false);
   });
 
-  show("skills");
+  show("excava");
 })();

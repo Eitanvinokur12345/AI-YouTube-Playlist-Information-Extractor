@@ -513,6 +513,57 @@
     .taste-bar i { height:7px; background:var(--gold); border-radius:999px; min-width:6px; display:inline-block; }
     .taste-bar b { color:var(--text); font-size:11px; }
     .taste-match { font-size:10.5px; color:var(--gold-deep); background:var(--gold-soft); border:1px solid var(--gold-line); border-radius:999px; padding:1px 7px; margin-left:4px; }
+    /* ── EXCAVA cockpit: the OS floor — departments, the core, and worker bots you can SEE working ── */
+    .ex-strip { display:flex; align-items:center; gap:10px; flex-wrap:wrap; background:oklch(0.19 0.015 85);
+      color:oklch(0.9 0.03 92); border:2px solid var(--line); border-radius:10px; padding:7px 12px;
+      margin-bottom:14px; font-size:12.5px; box-shadow:var(--shadow); }
+    .ex-strip b { color:oklch(0.87 0.165 96); letter-spacing:.06em; }
+    .ex-lamp { width:9px; height:9px; border-radius:50%; display:inline-block; }
+    .ex-lamp.on { background:oklch(0.75 0.19 145); box-shadow:0 0 6px oklch(0.75 0.19 145); }
+    .ex-lamp.off { background:oklch(0.6 0.19 28); }
+    .ex-strip a { color:oklch(0.87 0.165 96); font-weight:600; margin-left:auto; cursor:pointer; }
+    .ex-floor { position:relative; height:380px; background:
+        radial-gradient(600px 300px at 50% 45%, oklch(0.26 0.03 92) 0%, oklch(0.185 0.015 85) 70%);
+      border:2px solid var(--line); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); }
+    .ex-core { position:absolute; left:50%; top:45%; transform:translate(-50%,-50%);
+      background:var(--gold); color:var(--text); font-family:"Archivo Black",sans-serif;
+      font-size:15px; letter-spacing:.04em; padding:12px 18px; border:3px solid var(--line);
+      border-radius:12px; box-shadow:4px 4px 0 oklch(0.1 0.01 85), 0 0 34px oklch(0.85 0.165 95/.35);
+      animation:exPulse 2.6s ease-in-out infinite; z-index:3; text-align:center; }
+    .ex-core small { display:block; font-family:"Space Grotesk",sans-serif; font-size:9.5px; letter-spacing:.18em; }
+    @keyframes exPulse { 0%,100% { box-shadow:4px 4px 0 oklch(0.1 0.01 85), 0 0 22px oklch(0.85 0.165 95/.25);} 50% { box-shadow:4px 4px 0 oklch(0.1 0.01 85), 0 0 44px oklch(0.85 0.165 95/.5);} }
+    .ex-station { position:absolute; transform:translate(-50%,-50%); width:118px; text-align:center;
+      background:oklch(0.235 0.018 88); border:2px solid oklch(0.42 0.05 92); border-radius:10px;
+      padding:7px 6px 6px; z-index:2; }
+    .ex-station.stale { opacity:.45; }
+    .ex-station .ic { font-size:17px; }
+    .ex-station .nm { font-size:10.5px; font-weight:700; color:oklch(0.92 0.03 92); letter-spacing:.04em; text-transform:uppercase; }
+    .ex-station .st { font-size:9.5px; color:oklch(0.66 0.03 90); }
+    .ex-station .lamp { position:absolute; top:6px; right:7px; width:7px; height:7px; border-radius:50%; }
+    .ex-station .lamp.live { background:oklch(0.75 0.19 145); box-shadow:0 0 5px oklch(0.75 0.19 145); animation:exBlink 1.4s infinite; }
+    .ex-station .lamp.slow { background:var(--gold); }
+    .ex-station .lamp.stale { background:oklch(0.6 0.19 28); }
+    @keyframes exBlink { 50% { opacity:.35; } }
+    .ex-bot { position:absolute; z-index:4; width:20px; height:16px; background:var(--gold);
+      border:2px solid var(--line); border-radius:5px; margin:-8px 0 0 -10px;
+      animation:exWalk var(--dur,7s) ease-in-out var(--delay,0s) infinite alternate; }
+    .ex-bot::before { content:""; position:absolute; left:3px; top:3px; width:4px; height:4px;
+      border-radius:50%; background:var(--line); box-shadow:7px 0 0 var(--line); }
+    .ex-bot::after { content:""; position:absolute; left:7px; top:-7px; width:2px; height:5px;
+      background:var(--line); }
+    .ex-bot .ex-chip { position:absolute; top:-22px; left:50%; transform:translateX(-50%);
+      background:oklch(0.99 0.008 95); color:var(--text); border:1.5px solid var(--line);
+      font-size:8.5px; font-weight:700; white-space:nowrap; padding:1px 6px; border-radius:999px; }
+    @keyframes exWalk { from { left:var(--sx); top:var(--sy); } to { left:var(--ex); top:var(--ey); } }
+    @media (prefers-reduced-motion: reduce) { .ex-bot { animation:none; left:var(--ex); top:var(--ey); } .ex-core { animation:none; } }
+    .ex-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    @media (max-width:760px) { .ex-grid { grid-template-columns:1fr; } .ex-floor { height:430px; } }
+    .ex-task { display:flex; gap:8px; align-items:baseline; padding:7px 10px; border:1.5px solid var(--line);
+      border-radius:9px; margin-bottom:7px; background:var(--panel); font-size:13px; }
+    .ex-task .tk { font-size:10px; font-weight:800; letter-spacing:.06em; border-radius:999px; padding:1px 8px; }
+    .ex-task .tk.q { background:var(--gold-soft); color:var(--gold-ink); border:1px solid var(--gold-line); }
+    .ex-task .tk.w { background:oklch(0.9 0.09 145); color:oklch(0.3 0.08 150); border:1px solid oklch(0.6 0.12 148); }
+    .ex-task .tk.h { background:var(--warnbg); color:#92400e; border:1px solid var(--warn); }
     .lnk-pending { font-size:11px; color:var(--gold-deep); background:var(--gold-soft);
       border:1px dashed var(--gold-line); border-radius:999px; padding:3px 9px; }
     /* Top priorities */
@@ -606,7 +657,8 @@
   <div class="counters" id="counters"></div>
 
   <nav id="tabs">
-    <button data-tab="skills" class="active">Skills Library</button>
+    <button data-tab="excava" class="active">🦾 EXCAVA</button>
+    <button data-tab="skills">Skills Library</button>
     <button data-tab="tools">Tool Rating</button>
     <button data-tab="comingsoon">Coming Soon</button>
     <button data-tab="prompts">Prompts</button>

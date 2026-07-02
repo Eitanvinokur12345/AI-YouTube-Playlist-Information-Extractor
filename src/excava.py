@@ -92,8 +92,30 @@ def main() -> int:
     internal_ok = checks["data_guard_ok"] and checks["security_clean"]
     outward_ok = internal_ok and checks["G3_ready_for_outward"]
 
-    # ── next action from priorities; outward ones are held until the gate opens ──
+    # ── OWNER'S INBOX first: tasks Eitan sends outrank the auto-priorities. Internal tasks are
+    #    worked autonomously; outward ones are held by the same gate. ──
+    inbox = _load("excava_inbox.json", {})
+    inbox_tasks = inbox.get("tasks", []) if isinstance(inbox, dict) else []
     action, holding = None, []
+    changed_inbox = False
+    for t in inbox_tasks:
+        if t.get("status") in ("done", "held"):
+            continue
+        is_outward = any(w in str(t.get("task", "")).lower() for w in OUTWARD)
+        if is_outward and not outward_ok:
+            if t.get("status") != "held":
+                t["status"] = "held"; changed_inbox = True
+            holding.append({"priority": t.get("task"), "why_held": "owner task is outward; gate closed"})
+            continue
+        if action is None and internal_ok:
+            action = {"do": t.get("task"), "area": "owner-inbox", "type": "internal", "source": "inbox"}
+            if t.get("status") != "working":
+                t["status"] = "working"; changed_inbox = True
+    if changed_inbox:
+        (DATA / "excava_inbox.json").write_text(
+            json.dumps(inbox, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    # ── then the auto-priorities; outward ones are held until the gate opens ──
     for p in prios:
         area = (p.get("area") or "").lower()
         is_outward = any(w in area for w in OUTWARD)

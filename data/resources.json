@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-02T12:21:49.754014+00:00",
+  "generated_at": "2026-07-02T14:27:42.083186+00:00",
   "in_ci": true,
   "resources": {
     "engine_keys": {
@@ -13,10 +13,12 @@
     },
     "yt_proxy": {
       "ok": false,
-      "note": "MISSING — add secret YT_PROXY_URL to unlock the transcript lane (~100x analysis)"
+      "optional": true,
+      "note": "not set (by choice, stays free) — analysis still runs via free Gemini-watch, just slower per video"
     },
     "brightdata": {
       "ok": true,
+      "optional": true,
       "note": "Bright Data web token (5k req/mo free)"
     },
     "github_token": {
@@ -39,7 +41,7 @@
     },
     "analyze-videos": {
       "ok": true,
-      "needs": "Gemini key + daily video quota"
+      "needs": "Gemini key + daily video quota (free Gemini-watch fallback, no proxy needed)"
     },
     "visual-extract": {
       "ok": true,
@@ -47,7 +49,8 @@
     },
     "fetch-transcripts": {
       "ok": false,
-      "needs": "YT_PROXY_URL secret (residential proxy)"
+      "optional": true,
+      "needs": "YT_PROXY_URL (optional speed upgrade, declined to stay free — analyze-videos covers this for free already)"
     },
     "embed-memory": {
       "ok": true,
@@ -67,7 +70,9 @@
     }
   },
   "missing": [
-    "yt_proxy",
     "github_token"
+  ],
+  "optional_missing": [
+    "yt_proxy"
   ]
 }

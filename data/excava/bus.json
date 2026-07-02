@@ -126,7 +126,44 @@
       "created_at": "2026-07-02T22:34:09.211962+00:00",
       "updated_at": "2026-07-02T22:35:53.443637+00:00",
       "result": "284 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "id": "1687-tools-skills-still--35672",
+      "title": "1687 tools/skills still have no real link (47.6%)",
+      "detail": "The link-resolver runs each cycle; this falls as it works. Add Gemini keys to speed it.",
+      "department": "memory",
+      "source": "auto",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/1687-tools-skills-still--35672--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-07-02T23:41:12.704074+00:00",
+      "updated_at": "2026-07-02T23:41:12.709617+00:00"
+    },
+    {
+      "id": "pipeline-lanes-overdue-r-35672",
+      "title": "Pipeline lanes overdue — retrieval/analysis may have stalled (2)",
+      "detail": "Check the workflow logs for these lanes; re-dispatch if blocked.",
+      "department": "analysis",
+      "source": "auto",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "output written to data/ and committed by CI",
+      "escalation_tier": 1,
+      "claimed_by": "analysis-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-02T23:41:12.705011+00:00",
+      "updated_at": "2026-07-02T23:41:12.708413+00:00",
+      "result": "284 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     }
   ],
-  "updated_at": "2026-07-02T22:35:53.443665+00:00"
+  "updated_at": "2026-07-02T23:41:12.709622+00:00"
 }

@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-07-02T21:48:14.427585+00:00",
+  "generated_at": "2026-07-02T23:41:12.550913+00:00",
   "name": "EXCAVA",
-  "phase": "OS-1 operator (live); OS-2 creator + OS-3 self-coder gated",
+  "phase": "OS spine (Phase 0): bus + departments + hand-offs live; creators (OS-2) gated",
   "gate": {
     "checks": {
       "data_guard_ok": true,
       "security_clean": true,
-      "truth_access_G3": 51,
+      "truth_access_G3": 52,
       "G3_ready_for_outward": false
     },
     "internal_allowed": true,
@@ -22,7 +22,7 @@
     "missing": [
       "github_token"
     ],
-    "checked_at": "2026-07-02T20:36:50.636058+00:00",
+    "checked_at": "2026-07-02T22:17:56.753786+00:00",
     "can_do": {
       "resolve-links": true,
       "analyze-videos": true,
@@ -35,50 +35,124 @@
     }
   },
   "next_action": {
-    "do": "Push link coverage toward 100% at +5%/day (the access gate)",
-    "area": "owner-inbox",
+    "do": "Keep the Designs tab pure: designs only, live previews, taste-ranked",
+    "area": "visual",
     "type": "internal",
-    "source": "inbox",
+    "source": "owner",
+    "task_id": "keep-the-designs-tab-pur-31649",
     "use_tools": [
       {
-        "id": "skills:zone-of-obsession",
-        "name": "Zone of Obsession",
+        "id": "skills:claude-taste-anti-slop-design",
+        "name": "Claude Taste Skill — Anti-Slop Frontend Design",
         "type": "skills",
-        "score": 0.583
+        "score": 0.655
       },
       {
-        "id": "skills:content-planning",
-        "name": "Content Planning (Gap Analysis, Clustering, Prioritization)",
+        "id": "skills:emil-kowalski-design-trio",
+        "name": "Emil Kowalski AI Website Design Trio",
         "type": "skills",
-        "score": 0.58
+        "score": 0.647
       },
       {
-        "id": "skills:ce-work",
-        "name": "CE Work",
-        "type": "skills",
-        "score": 0.575
+        "id": "tools:taste-claude-skill",
+        "name": "Taste (Claude Skill)",
+        "type": "tools",
+        "score": 0.647
       },
       {
-        "id": "skills:investor-outreach",
-        "name": "Investor Outreach",
-        "type": "skills",
-        "score": 0.572
+        "id": "models:taste-claude-skill",
+        "name": "Taste (Claude Skill)",
+        "type": "models",
+        "score": 0.647
       },
       {
-        "id": "skills:seo-optimization",
-        "name": "SEO Optimization",
-        "type": "skills",
-        "score": 0.569
+        "id": "tools:taste-design-system",
+        "name": "Taste Design System",
+        "type": "tools",
+        "score": 0.639
       },
       {
-        "id": "skills:codebase-knowledge-graph-token-savings",
-        "name": "Codebase Knowledge Graph for Claude Code Token Savings",
+        "id": "skills:ai-powered-design-review",
+        "name": "AI-powered Design Review",
         "type": "skills",
-        "score": 0.564
+        "score": 0.639
       }
     ]
   },
-  "holding": [],
+  "holding": [
+    {
+      "priority": "Empty-body items render as blank 'white' nodes in the brain graph (207)",
+      "why_held": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "priority": "Title collisions: distinct items share one note name and overwrite each other (10)",
+      "why_held": "no department specialization matched"
+    }
+  ],
+  "os": {
+    "beats": 5,
+    "bus": {
+      "open": 5,
+      "total": 9,
+      "per_department": {
+        "memory": {
+          "queued": 1,
+          "working": 0,
+          "done": 2,
+          "held": 0,
+          "failed": 0
+        },
+        "visual": {
+          "queued": 1,
+          "working": 0,
+          "done": 0,
+          "held": 0,
+          "failed": 0
+        },
+        "improve": {
+          "queued": 1,
+          "working": 0,
+          "done": 0,
+          "held": 0,
+          "failed": 0
+        },
+        "(unrouted)": {
+          "queued": 2,
+          "working": 0,
+          "done": 0,
+          "held": 0,
+          "failed": 0
+        },
+        "analysis": {
+          "queued": 0,
+          "working": 0,
+          "done": 2,
+          "held": 0,
+          "failed": 0
+        }
+      },
+      "last_handoff": "data/excava/handoffs/1687-tools-skills-still--35672--01--links-w1--to--memory.md"
+    },
+    "beat_log": [
+      "analysis-w1: pipeline-lanes-overdue-r-35672 DONE",
+      "links-w1: 1687-tools-skills-still--35672 -> memory (data/excava/handoffs/1687-tools-skills-still--35672--01--links-w1--to--memory.md)"
+    ],
+    "departments": [
+      "analysis",
+      "creators",
+      "improve",
+      "links",
+      "memory",
+      "mining",
+      "news",
+      "security",
+      "transcripts",
+      "visual",
+      "watch"
+    ],
+    "guardrails": "data/excava/guardrails.md",
+    "traces": "data/excava/traces/"
+  },
   "tool_stack": [
     {
       "role": "mind (orchestrator)",

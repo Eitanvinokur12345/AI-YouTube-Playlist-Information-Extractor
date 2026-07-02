@@ -1,0 +1,122 @@
+{
+  "version": 1,
+  "updated_at": "2026-07-03T00:00:00Z",
+  "tiers": {
+    "1": "workers — do one department's mechanical work, scoped tools only",
+    "2": "leads — one per department; review hand-offs, first escalation stop",
+    "3": "core — the orchestrator: routes by specialization+resources+load, enforces gate+guardrails, talks to the owner"
+  },
+  "departments": {
+    "transcripts": {
+      "purpose": "recover real transcripts (residential backfill, supadata, whisper) so analysis reads the actual video",
+      "capability": "fetch-transcripts",
+      "specialization": ["transcript", "caption", "backfill", "whisper", "subtitle", "drain"],
+      "lane_hint": "Transcript retrieval"
+    },
+    "analysis": {
+      "purpose": "deep text extraction of every video into hub items (skills/tools/prompts/...)",
+      "capability": "analyze-videos",
+      "specialization": ["analyze", "analysis", "extract", "re-analyze", "pending", "bulk"],
+      "lane_hint": "Free analysis pool"
+    },
+    "watch": {
+      "purpose": "gemini watches audio+visual for videos with no usable transcript",
+      "capability": "analyze-videos",
+      "specialization": ["watch", "gemini video", "audio", "visual analysis"],
+      "lane_hint": "Gemini watch (audio+visual)"
+    },
+    "links": {
+      "purpose": "resolve+verify real links (Website/GitHub/Open-code) for every hub item — THE coverage gate",
+      "capability": "resolve-links",
+      "specialization": ["link", "resolve", "coverage", "url", "verify link", "404"],
+      "lane_hint": "links+memory (fast lane)"
+    },
+    "memory": {
+      "purpose": "embed the hub into the semantic index all agents recall from",
+      "capability": "embed-memory",
+      "specialization": ["memory", "embed", "vector", "semantic", "recall", "index"],
+      "lane_hint": "links+memory (fast lane)"
+    },
+    "mining": {
+      "purpose": "mine external sources (competitor directories, awesome-lists) into the hub",
+      "capability": "mine-competitors",
+      "specialization": ["mine", "mining", "competitor", "source", "awesome", "directory", "ingest"],
+      "lane_hint": "External mining"
+    },
+    "visual": {
+      "purpose": "capture designs/screenshots and taste-learning material",
+      "capability": "visual-extract",
+      "specialization": ["design", "screenshot", "capture", "arena", "taste", "visual extract"],
+      "lane_hint": "Deep analysis (night-gated)"
+    },
+    "news": {
+      "purpose": "refresh official-site AI news",
+      "capability": null,
+      "specialization": ["news", "announcement", "release", "changelog"],
+      "lane_hint": "AI news refresh"
+    },
+    "improve": {
+      "purpose": "review the pipeline's own tool stack; queue self-improvements",
+      "capability": null,
+      "specialization": ["improve", "self-improvement", "optimize", "stack", "scout", "refactor"],
+      "lane_hint": "Self-improvement review"
+    },
+    "security": {
+      "purpose": "gatekeeping: leaks, untrusted content preflight, data-collapse guard",
+      "capability": null,
+      "specialization": ["security", "leak", "secret", "preflight", "untrusted", "guard", "sandbox"],
+      "lane_hint": null
+    },
+    "creators": {
+      "purpose": "PHASE 3 (GATED): draft new skills/prompts/formats/designs — needs G3>=70 + owner approval",
+      "capability": "create-drafts",
+      "specialization": ["create", "draft", "new skill", "new prompt", "publish"],
+      "lane_hint": null,
+      "gated": true
+    }
+  },
+  "agents": [
+    { "id": "excava-core", "tier": 3, "department": "core",
+      "scoped_tools": ["src.excava", "src.excava_bus", "src.excava_agents"] },
+
+    { "id": "transcripts-lead", "tier": 2, "department": "transcripts", "scoped_tools": ["src.excava_bus"] },
+    { "id": "transcripts-w1", "tier": 1, "department": "transcripts",
+      "scoped_tools": ["src.backfill_transcripts", "src.supadata_fetch", "src.transcribe_local", "src.requeue"] },
+
+    { "id": "analysis-lead", "tier": 2, "department": "analysis", "scoped_tools": ["src.excava_bus"] },
+    { "id": "analysis-w1", "tier": 1, "department": "analysis",
+      "scoped_tools": ["src.bulk_analyze", "src.analyze_batch", "src.recategorize"] },
+
+    { "id": "watch-lead", "tier": 2, "department": "watch", "scoped_tools": ["src.excava_bus"] },
+    { "id": "watch-w1", "tier": 1, "department": "watch",
+      "scoped_tools": ["src.gemini_video_analyze"] },
+
+    { "id": "links-lead", "tier": 2, "department": "links", "scoped_tools": ["src.excava_bus"] },
+    { "id": "links-w1", "tier": 1, "department": "links",
+      "scoped_tools": ["src.resolve_links", "src.coverage_log", "src.resolve_comment_gated"] },
+
+    { "id": "memory-lead", "tier": 2, "department": "memory", "scoped_tools": ["src.excava_bus"] },
+    { "id": "memory-w1", "tier": 1, "department": "memory",
+      "scoped_tools": ["src.build_memory", "src.build_hub_index"] },
+
+    { "id": "mining-lead", "tier": 2, "department": "mining", "scoped_tools": ["src.excava_bus"] },
+    { "id": "mining-w1", "tier": 1, "department": "mining",
+      "scoped_tools": ["src.mine_competitors", "src.source_bundles", "src.mine_designs"] },
+
+    { "id": "visual-lead", "tier": 2, "department": "visual", "scoped_tools": ["src.excava_bus"] },
+    { "id": "visual-w1", "tier": 1, "department": "visual",
+      "scoped_tools": ["src.visual_extract", "src.collect_designs", "src.warm_shots"] },
+
+    { "id": "news-lead", "tier": 2, "department": "news", "scoped_tools": ["src.excava_bus"] },
+    { "id": "news-w1", "tier": 1, "department": "news",
+      "scoped_tools": ["src.trend_watch"] },
+
+    { "id": "improve-lead", "tier": 2, "department": "improve", "scoped_tools": ["src.excava_bus"] },
+    { "id": "improve-w1", "tier": 1, "department": "improve",
+      "scoped_tools": ["src.pipeline_scout", "src.improve_log", "src.self_check", "src.effectiveness"] },
+
+    { "id": "security-lead", "tier": 2, "department": "security", "scoped_tools": ["src.excava_bus"] },
+    { "id": "security-w1", "tier": 1, "department": "security",
+      "scoped_tools": ["src.security_scan", "src.security_preflight", "src.data_guard"] }
+  ]
+}

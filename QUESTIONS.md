@@ -30,3 +30,10 @@ The 6 goals miss two things we now actually build for:
 
 ## E. Working mode
 13. Confirm: keep doing big autonomous chunks on Fable (all visuals), Opus only for your own refinement passes; questions parked here. _Default: yes._
+
+## F. Program gate decisions D1–D5 (from EXCAVA_PROGRAM.md, 2026-07-03)
+17. **D1 — architecture** — ✅ ANSWERED 2026-07-03: **cron heartbeat** (Eitan picked it live in-session). Phase 0 built on it same day: the hourly `python -m src.excava` beat in bulk_analyze.yml IS the heartbeat; the file bus resumes state between beats.
+18. **D2 — the 10 alignment systems (Phase 6):** name the 2–3 you want FIRST from: direction-loop, self-extending guardrails, DISCOVERY file, priority-weights, goals-re-score, approval queue, change-tutorials, proactive digest, session-start memory-audit, source trust-scores. _No default — needs you (only gates Phase 6, not Phase 0)._
+19. **D3 — approval style:** approve the program as ONE block, or phase-by-phase sign-off? _Default: one block, with the per-phase ask-checkpoints still running._
+20. **D4 — rebuild order:** spine-first as planned (P0 before any cleanup), or interleave small cleanups? _Default: spine-first._
+21. **D5 — connectors tab:** OK to shrink it to verified-only once Phase 4 resolves real installs (94% are empty today)? _Default: yes._

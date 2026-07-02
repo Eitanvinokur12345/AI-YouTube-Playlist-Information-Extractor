@@ -7,7 +7,7 @@ Last updated: 2026-07-02. Keep this current at the end of every working session.
 1. **Load memory** (re-read specifically): `project_excavatortron`, `project-excava-makeit-work`, `project-excava-roadmap`, `project-excava-direction-loop` (⚠ missed once before), `feedback-fable-workflow`, `feedback-nosg`, `feedback-ship-visible-progress`, `feedback-consistency-check`.
 2. **Read the plan**: `EXCAVA_PROGRAM.md` (approved-pending program: 56 goals / 9 phases / ask-checkpoints), `PLAN.md` (P/F history), `QUESTIONS.md` (open, non-blocking).
 3. **Run the consistency check** (§6) and keep running it after every task.
-4. **Don't start Phase 0 until Eitan answers D1–D5** in EXCAVA_PROGRAM.md (esp. D1: cron-heartbeat vs always-on). Everything else can proceed with defaults.
+4. **D1 ANSWERED 2026-07-03: cron heartbeat** → **Phase 0 SHIPPED same day** (see §3). D2–D5 still open in QUESTIONS.md §F (D2 — his 2-3 alignment systems — has no default and gates Phase 6 only).
 
 ## 1. WHAT THIS IS
 A **personal build-leverage system** for Eitan — a hub of every AI capability (tools/skills/models/MCP/
@@ -22,7 +22,24 @@ Excavatortron as its database). Free on GitHub Actions. "LIV" = *live, together*
 - Activator: portable SKILL.md in `~/.claude/skills/excavatortron-activator/` + Desktop + `docs/activator-skill.md`. **KNOWN BROKEN → Opus 4.8 track (§5).**
 - Connectors are **~94% fake** (empty/placeholder install) — Phase 4 fixes.
 
-## 3. THE PLAN (full steps in EXCAVA_PROGRAM.md)
+## 3. PHASE 0 — SHIPPED 2026-07-03 (the OS spine is LIVE)
+- **File bus** `src/excava_bus.py`: enqueue → route → claim → hand-off/complete/fail; atomic writes;
+  per-task traces (`data/excava/traces/*.jsonl`, incl. "why X over Y" routing events).
+- **Hand-off gate (G-4)**: a hand-off missing what_was_done/artifacts/what_remains/context_for_next is
+  REJECTED + traced. Docs land in `data/excava/handoffs/` as readable markdown.
+- **Registry** `data/excava/agents.json`: 3 tiers, 11 departments mapped 1:1 to the real lanes, scoped
+  tools (G-7); `creators` defined but unstaffed = mechanically gated until Phase 3.
+- **Orchestrator** `src/excava.py` (same CI entry, same status schema + new `os` section): gate → inbox
+  outranks (G-8) → priorities → specialization routing → ≤4 worker ticks/beat → 3-tier escalation → owner.
+- **Shared memory**: vector index = read side; `data/excava/state.json` = write side (`bus.remember`).
+- **Guardrails**: `data/excava/guardrails.md` (G-1…G-11), enforced in code.
+- **Done-criterion PROVEN on real work**: owner inbox task t1 (link coverage) crossed links → memory via a
+  real hand-off doc (`data/excava/handoffs/push-link-coverage-towar-31649--01--…`), completed next beat.
+  Repeatable proof: `python -m src.excava --selftest` (scratch bus; asserts the doc-less hand-off is rejected).
+- Phase-0 workers are ASSESSORS (read their dept's real data, move tasks with grounded docs); heavy work
+  still lives in the CI lanes — later phases add execution muscle, the Worker contract stays.
+
+## 3b. THE PLAN (full steps in EXCAVA_PROGRAM.md)
 9 phases: **P0 OS spine** (bus + shared-memory + orchestrator — build FIRST) → P1 you-drive-it → P2 safe
 24/7 → P3 Creators dept → P4 connectors made real → P5 living OS (crew v2) → P6 direction-loop + 10
 systems → P7 portability + breadth → P8 North-Star G9 + cleanup. **56 goals** (52 + G53-56 gap-audit),
@@ -60,5 +77,10 @@ inconsistent → flag + fix before proceeding.
 - Commit trailer: `Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>` (Opus on that track).
 
 ## 8. NEXT SESSION
-1. Get D1–D5. 2. Start **Phase 0** (unblocks everything). 3. Then P5 early (so Eitan SEES the spine).
-4. Keep the consistency check + ask-checkpoints running. 5. Update this handoff at session end.
+1. Get D2 (his 2–3 alignment systems; D3–D5 proceed on defaults). 2. **Phase 1 + 2** (task-send form →
+bus, kill switch, approval queue; leases/ceilings, crash recovery, bus pruning). 3. Then **P5 early** —
+wire the cockpit/residents to the REAL bus (`excava_status.json` already carries the new `os` section:
+beats, per-department load, beat_log, last hand-off) so Eitan SEES the spine.
+4. Transcript drain: 2026-07-03 run hit a pre-existing IP block after 4 videos (auto-stopped correctly);
+1,389 still lack real transcripts — next residential session, retry gentler (`--sleep 6 --limit 60`).
+5. Keep the consistency check + ask-checkpoints running. 6. Update this handoff at session end.

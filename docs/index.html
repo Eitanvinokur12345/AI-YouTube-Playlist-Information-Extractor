@@ -6,7 +6,10 @@
   <title>Excavatortron — AI Skills Dashboard</title>
   <!-- PWA: installable to a phone / desktop home screen -->
   <link rel="manifest" href="manifest.webmanifest" />
-  <meta name="theme-color" content="#2563eb" />
+  <meta name="theme-color" content="#f2c200" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="apple-touch-icon" href="icon.png" />
   <!-- iOS PWA: makes "Add to Home Screen" open as standalone (no Safari chrome) -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -17,61 +20,66 @@
   <meta property="og:description" content="Self-improving AI Skills tracker: skills library, model rankings, daily news, MCP connectors." />
   <meta property="og:type" content="website" />
   <style>
-    /* "Field archive" — warm tinted neutrals (never pure #000/#fff) + a clay/ember accent.
-       Deliberately NOT the AI-tool blue/indigo reflex. OKLCH for even, controlled tints. */
-    :root { --bg:oklch(0.967 0.006 74); --panel:oklch(0.995 0.0035 86); --panel2:oklch(0.952 0.009 76);
-            --line:oklch(0.901 0.011 76); --text:oklch(0.255 0.017 58); --muted:oklch(0.522 0.015 60);
-            --accent:oklch(0.55 0.105 172); --accent-ink:oklch(0.44 0.092 172); --accent-soft:oklch(0.95 0.035 168);
-            /* Gold — a luxe metallic accent threaded through every area as a highlight (NOT the base
-               palette). Used for #1 ranks, active nav, badges, key numbers, hub node, hairlines. */
-            --gold:oklch(0.80 0.118 86); --gold-deep:oklch(0.60 0.10 80); --gold-ink:oklch(0.50 0.085 78);
-            --gold-soft:oklch(0.95 0.045 88); --gold-line:oklch(0.86 0.085 86);
-            --gold-grad:linear-gradient(135deg, oklch(0.86 0.10 92) 0%, oklch(0.74 0.13 78) 55%, oklch(0.64 0.11 72) 100%);
-            --good:oklch(0.62 0.12 150); --warn:oklch(0.66 0.13 66); --warnbg:oklch(0.962 0.034 78);
-            --bad:oklch(0.575 0.16 28); --radius:13px;
-            --shadow:0 1px 2px oklch(0.30 0.02 58 / .05), 0 14px 30px -18px oklch(0.30 0.04 50 / .26); }
+    /* "HEAVY MACHINERY" — Excavatortron's own skin: hazard yellow + warm ink, neobrutalist hard
+       edges (chunky borders, offset shadows), Archivo Black display type. Bold / colorful /
+       maximalist + playful / retro / brutalist — the owner's taste, and literally an excavator. */
+    :root { --bg:oklch(0.955 0.028 95); --panel:oklch(0.99 0.008 95); --panel2:oklch(0.93 0.035 95);
+            --line:oklch(0.30 0.022 85); --text:oklch(0.21 0.02 80); --muted:oklch(0.46 0.025 80);
+            --accent:oklch(0.60 0.185 40); --accent-ink:oklch(0.46 0.15 40); --accent-soft:oklch(0.93 0.05 55);
+            /* Hazard yellow — the machine's signature color: #1 ranks, active nav, badges, key
+               numbers, hub node. Deep/ink variants keep text on it readable. */
+            --gold:oklch(0.85 0.165 95); --gold-deep:oklch(0.56 0.115 88); --gold-ink:oklch(0.44 0.09 84);
+            --gold-soft:oklch(0.94 0.075 98); --gold-line:oklch(0.74 0.15 93);
+            --gold-grad:linear-gradient(135deg, oklch(0.90 0.155 98) 0%, oklch(0.83 0.17 92) 55%, oklch(0.70 0.145 84) 100%);
+            --good:oklch(0.60 0.14 150); --warn:oklch(0.65 0.15 70); --warnbg:oklch(0.95 0.05 85);
+            --bad:oklch(0.55 0.19 28); --radius:10px;
+            --shadow:3px 3px 0 oklch(0.30 0.022 85 / .9); }
     * { box-sizing: border-box; }
-    body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; margin:0;
+    body { font-family:"Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif; margin:0;
            background:
-             radial-gradient(1100px 460px at 50% -140px, oklch(0.94 0.035 64) 0%, oklch(0.967 0.006 74 / 0) 72%),
+             radial-gradient(1100px 460px at 50% -140px, oklch(0.92 0.07 96) 0%, oklch(0.955 0.028 95 / 0) 72%),
              var(--bg);
            color:var(--text);
            font-size:15.5px; line-height:1.62; -webkit-font-smoothing:antialiased;
            text-rendering:optimizeLegibility; }
 
-    /* Hero — BENTO grid on dark charcoal with natural teal/emerald accents and luxury tiles */
+    /* Hero — the machine cab: warm-ink bento with hazard-yellow signage and hard-shadow type */
     header { display:grid; grid-template-columns:1.7fr 1fr; gap:clamp(10px,1.4vw,16px);
-             padding:clamp(16px,2.4vw,26px); background:oklch(0.205 0.018 200);
-             border-bottom:1px solid oklch(0.30 0.02 200); }
-    .tile { background:oklch(0.255 0.020 205); border:1px solid oklch(0.33 0.02 200);
-            border-radius:18px; padding:clamp(22px,3vw,36px); position:relative; overflow:hidden; }
+             padding:clamp(16px,2.4vw,26px); background:oklch(0.19 0.015 85);
+             border-bottom:1px solid oklch(0.30 0.02 85); }
+    .tile { background:oklch(0.235 0.018 88); border:1px solid oklch(0.40 0.05 92);
+            border-radius:14px; padding:clamp(22px,3vw,36px); position:relative; overflow:hidden; }
     .tile-id { display:flex; flex-direction:column; justify-content:center;
-               background:radial-gradient(125% 135% at 0% 0%, oklch(0.30 0.06 172) 0%, oklch(0.255 0.02 205) 56%);
+               background:radial-gradient(125% 135% at 0% 0%, oklch(0.32 0.07 95) 0%, oklch(0.235 0.018 88) 56%);
                animation:heroRise .7s cubic-bezier(.16,1,.3,1) both; }
     .tile-act { display:flex; flex-direction:column; gap:12px; justify-content:center;
                 animation:heroRise .7s .08s cubic-bezier(.16,1,.3,1) both; }
-    h1 { margin:0; font-family:Georgia,"Iowan Old Style","Times New Roman",serif; font-weight:700;
-         font-size:clamp(40px,6.2vw,76px); line-height:.93; letter-spacing:-.02em; color:oklch(0.97 0.015 150); }
-    .subtitle { font-size:clamp(10px,1.2vw,12px); color:oklch(0.80 0.13 168); font-weight:600;
-                letter-spacing:.26em; text-transform:uppercase; margin:0 0 14px; }
+    h1 { margin:0; font-family:"Archivo Black", system-ui, sans-serif; font-weight:400;
+         text-transform:uppercase; font-size:clamp(30px,4.8vw,58px); line-height:.98;
+         letter-spacing:-.01em; color:oklch(0.87 0.165 96);
+         text-shadow:4px 4px 0 oklch(0.42 0.13 40); }
+    .subtitle { font-size:clamp(10px,1.2vw,12px); color:oklch(0.87 0.165 96); font-weight:700;
+                letter-spacing:.3em; text-transform:uppercase; margin:0 0 14px; }
     .hero-sub { max-width:54ch; margin:16px 0 0; font-size:clamp(14px,1.4vw,16.5px);
-                line-height:1.6; color:oklch(0.83 0.025 195); }
-    .meta { color:oklch(0.66 0.02 200); font-size:12px; margin-top:14px; }
+                line-height:1.6; color:oklch(0.87 0.03 92); }
+    .meta { color:oklch(0.68 0.03 90); font-size:12px; margin-top:14px; }
     @keyframes heroRise { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
     @media (prefers-reduced-motion: reduce) { .tile-id,.tile-act { animation:none; } }
     @media (max-width:680px) { header { grid-template-columns:1fr; } }
 
-    /* Scale strip — bento stat tiles continuing the dark hero */
+    /* Scale strip — stat tiles continuing the dark cab, closed by a HAZARD STRIPE (the signature) */
     .counters { display:grid; grid-template-columns:repeat(auto-fit, minmax(108px,1fr));
-                gap:clamp(8px,1.2vw,14px); background:oklch(0.205 0.018 200);
-                padding:0 clamp(16px,2.4vw,26px) clamp(16px,2.2vw,24px); }
-    .counter { background:oklch(0.255 0.020 205); border:1px solid oklch(0.33 0.02 200);
-               border-radius:14px; padding:16px 14px; text-align:center; }
-    .counter .n { font-family:Georgia,"Times New Roman",serif; font-size:clamp(26px,3.3vw,38px);
-                  font-weight:700; color:oklch(0.95 0.015 150); line-height:1; letter-spacing:-.01em; }
-    .counter .l { color:oklch(0.66 0.02 200); font-size:11px; margin-top:6px; text-transform:uppercase;
+                gap:clamp(8px,1.2vw,14px); background:oklch(0.19 0.015 85);
+                padding:0 clamp(16px,2.4vw,26px) clamp(16px,2.2vw,24px);
+                border-bottom:12px solid;
+                border-image:repeating-linear-gradient(-45deg, oklch(0.85 0.165 95) 0 16px, oklch(0.21 0.02 80) 16px 32px) 12; }
+    .counter { background:oklch(0.235 0.018 88); border:1px solid oklch(0.40 0.05 92);
+               border-radius:12px; padding:16px 14px; text-align:center; }
+    .counter .n { font-family:"Archivo Black", system-ui, sans-serif; font-size:clamp(24px,3vw,34px);
+                  font-weight:400; color:oklch(0.96 0.02 95); line-height:1; letter-spacing:-.01em; }
+    .counter .l { color:oklch(0.68 0.03 90); font-size:11px; margin-top:6px; text-transform:uppercase;
                   letter-spacing:.1em; }
-    .counter.hl .n { color:oklch(0.80 0.14 168); }
+    .counter.hl .n { color:oklch(0.87 0.165 96); }
 
     /* Yearly-token warning banner */
     .tokenwarn { margin:0; padding:14px 28px; background:var(--warnbg);
@@ -119,20 +127,22 @@
               border:1.5px solid var(--line); border-radius:999px; padding:9px 18px;
               font-size:14px; transition:border-color .15s, box-shadow .15s; }
     #search::placeholder { color:var(--muted); }
-    #search:focus { outline:none; border-color:var(--accent);
-                    box-shadow:0 0 0 3px rgba(37,99,235,.12); }
+    #search:focus { outline:none; border-color:var(--line);
+                    box-shadow:3px 3px 0 var(--line); }
 
     /* Nav */
     nav { display:flex; gap:8px; padding:12px 28px; background:var(--panel2);
           border-bottom:1px solid var(--line); flex-wrap:wrap; }
-    nav button { background:var(--panel); color:#3a4257; border:1.5px solid var(--line);
-                 padding:8px 16px; border-radius:999px; cursor:pointer; font-size:14px;
-                 font-weight:500; transition:border-color .15s, color .15s, box-shadow .15s, background .15s; }
-    nav button:hover { border-color:var(--accent); color:var(--accent); background:var(--accent-soft); }
-    nav button.active { background:var(--accent); color:#fff; border-color:var(--gold);
-                        box-shadow:0 6px 16px -5px oklch(0.44 0.092 172 / .5), inset 0 0 0 1px oklch(0.85 0.09 86 / .55); }
+    nav button { background:var(--panel); color:var(--text); border:2px solid var(--line);
+                 padding:8px 16px; border-radius:10px; cursor:pointer; font-size:14px;
+                 font-weight:600; box-shadow:2px 2px 0 var(--line);
+                 transition:transform .12s, box-shadow .12s, background .15s, color .15s; }
+    nav button:hover { transform:translate(-1px,-1px); box-shadow:3px 3px 0 var(--line);
+                       background:var(--gold-soft); }
+    nav button.active { background:var(--gold); color:var(--text); border-color:var(--line);
+                        box-shadow:3px 3px 0 var(--line); font-weight:700; }
     nav button.active::after { content:""; display:block; height:2px; margin:6px -4px -3px;
-                        border-radius:2px; background:var(--gold-grad); }
+                        border-radius:2px; background:var(--line); }
 
     main { padding:24px 28px; max-width:1100px; }
     .empty { color:var(--muted); }
@@ -141,13 +151,12 @@
                  padding:5px 14px; border-radius:999px; cursor:pointer; font-size:13px; }
     .subnav button.active { background:var(--accent); color:#fff; border-color:var(--gold); }
 
-    /* Cards */
-    .card { background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
-            padding:18px 20px; margin-bottom:14px; box-shadow:var(--shadow);
-            transition:box-shadow .18s ease, transform .18s ease, border-color .18s ease; }
-    .card:hover { box-shadow:0 2px 6px rgba(15,23,42,.07), 0 18px 40px -20px rgba(79,70,229,.28);
-                  border-color:#d4d9e6; }
-    .card h3 { margin:0 0 6px; font-size:16px; color:var(--text); font-weight:650; letter-spacing:-.1px; }
+    /* Cards — neobrutalist: chunky ink border + hard offset shadow that grows on hover */
+    .card { background:var(--panel); border:2px solid var(--line); border-radius:var(--radius);
+            padding:18px 20px; margin-bottom:16px; box-shadow:var(--shadow);
+            transition:box-shadow .14s ease, transform .14s ease; }
+    .card:hover { transform:translate(-2px,-2px); box-shadow:5px 5px 0 oklch(0.30 0.022 85 / .9); }
+    .card h3 { margin:0 0 6px; font-size:16px; color:var(--text); font-weight:700; letter-spacing:-.1px; }
     .card .sub { color:var(--muted); font-size:13px; margin-bottom:8px; }
     .card p { margin:6px 0; line-height:1.5; }
     /* Gold thread — structural PANEL cards carry a fine gold top-rule + a short gold kicker under
@@ -162,9 +171,9 @@
     .score { display:inline-block; background:var(--accent-soft); color:var(--accent-ink);
              border:1px solid oklch(0.86 0.045 58); border-radius:6px; padding:1px 8px;
              font-weight:700; font-size:13px; }
-    .pill { display:inline-block; background:var(--panel2); color:#4b5563;
+    .pill { display:inline-block; background:var(--gold-soft); color:var(--text);
             border:1px solid var(--line); border-radius:999px; padding:1px 9px;
-            font-size:12px; margin-left:6px; }
+            font-size:12px; font-weight:600; margin-left:6px; }
     a { color:var(--accent); }
     pre.ascii { background:var(--panel2); border:1px solid var(--line); border-radius:10px;
                 padding:14px; overflow:auto; font-size:13px; line-height:1.35; color:var(--text); }

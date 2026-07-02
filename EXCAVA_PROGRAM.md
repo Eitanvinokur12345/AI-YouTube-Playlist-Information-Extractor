@@ -157,3 +157,72 @@ graphify self-graph, seeded P0, finished P4.)
 - **D4:** should this whole rebuild jump ahead of P6-leftovers/formats/brain-cleanup, or after? (Plan
   currently interleaves; P8 does cleanup last.)
 - **D5:** connectors — after Phase 4 the tab likely SHRINKS a lot (only verified ones shown). OK?
+
+---
+
+## GOALS 53-56 — added from the 2026-07-02 internet gap-audit (real, important, were missing)
+Sourced from 2026 multi-agent production research (arxiv orchestration survey, Microsoft Agent Governance
+Toolkit, futureagi/Galileo observability + A2A writeups). These are the failure modes that kill real
+agentic systems — and they weren't in the 52:
+- **G53 — Handoff state-validation (HIGH).** The single hardest multi-agent bug is the *silent partial
+  completion*: an agent reports "success" but passes CORRUPT state downstream, and the error cascades
+  silently. Every hand-off on the bus must VALIDATE the handed-off state against the task's contract
+  before the next agent accepts it. Without this, 24/7 autonomy quietly rots the data. → **Phase 0** (bus
+  contract) + **Phase 2** (self-audit catches drift). *Why it matters: this is exactly how an unattended
+  system breaks without anyone noticing.*
+- **G54 — Verifiable execution (HIGH).** Proof an agent actually DID the thing, not just claimed it
+  (file really written / MCP really responds / links really resolve) — checked by the system, not taken
+  on the agent's word. → **Phase 0** (every result carries evidence) + **Phase 4** (connector proof).
+  *Why: pairs with G53 — "trust but verify" is the only safe basis for autonomy.*
+- **G55 — Human-oversight ergonomics (HIGH, and personal to you).** Research names *alert fatigue* and
+  *automation bias* as the top ways human oversight fails — you rubber-stamp approvals or drown in pings
+  and stop really overseeing. Since you're "in and out a lot," EXCAVA must surface decisions BY RISK
+  (batch the trivial, foreground the consequential), each with a one-line "why you're being asked," and
+  never cry wolf. → **Phase 1** (approval queue design) + **Phase 6** (direction loop). *Why: without
+  this, all the approval gates become theater.*
+- **G56 — Immutable audit trail / governance log (MEDIUM, ties to G7).** A tamper-evident record of who/
+  which-agent/when/why for every action — Gartner attributes ~40% of agentic-project cancellations partly
+  to inadequate risk controls. → **Phase 2** (append-only log) + surfaced in **Phase 5** trace viewer.
+  *Why: for a security-conscious owner, "what did it do while I was away, provably" is the trust backbone.*
+
+## Considered but NOT adopted now (with reasons — so we're deliberate, not ignorant)
+- **OpenTelemetry / GenAI semantic-convention tracing** — the enterprise standard for agent observability.
+  *Not necessary now:* our custom traces + the Phase-5 trace viewer already give full legibility for a
+  single-owner free system; OTel is interop plumbing for multi-team/multi-vendor stacks. Revisit only if
+  EXCAVA ever needs to feed an external monitoring tool. (Low cost to add later.)
+- **A2A (Agent2Agent) protocol** — Google's cross-vendor agent-interop standard (Apr 2025, still thin in
+  production). *Not necessary now:* our internal file-bus handles our own agents, and **G13 (EXCAVA-as-
+  MCP-server)** already lets outside tools reach in. Adopt A2A later IF you want EXCAVA to talk to
+  third-party agent *systems* (not just tools). Watching it, not building on it yet.
+
+## COVERAGE AUDIT — honest: what was under-placed, now fixed
+Cross-checked the plan against all 52 goals, the P0-P7 plan, the F1-F4 plan, and the remember-later
+roadmap. Gaps found and now closed:
+- **G12 (12-phase brain-dump→deployed pattern)** — was in the goals list but missing from the phase map.
+  → now **Phase 3/7**: it's the literal path for "build MY things" (Budoaris/FreeDup).
+- **G37 (agent conflict resolution over shared files/resources)** — missing from map. → now **Phase 0**
+  (bus locking) + **Phase 2** (lease arbiter).
+- **HORSE** (named ~10-agent fan-out → merge-by-base-values → trigger word) — the mechanisms existed
+  (G13 sharding, G19 debate) but the *named feature* wasn't a step. → now explicit in **Phase 3**.
+- **Split token-reduction into 2 skills (heavy/light)** — discrete deferred task, was MISSING. → **Phase 8**.
+- **Meta-brain of all Excavatortron history/conversations** — was MISSING. → **Phase 7** (ingest
+  transcripts/commits/decisions → queryable store; extends the semantic memory).
+- **Per-tab self-improvement (split self-improvement into per-tab sub-systems)** — was MISSING (only the
+  source-hunting half, G26, was placed). → now **Phase 7**.
+- **Unified personal preference model / taste beyond designs (G8 depth)** — G8 is a scored goal but had
+  no BUILD step. → now **Phase 6** (extend Arena taste to tools/stacks/plans).
+- **Activator 30-question overhaul + live examples** — the activator *fix* is Opus 4.8's; the 30-Q
+  *overhaul process* wasn't placed. → **Phase 8**, run as the 30-MC-question step per your stated process,
+  after the core program.
+- **Run-a-repo-DIRECTLY (opensrc + pre-prepared ready-to-run env / "active mode" run link)** — was only
+  partial via P4 sandbox. → now explicit **Phase 4** (pre-prepare env so a click OPENS a running thing).
+- **LiteLLM routing / 429 waste** — its PURPOSE is fully covered by **G25 (provider-agnostic runtime) +
+  G32 (resource-lease arbiter)**; noting explicitly so it's not seen as dropped.
+- **Links → ~100%** — runs as an ongoing background track through ALL phases (not a discrete phase); the
+  autonomous resolver keeps climbing while the rebuild happens.
+- **F2 activation "actually does setup"** — its CORE (SKILL.md/activator working) is on the **Opus 4.8
+  track**; EXCAVA's orchestration (Phase 3) drives it once Opus makes the activator function.
+
+**Result: all 52 goals + G53-56 + the P/F plans + every remember-later item now have an explicit home.**
+The only intentionally-unbuilt items are the two above (OTel, A2A) with stated reasons, and anything
+gated on decision **D1** (always-on) for full remote control (G4).

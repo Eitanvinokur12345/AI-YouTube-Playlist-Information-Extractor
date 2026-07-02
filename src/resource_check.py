@@ -56,10 +56,13 @@ def main() -> int:
                         "note": f"{len(engines)} engine keys visible ({len(gem)} Gemini, {len(fast)} fast)"},
         "gemini_video_quota": {"ok": bool(gem) and used_watch < watch_budget * 0.9,
                                "note": f"watch {used_watch}/{watch_budget}m + visual {used_visual}/{visual_budget}m used today"},
-        "yt_proxy": {"ok": _env("YT_PROXY_URL"),
-                     "note": "residential proxy for transcripts" if _env("YT_PROXY_URL")
-                             else "MISSING — add secret YT_PROXY_URL to unlock the transcript lane (~100x analysis)"},
-        "brightdata": {"ok": _env("BRIGHTDATA_API_TOKEN"), "note": "Bright Data web token (5k req/mo free)"},
+        # OPTIONAL speed upgrade only — Gemini-watches-video (gemini_video_analyze.py) is the free,
+        # already-running fallback for analysis, so this is never a blocker. Owner declined the paid
+        # Bright Data tier (residential proxy needs a card on file) to keep the project 100% free.
+        "yt_proxy": {"ok": _env("YT_PROXY_URL"), "optional": True,
+                     "note": "residential proxy for FAST transcript reads" if _env("YT_PROXY_URL")
+                             else "not set (by choice, stays free) — analysis still runs via free Gemini-watch, just slower per video"},
+        "brightdata": {"ok": _env("BRIGHTDATA_API_TOKEN"), "optional": True, "note": "Bright Data web token (5k req/mo free)"},
         "github_token": {"ok": _env("GITHUB_TOKEN") or _env("GH_TOKEN"), "note": "commit/push from CI"},
         "library": {"ok": lib_ok, "note": "data library intact" if lib_ok else "LIBRARY LOOKS COLLAPSED — data_guard should restore"},
         "semantic_memory": {"ok": mem_vecs > 200, "note": f"{mem_vecs} vectors"},
@@ -67,17 +70,22 @@ def main() -> int:
     # what each TASK TYPE needs -> can we do it right now?
     can_do = {
         "resolve-links": {"ok": len(engines) >= 1, "needs": "any engine key"},
-        "analyze-videos": {"ok": resources["gemini_video_quota"]["ok"], "needs": "Gemini key + daily video quota"},
+        "analyze-videos": {"ok": resources["gemini_video_quota"]["ok"], "needs": "Gemini key + daily video quota (free Gemini-watch fallback, no proxy needed)"},
         "visual-extract": {"ok": bool(gem) and used_visual < visual_budget * 0.9, "needs": "Gemini key + visual quota"},
-        "fetch-transcripts": {"ok": _env("YT_PROXY_URL"), "needs": "YT_PROXY_URL secret (residential proxy)"},
+        "fetch-transcripts": {"ok": _env("YT_PROXY_URL"), "optional": True,
+                              "needs": "YT_PROXY_URL (optional speed upgrade, declined to stay free — analyze-videos covers this for free already)"},
         "embed-memory": {"ok": bool(gem), "needs": "Gemini key"},
         "mine-competitors": {"ok": True, "needs": "network only (free)"},
         "screenshots-designs": {"ok": True, "needs": "free screenshot services"},
         "create-drafts": {"ok": len(engines) >= 3 and lib_ok, "needs": "engine pool + intact library"},
     }
-    missing = [k for k, v in resources.items() if not v["ok"]]
+    # "missing" = critical gaps only. Optional resources (declined-by-choice, e.g. paid proxy tiers
+    # the owner opted out of to stay free) never appear here — they have a free fallback already.
+    missing = [k for k, v in resources.items() if not v["ok"] and not v.get("optional")]
+    optional_missing = [k for k, v in resources.items() if not v["ok"] and v.get("optional")]
     OUT.write_text(json.dumps({"generated_at": NOW.isoformat(), "in_ci": _env("GITHUB_ACTIONS"),
-                               "resources": resources, "can_do": can_do, "missing": missing},
+                               "resources": resources, "can_do": can_do,
+                               "missing": missing, "optional_missing": optional_missing},
                               ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"resource_check: {len(engines)} engines; missing: {', '.join(missing) or 'nothing critical'}; "
           f"can_do: {sum(1 for v in can_do.values() if v['ok'])}/{len(can_do)} task types.")

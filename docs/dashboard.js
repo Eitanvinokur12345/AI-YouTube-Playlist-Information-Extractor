@@ -1689,11 +1689,16 @@ async function renderExcava() {
         ${((ex && ex.holding) || []).map(h => `<div class="ex-task"><span class="tk h">HELD</span><span>${esc(h.priority || "")} <span class="sub">${esc(h.why_held || "")}</span></span></div>`).join("")}
       </div>
     </div>
-    ${rc && rc.resources ? `<div class="card"><h3>🔋 Resources <span class="sub">— checked before any task is attempted</span></h3>
-      <div class="links">${Object.entries(rc.resources).map(([k, v]) =>
-        `<span class="lnk" style="${v.ok ? "" : "border-color:var(--bad);color:var(--bad);font-weight:700"}" title="${esc(v.note || "")}">${v.ok ? "✓" : "✗"} ${esc(k.replace(/_/g, " "))}</span>`).join("")}</div>
-      ${(rc.missing || []).length ? `<p class="sub">Missing: <b>${rc.missing.map(esc).join(", ")}</b> — tasks needing these are HELD, not attempted. Hover a chip for the fix.</p>`
-        : `<p class="sub">All resources present — every task type is runnable.</p>`}
+    ${rc && rc.resources ? `<div class="card"><h3>🔋 Resources <span class="sub">— checked before any task is attempted; free-only, on purpose</span></h3>
+      <div class="links">${Object.entries(rc.resources).map(([k, v]) => {
+        const bad = !v.ok && !v.optional, style = bad ? "border-color:var(--bad);color:var(--bad);font-weight:700"
+          : !v.ok ? "border-color:var(--muted);color:var(--muted)" : "";
+        const mark = v.ok ? "✓" : v.optional ? "○" : "✗";
+        return `<span class="lnk" style="${style}" title="${esc(v.note || "")}">${mark} ${esc(k.replace(/_/g, " "))}${v.optional && !v.ok ? " (optional)" : ""}</span>`;
+      }).join("")}</div>
+      ${(rc.missing || []).length ? `<p class="sub">Missing (blocking): <b>${rc.missing.map(esc).join(", ")}</b> — tasks needing these are HELD, not attempted. Hover a chip for the fix.</p>`
+        : `<p class="sub">Nothing critical missing — every core task type is runnable, 100% free.</p>`}
+      ${(rc.optional_missing || []).length ? `<p class="sub">Skipped by choice (stay free): <b>${rc.optional_missing.map(esc).join(", ")}</b> — a free fallback covers these already, just slower.</p>` : ""}
       <p class="sub">Can do now: ${Object.entries(rc.can_do || {}).map(([k, v]) => `${v.ok ? "✅" : "⛔"} ${esc(k)}`).join(" · ")}</p>
     </div>` : ""}`;
   view.querySelectorAll("[data-goto]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); show(a.dataset.goto); }));

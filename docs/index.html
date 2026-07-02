@@ -573,6 +573,23 @@
     .ex-task .tk.q { background:var(--gold-soft); color:var(--gold-ink); border:1px solid var(--gold-line); }
     .ex-task .tk.w { background:oklch(0.9 0.09 145); color:oklch(0.3 0.08 150); border:1px solid oklch(0.6 0.12 148); }
     .ex-task .tk.h { background:var(--warnbg); color:#92400e; border:1px solid var(--warn); }
+    /* CREW — virtual residents who wander EVERY tab, wired to the OS (their bubbles = real dept status) */
+    .crew { position:fixed; left:0; right:0; bottom:0; height:0; z-index:60; pointer-events:none; }
+    .crew-p { position:absolute; bottom:8px; width:22px; height:19px; border-radius:6px;
+      background:var(--gold); border:2px solid var(--line); pointer-events:auto; cursor:pointer;
+      animation:crewWalk var(--dur,26s) linear var(--delay,0s) infinite alternate; }
+    .crew-p::before { content:""; position:absolute; left:4px; top:4px; width:4px; height:4px;
+      border-radius:50%; background:var(--line); box-shadow:8px 0 0 var(--line); }
+    .crew-p::after { content:""; position:absolute; left:4px; bottom:-6px; width:3px; height:6px;
+      background:var(--line); box-shadow:9px 0 0 var(--line); animation:crewLegs .5s steps(2) infinite; }
+    .crew-p .say { position:absolute; bottom:26px; left:50%; transform:translateX(-50%); white-space:nowrap;
+      background:var(--panel); border:2px solid var(--line); border-radius:8px; padding:2px 8px;
+      font-size:10.5px; font-weight:600; color:var(--text); opacity:0; transition:opacity .25s;
+      box-shadow:2px 2px 0 var(--line); pointer-events:none; }
+    .crew-p:hover .say, .crew-p.talk .say { opacity:1; }
+    @keyframes crewWalk { from { left:var(--x0,4%); } to { left:var(--x1,88%); } }
+    @keyframes crewLegs { 50% { transform:translateY(1.5px); } }
+    @media (prefers-reduced-motion: reduce) { .crew-p { animation:none; left:var(--x1,50%); } .crew-p::after { animation:none; } }
     .lnk-pending { font-size:11px; color:var(--gold-deep); background:var(--gold-soft);
       border:1px dashed var(--gold-line); border-radius:999px; padding:3px 9px; }
     /* Top priorities */

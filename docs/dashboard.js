@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v61";
+const APP_BUILD = "v62";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1634,6 +1634,41 @@ async function excavaStrip(tab) {
     <span>working: ${esc(String(act).slice(0, 48))}</span>${dept}
     <a data-goto="excava">cockpit →</a></div>`;
 }
+// ── CREW: virtual residents who live on EVERY tab, wired to the OS. Their speech bubbles are real
+// department status (from the same cached JSON the cockpit uses — zero extra network). Click one →
+// the cockpit. Kill switch: localStorage.setItem("excavatortron.crew","off").
+let _crewTimer = null;
+async function renderCrew(tab) {
+  let host = document.getElementById("crew");
+  if (!host) { host = document.createElement("div"); host.id = "crew"; host.className = "crew"; document.body.appendChild(host); }
+  if (localStorage.getItem("excavatortron.crew") === "off") { host.innerHTML = ""; return; }
+  const [ps, ex] = await Promise.all([load("pipeline_status.json"), load("excava_status.json")]);
+  const lanes = (ps && ps.lanes) || [];
+  const lc = l => (l.label || "").toLowerCase();
+  const key = TAB_DEPT[tab];
+  const dept = key ? (lanes.find(l => lc(l).includes(key) && !lc(l).includes("audio+")) || lanes.find(l => lc(l).includes(key))) : null;
+  const live = lanes.filter(l => l.status !== "stale").slice(0, 3);
+  const people = [{ c: "var(--gold)", dur: 34,
+    say: "🦾 " + String(((ex || {}).next_action || {}).do || "on patrol").slice(0, 46) }];
+  if (dept) people.push({ c: TAB_ACCENT[tab] || "var(--gold)", dur: 22,
+    say: `${_exIcon(dept.label)} ${dept.label}: ${dept.status === "live" ? "working now" : dept.status === "slow" ? "due to run" : "resting"}` });
+  live.forEach((L, i) => {
+    if (dept && L.label === dept.label) return;
+    people.push({ c: ["oklch(0.75 0.15 200)", "oklch(0.75 0.17 330)", "oklch(0.78 0.17 145)"][i % 3],
+      dur: 18 + i * 7, say: _exIcon(L.label) + " " + String(L.what || L.label || "").slice(0, 42) });
+  });
+  host.innerHTML = people.slice(0, 4).map((p, i) => `
+    <div class="crew-p" style="background:${p.c};--x0:${3 + i * 6}%;--x1:${68 + i * 7}%;--dur:${p.dur}s;--delay:${-i * 9}s"
+      title="a resident of the OS — click to open the cockpit"><span class="say">${esc(p.say)}</span></div>`).join("");
+  host.querySelectorAll(".crew-p").forEach(el => el.addEventListener("click", () => show("excava")));
+  if (_crewTimer) clearInterval(_crewTimer);
+  let turn = 0;                                     // residents take turns "talking"
+  _crewTimer = setInterval(() => {
+    const ppl = host.querySelectorAll(".crew-p"); if (!ppl.length) return;
+    ppl.forEach(x => x.classList.remove("talk"));
+    ppl[turn % ppl.length].classList.add("talk"); turn++;
+  }, 6000);
+}
 async function renderExcava() {
   const [ex, ps, inbox, gs, rc] = await Promise.all([load("excava_status.json"), load("pipeline_status.json"),
     load("excava_inbox.json"), load("goals_status.json"), load("resources.json")]);
@@ -1737,6 +1772,8 @@ async function show(tab) {
         a.addEventListener("click", e => { e.preventDefault(); show(a.dataset.goto); }));
     }
   }
+  // Virtual residents on every tab (fire-and-forget; reuses cached JSON).
+  renderCrew(tab);
   // If quick-read is on, actually condense the descriptions (not just CSS-clamp them).
   quickreadSummarize(document.body.classList.contains("quickread"));
 }

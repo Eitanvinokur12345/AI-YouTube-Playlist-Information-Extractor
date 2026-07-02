@@ -534,7 +534,16 @@
     @keyframes exPulse { 0%,100% { box-shadow:4px 4px 0 oklch(0.1 0.01 85), 0 0 22px oklch(0.85 0.165 95/.25);} 50% { box-shadow:4px 4px 0 oklch(0.1 0.01 85), 0 0 44px oklch(0.85 0.165 95/.5);} }
     .ex-station { position:absolute; transform:translate(-50%,-50%); width:118px; text-align:center;
       background:oklch(0.235 0.018 88); border:2px solid oklch(0.42 0.05 92); border-radius:10px;
-      padding:7px 6px 6px; z-index:2; }
+      padding:7px 6px 6px; z-index:2; cursor:pointer; transition:border-color .12s, box-shadow .12s; }
+    .ex-station:hover { border-color:var(--gold); }
+    .ex-station.sel { border-color:var(--gold); box-shadow:0 0 0 2px var(--gold), 0 0 18px oklch(0.85 0.165 95/.4); }
+    .ex-detail { margin-top:10px; border:2px solid var(--line); border-radius:10px; background:var(--panel2);
+      padding:10px 14px; font-size:13px; }
+    .ex-detail b { color:var(--gold-ink); }
+    .tab-dot { width:7px; height:7px; border-radius:50%; display:inline-block; margin-right:6px; vertical-align:1px; }
+    .gb-met { background:oklch(0.68 0.16 148) !important; }
+    .gb-risk { background:var(--gold) !important; }
+    .gb-unmet { background:oklch(0.6 0.19 28) !important; }
     .ex-station.stale { opacity:.45; }
     .ex-station .ic { font-size:17px; }
     .ex-station .nm { font-size:10.5px; font-weight:700; color:oklch(0.92 0.03 92); letter-spacing:.04em; text-transform:uppercase; }

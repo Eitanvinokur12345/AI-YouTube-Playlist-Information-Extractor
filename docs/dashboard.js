@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v59";
+const APP_BUILD = "v60";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1607,15 +1607,32 @@ function _exIcon(label) {
   for (const k in EX_ICONS) if (l.includes(k)) return EX_ICONS[k];
   return "🤖";
 }
-async function excavaStrip() {
-  const ex = await load("excava_status.json");
+// per-tab accent colors — each area of the machine wears its own paint
+const TAB_ACCENT = { excava: "oklch(0.85 0.165 95)", skills: "oklch(0.62 0.17 280)", tools: "oklch(0.66 0.18 40)",
+  comingsoon: "oklch(0.65 0.16 310)", prompts: "oklch(0.68 0.17 340)", improvement: "oklch(0.62 0.15 150)",
+  tips: "oklch(0.7 0.13 200)", news: "oklch(0.6 0.19 25)", connectors: "oklch(0.6 0.15 250)",
+  designs: "oklch(0.66 0.19 0)", sources: "oklch(0.62 0.12 170)", devbuild: "oklch(0.55 0.1 260)" };
+// which pipeline department serves each tab (so the strip talks about THIS tab's work)
+const TAB_DEPT = { skills: "analysis", tools: "analysis", comingsoon: "analysis", prompts: "analysis",
+  tips: "analysis", news: "news", connectors: "mining", designs: "visual", sources: "mining",
+  improvement: "improve", selfimprove: "improve", effectiveness: "improve", devbuild: "deep" };
+async function excavaStrip(tab) {
+  const [ex, ps] = await Promise.all([load("excava_status.json"), load("pipeline_status.json")]);
   if (!ex || !ex.gate) return "";
   const g = ex.gate, act = (ex.next_action || {}).do || "idle";
+  let dept = "";
+  const key = TAB_DEPT[tab];
+  if (key && ps && ps.lanes) {
+    const lc = l => (l.label || "").toLowerCase();
+    const L = ps.lanes.find(l => lc(l).includes(key) && !lc(l).includes("audio+"))
+           || ps.lanes.find(l => lc(l).includes(key));
+    if (L) dept = `<span>this dept: ${_exIcon(L.label)} ${esc(L.label)} · ${esc(L.status)} · ran ${_ageAgo(L.age_hours)}</span>`;
+  }
   return `<div class="ex-strip"><b>🦾 EXCAVA</b>
     <span><span class="ex-lamp ${g.internal_allowed ? "on" : "off"}"></span> internal</span>
     <span><span class="ex-lamp ${g.outward_allowed ? "on" : "off"}"></span> outward</span>
-    <span>working: ${esc(String(act).slice(0, 60))}</span>
-    <a data-goto="excava">open cockpit →</a></div>`;
+    <span>working: ${esc(String(act).slice(0, 48))}</span>${dept}
+    <a data-goto="excava">cockpit →</a></div>`;
 }
 async function renderExcava() {
   const [ex, ps, inbox, gs] = await Promise.all([load("excava_status.json"), load("pipeline_status.json"),
@@ -1634,10 +1651,13 @@ async function renderExcava() {
       <div class="ic">${_exIcon(s.label)}</div><div class="nm">${esc(s.label || "")}</div>
       <div class="st">${s.status === "live" ? "working" : s.status === "slow" ? "due" : "idle"} · ran ${_ageAgo(s.age_hours)}</div>
     </div>`).join("");
-  // worker bots: one per non-stale department, walking core <-> station with a task chip
+  // worker bots: one per non-stale department, walking core <-> station with a task chip.
+  // Each department's crew has its own color — you can tell WHO is doing WHAT at a glance.
+  const BOTC = ["oklch(0.85 0.165 95)", "oklch(0.72 0.17 40)", "oklch(0.75 0.15 200)", "oklch(0.75 0.17 330)",
+    "oklch(0.78 0.17 145)", "oklch(0.75 0.14 280)", "oklch(0.8 0.15 60)", "oklch(0.82 0.12 170)"];
   const bots = stations.filter(s => s.status !== "stale").map((s, i) => {
     const word = (s.what || s.label || "task").split(" ").slice(0, 2).join(" ");
-    return `<div class="ex-bot" style="--sx:50%;--sy:45%;--ex:${s.x}%;--ey:${s.y}%;--dur:${5.5 + (i % 4) * 1.6}s;--delay:${-i * 1.7}s">
+    return `<div class="ex-bot" style="background:${BOTC[i % BOTC.length]};--sx:50%;--sy:45%;--ex:${s.x}%;--ey:${s.y}%;--dur:${5.5 + (i % 4) * 1.6}s;--delay:${-i * 1.7}s">
       <span class="ex-chip">${esc(word)}</span></div>`;
   }).join("");
   const taskHTML = tasks.length ? tasks.map(t => `<div class="ex-task">
@@ -1652,7 +1672,14 @@ async function renderExcava() {
       <p class="sub">Phase: ${esc(ex && ex.phase || "OS-1 operator")} · memory: <b>${mem.vectors || 0}</b> vectors ·
         outward actions ${gate.outward_allowed ? "OPEN" : `held (${esc((gate.checks || {}).truth_access_G3 ?? "?")} / 70 truth&access)`} · goals: ${goalsMini}</p>
       <div class="ex-floor">${stHTML}${bots}<div class="ex-core">EXCAVA<small>AGENTIC CORE</small></div></div>
-      <p class="sub" style="margin-top:8px">The floor is LIVE: each station is a real pipeline department (lamp = its actual status), each bot carries that department's current work between the core and its station. Stale departments dim until their next run.</p>
+      <div class="ex-detail" id="ex-detail">Click a department station to inspect it — what it does, its real status, cadence and last run.</div>
+      <p class="sub" style="margin-top:8px">The floor is LIVE: each station is a real pipeline department (lamp = its actual status), each colored bot is that department's crew carrying its current work. Stale departments dim until their next run.</p>
+    </div>
+    <div class="card"><h3>⭐ North Star <span class="sub">— the 8 goals, scored as law every cycle</span></h3>
+      <div class="taste-bars">${goals.map(g => `<div class="taste-bar" title="${esc(g.gap || "")}">
+        <span style="width:150px">${esc(g.id)} ${esc(g.name)}</span>
+        <i class="${g.status === "met" ? "gb-met" : g.status === "at-risk" ? "gb-risk" : "gb-unmet"}" style="width:${Math.max(g.score, 3)}%"></i>
+        <b>${g.score}</b></div>`).join("")}</div>
     </div>
     <div class="ex-grid">
       <div class="card"><h3>📥 Task inbox <span class="sub">— send EXCAVA work</span></h3>${taskHTML}</div>
@@ -1663,6 +1690,17 @@ async function renderExcava() {
       </div>
     </div>`;
   view.querySelectorAll("[data-goto]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); show(a.dataset.goto); }));
+  // station click-through: inspect a department
+  const det = view.querySelector("#ex-detail");
+  view.querySelectorAll(".ex-station").forEach((el, i) => el.addEventListener("click", () => {
+    view.querySelectorAll(".ex-station").forEach(x => x.classList.remove("sel"));
+    el.classList.add("sel");
+    const s = stations[i] || {};
+    const next = s.last_run ? new Date(new Date(s.last_run).getTime() + (s.cadence_h || 12) * 3.6e6) : null;
+    det.innerHTML = `<b>${_exIcon(s.label)} ${esc(s.label || "")}</b> — ${esc(s.what || "")}<br>
+      status <b>${esc(s.status || "?")}</b> · ran ${_ageAgo(s.age_hours)} · every ~${esc(s.cadence_h)}h ·
+      ${esc(s.runs_7d)}× this week${next ? ` · next ~${esc(fmtDate(next.toISOString()))}` : ""}`;
+  }));
 }
 
 // ── tab router ───────────────────────────────────────────────────────────────
@@ -1676,9 +1714,11 @@ async function show(tab) {
   // One bulleted "Updates: …" line at the very top of the tab (lists every update type).
   const c = cadenceLine(tab);
   if (c) view.insertAdjacentHTML("afterbegin", c);
+  // Per-tab accent: every department wears its own color (maximalist, way-finding).
+  view.style.borderTop = `5px solid ${TAB_ACCENT[tab] || "var(--gold)"}`;
   // EXCAVA presence on every tab: the OS strip (gate lamps + what it's working on right now).
   if (tab !== "excava") {
-    const s = await excavaStrip();
+    const s = await excavaStrip(tab);
     if (s) {
       view.insertAdjacentHTML("afterbegin", s);
       view.querySelectorAll(".ex-strip [data-goto]").forEach(a =>
@@ -1887,8 +1927,11 @@ async function renderTab(tab) {
   if (tab && tab.startsWith("dyn:")) return renderDynamicTab(tab.slice(4));
 }
 
-document.querySelectorAll("nav button").forEach(b =>
-  b.addEventListener("click", () => show(b.dataset.tab)));
+document.querySelectorAll("nav button").forEach(b => {
+  b.addEventListener("click", () => show(b.dataset.tab));
+  const c = TAB_ACCENT[b.dataset.tab];
+  if (c) b.insertAdjacentHTML("afterbegin", `<i class="tab-dot" style="background:${c}"></i>`);
+});
 
 (async () => {
   const [status, stars, extra, config, health] = await Promise.all([

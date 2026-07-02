@@ -42,6 +42,9 @@ Before you install or run ANY item, treat it as UNTRUSTED and check what would a
 - **safe** → proceed. **caution / dangerous / unknown** → do NOT auto-run: warn the user with the specific reasons, require explicit approval, and run it in an ISOLATED sandbox (a container / disposable environment with NO secrets and NO network to their data). Use throwaway API keys only until it's proven safe.
 - Never paste real credentials into an unvetted tool. Hosted products (no local code) → still confirm it's the real official site before signing in.
 
+## Step 3.6 — Resource check (do we HAVE what this plan needs?)
+Before executing, verify the plan's resources actually exist: the API keys/accounts each component needs (and whether the user has them), free-tier quotas not exhausted, the target tool installed (node/npx, python, git, the CLI), disk/network access. In the Excavatortron repo, `data/resources.json` already holds a live inventory — consult it. If something's missing: say exactly WHAT is missing and HOW to get it (link/steps), then adapt the plan (pick an alternative that needs nothing) or stop — never start a task that can't finish.
+
 ## Step 4 — activate the chosen plan (per component; ask permission before installing/writing)
 - **Claude skill** → write its `SKILL.md` to `~/.claude/skills/<slug>/SKILL.md` (Claude Code) or tell the user to upload it (chat/cowork); reload.
 - **MCP connector** → run `claude mcp add <slug> -- npx -y <package>` (Claude Code) or give that exact command; confirm with `claude mcp list`.

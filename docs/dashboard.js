@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v60";
+const APP_BUILD = "v61";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1635,8 +1635,8 @@ async function excavaStrip(tab) {
     <a data-goto="excava">cockpit →</a></div>`;
 }
 async function renderExcava() {
-  const [ex, ps, inbox, gs] = await Promise.all([load("excava_status.json"), load("pipeline_status.json"),
-    load("excava_inbox.json"), load("goals_status.json")]);
+  const [ex, ps, inbox, gs, rc] = await Promise.all([load("excava_status.json"), load("pipeline_status.json"),
+    load("excava_inbox.json"), load("goals_status.json"), load("resources.json")]);
   const gate = (ex && ex.gate) || {}, mem = (ex && ex.memory) || {};
   const lanes = ((ps && ps.lanes) || []).slice(0, 8);
   const act = (ex && ex.next_action) || {};
@@ -1688,7 +1688,14 @@ async function renderExcava() {
         ${(act.use_tools || []).length ? `<p class="sub">using (recalled by meaning): ${act.use_tools.map(t => esc(t.name)).join(" · ")}</p>` : ""}
         ${((ex && ex.holding) || []).map(h => `<div class="ex-task"><span class="tk h">HELD</span><span>${esc(h.priority || "")} <span class="sub">${esc(h.why_held || "")}</span></span></div>`).join("")}
       </div>
-    </div>`;
+    </div>
+    ${rc && rc.resources ? `<div class="card"><h3>🔋 Resources <span class="sub">— checked before any task is attempted</span></h3>
+      <div class="links">${Object.entries(rc.resources).map(([k, v]) =>
+        `<span class="lnk" style="${v.ok ? "" : "border-color:var(--bad);color:var(--bad);font-weight:700"}" title="${esc(v.note || "")}">${v.ok ? "✓" : "✗"} ${esc(k.replace(/_/g, " "))}</span>`).join("")}</div>
+      ${(rc.missing || []).length ? `<p class="sub">Missing: <b>${rc.missing.map(esc).join(", ")}</b> — tasks needing these are HELD, not attempted. Hover a chip for the fix.</p>`
+        : `<p class="sub">All resources present — every task type is runnable.</p>`}
+      <p class="sub">Can do now: ${Object.entries(rc.can_do || {}).map(([k, v]) => `${v.ok ? "✅" : "⛔"} ${esc(k)}`).join(" · ")}</p>
+    </div>` : ""}`;
   view.querySelectorAll("[data-goto]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); show(a.dataset.goto); }));
   // station click-through: inspect a department
   const det = view.querySelector("#ex-detail");

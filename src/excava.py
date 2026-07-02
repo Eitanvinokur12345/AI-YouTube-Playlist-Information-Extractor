@@ -92,6 +92,25 @@ def main() -> int:
     internal_ok = checks["data_guard_ok"] and checks["security_clean"]
     outward_ok = internal_ok and checks["G3_ready_for_outward"]
 
+    # ── RESOURCE CHECK (owner's rule): before carrying out ANY task, verify we have what it needs.
+    #    resources.json is written hourly by resource_check in CI (where the secrets live). A task
+    #    whose resources are missing is HELD with the exact reason — never attempted blind. ──
+    res = _load("resources.json", {})
+    can = res.get("can_do", {}) or {}
+    NEED = [("transcript", "fetch-transcripts"), ("watch", "analyze-videos"), ("video", "analyze-videos"),
+            ("visual", "visual-extract"), ("link", "resolve-links"), ("embed", "embed-memory"),
+            ("memory", "embed-memory"), ("design", "screenshots-designs"), ("creat", "create-drafts"),
+            ("competitor", "mine-competitors")]
+
+    def missing_resource(text) -> str | None:
+        tl = str(text or "").lower()
+        for kw, cap in NEED:
+            if kw in tl:
+                c = can.get(cap)
+                if c and not c.get("ok"):
+                    return f"missing resource for {cap}: {c.get('needs')}"
+        return None
+
     # ── OWNER'S INBOX first: tasks Eitan sends outrank the auto-priorities. Internal tasks are
     #    worked autonomously; outward ones are held by the same gate. ──
     inbox = _load("excava_inbox.json", {})
@@ -107,6 +126,10 @@ def main() -> int:
                 t["status"] = "held"; changed_inbox = True
             holding.append({"priority": t.get("task"), "why_held": "owner task is outward; gate closed"})
             continue
+        mr = missing_resource(t.get("task"))
+        if mr:
+            holding.append({"priority": t.get("task"), "why_held": mr})
+            continue
         if action is None and internal_ok:
             action = {"do": t.get("task"), "area": "owner-inbox", "type": "internal", "source": "inbox"}
             if t.get("status") != "working":
@@ -121,6 +144,10 @@ def main() -> int:
         is_outward = any(w in area for w in OUTWARD)
         if is_outward and not outward_ok:
             holding.append({"priority": p.get("title"), "why_held": f"outward action; gate closed (G3={g3}<{G3_OUTWARD} or checks failing)"})
+            continue
+        mr = missing_resource(f"{p.get('title')} {p.get('detail')}")
+        if mr:
+            holding.append({"priority": p.get("title"), "why_held": mr})
             continue
         if action is None and internal_ok:
             action = {"do": p.get("title"), "area": p.get("area"), "detail": p.get("detail"),
@@ -150,6 +177,8 @@ def main() -> int:
         "gate": {"checks": checks, "internal_allowed": internal_ok, "outward_allowed": outward_ok,
                  "outward_needs": "data_guard ok + security clean + G3>=70 + owner approval"},
         "memory": {"vectors": len(mem.get("vectors", {})), "model": mem.get("model"), "wired": mem_wired},
+        "resources": {"missing": res.get("missing", []), "checked_at": res.get("generated_at"),
+                      "can_do": {k: v.get("ok") for k, v in can.items()}},
         "next_action": action, "holding": holding[:6],
         "tool_stack": cfg.get("tool_stack", []), "stack_review": stack_review,
     }, ensure_ascii=False, indent=2), encoding="utf-8")

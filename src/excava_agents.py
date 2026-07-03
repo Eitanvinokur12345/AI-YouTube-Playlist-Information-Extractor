@@ -154,9 +154,9 @@ WORK: dict = {"links": _work_links, "memory": _work_memory,
               "transcripts": _work_transcripts, "analysis": _work_analysis}
 
 
-def tick(department: str, reg: dict) -> str | None:
+def tick(department: str, reg: dict) -> tuple[str, str] | None:
     """One Worker-contract turn for a department: claim → work → complete/handoff/fail.
-    Returns a one-line human summary (for the beat log), or None if nothing to do."""
+    Returns (one-line summary, outcome) for the beat log + usage accounting, or None."""
     agent = worker_for(reg, department)
     if agent is None or department not in WORK:
         return None
@@ -166,10 +166,10 @@ def tick(department: str, reg: dict) -> str | None:
     act = WORK[department](task)
     if act["kind"] == "handoff":
         ok, ref = bus.handoff(task["id"], agent["id"], act["to"], act["doc"])
-        return (f"{agent['id']}: {task['id']} -> {act['to']} ({ref})" if ok
-                else f"{agent['id']}: {task['id']} {ref}")
+        return ((f"{agent['id']}: {task['id']} -> {act['to']} ({ref})", "handoffs") if ok
+                else (f"{agent['id']}: {task['id']} {ref}", "fails"))
     if act["kind"] == "complete":
         bus.complete(task["id"], agent["id"], act["result"])
-        return f"{agent['id']}: {task['id']} DONE"
+        return f"{agent['id']}: {task['id']} DONE", "done"
     msg = bus.fail(task["id"], agent["id"], act.get("reason", "failed"))
-    return f"{agent['id']}: {task['id']} {msg}"
+    return f"{agent['id']}: {task['id']} {msg}", "fails"

@@ -44,6 +44,11 @@ G3_OUTWARD = 70          # truth/access must be this high before EXCAVA may crea
 OUTWARD = {"create", "promote", "publish", "self-code", "leverage"}
 MAX_TICKS_PER_BEAT = 4   # a beat is cheap and bounded; the next beat resumes (cron heartbeat)
 REDONE_WINDOW_H = 20     # don't re-enqueue a same-title task finished within this window
+FAIL_STREAK = 3          # Phase 2 backpressure: this many straight failures rests a department
+COOLDOWN_H = 6           # ...for this long (self-healing: it resumes on its own, traced)
+# Phase 1 priority-weights dial (owner-tunable in data/excava_config.json -> priority_weights):
+# higher weight = that area's auto-priorities reach the bus first. Owner inbox always outranks (G-8).
+DEFAULT_WEIGHTS = {"access": 90, "backlog": 70, "pipeline": 60, "maintenance": 40}
 
 
 def _load(name, d=None):
@@ -73,9 +78,22 @@ def semantic_recall(query: str, idx: dict, keys: list, k: int = 6) -> list:
     return _search(emb, idx, k)
 
 
+def _norm_title(s) -> str:
+    """Counts inside priority titles change hourly ('1665 tools still…' -> '1674 tools…');
+    compare with digits collapsed so the same standing task isn't re-enqueued every beat."""
+    import re
+    return re.sub(r"[\d.,%]+", "#", str(s or "").lower()).strip()
+
+
 def _recently_done(all_tasks: list, title: str) -> bool:
+    """True if a normalized-same task is OPEN already or finished within the window."""
+    nt = _norm_title(title)
     for t in all_tasks:
-        if t.get("title") == title and t.get("status") == "done":
+        if _norm_title(t.get("title")) != nt:
+            continue
+        if t.get("status") in ("queued", "working", "held"):
+            return True
+        if t.get("status") == "done":
             try:
                 dt = datetime.fromisoformat(t["updated_at"])
                 if (datetime.now(timezone.utc) - dt).total_seconds() < REDONE_WINDOW_H * 3600:
@@ -85,9 +103,13 @@ def _recently_done(all_tasks: list, title: str) -> bool:
     return False
 
 
-def _sync_to_bus(inbox_tasks: list, prios: list, outward_ok: bool, g3, holding: list) -> bool:
-    """Owner inbox first (G-8, priority 0), then top auto-priorities (priority 1). Outward
-    work is held at the door while the gate is closed — it never reaches the bus."""
+def _sync_to_bus(inbox_tasks: list, prios: list, outward_ok: bool, g3, holding: list,
+                 weights: dict | None = None) -> bool:
+    """Owner inbox first (G-8, priority 0), then top auto-priorities (priority 1) ordered by
+    the owner's priority-weights dial. Outward work is held at the door while the gate is
+    closed — it never reaches the bus."""
+    w = {**DEFAULT_WEIGHTS, **(weights or {})}
+    prios = sorted(prios, key=lambda p: -w.get((p.get("area") or "").lower(), 50))
     existing = bus.read_bus()["tasks"]
     changed_inbox = False
     for t in inbox_tasks:
@@ -133,6 +155,74 @@ def _route_all(reg: dict, can_do: dict, holding: list) -> int:
     return routed
 
 
+def _audit_spine() -> list[str]:
+    """Phase 2 continuous self-audit: every beat, verify the coded spine still matches
+    guardrails.md and the bus invariants hold. Any violation forces SAFE mode for the beat
+    (assess, don't act) and surfaces to the owner — the OS never runs on a broken law."""
+    problems = []
+    try:
+        law = (DATA / "excava" / "guardrails.md").read_text(encoding="utf-8").lower()
+        for f in bus.REQUIRED_HANDOFF_FIELDS:
+            if f not in law:
+                problems.append(f"guardrails.md no longer names required hand-off field '{f}' (G-4 drift)")
+    except Exception:
+        problems.append("guardrails.md missing/unreadable — the law is gone (G-4/G-7 unverifiable)")
+    reg = agents.load_registry()
+    for a in reg.get("agents", []):
+        if not a.get("scoped_tools"):
+            problems.append(f"agent {a.get('id')} has no scoped tools (G-7 violation)")
+    b = bus.read_bus()
+    for t in b["tasks"]:
+        if t["status"] == "working" and not t.get("claimed_by"):
+            problems.append(f"bus invariant: {t['id']} working but unclaimed")
+        for d in t.get("handoff_docs", []):
+            if not (ROOT / d).exists():
+                problems.append(f"bus invariant: {t['id']} hand-off doc missing on disk: {d}")
+    return problems
+
+
+def _approvals_sync(holding: list, mode: str) -> dict:
+    """Phase 1 approval queue: everything waiting on the OWNER lands in
+    data/excava_approvals.json with a category; the owner grants by id (cockpit issue link,
+    Claude, or editing the file). Granted ids un-hold the matching bus task next beat."""
+    prev = _load("excava_approvals.json", {})
+    granted = set(prev.get("granted", []))
+    applied = []
+    if granted:
+        b = bus.read_bus()
+        for t in b["tasks"]:
+            if t["status"] == "held" and t["id"] in granted:
+                t.update(status="queued", claimed_by=None, escalation_tier=1,
+                         hold_reason=None, updated_at=NOW)
+                bus.event(t["id"], "owner_approved", {"via": "excava_approvals.json"})
+                applied.append(t["id"])
+        if applied:
+            bus._write_bus(b)
+    pending, seen = [], set()
+    for t in bus.read_bus()["tasks"]:
+        if t["status"] == "held" and t["id"] not in granted:
+            pending.append({"id": t["id"], "title": t["title"], "category": "escalated",
+                            "why": t.get("hold_reason", "escalated past tier 3"),
+                            "since": t.get("updated_at")})
+            seen.add(t["title"])
+    for h in holding:
+        if h.get("priority") in seen:
+            continue
+        why = h.get("why_held", "")
+        cat = ("outward" if "outward" in why else
+               "missing-resource" if "resource" in why else
+               "unroutable" if "specialization" in why or "unroutable" in why else "needs-owner")
+        pending.append({"id": None, "title": h.get("priority"), "category": cat, "why": why})
+    out = {"generated_at": NOW, "mode": mode,
+           "note": ("Approve by id: tell Claude 'EXCAVA: approve <id>', open the cockpit's approve "
+                    "link (GitHub issue), or add the id to 'granted' here. Granted ids are applied "
+                    "and re-queued on the next beat."),
+           "pending": pending[:20], "granted": sorted(granted), "applied_last_beat": applied}
+    (DATA / "excava_approvals.json").write_text(
+        json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
+    return out
+
+
 def _beat(args) -> int:
     mem = _load("memory_index.json", {})
     keys = _keys()
@@ -162,11 +252,31 @@ def _beat(args) -> int:
 
     beat_log: list[str] = []
     changed_inbox = False
-    if internal_ok:
-        # ── 2. sync owner inbox + auto-priorities onto the bus ──
+    usage_delta: dict = {}
+
+    # ── kill switch / safe-mode (Phase 1) + continuous self-audit (Phase 2) ──
+    mode = (cfg.get("mode") or "run").lower()
+    audit = _audit_spine()
+    if audit and mode == "run":
+        mode = "safe"
+        beat_log.append(f"AUTO SAFE-MODE — self-audit found {len(audit)} problem(s); acting is frozen "
+                        "until the spine matches the law again")
+    if mode == "kill":
+        beat_log.append("KILL SWITCH ON (data/excava_config.json mode=kill) — bus untouched this beat")
+
+    if internal_ok and mode != "kill":
+        # ── crash recovery + memory pruning (Phase 2): the bus is the checkpoint ──
+        for tid in bus.recover_leases():
+            beat_log.append(f"lease expired -> re-queued {tid} (crash recovery)")
+        pruned = bus.prune()
+        if pruned:
+            beat_log.append(f"pruned {pruned} finished task(s) to data/excava/archive/")
+
+        # ── 2. sync owner inbox + auto-priorities onto the bus (weights dial, Phase 1) ──
         inbox = _load("excava_inbox.json", {})
         inbox_tasks = inbox.get("tasks", []) if isinstance(inbox, dict) else []
-        changed_inbox = _sync_to_bus(inbox_tasks, prios, outward_ok, g3, holding)
+        changed_inbox = _sync_to_bus(inbox_tasks, prios, outward_ok, g3, holding,
+                                     cfg.get("priority_weights"))
         if changed_inbox:
             (DATA / "excava_inbox.json").write_text(
                 json.dumps(inbox, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -174,15 +284,43 @@ def _beat(args) -> int:
         # ── 3. route by specialization + resources (+ load via claim order) ──
         _route_all(reg, can, holding)
 
-        # ── 4. tick workers (bounded; the next beat resumes the rest — cron heartbeat) ──
-        per = bus.snapshot()["per_department"]
-        busiest_first = sorted((d for d in per if per[d].get("queued") and d != "(unrouted)"),
-                               key=lambda d: (-per[d]["queued"], d))
-        for dept in busiest_first[:MAX_TICKS_PER_BEAT]:
-            line = agents.tick(dept, reg)
-            if line:
-                beat_log.append(line)
-    else:
+        # ── 4. tick workers — unless safe-mode (assess, don't act) or a cooling-off
+        #      department (Phase 2 backpressure: 3 straight fails => rest, then self-heal) ──
+        if mode == "safe":
+            beat_log.append("SAFE MODE — bus synced + routed, but no worker acted this beat")
+        else:
+            st0 = _load("excava/state.json", {})
+            bp = (st0.get("facts", {}).get("backpressure", {}) or {}).get("value", {})
+            per = bus.snapshot()["per_department"]
+            busiest_first = sorted((d for d in per if per[d].get("queued") and d != "(unrouted)"),
+                                   key=lambda d: (-per[d]["queued"], d))
+            ticked = 0
+            for dept in busiest_first:
+                if ticked >= MAX_TICKS_PER_BEAT:
+                    break
+                cool = (bp.get(dept) or {}).get("cooldown_until", "")
+                if cool and cool > NOW:
+                    beat_log.append(f"{dept}: cooling off until {cool[:16]} (backpressure)")
+                    continue
+                r = agents.tick(dept, reg)
+                if r:
+                    line, outcome = r
+                    beat_log.append(line)
+                    usage_delta[dept] = outcome
+                    ticked += 1
+                    d = bp.setdefault(dept, {"streak": 0})
+                    if outcome == "fails":
+                        d["streak"] = d.get("streak", 0) + 1
+                        if d["streak"] >= FAIL_STREAK:
+                            until = datetime.fromtimestamp(
+                                datetime.now(timezone.utc).timestamp() + COOLDOWN_H * 3600,
+                                tz=timezone.utc).isoformat()
+                            d["cooldown_until"], d["streak"] = until, 0
+                            beat_log.append(f"{dept}: {FAIL_STREAK} straight fails -> resting {COOLDOWN_H}h")
+                    else:
+                        d["streak"], d["cooldown_until"] = 0, ""
+            bus.remember("backpressure", bp)
+    elif not internal_ok:
         beat_log.append("HOLD ALL — verification gate failing (fix data_guard/security first)")
 
     # bus-held tasks surface to the owner via the same holding list the cockpit shows
@@ -191,6 +329,11 @@ def _beat(args) -> int:
         if t["status"] == "held":
             holding.append({"priority": t["title"],
                             "why_held": t.get("hold_reason", "escalated past tier 3 — needs owner")})
+
+    # ── approval queue (Phase 1): everything owner-blocked, one file, categorized ──
+    approvals = _approvals_sync(holding, mode)
+    for tid in approvals.get("applied_last_beat", []):
+        beat_log.append(f"owner approval applied -> {tid} re-queued")
 
     # ── next action = the top open bus task, grounded in the semantic memory ──
     open_tasks = [t for t in bus.read_bus()["tasks"] if t["status"] in ("queued", "working")]
@@ -210,7 +353,7 @@ def _beat(args) -> int:
 
     # ── 5. shared memory write side + status for the cockpit ──
     dept_load = {d: v.get("queued", 0) + v.get("working", 0) for d, v in snap["per_department"].items()}
-    st = bus.beat_state(dept_load)
+    st = bus.beat_state(dept_load, usage_delta)
 
     stack_review = {
         "candidates_available": scout.get("total_candidates", 0),
@@ -227,15 +370,17 @@ def _beat(args) -> int:
         "resources": {"missing": res.get("missing", []), "checked_at": res.get("generated_at"),
                       "can_do": {k: v.get("ok") for k, v in can.items()}},
         "next_action": action, "holding": holding[:6],
-        "os": {"beats": st.get("beats"), "bus": snap, "beat_log": beat_log,
+        "os": {"beats": st.get("beats"), "mode": mode, "bus": snap, "beat_log": beat_log,
                "departments": sorted((reg.get("departments") or {}).keys()),
+               "usage": st.get("usage", {}), "audit": {"ok": not audit, "problems": audit[:8]},
+               "approvals_pending": len(approvals.get("pending", [])),
                "guardrails": "data/excava/guardrails.md", "traces": "data/excava/traces/"},
         "tool_stack": cfg.get("tool_stack", []), "stack_review": stack_review,
     }, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    print(f"EXCAVA beat #{st.get('beats')}: gate internal={'open' if internal_ok else 'CLOSED'} "
+    print(f"EXCAVA beat #{st.get('beats')} [{mode}]: gate internal={'open' if internal_ok else 'CLOSED'} "
           f"outward={'open' if outward_ok else 'closed (G3=' + str(g3) + ')'}; "
-          f"bus {snap['open']} open/{snap['total']} total; "
+          f"bus {snap['open']} open/{snap['total']} total; audit {'OK' if not audit else 'FAIL'}; "
           f"next = {action['do'] if action else 'none'}; holding {len(holding)}.")
     for line in beat_log:
         print(f"  · {line}")
@@ -286,6 +431,11 @@ def _selftest() -> int:
 
 
 def main() -> int:
+    import sys
+    try:                                   # Windows console defaults to cp1252 -> emoji crash
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
     ap = argparse.ArgumentParser()
     ap.add_argument("--recall", default="", help="print the hub items semantically closest to a task, then exit")
     ap.add_argument("--selftest", action="store_true", help="prove the OS spine on a scratch bus")

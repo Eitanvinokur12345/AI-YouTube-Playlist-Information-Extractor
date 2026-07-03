@@ -229,6 +229,57 @@ def _escalate(bus: dict, t: dict, reason: str, by: str = "") -> str:
     return msg
 
 
+LEASE_H = 6            # Phase 2 crash recovery: a claim older than this = a worker died mid-task
+PRUNE_DAYS = 7         # Phase 2 memory pruning: finished tasks older than this move to the archive
+
+
+def recover_leases(max_h: float = LEASE_H) -> list[str]:
+    """Crash recovery + checkpointing: the bus IS the checkpoint, so recovery = requeue any
+    claim whose lease expired (beat killed, runner evicted, worker crashed). Traced, never lost."""
+    bus = read_bus()
+    now, out = datetime.now(timezone.utc), []
+    for t in bus["tasks"]:
+        if t["status"] != "working":
+            continue
+        try:
+            age_h = (now - datetime.fromisoformat(t["updated_at"])).total_seconds() / 3600
+        except Exception:
+            age_h = max_h + 1
+        if age_h > max_h:
+            was = t.get("claimed_by")
+            t.update(status="queued", claimed_by=None, updated_at=_now())
+            event(t["id"], "lease_expired", {"after_h": round(age_h, 1), "was": was})
+            out.append(t["id"])
+    if out:
+        _write_bus(bus)
+    return out
+
+
+def prune(days: int = PRUNE_DAYS) -> int:
+    """Memory pruning: finished (done/failed) tasks older than N days move to
+    data/excava/archive/YYYY-MM.jsonl — the bus stays small, history stays complete."""
+    bus = read_bus()
+    cutoff = datetime.now(timezone.utc).timestamp() - days * 86400
+    keep, moved = [], 0
+    for t in bus["tasks"]:
+        try:
+            ts = datetime.fromisoformat(t["updated_at"]).timestamp()
+        except Exception:
+            ts = None
+        if t["status"] in ("done", "failed") and ts and ts < cutoff:
+            arch = EXDIR / "archive"
+            arch.mkdir(parents=True, exist_ok=True)
+            with open(arch / f"{datetime.now(timezone.utc):%Y-%m}.jsonl", "a", encoding="utf-8") as fh:
+                fh.write(json.dumps(t, ensure_ascii=False) + "\n")
+            moved += 1
+        else:
+            keep.append(t)
+    if moved:
+        bus["tasks"] = keep
+        _write_bus(bus)
+    return moved
+
+
 def remember(key: str, value, who: str = "excava-core") -> None:
     """Shared-memory WRITE (G-9). Facts survive between beats; the read side is the vector index."""
     st = _read(STATE, {"version": 1, "facts": {}, "beats": 0})
@@ -236,12 +287,20 @@ def remember(key: str, value, who: str = "excava-core") -> None:
     _atomic_write(STATE, st)
 
 
-def beat_state(dept_load: dict) -> dict:
-    """Called once per orchestrator beat: bump the counter, persist load, return the state."""
+def beat_state(dept_load: dict, usage_delta: dict | None = None) -> dict:
+    """Called once per orchestrator beat: bump the counter, persist load + per-department
+    usage (Phase 2 cost/usage accounting), return the state."""
     st = _read(STATE, {"version": 1, "facts": {}, "beats": 0})
     st["beats"] = st.get("beats", 0) + 1
     st["last_beat"] = _now()
     st["dept_load"] = dept_load
+    if usage_delta:
+        usage = st.setdefault("usage", {})
+        for dept, outcome in usage_delta.items():
+            u = usage.setdefault(dept, {"ticks": 0, "done": 0, "handoffs": 0, "fails": 0})
+            u["ticks"] += 1
+            u[outcome] = u.get(outcome, 0) + 1
+            u["last"] = _now()
     _atomic_write(STATE, st)
     return st
 

@@ -39,6 +39,25 @@ Excavatortron as its database). Free on GitHub Actions. "LIV" = *live, together*
 - Phase-0 workers are ASSESSORS (read their dept's real data, move tasks with grounded docs); heavy work
   still lives in the CI lanes — later phases add execution muscle, the Worker contract stays.
 
+## 3a. PHASES 1+2 — SHIPPED 2026-07-03 (you drive it + safe 24/7), dashboard v63
+- **Multi-channel task send**: cockpit send-box → prefilled GitHub issue "EXCAVA: <task>" →
+  `excava_inbox.yml` workflow applies it via `src/excava_channel.py`, commits, replies a receipt,
+  closes the issue (phone-friendly). Channels: issue / tell Claude / edit inbox file.
+- **Kill switch + safe-mode**: `excava_config.json mode` = run|safe|kill (issue "EXCAVA: kill|safe|run"
+  or cockpit links). kill = bus untouched; safe = sync+route, no worker acts. Mode chip on cockpit + strip.
+- **Priority-weights dial**: `excava_config.json priority_weights` orders which auto-priorities reach
+  the bus ("EXCAVA: weight access 95"). Owner inbox always outranks (G-8).
+- **Approval queue**: `data/excava_approvals.json` — everything owner-blocked, categorized
+  (escalated/outward/unroutable/missing-resource); cockpit widget with per-item approve links
+  ("EXCAVA: approve <id>" → re-queued next beat).
+- **Phase 2 safety**: lease recovery (claims >6h = crashed worker → re-queued, traced) · bus pruning
+  (done >7d → data/excava/archive/) · per-dept usage accounting (state.json) · fail-streak backpressure
+  (3 straight fails → 6h cooldown, self-heals) · **continuous self-audit** (guardrails-vs-code + bus
+  invariants each beat; problems force AUTO SAFE-MODE).
+- **Cockpit v63 shows the spine**: "You drive it" card (send box, mode, weights), OS spine board
+  (beat #, per-dept bus counts, beat log, last hand-off link), approval queue. Verified via DOM checks
+  (screenshots still time out on the crew animation — known).
+
 ## 3b. THE PLAN (full steps in EXCAVA_PROGRAM.md)
 9 phases: **P0 OS spine** (bus + shared-memory + orchestrator — build FIRST) → P1 you-drive-it → P2 safe
 24/7 → P3 Creators dept → P4 connectors made real → P5 living OS (crew v2) → P6 direction-loop + 10
@@ -77,10 +96,10 @@ inconsistent → flag + fix before proceeding.
 - Commit trailer: `Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>` (Opus on that track).
 
 ## 8. NEXT SESSION
-1. Get D2 (his 2–3 alignment systems; D3–D5 proceed on defaults). 2. **Phase 1 + 2** (task-send form →
-bus, kill switch, approval queue; leases/ceilings, crash recovery, bus pruning). 3. Then **P5 early** —
-wire the cockpit/residents to the REAL bus (`excava_status.json` already carries the new `os` section:
-beats, per-department load, beat_log, last hand-off) so Eitan SEES the spine.
+1. Get D2 (his 2–3 alignment systems; D3–D5 proceed on defaults). 2. **Phase 5 — the living OS**
+(residents 1:1 with real agents: click → its real queue/trace; job menus; work animations from real
+bus events; fleet-health view; trace viewer "why X over Y" — the traces already carry routed.why/over).
+3. Then Phases 3+4 (creators dept behind the gate; connectors made real).
 4. Transcript drain: 2026-07-03 run hit a pre-existing IP block after 4 videos (auto-stopped correctly);
 1,389 still lack real transcripts — next residential session, retry gentler (`--sleep 6 --limit 60`).
 5. Keep the consistency check + ask-checkpoints running. 6. Update this handoff at session end.

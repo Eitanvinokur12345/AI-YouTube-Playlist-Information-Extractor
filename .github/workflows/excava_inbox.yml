@@ -1,0 +1,62 @@
+name: EXCAVA inbox (GitHub-issue channel)
+
+# Phase 1 of EXCAVA_PROGRAM.md: multi-channel task send. Any issue titled "EXCAVA: <text>"
+# becomes an owner-rank task on the bus (or a command: kill / safe / run / approve <id> /
+# weight <area> <n>). The workflow applies it via src/excava_channel.py, commits, comments
+# the receipt, and closes the issue. The cockpit's send-form opens these issues prefilled —
+# works from the phone, no local machine needed.
+#
+# COST: $0 — no API keys, no tokens, no paid services.
+on:
+  issues:
+    types: [opened, reopened]
+
+concurrency:
+  group: skills-tracker-excava-inbox
+  cancel-in-progress: false
+
+permissions:
+  contents: write   # commit data/ back to the repo
+  issues: write     # comment the receipt + close the issue
+
+jobs:
+  inbox:
+    if: startsWith(github.event.issue.title, 'EXCAVA')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Apply the command / queue the task
+        id: apply
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          RECEIPT=$(python -m src.excava_channel)
+          echo "receipt<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$RECEIPT" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Commit inbox/config change
+        run: |
+          git config user.name "skills-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data
+          git commit -m "excava-inbox: issue #${{ github.event.issue.number }} — $(date -u +%Y-%m-%dT%H:%MZ)" \
+            || echo "nothing to commit"
+          git pull --rebase --autostash origin main || true
+          git push || echo "push skipped"
+
+      - name: Reply + close
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue comment ${{ github.event.issue.number }} --repo ${{ github.repository }} \
+            --body "${{ steps.apply.outputs.receipt }}"
+          gh issue close ${{ github.event.issue.number }} --repo ${{ github.repository }} \
+            --reason completed

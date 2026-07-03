@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v62";
+const APP_BUILD = "v63";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1600,8 +1600,15 @@ async function renderSearchAll() {
 }
 
 // ── EXCAVA: the OS you can SEE working (cockpit home + a live presence strip on every tab) ──
+// The GitHub-issue channel (Phase 1 "you drive it"): the static page can't write to the repo,
+// so drive actions open a PREFILLED issue titled "EXCAVA: …" — CI applies it, replies a
+// receipt, closes the issue. Works from the phone.
+const GH_REPO = "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor";
+const _exIssue = (title, body = "") =>
+  `${GH_REPO}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
 const EX_ICONS = { gemini: "📺", transcript: "📜", analysis: "⚙️", mining: "⛏️", external: "⛏️",
-  news: "📰", links: "🔗", memory: "🧠", visual: "🎨", deep: "🔬", improve: "🧬", security: "🛡️" };
+  news: "📰", links: "🔗", memory: "🧠", visual: "🎨", deep: "🔬", improve: "🧬", security: "🛡️",
+  watch: "📺", core: "🦾" };
 function _exIcon(label) {
   const l = (label || "").toLowerCase();
   for (const k in EX_ICONS) if (l.includes(k)) return EX_ICONS[k];
@@ -1628,7 +1635,9 @@ async function excavaStrip(tab) {
            || ps.lanes.find(l => lc(l).includes(key));
     if (L) dept = `<span>this dept: ${_exIcon(L.label)} ${esc(L.label)} · ${esc(L.status)} · ran ${_ageAgo(L.age_hours)}</span>`;
   }
+  const mode = ((ex.os || {}).mode || "run");
   return `<div class="ex-strip"><b>🦾 EXCAVA</b>
+    ${mode !== "run" ? `<span class="ex-mode ${esc(mode)}">${esc(mode.toUpperCase())}</span>` : ""}
     <span><span class="ex-lamp ${g.internal_allowed ? "on" : "off"}"></span> internal</span>
     <span><span class="ex-lamp ${g.outward_allowed ? "on" : "off"}"></span> outward</span>
     <span>working: ${esc(String(act).slice(0, 48))}</span>${dept}
@@ -1670,9 +1679,12 @@ async function renderCrew(tab) {
   }, 6000);
 }
 async function renderExcava() {
-  const [ex, ps, inbox, gs, rc] = await Promise.all([load("excava_status.json"), load("pipeline_status.json"),
-    load("excava_inbox.json"), load("goals_status.json"), load("resources.json")]);
+  const [ex, ps, inbox, gs, rc, ap, excfg] = await Promise.all([load("excava_status.json"),
+    load("pipeline_status.json"), load("excava_inbox.json"), load("goals_status.json"),
+    load("resources.json"), load("excava_approvals.json"), load("excava_config.json")]);
   const gate = (ex && ex.gate) || {}, mem = (ex && ex.memory) || {};
+  const os = (ex && ex.os) || {};
+  const mode = os.mode || (excfg && excfg.mode) || "run";
   const lanes = ((ps && ps.lanes) || []).slice(0, 8);
   const act = (ex && ex.next_action) || {};
   const tasks = (inbox && inbox.tasks) || [];
@@ -1698,7 +1710,55 @@ async function renderExcava() {
   const taskHTML = tasks.length ? tasks.map(t => `<div class="ex-task">
       <span class="tk ${t.status === "working" ? "w" : t.status === "held" ? "h" : "q"}">${esc((t.status || "queued").toUpperCase())}</span>
       <span>${esc(t.task || "")}</span></div>`).join("")
-    : `<p class="sub">No tasks in the inbox. Send EXCAVA a task by telling Claude "EXCAVA: <task>" or editing <code>data/excava_inbox.json</code> — it works the queue on its own, holding anything outward until the gate is green.</p>`;
+    : `<p class="sub">No tasks in the inbox. Use the send box above, tell Claude "EXCAVA: <task>", or edit <code>data/excava_inbox.json</code> — it works the queue on its own, holding anything outward until the gate is green.</p>`;
+  // ── OS SPINE (Phase 0-2): the bus board, beat log, drive controls, approval queue ──
+  const busPer = (os.bus && os.bus.per_department) || {};
+  const deptChips = Object.entries(busPer).map(([d, c]) =>
+    `<span class="os-dept">${_exIcon(d)} <b>${esc(d)}</b> ${c.queued || 0}q · ${c.working || 0}w · ${c.done || 0}✓${c.held ? ` · <span style="color:#92400e;font-weight:700">${c.held} held</span>` : ""}</span>`).join("")
+    || `<p class="sub">The bus is empty — send a task above.</p>`;
+  const logHTML = ((os.beat_log || []).length ? os.beat_log : ["quiet beat — everything waits on the next cron heartbeat"])
+    .map(l => `<div>· ${esc(l)}</div>`).join("");
+  const lastH = os.bus && os.bus.last_handoff;
+  const weights = (excfg && excfg.priority_weights) || {};
+  const wBars = Object.entries(weights).sort((a, b) => b[1] - a[1]).map(([k, v]) =>
+    `<div class="taste-bar"><span>${esc(k)}</span><i style="width:${v}%"></i><b>${v}</b></div>`).join("");
+  const auditOK = !os.audit || os.audit.ok;
+  const driveHTML = `
+    <div class="card" style="border-top:3px solid var(--gold)">
+      <h3>🕹 You drive it <span class="sub">— send work, flip the mode, tune the dial</span>
+        <span class="ex-mode ${esc(mode)}">${esc(mode.toUpperCase())}</span></h3>
+      <div class="ex-send">
+        <input id="ex-send-input" maxlength="180" placeholder='Send EXCAVA a task… e.g. "resolve links for the newest 50 tools"'>
+        <button class="qr-btn" id="ex-send-btn">send ➤</button>
+      </div>
+      <p class="sub">Send opens a prefilled GitHub issue (works on your phone) — CI queues it at <b>owner rank</b>, replies a receipt, closes the issue. Mode, same channel:
+        <a target="_blank" href="${_exIssue("EXCAVA: kill")}">🔴 kill</a> ·
+        <a target="_blank" href="${_exIssue("EXCAVA: safe")}">🟡 safe</a> ·
+        <a target="_blank" href="${_exIssue("EXCAVA: run")}">🟢 run</a> ·
+        or <a target="_blank" href="https://github.dev/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/excava_inbox.json">edit the inbox directly</a> · or tell Claude “EXCAVA: &lt;task&gt;”.</p>
+      <div class="ex-grid" style="margin-top:10px">
+        <div>
+          <b class="sub">⚙ OS spine — beat #${os.beats || "?"} · audit ${auditOK ? "✅ code matches the guardrails" : `⚠ ${esc(((os.audit || {}).problems || []).join("; ") || "problems")} — auto SAFE`}</b>
+          <div style="margin-top:8px">${deptChips}</div>
+          <div class="os-log">${logHTML}</div>
+          ${lastH ? `<p class="sub" style="margin-top:6px">last hand-off: <a target="_blank" href="${GH_REPO}/blob/main/${esc(lastH)}">${esc(lastH.split("/").pop())}</a> · <a target="_blank" href="${GH_REPO}/tree/main/data/excava/traces">all traces</a></p>` : ""}
+        </div>
+        <div>
+          <b class="sub">🎚 Priority weights — which auto-work reaches the bus first (your inbox always outranks)</b>
+          <div class="taste-bars" style="margin-top:8px">${wBars || "<p class='sub'>defaults active</p>"}</div>
+          <p class="sub">change from anywhere: issue “EXCAVA: weight access 95”</p>
+        </div>
+      </div>
+    </div>`;
+  const pend = (ap && ap.pending) || [];
+  const apHTML = `
+    <div class="card"><h3>🖊 Approval queue <span class="sub">— the only things waiting on YOU (${pend.length})</span></h3>
+      ${pend.length ? pend.map(p => `<div class="ex-task">
+        <span class="tk h">${esc((p.category || "held").toUpperCase())}</span>
+        <span>${esc(p.title || "")} <span class="sub">— ${esc(p.why || "")}</span></span>
+        ${p.id ? `<a class="qr-btn" style="margin-left:auto;flex:none" target="_blank" href="${_exIssue("EXCAVA: approve " + p.id)}">approve ✓</a>` : ""}</div>`).join("")
+      : `<p class="sub">Nothing waits on you. Tasks land here only after 3-tier escalation, an outward gate hold, or an unroutable/missing-resource hold.</p>`}
+    </div>`;
   const goalsMini = goals.map(g => `<span class="pill" title="${esc(g.gap || "")}">${esc(g.id)} ${g.score}</span>`).join(" ");
   view.innerHTML = `
     <div class="card" style="border-top:3px solid var(--gold)">
@@ -1710,6 +1770,8 @@ async function renderExcava() {
       <div class="ex-detail" id="ex-detail">Click a department station to inspect it — what it does, its real status, cadence and last run.</div>
       <p class="sub" style="margin-top:8px">The floor is LIVE: each station is a real pipeline department (lamp = its actual status), each colored bot is that department's crew carrying its current work. Stale departments dim until their next run.</p>
     </div>
+    ${driveHTML}
+    ${apHTML}
     <div class="card"><h3>⭐ North Star <span class="sub">— the 8 goals, scored as law every cycle</span></h3>
       <div class="taste-bars">${goals.map(g => `<div class="taste-bar" title="${esc(g.gap || "")}">
         <span style="width:150px">${esc(g.id)} ${esc(g.name)}</span>
@@ -1737,6 +1799,16 @@ async function renderExcava() {
       <p class="sub">Can do now: ${Object.entries(rc.can_do || {}).map(([k, v]) => `${v.ok ? "✅" : "⛔"} ${esc(k)}`).join(" · ")}</p>
     </div>` : ""}`;
   view.querySelectorAll("[data-goto]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); show(a.dataset.goto); }));
+  // Phase 1 task-send: the box builds the prefilled "EXCAVA: …" issue (owner-rank channel)
+  const sendIt = () => {
+    const inp = view.querySelector("#ex-send-input");
+    const v = (inp && inp.value || "").trim();
+    if (v) window.open(_exIssue("EXCAVA: " + v, "Sent from the cockpit send box."), "_blank");
+  };
+  const sBtn = view.querySelector("#ex-send-btn");
+  if (sBtn) sBtn.addEventListener("click", sendIt);
+  const sInp = view.querySelector("#ex-send-input");
+  if (sInp) sInp.addEventListener("keydown", e => { if (e.key === "Enter") sendIt(); });
   // station click-through: inspect a department
   const det = view.querySelector("#ex-detail");
   view.querySelectorAll(".ex-station").forEach((el, i) => el.addEventListener("click", () => {

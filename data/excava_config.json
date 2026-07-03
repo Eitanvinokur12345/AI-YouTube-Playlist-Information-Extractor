@@ -1,7 +1,15 @@
 {
   "name": "EXCAVA",
   "tagline": "the agentic OS that operates Excavatortron toward the 6 goals",
-  "updated_at": "2026-06-29",
+  "updated_at": "2026-07-03",
+  "mode": "run",
+  "mode_help": "run = normal · safe = sync+route but no worker acts · kill = bus untouched. Flip via GitHub issue 'EXCAVA: kill|safe|run' (cockpit has the buttons) or edit here.",
+  "priority_weights": {
+    "access": 90,
+    "backlog": 70,
+    "pipeline": 60,
+    "maintenance": 40
+  },
   "phases": {
     "OS-1 operator": "live — reads goals+priorities+memory, runs the safe internal work, reports",
     "OS-2 creator": "gated — wires the hub's create/promote/publish tools; outward actions need the gate green + owner approval",

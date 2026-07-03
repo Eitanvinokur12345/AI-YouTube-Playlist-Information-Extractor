@@ -74,11 +74,15 @@ def _write_bus(bus: dict) -> None:
 
 
 def event(task_id: str, kind: str, data: dict | None = None) -> None:
-    """Append one trace event. Traces answer 'why X over Y' — never deleted, one file per task."""
+    """Append one trace event. Traces answer 'why X over Y' — never deleted, one file per task.
+    Also mirrored into a bounded recent-events ring the living-OS cockpit reads (Phase 5)."""
     TRACES.mkdir(parents=True, exist_ok=True)
     rec = {"at": _now(), "kind": kind, **(data or {})}
     with open(TRACES / f"{task_id}.jsonl", "a", encoding="utf-8") as fh:
         fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    ring = _read(EXDIR / "recent_events.json", {"events": []})
+    ring["events"] = (ring.get("events", []) + [{"task": task_id, **rec}])[-40:]
+    _atomic_write(EXDIR / "recent_events.json", ring)
 
 
 def enqueue(title: str, detail: str = "", department: str = "", source: str = "auto",

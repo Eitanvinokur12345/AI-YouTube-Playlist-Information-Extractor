@@ -43,6 +43,26 @@ The thing that turns the tab pile into an OS. Build first; everything depends on
 - **0.6** Per-task `done_criteria` + `max_steps` + termination — nothing runs away silently.
 - **Done when:** two departments pass one task via the bus with a real handoff doc, visible in a trace,
   gate-enforced. Also builds goal 5 (graphify-style self-graph) as a stretch inside this phase.
+- ✅ **SHIPPED 2026-07-03** (see SESSION_HANDOFF §3).
+
+## PHASE 0.7 — PROJECT MEMORY MASTER  (added 2026-07-03, owner-directed)  · Python · serves EVERY later phase
+**The rule: no AI tool — Claude, EXCAVA agents, Opus, anything — starts a change from scratch.** Every
+change starts from what the project already knows about every prior change, however small. Token use
+drops because context is RECALLED, not re-derived.
+- **0.7.1** `src/project_memory.py` + `data/project_memory/`: an **episode ledger** (JSONL — one line per
+  change: when/what/files/why/by-whom) + a **brain graph** (Obsidian/graphify-style nodes+links over
+  files↔episodes↔topics, feeding the existing brain tab later).
+- **0.7.2** **AUTO ingestion** (owner-chosen mode: auto + manual WHY): every EXCAVA beat ingests new git
+  commits + bus traces into episodes — zero effort, never forgotten. Playwright is NOT needed for our own
+  repo (it's the extraction engine for Phase 9 sources); the memory master is git+bus based.
+- **0.7.3** **Manual WHY contract**: `PROJECT_MEMORY.md` at repo root instructs every AI tool: (a) BEFORE
+  changing anything, run `python -m src.project_memory recall "<topic/files>"` and start from that; (b)
+  AFTER a meaningful change, log one WHY line via `python -m src.project_memory log ...`. EXCAVA's own
+  agents obey the same contract through the bus (hand-off docs double as episodes).
+- **0.7.4** Recall returns a compact **context pack** (recent episodes touching those files/topics +
+  linked graph nodes + the relevant hand-off docs) — small enough to paste anywhere, incl. non-Claude tools.
+- **Done when:** `recall` answers "what happened around X?" correctly for the last 30 days of real
+  history, and the beat auto-ingests without growing unbounded (pruning/rollup included).
 
 ## PHASE 1 — YOU DRIVE IT  (task intake + control)  · Fable UI + Python · covers G4(part),5,19,24,42,46,52g
 - **1.1** Multi-channel task send (G46): keep the JSON inbox; add a cockpit **"Send EXCAVA a task"** form
@@ -131,6 +151,28 @@ provider-agnostic runtime (G25) · event-condition-action rules (G48) · auto en
 - **8.3** `formats.json` → a "Formats" filter inside the Designs tab; brain white-node + title-collision
   cleanup (known P-plan gaps).
 
+## PHASE 9 — OMNI-SOURCE INTAKE  (added 2026-07-03, owner-directed)  · Python + Playwright/agent-reach · feeds G1
+**Extract capability-knowledge from beyond the playlist**: YouTube-outside-playlist, Instagram, TikTok,
+LinkedIn, X/Twitter, Reddit, Facebook, Telegram, AI WhatsApp groups, and general whole-internet search.
+Owner decision 2026-07-03: **public-only, free** (no logins/cookies for now); toolkit assist =
+**agent-reach** (MIT, ~26k★, keyless CLI for web/GitHub/YouTube/RSS/X-read; its Reddit/IG/FB paths need
+logins → skipped). Every intake passes security_preflight + the trust-score gate before touching the hub.
+- **TIER 1 (buildable now, keyless):** Reddit public JSON · Telegram public channels (t.me/s previews) ·
+  DuckDuckGo/SearXNG whole-web search · YouTube-beyond-playlist (existing free API key, search quota) ·
+  RSS (already live) · X/Twitter read-only via agent-reach/nitter mirrors (flaky, best-effort) ·
+  arbitrary-page reading via agent-reach's Jina Reader.
+- **TIER 2 (needs owner action, still free):** WhatsApp groups via manual chat export (.txt dropped in
+  repo — no free API exists) · Exa search free signup (optional; DDG is the no-signup fallback).
+- **TIER 3 (locked, declined for now):** Instagram/TikTok/Facebook/LinkedIn feeds need account
+  cookies/sessions → revisit only if Eitan later opts in (D-source decision parked in QUESTIONS.md).
+- **9.1** `src/mine_social.py` + `data/social_sources.json` (which subreddits/channels/queries — owner
+  fills over time) → intake lane in the **mining department**, daily workflow, everything gated.
+- **9.2** Playwright renders JS-heavy public pages in CI when plain HTTP fails (also the seed of the
+  Phase-4 sandbox test-runs).
+- **9.3** Source **trust-scores** (D2 pick) gate what intake may touch; per-source coverage shows on the
+  Sources tab.
+- **Done when:** ≥3 tier-1 sources feed real, gated items into the hub on a daily cadence.
+
 ---
 
 ## RESERVED FOR OPUS 4.8 (not Fable — data/logic accuracy)
@@ -139,10 +181,12 @@ provider-agnostic runtime (G25) · event-condition-action rules (G48) · auto en
 - Dashboard preview loads in **<3s**, with **Arena images prioritized**.
 - Data-retrieval quality/accuracy improvements + anything Fable built that's inaccurate.
 
-## SEQUENCING
-0 (spine) → then 1 (control) + 2 (safe 24/7) together → **5 early** (so you SEE the spine working) →
-3 + 4 (capabilities) → 6 (alignment) → 7 + 8 (breadth + cleanup). P0 link-coverage keeps climbing the
-whole time. Each phase ends with a change-tutorial (Phase 6 mechanism) so you always know what shifted.
+## SEQUENCING (updated 2026-07-03 after owner answers)
+0 ✅ → 1+2 ✅ → **0.7 memory master + 5 living-OS + 9-tier-1 miners (this arc)** → 3 + 4 (capabilities)
+→ 6 (alignment: direction-loop + change-tutorials FIRST per D2, built as deep daemon-grade integration —
+CORTEX-OS-style, every lane/agent wired through the bus, nothing cosmetic; HORSE fan-out joins here) →
+7 + 8 (breadth + cleanup) → 9 tiers 2-3 as unlocked. Link-coverage keeps climbing the whole time. Each
+phase ends with a change-tutorial so you always know what shifted.
 
 ## GOAL → PHASE MAP (traceability, all 52)
 P0: 1,2,6,7,8,13(seed),14,17,18,27,29,30,40 · P1: 5(control),19,24,42,46,52g · P2: 9,16,21,32,33,36,39,51,52a-h ·
@@ -163,13 +207,16 @@ checkpoint: ask (park in QUESTIONS.md), proceed on the stated default, adjust wh
 - **P7:** which linked project to make the harness portable to first. _Default: Budoaris._
 - **P8:** the G9 goal name + whether to re-weight the North Star. _Default: "Agency/Orchestration", equal weight._
 
-## OPEN DECISIONS (answer any; work can start on P0 regardless)
-- **D1 (biggest):** cron-heartbeat 24/7 (free, recommended) or pursue an always-on runner?
-- **D2:** name 2-3 of your "10 systems" so I finalize the set (Phase 6.2).
-- **D3:** approve as ONE program, or ship it in the sequenced sub-programs above (approve each)?
-- **D4:** should this whole rebuild jump ahead of P6-leftovers/formats/brain-cleanup, or after? (Plan
-  currently interleaves; P8 does cleanup last.)
-- **D5:** connectors — after Phase 4 the tab likely SHRINKS a lot (only verified ones shown). OK?
+## OPEN DECISIONS
+- **D1 ✅ ANSWERED 2026-07-03: cron heartbeat.** Phase 0 built on it same day.
+- **D2 ✅ ANSWERED 2026-07-03: direction-loop + change-tutorials first**, delivered as DEEP integration
+  ("like a daemon for the entire project, not something casual, like in cortexOS — a clean daemon part
+  of the OS that connects, or full integration") + HORSE-style fan-out pulled into Phase 6 scope.
+- **D3 (default: one program, per-phase ask-checkpoints running)** — proceeding on default.
+- **D4 (default: spine-first, cleanup in P8)** — proceeding on default.
+- **D5 (default: yes, shrink connectors to verified-only)** — proceeding on default.
+- **D6 (new): locked social sources (IG/TikTok/FB/LinkedIn feeds) need your cookies — opt in ever?**
+  _Default: no; public-only stands._
 
 ---
 

@@ -33,7 +33,13 @@ The 6 goals miss two things we now actually build for:
 
 ## F. Program gate decisions D1–D5 (from EXCAVA_PROGRAM.md, 2026-07-03)
 17. **D1 — architecture** — ✅ ANSWERED 2026-07-03: **cron heartbeat** (Eitan picked it live in-session). Phase 0 built on it same day: the hourly `python -m src.excava` beat in bulk_analyze.yml IS the heartbeat; the file bus resumes state between beats.
-18. **D2 — the 10 alignment systems (Phase 6):** name the 2–3 you want FIRST from: direction-loop, self-extending guardrails, DISCOVERY file, priority-weights, goals-re-score, approval queue, change-tutorials, proactive digest, session-start memory-audit, source trust-scores. _No default — needs you (only gates Phase 6, not Phase 0)._
+18. **D2** — ✅ ANSWERED 2026-07-03: **direction-loop + change-tutorials first**, and the integration must be DAEMON-GRADE ("like a daemon for the entire project, not something casual, like in cortexOS — a clean daemon part of the OS that connects, or full integration"). HORSE-style fan-out pulled into Phase 6 scope. First daemon step shipped same day: every lane's runs now become OS bus events (the cockpit's 📡 feed).
 19. **D3 — approval style:** approve the program as ONE block, or phase-by-phase sign-off? _Default: one block, with the per-phase ask-checkpoints still running._
 20. **D4 — rebuild order:** spine-first as planned (P0 before any cleanup), or interleave small cleanups? _Default: spine-first._
 21. **D5 — connectors tab:** OK to shrink it to verified-only once Phase 4 resolves real installs (94% are empty today)? _Default: yes._
+
+## G. Omni-source intake + memory master (2026-07-03 owner additions)
+22. **Your communities:** which subreddits / public Telegram channels / search queries should tier-1 intake watch? Starter set is in `data/social_sources.json` (LocalLLaMA, ClaudeAI, ChatGPTCoding, artificial, AI_Agents; Telegram empty — t.me/s only works for PUBLIC channels). _Default: keep the starter set, grow it over time._
+23. **WhatsApp groups:** the only free path is you exporting a group chat (.txt, no media) from your phone into `data/whatsapp_exports/` occasionally — the miner parses the links out. Want a short how-to tutorial for that? _Default: yes, added with the Phase-6 change-tutorials._
+24. **D6 — locked feeds (Instagram/TikTok/Facebook/LinkedIn):** these need your logged-in cookies stored as CI secrets, with real risk of account flags. Ever opt in? _Default: no — public-only stands._
+25. **Daemon interpretation check:** I read your D2 note as "every part of the project reports through the OS bus (all 16 lanes now emit events), residents/cockpit react to real machine-wide events, and EXCAVA is the single connective layer — not a cosmetic overlay." First step shipped (lane events). If you meant something MORE (e.g. an actual resident process on a host), say so — the free-only + PC-off rules currently make the cron heartbeat the only clean daemon body. _Default: my reading._

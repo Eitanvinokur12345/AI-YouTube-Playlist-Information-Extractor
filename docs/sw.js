@@ -1,21 +1,21 @@
-// Service worker for the AI Skills Tracker (Excavatortron) dashboard.
+﻿// Service worker for the AI Skills Tracker (Excavatortron) dashboard.
 //
 // Jobs:
 //   1. Make the dashboard installable as a PWA on phone AND desktop.
 //   2. Cache the app SHELL so it loads instantly and works with no connection.
 //   3. Cache DATA files (../data/*.json, config.json) so the dashboard shows
-//      the LAST KNOWN data when offline — always tries the network first so
+//      the LAST KNOWN data when offline â€” always tries the network first so
 //      you always see fresh data when connected.
 //
 // Bump SHELL_CACHE to force the shell to refresh (after changing index.html/dashboard.js).
 // DATA_CACHE version is independent; bump it to purge old data caches.
-const SHELL_CACHE = "ai-skills-shell-v63";
+const SHELL_CACHE = "ai-skills-shell-v64";
 const DATA_CACHE  = "ai-skills-data-v1";
 const SHELL = [
   "./", "./index.html", "./dashboard.js", "./manifest.webmanifest", "./icon.png",
 ];
 
-// ── install: pre-cache the app shell ──────────────────────────────────────────
+// â”€â”€ install: pre-cache the app shell â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(SHELL_CACHE)
@@ -25,7 +25,7 @@ self.addEventListener("install", (event) => {
   );
 });
 
-// ── activate: evict caches from old versions ───────────────────────────────────
+// â”€â”€ activate: evict caches from old versions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys()
@@ -38,13 +38,13 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-// ── fetch ─────────────────────────────────────────────────────────────────────
+// â”€â”€ fetch â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 self.addEventListener("fetch", (event) => {
   const req = event.request;
   if (req.method !== "GET") return;
   const url = new URL(req.url);
 
-  // ── JSON data files (../data/*.json and ../config.json) ────────────────────
+  // â”€â”€ JSON data files (../data/*.json and ../config.json) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // Strategy: network-first, update cache on success, serve cached copy offline.
   // This means: when online, you always see the freshest data; when offline, you
   // see the last version that was loaded while online.
@@ -70,7 +70,7 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // ── App shell (html / js / manifest / images / css) ───────────────────────
+  // â”€â”€ App shell (html / js / manifest / images / css) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // Strategy: network-first so updates appear promptly; fall back to cache offline.
   if (!url.pathname.endsWith("/") && !/\.(html|js|webmanifest|png|css|svg|ico)$/.test(url.pathname)) {
     return; // everything else (YouTube links, etc.) goes straight to the network

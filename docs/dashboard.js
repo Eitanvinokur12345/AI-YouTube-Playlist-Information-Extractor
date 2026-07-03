@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v63";
+const APP_BUILD = "v64";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -78,6 +78,13 @@ async function load(file) {
 }
 // Invalidate a specific file's cache (e.g. after an approve action)
 function invalidate(file) { delete _cache[file]; }
+// Raw-text loader (JSONL traces etc.) — no cache, "" on miss. Phase 5 trace viewer uses it.
+async function loadText(file) {
+  try {
+    const r = await fetch(DATA + file, { cache: "no-store" });
+    return r.ok ? await r.text() : "";
+  } catch { return ""; }
+}
 
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, c =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -1679,9 +1686,10 @@ async function renderCrew(tab) {
   }, 6000);
 }
 async function renderExcava() {
-  const [ex, ps, inbox, gs, rc, ap, excfg] = await Promise.all([load("excava_status.json"),
+  const [ex, ps, inbox, gs, rc, ap, excfg, reg] = await Promise.all([load("excava_status.json"),
     load("pipeline_status.json"), load("excava_inbox.json"), load("goals_status.json"),
-    load("resources.json"), load("excava_approvals.json"), load("excava_config.json")]);
+    load("resources.json"), load("excava_approvals.json"), load("excava_config.json"),
+    load("excava/agents.json")]);
   const gate = (ex && ex.gate) || {}, mem = (ex && ex.memory) || {};
   const os = (ex && ex.os) || {};
   const mode = os.mode || (excfg && excfg.mode) || "run";
@@ -1760,17 +1768,68 @@ async function renderExcava() {
       : `<p class="sub">Nothing waits on you. Tasks land here only after 3-tier escalation, an outward gate hold, or an unroutable/missing-resource hold.</p>`}
     </div>`;
   const goalsMini = goals.map(g => `<span class="pill" title="${esc(g.gap || "")}">${esc(g.id)} ${g.score}</span>`).join(" ");
+  // ── PHASE 5, the LIVING OS: residents 1:1 with real agents, fleet health, queue + trace viewer ──
+  const deptsReg = (reg && reg.departments) || {};
+  const regAgents = (reg && reg.agents) || [];
+  const busTasks = os.tasks || [];
+  // residents v2: one bot per department with REAL open work; its chip is the actual task
+  const workBots = Object.entries(busPer)
+    .filter(([d, c]) => d !== "(unrouted)" && (c.queued || 0) + (c.working || 0) > 0)
+    .slice(0, 8).map(([d], i) => {
+      const hint = String((deptsReg[d] || {}).lane_hint || d).split(" ")[0].toLowerCase();
+      const st = stations.find(s => (s.label || "").toLowerCase().includes(hint))
+        || stations[i % Math.max(stations.length, 1)] || { x: 50, y: 80 };
+      const t = busTasks.find(x => x.department === d) || {};
+      const w = regAgents.find(a => a.department === d && a.tier === 1) || {};
+      return `<div class="ex-bot" style="background:${BOTC[i % BOTC.length]};--sx:50%;--sy:45%;--ex:${st.x}%;--ey:${st.y}%;--dur:${5.5 + (i % 4) * 1.6}s;--delay:${-i * 1.7}s"
+        title="${esc(w.id || d)} — ${esc(t.title || "on the bus")}">
+        <span class="ex-chip">${esc(d)}: ${esc(String(t.title || "work").split(" ").slice(0, 2).join(" "))}</span></div>`;
+    }).join("");
+  const bpMap = os.backpressure || {}, usage = os.usage || {};
+  const fleetHTML = `
+    <div class="card"><h3>🛠 Fleet health <span class="sub">— every department: its worker, real counters, who's resting</span></h3>
+      <div class="fleet">${Object.keys(deptsReg).sort().map(d => {
+        const u = usage[d] || {}, c = busPer[d] || {}, bp = bpMap[d] || {};
+        const cooling = bp.cooldown_until && bp.cooldown_until > new Date().toISOString();
+        const w = regAgents.find(a => a.department === d && a.tier === 1);
+        return `<div class="dep">${_exIcon(d)} <b>${esc(d)}</b>${deptsReg[d].gated ? " 🔒 gated" : ""}<br>
+          <span class="sub">${esc(w ? w.id : "unstaffed until Phase 3")}</span><br>
+          ${c.queued || 0} queued · ${c.working || 0} working · ${u.done || 0} done · ${u.handoffs || 0} hand-offs · ${u.fails || 0} fails
+          ${cooling ? `<br><span class="cool">😮‍💨 resting until ${esc(String(bp.cooldown_until).slice(11, 16))} UTC (backpressure)</span>` : ""}</div>`;
+      }).join("")}</div></div>`;
+  const evs = (os.recent_events || []).slice().reverse();
+  const _evTxt = e => String(e.why || e.what || e.doc || e.result || e.reason || "").slice(0, 70);
+  const queueHTML = `
+    <div class="ex-grid">
+      <div class="card"><h3>🚌 Live bus queue <span class="sub">— click a task to see its full trace (why X over Y)</span></h3>
+        ${busTasks.length ? busTasks.map(t => `<div class="ex-task os-task-row" data-trace="${esc(t.id)}">
+          <span class="tk ${t.status === "working" ? "w" : t.status === "held" ? "h" : "q"}">${esc(String(t.status).toUpperCase())}</span>
+          <span>${_exIcon(t.department || "")} <b>${esc(t.department || "unrouted")}</b> · ${esc(t.title)}
+            <span class="sub">step ${t.steps || 0} · from ${esc(t.source || "?")}${t.doc ? " · has hand-off doc" : ""}</span></span></div>`).join("")
+        : `<p class="sub">Bus is clear — everything is done or waiting for the next heartbeat.</p>`}
+        <div id="trace-view"></div>
+      </div>
+      <div class="card"><h3>📡 OS events <span class="sub">— the daemon feed: everything the OS saw machine-wide</span></h3>
+        <div class="os-log" style="max-height:280px">${evs.length ? evs.map(e =>
+          `<div>· [${esc(String(e.at || "").slice(11, 16))}] <b>${esc(e.kind)}</b> ${esc(e.lane || e.chose || e.department || "")} ${esc(_evTxt(e))}</div>`).join("")
+          : "<div>· events appear here as beats run</div>"}</div>
+      </div>
+    </div>`;
+  const maint = mode !== "run"
+    ? `<div class="ex-maint"><b>${mode === "kill" ? "⛔ KILL SWITCH — the OS is stopped" : "🔧 MAINTENANCE — safe mode, assess only"}</b></div>` : "";
   view.innerHTML = `
     <div class="card" style="border-top:3px solid var(--gold)">
       <h3>🦾 EXCAVA <span class="sub">— the agentic OS running this project</span>
         <span class="pl-badge ${gate.internal_allowed ? "pl-live" : "pl-stale"}">${gate.internal_allowed ? "OPERATING" : "GATE CLOSED"}</span></h3>
       <p class="sub">Phase: ${esc(ex && ex.phase || "OS-1 operator")} · memory: <b>${mem.vectors || 0}</b> vectors ·
         outward actions ${gate.outward_allowed ? "OPEN" : `held (${esc((gate.checks || {}).truth_access_G3 ?? "?")} / 70 truth&access)`} · goals: ${goalsMini}</p>
-      <div class="ex-floor">${stHTML}${bots}<div class="ex-core">EXCAVA<small>AGENTIC CORE</small></div></div>
+      <div class="ex-floor">${maint}${stHTML}${workBots || bots}<div class="ex-core">EXCAVA<small>AGENTIC CORE</small></div></div>
       <div class="ex-detail" id="ex-detail">Click a department station to inspect it — what it does, its real status, cadence and last run.</div>
-      <p class="sub" style="margin-top:8px">The floor is LIVE: each station is a real pipeline department (lamp = its actual status), each colored bot is that department's crew carrying its current work. Stale departments dim until their next run.</p>
+      <p class="sub" style="margin-top:8px">The floor is LIVE: each station is a real pipeline department (lamp = its actual status), each colored bot is a real registered agent carrying its department's actual bus task — hover one to see who it is and what it holds.</p>
     </div>
     ${driveHTML}
+    ${fleetHTML}
+    ${queueHTML}
     ${apHTML}
     <div class="card"><h3>⭐ North Star <span class="sub">— the 8 goals, scored as law every cycle</span></h3>
       <div class="taste-bars">${goals.map(g => `<div class="taste-bar" title="${esc(g.gap || "")}">
@@ -1809,6 +1868,22 @@ async function renderExcava() {
   if (sBtn) sBtn.addEventListener("click", sendIt);
   const sInp = view.querySelector("#ex-send-input");
   if (sInp) sInp.addEventListener("keydown", e => { if (e.key === "Enter") sendIt(); });
+  // Phase 5 trace viewer: click a bus task -> fetch its real JSONL trace, show why X over Y
+  view.querySelectorAll(".os-task-row").forEach(el => el.addEventListener("click", async () => {
+    const id = el.dataset.trace;
+    const tv = view.querySelector("#trace-view");
+    if (!tv) return;
+    tv.innerHTML = `<p class="sub">loading trace ${esc(id)}…</p>`;
+    const txt = await loadText(`excava/traces/${id}.jsonl`);
+    if (!txt) { tv.innerHTML = `<p class="sub">no trace on disk for ${esc(id)} (it may not be committed yet).</p>`; return; }
+    const rows = txt.trim().split("\n").map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean);
+    tv.innerHTML = `<p class="sub" style="margin-top:8px"><b>trace — ${esc(id)}</b> (${rows.length} events)</p>` + rows.map(ev => {
+      const extra = ev.kind === "routed"
+        ? `chose <b>${esc(ev.chose)}</b>${(ev.over || []).length ? ` over ${(ev.over || []).map(esc).join(", ")}` : ""} — ${esc(ev.why || "")}`
+        : esc(String(ev.doc || ev.result || ev.reason || ev.by || ev.title || "").slice(0, 140));
+      return `<div class="tr-ev">[${esc(String(ev.at || "").slice(0, 16))}] <b>${esc(ev.kind)}</b> ${extra}</div>`;
+    }).join("");
+  }));
   // station click-through: inspect a department
   const det = view.querySelector("#ex-detail");
   view.querySelectorAll(".ex-station").forEach((el, i) => el.addEventListener("click", () => {

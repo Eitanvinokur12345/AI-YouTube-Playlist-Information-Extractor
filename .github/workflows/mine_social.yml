@@ -1,0 +1,45 @@
+name: Omni-source intake (tier 1)
+
+# Phase 9 of EXCAVA_PROGRAM.md (owner-directed 2026-07-03): mine PUBLIC, FREE sources beyond
+# the playlist — Reddit RSS, public Telegram channels, DuckDuckGo whole-web search, YouTube
+# beyond-playlist (existing free key), WhatsApp exports the owner drops in the repo.
+# Output = data/social_intake.json, an INTAKE QUEUE the mining lane consumes through the
+# verify+security gate. Locked platforms (IG/TikTok/FB/LinkedIn) stay out until D6 opts in.
+#
+# COST: $0 — public endpoints only, no logins, no cookies, no paid services.
+on:
+  schedule:
+    - cron: "20 6 * * *"      # daily, off the busy hours of the other lanes
+  workflow_dispatch:
+
+concurrency:
+  group: skills-tracker-social
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  intake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Mine tier-1 public sources
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: python -m src.mine_social
+
+      - name: Commit intake
+        run: |
+          git config user.name "skills-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/social_intake.json
+          git commit -m "social-intake (tier 1): $(date -u +%Y-%m-%dT%H:%MZ)" \
+            || echo "nothing to commit"
+          git pull --rebase --autostash origin main || true
+          git push || echo "push skipped"

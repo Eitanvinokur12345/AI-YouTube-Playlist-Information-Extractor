@@ -4,10 +4,27 @@ _Everything a fresh session needs to continue Excavatortron/EXCAVA with zero con
 Last updated: 2026-07-02. Keep this current at the end of every working session._
 
 ## 0. FIRST ACTIONS (do before anything)
-1. **Load memory** (re-read specifically): `project_excavatortron`, `project-excava-makeit-work`, `project-excava-roadmap`, `project-excava-direction-loop` (⚠ missed once before), `feedback-fable-workflow`, `feedback-nosg`, `feedback-ship-visible-progress`, `feedback-consistency-check`.
-2. **Read the plan**: `EXCAVA_PROGRAM.md` (approved-pending program: 56 goals / 9 phases / ask-checkpoints), `PLAN.md` (P/F history), `QUESTIONS.md` (open, non-blocking).
-3. **Run the consistency check** (§6) and keep running it after every task.
-4. **D1 ANSWERED 2026-07-03: cron heartbeat** → **Phase 0 SHIPPED same day** (see §3). D2–D5 still open in QUESTIONS.md §F (D2 — his 2-3 alignment systems — has no default and gates Phase 6 only).
+1. **PROJECT MEMORY MASTER (Phase 0.7, owner law):** before touching ANYTHING run
+   `python -m src.project_memory recall "<topic>"` and start from it; after meaningful changes
+   `python -m src.project_memory log --what ... --why ...`. Full contract: `PROJECT_MEMORY.md`.
+2. **Load memory** (re-read specifically): `project_excavatortron`, `project-excava-makeit-work`, `project-excava-roadmap`, `project-excava-direction-loop` (⚠ missed once before), `feedback-fable-workflow`, `feedback-nosg`, `feedback-ship-visible-progress`, `feedback-consistency-check`.
+3. **Read the plan**: `EXCAVA_PROGRAM.md` (now phases 0–9 incl. 0.7 memory-master + 9 omni-source), `PLAN.md` (P/F history), `QUESTIONS.md` (open, non-blocking).
+4. **Run the consistency check** (§6) and keep running it after every task.
+5. **Decisions:** D1 ✅ cron heartbeat · D2 ✅ direction-loop + change-tutorials, DAEMON-GRADE integration (see QUESTIONS #18/#25) · D3–D5 on defaults · D6 (locked social feeds) default no.
+
+## 0b. SHIPPED 2026-07-03 (second arc): 0.7 + 5 + 9-tier-1, dashboard v64
+- **Phase 0.7 memory master**: `src/project_memory.py` + `data/project_memory/` + root
+  `PROJECT_MEMORY.md`; auto-ingests commits+bus traces every beat; `recall`/`log` CLI; rollup at 90d.
+- **Phase 5 living OS (v64)**: fleet-health card (11 depts, real counters, cooldowns), live bus
+  queue with per-task TRACE VIEWER (real "chose X over Y" routing), 📡 OS-events daemon feed,
+  floor bots = real registered agents carrying their actual bus task, maintenance overlay on
+  safe/kill. Special visitors + job menus still open (P5 leftovers).
+- **Daemon step 1 (D2)**: every beat converts pipeline-lane runs into bus events — the OS sees
+  all 16 lanes, not just its own ticks.
+- **Phase 9 tier-1**: `src/mine_social.py` + `data/social_sources.json` + daily
+  `mine_social.yml` → `data/social_intake.json` (intake QUEUE, gated before hub). Reddit=RSS
+  (json is 403-blocked), DDG needs the Chrome UA, Jina Reader verified as universal fallback;
+  agent-reach (MIT, keyless parts) endorsed by owner — deeper integration next arc.
 
 ## 1. WHAT THIS IS
 A **personal build-leverage system** for Eitan — a hub of every AI capability (tools/skills/models/MCP/
@@ -96,10 +113,12 @@ inconsistent → flag + fix before proceeding.
 - Commit trailer: `Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>` (Opus on that track).
 
 ## 8. NEXT SESSION
-1. Get D2 (his 2–3 alignment systems; D3–D5 proceed on defaults). 2. **Phase 5 — the living OS**
-(residents 1:1 with real agents: click → its real queue/trace; job menus; work animations from real
-bus events; fleet-health view; trace viewer "why X over Y" — the traces already carry routed.why/over).
-3. Then Phases 3+4 (creators dept behind the gate; connectors made real).
-4. Transcript drain: 2026-07-03 run hit a pre-existing IP block after 4 videos (auto-stopped correctly);
+1. **Phases 3+4** per sequencing (creators dept behind the gate; connectors made real + sandbox
+test-runs). 2. P5 leftovers: job menus on residents, special visitors, per-dept animation vocabulary.
+3. **Phase 9 deepening**: wire `social_intake.json` consumption into the mining lane's verify+security
+gate (intake → hub); integrate agent-reach's keyless tools; Eitan's channel/subreddit list (Q22).
+4. **Phase 6 start (D2)**: direction-loop + change-tutorials, daemon-grade (see QUESTIONS #25).
+5. Transcript drain: 2026-07-03 run hit a pre-existing IP block after 4 videos (auto-stopped correctly);
 1,389 still lack real transcripts — next residential session, retry gentler (`--sleep 6 --limit 60`).
-5. Keep the consistency check + ask-checkpoints running. 6. Update this handoff at session end.
+6. Keep the consistency check + ask-checkpoints + PROJECT_MEMORY contract running. 7. Update this
+handoff at session end.

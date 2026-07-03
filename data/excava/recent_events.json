@@ -1,0 +1,127 @@
+{
+  "events": [
+    {
+      "task": "only-381-1555-videos-ana-73320",
+      "at": "2026-07-03T10:08:40.260325+00:00",
+      "kind": "enqueued",
+      "title": "Only 381/1555 videos analyzed (24.5%)",
+      "source": "auto",
+      "priority": 1,
+      "department": "(unrouted)"
+    },
+    {
+      "task": "lane-transcript-retrieva-73320",
+      "at": "2026-07-03T10:08:40.290172+00:00",
+      "kind": "enqueued",
+      "title": "Lane 'Transcript retrieval' is slow",
+      "source": "auto",
+      "priority": 1,
+      "department": "(unrouted)"
+    },
+    {
+      "task": "weakest-lane-deep-analys-73320",
+      "at": "2026-07-03T10:08:40.345456+00:00",
+      "kind": "enqueued",
+      "title": "Weakest lane: Deep analysis (Claude, night-gated)",
+      "source": "auto",
+      "priority": 1,
+      "department": "(unrouted)"
+    },
+    {
+      "task": "empty-body-items-render--31649",
+      "at": "2026-07-03T10:08:40.403035+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "title-collisions-distinc-31649",
+      "at": "2026-07-03T10:08:40.433973+00:00",
+      "kind": "unroutable",
+      "why": "no department specialization matched"
+    },
+    {
+      "task": "only-381-1555-videos-ana-73320",
+      "at": "2026-07-03T10:08:40.467844+00:00",
+      "kind": "routed",
+      "chose": "analysis",
+      "over": [],
+      "why": "best specialization match (1 hits)"
+    },
+    {
+      "task": "lane-transcript-retrieva-73320",
+      "at": "2026-07-03T10:08:40.499228+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "weakest-lane-deep-analys-73320",
+      "at": "2026-07-03T10:08:40.562482+00:00",
+      "kind": "routed",
+      "chose": "analysis",
+      "over": [
+        "improve"
+      ],
+      "why": "best specialization match (1 hits)"
+    },
+    {
+      "task": "only-381-1555-videos-ana-73320",
+      "at": "2026-07-03T10:08:40.623711+00:00",
+      "kind": "claimed",
+      "by": "analysis-w1",
+      "department": "analysis"
+    },
+    {
+      "task": "only-381-1555-videos-ana-73320",
+      "at": "2026-07-03T10:08:40.683748+00:00",
+      "kind": "completed",
+      "by": "analysis-w1",
+      "result": "391 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "task": "1665-tools-skills-still--64934",
+      "at": "2026-07-03T10:08:40.744349+00:00",
+      "kind": "claimed",
+      "by": "memory-w1",
+      "department": "memory"
+    },
+    {
+      "task": "1665-tools-skills-still--64934",
+      "at": "2026-07-03T10:08:41.073886+00:00",
+      "kind": "completed",
+      "by": "memory-w1",
+      "result": "Semantic index: 1417 vectors (model gemini-embedding-001); hub 4756 items → 3339 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "task": "empty-body-items-render--31649",
+      "at": "2026-07-03T10:21:30.189647+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "title-collisions-distinc-31649",
+      "at": "2026-07-03T10:21:30.192044+00:00",
+      "kind": "unroutable",
+      "why": "no department specialization matched"
+    },
+    {
+      "task": "lane-transcript-retrieva-73320",
+      "at": "2026-07-03T10:21:30.226689+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "weakest-lane-deep-analys-73320",
+      "at": "2026-07-03T10:21:30.289605+00:00",
+      "kind": "claimed",
+      "by": "analysis-w1",
+      "department": "analysis"
+    },
+    {
+      "task": "weakest-lane-deep-analys-73320",
+      "at": "2026-07-03T10:21:30.353202+00:00",
+      "kind": "completed",
+      "by": "analysis-w1",
+      "result": "391 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    }
+  ]
+}

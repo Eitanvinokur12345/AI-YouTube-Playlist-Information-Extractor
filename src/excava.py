@@ -320,6 +320,21 @@ def _beat(args) -> int:
                     else:
                         d["streak"], d["cooldown_until"] = 0, ""
             bus.remember("backpressure", bp)
+
+        # ── daemon-grade integration (D2 directive): the OS sees EVERY lane of the project.
+        #    Any lane that ran since the last beat becomes a bus event — the living OS reacts
+        #    to the whole machine, not just its own department ticks. ──
+        ps_all = _load("pipeline_status.json", {})
+        st_seen = _load("excava/state.json", {})
+        seen = (st_seen.get("facts", {}).get("lanes_seen", {}) or {}).get("value", {})
+        lanes_now = {}
+        for L in ps_all.get("lanes", []):
+            label, lr = L.get("label") or "?", L.get("last_run") or ""
+            lanes_now[label] = lr
+            if lr and seen and seen.get(label) != lr:
+                bus.event("os-lanes", "lane_ran", {"lane": label, "status": L.get("status"),
+                                                   "what": str(L.get("what") or "")[:80]})
+        bus.remember("lanes_seen", lanes_now)
     elif not internal_ok:
         beat_log.append("HOLD ALL — verification gate failing (fix data_guard/security first)")
 
@@ -355,6 +370,18 @@ def _beat(args) -> int:
     dept_load = {d: v.get("queued", 0) + v.get("working", 0) for d, v in snap["per_department"].items()}
     st = bus.beat_state(dept_load, usage_delta)
 
+    # ── project memory master (Phase 0.7): auto-ingest commits + bus events; roll up daily ──
+    ep_count = 0
+    try:
+        from src import project_memory as pm
+        ep_count = pm.ingest()
+        if ep_count:
+            beat_log.append(f"memory master: +{ep_count} episodes")
+        if st.get("beats", 0) % 24 == 0:
+            pm.rollup()
+    except Exception:
+        pass
+
     stack_review = {
         "candidates_available": scout.get("total_candidates", 0),
         "note": ("EXCAVA reviews its stack each cycle: integrate the best free per-process tool, "
@@ -374,6 +401,16 @@ def _beat(args) -> int:
                "departments": sorted((reg.get("departments") or {}).keys()),
                "usage": st.get("usage", {}), "audit": {"ok": not audit, "problems": audit[:8]},
                "approvals_pending": len(approvals.get("pending", [])),
+               "backpressure": (st.get("facts", {}).get("backpressure", {}) or {}).get("value", {}),
+               "tasks": [{"id": t["id"], "title": t["title"][:90], "department": t.get("department"),
+                          "status": t["status"], "steps": t.get("steps", 0),
+                          "priority": t.get("priority"), "source": t.get("source"),
+                          "doc": (t.get("handoff_docs") or [None])[-1]}
+                         for t in bus.read_bus()["tasks"]
+                         if t["status"] in ("queued", "working", "held")][:20],
+               "recent_events": bus._read(bus.EXDIR / "recent_events.json",
+                                          {"events": []}).get("events", [])[-20:],
+               "memory_episodes": ep_count,
                "guardrails": "data/excava/guardrails.md", "traces": "data/excava/traces/"},
         "tool_stack": cfg.get("tool_stack", []), "stack_review": stack_review,
     }, ensure_ascii=False, indent=2), encoding="utf-8")

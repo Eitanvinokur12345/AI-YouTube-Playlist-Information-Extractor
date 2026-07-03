@@ -26,6 +26,22 @@ Last updated: 2026-07-02. Keep this current at the end of every working session.
   (json is 403-blocked), DDG needs the Chrome UA, Jina Reader verified as universal fallback;
   agent-reach (MIT, keyless parts) endorsed by owner — deeper integration next arc.
 
+## 0c. SHIPPED 2026-07-03 (third arc): 3 + 4 + 6-core + G9, dashboard v65
+- **Phase 3 creators LIVE** (`src/excava_creators.py`, daily creators.yml): discovery gap-radar →
+  data-grounded drafts → independent self-test → publish INTO the project, always labeled
+  **"Created by EXCAVA"** (owner rule → guardrail **G-12**); `--test-before-run "<name>"` re-tests
+  before first use. **PACKAGES** = owner's term for multi-element bundles. Creators dept staffed.
+- **Phase 4 sandbox verify LIVE** (`src/verify_connectors.py`, 6-hourly connectors_verify.yml):
+  owner chose test-run EVERYTHING — resolve real install (npm/PyPI keyless) → run in clean-env
+  sandbox (no secrets, temp dir, timeout) → `data/connectors_verified.json`; tab shows progress +
+  shrinks to verified-only at ≥25 passes (D5). ~10 days of batches for all 1,142.
+- **Phase 6 core LIVE**: direction loop ("EXCAVA: direction …" issue command + cockpit 🧭 card +
+  beat acknowledgment with EXCAVA's reading) + change tutorials (`data/tutorials.json`, v62-v65
+  walkthroughs; the beat NAGS when a build ships without one). Remaining: other 8 systems, HORSE.
+- **G9 "Agency/Orchestration"** on the North Star (born at 80/100). PORTABLE_HARNESS.md documents
+  the spine as a package (owner: port nothing yet). Source trust-scores seeded
+  (`data/source_trust.json`), intake items now carry trust.
+
 ## 1. WHAT THIS IS
 A **personal build-leverage system** for Eitan — a hub of every AI capability (tools/skills/models/MCP/
 prompts/commands/designs) mined from ONE YouTube playlist, used with all his tools to build things fast.

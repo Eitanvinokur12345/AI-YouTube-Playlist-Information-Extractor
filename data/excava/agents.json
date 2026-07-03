@@ -68,11 +68,10 @@
       "lane_hint": null
     },
     "creators": {
-      "purpose": "PHASE 3 (GATED): draft new skills/prompts/formats/designs — needs G3>=70 + owner approval",
+      "purpose": "PHASE 3 (STAFFED 2026-07-03): draft skills/prompts/formats/tools/connectors/MCP servers/designs and PACKAGES (multi-element bundles). Owner rule: creations enter the project autonomously WHEN labeled 'Created by EXCAVA'; an independent test re-runs before first use. Publishing beyond the project stays G3>=70-gated.",
       "capability": "create-drafts",
-      "specialization": ["create", "draft", "new skill", "new prompt", "publish"],
-      "lane_hint": null,
-      "gated": true
+      "specialization": ["create", "draft", "new skill", "new prompt", "publish", "package", "creation"],
+      "lane_hint": null
     }
   },
   "agents": [
@@ -117,6 +116,10 @@
 
     { "id": "security-lead", "tier": 2, "department": "security", "scoped_tools": ["src.excava_bus"] },
     { "id": "security-w1", "tier": 1, "department": "security",
-      "scoped_tools": ["src.security_scan", "src.security_preflight", "src.data_guard"] }
+      "scoped_tools": ["src.security_scan", "src.security_preflight", "src.data_guard"] },
+
+    { "id": "creators-lead", "tier": 2, "department": "creators", "scoped_tools": ["src.excava_bus"] },
+    { "id": "creators-w1", "tier": 1, "department": "creators",
+      "scoped_tools": ["src.excava_creators"] }
   ]
 }

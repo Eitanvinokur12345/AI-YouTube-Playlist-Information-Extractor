@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v64";
+const APP_BUILD = "v65";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -722,12 +722,39 @@ function safetyPill(rating, reasons) {
 }
 async function renderConnectors(data) {
   const safety = ((await load("safety.json")) || {}).connectors || {};
+  // Phase 4: sandbox verification verdicts (owner: test-run EVERYTHING; D5: shrink to verified)
+  const cv = (await load("connectors_verified.json")) || {};
+  const vmap = cv.verified || {};
+  const vsum = cv.summary || {};
   let items = (data && data.connectors) || [];
   if (!items.length) return view.innerHTML = empty("No connectors or MCP servers tracked yet.");
   if (q()) items = items.filter(c => hit(c.name, c.provider, c.what_it_does, c.category, c.type));
+  const passCount = Object.values(vmap).filter(v => v.status === "pass").length;
+  const showVerifiedOnly = localStorage.getItem("excavatortron.connverified") !== "off" && passCount >= 25;
+  if (showVerifiedOnly) items = items.filter(c => (vmap[c.name] || {}).status === "pass");
   items.sort((a, b) =>
     (isStarred(b) - isStarred(a)) || ((b.quality_score || 0) - (a.quality_score || 0)));
-  view.innerHTML = items.map(c => {
+  const prog = `<div class="card"><h3>🧪 Sandbox verification <span class="sub">— your call: test-run ALL ${vsum.total || 1142} in isolated CI batches</span>
+      ${passCount >= 25 ? `<button class="qr-btn" id="conn-vtoggle">${showVerifiedOnly ? "show all" : "verified only"}</button>` : ""}</h3>
+    <p class="sub">checked <b>${vsum.checked || 0}</b> / ${vsum.total || 1142} so far · ${Object.entries(vsum.by_status || {}).map(([k, v]) => `${esc(k)}: <b>${v}</b>`).join(" · ") || "first batches queued"} —
+      each one resolves a REAL install command, then runs it in a clean sandbox (no secrets, temp dir, timeout). ${showVerifiedOnly ? "Showing verified-only (D5)." : `The tab shrinks to verified-only once ≥25 pass${passCount ? ` (now ${passCount})` : ""}.`}</p>
+  </div>`;
+  view.innerHTML = prog + items.map(c => {
+    const v = vmap[c.name];
+    const vPill = v ? (v.status === "pass"
+        ? `<span class="freepill free-yes" title="${esc(v.cmd || "")} — ${esc((v.log || "").slice(0, 120))}">✓ sandbox-verified</span>`
+        : v.status === "fail" ? `<span class="freepill free-no" title="${esc((v.log || "").slice(0, 120))}">✗ failed sandbox</span>`
+        : `<span class="freepill free-mid" title="${esc(v.note || v.log || "")}">${esc(v.status)}</span>`) : "";
+    return _connCard(c, safety, vPill);
+  }).join("") || empty(showVerifiedOnly ? "No verified connectors match — toggle 'show all'." : `No connectors match "${esc(state.query)}".`);
+  const vt = view.querySelector("#conn-vtoggle");
+  if (vt) vt.addEventListener("click", () => {
+    localStorage.setItem("excavatortron.connverified", showVerifiedOnly ? "off" : "on");
+    show("connectors");
+  });
+}
+function _connCard(c, safety, vPill) {
+  {
     const via = c.via_video_id || c.source_video;
     const srcLine = (c.source_type === "linked_resource" && c.source_url)
       ? `<p><a href="${esc(c.source_url)}" target="_blank" rel="noopener">Linked resource</a>` +
@@ -755,6 +782,7 @@ async function renderConnectors(data) {
       ${works}
       ${c.official ? '<span class="official">official</span>' : ""}
       ${linkedPill(c)}
+      ${vPill || ""}
       ${isStarred(c) ? '<span class="frozenpill">frozen</span>' : ""}</h3>
     <div class="sub">${esc(c.provider || "")}${c.category ? " · " + esc(c.category) : ""}${c.source ? " · src: " + esc(c.source) : ""}</div>
     <p>${esc(c.what_it_does || "")}</p>
@@ -764,7 +792,7 @@ async function renderConnectors(data) {
     ${srcLine}
     ${connectorUseBox(c)}
   </div>`;
-  }).join("") || empty(`No connectors match "${esc(state.query)}".`);
+  }
 }
 
 // ── Tab: Self-Improvement (health + suggestion queue + audit) ─────────────────
@@ -1686,10 +1714,11 @@ async function renderCrew(tab) {
   }, 6000);
 }
 async function renderExcava() {
-  const [ex, ps, inbox, gs, rc, ap, excfg, reg] = await Promise.all([load("excava_status.json"),
+  const [ex, ps, inbox, gs, rc, ap, excfg, reg, dirs, tuts, made] = await Promise.all([load("excava_status.json"),
     load("pipeline_status.json"), load("excava_inbox.json"), load("goals_status.json"),
     load("resources.json"), load("excava_approvals.json"), load("excava_config.json"),
-    load("excava/agents.json")]);
+    load("excava/agents.json"), load("excava_direction.json"), load("tutorials.json"),
+    load("created_by_excava.json")]);
   const gate = (ex && ex.gate) || {}, mem = (ex && ex.memory) || {};
   const os = (ex && ex.os) || {};
   const mode = os.mode || (excfg && excfg.mode) || "run";
@@ -1817,6 +1846,45 @@ async function renderExcava() {
     </div>`;
   const maint = mode !== "run"
     ? `<div class="ex-maint"><b>${mode === "kill" ? "⛔ KILL SWITCH — the OS is stopped" : "🔧 MAINTENANCE — safe mode, assess only"}</b></div>` : "";
+  // ── PHASE 6: the DIRECTION LOOP + CHANGE TUTORIALS (D2 — the loop that was missed once) ──
+  const dirList = ((dirs && dirs.directions) || []).filter(d => d.status === "active").slice(-4).reverse();
+  const tutList = ((tuts && tuts.tutorials) || []).slice(0, 4);
+  const directionHTML = `
+    <div class="card" style="border-top:3px solid var(--gold)">
+      <h3>🧭 Direction & tutorials <span class="sub">— you steer; EXCAVA shows its reading; every change gets a walkthrough</span></h3>
+      <div class="ex-send">
+        <input id="ex-dir-input" maxlength="300" placeholder='State a direction… e.g. "focus on making the activator real before anything visual"'>
+        <button class="qr-btn" id="ex-dir-btn">set direction ➤</button>
+      </div>
+      <div class="ex-grid" style="margin-top:10px">
+        <div>
+          <b class="sub">Your active directions — and how EXCAVA reads them (correct it by re-stating)</b>
+          ${dirList.length ? dirList.map(d => `<div class="ex-task" style="display:block">
+            <div><span class="tk q">${esc(d.id.toUpperCase())}</span> <b>${esc(d.text)}</b></div>
+            <div class="sub" style="margin-top:4px">${d.excava_reading ? "🦾 reading: " + esc(d.excava_reading) : "🦾 acknowledgment arrives next beat (hourly)"}</div>
+          </div>`).join("") : `<p class="sub">No directions yet — the standing rules apply until you state one.</p>`}
+        </div>
+        <div>
+          <b class="sub">What changed — walkthroughs, newest first (Phase-6 law: no major change without one)</b>
+          ${tutList.map(t => `<details class="ex-task" style="display:block"><summary><b>${esc(t.build)}</b> · ${esc(t.title)} <span class="sub">${esc(t.at || "")}</span></summary>
+            <ol style="margin:6px 0 2px 18px;font-size:12.5px">${(t.steps || []).map(s => `<li>${esc(s)}</li>`).join("")}</ol></details>`).join("")
+          || `<p class="sub">No tutorials recorded yet.</p>`}
+        </div>
+      </div>
+    </div>`;
+  // ── PHASE 3: what the Creators department made (always labeled, tested before first use) ──
+  const creations = ((made && made.creations) || []).slice(-8).reverse();
+  const creationsHTML = creations.length ? `
+    <div class="card"><h3>🦾 Created by EXCAVA <span class="sub">— autonomous creations; every one labeled + independently tested before first use (G-12)</span></h3>
+      ${creations.map(c => `<details class="ex-task" style="display:block">
+        <summary><span class="tk ${c.status === "published" ? "w" : "h"}">${esc((c.status || "").toUpperCase())}</span>
+          <b>${esc(c.name)}</b> <span class="pill">${esc(c.type)}</span> <span class="pill" style="background:var(--gold-soft)">🦾 ${esc(c.label || "Created by EXCAVA")}</span>
+          <span class="sub">fills: ${esc(c.gap || "")}</span></summary>
+        <p class="sub" style="margin:6px 0 2px">${esc(c.what || "")}<br><b>use:</b> ${esc(c.how_to_use || "")}<br>
+          <b>self-test:</b> ${c.self_test ? (c.self_test.ok ? "✅ passed" : "❌ " + esc(JSON.stringify(c.self_test.checks))) : "pending"} ·
+          before first run: <code>python -m src.excava_creators --test-before-run "${esc(c.name)}"</code></p>
+      </details>`).join("")}
+    </div>` : "";
   view.innerHTML = `
     <div class="card" style="border-top:3px solid var(--gold)">
       <h3>🦾 EXCAVA <span class="sub">— the agentic OS running this project</span>
@@ -1828,6 +1896,8 @@ async function renderExcava() {
       <p class="sub" style="margin-top:8px">The floor is LIVE: each station is a real pipeline department (lamp = its actual status), each colored bot is a real registered agent carrying its department's actual bus task — hover one to see who it is and what it holds.</p>
     </div>
     ${driveHTML}
+    ${directionHTML}
+    ${creationsHTML}
     ${fleetHTML}
     ${queueHTML}
     ${apHTML}
@@ -1868,6 +1938,16 @@ async function renderExcava() {
   if (sBtn) sBtn.addEventListener("click", sendIt);
   const sInp = view.querySelector("#ex-send-input");
   if (sInp) sInp.addEventListener("keydown", e => { if (e.key === "Enter") sendIt(); });
+  // Phase 6 direction-send: same issue channel, "EXCAVA: direction …"
+  const dirIt = () => {
+    const inp = view.querySelector("#ex-dir-input");
+    const v = (inp && inp.value || "").trim();
+    if (v) window.open(_exIssue("EXCAVA: direction " + v, "Stated from the cockpit Direction card."), "_blank");
+  };
+  const dBtn = view.querySelector("#ex-dir-btn");
+  if (dBtn) dBtn.addEventListener("click", dirIt);
+  const dInp = view.querySelector("#ex-dir-input");
+  if (dInp) dInp.addEventListener("keydown", e => { if (e.key === "Enter") dirIt(); });
   // Phase 5 trace viewer: click a bus task -> fetch its real JSONL trace, show why X over Y
   view.querySelectorAll(".os-task-row").forEach(el => el.addEventListener("click", async () => {
     const id = el.dataset.trace;

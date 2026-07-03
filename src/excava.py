@@ -223,6 +223,51 @@ def _approvals_sync(holding: list, mode: str) -> dict:
     return out
 
 
+def _direction_loop(reg: dict, beat_log: list) -> list:
+    """Phase 6 (D2, daemon-grade): the owner states direction ('EXCAVA: direction …');
+    EXCAVA acknowledges with ITS READING next beat (visible on the cockpit — he corrects it
+    by stating again). Major changes preview against active directions via the approval
+    queue. Returns active directions for the status file."""
+    d = _load("excava_direction.json", {})
+    ds = d.get("directions", []) if isinstance(d, dict) else []
+    changed = False
+    for x in ds:
+        if x.get("status") == "active" and not x.get("excava_reading"):
+            dept, why, _ = agents.pick_department(x.get("text", ""), reg, {})
+            x["excava_reading"] = (
+                f"Read {x.get('at', '')[:10]}: touches the {dept or 'whole-OS'} area"
+                + (f" ({why})" if dept else "")
+                + ". Routing weights and creators' discovery now consider this; major changes "
+                  "in this area preview in the approval queue before happening.")
+            x["acknowledged_at"] = NOW
+            bus.event("os-direction", "direction_received",
+                      {"direction": x.get("text", "")[:120], "reading": dept or "whole-OS"})
+            beat_log.append(f"direction acknowledged: {x.get('text', '')[:60]}")
+            changed = True
+    if changed:
+        (DATA / "excava_direction.json").write_text(
+            json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
+    return [x for x in ds if x.get("status") == "active"][-5:]
+
+
+def _tutorial_audit(beat_log: list) -> dict:
+    """Phase 6 change-tutorials: every dashboard build MUST ship a walkthrough. The beat
+    checks APP_BUILD in docs/dashboard.js against data/tutorials.json and nags if missing."""
+    try:
+        import re as _re
+        js = (ROOT / "docs" / "dashboard.js").read_text(encoding="utf-8", errors="replace")
+        build = (_re.search(r'APP_BUILD = "(v\d+)"', js) or [None, "?"])[1]
+    except Exception:
+        build = "?"
+    tut = _load("tutorials.json", {})
+    entries = tut.get("tutorials", [])
+    covered = any(t.get("build") == build for t in entries)
+    if not covered and build != "?":
+        beat_log.append(f"TUTORIAL MISSING for dashboard {build} — Phase 6 law: every major "
+                        "change ships a walkthrough (data/tutorials.json)")
+    return {"current_build": build, "covered": covered, "count": len(entries)}
+
+
 def _beat(args) -> int:
     mem = _load("memory_index.json", {})
     keys = _keys()
@@ -350,6 +395,10 @@ def _beat(args) -> int:
     for tid in approvals.get("applied_last_beat", []):
         beat_log.append(f"owner approval applied -> {tid} re-queued")
 
+    # ── Phase 6: direction loop + change-tutorial audit (D2: daemon-grade, every beat) ──
+    directions = _direction_loop(reg, beat_log) if internal_ok and mode != "kill" else []
+    tut_audit = _tutorial_audit(beat_log)
+
     # ── next action = the top open bus task, grounded in the semantic memory ──
     open_tasks = [t for t in bus.read_bus()["tasks"] if t["status"] in ("queued", "working")]
     open_tasks.sort(key=lambda t: (t.get("priority", 1), t.get("created_at", "")))
@@ -411,6 +460,7 @@ def _beat(args) -> int:
                "recent_events": bus._read(bus.EXDIR / "recent_events.json",
                                           {"events": []}).get("events", [])[-20:],
                "memory_episodes": ep_count,
+               "directions": directions, "tutorials": tut_audit,
                "guardrails": "data/excava/guardrails.md", "traces": "data/excava/traces/"},
         "tool_stack": cfg.get("tool_stack", []), "stack_review": stack_review,
     }, ensure_ascii=False, indent=2), encoding="utf-8")

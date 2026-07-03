@@ -91,6 +91,22 @@ def main() -> int:
                      f"{'live' if 'arenaVote' in dash else 'missing'}; NOSG "
                      f"{'wired' if 'NOSG' in act else 'missing'} (next: taste beyond designs)")
 
+    # G9 Agency/Orchestration (added 2026-07-03, owner-approved): is the OS truly agentic?
+    ex = _load("excava_status.json", {})
+    osx = ex.get("os", {}) or {}
+    bus_ = _load("excava/bus.json", {})
+    handoff_docs = sum(len(t.get("handoff_docs", [])) for t in bus_.get("tasks", []))
+    done = sum(1 for t in bus_.get("tasks", []) if t.get("status") == "done")
+    depts = len(osx.get("departments", []) or [])
+    g9 = ((20 if (osx.get("beats") or 0) > 0 else 0)
+          + (20 if handoff_docs else 0)
+          + (20 if depts >= 10 else depts * 2)
+          + (20 if (osx.get("audit") or {}).get("ok") else 0)
+          + (20 if done else 0))
+    sig["G9"] = (g9, f"beats {osx.get('beats', 0)}; {handoff_docs} hand-off docs; {done} tasks done; "
+                     f"{depts} departments; audit {'ok' if (osx.get('audit') or {}).get('ok') else 'failing/missing'} "
+                     "(next: more departments executing, not just assessing)")
+
     out = []
     for g in ns:
         score, gap = sig.get(g["id"], (50, ""))

@@ -38,6 +38,12 @@ The 6 goals miss two things we now actually build for:
 20. **D4 — rebuild order:** spine-first as planned (P0 before any cleanup), or interleave small cleanups? _Default: spine-first._
 21. **D5 — connectors tab:** OK to shrink it to verified-only once Phase 4 resolves real installs (94% are empty today)? _Default: yes._
 
+## H. Phase checkpoints — ✅ ANSWERED 2026-07-03 (second batch)
+26. **P3 creators** — ✅: creations enter the project autonomously WHEN labeled "Created by EXCAVA"; an independent test re-runs before first use; creators may build MCP servers/connectors/tools; **"PACKAGES"** = the owner's term for multi-element bundles (skills+tools+commands+designs+prompts+formats+outlines+MCP servers). Now guardrail G-12.
+27. **P4 connectors** — ✅: **sandbox test-run EVERYTHING** (all 1,142; 6-hourly CI batches; verified-only tab per D5).
+28. **P7 porting** — ✅: skip for now; harness stays a clean documented package (PORTABLE_HARNESS.md).
+29. **P8 G9** — ✅: "Agency/Orchestration", equal weight — live on the North Star (scored 80 at birth).
+
 ## G. Omni-source intake + memory master (2026-07-03 owner additions)
 22. **Your communities:** which subreddits / public Telegram channels / search queries should tier-1 intake watch? Starter set is in `data/social_sources.json` (LocalLLaMA, ClaudeAI, ChatGPTCoding, artificial, AI_Agents; Telegram empty — t.me/s only works for PUBLIC channels). _Default: keep the starter set, grow it over time._
 23. **WhatsApp groups:** the only free path is you exporting a group chat (.txt, no media) from your phone into `data/whatsapp_exports/` occasionally — the miner parses the links out. Want a short how-to tutorial for that? _Default: yes, added with the Phase-6 change-tutorials._

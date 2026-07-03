@@ -48,9 +48,24 @@ def _get(url: str, timeout: int = 20) -> str:
         return ""
 
 
+def _trust() -> dict:
+    try:
+        return json.load(open(DATA / "source_trust.json", encoding="utf-8")).get("sources", {})
+    except Exception:
+        return {}
+
+
+_TRUST = None
+
+
 def _item(source: str, title: str, url: str, extra: str = "", via: str = "") -> dict:
+    global _TRUST
+    if _TRUST is None:
+        _TRUST = _trust()
+    kind = source.split("/")[0]
     return {"source": source, "title": title.strip()[:220], "url": url,
-            "extra": extra.strip()[:300], "via": via, "found_at": _now()}
+            "extra": extra.strip()[:300], "via": via, "found_at": _now(),
+            "trust": _TRUST.get(kind, 40)}
 
 
 def reddit(subs: list[str], limit: int) -> list[dict]:

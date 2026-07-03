@@ -181,12 +181,16 @@ logins → skipped). Every intake passes security_preflight + the trust-score ga
 - Dashboard preview loads in **<3s**, with **Arena images prioritized**.
 - Data-retrieval quality/accuracy improvements + anything Fable built that's inaccurate.
 
-## SEQUENCING (updated 2026-07-03 after owner answers)
-0 ✅ → 1+2 ✅ → **0.7 memory master + 5 living-OS + 9-tier-1 miners (this arc)** → 3 + 4 (capabilities)
-→ 6 (alignment: direction-loop + change-tutorials FIRST per D2, built as deep daemon-grade integration —
-CORTEX-OS-style, every lane/agent wired through the bus, nothing cosmetic; HORSE fan-out joins here) →
-7 + 8 (breadth + cleanup) → 9 tiers 2-3 as unlocked. Link-coverage keeps climbing the whole time. Each
-phase ends with a change-tutorial so you always know what shifted.
+## SEQUENCING (status 2026-07-03 evening — one-day sprint through the spine)
+0 ✅ → 1+2 ✅ → 0.7 ✅ + 5 ✅ (job-menus/visitors open) + 9-tier-1 ✅ → **3 ✅ (creators live under
+G-12: labeled + test-before-run; PACKAGES = owner's term for multi-element bundles) + 4 ✅ machinery
+(sandbox test-run EVERYTHING per owner — 6-hourly CI batches walking all 1,142; tab shrinks as passes
+land)** → **6 partial ✅ (direction-loop + change-tutorials LIVE — cockpit card, issue channel, beat
+acknowledgment, tutorial audit; remaining 8 systems + HORSE fan-out open)** → 7 (harness documented
+portable per owner "skip porting"; runtime/rules-engine/meta-brain open) + 8 partial (G9 ✅ scored;
+formats-filter, brain-cleanup, token-split open) → 9 tiers 2-3 as unlocked. Link-coverage keeps
+climbing the whole time. Every build ships a change-tutorial (data/tutorials.json — enforced by the
+beat's tutorial audit).
 
 ## GOAL → PHASE MAP (traceability, all 52)
 P0: 1,2,6,7,8,13(seed),14,17,18,27,29,30,40 · P1: 5(control),19,24,42,46,52g · P2: 9,16,21,32,33,36,39,51,52a-h ·

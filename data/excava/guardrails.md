@@ -45,6 +45,12 @@ to `data/excava/state.json` (through the bus) — no agent invents its own side-
 `data/*.json` regenerate hourly in CI. Local test artifacts of CI-owned files are reverted,
 never committed. New `data/excava/*` files are bus-owned and committed by the bus only.
 
+## G-12 Creations are labeled and independently tested (owner rule 2026-07-03)
+Anything the Creators department makes may enter the project autonomously **only** with the
+visible label "Created by EXCAVA", and an **independent test re-runs before its first use**
+(`python -m src.excava_creators --test-before-run "<name>"`). Publishing beyond the project
+stays behind G-2's outward gate. "Packages" (multi-element bundles) follow the same rule.
+
 ## G-11 Security first, quality over quantity
 Untrusted content passes `security_preflight` before any agent consumes it. 300 verified
 items beat 3,000 dead ones — a department that can't verify its output hands off to

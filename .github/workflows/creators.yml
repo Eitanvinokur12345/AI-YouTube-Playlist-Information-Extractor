@@ -1,0 +1,42 @@
+name: Creators department (daily)
+
+# Phase 3 of EXCAVA_PROGRAM.md. DISCOVERY (gap radar over real data) -> drafts -> independent
+# self-test -> publish INTO the project, always labeled "Created by EXCAVA" (owner rule /
+# guardrail G-12); an independent test re-runs before any creation's first use. Publishing
+# beyond the project stays behind the G3>=70 outward gate.
+#
+# COST: $0 — data-grounded drafting, no LLM tokens, no paid services.
+on:
+  schedule:
+    - cron: "45 7 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: skills-tracker-creators
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Discovery -> draft -> self-test -> publish (labeled)
+        run: python -m src.excava_creators --max-new 6
+
+      - name: Commit creations
+        run: |
+          git config user.name "skills-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/created_by_excava.json data/creators_discovery.json
+          git commit -m "creators: $(date -u +%Y-%m-%dT%H:%MZ) — labeled drafts from discovery gaps" \
+            || echo "nothing to commit"
+          git pull --rebase --autostash origin main || true
+          git push || echo "push skipped"

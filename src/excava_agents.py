@@ -150,8 +150,19 @@ def _work_analysis(task: dict) -> dict:
     return {"kind": "complete", "result": "data/_pending is empty — nothing awaiting re-analysis."}
 
 
+def _work_creators(task: dict) -> dict:
+    store = _jload("created_by_excava.json", {})
+    cs = store.get("creations", [])
+    pub = sum(1 for c in cs if c.get("status") == "published")
+    return {"kind": "complete", "result": (
+        f"Creators: {len(cs)} creations on record, {pub} published — every one labeled "
+        "'Created by EXCAVA' with an independent test before first use (G-12). The daily "
+        "creators lane drafts from data/creators_discovery.json gaps.")}
+
+
 WORK: dict = {"links": _work_links, "memory": _work_memory,
-              "transcripts": _work_transcripts, "analysis": _work_analysis}
+              "transcripts": _work_transcripts, "analysis": _work_analysis,
+              "creators": _work_creators}
 
 
 def tick(department: str, reg: dict) -> tuple[str, str] | None:

@@ -51,6 +51,19 @@ def apply(title: str, body: str, number: str) -> str:
                 "safe": "🟡 SAFE MODE — EXCAVA syncs + routes but no worker acts until 'EXCAVA: run'.",
                 "run": "🟢 RUN MODE — EXCAVA operating normally."}[low]
 
+    m = re.match(r"direction\s+(.+)$", text, re.I | re.S)
+    if m:
+        stmt = m.group(1).strip()[:600]
+        def _dir(d):
+            ds = d.setdefault("directions", [])
+            ds.append({"id": f"dir-{len(ds) + 1}", "text": stmt,
+                       "at": datetime.now(timezone.utc).isoformat(),
+                       "via": f"github-issue #{number}", "status": "active", "excava_reading": ""})
+        _rw("excava_direction.json", _dir)
+        return ("🧭 Direction recorded (Phase 6 loop). EXCAVA acknowledges it next beat — its reading "
+                "appears on the cockpit's Direction card, and major changes preview against it first. "
+                "Overrule any reading with another 'EXCAVA: direction …'.")
+
     m = re.match(r"approve\s+(\S+)$", low)
     if m:
         tid = m.group(1)

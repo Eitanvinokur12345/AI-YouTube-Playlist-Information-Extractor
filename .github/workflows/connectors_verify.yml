@@ -1,0 +1,47 @@
+name: Connectors sandbox verify (batch)
+
+# Phase 4 of EXCAVA_PROGRAM.md — owner decision 2026-07-03: SANDBOX TEST-RUN EVERYTHING.
+# Each batch resolves a real install command per connector (npm/PyPI, keyless) and executes
+# it in an isolated sandbox: clean env (NO secrets exposed to this job), temp dir, hard
+# timeout. Results land in data/connectors_verified.json; the tab shrinks to verified-only
+# (D5). ~30 per run, every 6h -> all 1,142 in ~10 days, then it keeps re-checking.
+#
+# COST: $0 — public registries + CI minutes.
+on:
+  schedule:
+    - cron: "10 */6 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: skills-tracker-connectors-verify
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Sandbox test-run the next batch
+        run: python -m src.verify_connectors --limit 30
+
+      - name: Commit verdicts
+        run: |
+          git config user.name "skills-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/connectors_verified.json data/connectors_verify_state.json
+          git commit -m "connectors-verify: $(date -u +%Y-%m-%dT%H:%MZ) — sandbox batch" \
+            || echo "nothing to commit"
+          git pull --rebase --autostash origin main || true
+          git push || echo "push skipped"

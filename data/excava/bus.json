@@ -192,18 +192,71 @@
       "department": "memory",
       "source": "auto",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/1665-tools-skills-still--64934--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-07-03T07:48:54.618576+00:00",
-      "updated_at": "2026-07-03T07:48:54.621464+00:00"
+      "updated_at": "2026-07-03T11:12:23.055161+00:00",
+      "result": "Semantic index: 1417 vectors (model gemini-embedding-001); hub 4756 items → 3339 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "id": "only-389-1555-videos-ana-77142",
+      "title": "Only 389/1555 videos analyzed (25.0%)",
+      "detail": "Add free Gemini keys (GEMINI_API_KEY_2/_3) to multiply throughput.",
+      "department": "analysis",
+      "source": "auto",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "output written to data/ and committed by CI",
+      "escalation_tier": 1,
+      "claimed_by": "analysis-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-03T11:12:22.891066+00:00",
+      "updated_at": "2026-07-03T11:12:22.898557+00:00",
+      "result": "391 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "id": "lane-transcript-retrieva-77142",
+      "title": "Lane 'Transcript retrieval' is slow",
+      "detail": "Overdue vs its cadence.",
+      "department": "",
+      "source": "auto",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "output written to data/ and committed by CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-03T11:12:22.892209+00:00",
+      "updated_at": "2026-07-03T11:12:22.892214+00:00"
+    },
+    {
+      "id": "lane-external-mining-is--77142",
+      "title": "Lane 'External mining' is slow",
+      "detail": "Overdue vs its cadence.",
+      "department": "mining",
+      "source": "auto",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "output written to data/ and committed by CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-03T11:12:22.892988+00:00",
+      "updated_at": "2026-07-03T11:12:22.896141+00:00"
     }
   ],
-  "updated_at": "2026-07-03T07:48:54.775662+00:00"
+  "updated_at": "2026-07-03T11:12:23.055179+00:00"
 }

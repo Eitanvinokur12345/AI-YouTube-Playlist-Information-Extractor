@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-03T07:48:54.468243+00:00",
+  "generated_at": "2026-07-03T11:12:22.728639+00:00",
   "name": "EXCAVA",
   "phase": "OS spine (Phase 0): bus + departments + hand-offs live; creators (OS-2) gated",
   "gate": {
@@ -14,7 +14,7 @@
     "outward_needs": "data_guard ok + security clean + G3>=70 + owner approval"
   },
   "memory": {
-    "vectors": 1411,
+    "vectors": 1417,
     "model": "gemini-embedding-001",
     "wired": true
   },
@@ -22,7 +22,7 @@
     "missing": [
       "github_token"
     ],
-    "checked_at": "2026-07-03T04:55:52.648349+00:00",
+    "checked_at": "2026-07-03T08:26:47.695707+00:00",
     "can_do": {
       "resolve-links": true,
       "analyze-videos": true,
@@ -87,18 +87,23 @@
     {
       "priority": "Title collisions: distinct items share one note name and overwrite each other (10)",
       "why_held": "no department specialization matched"
+    },
+    {
+      "priority": "Lane 'Transcript retrieval' is slow",
+      "why_held": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
     }
   ],
   "os": {
-    "beats": 7,
+    "beats": 8,
+    "mode": "run",
     "bus": {
-      "open": 5,
-      "total": 11,
+      "open": 6,
+      "total": 14,
       "per_department": {
         "memory": {
-          "queued": 1,
+          "queued": 0,
           "working": 0,
-          "done": 4,
+          "done": 5,
           "held": 0,
           "failed": 0
         },
@@ -117,7 +122,7 @@
           "failed": 0
         },
         "(unrouted)": {
-          "queued": 2,
+          "queued": 3,
           "working": 0,
           "done": 0,
           "held": 0,
@@ -126,7 +131,14 @@
         "analysis": {
           "queued": 0,
           "working": 0,
-          "done": 2,
+          "done": 3,
+          "held": 0,
+          "failed": 0
+        },
+        "mining": {
+          "queued": 1,
+          "working": 0,
+          "done": 0,
           "held": 0,
           "failed": 0
         }
@@ -134,8 +146,9 @@
       "last_handoff": "data/excava/handoffs/1665-tools-skills-still--64934--01--links-w1--to--memory.md"
     },
     "beat_log": [
-      "links-w1: 1665-tools-skills-still--64934 -> memory (data/excava/handoffs/1665-tools-skills-still--64934--01--links-w1--to--memory.md)",
-      "memory-w1: 1674-tools-skills-still--52879 DONE"
+      "analysis-w1: only-389-1555-videos-ana-77142 DONE",
+      "memory-w1: 1665-tools-skills-still--64934 DONE",
+      "memory master: +2 episodes"
     ],
     "departments": [
       "analysis",
@@ -150,6 +163,244 @@
       "visual",
       "watch"
     ],
+    "usage": {
+      "analysis": {
+        "ticks": 1,
+        "done": 1,
+        "handoffs": 0,
+        "fails": 0,
+        "last": "2026-07-03T11:12:23.361254+00:00"
+      },
+      "memory": {
+        "ticks": 1,
+        "done": 1,
+        "handoffs": 0,
+        "fails": 0,
+        "last": "2026-07-03T11:12:23.361257+00:00"
+      }
+    },
+    "audit": {
+      "ok": true,
+      "problems": []
+    },
+    "approvals_pending": 3,
+    "backpressure": {
+      "analysis": {
+        "streak": 0,
+        "cooldown_until": ""
+      },
+      "memory": {
+        "streak": 0,
+        "cooldown_until": ""
+      }
+    },
+    "tasks": [
+      {
+        "id": "keep-the-designs-tab-pur-31649",
+        "title": "Keep the Designs tab pure: designs only, live previews, taste-ranked",
+        "department": "visual",
+        "status": "queued",
+        "steps": 0,
+        "priority": 0,
+        "source": "owner",
+        "doc": null
+      },
+      {
+        "id": "lane-self-improvement-re-31649",
+        "title": "Lane 'Self-improvement review' is idle",
+        "department": "improve",
+        "status": "queued",
+        "steps": 0,
+        "priority": 1,
+        "source": "auto",
+        "doc": null
+      },
+      {
+        "id": "empty-body-items-render--31649",
+        "title": "Empty-body items render as blank 'white' nodes in the brain graph (207)",
+        "department": "",
+        "status": "queued",
+        "steps": 0,
+        "priority": 1,
+        "source": "auto",
+        "doc": null
+      },
+      {
+        "id": "title-collisions-distinc-31649",
+        "title": "Title collisions: distinct items share one note name and overwrite each other (10)",
+        "department": "",
+        "status": "queued",
+        "steps": 0,
+        "priority": 1,
+        "source": "auto",
+        "doc": null
+      },
+      {
+        "id": "lane-transcript-retrieva-77142",
+        "title": "Lane 'Transcript retrieval' is slow",
+        "department": "",
+        "status": "queued",
+        "steps": 0,
+        "priority": 1,
+        "source": "auto",
+        "doc": null
+      },
+      {
+        "id": "lane-external-mining-is--77142",
+        "title": "Lane 'External mining' is slow",
+        "department": "mining",
+        "status": "queued",
+        "steps": 0,
+        "priority": 1,
+        "source": "auto",
+        "doc": null
+      }
+    ],
+    "recent_events": [
+      {
+        "task": "only-381-1555-videos-ana-73320",
+        "at": "2026-07-03T10:08:40.683748+00:00",
+        "kind": "completed",
+        "by": "analysis-w1",
+        "result": "391 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+      },
+      {
+        "task": "1665-tools-skills-still--64934",
+        "at": "2026-07-03T10:08:40.744349+00:00",
+        "kind": "claimed",
+        "by": "memory-w1",
+        "department": "memory"
+      },
+      {
+        "task": "1665-tools-skills-still--64934",
+        "at": "2026-07-03T10:08:41.073886+00:00",
+        "kind": "completed",
+        "by": "memory-w1",
+        "result": "Semantic index: 1417 vectors (model gemini-embedding-001); hub 4756 items → 3339 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+      },
+      {
+        "task": "empty-body-items-render--31649",
+        "at": "2026-07-03T10:21:30.189647+00:00",
+        "kind": "unroutable",
+        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+      },
+      {
+        "task": "title-collisions-distinc-31649",
+        "at": "2026-07-03T10:21:30.192044+00:00",
+        "kind": "unroutable",
+        "why": "no department specialization matched"
+      },
+      {
+        "task": "lane-transcript-retrieva-73320",
+        "at": "2026-07-03T10:21:30.226689+00:00",
+        "kind": "unroutable",
+        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+      },
+      {
+        "task": "weakest-lane-deep-analys-73320",
+        "at": "2026-07-03T10:21:30.289605+00:00",
+        "kind": "claimed",
+        "by": "analysis-w1",
+        "department": "analysis"
+      },
+      {
+        "task": "weakest-lane-deep-analys-73320",
+        "at": "2026-07-03T10:21:30.353202+00:00",
+        "kind": "completed",
+        "by": "analysis-w1",
+        "result": "391 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+      },
+      {
+        "task": "only-389-1555-videos-ana-77142",
+        "at": "2026-07-03T11:12:22.891635+00:00",
+        "kind": "enqueued",
+        "title": "Only 389/1555 videos analyzed (25.0%)",
+        "source": "auto",
+        "priority": 1,
+        "department": "(unrouted)"
+      },
+      {
+        "task": "lane-transcript-retrieva-77142",
+        "at": "2026-07-03T11:12:22.892576+00:00",
+        "kind": "enqueued",
+        "title": "Lane 'Transcript retrieval' is slow",
+        "source": "auto",
+        "priority": 1,
+        "department": "(unrouted)"
+      },
+      {
+        "task": "lane-external-mining-is--77142",
+        "at": "2026-07-03T11:12:22.893347+00:00",
+        "kind": "enqueued",
+        "title": "Lane 'External mining' is slow",
+        "source": "auto",
+        "priority": 1,
+        "department": "(unrouted)"
+      },
+      {
+        "task": "empty-body-items-render--31649",
+        "at": "2026-07-03T11:12:22.893942+00:00",
+        "kind": "unroutable",
+        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+      },
+      {
+        "task": "title-collisions-distinc-31649",
+        "at": "2026-07-03T11:12:22.894300+00:00",
+        "kind": "unroutable",
+        "why": "no department specialization matched"
+      },
+      {
+        "task": "only-389-1555-videos-ana-77142",
+        "at": "2026-07-03T11:12:22.895162+00:00",
+        "kind": "routed",
+        "chose": "analysis",
+        "over": [],
+        "why": "best specialization match (1 hits)"
+      },
+      {
+        "task": "lane-transcript-retrieva-77142",
+        "at": "2026-07-03T11:12:22.895618+00:00",
+        "kind": "unroutable",
+        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+      },
+      {
+        "task": "lane-external-mining-is--77142",
+        "at": "2026-07-03T11:12:22.896441+00:00",
+        "kind": "routed",
+        "chose": "mining",
+        "over": [],
+        "why": "best specialization match (1 hits)"
+      },
+      {
+        "task": "only-389-1555-videos-ana-77142",
+        "at": "2026-07-03T11:12:22.897334+00:00",
+        "kind": "claimed",
+        "by": "analysis-w1",
+        "department": "analysis"
+      },
+      {
+        "task": "only-389-1555-videos-ana-77142",
+        "at": "2026-07-03T11:12:22.898882+00:00",
+        "kind": "completed",
+        "by": "analysis-w1",
+        "result": "391 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+      },
+      {
+        "task": "1665-tools-skills-still--64934",
+        "at": "2026-07-03T11:12:22.899701+00:00",
+        "kind": "claimed",
+        "by": "memory-w1",
+        "department": "memory"
+      },
+      {
+        "task": "1665-tools-skills-still--64934",
+        "at": "2026-07-03T11:12:23.055797+00:00",
+        "kind": "completed",
+        "by": "memory-w1",
+        "result": "Semantic index: 1417 vectors (model gemini-embedding-001); hub 4756 items → 3339 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+      }
+    ],
+    "memory_episodes": 2,
     "guardrails": "data/excava/guardrails.md",
     "traces": "data/excava/traces/"
   },
@@ -206,7 +457,7 @@
     }
   ],
   "stack_review": {
-    "candidates_available": 998,
+    "candidates_available": 1005,
     "note": "EXCAVA reviews its stack each cycle: integrate the best free per-process tool, combine overlaps, offload weak ones. Top open process gaps: Dedup/entity resolution"
   }
 }

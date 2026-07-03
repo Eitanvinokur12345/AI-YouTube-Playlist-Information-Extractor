@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-03T14:52:32.198543+00:00",
+  "generated_at": "2026-07-03T17:58:08.928890+00:00",
   "name": "EXCAVA",
   "phase": "OS spine (Phase 0): bus + departments + hand-offs live; creators (OS-2) gated",
   "gate": {
@@ -22,7 +22,7 @@
     "missing": [
       "github_token"
     ],
-    "checked_at": "2026-07-03T14:30:39.022840+00:00",
+    "checked_at": "2026-07-03T16:44:23.560059+00:00",
     "can_do": {
       "resolve-links": true,
       "analyze-videos": true,
@@ -94,7 +94,7 @@
     }
   ],
   "os": {
-    "beats": 9,
+    "beats": 10,
     "mode": "run",
     "bus": {
       "open": 6,
@@ -146,8 +146,7 @@
       "last_handoff": "data/excava/handoffs/1665-tools-skills-still--64934--01--links-w1--to--memory.md"
     },
     "beat_log": [
-      "analysis-w1: weakest-lane-deep-analys-90352 DONE",
-      "memory master: +10 episodes"
+      "memory master: +8 episodes"
     ],
     "departments": [
       "analysis",
@@ -256,40 +255,6 @@
       }
     ],
     "recent_events": [
-      {
-        "task": "empty-body-items-render--31649",
-        "at": "2026-07-03T11:12:22.893942+00:00",
-        "kind": "unroutable",
-        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-      },
-      {
-        "task": "title-collisions-distinc-31649",
-        "at": "2026-07-03T11:12:22.894300+00:00",
-        "kind": "unroutable",
-        "why": "no department specialization matched"
-      },
-      {
-        "task": "only-389-1555-videos-ana-77142",
-        "at": "2026-07-03T11:12:22.895162+00:00",
-        "kind": "routed",
-        "chose": "analysis",
-        "over": [],
-        "why": "best specialization match (1 hits)"
-      },
-      {
-        "task": "lane-transcript-retrieva-77142",
-        "at": "2026-07-03T11:12:22.895618+00:00",
-        "kind": "unroutable",
-        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-      },
-      {
-        "task": "lane-external-mining-is--77142",
-        "at": "2026-07-03T11:12:22.896441+00:00",
-        "kind": "routed",
-        "chose": "mining",
-        "over": [],
-        "why": "best specialization match (1 hits)"
-      },
       {
         "task": "only-389-1555-videos-ana-77142",
         "at": "2026-07-03T11:12:22.897334+00:00",
@@ -400,9 +365,68 @@
         "lane": "AI news refresh",
         "status": "live",
         "what": "Refreshes official-site AI news"
+      },
+      {
+        "task": "empty-body-items-render--31649",
+        "at": "2026-07-03T17:58:09.079256+00:00",
+        "kind": "unroutable",
+        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+      },
+      {
+        "task": "title-collisions-distinc-31649",
+        "at": "2026-07-03T17:58:09.079991+00:00",
+        "kind": "unroutable",
+        "why": "no department specialization matched"
+      },
+      {
+        "task": "lane-transcript-retrieva-77142",
+        "at": "2026-07-03T17:58:09.080623+00:00",
+        "kind": "unroutable",
+        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-03T17:58:09.082300+00:00",
+        "kind": "lane_ran",
+        "lane": "Free analysis pool",
+        "status": "live",
+        "what": "Turns transcripts into skills/tools/connectors (free engines)"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-03T17:58:09.082919+00:00",
+        "kind": "lane_ran",
+        "lane": "Deep analysis (night-gated)",
+        "status": "live",
+        "what": "Claude re-analysis + safety pass"
       }
     ],
-    "memory_episodes": 10,
+    "memory_episodes": 8,
+    "directions": [
+      {
+        "id": "dir-1",
+        "text": "Free-only forever; quality over quantity; every step deepens EXCAVA's integration (daemon-grade, not cosmetic); I don't babysit — park questions, proceed on defaults.",
+        "at": "2026-07-03T00:00:00+00:00",
+        "via": "standing rules (SESSION_HANDOFF §4)",
+        "status": "active",
+        "excava_reading": "Baseline law, seeded at Phase-6 birth: applies to every department and every phase; the guardrails file is its enforcement arm.",
+        "acknowledged_at": "2026-07-03T00:00:00+00:00"
+      },
+      {
+        "id": "dir-2",
+        "text": "Creations enter the project autonomously when labeled 'Created by EXCAVA', with an independent test before first use; creators may build MCP servers, connectors, tools; multi-element bundles are called PACKAGES.",
+        "at": "2026-07-03T00:00:00+00:00",
+        "via": "P3 checkpoint answer",
+        "status": "active",
+        "excava_reading": "Creators department staffed under guardrail G-12; the label and test_before_run are mechanical, not optional.",
+        "acknowledged_at": "2026-07-03T00:00:00+00:00"
+      }
+    ],
+    "tutorials": {
+      "current_build": "v65",
+      "covered": true,
+      "count": 4
+    },
     "guardrails": "data/excava/guardrails.md",
     "traces": "data/excava/traces/"
   },

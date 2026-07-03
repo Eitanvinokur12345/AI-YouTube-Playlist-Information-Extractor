@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-03T19:58:22.827867+00:00",
+  "generated_at": "2026-07-03T21:41:03.960708+00:00",
   "name": "EXCAVA",
   "phase": "OS spine (Phase 0): bus + departments + hand-offs live; creators (OS-2) gated",
   "gate": {
@@ -22,7 +22,7 @@
     "missing": [
       "github_token"
     ],
-    "checked_at": "2026-07-03T18:38:25.765287+00:00",
+    "checked_at": "2026-07-03T20:32:17.233405+00:00",
     "can_do": {
       "resolve-links": true,
       "analyze-videos": true,
@@ -94,16 +94,16 @@
     }
   ],
   "os": {
-    "beats": 11,
+    "beats": 12,
     "mode": "run",
     "bus": {
-      "open": 7,
+      "open": 6,
       "total": 16,
       "per_department": {
         "memory": {
-          "queued": 1,
+          "queued": 0,
           "working": 0,
-          "done": 5,
+          "done": 6,
           "held": 0,
           "failed": 0
         },
@@ -146,8 +146,8 @@
       "last_handoff": "data/excava/handoffs/push-link-coverage-towar-8702--01--links-w1--to--memory.md"
     },
     "beat_log": [
-      "links-w1: push-link-coverage-towar-8702 -> memory (data/excava/handoffs/push-link-coverage-towar-8702--01--links-w1--to--memory.md)",
-      "memory master: +8 episodes"
+      "memory-w1: push-link-coverage-towar-8702 DONE",
+      "memory master: +4 episodes"
     ],
     "departments": [
       "analysis",
@@ -171,11 +171,11 @@
         "last": "2026-07-03T14:52:32.723872+00:00"
       },
       "memory": {
-        "ticks": 1,
-        "done": 1,
+        "ticks": 2,
+        "done": 2,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-03T11:12:23.361257+00:00"
+        "last": "2026-07-03T21:41:04.613551+00:00"
       },
       "links": {
         "ticks": 1,
@@ -264,69 +264,9 @@
         "priority": 1,
         "source": "auto",
         "doc": null
-      },
-      {
-        "id": "push-link-coverage-towar-8702",
-        "title": "Push link coverage toward 100% at +5%/day (the access gate)",
-        "department": "memory",
-        "status": "queued",
-        "steps": 1,
-        "priority": 0,
-        "source": "owner",
-        "doc": "data/excava/handoffs/push-link-coverage-towar-8702--01--links-w1--to--memory.md"
       }
     ],
     "recent_events": [
-      {
-        "task": "os-lanes",
-        "at": "2026-07-03T14:52:32.371185+00:00",
-        "kind": "lane_ran",
-        "lane": "Gemini watch (audio+visual)",
-        "status": "live",
-        "what": "Watches videos directly — clears the backlog free"
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-03T14:52:32.371827+00:00",
-        "kind": "lane_ran",
-        "lane": "Free analysis pool",
-        "status": "live",
-        "what": "Turns transcripts into skills/tools/connectors (free engines)"
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-03T14:52:32.372436+00:00",
-        "kind": "lane_ran",
-        "lane": "Deep analysis (night-gated)",
-        "status": "live",
-        "what": "Claude re-analysis + safety pass"
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-03T14:52:32.372998+00:00",
-        "kind": "lane_ran",
-        "lane": "AI news refresh",
-        "status": "live",
-        "what": "Refreshes official-site AI news"
-      },
-      {
-        "task": "empty-body-items-render--31649",
-        "at": "2026-07-03T17:58:09.079256+00:00",
-        "kind": "unroutable",
-        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-      },
-      {
-        "task": "title-collisions-distinc-31649",
-        "at": "2026-07-03T17:58:09.079991+00:00",
-        "kind": "unroutable",
-        "why": "no department specialization matched"
-      },
-      {
-        "task": "lane-transcript-retrieva-77142",
-        "at": "2026-07-03T17:58:09.080623+00:00",
-        "kind": "unroutable",
-        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-      },
       {
         "task": "os-lanes",
         "at": "2026-07-03T17:58:09.082300+00:00",
@@ -424,9 +364,57 @@
         "lane": "AI news refresh",
         "status": "live",
         "what": "Refreshes official-site AI news"
+      },
+      {
+        "task": "empty-body-items-render--31649",
+        "at": "2026-07-03T21:41:04.080889+00:00",
+        "kind": "unroutable",
+        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+      },
+      {
+        "task": "title-collisions-distinc-31649",
+        "at": "2026-07-03T21:41:04.081514+00:00",
+        "kind": "unroutable",
+        "why": "no department specialization matched"
+      },
+      {
+        "task": "lane-transcript-retrieva-77142",
+        "at": "2026-07-03T21:41:04.082138+00:00",
+        "kind": "unroutable",
+        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+      },
+      {
+        "task": "push-link-coverage-towar-8702",
+        "at": "2026-07-03T21:41:04.083179+00:00",
+        "kind": "claimed",
+        "by": "memory-w1",
+        "department": "memory"
+      },
+      {
+        "task": "push-link-coverage-towar-8702",
+        "at": "2026-07-03T21:41:04.205840+00:00",
+        "kind": "completed",
+        "by": "memory-w1",
+        "result": "Semantic index: 1417 vectors (model gemini-embedding-001); hub 4756 items → 3339 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-03T21:41:04.206832+00:00",
+        "kind": "lane_ran",
+        "lane": "Free analysis pool",
+        "status": "live",
+        "what": "Turns transcripts into skills/tools/connectors (free engines)"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-03T21:41:04.210675+00:00",
+        "kind": "lane_ran",
+        "lane": "Deep analysis (night-gated)",
+        "status": "live",
+        "what": "Claude re-analysis + safety pass"
       }
     ],
-    "memory_episodes": 8,
+    "memory_episodes": 4,
     "directions": [
       {
         "id": "dir-1",

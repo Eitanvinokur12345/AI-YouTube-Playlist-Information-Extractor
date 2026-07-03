@@ -1,60 +1,6 @@
 {
   "events": [
     {
-      "task": "weakest-lane-deep-analys-73320",
-      "at": "2026-07-03T10:21:30.353202+00:00",
-      "kind": "completed",
-      "by": "analysis-w1",
-      "result": "391 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-    },
-    {
-      "task": "only-389-1555-videos-ana-77142",
-      "at": "2026-07-03T11:12:22.891635+00:00",
-      "kind": "enqueued",
-      "title": "Only 389/1555 videos analyzed (25.0%)",
-      "source": "auto",
-      "priority": 1,
-      "department": "(unrouted)"
-    },
-    {
-      "task": "lane-transcript-retrieva-77142",
-      "at": "2026-07-03T11:12:22.892576+00:00",
-      "kind": "enqueued",
-      "title": "Lane 'Transcript retrieval' is slow",
-      "source": "auto",
-      "priority": 1,
-      "department": "(unrouted)"
-    },
-    {
-      "task": "lane-external-mining-is--77142",
-      "at": "2026-07-03T11:12:22.893347+00:00",
-      "kind": "enqueued",
-      "title": "Lane 'External mining' is slow",
-      "source": "auto",
-      "priority": 1,
-      "department": "(unrouted)"
-    },
-    {
-      "task": "empty-body-items-render--31649",
-      "at": "2026-07-03T11:12:22.893942+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "title-collisions-distinc-31649",
-      "at": "2026-07-03T11:12:22.894300+00:00",
-      "kind": "unroutable",
-      "why": "no department specialization matched"
-    },
-    {
-      "task": "only-389-1555-videos-ana-77142",
-      "at": "2026-07-03T11:12:22.895162+00:00",
-      "kind": "routed",
-      "chose": "analysis",
-      "over": [],
-      "why": "best specialization match (1 hits)"
-    },
-    {
       "task": "lane-transcript-retrieva-77142",
       "at": "2026-07-03T11:12:22.895618+00:00",
       "kind": "unroutable",
@@ -294,6 +240,54 @@
       "lane": "AI news refresh",
       "status": "live",
       "what": "Refreshes official-site AI news"
+    },
+    {
+      "task": "empty-body-items-render--31649",
+      "at": "2026-07-03T21:41:04.080889+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "title-collisions-distinc-31649",
+      "at": "2026-07-03T21:41:04.081514+00:00",
+      "kind": "unroutable",
+      "why": "no department specialization matched"
+    },
+    {
+      "task": "lane-transcript-retrieva-77142",
+      "at": "2026-07-03T21:41:04.082138+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "push-link-coverage-towar-8702",
+      "at": "2026-07-03T21:41:04.083179+00:00",
+      "kind": "claimed",
+      "by": "memory-w1",
+      "department": "memory"
+    },
+    {
+      "task": "push-link-coverage-towar-8702",
+      "at": "2026-07-03T21:41:04.205840+00:00",
+      "kind": "completed",
+      "by": "memory-w1",
+      "result": "Semantic index: 1417 vectors (model gemini-embedding-001); hub 4756 items → 3339 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "task": "os-lanes",
+      "at": "2026-07-03T21:41:04.206832+00:00",
+      "kind": "lane_ran",
+      "lane": "Free analysis pool",
+      "status": "live",
+      "what": "Turns transcripts into skills/tools/connectors (free engines)"
+    },
+    {
+      "task": "os-lanes",
+      "at": "2026-07-03T21:41:04.210675+00:00",
+      "kind": "lane_ran",
+      "lane": "Deep analysis (night-gated)",
+      "status": "live",
+      "what": "Claude re-analysis + safety pass"
     }
   ]
 }

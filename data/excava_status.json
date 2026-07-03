@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-03T17:58:08.928890+00:00",
+  "generated_at": "2026-07-03T19:58:22.827867+00:00",
   "name": "EXCAVA",
   "phase": "OS spine (Phase 0): bus + departments + hand-offs live; creators (OS-2) gated",
   "gate": {
@@ -22,7 +22,7 @@
     "missing": [
       "github_token"
     ],
-    "checked_at": "2026-07-03T16:44:23.560059+00:00",
+    "checked_at": "2026-07-03T18:38:25.765287+00:00",
     "can_do": {
       "resolve-links": true,
       "analyze-videos": true,
@@ -94,14 +94,14 @@
     }
   ],
   "os": {
-    "beats": 10,
+    "beats": 11,
     "mode": "run",
     "bus": {
-      "open": 6,
-      "total": 15,
+      "open": 7,
+      "total": 16,
       "per_department": {
         "memory": {
-          "queued": 0,
+          "queued": 1,
           "working": 0,
           "done": 5,
           "held": 0,
@@ -143,9 +143,10 @@
           "failed": 0
         }
       },
-      "last_handoff": "data/excava/handoffs/1665-tools-skills-still--64934--01--links-w1--to--memory.md"
+      "last_handoff": "data/excava/handoffs/push-link-coverage-towar-8702--01--links-w1--to--memory.md"
     },
     "beat_log": [
+      "links-w1: push-link-coverage-towar-8702 -> memory (data/excava/handoffs/push-link-coverage-towar-8702--01--links-w1--to--memory.md)",
       "memory master: +8 episodes"
     ],
     "departments": [
@@ -175,6 +176,13 @@
         "handoffs": 0,
         "fails": 0,
         "last": "2026-07-03T11:12:23.361257+00:00"
+      },
+      "links": {
+        "ticks": 1,
+        "done": 0,
+        "handoffs": 1,
+        "fails": 0,
+        "last": "2026-07-03T19:58:23.351654+00:00"
       }
     },
     "audit": {
@@ -188,6 +196,10 @@
         "cooldown_until": ""
       },
       "memory": {
+        "streak": 0,
+        "cooldown_until": ""
+      },
+      "links": {
         "streak": 0,
         "cooldown_until": ""
       }
@@ -252,88 +264,19 @@
         "priority": 1,
         "source": "auto",
         "doc": null
+      },
+      {
+        "id": "push-link-coverage-towar-8702",
+        "title": "Push link coverage toward 100% at +5%/day (the access gate)",
+        "department": "memory",
+        "status": "queued",
+        "steps": 1,
+        "priority": 0,
+        "source": "owner",
+        "doc": "data/excava/handoffs/push-link-coverage-towar-8702--01--links-w1--to--memory.md"
       }
     ],
     "recent_events": [
-      {
-        "task": "only-389-1555-videos-ana-77142",
-        "at": "2026-07-03T11:12:22.897334+00:00",
-        "kind": "claimed",
-        "by": "analysis-w1",
-        "department": "analysis"
-      },
-      {
-        "task": "only-389-1555-videos-ana-77142",
-        "at": "2026-07-03T11:12:22.898882+00:00",
-        "kind": "completed",
-        "by": "analysis-w1",
-        "result": "391 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-      },
-      {
-        "task": "1665-tools-skills-still--64934",
-        "at": "2026-07-03T11:12:22.899701+00:00",
-        "kind": "claimed",
-        "by": "memory-w1",
-        "department": "memory"
-      },
-      {
-        "task": "1665-tools-skills-still--64934",
-        "at": "2026-07-03T11:12:23.055797+00:00",
-        "kind": "completed",
-        "by": "memory-w1",
-        "result": "Semantic index: 1417 vectors (model gemini-embedding-001); hub 4756 items → 3339 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-      },
-      {
-        "task": "weakest-lane-deep-analys-90352",
-        "at": "2026-07-03T14:52:32.363307+00:00",
-        "kind": "enqueued",
-        "title": "Weakest lane: Deep analysis (Claude, night-gated)",
-        "source": "auto",
-        "priority": 1,
-        "department": "(unrouted)"
-      },
-      {
-        "task": "empty-body-items-render--31649",
-        "at": "2026-07-03T14:52:32.364094+00:00",
-        "kind": "unroutable",
-        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-      },
-      {
-        "task": "title-collisions-distinc-31649",
-        "at": "2026-07-03T14:52:32.364666+00:00",
-        "kind": "unroutable",
-        "why": "no department specialization matched"
-      },
-      {
-        "task": "lane-transcript-retrieva-77142",
-        "at": "2026-07-03T14:52:32.365228+00:00",
-        "kind": "unroutable",
-        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-      },
-      {
-        "task": "weakest-lane-deep-analys-90352",
-        "at": "2026-07-03T14:52:32.366484+00:00",
-        "kind": "routed",
-        "chose": "analysis",
-        "over": [
-          "improve"
-        ],
-        "why": "best specialization match (1 hits)"
-      },
-      {
-        "task": "weakest-lane-deep-analys-90352",
-        "at": "2026-07-03T14:52:32.367814+00:00",
-        "kind": "claimed",
-        "by": "analysis-w1",
-        "department": "analysis"
-      },
-      {
-        "task": "weakest-lane-deep-analys-90352",
-        "at": "2026-07-03T14:52:32.369830+00:00",
-        "kind": "completed",
-        "by": "analysis-w1",
-        "result": "391 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-      },
       {
         "task": "os-lanes",
         "at": "2026-07-03T14:52:32.371185+00:00",
@@ -399,6 +342,88 @@
         "lane": "Deep analysis (night-gated)",
         "status": "live",
         "what": "Claude re-analysis + safety pass"
+      },
+      {
+        "task": "push-link-coverage-towar-8702",
+        "at": "2026-07-03T19:58:22.984404+00:00",
+        "kind": "enqueued",
+        "title": "Push link coverage toward 100% at +5%/day (the access gate)",
+        "source": "owner",
+        "priority": 0,
+        "department": "(unrouted)"
+      },
+      {
+        "task": "empty-body-items-render--31649",
+        "at": "2026-07-03T19:58:22.985449+00:00",
+        "kind": "unroutable",
+        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+      },
+      {
+        "task": "title-collisions-distinc-31649",
+        "at": "2026-07-03T19:58:22.986060+00:00",
+        "kind": "unroutable",
+        "why": "no department specialization matched"
+      },
+      {
+        "task": "lane-transcript-retrieva-77142",
+        "at": "2026-07-03T19:58:22.986697+00:00",
+        "kind": "unroutable",
+        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+      },
+      {
+        "task": "push-link-coverage-towar-8702",
+        "at": "2026-07-03T19:58:22.987961+00:00",
+        "kind": "routed",
+        "chose": "links",
+        "over": [],
+        "why": "best specialization match (2 hits)"
+      },
+      {
+        "task": "push-link-coverage-towar-8702",
+        "at": "2026-07-03T19:58:22.989365+00:00",
+        "kind": "claimed",
+        "by": "links-w1",
+        "department": "links"
+      },
+      {
+        "task": "push-link-coverage-towar-8702",
+        "at": "2026-07-03T19:58:22.990731+00:00",
+        "kind": "handoff",
+        "from": "links-w1",
+        "to": "memory",
+        "doc": "data/excava/handoffs/push-link-coverage-towar-8702--01--links-w1--to--memory.md"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-03T19:58:22.992068+00:00",
+        "kind": "lane_ran",
+        "lane": "Gemini watch (audio+visual)",
+        "status": "live",
+        "what": "Watches videos directly — clears the backlog free"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-03T19:58:22.992679+00:00",
+        "kind": "lane_ran",
+        "lane": "Free analysis pool",
+        "status": "live",
+        "what": "Turns transcripts into skills/tools/connectors (free engines)"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-03T19:58:22.993255+00:00",
+        "kind": "lane_ran",
+        "lane": "Deep analysis (night-gated)",
+        "status": "live",
+        "what": "Claude re-analysis + safety pass"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-03T19:58:22.993835+00:00",
+        "kind": "lane_ran",
+        "lane": "AI news refresh",
+        "status": "live",
+        "what": "Refreshes official-site AI news"
       }
     ],
     "memory_episodes": 8,

@@ -173,7 +173,8 @@ def ingest() -> int:
 
 def log_manual(what: str, why: str, files: list[str], by: str = "ai-tool") -> str:
     """MANUAL feed: the WHY that git can't see. One line, seconds, saves the next tool minutes."""
-    eid = f"m-{int(datetime.now(timezone.utc).timestamp()) % 10**8}"
+    import os as _os
+    eid = f"m-{int(datetime.now(timezone.utc).timestamp()) % 10**8}-{_os.urandom(2).hex()}"
     _append([{"id": eid, "at": _now(), "kind": "manual", "what": what, "why": why,
               "files": files[:20], "topics": _topics(f"{what} {why}", files), "by": by}])
     return eid

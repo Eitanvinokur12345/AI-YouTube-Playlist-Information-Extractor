@@ -112,6 +112,34 @@ The #1 job: make what EXCAVA already does the **deepest, freshest, most accurate
 5. **Design tools:** nothing now — Fable will first show you **sample monster creatures** to judge
    quality; we pick asset tools at the design round.
 
-## H. NEXT
-A **design-only interview** before M3 (your choice), and O1–O8 mockups **after** this program is
-finalized. This doc is the finalized answer-set; PLAN + STEPS unchanged.
+## I. DESIGN DIRECTION (final 2026-07-05 — Fable builds autonomously; NO approval gate; Eitan reviews results)
+- **Aesthetic:** refined **Heavy-Machinery** (premium industrial) **+ playful game-UI liveliness** +
+  **clean-tech touches at points**. Must feel like a real, established product.
+- **Palette:** signature **yellow + warm ink**, with **real metal framing** and **pockets of greenery/
+  vegetation** in certain areas (life against the industrial). **Light default, dark optional.**
+- **Density:** **spacious** (premium, calm).
+- **Type:** **bold industrial** display (Archivo Black-ish), clean readable body.
+- **Finish:** **refined neobrutalist** (hard offset shadows + chunky borders, cleaned up) as the primary,
+  with a **near-equal amount of textured industrial** (subtle metal/brushed/grain surfaces).
+- **Shapes:** **rounded but organic and characterful** — nothing is a plain circle or square; creatures
+  and UI elements get distinctive, interesting silhouettes.
+- **Icons:** one **bespoke line-icon set**, no emoji mixing.
+- **Floor:** **isometric factory** (primary) with **side-view cutaway moments** (e.g. when you enter a
+  department). Departments = their own station/building.
+- **Monsters:** **friendly-but-distinctive with a cool/edgy edge**; one species per department, **matched
+  to its function**; **named + suited leads**, generic smaller workers. Fable **generates sample creatures
+  for Eitan to see first** (quality check) — but no pre-approval blocks the build.
+- **Animation:** **lively but purposeful** — the floor is alive; elsewhere motion is tied to real events.
+- **Showpieces (make these sing):** the **living factory floor** + the **chat / WAR ROOMS** (Eitan's
+  most-anticipated) + the North-Star constellation + the console hero.
+- **Already set (earlier rounds):** messenger-style chat UI · central hero **console** like the screenshot
+  (home + floating) · **launcher** = its own clean minimal brand, full context switch.
+- **No approval gate on designs:** EXCAVA/Fable create designs autonomously; Eitan **sees** them, doesn't
+  pre-approve. O1–O8 mockups fold into the build the same way.
+
+## H. NEXT / WORKING
+- All interviews DONE (~100 questions, incl. this design round). This doc is the finalized answer-set;
+  `EXCAVA_V2_PLAN.md` + `EXCAVA_V2_STEPS.md` remain byte-identical.
+- **Fable is on Eitan's Pro until July 7** → **front-load building, visuals first**, over the next ~2 days.
+- On switch to Fable: start **M1 core (retrieval depth + verification)** and the **design system + sample
+  monsters** in parallel; show results, no approval gate.

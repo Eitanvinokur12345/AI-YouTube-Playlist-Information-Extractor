@@ -86,11 +86,12 @@ turning OmniRoute off still works.
 **M2.1a — [OWNER] Confirm keys (already added).** Eitan's ~20 secrets are already in the repo; run
 `engine_selftest.yml` to confirm which families answer. **No new purchase.** Done when: the selftest report
 shows the live set.
-**M2.1b — [OWNER/setup] External free tools.** Self-host **OmniRoute** (`npm install`, port 20128; ideally on
-the Pi as an always-on gateway, else started per-CI-run) — sign in to its free tiers (no card) and point it at
-the existing keys. Self-host **OpenClaw** (channels/browse/shell). Install **agent-reach** (M1.C2 discovery
-reach). Optional **Ollama/Hermes** + **Raspberry Pi** (real-time + residential IP + a home for OmniRoute).
-Done when: the OmniRoute endpoint answers with fallback; OpenClaw + agent-reach reachable from a run.
+**M2.1b — External free tools (OPTIONAL — Fable/EXCAVA self-configures; no manual owner step required).**
+**OmniRoute** — OPTIONAL central gateway (`npm install`, port 20128; per-CI-run or on a host). Eitan
+installed it locally 2026-07-05 (it runs) but left the provider-key step; **Fable wires it up autonomously
+later**, so no owner action now. **OpenClaw** (channels/browse/shell), **agent-reach** (M1.C2 discovery
+reach), optional **Ollama/Hermes** + **Raspberry Pi** — all likewise Fable-set-up, deferred until needed.
+Done when: each is reachable from a run whenever Fable brings it online; nothing here blocks M1–M4.
 **M2.2 — Lease arbiter + budgets.** Build: `src/excava_leases.py` — per-dept daily token budget, hard
 ceilings, per-engine RPM caps, **+ a tight Claude/Pro budget** so automation never eats Eitan's Desktop quota.
 Done when: a department at budget is held+traced; Claude usage stays within its daily cap.

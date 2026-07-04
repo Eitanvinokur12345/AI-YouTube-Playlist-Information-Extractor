@@ -22,6 +22,9 @@ interview. **Top priority: §F CORE SPOT-ON**, then M1→M4, breadth (M5 externa
   4-tier fallback Subscription→API-key→cheap→free, token compression 15–95%, ~1.6B free tokens/mo).
   **ADDED as an additional, CENTRAL routing option — NOT a replacement, NOT the sole path**; the 9
   engines above remain directly callable and everything still works with OmniRoute off. (M2.1 + M2.1b.)
+  **STATUS: OPTIONAL / deferred.** Eitan installed it locally 2026-07-05 (it runs) but stopped at the
+  provider-key step (fiddly). **No owner action needed** — EXCAVA/Fable wires it up autonomously later
+  (per-CI-run or on a host); until then the direct engines cover everything. Keep it on the options list.
 - **Hermes** ("Hadishan"): open-weights, added on the **free self-host path** (Ollama on the optional
   Pi / a capable machine); the paid endpoint stays off.
 - **OpenClaw: ADD as a tool** (Eitan's call) — used for its capabilities (channels, browse/shell,

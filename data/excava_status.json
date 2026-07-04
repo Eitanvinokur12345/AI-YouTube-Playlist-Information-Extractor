@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-03T23:36:18.833394+00:00",
+  "generated_at": "2026-07-04T04:13:27.201636+00:00",
   "name": "EXCAVA",
   "phase": "OS spine (Phase 0): bus + departments + hand-offs live; creators (OS-2) gated",
   "gate": {
@@ -22,7 +22,7 @@
     "missing": [
       "github_token"
     ],
-    "checked_at": "2026-07-03T22:15:22.945430+00:00",
+    "checked_at": "2026-07-04T00:16:28.252714+00:00",
     "can_do": {
       "resolve-links": true,
       "analyze-videos": true,
@@ -94,11 +94,11 @@
     }
   ],
   "os": {
-    "beats": 13,
+    "beats": 14,
     "mode": "run",
     "bus": {
-      "open": 6,
-      "total": 16,
+      "open": 7,
+      "total": 17,
       "per_department": {
         "memory": {
           "queued": 0,
@@ -136,7 +136,7 @@
           "failed": 0
         },
         "mining": {
-          "queued": 1,
+          "queued": 2,
           "working": 0,
           "done": 0,
           "held": 0,
@@ -263,70 +263,19 @@
         "priority": 1,
         "source": "auto",
         "doc": null
+      },
+      {
+        "id": "lane-external-mining-is--38407",
+        "title": "Lane 'External mining' is stale",
+        "department": "mining",
+        "status": "queued",
+        "steps": 0,
+        "priority": 1,
+        "source": "auto",
+        "doc": null
       }
     ],
     "recent_events": [
-      {
-        "task": "lane-transcript-retrieva-77142",
-        "at": "2026-07-03T19:58:22.986697+00:00",
-        "kind": "unroutable",
-        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-      },
-      {
-        "task": "push-link-coverage-towar-8702",
-        "at": "2026-07-03T19:58:22.987961+00:00",
-        "kind": "routed",
-        "chose": "links",
-        "over": [],
-        "why": "best specialization match (2 hits)"
-      },
-      {
-        "task": "push-link-coverage-towar-8702",
-        "at": "2026-07-03T19:58:22.989365+00:00",
-        "kind": "claimed",
-        "by": "links-w1",
-        "department": "links"
-      },
-      {
-        "task": "push-link-coverage-towar-8702",
-        "at": "2026-07-03T19:58:22.990731+00:00",
-        "kind": "handoff",
-        "from": "links-w1",
-        "to": "memory",
-        "doc": "data/excava/handoffs/push-link-coverage-towar-8702--01--links-w1--to--memory.md"
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-03T19:58:22.992068+00:00",
-        "kind": "lane_ran",
-        "lane": "Gemini watch (audio+visual)",
-        "status": "live",
-        "what": "Watches videos directly — clears the backlog free"
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-03T19:58:22.992679+00:00",
-        "kind": "lane_ran",
-        "lane": "Free analysis pool",
-        "status": "live",
-        "what": "Turns transcripts into skills/tools/connectors (free engines)"
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-03T19:58:22.993255+00:00",
-        "kind": "lane_ran",
-        "lane": "Deep analysis (night-gated)",
-        "status": "live",
-        "what": "Claude re-analysis + safety pass"
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-03T19:58:22.993835+00:00",
-        "kind": "lane_ran",
-        "lane": "AI news refresh",
-        "status": "live",
-        "what": "Refreshes official-site AI news"
-      },
       {
         "task": "empty-body-items-render--31649",
         "at": "2026-07-03T21:41:04.080889+00:00",
@@ -408,6 +357,65 @@
         "lane": "Deep analysis (night-gated)",
         "status": "live",
         "what": "Claude re-analysis + safety pass"
+      },
+      {
+        "task": "lane-external-mining-is--38407",
+        "at": "2026-07-04T04:13:27.361402+00:00",
+        "kind": "enqueued",
+        "title": "Lane 'External mining' is stale",
+        "source": "auto",
+        "priority": 1,
+        "department": "(unrouted)"
+      },
+      {
+        "task": "empty-body-items-render--31649",
+        "at": "2026-07-04T04:13:27.362334+00:00",
+        "kind": "unroutable",
+        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+      },
+      {
+        "task": "title-collisions-distinc-31649",
+        "at": "2026-07-04T04:13:27.362943+00:00",
+        "kind": "unroutable",
+        "why": "no department specialization matched"
+      },
+      {
+        "task": "lane-transcript-retrieva-77142",
+        "at": "2026-07-04T04:13:27.363582+00:00",
+        "kind": "unroutable",
+        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+      },
+      {
+        "task": "lane-external-mining-is--38407",
+        "at": "2026-07-04T04:13:27.364874+00:00",
+        "kind": "routed",
+        "chose": "mining",
+        "over": [],
+        "why": "best specialization match (1 hits)"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-04T04:13:27.366559+00:00",
+        "kind": "lane_ran",
+        "lane": "Gemini watch (audio+visual)",
+        "status": "live",
+        "what": "Watches videos directly — clears the backlog free"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-04T04:13:27.367150+00:00",
+        "kind": "lane_ran",
+        "lane": "Free analysis pool",
+        "status": "live",
+        "what": "Turns transcripts into skills/tools/connectors (free engines)"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-04T04:13:27.367761+00:00",
+        "kind": "lane_ran",
+        "lane": "AI news refresh",
+        "status": "live",
+        "what": "Refreshes official-site AI news"
       }
     ],
     "memory_episodes": 5,

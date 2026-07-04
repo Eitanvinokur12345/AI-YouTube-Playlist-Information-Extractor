@@ -71,18 +71,23 @@ Agents get real engines; their work is a visible conversation that produces arti
 
 **M2.0 — `PROTOCOLS.md` + self-audit.** Build: write P1–P14; extend the beat `_audit_spine()` to check it;
 drift → SAFE mode. Done when: beat prints "audit OK vs PROTOCOLS.md"; deleting a rule trips SAFE.
-**M2.1 — The engine layer.** Build: `src/excava_engines.py` — adapters for the **9 already-wired free
-families** (Gemini ×6 rotated · Groq ×2 · Cerebras ×2 · OpenRouter incl. **free DeepSeek R1 / Qwen3 Coder** ·
-NVIDIA Nemotron · SambaNova · Mistral · GH-Models), **+ self-hosted Hermes** (Ollama/Pi), **+ Claude via the
-Pro OAuth token** (budgeted, premium-marked). `pick_engine(dept,difficulty)` = fast-first (Cerebras/Groq) →
-Gemini/Claude for the hard/grounded parts; graceful skip if a key is absent. Done when: `--selftest` returns
-a real completion from every configured engine.
+**M2.1 — The engine layer (via the OmniRoute gateway).** Build: `src/excava_engines.py` routes through
+**OmniRoute** — a free, self-hosted, OpenAI-compatible gateway fronting 160+ providers with **4-tier
+auto-fallback (Subscription → API-key → cheap → free)** and **built-in prompt compression (15–95% token
+savings)** — configured with the **~20 existing keys** + **90+ free tiers (~1.6B free tokens/mo)** + the
+**self-hosted Hermes** (Ollama/Pi) + the **Claude/Pro subscription tier**. `pick_engine(dept,difficulty)`
+sets the routing policy (fast-first Cerebras/Groq → Gemini/Claude for hard/grounded work), Claude budgeted +
+premium-marked. A thin **direct-call fallback** keeps the 9 families working if the gateway is down. Done
+when: `--selftest` returns a real completion routed through OmniRoute, and a simulated provider outage
+auto-falls-back.
 **M2.1a — [OWNER] Confirm keys (already added).** Eitan's ~20 secrets are already in the repo; run
 `engine_selftest.yml` to confirm which families answer. **No new purchase.** Done when: the selftest report
 shows the live set.
-**M2.1b — [OWNER/setup] External free tools.** Self-host **OpenClaw** (his machine/Pi) + install **agent-reach**
-(for M1.C2 reach) + optional **Ollama/Hermes** + optional **Raspberry Pi** (real-time + residential IP). Done
-when: OpenClaw + agent-reach reachable from a run; Pi optional.
+**M2.1b — [OWNER/setup] External free tools.** Self-host **OmniRoute** (`npm install`, port 20128; ideally on
+the Pi as an always-on gateway, else started per-CI-run) — sign in to its free tiers (no card) and point it at
+the existing keys. Self-host **OpenClaw** (channels/browse/shell). Install **agent-reach** (M1.C2 discovery
+reach). Optional **Ollama/Hermes** + **Raspberry Pi** (real-time + residential IP + a home for OmniRoute).
+Done when: the OmniRoute endpoint answers with fallback; OpenClaw + agent-reach reachable from a run.
 **M2.2 — Lease arbiter + budgets.** Build: `src/excava_leases.py` — per-dept daily token budget, hard
 ceilings, per-engine RPM caps, **+ a tight Claude/Pro budget** so automation never eats Eitan's Desktop quota.
 Done when: a department at budget is held+traced; Claude usage stays within its daily cap.

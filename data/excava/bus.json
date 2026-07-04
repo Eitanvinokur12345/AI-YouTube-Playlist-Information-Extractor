@@ -319,17 +319,18 @@
       "department": "memory",
       "source": "auto",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/1700-tools-skills-still--49869--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-07-04T07:24:29.523854+00:00",
-      "updated_at": "2026-07-04T07:24:29.536252+00:00"
+      "updated_at": "2026-07-04T10:34:42.611783+00:00",
+      "result": "Semantic index: 1423 vectors (model gemini-embedding-001); hub 4847 items → 3424 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "only-389-1555-videos-ana-49869",
@@ -350,5 +351,5 @@
       "result": "391 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     }
   ],
-  "updated_at": "2026-07-04T07:24:29.536257+00:00"
+  "updated_at": "2026-07-04T10:34:42.611802+00:00"
 }

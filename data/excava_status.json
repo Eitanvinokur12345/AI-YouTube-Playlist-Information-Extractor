@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-04T07:24:29.372632+00:00",
+  "generated_at": "2026-07-04T10:34:42.296952+00:00",
   "name": "EXCAVA",
   "phase": "OS spine (Phase 0): bus + departments + hand-offs live; creators (OS-2) gated",
   "gate": {
@@ -14,7 +14,7 @@
     "outward_needs": "data_guard ok + security clean + G3>=70 + owner approval"
   },
   "memory": {
-    "vectors": 1418,
+    "vectors": 1423,
     "model": "gemini-embedding-001",
     "wired": true
   },
@@ -22,7 +22,7 @@
     "missing": [
       "github_token"
     ],
-    "checked_at": "2026-07-04T04:49:25.810514+00:00",
+    "checked_at": "2026-07-04T10:24:24.111554+00:00",
     "can_do": {
       "resolve-links": true,
       "analyze-videos": true,
@@ -94,16 +94,16 @@
     }
   ],
   "os": {
-    "beats": 15,
+    "beats": 16,
     "mode": "run",
     "bus": {
-      "open": 8,
+      "open": 7,
       "total": 19,
       "per_department": {
         "memory": {
-          "queued": 1,
+          "queued": 0,
           "working": 0,
-          "done": 6,
+          "done": 7,
           "held": 0,
           "failed": 0
         },
@@ -146,9 +146,8 @@
       "last_handoff": "data/excava/handoffs/1700-tools-skills-still--49869--01--links-w1--to--memory.md"
     },
     "beat_log": [
-      "analysis-w1: only-389-1555-videos-ana-49869 DONE",
-      "links-w1: 1700-tools-skills-still--49869 -> memory (data/excava/handoffs/1700-tools-skills-still--49869--01--links-w1--to--memory.md)",
-      "memory master: +7 episodes"
+      "memory-w1: 1700-tools-skills-still--49869 DONE",
+      "memory master: +11 episodes"
     ],
     "departments": [
       "analysis",
@@ -172,11 +171,11 @@
         "last": "2026-07-04T07:24:29.883599+00:00"
       },
       "memory": {
-        "ticks": 2,
-        "done": 2,
+        "ticks": 3,
+        "done": 3,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-03T21:41:04.613551+00:00"
+        "last": "2026-07-04T10:34:42.932734+00:00"
       },
       "links": {
         "ticks": 2,
@@ -275,87 +274,9 @@
         "priority": 1,
         "source": "auto",
         "doc": null
-      },
-      {
-        "id": "1700-tools-skills-still--49869",
-        "title": "1700 tools/skills still have no real link (46.8%)",
-        "department": "memory",
-        "status": "queued",
-        "steps": 1,
-        "priority": 1,
-        "source": "auto",
-        "doc": "data/excava/handoffs/1700-tools-skills-still--49869--01--links-w1--to--memory.md"
       }
     ],
     "recent_events": [
-      {
-        "task": "empty-body-items-render--31649",
-        "at": "2026-07-04T04:13:27.362334+00:00",
-        "kind": "unroutable",
-        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-      },
-      {
-        "task": "title-collisions-distinc-31649",
-        "at": "2026-07-04T04:13:27.362943+00:00",
-        "kind": "unroutable",
-        "why": "no department specialization matched"
-      },
-      {
-        "task": "lane-transcript-retrieva-77142",
-        "at": "2026-07-04T04:13:27.363582+00:00",
-        "kind": "unroutable",
-        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-      },
-      {
-        "task": "lane-external-mining-is--38407",
-        "at": "2026-07-04T04:13:27.364874+00:00",
-        "kind": "routed",
-        "chose": "mining",
-        "over": [],
-        "why": "best specialization match (1 hits)"
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-04T04:13:27.366559+00:00",
-        "kind": "lane_ran",
-        "lane": "Gemini watch (audio+visual)",
-        "status": "live",
-        "what": "Watches videos directly — clears the backlog free"
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-04T04:13:27.367150+00:00",
-        "kind": "lane_ran",
-        "lane": "Free analysis pool",
-        "status": "live",
-        "what": "Turns transcripts into skills/tools/connectors (free engines)"
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-04T04:13:27.367761+00:00",
-        "kind": "lane_ran",
-        "lane": "AI news refresh",
-        "status": "live",
-        "what": "Refreshes official-site AI news"
-      },
-      {
-        "task": "1700-tools-skills-still--49869",
-        "at": "2026-07-04T07:24:29.524501+00:00",
-        "kind": "enqueued",
-        "title": "1700 tools/skills still have no real link (46.8%)",
-        "source": "auto",
-        "priority": 1,
-        "department": "(unrouted)"
-      },
-      {
-        "task": "only-389-1555-videos-ana-49869",
-        "at": "2026-07-04T07:24:29.525845+00:00",
-        "kind": "enqueued",
-        "title": "Only 389/1555 videos analyzed (25.0%)",
-        "source": "auto",
-        "priority": 1,
-        "department": "(unrouted)"
-      },
       {
         "task": "empty-body-items-render--31649",
         "at": "2026-07-04T07:24:29.526776+00:00",
@@ -434,9 +355,73 @@
         "lane": "Deep analysis (night-gated)",
         "status": "live",
         "what": "Claude re-analysis + safety pass"
+      },
+      {
+        "task": "empty-body-items-render--31649",
+        "at": "2026-07-04T10:34:42.452151+00:00",
+        "kind": "unroutable",
+        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+      },
+      {
+        "task": "title-collisions-distinc-31649",
+        "at": "2026-07-04T10:34:42.452940+00:00",
+        "kind": "unroutable",
+        "why": "no department specialization matched"
+      },
+      {
+        "task": "lane-transcript-retrieva-77142",
+        "at": "2026-07-04T10:34:42.453588+00:00",
+        "kind": "unroutable",
+        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+      },
+      {
+        "task": "1700-tools-skills-still--49869",
+        "at": "2026-07-04T10:34:42.455054+00:00",
+        "kind": "claimed",
+        "by": "memory-w1",
+        "department": "memory"
+      },
+      {
+        "task": "1700-tools-skills-still--49869",
+        "at": "2026-07-04T10:34:42.612469+00:00",
+        "kind": "completed",
+        "by": "memory-w1",
+        "result": "Semantic index: 1423 vectors (model gemini-embedding-001); hub 4847 items → 3424 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-04T10:34:42.613928+00:00",
+        "kind": "lane_ran",
+        "lane": "Gemini watch (audio+visual)",
+        "status": "live",
+        "what": "Watches videos directly — clears the backlog free"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-04T10:34:42.614488+00:00",
+        "kind": "lane_ran",
+        "lane": "Free analysis pool",
+        "status": "live",
+        "what": "Turns transcripts into skills/tools/connectors (free engines)"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-04T10:34:42.615097+00:00",
+        "kind": "lane_ran",
+        "lane": "Deep analysis (night-gated)",
+        "status": "live",
+        "what": "Claude re-analysis + safety pass"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-04T10:34:42.615672+00:00",
+        "kind": "lane_ran",
+        "lane": "AI news refresh",
+        "status": "live",
+        "what": "Refreshes official-site AI news"
       }
     ],
-    "memory_episodes": 7,
+    "memory_episodes": 11,
     "directions": [
       {
         "id": "dir-1",
@@ -518,7 +503,7 @@
     }
   ],
   "stack_review": {
-    "candidates_available": 1008,
+    "candidates_available": 1016,
     "note": "EXCAVA reviews its stack each cycle: integrate the best free per-process tool, combine overlaps, offload weak ones. Top open process gaps: Dedup/entity resolution"
   }
 }

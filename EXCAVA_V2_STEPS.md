@@ -71,15 +71,18 @@ Agents get real engines; their work is a visible conversation that produces arti
 
 **M2.0 — `PROTOCOLS.md` + self-audit.** Build: write P1–P14; extend the beat `_audit_spine()` to check it;
 drift → SAFE mode. Done when: beat prints "audit OK vs PROTOCOLS.md"; deleting a rule trips SAFE.
-**M2.1 — The engine layer (via the OmniRoute gateway).** Build: `src/excava_engines.py` routes through
-**OmniRoute** — a free, self-hosted, OpenAI-compatible gateway fronting 160+ providers with **4-tier
-auto-fallback (Subscription → API-key → cheap → free)** and **built-in prompt compression (15–95% token
-savings)** — configured with the **~20 existing keys** + **90+ free tiers (~1.6B free tokens/mo)** + the
-**self-hosted Hermes** (Ollama/Pi) + the **Claude/Pro subscription tier**. `pick_engine(dept,difficulty)`
-sets the routing policy (fast-first Cerebras/Groq → Gemini/Claude for hard/grounded work), Claude budgeted +
-premium-marked. A thin **direct-call fallback** keeps the 9 families working if the gateway is down. Done
-when: `--selftest` returns a real completion routed through OmniRoute, and a simulated provider outage
-auto-falls-back.
+**M2.1 — The engine layer (existing engines KEPT first-class; OmniRoute ADDED as a central option, not a
+replacement or sole path).** Build: `src/excava_engines.py` keeps the **9 already-wired free families**
+(Gemini ×6 · Groq ×2 · Cerebras ×2 · OpenRouter incl. **free DeepSeek R1 / Qwen3 Coder** · NVIDIA Nemotron ·
+SambaNova · Mistral · GH-Models) as **first-class, directly-callable** engines, **+ self-hosted Hermes**
+(Ollama/Pi) **+ Claude via the Pro OAuth token** (budgeted, premium-marked). **OmniRoute is ADDED alongside
+them as an additional, central routing option** (never replacing them, never the only path): a free
+self-hosted OpenAI-compatible gateway that fronts 160+ providers with **4-tier fallback (Subscription →
+API-key → cheap → free)** + **token compression (15–95%)** + **90+ free tiers (~1.6B free tokens/mo)**.
+`pick_engine(dept,difficulty)` may route **via OmniRoute** (central smart-routing + compression + widest free
+reach) **or call an engine directly** — configurable per department; **direct calls always work if OmniRoute
+is off or down**. Done when: `--selftest` returns real completions **both directly AND via OmniRoute**, and
+turning OmniRoute off still works.
 **M2.1a — [OWNER] Confirm keys (already added).** Eitan's ~20 secrets are already in the repo; run
 `engine_selftest.yml` to confirm which families answer. **No new purchase.** Done when: the selftest report
 shows the live set.

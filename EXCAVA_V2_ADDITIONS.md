@@ -16,7 +16,12 @@ interview. **Top priority: §F CORE SPOT-ON**, then M1→M4, breadth (M5 externa
 ## B. Engines & external tools (final)
 - **Engines already wired (free):** Gemini ×6 · Groq ×2 · Cerebras ×2 · OpenRouter · NVIDIA
   (Nemotron) · SambaNova · Mistral · GH-Models — **9 families**, plenty. DeepSeek R1 + Qwen3 Coder
-  come **free through OpenRouter**. Confirm live set by running `engine_selftest.yml`.
+  come **free through OpenRouter**. Confirm live set by running `engine_selftest.yml`. **These stay
+  first-class + directly callable — nothing below replaces them.**
+- **OmniRoute** (diegosouzapw/OmniRoute): free self-hosted OpenAI-compatible **gateway** (160+ providers,
+  4-tier fallback Subscription→API-key→cheap→free, token compression 15–95%, ~1.6B free tokens/mo).
+  **ADDED as an additional, CENTRAL routing option — NOT a replacement, NOT the sole path**; the 9
+  engines above remain directly callable and everything still works with OmniRoute off. (M2.1 + M2.1b.)
 - **Hermes** ("Hadishan"): open-weights, added on the **free self-host path** (Ollama on the optional
   Pi / a capable machine); the paid endpoint stays off.
 - **OpenClaw: ADD as a tool** (Eitan's call) — used for its capabilities (channels, browse/shell,

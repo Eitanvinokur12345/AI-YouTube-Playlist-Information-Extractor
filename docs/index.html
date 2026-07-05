@@ -695,6 +695,33 @@
       background-image:linear-gradient(45deg, transparent 44%, var(--line) 44%, var(--line) 56%, transparent 56%); }
     .cutaway .more { font-size:11px; color:var(--muted); }
     .cut-lane { margin:8px 2px 0; font-size:12.5px; }
+    /* ── M3.8 North-Star CONSTELLATION — a pocket of night sky (intentional showpiece) ── */
+    .constel { position:relative; height:340px; border:3px solid var(--line); border-radius:16px 20px 14px 18px;
+      overflow:hidden; background:radial-gradient(420px 300px at 50% 50%, #232043 0%, #0e0c1a 78%);
+      box-shadow:inset 0 0 40px #000a, 3px 4px 0 oklch(0.30 0.022 85 / .5); }
+    .constel-core { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:3;
+      text-align:center; color:#ffd166; background:#171430; border:2.5px solid #ffd166;
+      border-radius:14px 18px 12px 16px; padding:10px 16px; font-family:"Archivo Black",sans-serif;
+      font-size:12px; letter-spacing:.08em; box-shadow:0 0 26px #ffd16655; }
+    .constel-core small { display:block; font-family:"Space Grotesk",sans-serif; font-size:9px;
+      letter-spacing:.22em; color:#bdb6e4; }
+    .constel .orbit { position:absolute; inset:0; animation:constSpin 160s linear infinite; }
+    @keyframes constSpin { to { transform:rotate(360deg); } }
+    .nstar { position:absolute; left:50%; top:50%; cursor:pointer; z-index:2;
+      transform:translate(-50%,-50%) rotate(var(--ang)) translateY(-132px) rotate(calc(-1 * var(--ang))); }
+    .nstar .body { position:relative; animation:constSpin 160s linear infinite reverse; transition:transform .15s; }
+    .nstar:hover .body, .nstar.sel .body { transform:scale(1.25); }
+    .nstar .body svg { width:100%; height:100%; filter:drop-shadow(0 0 7px #ffd16688);
+      animation:twinkle 2.8s ease-in-out infinite alternate; animation-delay:inherit; }
+    .nstar.met .body svg { filter:drop-shadow(0 0 10px #b5e48ccc); }
+    .nstar.risk .body svg { filter:drop-shadow(0 0 8px #f4978ecc); }
+    @keyframes twinkle { from { opacity:.72; } to { opacity:1; } }
+    .nstar b { position:absolute; left:50%; top:100%; transform:translateX(-50%); color:#efe9ff;
+      font-size:9.5px; letter-spacing:.06em; white-space:nowrap; text-align:center; }
+    .nstar b i { font-style:normal; color:#ffd166; margin-left:3px; }
+    @media (prefers-reduced-motion: reduce) { .constel .orbit, .nstar .body, .nstar .body svg { animation:none; } }
+    @media (max-width:760px) { .constel { height:300px; }
+      .nstar { transform:translate(-50%,-50%) rotate(var(--ang)) translateY(-104px) rotate(calc(-1 * var(--ang))); } }
     /* M3.7: the "new results" badge on the tab + the inline artifact bubble in the making-chat */
     .nav-new { display:inline-block; background:var(--gold); color:var(--text); font-size:10px;
       font-weight:800; border:1.5px solid var(--line); border-radius:999px; padding:0 6px;

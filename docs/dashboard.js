@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v73";
+const APP_BUILD = "v74";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1795,6 +1795,15 @@ function _monsterImg(label, variant, cls) {
   const d = _monsterDept(label);
   return d ? `<img class="${cls || "m-ava"}" src="assets/monsters/${d}-${variant}.svg" alt="${esc(d)} ${variant}">` : "";
 }
+// M3.8: an n-pointed star path (each goal-star gets a DISTINCT silhouette)
+function _starPath(n, R, r) {
+  let p = "";
+  for (let i = 0; i < n * 2; i++) {
+    const a = Math.PI / n * i - Math.PI / 2, rad = i % 2 ? r : R;
+    p += (i ? "L" : "M") + (20 + rad * Math.cos(a)).toFixed(1) + " " + (20 + rad * Math.sin(a)).toFixed(1);
+  }
+  return p + "Z";
+}
 // per-tab accent colors — each area of the machine wears its own paint
 const TAB_ACCENT = { excava: "oklch(0.85 0.165 95)", skills: "oklch(0.62 0.17 280)", tools: "oklch(0.66 0.18 40)",
   comingsoon: "oklch(0.65 0.16 310)", prompts: "oklch(0.68 0.17 340)", improvement: "oklch(0.62 0.15 150)",
@@ -2099,11 +2108,24 @@ async function renderExcava() {
     ${fleetHTML}
     ${queueHTML}
     ${apHTML}
-    <div class="card"><h3>⭐ North Star <span class="sub">— the 8 goals, scored as law every cycle</span></h3>
-      <div class="taste-bars">${goals.map(g => `<div class="taste-bar" title="${esc(g.gap || "")}">
-        <span style="width:150px">${esc(g.id)} ${esc(g.name)}</span>
-        <i class="${g.status === "met" ? "gb-met" : g.status === "at-risk" ? "gb-risk" : "gb-unmet"}" style="width:${Math.max(g.score, 3)}%"></i>
-        <b>${g.score}</b></div>`).join("")}</div>
+    <div class="card"><h3>⭐ North Star <span class="sub">— the ${goals.length} goals as a CONSTELLATION: live scores orbit the core; click a star to open its goal</span></h3>
+      <div class="constel">
+        <div class="constel-core"><b>EXCAVATORTRON</b><small>the hub</small></div>
+        <div class="orbit">${goals.map((g, i) => {
+          const ang = Math.round(i / Math.max(goals.length, 1) * 360);
+          const pts = 4 + (i % 5), size = 30 + (g.score || 0) * 0.26;
+          const col = ["#ffd166", "#8ecae6", "#f7a8c4", "#b5e48c", "#f4978e", "#cdb4db", "#a8dadc", "#ffb703", "#b9fbc0"][i % 9];
+          return `<div class="nstar ${g.status === "met" ? "met" : g.status === "at-risk" ? "risk" : ""}"
+            data-goal="${i}" style="--ang:${ang}deg" title="${esc(g.name)}: ${g.score}/100">
+            <div class="body" style="width:${size}px;height:${size}px;animation-delay:${-i * 0.7}s">
+              <svg viewBox="0 0 40 40"><path d="${_starPath(pts, 19, 8.5)}" fill="${col}" stroke="#0e0c1a" stroke-width="2"/></svg>
+              <b>${esc(g.id)}<i>${g.score}</i></b>
+            </div></div>`;
+        }).join("")}</div>
+      </div>
+      <div class="ex-detail" id="nstar-detail">Click a star — its goal, live score and current gap open here.</div>
+      <div class="links" style="margin-top:8px">${goals.map((g, i) =>
+        `<span class="lnk" data-goal-chip="${i}" style="cursor:pointer" title="${esc(g.gap || "")}">${esc(g.id)} ${esc(g.name)} · ${g.score}</span>`).join("")}</div>
     </div>
     <div class="ex-grid">
       <div class="card"><h3>📥 Task inbox <span class="sub">— send EXCAVA work</span></h3>${taskHTML}</div>
@@ -2207,6 +2229,17 @@ async function renderExcava() {
         roles, counts: busPer[dep] || {}, usage: usage[dep] || {} }) + `<p class="cut-lane">${laneLine}</p>`;
     } else det.innerHTML = laneLine;
   }));
+  // M3.8: constellation — a star (or its legend chip) opens the goal, live score + gap
+  const nd = view.querySelector("#nstar-detail");
+  const openGoal = i => {
+    const g = goals[+i]; if (!g || !nd) return;
+    view.querySelectorAll(".nstar").forEach((x, xi) => x.classList.toggle("sel", xi === +i));
+    nd.innerHTML = `<b>⭐ ${esc(g.id)} — ${esc(g.name)}</b> · score <b>${g.score}</b>/100 · ${esc(g.status || "")}
+      <div class="taste-bar" style="margin-top:6px"><i class="${g.status === "met" ? "gb-met" : g.status === "at-risk" ? "gb-risk" : "gb-unmet"}" style="width:${Math.max(g.score, 3)}%"></i><b>${g.score}</b></div>
+      ${g.gap ? `<p class="sub" style="margin:6px 0 0">gap: ${esc(g.gap)}</p>` : ""}`;
+  };
+  view.querySelectorAll(".nstar").forEach(el => el.addEventListener("click", () => openGoal(el.dataset.goal)));
+  view.querySelectorAll("[data-goal-chip]").forEach(el => el.addEventListener("click", () => openGoal(el.dataset.goalChip)));
 }
 
 // ── tab router ───────────────────────────────────────────────────────────────

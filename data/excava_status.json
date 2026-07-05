@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-05T04:41:41.382713+00:00",
+  "generated_at": "2026-07-05T09:29:43.285055+00:00",
   "name": "EXCAVA",
   "phase": "OS spine (Phase 0): bus + departments + hand-offs live; creators (OS-2) gated",
   "gate": {
@@ -14,7 +14,7 @@
     "outward_needs": "data_guard ok + security clean + G3>=70 + owner approval"
   },
   "memory": {
-    "vectors": 1423,
+    "vectors": 1429,
     "model": "gemini-embedding-001",
     "wired": true
   },
@@ -22,7 +22,7 @@
     "missing": [
       "github_token"
     ],
-    "checked_at": "2026-07-05T04:20:56.268097+00:00",
+    "checked_at": "2026-07-05T08:14:52.795647+00:00",
     "can_do": {
       "resolve-links": true,
       "analyze-videos": true,
@@ -94,14 +94,14 @@
     }
   ],
   "os": {
-    "beats": 23,
+    "beats": 24,
     "mode": "run",
     "bus": {
-      "open": 8,
-      "total": 23,
+      "open": 9,
+      "total": 24,
       "per_department": {
         "memory": {
-          "queued": 0,
+          "queued": 1,
           "working": 0,
           "done": 8,
           "held": 0,
@@ -143,11 +143,11 @@
           "failed": 0
         }
       },
-      "last_handoff": "data/excava/handoffs/push-link-coverage-towar-94361--01--links-w1--to--memory.md"
+      "last_handoff": "data/excava/handoffs/1812-tools-skills-still--43783--01--links-w1--to--memory.md"
     },
     "beat_log": [
-      "analysis-w1: only-403-1555-videos-ana-26501 DONE",
-      "memory master: +7 episodes"
+      "links-w1: 1812-tools-skills-still--43783 -> memory (data/excava/handoffs/1812-tools-skills-still--43783--01--links-w1--to--memory.md)",
+      "memory master: +13 episodes"
     ],
     "departments": [
       "analysis",
@@ -178,11 +178,11 @@
         "last": "2026-07-04T21:29:20.435907+00:00"
       },
       "links": {
-        "ticks": 3,
+        "ticks": 4,
         "done": 0,
-        "handoffs": 3,
+        "handoffs": 4,
         "fails": 0,
-        "last": "2026-07-04T19:46:01.679724+00:00"
+        "last": "2026-07-05T09:29:43.794679+00:00"
       }
     },
     "audit": {
@@ -284,94 +284,19 @@
         "priority": 1,
         "source": "auto",
         "doc": null
+      },
+      {
+        "id": "1812-tools-skills-still--43783",
+        "title": "1812 tools/skills still have no real link (47.0%)",
+        "department": "memory",
+        "status": "queued",
+        "steps": 1,
+        "priority": 1,
+        "source": "auto",
+        "doc": "data/excava/handoffs/1812-tools-skills-still--43783--01--links-w1--to--memory.md"
       }
     ],
     "recent_events": [
-      {
-        "task": "lane-transcript-retrieva-77142",
-        "at": "2026-07-04T21:29:19.936296+00:00",
-        "kind": "unroutable",
-        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-      },
-      {
-        "task": "push-link-coverage-towar-94361",
-        "at": "2026-07-04T21:29:19.937823+00:00",
-        "kind": "claimed",
-        "by": "memory-w1",
-        "department": "memory"
-      },
-      {
-        "task": "push-link-coverage-towar-94361",
-        "at": "2026-07-04T21:29:20.094441+00:00",
-        "kind": "completed",
-        "by": "memory-w1",
-        "result": "Semantic index: 1423 vectors (model gemini-embedding-001); hub 4871 items → 3448 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-04T21:29:20.095833+00:00",
-        "kind": "lane_ran",
-        "lane": "Free analysis pool",
-        "status": "live",
-        "what": "Turns transcripts into skills/tools/connectors (free engines)"
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-04T21:29:20.096412+00:00",
-        "kind": "lane_ran",
-        "lane": "Deep analysis (night-gated)",
-        "status": "live",
-        "what": "Claude re-analysis + safety pass"
-      },
-      {
-        "task": "empty-body-items-render--31649",
-        "at": "2026-07-04T23:33:25.682225+00:00",
-        "kind": "unroutable",
-        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-      },
-      {
-        "task": "title-collisions-distinc-31649",
-        "at": "2026-07-04T23:33:25.682976+00:00",
-        "kind": "unroutable",
-        "why": "no department specialization matched"
-      },
-      {
-        "task": "lane-transcript-retrieva-77142",
-        "at": "2026-07-04T23:33:25.683626+00:00",
-        "kind": "unroutable",
-        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-04T23:33:25.685370+00:00",
-        "kind": "lane_ran",
-        "lane": "Free analysis pool",
-        "status": "live",
-        "what": "Turns transcripts into skills/tools/connectors (free engines)"
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-04T23:33:25.686011+00:00",
-        "kind": "lane_ran",
-        "lane": "Deep analysis (night-gated)",
-        "status": "live",
-        "what": "Claude re-analysis + safety pass"
-      },
-      {
-        "task": "only-403-1555-videos-ana-26501",
-        "at": "2026-07-05T04:41:41.539519+00:00",
-        "kind": "enqueued",
-        "title": "Only 403/1555 videos analyzed (25.9%)",
-        "source": "auto",
-        "priority": 1,
-        "department": "(unrouted)"
-      },
-      {
-        "task": "empty-body-items-render--31649",
-        "at": "2026-07-05T04:41:41.540540+00:00",
-        "kind": "unroutable",
-        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-      },
       {
         "task": "title-collisions-distinc-31649",
         "at": "2026-07-05T04:41:41.541122+00:00",
@@ -429,9 +354,99 @@
         "lane": "AI news refresh",
         "status": "live",
         "what": "Refreshes official-site AI news"
+      },
+      {
+        "task": "1812-tools-skills-still--43783",
+        "at": "2026-07-05T09:29:43.439270+00:00",
+        "kind": "enqueued",
+        "title": "1812 tools/skills still have no real link (47.0%)",
+        "source": "auto",
+        "priority": 1,
+        "department": "(unrouted)"
+      },
+      {
+        "task": "empty-body-items-render--31649",
+        "at": "2026-07-05T09:29:43.440240+00:00",
+        "kind": "unroutable",
+        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+      },
+      {
+        "task": "title-collisions-distinc-31649",
+        "at": "2026-07-05T09:29:43.440860+00:00",
+        "kind": "unroutable",
+        "why": "no department specialization matched"
+      },
+      {
+        "task": "lane-transcript-retrieva-77142",
+        "at": "2026-07-05T09:29:43.441439+00:00",
+        "kind": "unroutable",
+        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+      },
+      {
+        "task": "1812-tools-skills-still--43783",
+        "at": "2026-07-05T09:29:43.442842+00:00",
+        "kind": "routed",
+        "chose": "links",
+        "over": [],
+        "why": "best specialization match (2 hits)"
+      },
+      {
+        "task": "1812-tools-skills-still--43783",
+        "at": "2026-07-05T09:29:43.444388+00:00",
+        "kind": "claimed",
+        "by": "links-w1",
+        "department": "links"
+      },
+      {
+        "task": "1812-tools-skills-still--43783",
+        "at": "2026-07-05T09:29:43.445884+00:00",
+        "kind": "handoff",
+        "from": "links-w1",
+        "to": "memory",
+        "doc": "data/excava/handoffs/1812-tools-skills-still--43783--01--links-w1--to--memory.md"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-05T09:29:43.447214+00:00",
+        "kind": "lane_ran",
+        "lane": "Gemini watch (audio+visual)",
+        "status": "live",
+        "what": "Watches videos directly — clears the backlog free"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-05T09:29:43.447812+00:00",
+        "kind": "lane_ran",
+        "lane": "Transcript retrieval",
+        "status": "live",
+        "what": "Pulls captions (Supadata cloud + residential)"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-05T09:29:43.448364+00:00",
+        "kind": "lane_ran",
+        "lane": "Free analysis pool",
+        "status": "live",
+        "what": "Turns transcripts into skills/tools/connectors (free engines)"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-05T09:29:43.448952+00:00",
+        "kind": "lane_ran",
+        "lane": "Deep analysis (night-gated)",
+        "status": "live",
+        "what": "Claude re-analysis + safety pass"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-05T09:29:43.449512+00:00",
+        "kind": "lane_ran",
+        "lane": "AI news refresh",
+        "status": "live",
+        "what": "Refreshes official-site AI news"
       }
     ],
-    "memory_episodes": 7,
+    "memory_episodes": 13,
     "directions": [
       {
         "id": "dir-1",
@@ -513,7 +528,7 @@
     }
   ],
   "stack_review": {
-    "candidates_available": 1024,
+    "candidates_available": 1045,
     "note": "EXCAVA reviews its stack each cycle: integrate the best free per-process tool, combine overlaps, offload weak ones. Top open process gaps: Dedup/entity resolution"
   }
 }

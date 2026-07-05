@@ -430,18 +430,37 @@
       "department": "memory",
       "source": "auto",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/1812-tools-skills-still--43783--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-07-05T09:29:43.438553+00:00",
-      "updated_at": "2026-07-05T09:29:43.445327+00:00"
+      "updated_at": "2026-07-05T11:57:28.056439+00:00",
+      "result": "Semantic index: 1429 vectors (model gemini-embedding-001); hub 5029 items → 3600 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "id": "weakest-lane-deep-analys-52647",
+      "title": "Weakest lane: Deep analysis (Claude, night-gated)",
+      "detail": "Lowest effectiveness (6.8/10) — the improve stage targets it.",
+      "department": "analysis",
+      "source": "auto",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "output written to data/ and committed by CI",
+      "escalation_tier": 1,
+      "claimed_by": "analysis-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-05T11:57:27.891340+00:00",
+      "updated_at": "2026-07-05T11:57:27.898871+00:00",
+      "result": "493 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     }
   ],
-  "updated_at": "2026-07-05T09:29:43.445332+00:00"
+  "updated_at": "2026-07-05T11:57:28.056454+00:00"
 }

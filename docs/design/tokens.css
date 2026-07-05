@@ -1,0 +1,128 @@
+/* ============================================================================
+   EXCAVATORTRON design system — M3.0 (EXCAVA v2)
+   Direction (owner, 2026-07-05): refined Heavy-Machinery + playful, clean-tech
+   touches at points · yellow + warm ink · REAL METAL framing · pockets of
+   greenery · light default (dark optional) · spacious · bold industrial display
+   + clean body · refined-neobrutalist ≈ textured-industrial · rounded ORGANIC
+   characterful shapes (no plain circles/squares) · bespoke line icons.
+   ========================================================================== */
+:root {
+  /* ── color: yellow signature + warm ink ── */
+  --x-yellow:       oklch(0.86 0.17 95);      /* hazard yellow — the signature */
+  --x-yellow-deep:  oklch(0.78 0.16 88);
+  --x-yellow-soft:  oklch(0.96 0.06 98);
+  --x-ink:          oklch(0.28 0.02 60);      /* warm ink — text, borders */
+  --x-ink-soft:     oklch(0.45 0.02 60);
+  --x-paper:        oklch(0.985 0.008 95);    /* warm off-white ground */
+  --x-panel:        oklch(1 0 0);
+  --x-panel-2:      oklch(0.965 0.012 95);
+
+  /* ── metal: real frames, brushed surfaces ── */
+  --x-steel:        oklch(0.72 0.015 250);
+  --x-steel-dark:   oklch(0.45 0.02 255);
+  --x-steel-hi:     oklch(0.88 0.01 250);
+  --x-metal-frame:  linear-gradient(145deg, var(--x-steel-hi), var(--x-steel) 40%,
+                    var(--x-steel-dark) 60%, var(--x-steel) 90%);
+  --x-brushed:      repeating-linear-gradient(92deg, transparent 0 2px,
+                    oklch(0 0 0 / .022) 2px 3px);
+
+  /* ── greenery: pockets of life against the industrial ── */
+  --x-leaf:         oklch(0.62 0.14 150);
+  --x-leaf-deep:    oklch(0.45 0.12 155);
+  --x-moss-soft:    oklch(0.94 0.04 150);
+
+  /* ── status ── */
+  --x-ok:           oklch(0.62 0.14 150);
+  --x-warn:         oklch(0.75 0.14 75);
+  --x-bad:          oklch(0.58 0.19 28);
+  --x-info:         oklch(0.60 0.12 250);
+
+  /* ── type: bold industrial display + clean body ── */
+  --x-display:      "Archivo Black", "Arial Black", system-ui, sans-serif;
+  --x-body:         "Inter", "Segoe UI", system-ui, sans-serif;
+  --x-mono:         ui-monospace, "Cascadia Code", Consolas, monospace;
+  --x-fs-hero:      clamp(26px, 4vw, 40px);
+  --x-fs-h1:        22px;  --x-fs-h2: 17px;  --x-fs-body: 13.5px;
+  --x-fs-small:     12px;  --x-fs-micro: 10.5px;
+
+  /* ── space: SPACIOUS (premium, calm) ── */
+  --x-s1: 6px;  --x-s2: 10px;  --x-s3: 16px;  --x-s4: 24px;  --x-s5: 36px;  --x-s6: 56px;
+
+  /* ── shape: rounded ORGANIC — nothing is a plain circle/square ── */
+  --x-r-blob:  58% 42% 45% 55% / 52% 48% 52% 48%;   /* creature/organic accents */
+  --x-r-card:  14px 18px 12px 16px;                 /* subtly irregular cards */
+  --x-r-chip:  12px 14px 12px 14px / 14px 12px 14px 12px;
+  --x-r-btn:   10px 12px 10px 12px;
+
+  /* ── neobrutalist, refined: hard offsets, cleaned up ── */
+  --x-shadow:      4px 5px 0 oklch(0.28 0.02 60 / .16);
+  --x-shadow-lift: 6px 8px 0 oklch(0.28 0.02 60 / .20);
+  --x-border:      2px solid var(--x-ink);
+  --x-border-soft: 1.5px solid oklch(0.28 0.02 60 / .28);
+
+  /* ── motion: lively but purposeful ── */
+  --x-ease:  cubic-bezier(.2, .9, .3, 1.2);
+  --x-fast:  140ms;  --x-med: 280ms;
+}
+
+[data-theme="dark"] {
+  --x-paper:   oklch(0.22 0.015 60);
+  --x-panel:   oklch(0.27 0.015 60);
+  --x-panel-2: oklch(0.31 0.015 60);
+  --x-ink:     oklch(0.93 0.01 95);
+  --x-ink-soft: oklch(0.72 0.015 95);
+  --x-yellow-soft: oklch(0.34 0.05 95);
+  --x-moss-soft:   oklch(0.30 0.04 150);
+  --x-shadow:      4px 5px 0 oklch(0 0 0 / .45);
+  --x-border-soft: 1.5px solid oklch(0.93 0.01 95 / .22);
+}
+
+/* ── primitives ─────────────────────────────────────────────────────────── */
+.x-card {
+  background: var(--x-panel);
+  background-image: var(--x-brushed);
+  border: var(--x-border); border-radius: var(--x-r-card);
+  box-shadow: var(--x-shadow); padding: var(--x-s4);
+  transition: transform var(--x-fast) var(--x-ease), box-shadow var(--x-fast) var(--x-ease);
+}
+.x-card:hover { transform: translate(-1px, -2px); box-shadow: var(--x-shadow-lift); }
+.x-card--metal {                                     /* the REAL METAL frame */
+  border: none; padding: 3px; background: var(--x-metal-frame);
+  border-radius: calc(14px + 3px) calc(18px + 3px) calc(12px + 3px) calc(16px + 3px);
+}
+.x-card--metal > .x-card__in {
+  background: var(--x-panel); background-image: var(--x-brushed);
+  border-radius: var(--x-r-card); padding: var(--x-s4);
+}
+.x-card--green { border-color: var(--x-leaf-deep); background: var(--x-moss-soft); }
+
+.x-display { font-family: var(--x-display); letter-spacing: .01em; line-height: 1.05;
+  text-transform: uppercase; }
+.x-btn {
+  font: 700 var(--x-fs-small)/1 var(--x-body); color: var(--x-ink);
+  background: var(--x-panel-2); border: var(--x-border); border-radius: var(--x-r-btn);
+  padding: 9px 16px; cursor: pointer; box-shadow: 3px 3px 0 oklch(0.28 0.02 60 / .18);
+  transition: all var(--x-fast) var(--x-ease);
+}
+.x-btn:hover { transform: translate(-1px, -1px); box-shadow: 4px 5px 0 oklch(0.28 0.02 60 / .22); }
+.x-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 oklch(0.28 0.02 60 / .2); }
+.x-btn--primary { background: var(--x-yellow); }
+.x-btn--leaf { background: var(--x-moss-soft); border-color: var(--x-leaf-deep); }
+.x-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  font: 800 var(--x-fs-micro)/1 var(--x-body); letter-spacing: .06em;
+  border: var(--x-border-soft); border-radius: var(--x-r-chip);
+  padding: 3px 10px; background: var(--x-panel-2);
+}
+.x-chip--ok { background: var(--x-moss-soft); color: var(--x-leaf-deep); border-color: var(--x-leaf-deep); }
+.x-chip--gold { background: var(--x-yellow-soft); border-color: var(--x-yellow-deep); }
+.x-vine {                                            /* a pocket of greenery */
+  height: 5px; border-radius: 999px;
+  background: linear-gradient(90deg, var(--x-leaf) 0 30%, var(--x-leaf-deep) 30% 34%,
+    var(--x-leaf) 34% 70%, transparent 70%);
+  opacity: .8;
+}
+.x-blob { border-radius: var(--x-r-blob); }          /* organic accent shape */
+@media (prefers-reduced-motion: reduce) {
+  .x-card, .x-btn { transition: none; }
+}

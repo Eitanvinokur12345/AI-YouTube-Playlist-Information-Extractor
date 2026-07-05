@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v71";
+const APP_BUILD = "v72";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -109,7 +109,7 @@ function elBadge(e) {
   return `<span class="el-badge ${cls}" title="${esc((e.verified || {}).method || "")}${src ? " · " + src + " sources" : ""}${e.trust ? " · trust " + e.trust : ""}">${label}</span>`;
 }
 // M1.4 — the per-card ACTION ROW: Activate / Open(<10s) / Use / Video / Bundle / Source
-function elementActions(e) {
+function elementActions(e, always) {
   const links = e.links || {};
   const warm = _ewarm && _ewarm[e.id];
   const vid = (e.source_videos || [])[0];
@@ -123,7 +123,7 @@ function elementActions(e) {
   const src = links.source_url || links.website || links.github;
   if (src) acts.push(`<a target="_blank" href="${esc(src)}">↗ Source</a>`);
   acts.push(`<a href="#element/${encodeURIComponent(e.id)}">🔍 Detail</a>`);
-  return `<div class="el-actions" data-elid="${esc(e.id)}">${acts.join("")}</div>`;
+  return `<div class="el-actions${always ? " always" : ""}" data-elid="${esc(e.id)}">${acts.join("")}</div>`;
 }
 // M1.5 — Open: warm = instant; cold = derive under the pancake (<10s)
 async function elOpen(id, btn) {
@@ -202,7 +202,7 @@ async function renderElement(id) {
         ${e.created_by === "EXCAVA" ? '<span class="pill" style="background:var(--gold-soft)">🦾 Created by EXCAVA</span>' : ""}</div>
       <p>${esc(e.what || "(deep-retrieve will enrich this element on its next pass)")}</p>
       ${e.body ? `<pre style="white-space:pre-wrap;font-size:12.5px;background:var(--panel2);border:1.5px solid var(--line);border-radius:9px;padding:10px">${esc(e.body)}</pre>` : ""}
-      ${elementActions(e)}
+      ${elementActions(e, true)}
       <p class="sub" style="margin-top:10px">
         ${e.category ? `category: <b>${esc(e.category)}</b> · ` : ""}trust ${e.trust || "?"} ·
         verified: <b>${esc((e.verified || {}).status)}</b>${(e.verified || {}).method ? ` (${esc(e.verified.method)}, ${((e.verified || {}).sources || 0)} sources)` : ""}

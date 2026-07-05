@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v68";
+const APP_BUILD = "v69";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1779,6 +1779,22 @@ function _exIcon(label) {
   for (const k in EX_ICONS) if (l.includes(k)) return EX_ICONS[k];
   return "🤖";
 }
+// ── M3.2 MONSTER CAST: one species per department (docs/assets/monsters/, src/make_monsters.py).
+// variant: lead (suit) | agent | worker. Falls back to "" so callers keep their emoji fallback.
+const MONSTER_DEPTS = ["transcripts", "analysis", "watch", "links", "memory", "mining",
+  "visual", "news", "improve", "security", "creators"];
+const MONSTER_ALIAS = { transcript: "transcripts", gemini: "watch", external: "mining",
+  deep: "analysis", social: "mining", connector: "links", design: "visual" };
+function _monsterDept(label) {
+  const l = (label || "").toLowerCase();
+  for (const d of MONSTER_DEPTS) if (l.includes(d)) return d;
+  for (const k in MONSTER_ALIAS) if (l.includes(k)) return MONSTER_ALIAS[k];
+  return null;
+}
+function _monsterImg(label, variant, cls) {
+  const d = _monsterDept(label);
+  return d ? `<img class="${cls || "m-ava"}" src="assets/monsters/${d}-${variant}.svg" alt="${esc(d)} ${variant}">` : "";
+}
 // per-tab accent colors — each area of the machine wears its own paint
 const TAB_ACCENT = { excava: "oklch(0.85 0.165 95)", skills: "oklch(0.62 0.17 280)", tools: "oklch(0.66 0.18 40)",
   comingsoon: "oklch(0.65 0.16 310)", prompts: "oklch(0.68 0.17 340)", improvement: "oklch(0.62 0.15 150)",
@@ -1862,7 +1878,7 @@ async function renderExcava() {
   const stHTML = stations.map(s => `
     <div class="ex-station ${s.status === "stale" ? "stale" : ""}" style="left:${s.x}%;top:${s.y}%">
       <span class="lamp ${esc(s.status || "stale")}"></span>
-      <div class="ic">${_exIcon(s.label)}</div><div class="nm">${esc(s.label || "")}</div>
+      <div class="ic">${_monsterImg(s.label, "agent", "st-m") || _exIcon(s.label)}</div><div class="nm">${esc(s.label || "")}</div>
       <div class="st">${s.status === "live" ? "working" : s.status === "slow" ? "due" : "idle"} · ran ${_ageAgo(s.age_hours)}</div>
     </div>`).join("");
   // worker bots: one per non-stale department, walking core <-> station with a task chip.
@@ -1871,8 +1887,9 @@ async function renderExcava() {
     "oklch(0.78 0.17 145)", "oklch(0.75 0.14 280)", "oklch(0.8 0.15 60)", "oklch(0.82 0.12 170)"];
   const bots = stations.filter(s => s.status !== "stale").map((s, i) => {
     const word = (s.what || s.label || "task").split(" ").slice(0, 2).join(" ");
-    return `<div class="ex-bot" style="background:${BOTC[i % BOTC.length]};--sx:50%;--sy:45%;--ex:${s.x}%;--ey:${s.y}%;--dur:${5.5 + (i % 4) * 1.6}s;--delay:${-i * 1.7}s">
-      <span class="ex-chip">${esc(word)}</span></div>`;
+    const m = _monsterImg(s.label, "worker", "ex-bot-m");
+    return `<div class="ex-bot ${m ? "has-m" : ""}" style="background:${m ? "transparent" : BOTC[i % BOTC.length]};--sx:50%;--sy:45%;--ex:${s.x}%;--ey:${s.y}%;--dur:${5.5 + (i % 4) * 1.6}s;--delay:${-i * 1.7}s">
+      ${m}<span class="ex-chip">${esc(word)}</span></div>`;
   }).join("");
   const taskHTML = tasks.length ? tasks.map(t => `<div class="ex-task">
       <span class="tk ${t.status === "working" ? "w" : t.status === "held" ? "h" : "q"}">${esc((t.status || "queued").toUpperCase())}</span>
@@ -1957,9 +1974,10 @@ async function renderExcava() {
         || stations[i % Math.max(stations.length, 1)] || { x: 50, y: 80 };
       const t = busTasks.find(x => x.department === d) || {};
       const w = regAgents.find(a => a.department === d && a.tier === 1) || {};
-      return `<div class="ex-bot" style="background:${BOTC[i % BOTC.length]};--sx:50%;--sy:45%;--ex:${st.x}%;--ey:${st.y}%;--dur:${5.5 + (i % 4) * 1.6}s;--delay:${-i * 1.7}s"
+      const m = _monsterImg(d, "worker", "ex-bot-m");
+      return `<div class="ex-bot ${m ? "has-m" : ""}" style="background:${m ? "transparent" : BOTC[i % BOTC.length]};--sx:50%;--sy:45%;--ex:${st.x}%;--ey:${st.y}%;--dur:${5.5 + (i % 4) * 1.6}s;--delay:${-i * 1.7}s"
         title="${esc(w.id || d)} — ${esc(t.title || "on the bus")}">
-        <span class="ex-chip">${esc(d)}: ${esc(String(t.title || "work").split(" ").slice(0, 2).join(" "))}</span></div>`;
+        ${m}<span class="ex-chip">${esc(d)}: ${esc(String(t.title || "work").split(" ").slice(0, 2).join(" "))}</span></div>`;
     }).join("");
   const bpMap = os.backpressure || {}, usage = os.usage || {};
   const fleetHTML = `
@@ -2393,8 +2411,9 @@ async function renderRooms(selId) {
     const a = agents[m.agent] || {};
     const isLead = a.role === "lead";
     if (m.agent === "system") return `<div class="msg sys"><div class="bub">${esc(m.text)}</div></div>`;
+    const mimg = _monsterImg(a.department || "", isLead ? "lead" : "agent");
     return `<div class="msg ${isLead ? "lead" : ""}">
-      <div class="ava" title="${esc(a.persona || m.agent)}">${AGENT_EMOJI[a.department || "core"] || "🤖"}${isLead ? "👔" : ""}</div>
+      <div class="ava ${mimg ? "has-m" : ""}" title="${esc(a.persona || m.agent)}">${mimg || (AGENT_EMOJI[a.department || "core"] || "🤖") + (isLead ? "👔" : "")}</div>
       <div class="bub"><div class="who">${esc(m.name || m.agent)} <span class="eng">${esc(m.engine || "")}${m.ms ? " · " + m.ms + "ms" : ""}</span></div>${esc(m.text)}</div>
     </div>`;
   }).join("") || `<p class="sub">This room hasn't spoken yet — it advances on the next CI beat (engines live in the cloud).</p>`;

@@ -1,42 +1,6 @@
 {
   "events": [
     {
-      "task": "title-collisions-distinc-31649",
-      "at": "2026-07-05T11:57:27.893548+00:00",
-      "kind": "unroutable",
-      "why": "no department specialization matched"
-    },
-    {
-      "task": "lane-transcript-retrieva-77142",
-      "at": "2026-07-05T11:57:27.894138+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "weakest-lane-deep-analys-52647",
-      "at": "2026-07-05T11:57:27.895574+00:00",
-      "kind": "routed",
-      "chose": "analysis",
-      "over": [
-        "improve"
-      ],
-      "why": "best specialization match (1 hits)"
-    },
-    {
-      "task": "weakest-lane-deep-analys-52647",
-      "at": "2026-07-05T11:57:27.897140+00:00",
-      "kind": "claimed",
-      "by": "analysis-w1",
-      "department": "analysis"
-    },
-    {
-      "task": "weakest-lane-deep-analys-52647",
-      "at": "2026-07-05T11:57:27.899413+00:00",
-      "kind": "completed",
-      "by": "analysis-w1",
-      "result": "493 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-    },
-    {
       "task": "1812-tools-skills-still--43783",
       "at": "2026-07-05T11:57:27.900743+00:00",
       "kind": "claimed",
@@ -287,6 +251,40 @@
       "lane": "AI news refresh",
       "status": "live",
       "what": "Refreshes official-site AI news"
+    },
+    {
+      "task": "empty-body-items-render--31649",
+      "at": "2026-07-05T21:35:07.445460+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "title-collisions-distinc-31649",
+      "at": "2026-07-05T21:35:07.446704+00:00",
+      "kind": "unroutable",
+      "why": "no department specialization matched"
+    },
+    {
+      "task": "lane-transcript-retrieva-77142",
+      "at": "2026-07-05T21:35:07.448490+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "os-lanes",
+      "at": "2026-07-05T21:35:07.754115+00:00",
+      "kind": "lane_ran",
+      "lane": "Free analysis pool",
+      "status": "live",
+      "what": "Turns transcripts into skills/tools/connectors (free engines)"
+    },
+    {
+      "task": "os-lanes",
+      "at": "2026-07-05T21:35:07.754736+00:00",
+      "kind": "lane_ran",
+      "lane": "Deep analysis (night-gated)",
+      "status": "live",
+      "what": "Claude re-analysis + safety pass"
     }
   ]
 }

@@ -1,72 +1,6 @@
 {
   "events": [
     {
-      "task": "only-403-1555-videos-ana-26501",
-      "at": "2026-07-05T04:41:41.546924+00:00",
-      "kind": "completed",
-      "by": "analysis-w1",
-      "result": "391 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-07-05T04:41:41.548265+00:00",
-      "kind": "lane_ran",
-      "lane": "Gemini watch (audio+visual)",
-      "status": "live",
-      "what": "Watches videos directly — clears the backlog free"
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-07-05T04:41:41.548819+00:00",
-      "kind": "lane_ran",
-      "lane": "Free analysis pool",
-      "status": "live",
-      "what": "Turns transcripts into skills/tools/connectors (free engines)"
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-07-05T04:41:41.549460+00:00",
-      "kind": "lane_ran",
-      "lane": "AI news refresh",
-      "status": "live",
-      "what": "Refreshes official-site AI news"
-    },
-    {
-      "task": "1812-tools-skills-still--43783",
-      "at": "2026-07-05T09:29:43.439270+00:00",
-      "kind": "enqueued",
-      "title": "1812 tools/skills still have no real link (47.0%)",
-      "source": "auto",
-      "priority": 1,
-      "department": "(unrouted)"
-    },
-    {
-      "task": "empty-body-items-render--31649",
-      "at": "2026-07-05T09:29:43.440240+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "title-collisions-distinc-31649",
-      "at": "2026-07-05T09:29:43.440860+00:00",
-      "kind": "unroutable",
-      "why": "no department specialization matched"
-    },
-    {
-      "task": "lane-transcript-retrieva-77142",
-      "at": "2026-07-05T09:29:43.441439+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "1812-tools-skills-still--43783",
-      "at": "2026-07-05T09:29:43.442842+00:00",
-      "kind": "routed",
-      "chose": "links",
-      "over": [],
-      "why": "best specialization match (2 hits)"
-    },
-    {
       "task": "1812-tools-skills-still--43783",
       "at": "2026-07-05T09:29:43.444388+00:00",
       "kind": "claimed",
@@ -289,6 +223,72 @@
     {
       "task": "os-lanes",
       "at": "2026-07-05T15:48:31.813248+00:00",
+      "kind": "lane_ran",
+      "lane": "Deep analysis (night-gated)",
+      "status": "live",
+      "what": "Claude re-analysis + safety pass"
+    },
+    {
+      "task": "push-link-coverage-towar-73045",
+      "at": "2026-07-05T17:37:25.464577+00:00",
+      "kind": "enqueued",
+      "title": "Push link coverage toward 100% at +5%/day (the access gate)",
+      "source": "owner",
+      "priority": 0,
+      "department": "(unrouted)"
+    },
+    {
+      "task": "empty-body-items-render--31649",
+      "at": "2026-07-05T17:37:25.465667+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "title-collisions-distinc-31649",
+      "at": "2026-07-05T17:37:25.466286+00:00",
+      "kind": "unroutable",
+      "why": "no department specialization matched"
+    },
+    {
+      "task": "lane-transcript-retrieva-77142",
+      "at": "2026-07-05T17:37:25.466899+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "push-link-coverage-towar-73045",
+      "at": "2026-07-05T17:37:25.468434+00:00",
+      "kind": "routed",
+      "chose": "links",
+      "over": [],
+      "why": "best specialization match (2 hits)"
+    },
+    {
+      "task": "push-link-coverage-towar-73045",
+      "at": "2026-07-05T17:37:25.470040+00:00",
+      "kind": "claimed",
+      "by": "links-w1",
+      "department": "links"
+    },
+    {
+      "task": "push-link-coverage-towar-73045",
+      "at": "2026-07-05T17:37:25.471554+00:00",
+      "kind": "handoff",
+      "from": "links-w1",
+      "to": "memory",
+      "doc": "data/excava/handoffs/push-link-coverage-towar-73045--01--links-w1--to--memory.md"
+    },
+    {
+      "task": "os-lanes",
+      "at": "2026-07-05T17:37:25.812887+00:00",
+      "kind": "lane_ran",
+      "lane": "Free analysis pool",
+      "status": "live",
+      "what": "Turns transcripts into skills/tools/connectors (free engines)"
+    },
+    {
+      "task": "os-lanes",
+      "at": "2026-07-05T17:37:25.813797+00:00",
       "kind": "lane_ran",
       "lane": "Deep analysis (night-gated)",
       "status": "live",

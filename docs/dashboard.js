@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v70";
+const APP_BUILD = "v71";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1994,6 +1994,21 @@ async function renderExcava() {
         title="${esc(w.id || d)} — ${esc(t.title || "on the bus")}">
         ${m}<span class="ex-chip">${esc(d)}: ${esc(String(t.title || "work").split(" ").slice(0, 2).join(" "))}</span></div>`;
     }).join("");
+  // ── M3.4: the animation catalog — every prop on the floor is a REAL last-beat event ──
+  let fxHTML = "";
+  if (iso) {
+    const at = {};                                     // department -> its building's coords
+    stations.forEach(s => { const d = _monsterDept(s.label); if (d && !at[d]) at[d] = [s.x, s.y]; });
+    (os.recent_events || []).slice(-8).forEach((e, i) => {
+      const d = e.department || _monsterDept(e.lane || e.by || "") || null;
+      const a = iso.animForEvent(e.kind, d);
+      const p = at[d] || [50, 40];
+      fxHTML += iso.prop(a, p[0] + 5.5, p[1] - 11, i * 0.35, `${e.kind}${d ? " · " + d : ""}`);
+      if (e.kind === "completed") fxHTML += iso.prop("party", 50, 33, i * 0.35, "delivered to the core");
+    });
+    stations.filter(s => s.status === "stale").forEach(s =>
+      fxHTML += iso.prop("rest", s.x - 5.5, s.y - 11, 0, "idle — lane resting"));
+  }
   const bpMap = os.backpressure || {}, usage = os.usage || {};
   const fleetHTML = `
     <div class="card"><h3>🛠 Fleet health <span class="sub">— every department: its worker, real counters, who's resting</span></h3>
@@ -2071,7 +2086,7 @@ async function renderExcava() {
         <span class="pl-badge ${gate.internal_allowed ? "pl-live" : "pl-stale"}">${gate.internal_allowed ? "OPERATING" : "GATE CLOSED"}</span></h3>
       <p class="sub">Phase: ${esc(ex && ex.phase || "OS-1 operator")} · memory: <b>${mem.vectors || 0}</b> vectors ·
         outward actions ${gate.outward_allowed ? "OPEN" : `held (${esc((gate.checks || {}).truth_access_G3 ?? "?")} / 70 truth&access)`} · goals: ${goalsMini}</p>
-      <div class="ex-floor ${iso ? "iso" : ""}">${iso ? iso.ground() : ""}${maint}${stHTML}${workBots || bots}
+      <div class="ex-floor ${iso ? "iso" : ""}">${iso ? iso.ground() : ""}${maint}${stHTML}${workBots || bots}${fxHTML}
         <div class="ex-core">EXCAVA<small>AGENTIC CORE</small></div>
         <div class="floor-clock" title="M2.7: the visible timing readout">⏱ beat #${os.beats || "?"} · ${((os.beat_log || []).length || 0)} events last beat</div>
       </div>

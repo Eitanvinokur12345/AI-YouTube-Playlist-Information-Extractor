@@ -693,6 +693,41 @@
     .cut-lane { margin:8px 2px 0; font-size:12.5px; }
     @media (max-width:760px) { .ex-floor.iso { height:430px; } .ex-floor.iso .ex-station { width:96px; }
       .ex-floor.iso .ex-station .bldg { width:78px; } .cutaway .cut-tag { display:none; } }
+    /* ── M3.4 the animation catalog: 11 action props, all tied to real events ── */
+    .fx { position:absolute; width:26px; height:26px; z-index:5; transform:translate(-50%,-50%);
+      pointer-events:none; animation:fxIn .3s ease-out backwards; }
+    .fx svg { width:100%; height:100%; overflow:visible; }
+    @keyframes fxIn { from { opacity:0; transform:translate(-50%,-30%) scale(.6);} }
+    .fx-weld svg { animation:fxFlicker .5s steps(2) infinite; }
+    @keyframes fxFlicker { 50% { opacity:.25; transform:scale(1.25) rotate(18deg);} }
+    .fx .fx-swing { transform-origin:12px 22px; animation:fxSwing .7s ease-in-out infinite alternate; }
+    @keyframes fxSwing { from { transform:rotate(-38deg);} to { transform:rotate(14deg);} }
+    .fx .fx-scan { animation:fxScan 1.8s ease-in-out infinite; }
+    @keyframes fxScan { 0%,100% { transform:translate(0,0);} 25% { transform:translate(5px,2px);} 50% { transform:translate(2px,5px);} 75% { transform:translate(-3px,2px);} }
+    .fx .fx-slam { animation:fxSlam 1.1s ease-in infinite; }
+    @keyframes fxSlam { 0%,55% { transform:translateY(-5px);} 70%,80% { transform:translateY(3px);} 100% { transform:translateY(-5px);} }
+    .fx .fx-ok { opacity:0; animation:fxOk 1.1s infinite; }
+    @keyframes fxOk { 0%,68% { opacity:0;} 75%,95% { opacity:1;} }
+    .fx .fx-cf { animation:fxRise 1.3s ease-out infinite; }
+    .fx .fx-cf.c2 { animation-delay:.25s; } .fx .fx-cf.c3 { animation-delay:.5s; }
+    @keyframes fxRise { from { transform:translateY(6px) rotate(0); opacity:1;} to { transform:translateY(-14px) rotate(160deg); opacity:0;} }
+    .fx .fx-rock { transform-origin:12px 20px; animation:fxRock 1s ease-in-out infinite alternate; }
+    @keyframes fxRock { from { transform:rotate(-16deg);} to { transform:rotate(22deg);} }
+    .fx .fx-dirt { animation:fxDirt 1s ease-out infinite; }
+    .fx .fx-dirt.d2 { animation-delay:.5s; }
+    @keyframes fxDirt { from { transform:translateY(0); opacity:1;} to { transform:translateY(-9px); opacity:0;} }
+    .fx .fx-clap { transform-origin:3px 10px; animation:fxClap 1s ease-in-out infinite; }
+    @keyframes fxClap { 0%,60%,100% { transform:rotate(0);} 75% { transform:rotate(-24deg);} }
+    .fx .fx-bob { animation:fxBob .8s ease-in-out infinite alternate; }
+    @keyframes fxBob { from { transform:translateY(0);} to { transform:translateY(-4px);} }
+    .fx .fx-flap { transform-origin:7px 4px; animation:fxFlap .9s ease-in-out infinite alternate; }
+    @keyframes fxFlap { from { transform:rotate(-8deg);} to { transform:rotate(10deg);} }
+    .fx .fx-z { opacity:0; animation:fxZ 2.4s ease-out infinite; }
+    .fx .fx-z.z2 { animation-delay:.55s; } .fx .fx-z.z3 { animation-delay:1.1s; }
+    @keyframes fxZ { 0% { opacity:0; transform:translateY(3px);} 25%,60% { opacity:.8;} 100% { opacity:0; transform:translateY(-6px);} }
+    .fx .fx-cake { animation:fxFlip 1.4s ease-in-out infinite; }
+    @keyframes fxFlip { 0%,20% { transform:translateY(0) rotate(0);} 55% { transform:translateY(-11px) rotate(180deg);} 90%,100% { transform:translateY(0) rotate(360deg);} }
+    @media (prefers-reduced-motion: reduce) { .fx, .fx * { animation:none !important; } }
     /* M3.2: a worker monster walks instead of the plain bot block */
     .ex-bot.has-m { border:none; border-radius:0; width:26px; height:27px; margin:-14px 0 0 -13px; }
     .ex-bot.has-m::before, .ex-bot.has-m::after { display:none; }

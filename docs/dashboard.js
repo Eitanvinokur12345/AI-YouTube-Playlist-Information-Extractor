@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v65";
+const APP_BUILD = "v66";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -84,6 +84,136 @@ async function loadText(file) {
     const r = await fetch(DATA + file, { cache: "no-store" });
     return r.ok ? await r.text() : "";
   } catch { return ""; }
+}
+
+// ── M1: the ELEMENT layer — unified index, badges, action row, detail view ──
+let _eidx = null, _ewarm = null;
+async function eidx() {
+  if (_eidx) return _eidx;
+  const [idx, pw] = await Promise.all([load("elements_index.json"), load("prewarm.json")]);
+  _eidx = { byId: {}, byKey: {}, meta: idx || {} };
+  _ewarm = {};
+  ((pw && pw.warm) || []).forEach(w => { _ewarm[w.id] = w; });
+  ((idx && idx.elements) || []).forEach(e => {
+    _eidx.byId[e.id] = e;
+    _eidx.byKey[e.type + "|" + e.name.toLowerCase().trim()] = e;
+  });
+  return _eidx;
+}
+function elBadge(e) {
+  const s = (e.verified || {}).status || "unverified";
+  const map = { verified: ["v", "✓ verified"], niche: ["n", "◆ niche-verified"],
+    unverified: ["u", "unverified"], dead: ["d", "✗ dead"] };
+  const [cls, label] = map[s] || map.unverified;
+  const src = (e.verified || {}).sources || 0;
+  return `<span class="el-badge ${cls}" title="${esc((e.verified || {}).method || "")}${src ? " · " + src + " sources" : ""}${e.trust ? " · trust " + e.trust : ""}">${label}</span>`;
+}
+// M1.4 — the per-card ACTION ROW: Activate / Open(<10s) / Use / Video / Bundle / Source
+function elementActions(e) {
+  const links = e.links || {};
+  const warm = _ewarm && _ewarm[e.id];
+  const vid = (e.source_videos || [])[0];
+  const acts = [];
+  acts.push(`<button class="primary" data-el-activate="${esc(e.id)}" title="Copy the activation recipe (full setup lands in M4)">⚡ Activate</button>`);
+  acts.push(`<button data-el-open="${esc(e.id)}" title="${warm ? "Pre-warmed — opens instantly" : "Derives a runnable target (<10s)"}">${warm ? "🟢" : "🥞"} Open</button>`);
+  acts.push(`<a target="_blank" href="${_exIssue("EXCAVA: use " + e.name + " for a task", "Element: " + e.id)}" title="Send to the EXCAVA console as a task">🦾 Use for a task</a>`);
+  if (vid) acts.push(`<a target="_blank" href="${yt(vid)}">▶ Video</a>`);
+  if ((e.source_videos || []).length > 1)
+    acts.push(`<a href="#element/${encodeURIComponent(e.id)}" title="${e.source_videos.length} source videos">🎬 Bundle (${e.source_videos.length})</a>`);
+  const src = links.source_url || links.website || links.github;
+  if (src) acts.push(`<a target="_blank" href="${esc(src)}">↗ Source</a>`);
+  acts.push(`<a href="#element/${encodeURIComponent(e.id)}">🔍 Detail</a>`);
+  return `<div class="el-actions" data-elid="${esc(e.id)}">${acts.join("")}</div>`;
+}
+// M1.5 — Open: warm = instant; cold = derive under the pancake (<10s)
+async function elOpen(id, btn) {
+  await eidx();
+  const w = _ewarm[id];
+  if (w && w.open_url) { window.open(w.open_url, "_blank"); return; }
+  const e = _eidx.byId[id];
+  if (!e) return;
+  const old = btn.innerHTML;
+  btn.innerHTML = `<span class="el-warm"><span class="pan">🥞</span> warming…</span>`;
+  const links = e.links || {};
+  const gh = (links.github || (String(links.website || "").includes("github.com") ? links.website : ""));
+  const m = String(gh).match(/github\.com\/([\w.\-]+)\/([\w.\-]+)/);
+  const target = m ? `https://github.dev/${m[1]}/${m[2].replace(/\.git$/, "")}`
+    : (links.website || links.source_url || "");
+  setTimeout(() => { btn.innerHTML = old; if (target) window.open(target, "_blank"); }, 600);
+}
+function elActivate(id, btn) {
+  const e = _eidx && _eidx.byId[id];
+  if (!e) return;
+  const recipe = [`# Activate: ${e.name} (${e.type}) — from Excavatortron`,
+    e.what ? `# What: ${e.what}` : "",
+    e.install ? `${e.install}` : "",
+    e.body ? e.body : "",
+    (e.links || {}).github ? `# Repo: ${e.links.github}` : "",
+    (e.links || {}).website ? `# Site: ${e.links.website}` : ""].filter(Boolean).join("\n");
+  try { navigator.clipboard.writeText(recipe); } catch (_) {}
+  const t = btn.textContent; btn.textContent = "✓ copied recipe"; setTimeout(() => { btn.textContent = t; }, 1400);
+}
+// One delegated handler for every action row on any tab
+document.addEventListener("click", (ev) => {
+  const o = ev.target.closest && ev.target.closest("[data-el-open]");
+  if (o) { ev.preventDefault(); elOpen(o.dataset.elOpen, o); return; }
+  const a = ev.target.closest && ev.target.closest("[data-el-activate]");
+  if (a) { ev.preventDefault(); elActivate(a.dataset.elActivate, a); }
+});
+// M1.8 — decorate every list tab's cards with badges + the action row (post-render pass)
+const TAB_ELTYPE = { skills: "skill", tools: "tool", models: "model", prompts: "prompt",
+  connectors: "connector", designs: "design", comingsoon: "tool" };
+async function decorateCards(tab) {
+  const etype = TAB_ELTYPE[tab];
+  if (!etype) return;
+  const ix = await eidx();
+  view.querySelectorAll(".card h3").forEach(h3 => {
+    if (h3.querySelector(".el-badge")) return;
+    const card = h3.closest(".card");
+    if (!card || card.querySelector(".el-actions")) return;
+    const name = (h3.cloneNode(true).childNodes[0] && h3.textContent || "")
+      .replace(/^[★\s]*\d+(\.\d+)?\/10\s*/, "").split("\n")[0]
+      .replace(/(frozen|official|✓.*|✗.*)$/g, "").trim().toLowerCase();
+    let e = ix.byKey[etype + "|" + name];
+    if (!e) {  // fuzzy: longest index name contained in the heading
+      const cands = Object.keys(ix.byKey).filter(k => k.startsWith(etype + "|"))
+        .filter(k => name.includes(k.split("|")[1])).sort((a, b) => b.length - a.length);
+      e = cands.length ? ix.byKey[cands[0]] : null;
+    }
+    if (!e) return;
+    h3.insertAdjacentHTML("beforeend", " " + elBadge(e));
+    card.insertAdjacentHTML("beforeend", elementActions(e));
+  });
+}
+// M1.6 — the ELEMENT DETAIL view at #element/<id>
+async function renderElement(id) {
+  const ix = await eidx();
+  const e = ix.byId[id];
+  if (!e) { view.innerHTML = empty(`No element "${esc(id)}" in the index.`); return; }
+  const links = e.links || {};
+  const vids = (e.source_videos || []).slice(0, 4);
+  const rel = (e.related || []).map(rid => ix.byId[rid]).filter(Boolean);
+  const enr = e.enrichment || {};
+  view.innerHTML = `
+    <div class="card" style="border-top:3px solid var(--gold)">
+      <p class="sub"><a href="#" onclick="history.back();return false">← back</a></p>
+      <div class="el-detail-hero"><h3 style="font-size:22px">${esc(e.name)}</h3>
+        <span class="pill">${esc(e.type)}</span> ${elBadge(e)}
+        ${e.created_by === "EXCAVA" ? '<span class="pill" style="background:var(--gold-soft)">🦾 Created by EXCAVA</span>' : ""}</div>
+      <p>${esc(e.what || "(deep-retrieve will enrich this element on its next pass)")}</p>
+      ${e.body ? `<pre style="white-space:pre-wrap;font-size:12.5px;background:var(--panel2);border:1.5px solid var(--line);border-radius:9px;padding:10px">${esc(e.body)}</pre>` : ""}
+      ${elementActions(e)}
+      <p class="sub" style="margin-top:10px">
+        ${e.category ? `category: <b>${esc(e.category)}</b> · ` : ""}trust ${e.trust || "?"} ·
+        verified: <b>${esc((e.verified || {}).status)}</b>${(e.verified || {}).method ? ` (${esc(e.verified.method)}, ${((e.verified || {}).sources || 0)} sources)` : ""}
+        ${enr.method ? ` · enriched via ${esc(enr.method)} [${(enr.sources || []).map(esc).join(", ")}]` : ""}</p>
+      ${e.install ? `<p class="sub"><b>Install / source:</b> <code>${esc(e.install)}</code></p>` : ""}
+    </div>
+    ${vids.length ? `<div class="card"><h3>🎬 Source video${vids.length > 1 ? " bundle" : ""} <span class="sub">— where it was really shown</span></h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px">
+      ${vids.map(v => `<iframe width="100%" height="180" src="https://www.youtube.com/embed/${encodeURIComponent(v)}" frameborder="0" allowfullscreen loading="lazy" style="border-radius:10px;border:1.5px solid var(--line)"></iframe>`).join("")}</div></div>` : ""}
+    ${rel.length ? `<div class="card"><h3>🧠 Related <span class="sub">— shown together / same topic (M1.7)</span></h3>
+      <div class="el-rel">${rel.map(r => `<a href="#element/${encodeURIComponent(r.id)}">${_exIcon(r.type)} ${esc(r.name)} ${elBadge(r)}</a>`).join("")}</div></div>` : ""}`;
 }
 
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, c =>
@@ -1984,7 +2114,14 @@ async function show(tab) {
   document.querySelectorAll("nav button").forEach(b =>
     b.classList.toggle("active", b.dataset.tab === tab));
   view.innerHTML = empty("Loading…");
+  // M1.6: #element/<id> routes to the element detail view on top of any tab
+  if (tab && tab.startsWith("element/")) {
+    await renderElement(decodeURIComponent(tab.slice(8)));
+    renderCrew("excava");
+    return;
+  }
   await renderTab(tab);
+  decorateCards(tab);                             // M1.8: badges + action rows on every list tab
   // One bulleted "Updates: …" line at the very top of the tab (lists every update type).
   const c = cadenceLine(tab);
   if (c) view.insertAdjacentHTML("afterbegin", c);
@@ -2203,6 +2340,12 @@ async function renderTab(tab) {
   if (tab && tab.startsWith("dyn:")) return renderDynamicTab(tab.slice(4));
 }
 
+// M1.6 hash routing: #element/<id> opens the detail view; back returns to the previous tab
+window.addEventListener("hashchange", () => {
+  const h = decodeURIComponent(location.hash.slice(1) || "");
+  if (h.startsWith("element/")) show(h);
+  else if (!h && state.activeTab && String(state.activeTab).startsWith("element/")) show("excava");
+});
 document.querySelectorAll("nav button").forEach(b => {
   b.addEventListener("click", () => show(b.dataset.tab));
   const c = TAB_ACCENT[b.dataset.tab];

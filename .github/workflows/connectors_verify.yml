@@ -34,7 +34,7 @@ jobs:
           node-version: "20"
 
       - name: Sandbox test-run the next batch
-        run: python -m src.verify_connectors --limit 30
+        run: python -m src.verify_connectors --limit 30 --catchup 60
 
       - name: Commit verdicts
         run: |

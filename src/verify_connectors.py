@@ -159,6 +159,8 @@ def main() -> int:
         pass
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=30)
+    ap.add_argument("--catchup", type=int, default=0,
+                    help="M1.1: raise the batch to this size while unchecked connectors remain")
     args = ap.parse_args()
 
     raw = _jload(DATA / "connectors.json", {})
@@ -167,6 +169,8 @@ def main() -> int:
     state = _jload(STATE, {"cursor": 0})
     store = _jload(OUT, {"verified": {}})
     ver = store.setdefault("verified", {})
+    if args.catchup and len(ver) < len(conns):
+        args.limit = max(args.limit, args.catchup)   # M1.1: bigger batches until all 1,142 done
 
     start = state.get("cursor", 0) % max(len(conns), 1)
     batch = conns[start:start + args.limit]

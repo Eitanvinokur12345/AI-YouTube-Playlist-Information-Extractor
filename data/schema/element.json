@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Element — the unified model every hub item normalizes into (EXCAVA v2 M1.0)",
+  "type": "object",
+  "required": ["id", "type", "name"],
+  "properties": {
+    "id": { "type": "string", "description": "type:slug — stable across rebuilds" },
+    "type": { "enum": ["skill", "tool", "prompt", "command", "connector", "design", "format", "model", "creation"] },
+    "name": { "type": "string" },
+    "what": { "type": "string", "description": "what it is / does — the enriched description" },
+    "category": { "type": "string" },
+    "source_videos": { "type": "array", "items": { "type": "string" }, "description": "YouTube video ids" },
+    "links": {
+      "type": "object",
+      "properties": {
+        "website": { "type": "string" }, "github": { "type": "string" }, "open_code": { "type": "string" },
+        "source_url": { "type": "string" }
+      }
+    },
+    "install": { "type": "string" },
+    "quality_score": { "type": "number" },
+    "verified": {
+      "type": "object",
+      "properties": {
+        "status": { "enum": ["verified", "unverified", "niche", "dead"] },
+        "method": { "type": "string", "description": "e.g. 'link+sandbox', '2-source+live'" },
+        "sources": { "type": "integer", "description": "independent sources confirming (M1.C3: >=2 for 'real')" },
+        "at": { "type": "string" }, "log": { "type": "string" }
+      }
+    },
+    "trust": { "type": "number", "description": "0-100 from source_trust.json by origin" },
+    "enriched": { "type": "boolean", "description": "M1.C1: full-source + >=1 enrichment source present" },
+    "stub": { "type": "boolean", "description": "true = thin item awaiting deep retrieval" },
+    "related": { "type": "array", "items": { "type": "string" }, "description": "element ids (M1.7)" },
+    "video_bundle": { "type": "array", "items": { "type": "string" }, "description": "same-topic video ids" },
+    "created_by": { "type": "string", "description": "'EXCAVA' for creations (G-12 label)" }
+  }
+}

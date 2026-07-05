@@ -695,6 +695,12 @@
       background-image:linear-gradient(45deg, transparent 44%, var(--line) 44%, var(--line) 56%, transparent 56%); }
     .cutaway .more { font-size:11px; color:var(--muted); }
     .cut-lane { margin:8px 2px 0; font-size:12.5px; }
+    /* M3.7: the "new results" badge on the tab + the inline artifact bubble in the making-chat */
+    .nav-new { display:inline-block; background:var(--gold); color:var(--text); font-size:10px;
+      font-weight:800; border:1.5px solid var(--line); border-radius:999px; padding:0 6px;
+      margin-left:4px; vertical-align:1px; box-shadow:1px 1px 0 var(--line); }
+    .msg.sys.artifact .bub { border-style:solid; border-color:var(--gold-line); background:var(--gold-soft);
+      color:var(--text); font-size:12.5px; }
     @media (max-width:760px) { .ex-floor.iso { height:430px; } .ex-floor.iso .ex-station { width:96px; }
       .ex-floor.iso .ex-station .bldg { width:78px; } .cutaway .cut-tag { display:none; } }
     /* ── M3.4 the animation catalog: 11 action props, all tied to real events ── */
@@ -925,6 +931,7 @@
   <nav id="tabs">
     <button data-tab="excava" class="active">🦾 EXCAVA</button>
     <button data-tab="rooms">🗣 Rooms</button>
+    <button data-tab="results">📦 Results</button>
     <button data-tab="skills">Skills Library</button>
     <button data-tab="tools">Tool Rating</button>
     <button data-tab="comingsoon">Coming Soon</button>

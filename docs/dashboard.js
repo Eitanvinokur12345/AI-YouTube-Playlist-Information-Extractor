@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v72";
+const APP_BUILD = "v73";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2460,13 +2460,18 @@ async function renderRooms(selId) {
       <div class="bub"><div class="who">${esc(m.name || m.agent)} <span class="eng">${esc(m.engine || "")}${m.ms ? " · " + m.ms + "ms" : ""}</span></div>${esc(m.text)}</div>
     </div>`;
   }).join("") || `<p class="sub">This room hasn't spoken yet — it advances on the next CI beat (engines live in the cloud).</p>`;
+  // M3.7: the artifact appears INLINE in the making-chat, not just in the meta line
+  const artInline = sel.artifact ? `<div class="msg sys artifact"><div class="bub">📦 <b>ARTIFACT</b> —
+      this room produced a <b>${esc(sel.artifact.kind || sel.artifact_kind || "artifact")}</b>:
+      ${esc(String(sel.artifact.ref || sel.artifact.id || ""))}
+      · <a href="#" data-open-results>see it in 📦 Results</a></div></div>` : "";
   const inner = `
     <div class="room-meta"><span class="pill">${esc(sel.kind)}</span>
       <span>goal: <b>${esc(sel.goal)}</b></span><span>turns ${sel.turns}/${sel.max_turns}</span>
       <span>${sel.status === "done" ? "✅ closed" : "🟢 live"}</span>
       ${sel.last_turn_ms ? `<span>last turn ${sel.last_turn_ms}ms</span>` : ""}
       ${sel.artifact ? `<span>📦 artifact: <b>${esc(sel.artifact.kind)}</b> → ${esc(String(sel.artifact.ref || sel.artifact.id || ""))}</span>` : ""}</div>
-    <div class="chat">${bubbles}</div>`;
+    <div class="chat">${bubbles}${artInline}</div>`;
   view.innerHTML = `
     <div class="card"><h3>🗣 Rooms <span class="sub">— agents work out loud; you're the boss watching (P13). War rooms are the showpiece.</span></h3>
       <div class="rooms-rail">${rail}</div>
@@ -2474,11 +2479,88 @@ async function renderRooms(selId) {
     </div>`;
   view.querySelectorAll("[data-room]").forEach(b =>
     b.addEventListener("click", () => renderRooms(b.dataset.room)));
+  view.querySelectorAll("[data-open-results]").forEach(a =>
+    a.addEventListener("click", e => { e.preventDefault(); show("results"); }));
+}
+
+// ── M3.7 RESULTS FEED: everything EXCAVA produced — attributed, filterable, openable ──
+async function _resultItems() {
+  const [rooms, made, ex] = await Promise.all([load("excava/rooms.json"),
+    load("created_by_excava.json"), load("excava_status.json")]);
+  const items = [];
+  ((rooms && rooms.rooms) || []).forEach(r => { if (r.artifact) items.push({
+    at: r.artifact.at || r.created_at, dept: r.dept || "core", agent: r.id,
+    kind: r.artifact.kind || r.artifact_kind || "artifact", title: r.goal,
+    preview: `the room converged after ${r.turns} turns and produced this`,
+    ref: String(r.artifact.ref || r.artifact.id || ""),
+    open: r.artifact.ref ? `${GH_REPO}/blob/main/${r.artifact.ref}` : null, room: r.id }); });
+  ((made && made.creations) || []).forEach(c => items.push({
+    at: c.created_at, dept: "creators", agent: c.created_by || "EXCAVA",
+    kind: c.type || "creation", title: c.name, preview: c.what || "", ref: c.name,
+    open: null, useBody: c.how_to_use || "" }));
+  (((ex || {}).os || {}).recent_events || []).filter(e => e.kind === "handoff" && e.doc)
+    .forEach(e => items.push({
+      at: e.at, dept: e.department || "core", agent: e.by || "worker", kind: "hand-off",
+      title: String(e.doc).split("/").pop().replace(/\.md$/, ""), preview: e.why || e.what || "",
+      ref: e.doc, open: `${GH_REPO}/blob/main/${e.doc}` }));
+  return items.filter(x => x.at).sort((a, b) => String(b.at).localeCompare(String(a.at)));
+}
+function _resultCard(x) {
+  return `<div class="card result-card">
+    <h3>${esc(x.title)} <span class="pill">${esc(x.kind)}</span>
+      <span class="mentions">${_exIcon(x.dept)} ${esc(x.dept)} · ${esc(x.agent)}</span></h3>
+    ${x.preview ? `<p class="sub">${esc(String(x.preview).slice(0, 220))}</p>` : ""}
+    <div class="el-actions always">
+      ${x.open ? `<a target="_blank" href="${esc(x.open)}">↗ Open</a>` : ""}
+      <a target="_blank" href="${_exIssue("EXCAVA: use " + x.title, x.useBody || x.ref || "")}">🦾 Use</a>
+      <a target="_blank" href="${_exIssue('EXCAVA: send "' + x.title + '" to a project',
+        "Artifact: " + (x.ref || x.title) + "\nProject: Budoaris / FreeDup / other — say which")}">📮 Send to a project</a>
+      ${x.room ? `<a href="#" data-goto-room="${esc(x.room)}">🗣 The making-of chat</a>` : ""}
+    </div>
+    <p class="sub" style="margin-top:6px">${esc(fmtDate(x.at))}</p>
+  </div>`;
+}
+async function renderResults() {
+  const items = await _resultItems();
+  localStorage.setItem("excavatortron.results.seen", new Date().toISOString());
+  const navBtn = document.querySelector('nav [data-tab="results"]');
+  if (navBtn) navBtn.innerHTML = "📦 Results";
+  const day = state.resDay || "", dept = state.resDept || "", agent = state.resAgent || "";
+  const days = [...new Set(items.map(x => String(x.at).slice(0, 10)))].slice(0, 7);
+  const depts = [...new Set(items.map(x => x.dept))];
+  const agents = [...new Set(items.map(x => x.agent))].slice(0, 12);
+  const f = items.filter(x => (!day || String(x.at).startsWith(day)) &&
+    (!dept || x.dept === dept) && (!agent || x.agent === agent));
+  const chip = (val, cur, key, lbl) =>
+    `<button class="qr-btn ${cur === val ? "active" : ""}" data-resf="${key}:${esc(val)}">${esc(lbl || val)}</button>`;
+  view.innerHTML = `<div class="card"><h3>📦 Results <span class="sub">— everything EXCAVA produced, attributed to who made it; filter by day / department / maker</span></h3>
+      <div class="links" style="margin-bottom:4px">${chip("", day, "day", "all days")}${days.map(d => chip(d, day, "day")).join("")}</div>
+      <div class="links" style="margin-bottom:4px">${chip("", dept, "dept", "all departments")}${depts.map(d => chip(d, dept, "dept")).join("")}</div>
+      <div class="links">${chip("", agent, "agent", "all makers")}${agents.map(a => chip(a, agent, "agent")).join("")}</div>
+    </div>
+    ${f.length ? f.map(_resultCard).join("") : empty("Nothing matches — rooms produce artifacts as they converge (M2.6); the creators department lands a few per day.")}`;
+  view.querySelectorAll("[data-resf]").forEach(b => b.addEventListener("click", () => {
+    const [k, ...v] = b.dataset.resf.split(":");
+    state[{ day: "resDay", dept: "resDept", agent: "resAgent" }[k]] = v.join(":");
+    renderResults();
+  }));
+  view.querySelectorAll("[data-goto-room]").forEach(a => a.addEventListener("click", e => {
+    e.preventDefault(); show("rooms").then(() => renderRooms(a.dataset.gotoRoom));
+  }));
+}
+async function resultsBadge() {                       // M3.7: the "new" count on the tab
+  try {
+    const seen = localStorage.getItem("excavatortron.results.seen") || "1970";
+    const n = (await _resultItems()).filter(x => String(x.at) > seen).length;
+    const navBtn = document.querySelector('nav [data-tab="results"]');
+    if (navBtn && n) navBtn.innerHTML = `📦 Results <span class="nav-new">${n}</span>`;
+  } catch (_) {}
 }
 
 async function renderTab(tab) {
   if (tab === "excava") return renderExcava();
   if (tab === "rooms") return renderRooms();
+  if (tab === "results") return renderResults();
   if (tab === "skills") return renderSkills(await load("skills.json"));
   if (tab === "tools" || tab === "models")
     return renderToolRating(await load("tools.json"), await load("models.json"));
@@ -2510,6 +2592,7 @@ document.querySelectorAll("nav button").forEach(b => {
 });
 
 (async () => {
+  resultsBadge();                                     // M3.7: fire-and-forget "new results" count
   const [status, stars, extra, config, health] = await Promise.all([
     load("status.json"), load("stars.json"), load("extra_tabs.json"), loadRoot("config.json"),
     load("health.json")]);

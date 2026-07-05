@@ -42,6 +42,32 @@ Last updated: 2026-07-02. Keep this current at the end of every working session.
   the spine as a package (owner: port nothing yet). Source trust-scores seeded
   (`data/source_trust.json`), intake items now carry trust.
 
+## 0d. EXCAVA v2 BUILD STATE (2026-07-05, Fable executing EXCAVA_V2_STEPS.md — continue HERE)
+- **M1 ✅ COMPLETE (v66, dd665b39):** element model (6,422 els, schema+index+set_field) · deep_retrieve
+  (full-source enrichment, stubs-first) · discovery_agent (hourly; GitHub/HN/PH/social; live-tested 58 new)
+  · verify_elements (2-source+live, rolling+on-access, conflicts noted) · relate (4,796 with related) ·
+  prewarm (52 targets) · badges+action-row on all list tabs · #element/<id> detail view · core_spoton.yml.
+- **M2 ✅ COMPLETE (v67→fixed in v68, 988f6b1b):** PROTOCOLS.md P1-P14 + SAFE-tripping audit (proven) ·
+  excava_engines (9 families, Hermes/OmniRoute optional, fall-through) · excava_leases (dept budgets,
+  RPM, Claude-cap) · 38 NAMED agents (Echo/Marrow/Iris/Ledger/Root/Boulder/Chroma/Wire/Ratchet/Bastion/
+  Nova + doers/checkers/improvers; --roster) · excava_chat rooms (debate→converge→ARTIFACT:
+  package/bus-task/creation; day archives) · workers dispatch/dissolve · rooms advance每 beat ·
+  excava_selfimprove (auto budget-shift, room-retire, PITCH filing). Rooms speak on CI beats (engines
+  live in secrets; local runs degrade honestly).
+- **M3 slice 1 ✅ (v68, 2e1e03b2):** tokens.css design system · sidebar shell (wide screens) · 🗣 Rooms
+  messenger tab (war-room round table; agent·engine·ms badges; suited leads raised) · console hero
+  (dept-route/mic/attach/slash→P6 triggers/away-digest).
+- **⚠ LESSON (cost us v67):** NEVER bump builds/edit utf-8 files via PowerShell Get/Set-Content —
+  python utf-8 only. v67's mojibake was restored from git (dd665b39) and re-applied.
+- **M3 REMAINING:** M3.2 monster cast (SVG/code-drawn, free-first; show Eitan samples, no gate) ·
+  M3.3 isometric floor + cutaways · M3.4 animation catalog (11) · M3.6 card final visual · M3.7 results
+  feed · M3.8 North-Star constellation · M3.9 brain graph→package · M3.11 steering banner/bell/monster-
+  walks-up · M3.11b editable taste panel (design vs work) · M3.12 mobile pass · M3.13 ship.
+- **THEN:** M4 (activator [OPUS], HORSE, packages UI, launcher own-brand, hub-API, prove-real) ·
+  M5 deferred · breadth B1/B3/B6 first. Plan files: EXCAVA_V2_STEPS.md (+ADDITIONS §I design direction).
+- Gate note: internal gate was CLOSED this session by a REAL data_guard restore (designs.json 242→670)
+  — correct behavior; it self-clears on the next clean guard pass.
+
 ## 1. WHAT THIS IS
 A **personal build-leverage system** for Eitan — a hub of every AI capability (tools/skills/models/MCP/
 prompts/commands/designs) mined from ONE YouTube playlist, used with all his tools to build things fast.

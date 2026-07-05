@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v69";
+const APP_BUILD = "v70";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1873,14 +1873,29 @@ async function renderExcava() {
   const tasks = (inbox && inbox.tasks) || [];
   const goals = (gs && gs.goals) || [];
   // department stations around the core (percent coords on the floor)
-  const POS = [[16, 22], [50, 14], [84, 22], [10, 62], [90, 62], [25, 86], [50, 90], [75, 86]];
+  // M3.3: the isometric ring when floor.js is loaded; the old flat scatter otherwise
+  const iso = window.ExcavaFloor || null;
+  const POS = iso ? iso.RING : [[16, 22], [50, 14], [84, 22], [10, 62], [90, 62], [25, 86], [50, 90], [75, 86]];
   const stations = lanes.map((L, i) => ({ ...L, x: POS[i % POS.length][0], y: POS[i % POS.length][1] }));
-  const stHTML = stations.map(s => `
+  const stHTML = stations.map((s, i) => {
+    const stat = `${s.status === "live" ? "working" : s.status === "slow" ? "due" : "idle"} · ran ${_ageAgo(s.age_hours)}`;
+    if (iso) {                                          // M3.3 isometric building + monster at the door
+      const dep = _monsterDept(s.label);
+      const acc = (dep && iso.ACCENT[dep]) || "var(--gold)";
+      return `
+    <div class="ex-station iso ${s.status === "stale" ? "stale" : ""}" style="left:${s.x}%;top:${s.y}%">
+      ${iso.building(acc, s.status || "stale", i)}
+      ${dep ? `<img class="door-m" src="assets/monsters/${dep}-agent.svg" alt="">` : ""}
+      <div class="plate"><div class="nm">${esc(s.label || "")}</div><div class="st">${stat}</div></div>
+    </div>`;
+    }
+    return `
     <div class="ex-station ${s.status === "stale" ? "stale" : ""}" style="left:${s.x}%;top:${s.y}%">
       <span class="lamp ${esc(s.status || "stale")}"></span>
       <div class="ic">${_monsterImg(s.label, "agent", "st-m") || _exIcon(s.label)}</div><div class="nm">${esc(s.label || "")}</div>
-      <div class="st">${s.status === "live" ? "working" : s.status === "slow" ? "due" : "idle"} · ran ${_ageAgo(s.age_hours)}</div>
-    </div>`).join("");
+      <div class="st">${stat}</div>
+    </div>`;
+  }).join("");
   // worker bots: one per non-stale department, walking core <-> station with a task chip.
   // Each department's crew has its own color — you can tell WHO is doing WHAT at a glance.
   const BOTC = ["oklch(0.85 0.165 95)", "oklch(0.72 0.17 40)", "oklch(0.75 0.15 200)", "oklch(0.75 0.17 330)",
@@ -2056,7 +2071,10 @@ async function renderExcava() {
         <span class="pl-badge ${gate.internal_allowed ? "pl-live" : "pl-stale"}">${gate.internal_allowed ? "OPERATING" : "GATE CLOSED"}</span></h3>
       <p class="sub">Phase: ${esc(ex && ex.phase || "OS-1 operator")} · memory: <b>${mem.vectors || 0}</b> vectors ·
         outward actions ${gate.outward_allowed ? "OPEN" : `held (${esc((gate.checks || {}).truth_access_G3 ?? "?")} / 70 truth&access)`} · goals: ${goalsMini}</p>
-      <div class="ex-floor">${maint}${stHTML}${workBots || bots}<div class="ex-core">EXCAVA<small>AGENTIC CORE</small></div></div>
+      <div class="ex-floor ${iso ? "iso" : ""}">${iso ? iso.ground() : ""}${maint}${stHTML}${workBots || bots}
+        <div class="ex-core">EXCAVA<small>AGENTIC CORE</small></div>
+        <div class="floor-clock" title="M2.7: the visible timing readout">⏱ beat #${os.beats || "?"} · ${((os.beat_log || []).length || 0)} events last beat</div>
+      </div>
       <div class="ex-detail" id="ex-detail">Click a department station to inspect it — what it does, its real status, cadence and last run.</div>
       <p class="sub" style="margin-top:8px">The floor is LIVE: each station is a real pipeline department (lamp = its actual status), each colored bot is a real registered agent carrying its department's actual bus task — hover one to see who it is and what it holds.</p>
     </div>
@@ -2153,16 +2171,26 @@ async function renderExcava() {
       return `<div class="tr-ev">[${esc(String(ev.at || "").slice(0, 16))}] <b>${esc(ev.kind)}</b> ${extra}</div>`;
     }).join("");
   }));
-  // station click-through: inspect a department
+  // station click-through: ENTER a department — M3.3 side-view cutaway + real numbers
   const det = view.querySelector("#ex-detail");
   view.querySelectorAll(".ex-station").forEach((el, i) => el.addEventListener("click", () => {
     view.querySelectorAll(".ex-station").forEach(x => x.classList.remove("sel"));
     el.classList.add("sel");
     const s = stations[i] || {};
     const next = s.last_run ? new Date(new Date(s.last_run).getTime() + (s.cadence_h || 12) * 3.6e6) : null;
-    det.innerHTML = `<b>${_exIcon(s.label)} ${esc(s.label || "")}</b> — ${esc(s.what || "")}<br>
+    const laneLine = `<b>${_exIcon(s.label)} ${esc(s.label || "")}</b> — ${esc(s.what || "")}<br>
       status <b>${esc(s.status || "?")}</b> · ran ${_ageAgo(s.age_hours)} · every ~${esc(s.cadence_h)}h ·
       ${esc(s.runs_7d)}× this week${next ? ` · next ~${esc(fmtDate(next.toISOString()))}` : ""}`;
+    const dep = _monsterDept(s.label);
+    if (window.ExcavaFloor && dep) {
+      const staff = regAgents.filter(a => a.department === dep);
+      const lead = staff.find(a => a.role === "lead") || staff.find(a => a.tier === 1) || {};
+      const roles = ["doer", "checker", "improver"].map(r =>
+        `${staff.filter(a => a.role === r).length} ${r}`).join(" · ");
+      det.innerHTML = ExcavaFloor.cutaway({ dept: dep, label: s.label || dep,
+        accent: ExcavaFloor.ACCENT[dep] || "#e9b400", lead, staff: Math.max(staff.length - 1, 0),
+        roles, counts: busPer[dep] || {}, usage: usage[dep] || {} }) + `<p class="cut-lane">${laneLine}</p>`;
+    } else det.innerHTML = laneLine;
   }));
 }
 

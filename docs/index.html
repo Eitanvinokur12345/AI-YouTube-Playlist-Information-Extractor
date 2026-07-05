@@ -633,6 +633,66 @@
       border-radius:50%; background:var(--line); box-shadow:7px 0 0 var(--line); }
     .ex-bot::after { content:""; position:absolute; left:7px; top:-7px; width:2px; height:5px;
       background:var(--line); }
+    /* ── M3.3: the ISOMETRIC factory floor (light surface, yellow+ink, metal frame, greenery) ── */
+    .ex-floor.iso { height:470px; background:
+        linear-gradient(180deg, oklch(0.97 0.02 95) 0%, oklch(0.93 0.035 92) 100%);
+      border:3px solid var(--line); box-shadow:5px 6px 0 oklch(0.28 0.02 60 / .25); }
+    .iso-ground { position:absolute; inset:0; width:100%; height:100%; }
+    .iso-ground .seam { opacity:.8; }
+    .ex-floor.iso .ex-station { width:128px; background:transparent; border:none; padding:0; }
+    .ex-floor.iso .ex-station .bldg { width:104px; display:block; margin:0 auto;
+      transition:transform .15s ease; }
+    .ex-floor.iso .ex-station:hover .bldg { transform:translateY(-4px); }
+    .ex-floor.iso .ex-station.sel { box-shadow:none; }
+    .ex-floor.iso .ex-station.sel .bldg { transform:translateY(-4px);
+      filter:drop-shadow(0 0 10px oklch(0.85 0.165 95 / .8)); }
+    .ex-floor.iso .ex-station .plate { display:inline-block; background:oklch(0.99 0.01 95);
+      border:2px solid var(--line); border-radius:8px 11px 7px 10px; padding:2px 9px 3px;
+      box-shadow:2px 2px 0 oklch(0.28 0.02 60 / .3); margin-top:-6px; }
+    .ex-floor.iso .ex-station .nm { color:var(--text); font-size:10px; }
+    .ex-floor.iso .ex-station .st { color:oklch(0.5 0.03 80); font-size:9px; }
+    .ex-floor.iso .ex-station .door-m { position:absolute; right:8px; bottom:32px; width:30px;
+      filter:drop-shadow(1.5px 2px 0 oklch(0.28 0.02 60 / .3)); }
+    .bldg .rooflamp.live { fill:oklch(0.78 0.19 145); animation:exBlink 1.4s infinite; }
+    .bldg .rooflamp.slow { fill:var(--gold); }
+    .bldg .rooflamp.off { fill:oklch(0.62 0.16 28); }
+    .bldg .puff { fill:oklch(0.85 0.01 90 / .8); animation:puffUp 2.4s ease-out infinite; }
+    .bldg .puff.p2 { animation-delay:1.2s; }
+    @keyframes puffUp { from { opacity:.85; transform:translateY(0);} to { opacity:0; transform:translateY(-14px);} }
+    .floor-clock { position:absolute; top:10px; right:12px; z-index:5; font-size:10.5px; font-weight:700;
+      background:oklch(0.99 0.01 95); color:var(--text); border:2px solid var(--line);
+      border-radius:999px; padding:2px 10px; box-shadow:2px 2px 0 oklch(0.28 0.02 60 / .3); }
+    /* the side-view CUTAWAY — the building sliced open when you enter a department */
+    .cutaway { border:3px solid var(--line); border-right:3px dashed var(--line);
+      border-radius:12px 4px 4px 12px; overflow:hidden; background:oklch(0.98 0.015 95);
+      box-shadow:4px 4px 0 oklch(0.28 0.02 60 / .22); animation:cutIn .28s ease-out;
+      max-width:640px; }
+    @keyframes cutIn { from { opacity:0; transform:translateX(14px);} to { opacity:1; transform:none;} }
+    .cutaway .cut-roof { background:var(--acc, var(--gold)); color:#fff; font-family:"Archivo Black",sans-serif;
+      font-size:13px; letter-spacing:.05em; text-transform:uppercase; padding:6px 12px;
+      border-bottom:3px solid var(--line); display:flex; justify-content:space-between; align-items:center;
+      text-shadow:1px 1px 0 oklch(0.28 0.02 60 / .5); }
+    .cutaway .cut-saw { font-family:"Space Grotesk",sans-serif; font-size:9px; letter-spacing:.16em;
+      font-style:normal; opacity:.85; }
+    .cutaway .cut-level { display:flex; align-items:center; gap:10px; padding:9px 12px;
+      border-bottom:2.5px solid var(--line); position:relative; min-height:52px; }
+    .cutaway .cut-level:last-child { border-bottom:0; }
+    .cutaway .cut-level.ground { background:oklch(0.94 0.03 92); }
+    .cutaway .cut-tag { font-size:8.5px; font-weight:800; letter-spacing:.14em; color:oklch(0.55 0.04 80);
+      writing-mode:vertical-rl; transform:rotate(180deg); border-right:1.5px solid var(--line); padding:0 3px 0 0; }
+    .cutaway img { filter:drop-shadow(1.5px 2px 0 oklch(0.28 0.02 60 / .25)); }
+    .cutaway .cut-info { display:flex; flex-direction:column; font-size:12px; line-height:1.25; }
+    .cutaway .cut-info span { color:var(--muted); font-size:11px; }
+    .cutaway .cut-nums { margin-left:auto; font-size:11px; font-weight:700; color:var(--gold-ink);
+      background:var(--gold-soft); border:1.5px solid var(--gold-line); border-radius:999px; padding:2px 9px; }
+    .cutaway .cut-belt { display:flex; gap:5px; align-items:flex-end; }
+    .cutaway .crate { width:15px; height:13px; background:#d8b56a; border:2px solid var(--line);
+      border-radius:2.5px; display:inline-block;
+      background-image:linear-gradient(45deg, transparent 44%, var(--line) 44%, var(--line) 56%, transparent 56%); }
+    .cutaway .more { font-size:11px; color:var(--muted); }
+    .cut-lane { margin:8px 2px 0; font-size:12.5px; }
+    @media (max-width:760px) { .ex-floor.iso { height:430px; } .ex-floor.iso .ex-station { width:96px; }
+      .ex-floor.iso .ex-station .bldg { width:78px; } .cutaway .cut-tag { display:none; } }
     /* M3.2: a worker monster walks instead of the plain bot block */
     .ex-bot.has-m { border:none; border-radius:0; width:26px; height:27px; margin:-14px 0 0 -13px; }
     .ex-bot.has-m::before, .ex-bot.has-m::after { display:none; }
@@ -835,6 +895,7 @@
 
   <main id="view"><p class="empty">Loading…</p></main>
   <link rel="stylesheet" href="design/tokens.css">
+  <script src="floor/floor.js"></script>
   <script src="dashboard.js"></script>
   <!-- PWA: register a tiny service worker so the dashboard installs to a phone/desktop
        home screen and the app shell loads offline. Data (../data) always hits the network. -->

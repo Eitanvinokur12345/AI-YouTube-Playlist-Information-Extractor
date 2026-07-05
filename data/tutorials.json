@@ -2,6 +2,25 @@
   "note": "Phase 6 CHANGE TUTORIALS (owner's D2 pick): every major change ships a walkthrough here; the beat nags when a dashboard build has none. Newest first on the cockpit's Direction card.",
   "tutorials": [
     {
+      "build": "v67",
+      "title": "M2 — real agents: named cast, live conversations, artifacts",
+      "at": "2026-07-05",
+      "podcast": "docs/tutorials/m2-podcast.wav",
+      "interactive": [
+        {"go": "excava", "look_for": ".os-log", "try": "The beat log now shows rooms advancing: named agents (Echo, Marrow, Ledger, Bastion, Nova…) speak via real free engines each CI beat — watch for 'X spoke (engine, ms)'."},
+        {"go": "excava", "look_for": ".fleet", "try": "Fleet health now reflects 38 named agents across 11 departments — leads wear suits, checkers push back by design (debate → converge)."},
+        {"go": "excava", "look_for": "#ex-send-input", "try": "Send a task: it becomes a WAR ROOM — doer proposes, checker challenges, lead states 'DECISION:' and a real artifact (package / bus task / labeled creation) is committed."}
+      ],
+      "steps": [
+        "38 NAMED agents staff the 11 departments (roster: python -m src.excava_agents --roster): suited leads with personas that match the department AND change behavior; doers; skeptic checkers; improvers.",
+        "Conversations are the work mechanism (src/excava_chat.py): dept/cross/group/WAR rooms, real engine calls per message (agent · engine badge is truth), archived by day under data/excava/chats/, replayable.",
+        "Engines (M2.1): 9 free families first-class + optional self-hosted Hermes + optional OmniRoute gateway + Claude premium on your Pro (tight daily cap). Lease arbiter (M2.2): per-dept daily budgets, per-engine RPM, zero runaway.",
+        "Rooms produce ARTIFACTS on convergence: packages (data/packages.json), bus tasks, or G-12-labeled creations — transcript is proof, artifact is the point.",
+        "Self-improvement is real (M2.8): auto-tunes budgets, retires silent rooms, logs to improvements.jsonl — and files a PITCH for anything overhaul-class (P5: only 3 things wait for you).",
+        "PROTOCOLS.md (P1-P14) is law: the beat self-audits it every cycle; removing a protocol trips SAFE mode (proven in test)."
+      ]
+    },
+    {
       "build": "v66",
       "title": "M1 — real, verified elements you can actually use",
       "at": "2026-07-05",

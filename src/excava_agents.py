@@ -165,6 +165,19 @@ WORK: dict = {"links": _work_links, "memory": _work_memory,
               "creators": _work_creators}
 
 
+def roster(reg: dict | None = None) -> str:
+    """M2.3 done-criterion: print the named cast with engines+roles+personas."""
+    reg = reg or load_registry()
+    lines = []
+    for a in reg.get("agents", []):
+        if a.get("tier") == 3:
+            continue
+        lines.append(f"{a.get('name', '?'):<9} {a['id']:<22} {a.get('role', '?'):<9} "
+                     f"engine:{a.get('engine_pref', '-'):<10} {'👔' if a.get('suit') else '  '} "
+                     f"{str(a.get('persona', ''))[:70]}")
+    return "\n".join(lines)
+
+
 def tick(department: str, reg: dict) -> tuple[str, str] | None:
     """One Worker-contract turn for a department: claim → work → complete/handoff/fail.
     Returns (one-line summary, outcome) for the beat log + usage accounting, or None."""
@@ -184,3 +197,16 @@ def tick(department: str, reg: dict) -> tuple[str, str] | None:
         return f"{agent['id']}: {task['id']} DONE", "done"
     msg = bus.fail(task["id"], agent["id"], act.get("reason", "failed"))
     return f"{agent['id']}: {task['id']} {msg}", "fails"
+
+
+if __name__ == "__main__":          # python -m src.excava_agents --roster
+    import sys
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+    if "--roster" in sys.argv:
+        print(roster())
+    else:
+        reg = load_registry()
+        print(f"{len(reg.get('agents', []))} agents registered; use --roster for the cast")

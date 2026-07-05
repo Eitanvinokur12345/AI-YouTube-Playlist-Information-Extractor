@@ -1,25 +1,25 @@
-// AI Skills Tracker dashboard — vanilla JS, no external libraries (works offline).
+﻿// AI Skills Tracker dashboard â€” vanilla JS, no external libraries (works offline).
 // Reads the committed JSON files from ../data (GitHub Pages must serve from repo root).
 const DATA = "../data/";
 const view = document.getElementById("view");
-// Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
+// Visible build stamp â€” bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v66";
+const APP_BUILD = "v67";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
   const b = e.target.closest && e.target.closest("[data-copy]"); if (!b) return;
   e.preventDefault();
   try { navigator.clipboard.writeText(b.dataset.copy || ""); } catch (_) {}
-  const t = b.textContent; b.textContent = "✓ copied"; setTimeout(() => { b.textContent = t; }, 1200);
+  const t = b.textContent; b.textContent = "âœ“ copied"; setTimeout(() => { b.textContent = t; }, 1200);
 });
 const meta = document.getElementById("meta");
 const countersEl = document.getElementById("counters");
 
-// ── PWA install prompt ───────────────────────────────────────────────────────
+// â”€â”€ PWA install prompt â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Chrome/Edge desktop + Android Chrome fire beforeinstallprompt when the site
 // qualifies as installable. Capture it; show the Install button; trigger on click.
-// iOS Safari doesn't support this — we show a static "Add to Home Screen" hint instead.
+// iOS Safari doesn't support this â€” we show a static "Add to Home Screen" hint instead.
 let _installPrompt = null;
 window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
@@ -35,7 +35,7 @@ window.addEventListener("appinstalled", () => {
 function triggerInstall() {
   if (_installPrompt) { _installPrompt.prompt(); _installPrompt = null; }
 }
-// iOS detection — show a static Add-to-Home-Screen hint
+// iOS detection â€” show a static Add-to-Home-Screen hint
 (function detectIOS() {
   const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
   const standalone = window.navigator.standalone;   // true if already installed
@@ -49,7 +49,7 @@ const state = { status: null, config: null, selectedCategory: "all", newsWindow:
   stars: new Set(), hideLowQuality: false, multiToolOnly: false, dynamicTabs: [],
   query: "", activeTab: "excava" };
 
-// True if a skill/connector slug is starred (frozen, best-in-class — never auto-changed).
+// True if a skill/connector slug is starred (frozen, best-in-class â€” never auto-changed).
 const isStarred = (s) =>
   (s && (s.starred === true || s.locked === true)) ||
   (s && s.slug && state.stars.has(String(s.slug).toLowerCase()));
@@ -57,13 +57,13 @@ const isStarred = (s) =>
 // Cross-tool: the skill/technique works with 2+ AI tools (e.g. Claude, ChatGPT, Gemini).
 const isMultiTool = (s) =>
   !!s && (s.multi_tool === true || ((s.compatibility || []).length > 1));
-// "Claude ≤ Sonnet 4.6" — a tool plus the highest version it's known to work with.
+// "Claude â‰¤ Sonnet 4.6" â€” a tool plus the highest version it's known to work with.
 const compatLabel = (c) => {
   const v = c && c.up_to_version;
   return esc(c && c.tool || "?") + (v && v !== "any" && v !== "latest" ? " &le; " + esc(v) : "");
 };
 
-// ── data loader with in-memory cache ─────────────────────────────────────────
+// â”€â”€ data loader with in-memory cache â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Caches each JSON file in memory for the session so switching tabs is instant.
 // The service worker independently handles network-first + offline persistence.
 const _cache = {};
@@ -78,7 +78,7 @@ async function load(file) {
 }
 // Invalidate a specific file's cache (e.g. after an approve action)
 function invalidate(file) { delete _cache[file]; }
-// Raw-text loader (JSONL traces etc.) — no cache, "" on miss. Phase 5 trace viewer uses it.
+// Raw-text loader (JSONL traces etc.) â€” no cache, "" on miss. Phase 5 trace viewer uses it.
 async function loadText(file) {
   try {
     const r = await fetch(DATA + file, { cache: "no-store" });
@@ -86,7 +86,7 @@ async function loadText(file) {
   } catch { return ""; }
 }
 
-// ── M1: the ELEMENT layer — unified index, badges, action row, detail view ──
+// â”€â”€ M1: the ELEMENT layer â€” unified index, badges, action row, detail view â”€â”€
 let _eidx = null, _ewarm = null;
 async function eidx() {
   if (_eidx) return _eidx;
@@ -102,30 +102,30 @@ async function eidx() {
 }
 function elBadge(e) {
   const s = (e.verified || {}).status || "unverified";
-  const map = { verified: ["v", "✓ verified"], niche: ["n", "◆ niche-verified"],
-    unverified: ["u", "unverified"], dead: ["d", "✗ dead"] };
+  const map = { verified: ["v", "âœ“ verified"], niche: ["n", "â—† niche-verified"],
+    unverified: ["u", "unverified"], dead: ["d", "âœ— dead"] };
   const [cls, label] = map[s] || map.unverified;
   const src = (e.verified || {}).sources || 0;
-  return `<span class="el-badge ${cls}" title="${esc((e.verified || {}).method || "")}${src ? " · " + src + " sources" : ""}${e.trust ? " · trust " + e.trust : ""}">${label}</span>`;
+  return `<span class="el-badge ${cls}" title="${esc((e.verified || {}).method || "")}${src ? " Â· " + src + " sources" : ""}${e.trust ? " Â· trust " + e.trust : ""}">${label}</span>`;
 }
-// M1.4 — the per-card ACTION ROW: Activate / Open(<10s) / Use / Video / Bundle / Source
+// M1.4 â€” the per-card ACTION ROW: Activate / Open(<10s) / Use / Video / Bundle / Source
 function elementActions(e) {
   const links = e.links || {};
   const warm = _ewarm && _ewarm[e.id];
   const vid = (e.source_videos || [])[0];
   const acts = [];
-  acts.push(`<button class="primary" data-el-activate="${esc(e.id)}" title="Copy the activation recipe (full setup lands in M4)">⚡ Activate</button>`);
-  acts.push(`<button data-el-open="${esc(e.id)}" title="${warm ? "Pre-warmed — opens instantly" : "Derives a runnable target (<10s)"}">${warm ? "🟢" : "🥞"} Open</button>`);
-  acts.push(`<a target="_blank" href="${_exIssue("EXCAVA: use " + e.name + " for a task", "Element: " + e.id)}" title="Send to the EXCAVA console as a task">🦾 Use for a task</a>`);
-  if (vid) acts.push(`<a target="_blank" href="${yt(vid)}">▶ Video</a>`);
+  acts.push(`<button class="primary" data-el-activate="${esc(e.id)}" title="Copy the activation recipe (full setup lands in M4)">âš¡ Activate</button>`);
+  acts.push(`<button data-el-open="${esc(e.id)}" title="${warm ? "Pre-warmed â€” opens instantly" : "Derives a runnable target (<10s)"}">${warm ? "ðŸŸ¢" : "ðŸ¥ž"} Open</button>`);
+  acts.push(`<a target="_blank" href="${_exIssue("EXCAVA: use " + e.name + " for a task", "Element: " + e.id)}" title="Send to the EXCAVA console as a task">ðŸ¦¾ Use for a task</a>`);
+  if (vid) acts.push(`<a target="_blank" href="${yt(vid)}">â–¶ Video</a>`);
   if ((e.source_videos || []).length > 1)
-    acts.push(`<a href="#element/${encodeURIComponent(e.id)}" title="${e.source_videos.length} source videos">🎬 Bundle (${e.source_videos.length})</a>`);
+    acts.push(`<a href="#element/${encodeURIComponent(e.id)}" title="${e.source_videos.length} source videos">ðŸŽ¬ Bundle (${e.source_videos.length})</a>`);
   const src = links.source_url || links.website || links.github;
-  if (src) acts.push(`<a target="_blank" href="${esc(src)}">↗ Source</a>`);
-  acts.push(`<a href="#element/${encodeURIComponent(e.id)}">🔍 Detail</a>`);
+  if (src) acts.push(`<a target="_blank" href="${esc(src)}">â†— Source</a>`);
+  acts.push(`<a href="#element/${encodeURIComponent(e.id)}">ðŸ” Detail</a>`);
   return `<div class="el-actions" data-elid="${esc(e.id)}">${acts.join("")}</div>`;
 }
-// M1.5 — Open: warm = instant; cold = derive under the pancake (<10s)
+// M1.5 â€” Open: warm = instant; cold = derive under the pancake (<10s)
 async function elOpen(id, btn) {
   await eidx();
   const w = _ewarm[id];
@@ -133,7 +133,7 @@ async function elOpen(id, btn) {
   const e = _eidx.byId[id];
   if (!e) return;
   const old = btn.innerHTML;
-  btn.innerHTML = `<span class="el-warm"><span class="pan">🥞</span> warming…</span>`;
+  btn.innerHTML = `<span class="el-warm"><span class="pan">ðŸ¥ž</span> warmingâ€¦</span>`;
   const links = e.links || {};
   const gh = (links.github || (String(links.website || "").includes("github.com") ? links.website : ""));
   const m = String(gh).match(/github\.com\/([\w.\-]+)\/([\w.\-]+)/);
@@ -144,14 +144,14 @@ async function elOpen(id, btn) {
 function elActivate(id, btn) {
   const e = _eidx && _eidx.byId[id];
   if (!e) return;
-  const recipe = [`# Activate: ${e.name} (${e.type}) — from Excavatortron`,
+  const recipe = [`# Activate: ${e.name} (${e.type}) â€” from Excavatortron`,
     e.what ? `# What: ${e.what}` : "",
     e.install ? `${e.install}` : "",
     e.body ? e.body : "",
     (e.links || {}).github ? `# Repo: ${e.links.github}` : "",
     (e.links || {}).website ? `# Site: ${e.links.website}` : ""].filter(Boolean).join("\n");
   try { navigator.clipboard.writeText(recipe); } catch (_) {}
-  const t = btn.textContent; btn.textContent = "✓ copied recipe"; setTimeout(() => { btn.textContent = t; }, 1400);
+  const t = btn.textContent; btn.textContent = "âœ“ copied recipe"; setTimeout(() => { btn.textContent = t; }, 1400);
 }
 // One delegated handler for every action row on any tab
 document.addEventListener("click", (ev) => {
@@ -160,7 +160,7 @@ document.addEventListener("click", (ev) => {
   const a = ev.target.closest && ev.target.closest("[data-el-activate]");
   if (a) { ev.preventDefault(); elActivate(a.dataset.elActivate, a); }
 });
-// M1.8 — decorate every list tab's cards with badges + the action row (post-render pass)
+// M1.8 â€” decorate every list tab's cards with badges + the action row (post-render pass)
 const TAB_ELTYPE = { skills: "skill", tools: "tool", models: "model", prompts: "prompt",
   connectors: "connector", designs: "design", comingsoon: "tool" };
 async function decorateCards(tab) {
@@ -172,8 +172,8 @@ async function decorateCards(tab) {
     const card = h3.closest(".card");
     if (!card || card.querySelector(".el-actions")) return;
     const name = (h3.cloneNode(true).childNodes[0] && h3.textContent || "")
-      .replace(/^[★\s]*\d+(\.\d+)?\/10\s*/, "").split("\n")[0]
-      .replace(/(frozen|official|✓.*|✗.*)$/g, "").trim().toLowerCase();
+      .replace(/^[â˜…\s]*\d+(\.\d+)?\/10\s*/, "").split("\n")[0]
+      .replace(/(frozen|official|âœ“.*|âœ—.*)$/g, "").trim().toLowerCase();
     let e = ix.byKey[etype + "|" + name];
     if (!e) {  // fuzzy: longest index name contained in the heading
       const cands = Object.keys(ix.byKey).filter(k => k.startsWith(etype + "|"))
@@ -185,7 +185,7 @@ async function decorateCards(tab) {
     card.insertAdjacentHTML("beforeend", elementActions(e));
   });
 }
-// M1.6 — the ELEMENT DETAIL view at #element/<id>
+// M1.6 â€” the ELEMENT DETAIL view at #element/<id>
 async function renderElement(id) {
   const ix = await eidx();
   const e = ix.byId[id];
@@ -196,23 +196,23 @@ async function renderElement(id) {
   const enr = e.enrichment || {};
   view.innerHTML = `
     <div class="card" style="border-top:3px solid var(--gold)">
-      <p class="sub"><a href="#" onclick="history.back();return false">← back</a></p>
+      <p class="sub"><a href="#" onclick="history.back();return false">â† back</a></p>
       <div class="el-detail-hero"><h3 style="font-size:22px">${esc(e.name)}</h3>
         <span class="pill">${esc(e.type)}</span> ${elBadge(e)}
-        ${e.created_by === "EXCAVA" ? '<span class="pill" style="background:var(--gold-soft)">🦾 Created by EXCAVA</span>' : ""}</div>
+        ${e.created_by === "EXCAVA" ? '<span class="pill" style="background:var(--gold-soft)">ðŸ¦¾ Created by EXCAVA</span>' : ""}</div>
       <p>${esc(e.what || "(deep-retrieve will enrich this element on its next pass)")}</p>
       ${e.body ? `<pre style="white-space:pre-wrap;font-size:12.5px;background:var(--panel2);border:1.5px solid var(--line);border-radius:9px;padding:10px">${esc(e.body)}</pre>` : ""}
       ${elementActions(e)}
       <p class="sub" style="margin-top:10px">
-        ${e.category ? `category: <b>${esc(e.category)}</b> · ` : ""}trust ${e.trust || "?"} ·
+        ${e.category ? `category: <b>${esc(e.category)}</b> Â· ` : ""}trust ${e.trust || "?"} Â·
         verified: <b>${esc((e.verified || {}).status)}</b>${(e.verified || {}).method ? ` (${esc(e.verified.method)}, ${((e.verified || {}).sources || 0)} sources)` : ""}
-        ${enr.method ? ` · enriched via ${esc(enr.method)} [${(enr.sources || []).map(esc).join(", ")}]` : ""}</p>
+        ${enr.method ? ` Â· enriched via ${esc(enr.method)} [${(enr.sources || []).map(esc).join(", ")}]` : ""}</p>
       ${e.install ? `<p class="sub"><b>Install / source:</b> <code>${esc(e.install)}</code></p>` : ""}
     </div>
-    ${vids.length ? `<div class="card"><h3>🎬 Source video${vids.length > 1 ? " bundle" : ""} <span class="sub">— where it was really shown</span></h3>
+    ${vids.length ? `<div class="card"><h3>ðŸŽ¬ Source video${vids.length > 1 ? " bundle" : ""} <span class="sub">â€” where it was really shown</span></h3>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px">
       ${vids.map(v => `<iframe width="100%" height="180" src="https://www.youtube.com/embed/${encodeURIComponent(v)}" frameborder="0" allowfullscreen loading="lazy" style="border-radius:10px;border:1.5px solid var(--line)"></iframe>`).join("")}</div></div>` : ""}
-    ${rel.length ? `<div class="card"><h3>🧠 Related <span class="sub">— shown together / same topic (M1.7)</span></h3>
+    ${rel.length ? `<div class="card"><h3>ðŸ§  Related <span class="sub">â€” shown together / same topic (M1.7)</span></h3>
       <div class="el-rel">${rel.map(r => `<a href="#element/${encodeURIComponent(r.id)}">${_exIcon(r.type)} ${esc(r.name)} ${elBadge(r)}</a>`).join("")}</div></div>` : ""}`;
 }
 
@@ -222,57 +222,57 @@ const empty = (msg) => `<p class="empty">${esc(msg)}</p>`;
 const yt = (id) => `https://www.youtube.com/watch?v=${encodeURIComponent(id || "")}`;
 const _ytid = (u) => { const m = String(u || "").match(/[?&]v=([\w-]+)/); return m ? m[1] : ""; };
 // Real, usable links for any item: Website / GitHub / Open-in-Codespaces (already-runnable) / Source
-// videos. The "Source" is the bundle of videos it came from — separate from the tool's own links.
+// videos. The "Source" is the bundle of videos it came from â€” separate from the tool's own links.
 function linksRow(it) {
   const out = [];
   const cand = it.homepage || it.source_url || it.url || "";
   const home = (cand && !/youtube\.com|youtu\.be/.test(cand)) ? cand : "";
-  if (home) out.push(`<a class="lnk lnk-web" href="${esc(home)}" target="_blank" rel="noopener" title="Open the live site/app">Website ↗</a>`);
-  if (it.github) out.push(`<a class="lnk lnk-gh" href="${esc(it.github)}" target="_blank" rel="noopener">GitHub ↗</a>`);
+  if (home) out.push(`<a class="lnk lnk-web" href="${esc(home)}" target="_blank" rel="noopener" title="Open the live site/app">Website â†—</a>`);
+  if (it.github) out.push(`<a class="lnk lnk-gh" href="${esc(it.github)}" target="_blank" rel="noopener">GitHub â†—</a>`);
   // "Run it" = open it actually RUNNING. A repo boots live in-browser (StackBlitz, no signup) instead
   // of a deploy signup-wall; we only fall back to a deploy page when there's no live site at all.
-  // "Use it now" = the live Website above. For source repos, open the code in github.dev — GitHub's
+  // "Use it now" = the live Website above. For source repos, open the code in github.dev â€” GitHub's
   // INSTANT in-browser editor (no clone, no build wait; the repo is just there). This replaced the
   // StackBlitz boot, which cloned on click and was slow/flaky ("the activation process is not working").
   const g = String(it.github || "").match(/github\.com\/([\w.-]+)\/([\w.-]+)/);
-  if (g) out.push(`<a class="lnk lnk-run" href="https://github.dev/${g[1]}/${g[2].replace(/\.git$/, "")}" target="_blank" rel="noopener" title="Opens the repo instantly in github.dev (in-browser VS Code) — nothing to clone, nothing builds on click">⌨ Open code ↗</a>`);
-  else if (!home && it.deploy_url) out.push(`<a class="lnk lnk-run" href="${esc(it.deploy_url)}" target="_blank" rel="noopener" title="Opens a one-click deploy page (may ask you to sign in)">⬆ Deploy your own ↗</a>`);
+  if (g) out.push(`<a class="lnk lnk-run" href="https://github.dev/${g[1]}/${g[2].replace(/\.git$/, "")}" target="_blank" rel="noopener" title="Opens the repo instantly in github.dev (in-browser VS Code) â€” nothing to clone, nothing builds on click">âŒ¨ Open code â†—</a>`);
+  else if (!home && it.deploy_url) out.push(`<a class="lnk lnk-run" href="${esc(it.deploy_url)}" target="_blank" rel="noopener" title="Opens a one-click deploy page (may ask you to sign in)">â¬† Deploy your own â†—</a>`);
   if (it.install_or_source && !it.github) out.push(`<span class="lnk lnk-mcp">install: <code>${esc(String(it.install_or_source).slice(0,60))}</code></span>`);
   // Source bundle, earliest-first: first link = the video that first revealed it.
   const sv = (it.source_videos || []);
   if (sv.length) {
-    out.push(`<a class="lnk lnk-src" href="${esc(sv[0].url)}" target="_blank" rel="noopener" title="First revealed here${sv[0].title ? ": " + esc(sv[0].title) : ""}">Source${sv.length > 1 ? ` (${sv.length} videos)` : " video"} ↗</a>`);
+    out.push(`<a class="lnk lnk-src" href="${esc(sv[0].url)}" target="_blank" rel="noopener" title="First revealed here${sv[0].title ? ": " + esc(sv[0].title) : ""}">Source${sv.length > 1 ? ` (${sv.length} videos)` : " video"} â†—</a>`);
   } else {
     const vids = ((it.endorsement_video_ids || []).length ? it.endorsement_video_ids
       : [it.source_video_id || _ytid(it.source_url)]).filter(Boolean);
-    if (vids.length) out.push(`<a class="lnk lnk-src" href="${yt(vids[0])}" target="_blank" rel="noopener">Source${vids.length > 1 ? ` (${vids.length} videos)` : " video"} ↗</a>`);
+    if (vids.length) out.push(`<a class="lnk lnk-src" href="${yt(vids[0])}" target="_blank" rel="noopener">Source${vids.length > 1 ? ` (${vids.length} videos)` : " video"} â†—</a>`);
   }
   const noReal = !home && !it.github && !it.install_or_source;
-  // ⚙ In-project SETUP recipe — what to actually run so it's set up WITHIN your tools (the future
+  // âš™ In-project SETUP recipe â€” what to actually run so it's set up WITHIN your tools (the future
   // activator/EXCAVA executes this; no link-out). Only shows when the item has a real recipe.
   const su = it.setup, cmd = su && (su.command || (su.steps || []).join(" && "));
-  const setupBlock = cmd ? `<div class="setup"><span class="setup-k">⚙ ${esc(su.kind || "setup")}</span>
+  const setupBlock = cmd ? `<div class="setup"><span class="setup-k">âš™ ${esc(su.kind || "setup")}</span>
     <code class="setup-cmd">${esc(cmd)}</code>
     <button class="copy-btn" data-copy="${esc(cmd)}" title="Copy this setup command">copy</button>
     ${su.needs_key ? '<span class="setup-key" title="Needs an API key / sign-in for the external service">needs key</span>' : ""}</div>` : "";
-  return `<div class="links">${out.join("")}${noReal ? '<span class="lnk-pending" title="No verified link yet — the links protocol resolves these each cycle">link pending</span>' : ""}</div>${setupBlock}`;
+  return `<div class="links">${out.join("")}${noReal ? '<span class="lnk-pending" title="No verified link yet â€” the links protocol resolves these each cycle">link pending</span>' : ""}</div>${setupBlock}`;
 }
 
-// ── Per-tab "how long until this updates" line (one bullet, lists every update type) ──
+// â”€â”€ Per-tab "how long until this updates" line (one bullet, lists every update type) â”€â”€
 // Derived from the real workflow crons so it's accurate; shown at the top of each tab.
 const TAB_CADENCE = {
-  skills:     "new items within ~3h of a recovered transcript (free analysis lane, every 3h) · deep re-curation weekly (Sat night, Israel)",
-  tools:      "new items within ~3h (free analysis lane, every 3h) · ranking &amp; de-duplication re-curated weekly (Sat night)",
-  models:     "new items within ~3h (free analysis lane, every 3h) · re-ranked weekly (Sat night)",
-  comingsoon: "refreshes with the Tool Rating tab — within ~3h of a new transcript",
+  skills:     "new items within ~3h of a recovered transcript (free analysis lane, every 3h) Â· deep re-curation weekly (Sat night, Israel)",
+  tools:      "new items within ~3h (free analysis lane, every 3h) Â· ranking &amp; de-duplication re-curated weekly (Sat night)",
+  models:     "new items within ~3h (free analysis lane, every 3h) Â· re-ranked weekly (Sat night)",
+  comingsoon: "refreshes with the Tool Rating tab â€” within ~3h of a new transcript",
   prompts:    "new prompts within ~3h (free analysis lane, every 3h)",
   tips:       "new tips &amp; commands within ~3h (free analysis lane, every 3h)",
   connectors: "new connectors within ~3h (free analysis lane, every 3h)",
-  news:       "web AI news every 6h · daily / weekly / monthly digests roll up on their own cycle",
-  sources:    "new channel suggestions daily (06:00 UTC) · tool discovery Sun/Tue/Thu",
-  improvement:"weekly deep pass (Sat 20:00 UTC) · safe auto-fixes applied on the next run",
-  selfimprove:"self-check + 3-agent review weekly (Sat night) · scores &amp; findings refresh then",
-  effectiveness:"recomputed every analysis cycle (~3h) · the self-improvement system targets the weakest lanes weekly",
+  news:       "web AI news every 6h Â· daily / weekly / monthly digests roll up on their own cycle",
+  sources:    "new channel suggestions daily (06:00 UTC) Â· tool discovery Sun/Tue/Thu",
+  improvement:"weekly deep pass (Sat 20:00 UTC) Â· safe auto-fixes applied on the next run",
+  selfimprove:"self-check + 3-agent review weekly (Sat night) Â· scores &amp; findings refresh then",
+  effectiveness:"recomputed every analysis cycle (~3h) Â· the self-improvement system targets the weakest lanes weekly",
   devbuild:   "regenerated on each weekly deep pass (Sat night) and on code changes",
 };
 function cadenceLine(tab) {
@@ -280,9 +280,9 @@ function cadenceLine(tab) {
   return txt ? `<div class="cadence-line" title="How often this tab's data updates">&#8226; <b>Updates:</b> ${txt}</div>` : "";
 }
 
-// ── Quick-read: real content PROCESSING, not just tighter line-spacing ──
+// â”€â”€ Quick-read: real content PROCESSING, not just tighter line-spacing â”€â”€
 // Extractive summary: score each sentence by how much of the text's signal it carries (term
-// frequency, stopwords removed, length-normalised) and surface the MOST informative one — which is
+// frequency, stopwords removed, length-normalised) and surface the MOST informative one â€” which is
 // often buried mid-paragraph, not the first. Then bold the single most salient term so the eye
 // lands on the topic instantly. This processes the content for the reader instead of truncating.
 const QR_STOP = new Set(("the a an and or but for with you your this that these those is are be to of in "
@@ -311,7 +311,7 @@ function summarizeText(t) {
   }
   let s = best.trim();
   const w = s.split(" ");
-  if (w.length > 28) s = w.slice(0, 28).join(" ") + "…";
+  if (w.length > 28) s = w.slice(0, 28).join(" ") + "â€¦";
   // bold the most salient term so the topic pops
   const top = Object.keys(f).sort((a, b) => f[b] - f[a])[0];
   return { text: s, top };
@@ -353,23 +353,23 @@ const fmtDate = (s) => {
   } catch { return String(s); }
 };
 
-// ── "How do I actually USE this in my tool?" — make the catalogue ACTIONABLE ──────────
+// â”€â”€ "How do I actually USE this in my tool?" â€” make the catalogue ACTIONABLE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // The project catalogues skills as SKILL.md, but to use one you must get it INTO the tool's
 // session. This generates a tool-specific deploy instruction + a ready-to-paste block so the
-// skill works "as if uploaded to the environment" — paste it and the tool follows it.
+// skill works "as if uploaded to the environment" â€” paste it and the tool follows it.
 function deployHowto(tool) {
   const t = (tool || "").toLowerCase();
   if (t.includes("claude"))
-    return `Claude: save the SKILL.md to your skills folder — <code>~/.claude/skills/&lt;slug&gt;/SKILL.md</code> (Claude Code) or upload it under Settings → Capabilities → Skills on claude.ai. Claude auto-loads it when relevant. Or paste the block below into a Project's custom instructions.`;
+    return `Claude: save the SKILL.md to your skills folder â€” <code>~/.claude/skills/&lt;slug&gt;/SKILL.md</code> (Claude Code) or upload it under Settings â†’ Capabilities â†’ Skills on claude.ai. Claude auto-loads it when relevant. Or paste the block below into a Project's custom instructions.`;
   if (t.includes("chatgpt") || t.includes("openai") || t.includes("gpt"))
-    return `ChatGPT: create a Custom GPT (or open a Project) and paste the block below as its instructions — or paste it as your first message in a normal chat.`;
+    return `ChatGPT: create a Custom GPT (or open a Project) and paste the block below as its instructions â€” or paste it as your first message in a normal chat.`;
   if (t.includes("cursor") || t.includes("windsurf"))
-    return `Cursor / Windsurf: add the block below to your project rules (<code>.cursor/rules</code> or <code>.windsurfrules</code>) — or paste it into the chat.`;
+    return `Cursor / Windsurf: add the block below to your project rules (<code>.cursor/rules</code> or <code>.windsurfrules</code>) â€” or paste it into the chat.`;
   if (t.includes("gemini"))
     return `Gemini: create a Gem with the block below as its instructions, or paste it into the chat.`;
   if (t.includes("copilot"))
     return `GitHub Copilot: add the block below to <code>.github/copilot-instructions.md</code>, or paste it into Copilot Chat.`;
-  return `Paste the block below into the tool's system prompt (or your first message). That loads the skill into the session — as if it were installed in the environment.`;
+  return `Paste the block below into the tool's system prompt (or your first message). That loads the skill into the session â€” as if it were installed in the environment.`;
 }
 function skillPrompt(s) {
   const lines = [`# ${s.skill_name || s.slug}`, "", (s.description || "").trim()];
@@ -385,20 +385,20 @@ function skillPrompt(s) {
   return lines.join("\n");
 }
 function useBox(s) {
-  return `<details class="usebox"><summary>⌁ Use this skill</summary>
+  return `<details class="usebox"><summary>âŒ Use this skill</summary>
     <p class="howto">${deployHowto(s.target_tool)}</p>
     <div class="copyrow"><button class="copybtn" type="button">Copy ready-to-paste block</button>
-      ${s.slug ? `<a class="mdlink" href="../skills/${esc(s.slug)}/SKILL.md" title="The full SKILL.md package">SKILL.md ↗</a>` : ""}</div>
+      ${s.slug ? `<a class="mdlink" href="../skills/${esc(s.slug)}/SKILL.md" title="The full SKILL.md package">SKILL.md â†—</a>` : ""}</div>
     <pre class="useprompt">${esc(skillPrompt(s))}</pre></details>`;
 }
-// Connectors are MCP servers — "using" one means registering it in your MCP client's config.
+// Connectors are MCP servers â€” "using" one means registering it in your MCP client's config.
 function connectorUseBox(c) {
-  return `<details class="usebox"><summary>⌁ How to add this connector</summary>
-    <p class="howto">It's an MCP connector — register it in your client, then restart and its tools appear in the session.
-      <b>Claude Desktop:</b> add it under <code>claude_desktop_config.json → mcpServers</code>.
+  return `<details class="usebox"><summary>âŒ How to add this connector</summary>
+    <p class="howto">It's an MCP connector â€” register it in your client, then restart and its tools appear in the session.
+      <b>Claude Desktop:</b> add it under <code>claude_desktop_config.json â†’ mcpServers</code>.
       <b>Claude Code:</b> <code>claude mcp add</code> (or a project <code>.mcp.json</code>).
       <b>Cursor / other MCP clients:</b> their MCP settings.${c.install_or_source ? ` <br><b>This one:</b> ${esc(c.install_or_source)}` : ""}</p>
-    ${c.url ? `<div class="copyrow"><a class="mdlink" href="${esc(c.url)}" target="_blank" rel="noopener">Website / repo ↗</a></div>` : ""}</details>`;
+    ${c.url ? `<div class="copyrow"><a class="mdlink" href="${esc(c.url)}" target="_blank" rel="noopener">Website / repo â†—</a></div>` : ""}</details>`;
 }
 
 // Fetch a repo-root file (e.g. config.json). Same offline/origin assumption as ../data/.
@@ -410,7 +410,7 @@ async function loadRoot(file) {
   } catch { return null; }
 }
 
-// ── client-side search (A4) ────────────────────────────────────────────────────
+// â”€â”€ client-side search (A4) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const q = () => state.query.trim().toLowerCase();
 // True if any part contains the current query (an empty query matches everything).
 const hit = (...parts) => {
@@ -419,12 +419,12 @@ const hit = (...parts) => {
   return parts.some(p => String(p ?? "").toLowerCase().includes(qq));
 };
 
-// ── source attribution (handles linked-resource records from CLAUDE.md Step 2c) ──
+// â”€â”€ source attribution (handles linked-resource records from CLAUDE.md Step 2c) â”€â”€
 function sourceLine(s) {
   if (s.source_type === "linked_resource" && s.source_url) {
     const via = s.via_video_id || s.source_video_id;
     return `<p><a href="${esc(s.source_url)}" target="_blank" rel="noopener">Linked resource</a>` +
-      (via ? ` · <a href="${yt(via)}" target="_blank" rel="noopener">via video</a>` : "") + `</p>`;
+      (via ? ` Â· <a href="${yt(via)}" target="_blank" rel="noopener">via video</a>` : "") + `</p>`;
   }
   if (s.source_video_id) return `<p><a href="${yt(s.source_video_id)}" target="_blank" rel="noopener">Source video</a></p>`;
   if (s.source_url) return `<p><a href="${esc(s.source_url)}" target="_blank" rel="noopener">Source</a></p>`;
@@ -433,7 +433,7 @@ function sourceLine(s) {
 const linkedPill = (s) => (s && s.source_type === "linked_resource")
   ? '<span class="linkpill" title="Discovered via a link in a video description">linked</span>' : "";
 
-// ── HTML model podium + run report (rendered from data; Claude writes no ASCII) ──
+// â”€â”€ HTML model podium + run report (rendered from data; Claude writes no ASCII) â”€â”€
 function podiumHtml(podium) {
   const p = (podium || []).filter(Boolean).slice(0, 3);
   if (!p.length) return "";
@@ -465,7 +465,7 @@ function runReportHtml(status) {
     `</table></div>`;
 }
 
-// ── reliability banner (A1/A2): analyze failure (red) or stalled pipeline (amber) ─
+// â”€â”€ reliability banner (A1/A2): analyze failure (red) or stalled pipeline (amber) â”€
 function staleMsg(status, config) {
   if (!status) return "";
   const now = Date.now();
@@ -478,7 +478,7 @@ function staleMsg(status, config) {
     const days = Math.max(1, Math.round((now - lastFetch) / 86400000));
     const hrs = Math.round(intervalMs / 3600000);
     return `No new fetch for ~${days} day(s) (expected about every ${hrs}h). The scheduler may be ` +
-      `paused — GitHub disables cron after ~60 days of repo inactivity. Check the Actions tab, ` +
+      `paused â€” GitHub disables cron after ~60 days of repo inactivity. Check the Actions tab, ` +
       `or trigger the Fetch workflow manually.`;
   }
   return "";
@@ -494,7 +494,7 @@ function renderAlert(status, config) {
   let kind = "", msg = "";
   if (status && status.analyze_ok === false) {
     kind = "bad";
-    msg = `<span class="badge">PIPELINE ERROR</span> The last analyze run failed — ` +
+    msg = `<span class="badge">PIPELINE ERROR</span> The last analyze run failed â€” ` +
       esc(status.token_hint || "check the GitHub Actions log for details.");
   } else {
     const stale = staleMsg(status, config);
@@ -504,17 +504,17 @@ function renderAlert(status, config) {
   else { el.hidden = true; el.className = "alert"; el.innerHTML = ""; }
 }
 
-// ── counters + meta ──────────────────────────────────────────────────────────
+// â”€â”€ counters + meta â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function renderHeader(status) {
-  if (!status) { meta.textContent = "No runs yet — waiting for the first pipeline run."; return; }
+  if (!status) { meta.textContent = "No runs yet â€” waiting for the first pipeline run."; return; }
   const rr = status.run_report || {};
   meta.textContent =
-    `Last fetch: ${fmtDate(status.last_fetch || status.last_run)} • ` +
-    `Last analyze: ${fmtDate(status.last_analyze)} • ` +
+    `Last fetch: ${fmtDate(status.last_fetch || status.last_run)} â€¢ ` +
+    `Last analyze: ${fmtDate(status.last_analyze)} â€¢ ` +
     `Next run: ${fmtDate(status.next_run)}`;
 
   // Lead with the HUB'S SCALE (what AI directories / info-center apps show first), not pipeline
-  // internals — the size of the knowledge base is the headline. Pulled from health.json.
+  // internals â€” the size of the knowledge base is the headline. Pulled from health.json.
   const lib = (state.health || {}).library || {};
   const vid = (state.health || {}).videos || {};
   const nsrc = ((state.config || {}).news_sources || []).length;
@@ -530,7 +530,7 @@ function renderHeader(status) {
     `<div class="counter ${hl ? "hl" : ""}"><div class="n">${esc(n)}</div>
      <div class="l">${esc(l)}</div></div>`).join("");
 
-  // Catch-up (massive-addition) banner — shown only while a big backlog is draining.
+  // Catch-up (massive-addition) banner â€” shown only while a big backlog is draining.
   const cuEl = document.getElementById("catchup");
   if (cuEl) {
     const cu = status.catch_up || {};
@@ -538,7 +538,7 @@ function renderHeader(status) {
     if (cu.active) {
       cuEl.hidden = false;
       cuEl.innerHTML =
-        `<span class="badge">⛏️ CATCHING UP</span> A large batch of videos was added — ` +
+        `<span class="badge">â›ï¸ CATCHING UP</span> A large batch of videos was added â€” ` +
         `Excavatortron is sprinting through the backlog (newest first). ` +
         `<b>${esc(pending)}</b> still to analyze; new knowledge is being added continuously. ` +
         `<span class="cusub">${esc(cu.reason || "")}</span>`;
@@ -551,7 +551,7 @@ function renderHeader(status) {
   renderAlert(status, state.config);
 }
 
-// ── Tab: Skills Library ──────────────────────────────────────────────────────
+// â”€â”€ Tab: Skills Library â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function renderSkills(data) {
   const skills = (data && data.skills) || [];
   let html = "";
@@ -588,20 +588,20 @@ function renderSkills(data) {
 
   html += list.map(s => `
     <div class="card ${isStarred(s) ? "starred" : ""} ${s.low_quality_source ? "lowq" : ""}">
-      <h3>${isStarred(s) ? '<span class="star" title="Starred — kept in original form, never auto-changed">&#9733;</span>' : ""}<span class="score">${esc(s.quality_score ?? "?")}/10</span> ${esc(s.skill_name || s.slug)}
+      <h3>${isStarred(s) ? '<span class="star" title="Starred â€” kept in original form, never auto-changed">&#9733;</span>' : ""}<span class="score">${esc(s.quality_score ?? "?")}/10</span> ${esc(s.skill_name || s.slug)}
         <span class="pill">${esc(s.category || "other")}</span>
         <span class="pill">${esc(s.target_tool || "claude")}</span>
         ${isMultiTool(s) ? '<span class="multitool" title="Works across several AI tools">multi-tool</span>' : ""}
         ${linkedPill(s)}
         ${s.open_source ? '<span class="pill">open source</span>' : ""}
         ${s.video_quality_score != null ? `<span class="vq ${s.low_quality_source ? "low" : ""}" title="Source video quality (AI content review + recency)">vid ${esc(s.video_quality_score)}/10</span>` : ""}
-        ${s.low_quality_source ? '<span class="lowsrc" title="Extracted from a low-quality video — treat with caution; its score was capped">low-quality source</span>' : ""}
+        ${s.low_quality_source ? '<span class="lowsrc" title="Extracted from a low-quality video â€” treat with caution; its score was capped">low-quality source</span>' : ""}
         ${isStarred(s) ? '<span class="frozenpill">frozen</span>' : ""}</h3>
-      ${s.company ? `<div class="sub">${esc(s.company)}${s.country ? " · " + esc(s.country) : ""}</div>` : ""}
+      ${s.company ? `<div class="sub">${esc(s.company)}${s.country ? " Â· " + esc(s.country) : ""}</div>` : ""}
       <p>${esc(s.description || "")}</p>
       ${s.use_case ? `<p><b>Use case:</b> ${esc(s.use_case)}</p>` : ""}
       ${(s.compatibility && s.compatibility.length) ? `<p class="compatline"><b>Works with:</b> ${s.compatibility.map(c => `<span class="compat">${compatLabel(c)}</span>`).join(" ")}</p>` : ""}
-      ${(s.tips && s.tips.length) ? `<p><b>Tips:</b> ${s.tips.map(esc).join(" · ")}</p>` : ""}
+      ${(s.tips && s.tips.length) ? `<p><b>Tips:</b> ${s.tips.map(esc).join(" Â· ")}</p>` : ""}
       ${sourceLine(s)}
       ${useBox(s)}
     </div>`).join("");
@@ -616,17 +616,17 @@ function renderSkills(data) {
   if (mt) mt.addEventListener("click", () => { state.multiToolOnly = !state.multiToolOnly; renderSkills(data); });
 }
 
-// ── Tab: Tools (auto-tracked catalog of AI tools & models seen in the playlist) ─
+// â”€â”€ Tab: Tools (auto-tracked catalog of AI tools & models seen in the playlist) â”€
 // Skills = techniques you apply; Tools = the products/models themselves. Ranked by
 // how many playlist videos mention each, so the most-talked-about tools float up.
-// ── Tab: Tool Rating (every tool + model, ranked by category, with what each does) ──
+// â”€â”€ Tab: Tool Rating (every tool + model, ranked by category, with what each does) â”€â”€
 // Merges the old Tools + Models Ranking tabs (a locked decision). Every tool appears,
-// ranked within its category by quality, each with a "what it does" blurb. A 🥇🥈🥉 podium
+// ranked within its category by quality, each with a "what it does" blurb. A ðŸ¥‡ðŸ¥ˆðŸ¥‰ podium
 // tops each category; models are badged and filterable via "models only".
 function renderToolRating(toolsData, modelsData) {
   const items = (toolsData && toolsData.tools) || [];
   if (!items.length) return view.innerHTML = empty("No tools tracked yet.");
-  // Which tools are models? (for the badge + "models only" filter) — from models.json names.
+  // Which tools are models? (for the badge + "models only" filter) â€” from models.json names.
   const modelNames = new Set();
   if (modelsData) Object.values(modelsData).forEach(blk =>
     ((blk && blk.full_ranking) || []).forEach(r => modelNames.add(String(r.name || "").toLowerCase())));
@@ -640,10 +640,10 @@ function renderToolRating(toolsData, modelsData) {
   if (modelsOnly) list = list.filter(isModel);
   if (q()) list = list.filter(t => hit(t.name, t.slug, t.company, t.country, t.category, t.description));
 
-  let html = `<div class="sub">${items.length} AI tools &amp; models — ranked within each category by quality, each with what it does. Models are badged; tap “models only” to filter.</div>`;
+  let html = `<div class="sub">${items.length} AI tools &amp; models â€” ranked within each category by quality, each with what it does. Models are badged; tap â€œmodels onlyâ€ to filter.</div>`;
   html += `<div class="subnav">` + cats.map(c =>
       `<button class="${activeCat === c ? "active" : ""}" data-tcat="${esc(c)}">${esc(c)}</button>`).join("")
-    + `<button class="${modelsOnly ? "active" : ""}" data-mo="1">⚙ models only</button></div>`;
+    + `<button class="${modelsOnly ? "active" : ""}" data-mo="1">âš™ models only</button></div>`;
 
   const catList = activeCat === "all" ? cats.filter(c => c !== "all") : [activeCat];
   let body = "";
@@ -659,8 +659,8 @@ function renderToolRating(toolsData, modelsData) {
         <h3><span class="rank">#${i + 1}</span> <span class="score">${esc(t.quality_score ?? "?")}/10</span> ${esc(t.name)}
           ${isModel(t) ? '<span class="modelpill">model</span>' : ""}
           ${t.open_source ? '<span class="pill">open source</span>' : ""}
-          ${t.mentions ? `<span class="mentions" title="How many playlist videos mention this">${esc(t.mentions)}× seen</span>` : ""}</h3>
-        ${t.company ? `<div class="sub">${esc(t.company)}${t.country ? " · " + esc(t.country) : ""}${t.model_version ? " · v" + esc(t.model_version) : ""}</div>` : ""}
+          ${t.mentions ? `<span class="mentions" title="How many playlist videos mention this">${esc(t.mentions)}Ã— seen</span>` : ""}</h3>
+        ${t.company ? `<div class="sub">${esc(t.company)}${t.country ? " Â· " + esc(t.country) : ""}${t.model_version ? " Â· v" + esc(t.model_version) : ""}</div>` : ""}
         <p>${esc(t.description || "")}</p>
         ${linksRow(t)}
       </div>`).join("");
@@ -674,7 +674,7 @@ function renderToolRating(toolsData, modelsData) {
   if (moBtn) moBtn.addEventListener("click", () => { state.modelsOnly = !state.modelsOnly; renderToolRating(toolsData, modelsData); });
 }
 
-// ── Tab: Improvement Log ─────────────────────────────────────────────────────
+// â”€â”€ Tab: Improvement Log â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function renderImprovement() {
   let merges = await load("merge_log.json"); let deleted = await load("deleted_skills.json");
   if (merges && !Array.isArray(merges)) merges = merges.merges || merges.entries || [];
@@ -687,16 +687,16 @@ async function renderImprovement() {
   }
   let html = `<div class="card"><h3>Merge log (${merges.length})</h3>` +
     (merges.length ? merges.map(e =>
-      `<p>${esc(fmtDate(e.timestamp))}: <b>${esc(e.merged_from)}</b> → <b>${esc(e.merged_into)}</b>
+      `<p>${esc(fmtDate(e.timestamp))}: <b>${esc(e.merged_from)}</b> â†’ <b>${esc(e.merged_into)}</b>
        <span class="sub">${esc(e.reason || "")}</span></p>`).join("") : empty(q() ? `No merges match "${esc(state.query)}".` : "No merges yet.")) + `</div>`;
   html += `<div class="card"><h3>Deleted / superseded (${deleted.length})</h3>` +
     (deleted.length ? deleted.map(e =>
-      `<p><b>${esc(e.slug || e.skill_name || "?")}</b> — <span class="sub">${esc(e.reason || "")}</span></p>`
+      `<p><b>${esc(e.slug || e.skill_name || "?")}</b> â€” <span class="sub">${esc(e.reason || "")}</span></p>`
     ).join("") : empty(q() ? `No deleted skills match "${esc(state.query)}".` : "Nothing deleted yet.")) + `</div>`;
   view.innerHTML = html;
 }
 
-// ── Tab: Tips & Commands ─────────────────────────────────────────────────────
+// â”€â”€ Tab: Tips & Commands â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function renderTips() {
   const tips = await load("tips.json"); const cmds = await load("commands.json");
   let html = "";
@@ -708,7 +708,7 @@ async function renderTips() {
   };
   const byTool = (tips && tips.by_tool) || {}; const general = (tips && tips.general) || {};
   // Each tool / topic becomes its own labelled group with a short bullet list (easier to scan
-  // than one long "·"-joined line).
+  // than one long "Â·"-joined line).
   const groupHtml = (t, arr) =>
     `<div class="tipgroup"><div class="tiptool">${esc(t)}</div><ul>` +
     arr.map(x => `<li>${esc(x)}</li>`).join("") + `</ul></div>`;
@@ -735,7 +735,7 @@ async function renderTips() {
   view.innerHTML = html || empty(q() ? `No tips or commands match "${esc(state.query)}".` : "No tips or commands yet.");
 }
 
-// ── Tab: News Feed (videos + official sites, merged every day) ────────────────
+// â”€â”€ Tab: News Feed (videos + official sites, merged every day) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function renderNews() {
   const vfiles = { daily: "daily_news.json", weekly: "weekly_news.json", monthly: "monthly_news.json" };
   const wfiles = { daily: "daily_web_news.json", weekly: "weekly_web_news.json", monthly: "monthly_web_news.json" };
@@ -749,27 +749,27 @@ async function renderNews() {
   let entries = ventries.concat(wentries).sort((a, b) => ts(b.publishedAt) - ts(a.publishedAt));
   if (q()) entries = entries.filter(e => hit(e.title, e.summary, e.source_name, e.channel_name));
   const hdr = (vdata && vdata.header) || (wdata && wdata.header) || {};
-  html += `<div class="sub">Window: ${esc(hdr.window || state.newsWindow)} ·
+  html += `<div class="sub">Window: ${esc(hdr.window || state.newsWindow)} Â·
     ${ventries.length} from videos + ${wentries.length} from official sites</div>`;
-  // The system's OWN synthesized brief (src/news_digest.py) — a real summary, grouped into themes,
+  // The system's OWN synthesized brief (src/news_digest.py) â€” a real summary, grouped into themes,
   // not a list of headlines. Shown first when available for this window.
   const syn = digestData && digestData.windows && digestData.windows[state.newsWindow];
   if (syn && syn.summary && !q()) {
-    html += `<div class="card news-brief"><h3>📰 The brief <span class="sub">— our summary of ${esc(state.newsWindow)} AI news</span></h3>
+    html += `<div class="card news-brief"><h3>ðŸ“° The brief <span class="sub">â€” our summary of ${esc(state.newsWindow)} AI news</span></h3>
       <p class="brief-lede">${esc(syn.summary)}</p>` +
       ((syn.themes || []).length ? `<div class="brief-themes">` + syn.themes.map(t =>
         `<div class="brief-theme"><b>${esc(t.theme)}</b><span>${esc(t.detail)}</span></div>`).join("") + `</div>` : "") +
-      `<p class="hint">Synthesized free from ${esc(syn.n_sources || 0)} sources${syn.engine ? ` · ${esc(syn.engine)}` : ""}. Headlines below.</p></div>`;
+      `<p class="hint">Synthesized free from ${esc(syn.n_sources || 0)} sources${syn.engine ? ` Â· ${esc(syn.engine)}` : ""}. Headlines below.</p></div>`;
   }
   // Pinned "most important" digest (CLAUDE.md/news writes header.digest); shown above the full array.
   const digest = (vdata && vdata.header && vdata.header.digest)
     || (wdata && wdata.header && wdata.header.digest) || [];
   if (digest.length && !q()) {
-    html += `<div class="card digest"><h3>📌 Most important — ${esc(state.newsWindow)}</h3><ol>` +
+    html += `<div class="card digest"><h3>ðŸ“Œ Most important â€” ${esc(state.newsWindow)}</h3><ol>` +
       digest.map(d => {
         const txt = typeof d === "string" ? d : (d.text || d.title || "");
         const url = d && d.url;
-        return `<li>${esc(txt)}${url ? ` <a href="${esc(url)}" target="_blank" rel="noopener">↗</a>` : ""}</li>`;
+        return `<li>${esc(txt)}${url ? ` <a href="${esc(url)}" target="_blank" rel="noopener">â†—</a>` : ""}</li>`;
       }).join("") + `</ol></div>`;
   }
   if (entries.length) {
@@ -782,7 +782,7 @@ async function renderNews() {
       const low = e.low_quality_source ? '<span class="lowsrc">low-quality source</span>' : "";
       return `<div class="card newscard ${e.low_quality_source ? "lowq" : ""}">
         <h3>${esc(e.title || "?")} ${tag} ${low}</h3>
-        <div class="sub">${esc(src)} · ${esc(fmtDate(e.publishedAt))}</div>
+        <div class="sub">${esc(src)} Â· ${esc(fmtDate(e.publishedAt))}</div>
         <p class="newsum">${esc(e.summary || "(summary pending)")}</p>
         <p><a href="${esc(link)}" target="_blank" rel="noopener">${label} &rarr;</a></p></div>`;
     }).join("");
@@ -792,7 +792,7 @@ async function renderNews() {
     b.addEventListener("click", () => { state.newsWindow = b.dataset.news; renderNews(); }));
 }
 
-// ── Tab: dynamic trend tabs (auto-created by the self-improvement stage) ──────
+// â”€â”€ Tab: dynamic trend tabs (auto-created by the self-improvement stage) â”€â”€â”€â”€â”€â”€
 function renderDynamicTab(id) {
   const t = state.dynamicTabs.find(x => x.id === id);
   if (!t) return view.innerHTML = empty("This tab is no longer available.");
@@ -818,7 +818,7 @@ function renderDynamicTab(id) {
 
 // A dynamic tab wears its NEW badge until `badge_until` (the improve stage sets
 // it to created_at + new_badge_days). Fall back to created_at + 7 days for tabs
-// written before badge_until existed. The badge auto-expires — no human action.
+// written before badge_until existed. The badge auto-expires â€” no human action.
 function tabIsNew(t) {
   const until = Date.parse(t.badge_until || "");
   if (!isNaN(until)) return Date.now() < until;
@@ -842,13 +842,13 @@ function injectDynamicTabs() {
   });
 }
 
-// ── Tab: Connectors ──────────────────────────────────────────────────────────
+// â”€â”€ Tab: Connectors â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const _slugify = (s) => String(s || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 function safetyPill(rating, reasons) {
   if (!rating) return "";
   const map = { safe: ["safe", "saf-ok"], caution: ["caution", "saf-warn"], risky: ["risky", "saf-bad"] };
   const m = map[rating]; if (!m) return "";
-  return `<span class="safpill ${m[1]}" title="${esc((reasons || []).join(" · "))}"><i class="dot"></i>${m[0]}</span>`;
+  return `<span class="safpill ${m[1]}" title="${esc((reasons || []).join(" Â· "))}"><i class="dot"></i>${m[0]}</span>`;
 }
 async function renderConnectors(data) {
   const safety = ((await load("safety.json")) || {}).connectors || {};
@@ -864,19 +864,19 @@ async function renderConnectors(data) {
   if (showVerifiedOnly) items = items.filter(c => (vmap[c.name] || {}).status === "pass");
   items.sort((a, b) =>
     (isStarred(b) - isStarred(a)) || ((b.quality_score || 0) - (a.quality_score || 0)));
-  const prog = `<div class="card"><h3>🧪 Sandbox verification <span class="sub">— your call: test-run ALL ${vsum.total || 1142} in isolated CI batches</span>
+  const prog = `<div class="card"><h3>ðŸ§ª Sandbox verification <span class="sub">â€” your call: test-run ALL ${vsum.total || 1142} in isolated CI batches</span>
       ${passCount >= 25 ? `<button class="qr-btn" id="conn-vtoggle">${showVerifiedOnly ? "show all" : "verified only"}</button>` : ""}</h3>
-    <p class="sub">checked <b>${vsum.checked || 0}</b> / ${vsum.total || 1142} so far · ${Object.entries(vsum.by_status || {}).map(([k, v]) => `${esc(k)}: <b>${v}</b>`).join(" · ") || "first batches queued"} —
-      each one resolves a REAL install command, then runs it in a clean sandbox (no secrets, temp dir, timeout). ${showVerifiedOnly ? "Showing verified-only (D5)." : `The tab shrinks to verified-only once ≥25 pass${passCount ? ` (now ${passCount})` : ""}.`}</p>
+    <p class="sub">checked <b>${vsum.checked || 0}</b> / ${vsum.total || 1142} so far Â· ${Object.entries(vsum.by_status || {}).map(([k, v]) => `${esc(k)}: <b>${v}</b>`).join(" Â· ") || "first batches queued"} â€”
+      each one resolves a REAL install command, then runs it in a clean sandbox (no secrets, temp dir, timeout). ${showVerifiedOnly ? "Showing verified-only (D5)." : `The tab shrinks to verified-only once â‰¥25 pass${passCount ? ` (now ${passCount})` : ""}.`}</p>
   </div>`;
   view.innerHTML = prog + items.map(c => {
     const v = vmap[c.name];
     const vPill = v ? (v.status === "pass"
-        ? `<span class="freepill free-yes" title="${esc(v.cmd || "")} — ${esc((v.log || "").slice(0, 120))}">✓ sandbox-verified</span>`
-        : v.status === "fail" ? `<span class="freepill free-no" title="${esc((v.log || "").slice(0, 120))}">✗ failed sandbox</span>`
+        ? `<span class="freepill free-yes" title="${esc(v.cmd || "")} â€” ${esc((v.log || "").slice(0, 120))}">âœ“ sandbox-verified</span>`
+        : v.status === "fail" ? `<span class="freepill free-no" title="${esc((v.log || "").slice(0, 120))}">âœ— failed sandbox</span>`
         : `<span class="freepill free-mid" title="${esc(v.note || v.log || "")}">${esc(v.status)}</span>`) : "";
     return _connCard(c, safety, vPill);
-  }).join("") || empty(showVerifiedOnly ? "No verified connectors match — toggle 'show all'." : `No connectors match "${esc(state.query)}".`);
+  }).join("") || empty(showVerifiedOnly ? "No verified connectors match â€” toggle 'show all'." : `No connectors match "${esc(state.query)}".`);
   const vt = view.querySelector("#conn-vtoggle");
   if (vt) vt.addEventListener("click", () => {
     localStorage.setItem("excavatortron.connverified", showVerifiedOnly ? "off" : "on");
@@ -888,7 +888,7 @@ function _connCard(c, safety, vPill) {
     const via = c.via_video_id || c.source_video;
     const srcLine = (c.source_type === "linked_resource" && c.source_url)
       ? `<p><a href="${esc(c.source_url)}" target="_blank" rel="noopener">Linked resource</a>` +
-        (via ? ` · <a href="${yt(via)}" target="_blank" rel="noopener">via video</a>` : "") + `</p>`
+        (via ? ` Â· <a href="${yt(via)}" target="_blank" rel="noopener">via video</a>` : "") + `</p>`
       : c.source_video ? `<p><a href="${yt(c.source_video)}" target="_blank" rel="noopener">Source video</a></p>`
       : c.source_url ? `<p><a href="${esc(c.source_url)}" target="_blank" rel="noopener">Source</a></p>` : "";
     // Free / paid + which Claude surface it runs in (CLAUDE.md Step 8 extended fields).
@@ -905,7 +905,7 @@ function _connCard(c, safety, vPill) {
     const metaRow = metaBits.length ? `<div class="connmeta">${metaBits.join("")}</div>` : "";
     const urlLine = c.url ? `<p><a href="${esc(c.url)}" target="_blank" rel="noopener">Website / repo</a></p>` : "";
     return `<div class="card ${isStarred(c) ? "starred" : ""}">
-    <h3>${isStarred(c) ? '<span class="star" title="Starred — frozen, never auto-changed">&#9733;</span>' : ""}<span class="score">${esc(c.quality_score ?? "?")}/10</span> ${esc(c.name)}
+    <h3>${isStarred(c) ? '<span class="star" title="Starred â€” frozen, never auto-changed">&#9733;</span>' : ""}<span class="score">${esc(c.quality_score ?? "?")}/10</span> ${esc(c.name)}
       <span class="pill">${esc(c.type || "")}</span>
       ${safPill}
       ${freePill}
@@ -914,7 +914,7 @@ function _connCard(c, safety, vPill) {
       ${linkedPill(c)}
       ${vPill || ""}
       ${isStarred(c) ? '<span class="frozenpill">frozen</span>' : ""}</h3>
-    <div class="sub">${esc(c.provider || "")}${c.category ? " · " + esc(c.category) : ""}${c.source ? " · src: " + esc(c.source) : ""}</div>
+    <div class="sub">${esc(c.provider || "")}${c.category ? " Â· " + esc(c.category) : ""}${c.source ? " Â· src: " + esc(c.source) : ""}</div>
     <p>${esc(c.what_it_does || "")}</p>
     ${metaRow}
     ${c.install_or_source ? `<p><b>Install / source:</b> ${esc(c.install_or_source)}</p>` : ""}
@@ -925,7 +925,7 @@ function _connCard(c, safety, vPill) {
   }
 }
 
-// ── Tab: Self-Improvement (health + suggestion queue + audit) ─────────────────
+// â”€â”€ Tab: Self-Improvement (health + suggestion queue + audit) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function renderSelfImprove() {
   const [health, sugData, apprData, audit, starsData, selfCheck, fixTasks, review, trends, maint] =
     await Promise.all([
@@ -940,7 +940,7 @@ async function renderSelfImprove() {
   html += await goalsPanel();
   html += await prioritiesPanel();
 
-  // ── Countdown to the next self-improvement run + proof of what it last changed ──
+  // â”€â”€ Countdown to the next self-improvement run + proof of what it last changed â”€â”€
   const nextImprove = (() => {
     const n = new Date();
     const d = new Date(Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), n.getUTCDate(), 20, 0, 0));
@@ -949,18 +949,18 @@ async function renderSelfImprove() {
     d.setUTCDate(d.getUTCDate() + add);
     return d;
   })();
-  const lastSC = (selfCheck && selfCheck.ran_at) ? fmtDate(selfCheck.ran_at) : "—";
-  const scScore = selfCheck ? `${selfCheck.score}/${selfCheck.total || 50}` : "—";
+  const lastSC = (selfCheck && selfCheck.ran_at) ? fmtDate(selfCheck.ran_at) : "â€”";
+  const scScore = selfCheck ? `${selfCheck.score}/${selfCheck.total || 50}` : "â€”";
   const openTasks = (fixTasks && (fixTasks.tasks || []).filter(t => (t.status || "open") !== "done").length) || 0;
-  const lastReview = (review && review.generated_at) ? fmtDate(review.generated_at) : "—";
+  const lastReview = (review && review.generated_at) ? fmtDate(review.generated_at) : "â€”";
   const lastEff = (await load("effectiveness.json"));
-  const effLine = lastEff ? `${lastEff.lanes ? lastEff.lanes.length : 0} lanes scored, weakest = ${esc((lastEff.summary || {}).weakest_lane || "?")}` : "—";
+  const effLine = lastEff ? `${lastEff.lanes ? lastEff.lanes.length : 0} lanes scored, weakest = ${esc((lastEff.summary || {}).weakest_lane || "?")}` : "â€”";
   html += `<div class="card improve-clock">
-    <h3>⏱ Self-improvement</h3>
+    <h3>â± Self-improvement</h3>
     <div class="ic-row">
       <div class="ic-timer"><div class="ic-label">Next deep pass in</div>
-        <div class="ic-count" id="improve-countdown">…</div>
-        <div class="sub">weekly · Sat 20:00 UTC (${esc(fmtDate(nextImprove.toISOString()))})</div></div>
+        <div class="ic-count" id="improve-countdown">â€¦</div>
+        <div class="sub">weekly Â· Sat 20:00 UTC (${esc(fmtDate(nextImprove.toISOString()))})</div></div>
       <div class="ic-last">
         <div class="sub" style="margin-bottom:6px"><b>What it last did</b> (so you can verify it's actually running):</div>
         <ul class="ic-changes">
@@ -971,32 +971,32 @@ async function renderSelfImprove() {
         </ul></div>
     </div></div>`;
 
-  // ── Recent self-improvement activity — a short line after each cycle (proof it's running) ──
+  // â”€â”€ Recent self-improvement activity â€” a short line after each cycle (proof it's running) â”€â”€
   if (improveLog && (improveLog.entries || []).length) {
     const rows = improveLog.entries.slice(-8).reverse().map(e =>
       `<li><span class="il-when">${esc(fmtDate(e.at))}</span> ${esc(e.text)}</li>`).join("");
-    html += `<div class="card improve-clock"><h3>📝 Recent self-improvement activity</h3>
+    html += `<div class="card improve-clock"><h3>ðŸ“ Recent self-improvement activity</h3>
       <p class="sub">One short line each time the self-improvement system runs, so you can see it's working.</p>
       <ul class="il-list">${rows}</ul></div>`;
   }
 
-  // ── Token-reduction PROTOCOL — runs every startup, applies all reducers to the Claude lanes ──
+  // â”€â”€ Token-reduction PROTOCOL â€” runs every startup, applies all reducers to the Claude lanes â”€â”€
   if (tokenActive && tokenActive.status === "active") {
     const reducers = (tokenActive.core_reducers || []).map(r =>
       `<li><b>${esc(r.name)}</b><br><span class="sub">${esc(r.technique)}</span></li>`).join("");
-    html += `<div class="card improve-clock"><h3>🎟 Token-reduction protocol
-        <span class="pl-badge pl-live" style="margin-left:8px">● ACTIVE</span></h3>
-      <p class="sub">Runs on every cycle so the Claude lanes (deep analysis + the 2×/week review) spend as few Pro tokens as possible. <b>${esc(tokenActive.count || 0)}</b> reducers active · refreshed ${esc(fmtDate(tokenActive.generated_at))}.</p>
+    html += `<div class="card improve-clock"><h3>ðŸŽŸ Token-reduction protocol
+        <span class="pl-badge pl-live" style="margin-left:8px">â— ACTIVE</span></h3>
+      <p class="sub">Runs on every cycle so the Claude lanes (deep analysis + the 2Ã—/week review) spend as few Pro tokens as possible. <b>${esc(tokenActive.count || 0)}</b> reducers active Â· refreshed ${esc(fmtDate(tokenActive.generated_at))}.</p>
       <details><summary class="sub" style="cursor:pointer">Show the active reducers</summary>
         <ul class="tok-list">${reducers}</ul></details></div>`;
   }
 
-  // ── Trend watch — surging topics the system proposes turning into tabs/features ──
+  // â”€â”€ Trend watch â€” surging topics the system proposes turning into tabs/features â”€â”€
   if (trends && (trends.proposals || []).length) {
     const goals = trends.goals || {};
     const top = trends.proposals.slice(0, 6);
-    html += `<div class="card trend-card"><h3>📈 Trend watch <span class="sub">→ new tabs &amp; features</span></h3>
-      <p class="sub">The system watches its own library for surging topics and proposes features, scored 1–10 and tied to one of the 5 goals. Strong ones are auto-queued for self-improvement.</p>
+    html += `<div class="card trend-card"><h3>ðŸ“ˆ Trend watch <span class="sub">â†’ new tabs &amp; features</span></h3>
+      <p class="sub">The system watches its own library for surging topics and proposes features, scored 1â€“10 and tied to one of the 5 goals. Strong ones are auto-queued for self-improvement.</p>
       <div class="trend-rows">` +
       top.map(p => `<div class="trend-row">
         <span class="trend-score s-${p.score >= 8 ? "hi" : p.score >= 6 ? "mid" : "lo"}">${esc(p.score)}</span>
@@ -1006,16 +1006,16 @@ async function renderSelfImprove() {
       `</div></div>`;
   }
 
-  // ── Maintenance sweep — system integrity, incl. the brain "white lines" fix ──
+  // â”€â”€ Maintenance sweep â€” system integrity, incl. the brain "white lines" fix â”€â”€
   if (maint && (maint.issues || []).length !== undefined) {
     const g = maint.grade || "?";
     const gcls = g === "A" ? "good" : (g === "B" || g === "C") ? "warn" : "bad";
-    html += `<div class="card"><h3>🧹 Maintenance sweep</h3>
-      <div class="health"><div class="big ${gcls}">${esc(g)}<span style="font-size:18px"> · ${esc(maint.health_score)}/100</span></div>
-      <div><div class="sub">Integrity of the brain + whole data layer · generated ${esc(fmtDate(maint.generated_at))}</div>
+    html += `<div class="card"><h3>ðŸ§¹ Maintenance sweep</h3>
+      <div class="health"><div class="big ${gcls}">${esc(g)}<span style="font-size:18px"> Â· ${esc(maint.health_score)}/100</span></div>
+      <div><div class="sub">Integrity of the brain + whole data layer Â· generated ${esc(fmtDate(maint.generated_at))}</div>
       <ul class="ic-changes" style="margin-top:8px">` +
       (maint.issues || []).slice(0, 6).map(i =>
-        `<li><b class="sev-${esc(i.severity)}">${esc(i.severity)}</b> — ${esc(i.issue)} <b>(${esc(i.count)})</b><br><span class="sub">→ ${esc(i.fix)}</span></li>`).join("") +
+        `<li><b class="sev-${esc(i.severity)}">${esc(i.severity)}</b> â€” ${esc(i.issue)} <b>(${esc(i.count)})</b><br><span class="sub">â†’ ${esc(i.fix)}</span></li>`).join("") +
       `</ul></div></div></div>`;
   }
 
@@ -1045,10 +1045,10 @@ async function renderSelfImprove() {
       html += `<p><b>Recommendations:</b></p><ul>${health.advice.map(a => `<li>${esc(a)}</li>`).join("")}</ul>`;
     html += `</div>`;
   } else {
-    html += `<div class="card"><h3>Data health</h3>${empty("No health report yet — runs every few days, or force it with the MCP tool run_improve().")}</div>`;
+    html += `<div class="card"><h3>Data health</h3>${empty("No health report yet â€” runs every few days, or force it with the MCP tool run_improve().")}</div>`;
   }
 
-  // Reference self-check — how well the system still matches the user's original
+  // Reference self-check â€” how well the system still matches the user's original
   // "System Prompt" spec (docs/REFERENCE_SPEC.md). The improve stage re-answers all
   // 50 questions each run and opens a fix task for every gap (loop closes itself).
   if (selfCheck && selfCheck.ran_at) {
@@ -1058,7 +1058,7 @@ async function renderSelfImprove() {
     const scls = pct >= 80 ? "good" : pct >= 50 ? "warn" : "bad";
     html += `<div class="card"><h3>Reference self-check</h3>
       <div class="health"><div class="big ${scls}">${esc(selfCheck.score ?? "?")}<span style="font-size:18px">/${esc(sTotal)}</span></div>
-      <div><div class="sub">Last checked ${esc(selfCheck.ran_at)} · ${esc(selfCheck.improvements_logged ?? 0)} improvements logged</div>
+      <div><div class="sub">Last checked ${esc(selfCheck.ran_at)} Â· ${esc(selfCheck.improvements_logged ?? 0)} improvements logged</div>
       <p class="hint">Each run re-answers the ${esc(sTotal)} questions from the original System Prompt spec
       (<code class="cmd">docs/REFERENCE_SPEC.md</code>) and opens a fix task for every gap.</p></div></div>`;
     const flagged = (selfCheck.results || []).filter(r =>
@@ -1067,7 +1067,7 @@ async function renderSelfImprove() {
       html += `<p><b>Gaps found (${flagged.length}):</b></p>` +
         flagged.slice(0, 12).map(r =>
           `<div class="sug"><b>Q${esc(r.n)}</b> <span class="sub">${esc(r.question || "")}</span>
-           <p>${esc(r.answer || "")}${r.evidence ? ` <span class="sub">— ${esc(r.evidence)}</span>` : ""}</p></div>`).join("");
+           <p>${esc(r.answer || "")}${r.evidence ? ` <span class="sub">â€” ${esc(r.evidence)}</span>` : ""}</p></div>`).join("");
     }
     html += `</div>`;
   }
@@ -1082,21 +1082,21 @@ async function renderSelfImprove() {
          <b>Q${esc(t.n)}</b> <p>${esc(t.fix || "")}</p></div>`).join("") + `</div>`;
   }
 
-  // 3-agent review (usability / cut-the-bullshit / deep code bugs) — Claude first,
+  // 3-agent review (usability / cut-the-bullshit / deep code bugs) â€” Claude first,
   // then an external engine + CodeQL. Read-only summary of data/review_findings.json.
   if (review && ((review.scores && Object.keys(review.scores).length) || (review.findings || []).length)) {
     const sc = review.scores || {};
     const dim = (k, label) => sc[k] != null
       ? `<span class="metric"><b>${esc(sc[k])}</b>/10 ${esc(label)}</span>` : "";
-    html += `<div class="card"><h3>Latest review <span class="sub">(${esc(review.mode || "weekly")} · ${esc(review.generated_at || "?")})</span></h3>
+    html += `<div class="card"><h3>Latest review <span class="sub">(${esc(review.mode || "weekly")} Â· ${esc(review.generated_at || "?")})</span></h3>
       <div class="metrics">${dim("usability", "usability")}${dim("cut_the_bullshit", "cut the bullshit")}${dim("deep_code_bugs", "deep code bugs")}` +
       (sc.overall != null ? `<span class="metric"><b>${esc(sc.overall)}</b>/10 overall</span>` : "") + `</div>`;
     const rv = review.reviewers || {};
     const rbits = [];
-    if (rv.claude) rbits.push(`Claude ${rv.claude.ok === false ? "…" : "✓"}`);
+    if (rv.claude) rbits.push(`Claude ${rv.claude.ok === false ? "â€¦" : "âœ“"}`);
     if (rv.external) rbits.push(`${esc(rv.external.provider || "external")}: ${esc(rv.external.status || "pending")}`);
-    if (rv.codeql) rbits.push(`CodeQL: ${esc(rv.codeql.status || "—")}`);
-    if (rbits.length) html += `<div class="sub">Reviewers — ${rbits.join(" · ")}</div>`;
+    if (rv.codeql) rbits.push(`CodeQL: ${esc(rv.codeql.status || "â€”")}`);
+    if (rbits.length) html += `<div class="sub">Reviewers â€” ${rbits.join(" Â· ")}</div>`;
     if ((review.top_actions || []).length)
       html += `<p><b>Top actions:</b></p><ul>${review.top_actions.map(a => `<li>${esc(a)}</li>`).join("")}</ul>`;
     html += `</div>`;
@@ -1105,7 +1105,7 @@ async function renderSelfImprove() {
     const bm = review.benchmark || {};
     if ((bm.we_do_better || []).length || (bm.they_do_better || []).length || (bm.borrow_next || []).length) {
       const col = (title, arr) => `<div><div class="sub"><b>${esc(title)}</b></div>` +
-        ((arr || []).length ? `<ul>${arr.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : `<p class="sub">—</p>`) + `</div>`;
+        ((arr || []).length ? `<ul>${arr.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : `<p class="sub">â€”</p>`) + `</div>`;
       html += `<div class="card"><h3>Competitor benchmark</h3>
         ${(bm.competitors || []).length ? `<div class="sub">vs ${(bm.competitors || []).map(esc).join(", ")}</div>` : ""}
         <div class="bench">${col("We do better", bm.we_do_better)}${col("They do better", bm.they_do_better)}${col("Borrow next", bm.borrow_next)}</div></div>`;
@@ -1121,13 +1121,13 @@ async function renderSelfImprove() {
         finds.slice(0, 25).map(f =>
           `<div class="sug"><span class="stat st-${esc(f.severity || "low")}">${esc(f.severity || "?")}</span>
            <b>${esc((f.dimension || "").replace(/_/g, " "))}</b>
-           <span class="sub">${esc(f.where || "")}${f.source === "external" ? " · external" : ""}</span>
+           <span class="sub">${esc(f.where || "")}${f.source === "external" ? " Â· external" : ""}</span>
            <p>${esc(f.detail || "")}</p>
            ${f.suggestion ? `<p class="sub">Fix: ${esc(f.suggestion)}</p>` : ""}</div>`).join("") + `</div>`;
     }
   }
 
-  // Suggestion queue (approve/dismiss are done from the MCP server — read-only here)
+  // Suggestion queue (approve/dismiss are done from the MCP server â€” read-only here)
   const approved = new Set((apprData && apprData.approved_ids) || []);
   const dismissed = new Set((apprData && apprData.dismissed_ids) || []);
   let sugs = (sugData && sugData.suggestions) || [];
@@ -1164,7 +1164,7 @@ async function renderSelfImprove() {
   if (runs.length) {
     const r = runs[runs.length - 1];
     html += `<div class="card"><h3>Last self-improvement run</h3>
-      <div class="sub">${esc(r.run_at || "")} · health ${esc(r.health_score ?? "?")}/100</div>
+      <div class="sub">${esc(r.run_at || "")} Â· health ${esc(r.health_score ?? "?")}/100</div>
       <p>${esc(r.notes || "")}</p>
       ${(r.caps_hit || []).length ? `<p class="sub">Caps hit: ${esc((r.caps_hit || []).join(", "))}</p>` : ""}</div>`;
   }
@@ -1182,7 +1182,7 @@ async function renderSelfImprove() {
   tickImprove(); window.__improveTimer = setInterval(tickImprove, 1000);
 }
 
-// ── Tab: Grow Sources (suggest a channel when the playlist stalls) ────────────
+// â”€â”€ Tab: Grow Sources (suggest a channel when the playlist stalls) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function renderSources() {
   const [data, gated] = await Promise.all([
     load("channel_suggestions.json"), load("comment_gated.json")]);
@@ -1193,15 +1193,15 @@ async function renderSources() {
   let html = `<div class="sub">Keeps the playlist growing: when fewer than ${esc(th)} videos are added in a week, Excavatortron proposes one of your highest-value channels for you to approve.</div>`;
   if (wk != null) {
     const ok = wk >= th;
-    html += `<div class="card"><h3>${ok ? "✅" : "⚠️"} ${esc(wk)} videos added in the last week <span class="pill">target ${esc(th)}</span></h3>
-      <p class="sub">${ok ? "Growing well — no suggestion needed right now." : "Below target — review the suggested channel below."}</p></div>`;
+    html += `<div class="card"><h3>${ok ? "âœ…" : "âš ï¸"} ${esc(wk)} videos added in the last week <span class="pill">target ${esc(th)}</span></h3>
+      <p class="sub">${ok ? "Growing well â€” no suggestion needed right now." : "Below target â€” review the suggested channel below."}</p></div>`;
   }
   if (pending.length) {
     html += pending.map(s => `
       <div class="card">
-        <h3>📺 ${esc(s.channel_title || s.channel)} <span class="newbadge">NEEDS YOU</span></h3>
+        <h3>ðŸ“º ${esc(s.channel_title || s.channel)} <span class="newbadge">NEEDS YOU</span></h3>
         <p>${esc(s.reason || "")}</p>
-        <p class="hint">Approve to add these ${esc((s.videos || []).length)} videos to your playlist (they'll then be transcribed + analyzed). <b>Approve:</b> tell Claude “approve ${esc(s.channel)}”, or use the MCP tool <code class="cmd">approve_channel</code>. <b>Skip:</b> “dismiss ${esc(s.channel)}”.</p>
+        <p class="hint">Approve to add these ${esc((s.videos || []).length)} videos to your playlist (they'll then be transcribed + analyzed). <b>Approve:</b> tell Claude â€œapprove ${esc(s.channel)}â€, or use the MCP tool <code class="cmd">approve_channel</code>. <b>Skip:</b> â€œdismiss ${esc(s.channel)}â€.</p>
         <ol class="srcvids">${(s.videos || []).map(v =>
           `<li><a href="${esc(v.url || yt(v.id))}" target="_blank" rel="noopener">${esc(v.title || v.id)}</a>${v.published ? ` <span class="sub">${esc(String(v.published).slice(0, 10))}</span>` : ""}</li>`).join("")}</ol>
       </div>`).join("");
@@ -1212,22 +1212,22 @@ async function renderSources() {
   // Resources hidden behind a comment-wall that we couldn't auto-retrieve (CLAUDE.md Step 2e)
   const gl = (gated && (gated.items || gated.resources)) || [];
   if (gl.length) {
-    html += `<h2 class="cat-title">🔒 Behind a comment-wall <span class="cat-count">${esc(gl.length)}</span></h2>
-      <div class="sub">These videos hide their file/link behind a comment (“comment X and I'll send it”) and it wasn't findable automatically — grab these few by hand.</div>`;
+    html += `<h2 class="cat-title">ðŸ”’ Behind a comment-wall <span class="cat-count">${esc(gl.length)}</span></h2>
+      <div class="sub">These videos hide their file/link behind a comment (â€œcomment X and I'll send itâ€) and it wasn't findable automatically â€” grab these few by hand.</div>`;
     html += gl.map(g => `
       <div class="card">
-        <h3>🔒 ${esc(g.title || g.video_id)}</h3>
+        <h3>ðŸ”’ ${esc(g.title || g.video_id)}</h3>
         ${g.what_it_is ? `<p>${esc(g.what_it_is)}</p>` : ""}
-        <p class="hint">${g.comment_keyword ? `Comment <code class="cmd">${esc(g.comment_keyword)}</code> on the video to get it.` : "Check the video's comments / pinned comment for the link."} &nbsp;<a href="${esc(g.source_url || yt(g.video_id))}" target="_blank" rel="noopener">Open video ↗</a></p>
+        <p class="hint">${g.comment_keyword ? `Comment <code class="cmd">${esc(g.comment_keyword)}</code> on the video to get it.` : "Check the video's comments / pinned comment for the link."} &nbsp;<a href="${esc(g.source_url || yt(g.video_id))}" target="_blank" rel="noopener">Open video â†—</a></p>
       </div>`).join("");
   }
   view.innerHTML = html;
 }
 
-// ── Tab: Prompts (master / guardrail / creation prompt library) ──────────────
+// â”€â”€ Tab: Prompts (master / guardrail / creation prompt library) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function renderPrompts(data) {
   const items = (data && data.prompts) || [];
-  if (!items.length) return view.innerHTML = empty("No prompts yet — they'll fill in as videos are analyzed.");
+  if (!items.length) return view.innerHTML = empty("No prompts yet â€” they'll fill in as videos are analyzed.");
   const LABELS = { master: "Master", system_guardrail: "System / guardrail", creation: "Creation",
     coding: "Coding", agents: "Agents", research: "Research", marketing: "Marketing", other: "Other" };
   const cats = ["all", ...Array.from(new Set(items.map(p => p.category || "other")))];
@@ -1235,7 +1235,7 @@ function renderPrompts(data) {
   let list = items.slice();
   if (active !== "all") list = list.filter(p => (p.category || "other") === active);
   if (q()) list = list.filter(p => hit(p.title, p.purpose, p.prompt_text, p.category));
-  let html = `<div class="sub">${items.length} prompts — master system prompts, anti-hallucination “don't lie” guardrails, and creation prompts. Hit Copy to use one.</div>`;
+  let html = `<div class="sub">${items.length} prompts â€” master system prompts, anti-hallucination â€œdon't lieâ€ guardrails, and creation prompts. Hit Copy to use one.</div>`;
   html += `<div class="subnav">` + cats.map(c =>
     `<button class="${active === c ? "active" : ""}" data-pcat="${esc(c)}">${esc(c === "all" ? "all" : (LABELS[c] || c))}</button>`).join("") + `</div>`;
   html += list.map((p, i) => `
@@ -1256,33 +1256,33 @@ function renderPrompts(data) {
     const pre = document.getElementById(b.dataset.copy);
     if (pre && navigator.clipboard) {
       navigator.clipboard.writeText(pre.innerText);
-      const o = b.textContent; b.textContent = "Copied ✓"; setTimeout(() => b.textContent = o, 1500);
+      const o = b.textContent; b.textContent = "Copied âœ“"; setTimeout(() => b.textContent = o, 1500);
     }
   }));
 }
 
-// ── Tab: Coming Soon (announced but not-yet-released tools) ───────────────────
+// â”€â”€ Tab: Coming Soon (announced but not-yet-released tools) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function renderComingSoon(data) {
   const items = ((data && data.tools) || []).filter(t => (t.release_status || "released") === "upcoming");
-  let html = `<div class="sub">AI tools &amp; models that have been <b>announced but not yet released</b> — kept out of the live rankings until they ship.</div>`;
+  let html = `<div class="sub">AI tools &amp; models that have been <b>announced but not yet released</b> â€” kept out of the live rankings until they ship.</div>`;
   let list = items.slice();
   if (q()) list = list.filter(t => hit(t.name, t.company, t.category, t.description));
-  if (!list.length) return view.innerHTML = html + empty(q() ? "No upcoming tools match." : "No upcoming tools tracked yet — they'll appear here as they're announced.");
+  if (!list.length) return view.innerHTML = html + empty(q() ? "No upcoming tools match." : "No upcoming tools tracked yet â€” they'll appear here as they're announced.");
   list.sort((a, b) => String(a.expected_release || "zzzz").localeCompare(String(b.expected_release || "zzzz")) || ((b.quality_score || 0) - (a.quality_score || 0)));
   html += list.map(t => `
     <div class="card upcoming">
-      <h3><span class="soonpill">🔜 UPCOMING</span> ${esc(t.name)} <span class="pill">${esc(t.category || "other")}</span></h3>
-      ${(t.company || t.expected_release) ? `<div class="sub">${esc(t.company || "")}${t.country ? " · " + esc(t.country) : ""}${t.expected_release ? " · expected " + esc(t.expected_release) : ""}</div>` : ""}
+      <h3><span class="soonpill">ðŸ”œ UPCOMING</span> ${esc(t.name)} <span class="pill">${esc(t.category || "other")}</span></h3>
+      ${(t.company || t.expected_release) ? `<div class="sub">${esc(t.company || "")}${t.country ? " Â· " + esc(t.country) : ""}${t.expected_release ? " Â· expected " + esc(t.expected_release) : ""}</div>` : ""}
       <p>${esc(t.description || "")}</p>
-      ${t.source_url ? `<p><a href="${esc(t.source_url)}" target="_blank" rel="noopener">Announcement ↗</a></p>`
-        : (t.source_video_id ? `<p><a href="${yt(t.source_video_id)}" target="_blank" rel="noopener">Source video ↗</a></p>` : "")}
+      ${t.source_url ? `<p><a href="${esc(t.source_url)}" target="_blank" rel="noopener">Announcement â†—</a></p>`
+        : (t.source_video_id ? `<p><a href="${yt(t.source_video_id)}" target="_blank" rel="noopener">Source video â†—</a></p>` : "")}
     </div>`).join("");
   view.innerHTML = html;
 }
 
-// ── Obsidian-style knowledge graph (lives in the Dev Construction tab) ────────
+// â”€â”€ Obsidian-style knowledge graph (lives in the Dev Construction tab) â”€â”€â”€â”€â”€â”€â”€â”€
 // Force-directed canvas graph of the WHOLE project, mirroring the Obsidian vault:
-// skills/tools/prompts/connectors → category & tool hubs → Home. Reads data/brain_graph.json
+// skills/tools/prompts/connectors â†’ category & tool hubs â†’ Home. Reads data/brain_graph.json
 // (built by src/build_graph.py). Pan = drag background, zoom = wheel, drag a node to move it,
 // hover to focus its neighbours, click a node to open its source. Pure canvas, no libraries.
 const GRAPH_COLORS = {
@@ -1319,22 +1319,22 @@ async function mountBrainGraph(host, file = "brain_graph.json", legend = null) {
   ensureGraphCss();
   const data = await load(file);
   if (!data || !(data.nodes || []).length)
-    return host.innerHTML = empty("Graph not generated yet — built in the pipeline.");
+    return host.innerHTML = empty("Graph not generated yet â€” built in the pipeline.");
   const c = data.counts || {};
   const defaultLegend =
     legendItem(GRAPH_COLORS.skill, "skill") + legendItem(GRAPH_COLORS.tool, "tool") +
     legendItem(GRAPH_COLORS.prompt, "prompt") + legendItem(GRAPH_COLORS.connector, "connector") +
     legendItem(GRAPH_COLORS.category, "category") + legendItem(GRAPH_COLORS.toolhub, "tool-hub") +
-    legendItem(GRAPH_COLORS.star, "★ anchor (doesn't change)") + legendItem(GRAPH_COLORS.combo, "combo (used together)");
+    legendItem(GRAPH_COLORS.star, "â˜… anchor (doesn't change)") + legendItem(GRAPH_COLORS.combo, "combo (used together)");
   host.innerHTML = `
     <div class="graphbar">
-      <span class="graphcount">${c.nodes || data.nodes.length} nodes · ${c.links || (data.links || []).length} links</span>
-      <input class="graphsearch" placeholder="highlight…" aria-label="highlight nodes" />
+      <span class="graphcount">${c.nodes || data.nodes.length} nodes Â· ${c.links || (data.links || []).length} links</span>
+      <input class="graphsearch" placeholder="highlightâ€¦" aria-label="highlight nodes" />
       <button class="graphreset">reset view</button>
       <span class="graphlegend">${legend || defaultLegend}</span>
     </div>
     <canvas class="braincanvas"></canvas>
-    <p class="graphhint">drag background to pan · scroll to zoom · drag a dot to move it · hover to focus · click a dot to open its source</p>`;
+    <p class="graphhint">drag background to pan Â· scroll to zoom Â· drag a dot to move it Â· hover to focus Â· click a dot to open its source</p>`;
   const canvas = host.querySelector("canvas");
   const ctx = canvas.getContext("2d");
   const H = 600;
@@ -1394,7 +1394,7 @@ async function mountBrainGraph(host, file = "brain_graph.json", legend = null) {
     ctx.setTransform(scale, 0, 0, scale, ox, oy);
     const focus = hover ? nbr[hover.id] : null;
     const settled = !running;                          // glow only when not animating (perf-safe)
-    // edges — WHITE on black; highlighted neighbours brighten, the rest recede. On big graphs the
+    // edges â€” WHITE on black; highlighted neighbours brighten, the rest recede. On big graphs the
     // base opacity is very low so ~1200 lines read as a faint web, not a solid white blob.
     const baseFade = big ? .05 : .12, dimFade = big ? .02 : .045;
     for (const l of L) {
@@ -1432,7 +1432,7 @@ async function mountBrainGraph(host, file = "brain_graph.json", legend = null) {
       }
     }
     ctx.globalAlpha = 1; ctx.shadowBlur = 0;
-    // depth vignette (screen space) — black at the rim so the graph reads as a lit core
+    // depth vignette (screen space) â€” black at the rim so the graph reads as a lit core
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     const vg = ctx.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.28, W / 2, H / 2, Math.max(W, H) * 0.72);
     vg.addColorStop(0, "rgba(0,0,0,0)"); vg.addColorStop(1, "rgba(0,0,0,0.5)");
@@ -1472,8 +1472,8 @@ async function mountBrainGraph(host, file = "brain_graph.json", legend = null) {
   start();
 }
 
-// ── Tab: Developer Construction (rebuild spec + the live knowledge graph) ─────
-// ── Live Pipeline monitor — proof that retrieval + analysis is actually running ──
+// â”€â”€ Tab: Developer Construction (rebuild spec + the live knowledge graph) â”€â”€â”€â”€â”€
+// â”€â”€ Live Pipeline monitor â€” proof that retrieval + analysis is actually running â”€â”€
 // Reads data/pipeline_status.json (regenerated every workflow). Each lane's heartbeat
 // comes from the git commit history, so a green row = that lane really committed recently.
 function _ageAgo(h) {
@@ -1487,9 +1487,9 @@ function _movedLine(p) {
   const d = (p && (p.deltas_24h || p.deltas_since_last)) || {};
   const order = ["tools", "skills", "videos_analyzed", "videos_with_transcript", "models", "connectors", "prompts", "commands"];
   const moved = order.filter(k => d[k] > 0).map(k => `+${d[k]} ${k.replace("videos_analyzed", "analyzed").replace("videos_with_transcript", "transcripts")}`);
-  return moved.length ? moved.join(" · ") : "no new items in the last 24h (lanes may be between runs)";
+  return moved.length ? moved.join(" Â· ") : "no new items in the last 24h (lanes may be between runs)";
 }
-// Push fresh numbers into the panel in place — so the percentages climb without a full re-render.
+// Push fresh numbers into the panel in place â€” so the percentages climb without a full re-render.
 function applyPipeNumbers(p) {
   const snap = (p && p.snapshot) || {};
   const tot = snap.videos_total || 0;
@@ -1501,7 +1501,7 @@ function applyPipeNumbers(p) {
   set("pl-anz", anz); set("pl-anzpct", ag); wid("pl-anzbar", ag);
   set("pl-tx", snap.videos_with_transcript || 0); set("pl-txpct", tg); wid("pl-txbar", tg);
   set("pl-since-line", _movedLine(p)); set("pl-snap-at", fmtDate(p.generated_at));
-  set("pl-lib", `${snap.skills || 0} skills · ${snap.tools || 0} tools · ${snap.models || 0} models · ${snap.connectors || 0} connectors · ${snap.prompts || 0} prompts`);
+  set("pl-lib", `${snap.skills || 0} skills Â· ${snap.tools || 0} tools Â· ${snap.models || 0} models Â· ${snap.connectors || 0} connectors Â· ${snap.prompts || 0} prompts`);
 }
 // Live per-lane countdowns, an online/offline sign, and a 3-minute auto-refresh of the numbers.
 function mountPipelineTimers() {
@@ -1518,12 +1518,12 @@ function mountPipelineTimers() {
     if (!net) { clearInterval(window.__pipeTimer); window.__pipeTimer = null; return; }
     const online = navigator.onLine;
     net.className = "pl-net " + (online ? "pl-on" : "pl-off");
-    net.innerHTML = online ? '<span class="pl-netdot"></span>ONLINE · live'
-                           : '<span class="pl-netdot"></span>OFFLINE · showing last saved data';
+    net.innerHTML = online ? '<span class="pl-netdot"></span>ONLINE Â· live'
+                           : '<span class="pl-netdot"></span>OFFLINE Â· showing last saved data';
     const rf = document.getElementById("pl-refresh");
     if (rf) {
       let ms = window.__pipeNextRefresh - Date.now();
-      if (ms <= 0) { rf.textContent = "refreshing…"; if (online) doRefresh(); }
+      if (ms <= 0) { rf.textContent = "refreshingâ€¦"; if (online) doRefresh(); }
       else { const m = Math.floor(ms / 6e4), s = Math.floor(ms / 1e3) % 60;
         rf.textContent = `auto-refresh in ${m}:${String(s).padStart(2, "0")}`; }
     }
@@ -1540,22 +1540,22 @@ function mountPipelineTimers() {
   tick(); window.__pipeTimer = setInterval(tick, 1000);
   window.addEventListener("online", tick); window.addEventListener("offline", tick);
 }
-// North Star — the 6 main goals + live conformance. Shown atop self-improvement.
+// North Star â€” the 6 main goals + live conformance. Shown atop self-improvement.
 async function goalsPanel() {
   const g = await load("goals_status.json");
   if (!g || !(g.goals || []).length) return "";
   const rows = g.goals.map(o => {
     const sev = o.status === "met" ? "sev-low" : o.status === "at-risk" ? "sev-medium" : "sev-high";
     return `<div class="prio-row"><span class="prio-rank ${sev}">${o.id}</span>
-      <div class="prio-main"><b>${esc(o.name)}</b> <span class="pl-runs">${o.score}/100 · ${esc(o.status)}</span>
+      <div class="prio-main"><b>${esc(o.name)}</b> <span class="pl-runs">${o.score}/100 Â· ${esc(o.status)}</span>
         <span class="pl-what">${esc(o.gap)}</span></div></div>`;
   }).join("");
-  return `<div class="card improve-clock"><h3>🌟 North Star — main goals (above all else)
+  return `<div class="card improve-clock"><h3>ðŸŒŸ North Star â€” main goals (above all else)
       <span class="pl-badge ${g.overall >= 75 ? "pl-live" : g.overall >= 45 ? "pl-slow" : "pl-stale"}">${g.overall}/100</span></h3>
     <p class="sub">Every cycle the system scores itself against these 6 goals and queues a fix for any that aren't met. Concepts, not features.</p>
     <div class="prio-rows">${rows}</div></div>`;
 }
-// Top priorities right now — auto-ranked from the live state, shown atop the key tabs.
+// Top priorities right now â€” auto-ranked from the live state, shown atop the key tabs.
 async function prioritiesPanel() {
   const p = await load("priorities.json");
   if (!p || !(p.priorities || []).length) return "";
@@ -1565,8 +1565,8 @@ async function prioritiesPanel() {
       <div class="prio-main"><b>${esc(x.title)}</b><span class="pl-what">${esc(x.detail)}</span></div>
       <span class="prio-area">${esc(x.area)}</span></div>`;
   }).join("");
-  return `<div class="card improve-clock"><h3>🎯 Top priorities right now</h3>
-    <p class="sub">Auto-ranked by impact from the live system state — it re-orders itself as things change (links resolved, a lane stalls, a regression appears).</p>
+  return `<div class="card improve-clock"><h3>ðŸŽ¯ Top priorities right now</h3>
+    <p class="sub">Auto-ranked by impact from the live system state â€” it re-orders itself as things change (links resolved, a lane stalls, a regression appears).</p>
     <div class="prio-rows">${rows}</div></div>`;
 }
 async function pipelinePanel() {
@@ -1574,8 +1574,8 @@ async function pipelinePanel() {
   if (!p || !p.lanes) return "";
   const cov = await load("coverage_log.json"), cl = (cov && cov.latest) || {};
   const cpct = cl.pct != null ? cl.pct : 0, cdelta = cov ? cov.delta_pct_vs_prev_day : null;
-  const OV = { live: ["pl-live", "● LIVE — data is flowing"], slow: ["pl-slow", "● SLOWING — some lanes overdue"],
-               stale: ["pl-stale", "● STALLED — lanes not running"] };
+  const OV = { live: ["pl-live", "â— LIVE â€” data is flowing"], slow: ["pl-slow", "â— SLOWING â€” some lanes overdue"],
+               stale: ["pl-stale", "â— STALLED â€” lanes not running"] };
   const ov = OV[p.overall] || OV.stale;
   const snap = p.snapshot || {};
   const tot = snap.videos_total || 0;
@@ -1589,20 +1589,20 @@ async function pipelinePanel() {
       <span class="pl-dot pl-${L.status}" title="${esc(L.status)}"></span>
       <div class="pl-main"><b>${esc(L.label)}</b><span class="pl-what">${esc(L.what)}</span></div>
       <div class="pl-meta"><span class="pl-age">ran ${_ageAgo(L.age_hours)}</span>
-        <span class="pl-next" data-next="${next}">next…</span>
-        <span class="pl-runs">${L.runs_7d}× / 7d · every ~${L.cadence_h}h</span></div>
+        <span class="pl-next" data-next="${next}">nextâ€¦</span>
+        <span class="pl-runs">${L.runs_7d}Ã— / 7d Â· every ~${L.cadence_h}h</span></div>
     </div>`;
   }).join("");
   return `<div class="card pipe-panel">
-      <div class="pipe-head"><h3>📡 Live Pipeline</h3><span class="pl-badge ${ov[0]}">${ov[1]}</span>
-        <span id="pl-net" class="pl-net pl-on"><span class="pl-netdot"></span>…</span>
-        <span id="pl-refresh" class="pl-refresh">auto-refresh…</span></div>
+      <div class="pipe-head"><h3>ðŸ“¡ Live Pipeline</h3><span class="pl-badge ${ov[0]}">${ov[1]}</span>
+        <span id="pl-net" class="pl-net pl-on"><span class="pl-netdot"></span>â€¦</span>
+        <span id="pl-refresh" class="pl-refresh">auto-refreshâ€¦</span></div>
       <p class="sub">Is retrieval &amp; analysis actually running? Each lane shows its real last-commit time and a live countdown to its next run; the numbers auto-refresh every 3 minutes (no manual reload), and work offline from the last saved snapshot.</p>
       <div class="pl-since"><b>Retrieved in the last 24h:</b> <span id="pl-since-line">${esc(_movedLine(p))}</span><br>
-        <span class="sub">snapshot from <span id="pl-snap-at">${esc(fmtDate(p.generated_at))}</span> · library: <span id="pl-lib">${snap.skills || 0} skills · ${snap.tools || 0} tools · ${snap.models || 0} models · ${snap.connectors || 0} connectors · ${snap.prompts || 0} prompts</span></span></div>
-      <div class="pl-prog"><span><b>Analyzed</b> <span id="pl-anz">${anz}</span> / ${tot} (<span id="pl-anzpct">${ag}</span>%) <span class="sub">— transcript OR Gemini-watched; this climbs as work happens</span></span><span class="pl-bar"><i id="pl-anzbar" style="width:${ag}%"></i></span></div>
-      <div class="pl-prog pl-prog2"><span>Transcripts <span id="pl-tx">${snap.videos_with_transcript || 0}</span> / ${tot} (<span id="pl-txpct">${tg}</span>%) <span class="sub">— captions only (rate-limited)</span></span><span class="pl-bar"><i id="pl-txbar" style="width:${tg}%"></i></span></div>
-      <div class="pl-prog pl-prog2"><span><b>Links</b> ${cl.linked || 0} / ${cl.total || 0} (${cpct}%) <span class="sub">— real, working links${cdelta != null ? ` · ${cdelta >= 0 ? "+" : ""}${cdelta}%/day (target +5%)` : ""}</span></span><span class="pl-bar"><i style="width:${cpct}%"></i></span></div>
+        <span class="sub">snapshot from <span id="pl-snap-at">${esc(fmtDate(p.generated_at))}</span> Â· library: <span id="pl-lib">${snap.skills || 0} skills Â· ${snap.tools || 0} tools Â· ${snap.models || 0} models Â· ${snap.connectors || 0} connectors Â· ${snap.prompts || 0} prompts</span></span></div>
+      <div class="pl-prog"><span><b>Analyzed</b> <span id="pl-anz">${anz}</span> / ${tot} (<span id="pl-anzpct">${ag}</span>%) <span class="sub">â€” transcript OR Gemini-watched; this climbs as work happens</span></span><span class="pl-bar"><i id="pl-anzbar" style="width:${ag}%"></i></span></div>
+      <div class="pl-prog pl-prog2"><span>Transcripts <span id="pl-tx">${snap.videos_with_transcript || 0}</span> / ${tot} (<span id="pl-txpct">${tg}</span>%) <span class="sub">â€” captions only (rate-limited)</span></span><span class="pl-bar"><i id="pl-txbar" style="width:${tg}%"></i></span></div>
+      <div class="pl-prog pl-prog2"><span><b>Links</b> ${cl.linked || 0} / ${cl.total || 0} (${cpct}%) <span class="sub">â€” real, working links${cdelta != null ? ` Â· ${cdelta >= 0 ? "+" : ""}${cdelta}%/day (target +5%)` : ""}</span></span><span class="pl-bar"><i style="width:${cpct}%"></i></span></div>
       <div class="pl-rows">${rows}</div>
     </div>`;
 }
@@ -1612,10 +1612,10 @@ async function scoutPanel() {
   if (!s || !(s.processes || []).length) return "";
   const rows = s.processes.map(r => `<div class="prio-row">
       <span class="prio-rank sev-low">${r.count}</span>
-      <div class="prio-main"><b>${esc(r.process)}</b><span class="pl-what">top free pick: ${r.recommended ? esc(r.recommended) : "—"}</span></div>
+      <div class="prio-main"><b>${esc(r.process)}</b><span class="pl-what">top free pick: ${r.recommended ? esc(r.recommended) : "â€”"}</span></div>
       <span class="prio-area">${esc(r.goal)}</span></div>`).join("");
-  return `<div class="card"><h3>🔭 Pipeline scout <span class="sub">— ${esc(s.total_candidates || 0)} catalogue tools that could improve the system</span></h3>
-    <p class="sub">Scans every catalogue type across 12 pipeline processes, ranks by quality, and queues the best into self-improvement. <b>Proposals — approve to integrate</b> (some matches are tangential; pick the genuinely free + useful ones).</p>
+  return `<div class="card"><h3>ðŸ”­ Pipeline scout <span class="sub">â€” ${esc(s.total_candidates || 0)} catalogue tools that could improve the system</span></h3>
+    <p class="sub">Scans every catalogue type across 12 pipeline processes, ranks by quality, and queues the best into self-improvement. <b>Proposals â€” approve to integrate</b> (some matches are tangential; pick the genuinely free + useful ones).</p>
     <div class="prio-rows">${rows}</div></div>`;
 }
 async function excavaPanel() {
@@ -1625,12 +1625,12 @@ async function excavaPanel() {
   const stack = (e.tool_stack || []).map(t =>
     `<div class="prio-row"><span class="prio-area">${esc(t.status)}</span>
       <div class="prio-main"><b>${esc(t.role)}</b><span class="pl-what">${esc(t.tool)}</span></div></div>`).join("");
-  return `<div class="card improve-clock"><h3>🛰 EXCAVA — the agentic OS
+  return `<div class="card improve-clock"><h3>ðŸ›° EXCAVA â€” the agentic OS
       <span class="pl-badge ${g.internal_allowed ? "pl-live" : "pl-stale"}">internal ${g.internal_allowed ? "OPEN" : "CLOSED"}</span>
       <span class="pl-badge ${g.outward_allowed ? "pl-live" : "pl-slow"}">outward ${g.outward_allowed ? "OPEN" : "CLOSED"}</span></h3>
-    <p class="sub">${esc(e.phase || "")}. Verification gate (focused checkers) must be green before it acts; outward create/publish also needs G3≥70 + your approval — so it never acts on bad data.</p>
-    <div class="pl-since"><b>Next action:</b> ${esc((e.next_action || {}).do || "—")} <span class="sub">(${esc((e.next_action || {}).type || "")})</span><br>
-      <span class="sub">gate: data ${g.checks.data_guard_ok ? "ok" : "BAD"} · security ${g.checks.security_clean ? "clean" : "LEAK"} · truth/access G3 ${esc(g.checks.truth_access_G3)}/100 · holding ${(e.holding || []).length} outward action(s)</span></div>
+    <p class="sub">${esc(e.phase || "")}. Verification gate (focused checkers) must be green before it acts; outward create/publish also needs G3â‰¥70 + your approval â€” so it never acts on bad data.</p>
+    <div class="pl-since"><b>Next action:</b> ${esc((e.next_action || {}).do || "â€”")} <span class="sub">(${esc((e.next_action || {}).type || "")})</span><br>
+      <span class="sub">gate: data ${g.checks.data_guard_ok ? "ok" : "BAD"} Â· security ${g.checks.security_clean ? "clean" : "LEAK"} Â· truth/access G3 ${esc(g.checks.truth_access_G3)}/100 Â· holding ${(e.holding || []).length} outward action(s)</span></div>
     <details><summary class="sub" style="cursor:pointer">Tool stack (${(e.tool_stack || []).length})</summary><div class="prio-rows">${stack}</div>
       <p class="hint">${esc((e.stack_review || {}).note || "")}</p></details></div>`;
 }
@@ -1643,13 +1643,13 @@ async function renderDevConstruction() {
   html += await pipelinePanel();
   html += await scoutPanel();
   html += `<div class="card">
-      <h3>🧠 Brain 1 — knowledge graph (what the project KNOWS)</h3>
-      <p class="sub">The best skills, tools, prompts and connectors clustered by category and tool (the full set lives in the tabs). Gold ★ = anchor skills that don't change; orange rings = combinations used together in the same video.</p>
+      <h3>ðŸ§  Brain 1 â€” knowledge graph (what the project KNOWS)</h3>
+      <p class="sub">The best skills, tools, prompts and connectors clustered by category and tool (the full set lives in the tabs). Gold â˜… = anchor skills that don't change; orange rings = combinations used together in the same video.</p>
       <p class="hint">Want the WHOLE brain (3,000+ nodes)? Download <a href="../data/brain.graphml">brain.graphml</a> and open it in <b>Graphify</b> / Gephi / Neo4j, or read the <a href="../docs/BIGGER_BRAIN.md">Obsidian + Graphify guide</a>.</p>
       <div id="braingraph" class="braingraph"></div>
     </div>`;
   html += `<div class="card">
-      <h3>🛠 Brain 2 — system orchestration (how the project WORKS)</h3>
+      <h3>ðŸ›  Brain 2 â€” system orchestration (how the project WORKS)</h3>
       <p class="sub">Every internal system/protocol and what depends on what. The big gold node, <b>data/ hub</b>, is the main one everything feeds and reads from (like an n8n flow). Nodes are tinted by which of the 5 goals they serve.</p>
       <div id="pipegraph" class="braingraph"></div>
     </div>`;
@@ -1676,7 +1676,7 @@ async function renderDevConstruction() {
   }
 }
 
-// ── Tab: Effectiveness — how good & how rigid each retrieval/analysis lane is ──
+// â”€â”€ Tab: Effectiveness â€” how good & how rigid each retrieval/analysis lane is â”€â”€
 // Measured scoreboard (data/effectiveness.json) that the self-improvement system targets.
 const DIM_LABEL = { quality: "Quality", quantity: "Quantity", form: "Form", time: "Time",
   tokens: "Tokens", ease_external: "Ext.access", ease_project: "Proj.access", ease_user: "User access" };
@@ -1684,36 +1684,36 @@ async function renderEffectiveness() {
   const d = await load("effectiveness.json");
   if (!d || !d.lanes) {
     view.innerHTML = `<div class="card"><h3>Extraction Effectiveness</h3>${empty(
-      "Scoreboard not generated yet — it runs every analysis cycle (~3h).")}</div>`;
+      "Scoreboard not generated yet â€” it runs every analysis cycle (~3h).")}</div>`;
     return;
   }
   const dims = d.dimensions || [];
   let html = await prioritiesPanel();
   html += `<div class="card"><h3>Extraction Effectiveness &amp; Rigidity</h3>
-    <p class="hint">🎯 ${esc(d.north_star || "")}</p>
-    <p class="sub">🌐 <b>Public hub API</b> (for external/future systems): <a href="../data/hub.json">data/hub.json</a> — a CORS-open, machine-readable manifest of every dataset · <a href="../HUB_API.md">HUB_API.md</a></p>
+    <p class="hint">ðŸŽ¯ ${esc(d.north_star || "")}</p>
+    <p class="sub">ðŸŒ <b>Public hub API</b> (for external/future systems): <a href="../data/hub.json">data/hub.json</a> â€” a CORS-open, machine-readable manifest of every dataset Â· <a href="../HUB_API.md">HUB_API.md</a></p>
     <p class="sub">Weakest lane: <b>${esc(d.summary.weakest_lane)}</b> (${esc(d.summary.weakest_effectiveness)}/10)
-      · transcript coverage ${esc(d.summary.transcript_coverage_pct)}% · library quality ${esc(d.library_quality)}/10
-      · generated ${esc(fmtDate(d.generated_at))}</p>
+      Â· transcript coverage ${esc(d.summary.transcript_coverage_pct)}% Â· library quality ${esc(d.library_quality)}/10
+      Â· generated ${esc(fmtDate(d.generated_at))}</p>
     <p class="sub">Effectiveness = weighted mean of the dimensions (higher better). Rigidity = how brittle/locked-in the lane is (lower better). The self-improvement system focuses on the lowest rows.</p></div>`;
   html += `<div class="card"><div class="efftable-wrap"><table class="efftable">
     <thead><tr><th>Lane</th><th title="Weighted effectiveness">Eff</th><th title="Brittleness (lower=better)">Rigid</th>` +
     dims.map(k => `<th title="${esc(k)}">${esc(DIM_LABEL[k] || k)}</th>`).join("") + `</tr></thead><tbody>`;
   d.lanes.forEach(L => {
     const sev = L.effectiveness >= 8 ? "ok" : (L.effectiveness >= 6.5 ? "warn" : "bad");
-    html += `<tr class="eff-${sev}"><td><b>${esc(L.name)}</b><br><span class="sub">${esc(L.engine)} · ${esc(L.kind)}</span></td>
+    html += `<tr class="eff-${sev}"><td><b>${esc(L.name)}</b><br><span class="sub">${esc(L.engine)} Â· ${esc(L.kind)}</span></td>
       <td class="effnum">${esc(L.effectiveness)}</td><td class="effnum">${esc(L.rigidity)}</td>` +
       dims.map(k => {
         const v = L.metrics[k];
         return `<td class="${(L.weak_dims || []).includes(k) ? "weak" : ""}">${esc(v)}</td>`;
       }).join("") + `</tr>`;
-    html += `<tr class="eff-note"><td colspan="${dims.length + 3}">→ ${esc(L.improve_note)}</td></tr>`;
+    html += `<tr class="eff-note"><td colspan="${dims.length + 3}">â†’ ${esc(L.improve_note)}</td></tr>`;
   });
   html += `</tbody></table></div></div>`;
   view.innerHTML = html;
 }
 
-// ── Global fuzzy search — closest match across EVERY tab, even without the exact name ──
+// â”€â”€ Global fuzzy search â€” closest match across EVERY tab, even without the exact name â”€â”€
 function _bigrams(s) { s = (s || "").toLowerCase(); const g = new Set();
   for (let i = 0; i < s.length - 1; i++) g.add(s.slice(i, i + 2)); return g; }
 function _sim(a, b) { const A = _bigrams(a), B = _bigrams(b); if (!A.size || !B.size) return 0;
@@ -1729,7 +1729,7 @@ function _scoreItem(ql, name, blob) {
 }
 async function renderSearchAll() {
   const query = (state.query || "").trim();
-  if (!query) return view.innerHTML = empty("Type in the search box and press Enter to search across every tab — closest matches first, even if you don't know the exact name.");
+  if (!query) return view.innerHTML = empty("Type in the search box and press Enter to search across every tab â€” closest matches first, even if you don't know the exact name.");
   const [sk, to, mo, co, pr, cm] = await Promise.all([load("skills.json"), load("tools.json"),
     load("models.json"), load("connectors.json"), load("prompts.json"), load("commands.json")]);
   const ql = query.toLowerCase();
@@ -1751,7 +1751,7 @@ async function renderSearchAll() {
     }
   results.sort((a, b) => b.score - a.score); results = results.slice(0, 40);
   let html = `<div class="cadence-line">&#8226; <b>Search:</b> closest matches across every tab for &ldquo;${esc(query)}&rdquo; (${results.length})</div>`;
-  if (!results.length) html += empty(`Nothing close to "${esc(query)}" yet — try fewer / different words.`);
+  if (!results.length) html += empty(`Nothing close to "${esc(query)}" yet â€” try fewer / different words.`);
   html += results.map(r => `<div class="card srch">
     <h3><span class="pill">${esc(r.type)}</span> ${esc(r.name)}
       <span class="sub" style="font-weight:400">&rarr; <a href="#" data-goto="${esc(tabFor[r.type])}">open ${esc(tabFor[r.type])} tab</a></span></h3>
@@ -1764,22 +1764,22 @@ async function renderSearchAll() {
   }));
 }
 
-// ── EXCAVA: the OS you can SEE working (cockpit home + a live presence strip on every tab) ──
+// â”€â”€ EXCAVA: the OS you can SEE working (cockpit home + a live presence strip on every tab) â”€â”€
 // The GitHub-issue channel (Phase 1 "you drive it"): the static page can't write to the repo,
-// so drive actions open a PREFILLED issue titled "EXCAVA: …" — CI applies it, replies a
+// so drive actions open a PREFILLED issue titled "EXCAVA: â€¦" â€” CI applies it, replies a
 // receipt, closes the issue. Works from the phone.
 const GH_REPO = "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor";
 const _exIssue = (title, body = "") =>
   `${GH_REPO}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
-const EX_ICONS = { gemini: "📺", transcript: "📜", analysis: "⚙️", mining: "⛏️", external: "⛏️",
-  news: "📰", links: "🔗", memory: "🧠", visual: "🎨", deep: "🔬", improve: "🧬", security: "🛡️",
-  watch: "📺", core: "🦾" };
+const EX_ICONS = { gemini: "ðŸ“º", transcript: "ðŸ“œ", analysis: "âš™ï¸", mining: "â›ï¸", external: "â›ï¸",
+  news: "ðŸ“°", links: "ðŸ”—", memory: "ðŸ§ ", visual: "ðŸŽ¨", deep: "ðŸ”¬", improve: "ðŸ§¬", security: "ðŸ›¡ï¸",
+  watch: "ðŸ“º", core: "ðŸ¦¾" };
 function _exIcon(label) {
   const l = (label || "").toLowerCase();
   for (const k in EX_ICONS) if (l.includes(k)) return EX_ICONS[k];
-  return "🤖";
+  return "ðŸ¤–";
 }
-// per-tab accent colors — each area of the machine wears its own paint
+// per-tab accent colors â€” each area of the machine wears its own paint
 const TAB_ACCENT = { excava: "oklch(0.85 0.165 95)", skills: "oklch(0.62 0.17 280)", tools: "oklch(0.66 0.18 40)",
   comingsoon: "oklch(0.65 0.16 310)", prompts: "oklch(0.68 0.17 340)", improvement: "oklch(0.62 0.15 150)",
   tips: "oklch(0.7 0.13 200)", news: "oklch(0.6 0.19 25)", connectors: "oklch(0.6 0.15 250)",
@@ -1798,18 +1798,18 @@ async function excavaStrip(tab) {
     const lc = l => (l.label || "").toLowerCase();
     const L = ps.lanes.find(l => lc(l).includes(key) && !lc(l).includes("audio+"))
            || ps.lanes.find(l => lc(l).includes(key));
-    if (L) dept = `<span>this dept: ${_exIcon(L.label)} ${esc(L.label)} · ${esc(L.status)} · ran ${_ageAgo(L.age_hours)}</span>`;
+    if (L) dept = `<span>this dept: ${_exIcon(L.label)} ${esc(L.label)} Â· ${esc(L.status)} Â· ran ${_ageAgo(L.age_hours)}</span>`;
   }
   const mode = ((ex.os || {}).mode || "run");
-  return `<div class="ex-strip"><b>🦾 EXCAVA</b>
+  return `<div class="ex-strip"><b>ðŸ¦¾ EXCAVA</b>
     ${mode !== "run" ? `<span class="ex-mode ${esc(mode)}">${esc(mode.toUpperCase())}</span>` : ""}
     <span><span class="ex-lamp ${g.internal_allowed ? "on" : "off"}"></span> internal</span>
     <span><span class="ex-lamp ${g.outward_allowed ? "on" : "off"}"></span> outward</span>
     <span>working: ${esc(String(act).slice(0, 48))}</span>${dept}
-    <a data-goto="excava">cockpit →</a></div>`;
+    <a data-goto="excava">cockpit â†’</a></div>`;
 }
-// ── CREW: virtual residents who live on EVERY tab, wired to the OS. Their speech bubbles are real
-// department status (from the same cached JSON the cockpit uses — zero extra network). Click one →
+// â”€â”€ CREW: virtual residents who live on EVERY tab, wired to the OS. Their speech bubbles are real
+// department status (from the same cached JSON the cockpit uses â€” zero extra network). Click one â†’
 // the cockpit. Kill switch: localStorage.setItem("excavatortron.crew","off").
 let _crewTimer = null;
 async function renderCrew(tab) {
@@ -1823,7 +1823,7 @@ async function renderCrew(tab) {
   const dept = key ? (lanes.find(l => lc(l).includes(key) && !lc(l).includes("audio+")) || lanes.find(l => lc(l).includes(key))) : null;
   const live = lanes.filter(l => l.status !== "stale").slice(0, 3);
   const people = [{ c: "var(--gold)", dur: 34,
-    say: "🦾 " + String(((ex || {}).next_action || {}).do || "on patrol").slice(0, 46) }];
+    say: "ðŸ¦¾ " + String(((ex || {}).next_action || {}).do || "on patrol").slice(0, 46) }];
   if (dept) people.push({ c: TAB_ACCENT[tab] || "var(--gold)", dur: 22,
     say: `${_exIcon(dept.label)} ${dept.label}: ${dept.status === "live" ? "working now" : dept.status === "slow" ? "due to run" : "resting"}` });
   live.forEach((L, i) => {
@@ -1833,7 +1833,7 @@ async function renderCrew(tab) {
   });
   host.innerHTML = people.slice(0, 4).map((p, i) => `
     <div class="crew-p" style="background:${p.c};--x0:${3 + i * 6}%;--x1:${68 + i * 7}%;--dur:${p.dur}s;--delay:${-i * 9}s"
-      title="a resident of the OS — click to open the cockpit"><span class="say">${esc(p.say)}</span></div>`).join("");
+      title="a resident of the OS â€” click to open the cockpit"><span class="say">${esc(p.say)}</span></div>`).join("");
   host.querySelectorAll(".crew-p").forEach(el => el.addEventListener("click", () => show("excava")));
   if (_crewTimer) clearInterval(_crewTimer);
   let turn = 0;                                     // residents take turns "talking"
@@ -1863,10 +1863,10 @@ async function renderExcava() {
     <div class="ex-station ${s.status === "stale" ? "stale" : ""}" style="left:${s.x}%;top:${s.y}%">
       <span class="lamp ${esc(s.status || "stale")}"></span>
       <div class="ic">${_exIcon(s.label)}</div><div class="nm">${esc(s.label || "")}</div>
-      <div class="st">${s.status === "live" ? "working" : s.status === "slow" ? "due" : "idle"} · ran ${_ageAgo(s.age_hours)}</div>
+      <div class="st">${s.status === "live" ? "working" : s.status === "slow" ? "due" : "idle"} Â· ran ${_ageAgo(s.age_hours)}</div>
     </div>`).join("");
   // worker bots: one per non-stale department, walking core <-> station with a task chip.
-  // Each department's crew has its own color — you can tell WHO is doing WHAT at a glance.
+  // Each department's crew has its own color â€” you can tell WHO is doing WHAT at a glance.
   const BOTC = ["oklch(0.85 0.165 95)", "oklch(0.72 0.17 40)", "oklch(0.75 0.15 200)", "oklch(0.75 0.17 330)",
     "oklch(0.78 0.17 145)", "oklch(0.75 0.14 280)", "oklch(0.8 0.15 60)", "oklch(0.82 0.12 170)"];
   const bots = stations.filter(s => s.status !== "stale").map((s, i) => {
@@ -1877,14 +1877,14 @@ async function renderExcava() {
   const taskHTML = tasks.length ? tasks.map(t => `<div class="ex-task">
       <span class="tk ${t.status === "working" ? "w" : t.status === "held" ? "h" : "q"}">${esc((t.status || "queued").toUpperCase())}</span>
       <span>${esc(t.task || "")}</span></div>`).join("")
-    : `<p class="sub">No tasks in the inbox. Use the send box above, tell Claude "EXCAVA: <task>", or edit <code>data/excava_inbox.json</code> — it works the queue on its own, holding anything outward until the gate is green.</p>`;
-  // ── OS SPINE (Phase 0-2): the bus board, beat log, drive controls, approval queue ──
+    : `<p class="sub">No tasks in the inbox. Use the send box above, tell Claude "EXCAVA: <task>", or edit <code>data/excava_inbox.json</code> â€” it works the queue on its own, holding anything outward until the gate is green.</p>`;
+  // â”€â”€ OS SPINE (Phase 0-2): the bus board, beat log, drive controls, approval queue â”€â”€
   const busPer = (os.bus && os.bus.per_department) || {};
   const deptChips = Object.entries(busPer).map(([d, c]) =>
-    `<span class="os-dept">${_exIcon(d)} <b>${esc(d)}</b> ${c.queued || 0}q · ${c.working || 0}w · ${c.done || 0}✓${c.held ? ` · <span style="color:#92400e;font-weight:700">${c.held} held</span>` : ""}</span>`).join("")
-    || `<p class="sub">The bus is empty — send a task above.</p>`;
-  const logHTML = ((os.beat_log || []).length ? os.beat_log : ["quiet beat — everything waits on the next cron heartbeat"])
-    .map(l => `<div>· ${esc(l)}</div>`).join("");
+    `<span class="os-dept">${_exIcon(d)} <b>${esc(d)}</b> ${c.queued || 0}q Â· ${c.working || 0}w Â· ${c.done || 0}âœ“${c.held ? ` Â· <span style="color:#92400e;font-weight:700">${c.held} held</span>` : ""}</span>`).join("")
+    || `<p class="sub">The bus is empty â€” send a task above.</p>`;
+  const logHTML = ((os.beat_log || []).length ? os.beat_log : ["quiet beat â€” everything waits on the next cron heartbeat"])
+    .map(l => `<div>Â· ${esc(l)}</div>`).join("");
   const lastH = os.bus && os.bus.last_handoff;
   const weights = (excfg && excfg.priority_weights) || {};
   const wBars = Object.entries(weights).sort((a, b) => b[1] - a[1]).map(([k, v]) =>
@@ -1892,42 +1892,42 @@ async function renderExcava() {
   const auditOK = !os.audit || os.audit.ok;
   const driveHTML = `
     <div class="card" style="border-top:3px solid var(--gold)">
-      <h3>🕹 You drive it <span class="sub">— send work, flip the mode, tune the dial</span>
+      <h3>ðŸ•¹ You drive it <span class="sub">â€” send work, flip the mode, tune the dial</span>
         <span class="ex-mode ${esc(mode)}">${esc(mode.toUpperCase())}</span></h3>
       <div class="ex-send">
-        <input id="ex-send-input" maxlength="180" placeholder='Send EXCAVA a task… e.g. "resolve links for the newest 50 tools"'>
-        <button class="qr-btn" id="ex-send-btn">send ➤</button>
+        <input id="ex-send-input" maxlength="180" placeholder='Send EXCAVA a taskâ€¦ e.g. "resolve links for the newest 50 tools"'>
+        <button class="qr-btn" id="ex-send-btn">send âž¤</button>
       </div>
-      <p class="sub">Send opens a prefilled GitHub issue (works on your phone) — CI queues it at <b>owner rank</b>, replies a receipt, closes the issue. Mode, same channel:
-        <a target="_blank" href="${_exIssue("EXCAVA: kill")}">🔴 kill</a> ·
-        <a target="_blank" href="${_exIssue("EXCAVA: safe")}">🟡 safe</a> ·
-        <a target="_blank" href="${_exIssue("EXCAVA: run")}">🟢 run</a> ·
-        or <a target="_blank" href="https://github.dev/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/excava_inbox.json">edit the inbox directly</a> · or tell Claude “EXCAVA: &lt;task&gt;”.</p>
+      <p class="sub">Send opens a prefilled GitHub issue (works on your phone) â€” CI queues it at <b>owner rank</b>, replies a receipt, closes the issue. Mode, same channel:
+        <a target="_blank" href="${_exIssue("EXCAVA: kill")}">ðŸ”´ kill</a> Â·
+        <a target="_blank" href="${_exIssue("EXCAVA: safe")}">ðŸŸ¡ safe</a> Â·
+        <a target="_blank" href="${_exIssue("EXCAVA: run")}">ðŸŸ¢ run</a> Â·
+        or <a target="_blank" href="https://github.dev/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/excava_inbox.json">edit the inbox directly</a> Â· or tell Claude â€œEXCAVA: &lt;task&gt;â€.</p>
       <div class="ex-grid" style="margin-top:10px">
         <div>
-          <b class="sub">⚙ OS spine — beat #${os.beats || "?"} · audit ${auditOK ? "✅ code matches the guardrails" : `⚠ ${esc(((os.audit || {}).problems || []).join("; ") || "problems")} — auto SAFE`}</b>
+          <b class="sub">âš™ OS spine â€” beat #${os.beats || "?"} Â· audit ${auditOK ? "âœ… code matches the guardrails" : `âš  ${esc(((os.audit || {}).problems || []).join("; ") || "problems")} â€” auto SAFE`}</b>
           <div style="margin-top:8px">${deptChips}</div>
           <div class="os-log">${logHTML}</div>
-          ${lastH ? `<p class="sub" style="margin-top:6px">last hand-off: <a target="_blank" href="${GH_REPO}/blob/main/${esc(lastH)}">${esc(lastH.split("/").pop())}</a> · <a target="_blank" href="${GH_REPO}/tree/main/data/excava/traces">all traces</a></p>` : ""}
+          ${lastH ? `<p class="sub" style="margin-top:6px">last hand-off: <a target="_blank" href="${GH_REPO}/blob/main/${esc(lastH)}">${esc(lastH.split("/").pop())}</a> Â· <a target="_blank" href="${GH_REPO}/tree/main/data/excava/traces">all traces</a></p>` : ""}
         </div>
         <div>
-          <b class="sub">🎚 Priority weights — which auto-work reaches the bus first (your inbox always outranks)</b>
+          <b class="sub">ðŸŽš Priority weights â€” which auto-work reaches the bus first (your inbox always outranks)</b>
           <div class="taste-bars" style="margin-top:8px">${wBars || "<p class='sub'>defaults active</p>"}</div>
-          <p class="sub">change from anywhere: issue “EXCAVA: weight access 95”</p>
+          <p class="sub">change from anywhere: issue â€œEXCAVA: weight access 95â€</p>
         </div>
       </div>
     </div>`;
   const pend = (ap && ap.pending) || [];
   const apHTML = `
-    <div class="card"><h3>🖊 Approval queue <span class="sub">— the only things waiting on YOU (${pend.length})</span></h3>
+    <div class="card"><h3>ðŸ–Š Approval queue <span class="sub">â€” the only things waiting on YOU (${pend.length})</span></h3>
       ${pend.length ? pend.map(p => `<div class="ex-task">
         <span class="tk h">${esc((p.category || "held").toUpperCase())}</span>
-        <span>${esc(p.title || "")} <span class="sub">— ${esc(p.why || "")}</span></span>
-        ${p.id ? `<a class="qr-btn" style="margin-left:auto;flex:none" target="_blank" href="${_exIssue("EXCAVA: approve " + p.id)}">approve ✓</a>` : ""}</div>`).join("")
+        <span>${esc(p.title || "")} <span class="sub">â€” ${esc(p.why || "")}</span></span>
+        ${p.id ? `<a class="qr-btn" style="margin-left:auto;flex:none" target="_blank" href="${_exIssue("EXCAVA: approve " + p.id)}">approve âœ“</a>` : ""}</div>`).join("")
       : `<p class="sub">Nothing waits on you. Tasks land here only after 3-tier escalation, an outward gate hold, or an unroutable/missing-resource hold.</p>`}
     </div>`;
   const goalsMini = goals.map(g => `<span class="pill" title="${esc(g.gap || "")}">${esc(g.id)} ${g.score}</span>`).join(" ");
-  // ── PHASE 5, the LIVING OS: residents 1:1 with real agents, fleet health, queue + trace viewer ──
+  // â”€â”€ PHASE 5, the LIVING OS: residents 1:1 with real agents, fleet health, queue + trace viewer â”€â”€
   const deptsReg = (reg && reg.departments) || {};
   const regAgents = (reg && reg.agents) || [];
   const busTasks = os.tasks || [];
@@ -1941,89 +1941,89 @@ async function renderExcava() {
       const t = busTasks.find(x => x.department === d) || {};
       const w = regAgents.find(a => a.department === d && a.tier === 1) || {};
       return `<div class="ex-bot" style="background:${BOTC[i % BOTC.length]};--sx:50%;--sy:45%;--ex:${st.x}%;--ey:${st.y}%;--dur:${5.5 + (i % 4) * 1.6}s;--delay:${-i * 1.7}s"
-        title="${esc(w.id || d)} — ${esc(t.title || "on the bus")}">
+        title="${esc(w.id || d)} â€” ${esc(t.title || "on the bus")}">
         <span class="ex-chip">${esc(d)}: ${esc(String(t.title || "work").split(" ").slice(0, 2).join(" "))}</span></div>`;
     }).join("");
   const bpMap = os.backpressure || {}, usage = os.usage || {};
   const fleetHTML = `
-    <div class="card"><h3>🛠 Fleet health <span class="sub">— every department: its worker, real counters, who's resting</span></h3>
+    <div class="card"><h3>ðŸ›  Fleet health <span class="sub">â€” every department: its worker, real counters, who's resting</span></h3>
       <div class="fleet">${Object.keys(deptsReg).sort().map(d => {
         const u = usage[d] || {}, c = busPer[d] || {}, bp = bpMap[d] || {};
         const cooling = bp.cooldown_until && bp.cooldown_until > new Date().toISOString();
         const w = regAgents.find(a => a.department === d && a.tier === 1);
-        return `<div class="dep">${_exIcon(d)} <b>${esc(d)}</b>${deptsReg[d].gated ? " 🔒 gated" : ""}<br>
+        return `<div class="dep">${_exIcon(d)} <b>${esc(d)}</b>${deptsReg[d].gated ? " ðŸ”’ gated" : ""}<br>
           <span class="sub">${esc(w ? w.id : "unstaffed until Phase 3")}</span><br>
-          ${c.queued || 0} queued · ${c.working || 0} working · ${u.done || 0} done · ${u.handoffs || 0} hand-offs · ${u.fails || 0} fails
-          ${cooling ? `<br><span class="cool">😮‍💨 resting until ${esc(String(bp.cooldown_until).slice(11, 16))} UTC (backpressure)</span>` : ""}</div>`;
+          ${c.queued || 0} queued Â· ${c.working || 0} working Â· ${u.done || 0} done Â· ${u.handoffs || 0} hand-offs Â· ${u.fails || 0} fails
+          ${cooling ? `<br><span class="cool">ðŸ˜®â€ðŸ’¨ resting until ${esc(String(bp.cooldown_until).slice(11, 16))} UTC (backpressure)</span>` : ""}</div>`;
       }).join("")}</div></div>`;
   const evs = (os.recent_events || []).slice().reverse();
   const _evTxt = e => String(e.why || e.what || e.doc || e.result || e.reason || "").slice(0, 70);
   const queueHTML = `
     <div class="ex-grid">
-      <div class="card"><h3>🚌 Live bus queue <span class="sub">— click a task to see its full trace (why X over Y)</span></h3>
+      <div class="card"><h3>ðŸšŒ Live bus queue <span class="sub">â€” click a task to see its full trace (why X over Y)</span></h3>
         ${busTasks.length ? busTasks.map(t => `<div class="ex-task os-task-row" data-trace="${esc(t.id)}">
           <span class="tk ${t.status === "working" ? "w" : t.status === "held" ? "h" : "q"}">${esc(String(t.status).toUpperCase())}</span>
-          <span>${_exIcon(t.department || "")} <b>${esc(t.department || "unrouted")}</b> · ${esc(t.title)}
-            <span class="sub">step ${t.steps || 0} · from ${esc(t.source || "?")}${t.doc ? " · has hand-off doc" : ""}</span></span></div>`).join("")
-        : `<p class="sub">Bus is clear — everything is done or waiting for the next heartbeat.</p>`}
+          <span>${_exIcon(t.department || "")} <b>${esc(t.department || "unrouted")}</b> Â· ${esc(t.title)}
+            <span class="sub">step ${t.steps || 0} Â· from ${esc(t.source || "?")}${t.doc ? " Â· has hand-off doc" : ""}</span></span></div>`).join("")
+        : `<p class="sub">Bus is clear â€” everything is done or waiting for the next heartbeat.</p>`}
         <div id="trace-view"></div>
       </div>
-      <div class="card"><h3>📡 OS events <span class="sub">— the daemon feed: everything the OS saw machine-wide</span></h3>
+      <div class="card"><h3>ðŸ“¡ OS events <span class="sub">â€” the daemon feed: everything the OS saw machine-wide</span></h3>
         <div class="os-log" style="max-height:280px">${evs.length ? evs.map(e =>
-          `<div>· [${esc(String(e.at || "").slice(11, 16))}] <b>${esc(e.kind)}</b> ${esc(e.lane || e.chose || e.department || "")} ${esc(_evTxt(e))}</div>`).join("")
-          : "<div>· events appear here as beats run</div>"}</div>
+          `<div>Â· [${esc(String(e.at || "").slice(11, 16))}] <b>${esc(e.kind)}</b> ${esc(e.lane || e.chose || e.department || "")} ${esc(_evTxt(e))}</div>`).join("")
+          : "<div>Â· events appear here as beats run</div>"}</div>
       </div>
     </div>`;
   const maint = mode !== "run"
-    ? `<div class="ex-maint"><b>${mode === "kill" ? "⛔ KILL SWITCH — the OS is stopped" : "🔧 MAINTENANCE — safe mode, assess only"}</b></div>` : "";
-  // ── PHASE 6: the DIRECTION LOOP + CHANGE TUTORIALS (D2 — the loop that was missed once) ──
+    ? `<div class="ex-maint"><b>${mode === "kill" ? "â›” KILL SWITCH â€” the OS is stopped" : "ðŸ”§ MAINTENANCE â€” safe mode, assess only"}</b></div>` : "";
+  // â”€â”€ PHASE 6: the DIRECTION LOOP + CHANGE TUTORIALS (D2 â€” the loop that was missed once) â”€â”€
   const dirList = ((dirs && dirs.directions) || []).filter(d => d.status === "active").slice(-4).reverse();
   const tutList = ((tuts && tuts.tutorials) || []).slice(0, 4);
   const directionHTML = `
     <div class="card" style="border-top:3px solid var(--gold)">
-      <h3>🧭 Direction & tutorials <span class="sub">— you steer; EXCAVA shows its reading; every change gets a walkthrough</span></h3>
+      <h3>ðŸ§­ Direction & tutorials <span class="sub">â€” you steer; EXCAVA shows its reading; every change gets a walkthrough</span></h3>
       <div class="ex-send">
-        <input id="ex-dir-input" maxlength="300" placeholder='State a direction… e.g. "focus on making the activator real before anything visual"'>
-        <button class="qr-btn" id="ex-dir-btn">set direction ➤</button>
+        <input id="ex-dir-input" maxlength="300" placeholder='State a directionâ€¦ e.g. "focus on making the activator real before anything visual"'>
+        <button class="qr-btn" id="ex-dir-btn">set direction âž¤</button>
       </div>
       <div class="ex-grid" style="margin-top:10px">
         <div>
-          <b class="sub">Your active directions — and how EXCAVA reads them (correct it by re-stating)</b>
+          <b class="sub">Your active directions â€” and how EXCAVA reads them (correct it by re-stating)</b>
           ${dirList.length ? dirList.map(d => `<div class="ex-task" style="display:block">
             <div><span class="tk q">${esc(d.id.toUpperCase())}</span> <b>${esc(d.text)}</b></div>
-            <div class="sub" style="margin-top:4px">${d.excava_reading ? "🦾 reading: " + esc(d.excava_reading) : "🦾 acknowledgment arrives next beat (hourly)"}</div>
-          </div>`).join("") : `<p class="sub">No directions yet — the standing rules apply until you state one.</p>`}
+            <div class="sub" style="margin-top:4px">${d.excava_reading ? "ðŸ¦¾ reading: " + esc(d.excava_reading) : "ðŸ¦¾ acknowledgment arrives next beat (hourly)"}</div>
+          </div>`).join("") : `<p class="sub">No directions yet â€” the standing rules apply until you state one.</p>`}
         </div>
         <div>
-          <b class="sub">What changed — walkthroughs, newest first (Phase-6 law: no major change without one)</b>
-          ${tutList.map(t => `<details class="ex-task" style="display:block"><summary><b>${esc(t.build)}</b> · ${esc(t.title)} <span class="sub">${esc(t.at || "")}</span></summary>
+          <b class="sub">What changed â€” walkthroughs, newest first (Phase-6 law: no major change without one)</b>
+          ${tutList.map(t => `<details class="ex-task" style="display:block"><summary><b>${esc(t.build)}</b> Â· ${esc(t.title)} <span class="sub">${esc(t.at || "")}</span></summary>
             <ol style="margin:6px 0 2px 18px;font-size:12.5px">${(t.steps || []).map(s => `<li>${esc(s)}</li>`).join("")}</ol></details>`).join("")
           || `<p class="sub">No tutorials recorded yet.</p>`}
         </div>
       </div>
     </div>`;
-  // ── PHASE 3: what the Creators department made (always labeled, tested before first use) ──
+  // â”€â”€ PHASE 3: what the Creators department made (always labeled, tested before first use) â”€â”€
   const creations = ((made && made.creations) || []).slice(-8).reverse();
   const creationsHTML = creations.length ? `
-    <div class="card"><h3>🦾 Created by EXCAVA <span class="sub">— autonomous creations; every one labeled + independently tested before first use (G-12)</span></h3>
+    <div class="card"><h3>ðŸ¦¾ Created by EXCAVA <span class="sub">â€” autonomous creations; every one labeled + independently tested before first use (G-12)</span></h3>
       ${creations.map(c => `<details class="ex-task" style="display:block">
         <summary><span class="tk ${c.status === "published" ? "w" : "h"}">${esc((c.status || "").toUpperCase())}</span>
-          <b>${esc(c.name)}</b> <span class="pill">${esc(c.type)}</span> <span class="pill" style="background:var(--gold-soft)">🦾 ${esc(c.label || "Created by EXCAVA")}</span>
+          <b>${esc(c.name)}</b> <span class="pill">${esc(c.type)}</span> <span class="pill" style="background:var(--gold-soft)">ðŸ¦¾ ${esc(c.label || "Created by EXCAVA")}</span>
           <span class="sub">fills: ${esc(c.gap || "")}</span></summary>
         <p class="sub" style="margin:6px 0 2px">${esc(c.what || "")}<br><b>use:</b> ${esc(c.how_to_use || "")}<br>
-          <b>self-test:</b> ${c.self_test ? (c.self_test.ok ? "✅ passed" : "❌ " + esc(JSON.stringify(c.self_test.checks))) : "pending"} ·
+          <b>self-test:</b> ${c.self_test ? (c.self_test.ok ? "âœ… passed" : "âŒ " + esc(JSON.stringify(c.self_test.checks))) : "pending"} Â·
           before first run: <code>python -m src.excava_creators --test-before-run "${esc(c.name)}"</code></p>
       </details>`).join("")}
     </div>` : "";
   view.innerHTML = `
     <div class="card" style="border-top:3px solid var(--gold)">
-      <h3>🦾 EXCAVA <span class="sub">— the agentic OS running this project</span>
+      <h3>ðŸ¦¾ EXCAVA <span class="sub">â€” the agentic OS running this project</span>
         <span class="pl-badge ${gate.internal_allowed ? "pl-live" : "pl-stale"}">${gate.internal_allowed ? "OPERATING" : "GATE CLOSED"}</span></h3>
-      <p class="sub">Phase: ${esc(ex && ex.phase || "OS-1 operator")} · memory: <b>${mem.vectors || 0}</b> vectors ·
-        outward actions ${gate.outward_allowed ? "OPEN" : `held (${esc((gate.checks || {}).truth_access_G3 ?? "?")} / 70 truth&access)`} · goals: ${goalsMini}</p>
+      <p class="sub">Phase: ${esc(ex && ex.phase || "OS-1 operator")} Â· memory: <b>${mem.vectors || 0}</b> vectors Â·
+        outward actions ${gate.outward_allowed ? "OPEN" : `held (${esc((gate.checks || {}).truth_access_G3 ?? "?")} / 70 truth&access)`} Â· goals: ${goalsMini}</p>
       <div class="ex-floor">${maint}${stHTML}${workBots || bots}<div class="ex-core">EXCAVA<small>AGENTIC CORE</small></div></div>
-      <div class="ex-detail" id="ex-detail">Click a department station to inspect it — what it does, its real status, cadence and last run.</div>
-      <p class="sub" style="margin-top:8px">The floor is LIVE: each station is a real pipeline department (lamp = its actual status), each colored bot is a real registered agent carrying its department's actual bus task — hover one to see who it is and what it holds.</p>
+      <div class="ex-detail" id="ex-detail">Click a department station to inspect it â€” what it does, its real status, cadence and last run.</div>
+      <p class="sub" style="margin-top:8px">The floor is LIVE: each station is a real pipeline department (lamp = its actual status), each colored bot is a real registered agent carrying its department's actual bus task â€” hover one to see who it is and what it holds.</p>
     </div>
     ${driveHTML}
     ${directionHTML}
@@ -2031,34 +2031,34 @@ async function renderExcava() {
     ${fleetHTML}
     ${queueHTML}
     ${apHTML}
-    <div class="card"><h3>⭐ North Star <span class="sub">— the 8 goals, scored as law every cycle</span></h3>
+    <div class="card"><h3>â­ North Star <span class="sub">â€” the 8 goals, scored as law every cycle</span></h3>
       <div class="taste-bars">${goals.map(g => `<div class="taste-bar" title="${esc(g.gap || "")}">
         <span style="width:150px">${esc(g.id)} ${esc(g.name)}</span>
         <i class="${g.status === "met" ? "gb-met" : g.status === "at-risk" ? "gb-risk" : "gb-unmet"}" style="width:${Math.max(g.score, 3)}%"></i>
         <b>${g.score}</b></div>`).join("")}</div>
     </div>
     <div class="ex-grid">
-      <div class="card"><h3>📥 Task inbox <span class="sub">— send EXCAVA work</span></h3>${taskHTML}</div>
-      <div class="card"><h3>🎯 Now / next</h3>
+      <div class="card"><h3>ðŸ“¥ Task inbox <span class="sub">â€” send EXCAVA work</span></h3>${taskHTML}</div>
+      <div class="card"><h3>ðŸŽ¯ Now / next</h3>
         <div class="ex-task"><span class="tk w">NOW</span><span>${esc(act.do || "idle")}</span></div>
-        ${(act.use_tools || []).length ? `<p class="sub">using (recalled by meaning): ${act.use_tools.map(t => esc(t.name)).join(" · ")}</p>` : ""}
+        ${(act.use_tools || []).length ? `<p class="sub">using (recalled by meaning): ${act.use_tools.map(t => esc(t.name)).join(" Â· ")}</p>` : ""}
         ${((ex && ex.holding) || []).map(h => `<div class="ex-task"><span class="tk h">HELD</span><span>${esc(h.priority || "")} <span class="sub">${esc(h.why_held || "")}</span></span></div>`).join("")}
       </div>
     </div>
-    ${rc && rc.resources ? `<div class="card"><h3>🔋 Resources <span class="sub">— checked before any task is attempted; free-only, on purpose</span></h3>
+    ${rc && rc.resources ? `<div class="card"><h3>ðŸ”‹ Resources <span class="sub">â€” checked before any task is attempted; free-only, on purpose</span></h3>
       <div class="links">${Object.entries(rc.resources).map(([k, v]) => {
         const bad = !v.ok && !v.optional, style = bad ? "border-color:var(--bad);color:var(--bad);font-weight:700"
           : !v.ok ? "border-color:var(--muted);color:var(--muted)" : "";
-        const mark = v.ok ? "✓" : v.optional ? "○" : "✗";
+        const mark = v.ok ? "âœ“" : v.optional ? "â—‹" : "âœ—";
         return `<span class="lnk" style="${style}" title="${esc(v.note || "")}">${mark} ${esc(k.replace(/_/g, " "))}${v.optional && !v.ok ? " (optional)" : ""}</span>`;
       }).join("")}</div>
-      ${(rc.missing || []).length ? `<p class="sub">Missing (blocking): <b>${rc.missing.map(esc).join(", ")}</b> — tasks needing these are HELD, not attempted. Hover a chip for the fix.</p>`
-        : `<p class="sub">Nothing critical missing — every core task type is runnable, 100% free.</p>`}
-      ${(rc.optional_missing || []).length ? `<p class="sub">Skipped by choice (stay free): <b>${rc.optional_missing.map(esc).join(", ")}</b> — a free fallback covers these already, just slower.</p>` : ""}
-      <p class="sub">Can do now: ${Object.entries(rc.can_do || {}).map(([k, v]) => `${v.ok ? "✅" : "⛔"} ${esc(k)}`).join(" · ")}</p>
+      ${(rc.missing || []).length ? `<p class="sub">Missing (blocking): <b>${rc.missing.map(esc).join(", ")}</b> â€” tasks needing these are HELD, not attempted. Hover a chip for the fix.</p>`
+        : `<p class="sub">Nothing critical missing â€” every core task type is runnable, 100% free.</p>`}
+      ${(rc.optional_missing || []).length ? `<p class="sub">Skipped by choice (stay free): <b>${rc.optional_missing.map(esc).join(", ")}</b> â€” a free fallback covers these already, just slower.</p>` : ""}
+      <p class="sub">Can do now: ${Object.entries(rc.can_do || {}).map(([k, v]) => `${v.ok ? "âœ…" : "â›”"} ${esc(k)}`).join(" Â· ")}</p>
     </div>` : ""}`;
   view.querySelectorAll("[data-goto]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); show(a.dataset.goto); }));
-  // Phase 1 task-send: the box builds the prefilled "EXCAVA: …" issue (owner-rank channel)
+  // Phase 1 task-send: the box builds the prefilled "EXCAVA: â€¦" issue (owner-rank channel)
   const sendIt = () => {
     const inp = view.querySelector("#ex-send-input");
     const v = (inp && inp.value || "").trim();
@@ -2068,7 +2068,7 @@ async function renderExcava() {
   if (sBtn) sBtn.addEventListener("click", sendIt);
   const sInp = view.querySelector("#ex-send-input");
   if (sInp) sInp.addEventListener("keydown", e => { if (e.key === "Enter") sendIt(); });
-  // Phase 6 direction-send: same issue channel, "EXCAVA: direction …"
+  // Phase 6 direction-send: same issue channel, "EXCAVA: direction â€¦"
   const dirIt = () => {
     const inp = view.querySelector("#ex-dir-input");
     const v = (inp && inp.value || "").trim();
@@ -2083,13 +2083,13 @@ async function renderExcava() {
     const id = el.dataset.trace;
     const tv = view.querySelector("#trace-view");
     if (!tv) return;
-    tv.innerHTML = `<p class="sub">loading trace ${esc(id)}…</p>`;
+    tv.innerHTML = `<p class="sub">loading trace ${esc(id)}â€¦</p>`;
     const txt = await loadText(`excava/traces/${id}.jsonl`);
     if (!txt) { tv.innerHTML = `<p class="sub">no trace on disk for ${esc(id)} (it may not be committed yet).</p>`; return; }
     const rows = txt.trim().split("\n").map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean);
-    tv.innerHTML = `<p class="sub" style="margin-top:8px"><b>trace — ${esc(id)}</b> (${rows.length} events)</p>` + rows.map(ev => {
+    tv.innerHTML = `<p class="sub" style="margin-top:8px"><b>trace â€” ${esc(id)}</b> (${rows.length} events)</p>` + rows.map(ev => {
       const extra = ev.kind === "routed"
-        ? `chose <b>${esc(ev.chose)}</b>${(ev.over || []).length ? ` over ${(ev.over || []).map(esc).join(", ")}` : ""} — ${esc(ev.why || "")}`
+        ? `chose <b>${esc(ev.chose)}</b>${(ev.over || []).length ? ` over ${(ev.over || []).map(esc).join(", ")}` : ""} â€” ${esc(ev.why || "")}`
         : esc(String(ev.doc || ev.result || ev.reason || ev.by || ev.title || "").slice(0, 140));
       return `<div class="tr-ev">[${esc(String(ev.at || "").slice(0, 16))}] <b>${esc(ev.kind)}</b> ${extra}</div>`;
     }).join("");
@@ -2101,19 +2101,19 @@ async function renderExcava() {
     el.classList.add("sel");
     const s = stations[i] || {};
     const next = s.last_run ? new Date(new Date(s.last_run).getTime() + (s.cadence_h || 12) * 3.6e6) : null;
-    det.innerHTML = `<b>${_exIcon(s.label)} ${esc(s.label || "")}</b> — ${esc(s.what || "")}<br>
-      status <b>${esc(s.status || "?")}</b> · ran ${_ageAgo(s.age_hours)} · every ~${esc(s.cadence_h)}h ·
-      ${esc(s.runs_7d)}× this week${next ? ` · next ~${esc(fmtDate(next.toISOString()))}` : ""}`;
+    det.innerHTML = `<b>${_exIcon(s.label)} ${esc(s.label || "")}</b> â€” ${esc(s.what || "")}<br>
+      status <b>${esc(s.status || "?")}</b> Â· ran ${_ageAgo(s.age_hours)} Â· every ~${esc(s.cadence_h)}h Â·
+      ${esc(s.runs_7d)}Ã— this week${next ? ` Â· next ~${esc(fmtDate(next.toISOString()))}` : ""}`;
   }));
 }
 
-// ── tab router ───────────────────────────────────────────────────────────────
+// â”€â”€ tab router â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function show(tab) {
   state.activeTab = tab;
   if (window.__graphStop) window.__graphStop();   // stop any running graph animation
   document.querySelectorAll("nav button").forEach(b =>
     b.classList.toggle("active", b.dataset.tab === tab));
-  view.innerHTML = empty("Loading…");
+  view.innerHTML = empty("Loadingâ€¦");
   // M1.6: #element/<id> routes to the element detail view on top of any tab
   if (tab && tab.startsWith("element/")) {
     await renderElement(decodeURIComponent(tab.slice(8)));
@@ -2122,7 +2122,7 @@ async function show(tab) {
   }
   await renderTab(tab);
   decorateCards(tab);                             // M1.8: badges + action rows on every list tab
-  // One bulleted "Updates: …" line at the very top of the tab (lists every update type).
+  // One bulleted "Updates: â€¦" line at the very top of the tab (lists every update type).
   const c = cadenceLine(tab);
   if (c) view.insertAdjacentHTML("afterbegin", c);
   // Per-tab accent: every department wears its own color (maximalist, way-finding).
@@ -2142,7 +2142,7 @@ async function show(tab) {
   quickreadSummarize(document.body.classList.contains("quickread"));
 }
 
-// Designs — AI-made / open-source website+app looks, tailored to your taste, with screenshots.
+// Designs â€” AI-made / open-source website+app looks, tailored to your taste, with screenshots.
 // Includes a Design ARENA (Are.na-inspired): pick what you like, and the project learns your taste.
 const _shot = (u, w = 1200) => u ? `https://s.wordpress.com/mshots/v1/${encodeURIComponent(u)}?w=${w}` : "";
 function _arena() { try { return JSON.parse(localStorage.getItem("excavatortron.arena") || "{}"); } catch { return {}; } }
@@ -2155,12 +2155,12 @@ function _tasteWeights(a) {
   return keys.map(k => ({ k, v: s[k], pct: Math.round(100 * s[k] / max) }));
 }
 // Where your Arena votes ACTUALLY show up: a visible panel (here), the gallery re-rank (_pscore),
-// the "♥ your taste" badge per design, and the build command (your styles get injected into it).
+// the "â™¥ your taste" badge per design, and the build command (your styles get injected into it).
 function _tastePanel(a) {
   const w = _tasteWeights(a), votes = a.total || 0;
-  if (!votes) return `<div class="taste-panel"><b>⚔ Your taste</b> <span class="sub">— pick designs in the Arena and this whole tab re-ranks to what YOU like (0 votes yet). Your top styles also flow into the "build" command on each card.</span></div>`;
-  return `<div class="taste-panel"><div class="taste-head"><b>⚔ Your taste</b>
-      <span class="sub">${votes} vote${votes > 1 ? "s" : ""} · gallery ranked for you · styles feed the build command</span>
+  if (!votes) return `<div class="taste-panel"><b>âš” Your taste</b> <span class="sub">â€” pick designs in the Arena and this whole tab re-ranks to what YOU like (0 votes yet). Your top styles also flow into the "build" command on each card.</span></div>`;
+  return `<div class="taste-panel"><div class="taste-head"><b>âš” Your taste</b>
+      <span class="sub">${votes} vote${votes > 1 ? "s" : ""} Â· gallery ranked for you Â· styles feed the build command</span>
       <button class="qr-btn" data-arena-reset title="Clear your taste votes">reset</button></div>
     <div class="taste-bars">${w.slice(0, 6).map(t => `<div class="taste-bar"><span>${esc(t.k)}</span><i style="width:${t.pct}%"></i><b>${t.v}</b></div>`).join("")}</div></div>`;
 }
@@ -2174,7 +2174,7 @@ window.arenaVote = function (slug, tags) {
   localStorage.setItem("excavatortron.arena", JSON.stringify(a)); renderTab("designs");
 };
 // Preview vs. full live-site view, per design (default = full-page image). Screenshots are async and
-// unreliable, so we use TWO free providers with fallback — mShots first, then thum.io (full-page) — then
+// unreliable, so we use TWO free providers with fallback â€” mShots first, then thum.io (full-page) â€” then
 // a graceful "open live" tile. A real full-page shot is TALL; a "Generating Preview"/blank placeholder
 // is short/wide, which is how we detect not-ready-yet and advance. Toggle is in BOTH gallery and arena.
 function _shotURL(prov, u, w) {
@@ -2184,12 +2184,12 @@ function _shotURL(prov, u, w) {
 function _previewHTML(live, w, name) {
   return `<a class="design-fullpage" href="${esc(live)}" target="_blank" rel="noopener" title="Open the live design">
     <img class="mshot" loading="lazy" src="${esc(_shotURL("mshots", live, w))}" data-url="${esc(live)}" data-w="${w}" data-try="0" alt="${esc(name || "")}">
-    <span class="fp-hint">full page — scroll ↓ · click to open live</span></a>`;
+    <span class="fp-hint">full page â€” scroll â†“ Â· click to open live</span></a>`;
 }
 function _liveHTML(live) {
   return `<div class="design-live"><iframe class="livefr" src="${esc(live)}" loading="lazy" referrerpolicy="no-referrer"
       sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
-    <span class="fp-hint">live site — if blank, <a href="${esc(live)}" target="_blank" rel="noopener">open ↗</a></span></div>`;
+    <span class="fp-hint">live site â€” if blank, <a href="${esc(live)}" target="_blank" rel="noopener">open â†—</a></span></div>`;
 }
 // WAY 3 (client safety net): if a live iframe errors or never loads (blocked/dead), swap it for the
 // reliable full-page screenshot. Catches the cases server-side header detection misses.
@@ -2197,7 +2197,7 @@ function _liveFallback(fr) {
   const media = fr.closest(".design-media"); if (!media) return;
   const body = media.querySelector(".dview-body"); if (!body) return;
   const live = media.dataset.live || "", w = +media.dataset.w || 1200, name = media.dataset.name || "";
-  body.innerHTML = `<div class="dnopreview">Can't embed this one live — <a href="${esc(live)}" target="_blank" rel="noopener">open live ↗</a>. Full screenshot:</div>` + _previewHTML(live, w, name);
+  body.innerHTML = `<div class="dnopreview">Can't embed this one live â€” <a href="${esc(live)}" target="_blank" rel="noopener">open live â†—</a>. Full screenshot:</div>` + _previewHTML(live, w, name);
   _wireMshots(media);
 }
 function _wireLive(scope) {
@@ -2205,23 +2205,23 @@ function _wireLive(scope) {
     fr.dataset.wired = "1"; let loaded = false;
     fr.addEventListener("load", () => { loaded = true; });
     fr.addEventListener("error", () => _liveFallback(fr));
-    setTimeout(() => { if (!loaded) _liveFallback(fr); }, 5000);   // never fired load → blocked/dead → screenshot
+    setTimeout(() => { if (!loaded) _liveFallback(fr); }, 5000);   // never fired load â†’ blocked/dead â†’ screenshot
   });
 }
 function _designMedia(x, w, liveDefault) {
   const live = x.source_url || x.homepage || "";
-  if (!live) return x.look ? `<div class="dnopreview">No live URL captured — described look below.</div>` : "";
+  if (!live) return x.look ? `<div class="dnopreview">No live URL captured â€” described look below.</div>` : "";
   // Only embed sites we've VERIFIED resolve AND don't block framing. Everything else (unverified, blocked,
-  // or dead) shows the full-page screenshot — still the whole site, but never a blank/broken iframe.
+  // or dead) shows the full-page screenshot â€” still the whole site, but never a blank/broken iframe.
   const canEmbed = x.url_status === "ok" && x.no_embed === false;
   const useLive = liveDefault && canEmbed;
   const body = useLive ? _liveHTML(live) : _previewHTML(live, w, x.name);
   return `<div class="design-media" data-live="${esc(live)}" data-w="${w}" data-name="${esc(x.name || "")}" data-embed="${canEmbed ? "1" : "0"}">
-    <div class="dview-tabs"><button class="${liveDefault ? "" : "active"}" data-dview="preview" title="Preview image">🖼 Preview</button>
-      <button class="${liveDefault ? "active" : ""}" data-dview="live" title="Live site if it allows embedding, else its full screenshot">🔍 Full site</button></div>
+    <div class="dview-tabs"><button class="${liveDefault ? "" : "active"}" data-dview="preview" title="Preview image">ðŸ–¼ Preview</button>
+      <button class="${liveDefault ? "active" : ""}" data-dview="live" title="Live site if it allows embedding, else its full screenshot">ðŸ” Full site</button></div>
     <div class="dview-body">${body}</div></div>`;
 }
-// Screenshot loader with PROVIDER FALLBACK. Real full-page shot = tall; short/blank = not-ready → advance:
+// Screenshot loader with PROVIDER FALLBACK. Real full-page shot = tall; short/blank = not-ready â†’ advance:
 // re-poll mShots (it's async), then switch to thum.io, then show a graceful open-live tile.
 function _wireMshots(scope) {
   (scope || view).querySelectorAll("img.mshot:not([data-wired])").forEach(img => {
@@ -2231,13 +2231,13 @@ function _wireMshots(scope) {
       const u = img.dataset.url, w = img.dataset.w || 1200;
       if (t === 1) {                                 // try the faster provider first (thum.io)
         setTimeout(() => { img.src = _shotURL("thum", u, w) + "?r=" + t; }, 800);
-      } else if (t <= 5) {                           // poll mShots as it generates async (can take 5–15s) — be patient
+      } else if (t <= 5) {                           // poll mShots as it generates async (can take 5â€“15s) â€” be patient
         setTimeout(() => { img.src = _shotURL("mshots", u, w) + "&r=" + t; }, 2500 + t * 1200);
       } else if (t <= 7) {                           // one more thum.io pass
         setTimeout(() => { img.src = _shotURL("thum", u, w) + "?r=" + t; }, 1500);
-      } else {                                       // exhausted → graceful open-live tile
+      } else {                                       // exhausted â†’ graceful open-live tile
         const a = img.closest(".design-fullpage");
-        if (a) a.outerHTML = `<div class="dnopreview">Preview still generating — <a href="${a.href}" target="_blank" rel="noopener">open live ↗</a>.</div>`;
+        if (a) a.outerHTML = `<div class="dnopreview">Preview still generating â€” <a href="${a.href}" target="_blank" rel="noopener">open live â†—</a>.</div>`;
       }
     };
     img.addEventListener("load", () => {
@@ -2254,32 +2254,32 @@ function renderDesigns(d) {
   if (q()) list = list.filter(x => hit(x.name, x.look, (x.kind || ""), (x.tech || []).join(" "), (x.style_tags || []).join(" ")));
   const taste = _arenaTaste(a);
   const STYLES = ["all", "bold", "colorful", "playful", "brutalist", "minimal", "retro", "dark", "gradient"];
-  let html = `<div class="card"><h3>🎨 Designs <span class="sub">— tuned to your taste</span>
+  let html = `<div class="card"><h3>ðŸŽ¨ Designs <span class="sub">â€” tuned to your taste</span>
       <span class="pl-badge ${mode === "arena" ? "pl-live" : "pl-slow"}" style="margin-left:8px">${mode === "arena" ? "ARENA" : "GALLERY"}</span></h3>
-    <p class="sub">Designs only — real looks from AI websites &amp; the videos, captured full-page so you can react to every part. ⚔ Arena learns what you like; "build like this" via the activator keeps the real style.</p>
+    <p class="sub">Designs only â€” real looks from AI websites &amp; the videos, captured full-page so you can react to every part. âš” Arena learns what you like; "build like this" via the activator keeps the real style.</p>
     <div class="subnav"><button class="${mode === "gallery" ? "active" : ""}" data-mode="gallery">Gallery</button>
-      <button class="${mode === "arena" ? "active" : ""}" data-mode="arena">⚔ Arena</button></div>
+      <button class="${mode === "arena" ? "active" : ""}" data-mode="arena">âš” Arena</button></div>
     ${_tastePanel(a)}
     ${mode === "gallery" ? `<div class="subnav">` + STYLES.map(s => `<button class="${styleFilter === s ? "active" : ""}" data-style="${s}">${s}</button>`).join("") + `</div>` : ""}</div>`;
 
   if (mode === "arena") {
     const pool = list.filter(x => (x.source_url || x.homepage));
-    if (pool.length < 2) { view.innerHTML = html + empty("Need a couple more designs with previews for the arena — the visual protocol is adding them."); _designHooks(); return; }
+    if (pool.length < 2) { view.innerHTML = html + empty("Need a couple more designs with previews for the arena â€” the visual protocol is adding them."); _designHooks(); return; }
     const i = Math.floor(Math.random() * pool.length); let j = Math.floor(Math.random() * pool.length);
     while (j === i) j = Math.floor(Math.random() * pool.length);
-    html += `<p class="sub" style="text-align:center;margin:6px 0">Which do you like more? Pick it — the project learns your taste. (🔍 Full site shows it live.)</p>
+    html += `<p class="sub" style="text-align:center;margin:6px 0">Which do you like more? Pick it â€” the project learns your taste. (ðŸ” Full site shows it live.)</p>
       <div class="arena-pair">${[pool[i], pool[j]].map(x => `
         <div class="card arena-card">
           ${_designMedia(x, 900, true)}
           <h3>${esc(x.name)} ${(x.style_tags || []).map(t => `<span class="pill">${esc(t)}</span>`).join("")}</h3>
           <p class="sub">${esc((x.look || "").slice(0, 90))}</p>
-          <button class="qr-btn pick-btn" data-pick="${esc(x.slug)}" data-tags="${esc((x.style_tags || []).join(","))}">👍 I like this</button></div>`).join("")}</div>
-      <div style="text-align:center;margin-top:10px"><button class="qr-btn" data-pick="">Skip / both meh →</button></div>`;
+          <button class="qr-btn pick-btn" data-pick="${esc(x.slug)}" data-tags="${esc((x.style_tags || []).join(","))}">ðŸ‘ I like this</button></div>`).join("")}</div>
+      <div style="text-align:center;margin-top:10px"><button class="qr-btn" data-pick="">Skip / both meh â†’</button></div>`;
     view.innerHTML = html; _designHooks(); return;
   }
 
   list.sort((x, y) => _pscore(y, a) - _pscore(x, a));   // gallery: rank by YOUR taste
-  if (!list.length) { view.innerHTML = html + empty(q() ? `No designs match "${esc(state.query)}".` : "No designs yet — the visual protocol watches the videos and collect_designs pulls AI websites each cycle."); _designHooks(); return; }
+  if (!list.length) { view.innerHTML = html + empty(q() ? `No designs match "${esc(state.query)}".` : "No designs yet â€” the visual protocol watches the videos and collect_designs pulls AI websites each cycle."); _designHooks(); return; }
   const SRC = { "ai-product": "AI product", "ai-builder": "AI builder", "gallery": "gallery", "dribbble": "concept", "video": "from video", "visual": "from video", "oss": "open-source" };
   html += list.map(x => {
     const liked = (a.wins || {})[x.slug];
@@ -2289,8 +2289,8 @@ function renderDesigns(d) {
     const buildCmd = `activator: build a site like "${x.name}"${styleBit}`;
     return `<div class="card design-card">
       ${_designMedia(x, 1200)}
-      <h3>${esc(x.name || "Design")} ${(x.style_tags || []).map(t => `<span class="pill">${esc(t)}</span>`).join("")}${match ? `<span class="taste-match" title="matches your Arena taste">♥ your taste</span>` : ""}${src ? `<span class="mentions">${esc(src)}</span>` : ""}
-        <button class="qr-btn ${liked ? "active" : ""}" data-like="${esc(x.slug)}" data-tags="${esc((x.style_tags || []).join(","))}" title="I like this">♥${liked ? " " + liked : ""}</button></h3>
+      <h3>${esc(x.name || "Design")} ${(x.style_tags || []).map(t => `<span class="pill">${esc(t)}</span>`).join("")}${match ? `<span class="taste-match" title="matches your Arena taste">â™¥ your taste</span>` : ""}${src ? `<span class="mentions">${esc(src)}</span>` : ""}
+        <button class="qr-btn ${liked ? "active" : ""}" data-like="${esc(x.slug)}" data-tags="${esc((x.style_tags || []).join(","))}" title="I like this">â™¥${liked ? " " + liked : ""}</button></h3>
       ${x.look ? `<p>${esc(x.look)}</p>` : ""}
       <div class="sub">Build: <code>${esc(buildCmd)}</code> <button class="copy-btn" data-copy="${esc(buildCmd)}" title="Copy build command">copy</button></div>
       ${linksRow(x)}
@@ -2312,7 +2312,7 @@ function _designHooks() {
     media.querySelectorAll(".dview-tabs button").forEach(x => x.classList.toggle("active", x === b));
     if (b.dataset.dview === "live") {
       if (media.dataset.embed === "1") { body.innerHTML = _liveHTML(live); _wireLive(media); }
-      else { body.innerHTML = `<div class="dnopreview">This site blocks live embedding — <a href="${esc(live)}" target="_blank" rel="noopener">open live ↗</a>. Showing its full screenshot:</div>` + _previewHTML(live, w, media.dataset.name || ""); _wireMshots(media); }
+      else { body.innerHTML = `<div class="dnopreview">This site blocks live embedding â€” <a href="${esc(live)}" target="_blank" rel="noopener">open live â†—</a>. Showing its full screenshot:</div>` + _previewHTML(live, w, media.dataset.name || ""); _wireMshots(media); }
     }
     else { body.innerHTML = _previewHTML(live, w, media.dataset.name || ""); _wireMshots(media); }
   }));
@@ -2394,14 +2394,14 @@ document.querySelectorAll("nav button").forEach(b => {
         localStorage.setItem("excavatortron.quickread", on ? "1" : "0"); applyQR(on); });
   }
 
-  // Copy the ready-to-paste skill block (delegated — works for every re-render).
+  // Copy the ready-to-paste skill block (delegated â€” works for every re-render).
   view.addEventListener("click", (e) => {
     const btn = e.target.closest(".copybtn");
     if (!btn) return;
     const box = btn.closest(".usebox");
     const txt = box ? (box.querySelector(".useprompt") || {}).textContent || "" : "";
     const done = (ok) => { const old = btn.textContent;
-      btn.textContent = ok ? "✓ Copied" : "Press Ctrl+C"; btn.classList.toggle("ok", ok);
+      btn.textContent = ok ? "âœ“ Copied" : "Press Ctrl+C"; btn.classList.toggle("ok", ok);
       setTimeout(() => { btn.textContent = old; btn.classList.remove("ok"); }, 1600); };
     if (navigator.clipboard) navigator.clipboard.writeText(txt).then(() => done(true)).catch(() => done(false));
     else done(false);

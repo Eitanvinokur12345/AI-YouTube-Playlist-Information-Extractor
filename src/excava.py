@@ -167,6 +167,14 @@ def _audit_spine() -> list[str]:
                 problems.append(f"guardrails.md no longer names required hand-off field '{f}' (G-4 drift)")
     except Exception:
         problems.append("guardrails.md missing/unreadable — the law is gone (G-4/G-7 unverifiable)")
+    # M2.0: PROTOCOLS.md is the owner's law — every protocol must still be present
+    try:
+        prot = (ROOT / "PROTOCOLS.md").read_text(encoding="utf-8")
+        for p in [f"P{i} —" for i in range(1, 15)]:
+            if p not in prot:
+                problems.append(f"PROTOCOLS.md missing {p.strip(' —')} (owner-law drift)")
+    except Exception:
+        problems.append("PROTOCOLS.md missing/unreadable — the owner's law is gone")
     reg = agents.load_registry()
     for a in reg.get("agents", []):
         if not a.get("scoped_tools"):
@@ -365,6 +373,26 @@ def _beat(args) -> int:
                     else:
                         d["streak"], d["cooldown_until"] = 0, ""
             bus.remember("backpressure", bp)
+
+        # ── M2.7: CONVERSATIONS advance every beat (bounded turns; engines live in CI).
+        #    Fully parallel across rooms; timing recorded; the next beat resumes the rest. ──
+        try:
+            from src import excava_chat as chat
+            chat.ensure_default_rooms()
+            open_rooms = [r for r in chat.load_rooms()["rooms"] if r["status"] == "open"]
+            for r in open_rooms[:4]:
+                for line in chat.advance(r["id"], turns=2):
+                    beat_log.append(line)
+        except Exception as e:
+            beat_log.append(f"rooms: skipped ({type(e).__name__})")
+
+        # ── M2.8: the self-improvement department reviews + tunes + pitches ──
+        try:
+            from src import excava_selfimprove as si
+            for line in si.run():
+                beat_log.append(line)
+        except Exception as e:
+            beat_log.append(f"self-improve: skipped ({type(e).__name__})")
 
         # ── daemon-grade integration (D2 directive): the OS sees EVERY lane of the project.
         #    Any lane that ran since the last beat becomes a bus event — the living OS reacts

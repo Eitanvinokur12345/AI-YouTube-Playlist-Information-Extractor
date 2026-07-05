@@ -1,0 +1,158 @@
+"""
+src/excava_engines.py — M2.1: THE ENGINE LAYER. Real brains behind every agent.
+
+The 9 already-wired FREE families stay first-class and directly callable:
+  Gemini x6 (rotated) · Groq x2 · Cerebras x2 · OpenRouter (free DeepSeek R1 / Qwen3 Coder) ·
+  NVIDIA Nemotron · SambaNova · Mistral · GitHub Models — plus optional self-hosted Hermes
+  (Ollama) and the OPTIONAL OmniRoute gateway (additional central route, never the sole path:
+  set OMNIROUTE_URL + OMNIROUTE_KEY and route="omniroute" becomes available; everything works
+  with it off). Claude rides Eitan's Pro (CLAUDE_CODE_OAUTH_TOKEN_REAL workflows) — it is a
+  PREMIUM session/CI engine, not an HTTP call from here; agents mark work "needs-claude" and
+  the claude.yml lane picks it up.
+
+pick_engine(dept, difficulty): fast-first (Cerebras/Groq) for the bulk -> Gemini/grounded
+for hard -> premium marked for Claude-grade work. Keys absent -> engine skipped gracefully;
+every completion records {engine, model, ms} so chat messages carry "agent · engine" truthfully.
+
+Run: python -m src.excava_engines --selftest
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import time
+import urllib.request
+
+# (name, kind, base_url, model, env_keys[, tier])  kind: gemini | openai | ollama
+CATALOG = [
+    ("cerebras",   "openai", "https://api.cerebras.ai/v1",            "llama-3.3-70b",
+     ["CEREBRAS_API_KEY", "CEREBRAS_API_KEY_2"], "fast"),
+    ("groq",       "openai", "https://api.groq.com/openai/v1",        "llama-3.3-70b-versatile",
+     ["GROQ_API_KEY", "GROQ_API_KEY_2"], "fast"),
+    ("sambanova",  "openai", "https://api.sambanova.ai/v1",           "Meta-Llama-3.3-70B-Instruct",
+     ["SAMBANOVA_API_KEY"], "fast"),
+    ("gemini",     "gemini", "",                                      "gemini-2.0-flash",
+     ["EXTERNAL_REVIEW_API_KEY", "GEMINI_API_KEY", "GEMINI_API_KEY_2", "GEMINI_API_KEY_3",
+      "GEMINI_API_KEY_4", "GEMINI_API_KEY_5", "GEMINI_API_KEY_6"], "grounded"),
+    ("openrouter", "openai", "https://openrouter.ai/api/v1",          "deepseek/deepseek-r1:free",
+     ["OPENROUTER_API_KEY"], "reasoning"),
+    ("nvidia",     "openai", "https://integrate.api.nvidia.com/v1",   "meta/llama-3.3-70b-instruct",
+     ["NVIDIA_API_KEY"], "grounded"),
+    ("mistral",    "openai", "https://api.mistral.ai/v1",             "mistral-small-latest",
+     ["MISTRAL_API_KEY"], "fast"),
+    ("gh-models",  "openai", "https://models.github.ai/inference",    "openai/gpt-4o-mini",
+     ["GH_MODELS_TOKEN", "GITHUB_TOKEN"], "grounded"),
+    ("hermes",     "ollama", "http://localhost:11434/v1",             "hermes3",
+     [], "reasoning"),
+    ("omniroute",  "openai", "",                                      "auto",
+     ["OMNIROUTE_KEY"], "gateway"),
+]
+_ROT: dict = {}
+
+
+def _key(env_keys: list) -> str:
+    live = [os.environ.get(k, "").strip() for k in env_keys]
+    live = [k for k in live if k]
+    if not live:
+        return ""
+    name = env_keys[0]
+    _ROT[name] = (_ROT.get(name, -1) + 1) % len(live)   # rotate multi-key families
+    return live[_ROT[name]]
+
+
+def available() -> list[dict]:
+    """Engines whose keys/endpoints exist right now (never raises)."""
+    out = []
+    for name, kind, base, model, envs, tier in CATALOG:
+        if name == "omniroute":
+            base = os.environ.get("OMNIROUTE_URL", "").strip()
+            if not base or not _key(envs):
+                continue
+        elif name == "hermes":
+            if os.environ.get("HERMES_OLLAMA", "") != "1":
+                continue                                  # opt-in: only when a local Ollama runs
+        elif not _key(envs):
+            continue
+        out.append({"name": name, "kind": kind, "base": base, "model": model,
+                    "envs": envs, "tier": tier})
+    return out
+
+
+def pick_engine(dept: str = "", difficulty: str = "normal") -> dict | None:
+    """Routing policy: fast-first for the bulk; grounded/reasoning for hard; the security
+    department always gets a grounded engine (its verdicts must not hallucinate)."""
+    av = available()
+    if not av:
+        return None
+    want = ("grounded", "reasoning") if (difficulty in ("hard", "grounded") or dept == "security") \
+        else ("fast", "gateway", "grounded", "reasoning")
+    for tier in want:
+        for e in av:
+            if e["tier"] == tier:
+                return e
+    return av[0]
+
+
+def complete(prompt: str, engine: dict | None = None, dept: str = "",
+             difficulty: str = "normal", max_tokens: int = 700) -> dict:
+    """One completion. Returns {ok, text, engine, model, ms}. Falls through the available
+    list on failure — an outage never silences an agent, it just changes the badge."""
+    tried = []
+    order = ([engine] if engine else []) + [e for e in available() if not engine or e["name"] != engine["name"]]
+    if engine is None:
+        first = pick_engine(dept, difficulty)
+        order = ([first] if first else []) + [e for e in available() if not first or e["name"] != first["name"]]
+    for e in order[:4]:
+        t0 = time.time()
+        try:
+            if e["kind"] == "gemini":
+                from src.bulk_analyze import call_gemini
+                r = call_gemini(_key(e["envs"]), e["model"], prompt, 45)
+                text = r if isinstance(r, str) else (r.get("text") or r.get("content") or "")
+            else:
+                key = _key(e["envs"]) if e["envs"] else "ollama"
+                body = json.dumps({"model": e["model"], "max_tokens": max_tokens,
+                                   "messages": [{"role": "user", "content": prompt}]}).encode()
+                req = urllib.request.Request(
+                    e["base"].rstrip("/") + "/chat/completions", data=body,
+                    headers={"Content-Type": "application/json", "Authorization": f"Bearer {key}"})
+                with urllib.request.urlopen(req, timeout=60) as resp:
+                    d = json.loads(resp.read().decode("utf-8", errors="replace"))
+                text = d["choices"][0]["message"]["content"]
+            text = str(text or "").strip()
+            if text:
+                return {"ok": True, "text": text, "engine": e["name"], "model": e["model"],
+                        "ms": int((time.time() - t0) * 1000)}
+            tried.append(f"{e['name']}:empty")
+        except Exception as ex:
+            tried.append(f"{e['name']}:{type(ex).__name__}")
+    return {"ok": False, "text": "", "engine": "none", "model": "", "ms": 0,
+            "error": "; ".join(tried) or "no engines configured"}
+
+
+def main() -> int:
+    import sys
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--selftest", action="store_true")
+    a = ap.parse_args()
+    av = available()
+    print(f"engines available here: {[e['name'] for e in av] or 'NONE (keys live in CI secrets)'}")
+    if a.selftest:
+        ok = 0
+        for e in av:
+            r = complete("Reply with exactly: OK", engine=e, max_tokens=8)
+            print(f"  {e['name']:<11} {'PASS' if r['ok'] else 'fail'} "
+                  f"({r['ms']}ms) {r.get('error', '')[:60]}")
+            ok += r["ok"]
+        print(f"selftest: {ok}/{len(av)} engines answered"
+              + ("" if av else " — run inside CI (engine_selftest.yml) where the keys live"))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

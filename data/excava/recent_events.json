@@ -1,46 +1,6 @@
 {
   "events": [
     {
-      "task": "only-421-1555-videos-ana-13612",
-      "at": "2026-07-06T04:53:32.726643+00:00",
-      "kind": "completed",
-      "by": "analysis-w1",
-      "result": "493 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-07-06T04:53:33.055458+00:00",
-      "kind": "lane_ran",
-      "lane": "Gemini watch (audio+visual)",
-      "status": "live",
-      "what": "Watches videos directly — clears the backlog free"
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-07-06T04:53:33.056286+00:00",
-      "kind": "lane_ran",
-      "lane": "Free analysis pool",
-      "status": "live",
-      "what": "Turns transcripts into skills/tools/connectors (free engines)"
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-07-06T04:53:33.056900+00:00",
-      "kind": "lane_ran",
-      "lane": "AI news refresh",
-      "status": "live",
-      "what": "Refreshes official-site AI news"
-    },
-    {
-      "task": "1870-tools-skills-still--36575",
-      "at": "2026-07-06T11:16:15.935350+00:00",
-      "kind": "enqueued",
-      "title": "1870 tools/skills still have no real link (47.0%)",
-      "source": "auto",
-      "priority": 1,
-      "department": "(unrouted)"
-    },
-    {
       "task": "weakest-lane-deep-analys-36575",
       "at": "2026-07-06T11:16:15.937051+00:00",
       "kind": "enqueued",
@@ -297,6 +257,40 @@
       "lane": "Deep analysis (night-gated)",
       "status": "live",
       "what": "Claude re-analysis + safety pass"
+    },
+    {
+      "task": "empty-body-items-render--31649",
+      "at": "2026-07-06T19:23:41.898769+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "title-collisions-distinc-31649",
+      "at": "2026-07-06T19:23:41.899537+00:00",
+      "kind": "unroutable",
+      "why": "no department specialization matched"
+    },
+    {
+      "task": "lane-transcript-retrieva-77142",
+      "at": "2026-07-06T19:23:41.900194+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "os-lanes",
+      "at": "2026-07-06T19:23:45.377904+00:00",
+      "kind": "lane_ran",
+      "lane": "Gemini watch (audio+visual)",
+      "status": "live",
+      "what": "Watches videos directly — clears the backlog free"
+    },
+    {
+      "task": "os-lanes",
+      "at": "2026-07-06T19:23:45.378549+00:00",
+      "kind": "lane_ran",
+      "lane": "Free analysis pool",
+      "status": "live",
+      "what": "Turns transcripts into skills/tools/connectors (free engines)"
     }
   ]
 }

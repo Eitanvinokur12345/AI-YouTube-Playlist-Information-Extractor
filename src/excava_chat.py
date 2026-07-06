@@ -164,34 +164,35 @@ def _prompt(room: dict, sp: dict, hist: list[dict]) -> str:
 
 
 def _artifact(room: dict, decision: str) -> dict | None:
-    """M2.6: the room's conclusion becomes a REAL committed artifact."""
-    kind = room.get("artifact_kind", "bus-task")
-    if kind == "package":
-        idx = _load(DATA / "elements_index.json", {}).get("elements", [])
-        words = set(re.findall(r"[a-z]{4,}", room["goal"].lower()))
-        scored = sorted(idx, key=lambda e: -len(words & set(re.findall(r"[a-z]{4,}",
-                        f"{e['name']} {e.get('what', '')[:100]}".lower()))))
-        elements = [e["id"] for e in scored[:6] if e["verified"]["status"] != "dead"]
-        pk = _load(DATA / "packages.json", {"packages": []})
-        entry = {"id": f"pkg-{room['id']}", "name": f"Package: {room['goal'][:60]}",
-                 "created_by": "EXCAVA", "label": "Created by EXCAVA",
-                 "from_room": room["id"], "decision": decision[:400],
-                 "elements": elements, "at": _now(), "pinned": False}
-        pk["packages"].append(entry)
-        (DATA / "packages.json").write_text(json.dumps(pk, ensure_ascii=False, indent=1),
-                                            encoding="utf-8")
-        return {"kind": "package", "ref": "data/packages.json", "id": entry["id"]}
-    if kind == "element":
-        try:
-            import subprocess
-            subprocess.run(["python", "-m", "src.excava_creators", "--max-new", "2"],
-                           timeout=300, capture_output=True)
-            return {"kind": "element", "ref": "data/created_by_excava.json"}
-        except Exception:
-            return None
-    t = bus.enqueue(f"[room:{room['id']}] {decision[:120] or room['goal'][:120]}",
-                    detail=f"artifact of {room['id']}", source="agent", priority=2)
-    return {"kind": "bus-task", "ref": t["id"] if t else "(deduped)"}
+    """M2.6 / Part 3 (owner: 'smallest real thing first'): the room's conclusion becomes a REAL
+    committed decision.md — what was decided + a concrete plan, synthesized by the lead from the
+    ACTUAL debate. Always produced (engine-written when possible, transcript-summarized as a
+    fallback) so a room never closes empty. No commands run; just a written, committed output."""
+    hist = [m for m in _history(room, 14) if m.get("agent") != "system"]
+    convo = "\n".join(f"{m['name']}: {m['text'][:280]}" for m in hist) or "(brief debate)"
+    reg = agents.load_registry()
+    cast = _cast(room, reg)
+    lead = next((a for a in cast if a.get("role") == "lead"), (cast[0] if cast else {"name": "Lead"}))
+    prompt = (f"You are {lead.get('name')}, closing this room. Synthesize the debate into a decision.\n"
+              f"GOAL: {room['goal']}\nDEBATE:\n{convo}\n\n"
+              "Output GitHub markdown ONLY, no preamble: a one-line '**Decision:**', then a numbered "
+              "'**Plan:**' of 3-6 concrete steps drawn from the debate, then '**What changed:**' one line.")
+    r = engines.complete(prompt, dept=room.get("dept", ""), difficulty="hard", max_tokens=420)
+    body = (r.get("text") or "").strip() if r.get("ok") else ""
+    src = f"{r.get('engine', '?')}/{r.get('model', '')}" if r.get("ok") else "transcript-summary (no engine)"
+    if not body:                                          # never leave a room without an artifact
+        steps = [m["text"][:200] for m in hist][-5:]
+        body = ("**Decision:** " + (decision[:200] or room["goal"]) + "\n\n**Plan (from the debate):**\n"
+                + "\n".join(f"{i + 1}. {s}" for i, s in enumerate(steps)) + "\n\n**What changed:** first real room artifact.")
+    who = ", ".join(dict.fromkeys(m["name"] for m in hist)) or "the room"
+    md = (f"# {room['goal']}\n\n"
+          f"> Decision artifact · room `{room['id']}` ({room.get('kind', '')}) · {_now()}\n"
+          f"> Participants: {who} · synthesized by {src}\n\n{body}\n")
+    adir = DATA / "excava" / "artifacts"
+    adir.mkdir(parents=True, exist_ok=True)
+    (adir / f"{room['id']}.md").write_text(md, encoding="utf-8")
+    return {"kind": "decision", "ref": f"data/excava/artifacts/{room['id']}.md",
+            "at": _now(), "title": room["goal"][:80], "by": lead.get("name", "lead")}
 
 
 def advance(room_id: str, turns: int = 2) -> list[str]:

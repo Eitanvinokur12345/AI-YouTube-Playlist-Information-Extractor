@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v78";
+const APP_BUILD = "v79";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2084,6 +2084,7 @@ async function renderExcava() {
   // ── PHASE 6: the DIRECTION LOOP + CHANGE TUTORIALS (D2 — the loop that was missed once) ──
   const dirList = ((dirs && dirs.directions) || []).filter(d => d.status === "active").slice(-4).reverse();
   const tutList = ((tuts && tuts.tutorials) || []).slice(0, 4);
+  _tourTuts = tutList;                                // M3.13: expose for the interactive tour runner
   const directionHTML = `
     <div class="card" style="border-top:3px solid var(--gold)">
       <h3>🧭 Direction & tutorials <span class="sub">— you steer; EXCAVA shows its reading; every change gets a walkthrough</span></h3>
@@ -2101,7 +2102,8 @@ async function renderExcava() {
         </div>
         <div>
           <b class="sub">What changed — walkthroughs, newest first (Phase-6 law: no major change without one)</b>
-          ${tutList.map(t => `<details class="ex-task" style="display:block"><summary><b>${esc(t.build)}</b> · ${esc(t.title)} <span class="sub">${esc(t.at || "")}</span></summary>
+          ${tutList.map((t, ti) => `<details class="ex-task" style="display:block" ${ti === 0 ? "open" : ""}><summary><b>${esc(t.build)}</b> · ${esc(t.title)} <span class="sub">${esc(t.at || "")}</span></summary>
+            ${(t.interactive || []).length ? `<div style="margin:6px 0"><button class="qr-btn" data-tour="${ti}" style="background:var(--gold-soft);border-color:var(--gold-line)">▶ Take the interactive tour (${(t.interactive || []).length} stops)</button>${t.podcast ? ` <a class="qr-btn" href="${esc(t.podcast.replace(/^docs\//, ""))}" target="_blank">🎧 podcast</a>` : ""}</div>` : ""}
             <ol style="margin:6px 0 2px 18px;font-size:12.5px">${(t.steps || []).map(s => `<li>${esc(s)}</li>`).join("")}</ol></details>`).join("")
           || `<p class="sub">No tutorials recorded yet.</p>`}
         </div>
@@ -2182,6 +2184,9 @@ async function renderExcava() {
   // M3.11: a pitch in the approval queue opens as a conversation
   view.querySelectorAll("[data-open-pitch]").forEach(a =>
     a.addEventListener("click", e => { e.preventDefault(); openPitch(a.dataset.openPitch); }));
+  // M3.13: the interactive walkthrough
+  view.querySelectorAll("[data-tour]").forEach(b =>
+    b.addEventListener("click", () => startTour(+b.dataset.tour)));
   // Phase 1 task-send: the box builds the prefilled "EXCAVA: …" issue (owner-rank channel)
   let attachBody = "";
   const sendIt = () => {
@@ -2351,6 +2356,41 @@ function openPitch(id) {
   const close = () => { modal.hidden = true; };
   modal.querySelector("[data-pitch-x]").addEventListener("click", close);
   modal.addEventListener("click", e => { if (e.target === modal) close(); });
+}
+
+// ── M3.13 / E7 INTERACTIVE WALKTHROUGH: navigate, highlight the new thing, let you try it ──
+let _tourTuts = [];
+async function startTour(idx) {
+  const t = _tourTuts[idx]; if (!t || !(t.interactive || []).length) return;
+  const steps = t.interactive; let i = 0;
+  let ov = document.getElementById("tour-ov");
+  if (!ov) { ov = document.createElement("div"); ov.id = "tour-ov"; ov.className = "tour-ov"; document.body.appendChild(ov); }
+  const ring = document.createElement("div"); ring.className = "tour-ring"; ov.appendChild(ring);
+  const box = document.createElement("div"); box.className = "tour-box"; ov.appendChild(box);
+  const done = () => { ov.remove(); };
+  async function go() {
+    const s = steps[i];
+    if (state.activeTab !== s.go) { await show(s.go); await new Promise(r => setTimeout(r, 550)); }
+    let el = null, tries = 0;
+    while (!el && tries < 14) { el = document.querySelector(s.look_for); if (!el) { await new Promise(r => setTimeout(r, 180)); tries++; } }
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      await new Promise(r => setTimeout(r, 260));
+      const r = el.getBoundingClientRect();
+      ring.style.cssText = `display:block;top:${r.top - 6}px;left:${r.left - 6}px;width:${r.width + 12}px;height:${r.height + 12}px`;
+    } else { ring.style.display = "none"; }
+    box.innerHTML = `<div class="tour-n">Stop ${i + 1} of ${steps.length} · <b>${esc(s.go)}</b></div>
+      <p>${esc(s.try)}</p>
+      <div class="tour-btns">
+        ${i > 0 ? `<button class="qr-btn" data-tprev>‹ Back</button>` : ""}
+        <button class="qr-btn" data-tskip>Exit</button>
+        <button class="qr-btn" data-tnext style="background:var(--gold);border-color:var(--gold-line)">${i < steps.length - 1 ? "Next ›" : "Done ✓"}</button>
+      </div>`;
+    box.querySelector("[data-tnext]").onclick = () => { if (i < steps.length - 1) { i++; go(); } else done(); };
+    const pv = box.querySelector("[data-tprev]"); if (pv) pv.onclick = () => { i--; go(); };
+    box.querySelector("[data-tskip]").onclick = done;
+  }
+  go();
 }
 
 // ── tab router ───────────────────────────────────────────────────────────────

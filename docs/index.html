@@ -739,6 +739,18 @@
       .tp-row { grid-template-columns:96px 1fr 30px; } .tp-row.wide { grid-template-columns:120px 1fr 30px; }
       .header, header { padding:14px 14px 10px; }
     }
+    /* ── M3.13 / E7 INTERACTIVE WALKTHROUGH — spotlight ring + floating coach box ── */
+    .tour-ov { position:fixed; inset:0; z-index:80; pointer-events:none; }
+    .tour-ring { position:fixed; display:none; border:3px solid var(--gold); border-radius:12px;
+      box-shadow:0 0 0 4000px oklch(0.2 0.02 60 / .55), 0 0 20px oklch(0.85 0.165 95 / .8);
+      transition:top .3s, left .3s, width .3s, height .3s; }
+    .tour-box { position:fixed; left:50%; bottom:26px; transform:translateX(-50%); z-index:81;
+      pointer-events:auto; max-width:440px; width:calc(100% - 32px); background:var(--panel);
+      border:3px solid var(--line); border-radius:14px 18px 12px 16px; padding:13px 16px;
+      box-shadow:5px 6px 0 oklch(0.28 0.02 60 / .4); }
+    .tour-box .tour-n { font-size:11px; font-weight:800; letter-spacing:.05em; color:var(--gold-ink); margin-bottom:4px; }
+    .tour-box p { margin:0 0 10px; font-size:13px; line-height:1.5; }
+    .tour-box .tour-btns { display:flex; gap:8px; justify-content:flex-end; }
     /* ── M3.11b EDITABLE TASTE PANEL — sliders for design-taste + work-taste ── */
     .tp-list { display:flex; flex-direction:column; gap:9px; margin:4px 0 10px; }
     .tp-row { display:grid; grid-template-columns:130px 1fr 34px; align-items:center; gap:10px; }

@@ -202,3 +202,33 @@ Ground truth, verified against real data + the 5 project sessions (not asserted 
 - **PRIORITY REORDER (proposed):** before adding more visual scope or the 2 new departments, make ONE
   real vertical work end-to-end — one engine call answers → one room actually debates → one artifact is
   produced in-app — and make the floor/rooms show only what's real. Pending owner Q (this session).
+
+## M. OWNER DECISIONS + ROOT-CAUSE FIX — 2026-07-06 (Opus 4.8; hand this to Fable)
+**Owner decided (4 questions):**
+1. **Priority = MAKE ONE VERTICAL REAL FIRST.** Pause new visual scope + the 2 new departments until:
+   an engine answers → one room runs real turns → one artifact is produced IN-APP → floor/rooms show
+   ONLY real activity. Then resume the program.
+2. **Monsters + animations = use a REAL image/video generation tool** (not code-drawn SVG). Regenerate
+   ALL department monsters (lead/agent/worker, **with legs + full body + character**) as one cohesive
+   cast, plus the 11 action animations, each placed **on the exact object being acted on**.
+3. **Console = FULLY IN-APP.** No GitHub-issue page. Typing a task dispatches to an in-app queue and
+   streams EXCAVA's reply in place (client-side run or a tiny always-free backend). Remove `_exIssue`
+   as the primary send path.
+4. **Visualization department goals** = owner's 3 (liveliness, info access, enjoyment) **+ clarity/
+   legibility + speed/performance + accessibility**. (Consistency intentionally not added.)
+
+**ROOT CAUSE of the M2 facade — FOUND + FIXED (2026-07-06, commit b47ffe0f):** the beat
+(`python -m src.excava`, in `bulk_analyze.yml`) runs LAST in a job that already drained the Gemini
+free-tier quota (analysis/links/news), and the beat step's env carried **only the 6 Gemini keys** — so
+rooms hit HTTP 429 with **no fallback family** → `gemini:HTTPError` → 0 turns for 33 beats. Fix: added
+the full pool (Groq/Cerebras/OpenRouter/NVIDIA/SambaNova/Mistral/GH-Models) to the beat step so rooms
+fall through to fast, separate-quota engines. **PROOF PENDING:** the next CI run of `bulk_analyze.yml`
+should show real agent turns in `data/excava/chats/**` and beat_log lines like "`<name> spoke (groq…)`".
+If it still fails, run `engine_selftest.yml` and read which families answer.
+
+**FABLE'S NEXT STEPS (in order):** (1) confirm the fix — after the next beat, verify rooms have real
+turns + at least one artifact; if not, route chat explicitly to Groq/Cerebras in `pick_engine` and/or
+run `engine_selftest.yml`. (2) Make the floor/rooms render ONLY real activity (no "working" without a
+real turn/commit behind it). (3) Console fully in-app (decision 3). (4) Real-tool monster+animation
+cast (decision 2). (5) THEN the 2 new departments (§J) + 2 pitch conditions + pitch-monster (§K).
+Everything still: free-only, guardrails (`GUARDRAILS.md`), ship via `python -m src.git_safe ship`.

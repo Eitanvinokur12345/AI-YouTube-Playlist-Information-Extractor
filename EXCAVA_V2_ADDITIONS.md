@@ -151,3 +151,54 @@ The #1 job: make what EXCAVA already does the **deepest, freshest, most accurate
 - **Fable is on Eitan's Pro until July 7** → **front-load building, visuals first**, over the next ~2 days.
 - On switch to Fable: start **M1 core (retrieval depth + verification)** and the **design system + sample
   monsters** in parallel; show results, no approval gate.
+
+## J. TWO NEW DEPARTMENTS (owner 2026-07-06 — enter into roster + floor + goals; build via Fable)
+- **Visualization** — owns the visibility of the ENTIRE Excavatortron interface and how everything is
+  presented (distinct from `visual`, which mines AI website/product designs). Its job: continuously
+  improve the shell/floor/cards/chat presentation. **Goals it drives up:** (1) more liveliness in the
+  project, (2) improved user access to information, (3) user enjoyment following changes. _(Owner invited
+  more goals — pending Q; candidates: clarity/legibility, speed/perf, accessibility, consistency.)_
+- **Power** — owns raising EXCAVA's raw capability. Mandate: chase every option that improves ability
+  **even by 0.5%** — find new tools to add, update agents onto the **best + newest models available**,
+  **combine "elements"** for compounding gains, and change agent **formation / planning / mode of
+  operation / action plan** for productivity. **Always displays a POWER %** (a single headline number for
+  how capable EXCAVA is) that **can exceed 100%**. Each improvement is logged with its measured % delta.
+- Personas match department (per §E1). Monsters: friendly-but-distinctive, matched to function — BUT the
+  whole cast is being reworked (see §L: real image tool, monsters need legs/body). Do not hand-draw new
+  ones in the old style; regenerate the full cast together once the art tool is chosen.
+
+## K. TWO NEW PITCH CONDITIONS + THE PITCH MONSTER (owner 2026-07-06)
+- EXCAVA **always prioritizes improvements it can make ITSELF** (auto, no pitch). It pitches the owner ONLY
+  when it truly needs him. Two NEW pitch triggers added to the existing P5 set:
+  - **(P5d) Owner-only high-leverage:** something **only Eitan can add** to the system that would help a
+    lot (a key/account/hardware/permission/decision EXCAVA cannot self-provide). Pitch = **why + what it
+    unlocks**. Still secondary to anything EXCAVA can do itself.
+  - **(P5e) New-department creation:** proposing a brand-new department. Pitch = **why it's needed + what
+    it will include** (mandate, goals, which existing gap it fills).
+- **NOT a pitch — notify only:** adding new **agents / employees** to an existing department needs no
+  approval; EXCAVA just **tells the owner through the existing channels** that it happened.
+- **The pitch MONSTER:** when a pitch is waiting, a monster **walks up to signal it, styled to the group
+  that produced the pitch** — a lone agent (single monster), a department (its lead + workers), a group
+  chat (a small cluster), or a **war room** (the round-table cast). The signal's form tells Eitan at a
+  glance who is asking. (Extends M3.11 "a monster walks up on new approvals".)
+
+## L. HONESTY AUDIT — 2026-07-06 (Opus 4.8), READ BEFORE BUILDING MORE
+Ground truth, verified against real data + the 5 project sessions (not asserted from handoffs):
+- **REAL and working:** the M1 pipeline — lanes extract/analyze/verify elements, write hand-off docs,
+  grow memory (6,400+ elements; floor "working/ran Xh" statuses are real git-commit recency).
+- **FACADE — not actually happening:** the M2 "agents conversing → converge → ARTIFACT" layer. Across 33
+  beats there are **0 real agent turns and 0 artifacts** — every engine call fails (`beat_log:
+  "no engine here (gemini:HTTPError)"`). The code is genuinely wired to call real engines, but no engine
+  has ever answered where the beat runs (keys not reaching the beat / endpoint rejects). So the rooms,
+  the bustling floor, and "M2 COMPLETE" are presentation over a core that does not run yet.
+- **Console leaves the app:** typing a task opens a GitHub *new-issue* page (`_exIssue`). Owner wants it
+  **fully in-app**. Needs a client-side run path or a tiny always-free backend (open decision).
+- **Monsters/animations:** code-drawn SVG (by Fable). Owner: they "don't look good… should have legs,"
+  and animations must sit **on the specific thing being acted on**. Likely needs a **real image/video
+  generation tool** (available now), not hand-drawn SVG.
+- **Scores corrected:** G4 (Autonomy) + G9 (Agency) were scored off proxies (lanes/beats/dept count) and
+  showed 90/100 while the agentic layer is 0. Now **CAPPED at 30** in `goals_check.py` until a real
+  conversation turn/artifact exists (the cap self-lifts on real evidence). Overall dropped ~76 → 62.
+- **PRIORITY REORDER (proposed):** before adding more visual scope or the 2 new departments, make ONE
+  real vertical work end-to-end — one engine call answers → one room actually debates → one artifact is
+  produced in-app — and make the floor/rooms show only what's real. Pending owner Q (this session).

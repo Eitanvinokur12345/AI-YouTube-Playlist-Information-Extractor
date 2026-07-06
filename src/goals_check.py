@@ -107,6 +107,26 @@ def main() -> int:
                      f"{depts} departments; audit {'ok' if (osx.get('audit') or {}).get('ok') else 'failing/missing'} "
                      "(next: more departments executing, not just assessing)")
 
+    # ── HONESTY CAP (owner order 2026-07-06): G4 Autonomy + G9 Agency scored off PROXIES (lanes,
+    #    beats, dept count) while the actual agentic behaviour — agents CONVERSING and PRODUCING —
+    #    has never happened (every engine call fails: see beat_log "no engine here"). Until a real
+    #    conversation turn or artifact exists, cap both at 30. The cap LIFTS itself the moment the
+    #    engines answer and rooms advance, so the score can only rise on real evidence. ──
+    real_turns = 0
+    for cf in (ROOT / "data" / "excava" / "chats").glob("**/*.jsonl"):
+        try:
+            for ln in cf.read_text(encoding="utf-8").splitlines():
+                if ln.strip() and '"agent": "system"' not in ln:
+                    real_turns += 1
+        except Exception:
+            pass
+    rooms_ = _load("excava/rooms.json", {})
+    real_artifacts = sum(1 for r in rooms_.get("rooms", []) if r.get("artifact"))
+    if real_turns == 0 and real_artifacts == 0:
+        for gid in ("G4", "G9"):
+            s0, gap0 = sig.get(gid, (30, ""))
+            sig[gid] = (min(s0, 30), gap0 + " — CAPPED 30: no real agent conversation/artifact yet (engines not answering)")
+
     out = []
     for g in ns:
         score, gap = sig.get(g["id"], (50, ""))

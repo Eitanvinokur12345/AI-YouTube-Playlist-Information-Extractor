@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v76";
+const APP_BUILD = "v77";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2415,6 +2415,86 @@ function _pscore(x, a) {
   const s = a.styles || {}, w = a.wins || {};
   return (x.style_tags || []).reduce((t, k) => t + (s[k] || 0), 0) * 3 + (w[x.slug] || 0) * 5 + (x.stars || 0) / 1000;
 }
+// ── M3.11b EDITABLE TASTE PANEL — separate DESIGN-taste (learned) vs WORK-taste (explicit) ──
+// Design taste lives in excavatortron.arena.styles (also grown by Arena votes); work taste is a
+// set of explicit dials in excavatortron.worktaste that feed HORSE best-of-results merges (M4.2).
+const WORK_DIMS = [
+  ["thoroughness", "fast &amp; lean", "thorough &amp; complete"],
+  ["detail", "concise", "detailed &amp; explained"],
+  ["boldness", "safe &amp; conventional", "bold &amp; opinionated"],
+  ["novelty", "proven patterns", "novel approaches"],
+  ["scope", "minimal / focused", "featureful"],
+  ["polish", "rough &amp; quick", "polished &amp; production"],
+];
+function _workTaste() {
+  let w; try { w = JSON.parse(localStorage.getItem("excavatortron.worktaste") || "{}"); } catch { w = {}; }
+  WORK_DIMS.forEach(([k]) => { if (typeof w[k] !== "number") w[k] = 50; });
+  return w;
+}
+function _saveWorkTaste(w) { localStorage.setItem("excavatortron.worktaste", JSON.stringify(w)); }
+async function renderTaste() {
+  const a = _arena(); a.styles = a.styles || {};
+  const wt = _workTaste();
+  const styleKeys = Object.keys(a.styles).filter(k => a.styles[k] > 0).sort((x, y) => a.styles[y] - a.styles[x]);
+  const maxS = Math.max(1, ...styleKeys.map(k => a.styles[k]));
+  const designSliders = styleKeys.length ? styleKeys.slice(0, 10).map(k => {
+    const pct = Math.round(100 * a.styles[k] / maxS);
+    return `<div class="tp-row"><label>${esc(k)}</label>
+      <input type="range" min="0" max="100" value="${pct}" data-dtaste="${esc(k)}">
+      <b class="tp-val">${pct}</b></div>`;
+  }).join("") : `<p class="sub">No design taste yet — vote in the Design Arena (Designs tab) and your styles appear here to fine-tune. You can also add one below.</p>`;
+  const workSliders = WORK_DIMS.map(([k, lo, hi]) =>
+    `<div class="tp-row wide"><label>${esc(k)} <span class="sub">${lo} ↔ ${hi}</span></label>
+      <input type="range" min="0" max="100" value="${wt[k]}" data-wtaste="${esc(k)}">
+      <b class="tp-val">${wt[k]}</b></div>`).join("");
+  view.innerHTML = `
+    <div class="card" style="border-top:3px solid var(--gold)">
+      <h3>🎛 Your taste <span class="sub">— two profiles EXCAVA steers by: how designs should look, and how work should be done. Learned + editable.</span></h3>
+      <p class="sub">Design taste feeds every design + the "build" command; work taste feeds <b>HORSE</b> best-of-results merges (M4.2) and how agents execute. Edits save instantly (on this device); “Save to EXCAVA” persists them for the cloud beats too.</p>
+    </div>
+    <div class="ex-grid">
+      <div class="card"><h3>🎨 Design taste <span class="sub">— learned from your Arena votes, tunable here</span></h3>
+        <div class="tp-list">${designSliders}</div>
+        <div class="tp-add"><input id="tp-newstyle" placeholder="add a style (e.g. brutalist, minimal, glassy)…" maxlength="24">
+          <button class="qr-btn" id="tp-addbtn">+ add</button>
+          <button class="qr-btn" data-taste-reset="design">reset</button></div>
+      </div>
+      <div class="card"><h3>🛠 Work taste <span class="sub">— how you want things built; feeds HORSE merges</span></h3>
+        <div class="tp-list">${workSliders}</div>
+        <div class="tp-add"><button class="qr-btn" data-taste-reset="work">reset to balanced</button></div>
+      </div>
+    </div>
+    <div class="card"><button class="qr-btn" id="tp-save" style="background:var(--gold-soft);border-color:var(--gold-line)">💾 Save to EXCAVA (persist for the cloud beats)</button>
+      <span class="sub" id="tp-savenote"> — writes your taste through the owner channel so HORSE + designers use it server-side.</span></div>`;
+  // wire design-taste sliders
+  view.querySelectorAll("[data-dtaste]").forEach(s => s.addEventListener("input", () => {
+    const k = s.dataset.dtaste; a.styles[k] = +s.value;
+    s.nextElementSibling.textContent = s.value;
+    localStorage.setItem("excavatortron.arena", JSON.stringify(a));
+  }));
+  // wire work-taste sliders
+  view.querySelectorAll("[data-wtaste]").forEach(s => s.addEventListener("input", () => {
+    wt[s.dataset.wtaste] = +s.value; s.nextElementSibling.textContent = s.value; _saveWorkTaste(wt);
+  }));
+  const addBtn = view.querySelector("#tp-addbtn");
+  if (addBtn) addBtn.addEventListener("click", () => {
+    const inp = view.querySelector("#tp-newstyle"); const k = (inp.value || "").trim().toLowerCase();
+    if (!k) return; a.styles[k] = Math.max(a.styles[k] || 0, Math.round(maxS * 0.6) || 3);
+    localStorage.setItem("excavatortron.arena", JSON.stringify(a)); renderTaste();
+  });
+  view.querySelectorAll("[data-taste-reset]").forEach(b => b.addEventListener("click", () => {
+    if (b.dataset.tasteReset === "design") { a.styles = {}; localStorage.setItem("excavatortron.arena", JSON.stringify(a)); }
+    else { localStorage.removeItem("excavatortron.worktaste"); }
+    renderTaste();
+  }));
+  view.querySelector("#tp-save").addEventListener("click", () => {
+    const body = "Design taste (style: weight):\n" +
+      Object.entries(a.styles).filter(([, v]) => v > 0).map(([k, v]) => `- ${k}: ${v}`).join("\n") +
+      "\n\nWork taste (dimension: 0-100):\n" + WORK_DIMS.map(([k]) => `- ${k}: ${wt[k]}`).join("\n");
+    window.open(_exIssue("EXCAVA: set taste", body), "_blank");
+    view.querySelector("#tp-savenote").textContent = " — opened the save channel; approve the issue and the next beat stores it.";
+  });
+}
 window.arenaVote = function (slug, tags) {
   const a = _arena(); a.styles = a.styles || {}; a.wins = a.wins || {}; a.total = (a.total || 0) + 1;
   if (slug) { a.wins[slug] = (a.wins[slug] || 0) + 1; (tags || []).forEach(t => a.styles[t] = (a.styles[t] || 0) + 1); }
@@ -2706,6 +2786,7 @@ async function renderTab(tab) {
   if (tab === "excava") return renderExcava();
   if (tab === "rooms") return renderRooms();
   if (tab === "results") return renderResults();
+  if (tab === "taste") return renderTaste();
   if (tab === "skills") return renderSkills(await load("skills.json"));
   if (tab === "tools" || tab === "models")
     return renderToolRating(await load("tools.json"), await load("models.json"));

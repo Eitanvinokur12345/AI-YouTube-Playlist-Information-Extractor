@@ -722,6 +722,17 @@
     @media (prefers-reduced-motion: reduce) { .constel .orbit, .nstar .body, .nstar .body svg { animation:none; } }
     @media (max-width:760px) { .constel { height:300px; }
       .nstar { transform:translate(-50%,-50%) rotate(var(--ang)) translateY(-104px) rotate(calc(-1 * var(--ang))); } }
+    /* ── M3.11b EDITABLE TASTE PANEL — sliders for design-taste + work-taste ── */
+    .tp-list { display:flex; flex-direction:column; gap:9px; margin:4px 0 10px; }
+    .tp-row { display:grid; grid-template-columns:130px 1fr 34px; align-items:center; gap:10px; }
+    .tp-row.wide { grid-template-columns:180px 1fr 34px; }
+    .tp-row label { font-size:12.5px; font-weight:700; color:var(--text); }
+    .tp-row label .sub { display:block; font-weight:400; font-size:10.5px; }
+    .tp-row input[type=range] { width:100%; accent-color:var(--gold); height:6px; cursor:pointer; }
+    .tp-val { font-size:12px; font-weight:800; color:var(--gold-ink); text-align:right; }
+    .tp-add { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    .tp-add input { flex:1; min-width:140px; border:2px solid var(--line); border-radius:8px 11px 7px 10px;
+      padding:5px 10px; font-size:12.5px; background:var(--panel2); }
     /* ── M3.11 STEERING — bell, approval banner, walk-up monster, pitch conversation ── */
     .approve-bell { position:relative; background:var(--panel); border:2px solid var(--line);
       border-radius:10px 13px 9px 12px; padding:5px 10px; font-size:15px; cursor:pointer;
@@ -1008,6 +1019,7 @@
     <button data-tab="excava" class="active">🦾 EXCAVA</button>
     <button data-tab="rooms">🗣 Rooms</button>
     <button data-tab="results">📦 Results</button>
+    <button data-tab="taste">🎛 Taste</button>
     <button data-tab="skills">Skills Library</button>
     <button data-tab="tools">Tool Rating</button>
     <button data-tab="comingsoon">Coming Soon</button>

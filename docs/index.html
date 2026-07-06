@@ -722,6 +722,23 @@
     @media (prefers-reduced-motion: reduce) { .constel .orbit, .nstar .body, .nstar .body svg { animation:none; } }
     @media (max-width:760px) { .constel { height:300px; }
       .nstar { transform:translate(-50%,-50%) rotate(var(--ang)) translateY(-104px) rotate(calc(-1 * var(--ang))); } }
+    /* ── M3.12 MOBILE PASS: read/review/approve/send; execution disabled on phone ── */
+    .mobile-note { display:none; }
+    @media (max-width:640px) {
+      main { padding:16px 13px; }
+      nav { padding:10px 12px; gap:6px; }
+      nav button { padding:7px 12px; font-size:13px; }
+      .mobile-note { display:block; margin:12px 13px 0; padding:8px 13px; font-size:12.5px; font-weight:600;
+        background:var(--gold-soft); border:2px solid var(--gold-line); border-radius:10px 13px 9px 12px;
+        box-shadow:2px 2px 0 oklch(0.30 0.022 85 / .4); }
+      /* execution disabled on phone: hide the run buttons; keep Detail / Video / Source / Use / approve / send */
+      .el-actions [data-el-activate], .el-actions [data-el-open], #ex-mic { display:none !important; }
+      .os-log, .os-log div, .ex-task span, pre.ascii { word-break:break-word; overflow-wrap:anywhere; }
+      pre.ascii { overflow-x:auto; }
+      .ex-grid { grid-template-columns:1fr; }
+      .tp-row { grid-template-columns:96px 1fr 30px; } .tp-row.wide { grid-template-columns:120px 1fr 30px; }
+      .header, header { padding:14px 14px 10px; }
+    }
     /* ── M3.11b EDITABLE TASTE PANEL — sliders for design-taste + work-taste ── */
     .tp-list { display:flex; flex-direction:column; gap:9px; margin:4px 0 10px; }
     .tp-row { display:grid; grid-template-columns:130px 1fr 34px; align-items:center; gap:10px; }
@@ -734,6 +751,8 @@
     .tp-add input { flex:1; min-width:140px; border:2px solid var(--line); border-radius:8px 11px 7px 10px;
       padding:5px 10px; font-size:12.5px; background:var(--panel2); }
     /* ── M3.11 STEERING — bell, approval banner, walk-up monster, pitch conversation ── */
+    /* the hidden attribute must win over the display below (else they render + cause overflow) */
+    .approve-banner[hidden], .walkup[hidden], .pitch-modal[hidden] { display:none !important; }
     .approve-bell { position:relative; background:var(--panel); border:2px solid var(--line);
       border-radius:10px 13px 9px 12px; padding:5px 10px; font-size:15px; cursor:pointer;
       box-shadow:2px 2px 0 oklch(0.30 0.022 85 / .5); transition:transform .1s; }
@@ -1014,6 +1033,9 @@
   <div class="catchup" id="catchup" hidden></div>
 
   <div class="counters" id="counters"></div>
+
+  <!-- M3.12: mobile mode banner — execution is desktop/cloud-only on a phone -->
+  <div class="mobile-note">📱 Mobile view — read, review, approve &amp; send. Execution runs on your desktop/cloud, so run buttons are off here.</div>
 
   <nav id="tabs">
     <button data-tab="excava" class="active">🦾 EXCAVA</button>

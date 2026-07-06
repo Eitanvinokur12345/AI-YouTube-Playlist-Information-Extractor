@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ORBIT — your projects</title>
+<!-- M4.4 PARENT LAUNCHER. Its OWN brand (ORBIT): calm, minimal, quiet — deliberately
+     NOT Excavatortron's Heavy-Machinery look. Soft paper, ink, one indigo accent, lots of
+     air, light geometric type, rounded project tiles. Opening a project is a full context
+     switch: the launcher hands off entirely to that project's own app. -->
+<style>
+  :root{
+    --paper:#f6f5f2; --ink:#1b1b20; --muted:#7a7a85; --line:#e6e4dd;
+    --tile:#ffffff; --accent:#4f46e5; --accent-soft:#eef0ff;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --paper:#141419; --ink:#eceaf2; --muted:#9a99a5; --line:#2a2a33; --tile:#1c1c23; --accent-soft:#23233a; }
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; height:100%; }
+  body{ background:var(--paper); color:var(--ink);
+    font-family:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased; display:flex; flex-direction:column; align-items:center;
+    padding:8vh 24px 60px; letter-spacing:.01em; }
+  .brand{ display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .brand .dot{ width:13px; height:13px; border-radius:50%; background:var(--accent);
+    box-shadow:0 0 0 5px var(--accent-soft); }
+  .brand h1{ font-size:19px; font-weight:800; letter-spacing:.22em; margin:0; }
+  .tag{ color:var(--muted); font-size:14px; margin:0 0 44px; font-weight:400; }
+  .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,242px)); gap:20px;
+    justify-content:center; width:100%; max-width:812px; }
+  .tile{ position:relative; background:var(--tile); border:1px solid var(--line); border-radius:22px;
+    padding:24px 22px 20px; text-decoration:none; color:inherit; cursor:pointer; overflow:hidden;
+    transition:transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .18s, border-color .18s;
+    box-shadow:0 1px 2px rgba(20,20,30,.04); }
+  .tile:hover{ transform:translateY(-4px); box-shadow:0 16px 40px rgba(20,20,40,.13); border-color:transparent; }
+  .tile:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+  .swatch{ width:52px; height:52px; border-radius:16px; display:flex; align-items:center;
+    justify-content:center; font-size:26px; margin-bottom:16px;
+    background:var(--acc-soft, var(--accent-soft)); }
+  .tile h2{ font-size:17px; font-weight:700; margin:0 0 6px; }
+  .tile p{ font-size:13px; line-height:1.5; color:var(--muted); margin:0 0 18px; min-height:38px; }
+  .go{ font-size:13px; font-weight:600; color:var(--acc, var(--accent));
+    display:inline-flex; align-items:center; gap:6px; }
+  .tile:hover .go .arrow{ transform:translateX(4px); }
+  .go .arrow{ transition:transform .18s; }
+  .madeby{ position:absolute; top:14px; right:14px; font-size:10px; font-weight:600; letter-spacing:.04em;
+    color:var(--accent); background:var(--accent-soft); border-radius:999px; padding:2px 9px; }
+  .add{ border:1.5px dashed var(--line); background:transparent; box-shadow:none; display:flex;
+    flex-direction:column; align-items:center; justify-content:center; text-align:center; color:var(--muted);
+    min-height:196px; }
+  .add:hover{ border-color:var(--accent); color:var(--accent); transform:translateY(-4px); box-shadow:none; }
+  .add .plus{ font-size:30px; font-weight:300; line-height:1; margin-bottom:8px; }
+  footer{ margin-top:52px; color:var(--muted); font-size:12px; }
+  footer a{ color:var(--accent); text-decoration:none; }
+</style>
+</head>
+<body>
+  <div class="brand"><span class="dot"></span><h1>ORBIT</h1></div>
+  <p class="tag">Your projects, one place.</p>
+  <main class="grid" id="grid" aria-label="projects"></main>
+  <footer>Built &amp; kept by <a href="https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/docs/#excava">EXCAVA</a>. New projects it creates appear here on their own.</footer>
+
+<script>
+// Inline fallback so the launcher works even opened from disk (file://) with no fetch.
+const FALLBACK = {
+  projects: [
+    { name:"Excavatortron", tagline:"Every AI capability, mined from the world's AI videos, ranked and ready.",
+      url:"https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/docs/", accent:"#c8a200", glyph:"🦾", created_by:"you" },
+    { name:"Budoaris", tagline:"Gamified martial-arts learning — a mobile dojo.", url:"#", accent:"#d1495b", glyph:"🥋", created_by:"you" },
+    { name:"FreeDup.ai", tagline:"A pixel-art aggregator of free AI tools, BYO-key.", url:"#", accent:"#4f46e5", glyph:"🕹️", created_by:"you" }
+  ],
+  created_projects: []
+};
+const esc = s => String(s==null?"":s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+
+function tile(p) {
+  const made = p.created_by === "EXCAVA";
+  const a = document.createElement("a");
+  a.className = "tile";
+  a.href = p.url || "#";
+  a.style.setProperty("--acc", p.accent || "#4f46e5");
+  a.style.setProperty("--acc-soft", (p.accent || "#4f46e5") + "1f");
+  a.innerHTML = `${made ? '<span class="madeby">EXCAVA-made</span>' : ""}
+    <div class="swatch" style="background:${esc(p.accent||'#4f46e5')}1f">${esc(p.glyph||"◆")}</div>
+    <h2>${esc(p.name)}</h2><p>${esc(p.tagline||"")}</p>
+    <span class="go">Open <span class="arrow">→</span></span>`;
+  if (!p.url || p.url === "#") a.addEventListener("click", e => { e.preventDefault();
+    a.querySelector(".go").innerHTML = "Coming soon"; });
+  // full context switch: navigating replaces the launcher entirely with the project's own app.
+  return a;
+}
+
+async function boot() {
+  let data = FALLBACK;
+  try {
+    const r = await fetch("projects.json", { cache: "no-store" });
+    if (r.ok) data = await r.json();
+  } catch (_) {}
+  const grid = document.getElementById("grid");
+  const all = [...(data.projects||[]), ...(data.created_projects||[])];
+  all.forEach(p => grid.appendChild(tile(p)));
+  const add = document.createElement("a");
+  add.className = "tile add"; add.href = "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/docs/#excava";
+  add.innerHTML = `<span class="plus">+</span><span>Ask EXCAVA to<br>spin up a project</span>`;
+  grid.appendChild(add);
+}
+boot();
+</script>
+</body>
+</html>

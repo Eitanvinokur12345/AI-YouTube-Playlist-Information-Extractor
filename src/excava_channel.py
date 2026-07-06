@@ -80,6 +80,19 @@ def apply(title: str, body: str, number: str) -> str:
         _rw("excava_config.json", _w)
         return f"🎚 Priority weight set: **{area} = {val}** — auto-priorities re-order next beat."
 
+    m = re.match(r"horse\s+(.+)$", text, re.I | re.S)     # M4.2: /horse <goal> — 10 executions merged
+    if m:
+        goal = m.group(1).strip()[:400]
+        try:
+            from src.horse import run_horse
+            res = run_horse(goal)
+            w = res.get("winner_idx")
+            eng = (res.get("merged") or {}).get("engine")
+            return (f"🐎 HORSE ran **{res['runners']} executions** on “{goal[:60]}”. "
+                    f"Winner #{(w or 0) + 1}, merged via **{eng}**. Open it in the 📦 Results feed on the cockpit.")
+        except Exception as ex:
+            return f"🐎 HORSE could not run ({type(ex).__name__}); it will retry on the next beat."
+
     task_id = f"gh{number or datetime.now(timezone.utc).strftime('%m%d%H%M')}"
     def _add(inbox):
         tasks = inbox.setdefault("tasks", [])

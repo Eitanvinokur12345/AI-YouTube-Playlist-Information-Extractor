@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v79";
+const APP_BUILD = "v80";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2750,9 +2750,15 @@ async function renderRooms(selId) {
 
 // ── M3.7 RESULTS FEED: everything EXCAVA produced — attributed, filterable, openable ──
 async function _resultItems() {
-  const [rooms, made, ex] = await Promise.all([load("excava/rooms.json"),
-    load("created_by_excava.json"), load("excava_status.json")]);
+  const [rooms, made, ex, horse] = await Promise.all([load("excava/rooms.json"),
+    load("created_by_excava.json"), load("excava_status.json"), load("horse_runs.json")]);
   const items = [];
+  // M4.2: HORSE merged artifacts — 10 executions merged best-of to your work-taste
+  ((horse && horse.runs) || []).forEach(h => items.push({
+    at: h.at, dept: "core", agent: "HORSE ×" + (h.runners || 10),
+    kind: "HORSE merge", title: h.goal,
+    preview: `10 runners executed this; the best merged to your work-taste (winner #${(h.winner_idx || 0) + 1}, via ${h.engine || "?"})`,
+    ref: h.file, open: h.file ? `${GH_REPO}/blob/main/${h.file}` : null }));
   ((rooms && rooms.rooms) || []).forEach(r => { if (r.artifact) items.push({
     at: r.artifact.at || r.created_at, dept: r.dept || "core", agent: r.id,
     kind: r.artifact.kind || r.artifact_kind || "artifact", title: r.goal,

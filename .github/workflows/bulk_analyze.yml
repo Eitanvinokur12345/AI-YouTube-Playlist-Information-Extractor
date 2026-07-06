@@ -137,7 +137,21 @@ jobs:
       - name: Safety ratings for connectors/skills (safe/caution/risky) -> data/safety.json
         if: always()
         env:                                  # EXCAVA embeds the task to recall tools by meaning
+          # ── FULL engine pool for the BEAT (fix 2026-07-06): the beat runs LAST in this job, after
+          #    analysis/links/news drained the Gemini free-tier quota → rooms hit 429 and, with only
+          #    Gemini present, had NO fallback = 0 conversations across 33 beats. Giving the beat the
+          #    same pool as engine_selftest lets rooms fall through to Groq/Cerebras (separate, fast
+          #    quota) so agents actually speak. This is the "make one vertical real" fix. ──
           EXTERNAL_REVIEW_API_KEY: ${{ secrets.EXTERNAL_REVIEW_API_KEY }}
+          GH_MODELS_TOKEN: ${{ secrets.GH_MODELS_TOKEN }}
+          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
+          CEREBRAS_API_KEY_2: ${{ secrets.CEREBRAS_API_KEY_2 }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GROQ_API_KEY_2: ${{ secrets.GROQ_API_KEY_2 }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          SAMBANOVA_API_KEY: ${{ secrets.SAMBANOVA_API_KEY }}
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_API_KEY_2: ${{ secrets.GEMINI_API_KEY_2 }}
           GEMINI_API_KEY_3: ${{ secrets.GEMINI_API_KEY_3 }}

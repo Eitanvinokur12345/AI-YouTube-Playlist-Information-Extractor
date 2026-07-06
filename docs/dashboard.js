@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v75";
+const APP_BUILD = "v76";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2011,7 +2011,8 @@ async function renderExcava() {
       ${pend.length ? pend.map(p => `<div class="ex-task">
         <span class="tk h">${esc((p.category || "held").toUpperCase())}</span>
         <span>${esc(p.title || "")} <span class="sub">— ${esc(p.why || "")}</span></span>
-        ${p.id ? `<a class="qr-btn" style="margin-left:auto;flex:none" target="_blank" href="${_exIssue("EXCAVA: approve " + p.id)}">approve ✓</a>` : ""}</div>`).join("")
+        ${p.category === "pitch" && p.id ? `<a class="qr-btn" style="margin-left:auto;flex:none;cursor:pointer" data-open-pitch="${esc(p.id)}">open as conversation 🗣</a>`
+          : p.id ? `<a class="qr-btn" style="margin-left:auto;flex:none" target="_blank" href="${_exIssue("EXCAVA: approve " + p.id)}">approve ✓</a>` : ""}</div>`).join("")
       : `<p class="sub">Nothing waits on you. Tasks land here only after 3-tier escalation, an outward gate hold, or an unroutable/missing-resource hold.</p>`}
     </div>`;
   const goalsMini = goals.map(g => `<span class="pill" title="${esc(g.gap || "")}">${esc(g.id)} ${g.score}</span>`).join(" ");
@@ -2178,6 +2179,9 @@ async function renderExcava() {
       <p class="sub">Can do now: ${Object.entries(rc.can_do || {}).map(([k, v]) => `${v.ok ? "✅" : "⛔"} ${esc(k)}`).join(" · ")}</p>
     </div>` : ""}`;
   view.querySelectorAll("[data-goto]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); show(a.dataset.goto); }));
+  // M3.11: a pitch in the approval queue opens as a conversation
+  view.querySelectorAll("[data-open-pitch]").forEach(a =>
+    a.addEventListener("click", e => { e.preventDefault(); openPitch(a.dataset.openPitch); }));
   // Phase 1 task-send: the box builds the prefilled "EXCAVA: …" issue (owner-rank channel)
   let attachBody = "";
   const sendIt = () => {
@@ -2272,6 +2276,83 @@ async function renderExcava() {
   view.querySelectorAll("[data-goal-chip]").forEach(el => el.addEventListener("click", () => openGoal(el.dataset.goalChip)));
 }
 
+// ── M3.11 STEERING: bell + count, "needs your approval" banner, walk-up monster, pitches ──
+let _pitchCache = [];
+async function renderSteering() {
+  const [ap, pit] = await Promise.all([load("excava_approvals.json"), load("excava/pitches.json")]);
+  const pend = (ap && ap.pending) || [];
+  _pitchCache = (pit && pit.pitches) || [];
+  const n = pend.length;
+  const bell = document.getElementById("approve-bell");
+  const count = document.getElementById("bell-count");
+  if (bell && count) {
+    bell.hidden = n === 0; count.textContent = n;
+    bell.onclick = () => { show("excava").then(() => {
+      const q = document.querySelector(".ex-task .tk.h"); if (q) q.closest(".card").scrollIntoView({ behavior: "smooth", block: "center" }); }); };
+  }
+  // a NEW approval since last visit → ring the bell + walk a herald monster up to the door
+  const seen = +(localStorage.getItem("excavatortron.approvals.seen") || 0);
+  const newest = pend.map(p => p.since || p.at || "").sort().slice(-1)[0] || "";
+  const newestN = pend.filter(p => (p.since || p.at || "") > (localStorage.getItem("excavatortron.approvals.seenAt") || "")).length;
+  if (bell && n > seen && n > 0) { bell.classList.add("ring"); setTimeout(() => bell.classList.remove("ring"), 1600); }
+  if (newestN > 0 && n > 0) heraldWalkUp(pend[0]);
+  localStorage.setItem("excavatortron.approvals.seen", n);
+  if (newest) localStorage.setItem("excavatortron.approvals.seenAt", newest);
+  // the dismissible banner (re-appears whenever the count changes)
+  const banner = document.getElementById("approve-banner");
+  if (banner) {
+    const dkey = "excavatortron.approveBanner.dismissed";
+    const dismissedFor = localStorage.getItem(dkey);
+    if (!n || dismissedFor === String(n)) { banner.hidden = true; }
+    else {
+      const top = pend[0];
+      const pitchN = pend.filter(p => p.category === "pitch").length;
+      banner.hidden = false;
+      banner.innerHTML = `🔔 <b>${n} thing${n > 1 ? "s" : ""} need${n > 1 ? "" : "s"} your approval</b>
+        — ${esc((top.title || "").slice(0, 70))}${pitchN ? ` <span class="pill">${pitchN} pitch${pitchN > 1 ? "es" : ""}</span>` : ""}
+        <span class="ab-open"><a href="#" data-steer-review>review →</a></span>
+        <button class="ab-x" data-steer-x title="dismiss until the next one">✕</button>`;
+      banner.querySelector("[data-steer-review]").addEventListener("click", e => { e.preventDefault();
+        const p0 = pend.find(p => p.category === "pitch");
+        if (p0) openPitch(p0.id); else show("excava"); });
+      banner.querySelector("[data-steer-x]").addEventListener("click", () => { localStorage.setItem(dkey, String(n)); banner.hidden = true; });
+    }
+  }
+}
+function heraldWalkUp(item) {
+  const w = document.getElementById("walkup"); if (!w) return;
+  const isPitch = item && item.category === "pitch";
+  const dep = isPitch ? "improve" : (item && _monsterDept(item.category || "")) || "news";
+  document.getElementById("walkup-img").src = `assets/monsters/${dep}-lead.svg`;
+  document.getElementById("walkup-say").textContent = isPitch
+    ? `Pitch for you: ${(item.title || "").slice(0, 40)}` : `Needs your call: ${(item && item.title || "").slice(0, 40)}`;
+  w.hidden = false;
+  w.onclick = () => { w.hidden = true; if (isPitch) openPitch(item.id); else show("excava"); };
+  clearTimeout(w._t); w._t = setTimeout(() => { w.hidden = true; }, 9000);
+}
+function openPitch(id) {
+  const p = _pitchCache.find(x => x.id === id) || { id, what: "pitch", why: "", class: "" };
+  const modal = document.getElementById("pitch-modal"); if (!modal) return;
+  const bubble = (dep, name, eng, text) =>
+    `<div class="msg"><div class="ava has-m">${_monsterImg(dep, "lead") || "🤖"}</div>
+      <div class="bub"><div class="who">${esc(name)} <span class="eng">${esc(eng)}</span></div>${esc(text)}</div></div>`;
+  modal.hidden = false;
+  modal.innerHTML = `<div class="pitch-box">
+    <div class="ph">⚡ PITCH — ${esc(p.class || "proposal")} <button class="px" data-pitch-x>✕</button></div>
+    <div class="chat">
+      ${bubble("improve", "Ratchet", "self-improve lead", `I want to ${p.what}.`)}
+      ${bubble("improve", "Ratchet", "reasoning", p.why || "It clears a recurring problem.")}
+      ${bubble("security", "Bastion", "checker", "Reviewed — it's reversible and scoped. Your call, boss.")}
+    </div>
+    <div class="pitch-actions">
+      <a class="ok" target="_blank" href="${_exIssue("EXCAVA: approve " + p.id, "Approving pitch: " + p.what)}">✓ Approve</a>
+      <a class="no" target="_blank" href="${_exIssue("EXCAVA: decline " + p.id, "Declining pitch: " + p.what)}">✕ Decline</a>
+    </div></div>`;
+  const close = () => { modal.hidden = true; };
+  modal.querySelector("[data-pitch-x]").addEventListener("click", close);
+  modal.addEventListener("click", e => { if (e.target === modal) close(); });
+}
+
 // ── tab router ───────────────────────────────────────────────────────────────
 async function show(tab) {
   state.activeTab = tab;
@@ -2303,6 +2384,7 @@ async function show(tab) {
   }
   // Virtual residents on every tab (fire-and-forget; reuses cached JSON).
   renderCrew(tab);
+  renderSteering();                                 // M3.11: keep the bell/banner current
   // If quick-read is on, actually condense the descriptions (not just CSS-clamp them).
   quickreadSummarize(document.body.classList.contains("quickread"));
 }
@@ -2656,6 +2738,7 @@ document.querySelectorAll("nav button").forEach(b => {
 
 (async () => {
   resultsBadge();                                     // M3.7: fire-and-forget "new results" count
+  renderSteering();                                   // M3.11: bell + banner + walk-up on new approvals
   const [status, stars, extra, config, health] = await Promise.all([
     load("status.json"), load("stars.json"), load("extra_tabs.json"), loadRoot("config.json"),
     load("health.json")]);

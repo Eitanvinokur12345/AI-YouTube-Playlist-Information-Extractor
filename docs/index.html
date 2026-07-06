@@ -722,6 +722,45 @@
     @media (prefers-reduced-motion: reduce) { .constel .orbit, .nstar .body, .nstar .body svg { animation:none; } }
     @media (max-width:760px) { .constel { height:300px; }
       .nstar { transform:translate(-50%,-50%) rotate(var(--ang)) translateY(-104px) rotate(calc(-1 * var(--ang))); } }
+    /* ── M3.11 STEERING — bell, approval banner, walk-up monster, pitch conversation ── */
+    .approve-bell { position:relative; background:var(--panel); border:2px solid var(--line);
+      border-radius:10px 13px 9px 12px; padding:5px 10px; font-size:15px; cursor:pointer;
+      box-shadow:2px 2px 0 oklch(0.30 0.022 85 / .5); transition:transform .1s; }
+    .approve-bell:hover { transform:translateY(-1px); }
+    .approve-bell.ring { animation:bellRing .7s ease-in-out 2; }
+    @keyframes bellRing { 0%,100% { transform:rotate(0);} 20% { transform:rotate(-16deg);} 40% { transform:rotate(13deg);} 60% { transform:rotate(-8deg);} 80% { transform:rotate(5deg);} }
+    .bell-count { position:absolute; top:-7px; right:-7px; min-width:17px; height:17px; padding:0 4px;
+      background:oklch(0.62 0.19 28); color:#fff; border:2px solid var(--line); border-radius:999px;
+      font-size:10px; font-weight:800; line-height:14px; text-align:center; }
+    .approve-banner { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:0 0 12px;
+      border:2.5px solid var(--gold-line); border-radius:12px 16px 10px 14px; padding:9px 14px;
+      background:var(--gold-soft); box-shadow:3px 4px 0 oklch(0.30 0.022 85 / .5); font-size:13.5px; }
+    .approve-banner b { color:var(--gold-ink); }
+    .approve-banner .ab-open { margin-left:auto; }
+    .approve-banner a { font-weight:700; border:2px solid var(--line); border-radius:8px; padding:3px 10px;
+      background:#fff; color:#374151; text-decoration:none; box-shadow:2px 2px 0 oklch(0.30 0.022 85 / .45); }
+    .approve-banner .ab-x { cursor:pointer; border:none; background:transparent; font-size:16px; color:var(--muted); box-shadow:none; }
+    .walkup { position:fixed; left:16px; bottom:16px; z-index:60; display:flex; align-items:flex-end; gap:8px;
+      animation:walkIn 1s ease-out; }
+    .walkup img { width:64px; filter:drop-shadow(2px 3px 0 oklch(0.28 0.02 60 / .35)); animation:walkBob .5s ease-in-out infinite alternate; }
+    .walkup-say { background:var(--panel); border:2px solid var(--line); border-radius:12px 14px 4px 14px;
+      padding:6px 11px; font-size:12.5px; font-weight:600; box-shadow:3px 3px 0 oklch(0.30 0.022 85 / .5); margin-bottom:20px; }
+    @keyframes walkIn { from { transform:translateX(-120%);} to { transform:translateX(0);} }
+    @keyframes walkBob { from { transform:translateY(0);} to { transform:translateY(-3px);} }
+    .pitch-modal { position:fixed; inset:0; z-index:70; display:flex; align-items:center; justify-content:center;
+      background:oklch(0.2 0.02 60 / .5); padding:18px; }
+    .pitch-box { background:var(--panel); border:3px solid var(--line); border-radius:16px 20px 14px 18px;
+      box-shadow:6px 8px 0 oklch(0.28 0.02 60 / .35); max-width:560px; width:100%; max-height:86vh; overflow:auto; }
+    .pitch-box .ph { background:oklch(0.62 0.16 28); color:#fff; padding:10px 15px; font-family:"Archivo Black",sans-serif;
+      font-size:14px; letter-spacing:.04em; border-bottom:3px solid var(--line); display:flex; justify-content:space-between; align-items:center; }
+    .pitch-box .ph .px { cursor:pointer; background:transparent; border:none; color:#fff; font-size:18px; }
+    .pitch-box .chat { padding:14px; }
+    .pitch-actions { display:flex; gap:10px; padding:0 14px 14px; }
+    .pitch-actions a { flex:1; text-align:center; font-weight:800; border:2.5px solid var(--line); border-radius:9px;
+      padding:8px; text-decoration:none; box-shadow:3px 3px 0 oklch(0.30 0.022 85 / .5); }
+    .pitch-actions .ok { background:oklch(0.85 0.16 145); color:oklch(0.28 0.09 150); }
+    .pitch-actions .no { background:var(--panel2); color:#374151; }
+    @media (prefers-reduced-motion: reduce) { .walkup, .walkup img, .approve-bell.ring { animation:none; } }
     /* M3.7: the "new results" badge on the tab + the inline artifact bubble in the making-chat */
     .nav-new { display:inline-block; background:var(--gold); color:var(--text); font-size:10px;
       font-weight:800; border:1.5px solid var(--line); border-radius:999px; padding:0 6px;
@@ -919,6 +958,9 @@
         placeholder="Search anything… (press Enter to search every tab for the closest match)" /></div>
       <div class="qr-wrap"><button id="qr-toggle" class="qr-btn" type="button" aria-pressed="false"
         title="Condense everything into scannable one-liners for fast reading">⚡ Quick-read</button></div>
+      <!-- M3.11: steering bell — pending-approval count; click jumps to the approval queue -->
+      <button id="approve-bell" class="approve-bell" type="button" hidden
+        title="Things waiting on your decision">🔔<span class="bell-count" id="bell-count">0</span></button>
       <div id="install-wrap" hidden>
         <button id="install-btn" class="install-btn" onclick="triggerInstall()">⬇&nbsp;Install as App</button>
       </div>
@@ -949,6 +991,13 @@
   <!-- Reliability: red if the last analyze run failed (token expired / error), amber if the
        pipeline looks stalled (no recent runs). Filled in by dashboard.js. -->
   <div class="alert" id="alert" hidden></div>
+
+  <!-- M3.11: steering banner — "needs your approval" (dismissible); filled by dashboard.js -->
+  <div class="approve-banner" id="approve-banner" hidden></div>
+  <!-- M3.11: a monster walks up to the door when a NEW approval lands -->
+  <div class="walkup" id="walkup" hidden><img id="walkup-img" alt="" src=""><span class="walkup-say" id="walkup-say"></span></div>
+  <!-- M3.11: a pitch opens here as a conversation you can approve/decline -->
+  <div class="pitch-modal" id="pitch-modal" hidden></div>
 
   <!-- Catch-up banner: appears only while a massive addition of videos is draining -->
   <div class="catchup" id="catchup" hidden></div>

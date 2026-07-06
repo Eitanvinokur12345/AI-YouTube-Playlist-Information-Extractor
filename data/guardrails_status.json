@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-06T13:00:17.292659+00:00",
+ "generated_at": "2026-07-06T13:03:33.610033+00:00",
  "total": 12,
- "passing": 10,
+ "passing": 12,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -22,7 +22,7 @@
    "id": "G-C",
    "name": "History backup fresh",
    "ok": true,
-   "detail": "1 bundle(s); newest within 26h.",
+   "detail": "2 bundle(s); newest within 26h.",
    "severity": "warn"
   },
   {
@@ -63,8 +63,8 @@
   {
    "id": "G-I",
    "name": "Handoff mentions live build",
-   "ok": false,
-   "detail": "handoff does not mention the live build (v84) — update §0d so no context is lost.",
+   "ok": true,
+   "detail": "SESSION_HANDOFF.md references v84.",
    "severity": "warn"
   },
   {
@@ -78,14 +78,14 @@
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "1 guardrail runs logged (append-only, never rewritten).",
+   "detail": "4 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
    "id": "G-L",
    "name": "Uncommitted-work watchdog",
-   "ok": false,
-   "detail": "3 untracked source file(s) not committed — commit or quarantine so nothing is lost: GUARDRAILS.md, src/git_safe.py, src/guardrails.py",
+   "ok": true,
+   "detail": "no stray source files uncommitted.",
    "severity": "warn"
   }
  ]

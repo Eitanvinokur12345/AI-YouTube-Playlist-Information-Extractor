@@ -42,7 +42,20 @@ Last updated: 2026-07-02. Keep this current at the end of every working session.
   the spine as a package (owner: port nothing yet). Source trust-scores seeded
   (`data/source_trust.json`), intake items now carry trust.
 
-## 0d. EXCAVA v2 BUILD STATE (2026-07-05, Fable executing EXCAVA_V2_STEPS.md — continue HERE)
+## 0a2. GUARDRAILS — READ THIS, information-loss protection (v84, owner law 2026-07-06)
+The project must never topple or lose committed work. **Two enforcers, run every beat:**
+- **`src/git_safe.py`** — the ONLY safe way to commit/push. Use it: `python -m src.git_safe ship -m
+  "msg" -a <files>` (commit via UTF-8 message-file → no PowerShell mangling; then backup → sync →
+  push → **verify origin==HEAD**). `sync` QUARANTINES colliding untracked files into `_ATTIC/` (NEVER
+  `git clean -fd` — that deletes). `backup` bundles all history to `_ATTIC/backups/`.
+- **`src/guardrails.py`** — 12 checks (G-A…G-L) → `data/guardrails_status.json` (shown on the cockpit's
+  🛡 Guardrails card) + append-only `data/guardrails_log.jsonl` (git-ignored, per-machine). Full contract
+  + recovery steps: **`GUARDRAILS.md`**. Fixes the two mechanical failures that risked the repo.
+- **Recovery:** lost file → `_ATTIC/quarantine/<ts>/`; wrecked repo → clone `_ATTIC/backups/repo-*.bundle`.
+- **Never again:** no blind `git clean -fd`/`rm -rf` on untracked content; no inline quoted commit
+  messages in PowerShell; no unverified push. `_ATTIC/`, `*.bundle`, `data/horse/` are git-ignored.
+
+## 0d. EXCAVA v2 BUILD STATE (2026-07-06, Fable executing EXCAVA_V2_STEPS.md — continue HERE; live build v84)
 - **M1 ✅ COMPLETE (v66, dd665b39):** element model (6,422 els, schema+index+set_field) · deep_retrieve
   (full-source enrichment, stubs-first) · discovery_agent (hourly; GitHub/HN/PH/social; live-tested 58 new)
   · verify_elements (2-source+live, rolling+on-access, conflicts noted) · relate (4,796 with related) ·

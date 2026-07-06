@@ -54,17 +54,31 @@ Last updated: 2026-07-02. Keep this current at the end of every working session.
   package/bus-task/creation; day archives) · workers dispatch/dissolve · rooms advance每 beat ·
   excava_selfimprove (auto budget-shift, room-retire, PITCH filing). Rooms speak on CI beats (engines
   live in secrets; local runs degrade honestly).
-- **M3 slice 1 ✅ (v68, 2e1e03b2):** tokens.css design system · sidebar shell (wide screens) · 🗣 Rooms
-  messenger tab (war-room round table; agent·engine·ms badges; suited leads raised) · console hero
-  (dept-route/mic/attach/slash→P6 triggers/away-digest).
+- **M3 ✅ COMPLETE (v79, d6e13e0b):** shipped 2026-07-06 (Fable). Slice-1 (v68) = tokens.css + sidebar
+  shell + 🗣 Rooms + console hero. Then: **M3.2** monster cast (`src/make_monsters.py`, 11 species ×3
+  variants SVG in docs/assets/monsters/, wired into Rooms bubbles + floor stations + bus bots) · **M3.3**
+  isometric factory floor + side cutaways (`docs/floor/floor.js`: ground+buildings+cutaway; monster at
+  each door; floor clock=M2.7 timing) · **M3.4** animation catalog (11 props, `animForEvent` grounds each
+  in a real bus/beat event) · **M3.6** final card visual (refined-neobrutalist, actions on hover/focus) ·
+  **M3.7** 📦 Results feed (attributed, day/dept/maker filters, inline artifact bubble, new-badge) ·
+  **M3.8** North-Star constellation (9 orbiting goal-stars, size=score, click→goal) · **M3.9** brain
+  graph click→explore→"make cluster a package" · **M3.11** steering (header bell+count, dismissible
+  approval banner, walk-up herald monster, pitches-as-conversations modal) · **M3.11b** 🎛 Taste tab
+  (editable design-taste vs work-taste, feeds HORSE) · **M3.12** mobile pass (read/review/approve/send;
+  run buttons off ≤640px; fixed a real [hidden]-override bug on modal/banner/walkup) · **M3.13** ship:
+  interactive walkthrough RUNNER (E7 — navigates tabs, spotlights the new thing, Next/Back) + M3 tutorial
+  + m3-podcast.wav (System.Speech).
 - **⚠ LESSON (cost us v67):** NEVER bump builds/edit utf-8 files via PowerShell Get/Set-Content —
-  python utf-8 only. v67's mojibake was restored from git (dd665b39) and re-applied.
-- **M3 REMAINING:** M3.2 monster cast (SVG/code-drawn, free-first; show Eitan samples, no gate) ·
-  M3.3 isometric floor + cutaways · M3.4 animation catalog (11) · M3.6 card final visual · M3.7 results
-  feed · M3.8 North-Star constellation · M3.9 brain graph→package · M3.11 steering banner/bell/monster-
-  walks-up · M3.11b editable taste panel (design vs work) · M3.12 mobile pass · M3.13 ship.
-- **THEN:** M4 (activator [OPUS], HORSE, packages UI, launcher own-brand, hub-API, prove-real) ·
-  M5 deferred · breadth B1/B3/B6 first. Plan files: EXCAVA_V2_STEPS.md (+ADDITIONS §I design direction).
+  python utf-8 only. Also: **commit -m messages must NOT contain embedded double-quotes** (PowerShell
+  mangles native-exe args → git treats trailing words as pathspecs; use a simple single-line message).
+  And: `git stash pop` can OOM on the huge untracked skill trees — extract just your files with
+  `git checkout stash@{0} -- <paths>` instead of a full pop, and `git clean -fd skills other-skills
+  data/excava/traces data/excava/handoffs backups` before a rebase (untracked CI/agent files block it).
+- **NEXT: M4** — M4.1 portable activator is **[OPUS]-reserved** (skip in Fable). Fable does: **M4.2**
+  HORSE (`src/horse.py`, 10 agents execute + merge best-of-results to work-taste) · **M4.3** packages
+  build/edit/save/reuse UI (`data/packages.json`) · **M4.4** parent launcher (`launcher/`, its OWN
+  minimal brand) · **M4.5** hub-as-database (`hub_api.json`) · **M4.6** ship + prove-real. Then M5
+  deferred · breadth B1/B3/B6 first. Plan files: EXCAVA_V2_STEPS.md (+ADDITIONS §I design direction).
 - Gate note: internal gate was CLOSED this session by a REAL data_guard restore (designs.json 242→670)
   — correct behavior; it self-clears on the next clean guard pass.
 

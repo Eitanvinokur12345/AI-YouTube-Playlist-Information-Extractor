@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v82";
+const APP_BUILD = "v83";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2123,6 +2123,27 @@ async function renderExcava() {
           before first run: <code>python -m src.excava_creators --test-before-run "${esc(c.name)}"</code></p>
       </details>`).join("")}
     </div>` : "";
+  // ── M4.6 PROVE IT'S REAL: (a) an artifact built unattended by a CI beat, (b) goal → package ──
+  const _unattended = (os.recent_events || []).filter(e => e.kind === "handoff" && e.doc)
+    .concat(creations.map(c => ({ kind: "creation", doc: c.name, at: c.created_at, by: "creators" })))
+    .sort((a, b) => String(b.at || "").localeCompare(String(a.at || "")))[0];
+  const proveHTML = `
+    <div class="card" style="border-top:3px solid oklch(0.68 0.16 148)"><h3>✅ Proof it's real <span class="sub">— M4.6: EXCAVA builds unattended, and a goal becomes a runnable package</span></h3>
+      <div class="ex-grid">
+        <div><b class="sub">① Built while you were away (unattended)</b>
+          ${_unattended ? `<div class="ex-task"><span class="tk w">${esc((_unattended.kind || "").toUpperCase())}</span>
+            <span>${esc(String(_unattended.doc).split("/").pop().replace(/\.md$/, ""))}
+            <span class="sub">— ${esc(_unattended.by || "a department")}, beat #${os.beats || "?"}, ${esc(fmtDate(_unattended.at))}</span></span>
+            ${_unattended.doc && String(_unattended.doc).includes("/") ? `<a class="qr-btn" style="margin-left:auto;flex:none" target="_blank" href="${GH_REPO}/blob/main/${esc(_unattended.doc)}">open</a>` : ""}</div>
+            <p class="sub">Hourly CI beats run the departments + rooms with no one watching — this is the newest thing they produced. See them all in 📦 <a href="#" data-goto="results">Results</a>.</p>`
+          : `<p class="sub">The next hourly beat will land one here — rooms + creators produce artifacts unattended.</p>`}
+        </div>
+        <div><b class="sub">② Type a goal → get a working package</b>
+          <p class="sub">Use the console above (or a <code>/horse</code> goal), or assemble in 🧰 <a href="#" data-goto="packages">Packages</a>: you get a runnable KIT of real elements — open it, run each or all. Another project can pull it via the 🛢 hub endpoint.</p>
+          <div class="ex-task"><span class="tk q">TRY</span><span>Type “<b>build me a research agent</b>” in the console, or open 🧰 Packages → “Research &amp; browse” → Run all.</span></div>
+        </div>
+      </div>
+    </div>`;
   view.innerHTML = `
     <div class="card" style="border-top:3px solid var(--gold)">
       <h3>🦾 EXCAVA <span class="sub">— the agentic OS running this project</span>
@@ -2137,6 +2158,7 @@ async function renderExcava() {
       <p class="sub" style="margin-top:8px">The floor is LIVE: each station is a real pipeline department (lamp = its actual status), each colored bot is a real registered agent carrying its department's actual bus task — hover one to see who it is and what it holds.</p>
     </div>
     ${driveHTML}
+    ${proveHTML}
     ${directionHTML}
     ${creationsHTML}
     ${fleetHTML}

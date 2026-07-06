@@ -2,6 +2,26 @@
   "note": "Phase 6 CHANGE TUTORIALS (owner's D2 pick): every major change ships a walkthrough here; the beat nags when a dashboard build has none. Newest first on the cockpit's Direction card.",
   "tutorials": [
     {
+      "build": "v82",
+      "title": "M4 SHIPPED — hands, not just a hub: HORSE, packages, the launcher, the hub-endpoint",
+      "at": "2026-07-06",
+      "podcast": "docs/tutorials/m4-podcast.wav",
+      "interactive": [
+        {"go": "packages", "look_for": ".pkg-card", "try": "The new 🧰 Packages tab (M4.3): reusable KITS of real hub elements. Assemble one by naming elements (loose names resolve), 📌 pin the ones you use, ✎ edit, then ▶ Run all (sends the kit to EXCAVA as one task) or ▶ Run each. Pinned kits float to the top."},
+        {"go": "packages", "look_for": ".hubapi-card", "try": "Hub-as-database (M4.5): Excavatortron publishes a PUBLIC endpoint (refreshed every beat). Copy it — Budoaris / FreeDup / any tool (or the activator offline) can GET it and pull a whole package or a single element, each with its install line + link."},
+        {"go": "excava", "look_for": ".console-hero", "try": "HORSE (M4.2): type a goal here (or /horse <goal>). TEN agents each FULLY execute it on a spread of free engines; the results are scored to your work-taste and the best merged into one deliverable — it appears in 📦 Results, attributed 'HORSE ×10'."},
+        {"go": "excava", "look_for": ".ex-grid", "try": "Proof it's real (M4.6): ① the newest artifact the hourly beats built while you were away (unattended), and ② the path from a typed goal to a runnable package. Both live on the cockpit."}
+      ],
+      "steps": [
+        "HORSE (M4.2): 10 agents each fully execute a goal on varied free engines; results scored against your work-taste (M3.11b) and the best merged into one deliverable. Trigger: console /horse or 'EXCAVA: HORSE <goal>'. Runs on the CI beat; merged artifact lands in Results.",
+        "Packages (M4.3): reusable kits in data/packages.json — assemble (loose names → real element ids), pin the frequent, edit, Run-all (kit → one EXCAVA task) / Run-each, Save-to-EXCAVA. Grown by you + room artifacts + brain-graph cluster orders.",
+        "Parent launcher (M4.4): launcher/ 'ORBIT' — its OWN calm minimal brand (deliberately not Heavy-Machinery); a project-cube grid; each cube is a full context switch to the project's own app; EXCAVA-made projects auto-appear.",
+        "Hub-as-database (M4.5): src/build_hub_api.py publishes docs/hub_api.json (packages fully resolved to element install+url + a compact index of the real elements); refreshed every beat; any project pulls a package via the endpoint or the activator.",
+        "M4.1 portable activator is on the Opus track (compressed-hub SKILL.md + live fetch, obeys the triggers, works offline) — Fable shipped M4.2–M4.6.",
+        "Prove-real (M4.6): the cockpit shows (a) the newest artifact a beat built unattended, and (b) the goal → runnable-package path — the two acceptance proofs for 'real'."
+      ]
+    },
+    {
       "build": "v78",
       "title": "M3 SHIPPED — the new look: monsters, the isometric factory, results, taste, mobile",
       "at": "2026-07-06",

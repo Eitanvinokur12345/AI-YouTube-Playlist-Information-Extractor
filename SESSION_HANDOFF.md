@@ -74,11 +74,32 @@ Last updated: 2026-07-02. Keep this current at the end of every working session.
   And: `git stash pop` can OOM on the huge untracked skill trees — extract just your files with
   `git checkout stash@{0} -- <paths>` instead of a full pop, and `git clean -fd skills other-skills
   data/excava/traces data/excava/handoffs backups` before a rebase (untracked CI/agent files block it).
-- **NEXT: M4** — M4.1 portable activator is **[OPUS]-reserved** (skip in Fable). Fable does: **M4.2**
-  HORSE (`src/horse.py`, 10 agents execute + merge best-of-results to work-taste) · **M4.3** packages
-  build/edit/save/reuse UI (`data/packages.json`) · **M4.4** parent launcher (`launcher/`, its OWN
-  minimal brand) · **M4.5** hub-as-database (`hub_api.json`) · **M4.6** ship + prove-real. Then M5
-  deferred · breadth B1/B3/B6 first. Plan files: EXCAVA_V2_STEPS.md (+ADDITIONS §I design direction).
+- **M4 ✅ COMPLETE (v83, bc8d6970):** shipped 2026-07-06 (Fable). **M4.2** HORSE (`src/horse.py` — 10
+  runners each fully execute the goal on varied free engines, scored vs work-taste, top-3 merged;
+  console `/horse` → `excava_channel` HORSE handler → `run_horse`, runs in CI; merged artifact in the
+  Results feed) · **M4.3** 🧰 Packages tab (`data/packages.json` 3 seeded kits; assemble w/ loose-name→id
+  resolution, pin, edit, Run-all/Run-each, Save-to-EXCAVA; merges server + creations + localStorage) ·
+  **M4.4** parent launcher (`launcher/` = **ORBIT**, its OWN calm minimal brand, project-cube grid, full
+  context switch, EXCAVA-made projects auto-appear) · **M4.5** hub-as-database (`src/build_hub_api.py` →
+  `docs/hub_api.json` public endpoint, packages resolved to element install+url + compact real-element
+  index; **wired into the excava beat** so it refreshes every cycle; Packages tab shows endpoint+copy) ·
+  **M4.6** ship: "Proof it's real" cockpit card (unattended CI artifact + goal→package path) + M4 tutorial
+  + m4-podcast.wav.
+- **M4.1 portable activator = [OPUS]-RESERVED** (compressed-hub SKILL.md + live fetch, obeys triggers,
+  offline). Fable did NOT build it — it's on the Opus track. This is the ONLY unbuilt core-program step.
+- **NEXT (per program): M5 is DEFERRED behind the core; BREADTH is next — B1/B3/B6 FIRST** (expand each
+  to full steps, then build), then B2/B4/B5, alongside M5. B1 finish the 52 goals (§9 order) · B3 per-tab
+  self-improvement + meta-brain · B6 EXCAVA-as-MCP-server · B2 omni-source tiers 2-3 · B4 portability
+  (Budoaris first if asked) · B5 cleanup (formats filter, brain white-nodes, token-split). M5 (external
+  actions) stays gated/deferred. Plan files: EXCAVA_V2_STEPS.md (+ADDITIONS §I) — the whole program is
+  now complete through M4 except OPUS M4.1; only AFTER the whole program may Fable ask questions / suggest
+  adding OpenClaw/Hermes/other tools.
+- **Push mechanics learned this session:** commit -m must be a SIMPLE single-line string (NO embedded
+  double-quotes — PowerShell mangles native args → git treats words as pathspecs). Before every rebase:
+  `git checkout -- data backups` + `git clean -fd data/horse data/excava/traces data/excava/handoffs
+  backups skills other-skills` (untracked CI/agent trees block rebase and can OOM `git stash pop` — use
+  `git checkout stash@{0} -- <paths>` to extract, never a full pop). git's stderr progress trips
+  PowerShell's NativeCommandError but the ref-update line confirms success.
 - Gate note: internal gate was CLOSED this session by a REAL data_guard restore (designs.json 242→670)
   — correct behavior; it self-clears on the next clean guard pass.
 

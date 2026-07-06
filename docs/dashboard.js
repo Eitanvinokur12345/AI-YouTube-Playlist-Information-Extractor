@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v74";
+const APP_BUILD = "v75";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1311,7 +1311,13 @@ function ensureGraphCss() {
     .graphsearch::placeholder{color:#64748b}
     .graphreset{cursor:pointer;transition:border-color .15s,background .15s}
     .graphreset:hover{border-color:rgba(255,255,255,.4);background:#11151f}
-    .graphhint{font-size:11px;color:var(--muted,#94a3b8);margin:7px 0 0;opacity:.75}`;
+    .graphhint{font-size:11px;color:var(--muted,#94a3b8);margin:7px 0 0;opacity:.75}
+    .graphsel{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:0 0 8px;font-size:12.5px;
+      border:2px solid var(--line,#333);border-radius:9px 12px 8px 11px;padding:6px 11px;
+      background:var(--gold-soft,#fdf3d0);box-shadow:2px 2px 0 rgba(0,0,0,.25)}
+    .graphsel a{font-weight:700;text-decoration:none;border:1.5px solid var(--line,#333);border-radius:7px;
+      padding:2px 8px;background:#fff;color:#374151}
+    .graphsel a:hover{border-color:var(--gold-line,#d4a900);color:var(--gold-ink,#7a5c00)}`;
   document.head.appendChild(st);
 }
 function legendItem(color, label) { return `<span><i style="background:${color};color:${color}"></i>${label}</span>`; }
@@ -1334,7 +1340,7 @@ async function mountBrainGraph(host, file = "brain_graph.json", legend = null) {
       <span class="graphlegend">${legend || defaultLegend}</span>
     </div>
     <canvas class="braincanvas"></canvas>
-    <p class="graphhint">drag background to pan · scroll to zoom · drag a dot to move it · hover to focus · click a dot to open its source</p>`;
+    <p class="graphhint">drag background to pan · scroll to zoom · drag a dot to move it · hover to focus · click a dot to EXPLORE it (element view, source, or turn its cluster into a 📦 package)</p>`;
   const canvas = host.querySelector("canvas");
   const ctx = canvas.getContext("2d");
   const H = 600;
@@ -1461,7 +1467,31 @@ async function mountBrainGraph(host, file = "brain_graph.json", legend = null) {
   canvas.addEventListener("mousedown", e => { const n = pick(e);
     if (n) drag = n; else { panning = true; lastX = e.clientX; lastY = e.clientY; canvas.style.cursor = "grabbing"; } });
   window.addEventListener("mouseup", () => { drag = null; panning = false; canvas.style.cursor = "grab"; });
-  canvas.addEventListener("click", e => { const n = pick(e); if (n && n.url) window.open(n.url, "_blank", "noopener"); });
+  // M3.9: click = EXPLORE — a panel for the node's cluster; the cluster can become a PACKAGE
+  const selBar = document.createElement("div");
+  selBar.className = "graphsel"; selBar.style.display = "none";
+  host.querySelector(".graphbar").insertAdjacentElement("afterend", selBar);
+  async function selectNode(n) {
+    const neigh = [...(nbr[n.id] || [])].slice(0, 12).map(id => String((byId[id] || {}).label || id));
+    const name = String(n.label || n.id);
+    let elLink = "";
+    try {
+      const ix = await eidx();
+      for (const t of ["skill", "tool", "prompt", "connector", "model"]) {
+        const el = ix.byKey[t + "|" + name.toLowerCase()];
+        if (el) { elLink = `<a href="#element/${encodeURIComponent(el.id)}">🔍 explore element</a>`; break; }
+      }
+    } catch (_) {}
+    const members = [name, ...neigh].slice(0, 10);
+    selBar.style.display = "";
+    selBar.innerHTML = `<b>${esc(name)}</b> <span class="pill">${esc(n.group || "node")}</span>
+      <span>· ${neigh.length} linked</span> ${elLink}
+      ${n.url ? `<a target="_blank" href="${esc(n.url)}">↗ source</a>` : ""}
+      <a target="_blank" href="${_exIssue('EXCAVA: package "' + name + ' kit"',
+        "Assemble a PACKAGE from this brain-graph cluster (M3.9):\n- " + members.join("\n- "))}"
+        title="Sends the cluster to EXCAVA as a package order — a room assembles it (M2.6)">📦 make this cluster a package (${members.length})</a>`;
+  }
+  canvas.addEventListener("click", e => { const n = pick(e); if (n) selectNode(n); });
   canvas.addEventListener("wheel", e => { e.preventDefault();
     const r = canvas.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top;
     const wx = (mx - ox) / scale, wy = (my - oy) / scale;

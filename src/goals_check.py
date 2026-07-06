@@ -122,12 +122,14 @@ def main() -> int:
             pass
     rooms_ = _load("excava/rooms.json", {})
     real_artifacts = sum(1 for r in rooms_.get("rooms", []) if r.get("artifact"))
-    # Graduated honesty cap: talk is not execution. 0 turns=30 (dead), turns but 0 artifacts=50
-    # (agents deliberate but don't PRODUCE), artifacts>0 = uncapped (they actually do work).
-    if real_artifacts == 0:
-        cap = 30 if real_turns == 0 else 50
+    # Graduated honesty ladder (owner order 2026-07-06): the score rises only on real evidence.
+    #   0 turns → 30 (dead) · turns but 0 artifacts → 50 (deliberates, doesn't produce) ·
+    #   1-2 artifacts → 65 (PROVEN but early) · 3+ artifacts → uncapped (produces work routinely).
+    if real_artifacts < 3:
+        cap = 30 if real_turns == 0 else (50 if real_artifacts == 0 else 65)
         note = ("no real agent conversation yet (engines not answering)" if real_turns == 0
-                else f"{real_turns} real turns but 0 artifacts — agents deliberate, don't execute yet")
+                else f"{real_turns} real turns but 0 artifacts — deliberates, doesn't execute" if real_artifacts == 0
+                else f"{real_artifacts} real artifact(s) produced — PROVEN but early (need 3+ to uncap)")
         for gid in ("G4", "G9"):
             s0, gap0 = sig.get(gid, (cap, ""))
             sig[gid] = (min(s0, cap), gap0 + f" — CAPPED {cap}: {note}")

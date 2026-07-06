@@ -19,3 +19,13 @@ Thumbs.db
 
 # Local Claude tooling / session data (never commit)
 .claude/
+
+# Guardrails: local-only safety artifacts (history backups + quarantined files — see GUARDRAILS.md)
+# _ATTIC preserves anything the safe-git helper moves aside; it is NEVER committed but NEVER deleted.
+_ATTIC/
+*.bundle
+# Ephemeral run outputs (the tracked INDEX files are committed; the per-run blobs are local)
+data/horse/
+scratch/
+# Guardrails audit log is append-only + per-machine (avoids CI/local append conflicts); status snapshot IS tracked
+data/guardrails_log.jsonl

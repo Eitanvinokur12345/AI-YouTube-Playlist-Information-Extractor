@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v83";
+const APP_BUILD = "v84";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1900,11 +1900,11 @@ async function renderCrew(tab) {
   }, 6000);
 }
 async function renderExcava() {
-  const [ex, ps, inbox, gs, rc, ap, excfg, reg, dirs, tuts, made] = await Promise.all([load("excava_status.json"),
+  const [ex, ps, inbox, gs, rc, ap, excfg, reg, dirs, tuts, made, grd] = await Promise.all([load("excava_status.json"),
     load("pipeline_status.json"), load("excava_inbox.json"), load("goals_status.json"),
     load("resources.json"), load("excava_approvals.json"), load("excava_config.json"),
     load("excava/agents.json"), load("excava_direction.json"), load("tutorials.json"),
-    load("created_by_excava.json")]);
+    load("created_by_excava.json"), load("guardrails_status.json")]);
   const gate = (ex && ex.gate) || {}, mem = (ex && ex.memory) || {};
   const os = (ex && ex.os) || {};
   const mode = os.mode || (excfg && excfg.mode) || "run";
@@ -2144,6 +2144,16 @@ async function renderExcava() {
         </div>
       </div>
     </div>`;
+  // ── GUARDRAILS: the information-loss protections, visible so you can trust the project won't topple ──
+  const gl = (grd && grd.guardrails) || [];
+  const guardHTML = gl.length ? `
+    <div class="card" style="border-top:3px solid ${grd.critical_failures ? "oklch(0.62 0.19 28)" : "oklch(0.68 0.16 148)"}">
+      <h3>🛡 Guardrails <span class="sub">— ${grd.passing}/${grd.total} holding · ${grd.critical_failures ? `<b style="color:var(--bad)">${grd.critical_failures} CRITICAL</b>` : "0 critical"} · so the project never loses information or topples</span></h3>
+      <div class="guard-grid">${gl.map(r => `<div class="guard ${r.ok ? "ok" : r.severity === "critical" ? "crit" : "warn"}" title="${esc(r.detail)}">
+        <span class="gm">${r.ok ? "✓" : r.severity === "critical" ? "✕" : "!"}</span>
+        <b>${esc(r.id)}</b> ${esc(r.name)}</div>`).join("")}</div>
+      <p class="sub" style="margin-top:6px">Runs every beat (last ${esc(fmtDate(grd.generated_at))}). Fixes the two mechanical failures: safe-git QUARANTINES colliding files (never deletes) and commits via a UTF-8 message file. Full contract: <a target="_blank" href="${GH_REPO}/blob/main/GUARDRAILS.md">GUARDRAILS.md</a>.</p>
+    </div>` : "";
   view.innerHTML = `
     <div class="card" style="border-top:3px solid var(--gold)">
       <h3>🦾 EXCAVA <span class="sub">— the agentic OS running this project</span>
@@ -2158,6 +2168,7 @@ async function renderExcava() {
       <p class="sub" style="margin-top:8px">The floor is LIVE: each station is a real pipeline department (lamp = its actual status), each colored bot is a real registered agent carrying its department's actual bus task — hover one to see who it is and what it holds.</p>
     </div>
     ${driveHTML}
+    ${guardHTML}
     ${proveHTML}
     ${directionHTML}
     ${creationsHTML}

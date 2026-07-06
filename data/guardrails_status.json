@@ -1,0 +1,92 @@
+{
+ "generated_at": "2026-07-06T13:00:17.292659+00:00",
+ "total": 12,
+ "passing": 10,
+ "critical_failures": 0,
+ "guardrails": [
+  {
+   "id": "G-A",
+   "name": "Quarantine over delete",
+   "ok": true,
+   "detail": "safe-git moves colliding untracked files to _ATTIC (never `git clean -fd`).",
+   "severity": "critical"
+  },
+  {
+   "id": "G-B",
+   "name": "Message-file commits",
+   "ok": true,
+   "detail": "commit messages go through a UTF-8 file (`commit -F`) — no shell mangling.",
+   "severity": "critical"
+  },
+  {
+   "id": "G-C",
+   "name": "History backup fresh",
+   "ok": true,
+   "detail": "1 bundle(s); newest within 26h.",
+   "severity": "warn"
+  },
+  {
+   "id": "G-D",
+   "name": "No mojibake (UTF-8 intact)",
+   "ok": true,
+   "detail": "no double-encoded text found.",
+   "severity": "critical"
+  },
+  {
+   "id": "G-E",
+   "name": "Build alignment",
+   "ok": true,
+   "detail": "APP_BUILD v84 == SHELL_CACHE v84.",
+   "severity": "warn"
+  },
+  {
+   "id": "G-F",
+   "name": "JSON integrity",
+   "ok": true,
+   "detail": "all top-level data/ + docs/ JSON parses.",
+   "severity": "critical"
+  },
+  {
+   "id": "G-G",
+   "name": "Remote sync verified",
+   "ok": true,
+   "detail": "HEAD == origin/main (work is really saved).",
+   "severity": "warn"
+  },
+  {
+   "id": "G-H",
+   "name": "No rebase-blocking collisions",
+   "ok": true,
+   "detail": "no untracked file collides with incoming commits.",
+   "severity": "warn"
+  },
+  {
+   "id": "G-I",
+   "name": "Handoff mentions live build",
+   "ok": false,
+   "detail": "handoff does not mention the live build (v84) — update §0d so no context is lost.",
+   "severity": "warn"
+  },
+  {
+   "id": "G-J",
+   "name": "Project-memory contract",
+   "ok": true,
+   "detail": "257 memory episodes on record.",
+   "severity": "warn"
+  },
+  {
+   "id": "G-K",
+   "name": "Append-only audit log",
+   "ok": true,
+   "detail": "1 guardrail runs logged (append-only, never rewritten).",
+   "severity": "info"
+  },
+  {
+   "id": "G-L",
+   "name": "Uncommitted-work watchdog",
+   "ok": false,
+   "detail": "3 untracked source file(s) not committed — commit or quarantine so nothing is lost: GUARDRAILS.md, src/git_safe.py, src/guardrails.py",
+   "severity": "warn"
+  }
+ ]
+}

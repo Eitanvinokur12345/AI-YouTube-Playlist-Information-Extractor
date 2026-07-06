@@ -499,6 +499,12 @@ def _beat(args) -> int:
     except Exception:
         pass
 
+    try:                                    # GUARDRAILS: run the information-loss checks every beat
+        from src.guardrails import run as _guardrails
+        _guardrails()
+    except Exception:
+        pass
+
     print(f"EXCAVA beat #{st.get('beats')} [{mode}]: gate internal={'open' if internal_ok else 'CLOSED'} "
           f"outward={'open' if outward_ok else 'closed (G3=' + str(g3) + ')'}; "
           f"bus {snap['open']} open/{snap['total']} total; audit {'OK' if not audit else 'FAIL'}; "

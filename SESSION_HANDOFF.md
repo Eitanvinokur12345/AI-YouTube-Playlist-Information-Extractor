@@ -55,6 +55,22 @@ The project must never topple or lose committed work. **Two enforcers, run every
 - **Never again:** no blind `git clean -fd`/`rm -rf` on untracked content; no inline quoted commit
   messages in PowerShell; no unverified push. `_ATTIC/`, `*.bundle`, `data/horse/` are git-ignored.
 
+## 0c. REAL-VERTICAL STATUS (2026-07-06 Opus — the agentic core is now GENUINELY real, not theater)
+The M2 "agents conversing → artifact" layer was a FACADE (0 turns/33 beats: every engine call 429'd
+because the beat only had exhausted Gemini). Fixed + PROVEN end-to-end:
+- **Part 1 (engines answer) ✅** — selftest run 28817002526: groq×2/gh-models/sambanova/mistral live;
+  all Gemini keys 429-exhausted, cerebras 404 (bad id). CATALOG reordered so proven engines lead.
+- **Part 2 (real turns) ✅** — `excava_beat.yml` (NEW: decoupled heartbeat, dispatch + every 3h, full
+  pool). Real debate committed: Fetch↔Probe, Reel↔Scriv via sambanova.
+- **Part 3 (real artifact) ✅** — rooms write a committed `decision.md` on convergence
+  (`data/excava/artifacts/<room>.md`, lead-synthesized). First one: dept-raise-link-coverage (Ledger).
+- **Honesty ladder** in `goals_check.py`: G4/G9 = 30 (dead) → 50 (talk) → 65 (1-2 artifacts) →
+  uncapped (3+). Now 65; overall 70. Score rises ONLY on real evidence.
+- **NEXT PARTS (owner order, vertical-first):** 4 floor/rooms show ONLY real activity · 5 console fully
+  in-app (kill the GitHub-issue send) · 6 monster+animation cast via a REAL image/video tool (legs, on
+  the acted-on object) · THEN 7 Visualization+Power depts + 2 pitch conditions + pitch-monster (§J/§K/§M
+  of EXCAVA_V2_ADDITIONS.md) · 8 M5 + breadth. Rule: "done" = a real artifact shown, never a rendered card.
+
 ## 0d. EXCAVA v2 BUILD STATE (2026-07-06, Fable executing EXCAVA_V2_STEPS.md — continue HERE; live build v84)
 - **M1 ✅ COMPLETE (v66, dd665b39):** element model (6,422 els, schema+index+set_field) · deep_retrieve
   (full-source enrichment, stubs-first) · discovery_agent (hourly; GitHub/HN/PH/social; live-tested 58 new)

@@ -105,10 +105,26 @@ def commit(message: str, add=None) -> str:
 
 
 def sync() -> list:
-    """Make the tree rebase-safe, then rebase onto origin. Returns what got quarantined."""
+    """Make the tree rebase-safe, then rebase onto origin. Returns what got quarantined.
+    Auto-resolves the recurring CI-data-churn conflict (data/* → take incoming), but for a real
+    SOURCE conflict it aborts and surfaces it — never silently drops your code."""
     revert_ci_churn()
     moved = quarantine_collisions()
-    _git(["pull", "--rebase", "--no-edit"])
+    r = subprocess.run(["git", "pull", "--rebase", "--no-edit"], cwd=str(ROOT), text=True, capture_output=True)
+    while r.returncode != 0 and "conflict" in (r.stdout + r.stderr).lower():
+        conflicted = [f for f in _git(["diff", "--name-only", "--diff-filter=U"]).splitlines() if f]
+        src = [f for f in conflicted if not f.startswith(("data/", "backups/"))]
+        if src or not conflicted:                       # a real source conflict → stop, don't guess
+            _git(["rebase", "--abort"], check=False)
+            raise RuntimeError(f"source conflict — resolve by hand: {', '.join(src or conflicted)}")
+        for f in conflicted:                            # CI data snapshots: your code regenerates them
+            _git(["checkout", "--theirs", "--", f], check=False)
+            _git(["add", "--", f])
+        env_run = subprocess.run(["git", "-c", "core.editor=true", "rebase", "--continue"],
+                                 cwd=str(ROOT), text=True, capture_output=True)
+        r = env_run
+    if r.returncode != 0:
+        raise RuntimeError(f"git pull --rebase failed:\n{(r.stderr or r.stdout).strip()}")
     return moved
 
 

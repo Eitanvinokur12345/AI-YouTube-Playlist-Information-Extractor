@@ -739,6 +739,14 @@
       .tp-row { grid-template-columns:96px 1fr 30px; } .tp-row.wide { grid-template-columns:120px 1fr 30px; }
       .header, header { padding:14px 14px 10px; }
     }
+    /* ── M4.3 PACKAGES — kit cards + assemble box ── */
+    .pkg-assemble { display:flex; gap:8px; flex-wrap:wrap; margin:2px 0 6px; }
+    .pkg-assemble input { border:2px solid var(--line); border-radius:8px 11px 7px 10px; padding:6px 11px;
+      font-size:12.5px; background:var(--panel2); }
+    .pkg-assemble #pkg-name { width:180px; } .pkg-assemble #pkg-els { flex:1; min-width:220px; }
+    .pkg-els { display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 2px; }
+    .pkg-els .pill { text-decoration:none; cursor:pointer; }
+    .pkg-els .pill:hover { border-color:var(--gold-line); color:var(--gold-ink); }
     /* ── M3.13 / E7 INTERACTIVE WALKTHROUGH — spotlight ring + floating coach box ── */
     .tour-ov { position:fixed; inset:0; z-index:80; pointer-events:none; }
     .tour-ring { position:fixed; display:none; border:3px solid var(--gold); border-radius:12px;
@@ -1053,6 +1061,7 @@
     <button data-tab="excava" class="active">🦾 EXCAVA</button>
     <button data-tab="rooms">🗣 Rooms</button>
     <button data-tab="results">📦 Results</button>
+    <button data-tab="packages">🧰 Packages</button>
     <button data-tab="taste">🎛 Taste</button>
     <button data-tab="skills">Skills Library</button>
     <button data-tab="tools">Tool Rating</button>

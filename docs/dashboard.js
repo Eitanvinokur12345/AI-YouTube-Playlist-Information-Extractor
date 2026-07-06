@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v80";
+const APP_BUILD = "v81";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2472,6 +2472,91 @@ function _workTaste() {
   return w;
 }
 function _saveWorkTaste(w) { localStorage.setItem("excavatortron.worktaste", JSON.stringify(w)); }
+// ── M4.3 PACKAGES: reusable kits — assemble / edit / pin / reuse in one click ──
+function _localPkgs() { try { return JSON.parse(localStorage.getItem("excavatortron.packages") || "{}"); } catch { return {}; } }
+function _saveLocalPkgs(o) { localStorage.setItem("excavatortron.packages", JSON.stringify(o)); }
+async function _allPackages() {
+  const [srv, made] = await Promise.all([load("packages.json"), load("created_by_excava.json")]);
+  const local = _localPkgs();
+  const map = {};
+  ((srv && srv.packages) || []).forEach(p => { map[p.id] = { ...p }; });
+  // room / creators package artifacts also become packages (attributed)
+  (((made && made.creations) || []).filter(c => c.type === "package" && Array.isArray(c.elements)))
+    .forEach(c => { const id = "pkg-made-" + (c.name || "").toLowerCase().replace(/\W+/g, "-").slice(0, 24);
+      map[id] = map[id] || { id, name: c.name, what: c.what || "", elements: c.elements, created_by: "EXCAVA", source: "made", at: c.created_at }; });
+  // your local overlay: assembles, edits, pins, deletes
+  Object.values(local.pkgs || {}).forEach(p => { if (p._deleted) delete map[p.id]; else map[p.id] = { ...(map[p.id] || {}), ...p, _local: true }; });
+  Object.entries(local.pins || {}).forEach(([id, v]) => { if (map[id]) map[id].pinned = v; });
+  return Object.values(map).sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || String(b.at || "").localeCompare(String(a.at || "")));
+}
+async function renderPackages() {
+  const pkgs = await _allPackages();
+  const ix = await eidx();
+  const elId = e => typeof e === "string" ? e : (e && (e.id || e.name)) ? String(e.id || e.name) : String(e);
+  const elName = e => { const id = elId(e); return (ix.byId[id] || {}).name || id.split(":").pop(); };
+  const card = p => {
+    const chips = (p.elements || []).map(e => { const id = elId(e);
+      return `<a class="pill" href="#element/${encodeURIComponent(id)}" title="${esc(id)}">${esc(elName(e))}</a>`; }).join(" ");
+    const kitBody = "Kit: " + p.name + "\n" + (p.elements || []).map(e => "- " + elId(e)).join("\n");
+    return `<div class="card pkg-card">
+      <h3>${p.pinned ? "📌 " : ""}${esc(p.name)} <span class="pill">${(p.elements || []).length} items</span>
+        <span class="mentions">${esc(p.created_by || "you")}${p.source ? " · " + esc(p.source) : ""}</span></h3>
+      ${p.what ? `<p class="sub">${esc(p.what)}</p>` : ""}
+      <div class="pkg-els">${chips || '<span class="sub">empty kit</span>'}</div>
+      <div class="el-actions always">
+        <a target="_blank" href="${_exIssue("EXCAVA: run kit " + p.name, kitBody + "\n\nRun each element for this task.")}">▶ Run all</a>
+        <a href="#" data-pkg-runeach="${esc(p.id)}">▶ Run each</a>
+        <a href="#" data-pkg-pin="${esc(p.id)}">${p.pinned ? "📌 Unpin" : "📌 Pin"}</a>
+        <a href="#" data-pkg-edit="${esc(p.id)}">✎ Edit</a>
+        <a target="_blank" href="${_exIssue("EXCAVA: save package " + p.name, kitBody)}">💾 Save to EXCAVA</a>
+        ${p._local ? `<a href="#" data-pkg-del="${esc(p.id)}">🗑 Remove</a>` : ""}
+      </div></div>`;
+  };
+  view.innerHTML = `
+    <div class="card" style="border-top:3px solid var(--gold)">
+      <h3>🧰 Packages <span class="sub">— reusable KITS of hub elements. Assemble once, pin the frequent ones, reuse in one click.</span></h3>
+      <div class="pkg-assemble">
+        <input id="pkg-name" placeholder="new kit name…" maxlength="40">
+        <input id="pkg-els" placeholder="element ids or names, comma-separated (e.g. tool:claude-code, firecrawl)…">
+        <button class="qr-btn" id="pkg-add" style="background:var(--gold-soft);border-color:var(--gold-line)">+ assemble</button>
+      </div>
+      <p class="sub">Auto-suggested + your assembles. “Run all” sends the kit to EXCAVA as one task; “Run each” opens each element. Pins float to the top. Edits live on this device; “Save to EXCAVA” persists a kit for the cloud.</p>
+    </div>
+    ${pkgs.length ? pkgs.map(card).join("") : empty("No packages yet — assemble one above, or turn a brain-graph cluster into a package (Dev Construction → brain graph).")}`;
+  // assemble
+  view.querySelector("#pkg-add").addEventListener("click", () => {
+    const name = (view.querySelector("#pkg-name").value || "").trim();
+    const raw = (view.querySelector("#pkg-els").value || "").split(",").map(s => s.trim()).filter(Boolean);
+    if (!name || !raw.length) return;
+    const els = raw.map(tok => {                       // resolve loose names to real element ids
+      if (ix.byId[tok]) return tok;
+      const hit = Object.keys(ix.byId).find(id => id.toLowerCase().includes(tok.toLowerCase()) ||
+        (ix.byId[id].name || "").toLowerCase().includes(tok.toLowerCase()));
+      return hit || tok;
+    });
+    const lp = _localPkgs(); lp.pkgs = lp.pkgs || {};
+    const id = "pkg-you-" + name.toLowerCase().replace(/\W+/g, "-").slice(0, 24) + "-" + Date.now().toString(36).slice(-4);
+    lp.pkgs[id] = { id, name, what: "your kit", elements: els, created_by: "you", source: "assembled", at: new Date().toISOString(), pinned: true };
+    _saveLocalPkgs(lp); renderPackages();
+  });
+  view.querySelectorAll("[data-pkg-pin]").forEach(a => a.addEventListener("click", e => { e.preventDefault();
+    const id = a.dataset.pkgPin; const lp = _localPkgs(); lp.pins = lp.pins || {};
+    const cur = pkgs.find(p => p.id === id); lp.pins[id] = !(cur && cur.pinned); _saveLocalPkgs(lp); renderPackages(); }));
+  view.querySelectorAll("[data-pkg-del]").forEach(a => a.addEventListener("click", e => { e.preventDefault();
+    const id = a.dataset.pkgDel; const lp = _localPkgs(); lp.pkgs = lp.pkgs || {};
+    lp.pkgs[id] = { id, _deleted: true }; _saveLocalPkgs(lp); renderPackages(); }));
+  view.querySelectorAll("[data-pkg-edit]").forEach(a => a.addEventListener("click", e => { e.preventDefault();
+    const p = pkgs.find(x => x.id === a.dataset.pkgEdit); if (!p) return;
+    const next = prompt("Edit kit elements (comma-separated ids):", (p.elements || []).join(", "));
+    if (next == null) return;
+    const lp = _localPkgs(); lp.pkgs = lp.pkgs || {};
+    lp.pkgs[p.id] = { ...p, elements: next.split(",").map(s => s.trim()).filter(Boolean), _local: true };
+    _saveLocalPkgs(lp); renderPackages(); }));
+  view.querySelectorAll("[data-pkg-runeach]").forEach(a => a.addEventListener("click", e => { e.preventDefault();
+    const p = pkgs.find(x => x.id === a.dataset.pkgRuneach); if (!p || !(p.elements || []).length) return;
+    show("element/" + encodeURIComponent(elId(p.elements[0])));   // open the first; each chip opens the rest
+  }));
+}
 async function renderTaste() {
   const a = _arena(); a.styles = a.styles || {};
   const wt = _workTaste();
@@ -2832,6 +2917,7 @@ async function renderTab(tab) {
   if (tab === "excava") return renderExcava();
   if (tab === "rooms") return renderRooms();
   if (tab === "results") return renderResults();
+  if (tab === "packages") return renderPackages();
   if (tab === "taste") return renderTaste();
   if (tab === "skills") return renderSkills(await load("skills.json"));
   if (tab === "tools" || tab === "models")

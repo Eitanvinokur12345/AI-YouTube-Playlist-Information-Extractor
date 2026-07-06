@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-06T19:23:41.738074+00:00",
+  "generated_at": "2026-07-06T19:31:53.035512+00:00",
   "name": "EXCAVA",
   "phase": "OS spine (Phase 0): bus + departments + hand-offs live; creators (OS-2) gated",
   "gate": {
@@ -94,7 +94,7 @@
     }
   ],
   "os": {
-    "beats": 36,
+    "beats": 37,
     "mode": "run",
     "bus": {
       "open": 8,
@@ -146,10 +146,10 @@
       "last_handoff": "data/excava/handoffs/push-link-coverage-towar-53881--01--links-w1--to--memory.md"
     },
     "beat_log": [
-      "war-deliver-keep-the-designs-tab-578: Reel spoke (sambanova, 961ms) t1",
-      "war-deliver-keep-the-designs-tab-578: Scriv spoke (sambanova, 687ms) t2",
-      "dept-raise-link-coverage-pick-the-641: Fetch spoke (sambanova, 1006ms) t1",
-      "dept-raise-link-coverage-pick-the-641: Probe spoke (sambanova, 636ms) t2",
+      "war-deliver-keep-the-designs-tab-578: Chisel spoke (sambanova, 804ms) t3",
+      "war-deliver-keep-the-designs-tab-578: Sift spoke (sambanova, 823ms) t4",
+      "dept-raise-link-coverage-pick-the-641: Fetch spoke (sambanova, 1424ms) t3",
+      "dept-raise-link-coverage-pick-the-641: Probe spoke (sambanova, 784ms) t4",
       "TUTORIAL MISSING for dashboard v84 — Phase 6 law: every major change ships a walkthrough (data/tutorials.json)"
     ],
     "departments": [
@@ -291,60 +291,6 @@
     ],
     "recent_events": [
       {
-        "task": "push-link-coverage-towar-53881",
-        "at": "2026-07-06T16:04:41.547065+00:00",
-        "kind": "handoff",
-        "from": "links-w1",
-        "to": "memory",
-        "doc": "data/excava/handoffs/push-link-coverage-towar-53881--01--links-w1--to--memory.md"
-      },
-      {
-        "task": "push-link-coverage-towar-53881",
-        "at": "2026-07-06T16:04:41.548242+00:00",
-        "kind": "claimed",
-        "by": "memory-w1",
-        "department": "memory"
-      },
-      {
-        "task": "push-link-coverage-towar-53881",
-        "at": "2026-07-06T16:04:41.707475+00:00",
-        "kind": "completed",
-        "by": "memory-w1",
-        "result": "Semantic index: 1439 vectors (model gemini-embedding-001); hub 5173 items → 3734 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-06T16:04:42.046898+00:00",
-        "kind": "lane_ran",
-        "lane": "Gemini watch (audio+visual)",
-        "status": "live",
-        "what": "Watches videos directly — clears the backlog free"
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-06T16:04:42.047447+00:00",
-        "kind": "lane_ran",
-        "lane": "Free analysis pool",
-        "status": "live",
-        "what": "Turns transcripts into skills/tools/connectors (free engines)"
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-06T16:04:42.047967+00:00",
-        "kind": "lane_ran",
-        "lane": "External mining",
-        "status": "live",
-        "what": "Mines 80+ web feeds for new tools/skills/MCPs"
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-06T16:04:42.048427+00:00",
-        "kind": "lane_ran",
-        "lane": "Deep analysis (night-gated)",
-        "status": "live",
-        "what": "Claude re-analysis + safety pass"
-      },
-      {
         "task": "os-lanes",
         "at": "2026-07-06T16:04:42.049013+00:00",
         "kind": "lane_ran",
@@ -433,6 +379,63 @@
         "lane": "Free analysis pool",
         "status": "live",
         "what": "Turns transcripts into skills/tools/connectors (free engines)"
+      },
+      {
+        "task": "empty-body-items-render--31649",
+        "at": "2026-07-06T19:31:53.200777+00:00",
+        "kind": "unroutable",
+        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+      },
+      {
+        "task": "title-collisions-distinc-31649",
+        "at": "2026-07-06T19:31:53.201502+00:00",
+        "kind": "unroutable",
+        "why": "no department specialization matched"
+      },
+      {
+        "task": "lane-transcript-retrieva-77142",
+        "at": "2026-07-06T19:31:53.202087+00:00",
+        "kind": "unroutable",
+        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+      },
+      {
+        "task": "war-deliver-keep-the-designs-tab-578",
+        "at": "2026-07-06T19:31:54.078586+00:00",
+        "kind": "workers_dispatched",
+        "by": "analysis-w1",
+        "n": 4,
+        "ids": [
+          "worker-7743",
+          "worker-9872",
+          "worker-5615",
+          "worker-1268"
+        ]
+      },
+      {
+        "task": "war-deliver-keep-the-designs-tab-578",
+        "at": "2026-07-06T19:31:54.079566+00:00",
+        "kind": "workers_dissolved",
+        "by": "analysis-w1",
+        "n": 4
+      },
+      {
+        "task": "dept-raise-link-coverage-pick-the-641",
+        "at": "2026-07-06T19:31:56.393014+00:00",
+        "kind": "workers_dispatched",
+        "by": "links-w1",
+        "n": 3,
+        "ids": [
+          "worker-4344",
+          "worker-7315",
+          "worker-6500"
+        ]
+      },
+      {
+        "task": "dept-raise-link-coverage-pick-the-641",
+        "at": "2026-07-06T19:31:56.393950+00:00",
+        "kind": "workers_dissolved",
+        "by": "links-w1",
+        "n": 3
       }
     ],
     "memory_episodes": 0,

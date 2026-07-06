@@ -1,57 +1,6 @@
 {
   "events": [
     {
-      "task": "lane-transcript-retrieva-77142",
-      "at": "2026-07-06T16:04:41.542941+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "push-link-coverage-towar-53881",
-      "at": "2026-07-06T16:04:41.544297+00:00",
-      "kind": "routed",
-      "chose": "links",
-      "over": [],
-      "why": "best specialization match (2 hits)"
-    },
-    {
-      "task": "push-link-coverage-towar-53881",
-      "at": "2026-07-06T16:04:41.545736+00:00",
-      "kind": "claimed",
-      "by": "links-w1",
-      "department": "links"
-    },
-    {
-      "task": "push-link-coverage-towar-53881",
-      "at": "2026-07-06T16:04:41.547065+00:00",
-      "kind": "handoff",
-      "from": "links-w1",
-      "to": "memory",
-      "doc": "data/excava/handoffs/push-link-coverage-towar-53881--01--links-w1--to--memory.md"
-    },
-    {
-      "task": "push-link-coverage-towar-53881",
-      "at": "2026-07-06T16:04:41.548242+00:00",
-      "kind": "claimed",
-      "by": "memory-w1",
-      "department": "memory"
-    },
-    {
-      "task": "push-link-coverage-towar-53881",
-      "at": "2026-07-06T16:04:41.707475+00:00",
-      "kind": "completed",
-      "by": "memory-w1",
-      "result": "Semantic index: 1439 vectors (model gemini-embedding-001); hub 5173 items → 3734 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-07-06T16:04:42.046898+00:00",
-      "kind": "lane_ran",
-      "lane": "Gemini watch (audio+visual)",
-      "status": "live",
-      "what": "Watches videos directly — clears the backlog free"
-    },
-    {
       "task": "os-lanes",
       "at": "2026-07-06T16:04:42.047447+00:00",
       "kind": "lane_ran",
@@ -299,6 +248,60 @@
       "lane": "AI news refresh",
       "status": "live",
       "what": "Refreshes official-site AI news"
+    },
+    {
+      "task": "empty-body-items-render--31649",
+      "at": "2026-07-06T21:59:32.327241+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "title-collisions-distinc-31649",
+      "at": "2026-07-06T21:59:32.327988+00:00",
+      "kind": "unroutable",
+      "why": "no department specialization matched"
+    },
+    {
+      "task": "lane-transcript-retrieva-77142",
+      "at": "2026-07-06T21:59:32.328596+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "dept-raise-link-coverage-pick-the-306",
+      "at": "2026-07-06T21:59:33.531649+00:00",
+      "kind": "workers_dispatched",
+      "by": "links-w1",
+      "n": 4,
+      "ids": [
+        "worker-2762",
+        "worker-1925",
+        "worker-9770",
+        "worker-2149"
+      ]
+    },
+    {
+      "task": "dept-raise-link-coverage-pick-the-306",
+      "at": "2026-07-06T21:59:33.532579+00:00",
+      "kind": "workers_dissolved",
+      "by": "links-w1",
+      "n": 4
+    },
+    {
+      "task": "os-lanes",
+      "at": "2026-07-06T21:59:36.215109+00:00",
+      "kind": "lane_ran",
+      "lane": "Free analysis pool",
+      "status": "live",
+      "what": "Turns transcripts into skills/tools/connectors (free engines)"
+    },
+    {
+      "task": "os-lanes",
+      "at": "2026-07-06T21:59:36.215811+00:00",
+      "kind": "lane_ran",
+      "lane": "Deep analysis (night-gated)",
+      "status": "live",
+      "what": "Claude re-analysis + safety pass"
     }
   ]
 }

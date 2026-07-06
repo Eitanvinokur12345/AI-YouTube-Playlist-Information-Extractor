@@ -1,0 +1,58 @@
+name: EXCAVA beat (agentic heartbeat)
+
+# The OS beat as its OWN workflow, decoupled from the heavy bulk_analyze job.
+# WHY: the beat used to run LAST inside bulk_analyze, after analysis/links/news had already
+# drained the Gemini free-tier quota — so rooms hit 429 with no engine and produced 0 turns
+# across 33 beats. Here the beat runs alone with the FULL working engine pool (groq/sambanova/
+# mistral/gh-models proven answering in selftest run 28817002526), so agents actually converse.
+# COST: free — only the free engine pool; no Claude tokens, no paid services.
+on:
+  workflow_dispatch:            # trigger on demand to PROVE rooms advance
+  schedule:
+    - cron: "17 */3 * * *"      # every 3 hours, offset so it never collides with bulk_analyze
+
+concurrency:
+  group: skills-tracker-excava-beat
+  cancel-in-progress: false
+
+permissions:
+  contents: write               # commit the chat transcripts + status back to the repo
+
+jobs:
+  beat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run the beat (rooms converse + self-improve) with the working engine pool
+        env:
+          GH_MODELS_TOKEN: ${{ secrets.GH_MODELS_TOKEN }}
+          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
+          CEREBRAS_API_KEY_2: ${{ secrets.CEREBRAS_API_KEY_2 }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GROQ_API_KEY_2: ${{ secrets.GROQ_API_KEY_2 }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          SAMBANOVA_API_KEY: ${{ secrets.SAMBANOVA_API_KEY }}
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY_2: ${{ secrets.GEMINI_API_KEY_2 }}
+          GEMINI_API_KEY_3: ${{ secrets.GEMINI_API_KEY_3 }}
+          GEMINI_API_KEY_4: ${{ secrets.GEMINI_API_KEY_4 }}
+          GEMINI_API_KEY_5: ${{ secrets.GEMINI_API_KEY_5 }}
+          GEMINI_API_KEY_6: ${{ secrets.GEMINI_API_KEY_6 }}
+        run: |
+          python -m src.excava || true
+
+      - name: Commit transcripts + status
+        run: |
+          git config user.name "skills-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data
+          git commit -m "excava-beat: $(date -u +%Y-%m-%dT%H:%MZ)" || echo "nothing to commit"
+          git pull --rebase --autostash origin main || true
+          git push || echo "push skipped"

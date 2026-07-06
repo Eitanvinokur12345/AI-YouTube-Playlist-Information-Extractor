@@ -25,13 +25,21 @@ import time
 import urllib.request
 
 # (name, kind, base_url, model, env_keys[, tier])  kind: gemini | openai | ollama
+# Order matters: pick_engine returns the FIRST available engine of the wanted tier, so the
+# PROVEN-working engines lead. CI selftest 2026-07-06 (run 28817002526): groq/sambanova/mistral/
+# gh-models answer; cerebras 404s (bad model id — parked last); all Gemini keys are 429-exhausted
+# by the analysis pipeline, so Gemini is NOT first-line for chat anymore.
 CATALOG = [
-    ("cerebras",   "openai", "https://api.cerebras.ai/v1",            "llama-3.3-70b",
-     ["CEREBRAS_API_KEY", "CEREBRAS_API_KEY_2"], "fast"),
     ("groq",       "openai", "https://api.groq.com/openai/v1",        "llama-3.3-70b-versatile",
      ["GROQ_API_KEY", "GROQ_API_KEY_2"], "fast"),
     ("sambanova",  "openai", "https://api.sambanova.ai/v1",           "Meta-Llama-3.3-70B-Instruct",
      ["SAMBANOVA_API_KEY"], "fast"),
+    ("mistral",    "openai", "https://api.mistral.ai/v1",             "mistral-small-latest",
+     ["MISTRAL_API_KEY"], "fast"),
+    ("gh-models",  "openai", "https://models.github.ai/inference",    "openai/gpt-4o-mini",
+     ["GH_MODELS_TOKEN", "GITHUB_TOKEN"], "grounded"),
+    ("cerebras",   "openai", "https://api.cerebras.ai/v1",            "llama-3.3-70b",
+     ["CEREBRAS_API_KEY", "CEREBRAS_API_KEY_2"], "fast"),
     ("gemini",     "gemini", "",                                      "gemini-2.0-flash",
      ["EXTERNAL_REVIEW_API_KEY", "GEMINI_API_KEY", "GEMINI_API_KEY_2", "GEMINI_API_KEY_3",
       "GEMINI_API_KEY_4", "GEMINI_API_KEY_5", "GEMINI_API_KEY_6"], "grounded"),
@@ -39,10 +47,6 @@ CATALOG = [
      ["OPENROUTER_API_KEY"], "reasoning"),
     ("nvidia",     "openai", "https://integrate.api.nvidia.com/v1",   "meta/llama-3.3-70b-instruct",
      ["NVIDIA_API_KEY"], "grounded"),
-    ("mistral",    "openai", "https://api.mistral.ai/v1",             "mistral-small-latest",
-     ["MISTRAL_API_KEY"], "fast"),
-    ("gh-models",  "openai", "https://models.github.ai/inference",    "openai/gpt-4o-mini",
-     ["GH_MODELS_TOKEN", "GITHUB_TOKEN"], "grounded"),
     ("hermes",     "ollama", "http://localhost:11434/v1",             "hermes3",
      [], "reasoning"),
     ("omniroute",  "openai", "",                                      "auto",

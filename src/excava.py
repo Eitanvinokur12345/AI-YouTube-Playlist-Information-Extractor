@@ -493,6 +493,12 @@ def _beat(args) -> int:
         "tool_stack": cfg.get("tool_stack", []), "stack_review": stack_review,
     }, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    try:                                    # M4.5: keep the public hub-as-database endpoint fresh
+        from src.build_hub_api import main as _hub_api
+        _hub_api()
+    except Exception:
+        pass
+
     print(f"EXCAVA beat #{st.get('beats')} [{mode}]: gate internal={'open' if internal_ok else 'CLOSED'} "
           f"outward={'open' if outward_ok else 'closed (G3=' + str(g3) + ')'}; "
           f"bus {snap['open']} open/{snap['total']} total; audit {'OK' if not audit else 'FAIL'}; "

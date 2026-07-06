@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v81";
+const APP_BUILD = "v82";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1799,6 +1799,7 @@ async function renderSearchAll() {
 // so drive actions open a PREFILLED issue titled "EXCAVA: …" — CI applies it, replies a
 // receipt, closes the issue. Works from the phone.
 const GH_REPO = "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor";
+const GH_PAGES = "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/docs";
 const _exIssue = (title, body = "") =>
   `${GH_REPO}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
 const EX_ICONS = { gemini: "📺", transcript: "📜", analysis: "⚙️", mining: "⛏️", external: "⛏️",
@@ -2521,6 +2522,13 @@ async function renderPackages() {
         <button class="qr-btn" id="pkg-add" style="background:var(--gold-soft);border-color:var(--gold-line)">+ assemble</button>
       </div>
       <p class="sub">Auto-suggested + your assembles. “Run all” sends the kit to EXCAVA as one task; “Run each” opens each element. Pins float to the top. Edits live on this device; “Save to EXCAVA” persists a kit for the cloud.</p>
+    </div>
+    <div class="card hubapi-card"><h3>🛢 Hub-as-database <span class="sub">— M4.5: pull these packages + real elements into ANY project</span></h3>
+      <p class="sub">Excavatortron publishes a public read endpoint (refreshed every beat). Budoaris / FreeDup / any tool — or the activator offline — can GET it and pull a package or an element (each carries install + url).</p>
+      <div class="sub">Endpoint: <code id="hubapi-url">${GH_PAGES}/hub_api.json</code>
+        <button class="qr-btn" data-copy="${GH_PAGES}/hub_api.json">copy</button>
+        <a class="qr-btn" target="_blank" href="${GH_PAGES}/hub_api.json">open</a></div>
+      <div class="sub" style="margin-top:6px">Pull a package: <code>const hub = await (await fetch("${GH_PAGES}/hub_api.json")).json(); const kit = hub.packages.find(p =&gt; p.name === "Research &amp; browse");</code></div>
     </div>
     ${pkgs.length ? pkgs.map(card).join("") : empty("No packages yet — assemble one above, or turn a brain-graph cluster into a package (Dev Construction → brain graph).")}`;
   // assemble

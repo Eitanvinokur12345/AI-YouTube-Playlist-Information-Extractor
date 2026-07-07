@@ -55,10 +55,16 @@ The project must never topple or lose committed work. **Two enforcers, run every
 - **Never again:** no blind `git clean -fd`/`rm -rf` on untracked content; no inline quoted commit
   messages in PowerShell; no unverified push. `_ATTIC/`, `*.bundle`, `data/horse/` are git-ignored.
 
-## 0b. RESUME HERE (loop paused 2026-07-07 — owner away, back during the day)
-Autonomous /loop is making EXCAVA actually DO tasks. Movement STALLED at **36 done / 6-of-12 depts**
-(analysis, creators, improve, memory, mining, visual move; news/security/watch/transcripts/links have
-real QUEUED tasks that never execute). **Fix these IN ORDER when resuming:**
+## 0b. RESUME HERE (autonomous /loop 2026-07-07 — owner away, "carry on")
+Movement now WORKS: order bug fixed + 8-cycle beat → 124 done, 10/11 depts active (G-M movement guardrail).
+BUT the work is HOLLOW: `_work_generic` wrote LLM *plans* and false-stamped them DONE (0 real videos/
+connectors done); now honestly labelled "EXECUTION PLAN — not executed" (`planned_only`).
+**TWO TOP PRIORITIES NEXT:** (1) **wire REAL per-department executors** — each dept runs its actual tool
+(security→`src.safety_check`, watch→pending processor…) and reports REAL output, not a plan. (2) **build
+the POWER department** — mine the ~13k index (`data/excava/power_findings.md`) → auto-apply safe self-
+improvements (token trims, routing) + pitch owner-gated ones (Modal/pinger/PAT for true 10-min cron; more
+free keys). Also: dept-fairness under the tick cap; deferred capabilities-extent review (owner request).
+_(historical stall notes below — mostly resolved:)_ **Fix these IN ORDER when resuming:**
 1. **ORDER BUG (fast, do first):** in `src/excava.py` the backlog refresh runs AFTER the step-4
    worker-tick, so freshly-queued per-department tasks always wait a full beat. **Move the backlog
    refresh to BEFORE the worker-tick step.** This alone should let the other 6 departments execute.

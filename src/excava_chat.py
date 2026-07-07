@@ -249,18 +249,29 @@ def advance(room_id: str, turns: int = 2) -> list[str]:
 
 
 def ensure_default_rooms() -> list[str]:
-    """M2.7 seed: a war room for the top owner task + one active department room."""
+    """Owner 2026-07-07: rooms are organized BY DEPARTMENT — one live room per department (all 13),
+    each labelled by its department + its real focus; plus a cross-department WAR ROOM for the top
+    owner task. Idempotent: only opens a department's room if it has none open."""
     opened = []
-    b = bus.read_bus()
+    reg = agents.load_registry()
+    depts = sorted({a.get("department") for a in reg.get("agents", [])
+                    if a.get("department") and a.get("department") != "core"})
+    intent = _load(DATA / "excava" / "intent.json", {}).get("departments", {})
+    state = load_rooms()
+    open_depts = {r.get("dept") for r in state["rooms"] if r["status"] == "open" and r.get("kind") == "dept"}
+    for d in depts:
+        if d in open_depts:
+            continue
+        focus = (intent.get(d, {}) or {}).get("should_do") or f"advance the {d} department's mission"
+        r = open_room("dept", f"{d}: {focus[:90]}", dept=d, max_turns=6, artifact_kind="bus-task")
+        opened.append(r["id"])
+    b = bus.read_bus()                                  # a cross-department WAR ROOM for the top owner task
     owner = [t for t in b.get("tasks", []) if t.get("priority") == 0 and t["status"] in ("queued", "working")]
-    if owner:
-        r = open_room("war", f"Deliver: {owner[0]['title'][:90]}", dept=owner[0].get("department", ""),
+    if owner and not any(r.get("kind") == "war" and r["status"] == "open" for r in load_rooms()["rooms"]):
+        r = open_room("war", f"Deliver: {owner[0]['title'][:80]}", dept=owner[0].get("department", ""),
                       done_criteria="a concrete artifact exists and the bus task can complete",
                       max_turns=8, artifact_kind="package")
         opened.append(r["id"])
-    r2 = open_room("dept", "Raise link coverage: pick the next 200 unlinked elements and the fastest resolution path",
-                   dept="links", max_turns=6, artifact_kind="bus-task")
-    opened.append(r2["id"])
     return opened
 
 

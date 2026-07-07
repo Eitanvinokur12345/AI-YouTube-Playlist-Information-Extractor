@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v89";
+const APP_BUILD = "v90";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2839,9 +2839,16 @@ async function renderRooms(selId) {
   const agents = {};
   ((reg && reg.agents) || []).forEach(a => { agents[a.id] = a; });
   const sel = list.find(r => r.id === selId) || list.find(r => r.status === "open") || list[0];
-  const rail = list.slice(0, 14).map(r =>
-    `<button class="${r.id === sel.id ? "on" : ""} ${r.kind === "war" ? "k-war" : ""}" data-room="${esc(r.id)}">
-      ${r.kind === "war" ? "⚔️" : r.kind === "group" ? "🏛" : "💬"} ${esc(r.goal.slice(0, 34))}${r.status === "done" ? " ✓" : ""}</button>`).join("");
+  // BY DEPARTMENT (owner 2026-07-07): one rail entry per department (its latest room), labeled by
+  // the DEPARTMENT NAME — not the cryptic goal-title — plus the cross-department war room(s).
+  const deptLatest = {};
+  list.forEach(r => { if (r.kind === "dept" && r.dept && !deptLatest[r.dept]) deptLatest[r.dept] = r; });
+  const deptRail = Object.keys(deptLatest).sort().map(d => { const r = deptLatest[d];
+    return `<button class="${r.id === sel.id ? "on" : ""}" data-room="${esc(r.id)}" title="${esc(r.goal)}">
+      ${_exIcon(d)} <b>${esc((d || "").toUpperCase())}</b>${r.status === "done" ? " ✓" : r.status === "open" ? " 🟢" : ""}</button>`; }).join("");
+  const warRail = list.filter(r => r.kind === "war").slice(0, 3).map(r =>
+    `<button class="${r.id === sel.id ? "on" : ""} k-war" data-room="${esc(r.id)}" title="${esc(r.goal)}">⚔️ WAR: ${esc((r.dept || "cross-dept").toUpperCase())}</button>`).join("");
+  const rail = deptRail + warRail;
   const days = [];
   for (let i = 3; i >= 0; i--) {
     const d = new Date(Date.now() - i * 864e5).toISOString().slice(0, 10);

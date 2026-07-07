@@ -161,9 +161,10 @@ def _work_creators(task: dict) -> dict:
 
 
 def _work_generic(task: dict) -> dict:
-    """EVERY department that lacks a bespoke assessor still DOES real work: its lead produces a
-    committed Decision + Plan artifact for the task (engine-written, task-summary fallback), then
-    the task completes. This un-freezes the 'all at 0' bus — no department is a dead-end anymore."""
+    """Departments without a bespoke executor produce an HONEST execution PLAN (not a claim that the
+    work is done). It is labelled 'PLAN — not yet executed' and the task is handed off for real
+    execution, NOT falsely marked complete. (2026-07-07: fixes the hollow-artifact facade where a
+    plausible LLM plan was stamped 'DONE' though no video/connector/design was actually touched.)"""
     import re
     tid = task.get("id", "task")
     dept = task.get("department", "core")
@@ -175,23 +176,29 @@ def _work_generic(task: dict) -> dict:
         lead = next((a for a in reg.get("agents", []) if a.get("department") == dept and a.get("role") == "lead"), {})
         prompt = (f"You are {lead.get('name', dept + ' lead')} ({str(lead.get('persona', ''))[:120]}).\n"
                   f"TASK: {task.get('title', '')}\nCONTEXT: {str(task.get('detail', ''))[:300]}\n\n"
-                  "Write GitHub markdown ONLY: one-line '**Decision:**', a numbered '**Plan:**' of 3-5 "
-                  "concrete steps, then '**Done when:**' one line. Specific and real, no preamble.")
+                  "Write an EXECUTION PLAN in GitHub markdown ONLY — the concrete steps to ACTUALLY do "
+                  "this (real files/tools/commands). Do NOT claim it is already done; this is a plan to "
+                  "be executed. One-line '**Approach:**', a numbered '**Steps:**' (3-5), '**Needs:**' "
+                  "(the real tool/data/access required). No preamble, no invented repos or metrics.")
         r = engines.complete(prompt, dept=dept, difficulty="normal", max_tokens=360)
         if r.get("ok") and (r.get("text") or "").strip():
             body, src = r["text"].strip(), f"{r['engine']}/{r['model']}"
     except Exception:
         pass
     if not body:
-        body = (f"**Decision:** Address — {task.get('title', '')}\n\n**Plan:**\n"
-                f"1. {str(task.get('detail', '')) or 'assess the gap'}\n2. Produce the artifact\n"
-                "3. Verify it closes the gap\n\n**Done when:** a committed artifact exists.")
+        body = (f"**Approach:** {task.get('title', '')}\n\n**Steps:**\n"
+                f"1. {str(task.get('detail', '')) or 'assess the gap'}\n2. Run the real tool for this domain\n"
+                "3. Verify the gap actually closed\n\n**Needs:** a real executor wired for this department.")
     adir = DATA / "excava" / "artifacts"
     adir.mkdir(parents=True, exist_ok=True)
     path = adir / f"task-{slug}.md"
-    path.write_text(f"# {task.get('title', 'task')}\n\n> {dept} · task `{tid}` · synthesized by {src}\n\n{body}\n",
-                    encoding="utf-8")
-    return {"kind": "complete", "result": f"produced data/excava/artifacts/{path.name} (by {src.split('/')[0]})"}
+    path.write_text(f"# {task.get('title', 'task')}\n\n> {dept} · task `{tid}` · **EXECUTION PLAN — NOT yet "
+                    f"executed** · by {src}\n\n{body}\n", encoding="utf-8")
+    # HONEST: the planning turn completed, but this is a PLAN, not executed work. The result string
+    # says so unmistakably (no self-handoff loop). Wiring real per-department executors is next.
+    return {"kind": "complete", "planned_only": True,
+            "result": f"EXECUTION PLAN written (NOT executed) → data/excava/artifacts/{path.name}; "
+                      f"real execution still needs a wired {dept} tool"}
 
 
 WORK: dict = {"links": _work_links, "memory": _work_memory,

@@ -1,14 +1,14 @@
 # Mining: discover new AI repos/tools + verify this cycle
 
-> mining · task `mining-discover-new-ai-r-38138` · synthesized by mistral/mistral-small-latest
+> mining · task `mining-discover-new-ai-r-43456` · synthesized by mistral/mistral-small-latest
 
-**Decision:** Keep only repos with novel architectures or niche optimizations; discard flashy demos.
+**Decision:** Mine AI repos/tools with high novelty-to-noise ratio.
 
 **Plan:**
-1. Query GitHub API for `ai tools` with `stars:>1000 pushed:>2023-01-01` (filter out tutorials/books).
-2. Manually inspect top 50 results: prioritize repos with `README.md` describing unconventional methods (e.g., "neural ODEs", "diffusion on graphs").
-3. Clone and run `main.py` or `demo.py`—discard if setup fails or output is trivial (e.g., MNIST accuracy >98%).
-4. Check commit activity: keep if active in last 3 months *and* has <5 contributors (signals niche focus).
-5. Log kept repos in `~/prospecting/ai_repos_YYYY-MM.txt` with 1-line justification (e.g., "Diffusion on graphs for molecule generation").
+1. Query GitHub API for repos with `ai`, `ml`, `llm`, or `transformers` in name/description, sorted by `pushed:>2023-11-01` and `stars:>50`.
+2. Filter results for repos with `README.md` containing "novel", "research", or "experimental".
+3. Clone top 10 candidates, run `pip install -e .` in a venv to check for installability.
+4. Run `pytest` or `python -m unittest` if tests exist; otherwise, manually test core functionality.
+5. Open issues/PRs for critical bugs or missing docs; discard if unmaintained (no commits >30 days).
 
-**Done when:** 3 novel repos added to prospecting log with verified functionality.
+**Done when:** 3 repos pass install/test and have unique value (e.g., new architecture, dataset, or tool).

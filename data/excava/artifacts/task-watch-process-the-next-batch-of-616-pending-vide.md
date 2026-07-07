@@ -1,14 +1,14 @@
 # Watch: process the next batch of 616 pending videos
 
-> watch · task `watch-process-the-next-b-38138` · synthesized by mistral/mistral-small-latest
+> watch · task `watch-process-the-next-b-43456` · synthesized by mistral/mistral-small-latest
 
-**Decision:** Approve batch for processing with priority flag due to high value-to-size ratio.
+**Decision:** Approve batch for processing after verifying cost/size/risk alignment.
 
 **Plan:**
-1. Filter videos by `size=29(small)` to reduce compute load.
-2. Batch-process first 50 videos using GPU cluster (cost cap 30).
-3. Log timestamps for each video’s start/end in `processing_log.md`.
-4. Flag videos with risk >10 for manual review post-processing.
-5. Update `pending_videos.csv` with new statuses (processed/flagged).
+1. Pull 616 pending videos from queue with `size=29` and `value=65`.
+2. Log timestamp `2023-11-15T14:32:00Z` for batch start.
+3. Run cost check: confirm `cost=30` ≤ `value=65` (margin 35).
+4. Validate risk: ensure `risk=10` ≤ 15% threshold.
+5. Trigger processing pipeline with `steps=40`.
 
-**Done when:** All 50 videos logged, risk-flagged items identified, and log pushed to `main`.
+**Done when:** All 616 videos processed with `cost=30`, `steps=40`, `risk=10` logged.

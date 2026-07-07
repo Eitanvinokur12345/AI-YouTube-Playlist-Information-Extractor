@@ -1,14 +1,14 @@
 # News: refresh the AI-news digest for the newest sources
 
-> news · task `news-refresh-the-ai-news-38138` · synthesized by mistral/mistral-small-latest
+> news · task `news-refresh-the-ai-news-43456` · synthesized by mistral/mistral-small-latest
 
-**Decision:** Prioritize AI governance policy leaks from EU/US sources.
+**Decision:** Prioritize AI news with fresh sources (cadence=62) and minimal risk (5).
 
 **Plan:**
-1. Query EU AI Act compliance docs (EUR-Lex, 24h fresh).
-2. Cross-check with US NIST AI RMF v1.1 draft (GitHub commits, last 48h).
-3. Pull Reuters/Bloomberg AI chip export ban rumors (verify 2+ sources).
-4. Scan arXiv for "LLM safety alignment" preprints (filter by submission date).
-5. Validate with at least one academic or industry insider quote.
+1. Scan top AI-repos (Hugging Face, LangChain, Mistral) for commits/issues in last 48h.
+2. Cross-check with 2+ independent sources (e.g., arXiv preprints + vendor blogs).
+3. Filter by "size=14" (small-scale) and "cost ≤15" (low-resource tools).
+4. Draft 3-line digest with sources cited (e.g., `[HF#123][arXiv:2405.123]`).
+5. Post to GitHub Issues with `freshness:cadence` tag.
 
-**Done when:** 3+ primary sources cited with timestamps in markdown table.
+**Done when:** Digest posted with 2+ sources and `cost 15/steps 20/risk 5` validated.

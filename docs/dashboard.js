@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v88";
+const APP_BUILD = "v89";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2974,21 +2974,27 @@ async function renderResults() {
   const days = [...new Set(items.map(x => String(x.at).slice(0, 10)))].slice(0, 7);
   const depts = [...new Set(items.map(x => x.dept))];
   const agents = [...new Set(items.map(x => x.agent))].slice(0, 12);
-  const f = items.filter(x => (!day || String(x.at).startsWith(day)) &&
-    (!dept || x.dept === dept) && (!agent || x.agent === agent));
-  const chip = (val, cur, key, lbl) =>
-    `<button class="qr-btn ${cur === val ? "active" : ""}" data-resf="${key}:${esc(val)}">${esc(lbl || val)}</button>`;
-  view.innerHTML = `<div class="card"><h3>📦 Results <span class="sub">— everything EXCAVA produced, attributed to who made it; filter by day / department / maker</span></h3>
-      <div class="links" style="margin-bottom:4px">${chip("", day, "day", "all days")}${days.map(d => chip(d, day, "day")).join("")}</div>
-      <div class="links" style="margin-bottom:4px">${chip("", dept, "dept", "all departments")}${depts.map(d => chip(d, dept, "dept")).join("")}</div>
-      <div class="links">${chip("", agent, "agent", "all makers")}${agents.map(a => chip(a, agent, "agent")).join("")}</div>
-    </div>
-    ${f.length ? f.map(_resultCard).join("") : empty("Nothing matches — rooms produce artifacts as they converge (M2.6); the creators department lands a few per day.")}`;
-  view.querySelectorAll("[data-resf]").forEach(b => b.addEventListener("click", () => {
-    const [k, ...v] = b.dataset.resf.split(":");
-    state[{ day: "resDay", dept: "resDept", agent: "resAgent" }[k]] = v.join(":");
-    renderResults();
-  }));
+  // DEPARTMENT-FIRST (owner: 'organized by department — click one, see everything it created')
+  const byDept = {};
+  items.forEach(x => { (byDept[x.dept || "core"] = byDept[x.dept || "core"] || []).push(x); });
+  if (!dept) {                                        // overview: one card per department
+    const cards = Object.keys(byDept).sort().map(d => `
+      <div class="card dept-card" data-open-dept="${esc(d)}" style="cursor:pointer;border-left:4px solid var(--gold-line)">
+        <h3>${_exIcon(d)} ${esc((d || "").toUpperCase())} department <span class="pill">${byDept[d].length} produced</span></h3>
+        <p class="sub">Most recent: ${esc(String((byDept[d][0] || {}).title || "").slice(0, 90))}</p>
+        <p class="sub" style="color:var(--gold-ink)">Click to see everything the ${esc(d)} department created →</p>
+      </div>`).join("");
+    view.innerHTML = `<div class="card"><h3>📦 Results — by department <span class="sub">everything EXCAVA produced, grouped by which department made it. Click a department.</span></h3></div>${cards || empty("No results yet — departments produce artifacts as they work; check back after a beat.")}`;
+    view.querySelectorAll("[data-open-dept]").forEach(c =>
+      c.addEventListener("click", () => { state.resDept = c.dataset.openDept; renderResults(); }));
+    return;
+  }
+  const f = byDept[dept] || [];                        // one department opened: everything it made
+  view.innerHTML = `<div class="card"><h3>${_exIcon(dept)} ${esc((dept || "").toUpperCase())} department <span class="sub">— everything it created (${f.length})</span>
+      <button class="qr-btn" id="res-back" style="margin-left:10px">← all departments</button></h3></div>
+    ${f.length ? f.map(_resultCard).join("") : empty("This department hasn't produced anything yet.")}`;
+  const back = view.querySelector("#res-back");
+  if (back) back.addEventListener("click", () => { state.resDept = ""; renderResults(); });
   view.querySelectorAll("[data-goto-room]").forEach(a => a.addEventListener("click", e => {
     e.preventDefault(); show("rooms").then(() => renderRooms(a.dataset.gotoRoom));
   }));

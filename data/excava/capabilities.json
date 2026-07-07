@@ -1,0 +1,306 @@
+{
+ "generated_at": "2026-07-07T09:38:13.685440+00:00",
+ "total": 37,
+ "live": 20,
+ "planned": 11,
+ "gated_M5": 5,
+ "pitch": 1,
+ "capabilities": [
+  {
+   "id": "analyze-video",
+   "name": "Analyze a video from full transcript",
+   "what": "extract tools/skills/prompts from the whole source",
+   "department": "analysis",
+   "status": "live",
+   "evidence": "6929 elements indexed"
+  },
+  {
+   "id": "verify-element",
+   "name": "Verify an element (2 sources + live test)",
+   "what": "cross-check + live link/install before 'real'",
+   "department": "analysis",
+   "status": "live",
+   "evidence": "verified/niche statuses in the index"
+  },
+  {
+   "id": "resolve-links",
+   "name": "Resolve real links for elements",
+   "what": "website/github/codespaces, verified",
+   "department": "links",
+   "status": "live",
+   "evidence": "links lane commits"
+  },
+  {
+   "id": "prune-dead",
+   "name": "Prune only truly-dead links (P3)",
+   "what": "hide dead, keep niche",
+   "department": "links",
+   "status": "live",
+   "evidence": "P3 in code"
+  },
+  {
+   "id": "recall-meaning",
+   "name": "Recall tools/skills by meaning",
+   "what": "vector recall over the hub",
+   "department": "memory",
+   "status": "live",
+   "evidence": "1400+ vectors"
+  },
+  {
+   "id": "relate-graph",
+   "name": "Relate elements / brain graph",
+   "what": "topic + co-occurrence graph",
+   "department": "memory",
+   "status": "live",
+   "evidence": "brain_graph.json"
+  },
+  {
+   "id": "cluster-package",
+   "name": "Turn a graph cluster into a package",
+   "what": "click a cluster → a kit",
+   "department": "memory",
+   "status": "live",
+   "evidence": "M3.9 shipped"
+  },
+  {
+   "id": "assemble-package",
+   "name": "Assemble a reusable package",
+   "what": "bundle elements into a kit",
+   "department": "creators",
+   "status": "live",
+   "evidence": "packages.json"
+  },
+  {
+   "id": "real-backlog",
+   "name": "Value-ranked real-gap backlog",
+   "what": "tasks from real deficits, no make-work",
+   "department": "core",
+   "status": "live",
+   "evidence": "excava_backlog.py, beat #45"
+  },
+  {
+   "id": "size-judgment",
+   "name": "Judge task size (cost+steps+risk)",
+   "what": "big→war room, small→parallel",
+   "department": "core",
+   "status": "live",
+   "evidence": "plan_beat()"
+  },
+  {
+   "id": "room-decision",
+   "name": "Run a room: debate → decision.md",
+   "what": "doer/checker converge to a committed artifact",
+   "department": "core",
+   "status": "live",
+   "evidence": "data/excava/artifacts/*.md"
+  },
+  {
+   "id": "engine-routing",
+   "name": "Multi-engine routing + fallback",
+   "what": "proven pool leads, dead engines parked",
+   "department": "core",
+   "status": "live",
+   "evidence": "selftest 28817002526"
+  },
+  {
+   "id": "lease-budget",
+   "name": "Lease + budget arbiter",
+   "what": "per-dept token budgets, RPM caps",
+   "department": "core",
+   "status": "live",
+   "evidence": "excava_leases.py"
+  },
+  {
+   "id": "guardrails",
+   "name": "12 information-loss guardrails",
+   "what": "quarantine-not-delete, verified push",
+   "department": "core",
+   "status": "live",
+   "evidence": "GUARDRAILS.md"
+  },
+  {
+   "id": "goals-score",
+   "name": "Score the North-Star goals honestly",
+   "what": "self-lifting caps on real evidence",
+   "department": "improve",
+   "status": "live",
+   "evidence": "goals_check.py"
+  },
+  {
+   "id": "discovery",
+   "name": "Discover new tools/repos",
+   "what": "GitHub/HN/PH/releases, quality bar",
+   "department": "mining",
+   "status": "live",
+   "evidence": "discovery_agent.py"
+  },
+  {
+   "id": "news-digest",
+   "name": "Freshness / AI-news digest",
+   "what": "the system's own summary",
+   "department": "news",
+   "status": "live",
+   "evidence": "news lane"
+  },
+  {
+   "id": "prewarm-open",
+   "name": "Pre-warm repos / <10s open",
+   "what": "warm=instant, cold<10s",
+   "department": "links",
+   "status": "live",
+   "evidence": "prewarm.py"
+  },
+  {
+   "id": "taste-learn",
+   "name": "Learn your design taste (Arena)",
+   "what": "picks tune future designs",
+   "department": "visual",
+   "status": "live",
+   "evidence": "arenaVote"
+  },
+  {
+   "id": "verify-connectors",
+   "name": "Sandbox-verify connectors",
+   "what": "run + liveness check",
+   "department": "security",
+   "status": "live",
+   "evidence": "verify_connectors"
+  },
+  {
+   "id": "war-room",
+   "name": "Open cross-department war rooms",
+   "what": "auto on a real 2+ dept need → shared decision",
+   "department": "core",
+   "status": "planned",
+   "evidence": "§N spec"
+  },
+  {
+   "id": "group-chat",
+   "name": "Open cross-agent group chat",
+   "what": "any agent↔any agent, join/leave by relevance",
+   "department": "core",
+   "status": "planned",
+   "evidence": "§N spec"
+  },
+  {
+   "id": "dept-focus",
+   "name": "Per-department rotating focus",
+   "what": "auto-picked from the biggest gap",
+   "department": "improve",
+   "status": "planned",
+   "evidence": "§N spec"
+  },
+  {
+   "id": "daily-selfimprove",
+   "name": "Daily self-improvement + digest",
+   "what": "auto safe changes, pitch the 5 conditions",
+   "department": "improve",
+   "status": "planned",
+   "evidence": "§N spec"
+  },
+  {
+   "id": "power-meter",
+   "name": "Measure + raise EXCAVA's Power %",
+   "what": "chase every +0.5%, can exceed 100%",
+   "department": "power",
+   "status": "planned",
+   "evidence": "new dept §J"
+  },
+  {
+   "id": "visualization",
+   "name": "Keep the whole UI alive",
+   "what": "liveliness, access, enjoyment, clarity, speed, a11y",
+   "department": "visualization",
+   "status": "planned",
+   "evidence": "new dept §J"
+  },
+  {
+   "id": "console-inapp",
+   "name": "In-app console dispatch",
+   "what": "type a task → runs in-app, no GitHub",
+   "department": "core",
+   "status": "planned",
+   "evidence": "decision 3"
+  },
+  {
+   "id": "monster-cast",
+   "name": "Monster + animation cast (real tool)",
+   "what": "legs + body via image/video gen",
+   "department": "visualization",
+   "status": "planned",
+   "evidence": "decision 2"
+  },
+  {
+   "id": "pitch-monster",
+   "name": "Pitch monster styled to the group",
+   "what": "signals a waiting pitch by who's asking",
+   "department": "visualization",
+   "status": "planned",
+   "evidence": "§K spec"
+  },
+  {
+   "id": "horse",
+   "name": "HORSE: 10 executions merged to taste",
+   "what": "best-of-results to your work-taste",
+   "department": "core",
+   "status": "planned",
+   "evidence": "horse.py partial"
+  },
+  {
+   "id": "activator",
+   "name": "Portable activator skill",
+   "what": "run a hub task in any tool, offline",
+   "department": "core",
+   "status": "planned",
+   "evidence": "activator/SKILL.md partial"
+  },
+  {
+   "id": "m5-project-tasks",
+   "name": "Manage your projects' tasks",
+   "what": "read/update Budoaris/FreeDup task lists",
+   "department": "core",
+   "status": "gated-M5",
+   "evidence": "deferred"
+  },
+  {
+   "id": "m5-channels",
+   "name": "Post to / monitor your channels",
+   "what": "via OpenClaw + agent-reach",
+   "department": "news",
+   "status": "gated-M5",
+   "evidence": "needs external tools"
+  },
+  {
+   "id": "m5-deploy",
+   "name": "Build + deploy sites/tools",
+   "what": "ship a real tool",
+   "department": "creators",
+   "status": "gated-M5",
+   "evidence": "deferred"
+  },
+  {
+   "id": "m5-money",
+   "name": "Find ways to make you money",
+   "what": "monetization research → pitch",
+   "department": "core",
+   "status": "gated-M5",
+   "evidence": "deferred"
+  },
+  {
+   "id": "m5-spinup",
+   "name": "Spin up whole projects independently",
+   "what": "new project end-to-end",
+   "department": "core",
+   "status": "gated-M5",
+   "evidence": "deferred"
+  },
+  {
+   "id": "add-capacity",
+   "name": "Add engine capacity",
+   "what": "more free keys / OmniRoute to go faster",
+   "department": "power",
+   "status": "pitch",
+   "evidence": "P5d — only Eitan can add keys"
+  }
+ ]
+}

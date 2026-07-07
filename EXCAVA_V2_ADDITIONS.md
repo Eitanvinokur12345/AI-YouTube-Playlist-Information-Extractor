@@ -232,3 +232,37 @@ run `engine_selftest.yml`. (2) Make the floor/rooms render ONLY real activity (n
 real turn/commit behind it). (3) Console fully in-app (decision 3). (4) Real-tool monster+animation
 cast (decision 2). (5) THEN the 2 new departments (§J) + 2 pitch conditions + pitch-monster (§K).
 Everything still: free-only, guardrails (`GUARDRAILS.md`), ship via `python -m src.git_safe ship`.
+
+## N. AUTONOMOUS-OPERATION SPEC — 2026-07-06 (/loop; owner-decided; build via Fable across loop ticks)
+DONE this session: `src/excava_backlog.py` (real-gap tasks + value bar + size score) wired into the beat;
+`excava_beat.yml` cron → **every 10 min** (public repo = free, cloud, **no computer needed**; GH cron is
+best-effort so timing ≈10 min).
+- **≥30 CAPABILITIES (not tasks).** EXCAVA must be able to DO ≥30 distinct things. Fable drafts
+  `data/excava/capabilities.json` + a dashboard "Capabilities" view; each tagged **live / planned /
+  pitch-needed / gated-M5**, honestly (per §L audit). Owner reviews/tweaks.
+- **Departments run INDEPENDENTLY — no cross-waiting, no task cap.** Each dept runs as many parallel
+  tasks as it has real-gap work for (small/medium), sized honestly.
+- **Size → WAR ROOM (owner resolution of the earlier "big waits" rule):** a genuinely HUGE task is not
+  blocked — it converts to a **war room** (needs several departments, or all of one dept's agents at full
+  capacity). Medium → an agent multitasks or one-agent-per-task (not on trivially small work). Only the
+  5 pitch conditions pitch the owner.
+- **GROUP CHAT = an open cross-agent space.** ANY agent can talk to ANY other agent across departments;
+  agents **join/leave by relevance** to what's written and can **call another agent in**. War rooms live
+  here as **scheduled meetings** — urgency sets the time (**critical = now, else the next daily slot**),
+  with **full departments or representatives** for deep/important issues.
+- **WAR ROOMS auto-open on a REAL cross-department need** (a task spanning 2+ depts): the relevant leads
+  (+ EXCAVA-core as chair) or reps convene, produce a **shared committed decision artifact**, split the
+  work back to departments.
+- **FOCUS — two levels:** (a) a **per-department focus** EXCAVA auto-picks from that dept's biggest gap
+  and **rotates**, shown on its floor station; (b) a **global self-improvement focus** for the whole
+  system. (Focus originated as a self-improvement lever — keep both.)
+- **DAILY SELF-IMPROVEMENT:** runs every day; **auto-applies + tests SAFE changes** (prompts, routing,
+  schedules, focuses); **PITCHES** on the **5 conditions** — new tool · complete overhaul · deeper/outward
+  access · **owner-only-high-leverage** (something only Eitan can add) · **new department**. Emits a daily
+  digest (what changed + pending pitches). Never pitches for adding agents/employees — just notifies.
+- **PACE = dizzying + honesty:** push hard, but **rate-aware backpressure** keeps it from fully crashing
+  the 5 live engines (Gemini is 429-dead); when more speed needs more fuel, it files the **owner-only
+  high-leverage pitch** (add free keys / bring OmniRoute online). Owner accepted "fast + tolerate some
+  429 + pitch for fuel."
+- **ROSTER:** bring every department to **4–6 agents** (add the missing improvers to the 7 three-agent
+  depts). Per owner: adding agents is **notify-only, never a pitch**.

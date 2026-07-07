@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v84";
+const APP_BUILD = "v85";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1900,11 +1900,11 @@ async function renderCrew(tab) {
   }, 6000);
 }
 async function renderExcava() {
-  const [ex, ps, inbox, gs, rc, ap, excfg, reg, dirs, tuts, made, grd] = await Promise.all([load("excava_status.json"),
+  const [ex, ps, inbox, gs, rc, ap, excfg, reg, dirs, tuts, made, grd, caps] = await Promise.all([load("excava_status.json"),
     load("pipeline_status.json"), load("excava_inbox.json"), load("goals_status.json"),
     load("resources.json"), load("excava_approvals.json"), load("excava_config.json"),
     load("excava/agents.json"), load("excava_direction.json"), load("tutorials.json"),
-    load("created_by_excava.json"), load("guardrails_status.json")]);
+    load("created_by_excava.json"), load("guardrails_status.json"), load("excava/capabilities.json")]);
   const gate = (ex && ex.gate) || {}, mem = (ex && ex.memory) || {};
   const os = (ex && ex.os) || {};
   const mode = os.mode || (excfg && excfg.mode) || "run";
@@ -2154,6 +2154,18 @@ async function renderExcava() {
         <b>${esc(r.id)}</b> ${esc(r.name)}</div>`).join("")}</div>
       <p class="sub" style="margin-top:6px">Runs every beat (last ${esc(fmtDate(grd.generated_at))}). Fixes the two mechanical failures: safe-git QUARANTINES colliding files (never deletes) and commits via a UTF-8 message file. Full contract: <a target="_blank" href="${GH_REPO}/blob/main/GUARDRAILS.md">GUARDRAILS.md</a>.</p>
     </div>` : "";
+  // ── CAPABILITIES: the ≥30 things EXCAVA can do, tagged HONESTLY (live/planned/gated/pitch) ──
+  const cl = (caps && caps.capabilities) || [];
+  const capOrder = { live: 0, planned: 1, "gated-M5": 2, pitch: 3 };
+  const capLabel = { live: "✓ live", planned: "◔ planned", "gated-M5": "🔒 M5-gated", pitch: "🖊 needs you" };
+  const capsHTML = cl.length ? `
+    <div class="card" style="border-top:3px solid oklch(0.62 0.17 280)">
+      <h3>🧩 Capabilities <span class="sub">— ${caps.total} things EXCAVA can do · <b style="color:oklch(0.5 0.14 150)">${caps.live} live</b> · ${caps.planned} planned · ${caps.gated_M5} M5-gated · ${caps.pitch} needs you (honest, per the 2026-07-06 audit)</span></h3>
+      <div class="cap-grid">${cl.slice().sort((a, b) => (capOrder[a.status] - capOrder[b.status])).map(c => `
+        <div class="cap cap-${c.status.replace('-', '')}" title="${esc(c.what)} — ${esc(c.evidence)}">
+          <span class="cap-s">${capLabel[c.status] || c.status}</span>
+          <b>${esc(c.name)}</b> <span class="cap-d">${_exIcon(c.department)} ${esc(c.department)}</span></div>`).join("")}</div>
+    </div>` : "";
   view.innerHTML = `
     <div class="card" style="border-top:3px solid var(--gold)">
       <h3>🦾 EXCAVA <span class="sub">— the agentic OS running this project</span>
@@ -2168,6 +2180,7 @@ async function renderExcava() {
       <p class="sub" style="margin-top:8px">The floor is LIVE: each station is a real pipeline department (lamp = its actual status), each colored bot is a real registered agent carrying its department's actual bus task — hover one to see who it is and what it holds.</p>
     </div>
     ${driveHTML}
+    ${capsHTML}
     ${guardHTML}
     ${proveHTML}
     ${directionHTML}

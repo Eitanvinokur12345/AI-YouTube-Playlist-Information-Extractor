@@ -749,6 +749,17 @@
     .guard.ok .gm { background:oklch(0.62 0.16 148); }
     .guard.warn { border-color:var(--gold-line); } .guard.warn .gm { background:var(--gold); color:var(--text); }
     .guard.crit { border-color:var(--bad); background:oklch(0.96 0.04 25); } .guard.crit .gm { background:var(--bad); }
+    /* ── CAPABILITIES card (honest live/planned/gated/pitch) ── */
+    .cap-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:7px; margin-top:8px; }
+    .cap { border:1.5px solid var(--line); border-radius:8px 11px 7px 10px; padding:6px 9px; background:var(--panel2);
+      font-size:12px; display:flex; flex-direction:column; gap:2px; }
+    .cap b { font-weight:800; font-size:12.5px; }
+    .cap .cap-s { font-size:9.5px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; }
+    .cap .cap-d { font-size:10.5px; color:var(--muted); }
+    .cap.caplive { border-color:oklch(0.6 0.14 150); background:oklch(0.97 0.03 150); } .cap.caplive .cap-s { color:oklch(0.42 0.12 150); }
+    .cap.capplanned .cap-s { color:oklch(0.5 0.12 260); }
+    .cap.capgatedM5 { opacity:.82; } .cap.capgatedM5 .cap-s { color:oklch(0.5 0.06 60); }
+    .cap.cappitch { border-color:var(--gold-line); background:var(--gold-soft); } .cap.cappitch .cap-s { color:var(--gold-ink); }
     /* ── M4.3 PACKAGES — kit cards + assemble box ── */
     .pkg-assemble { display:flex; gap:8px; flex-wrap:wrap; margin:2px 0 6px; }
     .pkg-assemble input { border:2px solid var(--line); border-radius:8px 11px 7px 10px; padding:6px 11px;

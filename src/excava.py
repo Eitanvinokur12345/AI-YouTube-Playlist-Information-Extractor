@@ -513,6 +513,12 @@ def _beat(args) -> int:
     except Exception as e:
         beat_log.append(f"backlog: skipped ({type(e).__name__})")
 
+    try:                                    # CAPABILITY CATALOG: keep the honest 'what EXCAVA can do' fresh
+        from src.build_capabilities import main as _caps
+        _caps()
+    except Exception:
+        pass
+
     print(f"EXCAVA beat #{st.get('beats')} [{mode}]: gate internal={'open' if internal_ok else 'CLOSED'} "
           f"outward={'open' if outward_ok else 'closed (G3=' + str(g3) + ')'}; "
           f"bus {snap['open']} open/{snap['total']} total; audit {'OK' if not audit else 'FAIL'}; "

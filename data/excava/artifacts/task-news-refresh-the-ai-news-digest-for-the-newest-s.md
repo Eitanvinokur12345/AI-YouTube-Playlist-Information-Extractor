@@ -1,14 +1,14 @@
 # News: refresh the AI-news digest for the newest sources
 
-> news · task `news-refresh-the-ai-news-35271` · synthesized by mistral/mistral-small-latest
+> news · task `news-refresh-the-ai-news-38138` · synthesized by mistral/mistral-small-latest
 
-**Decision:** Prioritize AI ethics framework leaks from EU sources before NVIDIA earnings.
+**Decision:** Prioritize AI governance policy leaks from EU/US sources.
 
 **Plan:**
-1. Cross-check EU AI Act draft leaks (Politico EU Pro & Euractiv) with anonymous Commission staffer tweets.
-2. Pull NVIDIA Q2 earnings previews (Reuters, Bloomberg) for revenue/guidance angles.
-3. Verify any "AI chip export curbs" rumors via two trade officials (WSJ + FT).
-4. Draft 300-word digest with sourced links, tagging #AIAct #NVDA.
-5. Post to GitHub Pages with timestamped commit.
+1. Query EU AI Act compliance docs (EUR-Lex, 24h fresh).
+2. Cross-check with US NIST AI RMF v1.1 draft (GitHub commits, last 48h).
+3. Pull Reuters/Bloomberg AI chip export ban rumors (verify 2+ sources).
+4. Scan arXiv for "LLM safety alignment" preprints (filter by submission date).
+5. Validate with at least one academic or industry insider quote.
 
-**Done when:** Digest published with 4+ sources, 2+ primary, and 2024-05-15T14:30Z commit hash.
+**Done when:** 3+ primary sources cited with timestamps in markdown table.

@@ -528,6 +528,13 @@ def _beat(args) -> int:
     except Exception as e:
         beat_log.append(f"supervisor: skipped ({type(e).__name__})")
 
+    try:                                    # SYSTEMCHECK: does EVERYTHING still work? (owner law — systematic each beat)
+        from src.excava_systemcheck import run as _syscheck
+        for line in _syscheck():
+            beat_log.append(line)
+    except Exception as e:
+        beat_log.append(f"systemcheck: skipped ({type(e).__name__})")
+
     print(f"EXCAVA beat #{st.get('beats')} [{mode}]: gate internal={'open' if internal_ok else 'CLOSED'} "
           f"outward={'open' if outward_ok else 'closed (G3=' + str(g3) + ')'}; "
           f"bus {snap['open']} open/{snap['total']} total; audit {'OK' if not audit else 'FAIL'}; "

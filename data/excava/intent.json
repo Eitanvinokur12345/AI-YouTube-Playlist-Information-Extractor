@@ -1,0 +1,19 @@
+{
+ "_note": "OWNER INTENT CHARTER — what Eitan actually wants each department to DO, distilled from the 5 project sessions + EXCAVA_V2_ADDITIONS.md. The supervisor checks real-tool output against THIS (not just 'did a tool run'). Update when intent changes. The full token-by-token history goes in the project knowledge-graph (separate).",
+ "generated_at": "2026-07-07",
+ "departments": {
+  "transcripts": {"should_do": "Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing).", "right_tool": "src.backfill_transcripts", "success_looks_like": "pending videos gain a real transcript_source=transcript", "note": "cloud can't drain — needs owner's residential IP; honest fail is OK here."},
+  "analysis": {"should_do": "Deep-analyze every element from its FULL source (whole transcript/repo) + enrich from >=1 other source; no stubs.", "right_tool": "src.bulk_analyze", "success_looks_like": "elements move unverified->verified/enriched, stub-rate ~0"},
+  "watch": {"should_do": "Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.", "right_tool": "src.gemini_video_analyze", "success_looks_like": "video-derived insights extracted", "note": "Gemini quota is 429-exhausted; needs a non-Gemini path or owner capacity."},
+  "links": {"should_do": "Resolve REAL links (website/github/codespaces) for unlinked elements + verify them live.", "right_tool": "src.resolve_links", "success_looks_like": "unlinked elements gain a real, verified link (raises G3)"},
+  "memory": {"should_do": "Recall by meaning, relate elements, build the brain graph, embed unembedded elements.", "right_tool": "src.build_memory", "success_looks_like": "index fresh, more elements embedded/related"},
+  "mining": {"should_do": "Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT just the playlist.", "right_tool": "src.discovery_agent", "success_looks_like": "brand-new tools/repos discovered same-day from many sources"},
+  "visual": {"should_do": "Mine AI website/product DESIGNS (the look), taste-learn from Eitan's picks.", "right_tool": "src.collect_designs", "success_looks_like": "new designs collected + taste-tagged", "note": "spec was mislabeled 'Deep analysis' — that is drift; the real job is DESIGNS."},
+  "news": {"should_do": "Freshness: refresh the AI-news digest from the newest official/company/national sources.", "right_tool": "src.trend_watch", "success_looks_like": "fresh news items added this cycle"},
+  "improve": {"should_do": "Self-improvement: review prompts/engines/routing/own-code; auto-apply safe changes; pitch the 5 conditions.", "right_tool": "src.self_check", "success_looks_like": ">=1 real safe improvement or a real pitch"},
+  "security": {"should_do": "Paranoid guard: scan for secret leaks/prompt-injection; safety-rate connectors/skills.", "right_tool": "src.security_scan", "success_looks_like": "clean scan proven, or connectors rated"},
+  "creators": {"should_do": "Build PACKAGES + enrich tabs + draft elements; every one labeled 'Created by EXCAVA' + tested before first use.", "right_tool": "src.excava_creators", "success_looks_like": "a real, tested creation/package"},
+  "visualization": {"should_do": "Own the visibility of the WHOLE interface: more liveliness, better info access, user enjoyment, clarity, speed, accessibility.", "right_tool": null, "success_looks_like": "measurable UI improvement", "note": "NEW department (owner 2026-07-06); not built yet."},
+  "power": {"should_do": "Raise EXCAVA's capability by even 0.5%: find new tools, best/newest models, combine elements, change agent formation; show a POWER % that can exceed 100.", "right_tool": null, "success_looks_like": "a measured capability gain + a rising POWER %", "note": "NEW department (owner 2026-07-06); mine data/excava/power_findings.md; not built yet."}
+ }
+}

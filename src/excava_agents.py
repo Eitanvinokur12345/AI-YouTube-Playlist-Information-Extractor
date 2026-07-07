@@ -162,10 +162,13 @@ def _work_creators(task: dict) -> dict:
 
 # REAL executors: the cheap, fast, real tool each department actually runs (verified 2026-07-07).
 # Running these does ACTUAL work + reports REAL output — the fix for the hollow-plan facade.
+# Each department's REAL tool, aligned to the OWNER INTENT CHARTER (data/excava/intent.json).
+# The supervisor flags any drift between this and the charter (caught memory/visual/mining drift).
 REAL_TOOL = {"security": "src.security_scan", "improve": "src.self_check",
-             "memory": "src.build_hub_index", "news": "src.trend_watch",
-             "mining": "src.discovery_agent",   # its REAL job: DIVERSE sources (GitHub/HN/PH/Reddit/…), not just the playlist
-             "visual": "src.warm_shots"}
+             "memory": "src.build_memory",      # intent: recall/relate/brain graph (not just the hub index)
+             "news": "src.trend_watch",
+             "mining": "src.discovery_agent",    # intent: DIVERSE sources (GitHub/HN/PH/Reddit), not the playlist
+             "visual": "src.collect_designs"}    # intent: mine AI DESIGNS (not just warm screenshots)
 
 
 def _run_real_tool(dept: str) -> dict | None:

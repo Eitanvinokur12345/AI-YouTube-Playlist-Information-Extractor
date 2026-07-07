@@ -43,11 +43,35 @@ def judge(result: str, dept: str) -> tuple[str, str]:
     return "real", "produced substantive real output"
 
 
+def check_intent_alignment() -> list[dict]:
+    """Strict intent check (owner law): is each department wired to the RIGHT tool for what Eitan
+    actually wants it to do (data/excava/intent.json), or is it doing the wrong job — the
+    mining→source_bundles / visual→warm_shots class of drift?"""
+    try:
+        intent = json.loads((DATA / "excava" / "intent.json").read_text(encoding="utf-8")).get("departments", {})
+        from src.excava_agents import REAL_TOOL
+    except Exception:
+        return []
+    flags = []
+    for dept, charter in intent.items():
+        want = charter.get("right_tool")
+        wired = REAL_TOOL.get(dept)
+        if want and wired and wired != want:
+            flags.append({"dept": dept, "wants": want, "wired": wired,
+                          "should_do": charter.get("should_do", ""),
+                          "note": f"WRONG TOOL for intent — {dept} should run {want} ({charter.get('should_do','')[:60]}) but is wired to {wired}"})
+        elif want and not wired and dept in REAL_TOOL:
+            flags.append({"dept": dept, "wants": want, "wired": None,
+                          "note": f"{dept} has no real executor wired though its intent needs {want}"})
+    return flags
+
+
 def run() -> list[str]:
     try:
         bus = json.loads((DATA / "excava" / "bus.json").read_text(encoding="utf-8"))
     except Exception:
         return ["supervisor: no bus to inspect"]
+    intent_flags = check_intent_alignment()
     done = [t for t in bus.get("tasks", []) if t.get("status") == "done"]
     recent = sorted(done, key=lambda t: t.get("updated_at", ""), reverse=True)[:40]
     verdicts, counts = [], {"real": 0, "noop": 0, "failed": 0, "planned": 0}
@@ -67,13 +91,19 @@ def run() -> list[str]:
     else:
         crit = (f"FACADE ALERT: only {real_pct}% of the last {n} completions did real work; {flagged} were "
                 "hollow. The counter is lying again. STOP building features — make the flagged work real.")
+    if intent_flags:
+        crit += f" · INTENT DRIFT: {len(intent_flags)} dept(s) wired to the WRONG tool for what you wanted — " \
+                + "; ".join(f"{f['dept']}→wants {f['wants']} not {f['wired']}" for f in intent_flags[:3])
     doc = {"generated_at": datetime.now(timezone.utc).isoformat(), "checked": n,
-           "real_pct": real_pct, "counts": counts, "criticism": crit, "verdicts": verdicts}
+           "real_pct": real_pct, "counts": counts, "criticism": crit,
+           "intent_drift": intent_flags, "verdicts": verdicts}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(doc, ensure_ascii=False, indent=1), encoding="utf-8")
     worst = [v for v in verdicts if v["verdict"] in ("planned", "failed", "noop")][:3]
     lines = [f"supervisor: {real_pct}% real of last {n} ({counts['real']}✓ {counts['noop']}no-op "
              f"{counts['failed']}fail {counts['planned']}plan)"]
+    for f in intent_flags:
+        lines.append(f"  ⚠ INTENT: {f['note']}")
     for w in worst:
         lines.append(f"  ⚠ {w['dept']}/{w['task']}: {w['verdict']} — {w['note']}")
     return lines

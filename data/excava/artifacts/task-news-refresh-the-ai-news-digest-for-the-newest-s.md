@@ -1,14 +1,14 @@
 # News: refresh the AI-news digest for the newest sources
 
-> news · task `news-refresh-the-ai-news-19512` · synthesized by mistral/mistral-small-latest
+> news · task `news-refresh-the-ai-news-26252` · synthesized by mistral/mistral-small-latest
 
-**Decision:** Prioritize AI ethics policy updates from EU and US regulators this week.
+**Decision:** Prioritize AI-news digest refresh with freshest sources under cost 15.
 
 **Plan:**
-1. Cross-check EU AI Act final draft leaks with Reuters (2024-05-15) and Euractiv (2024-05-16).
-2. Verify US NIST AI Risk Management Framework v2.0 updates via official NIST.gov release (2024-05-14).
-3. Pull GitHub commits from MistralAI/7B-Instruct-v0.3 for compliance notes (2024-05-13).
-4. Confirm OpenAI’s GPT-5 safety whitepaper embargo lift with The Information (2024-05-12).
-5. Validate Anthropic’s Claude 4 safety benchmarks via arXiv preprint (2024-05-11).
+1. Scan [arXiv AI](https://arxiv.org/list/cs.AI/recent) and [Hugging Face Daily Papers](https://huggingface.co/papers) for latest preprints.
+2. Cross-check [MIT Tech Review AI](https://www.technologyreview.com/topic/artificial-intelligence/) and [The Batch (DeepLearning.AI)](https://www.deeplearning.ai/the-batch/) for curated updates.
+3. Verify at least two sources per item before inclusion.
+4. Update GitHub markdown digest with timestamp and source links.
+5. Push changes to repo with commit message: "AI-news digest refresh [YYYY-MM-DD]".
 
-**Done when:** All 5 sources cross-verified with timestamps ≤48h old.
+**Done when:** GitHub markdown digest updated with ≥3 new items, each with ≥2 sources, timestamped.

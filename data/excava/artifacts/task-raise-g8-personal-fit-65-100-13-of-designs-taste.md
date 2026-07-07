@@ -1,14 +1,14 @@
 # Raise G8 Personal fit (65/100): 13% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond
 
-> visual · task `raise-g8-personal-fit-65-19512` · synthesized by mistral/mistral-small-latest
+> visual · task `raise-g8-personal-fit-65-26252` · synthesized by mistral/mistral-small-latest
 
-**Decision:** Proceed with taste-tagging 13% of designs to refine G8 Personal fit.
+**Decision:** Ship taste-tagging v2 with NOSG integration and Arena live-learning loop.
 
 **Plan:**
-1. Curate 13% of designs (2 designs) with highest engagement/retention metrics for taste-tagging.
-2. Tag designs with 3-5 aesthetic attributes (e.g., "minimalist," "vintage," "bold colors") using NOSG’s taxonomy.
-3. Feed tagged data into Arena learning model to adjust G8 weights (target: +5% fit).
-4. Validate tags with 10% manual review (Chroma’s eye for receipts).
-5. Log discrepancies and iterate once (no more than 2 passes).
+1. Curate 13% of designs (22/170) with receipts (screenshots + metadata) for taste-tagging v2.
+2. NOSG wired to ingest taste-tags; validate 95% tag accuracy via Arena live-learning (24h).
+3. Deploy taste-tagging v2 to 10% of users; monitor engagement delta (target: +12% taste clicks).
+4. Iterate on Arena feedback: adjust tag thresholds based on 48h retention data.
+5. Freeze v2 after 72h with 0 critical taste-tag errors.
 
-**Done when:** G8 Personal fit hits 70/100 with tagged designs in Arena learning.
+**Done when:** Arena confirms 95% taste-tag accuracy and 12% engagement lift.

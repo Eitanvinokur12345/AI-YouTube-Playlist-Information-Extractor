@@ -22,7 +22,7 @@ permissions:
 jobs:
   beat:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 340          # ~5.5h: the job stays alive beating every 10 min (see run step)
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -47,20 +47,21 @@ jobs:
           GEMINI_API_KEY_5: ${{ secrets.GEMINI_API_KEY_5 }}
           GEMINI_API_KEY_6: ${{ secrets.GEMINI_API_KEY_6 }}
         run: |
-          # GitHub throttles free */10 cron to ~hourly, so MAKE EACH RUN COUNT: run several beat
-          # cycles per invocation (2026-07-07). 8 cycles × ~50s = ~7 min < timeout. At hourly CI
-          # that's 8x the throughput; the */10 cron + these cycles give many advances per hour.
-          for i in $(seq 1 8); do
-            echo "── beat cycle $i/8 ──"
-            python -m src.excava || true
-            if [ "$i" -lt 8 ]; then sleep 50; fi
-          done
-
-      - name: Commit transcripts + status
-        run: |
           git config user.name "skills-tracker-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data
-          git commit -m "excava-beat: $(date -u +%Y-%m-%dT%H:%MZ)" || echo "nothing to commit"
-          git pull --rebase --autostash origin main || true
-          git push || echo "push skipped"
+          # DURABLE HEARTBEAT (2026-07-07): GitHub throttles the */10 cron to every few HOURS, so one
+          # short run can't be "every 10 min". Fix — this job RUNS ~5.3 HOURS, beating every 10 min
+          # internally + committing each cycle. The cron fires every 2-4h and each run lasts 5.3h
+          # (concurrency queues, never overlaps) => near-CONTINUOUS real 10-min beats, free, no owner.
+          END=$((SECONDS + 19000))
+          n=0
+          while [ "$SECONDS" -lt "$END" ]; do
+            n=$((n+1)); echo "── beat cycle $n ($(date -u +%H:%MZ)) ──"
+            python -m src.excava || true
+            git add data
+            git commit -m "excava-beat #$n: $(date -u +%Y-%m-%dT%H:%MZ)" || echo "nothing to commit"
+            git pull --rebase --autostash origin main || true
+            git push || echo "push skipped"
+            [ "$SECONDS" -lt "$END" ] && sleep 600 || true
+          done
+          echo "beat run complete: $n cycles over ~5.3h"

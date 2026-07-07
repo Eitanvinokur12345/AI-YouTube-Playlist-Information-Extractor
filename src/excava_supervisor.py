@@ -70,6 +70,28 @@ def check_intent_alignment() -> list[dict]:
     return flags
 
 
+def long_term(real_pct, total_done: int, artifacts: int) -> dict:
+    """LONG-TERM test (owner 2026-07-07): a snapshot can look fine while nothing accumulates over
+    days. Track real_pct/done/artifacts across many beats; flag STAGNANT if real work isn't growing
+    over the long window (the 'it moved but only because you did it / the number didn't rise' test)."""
+    log = DATA / "excava" / "supervisor_longterm.jsonl"
+    hist = []
+    if log.exists():
+        hist = [json.loads(l) for l in log.read_text(encoding="utf-8").splitlines() if l.strip()]
+    with log.open("a", encoding="utf-8") as fh:
+        fh.write(json.dumps({"at": datetime.now(timezone.utc).isoformat(), "real_pct": real_pct,
+                             "done": total_done, "artifacts": artifacts}) + "\n")
+    win = hist[-24:]                                     # ~a day of beats
+    if len(win) < 5:
+        return {"verdict": "building baseline", "detail": f"{len(win) + 1} long-term snapshots so far", "stagnant": False}
+    old = win[0]
+    dg, ag = total_done - old.get("done", total_done), artifacts - old.get("artifacts", artifacts)
+    stagnant = dg <= 0 and ag <= 0
+    return {"verdict": "STAGNANT — real work is NOT accumulating over time" if stagnant else "accumulating over time",
+            "detail": f"over last {len(win)} snapshots: done {'+' if dg >= 0 else ''}{dg}, artifacts {'+' if ag >= 0 else ''}{ag}, real_pct {old.get('real_pct')}→{real_pct}",
+            "stagnant": stagnant}
+
+
 def _history() -> dict:
     """The supervisor's memory of the WHOLE project: the owner's full message history (all 5
     sessions), ingested to the repo by src.ingest_history so even the CI supervisor knows the
@@ -110,8 +132,11 @@ def run() -> list[str]:
     if intent_flags:
         crit += f" · INTENT DRIFT: {len(intent_flags)} dept(s) wired to the WRONG tool for what you wanted — " \
                 + "; ".join(f"{f['dept']}→wants {f['wants']} not {f['wired']}" for f in intent_flags[:3])
+    total_done = sum(1 for t in bus.get("tasks", []) if t.get("status") == "done")
+    art_count = len(list((DATA / "excava" / "artifacts").glob("*.md"))) if (DATA / "excava" / "artifacts").exists() else 0
+    lt = long_term(real_pct, total_done, art_count)
     doc = {"generated_at": datetime.now(timezone.utc).isoformat(), "checked": n,
-           "real_pct": real_pct, "counts": counts, "criticism": crit,
+           "real_pct": real_pct, "counts": counts, "criticism": crit, "long_term": lt,
            "history": {"records": hist.get("records", 0), "owner_messages": hist.get("owner_messages", 0),
                        "questions": hist.get("questions", 0), "answers": hist.get("answers", 0),
                        "sessions": hist.get("session_count", 0), "since": hist.get("first", "")[:10]},
@@ -122,7 +147,8 @@ def run() -> list[str]:
     lines = [f"supervisor: {real_pct}% real of last {n} ({counts['real']}✓ {counts['noop']}no-op "
              f"{counts['failed']}fail {counts['planned']}plan) · knows history: "
              f"{hist.get('records', 0)} recs ({hist.get('owner_messages', 0)} msgs, {hist.get('questions', 0)} Qs, "
-             f"{hist.get('answers', 0)} answer-sets) / {hist.get('session_count', 0)} sessions"]
+             f"{hist.get('answers', 0)} answer-sets) / {hist.get('session_count', 0)} sessions",
+             f"  long-term: {lt['verdict']} — {lt['detail']}"]
     for f in intent_flags:
         lines.append(f"  ⚠ INTENT: {f['note']}")
     for w in worst:

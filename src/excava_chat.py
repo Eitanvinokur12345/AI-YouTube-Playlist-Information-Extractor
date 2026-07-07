@@ -213,7 +213,10 @@ def advance(room_id: str, turns: int = 2) -> list[str]:
         if not ok:
             log.append(f"{room['id']}: held — {why}")
             break
-        r = engines.complete(_prompt(room, sp, _history(room)),
+        # each agent speaks with a DISTINCT engine → real cross-model debate, not one model with itself
+        av = engines.available()
+        eng = av[sum(ord(c) for c in sp.get("id", "x")) % len(av)] if av else None
+        r = engines.complete(_prompt(room, sp, _history(room)), engine=eng,
                              dept=dept, difficulty="hard" if sp.get("role") == "lead" else "normal",
                              max_tokens=260)
         if not r["ok"]:

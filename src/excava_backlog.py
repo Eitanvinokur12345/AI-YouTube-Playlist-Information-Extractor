@@ -76,6 +76,28 @@ def scan_gaps() -> list[dict]:
             out.append({"title": f"Raise {g['id']} {g.get('name', '')} ({g['score']}/100): {str(g.get('gap', ''))[:80]}",
                         "department": dept, "source": "gap", "why": f"{g['id']} at {g['score']}",
                         "value": 100 - g["score"], **size_score(cost=15, steps=25, risk=10)})
+    # ── per-department REAL work, so no department rests at 0 without cause (all from real counts) ──
+    import glob as _glob
+    pending = len(_glob.glob(str(DATA / "_pending" / "*.json")))
+    if pending:
+        out.append({"title": f"Watch: process the next batch of {pending} pending videos", "department": "watch",
+                    "source": "gap", "why": f"{pending} pending", "value": min(90, 50 + pending // 40), **size_score(30, 40, 10)})
+        out.append({"title": f"Transcripts: drain the next batch of {pending} pending (residential IP)", "department": "transcripts",
+                    "source": "gap", "why": f"{pending} pending", "value": 60, **size_score(25, 35, 15)})
+    con = _load("connectors.json", {})
+    ncon = len(con.get("connectors", con) if isinstance(con, dict) else con) if con else 0
+    if ncon:
+        out.append({"title": f"Security: safety-rate the next batch of {ncon} connectors/skills", "department": "security",
+                    "source": "gap", "why": f"{ncon} connectors", "value": 72, **size_score(25, 30, 25)})
+        out.append({"title": "Mining: discover new AI repos/tools + verify this cycle", "department": "mining",
+                    "source": "gap", "why": "discovery cadence", "value": 68, **size_score(20, 25, 10)})
+    if (DATA / "weekly_web_news.json").exists():
+        out.append({"title": "News: refresh the AI-news digest for the newest sources", "department": "news",
+                    "source": "gap", "why": "freshness cadence", "value": 62, **size_score(15, 20, 5)})
+    n_el = len(_load("elements_index.json", {}).get("elements", []))
+    if n_el:
+        out.append({"title": f"Memory: embed the remaining unembedded of {n_el} elements for full recall", "department": "memory",
+                    "source": "gap", "why": f"{n_el} elements", "value": 64, **size_score(20, 30, 5)})
     return out
 
 
@@ -112,7 +134,7 @@ def _is_big(t: dict) -> bool:
     return "size=BIG" in d or (isinstance(t.get("size"), int) and t["size"] >= BIG_THRESHOLD)
 
 
-def refresh(max_new: int = 6) -> dict:
+def refresh(max_new: int = 12) -> dict:
     """Build the value-ranked, size-judged backlog; enqueue the top above-bar items (deduped)."""
     cands = [c for c in scan_gaps() if value_ok(c)]
     cands.sort(key=lambda c: -c["value"])

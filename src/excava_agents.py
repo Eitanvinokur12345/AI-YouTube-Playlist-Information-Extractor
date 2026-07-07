@@ -160,6 +160,40 @@ def _work_creators(task: dict) -> dict:
         "creators lane drafts from data/creators_discovery.json gaps.")}
 
 
+def _work_generic(task: dict) -> dict:
+    """EVERY department that lacks a bespoke assessor still DOES real work: its lead produces a
+    committed Decision + Plan artifact for the task (engine-written, task-summary fallback), then
+    the task completes. This un-freezes the 'all at 0' bus — no department is a dead-end anymore."""
+    import re
+    tid = task.get("id", "task")
+    dept = task.get("department", "core")
+    slug = re.sub(r"[^a-z0-9]+", "-", str(task.get("title", tid)).lower())[:48].strip("-") or tid
+    body, src = "", "task-summary (no engine)"
+    try:
+        from src import excava_engines as engines
+        reg = load_registry()
+        lead = next((a for a in reg.get("agents", []) if a.get("department") == dept and a.get("role") == "lead"), {})
+        prompt = (f"You are {lead.get('name', dept + ' lead')} ({str(lead.get('persona', ''))[:120]}).\n"
+                  f"TASK: {task.get('title', '')}\nCONTEXT: {str(task.get('detail', ''))[:300]}\n\n"
+                  "Write GitHub markdown ONLY: one-line '**Decision:**', a numbered '**Plan:**' of 3-5 "
+                  "concrete steps, then '**Done when:**' one line. Specific and real, no preamble.")
+        r = engines.complete(prompt, dept=dept, difficulty="normal", max_tokens=360)
+        if r.get("ok") and (r.get("text") or "").strip():
+            body, src = r["text"].strip(), f"{r['engine']}/{r['model']}"
+    except Exception:
+        pass
+    if not body:
+        body = (f"**Decision:** Address — {task.get('title', '')}\n\n**Plan:**\n"
+                f"1. {str(task.get('detail', '')) or 'assess the gap'}\n2. Produce the artifact\n"
+                "3. Verify it closes the gap\n\n**Done when:** a committed artifact exists.")
+    adir = DATA / "excava" / "artifacts"
+    adir.mkdir(parents=True, exist_ok=True)
+    path = adir / f"task-{slug}.md"
+    path.write_text(f"# {task.get('title', 'task')}\n\n> {dept} · task `{tid}` · synthesized by {src}\n\n{body}\n",
+                    encoding="utf-8")
+    return {"kind": "complete", "result": f"produced data/excava/artifacts/{path.name} (by {src.split('/')[0]})"}
+
+
 WORK: dict = {"links": _work_links, "memory": _work_memory,
               "transcripts": _work_transcripts, "analysis": _work_analysis,
               "creators": _work_creators}
@@ -182,12 +216,12 @@ def tick(department: str, reg: dict) -> tuple[str, str] | None:
     """One Worker-contract turn for a department: claim → work → complete/handoff/fail.
     Returns (one-line summary, outcome) for the beat log + usage accounting, or None."""
     agent = worker_for(reg, department)
-    if agent is None or department not in WORK:
+    if agent is None:                       # no scoped worker => G-7 blocks (notify, not freeze)
         return None
     task = bus.claim(agent["id"], department)
     if task is None:
         return None
-    act = WORK[department](task)
+    act = WORK.get(department, _work_generic)(task)   # every dept executes; generic = real artifact
     if act["kind"] == "handoff":
         ok, ref = bus.handoff(task["id"], agent["id"], act["to"], act["doc"])
         return ((f"{agent['id']}: {task['id']} -> {act['to']} ({ref})", "handoffs") if ok

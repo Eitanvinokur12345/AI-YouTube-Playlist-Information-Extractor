@@ -190,13 +190,22 @@ def _run_real_tool(dept: str) -> dict | None:
         return {"ok": False, "tool": mod, "tail": type(e).__name__}
 
 
+# Departments that genuinely CANNOT do real work in CI (missing an owner resource). They report an
+# HONEST 'BLOCKED — needs you' instead of faking a plan. This tells the owner exactly what he must add.
+BLOCKED = {"watch": "video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key)",
+           "transcripts": "a residential IP (your PC) — cloud CI is IP-blocked from draining captions"}
+
+
 def _work_generic(task: dict) -> dict:
-    """Do REAL work when the department has a runnable tool (run it, report real output). Otherwise
-    produce an HONEST execution PLAN labelled 'not yet executed' — never a false 'DONE'. (2026-07-07:
-    kills the hollow-artifact facade where an LLM plan was stamped DONE though nothing was touched.)"""
+    """Do REAL work when the department has a runnable tool (run it, report real output). If the
+    department is truly BLOCKED (needs an owner resource) say so honestly. Otherwise produce an HONEST
+    execution PLAN labelled 'not yet executed' — never a false 'DONE'."""
     import re
     tid = task.get("id", "task")
     dept = task.get("department", "core")
+    if dept in BLOCKED and dept not in REAL_TOOL:        # honest 'can't', not a fake plan
+        return {"kind": "complete",
+                "result": f"BLOCKED — {dept} needs {BLOCKED[dept]}. No fake work done; waiting on the owner."}
     real = _run_real_tool(dept)                          # FIRST: try to actually DO the work
     if real and real["ok"]:
         return {"kind": "complete", "result": f"RAN {real['tool']} (real work): {real['tail']}"}

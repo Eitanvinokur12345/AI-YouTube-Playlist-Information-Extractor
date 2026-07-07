@@ -30,6 +30,8 @@ def judge(result: str, dept: str) -> tuple[str, str]:
     r = (result or "").strip().lower()
     if not r:
         return "planned", "empty result — nothing was actually done"
+    if r.startswith("blocked"):
+        return "blocked", "honestly BLOCKED — needs an owner resource; not faking work (this is the truth, not a facade)"
     # HOLLOW-PLAN signature only: the _work_generic facade labels itself a plan / writes a task-artifact.
     # (Bespoke WORK functions — analysis/memory/links/creators — do real assessments that don't say 'RAN';
     # those are REAL, not plans. Only the explicit plan/task-artifact outputs are hollow.)
@@ -87,14 +89,15 @@ def run() -> list[str]:
     hist = _history()
     done = [t for t in bus.get("tasks", []) if t.get("status") == "done"]
     recent = sorted(done, key=lambda t: t.get("updated_at", ""), reverse=True)[:40]
-    verdicts, counts = [], {"real": 0, "noop": 0, "failed": 0, "planned": 0}
+    verdicts, counts = [], {"real": 0, "noop": 0, "failed": 0, "planned": 0, "blocked": 0}
     for t in recent:
         v, note = judge(str(t.get("result", "")), t.get("department", ""))
         counts[v] += 1
         verdicts.append({"task": t.get("id"), "dept": t.get("department"), "verdict": v,
                          "note": note, "result": str(t.get("result", ""))[:160]})
     n = max(len(recent), 1)
-    real_pct = round(100 * counts["real"] / n)
+    gradable = max(n - counts["blocked"], 1)   # 'blocked' = honest 'can't' (owner resource), not graded
+    real_pct = round(100 * counts["real"] / gradable)
     flagged = counts["noop"] + counts["failed"] + counts["planned"]
     if real_pct >= 80:
         crit = f"Acceptable: {real_pct}% of the last {n} completions did real work. Stay strict."

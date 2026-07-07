@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v87";
+const APP_BUILD = "v88";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2937,8 +2937,8 @@ function renderProof(p) {
     return;
   }
   const gh = p.gh || "";
-  const vclass = v => v === "real" ? "pv-real" : v === "noop" ? "pv-noop" : v === "failed" ? "pv-fail" : "pv-plan";
-  const vlabel = { real: "✓ REAL work", noop: "⚠ ran, did nothing", planned: "✕ only a plan", failed: "✕ failed" };
+  const vclass = v => v === "real" ? "pv-real" : v === "noop" ? "pv-noop" : v === "blocked" ? "pv-block" : v === "failed" ? "pv-fail" : "pv-plan";
+  const vlabel = { real: "✓ REAL work", noop: "⚠ ran, did nothing", planned: "✕ only a plan", failed: "✕ failed", blocked: "⛔ needs YOU" };
   const dsum = Object.entries(p.delta || {}).map(([k, v]) => `${k} ${v >= 0 ? "+" : ""}${v}`).join(" · ");
   const rows = p.departments.map(d => `<tr class="${vclass(d.verdict)}">
       <td><b>${esc((d.dept || "").toUpperCase())}</b></td>

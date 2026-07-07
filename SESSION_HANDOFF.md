@@ -55,6 +55,22 @@ The project must never topple or lose committed work. **Two enforcers, run every
 - **Never again:** no blind `git clean -fd`/`rm -rf` on untracked content; no inline quoted commit
   messages in PowerShell; no unverified push. `_ATTIC/`, `*.bundle`, `data/horse/` are git-ignored.
 
+## 0b. RESUME HERE (loop paused 2026-07-07 — owner away, back during the day)
+Autonomous /loop is making EXCAVA actually DO tasks. Movement STALLED at **36 done / 6-of-12 depts**
+(analysis, creators, improve, memory, mining, visual move; news/security/watch/transcripts/links have
+real QUEUED tasks that never execute). **Fix these IN ORDER when resuming:**
+1. **ORDER BUG (fast, do first):** in `src/excava.py` the backlog refresh runs AFTER the step-4
+   worker-tick, so freshly-queued per-department tasks always wait a full beat. **Move the backlog
+   refresh to BEFORE the worker-tick step.** This alone should let the other 6 departments execute.
+2. **CRON UNRELIABLE:** `excava_beat.yml` `*/10` is throttled by GitHub — it actually ran ~hourly to
+   every-4h (10:18, 10:01, 08:56, 04:17, 22:39), NOT every 10 min. Owner's "10 min" is **not
+   achievable on free GH cron**. Options to raise with owner: accept sporadic timing · self-re-trigger
+   workflow (a run dispatches the next) · external uptime pinger via repository_dispatch.
+3. **FAIRNESS:** `busiest_first` + `MAX_TICKS_PER_BEAT=10` may starve a low-queue dept; add round-robin.
+Verify each with the movement check (`data/excava/movement.json` / guardrail G-M) — it must actually rise.
+Proven working: engines (5 live), real convos, decision.md artifacts, `_work_generic`, backlog+judgment,
+capabilities.json (37), guardrails (13 incl G-M), safe-git. Ship via `python -m src.git_safe ship`.
+
 ## 0c. REAL-VERTICAL STATUS (2026-07-06 Opus — the agentic core is now GENUINELY real, not theater)
 The M2 "agents conversing → artifact" layer was a FACADE (0 turns/33 beats: every engine call 429'd
 because the beat only had exhausted Gemini). Fixed + PROVEN end-to-end:

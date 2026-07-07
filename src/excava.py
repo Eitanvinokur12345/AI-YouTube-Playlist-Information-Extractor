@@ -521,6 +521,13 @@ def _beat(args) -> int:
     except Exception:
         pass
 
+    try:                                    # SUPERVISOR: strict critic of every real-tool result (no facade survives a beat)
+        from src.excava_supervisor import run as _supervise
+        for line in _supervise():
+            beat_log.append(line)
+    except Exception as e:
+        beat_log.append(f"supervisor: skipped ({type(e).__name__})")
+
     print(f"EXCAVA beat #{st.get('beats')} [{mode}]: gate internal={'open' if internal_ok else 'CLOSED'} "
           f"outward={'open' if outward_ok else 'closed (G3=' + str(g3) + ')'}; "
           f"bus {snap['open']} open/{snap['total']} total; audit {'OK' if not audit else 'FAIL'}; "

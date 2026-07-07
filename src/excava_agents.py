@@ -164,7 +164,8 @@ def _work_creators(task: dict) -> dict:
 # Running these does ACTUAL work + reports REAL output — the fix for the hollow-plan facade.
 REAL_TOOL = {"security": "src.security_scan", "improve": "src.self_check",
              "memory": "src.build_hub_index", "news": "src.trend_watch",
-             "mining": "src.source_bundles", "visual": "src.warm_shots"}
+             "mining": "src.discovery_agent",   # its REAL job: DIVERSE sources (GitHub/HN/PH/Reddit/…), not just the playlist
+             "visual": "src.warm_shots"}
 
 
 def _run_real_tool(dept: str) -> dict | None:

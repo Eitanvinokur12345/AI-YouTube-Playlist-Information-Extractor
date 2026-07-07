@@ -1,11 +1,14 @@
 # Raise G8 Personal fit (65/100): 13% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond
 
-> visual · task `raise-g8-personal-fit-65-14629` · synthesized by sambanova/Meta-Llama-3.3-70B-Instruct
+> visual · task `raise-g8-personal-fit-65-19512` · synthesized by mistral/mistral-small-latest
 
-**Decision:** Enhance G8 Personal fit by 35 to reach 100
-1. **Taste-tag** 87 designs to reach 100% coverage, focusing on high-impact, visually stunning pieces
-2. **Arena learning live**: Engage with the live learning sessions for at least 10 hours to gain in-depth knowledge
-3. **NOSG optimization**: Invest in wiring NOSG to unlock taste beyond current limitations, allocating 15 units for this step
-4. **Risk assessment**: Mitigate the 10% risk by implementing a contingency plan, including regular progress checks and design reassessments
-5. **Size adjustment**: Adjust the size from 17 to a more balanced value, considering the cost and steps required
-**Done when:** G8 Personal fit reaches 100, with 100% taste-tagged designs, Arena learning live sessions completed, and NOSG wired successfully.
+**Decision:** Proceed with taste-tagging 13% of designs to refine G8 Personal fit.
+
+**Plan:**
+1. Curate 13% of designs (2 designs) with highest engagement/retention metrics for taste-tagging.
+2. Tag designs with 3-5 aesthetic attributes (e.g., "minimalist," "vintage," "bold colors") using NOSG’s taxonomy.
+3. Feed tagged data into Arena learning model to adjust G8 weights (target: +5% fit).
+4. Validate tags with 10% manual review (Chroma’s eye for receipts).
+5. Log discrepancies and iterate once (no more than 2 passes).
+
+**Done when:** G8 Personal fit hits 70/100 with tagged designs in Arena learning.

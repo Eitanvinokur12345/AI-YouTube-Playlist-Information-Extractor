@@ -1,14 +1,14 @@
 # Mining: discover new AI repos/tools + verify this cycle
 
-> mining · task `mining-discover-new-ai-r-26252` · synthesized by mistral/mistral-small-latest
+> mining · task `mining-discover-new-ai-r-28375` · synthesized by mistral/mistral-small-latest
 
-**Decision:** Mine this cycle for odd gems—discard shiny junk fast.
+**Decision:** Mine for AI repos/tools with high value-to-noise ratio, prioritizing odd gems over shiny junk.
 
 **Plan:**
-1. Query GitHub API for repos with `ai`, `tool`, `framework` in name/desc, created in last 30 days, stars < 100.
-2. Filter out obvious junk (e.g., "ai-starter-kit", "awesome-ai" clones) using regex: `(\b(awesome|starter|template|boilerplate)\b|-ai$)`.
-3. Manually inspect top 20 candidates: check README, license, last commit, issues/PRs for activity.
-4. Clone and run basic tests (e.g., `pip install -e . && pytest`) on repos with >50% test coverage.
-5. Log gems in `~/mining/gems_YYYYMMDD.md` with: name, stars, license, 1-line pitch, test result.
+1. Query GitHub API for repos with `ai`, `ml`, `neural`, `transformer` keywords, sorted by `stars` > 100, `created` > 2023-01-01.
+2. Filter results for repos with `README.md` mentioning "novel", "unusual", or "experimental" techniques.
+3. Manually inspect top 10 candidates for unique architectures, datasets, or training methods (e.g., diffusion models, sparse attention).
+4. Clone and run `pip install -e .` on promising repos; verify functionality with minimal test data.
+5. Log findings in `ai-mining-log.md` with repo name, key insight, and reproduction steps.
 
-**Done when:** 3 verified repos added to `~/mining/gems_YYYYMMDD.md` with tests passing.
+**Done when:** 3 novel repos verified and logged with reproducible results.

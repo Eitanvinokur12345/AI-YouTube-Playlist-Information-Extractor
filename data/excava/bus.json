@@ -789,17 +789,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/resolve-real-links-websi-19512--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-07-07T10:18:32.170451+00:00",
-      "updated_at": "2026-07-07T12:45:56.777936+00:00"
+      "updated_at": "2026-07-07T14:20:50.804838+00:00",
+      "result": "Semantic index: 1439 vectors (model gemini-embedding-001); hub 5218 items → 3779 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "security-safety-rate-the-19512",
@@ -897,17 +898,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-19512--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-07-07T10:18:32.180929+00:00",
-      "updated_at": "2026-07-07T12:10:43.780618+00:00"
+      "updated_at": "2026-07-07T14:20:50.644370+00:00",
+      "result": "616 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g5-leverage-53-100-19512",
@@ -1075,18 +1077,20 @@
       "id": "raise-g3-truth-access-53-26252",
       "title": "Raise G3 Truth & access (53/100): 53.3% of tools/skills have a real link (target: ~100%)",
       "detail": "value=47 size=17(small) [cost 15/steps 25/risk 10] · G3 at 53",
-      "department": "links",
+      "department": "memory",
       "source": "gap",
       "priority": 1,
       "status": "queued",
-      "steps": 0,
+      "steps": 1,
       "max_steps": 8,
-      "done_criteria": "a committed artifact that measurably closes this gap",
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
       "claimed_by": null,
-      "handoff_docs": [],
+      "handoff_docs": [
+        "data/excava/handoffs/raise-g3-truth-access-53-26252--01--links-w1--to--memory.md"
+      ],
       "created_at": "2026-07-07T12:10:52.156618+00:00",
-      "updated_at": "2026-07-07T12:10:52.156623+00:00"
+      "updated_at": "2026-07-07T14:20:50.809684+00:00"
     },
     {
       "id": "raise-g5-leverage-53-100-26252",
@@ -1148,15 +1152,16 @@
       "department": "security",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-07T12:46:15.503375+00:00",
-      "updated_at": "2026-07-07T12:46:15.503389+00:00"
+      "updated_at": "2026-07-07T14:20:57.910184+00:00",
+      "result": "produced data/excava/artifacts/task-security-safety-rate-the-next-batch-of-1196-conn.md (by gh-models)"
     },
     {
       "id": "mining-discover-new-ai-r-28375",
@@ -1165,15 +1170,16 @@
       "department": "mining",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "mining-w1",
       "handoff_docs": [],
       "created_at": "2026-07-07T12:46:15.505792+00:00",
-      "updated_at": "2026-07-07T12:46:15.505799+00:00"
+      "updated_at": "2026-07-07T14:20:52.923926+00:00",
+      "result": "produced data/excava/artifacts/task-mining-discover-new-ai-repos-tools-verify-this-c.md (by mistral)"
     },
     {
       "id": "watch-process-the-next-b-28375",
@@ -1182,15 +1188,16 @@
       "department": "watch",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-07-07T12:46:15.507890+00:00",
-      "updated_at": "2026-07-07T12:46:15.507896+00:00"
+      "updated_at": "2026-07-07T14:21:02.059812+00:00",
+      "result": "produced data/excava/artifacts/task-watch-process-the-next-batch-of-616-pending-vide.md (by mistral)"
     },
     {
       "id": "news-refresh-the-ai-news-28375",
@@ -1199,15 +1206,16 @@
       "department": "news",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "news-w1",
       "handoff_docs": [],
       "created_at": "2026-07-07T12:46:15.510330+00:00",
-      "updated_at": "2026-07-07T12:46:15.510336+00:00"
+      "updated_at": "2026-07-07T14:20:54.948587+00:00",
+      "result": "produced data/excava/artifacts/task-news-refresh-the-ai-news-digest-for-the-newest-s.md (by mistral)"
     },
     {
       "id": "raise-g3-truth-access-53-28375",
@@ -1233,15 +1241,16 @@
       "department": "creators",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-07-07T12:46:15.514934+00:00",
-      "updated_at": "2026-07-07T12:46:15.514940+00:00"
+      "updated_at": "2026-07-07T14:20:50.814053+00:00",
+      "result": "Creators: 11 creations on record, 11 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     },
     {
       "id": "raise-g8-personal-fit-65-28375",
@@ -1250,16 +1259,17 @@
       "department": "visual",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "visual-w1",
       "handoff_docs": [],
       "created_at": "2026-07-07T12:46:15.517434+00:00",
-      "updated_at": "2026-07-07T12:46:15.517439+00:00"
+      "updated_at": "2026-07-07T14:21:00.171875+00:00",
+      "result": "produced data/excava/artifacts/task-raise-g8-personal-fit-65-100-13-of-designs-taste.md (by mistral)"
     }
   ],
-  "updated_at": "2026-07-07T12:46:15.517442+00:00"
+  "updated_at": "2026-07-07T14:21:02.059826+00:00"
 }

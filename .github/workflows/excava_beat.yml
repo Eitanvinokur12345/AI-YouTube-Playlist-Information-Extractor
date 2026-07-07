@@ -47,7 +47,14 @@ jobs:
           GEMINI_API_KEY_5: ${{ secrets.GEMINI_API_KEY_5 }}
           GEMINI_API_KEY_6: ${{ secrets.GEMINI_API_KEY_6 }}
         run: |
-          python -m src.excava || true
+          # GitHub throttles free */10 cron to ~hourly, so MAKE EACH RUN COUNT: run several beat
+          # cycles per invocation (2026-07-07). 8 cycles × ~50s = ~7 min < timeout. At hourly CI
+          # that's 8x the throughput; the */10 cron + these cycles give many advances per hour.
+          for i in $(seq 1 8); do
+            echo "── beat cycle $i/8 ──"
+            python -m src.excava || true
+            if [ "$i" -lt 8 ]; then sleep 50; fi
+          done
 
       - name: Commit transcripts + status
         run: |

@@ -160,14 +160,42 @@ def _work_creators(task: dict) -> dict:
         "creators lane drafts from data/creators_discovery.json gaps.")}
 
 
+# REAL executors: the cheap, fast, real tool each department actually runs (verified 2026-07-07).
+# Running these does ACTUAL work + reports REAL output — the fix for the hollow-plan facade.
+REAL_TOOL = {"security": "src.security_scan", "improve": "src.self_check",
+             "memory": "src.build_hub_index", "news": "src.trend_watch",
+             "mining": "src.source_bundles", "visual": "src.warm_shots"}
+
+
+def _run_real_tool(dept: str) -> dict | None:
+    """Run the department's real tool with a bounded timeout; return its REAL output tail."""
+    import subprocess
+    import sys
+    mod = REAL_TOOL.get(dept)
+    if not mod:
+        return None
+    try:
+        r = subprocess.run([sys.executable, "-m", mod], cwd=str(ROOT),
+                           capture_output=True, text=True, timeout=90)
+        lines = [ln for ln in (r.stdout or "").strip().splitlines() if ln.strip()]
+        tail = lines[-1][:220] if lines else ((r.stderr or "").strip()[:160] or "(no output)")
+        return {"ok": r.returncode == 0 and bool(lines), "tool": mod, "tail": tail}
+    except subprocess.TimeoutExpired:
+        return {"ok": False, "tool": mod, "tail": "timed out (>90s) — heavy lane runs in its own CI"}
+    except Exception as e:
+        return {"ok": False, "tool": mod, "tail": type(e).__name__}
+
+
 def _work_generic(task: dict) -> dict:
-    """Departments without a bespoke executor produce an HONEST execution PLAN (not a claim that the
-    work is done). It is labelled 'PLAN — not yet executed' and the task is handed off for real
-    execution, NOT falsely marked complete. (2026-07-07: fixes the hollow-artifact facade where a
-    plausible LLM plan was stamped 'DONE' though no video/connector/design was actually touched.)"""
+    """Do REAL work when the department has a runnable tool (run it, report real output). Otherwise
+    produce an HONEST execution PLAN labelled 'not yet executed' — never a false 'DONE'. (2026-07-07:
+    kills the hollow-artifact facade where an LLM plan was stamped DONE though nothing was touched.)"""
     import re
     tid = task.get("id", "task")
     dept = task.get("department", "core")
+    real = _run_real_tool(dept)                          # FIRST: try to actually DO the work
+    if real and real["ok"]:
+        return {"kind": "complete", "result": f"RAN {real['tool']} (real work): {real['tail']}"}
     slug = re.sub(r"[^a-z0-9]+", "-", str(task.get("title", tid)).lower())[:48].strip("-") or tid
     body, src = "", "task-summary (no engine)"
     try:

@@ -66,12 +66,23 @@ def check_intent_alignment() -> list[dict]:
     return flags
 
 
+def _history() -> dict:
+    """The supervisor's memory of the WHOLE project: the owner's full message history (all 5
+    sessions), ingested to the repo by src.ingest_history so even the CI supervisor knows the
+    entire history + the owner's true desires (owner law 2026-07-07, non-negotiable)."""
+    try:
+        return json.loads((DATA / "excava" / "history_index.json").read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
 def run() -> list[str]:
     try:
         bus = json.loads((DATA / "excava" / "bus.json").read_text(encoding="utf-8"))
     except Exception:
         return ["supervisor: no bus to inspect"]
     intent_flags = check_intent_alignment()
+    hist = _history()
     done = [t for t in bus.get("tasks", []) if t.get("status") == "done"]
     recent = sorted(done, key=lambda t: t.get("updated_at", ""), reverse=True)[:40]
     verdicts, counts = [], {"real": 0, "noop": 0, "failed": 0, "planned": 0}
@@ -96,12 +107,15 @@ def run() -> list[str]:
                 + "; ".join(f"{f['dept']}→wants {f['wants']} not {f['wired']}" for f in intent_flags[:3])
     doc = {"generated_at": datetime.now(timezone.utc).isoformat(), "checked": n,
            "real_pct": real_pct, "counts": counts, "criticism": crit,
+           "history": {"owner_messages": hist.get("owner_messages", 0),
+                       "sessions": hist.get("session_count", 0), "since": hist.get("first", "")[:10]},
            "intent_drift": intent_flags, "verdicts": verdicts}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(doc, ensure_ascii=False, indent=1), encoding="utf-8")
     worst = [v for v in verdicts if v["verdict"] in ("planned", "failed", "noop")][:3]
     lines = [f"supervisor: {real_pct}% real of last {n} ({counts['real']}✓ {counts['noop']}no-op "
-             f"{counts['failed']}fail {counts['planned']}plan)"]
+             f"{counts['failed']}fail {counts['planned']}plan) · knows history: "
+             f"{hist.get('owner_messages', 0)} owner msgs / {hist.get('session_count', 0)} sessions"]
     for f in intent_flags:
         lines.append(f"  ⚠ INTENT: {f['note']}")
     for w in worst:

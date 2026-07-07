@@ -505,6 +505,14 @@ def _beat(args) -> int:
     except Exception:
         pass
 
+    try:                                    # ALWAYS-THERE BACKLOG: refresh real-gap tasks + judgment
+        from src.excava_backlog import refresh as _backlog
+        _bk = _backlog()
+        beat_log.append(f"backlog: {len(_bk.get('queued_now', []))} real-gap task(s) queued; "
+                        f"plan { {d: p['reason'][:22] for d, p in list(_bk.get('plan', {}).items())[:4]} }")
+    except Exception as e:
+        beat_log.append(f"backlog: skipped ({type(e).__name__})")
+
     print(f"EXCAVA beat #{st.get('beats')} [{mode}]: gate internal={'open' if internal_ok else 'CLOSED'} "
           f"outward={'open' if outward_ok else 'closed (G3=' + str(g3) + ')'}; "
           f"bus {snap['open']} open/{snap['total']} total; audit {'OK' if not audit else 'FAIL'}; "

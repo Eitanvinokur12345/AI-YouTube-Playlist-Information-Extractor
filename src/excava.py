@@ -334,6 +334,16 @@ def _beat(args) -> int:
             (DATA / "excava_inbox.json").write_text(
                 json.dumps(inbox, ensure_ascii=False, indent=2), encoding="utf-8")
 
+        # ── 2.5 BACKLOG before routing (fix 2026-07-07): fresh real-gap tasks route + EXECUTE this
+        #      same beat instead of waiting a full cycle — un-stalls the fed-but-idle departments. ──
+        try:
+            from src.excava_backlog import refresh as _backlog
+            _bk = _backlog()
+            beat_log.append(f"backlog: {len(_bk.get('queued_now', []))} real-gap task(s) queued; "
+                            f"plan { {d: p['reason'][:22] for d, p in list(_bk.get('plan', {}).items())[:4]} }")
+        except Exception as e:
+            beat_log.append(f"backlog: skipped ({type(e).__name__})")
+
         # ── 3. route by specialization + resources (+ load via claim order) ──
         _route_all(reg, can, holding)
 
@@ -504,14 +514,6 @@ def _beat(args) -> int:
         _guardrails()
     except Exception:
         pass
-
-    try:                                    # ALWAYS-THERE BACKLOG: refresh real-gap tasks + judgment
-        from src.excava_backlog import refresh as _backlog
-        _bk = _backlog()
-        beat_log.append(f"backlog: {len(_bk.get('queued_now', []))} real-gap task(s) queued; "
-                        f"plan { {d: p['reason'][:22] for d, p in list(_bk.get('plan', {}).items())[:4]} }")
-    except Exception as e:
-        beat_log.append(f"backlog: skipped ({type(e).__name__})")
 
     try:                                    # CAPABILITY CATALOG: keep the honest 'what EXCAVA can do' fresh
         from src.build_capabilities import main as _caps

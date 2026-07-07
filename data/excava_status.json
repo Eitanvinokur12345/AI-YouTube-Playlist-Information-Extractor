@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-07T08:57:04.489521+00:00",
+  "generated_at": "2026-07-07T10:01:28.865296+00:00",
   "name": "EXCAVA",
   "phase": "OS spine (Phase 0): bus + departments + hand-offs live; creators (OS-2) gated",
   "gate": {
@@ -94,30 +94,30 @@
     }
   ],
   "os": {
-    "beats": 45,
+    "beats": 46,
     "mode": "run",
     "bus": {
-      "open": 8,
-      "total": 32,
+      "open": 11,
+      "total": 38,
       "per_department": {
         "memory": {
-          "queued": 0,
+          "queued": 1,
           "working": 0,
           "done": 12,
           "held": 0,
           "failed": 0
         },
         "visual": {
-          "queued": 1,
+          "queued": 2,
           "working": 0,
           "done": 0,
           "held": 0,
           "failed": 0
         },
         "improve": {
-          "queued": 2,
+          "queued": 1,
           "working": 0,
-          "done": 0,
+          "done": 1,
           "held": 0,
           "failed": 0
         },
@@ -129,30 +129,47 @@
           "failed": 0
         },
         "analysis": {
-          "queued": 0,
+          "queued": 1,
           "working": 0,
-          "done": 12,
+          "done": 13,
           "held": 0,
           "failed": 0
         },
         "mining": {
-          "queued": 2,
+          "queued": 1,
+          "working": 0,
+          "done": 1,
+          "held": 0,
+          "failed": 0
+        },
+        "links": {
+          "queued": 1,
+          "working": 0,
+          "done": 0,
+          "held": 0,
+          "failed": 0
+        },
+        "creators": {
+          "queued": 1,
           "working": 0,
           "done": 0,
           "held": 0,
           "failed": 0
         }
       },
-      "last_handoff": "data/excava/handoffs/push-link-coverage-towar-53881--01--links-w1--to--memory.md"
+      "last_handoff": "data/excava/handoffs/resolve-real-links-websi-14629--01--links-w1--to--memory.md"
     },
     "beat_log": [
-      "analysis-w1: weakest-lane-deep-analys-14624 DONE",
-      "war-deliver-keep-the-designs-tab-906: Chisel spoke (sambanova, 972ms) t3",
-      "war-deliver-keep-the-designs-tab-906: Sift spoke (sambanova, 1045ms) t4",
-      "dept-raise-link-coverage-pick-the-574: Fetch spoke (sambanova, 1039ms) t1",
-      "dept-raise-link-coverage-pick-the-574: Probe spoke (sambanova, 703ms) t2",
-      "TUTORIAL MISSING for dashboard v84 — Phase 6 law: every major change ships a walkthrough (data/tutorials.json)",
-      "memory master: +1 episodes"
+      "analysis-w1: verify-the-next-200-of-6-14629 DONE",
+      "improve-w1: lane-self-improvement-re-31649 DONE",
+      "links-w1: resolve-real-links-websi-14629 -> memory (data/excava/handoffs/resolve-real-links-websi-14629--01--links-w1--to--memory.md)",
+      "mining-w1: lane-external-mining-is--77142 DONE",
+      "war-deliver-keep-the-designs-tab-906: Scope spoke (sambanova, 1101ms) t5",
+      "war-deliver-keep-the-designs-tab-906: Scriv spoke (sambanova, 5139ms) t6",
+      "dept-raise-link-coverage-pick-the-574: Fetch spoke (sambanova, 1283ms) t3",
+      "dept-raise-link-coverage-pick-the-574: Probe spoke (sambanova, 744ms) t4",
+      "TUTORIAL MISSING for dashboard v85 — Phase 6 law: every major change ships a walkthrough (data/tutorials.json)",
+      "memory master: +4 episodes"
     ],
     "departments": [
       "analysis",
@@ -169,11 +186,11 @@
     ],
     "usage": {
       "analysis": {
-        "ticks": 10,
-        "done": 10,
+        "ticks": 11,
+        "done": 11,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-07T08:57:09.048977+00:00"
+        "last": "2026-07-07T10:01:39.927930+00:00"
       },
       "memory": {
         "ticks": 8,
@@ -183,11 +200,25 @@
         "last": "2026-07-06T18:29:15.032843+00:00"
       },
       "links": {
-        "ticks": 7,
+        "ticks": 8,
         "done": 0,
-        "handoffs": 7,
+        "handoffs": 8,
         "fails": 0,
-        "last": "2026-07-06T16:04:42.404092+00:00"
+        "last": "2026-07-07T10:01:39.927937+00:00"
+      },
+      "improve": {
+        "ticks": 1,
+        "done": 1,
+        "handoffs": 0,
+        "fails": 0,
+        "last": "2026-07-07T10:01:39.927934+00:00"
+      },
+      "mining": {
+        "ticks": 1,
+        "done": 1,
+        "handoffs": 0,
+        "fails": 0,
+        "last": "2026-07-07T10:01:39.927939+00:00"
       }
     },
     "audit": {
@@ -207,6 +238,14 @@
       "links": {
         "streak": 0,
         "cooldown_until": ""
+      },
+      "improve": {
+        "streak": 0,
+        "cooldown_until": ""
+      },
+      "mining": {
+        "streak": 0,
+        "cooldown_until": ""
       }
     },
     "tasks": [
@@ -218,16 +257,6 @@
         "steps": 0,
         "priority": 0,
         "source": "owner",
-        "doc": null
-      },
-      {
-        "id": "lane-self-improvement-re-31649",
-        "title": "Lane 'Self-improvement review' is idle",
-        "department": "improve",
-        "status": "queued",
-        "steps": 0,
-        "priority": 1,
-        "source": "auto",
         "doc": null
       },
       {
@@ -261,16 +290,6 @@
         "doc": null
       },
       {
-        "id": "lane-external-mining-is--77142",
-        "title": "Lane 'External mining' is slow",
-        "department": "mining",
-        "status": "queued",
-        "steps": 0,
-        "priority": 1,
-        "source": "auto",
-        "doc": null
-      },
-      {
         "id": "lane-external-mining-is--38407",
         "title": "Lane 'External mining' is stale",
         "department": "mining",
@@ -289,162 +308,59 @@
         "priority": 1,
         "source": "auto",
         "doc": null
+      },
+      {
+        "id": "resolve-real-links-websi-14629",
+        "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
+        "department": "memory",
+        "status": "queued",
+        "steps": 1,
+        "priority": 1,
+        "source": "gap",
+        "doc": "data/excava/handoffs/resolve-real-links-websi-14629--01--links-w1--to--memory.md"
+      },
+      {
+        "id": "raise-g3-truth-access-53-14629",
+        "title": "Raise G3 Truth & access (53/100): 53.2% of tools/skills have a real link (target: ~100%)",
+        "department": "links",
+        "status": "queued",
+        "steps": 0,
+        "priority": 1,
+        "source": "gap",
+        "doc": null
+      },
+      {
+        "id": "raise-g5-leverage-53-100-14629",
+        "title": "Raise G5 Leverage (53/100): leverage needs real, usable links first (= G3); then the OS cr",
+        "department": "creators",
+        "status": "queued",
+        "steps": 0,
+        "priority": 1,
+        "source": "gap",
+        "doc": null
+      },
+      {
+        "id": "raise-g1-omniscience-57--14629",
+        "title": "Raise G1 Omniscience (57/100): 434/1555 videos analyzed (27.9%); 5/7 lanes live",
+        "department": "analysis",
+        "status": "queued",
+        "steps": 0,
+        "priority": 1,
+        "source": "gap",
+        "doc": null
+      },
+      {
+        "id": "raise-g8-personal-fit-65-14629",
+        "title": "Raise G8 Personal fit (65/100): 13% of designs taste-tagged; Arena learning live; NOSG wir",
+        "department": "visual",
+        "status": "queued",
+        "steps": 0,
+        "priority": 1,
+        "source": "gap",
+        "doc": null
       }
     ],
     "recent_events": [
-      {
-        "task": "dept-raise-link-coverage-pick-the-991",
-        "at": "2026-07-07T04:17:33.288447+00:00",
-        "kind": "workers_dispatched",
-        "by": "links-w1",
-        "n": 4,
-        "ids": [
-          "worker-8777",
-          "worker-1088",
-          "worker-2227",
-          "worker-2177"
-        ]
-      },
-      {
-        "task": "dept-raise-link-coverage-pick-the-991",
-        "at": "2026-07-07T04:17:33.289469+00:00",
-        "kind": "workers_dissolved",
-        "by": "links-w1",
-        "n": 4
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-07T04:17:34.204617+00:00",
-        "kind": "lane_ran",
-        "lane": "Gemini watch (audio+visual)",
-        "status": "live",
-        "what": "Watches videos directly — clears the backlog free"
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-07T04:17:34.205245+00:00",
-        "kind": "lane_ran",
-        "lane": "Free analysis pool",
-        "status": "live",
-        "what": "Turns transcripts into skills/tools/connectors (free engines)"
-      },
-      {
-        "task": "empty-body-items-render--31649",
-        "at": "2026-07-07T04:35:42.103970+00:00",
-        "kind": "unroutable",
-        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-      },
-      {
-        "task": "title-collisions-distinc-31649",
-        "at": "2026-07-07T04:35:42.104755+00:00",
-        "kind": "unroutable",
-        "why": "no department specialization matched"
-      },
-      {
-        "task": "lane-transcript-retrieva-77142",
-        "at": "2026-07-07T04:35:42.105442+00:00",
-        "kind": "unroutable",
-        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-      },
-      {
-        "task": "dept-raise-link-coverage-pick-the-991",
-        "at": "2026-07-07T04:35:48.162960+00:00",
-        "kind": "room_closed",
-        "artifact": {
-          "kind": "decision",
-          "ref": "data/excava/artifacts/dept-raise-link-coverage-pick-the-991.md",
-          "at": "2026-07-07T04:35:48.162782+00:00",
-          "title": "Raise link coverage: pick the next 200 unlinked elements and the fastest resolut",
-          "by": "Ledger"
-        },
-        "turns": 5
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-07T04:35:54.190016+00:00",
-        "kind": "lane_ran",
-        "lane": "AI news refresh",
-        "status": "live",
-        "what": "Refreshes official-site AI news"
-      },
-      {
-        "task": "weakest-lane-deep-analys-14624",
-        "at": "2026-07-07T08:57:04.649580+00:00",
-        "kind": "enqueued",
-        "title": "Weakest lane: Deep analysis (Claude, night-gated)",
-        "source": "auto",
-        "priority": 1,
-        "department": "(unrouted)"
-      },
-      {
-        "task": "empty-body-items-render--31649",
-        "at": "2026-07-07T08:57:04.650521+00:00",
-        "kind": "unroutable",
-        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-      },
-      {
-        "task": "title-collisions-distinc-31649",
-        "at": "2026-07-07T08:57:04.651152+00:00",
-        "kind": "unroutable",
-        "why": "no department specialization matched"
-      },
-      {
-        "task": "lane-transcript-retrieva-77142",
-        "at": "2026-07-07T08:57:04.651863+00:00",
-        "kind": "unroutable",
-        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-      },
-      {
-        "task": "weakest-lane-deep-analys-14624",
-        "at": "2026-07-07T08:57:04.653553+00:00",
-        "kind": "routed",
-        "chose": "analysis",
-        "over": [
-          "improve"
-        ],
-        "why": "best specialization match (1 hits)"
-      },
-      {
-        "task": "weakest-lane-deep-analys-14624",
-        "at": "2026-07-07T08:57:04.655362+00:00",
-        "kind": "claimed",
-        "by": "analysis-w1",
-        "department": "analysis"
-      },
-      {
-        "task": "weakest-lane-deep-analys-14624",
-        "at": "2026-07-07T08:57:04.657817+00:00",
-        "kind": "completed",
-        "by": "analysis-w1",
-        "result": "493 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-      },
-      {
-        "task": "war-deliver-keep-the-designs-tab-906",
-        "at": "2026-07-07T08:57:05.781819+00:00",
-        "kind": "workers_dispatched",
-        "by": "analysis-w1",
-        "n": 3,
-        "ids": [
-          "worker-9150",
-          "worker-8160",
-          "worker-5538"
-        ]
-      },
-      {
-        "task": "war-deliver-keep-the-designs-tab-906",
-        "at": "2026-07-07T08:57:05.782753+00:00",
-        "kind": "workers_dissolved",
-        "by": "analysis-w1",
-        "n": 3
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-07T08:57:08.677936+00:00",
-        "kind": "lane_ran",
-        "lane": "Free analysis pool",
-        "status": "live",
-        "what": "Turns transcripts into skills/tools/connectors (free engines)"
-      },
       {
         "task": "os-lanes",
         "at": "2026-07-07T08:57:08.678597+00:00",
@@ -452,9 +368,157 @@
         "lane": "Deep analysis (night-gated)",
         "status": "live",
         "what": "Claude re-analysis + safety pass"
+      },
+      {
+        "task": "verify-the-next-200-of-6-14629",
+        "at": "2026-07-07T08:57:09.657533+00:00",
+        "kind": "enqueued",
+        "title": "Verify the next 200 of 6719 unverified elements (2-source + live test)",
+        "source": "gap",
+        "priority": 1,
+        "department": "analysis"
+      },
+      {
+        "task": "resolve-real-links-websi-14629",
+        "at": "2026-07-07T08:57:09.659684+00:00",
+        "kind": "enqueued",
+        "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
+        "source": "gap",
+        "priority": 1,
+        "department": "links"
+      },
+      {
+        "task": "raise-g3-truth-access-53-14629",
+        "at": "2026-07-07T08:57:09.661237+00:00",
+        "kind": "enqueued",
+        "title": "Raise G3 Truth & access (53/100): 53.2% of tools/skills have a real link (target: ~100%)",
+        "source": "gap",
+        "priority": 1,
+        "department": "links"
+      },
+      {
+        "task": "raise-g5-leverage-53-100-14629",
+        "at": "2026-07-07T08:57:09.662843+00:00",
+        "kind": "enqueued",
+        "title": "Raise G5 Leverage (53/100): leverage needs real, usable links first (= G3); then the OS creation agent",
+        "source": "gap",
+        "priority": 1,
+        "department": "creators"
+      },
+      {
+        "task": "raise-g1-omniscience-57--14629",
+        "at": "2026-07-07T08:57:09.664463+00:00",
+        "kind": "enqueued",
+        "title": "Raise G1 Omniscience (57/100): 434/1555 videos analyzed (27.9%); 5/7 lanes live",
+        "source": "gap",
+        "priority": 1,
+        "department": "analysis"
+      },
+      {
+        "task": "raise-g8-personal-fit-65-14629",
+        "at": "2026-07-07T08:57:09.666061+00:00",
+        "kind": "enqueued",
+        "title": "Raise G8 Personal fit (65/100): 13% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
+        "source": "gap",
+        "priority": 1,
+        "department": "visual"
+      },
+      {
+        "task": "empty-body-items-render--31649",
+        "at": "2026-07-07T10:01:29.030925+00:00",
+        "kind": "unroutable",
+        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+      },
+      {
+        "task": "title-collisions-distinc-31649",
+        "at": "2026-07-07T10:01:29.031676+00:00",
+        "kind": "unroutable",
+        "why": "no department specialization matched"
+      },
+      {
+        "task": "lane-transcript-retrieva-77142",
+        "at": "2026-07-07T10:01:29.032300+00:00",
+        "kind": "unroutable",
+        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+      },
+      {
+        "task": "verify-the-next-200-of-6-14629",
+        "at": "2026-07-07T10:01:29.034240+00:00",
+        "kind": "claimed",
+        "by": "analysis-w1",
+        "department": "analysis"
+      },
+      {
+        "task": "verify-the-next-200-of-6-14629",
+        "at": "2026-07-07T10:01:29.037081+00:00",
+        "kind": "completed",
+        "by": "analysis-w1",
+        "result": "616 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+      },
+      {
+        "task": "lane-self-improvement-re-31649",
+        "at": "2026-07-07T10:01:29.038666+00:00",
+        "kind": "claimed",
+        "by": "improve-w1",
+        "department": "improve"
+      },
+      {
+        "task": "lane-self-improvement-re-31649",
+        "at": "2026-07-07T10:01:30.253624+00:00",
+        "kind": "completed",
+        "by": "improve-w1",
+        "result": "produced data/excava/artifacts/task-lane-self-improvement-review-is-idle.md (by sambanova)"
+      },
+      {
+        "task": "resolve-real-links-websi-14629",
+        "at": "2026-07-07T10:01:30.255207+00:00",
+        "kind": "claimed",
+        "by": "links-w1",
+        "department": "links"
+      },
+      {
+        "task": "resolve-real-links-websi-14629",
+        "at": "2026-07-07T10:01:30.257030+00:00",
+        "kind": "handoff",
+        "from": "links-w1",
+        "to": "memory",
+        "doc": "data/excava/handoffs/resolve-real-links-websi-14629--01--links-w1--to--memory.md"
+      },
+      {
+        "task": "lane-external-mining-is--77142",
+        "at": "2026-07-07T10:01:30.258733+00:00",
+        "kind": "claimed",
+        "by": "mining-w1",
+        "department": "mining"
+      },
+      {
+        "task": "lane-external-mining-is--77142",
+        "at": "2026-07-07T10:01:31.081132+00:00",
+        "kind": "completed",
+        "by": "mining-w1",
+        "result": "produced data/excava/artifacts/task-lane-external-mining-is-slow.md (by sambanova)"
+      },
+      {
+        "task": "dept-raise-link-coverage-pick-the-574",
+        "at": "2026-07-07T10:01:38.707681+00:00",
+        "kind": "workers_dispatched",
+        "by": "links-w1",
+        "n": 3,
+        "ids": [
+          "worker-4645",
+          "worker-5086",
+          "worker-1439"
+        ]
+      },
+      {
+        "task": "dept-raise-link-coverage-pick-the-574",
+        "at": "2026-07-07T10:01:38.708617+00:00",
+        "kind": "workers_dissolved",
+        "by": "links-w1",
+        "n": 3
       }
     ],
-    "memory_episodes": 1,
+    "memory_episodes": 4,
     "directions": [
       {
         "id": "dir-1",
@@ -476,7 +540,7 @@
       }
     ],
     "tutorials": {
-      "current_build": "v84",
+      "current_build": "v85",
       "covered": false,
       "count": 9
     },

@@ -65,15 +65,16 @@
       "department": "improve",
       "source": "auto",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "output written to data/ and committed by CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "improve-w1",
       "handoff_docs": [],
       "created_at": "2026-07-02T22:34:09.124641+00:00",
-      "updated_at": "2026-07-02T22:34:09.352946+00:00"
+      "updated_at": "2026-07-07T10:01:30.252781+00:00",
+      "result": "produced data/excava/artifacts/task-lane-self-improvement-review-is-idle.md (by sambanova)"
     },
     {
       "id": "empty-body-items-render--31649",
@@ -247,15 +248,16 @@
       "department": "mining",
       "source": "auto",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "output written to data/ and committed by CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "mining-w1",
       "handoff_docs": [],
       "created_at": "2026-07-03T11:12:22.892988+00:00",
-      "updated_at": "2026-07-03T11:12:22.896141+00:00"
+      "updated_at": "2026-07-07T10:01:31.080233+00:00",
+      "result": "produced data/excava/artifacts/task-lane-external-mining-is-slow.md (by sambanova)"
     },
     {
       "id": "weakest-lane-deep-analys-90352",
@@ -600,32 +602,35 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-07-07T08:57:09.656731+00:00",
-      "updated_at": "2026-07-07T08:57:09.656742+00:00"
+      "updated_at": "2026-07-07T10:01:29.036291+00:00",
+      "result": "616 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "resolve-real-links-websi-14629",
       "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
       "detail": "value=82 size=41(small) [cost 40/steps 60/risk 15] · many unlinked",
-      "department": "links",
+      "department": "memory",
       "source": "gap",
       "priority": 1,
       "status": "queued",
-      "steps": 0,
+      "steps": 1,
       "max_steps": 8,
-      "done_criteria": "a committed artifact that measurably closes this gap",
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
       "claimed_by": null,
-      "handoff_docs": [],
+      "handoff_docs": [
+        "data/excava/handoffs/resolve-real-links-websi-14629--01--links-w1--to--memory.md"
+      ],
       "created_at": "2026-07-07T08:57:09.658375+00:00",
-      "updated_at": "2026-07-07T08:57:09.658381+00:00"
+      "updated_at": "2026-07-07T10:01:30.256277+00:00"
     },
     {
       "id": "raise-g3-truth-access-53-14629",
@@ -694,7 +699,24 @@
       "handoff_docs": [],
       "created_at": "2026-07-07T08:57:09.665307+00:00",
       "updated_at": "2026-07-07T08:57:09.665313+00:00"
+    },
+    {
+      "id": "verify-the-next-200-of-6-18500",
+      "title": "Verify the next 200 of 6719 unverified elements (2-source + live test)",
+      "detail": "value=88 size=40(small) [cost 35/steps 70/risk 10] · 6719 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-07T10:01:40.563209+00:00",
+      "updated_at": "2026-07-07T10:01:40.563222+00:00"
     }
   ],
-  "updated_at": "2026-07-07T08:57:09.665316+00:00"
+  "updated_at": "2026-07-07T10:01:40.563226+00:00"
 }

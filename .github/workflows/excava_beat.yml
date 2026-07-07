@@ -9,7 +9,8 @@ name: EXCAVA beat (agentic heartbeat)
 on:
   workflow_dispatch:            # trigger on demand to PROVE rooms advance
   schedule:
-    - cron: "17 */3 * * *"      # every 3 hours, offset so it never collides with bulk_analyze
+    - cron: "*/10 * * * *"      # every 10 min (owner). Free (public repo). GH cron is best-effort,
+                                # so timing is approximate; rate-aware backpressure guards the engines.
 
 concurrency:
   group: skills-tracker-excava-beat

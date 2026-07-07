@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v86";
+const APP_BUILD = "v87";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2930,6 +2930,41 @@ function _resultCard(x) {
     <p class="sub" style="margin-top:6px">${esc(fmtDate(x.at))}</p>
   </div>`;
 }
+// ── 🧾 PROOF: read the proof IN THE APP (owner: 'I shouldn't have to open GitHub') ──
+function renderProof(p) {
+  if (!p || !p.departments) {
+    view.innerHTML = `<div class="card"><h3>🧾 Proof</h3><p class="sub">No proof file yet — it's written every beat (within ~10 min). It shows what each department actually did, honestly.</p></div>`;
+    return;
+  }
+  const gh = p.gh || "";
+  const vclass = v => v === "real" ? "pv-real" : v === "noop" ? "pv-noop" : v === "failed" ? "pv-fail" : "pv-plan";
+  const vlabel = { real: "✓ REAL work", noop: "⚠ ran, did nothing", planned: "✕ only a plan", failed: "✕ failed" };
+  const dsum = Object.entries(p.delta || {}).map(([k, v]) => `${k} ${v >= 0 ? "+" : ""}${v}`).join(" · ");
+  const rows = p.departments.map(d => `<tr class="${vclass(d.verdict)}">
+      <td><b>${esc((d.dept || "").toUpperCase())}</b></td>
+      <td><span class="pv-badge ${vclass(d.verdict)}">${vlabel[d.verdict] || d.verdict}</span></td>
+      <td class="pv-out">${esc(d.output || "")}</td>
+      <td>${d.evidence_url ? `<a target="_blank" href="${esc(d.evidence_url)}">see the file ↗</a>` : "—"}</td>
+    </tr>`).join("");
+  view.innerHTML = `
+    <div class="card" style="border-top:3px solid oklch(0.62 0.16 148)">
+      <h3>🧾 Proof <span class="sub">— what EXCAVA actually did, honestly. Don't trust the words — the links go to the real files.</span></h3>
+      <div class="pv-summary">
+        <span class="pv-big">${p.real_pct != null ? p.real_pct + "%" : "?"}</span> of the last checks did <b>REAL</b> work
+        <span class="sub">· counts ${esc(JSON.stringify(p.counts || {}))} · updated ${esc(fmtDate(p.generated_at))}</span>
+        ${dsum ? `<div class="sub" style="margin-top:4px">Change since last beat: <b>${esc(dsum)}</b></div>` : ""}
+        ${p.totals ? `<div class="sub">Totals now: ${p.totals.elements} tools/skills · ${p.totals.verified} verified · ${p.totals.with_link} with a real link · ${p.totals.designs} designs · ${p.totals.creations} creations</div>` : ""}
+      </div>
+      <table class="pv-table"><thead><tr><th>department</th><th>did it work?</th><th>what it actually produced</th><th>proof</th></tr></thead>
+        <tbody>${rows}</tbody></table>
+      <p class="sub" style="margin-top:8px">Read the agents' real conversations:
+        <a href="#" data-goto-tab="rooms">🗣 open Rooms</a> ·
+        <a target="_blank" href="${gh}/tree/main/data/excava/chats">raw transcripts ↗</a> ·
+        <a target="_blank" href="${gh}/actions/workflows/excava_beat.yml">every run's log ↗</a></p>
+    </div>`;
+  view.querySelectorAll("[data-goto-tab]").forEach(a =>
+    a.addEventListener("click", e => { e.preventDefault(); show(a.dataset.gotoTab); }));
+}
 async function renderResults() {
   const items = await _resultItems();
   localStorage.setItem("excavatortron.results.seen", new Date().toISOString());
@@ -2970,6 +3005,7 @@ async function resultsBadge() {                       // M3.7: the "new" count o
 async function renderTab(tab) {
   if (tab === "excava") return renderExcava();
   if (tab === "rooms") return renderRooms();
+  if (tab === "proof") return renderProof(await load("excava/proof.json"));
   if (tab === "results") return renderResults();
   if (tab === "packages") return renderPackages();
   if (tab === "taste") return renderTaste();

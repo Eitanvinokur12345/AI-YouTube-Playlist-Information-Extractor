@@ -760,6 +760,22 @@
     .cap.capplanned .cap-s { color:oklch(0.5 0.12 260); }
     .cap.capgatedM5 { opacity:.82; } .cap.capgatedM5 .cap-s { color:oklch(0.5 0.06 60); }
     .cap.cappitch { border-color:var(--gold-line); background:var(--gold-soft); } .cap.cappitch .cap-s { color:var(--gold-ink); }
+    /* ── 🧾 PROOF tab — read the honest proof in-app ── */
+    .pv-summary { border:2px solid var(--line); border-radius:10px 14px 9px 12px; background:var(--panel2);
+      padding:10px 14px; margin:8px 0 12px; }
+    .pv-big { font-family:"Archivo Black",sans-serif; font-size:26px; color:oklch(0.55 0.15 148); margin-right:6px; }
+    .pv-table { width:100%; border-collapse:collapse; font-size:13px; }
+    .pv-table th { text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.05em;
+      color:var(--muted); border-bottom:2px solid var(--line); padding:6px 8px; }
+    .pv-table td { padding:7px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+    .pv-out { color:var(--text); font-size:12px; max-width:420px; }
+    .pv-badge { font-size:11px; font-weight:800; border-radius:999px; padding:2px 9px; white-space:nowrap; }
+    .pv-badge.pv-real { background:oklch(0.9 0.09 145); color:oklch(0.3 0.08 150); }
+    .pv-badge.pv-noop { background:var(--gold-soft); color:var(--gold-ink); }
+    .pv-badge.pv-plan, .pv-badge.pv-fail { background:oklch(0.92 0.07 25); color:oklch(0.4 0.13 25); }
+    .pv-table tr.pv-real td:first-child { border-left:3px solid oklch(0.62 0.16 148); }
+    .pv-table tr.pv-noop td:first-child { border-left:3px solid var(--gold); }
+    .pv-table tr.pv-plan td:first-child, .pv-table tr.pv-fail td:first-child { border-left:3px solid var(--bad); }
     /* ── M4.3 PACKAGES — kit cards + assemble box ── */
     .pkg-assemble { display:flex; gap:8px; flex-wrap:wrap; margin:2px 0 6px; }
     .pkg-assemble input { border:2px solid var(--line); border-radius:8px 11px 7px 10px; padding:6px 11px;
@@ -1081,6 +1097,7 @@
   <nav id="tabs">
     <button data-tab="excava" class="active">🦾 EXCAVA</button>
     <button data-tab="rooms">🗣 Rooms</button>
+    <button data-tab="proof">🧾 Proof</button>
     <button data-tab="results">📦 Results</button>
     <button data-tab="packages">🧰 Packages</button>
     <button data-tab="taste">🎛 Taste</button>

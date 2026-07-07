@@ -76,17 +76,16 @@ def build() -> str:
             latest[t["department"]] = t
     verdict = {v["dept"]: v for v in sup.get("verdicts", []) if v.get("dept")}
 
-    def link(path):
-        return f"[`{path}`]({GH}/blob/main/{path})"
-
+    depts = []                              # structured, so the DASHBOARD can render proof in-app
     rows = []
     for dept in sorted(latest):
         t = latest[dept]
         res = str(t.get("result", ""))[:150]
         ev = EVIDENCE.get(dept, "")
-        evlink = f"[`{ev}`]({GH}/{'tree' if '.' not in ev.split('/')[-1] else 'blob'}/main/{ev})" if ev else "—"
+        ev_url = f"{GH}/{'tree' if '.' not in ev.split('/')[-1] else 'blob'}/main/{ev}" if ev else ""
         v = (verdict.get(dept, {}) or {}).get("verdict", "?")
-        rows.append(f"| **{dept}** | {v} | {res} | {evlink} |")
+        depts.append({"dept": dept, "verdict": v, "output": res, "evidence": ev, "evidence_url": ev_url})
+        rows.append(f"| **{dept}** | {v} | {res} | {f'[`{ev}`]({ev_url})' if ev else '—'} |")
 
     dsum = " · ".join(f"{k} {'+' if d[k] >= 0 else ''}{d[k]}" for k in ("elements", "verified", "with_link", "designs", "creations") if d.get(k))
     trend = [h.get("done", 0) for h in mv.get("history", [])[-6:]]
@@ -118,7 +117,13 @@ _Verdicts: **real** = ran a real tool / real assessment · **noop** = ran but pr
     (ROOT / "PROOF.md").write_text(out, encoding="utf-8")
     STATE.write_text(json.dumps({"at": datetime.now(timezone.utc).isoformat(), "counts": cur},
                                 ensure_ascii=False, indent=1), encoding="utf-8")
-    return f"proof: PROOF.md written — {len(rows)} depts, real_pct {sup.get('real_pct','?')}%, delta [{dsum or 'none'}]"
+    # in-app copy: the dashboard's Proof tab reads THIS so the owner never has to open GitHub
+    (DATA / "excava" / "proof.json").write_text(json.dumps({
+        "generated_at": datetime.now(timezone.utc).isoformat(), "commit": sha,
+        "real_pct": sup.get("real_pct"), "counts": sup.get("counts", {}), "trend": trend,
+        "delta": {k: d[k] for k in cur if d.get(k)}, "totals": cur, "departments": depts,
+        "gh": GH}, ensure_ascii=False, indent=1), encoding="utf-8")
+    return f"proof: PROOF.md + proof.json written — {len(rows)} depts, real_pct {sup.get('real_pct','?')}%, delta [{dsum or 'none'}]"
 
 
 def main() -> int:

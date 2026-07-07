@@ -107,7 +107,8 @@ def run() -> list[str]:
                 + "; ".join(f"{f['dept']}→wants {f['wants']} not {f['wired']}" for f in intent_flags[:3])
     doc = {"generated_at": datetime.now(timezone.utc).isoformat(), "checked": n,
            "real_pct": real_pct, "counts": counts, "criticism": crit,
-           "history": {"owner_messages": hist.get("owner_messages", 0),
+           "history": {"records": hist.get("records", 0), "owner_messages": hist.get("owner_messages", 0),
+                       "questions": hist.get("questions", 0), "answers": hist.get("answers", 0),
                        "sessions": hist.get("session_count", 0), "since": hist.get("first", "")[:10]},
            "intent_drift": intent_flags, "verdicts": verdicts}
     OUT.parent.mkdir(parents=True, exist_ok=True)
@@ -115,7 +116,8 @@ def run() -> list[str]:
     worst = [v for v in verdicts if v["verdict"] in ("planned", "failed", "noop")][:3]
     lines = [f"supervisor: {real_pct}% real of last {n} ({counts['real']}✓ {counts['noop']}no-op "
              f"{counts['failed']}fail {counts['planned']}plan) · knows history: "
-             f"{hist.get('owner_messages', 0)} owner msgs / {hist.get('session_count', 0)} sessions"]
+             f"{hist.get('records', 0)} recs ({hist.get('owner_messages', 0)} msgs, {hist.get('questions', 0)} Qs, "
+             f"{hist.get('answers', 0)} answer-sets) / {hist.get('session_count', 0)} sessions"]
     for f in intent_flags:
         lines.append(f"  ⚠ INTENT: {f['note']}")
     for w in worst:

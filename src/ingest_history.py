@@ -66,25 +66,50 @@ def main() -> int:
             except Exception:
                 continue
             m = d.get("message")
-            if not isinstance(m, dict) or m.get("role") != "user":
+            if not isinstance(m, dict):
                 continue
-            txt = _text(m.get("content")).strip()
-            if len(txt) < 40 or any(s in txt[:40] for s in SKIP):
-                continue
-            sessions.add(sess)
-            rows.append({"at": d.get("timestamp", ""), "session": sess, "text": txt[:MAX_CHARS]})
+            ts = d.get("timestamp", "")
+            content = m.get("content")
+            # 1) OWNER MESSAGES (his desires, corrections, "this is wrong")
+            if m.get("role") == "user":
+                txt = _text(content).strip()
+                if len(txt) >= 40 and not any(s in txt[:40] for s in SKIP):
+                    sessions.add(sess)
+                    rows.append({"kind": "owner_msg", "at": ts, "session": sess, "text": txt[:MAX_CHARS]})
+            # 2) Q&A + tool-use decisions embedded in content parts (the ~300 answered questions)
+            if isinstance(content, list):
+                for p in content:
+                    if not isinstance(p, dict):
+                        continue
+                    if p.get("type") == "tool_use" and p.get("name") == "AskUserQuestion":
+                        qs = (p.get("input") or {}).get("questions", [])
+                        for q in qs:
+                            opts = " | ".join(o.get("label", "") for o in q.get("options", []))
+                            rows.append({"kind": "question", "at": ts, "session": sess,
+                                         "text": f"Q[{q.get('header', '')}]: {q.get('question', '')}  options: {opts}"[:MAX_CHARS]})
+                    elif p.get("type") == "tool_result":
+                        rc = p.get("content", "")
+                        rc = rc if isinstance(rc, str) else json.dumps(rc, ensure_ascii=False)
+                        if "have been answered" in rc:                # the owner's actual choices
+                            sessions.add(sess)
+                            rows.append({"kind": "answer", "at": ts, "session": sess, "text": rc[:MAX_CHARS]})
     rows.sort(key=lambda r: r["at"])
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with OUT.open("w", encoding="utf-8") as fh:
         for r in rows:
             fh.write(json.dumps(r, ensure_ascii=False) + "\n")
-    idx = {"generated_at": datetime.now(timezone.utc).isoformat(), "owner_messages": len(rows),
+    from collections import Counter
+    by_kind = Counter(r["kind"] for r in rows)
+    idx = {"generated_at": datetime.now(timezone.utc).isoformat(), "records": len(rows),
+           "owner_messages": by_kind.get("owner_msg", 0), "questions": by_kind.get("question", 0),
+           "answers": by_kind.get("answer", 0), "by_kind": dict(by_kind),
            "sessions": sorted(sessions), "session_count": len(sessions),
            "first": rows[0]["at"] if rows else "", "last": rows[-1]["at"] if rows else "",
            "chars": sum(len(r["text"]) for r in rows)}
     INDEX.write_text(json.dumps(idx, ensure_ascii=False, indent=1), encoding="utf-8")
-    print(f"history: {len(rows)} owner messages from {len(sessions)} EXCAVA sessions "
-          f"({idx['chars'] // 1000}KB) -> {OUT.relative_to(ROOT)}  (skipped {skipped} unreadable)")
+    print(f"history: {len(rows)} records from {len(sessions)} EXCAVA sessions — "
+          f"{by_kind.get('owner_msg', 0)} owner msgs, {by_kind.get('question', 0)} questions, "
+          f"{by_kind.get('answer', 0)} answer-sets ({idx['chars'] // 1000}KB) -> {OUT.relative_to(ROOT)}")
     return 0
 
 

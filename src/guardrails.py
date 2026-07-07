@@ -167,8 +167,36 @@ def g_watchdog():
                f"{len(sus)} untracked source file(s) not committed — commit or quarantine so nothing is lost: {', '.join(sus[:4])}", "warn")
 
 
+def g_movement():
+    """Owner law 2026-07-06: EACH loop, confirm work is actually MOVING (not all at 0). Tracks the
+    bus done-count over time; flags a STALL if it hasn't risen across the last 3 checks."""
+    mv = DATA / "excava" / "movement.json"
+    bus = _load_json(DATA / "excava" / "bus.json", {})
+    done = sum(1 for t in bus.get("tasks", []) if t.get("status") == "done")
+    depts = len({t.get("department") for t in bus.get("tasks", [])
+                 if t.get("status") == "done" and t.get("department") not in (None, "core")})
+    hist = _load_json(mv, {"history": []}).get("history", [])
+    hist.append({"at": _now(), "done": done, "depts_moving": depts})
+    hist = hist[-30:]
+    mv.parent.mkdir(parents=True, exist_ok=True)
+    mv.write_text(json.dumps({"history": hist, "done": done, "depts_moving": depts},
+                             ensure_ascii=False, indent=1), encoding="utf-8")
+    recent = [h["done"] for h in hist[-4:]]
+    stalled = len(recent) >= 4 and len(set(recent)) == 1        # 4 checks, zero movement
+    return _ok("G-M", "Work is moving (not all at 0)", not stalled,
+               f"{done} tasks done, {depts} departments moving" + (" — STALLED (no new completions in the last 4 beats)" if stalled else ""),
+               "warn")
+
+
+def _load_json(p, d):
+    try:
+        return json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return d
+
+
 CHECKS = [g_quarantine, g_msgfile, g_backup, g_mojibake, g_build_align, g_json,
-          g_remote_sync, g_collisions, g_handoff, g_memory, g_auditlog, g_watchdog]
+          g_remote_sync, g_collisions, g_handoff, g_memory, g_auditlog, g_watchdog, g_movement]
 
 
 def run() -> dict:

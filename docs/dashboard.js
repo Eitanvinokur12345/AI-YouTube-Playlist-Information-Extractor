@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v85";
+const APP_BUILD = "v86";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2918,7 +2918,7 @@ async function _resultItems() {
 function _resultCard(x) {
   return `<div class="card result-card">
     <h3>${esc(x.title)} <span class="pill">${esc(x.kind)}</span>
-      <span class="mentions">${_exIcon(x.dept)} ${esc(x.dept)} · ${esc(x.agent)}</span></h3>
+      <span class="mentions" title="produced by the ${esc(x.dept)} department">${_exIcon(x.dept)} <b>${esc((x.dept || "").toUpperCase())}</b> department</span></h3>
     ${x.preview ? `<p class="sub">${esc(String(x.preview).slice(0, 220))}</p>` : ""}
     <div class="el-actions always">
       ${x.open ? `<a target="_blank" href="${esc(x.open)}">↗ Open</a>` : ""}

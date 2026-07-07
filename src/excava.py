@@ -535,6 +535,12 @@ def _beat(args) -> int:
     except Exception as e:
         beat_log.append(f"systemcheck: skipped ({type(e).__name__})")
 
+    try:                                    # PROOF: regenerate PROOF.md — the owner's clickable receipts (SEE it, don't trust me)
+        from src.excava_proof import build as _proof
+        beat_log.append(_proof())
+    except Exception as e:
+        beat_log.append(f"proof: skipped ({type(e).__name__})")
+
     print(f"EXCAVA beat #{st.get('beats')} [{mode}]: gate internal={'open' if internal_ok else 'CLOSED'} "
           f"outward={'open' if outward_ok else 'closed (G3=' + str(g3) + ')'}; "
           f"bus {snap['open']} open/{snap['total']} total; audit {'OK' if not audit else 'FAIL'}; "

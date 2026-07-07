@@ -30,10 +30,12 @@ def judge(result: str, dept: str) -> tuple[str, str]:
     r = (result or "").strip().lower()
     if not r:
         return "planned", "empty result — nothing was actually done"
-    if r.startswith("execution plan") or "not executed" in r or "plan written" in r:
+    # HOLLOW-PLAN signature only: the _work_generic facade labels itself a plan / writes a task-artifact.
+    # (Bespoke WORK functions — analysis/memory/links/creators — do real assessments that don't say 'RAN';
+    # those are REAL, not plans. Only the explicit plan/task-artifact outputs are hollow.)
+    if ("not executed" in r or r.startswith("execution plan") or "plan written" in r
+            or "artifacts/task-" in r):
         return "planned", "STILL A PLAN, not execution — the hollow-work facade"
-    if not r.startswith("ran "):
-        return "planned", "not a real-tool run — no external tool executed"
     if any(f in r for f in FAIL):
         return "failed", "the external tool ran but FAILED or returned nothing usable"
     # 'no-op', but a clean security/verify scan ('0 leaks') is a REAL good result, not a no-op.

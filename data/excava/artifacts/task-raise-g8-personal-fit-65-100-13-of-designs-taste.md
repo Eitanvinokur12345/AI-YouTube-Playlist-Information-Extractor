@@ -1,14 +1,14 @@
 # Raise G8 Personal fit (65/100): 13% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond
 
-> visual · task `raise-g8-personal-fit-65-28375` · synthesized by mistral/mistral-small-latest
+> visual · task `raise-g8-personal-fit-65-35271` · synthesized by mistral/mistral-small-latest
 
-**Decision:** Proceed with taste-tagging pipeline expansion to hit 13%+ coverage.
+**Decision:** Ship taste-tagged designs as framed screenshots in a public repo with NOSG integration.
 
 **Plan:**
-1. Audit existing taste tags in G8 repo (grep "taste:" *.md) and export to CSV.
-2. Manually curate 100 new taste-tagged designs from NOSG’s latest 1000 submissions (filter by "flamboyant" or "aesthete" in metadata).
-3. Add taste tags to 30% of curated designs via PRs to `designs/` branch with commit msg: "feat(taste): [design_id] - [tag]".
-4. Update Arena learning model config (`config/arena.yml`) to include new tags in training data.
-5. Deploy taste-tagging bot to auto-label 5% of new submissions weekly (via regex on description fields).
+1. Curate 13% of existing designs with taste tags (min 3/week) and export as 4K PNGs with metadata overlay.
+2. Push to `chromast/taste-archive` repo with commit messages linking to Arena learning threads.
+3. Wire NOSG to auto-pull new screenshots into a "Framed" folder with SHA256 hashes for provenance.
+4. Add a `taste-beyond.md` doc outlining next-phase criteria (e.g., color theory, material honesty).
+5. Run a 7-day A/B test: post framed vs. raw screenshots in NOSG channels; log engagement metrics.
 
-**Done when:** 13% of G8 designs have taste tags and Arena learning model shows 5% accuracy improvement on taste classification.
+**Done when:** `taste-archive` has 22 tagged designs + NOSG integration logs 100+ engagements.

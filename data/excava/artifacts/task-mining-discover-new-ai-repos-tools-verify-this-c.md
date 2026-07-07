@@ -1,14 +1,14 @@
 # Mining: discover new AI repos/tools + verify this cycle
 
-> mining · task `mining-discover-new-ai-r-28375` · synthesized by mistral/mistral-small-latest
+> mining · task `mining-discover-new-ai-r-35271` · synthesized by mistral/mistral-small-latest
 
-**Decision:** Mine for AI repos/tools with high value-to-noise ratio, prioritizing odd gems over shiny junk.
+**Decision:** Mine for AI repos/tools with high novelty-to-noise ratio, prioritizing odd gems over shiny junk.
 
 **Plan:**
-1. Query GitHub API for repos with `ai`, `ml`, `neural`, `transformer` keywords, sorted by `stars` > 100, `created` > 2023-01-01.
-2. Filter results for repos with `README.md` mentioning "novel", "unusual", or "experimental" techniques.
-3. Manually inspect top 10 candidates for unique architectures, datasets, or training methods (e.g., diffusion models, sparse attention).
-4. Clone and run `pip install -e .` on promising repos; verify functionality with minimal test data.
-5. Log findings in `ai-mining-log.md` with repo name, key insight, and reproduction steps.
+1. Query GitHub API for repos tagged `ai`, `machine-learning`, or `deep-learning` created in last 30 days, sorted by stars descending.
+2. Filter results by `size:<20` (small repos) and `language:python` (prioritize tooling).
+3. Manually inspect top 20 results: discard repos with >50% boilerplate (e.g., tutorials, forks of popular libs).
+4. Clone and run `pip install -e .` in each remaining repo; check for functional README/demo.
+5. Log repos with unique architectures (e.g., novel attention mechanisms, unconventional training loops) in `mined_repos.md`.
 
-**Done when:** 3 novel repos verified and logged with reproducible results.
+**Done when:** 3 novel, functional AI repos/tools are verified and documented in `mined_repos.md`.

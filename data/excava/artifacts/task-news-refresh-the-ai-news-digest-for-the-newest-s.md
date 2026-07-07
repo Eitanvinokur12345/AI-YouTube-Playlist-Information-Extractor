@@ -1,14 +1,14 @@
 # News: refresh the AI-news digest for the newest sources
 
-> news · task `news-refresh-the-ai-news-28375` · synthesized by mistral/mistral-small-latest
+> news · task `news-refresh-the-ai-news-35271` · synthesized by mistral/mistral-small-latest
 
-**Decision:** Prioritize AI news sources with freshest cadence for GitHub digest refresh.
+**Decision:** Prioritize AI ethics framework leaks from EU sources before NVIDIA earnings.
 
 **Plan:**
-1. Scan [arXiv AI section](https://arxiv.org/list/cs.AI/recent) for latest preprints (last 48h).
-2. Pull RSS feeds from [MIT Tech Review AI](https://www.technologyreview.com/topic/artificial-intelligence/) and [The Batch (DeepLearning.AI)](https://www.deeplearning.ai/the-batch/) for top headlines.
-3. Check [Hugging Face Daily Papers](https://huggingface.co/papers) for trending models/papers.
-4. Cross-verify with [AI Index (Stanford)](https://aiindex.stanford.edu/blog/) for policy/research updates.
-5. Compile into GitHub markdown digest with timestamps and source links.
+1. Cross-check EU AI Act draft leaks (Politico EU Pro & Euractiv) with anonymous Commission staffer tweets.
+2. Pull NVIDIA Q2 earnings previews (Reuters, Bloomberg) for revenue/guidance angles.
+3. Verify any "AI chip export curbs" rumors via two trade officials (WSJ + FT).
+4. Draft 300-word digest with sourced links, tagging #AIAct #NVDA.
+5. Post to GitHub Pages with timestamped commit.
 
-**Done when:** Digest.md updated with ≥3 fresh sources (≤24h old) and posted to repo.
+**Done when:** Digest published with 4+ sources, 2+ primary, and 2024-05-15T14:30Z commit hash.

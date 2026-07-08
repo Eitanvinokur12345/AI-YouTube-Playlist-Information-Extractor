@@ -774,6 +774,18 @@
     .pv-badge.pv-noop { background:var(--gold-soft); color:var(--gold-ink); }
     .pv-badge.pv-plan, .pv-badge.pv-fail { background:oklch(0.92 0.07 25); color:oklch(0.4 0.13 25); }
     .pv-badge.pv-block { background:oklch(0.9 0.09 250); color:oklch(0.35 0.12 255); }
+    /* ── IN-APP modal viewer (open artifacts in the app, not GitHub) ── */
+    .ex-modal { display:none; position:fixed; inset:0; z-index:200; background:oklch(0.2 0.02 60 / .55);
+      align-items:center; justify-content:center; padding:20px; }
+    .ex-modal-box { background:var(--panel); border:2.5px solid var(--line); border-radius:14px 18px 12px 16px;
+      box-shadow:6px 8px 0 oklch(0.2 0.02 60 / .5); max-width:760px; width:100%; max-height:82vh; display:flex; flex-direction:column; }
+    .ex-modal-head { display:flex; align-items:center; justify-content:space-between; padding:12px 16px;
+      border-bottom:2px solid var(--line); font-size:15px; }
+    .ex-modal-x { border:1.5px solid var(--line); border-radius:8px; background:var(--panel2); cursor:pointer;
+      font-size:14px; padding:2px 9px; }
+    .ex-modal-body { padding:14px 16px; overflow:auto; }
+    .ex-artifact { white-space:pre-wrap; font-size:13px; line-height:1.5; background:var(--panel2);
+      border:1.5px solid var(--line); border-radius:9px; padding:12px; color:var(--text); }
     .pv-table tr.pv-block td:first-child { border-left:3px solid oklch(0.6 0.15 250); }
     .pv-table tr.pv-real td:first-child { border-left:3px solid oklch(0.62 0.16 148); }
     .pv-table tr.pv-noop td:first-child { border-left:3px solid var(--gold); }

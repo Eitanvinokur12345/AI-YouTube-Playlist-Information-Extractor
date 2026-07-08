@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v91";
+const APP_BUILD = "v92";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1802,6 +1802,28 @@ const GH_REPO = "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Inform
 const GH_PAGES = "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/docs";
 const _exIssue = (title, body = "") =>
   `${GH_REPO}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+// ── IN-APP viewer (owner's #1 ask: open/read things IN the app, not on GitHub) ──
+function _showModal(title, html) {
+  let m = document.getElementById("ex-modal");
+  if (!m) {
+    m = document.createElement("div"); m.id = "ex-modal"; m.className = "ex-modal";
+    document.body.appendChild(m);
+    m.addEventListener("click", e => { if (e.target === m) m.style.display = "none"; });
+  }
+  m.innerHTML = `<div class="ex-modal-box"><div class="ex-modal-head"><b>${esc(title)}</b>
+    <button class="ex-modal-x" aria-label="close">✕</button></div><div class="ex-modal-body">${html}</div></div>`;
+  m.querySelector(".ex-modal-x").addEventListener("click", () => { m.style.display = "none"; });
+  m.style.display = "flex";
+}
+async function _openArtifact(ref, title) {
+  _showModal(title || "Artifact", `<p class="sub">loading…</p>`);
+  let txt = "";
+  try { txt = await (await fetch("../" + ref, { cache: "no-store" })).text(); } catch (e) {}
+  const body = txt
+    ? `<pre class="ex-artifact">${esc(txt)}</pre><p class="sub">file: <code>${esc(ref)}</code> · <a target="_blank" href="${GH_REPO}/blob/main/${esc(ref)}">also on GitHub ↗</a></p>`
+    : `<p class="sub">Couldn't load it in-app — <a target="_blank" href="${GH_REPO}/blob/main/${esc(ref)}">open on GitHub ↗</a></p>`;
+  _showModal(title || ref.split("/").pop(), body);
+}
 const EX_ICONS = { gemini: "📺", transcript: "📜", analysis: "⚙️", mining: "⛏️", external: "⛏️",
   news: "📰", links: "🔗", memory: "🧠", visual: "🎨", deep: "🔬", improve: "🧬", security: "🛡️",
   watch: "📺", core: "🦾" };
@@ -2245,7 +2267,18 @@ async function renderExcava() {
     const dept = (view.querySelector("#ex-dept") || {}).value || "";
     const body = [attachBody, dept ? `route-to: ${dept}` : "", "Sent from the EXCAVA console."]
       .filter(Boolean).join("\n");
-    window.open(_exIssue("EXCAVA: " + v, body), "_blank");
+    // IN-APP first (owner: don't just fling me to GitHub): keep a local record + confirm in-app,
+    // then dispatch to the cloud beat via the free issue channel on an explicit click.
+    try { const q = JSON.parse(localStorage.getItem("excavatortron.mytasks") || "[]");
+      q.unshift({ task: v, dept, at: new Date().toISOString() });
+      localStorage.setItem("excavatortron.mytasks", JSON.stringify(q.slice(0, 40))); } catch (_) {}
+    _showModal("Send task to EXCAVA", `<p>Task: <b>${esc(v)}</b>${dept ? ` → <b>${esc(dept)}</b> department` : ""}</p>
+      <p class="sub">Saved to your in-app task list. EXCAVA runs in the cloud, so to hand it to the running beat, send it through the free issue channel (one click). A tiny always-free backend would make this fully one-click in-app — that's your call (an owner pitch).</p>
+      <div class="el-actions always"><a class="primary" target="_blank" href="${_exIssue("EXCAVA: " + v, body)}">📮 Send to the cloud beat ↗</a>
+      <button class="ex-modal-cancel">keep in-app only</button></div>`);
+    const mc = document.querySelector("#ex-modal .ex-modal-cancel");
+    if (mc) mc.addEventListener("click", () => { document.getElementById("ex-modal").style.display = "none"; });
+    const inp2 = view.querySelector("#ex-send-input"); if (inp2) inp2.value = "";
   };
   const sBtn = view.querySelector("#ex-send-btn");
   if (sBtn) sBtn.addEventListener("click", sendIt);
@@ -2930,10 +2963,9 @@ function _resultCard(x) {
       <span class="mentions" title="produced by the ${esc(x.dept)} department">${_exIcon(x.dept)} <b>${esc((x.dept || "").toUpperCase())}</b> department</span></h3>
     ${x.preview ? `<p class="sub">${esc(String(x.preview).slice(0, 220))}</p>` : ""}
     <div class="el-actions always">
-      ${x.open ? `<a target="_blank" href="${esc(x.open)}">↗ Open</a>` : ""}
+      ${x.ref && String(x.ref).endsWith(".md") ? `<button data-open-artifact="${esc(x.ref)}" data-title="${esc(x.title)}">📖 Open here</button>`
+        : x.open ? `<a target="_blank" href="${esc(x.open)}" title="opens the raw file on GitHub">↗ Open (GitHub)</a>` : ""}
       <a target="_blank" href="${_exIssue("EXCAVA: use " + x.title, x.useBody || x.ref || "")}">🦾 Use</a>
-      <a target="_blank" href="${_exIssue('EXCAVA: send "' + x.title + '" to a project',
-        "Artifact: " + (x.ref || x.title) + "\nProject: Budoaris / FreeDup / other — say which")}">📮 Send to a project</a>
       ${x.room ? `<a href="#" data-goto-room="${esc(x.room)}">🗣 The making-of chat</a>` : ""}
     </div>
     <p class="sub" style="margin-top:6px">${esc(fmtDate(x.at))}</p>
@@ -3004,6 +3036,8 @@ async function renderResults() {
     ${f.length ? f.map(_resultCard).join("") : empty("This department hasn't produced anything yet.")}`;
   const back = view.querySelector("#res-back");
   if (back) back.addEventListener("click", () => { state.resDept = ""; renderResults(); });
+  view.querySelectorAll("[data-open-artifact]").forEach(b => b.addEventListener("click", () =>
+    _openArtifact(b.dataset.openArtifact, b.dataset.title)));
   view.querySelectorAll("[data-goto-room]").forEach(a => a.addEventListener("click", e => {
     e.preventDefault(); show("rooms").then(() => renderRooms(a.dataset.gotoRoom));
   }));

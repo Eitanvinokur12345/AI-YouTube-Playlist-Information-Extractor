@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v92";
+const APP_BUILD = "v93";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1824,6 +1824,29 @@ async function _openArtifact(ref, title) {
     : `<p class="sub">Couldn't load it in-app — <a target="_blank" href="${GH_REPO}/blob/main/${esc(ref)}">open on GitHub ↗</a></p>`;
   _showModal(title || ref.split("/").pop(), body);
 }
+// The in-app "send a task to EXCAVA" confirm — used by the console AND every dispatch button.
+function _sendModal(title, body) {
+  try { const q = JSON.parse(localStorage.getItem("excavatortron.mytasks") || "[]");
+    q.unshift({ task: title, at: new Date().toISOString() });
+    localStorage.setItem("excavatortron.mytasks", JSON.stringify(q.slice(0, 40))); } catch (_) {}
+  _showModal("Send to EXCAVA", `<p><b>${esc(title)}</b></p>
+    <p class="sub">Saved to your in-app task list. EXCAVA runs in the cloud — to hand it to the running beat, send it through the free issue channel (one click). A tiny always-free backend would make this fully one-click in-app (an owner pitch).</p>
+    <div class="el-actions always"><a class="primary" target="_blank" href="${_exIssue(title, body)}" data-ex-raw="1">📮 Send to the cloud beat ↗</a>
+    <button class="ex-modal-cancel2">keep in-app only</button></div>`);
+  const c = document.querySelector("#ex-modal .ex-modal-cancel2");
+  if (c) c.addEventListener("click", () => { document.getElementById("ex-modal").style.display = "none"; });
+}
+// SWEEP: intercept EVERY GitHub-issue link (current + future) → show the in-app modal instead of
+// flinging the owner to GitHub. The only exception is the modal's own explicit "Send to cloud" link.
+document.addEventListener("click", e => {
+  const a = e.target.closest && e.target.closest('a[href*="/issues/new"]');
+  if (a && !a.dataset.exRaw) {
+    e.preventDefault();
+    try { const u = new URL(a.href);
+      _sendModal(u.searchParams.get("title") || "task", u.searchParams.get("body") || ""); }
+    catch (_) {}
+  }
+}, true);
 const EX_ICONS = { gemini: "📺", transcript: "📜", analysis: "⚙️", mining: "⛏️", external: "⛏️",
   news: "📰", links: "🔗", memory: "🧠", visual: "🎨", deep: "🔬", improve: "🧬", security: "🛡️",
   watch: "📺", core: "🦾" };
@@ -2305,7 +2328,7 @@ async function renderExcava() {
   const dirIt = () => {
     const inp = view.querySelector("#ex-dir-input");
     const v = (inp && inp.value || "").trim();
-    if (v) window.open(_exIssue("EXCAVA: direction " + v, "Stated from the cockpit Direction card."), "_blank");
+    if (v) _sendModal("EXCAVA: direction " + v, "Stated from the cockpit Direction card.");
   };
   const dBtn = view.querySelector("#ex-dir-btn");
   if (dBtn) dBtn.addEventListener("click", dirIt);
@@ -2703,7 +2726,7 @@ async function renderTaste() {
     const body = "Design taste (style: weight):\n" +
       Object.entries(a.styles).filter(([, v]) => v > 0).map(([k, v]) => `- ${k}: ${v}`).join("\n") +
       "\n\nWork taste (dimension: 0-100):\n" + WORK_DIMS.map(([k]) => `- ${k}: ${wt[k]}`).join("\n");
-    window.open(_exIssue("EXCAVA: set taste", body), "_blank");
+    _sendModal("EXCAVA: set taste", body);
     view.querySelector("#tp-savenote").textContent = " — opened the save channel; approve the issue and the next beat stores it.";
   });
 }

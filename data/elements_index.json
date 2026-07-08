@@ -1,22 +1,22 @@
 {
- "generated_at": "2026-07-08T04:24:08.710159+00:00",
- "total": 6979,
+ "generated_at": "2026-07-08T07:37:56.111045+00:00",
+ "total": 6986,
  "counts": {
-  "skill": 1785,
-  "tool": 2258,
+  "skill": 1788,
+  "tool": 2259,
   "prompt": 343,
-  "command": 266,
+  "command": 267,
   "connector": 1196,
   "design": 692,
-  "format": 22,
+  "format": 24,
   "model": 406,
   "creation": 11
  },
- "stubs": 2100,
+ "stubs": 2101,
  "by_status": {
   "verified": 273,
   "niche": 226,
-  "unverified": 6480,
+  "unverified": 6487,
   "dead": 0
  },
  "note": "READ-ONLY derivative. Sources of truth = the per-type files; write via element_model.set_field only.",
@@ -59550,6 +59550,80 @@
     "tool:quen-3-vl",
     "skill:ai-task-prioritization-before-automation"
    ]
+  },
+  {
+   "id": "skill:ai-model-selection-optimization",
+   "type": "skill",
+   "name": "AI Model Selection Optimization",
+   "what": "The ability to strategically choose between different AI models (e.g., Opus for planning, Sonnet for execution) to optimize for token usage, speed, and task complexity.",
+   "category": "agents",
+   "source_videos": [
+    "{'id': '0-p-SuoHCoo', 'url': 'https://www.youtube.com/watch?v=0-p-SuoHCoo', 'title': 'Stop Wasting Your Claude Code Usage Limits'}"
+   ],
+   "links": {
+    "github": "https://github.com/LLMSELECTOR/LLMSELECTOR"
+   },
+   "install": "",
+   "quality_score": 1,
+   "trust": 95,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:ai-conversation-context-management",
+   "type": "skill",
+   "name": "AI Conversation Context Management",
+   "what": "Techniques for managing the length and relevance of AI chat history, such as using a 'compact' command to summarize conversations and prevent token limits from being reached.",
+   "category": "agents",
+   "source_videos": [
+    "{'id': '0-p-SuoHCoo', 'url': 'https://www.youtube.com/watch?v=0-p-SuoHCoo', 'title': 'Stop Wasting Your Claude Code Usage Limits'}"
+   ],
+   "links": {},
+   "install": "",
+   "quality_score": 1,
+   "trust": 95,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:advanced-prompt-engineering-for-planning",
+   "type": "skill",
+   "name": "Advanced Prompt Engineering for Planning",
+   "what": "Adding specific directives or keywords (e.g., 'Ultrathin') to AI prompts to encourage the model to develop a comprehensive plan before attempting to generate a solution, particularly for complex tasks.",
+   "category": "agents",
+   "source_videos": [
+    "{'id': '0-p-SuoHCoo', 'url': 'https://www.youtube.com/watch?v=0-p-SuoHCoo', 'title': 'Stop Wasting Your Claude Code Usage Limits'}"
+   ],
+   "links": {},
+   "install": "",
+   "quality_score": 1,
+   "trust": 95,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
   },
   {
    "id": "tool:claude",
@@ -127026,6 +127100,28 @@
    "related": []
   },
   {
+   "id": "tool:ultrathin",
+   "type": "tool",
+   "name": "Ultrathin",
+   "what": "A feature or mode within Claude Code designed to force the AI to plan complex tasks thoroughly before execution, optimizing for better outcomes.",
+   "category": "agents",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 1,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
    "id": "prompt:master-assistant-system-prompt",
    "type": "prompt",
    "name": "Master Assistant System Prompt",
@@ -144594,6 +144690,28 @@
     "tool:exploit-gpt",
     "tool:snyk-code"
    ]
+  },
+  {
+   "id": "command:model-opus-plan-mode",
+   "type": "command",
+   "name": "/model Opus Plan Mode",
+   "what": "Selects the 'Opus Plan Mode' for Claude Code, which uses Opus 4.1 for planning and Sonnet 4.1 for execution to optimize token usage.",
+   "category": "",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
   },
   {
    "id": "connector:perplexity-mcp",
@@ -202100,6 +202218,54 @@
    ]
   },
   {
+   "id": "format:cli-model-selection",
+   "type": "format",
+   "name": "CLI Model Selection",
+   "what": "A command-line interface pattern for selecting options from a numbered list, often used for configuring tool behavior or AI models.",
+   "category": "flow",
+   "source_videos": [],
+   "links": {
+    "source_url": "https://www.youtube.com/watch?v=0-p-SuoHCoo"
+   },
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "format:cli-conversation-log-with-commands",
+   "type": "format",
+   "name": "CLI Conversation Log with Commands",
+   "what": "A terminal-style layout for displaying chat history, system messages, and command outputs, including error logs, in a sequential manner.",
+   "category": "layout",
+   "source_videos": [],
+   "links": {
+    "source_url": "https://www.youtube.com/watch?v=0-p-SuoHCoo"
+   },
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
    "id": "model:claude-opus-4-8-max",
    "type": "model",
    "name": "Claude Opus 4.8 (max)",
@@ -202859,7 +203025,7 @@
    "id": "model:gpt",
    "type": "model",
    "name": "GPT",
-   "what": "video 1F-Bww76qB0 · This is the one tool that actually gets smarter every single time you use it. ai aitools recall\nyou want, like podcasts, YouTube videos, TikToks, websites, and even PDFs. And then it's automatically going to summarize and organize all of that information for you.",
+   "what": "A large language model, available as an option within the Recall tool.",
    "category": "writing",
    "source_videos": [
     "1F-Bww76qB0"
@@ -202886,7 +203052,7 @@
     "sources": 0,
     "at": ""
    },
-   "stub": false,
+   "stub": true,
    "related": [
     "tool:gpt",
     "tool:recall",

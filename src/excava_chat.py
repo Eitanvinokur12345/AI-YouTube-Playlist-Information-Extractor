@@ -265,6 +265,13 @@ def ensure_default_rooms() -> list[str]:
         focus = (intent.get(d, {}) or {}).get("should_do") or f"advance the {d} department's mission"
         r = open_room("dept", f"{d}: {focus[:90]}", dept=d, max_turns=6, artifact_kind="bus-task")
         opened.append(r["id"])
+    # a persistent GROUP CHAT — ANY agent, ANY department (owner's spec: "any agent regardless of
+    # department can talk and create the best thing… scroll through all the chats, marked by day").
+    if not any(r.get("kind") == "group" and r["status"] == "open" for r in state["rooms"]):
+        r = open_room("group", "Open floor — any agent from any department: name the single best "
+                      "cross-department improvement to make right now, and who should do it.",
+                      dept="", max_turns=60, artifact_kind="bus-task")
+        opened.append(r["id"])
     b = bus.read_bus()                                  # a cross-department WAR ROOM for the top owner task
     owner = [t for t in b.get("tasks", []) if t.get("priority") == 0 and t["status"] in ("queued", "working")]
     if owner and not any(r.get("kind") == "war" and r["status"] == "open" for r in load_rooms()["rooms"]):

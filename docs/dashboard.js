@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v90";
+const APP_BUILD = "v91";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2846,9 +2846,11 @@ async function renderRooms(selId) {
   const deptRail = Object.keys(deptLatest).sort().map(d => { const r = deptLatest[d];
     return `<button class="${r.id === sel.id ? "on" : ""}" data-room="${esc(r.id)}" title="${esc(r.goal)}">
       ${_exIcon(d)} <b>${esc((d || "").toUpperCase())}</b>${r.status === "done" ? " ✓" : r.status === "open" ? " 🟢" : ""}</button>`; }).join("");
+  const groupRail = list.filter(r => r.kind === "group" && r.status === "open").slice(0, 1).map(r =>
+    `<button class="${r.id === sel.id ? "on" : ""} k-war" data-room="${esc(r.id)}" title="${esc(r.goal)}" style="background:oklch(0.92 0.06 280)">🏛 GROUP CHAT — all departments</button>`).join("");
   const warRail = list.filter(r => r.kind === "war").slice(0, 3).map(r =>
     `<button class="${r.id === sel.id ? "on" : ""} k-war" data-room="${esc(r.id)}" title="${esc(r.goal)}">⚔️ WAR: ${esc((r.dept || "cross-dept").toUpperCase())}</button>`).join("");
-  const rail = deptRail + warRail;
+  const rail = groupRail + deptRail + warRail;
   const days = [];
   for (let i = 3; i >= 0; i--) {
     const d = new Date(Date.now() - i * 864e5).toISOString().slice(0, 10);

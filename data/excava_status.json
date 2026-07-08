@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-07-07T23:30:56.099080+00:00",
+  "generated_at": "2026-07-08T01:03:06.325631+00:00",
   "name": "EXCAVA",
   "phase": "OS spine (Phase 0): bus + departments + hand-offs live; creators (OS-2) gated",
   "gate": {
     "checks": {
-      "data_guard_ok": true,
+      "data_guard_ok": false,
       "security_clean": true,
       "truth_access_G3": 53,
       "G3_ready_for_outward": false
     },
-    "internal_allowed": true,
+    "internal_allowed": false,
     "outward_allowed": false,
     "outward_needs": "data_guard ok + security clean + G3>=70 + owner approval"
   },
@@ -79,22 +79,9 @@
       }
     ]
   },
-  "holding": [
-    {
-      "priority": "Empty-body items render as blank 'white' nodes in the brain graph (207)",
-      "why_held": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "priority": "Title collisions: distinct items share one note name and overwrite each other (10)",
-      "why_held": "no department specialization matched"
-    },
-    {
-      "priority": "Lane 'Transcript retrieval' is slow",
-      "why_held": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    }
-  ],
+  "holding": [],
   "os": {
-    "beats": 96,
+    "beats": 97,
     "mode": "run",
     "bus": {
       "open": 8,
@@ -174,23 +161,8 @@
       "last_handoff": "data/excava/handoffs/transcripts-drain-the-ne-61335--01--transcripts-w1--to--analysis.md"
     },
     "beat_log": [
-      "backlog: 6 real-gap task(s) queued; plan {'core': '3 small task(s) run in', 'analysis': '3 small task(s) run in', 'memory': '3 small task(s) run in', 'security': '1 small task(s) run in'}",
-      "analysis-w1: verify-the-next-200-of-6-56025 DONE",
-      "memory-w1: resolve-real-links-websi-56025 DONE",
-      "creators-w1: raise-g5-leverage-53-100-67056 DONE",
-      "mining-w1: mining-discover-new-ai-r-67056 DONE",
-      "news-w1: news-refresh-the-ai-news-67056 DONE",
-      "security-w1: security-safety-rate-the-67056 DONE",
-      "visual-w1: raise-g8-personal-fit-65-67056 DONE",
-      "watch-w1: watch-process-the-next-b-67056 DONE",
-      "dept-analysis-deep-analyze-every-934: Marrow spoke (sambanova, 1048ms) t5",
-      "dept-analysis-deep-analyze-every-934: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-analysis-deep-analyze-every-934.md', 'at': '2026-07-07T23:32:16.701227+00:00', 'title': 'analysis: Deep-analyze every element from its FULL source (whole transcript/repo', 'by': 'Marrow'}",
-      "dept-creators-build-packages-enri-414: Nova spoke (mistral, 1206ms) t5",
-      "dept-creators-build-packages-enri-414: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-creators-build-packages-enri-414.md', 'at': '2026-07-07T23:32:22.350385+00:00', 'title': \"creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Crea\", 'by': 'Nova'}",
-      "dept-improve-self-improvement-rev-648: Ratchet spoke (mistral, 707ms) t5",
-      "dept-improve-self-improvement-rev-648: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-improve-self-improvement-rev-648.md', 'at': '2026-07-07T23:32:27.093393+00:00', 'title': 'improve: Self-improvement: review prompts/engines/routing/own-code; auto-apply s', 'by': 'Ratchet'}",
-      "TUTORIAL MISSING for dashboard v90 — Phase 6 law: every major change ships a walkthrough (data/tutorials.json)",
-      "memory master: +11 episodes"
+      "HOLD ALL — verification gate failing (fix data_guard/security first)",
+      "TUTORIAL MISSING for dashboard v90 — Phase 6 law: every major change ships a walkthrough (data/tutorials.json)"
     ],
     "departments": [
       "analysis",
@@ -290,7 +262,7 @@
       "ok": true,
       "problems": []
     },
-    "approvals_pending": 3,
+    "approvals_pending": 0,
     "backpressure": {
       "analysis": {
         "streak": 0,
@@ -580,27 +552,8 @@
         "what": "Turns transcripts into skills/tools/connectors (free engines)"
       }
     ],
-    "memory_episodes": 11,
-    "directions": [
-      {
-        "id": "dir-1",
-        "text": "Free-only forever; quality over quantity; every step deepens EXCAVA's integration (daemon-grade, not cosmetic); I don't babysit — park questions, proceed on defaults.",
-        "at": "2026-07-03T00:00:00+00:00",
-        "via": "standing rules (SESSION_HANDOFF §4)",
-        "status": "active",
-        "excava_reading": "Baseline law, seeded at Phase-6 birth: applies to every department and every phase; the guardrails file is its enforcement arm.",
-        "acknowledged_at": "2026-07-03T00:00:00+00:00"
-      },
-      {
-        "id": "dir-2",
-        "text": "Creations enter the project autonomously when labeled 'Created by EXCAVA', with an independent test before first use; creators may build MCP servers, connectors, tools; multi-element bundles are called PACKAGES.",
-        "at": "2026-07-03T00:00:00+00:00",
-        "via": "P3 checkpoint answer",
-        "status": "active",
-        "excava_reading": "Creators department staffed under guardrail G-12; the label and test_before_run are mechanical, not optional.",
-        "acknowledged_at": "2026-07-03T00:00:00+00:00"
-      }
-    ],
+    "memory_episodes": 0,
+    "directions": [],
     "tutorials": {
       "current_build": "v90",
       "covered": false,

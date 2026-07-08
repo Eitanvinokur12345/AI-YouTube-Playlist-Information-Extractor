@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-07-08T01:03:06.325631+00:00",
+  "generated_at": "2026-07-08T01:13:10.235834+00:00",
   "name": "EXCAVA",
   "phase": "OS spine (Phase 0): bus + departments + hand-offs live; creators (OS-2) gated",
   "gate": {
     "checks": {
-      "data_guard_ok": false,
+      "data_guard_ok": true,
       "security_clean": true,
       "truth_access_G3": 53,
       "G3_ready_for_outward": false
     },
-    "internal_allowed": false,
+    "internal_allowed": true,
     "outward_allowed": false,
     "outward_needs": "data_guard ok + security clean + G3>=70 + owner approval"
   },
@@ -22,7 +22,7 @@
     "missing": [
       "github_token"
     ],
-    "checked_at": "2026-07-07T23:13:51.945747+00:00",
+    "checked_at": "2026-07-08T00:12:08.970468+00:00",
     "can_do": {
       "resolve-links": true,
       "analyze-videos": true,
@@ -79,25 +79,38 @@
       }
     ]
   },
-  "holding": [],
+  "holding": [
+    {
+      "priority": "Empty-body items render as blank 'white' nodes in the brain graph (207)",
+      "why_held": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "priority": "Title collisions: distinct items share one note name and overwrite each other (10)",
+      "why_held": "no department specialization matched"
+    },
+    {
+      "priority": "Lane 'Transcript retrieval' is slow",
+      "why_held": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    }
+  ],
   "os": {
-    "beats": 97,
+    "beats": 98,
     "mode": "run",
     "bus": {
-      "open": 8,
-      "total": 428,
+      "open": 9,
+      "total": 437,
       "per_department": {
         "memory": {
           "queued": 2,
           "working": 0,
-          "done": 61,
+          "done": 62,
           "held": 0,
           "failed": 0
         },
         "visual": {
           "queued": 0,
           "working": 0,
-          "done": 50,
+          "done": 51,
           "held": 0,
           "failed": 0
         },
@@ -116,53 +129,69 @@
           "failed": 0
         },
         "analysis": {
-          "queued": 3,
+          "queued": 4,
           "working": 0,
-          "done": 63,
+          "done": 64,
           "held": 0,
           "failed": 0
         },
         "mining": {
           "queued": 0,
           "working": 0,
-          "done": 50,
+          "done": 51,
           "held": 0,
           "failed": 0
         },
         "creators": {
           "queued": 0,
           "working": 0,
-          "done": 50,
+          "done": 51,
           "held": 0,
           "failed": 0
         },
         "security": {
           "queued": 0,
           "working": 0,
-          "done": 48,
+          "done": 49,
           "held": 0,
           "failed": 0
         },
         "watch": {
           "queued": 0,
           "working": 0,
-          "done": 48,
+          "done": 49,
           "held": 0,
           "failed": 0
         },
         "news": {
           "queued": 0,
           "working": 0,
-          "done": 48,
+          "done": 49,
           "held": 0,
           "failed": 0
         }
       },
-      "last_handoff": "data/excava/handoffs/transcripts-drain-the-ne-61335--01--transcripts-w1--to--analysis.md"
+      "last_handoff": "data/excava/handoffs/resolve-real-links-websi-73190--01--links-w1--to--memory.md"
     },
     "beat_log": [
-      "HOLD ALL — verification gate failing (fix data_guard/security first)",
-      "TUTORIAL MISSING for dashboard v90 — Phase 6 law: every major change ships a walkthrough (data/tutorials.json)"
+      "backlog: 8 real-gap task(s) queued; plan {'core': '3 small task(s) run in', 'memory': '2 small task(s) run in', 'analysis': '3 small task(s) run in', 'links': '1 small task(s) run in'}",
+      "analysis-w1: raise-g1-omniscience-58--56025 DONE",
+      "memory-w1: raise-g3-truth-access-53-56025 DONE",
+      "creators-w1: raise-g5-leverage-53-100-73190 DONE",
+      "links-w1: resolve-real-links-websi-73190 -> memory (data/excava/handoffs/resolve-real-links-websi-73190--01--links-w1--to--memory.md)",
+      "mining-w1: mining-discover-new-ai-r-73190 DONE",
+      "news-w1: news-refresh-the-ai-news-73190 DONE",
+      "security-w1: security-safety-rate-the-73190 DONE",
+      "visual-w1: raise-g8-personal-fit-65-73190 DONE",
+      "watch-w1: watch-process-the-next-b-73190 DONE",
+      "dept-memory-recall-by-meaning-rel-698: Graft spoke (mistral, 1448ms) t1",
+      "dept-memory-recall-by-meaning-rel-698: Prune spoke (gh-models, 2298ms) t2",
+      "dept-mining-gather-ai-info-from-d-851: Pick spoke (mistral, 1402ms) t1",
+      "dept-mining-gather-ai-info-from-d-851: Assay spoke (mistral, 1283ms) t2",
+      "dept-news-freshness-refresh-the-a-293: Scoop spoke (mistral, 1278ms) t1",
+      "dept-news-freshness-refresh-the-a-293: Factcheck spoke (mistral, 1035ms) t2",
+      "TUTORIAL MISSING for dashboard v90 — Phase 6 law: every major change ships a walkthrough (data/tutorials.json)",
+      "memory master: +13 episodes"
     ],
     "departments": [
       "analysis",
@@ -181,25 +210,25 @@
     ],
     "usage": {
       "analysis": {
-        "ticks": 61,
-        "done": 61,
+        "ticks": 62,
+        "done": 62,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-07T23:32:27.476310+00:00"
+        "last": "2026-07-08T01:15:38.948613+00:00"
       },
       "memory": {
-        "ticks": 57,
-        "done": 57,
+        "ticks": 58,
+        "done": 58,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-07T23:32:27.476314+00:00"
+        "last": "2026-07-08T01:15:38.948617+00:00"
       },
       "links": {
-        "ticks": 42,
+        "ticks": 43,
         "done": 0,
-        "handoffs": 42,
+        "handoffs": 43,
         "fails": 0,
-        "last": "2026-07-07T21:57:15.017209+00:00"
+        "last": "2026-07-08T01:15:38.948622+00:00"
       },
       "improve": {
         "ticks": 2,
@@ -209,39 +238,39 @@
         "last": "2026-07-07T10:09:45.590828+00:00"
       },
       "mining": {
-        "ticks": 50,
-        "done": 50,
+        "ticks": 51,
+        "done": 51,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-07T23:32:27.476318+00:00"
+        "last": "2026-07-08T01:15:38.948624+00:00"
       },
       "visual": {
-        "ticks": 50,
-        "done": 50,
+        "ticks": 51,
+        "done": 51,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-07T23:32:27.476324+00:00"
+        "last": "2026-07-08T01:15:38.948632+00:00"
       },
       "creators": {
-        "ticks": 50,
-        "done": 50,
+        "ticks": 51,
+        "done": 51,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-07T23:32:27.476316+00:00"
+        "last": "2026-07-08T01:15:38.948619+00:00"
       },
       "news": {
-        "ticks": 48,
-        "done": 48,
+        "ticks": 49,
+        "done": 49,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-07T23:32:27.476320+00:00"
+        "last": "2026-07-08T01:15:38.948626+00:00"
       },
       "security": {
-        "ticks": 48,
-        "done": 48,
+        "ticks": 49,
+        "done": 49,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-07T23:32:27.476322+00:00"
+        "last": "2026-07-08T01:15:38.948628+00:00"
       },
       "transcripts": {
         "ticks": 16,
@@ -251,18 +280,18 @@
         "last": "2026-07-07T21:57:15.017217+00:00"
       },
       "watch": {
-        "ticks": 48,
-        "done": 48,
+        "ticks": 49,
+        "done": 49,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-07T23:32:27.476328+00:00"
+        "last": "2026-07-08T01:15:38.948635+00:00"
       }
     },
     "audit": {
       "ok": true,
       "problems": []
     },
-    "approvals_pending": 0,
+    "approvals_pending": 3,
     "backpressure": {
       "analysis": {
         "streak": 0,
@@ -341,26 +370,6 @@
         "doc": null
       },
       {
-        "id": "raise-g3-truth-access-53-56025",
-        "title": "Raise G3 Truth & access (53/100): 53.5% of tools/skills have a real link (target: ~100%)",
-        "department": "memory",
-        "status": "queued",
-        "steps": 1,
-        "priority": 1,
-        "source": "gap",
-        "doc": "data/excava/handoffs/raise-g3-truth-access-53-56025--01--links-w1--to--memory.md"
-      },
-      {
-        "id": "raise-g1-omniscience-58--56025",
-        "title": "Raise G1 Omniscience (58/100): 435/1555 videos analyzed (28.0%); 6/7 lanes live",
-        "department": "analysis",
-        "status": "queued",
-        "steps": 0,
-        "priority": 1,
-        "source": "gap",
-        "doc": null
-      },
-      {
         "id": "verify-the-next-200-of-6-61335",
         "title": "Verify the next 200 of 6564 unverified elements (2-source + live test)",
         "department": "analysis",
@@ -389,171 +398,204 @@
         "priority": 1,
         "source": "gap",
         "doc": "data/excava/handoffs/transcripts-drain-the-ne-61335--01--transcripts-w1--to--analysis.md"
+      },
+      {
+        "id": "only-435-1555-videos-ana-73190",
+        "title": "Only 435/1555 videos analyzed (28.0%)",
+        "department": "analysis",
+        "status": "queued",
+        "steps": 0,
+        "priority": 1,
+        "source": "auto",
+        "doc": null
+      },
+      {
+        "id": "verify-the-next-200-of-6-73190",
+        "title": "Verify the next 200 of 6498 unverified elements (2-source + live test)",
+        "department": "analysis",
+        "status": "queued",
+        "steps": 0,
+        "priority": 1,
+        "source": "gap",
+        "doc": null
+      },
+      {
+        "id": "resolve-real-links-websi-73190",
+        "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
+        "department": "memory",
+        "status": "queued",
+        "steps": 1,
+        "priority": 1,
+        "source": "gap",
+        "doc": "data/excava/handoffs/resolve-real-links-websi-73190--01--links-w1--to--memory.md"
       }
     ],
     "recent_events": [
       {
-        "task": "verify-the-next-200-of-6-56025",
-        "at": "2026-07-07T23:30:56.534497+00:00",
+        "task": "raise-g1-omniscience-58--56025",
+        "at": "2026-07-08T01:13:10.696670+00:00",
         "kind": "claimed",
         "by": "analysis-w1",
         "department": "analysis"
       },
       {
-        "task": "verify-the-next-200-of-6-56025",
-        "at": "2026-07-07T23:30:56.543869+00:00",
+        "task": "raise-g1-omniscience-58--56025",
+        "at": "2026-07-08T01:13:10.706398+00:00",
         "kind": "completed",
         "by": "analysis-w1",
         "result": "616 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
       },
       {
-        "task": "resolve-real-links-websi-56025",
-        "at": "2026-07-07T23:30:56.552376+00:00",
+        "task": "raise-g3-truth-access-53-56025",
+        "at": "2026-07-08T01:13:10.715292+00:00",
         "kind": "claimed",
         "by": "memory-w1",
         "department": "memory"
       },
       {
-        "task": "resolve-real-links-websi-56025",
-        "at": "2026-07-07T23:30:56.717838+00:00",
+        "task": "raise-g3-truth-access-53-56025",
+        "at": "2026-07-08T01:13:10.905387+00:00",
         "kind": "completed",
         "by": "memory-w1",
         "result": "Semantic index: 1439 vectors (model gemini-embedding-001); hub 5239 items → 3800 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
       },
       {
-        "task": "raise-g5-leverage-53-100-67056",
-        "at": "2026-07-07T23:30:56.727649+00:00",
+        "task": "raise-g5-leverage-53-100-73190",
+        "at": "2026-07-08T01:13:10.914641+00:00",
         "kind": "claimed",
         "by": "creators-w1",
         "department": "creators"
       },
       {
-        "task": "raise-g5-leverage-53-100-67056",
-        "at": "2026-07-07T23:30:56.736247+00:00",
+        "task": "raise-g5-leverage-53-100-73190",
+        "at": "2026-07-08T01:13:10.923772+00:00",
         "kind": "completed",
         "by": "creators-w1",
         "result": "Creators: 11 creations on record, 11 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
       },
       {
-        "task": "mining-discover-new-ai-r-67056",
-        "at": "2026-07-07T23:30:56.744738+00:00",
+        "task": "resolve-real-links-websi-73190",
+        "at": "2026-07-08T01:13:10.932601+00:00",
+        "kind": "claimed",
+        "by": "links-w1",
+        "department": "links"
+      },
+      {
+        "task": "resolve-real-links-websi-73190",
+        "at": "2026-07-08T01:13:10.941547+00:00",
+        "kind": "handoff",
+        "from": "links-w1",
+        "to": "memory",
+        "doc": "data/excava/handoffs/resolve-real-links-websi-73190--01--links-w1--to--memory.md"
+      },
+      {
+        "task": "mining-discover-new-ai-r-73190",
+        "at": "2026-07-08T01:13:10.950316+00:00",
         "kind": "claimed",
         "by": "mining-w1",
         "department": "mining"
       },
       {
-        "task": "mining-discover-new-ai-r-67056",
-        "at": "2026-07-07T23:31:01.354592+00:00",
+        "task": "mining-discover-new-ai-r-73190",
+        "at": "2026-07-08T01:13:16.165771+00:00",
         "kind": "completed",
         "by": "mining-w1",
-        "result": "RAN src.discovery_agent (real work): discovery: +1 new (of 114 sighted) → 397 queued; gh-active=51, gh-new=18, hn-front=26, hn-new=51, producthunt=39, reddit=108, web-search=39, youtube-beyond=65"
+        "result": "RAN src.discovery_agent (real work): discovery: +6 new (of 113 sighted) → 415 queued; gh-active=65, gh-new=18, hn-front=27, hn-new=53, producthunt=39, reddit=109, web-search=39, youtube-beyond=65"
       },
       {
-        "task": "news-refresh-the-ai-news-67056",
-        "at": "2026-07-07T23:31:01.363346+00:00",
+        "task": "news-refresh-the-ai-news-73190",
+        "at": "2026-07-08T01:13:16.175823+00:00",
         "kind": "claimed",
         "by": "news-w1",
         "department": "news"
       },
       {
-        "task": "news-refresh-the-ai-news-67056",
-        "at": "2026-07-07T23:31:01.585405+00:00",
+        "task": "news-refresh-the-ai-news-73190",
+        "at": "2026-07-08T01:13:16.389198+00:00",
         "kind": "completed",
         "by": "news-w1",
         "result": "RAN src.trend_watch (real work): trend_watch: 10 proposals (top score 10); queued 0 into self-improvement."
       },
       {
-        "task": "security-safety-rate-the-67056",
-        "at": "2026-07-07T23:31:01.594001+00:00",
+        "task": "security-safety-rate-the-73190",
+        "at": "2026-07-08T01:13:16.398172+00:00",
         "kind": "claimed",
         "by": "security-w1",
         "department": "security"
       },
       {
-        "task": "security-safety-rate-the-67056",
-        "at": "2026-07-07T23:31:02.157443+00:00",
+        "task": "security-safety-rate-the-73190",
+        "at": "2026-07-08T01:13:16.930350+00:00",
         "kind": "completed",
         "by": "security-w1",
         "result": "RAN src.security_scan (real work): security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
       },
       {
-        "task": "raise-g8-personal-fit-65-67056",
-        "at": "2026-07-07T23:31:02.166076+00:00",
+        "task": "raise-g8-personal-fit-65-73190",
+        "at": "2026-07-08T01:13:16.939120+00:00",
         "kind": "claimed",
         "by": "visual-w1",
         "department": "visual"
       },
       {
-        "task": "raise-g8-personal-fit-65-67056",
-        "at": "2026-07-07T23:31:12.477746+00:00",
+        "task": "raise-g8-personal-fit-65-73190",
+        "at": "2026-07-08T01:13:27.603653+00:00",
         "kind": "completed",
         "by": "visual-w1",
         "result": "RAN src.collect_designs (real work): collect_designs: 263 designs (kept 268 / dropped 424 repo-only + 6 dead/parked + 17 non-design; +0 AI-product, +27 seeds, +11 shown-in-video; url-checked 50). designs-only."
       },
       {
-        "task": "watch-process-the-next-b-67056",
-        "at": "2026-07-07T23:31:12.486471+00:00",
+        "task": "watch-process-the-next-b-73190",
+        "at": "2026-07-08T01:13:27.612314+00:00",
         "kind": "claimed",
         "by": "watch-w1",
         "department": "watch"
       },
       {
-        "task": "watch-process-the-next-b-67056",
-        "at": "2026-07-07T23:31:12.495042+00:00",
+        "task": "watch-process-the-next-b-73190",
+        "at": "2026-07-08T01:13:27.620932+00:00",
         "kind": "completed",
         "by": "watch-w1",
         "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
       },
       {
-        "task": "dept-analysis-deep-analyze-every-934",
-        "at": "2026-07-07T23:32:16.701420+00:00",
-        "kind": "room_closed",
-        "artifact": {
-          "kind": "decision",
-          "ref": "data/excava/artifacts/dept-analysis-deep-analyze-every-934.md",
-          "at": "2026-07-07T23:32:16.701227+00:00",
-          "title": "analysis: Deep-analyze every element from its FULL source (whole transcript/repo",
-          "by": "Marrow"
-        },
-        "turns": 5
-      },
-      {
-        "task": "dept-creators-build-packages-enri-414",
-        "at": "2026-07-07T23:32:22.350563+00:00",
-        "kind": "room_closed",
-        "artifact": {
-          "kind": "decision",
-          "ref": "data/excava/artifacts/dept-creators-build-packages-enri-414.md",
-          "at": "2026-07-07T23:32:22.350385+00:00",
-          "title": "creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Crea",
-          "by": "Nova"
-        },
-        "turns": 5
-      },
-      {
-        "task": "dept-improve-self-improvement-rev-648",
-        "at": "2026-07-07T23:32:27.093567+00:00",
-        "kind": "room_closed",
-        "artifact": {
-          "kind": "decision",
-          "ref": "data/excava/artifacts/dept-improve-self-improvement-rev-648.md",
-          "at": "2026-07-07T23:32:27.093393+00:00",
-          "title": "improve: Self-improvement: review prompts/engines/routing/own-code; auto-apply s",
-          "by": "Ratchet"
-        },
-        "turns": 5
+        "task": "os-lanes",
+        "at": "2026-07-08T01:15:38.548823+00:00",
+        "kind": "lane_ran",
+        "lane": "Gemini watch (audio+visual)",
+        "status": "live",
+        "what": "Watches videos directly — clears the backlog free"
       },
       {
         "task": "os-lanes",
-        "at": "2026-07-07T23:32:27.098381+00:00",
+        "at": "2026-07-08T01:15:38.549487+00:00",
         "kind": "lane_ran",
         "lane": "Free analysis pool",
         "status": "live",
         "what": "Turns transcripts into skills/tools/connectors (free engines)"
       }
     ],
-    "memory_episodes": 0,
-    "directions": [],
+    "memory_episodes": 13,
+    "directions": [
+      {
+        "id": "dir-1",
+        "text": "Free-only forever; quality over quantity; every step deepens EXCAVA's integration (daemon-grade, not cosmetic); I don't babysit — park questions, proceed on defaults.",
+        "at": "2026-07-03T00:00:00+00:00",
+        "via": "standing rules (SESSION_HANDOFF §4)",
+        "status": "active",
+        "excava_reading": "Baseline law, seeded at Phase-6 birth: applies to every department and every phase; the guardrails file is its enforcement arm.",
+        "acknowledged_at": "2026-07-03T00:00:00+00:00"
+      },
+      {
+        "id": "dir-2",
+        "text": "Creations enter the project autonomously when labeled 'Created by EXCAVA', with an independent test before first use; creators may build MCP servers, connectors, tools; multi-element bundles are called PACKAGES.",
+        "at": "2026-07-03T00:00:00+00:00",
+        "via": "P3 checkpoint answer",
+        "status": "active",
+        "excava_reading": "Creators department staffed under guardrail G-12; the label and test_before_run are mechanical, not optional.",
+        "acknowledged_at": "2026-07-03T00:00:00+00:00"
+      }
+    ],
     "tutorials": {
       "current_build": "v90",
       "covered": false,

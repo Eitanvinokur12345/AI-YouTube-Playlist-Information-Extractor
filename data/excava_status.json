@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-07-08T17:41:45.589330+00:00",
+  "generated_at": "2026-07-08T18:01:45.951010+00:00",
   "name": "EXCAVA",
   "phase": "OS spine (Phase 0): bus + departments + hand-offs live; creators (OS-2) gated",
   "gate": {
     "checks": {
-      "data_guard_ok": true,
+      "data_guard_ok": false,
       "security_clean": true,
       "truth_access_G3": 53,
       "G3_ready_for_outward": false
     },
-    "internal_allowed": true,
+    "internal_allowed": false,
     "outward_allowed": false,
     "outward_needs": "data_guard ok + security clean + G3>=70 + owner approval"
   },
@@ -79,26 +79,9 @@
       }
     ]
   },
-  "holding": [
-    {
-      "priority": "Empty-body items render as blank 'white' nodes in the brain graph (207)",
-      "why_held": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "priority": "Title collisions: distinct items share one note name and overwrite each other (10)",
-      "why_held": "no department specialization matched"
-    },
-    {
-      "priority": "Lane 'Transcript retrieval' is slow",
-      "why_held": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "priority": "Push link coverage toward 100% at +5%/day (the access gate)",
-      "why_held": "no department specialization matched"
-    }
-  ],
+  "holding": [],
   "os": {
-    "beats": 123,
+    "beats": 124,
     "mode": "run",
     "bus": {
       "open": 8,
@@ -185,45 +168,9 @@
       "last_handoff": "data/excava/handoffs/transcripts-drain-the-ne-30906--01--transcripts-w1--to--analysis.md"
     },
     "beat_log": [
-      "backlog: 7 real-gap task(s) queued; plan {'core': '3 small task(s) run in', 'links': '2 small task(s) run in', 'analysis': '3 small task(s) run in', 'security': '1 small task(s) run in'}",
-      "analysis-w1: verify-the-next-200-of-6-30906 DONE",
-      "creators-w1: raise-g5-leverage-53-100-32506 DONE",
-      "memory-w1: memory-embed-the-remaini-32505 DONE",
-      "mining-w1: mining-discover-new-ai-r-32505 DONE",
-      "news-w1: news-refresh-the-ai-news-32506 DONE",
-      "security-w1: security-safety-rate-the-32505 DONE",
-      "visual-w1: raise-g8-personal-fit-65-32506 DONE",
-      "watch-w1: watch-process-the-next-b-32505 DONE",
-      "group-open-floor-any-agent-from-an-571: Chisel spoke (mistral, 1675ms) t15",
-      "group-open-floor-any-agent-from-an-571: Sift spoke (mistral, 1255ms) t16",
-      "war-deliver-push-link-coverage-t-441: Echo spoke (mistral, 887ms) t7",
-      "war-deliver-push-link-coverage-t-441: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/war-deliver-push-link-coverage-t-441.md', 'at': '2026-07-08T17:42:04.818412+00:00', 'title': 'Deliver: Push link coverage toward 100% at +5%/day (the access gate)', 'by': 'Echo'}",
-      "dept-power-raise-excava-s-capabil-755: Dynamo spoke (mistral, 1456ms) t5",
-      "dept-power-raise-excava-s-capabil-755: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-power-raise-excava-s-capabil-755.md', 'at': '2026-07-08T17:42:09.105264+00:00', 'title': \"power: Raise EXCAVA's capability by even 0.5%: find new tools, best/newest model\", 'by': 'Dynamo'}",
-      "dept-security-paranoid-guard-scan-984: Bastion spoke (gh-models, 1236ms) t5",
-      "dept-security-paranoid-guard-scan-984: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-security-paranoid-guard-scan-984.md', 'at': '2026-07-08T17:42:14.430408+00:00', 'title': 'security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (no', 'by': 'Bastion'}",
-      "dept-transcripts-retrieve-real-fu-745: Echo spoke (mistral, 1567ms) t5",
-      "dept-transcripts-retrieve-real-fu-745: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-transcripts-retrieve-real-fu-745.md', 'at': '2026-07-08T17:42:19.473618+00:00', 'title': 'transcripts: Retrieve REAL full transcripts/captions for pending videos (residen', 'by': 'Echo'}",
-      "dept-analysis-deep-analyze-every-596: Chisel spoke (mistral, 1532ms) t3",
-      "dept-analysis-deep-analyze-every-596: Sift spoke (mistral, 14345ms) t4",
-      "dept-creators-build-packages-enri-793: Forge spoke (mistral, 1250ms) t3",
-      "dept-creators-build-packages-enri-793: Vet spoke (mistral, 1830ms) t4",
-      "dept-improve-self-improvement-rev-573: Sprocket spoke (mistral, 1495ms) t3",
-      "dept-improve-self-improvement-rev-573: Gauge spoke (mistral, 1233ms) t4",
-      "dept-memory-recall-by-meaning-rel-342: Graft spoke (mistral, 1573ms) t3",
-      "dept-memory-recall-by-meaning-rel-342: Prune spoke (gh-models, 2907ms) t4",
-      "dept-mining-gather-ai-info-from-d-472: Pick spoke (mistral, 1962ms) t3",
-      "dept-mining-gather-ai-info-from-d-472: Assay spoke (mistral, 1283ms) t4",
-      "dept-news-freshness-refresh-the-a-560: Scoop spoke (mistral, 1745ms) t3",
-      "dept-news-freshness-refresh-the-a-560: Factcheck spoke (mistral, 1494ms) t4",
-      "dept-visual-mine-ai-website-produ-662: Easel spoke (mistral, 1669ms) t3",
-      "dept-visual-mine-ai-website-produ-662: Squint spoke (mistral, 1501ms) t4",
-      "dept-visualization-own-the-visibi-732: Facet spoke (mistral, 1695ms) t3",
-      "dept-visualization-own-the-visibi-732: Pane spoke (mistral, 934ms) t4",
-      "dept-watch-analyze-video-audio-vi-158: Scope spoke (mistral, 2188ms) t3",
-      "dept-watch-analyze-video-audio-vi-158: Frame spoke (mistral, 1566ms) t4",
+      "HOLD ALL — verification gate failing (fix data_guard/security first)",
       "TUTORIAL MISSING for dashboard v93 — Phase 6 law: every major change ships a walkthrough (data/tutorials.json)",
-      "memory master: +9 episodes"
+      "memory master: +2 episodes"
     ],
     "departments": [
       "analysis",
@@ -322,7 +269,7 @@
       "ok": true,
       "problems": []
     },
-    "approvals_pending": 4,
+    "approvals_pending": 0,
     "backpressure": {
       "analysis": {
         "streak": 0,
@@ -654,27 +601,8 @@
         "n": 3
       }
     ],
-    "memory_episodes": 9,
-    "directions": [
-      {
-        "id": "dir-1",
-        "text": "Free-only forever; quality over quantity; every step deepens EXCAVA's integration (daemon-grade, not cosmetic); I don't babysit — park questions, proceed on defaults.",
-        "at": "2026-07-03T00:00:00+00:00",
-        "via": "standing rules (SESSION_HANDOFF §4)",
-        "status": "active",
-        "excava_reading": "Baseline law, seeded at Phase-6 birth: applies to every department and every phase; the guardrails file is its enforcement arm.",
-        "acknowledged_at": "2026-07-03T00:00:00+00:00"
-      },
-      {
-        "id": "dir-2",
-        "text": "Creations enter the project autonomously when labeled 'Created by EXCAVA', with an independent test before first use; creators may build MCP servers, connectors, tools; multi-element bundles are called PACKAGES.",
-        "at": "2026-07-03T00:00:00+00:00",
-        "via": "P3 checkpoint answer",
-        "status": "active",
-        "excava_reading": "Creators department staffed under guardrail G-12; the label and test_before_run are mechanical, not optional.",
-        "acknowledged_at": "2026-07-03T00:00:00+00:00"
-      }
-    ],
+    "memory_episodes": 2,
+    "directions": [],
     "tutorials": {
       "current_build": "v93",
       "covered": false,

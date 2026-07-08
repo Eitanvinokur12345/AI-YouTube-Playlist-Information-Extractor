@@ -390,7 +390,9 @@ def _beat(args) -> int:
             from src import excava_chat as chat
             chat.ensure_default_rooms()
             open_rooms = [r for r in chat.load_rooms()["rooms"] if r["status"] == "open"]
-            for r in open_rooms[:4]:
+            # advance ALL open rooms each beat (was [:4]) so every department's room actually talks —
+            # group chat + war + all 12 depts. Owner: 'none of the departments have made calls'.
+            for r in open_rooms[:18]:
                 for line in chat.advance(r["id"], turns=2):
                     beat_log.append(line)
         except Exception as e:

@@ -45,19 +45,6 @@
    ],
    "lane_hint": "Gemini watch (audio+visual)"
   },
-  "links": {
-   "purpose": "resolve+verify real links (Website/GitHub/Open-code) for every hub item — THE coverage gate",
-   "capability": "resolve-links",
-   "specialization": [
-    "link",
-    "resolve",
-    "coverage",
-    "url",
-    "verify link",
-    "404"
-   ],
-   "lane_hint": "links+memory (fast lane)"
-  },
   "memory": {
    "purpose": "embed the hub into the semantic index all agents recall from",
    "capability": "embed-memory",
@@ -123,7 +110,7 @@
    "lane_hint": "Self-improvement review"
   },
   "security": {
-   "purpose": "gatekeeping: leaks, untrusted content preflight, data-collapse guard",
+   "purpose": "paranoid guard: scan for secret leaks + prompt-injection, VERIFY elements are REAL (not fake/dead), and DETECT MALWARE/viruses in tools & connectors",
    "capability": null,
    "specialization": [
     "security",
@@ -132,7 +119,15 @@
     "preflight",
     "untrusted",
     "guard",
-    "sandbox"
+    "sandbox",
+    "verify",
+    "real",
+    "authentic",
+    "fake",
+    "malware",
+    "virus",
+    "malicious",
+    "trojan"
    ],
    "lane_hint": null
   },
@@ -151,7 +146,7 @@
    "lane_hint": null
   },
   "visualization": {
-   "purpose": "own the visibility of the WHOLE Excavatortron interface — liveliness, user access to information, enjoyment, clarity, speed, accessibility",
+   "purpose": "own the visibility AND ACCESSIBILITY of the whole interface — liveliness, info access, enjoyment, clarity, speed, and accessibility problems (contrast, mobile, reduced-motion, screen-readers)",
    "capability": "present",
    "specialization": [
     "ui",
@@ -163,7 +158,8 @@
     "legible",
     "enjoy"
    ],
-   "lane_hint": "Visualization"
+   "lane_hint": "Visualization",
+   "display_name": "Visualization & Accessibility"
   },
   "power": {
    "purpose": "raise EXCAVA capability by even 0.5% — new tools, best/newest models, combine elements, change agent formation; show a POWER % that can exceed 100",
@@ -338,65 +334,6 @@
    "engine_pref": "grounded",
    "scoped_tools": [
     "src.gemini_video_analyze"
-   ]
-  },
-  {
-   "id": "links-lead",
-   "name": "Ledger",
-   "tier": 2,
-   "department": "links",
-   "role": "lead",
-   "persona": "Meticulous librarian; takes a 404 personally; behavior: verifies twice, cites where every link was found.",
-   "engine_pref": "fast",
-   "suit": true,
-   "scoped_tools": [
-    "src.excava_bus",
-    "src.excava_chat",
-    "src.resolve_links",
-    "src.coverage_log",
-    "src.resolve_comment_gated"
-   ]
-  },
-  {
-   "id": "links-w1",
-   "name": "Fetch",
-   "tier": 1,
-   "department": "links",
-   "role": "doer",
-   "persona": "Fetch: hands-on links specialist; does the work, shows the work.",
-   "engine_pref": "fast",
-   "scoped_tools": [
-    "src.resolve_links",
-    "src.coverage_log",
-    "src.resolve_comment_gated"
-   ]
-  },
-  {
-   "id": "links-checker",
-   "name": "Probe",
-   "tier": 1,
-   "department": "links",
-   "role": "checker",
-   "persona": "Probe: the skeptic — pushes back before the room converges; verifies more than asked.",
-   "engine_pref": "grounded",
-   "scoped_tools": [
-    "src.resolve_links",
-    "src.coverage_log",
-    "src.resolve_comment_gated"
-   ]
-  },
-  {
-   "id": "links-improver",
-   "name": "Mend",
-   "tier": 1,
-   "department": "links",
-   "role": "improver",
-   "persona": "Mend: ambitious optimizer — finds the better way, measures it.",
-   "engine_pref": "reasoning",
-   "scoped_tools": [
-    "src.resolve_links",
-    "src.coverage_log",
-    "src.resolve_comment_gated"
    ]
   },
   {

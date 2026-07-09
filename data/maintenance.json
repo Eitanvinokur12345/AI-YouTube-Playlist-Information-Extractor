@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-07-09T04:32:14.016256+00:00",
+  "generated_at": "2026-07-09T08:36:47.345607+00:00",
   "health_score": 41,
   "grade": "D",
-  "issue_count": 6,
+  "issue_count": 7,
   "issues": [
     {
       "severity": "high",
       "area": "brain",
       "issue": "Empty-body items render as blank 'white' nodes in the brain graph",
-      "count": 250,
+      "count": 251,
       "fix": "Skip empty-body items from the brain (or backfill a one-line description) so they stop appearing as contentless dots.",
       "sample": [
         "AITER v3",
@@ -48,14 +48,14 @@
       "severity": "medium",
       "area": "brain",
       "issue": "Oversized category hubs become hairballs in the graph view",
-      "count": 3739,
+      "count": 3794,
       "fix": "Sub-bucket big categories (cap members per hub, add sub-hubs) so the graph stays readable.",
       "sample": [
-        "productivity (424)",
-        "code (454)",
-        "automation (292)",
-        "integration (133)",
-        "research (316)"
+        "productivity (431)",
+        "code (459)",
+        "automation (297)",
+        "integration (134)",
+        "research (320)"
       ]
     },
     {
@@ -84,6 +84,16 @@
         "Claude Co-work Slack Integration",
         "Claude Co-work Notion Integration",
         "Canva Connector for Claude"
+      ]
+    },
+    {
+      "severity": "low",
+      "area": "data",
+      "issue": "Tools with no quality score can't be ranked",
+      "count": 1,
+      "fix": "Score them in the next analysis pass.",
+      "sample": [
+        "Google Slides"
       ]
     }
   ]

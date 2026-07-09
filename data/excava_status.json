@@ -1,20 +1,20 @@
 {
-  "generated_at": "2026-07-09T04:32:39.622991+00:00",
+  "generated_at": "2026-07-09T10:05:48.515310+00:00",
   "name": "EXCAVA",
   "phase": "OS spine (Phase 0): bus + departments + hand-offs live; creators (OS-2) gated",
   "gate": {
     "checks": {
-      "data_guard_ok": false,
+      "data_guard_ok": true,
       "security_clean": true,
       "truth_access_G3": 53,
       "G3_ready_for_outward": false
     },
-    "internal_allowed": false,
+    "internal_allowed": true,
     "outward_allowed": false,
     "outward_needs": "data_guard ok + security clean + G3>=70 + owner approval"
   },
   "memory": {
-    "vectors": 1439,
+    "vectors": 1441,
     "model": "gemini-embedding-001",
     "wired": true
   },
@@ -22,7 +22,7 @@
     "missing": [
       "github_token"
     ],
-    "checked_at": "2026-07-09T00:19:55.127130+00:00",
+    "checked_at": "2026-07-09T08:53:16.858430+00:00",
     "can_do": {
       "resolve-links": true,
       "analyze-videos": true,
@@ -79,25 +79,42 @@
       }
     ]
   },
-  "holding": [],
+  "holding": [
+    {
+      "priority": "Empty-body items render as blank 'white' nodes in the brain graph (207)",
+      "why_held": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "priority": "Title collisions: distinct items share one note name and overwrite each other (10)",
+      "why_held": "no department specialization matched"
+    },
+    {
+      "priority": "Lane 'Transcript retrieval' is slow",
+      "why_held": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "priority": "Push link coverage toward 100% at +5%/day (the access gate)",
+      "why_held": "no department specialization matched"
+    }
+  ],
   "os": {
-    "beats": 130,
+    "beats": 131,
     "mode": "run",
     "bus": {
-      "open": 12,
-      "total": 659,
+      "open": 15,
+      "total": 670,
       "per_department": {
         "memory": {
           "queued": 0,
           "working": 0,
-          "done": 89,
+          "done": 90,
           "held": 0,
           "failed": 0
         },
         "visual": {
           "queued": 1,
           "working": 0,
-          "done": 78,
+          "done": 79,
           "held": 0,
           "failed": 0
         },
@@ -116,44 +133,44 @@
           "failed": 0
         },
         "analysis": {
-          "queued": 4,
+          "queued": 6,
           "working": 0,
-          "done": 91,
+          "done": 92,
           "held": 0,
           "failed": 0
         },
         "mining": {
           "queued": 1,
           "working": 0,
-          "done": 78,
+          "done": 79,
           "held": 0,
           "failed": 0
         },
         "creators": {
           "queued": 0,
           "working": 0,
-          "done": 78,
+          "done": 79,
           "held": 0,
           "failed": 0
         },
         "security": {
-          "queued": 0,
+          "queued": 1,
           "working": 0,
-          "done": 76,
+          "done": 77,
           "held": 0,
           "failed": 0
         },
         "watch": {
           "queued": 0,
           "working": 0,
-          "done": 76,
+          "done": 77,
           "held": 0,
           "failed": 0
         },
         "news": {
           "queued": 0,
           "working": 0,
-          "done": 76,
+          "done": 77,
           "held": 0,
           "failed": 0
         },
@@ -165,12 +182,49 @@
           "failed": 0
         }
       },
-      "last_handoff": "data/excava/handoffs/transcripts-drain-the-ne-47008--01--transcripts-w1--to--analysis.md"
+      "last_handoff": "data/excava/handoffs/transcripts-drain-the-ne-91548--01--transcripts-w1--to--analysis.md"
     },
     "beat_log": [
-      "HOLD ALL — verification gate failing (fix data_guard/security first)",
+      "backlog: 9 real-gap task(s) queued; plan {'core': '3 small task(s) run in', 'links': '2 small task(s) run in', 'analysis': '3 small task(s) run in', 'mining': '1 small task(s) run in'}",
+      "analysis-w1: transcripts-drain-the-ne-47008 DONE",
+      "mining-w1: mining-discover-new-ai-r-69470 DONE",
+      "security-w1: 1915-tools-skills-still--91548 DONE",
+      "visual-w1: raise-g8-personal-fit-65-69470 DONE",
+      "creators-w1: raise-g5-leverage-53-100-91548 DONE",
+      "memory-w1: memory-embed-the-remaini-91548 DONE",
+      "news-w1: news-refresh-the-ai-news-91548 DONE",
+      "transcripts-w1: transcripts-drain-the-ne-91548 -> analysis (data/excava/handoffs/transcripts-drain-the-ne-91548--01--transcripts-w1--to--analysis.md)",
+      "watch-w1: watch-process-the-next-b-91548 DONE",
+      "group-open-floor-any-agent-from-an-571: Reel spoke (mistral, 1587ms) t25",
+      "group-open-floor-any-agent-from-an-571: Scriv spoke (mistral, 1444ms) t26",
+      "dept-power-raise-excava-s-capabil-342: Gearbox spoke (mistral, 1948ms) t3",
+      "dept-power-raise-excava-s-capabil-342: Torque spoke (mistral, 1646ms) t4",
+      "dept-security-paranoid-guard-scan-411: Warden spoke (mistral, 1679ms) t3",
+      "dept-security-paranoid-guard-scan-411: Audit spoke (mistral, 1493ms) t4",
+      "dept-transcripts-retrieve-real-fu-381: Reel spoke (mistral, 1711ms) t3",
+      "dept-transcripts-retrieve-real-fu-381: Scriv spoke (mistral, 1403ms) t4",
+      "dept-analysis-deep-analyze-every-837: Chisel spoke (mistral, 1492ms) t1",
+      "dept-analysis-deep-analyze-every-837: Sift spoke (mistral, 1541ms) t2",
+      "dept-creators-build-packages-enri-477: Forge spoke (mistral, 1234ms) t1",
+      "dept-creators-build-packages-enri-477: Vet spoke (mistral, 1268ms) t2",
+      "dept-improve-self-improvement-rev-385: Sprocket spoke (mistral, 1513ms) t1",
+      "dept-improve-self-improvement-rev-385: Gauge spoke (mistral, 1302ms) t2",
+      "dept-memory-recall-by-meaning-rel-387: Graft spoke (mistral, 1302ms) t1",
+      "dept-memory-recall-by-meaning-rel-387: Prune spoke (mistral, 1318ms) t2",
+      "dept-mining-gather-ai-info-from-d-657: Pick spoke (mistral, 1933ms) t1",
+      "dept-mining-gather-ai-info-from-d-657: Assay spoke (mistral, 1407ms) t2",
+      "dept-news-freshness-refresh-the-a-760: Scoop spoke (mistral, 1495ms) t1",
+      "dept-news-freshness-refresh-the-a-760: Factcheck spoke (mistral, 2021ms) t2",
+      "dept-visual-mine-ai-website-produ-390: Easel spoke (mistral, 1375ms) t1",
+      "dept-visual-mine-ai-website-produ-390: Squint spoke (mistral, 1326ms) t2",
+      "dept-visualization-own-the-visibi-157: Facet spoke (mistral, 1681ms) t1",
+      "dept-visualization-own-the-visibi-157: Pane spoke (mistral, 1195ms) t2",
+      "dept-watch-analyze-video-audio-vi-462: Scope spoke (mistral, 1913ms) t1",
+      "dept-watch-analyze-video-audio-vi-462: Frame spoke (mistral, 1180ms) t2",
+      "war-deliver-push-link-coverage-t-631: Reel spoke (mistral, 1312ms) t1",
+      "war-deliver-push-link-coverage-t-631: Scriv spoke (mistral, 1215ms) t2",
       "TUTORIAL MISSING for dashboard v93 — Phase 6 law: every major change ships a walkthrough (data/tutorials.json)",
-      "memory master: +3 episodes"
+      "memory master: +20 episodes"
     ],
     "departments": [
       "analysis",
@@ -188,18 +242,18 @@
     ],
     "usage": {
       "analysis": {
-        "ticks": 89,
-        "done": 89,
+        "ticks": 90,
+        "done": 90,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-09T04:04:10.045113+00:00"
+        "last": "2026-07-09T10:14:57.247803+00:00"
       },
       "memory": {
-        "ticks": 85,
-        "done": 85,
+        "ticks": 86,
+        "done": 86,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-09T04:04:10.045126+00:00"
+        "last": "2026-07-09T10:14:57.247811+00:00"
       },
       "links": {
         "ticks": 53,
@@ -216,60 +270,60 @@
         "last": "2026-07-09T04:04:10.045124+00:00"
       },
       "mining": {
-        "ticks": 78,
-        "done": 78,
+        "ticks": 79,
+        "done": 79,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-09T04:04:10.045117+00:00"
+        "last": "2026-07-09T10:14:57.247805+00:00"
       },
       "visual": {
-        "ticks": 78,
-        "done": 78,
+        "ticks": 79,
+        "done": 79,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-09T04:04:10.045120+00:00"
+        "last": "2026-07-09T10:14:57.247808+00:00"
       },
       "creators": {
-        "ticks": 78,
-        "done": 78,
+        "ticks": 79,
+        "done": 79,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-09T04:04:10.045122+00:00"
+        "last": "2026-07-09T10:14:57.247809+00:00"
       },
       "news": {
-        "ticks": 76,
-        "done": 76,
+        "ticks": 77,
+        "done": 77,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-09T04:04:10.045128+00:00"
+        "last": "2026-07-09T10:14:57.247812+00:00"
       },
       "security": {
-        "ticks": 76,
-        "done": 76,
+        "ticks": 77,
+        "done": 77,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-09T04:04:10.045132+00:00"
+        "last": "2026-07-09T10:14:57.247806+00:00"
       },
       "transcripts": {
-        "ticks": 23,
+        "ticks": 24,
         "done": 0,
-        "handoffs": 23,
+        "handoffs": 24,
         "fails": 0,
-        "last": "2026-07-08T21:51:36.113872+00:00"
+        "last": "2026-07-09T10:14:57.247815+00:00"
       },
       "watch": {
-        "ticks": 76,
-        "done": 76,
+        "ticks": 77,
+        "done": 77,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-09T04:04:10.045134+00:00"
+        "last": "2026-07-09T10:14:57.247816+00:00"
       }
     },
     "audit": {
       "ok": true,
       "problems": []
     },
-    "approvals_pending": 0,
+    "approvals_pending": 4,
     "backpressure": {
       "analysis": {
         "streak": 0,
@@ -378,16 +432,6 @@
         "doc": null
       },
       {
-        "id": "transcripts-drain-the-ne-47008",
-        "title": "Transcripts: drain the next batch of 616 pending (residential IP)",
-        "department": "analysis",
-        "status": "queued",
-        "steps": 1,
-        "priority": 1,
-        "source": "gap",
-        "doc": "data/excava/handoffs/transcripts-drain-the-ne-47008--01--transcripts-w1--to--analysis.md"
-      },
-      {
         "id": "only-435-1555-videos-ana-53899",
         "title": "Only 435/1555 videos analyzed (28.0%)",
         "department": "analysis",
@@ -408,16 +452,6 @@
         "doc": null
       },
       {
-        "id": "mining-discover-new-ai-r-69470",
-        "title": "Mining: discover new AI repos/tools + verify this cycle",
-        "department": "mining",
-        "status": "queued",
-        "steps": 0,
-        "priority": 1,
-        "source": "gap",
-        "doc": null
-      },
-      {
         "id": "raise-g1-omniscience-58--69470",
         "title": "Raise G1 Omniscience (58/100): 436/1555 videos analyzed (28.0%); 4/7 lanes live",
         "department": "analysis",
@@ -428,8 +462,58 @@
         "doc": null
       },
       {
-        "id": "raise-g8-personal-fit-65-69470",
-        "title": "Raise G8 Personal fit (65/100): 13% of designs taste-tagged; Arena learning live; NOSG wir",
+        "id": "lane-external-mining-is--91548",
+        "title": "Lane 'External mining' is stale",
+        "department": "mining",
+        "status": "queued",
+        "steps": 0,
+        "priority": 1,
+        "source": "auto",
+        "doc": null
+      },
+      {
+        "id": "verify-the-next-200-of-5-91548",
+        "title": "Verify the next 200 of 5918 unverified elements (2-source + live test)",
+        "department": "analysis",
+        "status": "queued",
+        "steps": 0,
+        "priority": 1,
+        "source": "gap",
+        "doc": null
+      },
+      {
+        "id": "security-safety-rate-the-91548",
+        "title": "Security: safety-rate the next batch of 1196 connectors/skills",
+        "department": "security",
+        "status": "queued",
+        "steps": 0,
+        "priority": 1,
+        "source": "gap",
+        "doc": null
+      },
+      {
+        "id": "transcripts-drain-the-ne-91548",
+        "title": "Transcripts: drain the next batch of 669 pending (residential IP)",
+        "department": "analysis",
+        "status": "queued",
+        "steps": 1,
+        "priority": 1,
+        "source": "gap",
+        "doc": "data/excava/handoffs/transcripts-drain-the-ne-91548--01--transcripts-w1--to--analysis.md"
+      },
+      {
+        "id": "raise-g1-omniscience-59--91548",
+        "title": "Raise G1 Omniscience (59/100): 453/1555 videos analyzed (29.1%); 4/7 lanes live",
+        "department": "analysis",
+        "status": "queued",
+        "steps": 0,
+        "priority": 1,
+        "source": "gap",
+        "doc": null
+      },
+      {
+        "id": "raise-g8-personal-fit-64-91548",
+        "title": "Raise G8 Personal fit (64/100): 12% of designs taste-tagged; Arena learning live; NOSG wir",
         "department": "visual",
         "status": "queued",
         "steps": 0,
@@ -440,194 +524,128 @@
     ],
     "recent_events": [
       {
-        "task": "memory-embed-the-remaini-69470",
-        "at": "2026-07-09T03:58:03.317714+00:00",
+        "task": "raise-g5-leverage-53-100-91548",
+        "at": "2026-07-09T10:06:06.135628+00:00",
+        "kind": "completed",
+        "by": "creators-w1",
+        "result": "Creators: 11 creations on record, 11 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
+      },
+      {
+        "task": "memory-embed-the-remaini-91548",
+        "at": "2026-07-09T10:06:06.142536+00:00",
         "kind": "claimed",
         "by": "memory-w1",
         "department": "memory"
       },
       {
-        "task": "memory-embed-the-remaini-69470",
-        "at": "2026-07-09T03:58:03.483395+00:00",
+        "task": "memory-embed-the-remaini-91548",
+        "at": "2026-07-09T10:06:06.368335+00:00",
         "kind": "completed",
         "by": "memory-w1",
-        "result": "Semantic index: 1439 vectors (model gemini-embedding-001); hub 5247 items → 3808 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+        "result": "Semantic index: 1441 vectors (model gemini-embedding-001); hub 5315 items → 3874 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
       },
       {
-        "task": "news-refresh-the-ai-news-69470",
-        "at": "2026-07-09T03:58:03.496662+00:00",
+        "task": "news-refresh-the-ai-news-91548",
+        "at": "2026-07-09T10:06:06.375656+00:00",
         "kind": "claimed",
         "by": "news-w1",
         "department": "news"
       },
       {
-        "task": "news-refresh-the-ai-news-69470",
-        "at": "2026-07-09T03:58:03.708104+00:00",
+        "task": "news-refresh-the-ai-news-91548",
+        "at": "2026-07-09T10:06:06.530773+00:00",
         "kind": "completed",
         "by": "news-w1",
-        "result": "RAN src.trend_watch (real work): trend_watch: 10 proposals (top score 10); queued 0 into self-improvement."
+        "result": "RAN src.trend_watch (real work): trend_watch: 13 proposals (top score 10); queued 0 into self-improvement."
       },
       {
-        "task": "security-safety-rate-the-69470",
-        "at": "2026-07-09T03:58:03.720390+00:00",
+        "task": "transcripts-drain-the-ne-91548",
+        "at": "2026-07-09T10:06:06.552189+00:00",
         "kind": "claimed",
-        "by": "security-w1",
-        "department": "security"
+        "by": "transcripts-w1",
+        "department": "transcripts"
       },
       {
-        "task": "security-safety-rate-the-69470",
-        "at": "2026-07-09T03:58:04.254351+00:00",
-        "kind": "completed",
-        "by": "security-w1",
-        "result": "RAN src.security_scan (real work): security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+        "task": "transcripts-drain-the-ne-91548",
+        "at": "2026-07-09T10:06:06.589974+00:00",
+        "kind": "handoff",
+        "from": "transcripts-w1",
+        "to": "analysis",
+        "doc": "data/excava/handoffs/transcripts-drain-the-ne-91548--01--transcripts-w1--to--analysis.md"
       },
       {
-        "task": "watch-process-the-next-b-69470",
-        "at": "2026-07-09T03:58:04.266725+00:00",
+        "task": "watch-process-the-next-b-91548",
+        "at": "2026-07-09T10:06:06.597005+00:00",
         "kind": "claimed",
         "by": "watch-w1",
         "department": "watch"
       },
       {
-        "task": "watch-process-the-next-b-69470",
-        "at": "2026-07-09T03:58:04.279016+00:00",
+        "task": "watch-process-the-next-b-91548",
+        "at": "2026-07-09T10:06:06.603895+00:00",
         "kind": "completed",
         "by": "watch-w1",
         "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
       },
       {
-        "task": "war-deliver-push-link-coverage-t-416",
-        "at": "2026-07-09T03:59:11.992891+00:00",
-        "kind": "room_closed",
-        "artifact": {
-          "kind": "decision",
-          "ref": "data/excava/artifacts/war-deliver-push-link-coverage-t-416.md",
-          "at": "2026-07-09T03:59:11.992717+00:00",
-          "title": "Deliver: Push link coverage toward 100% at +5%/day (the access gate)",
-          "by": "Echo"
-        },
-        "turns": 7
+        "task": "dept-power-raise-excava-s-capabil-342",
+        "at": "2026-07-09T10:07:12.043333+00:00",
+        "kind": "workers_dispatched",
+        "by": "power-w1",
+        "n": 2,
+        "ids": [
+          "worker-3131",
+          "worker-4283"
+        ]
       },
       {
-        "task": "dept-analysis-deep-analyze-every-836",
-        "at": "2026-07-09T04:00:16.954840+00:00",
-        "kind": "room_closed",
-        "artifact": {
-          "kind": "decision",
-          "ref": "data/excava/artifacts/dept-analysis-deep-analyze-every-836.md",
-          "at": "2026-07-09T04:00:16.954672+00:00",
-          "title": "analysis: Deep-analyze every element from its FULL source (whole transcript/repo",
-          "by": "Marrow"
-        },
-        "turns": 5
+        "task": "dept-power-raise-excava-s-capabil-342",
+        "at": "2026-07-09T10:07:12.044022+00:00",
+        "kind": "workers_dissolved",
+        "by": "power-w1",
+        "n": 2
       },
       {
-        "task": "dept-creators-build-packages-enri-122",
-        "at": "2026-07-09T04:00:22.862741+00:00",
-        "kind": "room_closed",
-        "artifact": {
-          "kind": "decision",
-          "ref": "data/excava/artifacts/dept-creators-build-packages-enri-122.md",
-          "at": "2026-07-09T04:00:22.862491+00:00",
-          "title": "creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Crea",
-          "by": "Nova"
-        },
-        "turns": 5
+        "task": "dept-security-paranoid-guard-scan-411",
+        "at": "2026-07-09T10:08:16.359522+00:00",
+        "kind": "workers_dispatched",
+        "by": "security-w1",
+        "n": 2,
+        "ids": [
+          "worker-6490",
+          "worker-1414"
+        ]
       },
       {
-        "task": "dept-improve-self-improvement-rev-125",
-        "at": "2026-07-09T04:00:27.723202+00:00",
-        "kind": "room_closed",
-        "artifact": {
-          "kind": "decision",
-          "ref": "data/excava/artifacts/dept-improve-self-improvement-rev-125.md",
-          "at": "2026-07-09T04:00:27.723032+00:00",
-          "title": "improve: Self-improvement: review prompts/engines/routing/own-code; auto-apply s",
-          "by": "Ratchet"
-        },
-        "turns": 5
+        "task": "dept-security-paranoid-guard-scan-411",
+        "at": "2026-07-09T10:08:16.360124+00:00",
+        "kind": "workers_dissolved",
+        "by": "security-w1",
+        "n": 2
       },
       {
-        "task": "dept-memory-recall-by-meaning-rel-545",
-        "at": "2026-07-09T04:00:34.443212+00:00",
-        "kind": "room_closed",
-        "artifact": {
-          "kind": "decision",
-          "ref": "data/excava/artifacts/dept-memory-recall-by-meaning-rel-545.md",
-          "at": "2026-07-09T04:00:34.443042+00:00",
-          "title": "memory: Recall by meaning, relate elements, build the brain graph, embed unembed",
-          "by": "Root"
-        },
-        "turns": 5
+        "task": "dept-transcripts-retrieve-real-fu-381",
+        "at": "2026-07-09T10:08:19.637248+00:00",
+        "kind": "workers_dispatched",
+        "by": "transcripts-w1",
+        "n": 4,
+        "ids": [
+          "worker-5520",
+          "worker-9421",
+          "worker-3616",
+          "worker-8806"
+        ]
       },
       {
-        "task": "dept-mining-gather-ai-info-from-d-168",
-        "at": "2026-07-09T04:00:40.771070+00:00",
-        "kind": "room_closed",
-        "artifact": {
-          "kind": "decision",
-          "ref": "data/excava/artifacts/dept-mining-gather-ai-info-from-d-168.md",
-          "at": "2026-07-09T04:00:40.770902+00:00",
-          "title": "mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Teleg",
-          "by": "Boulder"
-        },
-        "turns": 5
-      },
-      {
-        "task": "dept-news-freshness-refresh-the-a-466",
-        "at": "2026-07-09T04:00:45.859697+00:00",
-        "kind": "room_closed",
-        "artifact": {
-          "kind": "decision",
-          "ref": "data/excava/artifacts/dept-news-freshness-refresh-the-a-466.md",
-          "at": "2026-07-09T04:00:45.859522+00:00",
-          "title": "news: Freshness: refresh the AI-news digest from the newest official/company/nat",
-          "by": "Wire"
-        },
-        "turns": 5
-      },
-      {
-        "task": "dept-visual-mine-ai-website-produ-107",
-        "at": "2026-07-09T04:01:50.712377+00:00",
-        "kind": "room_closed",
-        "artifact": {
-          "kind": "decision",
-          "ref": "data/excava/artifacts/dept-visual-mine-ai-website-produ-107.md",
-          "at": "2026-07-09T04:01:50.712210+00:00",
-          "title": "visual: Mine AI website/product DESIGNS (the look), taste-learn from Eitan's pic",
-          "by": "Chroma"
-        },
-        "turns": 5
-      },
-      {
-        "task": "dept-visualization-own-the-visibi-601",
-        "at": "2026-07-09T04:01:55.498001+00:00",
-        "kind": "room_closed",
-        "artifact": {
-          "kind": "decision",
-          "ref": "data/excava/artifacts/dept-visualization-own-the-visibi-601.md",
-          "at": "2026-07-09T04:01:55.497837+00:00",
-          "title": "visualization: Own the visibility AND ACCESSIBILITY of the whole interface — liv",
-          "by": "Lumen"
-        },
-        "turns": 5
-      },
-      {
-        "task": "dept-watch-analyze-video-audio-vi-604",
-        "at": "2026-07-09T04:02:00.016806+00:00",
-        "kind": "room_closed",
-        "artifact": {
-          "kind": "decision",
-          "ref": "data/excava/artifacts/dept-watch-analyze-video-audio-vi-604.md",
-          "at": "2026-07-09T04:02:00.016637+00:00",
-          "title": "watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.",
-          "by": "Iris"
-        },
-        "turns": 5
+        "task": "dept-transcripts-retrieve-real-fu-381",
+        "at": "2026-07-09T10:08:19.638133+00:00",
+        "kind": "workers_dissolved",
+        "by": "transcripts-w1",
+        "n": 4
       },
       {
         "task": "os-lanes",
-        "at": "2026-07-09T04:04:09.685222+00:00",
+        "at": "2026-07-09T10:14:56.936750+00:00",
         "kind": "lane_ran",
         "lane": "Gemini watch (audio+visual)",
         "status": "live",
@@ -635,15 +653,58 @@
       },
       {
         "task": "os-lanes",
-        "at": "2026-07-09T04:04:09.685928+00:00",
+        "at": "2026-07-09T10:14:56.937109+00:00",
+        "kind": "lane_ran",
+        "lane": "Transcript retrieval",
+        "status": "live",
+        "what": "Pulls captions (Supadata cloud + residential)"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-09T10:14:56.937439+00:00",
         "kind": "lane_ran",
         "lane": "Free analysis pool",
         "status": "live",
         "what": "Turns transcripts into skills/tools/connectors (free engines)"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-09T10:14:56.937760+00:00",
+        "kind": "lane_ran",
+        "lane": "Deep analysis (night-gated)",
+        "status": "live",
+        "what": "Claude re-analysis + safety pass"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-09T10:14:56.961332+00:00",
+        "kind": "lane_ran",
+        "lane": "AI news refresh",
+        "status": "live",
+        "what": "Refreshes official-site AI news"
       }
     ],
-    "memory_episodes": 3,
-    "directions": [],
+    "memory_episodes": 20,
+    "directions": [
+      {
+        "id": "dir-1",
+        "text": "Free-only forever; quality over quantity; every step deepens EXCAVA's integration (daemon-grade, not cosmetic); I don't babysit — park questions, proceed on defaults.",
+        "at": "2026-07-03T00:00:00+00:00",
+        "via": "standing rules (SESSION_HANDOFF §4)",
+        "status": "active",
+        "excava_reading": "Baseline law, seeded at Phase-6 birth: applies to every department and every phase; the guardrails file is its enforcement arm.",
+        "acknowledged_at": "2026-07-03T00:00:00+00:00"
+      },
+      {
+        "id": "dir-2",
+        "text": "Creations enter the project autonomously when labeled 'Created by EXCAVA', with an independent test before first use; creators may build MCP servers, connectors, tools; multi-element bundles are called PACKAGES.",
+        "at": "2026-07-03T00:00:00+00:00",
+        "via": "P3 checkpoint answer",
+        "status": "active",
+        "excava_reading": "Creators department staffed under guardrail G-12; the label and test_before_run are mechanical, not optional.",
+        "acknowledged_at": "2026-07-03T00:00:00+00:00"
+      }
+    ],
     "tutorials": {
       "current_build": "v93",
       "covered": false,
@@ -705,7 +766,7 @@
     }
   ],
   "stack_review": {
-    "candidates_available": 1095,
+    "candidates_available": 1100,
     "note": "EXCAVA reviews its stack each cycle: integrate the best free per-process tool, combine overlaps, offload weak ones. Top open process gaps: Dedup/entity resolution"
   }
 }

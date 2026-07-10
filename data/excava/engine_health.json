@@ -1,47 +1,58 @@
 {
- "generated_at": "2026-07-10T21:00:06.674808+00:00",
+ "generated_at": "2026-07-10T22:55:23.233304+00:00",
  "experiment": "engine-benchmark (golden-task canary)",
  "golden_prompt": "Reply with exactly these two words and nothing else: benchmark ok",
  "results": [
   {
    "engine": "groq",
-   "status": "no-key",
-   "note": "no API key in this environment (keys live in CI secrets)"
+   "status": "healthy",
+   "valid": true,
+   "ms": 698,
+   "model": "mistral-small-latest"
   },
   {
    "engine": "sambanova",
-   "status": "no-key",
-   "note": "no API key in this environment (keys live in CI secrets)"
+   "status": "healthy",
+   "valid": true,
+   "ms": 1420,
+   "model": "mistral-small-latest"
   },
   {
    "engine": "mistral",
-   "status": "no-key",
-   "note": "no API key in this environment (keys live in CI secrets)"
+   "status": "healthy",
+   "valid": true,
+   "ms": 378,
+   "model": "mistral-small-latest"
   },
   {
    "engine": "gh-models",
-   "status": "no-key",
-   "note": "no API key in this environment (keys live in CI secrets)"
+   "status": "failing",
+   "ms": 613,
+   "note": "gh-models:HTTPError; groq:HTTPError; sambanova:HTTPError"
   },
   {
    "engine": "cerebras",
-   "status": "no-key",
-   "note": "no API key in this environment (keys live in CI secrets)"
+   "status": "failing",
+   "ms": 205,
+   "note": "cerebras:HTTPError; groq:HTTPError; sambanova:HTTPError"
   },
   {
    "engine": "gemini",
-   "status": "no-key",
-   "note": "no API key in this environment (keys live in CI secrets)"
+   "status": "failing",
+   "ms": 297,
+   "note": "gemini:HTTPError; groq:HTTPError; sambanova:HTTPError"
   },
   {
    "engine": "openrouter",
-   "status": "no-key",
-   "note": "no API key in this environment (keys live in CI secrets)"
+   "status": "failing",
+   "ms": 462,
+   "note": "openrouter:HTTPError; groq:HTTPError; sambanova:HTTPError"
   },
   {
    "engine": "nvidia",
-   "status": "no-key",
-   "note": "no API key in this environment (keys live in CI secrets)"
+   "status": "failing",
+   "ms": 60378,
+   "note": "nvidia:TimeoutError; groq:HTTPError; sambanova:HTTPError"
   },
   {
    "engine": "hermes",
@@ -55,13 +66,13 @@
   }
  ],
  "ranking": [
+  "mistral",
   "groq",
   "sambanova",
-  "mistral",
-  "gh-models",
   "cerebras",
   "gemini",
   "openrouter",
+  "gh-models",
   "nvidia",
   "hermes",
   "omniroute"

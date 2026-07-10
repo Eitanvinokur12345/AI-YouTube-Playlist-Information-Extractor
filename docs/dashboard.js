@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v98";
+const APP_BUILD = "v99";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1988,11 +1988,12 @@ async function renderCrew(tab) {
   }, 6000);
 }
 async function renderExcava() {
-  const [ex, ps, inbox, gs, rc, ap, excfg, reg, dirs, tuts, made, grd, caps] = await Promise.all([load("excava_status.json"),
+  const [ex, ps, inbox, gs, rc, ap, excfg, reg, dirs, tuts, made, grd, caps, engh] = await Promise.all([load("excava_status.json"),
     load("pipeline_status.json"), load("excava_inbox.json"), load("goals_status.json"),
     load("resources.json"), load("excava_approvals.json"), load("excava_config.json"),
     load("excava/agents.json"), load("excava_direction.json"), load("tutorials.json"),
-    load("created_by_excava.json"), load("guardrails_status.json"), load("excava/capabilities.json")]);
+    load("created_by_excava.json"), load("guardrails_status.json"), load("excava/capabilities.json"),
+    load("excava/engine_health.json")]);
   const gate = (ex && ex.gate) || {}, mem = (ex && ex.memory) || {};
   const os = (ex && ex.os) || {};
   const mode = os.mode || (excfg && excfg.mode) || "run";
@@ -2284,6 +2285,11 @@ async function renderExcava() {
     ${fleetHTML}
     ${queueHTML}
     ${apHTML}
+    ${engh && engh.results ? `<div class="card"><h3>🔌 Engine health <span class="sub">— hourly benchmark canary (a self-improvement experiment): each free engine answers one golden prompt; agents prefer the healthy ones</span></h3>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">${engh.results.map(r => {
+        const c = r.status === "healthy" ? "oklch(0.62 0.16 148)" : r.status === "no-key" ? "oklch(0.6 0.02 90)" : "oklch(0.6 0.18 25)";
+        return `<span class="pill" style="border-color:${c}" title="${esc(r.note || r.model || "")}">${esc(r.engine)} · ${esc(r.status)}${r.ms ? " · " + r.ms + "ms" : ""}</span>`; }).join("")}</div>
+      <p class="sub" style="margin-top:6px">measured ${esc(fmtDate(engh.generated_at))} · ranking: ${esc((engh.ranking || []).slice(0, 5).join(" → "))}</p></div>` : ""}
     <div class="card"><h3>⭐ North Star <span class="sub">— the ${goals.length} goals as a CONSTELLATION: live scores orbit the core; click a star to open its goal</span></h3>
       <div class="constel">
         <div class="constel-core"><b>EXCAVATORTRON</b><small>the hub</small></div>

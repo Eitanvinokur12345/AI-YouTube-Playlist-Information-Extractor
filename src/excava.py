@@ -461,6 +461,17 @@ def _beat(args) -> int:
         except Exception as e:
             beat_log.append(f"self-improve: skipped ({type(e).__name__})")
 
+        # ── SI step 2 (owner 2026-07-10): hourly engine-benchmark canary; chat prefers healthy ──
+        try:
+            from src import excava_experiments as exp
+            rep = exp.benchmark_engines()
+            if rep:
+                ok = sum(1 for r in rep["results"] if r["status"] == "healthy")
+                beat_log.append(f"experiment engine-benchmark: {ok}/{len(rep['results'])} healthy; "
+                                f"ranking {', '.join(rep['ranking'][:4])}")
+        except Exception as e:
+            beat_log.append(f"experiment: skipped ({type(e).__name__})")
+
         # ── daemon-grade integration (D2 directive): the OS sees EVERY lane of the project.
         #    Any lane that ran since the last beat becomes a bus event — the living OS reacts
         #    to the whole machine, not just its own department ticks. ──

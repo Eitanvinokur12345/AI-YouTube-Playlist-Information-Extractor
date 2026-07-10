@@ -23,6 +23,7 @@ import json
 import os
 import time
 import urllib.request
+from pathlib import Path
 
 # (name, kind, base_url, model, env_keys[, tier])  kind: gemini | openai | ollama
 # Order matters: pick_engine returns the FIRST available engine of the wanted tier, so the
@@ -38,7 +39,7 @@ CATALOG = [
      ["MISTRAL_API_KEY"], "fast"),
     ("gh-models",  "openai", "https://models.github.ai/inference",    "openai/gpt-4o-mini",
      ["GH_MODELS_TOKEN", "GITHUB_TOKEN"], "grounded"),
-    ("cerebras",   "openai", "https://api.cerebras.ai/v1",            "llama-3.3-70b",
+    ("cerebras",   "openai", "https://api.cerebras.ai/v1",            "llama3.3-70b",
      ["CEREBRAS_API_KEY", "CEREBRAS_API_KEY_2"], "fast"),
     ("gemini",     "gemini", "",                                      "gemini-2.0-flash",
      ["EXTERNAL_REVIEW_API_KEY", "GEMINI_API_KEY", "GEMINI_API_KEY_2", "GEMINI_API_KEY_3",
@@ -65,8 +66,24 @@ def _key(env_keys: list) -> str:
     return live[_ROT[name]]
 
 
+def _health_rank() -> dict:
+    """Engine ranking from the hourly benchmark canary (src/excava_experiments.py). Empty dict
+    if no report yet or it's stale (>2h) — then catalog order stands."""
+    try:
+        h = json.load(open(Path(__file__).parent.parent / "data" / "excava" / "engine_health.json",
+                           encoding="utf-8"))
+        from datetime import datetime, timezone
+        age = (datetime.now(timezone.utc) - datetime.fromisoformat(h["generated_at"])).total_seconds()
+        if age > 2 * 3600:
+            return {}
+        return {n: i for i, n in enumerate(h.get("ranking", []))}
+    except Exception:
+        return {}
+
+
 def available() -> list[dict]:
-    """Engines whose keys/endpoints exist right now (never raises)."""
+    """Engines whose keys/endpoints exist right now (never raises), ordered by measured health
+    (benchmark ranking) when fresh, else catalog order."""
     out = []
     for name, kind, base, model, envs, tier in CATALOG:
         if name == "omniroute":
@@ -80,6 +97,9 @@ def available() -> list[dict]:
             continue
         out.append({"name": name, "kind": kind, "base": base, "model": model,
                     "envs": envs, "tier": tier})
+    rank = _health_rank()
+    if rank:
+        out.sort(key=lambda e: rank.get(e["name"], 99))
     return out
 
 

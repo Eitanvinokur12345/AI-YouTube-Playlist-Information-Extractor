@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-07-10T12:42:40.581145+00:00",
+  "generated_at": "2026-07-10T19:59:43.720222+00:00",
   "policy": "activator gate: safe = auto-activate, caution = warn, risky = block until confirmed",
   "summary": {
     "safe": 126,
     "caution": 1047,
-    "risky": 30
+    "risky": 31
   },
   "connectors": {
     "perplexity-mcp": {
@@ -9309,6 +9309,14 @@
       "reasons": [
         "third-party (not an official vendor connector)"
       ]
+    },
+    "telegram-plugin-for-claude-code": {
+      "name": "Telegram Plugin for Claude Code",
+      "rating": "risky",
+      "reasons": [
+        "requests broad system/shell/file access",
+        "third-party (not an official vendor connector)"
+      ]
     }
   },
   "skills_flagged": {
@@ -9587,6 +9595,13 @@
     },
     "dynamic-agent-orchestration": {
       "name": "Dynamic Agent Orchestration",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "remote-ai-agent-operation": {
+      "name": "Remote AI Agent Operation",
       "rating": "caution",
       "reasons": [
         "the technique runs system/shell/file operations — review what it executes"

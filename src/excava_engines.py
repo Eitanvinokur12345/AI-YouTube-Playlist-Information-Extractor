@@ -140,11 +140,16 @@ def complete(prompt: str, engine: dict | None = None, dept: str = "",
     """One completion. Returns {ok, text, engine, model, ms}. Falls through the available
     list on failure — an outage never silences an agent, it just changes the badge."""
     tried = []
-    order = ([engine] if engine else []) + [e for e in available() if not engine or e["name"] != engine["name"]]
+    # Fall through the canary-proven HEALTHY pool, not the raw keyed list: a quota-dead engine
+    # used to eat a 60s timeout on EVERY turn before falling through — with ~18 rooms per cycle
+    # that made beats crawl and left one survivor (Mistral) answering everything (owner's
+    # 'agents aren't real' complaint, 2026-07-11). Dead engines re-enter via the hourly canary.
+    pool = healthy()
+    order = ([engine] if engine else []) + [e for e in pool if not engine or e["name"] != engine["name"]]
     if engine is None:
         first = pick_engine(dept, difficulty)
-        order = ([first] if first else []) + [e for e in available() if not first or e["name"] != first["name"]]
-    for e in order[:4]:
+        order = ([first] if first else []) + [e for e in pool if not first or e["name"] != first["name"]]
+    for e in order[:3]:
         t0 = time.time()
         try:
             if e["kind"] == "gemini":

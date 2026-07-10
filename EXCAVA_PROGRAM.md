@@ -30,8 +30,10 @@ proof) · SI-3 autonomy enforced + tier-2.5 auto-staffing (sandbox-proven) + �
    multi-model debates, not one engine talking to itself (owner caught 20/20 turns all-Mistral).
    Mechanics SHIPPED: healthy-pool round-robin per turn (consecutive speakers get different models),
    canary no-healthy reports never block a keyed re-run, supervisor flags single-engine rooms (11
-   caught on real data, visible in its criticism). LIVE CI PROOF PENDING — check fresh transcripts
-   for a real engine mix. Next layer: per-agent memory/stance so agents differ by more than engine.
+   caught on real data, visible in its criticism). PLUS: complete() now falls through the HEALTHY
+   pool only — a quota-dead engine used to eat a 60s timeout on every turn (why cycles crawled and
+   Mistral answered everything). LIVE CI PROOF PENDING — check fresh transcripts for a real engine
+   mix. Next layer: per-agent memory/stance so agents differ by more than engine.
 4. **P1 Live refresh** — the app polls data (~60s) while open (owner saw "updates only when I open it").
 5. **P2 Item-6 rest** — route results to their tabs (package→Packages, tool→Tools, prompt→Prompts,
    design→Designs); flag talk-only departments honestly in-app; ONE systematic github.com-link sweep.

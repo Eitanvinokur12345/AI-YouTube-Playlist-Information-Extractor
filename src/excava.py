@@ -257,6 +257,19 @@ def _approvals_sync(holding: list, mode: str) -> dict:
                "unroutable" if "specialization" in why or "unroutable" in why else "needs-owner")
         pending.append({"id": hid, "title": h.get("priority"),
                         "category": cat, "why": why, "what": _pending_what(cat, why)})
+    # Carry PITCHES (big-change proposals from self-improve) into the queue. They live in
+    # excava/pitches.json as the source of truth, so they SURVIVE this per-beat rebuild of
+    # `pending` — the bug that used to wipe them the same beat they were filed.
+    for p in _load("excava/pitches.json", {}).get("pitches", []):
+        pid = p.get("id")
+        if not pid or pid in granted or pid in declined or p.get("status") in ("granted", "declined"):
+            continue
+        if any(x.get("id") == pid for x in pending):
+            continue
+        pending.append({"id": pid, "title": p.get("what", ""), "category": "pitch",
+                        "why": p.get("why", ""),
+                        "what": p.get("owner_what") or _pending_what("needs-owner", ""),
+                        "since": p.get("at")})
     out = {"generated_at": NOW, "mode": mode,
            "note": ("Decide in the app: each pending item shows what it does in plain language with "
                     "Approve / Decline buttons and a review box. Your decision is saved in the app "

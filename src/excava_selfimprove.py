@@ -14,6 +14,7 @@ always overhaul-class -> pitch).
 from __future__ import annotations
 
 import json
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -98,28 +99,75 @@ def run() -> list[str]:
     if improved:
         rooms_p.write_text(json.dumps(rooms, ensure_ascii=False, indent=1), encoding="utf-8")
 
-    # PITCH: repeated engine outages -> propose the OmniRoute fallback wiring (overhaul-class)
-    fails = _engine_failures()
+    # PITCHES: big changes that need Eitan — grounded in REAL telemetry, deduped, routed to the
+    # SAME in-app decide flow (each pitch cites the number that triggered it, so it's never invented).
     pitched = _load(EXDIR / "pitches.json", {"pitches": []})
     have = {p.get("what") for p in pitched.get("pitches", [])}
-    if fails.get("(all)", 0) >= 3 and "wire OmniRoute gateway fallback" not in have:
-        pitch = {"id": f"pitch-{int(datetime.now(timezone.utc).timestamp()) % 100000}",
-                 "what": "wire OmniRoute gateway fallback",
-                 "why": f"{fails['(all)']} engine-outage turns in 2 days; the gateway's 4-tier "
-                        "fallback would absorb them (owner installed it locally already)",
-                 "class": "overhaul (P5 gate #2)", "at": _now(), "status": "pending"}
-        pitched.setdefault("pitches", []).append(pitch)
+    new_pitches = _gen_pitches(have)
+    if new_pitches:
+        pitched.setdefault("pitches", []).extend(new_pitches)
         (EXDIR / "pitches.json").write_text(json.dumps(pitched, ensure_ascii=False, indent=1),
                                             encoding="utf-8")
-        ap = _load(DATA / "excava_approvals.json", {"pending": [], "granted": []})
-        ap.setdefault("pending", []).append({"id": pitch["id"], "title": pitch["what"],
-                                             "category": "pitch", "why": pitch["why"],
-                                             "since": _now()})
-        (DATA / "excava_approvals.json").write_text(json.dumps(ap, ensure_ascii=False, indent=1),
-                                                    encoding="utf-8")
-        _log("pitch", pitch["what"], pitch["why"], False)
-        out.append(f"self-improve: PITCH filed — {pitch['what']} (awaits owner)")
+        for pitch in new_pitches:
+            _log("pitch", pitch["what"], pitch["why"], False)
+            out.append(f"self-improve: PITCH filed — {pitch['what']} (awaits owner)")
+        # NOTE: pitches reach the approval queue via excava._approvals_sync, which reads pitches.json
+        # as the source of truth every beat — so they survive the queue rebuild instead of being wiped.
     return out
+
+
+def _gen_pitches(have: set) -> list[dict]:
+    """Evaluate real, grounded conditions and file genuine big-change pitches. Deduped by 'what'.
+    'owner_what' is the plain-language 'what approving does' the in-app decide modal shows."""
+    pitches: list[dict] = []
+
+    def add(what: str, why: str, klass: str, owner_what: str) -> None:
+        if what in have:
+            return
+        pitches.append({"id": f"pitch-{abs(hash(what)) % 100000}", "what": what, "why": why,
+                        "class": klass, "owner_what": owner_what, "at": _now(), "status": "pending"})
+        have.add(what)
+
+    # A. repeated engine outages -> OmniRoute gateway fallback (overhaul-class)
+    fails = _engine_failures()
+    if fails.get("(all)", 0) >= 3:
+        add("wire OmniRoute gateway fallback",
+            f"{fails['(all)']} engine-outage turns in the last 2 days; the gateway's 4-tier fallback "
+            "would absorb them (you installed OmniRoute locally already)",
+            "overhaul (P5 gate #2)",
+            "Approve to let EXCAVA wire the OmniRoute fallback so engine outages stop stalling the rooms.")
+
+    # B. the lowest at-risk North-Star goal -> a dedicated build lane (focused push)
+    goals = _load(DATA / "goals_status.json", [])
+    if isinstance(goals, dict):
+        goals = goals.get("goals", [])
+    atrisk = [g for g in goals if isinstance(g, dict) and g.get("score", 100) < 65]
+    if atrisk:
+        g = min(atrisk, key=lambda x: x.get("score", 100))
+        add(f"dedicate a build lane to {g['id']} - {g.get('name', '')}",
+            f"{g['id']} sits at {g.get('score')}/100 ({g.get('gap', 'below target')}); a focused lane "
+            "would move the goal instead of leaving it at-risk",
+            "deeper focus (P5)",
+            f"Approve to spin up a lane that pushes {g['id']} '{g.get('name', '')}' toward its target.")
+
+    # C. a resource that keeps BLOCKING work -> obtain/enable it (deeper access)
+    ap = _load(DATA / "excava_approvals.json", {"pending": []})
+    miss = [p for p in ap.get("pending", []) if p.get("category") == "missing-resource"]
+    if len(miss) >= 2:
+        res = None
+        for p in miss:
+            m = re.search(r"resource ([a-z0-9\-]+)", p.get("why", ""))
+            if m:
+                res = m.group(1)
+                break
+        label = res or "the blocked capability"
+        add(f"provide the blocked resource: {label}",
+            f"{len(miss)} held items can't proceed because '{label}' isn't available; providing it "
+            "unblocks them all at once",
+            "deeper access (P5 gate #3)",
+            f"Approve to let EXCAVA obtain/enable '{label}' so the blocked items can run.")
+
+    return pitches
 
 
 if __name__ == "__main__":

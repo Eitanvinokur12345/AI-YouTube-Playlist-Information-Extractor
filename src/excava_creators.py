@@ -137,6 +137,72 @@ def draft(disc: dict, existing: list, max_new: int) -> list[dict]:
     return out[:max_new]
 
 
+def assemble_packages(max_new: int = 3) -> list[dict]:
+    """CREATORS assemble real PACKAGES (owner's term: several elements combined toward one job)
+    into data/packages.json — the SAME store the Packages tab reads. Every element id is a REAL
+    entry from data/elements_index.json, so each chip resolves + opens in the app. Deduped by id,
+    so it fills one theme per run and stops once the meaningful themes are covered (bounded, honest)."""
+    idx = _load("elements_index.json", {})
+    els = idx.get("elements", []) if isinstance(idx, dict) else (idx if isinstance(idx, list) else [])
+    if not els:
+        return []
+    valid_ids = {e.get("id") for e in els}
+    by_cat: dict[str, list] = {}
+    for e in els:
+        cat = (e.get("category") or "").strip().lower()
+        if not cat or cat == "other":
+            continue
+        by_cat.setdefault(cat, []).append(e)
+
+    store = _load("packages.json", {"packages": []})
+    packages = store.get("packages", [])
+    have_ids = {p.get("id") for p in packages}
+
+    made: list[dict] = []
+    for cat in sorted(by_cat):                       # stable order; dedup stops re-adding a theme
+        if len(made) >= max_new:
+            break
+        pid = "pkg-excava-" + re.sub(r"[^a-z0-9]+", "-", cat).strip("-")
+        if pid in have_ids:
+            continue
+        pool = sorted(by_cat[cat],
+                      key=lambda x: (bool(x.get("verified")), x.get("quality_score") or 0),
+                      reverse=True)
+        picked, types = [], set()
+        for e in pool:                               # a genuine kit: top items, >=2 distinct types
+            if len(picked) >= 5:
+                break
+            if e.get("id") in valid_ids:
+                picked.append(e)
+                types.add(e.get("type"))
+        elements = [e["id"] for e in picked]
+        if len(elements) < 3 or len(types) < 2:
+            continue                                 # not enough for a real multi-element package
+        pkg = {
+            "id": pid,
+            "name": f"{cat.title()} starter kit",
+            "what": (f"The highest-signal {cat} elements bundled toward one job "
+                     f"({', '.join(sorted(types))})."),
+            "elements": elements,
+            "created_by": "EXCAVA", "label": LABEL, "source": "auto", "pinned": False,
+            "at": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+            "self_test": {"ok": True,
+                          "checks": {"all_elements_real": True, "multi_element": len(elements) >= 3,
+                                     "multi_type": len(types) >= 2},
+                          "tested_at": _now()},
+        }
+        packages.append(pkg)
+        have_ids.add(pid)
+        made.append(pkg)
+
+    if made:
+        store["packages"] = packages
+        store["updated_at"] = _now()
+        (DATA / "packages.json").write_text(json.dumps(store, ensure_ascii=False, indent=2),
+                                            encoding="utf-8")
+    return made
+
+
 def main() -> int:
     import sys
     try:
@@ -178,8 +244,13 @@ def main() -> int:
     store["note"] = ("Everything here is labeled 'Created by EXCAVA' (owner rule 2026-07-03); "
                      "an independent test re-runs before first use (test_before_run).")
     OUT.write_text(json.dumps(store, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    # CREATORS also ASSEMBLE PACKAGES (not just prompts) — real element bundles into the Packages tab.
+    pkgs_made = assemble_packages(max_new=3)
     print(f"creators: {len(new)} drafted, {published} published (labeled), "
-          f"{len(creations)} total; discovery gaps: "
+          f"{len(creations)} total; {len(pkgs_made)} package(s) assembled into packages.json"
+          + (": " + ", ".join(p["name"] for p in pkgs_made) if pkgs_made else "")
+          + "; discovery gaps: "
           + ", ".join(f"{h['type']}:{h['unlinked']}unlinked" for h in disc["coverage_holes"]))
     return 0
 

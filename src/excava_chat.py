@@ -151,14 +151,19 @@ def _prompt(room: dict, sp: dict, hist: list[dict]) -> str:
     closing = room["turns"] >= room["max_turns"] - 2
     convo = "\n".join(f"{m['name']} ({m['agent']}): {m['text'][:300]}" for m in hist) or "(room just opened)"
     inst = {
-        "doer": "Propose the CONCRETE next action with real specifics (files, counts, commands). 2-4 sentences, in character.",
-        "checker": "Challenge the last proposal — find the real weakness or risk, demand evidence (productive debate). 2-3 sentences, in character.",
-        "improver": "Suggest one measurable improvement to the approach. 2 sentences.",
-        "lead": ("CONVERGE now: state the decision in one line starting 'DECISION:', then what the artifact must contain. In character."
+        "doer": ("Make the case for ONE concrete decision: what we should DO and why it's the best "
+                 "option for the goal. Name the trade-off you're accepting. 2-4 sentences, in character."),
+        "checker": ("Push back on the last idea: name the real risk or a better alternative, and what "
+                    "would settle the argument. 2-3 sentences, in character."),
+        "improver": "Offer one concrete way to make the plan better, cheaper, or faster. 2 sentences.",
+        "lead": ("CONVERGE now: state the call in one line starting 'DECISION:', then what the result "
+                 "must deliver and who owns it. In character."
                  if closing else "Steer: weigh the debate so far, keep it on the goal. 2 sentences."),
-    }.get(role, "Contribute concretely. 2 sentences.")
+    }.get(role, "Contribute one clear point. 2 sentences.")
     return (f"You are {sp.get('name')} — {sp.get('persona', '')}\n"
             f"Team law (obey): free-only; real-not-display; quality first; task-relative value.\n"
+            f"STYLE (obey): speak in PLAIN LANGUAGE a non-engineer can follow — talk about DECISIONS, "
+            f"reasons, and trade-offs, NOT shell commands, code, regex, or file paths. Full sentences.\n"
             f"ROOM ({room['kind']}): {room['goal']}\nDone-criteria: {room['done_criteria']}\n"
             f"Conversation so far:\n{convo}\n\nYour turn. {inst}")
 

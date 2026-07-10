@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v95";
+const APP_BUILD = "v96";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1885,6 +1885,7 @@ const EX_ICONS = { gemini: "📺", transcript: "📜", analysis: "⚙️", minin
   watch: "📺", core: "🦾" };
 function _exIcon(label) {
   const l = (label || "").toLowerCase();
+  if (AGENT_EMOJI[l]) return AGENT_EMOJI[l];   // exact department match first (e.g. visualization vs visual)
   for (const k in EX_ICONS) if (l.includes(k)) return EX_ICONS[k];
   return "🤖";
 }
@@ -2972,7 +2973,8 @@ function _designHooks() {
 }
 // ── M3.5 ROOMS: the messenger chat over real agent conversations ─────────────
 const AGENT_EMOJI = { transcripts: "📜", analysis: "⚙️", watch: "📺", links: "🔗", memory: "🧠",
-  mining: "⛏️", visual: "🎨", news: "📰", improve: "🧬", security: "🛡️", creators: "✨", core: "🦾" };
+  mining: "⛏️", visual: "🎨", news: "📰", improve: "🧬", security: "🛡️", creators: "✨",
+  visualization: "🖼️", accessibility: "♿", power: "⚡", core: "🦾" };
 async function renderRooms(selId) {
   const [rooms, reg] = await Promise.all([load("excava/rooms.json"), load("excava/agents.json")]);
   const list = ((rooms && rooms.rooms) || []).slice().reverse();

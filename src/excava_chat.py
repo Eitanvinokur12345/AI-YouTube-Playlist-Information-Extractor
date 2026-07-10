@@ -218,9 +218,12 @@ def advance(room_id: str, turns: int = 2) -> list[str]:
         if not ok:
             log.append(f"{room['id']}: held — {why}")
             break
-        # each agent speaks with a DISTINCT engine → real cross-model debate, not one model with itself
-        av = engines.available()
-        eng = av[sum(ord(c) for c in sp.get("id", "x")) % len(av)] if av else None
+        # REAL cross-model debate (owner 2026-07-11: 'it all happens through one engine — Mistral').
+        # Round-robin over the engines the benchmark canary PROVED healthy, by turn number, so two
+        # consecutive speakers use DIFFERENT models whenever more than one is alive. The old id-hash
+        # picked from all keyed engines, and dead ones fell through to the same survivor every time.
+        av = engines.healthy()
+        eng = av[room["turns"] % len(av)] if av else None
         r = engines.complete(_prompt(room, sp, _history(room)), engine=eng,
                              dept=dept, difficulty="hard" if sp.get("role") == "lead" else "normal",
                              max_tokens=260)

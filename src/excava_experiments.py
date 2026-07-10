@@ -39,6 +39,11 @@ def _now() -> str:
 def _stale() -> bool:
     try:
         prev = json.load(open(OUT, encoding="utf-8"))
+        # a report with zero healthy engines must NOT block a re-run in a place that HAS keys
+        # (e.g. the owner's PC wrote all-no-key, then CI — with keys — inherits it via git)
+        if not any(r.get("status") == "healthy" for r in prev.get("results", [])) \
+                and engines.available():
+            return True
         age = (datetime.now(timezone.utc)
                - datetime.fromisoformat(prev["generated_at"])).total_seconds()
         return age > FRESH_S

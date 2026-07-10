@@ -24,6 +24,12 @@ proof) · SI-3 autonomy enforced + tier-2.5 auto-staffing (sandbox-proven) + �
    `data/excava/regression.json`; beat-wired; roster flips to LIVE. This GATES tier-2 self-code for real.
 2. **SI-4b Formation A/B** (CI engines): same goal, two team shapes, blind judge → daily, `formation_ab.json`.
 3. **SI-4c Huge-task splitting**: decompose one big backlog goal into verified checkpointed bus steps.
+3½. **AGENT REALNESS (owner 2026-07-11 — priority #2 after self-improvement):** rooms must be TRUE
+   multi-model debates, not one engine talking to itself (owner caught 20/20 turns all-Mistral).
+   Mechanics SHIPPED: healthy-pool round-robin per turn (consecutive speakers get different models),
+   canary no-healthy reports never block a keyed re-run, supervisor flags single-engine rooms (11
+   caught on real data, visible in its criticism). LIVE CI PROOF PENDING — check fresh transcripts
+   for a real engine mix. Next layer: per-agent memory/stance so agents differ by more than engine.
 4. **P1 Live refresh** — the app polls data (~60s) while open (owner saw "updates only when I open it").
 5. **P2 Item-6 rest** — route results to their tabs (package→Packages, tool→Tools, prompt→Prompts,
    design→Designs); flag talk-only departments honestly in-app; ONE systematic github.com-link sweep.

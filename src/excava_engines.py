@@ -81,6 +81,23 @@ def _health_rank() -> dict:
         return {}
 
 
+def healthy(report: dict | None = None) -> list[dict]:
+    """Engines that BOTH have a key here AND answered the last benchmark canary. This is the pool
+    rooms round-robin over so a debate really crosses models. Falls back to available() when the
+    canary has no healthy data (first run / all-outage) — better one engine than silence."""
+    av = available()
+    try:
+        if report is None:
+            report = json.load(open(Path(__file__).parent.parent / "data" / "excava"
+                                    / "engine_health.json", encoding="utf-8"))
+        good = {r["engine"] for r in report.get("results", [])
+                if r.get("status") in ("healthy", "answering-but-sloppy")}
+        pool = [e for e in av if e["name"] in good]
+        return pool or av
+    except Exception:
+        return av
+
+
 def available() -> list[dict]:
     """Engines whose keys/endpoints exist right now (never raises), ordered by measured health
     (benchmark ranking) when fresh, else catalog order."""

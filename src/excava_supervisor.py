@@ -102,6 +102,33 @@ def _history() -> dict:
         return {}
 
 
+def _single_engine_rooms() -> list[str]:
+    """Owner flag 2026-07-11: a 'debate' where every turn comes from the same model is one engine
+    talking to itself. Flag today's rooms with >=6 agent turns but only 1 distinct engine."""
+    from datetime import timedelta
+    out = []
+    now = datetime.now(timezone.utc)
+    files = []
+    for d in (now.date(), (now - timedelta(days=1)).date()):   # chat folders are UTC-dated
+        day = DATA / "excava" / "chats" / d.isoformat()
+        if day.exists():
+            files.extend(day.glob("*.jsonl"))
+    for f in files:
+        engs, turns = set(), 0
+        for ln in f.read_text(encoding="utf-8").splitlines():
+            try:
+                m = json.loads(ln)
+            except Exception:
+                continue
+            if m.get("agent") == "system":
+                continue
+            turns += 1
+            engs.add((m.get("engine") or "?").split("/")[0])
+        if turns >= 6 and len(engs) == 1:
+            out.append(f"{f.stem[:34]} ({turns} turns, all {next(iter(engs))})")
+    return out
+
+
 def run() -> list[str]:
     try:
         bus = json.loads((DATA / "excava" / "bus.json").read_text(encoding="utf-8"))
@@ -132,6 +159,11 @@ def run() -> list[str]:
     if intent_flags:
         crit += f" · INTENT DRIFT: {len(intent_flags)} dept(s) wired to the WRONG tool for what you wanted — " \
                 + "; ".join(f"{f['dept']}→wants {f['wants']} not {f['wired']}" for f in intent_flags[:3])
+    mono = _single_engine_rooms()
+    if mono:
+        crit += (f" · SINGLE-ENGINE DEBATE (owner flag 2026-07-11): {len(mono)} room(s) today ran "
+                 f"entirely on ONE model ({'; '.join(mono[:3])}) — that is one engine talking to "
+                 "itself, not a real multi-model debate. The healthy-pool round-robin must spread it.")
     total_done = sum(1 for t in bus.get("tasks", []) if t.get("status") == "done")
     art_count = len(list((DATA / "excava" / "artifacts").glob("*.md"))) if (DATA / "excava" / "artifacts").exists() else 0
     lt = long_term(real_pct, total_done, art_count)

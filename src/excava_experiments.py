@@ -78,9 +78,115 @@ ROSTER = [
 def write_roster() -> None:
     p = ROOT / "data" / "excava" / "experiments.json"
     p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(json.dumps({"generated_at": _now(), "experiments": ROSTER,
+    roster = [dict(x) for x in ROSTER]
+    try:                                              # flip golden-task-regression to live + show score
+        reg = json.load(open(ROOT / "data" / "excava" / "regression.json", encoding="utf-8"))
+        for x in roster:
+            if x["id"] == "golden-task-regression":
+                x["status"] = "live"
+                x["what"] += f" Latest score: {reg.get('score')}% ({reg.get('passed')}/{reg.get('total')} tasks)."
+    except Exception:
+        pass
+    p.write_text(json.dumps({"generated_at": _now(), "experiments": roster,
                              "autonomy": "see data/excava/autonomy.json (owner-agreed tiers)"},
                             ensure_ascii=False, indent=1), encoding="utf-8")
+
+
+REG_OUT = ROOT / "data" / "excava" / "regression.json"
+
+
+def run_regression(force: bool = False) -> dict | None:
+    """SI-4a GOLDEN-TASK REGRESSION (gates tier-2 self-code): six fixed, engine-free tasks EXCAVA
+    must always do correctly. Runs hourly in the beat; a self-code change that drops the score
+    must be reverted (the autonomy.json tier-2 rule, now enforceable with real numbers).
+    Side-effect-safe: file-writing subsystems run against sandbox copies."""
+    if not force:
+        try:
+            prev = json.load(open(REG_OUT, encoding="utf-8"))
+            age = (datetime.now(timezone.utc)
+                   - datetime.fromisoformat(prev["generated_at"])).total_seconds()
+            if age < FRESH_S:
+                return None
+        except Exception:
+            pass
+    import shutil, tempfile
+    results = []
+
+    def task(name, fn):
+        try:
+            ok, note = fn()
+        except Exception as ex:
+            ok, note = False, f"{type(ex).__name__}: {str(ex)[:80]}"
+        results.append({"task": name, "ok": bool(ok), "note": str(note)[:120]})
+
+    def t_hub_candidates():
+        from src.excava_selfimprove import _hub_candidates
+        c = _hub_candidates(["transcript"])
+        return bool(c) and all(x.get("id") and x.get("name") for x in c), f"{len(c)} candidates"
+
+    def t_pitch_v2_fields():
+        from src.excava_selfimprove import _gen_pitches
+        ps = _gen_pitches(set())
+        need = ("requested_by", "need", "importance", "missing", "owner_what")
+        ok = bool(ps) and all(all(k in p for k in need) for p in ps)
+        return ok, f"{len(ps)} pitches, v2 fields present"
+
+    def t_pitch_survival():
+        from src import excava
+        raw = (ROOT / "data" / "excava_approvals.json").read_text(encoding="utf-8")
+        try:
+            res = excava._approvals_sync([], "run")
+            want = {p.get("id") for p in json.load(open(ROOT / "data/excava/pitches.json",
+                    encoding="utf-8")).get("pitches", []) if p.get("status") == "pending"}
+            got = {p.get("id") for p in res.get("pending", [])}
+            missing = want - got - set(res.get("granted", [])) - set(res.get("declined", []))
+            return not missing, f"{len(want)} pitches, {len(missing)} lost"
+        finally:                                       # never mutate the real queue from a test
+            (ROOT / "data" / "excava_approvals.json").write_text(raw, encoding="utf-8")
+
+    def t_package_assembly():
+        from src import excava_creators as cr
+        tmp = Path(tempfile.mkdtemp())
+        shutil.copy(ROOT / "data" / "elements_index.json", tmp / "elements_index.json")
+        (tmp / "packages.json").write_text('{"packages": []}', encoding="utf-8")
+        old = cr.DATA
+        try:
+            cr.DATA = tmp                              # sandbox: never touches real packages.json
+            made = cr.assemble_packages(max_new=1)
+            ok = bool(made) and len(made[0].get("elements", [])) >= 3
+            return ok, f"assembled {len(made)} kit(s) in sandbox"
+        finally:
+            cr.DATA = old
+
+    def t_bus_invariants():
+        from src import excava_bus as bus
+        b = bus.read_bus()
+        bad = [t["id"] for t in b.get("tasks", [])
+               if t.get("status") == "working" and not t.get("claimed_by")]
+        return not bad and all(t.get("id") and t.get("status") for t in b.get("tasks", [])), \
+            f"{len(b.get('tasks', []))} tasks, {len(bad)} working-unclaimed"
+
+    def t_stable_ids():
+        from src.excava import _hold_id
+        a, b = _hold_id("Some Held Priority"), _hold_id("Some Held Priority")
+        return a == b and a.startswith("hold-"), a
+
+    task("hub-candidates", t_hub_candidates)
+    task("pitch-v2-fields", t_pitch_v2_fields)
+    task("pitch-survival-in-approvals", t_pitch_survival)
+    task("package-assembly-sandbox", t_package_assembly)
+    task("bus-invariants", t_bus_invariants)
+    task("stable-hold-ids", t_stable_ids)
+    passed = sum(1 for r in results if r["ok"])
+    report = {"generated_at": _now(), "experiment": "golden-task-regression",
+              "passed": passed, "total": len(results),
+              "score": round(100 * passed / len(results)),
+              "results": results,
+              "note": "Six fixed engine-free tasks. A self-code change that drops this score gets "
+                      "auto-reverted (autonomy tier-2 rule)."}
+    REG_OUT.write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
+    write_roster()                                     # flip the roster entry to live with the score
+    return report
 
 
 def benchmark_engines(force: bool = False) -> dict | None:

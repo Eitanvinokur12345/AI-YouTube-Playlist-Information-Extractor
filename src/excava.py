@@ -469,6 +469,10 @@ def _beat(args) -> int:
                 ok = sum(1 for r in rep["results"] if r["status"] == "healthy")
                 beat_log.append(f"experiment engine-benchmark: {ok}/{len(rep['results'])} healthy; "
                                 f"ranking {', '.join(rep['ranking'][:4])}")
+            reg = exp.run_regression()
+            if reg:
+                beat_log.append(f"experiment golden-task-regression: {reg['score']}% "
+                                f"({reg['passed']}/{reg['total']} tasks pass)")
         except Exception as e:
             beat_log.append(f"experiment: skipped ({type(e).__name__})")
 

@@ -1,6 +1,44 @@
 # EXCAVA — the complete program (multi-agent orchestrator + harness over Excavatortron)
 
-_Draft for approval. Nothing here is executed until Eitan approves. Grounded in the 52 goals + James
+## ⭐ CURRENT PROGRAM — updated 2026-07-11 (this section IS the source of truth; below it = the original foundation)
+
+**Standing laws (owner):** free-only forever · everything operable IN THE APP (no GitHub for the owner) ·
+Ponytail law (reuse before build, minimal diffs, fewest tokens) · one item to VERIFIED-done per loop tick
+(operate the real user path; captured ≠ built ≠ used) · recall-before-change + log WHY after · ship only via
+`python -m src.git_safe ship` · harsh 100% criticism both ways every tick · memory-review opens each tick.
+
+**Autonomy tiers (agreed 2026-07-10, data/excava/autonomy.json, enforced):** EXCAVA alone may tune
+prompts/configs/tunings; change its OWN code only behind a sandbox test (auto-revert on fail); ADD AGENTS
+(labeled "Added by EXCAVA"). New tools from scratch / new departments / completely new features → pitch.
+
+**DONE + verified (July 10-11):** approvals decidable in-app (v94) · pitch system revived + PITCH V2
+(who/need/importance/missing + own-hub candidate chips, v98) · creators assemble real packages · humanized
+output + plain-language agent debates (VERIFIED live: 20/20 fresh turns, 0 bash) · Visualization ⁄
+Accessibility split into two staffed departments (v96) · Proof files open in-app (v97) · SI-1 hub self-use ·
+SI-2 hourly engine-benchmark canary + health-aware engine picking + 🔌 panel (v99, cerebras id fix pending CI
+proof) · SI-3 autonomy enforced + tier-2.5 auto-staffing (sandbox-proven) + 🧪 experiments roster in-app (v100).
+
+**NOW → NEXT (approved order — self-improvement first):**
+1. **SI-4a Golden-task regression suite** — ~6 fixed engine-free tasks (bus routing, package assembly,
+   pitch v2 generation, humanize, hub-candidate search, pitch-survival in approvals) → `run_regression()` →
+   `data/excava/regression.json`; beat-wired; roster flips to LIVE. This GATES tier-2 self-code for real.
+2. **SI-4b Formation A/B** (CI engines): same goal, two team shapes, blind judge → daily, `formation_ab.json`.
+3. **SI-4c Huge-task splitting**: decompose one big backlog goal into verified checkpointed bus steps.
+4. **P1 Live refresh** — the app polls data (~60s) while open (owner saw "updates only when I open it").
+5. **P2 Item-6 rest** — route results to their tabs (package→Packages, tool→Tools, prompt→Prompts,
+   design→Designs); flag talk-only departments honestly in-app; ONE systematic github.com-link sweep.
+6. **P5 Visual dept + Designs tab overhaul** — auto-ADD every design, quality-filter the junk, then tasks.
+7. **P6 Department interconnection** — depts ↔ brain systems/protocols, surfaced in the Developer tab.
+8. **P7 Rooms/Results HISTORY views** — per-department all-conversations view; war rooms sectioned above;
+   group-chat tab inside Rooms (owner re-confirmed; deliberately after the items above).
+
+**Standing checks each tick:** newest room-turn timestamp (beat health) · engine_health.json for real CI
+numbers (+ did owner's GROQ_API_KEY_2 / GEMINI_* / OPENROUTER_API_KEY secrets land) · any tier-2.5
+auto-added agents · supervisor real_pct + movement + systemcheck + proof.
+
+---
+
+_Original draft below (approved 2026-07-03; phases 0-3 built). Grounded in the 52 goals + James
 Goldbach's cortextOS/m2c1/claude-remote-manager patterns + agent-harness research. All visual work =
 Fable; the reserved-for-Opus-4.8 track is listed at the end._
 

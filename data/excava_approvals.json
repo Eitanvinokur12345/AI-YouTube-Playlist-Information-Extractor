@@ -32,20 +32,56 @@
       "what": "No department claimed this because none specialises in it. Approve to let EXCAVA assign it to the closest-fit department (or open a new task for it); decline to skip it."
     },
     {
-      "id": "pitch-87033",
+      "id": "pitch-73976",
       "title": "dedicate a build lane to G3 - Truth & access",
       "category": "pitch",
-      "why": "G3 sits at 54/100 (54.0% of tools/skills have a real link (target: ~100%)); a focused lane would move the goal instead of leaving it at-risk",
+      "why": "G3 sits at 54/100 (54.1% of tools/skills have a real link (target: ~100%)); a focused lane would move the goal instead of leaving it at-risk",
       "what": "Approve to spin up a lane that pushes G3 'Truth & access' toward its target.",
-      "since": "2026-07-10T13:15:50.271344+00:00"
+      "since": "2026-07-10T20:47:39.716049+00:00",
+      "requested_by": "Improve department (North-Star goal tracker, data/goals_status.json)",
+      "need": "Of your 9 North-Star goals, G3 'Truth & access' is the weakest at 54/100 — concretely: 54.1% of tools/skills have a real link (target: ~100%).",
+      "importance": "High — G3 is the LOWEST-scoring goal; every beat without a dedicated lane leaves the weakest link weakest.",
+      "missing": "A recurring CI lane whose only job is closing this goal's gap (like the analysis and links lanes that already exist for other goals).",
+      "hub_candidates": [
+        {
+          "id": "tool:bright-data-mcp",
+          "name": "Bright Data MCP"
+        },
+        {
+          "id": "tool:github-mcp-server",
+          "name": "GitHub MCP Server"
+        },
+        {
+          "id": "skill:meta-ads-mcp-integration",
+          "name": "Meta Ads MCP Integration"
+        }
+      ]
     },
     {
-      "id": "pitch-39883",
+      "id": "pitch-53860",
       "title": "provide the blocked resource: fetch-transcripts",
       "category": "pitch",
       "why": "2 held items can't proceed because 'fetch-transcripts' isn't available; providing it unblocks them all at once",
       "what": "Approve to let EXCAVA obtain/enable 'fetch-transcripts' so the blocked items can run.",
-      "since": "2026-07-10T13:15:50.272811+00:00"
+      "since": "2026-07-10T20:47:41.631604+00:00",
+      "requested_by": "The departments whose work is stuck on it (2 held items in your approval queue)",
+      "need": "'fetch-transcripts' is the one missing capability behind 2 stuck items — one unblock clears them all.",
+      "importance": "Medium-high — 2 real tasks wait on this single resource.",
+      "missing": "A working way to do 'fetch-transcripts' in the cloud beat (quota, key, or tool).",
+      "hub_candidates": [
+        {
+          "id": "tool:context7-mcp",
+          "name": "Context7 MCP"
+        },
+        {
+          "id": "tool:gemini-3-1-ultra",
+          "name": "Gemini 3.1 Ultra"
+        },
+        {
+          "id": "tool:openai-realtime-api",
+          "name": "OpenAI Realtime API"
+        }
+      ]
     }
   ],
   "granted": [],

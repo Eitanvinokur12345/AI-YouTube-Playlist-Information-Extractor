@@ -269,7 +269,11 @@ def _approvals_sync(holding: list, mode: str) -> dict:
         pending.append({"id": pid, "title": p.get("what", ""), "category": "pitch",
                         "why": p.get("why", ""),
                         "what": p.get("owner_what") or _pending_what("needs-owner", ""),
-                        "since": p.get("at")})
+                        "since": p.get("at"),
+                        # PITCH V2 (owner: 'not enough data in the pitch') — full decision context
+                        "requested_by": p.get("requested_by", ""), "need": p.get("need", ""),
+                        "importance": p.get("importance", ""), "missing": p.get("missing", ""),
+                        "hub_candidates": p.get("hub_candidates", [])})
     out = {"generated_at": NOW, "mode": mode,
            "note": ("Decide in the app: each pending item shows what it does in plain language with "
                     "Approve / Decline buttons and a review box. Your decision is saved in the app "

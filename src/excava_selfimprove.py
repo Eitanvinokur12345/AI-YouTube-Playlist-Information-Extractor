@@ -116,16 +116,48 @@ def run() -> list[str]:
     return out
 
 
+def _hub_candidates(terms: list[str], k: int = 3) -> list[dict]:
+    """SELF-USE (owner law 2026-07-10): before asking the owner for anything, search EXCAVA's OWN
+    hub (elements_index.json, ~6.8k elements) for tools/skills that could solve the problem.
+    Cheap keyword scoring, stdlib only; quality+verified break ties."""
+    idx = _load(DATA / "elements_index.json", {})
+    els = idx.get("elements", []) if isinstance(idx, dict) else []
+    terms = {t.lower().rstrip("s") for t in terms if t}          # singular-ize so 'transcripts' matches 'transcript'
+    scored, seen = [], set()
+    for e in els:
+        hay = (str(e.get("name", "")) + " " + str(e.get("what", ""))).lower()
+        score = sum(1 for t in terms if t in hay)
+        if score:
+            scored.append((score, bool(e.get("verified")), e.get("quality_score") or 0, e))
+    scored.sort(key=lambda x: (x[0], x[1], x[2]), reverse=True)
+    out = []
+    for _, _, _, e in scored:
+        if e.get("name") in seen:
+            continue
+        seen.add(e.get("name"))
+        out.append({"id": e.get("id"), "name": e.get("name")})
+        if len(out) >= k:
+            break
+    return out
+
+
 def _gen_pitches(have: set) -> list[dict]:
     """Evaluate real, grounded conditions and file genuine big-change pitches. Deduped by 'what'.
-    'owner_what' is the plain-language 'what approving does' the in-app decide modal shows."""
+    PITCH V2 (owner 2026-07-10: 'I don't have enough data in the pitch'): every pitch carries
+    requested_by / need / importance / missing / hub_candidates so the decide modal answers
+    WHO asks, WHY, HOW important, WHAT is missing, and what EXCAVA found in its own hub."""
     pitches: list[dict] = []
 
-    def add(what: str, why: str, klass: str, owner_what: str) -> None:
+    def add(what: str, why: str, klass: str, owner_what: str, *, requested_by: str = "",
+            need: str = "", importance: str = "", missing: str = "",
+            hub_terms: list[str] | None = None) -> None:
         if what in have:
             return
         pitches.append({"id": f"pitch-{abs(hash(what)) % 100000}", "what": what, "why": why,
-                        "class": klass, "owner_what": owner_what, "at": _now(), "status": "pending"})
+                        "class": klass, "owner_what": owner_what, "at": _now(), "status": "pending",
+                        "requested_by": requested_by, "need": need, "importance": importance,
+                        "missing": missing,
+                        "hub_candidates": _hub_candidates(hub_terms) if hub_terms else []})
         have.add(what)
 
     # A. repeated engine outages -> OmniRoute gateway fallback (overhaul-class)
@@ -135,7 +167,14 @@ def _gen_pitches(have: set) -> list[dict]:
             f"{fails['(all)']} engine-outage turns in the last 2 days; the gateway's 4-tier fallback "
             "would absorb them (you installed OmniRoute locally already)",
             "overhaul (P5 gate #2)",
-            "Approve to let EXCAVA wire the OmniRoute fallback so engine outages stop stalling the rooms.")
+            "Approve to let EXCAVA wire the OmniRoute fallback so engine outages stop stalling the rooms.",
+            requested_by="Improve department (engine-outage telemetry from the room transcripts)",
+            need=f"Agent conversations died {fails['(all)']} times in 2 days because every free engine "
+                 "was rate-limited at once; a fallback router would keep rooms alive.",
+            importance="High — when engines are out, ALL departments stop talking and producing.",
+            missing="A router that tries engine after engine automatically (OmniRoute is installed "
+                    "on your PC but not wired into the cloud beat).",
+            hub_terms=["router", "gateway", "fallback", "openrouter"])
 
     # B. the lowest at-risk North-Star goal -> a dedicated build lane (focused push)
     goals = _load(DATA / "goals_status.json", [])
@@ -148,7 +187,15 @@ def _gen_pitches(have: set) -> list[dict]:
             f"{g['id']} sits at {g.get('score')}/100 ({g.get('gap', 'below target')}); a focused lane "
             "would move the goal instead of leaving it at-risk",
             "deeper focus (P5)",
-            f"Approve to spin up a lane that pushes {g['id']} '{g.get('name', '')}' toward its target.")
+            f"Approve to spin up a lane that pushes {g['id']} '{g.get('name', '')}' toward its target.",
+            requested_by="Improve department (North-Star goal tracker, data/goals_status.json)",
+            need=f"Of your 9 North-Star goals, {g['id']} '{g.get('name', '')}' is the weakest at "
+                 f"{g.get('score')}/100 — concretely: {g.get('gap', 'below target')}.",
+            importance=f"High — {g['id']} is the LOWEST-scoring goal; every beat without a dedicated "
+                       "lane leaves the weakest link weakest.",
+            missing="A recurring CI lane whose only job is closing this goal's gap (like the analysis "
+                    "and links lanes that already exist for other goals).",
+            hub_terms=[w for w in str(g.get("name", "")).lower().split() if len(w) > 3][:3])
 
     # C. a resource that keeps BLOCKING work -> obtain/enable it (deeper access)
     ap = _load(DATA / "excava_approvals.json", {"pending": []})
@@ -165,7 +212,14 @@ def _gen_pitches(have: set) -> list[dict]:
             f"{len(miss)} held items can't proceed because '{label}' isn't available; providing it "
             "unblocks them all at once",
             "deeper access (P5 gate #3)",
-            f"Approve to let EXCAVA obtain/enable '{label}' so the blocked items can run.")
+            f"Approve to let EXCAVA obtain/enable '{label}' so the blocked items can run.",
+            requested_by=f"The departments whose work is stuck on it ({len(miss)} held items in your "
+                         "approval queue)",
+            need=f"'{label}' is the one missing capability behind {len(miss)} stuck items — one "
+                 "unblock clears them all.",
+            importance=f"Medium-high — {len(miss)} real tasks wait on this single resource.",
+            missing=f"A working way to do '{label}' in the cloud beat (quota, key, or tool).",
+            hub_terms=[t for t in re.split(r"[^a-z0-9]+", label.lower()) if len(t) > 3][:3])
 
     return pitches
 

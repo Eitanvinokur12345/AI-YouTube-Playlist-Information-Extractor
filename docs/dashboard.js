@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v97";
+const APP_BUILD = "v98";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2457,11 +2457,19 @@ function openApproval(id) {
   const modal = document.getElementById("pitch-modal"); if (!modal) return;
   modal.hidden = false;
   const close = () => { modal.hidden = true; };
+  const row = (label, val) => val ? `<p class="sub" style="margin:.15rem 0"><b>${label}:</b> ${esc(val)}</p>` : "";
+  const hub = (p.hub_candidates || []).map(c =>
+    `<a class="pill" href="#element/${encodeURIComponent(c.id)}" title="${esc(c.id)}">${esc(c.name)}</a>`).join(" ");
   modal.innerHTML = `<div class="pitch-box">
     <div class="ph">🖊 NEEDS YOUR DECISION — ${esc((p.category || "held").toUpperCase())} <button class="px" data-appr-x>✕</button></div>
     <p style="font-weight:600;margin:.4rem 0">${esc(p.title || "")}</p>
     <p class="sub" style="margin:.2rem 0 .6rem">${esc(p.what || "")}</p>
-    ${p.why ? `<p class="sub" style="opacity:.7;font-size:.82em">context: ${esc(p.why)}</p>` : ""}
+    ${row("Who asks", p.requested_by)}
+    ${row("The need", p.need || p.why)}
+    ${row("How important", p.importance)}
+    ${row("What's missing", p.missing)}
+    ${hub ? `<p class="sub" style="margin:.3rem 0 .1rem"><b>What EXCAVA found in its own hub</b> (click to open):</p><p style="margin:.1rem 0 .4rem">${hub}</p>` : ""}
+    ${!p.need && p.why ? "" : (p.why && p.need ? `<p class="sub" style="opacity:.7;font-size:.82em">raw trigger: ${esc(p.why)}</p>` : "")}
     <label class="sub" style="display:block;margin:.5rem 0 .2rem">Your review / note (optional — the cloud beat and history keep it):</label>
     <textarea id="appr-review" rows="3" style="width:100%;box-sizing:border-box;border-radius:8px;padding:8px;font:inherit" placeholder="e.g. yes, but route it to analysis instead / no, not worth it right now"></textarea>
     <div class="pitch-actions" style="margin-top:.7rem">
@@ -2479,6 +2487,7 @@ function openApproval(id) {
   modal.querySelector("[data-appr-x]").addEventListener("click", close);
   modal.querySelector("[data-appr-yes]").addEventListener("click", () => decide("approve"));
   modal.querySelector("[data-appr-no]").addEventListener("click", () => decide("decline"));
+  modal.querySelectorAll("a.pill").forEach(a => a.addEventListener("click", close));  // hub chip -> element view
   modal.addEventListener("click", e => { if (e.target === modal) close(); });
 }
 

@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v96";
+const APP_BUILD = "v97";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1852,8 +1852,17 @@ async function _openArtifact(ref, title) {
   _showModal(title || "Artifact", `<p class="sub">loading…</p>`);
   let txt = "";
   try { txt = await (await fetch("../" + ref, { cache: "no-store" })).text(); } catch (e) {}
+  let shown = txt, note = "";
+  if (txt && /\.json$/.test(ref)) {                       // pretty-print JSON so it's readable, not a blob
+    try { shown = JSON.stringify(JSON.parse(txt), null, 2); } catch (_) {}
+  }
+  const CAP = 60000;                                      // don't dump multi-MB files into the modal
+  if (shown.length > CAP) {
+    note = ` <b>(showing the first ${Math.round(CAP / 1000)}KB of ${Math.round(shown.length / 1000)}KB)</b>`;
+    shown = shown.slice(0, CAP) + "\n… (truncated — use the GitHub link for the whole file)";
+  }
   const body = txt
-    ? `<pre class="ex-artifact">${esc(txt)}</pre><p class="sub">file: <code>${esc(ref)}</code> · <a target="_blank" href="${GH_REPO}/blob/main/${esc(ref)}">also on GitHub ↗</a></p>`
+    ? `<pre class="ex-artifact">${esc(shown)}</pre><p class="sub">file: <code>${esc(ref)}</code>${note} · <a target="_blank" href="${GH_REPO}/blob/main/${esc(ref)}">full file on GitHub ↗</a></p>`
     : `<p class="sub">Couldn't load it in-app — <a target="_blank" href="${GH_REPO}/blob/main/${esc(ref)}">open on GitHub ↗</a></p>`;
   _showModal(title || ref.split("/").pop(), body);
 }
@@ -3098,7 +3107,8 @@ function renderProof(p) {
       <td><b>${esc((d.dept || "").toUpperCase())}</b></td>
       <td><span class="pv-badge ${vclass(d.verdict)}">${vlabel[d.verdict] || d.verdict}</span></td>
       <td class="pv-out">${humanizeHTML(d.output || "")}</td>
-      <td>${d.evidence_url ? `<a target="_blank" href="${esc(d.evidence_url)}">see the file ↗</a>` : "—"}</td>
+      <td>${d.evidence ? `<button class="qr-btn" data-open-artifact="${esc(d.evidence)}" data-title="${esc((d.dept || "").toUpperCase())} — the real file">see the file</button>`
+        : d.evidence_url ? `<a target="_blank" href="${esc(d.evidence_url)}">see the file ↗</a>` : "—"}</td>
     </tr>`).join("");
   view.innerHTML = `
     <div class="card" style="border-top:3px solid oklch(0.62 0.16 148)">
@@ -3118,6 +3128,8 @@ function renderProof(p) {
     </div>`;
   view.querySelectorAll("[data-goto-tab]").forEach(a =>
     a.addEventListener("click", e => { e.preventDefault(); show(a.dataset.gotoTab); }));
+  view.querySelectorAll("[data-open-artifact]").forEach(b => b.addEventListener("click", () =>
+    _openArtifact(b.dataset.openArtifact, b.dataset.title)));   // proof files open IN-APP, not GitHub
 }
 async function renderResults() {
   const items = await _resultItems();

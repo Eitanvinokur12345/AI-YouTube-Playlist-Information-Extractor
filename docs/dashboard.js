@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v93";
+const APP_BUILD = "v94";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2052,13 +2052,21 @@ async function renderExcava() {
       </div>
     </div>`;
   const pend = (ap && ap.pending) || [];
+  _apprCache = pend.slice();
+  const _dec = _localDecisions();
+  const waiting = pend.filter(p => !_dec[p.id]);
   const apHTML = `
-    <div class="card"><h3>🖊 Approval queue <span class="sub">— the only things waiting on YOU (${pend.length})</span></h3>
-      ${pend.length ? pend.map(p => `<div class="ex-task">
-        <span class="tk h">${esc((p.category || "held").toUpperCase())}</span>
-        <span>${esc(p.title || "")} <span class="sub">— ${esc(p.why || "")}</span></span>
-        ${p.category === "pitch" && p.id ? `<a class="qr-btn" style="margin-left:auto;flex:none;cursor:pointer" data-open-pitch="${esc(p.id)}">open as conversation 🗣</a>`
-          : p.id ? `<a class="qr-btn" style="margin-left:auto;flex:none" target="_blank" href="${_exIssue("EXCAVA: approve " + p.id)}">approve ✓</a>` : ""}</div>`).join("")
+    <div class="card"><h3>🖊 Approval queue <span class="sub">— the only things waiting on YOU (${waiting.length})</span></h3>
+      ${pend.length ? pend.map(p => {
+        const d = _dec[p.id];
+        const decided = d ? `<span class="qr-btn" style="margin-left:auto;flex:none;pointer-events:none;background:${d.decision === "approve" ? "var(--ok,#1c7)" : "#b44"};color:#fff;border:0">${d.decision === "approve" ? "✓ you approved" : "✕ you declined"} · sent</span>`
+          : `<a class="qr-btn" style="margin-left:auto;flex:none;cursor:pointer;background:var(--gold);border-color:var(--gold-line)" data-open-approval="${esc(p.id)}">Review &amp; decide →</a>`;
+        return `<div class="ex-task" style="align-items:flex-start">
+          <span class="tk h">${esc((p.category || "held").toUpperCase())}</span>
+          <span style="flex:1"><b>${esc(p.title || "")}</b>
+            <span class="sub" style="display:block;margin-top:2px">${esc(p.what || p.why || "")}</span></span>
+          ${decided}</div>`;
+      }).join("")
       : `<p class="sub">Nothing waits on you. Tasks land here only after 3-tier escalation, an outward gate hold, or an unroutable/missing-resource hold.</p>`}
     </div>`;
   const goalsMini = goals.map(g => `<span class="pill" title="${esc(g.gap || "")}">${esc(g.id)} ${g.score}</span>`).join(" ");
@@ -2276,6 +2284,9 @@ async function renderExcava() {
   // M3.11: a pitch in the approval queue opens as a conversation
   view.querySelectorAll("[data-open-pitch]").forEach(a =>
     a.addEventListener("click", e => { e.preventDefault(); openPitch(a.dataset.openPitch); }));
+  // 2026-07-10: every pending approval opens the in-app Review & decide modal (Approve/Decline + note)
+  view.querySelectorAll("[data-open-approval]").forEach(a =>
+    a.addEventListener("click", e => { e.preventDefault(); openApproval(a.dataset.openApproval); }));
   // M3.13: the interactive walkthrough
   view.querySelectorAll("[data-tour]").forEach(b =>
     b.addEventListener("click", () => startTour(+b.dataset.tour)));
@@ -2382,6 +2393,50 @@ async function renderExcava() {
   };
   view.querySelectorAll(".nstar").forEach(el => el.addEventListener("click", () => openGoal(el.dataset.goal)));
   view.querySelectorAll("[data-goal-chip]").forEach(el => el.addEventListener("click", () => openGoal(el.dataset.goalChip)));
+}
+
+// ── APPROVAL DECISIONS: every pending item is reviewable + decidable IN THE APP ──
+// The decision is saved locally instantly (visible + persists your review) and dispatched to the
+// cloud beat via the free issue channel, which writes granted/declined to excava_approvals.json.
+let _apprCache = [];
+function _localDecisions() {
+  try { return JSON.parse(localStorage.getItem("excavatortron.decisions") || "{}"); }
+  catch (_) { return {}; }
+}
+function _recordDecision(id, decision, review) {
+  const d = _localDecisions();
+  d[id] = { decision, review: review || "", at: new Date().toISOString() };
+  try { localStorage.setItem("excavatortron.decisions", JSON.stringify(d)); } catch (_) {}
+}
+// Open the in-app decision modal for a pending approval — plain language, review box, Approve/Decline.
+function openApproval(id) {
+  const p = _apprCache.find(x => x.id === id) || { id, title: id, what: "", why: "", category: "held" };
+  const modal = document.getElementById("pitch-modal"); if (!modal) return;
+  modal.hidden = false;
+  const close = () => { modal.hidden = true; };
+  modal.innerHTML = `<div class="pitch-box">
+    <div class="ph">🖊 NEEDS YOUR DECISION — ${esc((p.category || "held").toUpperCase())} <button class="px" data-appr-x>✕</button></div>
+    <p style="font-weight:600;margin:.4rem 0">${esc(p.title || "")}</p>
+    <p class="sub" style="margin:.2rem 0 .6rem">${esc(p.what || "")}</p>
+    ${p.why ? `<p class="sub" style="opacity:.7;font-size:.82em">context: ${esc(p.why)}</p>` : ""}
+    <label class="sub" style="display:block;margin:.5rem 0 .2rem">Your review / note (optional — the cloud beat and history keep it):</label>
+    <textarea id="appr-review" rows="3" style="width:100%;box-sizing:border-box;border-radius:8px;padding:8px;font:inherit" placeholder="e.g. yes, but route it to analysis instead / no, not worth it right now"></textarea>
+    <div class="pitch-actions" style="margin-top:.7rem">
+      <button class="ok" data-appr-yes>✓ Approve</button>
+      <button class="no" data-appr-no>✕ Decline</button>
+    </div></div>`;
+  const decide = (decision) => {
+    const review = (modal.querySelector("#appr-review") || {}).value || "";
+    _recordDecision(id, decision, review);
+    close();
+    invalidate("excava_approvals.json");
+    _sendModal("EXCAVA: " + decision + " " + id, review || ("(" + decision + " — no note)"));
+    if (typeof renderExcava === "function") renderExcava();
+  };
+  modal.querySelector("[data-appr-x]").addEventListener("click", close);
+  modal.querySelector("[data-appr-yes]").addEventListener("click", () => decide("approve"));
+  modal.querySelector("[data-appr-no]").addEventListener("click", () => decide("decline"));
+  modal.addEventListener("click", e => { if (e.target === modal) close(); });
 }
 
 // ── M3.11 STEERING: bell + count, "needs your approval" banner, walk-up monster, pitches ──

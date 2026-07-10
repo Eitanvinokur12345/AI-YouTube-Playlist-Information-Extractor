@@ -27,8 +27,10 @@ Free, mechanical, no Claude tokens; a beat never raises (the cron must not break
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -189,12 +191,41 @@ def _audit_spine() -> list[str]:
     return problems
 
 
+def _hold_id(title: str) -> str:
+    """Stable, human-addressable id for a held item so the cockpit can render an
+    approve/decline action and the owner (or Claude) can grant it by id. Deterministic:
+    the same title always yields the same id, so a decision survives across beats."""
+    slug = re.sub(r"[^a-z0-9]+", "-", (title or "item").lower()).strip("-")[:36] or "item"
+    h = hashlib.sha1((title or "").encode("utf-8")).hexdigest()[:4]
+    return f"hold-{slug}-{h}"
+
+
+def _pending_what(cat: str, why: str) -> str:
+    """Plain-language 'what this is and what your decision does' — no jargon, no codes.
+    The owner reads THIS, not the raw why-string, to decide."""
+    m = {
+        "escalated": "This task bounced through every department without getting resolved, so it needs your call. "
+                     "Approve to send it back into the work queue with priority; decline to drop it.",
+        "missing-resource": "A department wants to do this but the tool it needs isn't available yet "
+                            "(for example, fetching transcripts). Approve to let EXCAVA route it to another "
+                            "department or flag it for an unblock; decline to shelve it.",
+        "unroutable": "No department claimed this because none specialises in it. Approve to let EXCAVA "
+                      "assign it to the closest-fit department (or open a new task for it); decline to skip it.",
+        "outward": "This would reach OUTSIDE the app (post, send, or publish something). It will not happen "
+                   "without your explicit yes. Approve only if you want EXCAVA to act externally.",
+        "needs-owner": "This needs a decision only you can make. Approve to proceed; decline to hold.",
+    }
+    base = m.get(cat, m["needs-owner"])
+    return base
+
+
 def _approvals_sync(holding: list, mode: str) -> dict:
     """Phase 1 approval queue: everything waiting on the OWNER lands in
     data/excava_approvals.json with a category; the owner grants by id (cockpit issue link,
     Claude, or editing the file). Granted ids un-hold the matching bus task next beat."""
     prev = _load("excava_approvals.json", {})
     granted = set(prev.get("granted", []))
+    declined = set(prev.get("declined", []))
     applied = []
     if granted:
         b = bus.read_bus()
@@ -208,24 +239,31 @@ def _approvals_sync(holding: list, mode: str) -> dict:
             bus._write_bus(b)
     pending, seen = [], set()
     for t in bus.read_bus()["tasks"]:
-        if t["status"] == "held" and t["id"] not in granted:
+        if t["status"] == "held" and t["id"] not in granted and t["id"] not in declined:
             pending.append({"id": t["id"], "title": t["title"], "category": "escalated",
                             "why": t.get("hold_reason", "escalated past tier 3"),
+                            "what": _pending_what("escalated", t.get("hold_reason", "")),
                             "since": t.get("updated_at")})
             seen.add(t["title"])
     for h in holding:
         if h.get("priority") in seen:
             continue
+        hid = _hold_id(h.get("priority", ""))
+        if hid in granted or hid in declined:
+            continue
         why = h.get("why_held", "")
         cat = ("outward" if "outward" in why else
                "missing-resource" if "resource" in why else
                "unroutable" if "specialization" in why or "unroutable" in why else "needs-owner")
-        pending.append({"id": None, "title": h.get("priority"), "category": cat, "why": why})
+        pending.append({"id": hid, "title": h.get("priority"),
+                        "category": cat, "why": why, "what": _pending_what(cat, why)})
     out = {"generated_at": NOW, "mode": mode,
-           "note": ("Approve by id: tell Claude 'EXCAVA: approve <id>', open the cockpit's approve "
-                    "link (GitHub issue), or add the id to 'granted' here. Granted ids are applied "
-                    "and re-queued on the next beat."),
-           "pending": pending[:20], "granted": sorted(granted), "applied_last_beat": applied}
+           "note": ("Decide in the app: each pending item shows what it does in plain language with "
+                    "Approve / Decline buttons and a review box. Your decision is saved in the app "
+                    "instantly and dispatched to the cloud beat, which applies granted ids and drops "
+                    "declined ids on the next cycle."),
+           "pending": pending[:20], "granted": sorted(granted),
+           "declined": sorted(declined), "applied_last_beat": applied}
     (DATA / "excava_approvals.json").write_text(
         json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
     return out

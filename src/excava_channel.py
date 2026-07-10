@@ -64,13 +64,27 @@ def apply(title: str, body: str, number: str) -> str:
                 "appears on the cockpit's Direction card, and major changes preview against it first. "
                 "Overrule any reading with another 'EXCAVA: direction …'.")
 
-    m = re.match(r"approve\s+(\S+)$", low)
+    m = re.match(r"approve\s+(\S+)", low)
     if m:
         tid = m.group(1)
+        review = (body or "").strip()[:600]
         def _grant(a):
             g = set(a.get("granted", [])); g.add(tid); a["granted"] = sorted(g)
+            a.setdefault("reviews", {})[tid] = {"decision": "approve", "review": review,
+                                                "at": datetime.now(timezone.utc).isoformat()}
         _rw("excava_approvals.json", _grant)
-        return f"✅ Approval granted for `{tid}` — applied and re-queued on the next beat (hourly)."
+        return f"✅ Approval granted for `{tid}` — applied and re-queued on the next beat."
+
+    m = re.match(r"decline\s+(\S+)", low)
+    if m:
+        tid = m.group(1)
+        review = (body or "").strip()[:600]
+        def _decline(a):
+            g = set(a.get("declined", [])); g.add(tid); a["declined"] = sorted(g)
+            a.setdefault("reviews", {})[tid] = {"decision": "decline", "review": review,
+                                                "at": datetime.now(timezone.utc).isoformat()}
+        _rw("excava_approvals.json", _decline)
+        return f"🚫 Declined `{tid}` — it's dropped from your queue on the next beat."
 
     m = re.match(r"weight\s+([a-z\-]+)\s+(\d{1,3})$", low)
     if m:

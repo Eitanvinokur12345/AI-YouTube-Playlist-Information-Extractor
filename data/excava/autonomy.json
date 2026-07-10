@@ -1,0 +1,22 @@
+{
+  "agreed_with_owner": "2026-07-10 (AskUserQuestion answers)",
+  "note": "What EXCAVA may change about ITSELF without asking. Enforced by excava_selfimprove._tier_allows; every self-change logs its tier in improvements.jsonl. Anything not listed = tier 3.",
+  "tiers": {
+    "1-auto": {
+      "may": ["agent prompts", "configs", "tunings", "budgets", "room pacing", "engine order", "priority weights"],
+      "rule": "Apply immediately + log. Reversible by nature."
+    },
+    "2-self-code": {
+      "may": ["EXCAVA's own Python/JS code"],
+      "rule": "Allowed ONLY if an independent sandbox test passes first; auto-revert on failure; log the test evidence."
+    },
+    "2.5-agents": {
+      "may": ["add new AGENTS to existing departments"],
+      "rule": "May draft alone, labeled 'Added by EXCAVA' with a mandate + persona; owner can remove."
+    },
+    "3-pitch": {
+      "may": ["new tools from scratch", "new departments", "completely new features", "anything outward-facing"],
+      "rule": "REQUIRES an owner pitch (v2: who/need/importance/missing/hub-candidates)."
+    }
+  }
+}

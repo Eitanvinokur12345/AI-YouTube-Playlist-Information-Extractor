@@ -46,8 +46,46 @@ def _stale() -> bool:
         return True
 
 
+#  THE EXPERIMENT ROSTER (owner 2026-07-10: 'professional experiments… think a lot about what
+#  to do'). Honest statuses — 'live' means running now; 'next' means designed, not yet built.
+ROSTER = [
+    {"id": "engine-benchmark", "status": "live",
+     "what": "Hourly golden-task canary over every free engine; agents prefer the healthy ones.",
+     "method": "canary testing (the standard for API health)"},
+    {"id": "hub-self-use", "status": "live",
+     "what": "When something blocks EXCAVA, it searches its OWN 6.8k-element hub for a tool that "
+             "solves it and attaches the candidates to the pitch.",
+     "method": "retrieval-augmented self-repair"},
+    {"id": "agent-staffing", "status": "live",
+     "what": "Departments missing a lead/doer/checker get the missing role added automatically "
+             "(tier 2.5 autonomy, labeled 'Added by EXCAVA').",
+     "method": "structural invariant enforcement"},
+    {"id": "formation-ab", "status": "next",
+     "what": "Run the same goal with two team shapes (e.g. 2 vs 5 agents, debate vs solo) and an "
+             "independent judge picks the better artifact; the winner becomes the default.",
+     "method": "A/B testing with blind judging"},
+    {"id": "huge-task-splitting", "status": "next",
+     "what": "Take one huge goal, decompose into small verified steps, execute step-by-step with "
+             "a checkpoint after each — the skill EXCAVA needs for big jobs.",
+     "method": "hierarchical decomposition with checkpoints"},
+    {"id": "golden-task-regression", "status": "next",
+     "what": "A fixed suite of tasks EXCAVA once did well, re-run after every self-change; any "
+             "score drop auto-reverts the change (tier-2 self-code gate).",
+     "method": "regression testing (how real software ships safely)"},
+]
+
+
+def write_roster() -> None:
+    p = ROOT / "data" / "excava" / "experiments.json"
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps({"generated_at": _now(), "experiments": ROSTER,
+                             "autonomy": "see data/excava/autonomy.json (owner-agreed tiers)"},
+                            ensure_ascii=False, indent=1), encoding="utf-8")
+
+
 def benchmark_engines(force: bool = False) -> dict | None:
     """One golden-task pass over every catalog engine. Returns the report (or None if fresh)."""
+    write_roster()                                     # keep the experiment roster visible in-app
     if not force and not _stale():
         return None
     results = []

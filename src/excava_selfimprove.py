@@ -35,11 +35,58 @@ def _load(p: Path, d):
         return d
 
 
+#  AUTONOMY (owner 2026-07-10, data/excava/autonomy.json): which self-changes need no owner.
+_TIER = {"budget-shift": "1-auto", "safe-room-retire": "1-auto", "prompt": "1-auto",
+         "config": "1-auto", "self-code": "2-self-code", "add-agent": "2.5-agents",
+         "pitch": "3-pitch"}
+
+
 def _log(kind: str, what: str, why: str, applied: bool) -> None:
     EXDIR.mkdir(parents=True, exist_ok=True)
     with open(LOG, "a", encoding="utf-8") as fh:
         fh.write(json.dumps({"at": _now(), "kind": kind, "what": what, "why": why,
-                             "applied": applied}, ensure_ascii=False) + "\n")
+                             "applied": applied, "tier": _TIER.get(kind, "3-pitch")},
+                            ensure_ascii=False) + "\n")
+
+
+def _staff_thin_departments() -> list[str]:
+    """TIER 2.5 (owner-granted): EXCAVA may add new AGENTS alone. Real use: any department
+    running below the standard cast (lead+doer+checker) gets its missing role added, labeled
+    'Added by EXCAVA'. Idempotent; owner can remove any agent it adds."""
+    out = []
+    reg_p = EXDIR / "agents.json"
+    reg = _load(reg_p, {})
+    ags = reg.get("agents", [])
+    by_dept: dict[str, set] = {}
+    for a in ags:
+        d = a.get("department")
+        if d and d != "core":
+            by_dept.setdefault(d, set()).add(a.get("role"))
+    need = {"lead": "steers the room and converges decisions",
+            "doer": "argues for one concrete decision and owns the follow-through",
+            "checker": "pushes back and demands evidence before the room converges"}
+    changed = False
+    for d, roles in sorted(by_dept.items()):
+        for role, duty in need.items():
+            if role in roles:
+                continue
+            aid = f"{d}-{role}-x"
+            if any(a.get("id") == aid for a in ags):
+                continue
+            name = (d[:1].upper() + d[1:3] + role[:1].upper() + role[1:3]).strip()
+            ags.append({"id": aid, "name": name, "tier": 1, "department": d, "role": role,
+                        "persona": f"{name}: {duty}. (Added by EXCAVA under tier 2.5 autonomy.)",
+                        "added_by": "EXCAVA", "engine_pref": "fast",
+                        "scoped_tools": ["src.excava_bus", "src.excava_chat"]})
+            _log("add-agent", f"added {role} '{name}' to {d}",
+                 f"{d} ran without a {role} — every department needs lead+doer+checker for a real debate", True)
+            out.append(f"self-improve: ADDED AGENT {name} ({role}) to {d} [tier 2.5]")
+            changed = True
+    if changed:
+        reg["agents"] = ags
+        reg["updated_at"] = _now()
+        reg_p.write_text(json.dumps(reg, ensure_ascii=False, indent=2), encoding="utf-8")
+    return out
 
 
 def _engine_failures() -> dict:
@@ -98,6 +145,9 @@ def run() -> list[str]:
                 improved = True
     if improved:
         rooms_p.write_text(json.dumps(rooms, ensure_ascii=False, indent=1), encoding="utf-8")
+
+    # TIER 2.5: staff any department missing a lead/doer/checker (owner-granted agent autonomy)
+    out.extend(_staff_thin_departments())
 
     # PITCHES: big changes that need Eitan — grounded in REAL telemetry, deduped, routed to the
     # SAME in-app decide flow (each pitch cites the number that triggered it, so it's never invented).

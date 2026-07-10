@@ -92,6 +92,16 @@ def write_roster() -> None:
                 x["what"] += f" Latest score: {reg.get('score')}% ({reg.get('passed')}/{reg.get('total')} tasks)."
     except Exception:
         pass
+    try:                                              # flip formation-ab to live + show the tally
+        ab = json.load(open(AB_OUT, encoding="utf-8"))
+        for x in roster:
+            if x["id"] == "formation-ab":
+                x["status"] = "live"
+                w = ab.get("wins", {})
+                x["what"] += (f" Tally: debate {w.get('debate', 0)} — solo {w.get('solo', 0)}; "
+                              f"latest winner: {ab.get('winner_today') or 'no verdict'}.")
+    except Exception:
+        pass
     p.write_text(json.dumps({"generated_at": _now(), "experiments": roster,
                              "autonomy": "see data/excava/autonomy.json (owner-agreed tiers)"},
                             ensure_ascii=False, indent=1), encoding="utf-8")
@@ -234,6 +244,69 @@ def benchmark_engines(force: bool = False) -> dict | None:
                       "'no-key' here is normal on a PC — real numbers come from the CI beat."}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
+    return report
+
+
+AB_OUT = ROOT / "data" / "excava" / "formation_ab.json"
+AB_GOAL = ("Name the single most valuable improvement EXCAVA could make to how it presents "
+           "results to its owner, and say concretely what to change.")
+
+
+def run_formation_ab(force: bool = False, _complete=None) -> dict | None:
+    """SI-4b FORMATION A/B (blind judging): the same goal answered by two team shapes —
+    A) SOLO: one doer answers directly (1 call).
+    B) DEBATE: doer proposes → checker attacks → doer revises (3 calls).
+    A judge on a DIFFERENT engine sees both artifacts in random order WITHOUT knowing which
+    formation made them, and picks the better one. Wins accumulate; at 3 net wins the winner
+    becomes the default room depth (formation_policy.json → open_room max_turns), so the
+    experiment IMPROVES the system, not just measures it. Daily cap. CI-only (needs engines)."""
+    prev = {}
+    try:
+        prev = json.load(open(AB_OUT, encoding="utf-8"))
+        age = (datetime.now(timezone.utc)
+               - datetime.fromisoformat(prev["generated_at"])).total_seconds()
+        if not force and age < 22 * 3600:
+            return None
+    except Exception:
+        pass
+    comp = _complete or engines.complete
+    pool = engines.healthy()
+    if len(pool) < 2:
+        return None                                     # honest: needs >=2 live engines (CI)
+    import random
+    a = comp(f"You are a capable solo agent. {AB_GOAL} Answer in 4-6 sentences.",
+             engine=pool[0], max_tokens=280)
+    prop = comp(f"You are the proposer in a two-agent debate. {AB_GOAL} Propose in 3-4 sentences.",
+                engine=pool[0], max_tokens=220)
+    crit = comp("You are the challenger. Attack this proposal's weakest point in 2 sentences:\n"
+                + (prop.get("text") or ""), engine=pool[1 % len(pool)], max_tokens=120)
+    b = comp("Revise your proposal to survive this attack. Final answer in 4-6 sentences.\n"
+             f"PROPOSAL: {prop.get('text', '')}\nATTACK: {crit.get('text', '')}",
+             engine=pool[0], max_tokens=280)
+    if not (a.get("ok") and b.get("ok")):
+        return None
+    arts = [("solo", a["text"]), ("debate", b["text"])]
+    random.shuffle(arts)                                # BLIND: judge can't infer from order
+    judge_eng = pool[-1] if len(pool) > 2 else pool[1 % len(pool)]
+    j = comp("You are an impartial judge. Two anonymous teams answered the same question. "
+             "Reply with exactly 'ARTIFACT 1' or 'ARTIFACT 2' then one sentence why the winner "
+             f"is more concrete and actionable.\nARTIFACT 1:\n{arts[0][1]}\n\nARTIFACT 2:\n{arts[1][1]}",
+             engine=judge_eng, max_tokens=90)
+    txt = (j.get("text") or "").upper()
+    winner = arts[0][0] if "ARTIFACT 1" in txt else arts[1][0] if "ARTIFACT 2" in txt else None
+    wins = prev.get("wins", {"solo": 0, "debate": 0})
+    if winner:
+        wins[winner] += 1
+    report = {"generated_at": _now(), "experiment": "formation-ab (blind judging)",
+              "goal": AB_GOAL, "winner_today": winner, "wins": wins,
+              "judge": {"engine": judge_eng["name"], "said": (j.get("text") or "")[:200]},
+              "artifacts": {k: v[:400] for k, v in arts},
+              "engines_used": [pool[0]["name"], pool[1 % len(pool)]["name"], judge_eng["name"]]}
+    AB_OUT.write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
+    if winner and wins[winner] - wins["solo" if winner == "debate" else "debate"] >= 3:
+        (ROOT / "data" / "excava" / "formation_policy.json").write_text(json.dumps(
+            {"default_formation": winner, "room_max_turns": 8 if winner == "debate" else 4,
+             "decided_by": "formation-ab, 3 net wins", "at": _now()}, indent=1), encoding="utf-8")
     return report
 
 

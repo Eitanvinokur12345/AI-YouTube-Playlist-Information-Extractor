@@ -22,7 +22,9 @@ proof) · SI-3 autonomy enforced + tier-2.5 auto-staffing (sandbox-proven) + �
 1. **SI-4a Golden-task regression suite** — ~6 fixed engine-free tasks (bus routing, package assembly,
    pitch v2 generation, humanize, hub-candidate search, pitch-survival in approvals) → `run_regression()` →
    `data/excava/regression.json`; beat-wired; roster flips to LIVE. This GATES tier-2 self-code for real.
-2. **SI-4b Formation A/B** (CI engines): same goal, two team shapes, blind judge → daily, `formation_ab.json`.
+2. **SI-4b Formation A/B** — SHIPPED (mechanics dry-run-verified: solo-vs-debate, blind judge on a third
+   engine, daily cap, 3-net-wins → formation_policy.json steers room depth). LIVE CI RESULT PENDING
+   (needs ≥2 healthy engines; runs in the beat).
 3. **SI-4c Huge-task splitting**: decompose one big backlog goal into verified checkpointed bus steps.
 3½. **AGENT REALNESS (owner 2026-07-11 — priority #2 after self-improvement):** rooms must be TRUE
    multi-model debates, not one engine talking to itself (owner caught 20/20 turns all-Mistral).

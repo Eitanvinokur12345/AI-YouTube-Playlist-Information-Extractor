@@ -473,6 +473,10 @@ def _beat(args) -> int:
             if reg:
                 beat_log.append(f"experiment golden-task-regression: {reg['score']}% "
                                 f"({reg['passed']}/{reg['total']} tasks pass)")
+            ab = exp.run_formation_ab()
+            if ab:
+                beat_log.append(f"experiment formation-ab: winner={ab.get('winner_today')} "
+                                f"(judge {ab['judge']['engine']}); tally {ab['wins']}")
         except Exception as e:
             beat_log.append(f"experiment: skipped ({type(e).__name__})")
 

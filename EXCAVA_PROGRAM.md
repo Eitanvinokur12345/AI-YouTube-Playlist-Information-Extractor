@@ -34,6 +34,11 @@ proof) · SI-3 autonomy enforced + tier-2.5 auto-staffing (sandbox-proven) + �
    pool only — a quota-dead engine used to eat a 60s timeout on every turn (why cycles crawled and
    Mistral answered everything). LIVE CI PROOF PENDING — check fresh transcripts for a real engine
    mix. Next layer: per-agent memory/stance so agents differ by more than engine.
+3¾. **POWER finds capacity itself (owner 2026-07-11):** DONE v1 — src/power_scan.py is Power's real
+   executor: audits which engine families lack a live key (+ the exact free signup path), searches
+   EXCAVA's OWN hub for free engines/gateways, files the best move as a v2 pitch. Plus a zero-setup
+   win: the beat now passes the built-in Actions GITHUB_TOKEN with models:read → free gh-models
+   capacity with NO owner key. (Power is no longer talk-only.)
 4. **P1 Live refresh** — the app polls data (~60s) while open (owner saw "updates only when I open it").
 5. **P2 Item-6 rest** — route results to their tabs (package→Packages, tool→Tools, prompt→Prompts,
    design→Designs); flag talk-only departments honestly in-app; ONE systematic github.com-link sweep.

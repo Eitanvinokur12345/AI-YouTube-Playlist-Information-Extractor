@@ -168,7 +168,8 @@ REAL_TOOL = {"security": "src.security_scan", "improve": "src.self_check",
              "memory": "src.build_memory",      # intent: recall/relate/brain graph (not just the hub index)
              "news": "src.trend_watch",
              "mining": "src.discovery_agent",    # intent: DIVERSE sources (GitHub/HN/PH/Reddit), not the playlist
-             "visual": "src.collect_designs"}    # intent: mine AI DESIGNS (not just warm screenshots)
+             "visual": "src.collect_designs",    # intent: mine AI DESIGNS (not just warm screenshots)
+             "power": "src.power_scan"}          # owner 2026-07-11: find capacity WITHOUT a manual key
 
 
 def _run_real_tool(dept: str) -> dict | None:

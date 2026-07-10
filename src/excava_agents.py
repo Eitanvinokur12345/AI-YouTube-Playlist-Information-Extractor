@@ -208,7 +208,8 @@ def _work_generic(task: dict) -> dict:
                 "result": f"BLOCKED — {dept} needs {BLOCKED[dept]}. No fake work done; waiting on the owner."}
     real = _run_real_tool(dept)                          # FIRST: try to actually DO the work
     if real and real["ok"]:
-        return {"kind": "complete", "result": f"RAN {real['tool']} (real work): {real['tail']}"}
+        friendly = real["tool"].split(".")[-1].replace("_", " ")   # 'src.self_check' -> 'self check'
+        return {"kind": "complete", "result": f"Ran the {friendly}. {real['tail']}"}
     slug = re.sub(r"[^a-z0-9]+", "-", str(task.get("title", tid)).lower())[:48].strip("-") or tid
     body, src = "", "task-summary (no engine)"
     try:

@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v94";
+const APP_BUILD = "v95";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -218,6 +218,39 @@ async function renderElement(id) {
 
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, c =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+// Turn EXCAVA's machine-y status strings into plain, readable sentences (owner: 'numbers that look
+// like code, not sentences'). Rewrites the common code-like fragments; safe on normal prose too.
+function humanize(text) {
+  if (!text) return "";
+  let s = String(text);
+  s = s.replace(/RAN\s+src\.[a-z0-9_.]+\s*\(real work\):\s*/gi, "");     // legacy prefix -> drop
+  s = s.replace(/\bRan the ([a-z0-9 ]+)\.\s*/gi, (_, m) => "Ran the " + m.trim() + ": ");
+  s = s.replace(/failing\s+Qs?:\s*\[([^\]]*)\]/gi, (_, list) => {        // number arrays -> a count
+    const n = list.split(",").map(x => x.trim()).filter(Boolean).length;
+    return n + (n === 1 ? " check still needs work" : " checks still need work");
+  });
+  s = s.replace(/\[dispatched\s+(\d+)\s+workers?:[^\]]*\]/gi,            // worker-id artifact -> note
+    (_, n) => "(handed off to " + n + (+n === 1 ? " worker)" : " workers)"));
+  s = s.replace(/\b(\d{1,4})\/(\d{1,4})\b/g, "$1 of $2");               // 40/50 -> 40 of 50
+  s = s.replace(/\s*\(mechanical\)/gi, "");                             // drop noise tag
+  s = s.replace(/\s*\|\s*/g, ". ");                                     // pipes -> sentence breaks
+  s = s.replace(/\.\s*\.\s*/g, ". ").replace(/\s{2,}/g, " ").trim();
+  return s;
+}
+// Humanize + escape, and mark any remaining inline `code`/commands so they read as clearly-labelled
+// code rather than sentences pretending to be prose.
+function humanizeHTML(text) {
+  return esc(humanize(text))
+    .replace(/`([^`]+)`/g, '<code class="inl">$1</code>')   // inline code / commands
+    .replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>");              // agents' markdown bold -> real bold
+}
+// A readable model name for the byline: 'mistral/mistral-small-latest' -> 'Mistral'.
+function _engFriendly(eng) {
+  if (!eng) return "";
+  const prov = String(eng).split("/")[0].split("-")[0];
+  if (/^[a-z]/.test(prov) && prov.length > 2) return prov.charAt(0).toUpperCase() + prov.slice(1);
+  return eng;
+}
 const empty = (msg) => `<p class="empty">${esc(msg)}</p>`;
 const yt = (id) => `https://www.youtube.com/watch?v=${encodeURIComponent(id || "")}`;
 const _ytid = (u) => { const m = String(u || "").match(/[?&]v=([\w-]+)/); return m ? m[1] : ""; };
@@ -2981,7 +3014,7 @@ async function renderRooms(selId) {
     const mimg = _monsterImg(a.department || "", isLead ? "lead" : "agent");
     return `<div class="msg ${isLead ? "lead" : ""}">
       <div class="ava ${mimg ? "has-m" : ""}" title="${esc(a.persona || m.agent)}">${mimg || (AGENT_EMOJI[a.department || "core"] || "🤖") + (isLead ? "👔" : "")}</div>
-      <div class="bub"><div class="who">${esc(m.name || m.agent)} <span class="eng">${esc(m.engine || "")}${m.ms ? " · " + m.ms + "ms" : ""}</span></div>${esc(m.text)}</div>
+      <div class="bub"><div class="who">${esc(m.name || m.agent)} <span class="eng">${esc(_engFriendly(m.engine))}${m.ms ? " · " + m.ms + "ms" : ""}</span></div>${humanizeHTML(m.text)}</div>
     </div>`;
   }).join("") || `<p class="sub">This room hasn't spoken yet — it advances on the next CI beat (engines live in the cloud).</p>`;
   // M3.7: the artifact appears INLINE in the making-chat, not just in the meta line
@@ -3062,7 +3095,7 @@ function renderProof(p) {
   const rows = p.departments.map(d => `<tr class="${vclass(d.verdict)}">
       <td><b>${esc((d.dept || "").toUpperCase())}</b></td>
       <td><span class="pv-badge ${vclass(d.verdict)}">${vlabel[d.verdict] || d.verdict}</span></td>
-      <td class="pv-out">${esc(d.output || "")}</td>
+      <td class="pv-out">${humanizeHTML(d.output || "")}</td>
       <td>${d.evidence_url ? `<a target="_blank" href="${esc(d.evidence_url)}">see the file ↗</a>` : "—"}</td>
     </tr>`).join("");
   view.innerHTML = `
@@ -3070,7 +3103,7 @@ function renderProof(p) {
       <h3>🧾 Proof <span class="sub">— what EXCAVA actually did, honestly. Don't trust the words — the links go to the real files.</span></h3>
       <div class="pv-summary">
         <span class="pv-big">${p.real_pct != null ? p.real_pct + "%" : "?"}</span> of the last checks did <b>REAL</b> work
-        <span class="sub">· counts ${esc(JSON.stringify(p.counts || {}))} · updated ${esc(fmtDate(p.generated_at))}</span>
+        <span class="sub">· ${esc(Object.entries(p.counts || {}).map(([k, v]) => v + " " + ({ real: "did real work", noop: "ran but changed nothing", planned: "only planned", failed: "failed", blocked: "need you" }[k] || k)).join(", ") || "no checks yet")} · updated ${esc(fmtDate(p.generated_at))}</span>
         ${dsum ? `<div class="sub" style="margin-top:4px">Change since last beat: <b>${esc(dsum)}</b></div>` : ""}
         ${p.totals ? `<div class="sub">Totals now: ${p.totals.elements} tools/skills · ${p.totals.verified} verified · ${p.totals.with_link} with a real link · ${p.totals.designs} designs · ${p.totals.creations} creations</div>` : ""}
       </div>

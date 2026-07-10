@@ -477,6 +477,10 @@ def _beat(args) -> int:
             if ab:
                 beat_log.append(f"experiment formation-ab: winner={ab.get('winner_today')} "
                                 f"(judge {ab['judge']['engine']}); tally {ab['wins']}")
+            ht = exp.run_huge_task_split()
+            if ht:
+                beat_log.append(f"experiment huge-task-split: '{ht['goal'][:50]}' → "
+                                f"{len(ht['steps'])} checkpoints ({ht['enqueued_now']} queued)")
         except Exception as e:
             beat_log.append(f"experiment: skipped ({type(e).__name__})")
 

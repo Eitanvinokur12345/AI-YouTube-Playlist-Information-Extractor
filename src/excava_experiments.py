@@ -92,6 +92,15 @@ def write_roster() -> None:
                 x["what"] += f" Latest score: {reg.get('score')}% ({reg.get('passed')}/{reg.get('total')} tasks)."
     except Exception:
         pass
+    try:                                              # flip huge-task-splitting to live + progress
+        ht = json.load(open(HT_OUT, encoding="utf-8"))
+        for x in roster:
+            if x["id"] == "huge-task-splitting":
+                x["status"] = "live"
+                done = sum(1 for s in ht.get("steps", []) if s.get("status") == "done")
+                x["what"] += f" Walking: '{ht.get('goal', '')[:60]}' — {done}/{len(ht.get('steps', []))} checkpoints done."
+    except Exception:
+        pass
     try:                                              # flip formation-ab to live + show the tally
         ab = json.load(open(AB_OUT, encoding="utf-8"))
         for x in roster:
@@ -244,6 +253,59 @@ def benchmark_engines(force: bool = False) -> dict | None:
                       "'no-key' here is normal on a PC — real numbers come from the CI beat."}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
+    return report
+
+
+HT_OUT = ROOT / "data" / "excava" / "huge_task.json"
+
+
+def run_huge_task_split(force: bool = False) -> dict | None:
+    """SI-4c HUGE-TASK SPLITTING (hierarchical decomposition with checkpoints): take the biggest
+    real goal — G3 link coverage (thousands of unlinked elements) — and turn it into small bus
+    tasks, each with a done-criterion and a VERIFY step, so a huge job becomes checkpoints the
+    OS can actually walk. Step 1 (measure) executes immediately; batch steps are consumed by the
+    existing links lane; the final step re-verifies the goal number. Idempotent + daily cap."""
+    try:
+        prev = json.load(open(HT_OUT, encoding="utf-8"))
+        age = (datetime.now(timezone.utc)
+               - datetime.fromisoformat(prev["generated_at"])).total_seconds()
+        if not force and age < 22 * 3600:
+            return None
+    except Exception:
+        pass
+    from src import excava_bus as bus
+    els = json.load(open(ROOT / "data" / "elements_index.json", encoding="utf-8")).get("elements", [])
+    unlinked = sum(1 for e in els if not ((e.get("links") or {}).get("website")
+                                          or (e.get("links") or {}).get("github")))
+    total = len(els)
+    goal = f"Close the link gap: {unlinked} of {total} elements have no verified link (G3)"
+    steps = [{"n": 1, "title": f"Measure the gap: {unlinked}/{total} unlinked",
+              "done_criterion": "the number is measured and recorded", "status": "done",
+              "result": f"{unlinked} unlinked of {total} ({round(100 * unlinked / max(total, 1))}%)"}]
+    batch = 400
+    for i in range(4):                                   # 4 checkpointed batches ≈ 1600 elements
+        steps.append({"n": i + 2,
+                      "title": f"Resolve links batch {i + 1} (~{batch} elements, links lane)",
+                      "done_criterion": f"unlinked count drops below {unlinked - batch * (i + 1)}",
+                      "verify": "recount unlinked in elements_index.json", "status": "queued"})
+    steps.append({"n": 6, "title": "Re-verify G3: coverage pct + goal score moved",
+                  "done_criterion": "G3 score in goals_status.json rises", "status": "queued"})
+    enq = 0
+    for s in steps:
+        if s["status"] != "queued":
+            continue
+        t = bus.enqueue(s["title"], detail=f"Huge-task checkpoint {s['n']}/6 of: {goal}",
+                        department="mining", source="huge-task-split", priority=1,
+                        done_criteria=s["done_criterion"])
+        if t:
+            s["bus_id"] = t["id"]
+            enq += 1
+    report = {"generated_at": _now(), "experiment": "huge-task-splitting",
+              "goal": goal, "steps": steps, "enqueued_now": enq,
+              "note": "A huge goal walked as small verified checkpoints on the bus — "
+                      "step 1 executed immediately; batches feed the existing links lane."}
+    HT_OUT.write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
+    write_roster()
     return report
 
 

@@ -25,7 +25,9 @@ proof) · SI-3 autonomy enforced + tier-2.5 auto-staffing (sandbox-proven) + �
 2. **SI-4b Formation A/B** — SHIPPED (mechanics dry-run-verified: solo-vs-debate, blind judge on a third
    engine, daily cap, 3-net-wins → formation_policy.json steers room depth). LIVE CI RESULT PENDING
    (needs ≥2 healthy engines; runs in the beat).
-3. **SI-4c Huge-task splitting**: decompose one big backlog goal into verified checkpointed bus steps.
+3. **SI-4c Huge-task splitting** — SHIPPED+verified: 'Close the link gap: 4060/7360 unlinked (G3)'
+   split into 6 checkpoints; measure step executed immediately; 4 batch steps + final re-verify are
+   REAL bus tasks the links lane consumes; daily cap; roster live with progress.
 3½. **AGENT REALNESS (owner 2026-07-11 — priority #2 after self-improvement):** rooms must be TRUE
    multi-model debates, not one engine talking to itself (owner caught 20/20 turns all-Mistral).
    Mechanics SHIPPED: healthy-pool round-robin per turn (consecutive speakers get different models),

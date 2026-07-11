@@ -41,7 +41,9 @@ proof) · SI-3 autonomy enforced + tier-2.5 auto-staffing (sandbox-proven) + �
    EXCAVA's OWN hub for free engines/gateways, files the best move as a v2 pitch. Plus a zero-setup
    win: the beat now passes the built-in Actions GITHUB_TOKEN with models:read → free gh-models
    capacity with NO owner key. (Power is no longer talk-only.)
-4. **P1 Live refresh** — the app polls data (~60s) while open (owner saw "updates only when I open it").
+4. **P1 Live refresh** — DONE+verified v102: the app polls the beat stamp every 60s while open; on new
+   data it drops the cache, re-renders the ACTIVE tab, and pulses "🟢 live · new data HH:MM" next to the
+   build badge; never refreshes while a modal is open or the tab is hidden (browser-verified end-to-end).
 5. **P2 Item-6 rest** — route results to their tabs (package→Packages, tool→Tools, prompt→Prompts,
    design→Designs); flag talk-only departments honestly in-app; ONE systematic github.com-link sweep.
 6. **P5 Visual dept + Designs tab overhaul** — auto-ADD every design, quality-filter the junk, then tasks.

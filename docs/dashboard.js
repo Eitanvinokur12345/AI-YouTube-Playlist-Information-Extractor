@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v101";
+const APP_BUILD = "v102";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -78,6 +78,42 @@ async function load(file) {
 }
 // Invalidate a specific file's cache (e.g. after an approve action)
 function invalidate(file) { delete _cache[file]; }
+// ── P1 LIVE REFRESH (owner: 'the project updates only when I open it — it must work online') ──
+// Every 60s: poll ONE small status file; if the cloud beat produced a new stamp, drop the cache,
+// re-render the ACTIVE tab, and pulse the live dot. Never refreshes while a modal is open (no
+// yanking the owner mid-decision) or while the tab is hidden (no wasted requests).
+let _liveStamp = null;
+async function _livePoll(force) {
+  if (!force && document.hidden) return "hidden";
+  const m1 = document.getElementById("ex-modal"), m2 = document.getElementById("pitch-modal");
+  if ((m1 && m1.style.display === "flex") || (m2 && !m2.hidden)) return "modal-open";
+  let stamp;
+  try {
+    const r = await fetch(DATA + "excava_status.json", { cache: "no-store" });
+    const s = await r.json();
+    stamp = s.generated_at || s.updated_at || JSON.stringify(s).slice(0, 80);
+  } catch (_) { return "offline"; }
+  if (_liveStamp === null) { _liveStamp = stamp; _liveDot("live"); return "first"; }
+  if (stamp === _liveStamp) { _liveDot("live"); return "unchanged"; }
+  _liveStamp = stamp;
+  for (const k in _cache) delete _cache[k];       // fresh data for every tab
+  await show(state.activeTab);                    // re-render what the owner is looking at
+  _liveDot("updated");
+  return "refreshed";
+}
+function _liveDot(kind) {
+  let d = document.getElementById("live-dot");
+  if (!d) {
+    const bb = document.getElementById("build-badge");
+    if (!bb) return;
+    d = document.createElement("span"); d.id = "live-dot"; d.className = "build-badge";
+    bb.after(d);
+  }
+  const t = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  d.textContent = kind === "updated" ? `🟢 live · new data ${t}` : `🟢 live · checked ${t}`;
+  d.style.color = "oklch(0.55 0.15 150)";
+}
+setInterval(_livePoll, 60000);
 // Raw-text loader (JSONL traces etc.) — no cache, "" on miss. Phase 5 trace viewer uses it.
 async function loadText(file) {
   try {

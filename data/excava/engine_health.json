@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-10T22:55:23.233304+00:00",
+ "generated_at": "2026-07-11T03:55:43.602570+00:00",
  "experiment": "engine-benchmark (golden-task canary)",
  "golden_prompt": "Reply with exactly these two words and nothing else: benchmark ok",
  "results": [
@@ -7,51 +7,52 @@
    "engine": "groq",
    "status": "healthy",
    "valid": true,
-   "ms": 698,
+   "ms": 607,
    "model": "mistral-small-latest"
   },
   {
    "engine": "sambanova",
    "status": "healthy",
    "valid": true,
-   "ms": 1420,
+   "ms": 540,
    "model": "mistral-small-latest"
   },
   {
    "engine": "mistral",
    "status": "healthy",
    "valid": true,
-   "ms": 378,
+   "ms": 301,
    "model": "mistral-small-latest"
   },
   {
    "engine": "gh-models",
-   "status": "failing",
-   "ms": 613,
-   "note": "gh-models:HTTPError; groq:HTTPError; sambanova:HTTPError"
+   "status": "healthy",
+   "valid": true,
+   "ms": 692,
+   "model": "openai/gpt-4o-mini"
   },
   {
    "engine": "cerebras",
    "status": "failing",
-   "ms": 205,
+   "ms": 451,
    "note": "cerebras:HTTPError; groq:HTTPError; sambanova:HTTPError"
   },
   {
    "engine": "gemini",
    "status": "failing",
-   "ms": 297,
+   "ms": 367,
    "note": "gemini:HTTPError; groq:HTTPError; sambanova:HTTPError"
   },
   {
    "engine": "openrouter",
    "status": "failing",
-   "ms": 462,
+   "ms": 332,
    "note": "openrouter:HTTPError; groq:HTTPError; sambanova:HTTPError"
   },
   {
    "engine": "nvidia",
    "status": "failing",
-   "ms": 60378,
+   "ms": 60305,
    "note": "nvidia:TimeoutError; groq:HTTPError; sambanova:HTTPError"
   },
   {
@@ -67,12 +68,12 @@
  ],
  "ranking": [
   "mistral",
-  "groq",
   "sambanova",
-  "cerebras",
-  "gemini",
-  "openrouter",
+  "groq",
   "gh-models",
+  "openrouter",
+  "gemini",
+  "cerebras",
   "nvidia",
   "hermes",
   "omniroute"

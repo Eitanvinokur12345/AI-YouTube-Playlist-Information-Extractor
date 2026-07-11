@@ -220,31 +220,25 @@ def benchmark_engines(force: bool = False) -> dict | None:
         return None
     results = []
     for spec in engines.CATALOG:
-        name, kind = spec[0], spec[5] if len(spec) > 5 else ""
+        name = spec[0]
         eng = next((e for e in engines.available() if e["name"] == name), None)
         if not eng:
             results.append({"engine": name, "status": "no-key",
                             "note": "no API key in this environment (keys live in CI secrets)"})
             continue
-        t0 = time.time()
-        try:
-            r = engines.complete(GOLDEN, engine=eng, max_tokens=12)
-            ms = int((time.time() - t0) * 1000)
-            if r.get("ok"):
-                valid = "benchmark ok" in (r.get("text") or "").lower()
-                results.append({"engine": name, "status": "healthy" if valid else "answering-but-sloppy",
-                                "valid": valid, "ms": ms, "model": r.get("model", "")})
-            else:
-                results.append({"engine": name, "status": "failing", "ms": ms,
-                                "note": str(r.get("text") or r.get("error") or "no answer")[:120]})
-        except Exception as ex:
-            err = str(ex)[:120]
-            klass = ("quota-429" if "429" in err else "bad-model-404" if "404" in err
-                     else "auth" if "401" in err or "403" in err else "error")
-            results.append({"engine": name, "status": klass, "ms": int((time.time() - t0) * 1000),
-                            "note": err})
-    order = {"healthy": 0, "answering-but-sloppy": 1, "error": 2, "quota-429": 3,
-             "failing": 3, "auth": 4, "bad-model-404": 4, "no-key": 5}
+        # ISOLATION: call THIS engine directly — no fallthrough, so a survivor can't be credited
+        # to a dead engine (the canary used to mislabel). _call_one carries the real HTTP status.
+        r = engines._call_one(eng, GOLDEN, max_tokens=12)
+        if r["ok"]:
+            valid = "benchmark ok" in r["text"].lower()
+            results.append({"engine": name, "status": "healthy" if valid else "answering-but-sloppy",
+                            "valid": valid, "ms": r["ms"], "model": eng["model"]})
+        else:
+            # status label = the real reason (quota-429 / bad-model-404 / bad-key-401 / timeout…)
+            label = (r["note"].split(":")[0].strip() or "failing") if r["note"] else "failing"
+            results.append({"engine": name, "status": label, "ms": r["ms"],
+                            "model": eng["model"], "note": r["note"]})
+    order = {"healthy": 0, "answering-but-sloppy": 1}
     ranking = [r["engine"] for r in sorted(
         results, key=lambda r: (order.get(r["status"], 9), r.get("ms", 99999)))]
     report = {"generated_at": _now(), "experiment": "engine-benchmark (golden-task canary)",

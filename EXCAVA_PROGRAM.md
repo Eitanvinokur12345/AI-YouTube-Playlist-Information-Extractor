@@ -59,9 +59,16 @@ proof) · SI-3 autonomy enforced + tier-2.5 auto-staffing (sandbox-proven) + �
 8. **P7 Rooms/Results HISTORY views** — per-department all-conversations view; war rooms sectioned above;
    group-chat tab inside Rooms (owner re-confirmed; deliberately after the items above).
 
-**Standing checks each tick:** newest room-turn timestamp (beat health) · engine_health.json for real CI
-numbers (+ did owner's GROQ_API_KEY_2 / GEMINI_* / OPENROUTER_API_KEY secrets land) · any tier-2.5
-auto-added agents · supervisor real_pct + movement + systemcheck + proof.
+**KEYS EXIST (confirmed 2026-07-11 from owner's secrets screenshot):** GROQ_API_KEY(+_2), GEMINI_API_KEY_2..6,
+OPENROUTER_API_KEY, CEREBRAS_API_KEY(+_2), MISTRAL, SAMBANOVA, NVIDIA, GH_MODELS, BRIGHTDATA, SUPADATA, YOUTUBE,
+OMNIROUTE, CLAUDE_CODE_OAUTH — ALL present. So engine failures are NOT missing keys; they are engine-side.
+Diagnosis SHIPPED: canary now records the REAL HTTP status per engine (quota-429 / bad-model-404 / bad-key-401),
+benchmarks each engine in ISOLATION (no fallthrough mislabel), and CHAT-gemini got its own plain-text path
+(bulk_analyze.call_gemini forced JSON + json.loads -> crashed on any free-form reply — gemini rooms were doomed
+regardless of quota; fixed + stub-verified). NEXT beat's canary reveals each engine's real reason -> fix precisely.
+
+**Standing checks each tick:** newest room-turn timestamp (beat health) · engine_health.json real HTTP status per
+engine · any tier-2.5 auto-added agents · supervisor real_pct + movement + systemcheck + proof.
 
 ---
 

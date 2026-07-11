@@ -135,44 +135,77 @@ def pick_engine(dept: str = "", difficulty: str = "normal") -> dict | None:
     return av[0]
 
 
+def _gemini_text(key: str, model: str, prompt: str, timeout: int = 45) -> str:
+    """Gemini generateContent for PLAIN free-form text (no forced JSON) — the chat/canary path."""
+    url = (f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}")
+    body = json.dumps({"contents": [{"parts": [{"text": prompt}]}]}).encode("utf-8")
+    req = urllib.request.Request(url, data=body,
+                                 headers={"Content-Type": "application/json"}, method="POST")
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        d = json.loads(resp.read().decode("utf-8", errors="replace"))
+    return d["candidates"][0]["content"]["parts"][0]["text"]
+
+
+def _call_one(e: dict, prompt: str, max_tokens: int = 700) -> dict:
+    """ONE attempt at ONE engine — NO fallthrough. Returns {ok, text, ms, status, note}.
+    status/note carry the REAL HTTP code + body snippet, so a failure reads as 'quota-429' /
+    'bad-model-404' / 'bad-key-401', not a blank 'HTTPError'. This is the honest diagnosis the
+    owner needs (2026-07-11: keys exist in repo secrets, yet engines fail — WHY matters)."""
+    import urllib.error
+    t0 = time.time()
+    _ms = lambda: int((time.time() - t0) * 1000)
+    try:
+        if e["kind"] == "gemini":
+            # PLAIN-TEXT gemini for CHAT — NOT bulk_analyze.call_gemini, which forces
+            # responseMimeType=application/json + json.loads() and so throws on any free-form
+            # reply like 'benchmark ok' (owner 2026-07-11: gemini keys exist yet gemini fails —
+            # the chat path was wired to the analysis-JSON function). Analysis keeps its own path.
+            text = _gemini_text(_key(e["envs"]), e["model"], prompt)
+        else:
+            key = _key(e["envs"]) if e["envs"] else "ollama"
+            body = json.dumps({"model": e["model"], "max_tokens": max_tokens,
+                               "messages": [{"role": "user", "content": prompt}]}).encode()
+            req = urllib.request.Request(
+                e["base"].rstrip("/") + "/chat/completions", data=body,
+                headers={"Content-Type": "application/json", "Authorization": f"Bearer {key}"})
+            with urllib.request.urlopen(req, timeout=60) as resp:
+                d = json.loads(resp.read().decode("utf-8", errors="replace"))
+            text = d["choices"][0]["message"]["content"]
+        text = str(text or "").strip()
+        return {"ok": bool(text), "text": text, "ms": _ms(), "status": 200 if text else 0,
+                "note": "" if text else "empty response"}
+    except urllib.error.HTTPError as ex:
+        try:
+            snippet = ex.read().decode("utf-8", errors="replace")[:160]
+        except Exception:
+            snippet = ""
+        klass = {429: "quota-429", 401: "bad-key-401", 403: "forbidden-403",
+                 404: "bad-model-404", 400: "bad-request-400"}.get(ex.code, f"http-{ex.code}")
+        return {"ok": False, "text": "", "ms": _ms(), "status": ex.code,
+                "note": f"{klass}: {snippet}".strip()}
+    except Exception as ex:
+        return {"ok": False, "text": "", "ms": _ms(), "status": 0,
+                "note": f"{type(ex).__name__}: {str(ex)[:120]}"}
+
+
 def complete(prompt: str, engine: dict | None = None, dept: str = "",
              difficulty: str = "normal", max_tokens: int = 700) -> dict:
-    """One completion. Returns {ok, text, engine, model, ms}. Falls through the available
-    list on failure — an outage never silences an agent, it just changes the badge."""
+    """One completion. Returns {ok, text, engine, model, ms}. Falls through the canary-HEALTHY
+    pool on failure — an outage never silences an agent, it just changes the badge. (Fallthrough
+    is the HEALTHY pool, not the raw keyed list: a quota-dead engine used to eat a 60s timeout on
+    every turn, leaving one survivor — the owner's 'agents aren't real' complaint, 2026-07-11.)"""
     tried = []
-    # Fall through the canary-proven HEALTHY pool, not the raw keyed list: a quota-dead engine
-    # used to eat a 60s timeout on EVERY turn before falling through — with ~18 rooms per cycle
-    # that made beats crawl and left one survivor (Mistral) answering everything (owner's
-    # 'agents aren't real' complaint, 2026-07-11). Dead engines re-enter via the hourly canary.
     pool = healthy()
     order = ([engine] if engine else []) + [e for e in pool if not engine or e["name"] != engine["name"]]
     if engine is None:
         first = pick_engine(dept, difficulty)
         order = ([first] if first else []) + [e for e in pool if not first or e["name"] != first["name"]]
     for e in order[:3]:
-        t0 = time.time()
-        try:
-            if e["kind"] == "gemini":
-                from src.bulk_analyze import call_gemini
-                r = call_gemini(_key(e["envs"]), e["model"], prompt, 45)
-                text = r if isinstance(r, str) else (r.get("text") or r.get("content") or "")
-            else:
-                key = _key(e["envs"]) if e["envs"] else "ollama"
-                body = json.dumps({"model": e["model"], "max_tokens": max_tokens,
-                                   "messages": [{"role": "user", "content": prompt}]}).encode()
-                req = urllib.request.Request(
-                    e["base"].rstrip("/") + "/chat/completions", data=body,
-                    headers={"Content-Type": "application/json", "Authorization": f"Bearer {key}"})
-                with urllib.request.urlopen(req, timeout=60) as resp:
-                    d = json.loads(resp.read().decode("utf-8", errors="replace"))
-                text = d["choices"][0]["message"]["content"]
-            text = str(text or "").strip()
-            if text:
-                return {"ok": True, "text": text, "engine": e["name"], "model": e["model"],
-                        "ms": int((time.time() - t0) * 1000)}
-            tried.append(f"{e['name']}:empty")
-        except Exception as ex:
-            tried.append(f"{e['name']}:{type(ex).__name__}")
+        r = _call_one(e, prompt, max_tokens)
+        if r["ok"]:
+            return {"ok": True, "text": r["text"], "engine": e["name"], "model": e["model"],
+                    "ms": r["ms"]}
+        tried.append(f"{e['name']}:{r['note'][:50]}")
     return {"ok": False, "text": "", "engine": "none", "model": "", "ms": 0,
             "error": "; ".join(tried) or "no engines configured"}
 

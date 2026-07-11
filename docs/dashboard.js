@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v102";
+const APP_BUILD = "v103";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -114,6 +114,25 @@ function _liveDot(kind) {
   d.style.color = "oklch(0.55 0.15 150)";
 }
 setInterval(_livePoll, 60000);
+// P2 (owner): EXCAVA's own creations ROUTE to their tabs — a created prompt shows in Prompts,
+// a created tool in Tools, a created design in Designs (packages already merge into Packages).
+// Each carries the 'Created by EXCAVA' label so provenance stays visible.
+async function _plusCreations(data, kind, listKey) {
+  const made = await load("created_by_excava.json");
+  const mine = ((made && made.creations) || []).filter(c => c.type === kind && c.status !== "failed-test");
+  if (!mine.length) return data;
+  const mapped = mine.map(c => ({
+    title: "🦾 " + c.name, name: "🦾 " + c.name,                       // both key styles used by tabs
+    purpose: c.what || "", description: c.what || "",
+    prompt_text: c.body || c.how_to_use || "", category: "creation",
+    created_by: "EXCAVA", label: c.label || "Created by EXCAVA",
+    quality_score: (c.self_test && c.self_test.ok) ? 7 : 5,
+    url: "", at: c.created_at || "",
+  }));
+  const out = Object.assign({}, data || {});
+  out[listKey] = mapped.concat((data && data[listKey]) || []);
+  return out;
+}
 // Raw-text loader (JSONL traces etc.) — no cache, "" on miss. Phase 5 trace viewer uses it.
 async function loadText(file) {
   try {
@@ -3242,14 +3261,14 @@ async function renderTab(tab) {
   if (tab === "taste") return renderTaste();
   if (tab === "skills") return renderSkills(await load("skills.json"));
   if (tab === "tools" || tab === "models")
-    return renderToolRating(await load("tools.json"), await load("models.json"));
+    return renderToolRating(await _plusCreations(await load("tools.json"), "tool", "tools"), await load("models.json"));
   if (tab === "comingsoon") return renderComingSoon(await load("tools.json"));
-  if (tab === "prompts") return renderPrompts(await load("prompts.json"));
+  if (tab === "prompts") return renderPrompts(await _plusCreations(await load("prompts.json"), "prompt", "prompts"));
   if (tab === "devbuild") return renderDevConstruction();
   if (tab === "improvement") return renderImprovement();
   if (tab === "tips") return renderTips();
   if (tab === "news") return renderNews();
-  if (tab === "designs") return renderDesigns(await load("designs.json"));
+  if (tab === "designs") return renderDesigns(await _plusCreations(await load("designs.json"), "design", "designs"));
   if (tab === "connectors") return renderConnectors(await load("connectors.json"));
   if (tab === "sources") return renderSources();
   if (tab === "selfimprove") return renderSelfImprove();

@@ -67,8 +67,10 @@ proof) · SI-3 autonomy enforced + tier-2.5 auto-staffing (sandbox-proven) + �
 4¾. **TOKEN DIET (Caveman, found on the web — NOT in the hub; mining gap):** apply its no-filler law to
    AGENT prompts next _prompt touch (fewer output tokens per turn = more turns per quota). Owner-facing
    reports stay full sentences (his standing 'sentences not code' law outranks caveman-speak).
-5. **P2 Item-6 rest** — route results to their tabs (package→Packages, tool→Tools, prompt→Prompts,
-   design→Designs); flag talk-only departments honestly in-app; ONE systematic github.com-link sweep.
+5. **P2 Item-6 rest** — (a) DONE+verified v103: creations ROUTE to their tabs (_plusCreations merges
+   'Created by EXCAVA' items into Prompts/Tools/Designs — 11 prompt-creations visible under the
+   'Creation' filter; packages already merged). (b) REMAINING: flag talk-only departments honestly
+   in-app; (c) ONE systematic github.com-link sweep.
 6. **P5 Visual dept + Designs tab overhaul** — auto-ADD every design, quality-filter the junk, then tasks.
 7. **P6 Department interconnection** — depts ↔ brain systems/protocols, surfaced in the Developer tab.
 8. **P7 Rooms/Results HISTORY views** — per-department all-conversations view; war rooms sectioned above;
@@ -77,7 +79,9 @@ proof) · SI-3 autonomy enforced + tier-2.5 auto-staffing (sandbox-proven) + �
 **KEYS EXIST (confirmed 2026-07-11 from owner's secrets screenshot):** GROQ_API_KEY(+_2), GEMINI_API_KEY_2..6,
 OPENROUTER_API_KEY, CEREBRAS_API_KEY(+_2), MISTRAL, SAMBANOVA, NVIDIA, GH_MODELS, BRIGHTDATA, SUPADATA, YOUTUBE,
 OMNIROUTE, CLAUDE_CODE_OAUTH — ALL present. So engine failures are NOT missing keys; they are engine-side.
-REAL CODES ARRIVED 2026-07-11 14:04 + FIXES: groq/cerebras = Cloudflare 1010 bot-block → browser
+CANARY VERDICTS 15:35: groq HEALTHY (UA fix VERIFIED beat Cloudflare); openrouter model valid (transient
+429 only); cerebras past Cloudflare but model-404 → id swapped to llama3.1-8b (canary verifies next).
+Debate pool now 3 healthy (groq+mistral+gh-models). REAL CODES ARRIVED 2026-07-11 14:04 + FIXES: groq/cerebras = Cloudflare 1010 bot-block → browser
 User-Agent added (canary verifies next beat); gemini = GENUINE quota-429 (not project-access — analysis
 pipeline drains all 7 keys; needs burn-rate control, not new keys); openrouter = deepseek-r1:free went
 PAID (404) → switched to llama-3.3-70b:free; sambanova temp 429; nvidia timeout (parked). Mistral +

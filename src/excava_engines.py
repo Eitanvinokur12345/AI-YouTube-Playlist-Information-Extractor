@@ -39,7 +39,7 @@ CATALOG = [
      ["MISTRAL_API_KEY"], "fast"),
     ("gh-models",  "openai", "https://models.github.ai/inference",    "openai/gpt-4o-mini",
      ["GH_MODELS_TOKEN", "GITHUB_TOKEN"], "grounded"),
-    ("cerebras",   "openai", "https://api.cerebras.ai/v1",            "llama3.3-70b",
+    ("cerebras",   "openai", "https://api.cerebras.ai/v1",            "llama3.1-8b",
      ["CEREBRAS_API_KEY", "CEREBRAS_API_KEY_2"], "fast"),
     ("gemini",     "gemini", "",                                      "gemini-2.0-flash",
      ["EXTERNAL_REVIEW_API_KEY", "GEMINI_API_KEY", "GEMINI_API_KEY_2", "GEMINI_API_KEY_3",

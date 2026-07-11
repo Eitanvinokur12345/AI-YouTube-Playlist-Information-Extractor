@@ -7,8 +7,9 @@
 (first run: 208 clusters; top: VPS/24h ×45, retrieval+new sources ×34, post-extraction verification ×31,
 OpenSpec/visual-analysis…). Each loop round, a short QUESTION SEQUENCE confirms a few candidates with the
 owner; confirmed gaps enter this plan. Don't follow only the recent requests — the history is the backlog.
-**CONFIRMED ROUND 1 (owner order, 2026-07-11): R1 free-VPS 24/7 runtime (reuse PORTABLE_HARNESS.md; needs
-an owner signup → prepare the pitch + one-click guide) · R2 more retrieval sources · R3 EXCAVA external +
+**CONFIRMED ROUND 1 (owner order, 2026-07-11): R1 free-VPS 24/7 — READY, awaiting owner approve:
+deploy/vps_setup.sh written (Oracle Always Free + systemd timer, 5-min beats forever); v2 pitch in the
+in-app decide queue with the 10-min guide (signup + fine-grained token + one command) · R2 more retrieval sources · R3 EXCAVA external +
 internal capabilities · R4 post-extraction verification · R5 visual data analysis. REMINDERS LEDGER lives at
 data/excava/reminders.json (owner: nothing may be forgotten) — the loop re-reads it; miner refills it.**
 

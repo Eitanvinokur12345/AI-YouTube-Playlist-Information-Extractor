@@ -1,36 +1,8 @@
 {
-  "generated_at": "2026-07-11T14:02:03.695083+00:00",
+  "generated_at": "2026-07-11T15:29:16.309792+00:00",
   "mode": "run",
   "note": "Decide in the app: each pending item shows what it does in plain language with Approve / Decline buttons and a review box. Your decision is saved in the app instantly and dispatched to the cloud beat, which applies granted ids and drops declined ids on the next cycle.",
   "pending": [
-    {
-      "id": "hold-empty-body-items-render-as-blank-whi-fad4",
-      "title": "Empty-body items render as blank 'white' nodes in the brain graph (207)",
-      "category": "missing-resource",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts",
-      "what": "A department wants to do this but the tool it needs isn't available yet (for example, fetching transcripts). Approve to let EXCAVA route it to another department or flag it for an unblock; decline to shelve it."
-    },
-    {
-      "id": "hold-title-collisions-distinct-items-shar-ac5c",
-      "title": "Title collisions: distinct items share one note name and overwrite each other (10)",
-      "category": "unroutable",
-      "why": "no department specialization matched",
-      "what": "No department claimed this because none specialises in it. Approve to let EXCAVA assign it to the closest-fit department (or open a new task for it); decline to skip it."
-    },
-    {
-      "id": "hold-lane-transcript-retrieval-is-slow-43b5",
-      "title": "Lane 'Transcript retrieval' is slow",
-      "category": "missing-resource",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts",
-      "what": "A department wants to do this but the tool it needs isn't available yet (for example, fetching transcripts). Approve to let EXCAVA route it to another department or flag it for an unblock; decline to shelve it."
-    },
-    {
-      "id": "hold-push-link-coverage-toward-100-at-5-d-6962",
-      "title": "Push link coverage toward 100% at +5%/day (the access gate)",
-      "category": "unroutable",
-      "why": "no department specialization matched",
-      "what": "No department claimed this because none specialises in it. Approve to let EXCAVA assign it to the closest-fit department (or open a new task for it); decline to skip it."
-    },
     {
       "id": "pitch-73976",
       "title": "dedicate a build lane to G3 - Truth & access",
@@ -100,6 +72,19 @@
           "name": "Bright Data MCP"
         }
       ]
+    },
+    {
+      "id": "pitch-99113",
+      "title": "run EXCAVA 24/7 on a free VPS (Oracle Always Free) — every-5-min beats, no cron throttling",
+      "category": "pitch",
+      "why": "You asked for this 45 times across sessions (the #1 mined want). GitHub cron throttles to 2-4h gaps with queued/cancelled runs; a free VPS beats every 5 minutes, forever.",
+      "what": "Approve to adopt the ready-made plan: you create a free Oracle VM once (~10 min guide included), paste one command, and EXCAVA runs 24/7 with real 5-minute beats. Everything is prepared in deploy/vps_setup.sh.",
+      "since": "2026-07-11T15:29:15.839171+00:00",
+      "requested_by": "The owner himself (raised 45x since June, confirmed priority #1 on 2026-07-11) + Power dept",
+      "need": "True 24/7 operation: the Actions cron fires every 2-4h and runs queue/cancel each other; agents idle for hours between beats.",
+      "importance": "HIGHEST — owner priority #1; every idle hour is lost mining/debating/verifying.",
+      "missing": "A one-time owner signup (Oracle Always Free) + a fine-grained repo token + pasting engine keys — nothing else; the setup script and systemd timer are already written.",
+      "hub_candidates": []
     }
   ],
   "granted": [],

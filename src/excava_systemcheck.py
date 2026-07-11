@@ -62,8 +62,15 @@ def check() -> list[dict]:
         depts = sorted({a.get("department") for a in reg.get("agents", []) if a.get("department") not in (None, "core")})
         staffed = [d for d in depts if ag.worker_for(reg, d)]
         executable = [d for d in depts if d in ag.WORK or d in ag.REAL_TOOL]
-        out.append(_c("departments executable", len(executable) >= len(depts) - 2,
-                      f"{len(executable)}/{len(depts)} depts have a real executor; {len(staffed)}/{len(depts)} staffed"))
+        blocked = [d for d in depts if d in ag.BLOCKED and d not in executable]
+        talk_only = sorted(set(depts) - set(executable) - set(blocked))
+        c = _c("departments executable", len(executable) >= len(depts) - 2,
+               f"{len(executable)}/{len(depts)} depts have a real executor; {len(staffed)}/{len(depts)} staffed")
+        # honest per-dept lists so the APP can flag talk-only departments (owner P2b)
+        c["executors"] = sorted(executable)
+        c["blocked"] = sorted(blocked)
+        c["talk_only"] = talk_only
+        out.append(c)
     except Exception as e:
         out.append(_c("departments executable", False, f"agent layer broken: {e}", "critical"))
 

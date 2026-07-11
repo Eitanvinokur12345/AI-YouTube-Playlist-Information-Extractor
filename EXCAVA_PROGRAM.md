@@ -69,8 +69,11 @@ proof) · SI-3 autonomy enforced + tier-2.5 auto-staffing (sandbox-proven) + �
    reports stay full sentences (his standing 'sentences not code' law outranks caveman-speak).
 5. **P2 Item-6 rest** — (a) DONE+verified v103: creations ROUTE to their tabs (_plusCreations merges
    'Created by EXCAVA' items into Prompts/Tools/Designs — 11 prompt-creations visible under the
-   'Creation' filter; packages already merged). (b) REMAINING: flag talk-only departments honestly
-   in-app; (c) ONE systematic github.com-link sweep.
+   'Creation' filter; packages already merged). (b) DONE+verified v104: Rooms rail flags 🗣 talk-only
+   (accessibility, visualization) and ⛔ blocked (watch) from systemcheck's honest per-dept lists.
+   (c) DONE+verified v104: global /blob/main/ interceptor — every repo-file link (current + future)
+   opens IN-APP via the artifact modal; the modal's own GitHub fallback is the one escape hatch.
+   → P2 COMPLETE.
 6. **P5 Visual dept + Designs tab overhaul** — auto-ADD every design, quality-filter the junk, then tasks.
 7. **P6 Department interconnection** — depts ↔ brain systems/protocols, surfaced in the Developer tab.
 8. **P7 Rooms/Results HISTORY views** — per-department all-conversations view; war rooms sectioned above;

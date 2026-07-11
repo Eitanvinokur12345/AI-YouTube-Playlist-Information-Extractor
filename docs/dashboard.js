@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v103";
+const APP_BUILD = "v104";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1917,8 +1917,8 @@ async function _openArtifact(ref, title) {
     shown = shown.slice(0, CAP) + "\n… (truncated — use the GitHub link for the whole file)";
   }
   const body = txt
-    ? `<pre class="ex-artifact">${esc(shown)}</pre><p class="sub">file: <code>${esc(ref)}</code>${note} · <a target="_blank" href="${GH_REPO}/blob/main/${esc(ref)}">full file on GitHub ↗</a></p>`
-    : `<p class="sub">Couldn't load it in-app — <a target="_blank" href="${GH_REPO}/blob/main/${esc(ref)}">open on GitHub ↗</a></p>`;
+    ? `<pre class="ex-artifact">${esc(shown)}</pre><p class="sub">file: <code>${esc(ref)}</code>${note} · <a target="_blank" data-ex-raw="1" href="${GH_REPO}/blob/main/${esc(ref)}">full file on GitHub ↗</a></p>`
+    : `<p class="sub">Couldn't load it in-app — <a target="_blank" data-ex-raw="1" href="${GH_REPO}/blob/main/${esc(ref)}">open on GitHub ↗</a></p>`;
   _showModal(title || ref.split("/").pop(), body);
 }
 // The in-app "send a task to EXCAVA" confirm — used by the console AND every dispatch button.
@@ -1942,6 +1942,19 @@ document.addEventListener("click", e => {
     try { const u = new URL(a.href);
       _sendModal(u.searchParams.get("title") || "task", u.searchParams.get("body") || ""); }
     catch (_) {}
+  }
+}, true);
+// P2c SWEEP: every repo-FILE link (github.com/...>/blob/main/<path>) opens IN-APP via the
+// artifact modal — current links and any future ones. The modal's own "full file on GitHub"
+// fallback carries data-ex-raw and stays external (that's the explicit escape hatch).
+document.addEventListener("click", e => {
+  const a = e.target.closest && e.target.closest('a[href*="/blob/main/"]');
+  if (a && !a.dataset.exRaw) {
+    e.preventDefault();
+    try {
+      const ref = decodeURIComponent(new URL(a.href).pathname.split("/blob/main/")[1] || "");
+      if (ref) _openArtifact(ref, ref.split("/").pop());
+    } catch (_) {}
   }
 }, true);
 const EX_ICONS = { gemini: "📺", transcript: "📜", analysis: "⚙️", mining: "⛏️", external: "⛏️",
@@ -3061,7 +3074,12 @@ const AGENT_EMOJI = { transcripts: "📜", analysis: "⚙️", watch: "📺", li
   mining: "⛏️", visual: "🎨", news: "📰", improve: "🧬", security: "🛡️", creators: "✨",
   visualization: "🖼️", accessibility: "♿", power: "⚡", core: "🦾" };
 async function renderRooms(selId) {
-  const [rooms, reg] = await Promise.all([load("excava/rooms.json"), load("excava/agents.json")]);
+  const [rooms, reg, syschk] = await Promise.all([load("excava/rooms.json"), load("excava/agents.json"),
+    load("excava/systemcheck.json")]);
+  // P2b (owner): flag departments that only TALK — no real executor wired — honestly, in the app
+  const deptCheck = ((syschk && syschk.systems) || []).find(s => s.system === "departments executable") || {};
+  const talkOnly = new Set(deptCheck.talk_only || []);
+  const blockedD = new Set(deptCheck.blocked || []);
   const list = ((rooms && rooms.rooms) || []).slice().reverse();
   if (!list.length) {
     view.innerHTML = `<div class="card"><h3>🗣 Rooms</h3><p class="sub">No conversations yet — rooms open and advance on every CI beat (the engines live in the cloud). Check back within the hour.</p></div>`;
@@ -3075,8 +3093,10 @@ async function renderRooms(selId) {
   const deptLatest = {};
   list.forEach(r => { if (r.kind === "dept" && r.dept && !deptLatest[r.dept]) deptLatest[r.dept] = r; });
   const deptRail = Object.keys(deptLatest).sort().map(d => { const r = deptLatest[d];
+    const flag = talkOnly.has(d) ? ` <span title="honest flag: this department has no real tool wired — it debates and decides, but can't yet DO; an executor is queued in the program">🗣</span>`
+      : blockedD.has(d) ? ` <span title="honestly BLOCKED: needs an owner resource (e.g. engine quota)">⛔</span>` : "";
     return `<button class="${r.id === sel.id ? "on" : ""}" data-room="${esc(r.id)}" title="${esc(r.goal)}">
-      ${_exIcon(d)} <b>${esc((d || "").toUpperCase())}</b>${r.status === "done" ? " ✓" : r.status === "open" ? " 🟢" : ""}</button>`; }).join("");
+      ${_exIcon(d)} <b>${esc((d || "").toUpperCase())}</b>${r.status === "done" ? " ✓" : r.status === "open" ? " 🟢" : ""}${flag}</button>`; }).join("");
   const groupRail = list.filter(r => r.kind === "group" && r.status === "open").slice(0, 1).map(r =>
     `<button class="${r.id === sel.id ? "on" : ""} k-war" data-room="${esc(r.id)}" title="${esc(r.goal)}" style="background:oklch(0.92 0.06 280)">🏛 GROUP CHAT — all departments</button>`).join("");
   const warRail = list.filter(r => r.kind === "war").slice(0, 3).map(r =>

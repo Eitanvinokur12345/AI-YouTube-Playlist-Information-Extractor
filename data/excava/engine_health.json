@@ -1,59 +1,63 @@
 {
- "generated_at": "2026-07-11T10:03:27.473938+00:00",
+ "generated_at": "2026-07-11T11:34:01.678905+00:00",
  "experiment": "engine-benchmark (golden-task canary)",
  "golden_prompt": "Reply with exactly these two words and nothing else: benchmark ok",
  "results": [
   {
    "engine": "groq",
-   "status": "healthy",
-   "valid": true,
-   "ms": 751,
-   "model": "mistral-small-latest"
+   "status": "forbidden-403",
+   "ms": 28,
+   "model": "llama-3.3-70b-versatile",
+   "note": "forbidden-403: error code: 1010"
   },
   {
    "engine": "sambanova",
-   "status": "healthy",
-   "valid": true,
-   "ms": 623,
-   "model": "mistral-small-latest"
+   "status": "quota-429",
+   "ms": 275,
+   "model": "Meta-Llama-3.3-70B-Instruct",
+   "note": "quota-429: {\"error\":{\"code\":null,\"message\":\"Rate limit exceeded\",\"param\":null,\"type\":\"rate_limit_exceeded\"},\"request_id\":\"afe7b0da-38ba-48c9-9e26-0651b380089f\"}"
   },
   {
    "engine": "mistral",
    "status": "healthy",
    "valid": true,
-   "ms": 315,
+   "ms": 378,
    "model": "mistral-small-latest"
   },
   {
    "engine": "gh-models",
    "status": "healthy",
    "valid": true,
-   "ms": 688,
+   "ms": 1409,
    "model": "openai/gpt-4o-mini"
   },
   {
    "engine": "cerebras",
-   "status": "failing",
-   "ms": 562,
-   "note": "cerebras:HTTPError; groq:HTTPError; sambanova:HTTPError"
+   "status": "forbidden-403",
+   "ms": 62,
+   "model": "llama3.3-70b",
+   "note": "forbidden-403: error code: 1010"
   },
   {
    "engine": "gemini",
-   "status": "failing",
-   "ms": 365,
-   "note": "gemini:HTTPError; groq:HTTPError; sambanova:HTTPError"
+   "status": "quota-429",
+   "ms": 148,
+   "model": "gemini-2.0-flash",
+   "note": "quota-429: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error,"
   },
   {
    "engine": "openrouter",
-   "status": "failing",
-   "ms": 262,
-   "note": "openrouter:HTTPError; groq:HTTPError; sambanova:HTTPError"
+   "status": "bad-model-404",
+   "ms": 153,
+   "model": "deepseek/deepseek-r1:free",
+   "note": "bad-model-404: {\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: deepseek/deepseek-r1\",\"code\":404},\"user_id\":"
   },
   {
    "engine": "nvidia",
-   "status": "failing",
-   "ms": 60435,
-   "note": "nvidia:TimeoutError; groq:HTTPError; sambanova:HTTPError"
+   "status": "TimeoutError",
+   "ms": 60101,
+   "model": "meta/llama-3.3-70b-instruct",
+   "note": "TimeoutError: The read operation timed out"
   },
   {
    "engine": "hermes",
@@ -68,12 +72,12 @@
  ],
  "ranking": [
   "mistral",
-  "sambanova",
   "gh-models",
   "groq",
-  "openrouter",
-  "gemini",
   "cerebras",
+  "gemini",
+  "openrouter",
+  "sambanova",
   "nvidia",
   "hermes",
   "omniroute"

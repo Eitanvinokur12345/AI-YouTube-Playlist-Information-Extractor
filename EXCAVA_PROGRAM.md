@@ -1,6 +1,12 @@
 # EXCAVA — the complete program (multi-agent orchestrator + harness over Excavatortron)
 
-## ⭐ CURRENT PROGRAM — updated 2026-07-11 (this section IS the source of truth; below it = the original foundation)
+## ⭐ EXCAVATORTRON & EXCAVA REHABILITATION PLAN — updated 2026-07-11 (this section IS the source of truth; below it = the original foundation)
+
+**0. HISTORY MINING (owner 2026-07-11 — INTEGRAL):** src/history_mine.py mines the FULL owner history
+(586 records, all sessions) for want-signals; repeated wants rank higher → data/excava/rehab_plan.json
+(first run: 208 clusters; top: VPS/24h ×45, retrieval+new sources ×34, post-extraction verification ×31,
+OpenSpec/visual-analysis…). Each loop round, a short QUESTION SEQUENCE confirms a few candidates with the
+owner; confirmed gaps enter this plan. Don't follow only the recent requests — the history is the backlog.
 
 **Standing laws (owner):** free-only forever · everything operable IN THE APP (no GitHub for the owner) ·
 Ponytail law (reuse before build, minimal diffs, fewest tokens) · one item to VERIFIED-done per loop tick
@@ -62,7 +68,11 @@ proof) · SI-3 autonomy enforced + tier-2.5 auto-staffing (sandbox-proven) + �
 **KEYS EXIST (confirmed 2026-07-11 from owner's secrets screenshot):** GROQ_API_KEY(+_2), GEMINI_API_KEY_2..6,
 OPENROUTER_API_KEY, CEREBRAS_API_KEY(+_2), MISTRAL, SAMBANOVA, NVIDIA, GH_MODELS, BRIGHTDATA, SUPADATA, YOUTUBE,
 OMNIROUTE, CLAUDE_CODE_OAUTH — ALL present. So engine failures are NOT missing keys; they are engine-side.
-Diagnosis SHIPPED: canary now records the REAL HTTP status per engine (quota-429 / bad-model-404 / bad-key-401),
+REAL CODES ARRIVED 2026-07-11 14:04 + FIXES: groq/cerebras = Cloudflare 1010 bot-block → browser
+User-Agent added (canary verifies next beat); gemini = GENUINE quota-429 (not project-access — analysis
+pipeline drains all 7 keys; needs burn-rate control, not new keys); openrouter = deepseek-r1:free went
+PAID (404) → switched to llama-3.3-70b:free; sambanova temp 429; nvidia timeout (parked). Mistral +
+gh-models healthy = today's debate pair. Diagnosis layer: canary records the REAL HTTP status per engine (quota-429 / bad-model-404 / bad-key-401),
 benchmarks each engine in ISOLATION (no fallthrough mislabel), and CHAT-gemini got its own plain-text path
 (bulk_analyze.call_gemini forced JSON + json.loads -> crashed on any free-form reply — gemini rooms were doomed
 regardless of quota; fixed + stub-verified). NEXT beat's canary reveals each engine's real reason -> fix precisely.

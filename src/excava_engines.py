@@ -44,7 +44,7 @@ CATALOG = [
     ("gemini",     "gemini", "",                                      "gemini-2.0-flash",
      ["EXTERNAL_REVIEW_API_KEY", "GEMINI_API_KEY", "GEMINI_API_KEY_2", "GEMINI_API_KEY_3",
       "GEMINI_API_KEY_4", "GEMINI_API_KEY_5", "GEMINI_API_KEY_6"], "grounded"),
-    ("openrouter", "openai", "https://openrouter.ai/api/v1",          "deepseek/deepseek-r1:free",
+    ("openrouter", "openai", "https://openrouter.ai/api/v1",          "meta-llama/llama-3.3-70b-instruct:free",
      ["OPENROUTER_API_KEY"], "reasoning"),
     ("nvidia",     "openai", "https://integrate.api.nvidia.com/v1",   "meta/llama-3.3-70b-instruct",
      ["NVIDIA_API_KEY"], "grounded"),
@@ -167,7 +167,11 @@ def _call_one(e: dict, prompt: str, max_tokens: int = 700) -> dict:
                                "messages": [{"role": "user", "content": prompt}]}).encode()
             req = urllib.request.Request(
                 e["base"].rstrip("/") + "/chat/completions", data=body,
-                headers={"Content-Type": "application/json", "Authorization": f"Bearer {key}"})
+                headers={"Content-Type": "application/json", "Authorization": f"Bearer {key}",
+                         # canary 2026-07-11: groq+cerebras return Cloudflare 1010 (bot-block) for
+                         # python-urllib's default agent — a browser UA is the documented cure
+                         "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                                       "(KHTML, like Gecko) Chrome/126.0 Safari/537.36"})
             with urllib.request.urlopen(req, timeout=60) as resp:
                 d = json.loads(resp.read().decode("utf-8", errors="replace"))
             text = d["choices"][0]["message"]["content"]

@@ -44,6 +44,14 @@ proof) · SI-3 autonomy enforced + tier-2.5 auto-staffing (sandbox-proven) + �
 4. **P1 Live refresh** — DONE+verified v102: the app polls the beat stamp every 60s while open; on new
    data it drops the cache, re-renders the ACTIVE tab, and pulses "🟢 live · new data HH:MM" next to the
    build badge; never refreshes while a modal is open or the tab is hidden (browser-verified end-to-end).
+4½. **DECISION AUDIT (owner 2026-07-11):** many department 'decisions' are actually SELF-IMPROVEMENT
+   work, not the department's mission. Build: classify recent room decisions (mission vs self-improve);
+   self-improve-type decisions route to the SI department's EXTERNAL ARMS (an SI liaison per dept);
+   departments keep only mission decisions. Output data/excava/decision_audit.json + in-app view;
+   supervisor gains a mission-vs-SI drift flag. (Bus task filed, priority 0.)
+4¾. **TOKEN DIET (Caveman, found on the web — NOT in the hub; mining gap):** apply its no-filler law to
+   AGENT prompts next _prompt touch (fewer output tokens per turn = more turns per quota). Owner-facing
+   reports stay full sentences (his standing 'sentences not code' law outranks caveman-speak).
 5. **P2 Item-6 rest** — route results to their tabs (package→Packages, tool→Tools, prompt→Prompts,
    design→Designs); flag talk-only departments honestly in-app; ONE systematic github.com-link sweep.
 6. **P5 Visual dept + Designs tab overhaul** — auto-ADD every design, quality-filter the junk, then tasks.

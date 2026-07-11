@@ -22,12 +22,12 @@ proof) · SI-3 autonomy enforced + tier-2.5 auto-staffing (sandbox-proven) + �
 1. **SI-4a Golden-task regression suite** — ~6 fixed engine-free tasks (bus routing, package assembly,
    pitch v2 generation, humanize, hub-candidate search, pitch-survival in approvals) → `run_regression()` →
    `data/excava/regression.json`; beat-wired; roster flips to LIVE. This GATES tier-2 self-code for real.
-2. **SI-4b Formation A/B** — SHIPPED (mechanics dry-run-verified: solo-vs-debate, blind judge on a third
-   engine, daily cap, 3-net-wins → formation_policy.json steers room depth). LIVE CI RESULT PENDING
-   (needs ≥2 healthy engines; runs in the beat).
+2. **SI-4b Formation A/B** — LIVE: first real CI verdict 2026-07-11 — blind judge picked SOLO (tally solo 1 : debate 0). Daily cadence; 3 net wins flips formation_policy.json.
 3. **SI-4c Huge-task splitting** — SHIPPED+verified: 'Close the link gap: 4060/7360 unlinked (G3)'
    split into 6 checkpoints; measure step executed immediately; 4 batch steps + final re-verify are
-   REAL bus tasks the links lane consumes; daily cap; roster live with progress.
+   REAL bus tasks the links lane consumes; daily cap; roster live with progress. NOTE 2026-07-11: the
+   hub GREW (7764 els, unlinked 4431) — batch done-criteria use absolute counts; switch to PERCENT
+   coverage criteria next touch.
 3½. **AGENT REALNESS (owner 2026-07-11 — priority #2 after self-improvement):** rooms must be TRUE
    multi-model debates, not one engine talking to itself (owner caught 20/20 turns all-Mistral).
    Mechanics SHIPPED: healthy-pool round-robin per turn (consecutive speakers get different models),
@@ -35,7 +35,7 @@ proof) · SI-3 autonomy enforced + tier-2.5 auto-staffing (sandbox-proven) + �
    caught on real data, visible in its criticism). PLUS: complete() now falls through the HEALTHY
    pool only — a quota-dead engine used to eat a 60s timeout on every turn (why cycles crawled and
    Mistral answered everything). LIVE CI PROOF PENDING — check fresh transcripts for a real engine
-   mix. ✅ LIVE PROOF 2026-07-11 ~10:00Z: 9 of 17 rooms show TWO models debating (gh-models + mistral in the same room; canary: groq/sambanova/mistral/gh-models all healthy — gh-models revived by the zero-setup GITHUB_TOKEN). Remaining spread gap: groq/sambanova pass the canary but burst-429 at cycle time → NEXT: pace turns (small sleep) so per-minute quotas breathe. Then per-agent memory/stance.
+   mix. ✅ LIVE PROOF 2026-07-11 ~10:00Z: 9 of 17 rooms show TWO models debating (gh-models + mistral in the same room; canary: groq/sambanova/mistral/gh-models all healthy — gh-models revived by the zero-setup GITHUB_TOKEN). Spread fix SHIPPED 2026-07-11: per-room OFFSET in the round-robin (before it, every room's first turn hit pool[0] — 17 rooms bursting one engine) + 2s pacing between turns; simulated cycle shows first-turn load 3-5 per engine instead of 17-on-one. LIVE spread proof next beats. Then per-agent memory/stance.
 3¾. **POWER finds capacity itself (owner 2026-07-11):** DONE v1 — src/power_scan.py is Power's real
    executor: audits which engine families lack a live key (+ the exact free signup path), searches
    EXCAVA's OWN hub for free engines/gateways, files the best move as a v2 pitch. Plus a zero-setup

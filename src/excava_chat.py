@@ -25,6 +25,7 @@ import argparse
 import json
 import random
 import re
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -219,17 +220,20 @@ def advance(room_id: str, turns: int = 2) -> list[str]:
             log.append(f"{room['id']}: held — {why}")
             break
         # REAL cross-model debate (owner 2026-07-11: 'it all happens through one engine — Mistral').
-        # Round-robin over the engines the benchmark canary PROVED healthy, by turn number, so two
-        # consecutive speakers use DIFFERENT models whenever more than one is alive. The old id-hash
-        # picked from all keyed engines, and dead ones fell through to the same survivor every time.
+        # Round-robin over the canary-HEALTHY pool with a PER-ROOM OFFSET: without the offset,
+        # every room's first turn indexed pool[0], so 17 rooms burst the same engine at once and
+        # fell through to the lone survivor. The offset spreads rooms across engines while keeping
+        # consecutive speakers in one room on DIFFERENT models.
         av = engines.healthy()
-        eng = av[room["turns"] % len(av)] if av else None
+        off = sum(ord(ch) for ch in room["id"][-6:])
+        eng = av[(off + room["turns"]) % len(av)] if av else None
         r = engines.complete(_prompt(room, sp, _history(room)), engine=eng,
                              dept=dept, difficulty="hard" if sp.get("role") == "lead" else "normal",
                              max_tokens=260)
         if not r["ok"]:
             log.append(f"{room['id']}: no engine here ({r.get('error', '')[:50]}) — resumes in CI")
             break
+        time.sleep(2)   # pace: let free-tier per-minute quotas breathe across ~50 turns/cycle
         leases.record(dept or "core", r["engine"], len(r["text"]) // 3 + 200)
         text = r["text"]
         if sp.get("role") == "doer" and room["turns"] == 2:

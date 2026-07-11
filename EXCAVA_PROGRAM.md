@@ -35,7 +35,7 @@ proof) · SI-3 autonomy enforced + tier-2.5 auto-staffing (sandbox-proven) + �
    caught on real data, visible in its criticism). PLUS: complete() now falls through the HEALTHY
    pool only — a quota-dead engine used to eat a 60s timeout on every turn (why cycles crawled and
    Mistral answered everything). LIVE CI PROOF PENDING — check fresh transcripts for a real engine
-   mix. Next layer: per-agent memory/stance so agents differ by more than engine.
+   mix. ✅ LIVE PROOF 2026-07-11 ~10:00Z: 9 of 17 rooms show TWO models debating (gh-models + mistral in the same room; canary: groq/sambanova/mistral/gh-models all healthy — gh-models revived by the zero-setup GITHUB_TOKEN). Remaining spread gap: groq/sambanova pass the canary but burst-429 at cycle time → NEXT: pace turns (small sleep) so per-minute quotas breathe. Then per-agent memory/stance.
 3¾. **POWER finds capacity itself (owner 2026-07-11):** DONE v1 — src/power_scan.py is Power's real
    executor: audits which engine families lack a live key (+ the exact free signup path), searches
    EXCAVA's OWN hub for free engines/gateways, files the best move as a v2 pitch. Plus a zero-setup

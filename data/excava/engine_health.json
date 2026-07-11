@@ -1,61 +1,61 @@
 {
- "generated_at": "2026-07-11T11:34:01.678905+00:00",
+ "generated_at": "2026-07-11T14:04:46.581910+00:00",
  "experiment": "engine-benchmark (golden-task canary)",
  "golden_prompt": "Reply with exactly these two words and nothing else: benchmark ok",
  "results": [
   {
    "engine": "groq",
    "status": "forbidden-403",
-   "ms": 28,
+   "ms": 113,
    "model": "llama-3.3-70b-versatile",
    "note": "forbidden-403: error code: 1010"
   },
   {
    "engine": "sambanova",
    "status": "quota-429",
-   "ms": 275,
+   "ms": 327,
    "model": "Meta-Llama-3.3-70B-Instruct",
-   "note": "quota-429: {\"error\":{\"code\":null,\"message\":\"Rate limit exceeded\",\"param\":null,\"type\":\"rate_limit_exceeded\"},\"request_id\":\"afe7b0da-38ba-48c9-9e26-0651b380089f\"}"
+   "note": "quota-429: {\"error\":{\"code\":null,\"message\":\"Rate limit exceeded\",\"param\":null,\"type\":\"rate_limit_exceeded\"},\"request_id\":\"b94f825a-ad5d-4b10-b4f2-60c55eb90a38\"}"
   },
   {
    "engine": "mistral",
    "status": "healthy",
    "valid": true,
-   "ms": 378,
+   "ms": 333,
    "model": "mistral-small-latest"
   },
   {
    "engine": "gh-models",
    "status": "healthy",
    "valid": true,
-   "ms": 1409,
+   "ms": 703,
    "model": "openai/gpt-4o-mini"
   },
   {
    "engine": "cerebras",
    "status": "forbidden-403",
-   "ms": 62,
+   "ms": 45,
    "model": "llama3.3-70b",
    "note": "forbidden-403: error code: 1010"
   },
   {
    "engine": "gemini",
    "status": "quota-429",
-   "ms": 148,
+   "ms": 133,
    "model": "gemini-2.0-flash",
    "note": "quota-429: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error,"
   },
   {
    "engine": "openrouter",
    "status": "bad-model-404",
-   "ms": 153,
+   "ms": 111,
    "model": "deepseek/deepseek-r1:free",
    "note": "bad-model-404: {\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: deepseek/deepseek-r1\",\"code\":404},\"user_id\":"
   },
   {
    "engine": "nvidia",
    "status": "TimeoutError",
-   "ms": 60101,
+   "ms": 60158,
    "model": "meta/llama-3.3-70b-instruct",
    "note": "TimeoutError: The read operation timed out"
   },
@@ -73,10 +73,10 @@
  "ranking": [
   "mistral",
   "gh-models",
-  "groq",
   "cerebras",
-  "gemini",
   "openrouter",
+  "groq",
+  "gemini",
   "sambanova",
   "nvidia",
   "hermes",

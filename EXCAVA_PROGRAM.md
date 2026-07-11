@@ -7,6 +7,10 @@
 (first run: 208 clusters; top: VPS/24h ×45, retrieval+new sources ×34, post-extraction verification ×31,
 OpenSpec/visual-analysis…). Each loop round, a short QUESTION SEQUENCE confirms a few candidates with the
 owner; confirmed gaps enter this plan. Don't follow only the recent requests — the history is the backlog.
+**DONE-WHEN (owner 2026-07-11): the plan ends only when EVERY request he has EVER made is fulfilled as
+he wanted — then new things. Frequency orders the queue but NEVER decides importance: a request raised
+once counts fully. Scoreboard: rehab_plan.json coverage (now 208 total · 4 in-progress · 204 unreviewed);
+every tick may move it, question sequences drain 'unreviewed'.**
 **CONFIRMED ROUND 1 (owner order, 2026-07-11): R1 free-VPS 24/7 — READY, awaiting owner approve:
 deploy/vps_setup.sh written (Oracle Always Free + systemd timer, 5-min beats forever); v2 pitch in the
 in-app decide queue with the 10-min guide (signup + fine-grained token + one command) · R2 more retrieval sources · R3 EXCAVA external +

@@ -76,18 +76,34 @@ def mine(top: int = 30) -> dict:
                 clusters.append({"fp": fp, "quote": s, "count": 1,
                                  "first_at": r.get("at", ""), "last_at": r.get("at", ""),
                                  "session": r.get("session", "")})
-    # rank: repetition first (he repeats what still hurts), then recency
+    # rank: repetition orders the QUEUE, but does NOT decide importance — owner law 2026-07-11:
+    # "something that appeared once doesn't mean it's not important". EVERY cluster is tracked;
+    # the plan is DONE only when every request is fulfilled as he wanted (coverage below).
     clusters.sort(key=lambda c: (c["count"], c["last_at"]), reverse=True)
+    prev_status: dict[str, str] = {}
+    try:                                     # statuses survive re-mining (merge by quote)
+        for it in json.load(open(OUT, encoding="utf-8")).get("items", []):
+            if "unreviewed" not in it.get("status", "") and "ask the owner" not in it.get("status", ""):
+                prev_status[it["quote"]] = it["status"]
+    except Exception:
+        pass
     items = [{"rank": i + 1, "quote": c["quote"], "times_raised": c["count"],
               "first": c["first_at"][:10], "last": c["last_at"][:10],
-              "status": "candidate — ask the owner"}
-             for i, c in enumerate(clusters[:top])]
+              "status": prev_status.get(c["quote"], "unreviewed — ask the owner")}
+             for i, c in enumerate(clusters)]          # ALL clusters, not a top-N slice
+    cov = {"total": len(items),
+           "fulfilled": sum(1 for i in items if i["status"].startswith("fulfilled")),
+           "in_progress": sum(1 for i in items if i["status"].startswith("in-progress")),
+           "not_wanted": sum(1 for i in items if i["status"].startswith("not-wanted")),
+           "unreviewed": sum(1 for i in items if i["status"].startswith("unreviewed"))}
     report = {"generated_at": datetime.now(timezone.utc).isoformat(),
               "source": f"{HIST.name} (full owner history, all sessions)",
-              "note": "EXCAVATORTRON & EXCAVA Rehabilitation Plan — candidate unfulfilled wants "
-                      "mined from the owner's own words; repeated wants rank higher. The loop "
-                      "confirms a few with the owner each round and feeds real gaps into the "
-                      "program.",
+              "done_when": "EVERY owner request ever made is fulfilled as he wanted — "
+                           "coverage.fulfilled + not_wanted == coverage.total",
+              "coverage": cov,
+              "note": "EXCAVATORTRON & EXCAVA Rehabilitation Plan — every want-cluster from the "
+                      "owner's own words, statuses persistent across re-mining; repetition orders "
+                      "the queue, never importance. Question sequences resolve 'unreviewed' items.",
               "total_clusters": len(clusters), "items": items}
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
     return report

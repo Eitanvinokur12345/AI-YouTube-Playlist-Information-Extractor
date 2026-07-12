@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-12T22:49:06.583580+00:00",
+ "generated_at": "2026-07-12T22:55:17.401147+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -21,12 +21,12 @@
    "last_position": "Log every confidence drop that changes actions, but auto-flag only those below 50% for human review within 5 minutes. Th"
   },
   {
-   "id": "watch-w1",
-   "name": "Scope",
-   "dept": "watch",
+   "id": "analysis-w1",
+   "name": "Chisel",
+   "dept": "analysis",
    "role": "doer",
-   "turns_7d": 105,
-   "rooms_7d": 56,
+   "turns_7d": 107,
+   "rooms_7d": 57,
    "engines_used": [
     "gh-models",
     "groq",
@@ -34,15 +34,31 @@
     "sambanova"
    ],
    "positions_held": 7,
-   "last_position": "I’ll run the video through Gemini 3.1 Ultra’s multimodal analysis to extract sentiment, tone, and visual cues beyond the"
+   "last_position": "Adopt the 50% confidence-drop threshold for auto-flagging. It balances noise reduction with risk capture: most critical "
   },
   {
-   "id": "analysis-w1",
-   "name": "Chisel",
-   "dept": "analysis",
+   "id": "watch-w1",
+   "name": "Scope",
+   "dept": "watch",
    "role": "doer",
-   "turns_7d": 104,
-   "rooms_7d": 55,
+   "turns_7d": 106,
+   "rooms_7d": 57,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 8,
+   "last_position": "I’ll run the video through Gemini 3.1 Ultra’s multimodal analysis to extract visual cues, tone shifts, and contextual ga"
+  },
+  {
+   "id": "analysis-checker",
+   "name": "Sift",
+   "dept": "analysis",
+   "role": "checker",
+   "turns_7d": 102,
+   "rooms_7d": 52,
    "engines_used": [
     "gh-models",
     "groq",
@@ -50,23 +66,7 @@
     "sambanova"
    ],
    "positions_held": 4,
-   "last_position": "I will deep-analyze the full earnings call transcript for the most recent quarter to extract key financial themes, senti"
-  },
-  {
-   "id": "analysis-checker",
-   "name": "Sift",
-   "dept": "analysis",
-   "role": "checker",
-   "turns_7d": 100,
-   "rooms_7d": 51,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 2,
-   "last_position": "The 50% threshold still misses high-impact decisions made at 46% confidence—like overriding a default with a risky alter"
+   "last_position": "The fixed 50% threshold still misses high-impact decisions made at 46-49% confidence—like overriding a default with a co"
   },
   {
    "id": "transcripts-w1",
@@ -89,24 +89,24 @@
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 79,
-   "rooms_7d": 44,
+   "turns_7d": 80,
+   "rooms_7d": 45,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 4,
-   "last_position": "I will now link every existing memory ID into a single shared graph by running the unified memory merge command. This wi"
+   "positions_held": 5,
+   "last_position": "I will now link every existing memory ID into a single shared graph by running the Hindsight MCP server to merge all nod"
   },
   {
    "id": "improve-w1",
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 79,
-   "rooms_7d": 45,
+   "turns_7d": 80,
+   "rooms_7d": 46,
    "engines_used": [
     "gh-models",
     "groq",
@@ -114,15 +114,15 @@
     "nvidia",
     "sambanova"
    ],
-   "positions_held": 3,
-   "last_position": "Do this: Run a weekly automated scan of all prompts in our system, flagging any that lack clear success criteria or cons"
+   "positions_held": 4,
+   "last_position": "Run a weekly automated scan of all prompts in our system, flagging duplicates, weak phrasing, or outdated references. Th"
   },
   {
    "id": "visualization-w1",
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 75,
+   "turns_7d": 76,
    "rooms_7d": 40,
    "engines_used": [
     "gh-models",
@@ -130,23 +130,23 @@
     "mistral",
     "sambanova"
    ],
-   "positions_held": 3,
-   "last_position": "Use Figma to build a clickable prototype of Excava’s interface. It lets users *feel* the navigation and interactions liv"
+   "positions_held": 4,
+   "last_position": "Build the Excava interface in Figma as a clickable prototype, then layer in a live backend demo only after navigation is"
   },
   {
    "id": "visual-w1",
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 73,
-   "rooms_7d": 37,
+   "turns_7d": 74,
+   "rooms_7d": 38,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
-   "positions_held": 3,
-   "last_position": "I’ll apply the muted coral accent to the AI site’s interactive elements and export a style guide showing it against the "
+   "positions_held": 4,
+   "last_position": "I’ll browse the Beverage Cans site and capture a screenshot of its bright pink accent in use on interactive elements. Th"
   },
   {
    "id": "visual-checker",
@@ -169,7 +169,7 @@
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 71,
+   "turns_7d": 72,
    "rooms_7d": 36,
    "engines_used": [
     "gh-models",
@@ -177,8 +177,8 @@
     "mistral",
     "sambanova"
    ],
-   "positions_held": 3,
-   "last_position": "Figma prototypes solve the liveliness problem but create a new risk: users mistake the polished demo for the real produc"
+   "positions_held": 4,
+   "last_position": "Pane: Figma’s polished demo still risks users conflating the prototype with the real product—even if navigation is locke"
   },
   {
    "id": "memory-checker",
@@ -197,6 +197,22 @@
    "last_position": "The real risk with a single, shared memory graph is that it may become overly centralized and prone to single-point fail"
   },
   {
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
+   "role": "checker",
+   "turns_7d": 69,
+   "rooms_7d": 35,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 4,
+   "last_position": "A weekly scan risks review fatigue—reviewers gloss over prompts when flooded with low-signal alerts. Instead, tie scans "
+  },
+  {
    "id": "creators-w1",
    "name": "Forge",
    "dept": "creators",
@@ -211,22 +227,6 @@
    ],
    "positions_held": 0,
    "last_position": ""
-  },
-  {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 68,
-   "rooms_7d": 34,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 3,
-   "last_position": "Gauge: A weekly scan misses urgent misalignments—vague prompts in fast-moving tasks slip through until the next scan, wa"
   },
   {
    "id": "security-w1",
@@ -393,15 +393,33 @@
    "name": "Root",
    "dept": "memory",
    "role": "lead",
-   "turns_7d": 36,
-   "rooms_7d": 36,
+   "turns_7d": 37,
+   "rooms_7d": 37,
    "engines_used": [
     "groq",
     "mistral",
     "sambanova"
    ],
+   "positions_held": 4,
+   "last_position": "ACTION: Graft runs the unified memory merge command to produce one consolidated brain graph where every memory connects ",
+   "proposed": 1
+  },
+  {
+   "id": "visual-lead",
+   "name": "Chroma",
+   "dept": "visual",
+   "role": "lead",
+   "turns_7d": 37,
+   "rooms_7d": 37,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "nvidia",
+    "sambanova"
+   ],
    "positions_held": 3,
-   "last_position": "ACTION: Graft runs the unified memory merge command to produce one consolidated brain graph where all existing memory ID",
+   "last_position": "ACTION: Worker-6206 captures a screenshot of the Beverage Cans site’s bright pink accent on interactive elements and upl",
    "proposed": 1
   },
   {
@@ -418,24 +436,6 @@
    ],
    "positions_held": 0,
    "last_position": ""
-  },
-  {
-   "id": "visual-lead",
-   "name": "Chroma",
-   "dept": "visual",
-   "role": "lead",
-   "turns_7d": 36,
-   "rooms_7d": 36,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "nvidia",
-    "sambanova"
-   ],
-   "positions_held": 2,
-   "last_position": "ACTION: Worker-6206 generates two style guide exports—one with muted coral accents, one with deep magenta—against Keychr",
-   "proposed": 1
   },
   {
    "id": "visualization-lead",
@@ -470,7 +470,7 @@
    "positions_held": 2,
    "last_position": "DECISION: Enforce a risk-based prompt review at task initiation—auto-flag vague or missing success criteria/constraints ",
    "proposed": 2,
-   "shipped": 1
+   "shipped": 2
   },
   {
    "id": "creators-lead",
@@ -504,6 +504,22 @@
    "last_position": ""
   },
   {
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 24,
+   "rooms_7d": 24,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 4,
+   "last_position": "ACTION: Run parallel audio sentiment and visual analysis on the video using Gemini 3.1 Ultra to generate a structured re",
+   "proposed": 1
+  },
+  {
    "id": "power-lead",
    "name": "Dynamo",
    "dept": "power",
@@ -517,22 +533,6 @@
    ],
    "positions_held": 0,
    "last_position": ""
-  },
-  {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 23,
-   "rooms_7d": 23,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 3,
-   "last_position": "ACTION: Run audio sentiment analysis and visual analysis in parallel on the video using Gemini 3.1 Ultra, outputting a s",
-   "proposed": 1
   },
   {
    "id": "news-lead",
@@ -554,14 +554,14 @@
    "name": "Marrow",
    "dept": "analysis",
    "role": "lead",
-   "turns_7d": 20,
-   "rooms_7d": 20,
+   "turns_7d": 21,
+   "rooms_7d": 21,
    "engines_used": [
     "mistral",
     "sambanova"
    ],
-   "positions_held": 2,
-   "last_position": "ACTION: Deep-analyze the full earnings call transcript for Q3 2023 (latest available) to extract financial themes, senti"
+   "positions_held": 3,
+   "last_position": "ACTION: Deep-analyze the full earnings call transcript for Q4 2023 (latest available) to extract key financial and opera"
   },
   {
    "id": "accessibility-w1",

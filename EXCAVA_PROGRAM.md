@@ -63,6 +63,15 @@ the GitHub cron remains the runtime until they decide. ('Sonat' resolved = Claud
 4. **P1 Live refresh** — DONE+verified v102: the app polls the beat stamp every 60s while open; on new
    data it drops the cache, re-renders the ACTIVE tab, and pulses "🟢 live · new data HH:MM" next to the
    build badge; never refreshes while a modal is open or the tab is hidden (browser-verified end-to-end).
+4½c. **DECISION-MAKING — STRUCTURALLY RESOLVED (owner's 3rd ask, 2026-07-12): rooms are now SHAPED
+   by tier. Output-tier depts (creators/analysis/security/memory/mining/news/transcripts/visual/
+   watch): 3-turn ACTION-shaped rooms — the doer states the act, the checker verifies it's mission
+   work, the lead closes with 'ACTION:', and the close puts REAL work on the bus. Improvement-
+   flavored conclusions REROUTE to improve (or power for EXCAVA-capability matters) — verified:
+   mission→own queue, 'standardize our workflow'→IMPROVE, 'upgrade our EXCAVA engine'→POWER, all
+   syscall-traced. Initiative restricted to the decision-heavy tier. Decision-heavy rooms
+   (improve/power/visualization/accessibility + war/group) keep the debate shape — deciding IS
+   their mission. LIVE PROOF pending: next beats' creators transcripts should read act-verify-ACT.**
 4½b. **DECISION-VOLUME POLICY — CONFIRMED 2026-07-12:** decision-heavy tier =
    improve/power/visualization/accessibility (debate IS their job); everyone else must let
    decisions lead to ACTION (owner: 'the emphasis should be on action') — enforcement

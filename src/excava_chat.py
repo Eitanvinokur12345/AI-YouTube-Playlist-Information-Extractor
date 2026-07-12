@@ -212,6 +212,9 @@ def _propose_from_decision(room: dict, sp: dict, decision_text: str) -> str:
         aid = sp.get("id", "")
         if not aid or room.get("kind") == "group":       # group chat audits 100% SI — no initiative
             return ""
+        heavy, _o = _tiers()
+        if room.get("kind") == "dept" and room.get("dept") not in heavy:
+            return ""                                    # output tier acts via _act_on_close instead
         m = re.search(r"DECISION:\s*(.+?)(?:\.|$)", decision_text, re.I)
         core = (m.group(1).strip() if m else "").strip()
         if len(core) < 20:
@@ -246,6 +249,58 @@ def _propose_from_decision(room: dict, sp: dict, decision_text: str) -> str:
         return ""
     except Exception:
         return ""                                        # initiative must never break a close
+
+
+#  DECISION-VOLUME LAW, ENFORCED IN THE MACHINE (owner 2026-07-12, third time asking):
+#  output-tier departments make as FEW decisions as possible — their rooms are ACTION-shaped
+#  (short, converge on 'ACTION:', and the action becomes real bus work). Any improvement-
+#  flavored conclusion is REROUTED to Self-Improvement (or Power if it's about EXCAVA's own
+#  capabilities) — departments never keep improvement work. Decision-heavy tier (improve,
+#  power, visualization, accessibility) keeps the debate shape: deciding IS their mission.
+def _tiers() -> tuple[set, set]:
+    try:
+        d = json.loads((DATA / "excava" / "dept_tiers.json").read_text(encoding="utf-8"))
+        return set(d.get("decision_heavy", [])), set(d.get("output_tier", []))
+    except Exception:
+        return {"improve", "power", "visualization", "accessibility"}, set()
+
+
+def _route_conclusion(room: dict, line: str) -> str:
+    """Where an output-tier room's converged ACTION belongs (owner's law):
+    improvement of an action/system/technical aspect -> improve; EXCAVA-capability -> power;
+    otherwise it is real department work and goes to the department's own bus queue."""
+    low = line.lower()
+    if any(w in low for w in ("excava", "capability", "engine", "power level", "upgrade our")):
+        return "power"
+    if any(w in low for w in ("improve", "optimi", "refactor", "streamlin", "standardiz",
+                              "workflow", "process", "our prompts", "our rooms", "efficien")):
+        return "improve"
+    return room.get("dept", "") or "core"
+
+
+def _act_on_close(room: dict, line: str) -> str:
+    """Output-tier close: the conclusion becomes REAL bus work (the bus + syscall gate execute
+    it), never a decision.md that goes nowhere. Rerouting is visible + traced."""
+    dest = _route_conclusion(room, line)
+    core = re.sub(r"^(ACTION|DECISION):\s*", "", line.strip(), flags=re.I)[:120]
+    src_dept = room.get("dept", "")
+    rerouted = dest != src_dept
+    t = bus.enqueue((f"[rerouted {src_dept}→{dest}] " if rerouted else f"[{src_dept} room action] ") + core,
+                    detail=f"From room {room.get('id')} (action-shaped close). "
+                           + ("Improvement matter — belongs to the "
+                              f"{dest} department by owner law 2026-07-12." if rerouted else
+                              "Mission action from the department's own room."),
+                    department=dest, source=f"room-action:{src_dept}", priority=2,
+                    done_criteria="the stated action is done and verifiable")
+    try:
+        from src.excava_agents import _syslog
+        _syslog(src_dept, "room-close", {"id": room.get("id", "")}, True,
+                f"rerouted-to-{dest}" if rerouted else "action-queued")
+    except Exception:
+        pass
+    if t:
+        return f"{room['id']}: {'REROUTED to ' + dest.upper() if rerouted else 'ACTION queued'} → {t['id']}"
+    return f"{room['id']}: action already on the bus (deduped)"
 
 
 _PAGE_CACHE: dict = {}
@@ -291,16 +346,32 @@ def _prompt(room: dict, sp: dict, hist: list[dict]) -> str:
     role = sp.get("role", "agent")
     closing = room["turns"] >= room["max_turns"] - 2
     convo = "\n".join(f"{m['name']} ({m['agent']}): {m['text'][:300]}" for m in hist) or "(room just opened)"
-    inst = {
-        "doer": ("Make the case for ONE concrete decision: what we should DO and why it's the best "
-                 "option for the goal. Name the trade-off you're accepting. 2-4 sentences, in character."),
-        "checker": ("Push back on the last idea: name the real risk or a better alternative, and what "
-                    "would settle the argument. 2-3 sentences, in character."),
-        "improver": "Offer one concrete way to make the plan better, cheaper, or faster. 2 sentences.",
-        "lead": ("CONVERGE now: state the call in one line starting 'DECISION:', then what the result "
-                 "must deliver and who owns it. In character."
-                 if closing else "Steer: weigh the debate so far, keep it on the goal. 2 sentences."),
-    }.get(role, "Contribute one clear point. 2 sentences.")
+    heavy, _out = _tiers()
+    if room.get("kind") == "dept" and room.get("dept") not in heavy:
+        # ACTION-shaped (output tier): as few decisions as possible — the room exists to DO
+        inst = {
+            "doer": ("State the ONE action you will take NOW with this department's real tool and "
+                     "what it will produce. If it's about IMPROVING a process/system, say so — that "
+                     "belongs to Self-Improvement, not us. 2 sentences, in character."),
+            "checker": ("Verify the action is MISSION work our tool can actually do (not an "
+                        "improvement matter — those go to Self-Improvement/Power). One sentence "
+                        "verdict, one fix if needed."),
+            "improver": "One way to do the SAME action faster or with less. 1 sentence.",
+            "lead": ("CLOSE now: one line starting 'ACTION:' — the concrete act, its output, who does it."
+                     if closing else "Keep it on the act, not on opinions. 1-2 sentences."),
+        }.get(role, "One clear point about the action. 1 sentence.")
+    else:
+        # DEBATE-shaped (decision-heavy tier: improve/power/visualization/accessibility + war/group)
+        inst = {
+            "doer": ("Make the case for ONE concrete decision: what we should DO and why it's the best "
+                     "option for the goal. Name the trade-off you're accepting. 2-4 sentences, in character."),
+            "checker": ("Push back on the last idea: name the real risk or a better alternative, and what "
+                        "would settle the argument. 2-3 sentences, in character."),
+            "improver": "Offer one concrete way to make the plan better, cheaper, or faster. 2 sentences.",
+            "lead": ("CONVERGE now: state the call in one line starting 'DECISION:', then what the result "
+                     "must deliver and who owns it. In character."
+                     if closing else "Steer: weigh the debate so far, keep it on the goal. 2 sentences."),
+        }.get(role, "Contribute one clear point. 2 sentences.")
     return (f"You are {sp.get('name')} — {sp.get('persona', '')}\n"
             f"Team law (obey): free-only; real-not-display; quality first; task-relative value.\n"
             f"STYLE (obey): speak in PLAIN LANGUAGE a non-engineer can follow — talk about DECISIONS, "
@@ -386,16 +457,23 @@ def advance(room_id: str, turns: int = 2) -> list[str]:
         room["turns"] += 1
         room["last_turn_ms"] = r["ms"]
         log.append(f"{room['id']}: {sp.get('name')} spoke ({r['engine']}, {r['ms']}ms) t{room['turns']}")
-        if text.strip().upper().startswith("DECISION:") or "DECISION:" in text[:60]:
+        _up = text.strip().upper()
+        if _up.startswith(("DECISION:", "ACTION:")) or "DECISION:" in text[:60] or "ACTION:" in text[:60]:
             art = _artifact(room, text)
             room["status"] = "done"
             room["artifact"] = art
             _post(room, "system", "room", "", f"Room closed. Artifact: {json.dumps(art)}", 0)
             bus.event(room["id"], "room_closed", {"artifact": art, "turns": room["turns"]})
             log.append(f"{room['id']}: CLOSED with artifact {art}")
-            init = _propose_from_decision(room, sp, text)   # layer-3 INITIATIVE (capped, traced)
-            if init:
-                log.append(init)
+            heavy, _o = _tiers()
+            if room.get("kind") == "dept" and room.get("dept") not in heavy:
+                # OUTPUT TIER (owner law): the conclusion becomes REAL bus work — mission acts go
+                # to the department's own queue; improvement matters REROUTE to improve/power.
+                log.append(_act_on_close(room, text.strip().splitlines()[0]))
+            else:
+                init = _propose_from_decision(room, sp, text)   # initiative: decision-heavy only
+                if init:
+                    log.append(init)
             break
     if room["turns"] >= room["max_turns"] and room["status"] == "open":
         art = _artifact(room, _history(room, 2)[-1]["text"] if _history(room, 2) else room["goal"])
@@ -422,7 +500,10 @@ def ensure_default_rooms() -> list[str]:
         if d in open_depts:
             continue
         focus = (intent.get(d, {}) or {}).get("should_do") or f"advance the {d} department's mission"
-        r = open_room("dept", f"{d}: {focus[:90]}", dept=d, max_turns=6, artifact_kind="bus-task")
+        heavy, _o = _tiers()
+        r = open_room("dept", f"{d}: {focus[:90]}", dept=d,
+                      max_turns=6 if d in heavy else 3,   # output tier: brief, then ACT (owner law)
+                      artifact_kind="bus-task")
         opened.append(r["id"])
     # a persistent GROUP CHAT — ANY agent, ANY department (owner's spec: "any agent regardless of
     # department can talk and create the best thing… scroll through all the chats, marked by day").

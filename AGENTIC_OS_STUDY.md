@@ -62,6 +62,18 @@ move as a unit to any repo with a `data/` folder (Budoaris, FreeDup, anything). 
 "creating their own version": fork the harness, swap the department list and the WORK
 handlers, keep the laws. The VPS (R1) adds the always-on runtime any port can share.
 
+## 6. What makes an agent an AGENT (owner asked, 2026-07-12 — plain words)
+An **engine** answers a question and forgets you existed. An **agent** is an engine given
+five things, stacked:
+1. **A job** — a goal it owns ("keep the hub's links alive"), not a one-off question.
+2. **Memory** — it remembers what it tried, what worked, what it believes; yesterday shapes today.
+3. **Tools** — it can DO things (run a scan, write a file, call an API), not just talk about them.
+4. **Initiative** — it acts when it sees a reason, without being asked each time.
+5. **Accountability** — its actions are traced, so trust can be earned or lost per agent.
+Engines are interchangeable brains; agents are colleagues. EXCAVA today: jobs ✓, tools ✓
+(department-level), traces ✓ (syscall log) — the gap is per-agent MEMORY, then a visible
+TRACK RECORD, then INITIATIVE, then broader EXTERNAL ACTION (owner's build order, 2026-07-12).
+
 ## Sources
 - AIOS paper: arxiv.org/abs/2403.16971 (COLM 2025) · openreview.net/forum?id=L4HHkCDz2x
 - Letta / "LLMs as operating systems": letta.com/blog/deeplearning-ai-llms-as-operating-systems-agent-memory

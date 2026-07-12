@@ -373,10 +373,14 @@ def run_formation_ab(force: bool = False, _complete=None) -> dict | None:
               "artifacts": {k: v[:400] for k, v in arts},
               "engines_used": [pool[0]["name"], pool[1 % len(pool)]["name"], judge_eng["name"]]}
     AB_OUT.write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
+    # OWNER LAW 2026-07-12: DEBATE STAYS regardless of the judge's tally — he values multi-agent
+    # debate for its own sake (realness). The experiment keeps MEASURING (advisory only); the
+    # 3-net-wins auto-flip is disabled by his explicit decision, not by accident.
     if winner and wins[winner] - wins["solo" if winner == "debate" else "debate"] >= 3:
         (ROOT / "data" / "excava" / "formation_policy.json").write_text(json.dumps(
-            {"default_formation": winner, "room_max_turns": 8 if winner == "debate" else 4,
-             "decided_by": "formation-ab, 3 net wins", "at": _now()}, indent=1), encoding="utf-8")
+            {"advisory_winner": winner, "applied": False,
+             "owner_law": "debate stays regardless (2026-07-12) — tally is information, not policy",
+             "at": _now()}, indent=1), encoding="utf-8")
     return report
 
 

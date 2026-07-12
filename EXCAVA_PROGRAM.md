@@ -132,7 +132,12 @@ with an honest fail→escalation instead of a fake done — verified against the
 logged to syscalls.jsonl so the supervisor can audit calls uniformly). **R3 COMPLETE — all four
 owner-ranked upgrades live.** Next layers when due: TRUE-AGENT-PLATFORM spec (question sequence) +
 SI agent-improvement experiments.**
-**TRUE AGENT PLATFORM (owner, new thread):** 'we are using engines; I'm not certain they qualify as true
+**TRUE AGENT PLATFORM — SPEC LOCKED 2026-07-12 (owner build order): 1) per-agent persistent MEMORY →
+2) visible TRACK RECORD per agent (in-app) → 3) INITIATIVE (agents propose bus tasks, capped+traced) →
+4) broader EXTERNAL ACTION. Explainer written into AGENTIC_OS_STUDY.md §6 per his ask. A/B LAW: DEBATE
+STAYS regardless of the judge's tally (auto-flip disabled in code; experiment stays advisory). SI-CONTINUOUS
+(owner): self-improvement runs continuously & independently, improving agents AND other agents over time —
+a distinct SI branch, possibly its own tab; design next SI wave.** (original thread note:) 'we are using engines; I'm not certain they qualify as true
 agents — the system must run on a genuine agent-based platform' → spec via question sequence (per-agent
 memory/stance is layer 1; what else makes an agent 'true' — persistence? initiative? tools-of-its-own?).
 **SI-ADVANCED (owner):** experiments specifically designed to drive AGENT improvement (not just system

@@ -59,7 +59,11 @@ proof) · SI-3 autonomy enforced + tier-2.5 auto-staffing (sandbox-proven) + �
 4. **P1 Live refresh** — DONE+verified v102: the app polls the beat stamp every 60s while open; on new
    data it drops the cache, re-renders the ACTIVE tab, and pulses "🟢 live · new data HH:MM" next to the
    build badge; never refreshes while a modal is open or the tab is hidden (browser-verified end-to-end).
-4½. **DECISION AUDIT (owner 2026-07-11):** many department 'decisions' are actually SELF-IMPROVEMENT
+4½. **DECISION AUDIT — DONE+verified (priority-0 bus task completed):** 284 real decisions audited
+   (src/decision_audit.py, mechanical): 13% are self-improvement — concentrated in WAR-ROOM (18/18),
+   GROUP-CHAT (2/2) and legacy links rooms; the 13 departments themselves are 0-5% SI (they hold
+   their missions). Supervisor flags DECISION DRIFT in its criticism. NEXT LAYER: SI liaison agent
+   per dept (tier-2.5) + war/group SI decisions auto-route to improve. ORIGINAL ITEM: many department 'decisions' are actually SELF-IMPROVEMENT
    work, not the department's mission. Build: classify recent room decisions (mission vs self-improve);
    self-improve-type decisions route to the SI department's EXTERNAL ARMS (an SI liaison per dept);
    departments keep only mission decisions. Output data/excava/decision_audit.json + in-app view;
@@ -79,7 +83,11 @@ proof) · SI-3 autonomy enforced + tier-2.5 auto-staffing (sandbox-proven) + �
 8. **P7 Rooms/Results HISTORY views** — per-department all-conversations view; war rooms sectioned above;
    group-chat tab inside Rooms (owner re-confirmed; deliberately after the items above).
 
-**KEYS EXIST (confirmed 2026-07-11 from owner's secrets screenshot):** GROQ_API_KEY(+_2), GEMINI_API_KEY_2..6,
+**DECIDE-FLOW TRUTH FIX v105 (owner caught it: his VPS review never arrived):** a decision saved in the
+app lives ONLY on the device until the cloud-dispatch click; the chip used to lie 'sent'. Now: orange
+'NOT SENT — tap to send' chip until the dispatch link is actually clicked (verified both states in
+browser). Real cure = one-click in-app decisions via a tiny receiver — folds into the VPS (R1) which
+can host it. **KEYS EXIST (confirmed 2026-07-11 from owner's secrets screenshot):** GROQ_API_KEY(+_2), GEMINI_API_KEY_2..6,
 OPENROUTER_API_KEY, CEREBRAS_API_KEY(+_2), MISTRAL, SAMBANOVA, NVIDIA, GH_MODELS, BRIGHTDATA, SUPADATA, YOUTUBE,
 OMNIROUTE, CLAUDE_CODE_OAUTH — ALL present. So engine failures are NOT missing keys; they are engine-side.
 CANARY VERDICTS 15:35: groq HEALTHY (UA fix VERIFIED beat Cloudflare); openrouter model valid (transient

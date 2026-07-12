@@ -159,6 +159,16 @@ def run() -> list[str]:
     if intent_flags:
         crit += f" · INTENT DRIFT: {len(intent_flags)} dept(s) wired to the WRONG tool for what you wanted — " \
                 + "; ".join(f"{f['dept']}→wants {f['wants']} not {f['wired']}" for f in intent_flags[:3])
+    try:                                     # owner law 2026-07-11: decisions must serve the MISSION
+        da = json.loads((DATA / "excava" / "decision_audit.json").read_text(encoding="utf-8"))
+        drift = [f"{d} {p['si_pct']}%" for d, p in da.get("per_department", {}).items()
+                 if p.get("si_pct", 0) >= 50 and d != "improve" and p.get("total", 0) >= 3]
+        if drift:
+            crit += (f" · DECISION DRIFT: {len(drift)} unit(s) mostly decide SELF-IMPROVEMENT, not "
+                     f"their mission ({'; '.join(drift[:3])}) — that work belongs to the improve "
+                     "department's external arms (decision_audit.json).")
+    except Exception:
+        pass
     mono = _single_engine_rooms()
     if mono:
         crit += (f" · SINGLE-ENGINE DEBATE (owner flag 2026-07-11): {len(mono)} room(s) today ran "

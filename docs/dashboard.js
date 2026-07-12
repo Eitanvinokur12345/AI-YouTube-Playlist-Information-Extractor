@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v104";
+const APP_BUILD = "v105";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1922,14 +1922,24 @@ async function _openArtifact(ref, title) {
   _showModal(title || ref.split("/").pop(), body);
 }
 // The in-app "send a task to EXCAVA" confirm — used by the console AND every dispatch button.
-function _sendModal(title, body) {
+function _sendModal(title, body, decisionId) {
   try { const q = JSON.parse(localStorage.getItem("excavatortron.mytasks") || "[]");
     q.unshift({ task: title, at: new Date().toISOString() });
     localStorage.setItem("excavatortron.mytasks", JSON.stringify(q.slice(0, 40))); } catch (_) {}
   _showModal("Send to EXCAVA", `<p><b>${esc(title)}</b></p>
-    <p class="sub">Saved to your in-app task list. EXCAVA runs in the cloud — to hand it to the running beat, send it through the free issue channel (one click). A tiny always-free backend would make this fully one-click in-app (an owner pitch).</p>
-    <div class="el-actions always"><a class="primary" target="_blank" href="${_exIssue(title, body)}" data-ex-raw="1">📮 Send to the cloud beat ↗</a>
-    <button class="ex-modal-cancel2">keep in-app only</button></div>`);
+    <p class="sub"><b>One more click finishes it:</b> the button below opens a pre-filled message — press
+    “Submit” there and the cloud beat receives your decision. If you stop here, it stays ONLY on this
+    device and EXCAVA never sees it (the truthful chip will keep nagging).</p>
+    <div class="el-actions always"><a class="primary" target="_blank" href="${_exIssue(title, body)}" data-ex-raw="1" data-send-click="1">📮 Send to the cloud beat ↗</a>
+    <button class="ex-modal-cancel2">keep on this device only</button></div>`);
+  const send = document.querySelector('#ex-modal [data-send-click]');
+  if (send && decisionId) send.addEventListener("click", () => {
+    const d = _localDecisions();                       // mark truthfully: the dispatch was opened
+    if (d[decisionId]) { d[decisionId].sent = true;
+      try { localStorage.setItem("excavatortron.decisions", JSON.stringify(d)); } catch (_) {}
+      if (typeof renderExcava === "function" && state.activeTab === "excava") setTimeout(renderExcava, 600);
+    }
+  });
   const c = document.querySelector("#ex-modal .ex-modal-cancel2");
   if (c) c.addEventListener("click", () => { document.getElementById("ex-modal").style.display = "none"; });
 }
@@ -2171,7 +2181,11 @@ async function renderExcava() {
     <div class="card"><h3>🖊 Approval queue <span class="sub">— the only things waiting on YOU (${waiting.length})</span></h3>
       ${pend.length ? pend.map(p => {
         const d = _dec[p.id];
-        const decided = d ? `<span class="qr-btn" style="margin-left:auto;flex:none;pointer-events:none;background:${d.decision === "approve" ? "var(--ok,#1c7)" : "#b44"};color:#fff;border:0">${d.decision === "approve" ? "✓ you approved" : "✕ you declined"} · sent</span>`
+        // TRUTHFUL chip (owner caught the lie 2026-07-12): a decision is only 'sent' after the
+        // cloud-dispatch click; until then it lives ONLY on this device and EXCAVA can't see it.
+        const decided = d ? (d.sent
+          ? `<span class="qr-btn" style="margin-left:auto;flex:none;pointer-events:none;background:${d.decision === "approve" ? "var(--ok,#1c7)" : "#b44"};color:#fff;border:0">${d.decision === "approve" ? "✓ you approved" : "✕ you declined"} · sent ✓</span>`
+          : `<a class="qr-btn" style="margin-left:auto;flex:none;cursor:pointer;background:#c80;color:#fff;border:0" data-open-approval="${esc(p.id)}" title="your decision is saved ONLY on this device — EXCAVA hasn't received it yet; tap to finish sending">${d.decision === "approve" ? "✓ approved" : "✕ declined"} · NOT SENT — tap to send</a>`)
           : `<a class="qr-btn" style="margin-left:auto;flex:none;cursor:pointer;background:var(--gold);border-color:var(--gold-line)" data-open-approval="${esc(p.id)}">Review &amp; decide →</a>`;
         return `<div class="ex-task" style="align-items:flex-start">
           <span class="tk h">${esc((p.category || "held").toUpperCase())}</span>
@@ -2561,7 +2575,7 @@ function openApproval(id) {
     _recordDecision(id, decision, review);
     close();
     invalidate("excava_approvals.json");
-    _sendModal("EXCAVA: " + decision + " " + id, review || ("(" + decision + " — no note)"));
+    _sendModal("EXCAVA: " + decision + " " + id, review || ("(" + decision + " — no note)"), id);
     if (typeof renderExcava === "function") renderExcava();
   };
   modal.querySelector("[data-appr-x]").addEventListener("click", close);

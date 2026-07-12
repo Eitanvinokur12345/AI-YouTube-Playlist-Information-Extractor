@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-12T19:43:00.283782+00:00",
+ "generated_at": "2026-07-12T21:26:25.422733+00:00",
  "experiment": "engine-benchmark (golden-task canary)",
  "golden_prompt": "Reply with exactly these two words and nothing else: benchmark ok",
  "results": [
@@ -7,55 +7,55 @@
    "engine": "groq",
    "status": "healthy",
    "valid": true,
-   "ms": 143,
+   "ms": 344,
    "model": "llama-3.3-70b-versatile"
   },
   {
    "engine": "sambanova",
-   "status": "quota-429",
-   "ms": 452,
-   "model": "Meta-Llama-3.3-70B-Instruct",
-   "note": "quota-429: {\"error\":{\"code\":null,\"message\":\"Rate limit exceeded\",\"param\":null,\"type\":\"rate_limit_exceeded\"},\"request_id\":\"01a2fa7f-fb3d-4c49-9e7b-3380038db1b5\"}"
+   "status": "healthy",
+   "valid": true,
+   "ms": 396,
+   "model": "Meta-Llama-3.3-70B-Instruct"
   },
   {
    "engine": "mistral",
    "status": "healthy",
    "valid": true,
-   "ms": 342,
+   "ms": 495,
    "model": "mistral-small-latest"
   },
   {
    "engine": "gh-models",
    "status": "quota-429",
-   "ms": 242,
+   "ms": 251,
    "model": "openai/gpt-4o-mini",
    "note": "quota-429: Too many requests. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/git"
   },
   {
    "engine": "cerebras",
    "status": "bad-model-404",
-   "ms": 210,
+   "ms": 165,
    "model": "llama3.1-8b",
    "note": "bad-model-404: {\"message\":\"Model does not exist or you do not have access to it.\",\"type\":\"not_found_error\",\"param\":\"model\",\"code\":\"model_not_found\"}"
   },
   {
    "engine": "gemini",
    "status": "quota-429",
-   "ms": 127,
+   "ms": 114,
    "model": "gemini-2.0-flash",
    "note": "quota-429: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error,"
   },
   {
    "engine": "openrouter",
    "status": "quota-429",
-   "ms": 208,
+   "ms": 242,
    "model": "meta-llama/llama-3.3-70b-instruct:free",
    "note": "quota-429: {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"meta-llama/llama-3.3-70b-instruct:free is temporarily rate-limited upstream. Please"
   },
   {
    "engine": "nvidia",
    "status": "TimeoutError",
-   "ms": 60169,
+   "ms": 60119,
    "model": "meta/llama-3.3-70b-instruct",
    "note": "TimeoutError: The read operation timed out"
   },
@@ -72,12 +72,12 @@
  ],
  "ranking": [
   "groq",
+  "sambanova",
   "mistral",
   "gemini",
-  "openrouter",
   "cerebras",
+  "openrouter",
   "gh-models",
-  "sambanova",
   "nvidia",
   "hermes",
   "omniroute"

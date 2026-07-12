@@ -150,8 +150,14 @@ tasks in CI beats) →
 3½) PROPOSAL-TIME GROUNDING — DONE+verified: an initiative whose decision mentions a foreign tech
 stack is REFUSED before touching the bus (same detector as the audit — one law, two enforcement
 points; refusals syscall-traced; sandbox-verified: cargo-decision refused, grounded decision passed) →
-4) broader EXTERNAL ACTION — needs the OWNER'S SPEC (question sequence next; outward gate applies to
-every step). Explainer written into AGENTIC_OS_STUDY.md §6 per his ask. A/B LAW: DEBATE
+4) EXTERNAL ACTION — SPEC LOCKED 2026-07-12: allowed classes (all owner-gated) = repo actions, web
+research (read-only), publishing to the hub site; outside-world posting = FUTURE (resource waste now).
+PERMANENT PROHIBITIONS from history: NEVER a YouTube comment bot; never keys in output. Open tension
+for a later question: 'comment-gated resources' want vs the no-comment-bot law. PILOT BUILT+sandbox-
+proven: agent files a repo issue (evidence: >=5 twice-failed dead links -> full draft into the in-app
+decide queue -> posts ONLY after owner approval, only from CI, once ever, syscall-traced). Currently
+DORMANT honestly: 0 elements meet the dead-link threshold today. ORDER: tutorials overhaul NEXT
+(comprehensive — everything essential to the owner's understanding). Explainer written into AGENTIC_OS_STUDY.md §6 per his ask. A/B LAW: DEBATE
 STAYS regardless of the judge's tally (auto-flip disabled in code; experiment stays advisory). SI-CONTINUOUS
 (owner): self-improvement runs continuously & independently, improving agents AND other agents over time —
 a distinct SI branch, possibly its own tab; design next SI wave.** (original thread note:) 'we are using engines; I'm not certain they qualify as true

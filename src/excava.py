@@ -512,6 +512,12 @@ def _beat(args) -> int:
                 agent_record.build()               # layer-2: per-agent track record for the app
             except Exception:
                 pass
+            try:
+                from src import agent_issue
+                beat_log.append(agent_issue.draft_and_file())
+                beat_log.append(agent_issue.execute_if_approved())
+            except Exception:
+                pass
             ht = exp.run_huge_task_split()
             if ht:
                 beat_log.append(f"experiment huge-task-split: '{ht['goal'][:50]}' → "

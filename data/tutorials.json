@@ -1,143 +1,307 @@
 {
-  "note": "Phase 6 CHANGE TUTORIALS (owner's D2 pick): every major change ships a walkthrough here; the beat nags when a dashboard build has none. Newest first on the cockpit's Direction card.",
-  "tutorials": [
+ "note": "Phase 6 CHANGE TUTORIALS (owner's D2 pick): every major change ships a walkthrough here; the beat nags when a dashboard build has none. Newest first on the cockpit's Direction card.",
+ "tutorials": [
+  {
+   "build": "v82",
+   "title": "M4 SHIPPED — hands, not just a hub: HORSE, packages, the launcher, the hub-endpoint",
+   "at": "2026-07-06",
+   "podcast": "docs/tutorials/m4-podcast.wav",
+   "interactive": [
     {
-      "build": "v82",
-      "title": "M4 SHIPPED — hands, not just a hub: HORSE, packages, the launcher, the hub-endpoint",
-      "at": "2026-07-06",
-      "podcast": "docs/tutorials/m4-podcast.wav",
-      "interactive": [
-        {"go": "packages", "look_for": ".pkg-card", "try": "The new 🧰 Packages tab (M4.3): reusable KITS of real hub elements. Assemble one by naming elements (loose names resolve), 📌 pin the ones you use, ✎ edit, then ▶ Run all (sends the kit to EXCAVA as one task) or ▶ Run each. Pinned kits float to the top."},
-        {"go": "packages", "look_for": ".hubapi-card", "try": "Hub-as-database (M4.5): Excavatortron publishes a PUBLIC endpoint (refreshed every beat). Copy it — Budoaris / FreeDup / any tool (or the activator offline) can GET it and pull a whole package or a single element, each with its install line + link."},
-        {"go": "excava", "look_for": ".console-hero", "try": "HORSE (M4.2): type a goal here (or /horse <goal>). TEN agents each FULLY execute it on a spread of free engines; the results are scored to your work-taste and the best merged into one deliverable — it appears in 📦 Results, attributed 'HORSE ×10'."},
-        {"go": "excava", "look_for": ".ex-grid", "try": "Proof it's real (M4.6): ① the newest artifact the hourly beats built while you were away (unattended), and ② the path from a typed goal to a runnable package. Both live on the cockpit."}
-      ],
-      "steps": [
-        "HORSE (M4.2): 10 agents each fully execute a goal on varied free engines; results scored against your work-taste (M3.11b) and the best merged into one deliverable. Trigger: console /horse or 'EXCAVA: HORSE <goal>'. Runs on the CI beat; merged artifact lands in Results.",
-        "Packages (M4.3): reusable kits in data/packages.json — assemble (loose names → real element ids), pin the frequent, edit, Run-all (kit → one EXCAVA task) / Run-each, Save-to-EXCAVA. Grown by you + room artifacts + brain-graph cluster orders.",
-        "Parent launcher (M4.4): launcher/ 'ORBIT' — its OWN calm minimal brand (deliberately not Heavy-Machinery); a project-cube grid; each cube is a full context switch to the project's own app; EXCAVA-made projects auto-appear.",
-        "Hub-as-database (M4.5): src/build_hub_api.py publishes docs/hub_api.json (packages fully resolved to element install+url + a compact index of the real elements); refreshed every beat; any project pulls a package via the endpoint or the activator.",
-        "M4.1 portable activator is on the Opus track (compressed-hub SKILL.md + live fetch, obeys the triggers, works offline) — Fable shipped M4.2–M4.6.",
-        "Prove-real (M4.6): the cockpit shows (a) the newest artifact a beat built unattended, and (b) the goal → runnable-package path — the two acceptance proofs for 'real'."
-      ]
+     "go": "packages",
+     "look_for": ".pkg-card",
+     "try": "The new 🧰 Packages tab (M4.3): reusable KITS of real hub elements. Assemble one by naming elements (loose names resolve), 📌 pin the ones you use, ✎ edit, then ▶ Run all (sends the kit to EXCAVA as one task) or ▶ Run each. Pinned kits float to the top."
     },
     {
-      "build": "v78",
-      "title": "M3 SHIPPED — the new look: monsters, the isometric factory, results, taste, mobile",
-      "at": "2026-07-06",
-      "podcast": "docs/tutorials/m3-podcast.wav",
-      "interactive": [
-        {"go": "excava", "look_for": ".ex-floor.iso", "try": "The floor is now an ISOMETRIC factory (M3.3): each department is its own building on a ring around the core, a monster at the door, a roof lamp = its real status. Click a building to ENTER it — a side-view cutaway opens (lead office / agent floor / worker line) with the real named lead and real bus counters."},
-        {"go": "excava", "look_for": ".fx", "try": "The animation catalog (M3.4): weld=fix, hammer=build, magnify=test, stamp=verify, party=deliver, dig=research, film=media, carry=hand-off, wave=pitch, sleep=idle, pancake=open. Every prop on the floor is a REAL last-beat event — hover one to see which."},
-        {"go": "rooms", "look_for": ".msg .ava.has-m", "try": "The 11-species monster CAST (M3.2) now fronts every chat bubble — suited leads and agents, each matched to its department. Same faces walk the floor and the cutaways."},
-        {"go": "results", "look_for": ".result-card", "try": "The 📦 Results feed (M3.7): everything EXCAVA produced, attributed to who made it, filter by day / department / maker. Open it, send it to a project, or jump to the making-of chat. A 'new' count rides the tab."},
-        {"go": "excava", "look_for": ".constel", "try": "The North Star is now a CONSTELLATION (M3.8): the 9 goals orbit the core as distinct stars, size = live score. Click a star to open its goal, score and gap."},
-        {"go": "taste", "look_for": "[data-wtaste]", "try": "The 🎛 Taste panel (M3.11b): two editable profiles — DESIGN taste (learned from Arena votes, tunable) and WORK taste (6 dials that feed HORSE). Drag a slider; it saves instantly. 💾 Save to EXCAVA persists it for the cloud beats."}
-      ],
-      "steps": [
-        "Monster cast (M3.2): 11 code-drawn species, one per department, each with a suited named lead, an agent, and a small worker — wired into the Rooms bubbles, the floor stations, and the walking bus bots.",
-        "Isometric factory floor + cutaways (M3.3): department buildings on a ring around the core; entering a department opens a side-view cutaway with the real staff and live bus counters; a floor clock shows the beat number (M2.7 timing readout).",
-        "Animation catalog (M3.4): 11 distinct action props, each spawned from a real bus/beat event — lively but purposeful, never decorative.",
-        "Final card visual (M3.6): refined-neobrutalist cards — organic radii, chunky borders, resting hard shadows, brushed grain; the action row appears on hover/focus.",
-        "Results feed (M3.7), North-Star constellation (M3.8), brain graph explore-to-package (M3.9): the three ways to see and reuse what EXCAVA makes.",
-        "Steering (M3.11): a header bell + count, a dismissible approval banner, a monster that walks up on new approvals, and pitches that open as conversations you approve or decline.",
-        "Editable taste (M3.11b) + mobile pass (M3.12): tune design-taste and work-taste by hand; on a phone you read, review, approve and send — execution (run buttons) stays on the desktop/cloud."
-      ]
+     "go": "packages",
+     "look_for": ".hubapi-card",
+     "try": "Hub-as-database (M4.5): Excavatortron publishes a PUBLIC endpoint (refreshed every beat). Copy it — Budoaris / FreeDup / any tool (or the activator offline) can GET it and pull a whole package or a single element, each with its install line + link."
     },
     {
-      "build": "v68",
-      "title": "M3 slice 1 — the console, the Rooms showpiece, the design system",
-      "at": "2026-07-05",
-      "podcast": "docs/tutorials/m3a-podcast.wav",
-      "interactive": [
-        {"go": "excava", "look_for": ".console-hero", "try": "The cockpit now opens with 'HOW CAN EXCAVA HELP?' — type a task, pick a department (or auto-route), 🎙 speak it, ＋ attach context, or tap a /trigger chip (NOSG/HORSE/PLAN/RESEARCH/WATCH). Enter dispatches."},
-        {"go": "rooms", "look_for": ".warroom", "try": "The new 🗣 Rooms tab — the showpiece: real agent conversations as a messenger. War rooms get the red round-table frame; every bubble shows agent · engine · ms; 👔 leads sit raised. Pick rooms from the rail; days divide the scroll."},
-        {"go": "excava", "look_for": ".console-digest", "try": "'While you were away' under the console = the last real beat actions (P13's digest, first form)."}
-      ],
-      "steps": [
-        "Console hero (M3.10 part 1): full bar — dept selector, mic (browser speech-to-text), attach, slash-triggers parsed to P6 trigger words; dispatches at owner rank via the issue channel.",
-        "Rooms tab (M3.5): messenger UI over data/excava/chats day archives — bubbles with agent·engine·ms badges, suited leads raised, war-room round-table styling, room rail, artifact line.",
-        "App shell (M3.1 part 1): left sidebar on wide screens; design tokens (M3.0) live in docs/design/tokens.css — yellow+warm-ink, metal frames, greenery, organic shapes, industrial type.",
-        "Recovered + hardened: a UTF-8 corruption from a careless build-bump was caught and fixed from git history; build bumps now go through UTF-8-safe tooling only."
-      ]
+     "go": "excava",
+     "look_for": ".console-hero",
+     "try": "HORSE (M4.2): type a goal here (or /horse <goal>). TEN agents each FULLY execute it on a spread of free engines; the results are scored to your work-taste and the best merged into one deliverable — it appears in 📦 Results, attributed 'HORSE ×10'."
     },
     {
-      "build": "v67",
-      "title": "M2 — real agents: named cast, live conversations, artifacts",
-      "at": "2026-07-05",
-      "podcast": "docs/tutorials/m2-podcast.wav",
-      "interactive": [
-        {"go": "excava", "look_for": ".os-log", "try": "The beat log now shows rooms advancing: named agents (Echo, Marrow, Ledger, Bastion, Nova…) speak via real free engines each CI beat — watch for 'X spoke (engine, ms)'."},
-        {"go": "excava", "look_for": ".fleet", "try": "Fleet health now reflects 38 named agents across 11 departments — leads wear suits, checkers push back by design (debate → converge)."},
-        {"go": "excava", "look_for": "#ex-send-input", "try": "Send a task: it becomes a WAR ROOM — doer proposes, checker challenges, lead states 'DECISION:' and a real artifact (package / bus task / labeled creation) is committed."}
-      ],
-      "steps": [
-        "38 NAMED agents staff the 11 departments (roster: python -m src.excava_agents --roster): suited leads with personas that match the department AND change behavior; doers; skeptic checkers; improvers.",
-        "Conversations are the work mechanism (src/excava_chat.py): dept/cross/group/WAR rooms, real engine calls per message (agent · engine badge is truth), archived by day under data/excava/chats/, replayable.",
-        "Engines (M2.1): 9 free families first-class + optional self-hosted Hermes + optional OmniRoute gateway + Claude premium on your Pro (tight daily cap). Lease arbiter (M2.2): per-dept daily budgets, per-engine RPM, zero runaway.",
-        "Rooms produce ARTIFACTS on convergence: packages (data/packages.json), bus tasks, or G-12-labeled creations — transcript is proof, artifact is the point.",
-        "Self-improvement is real (M2.8): auto-tunes budgets, retires silent rooms, logs to improvements.jsonl — and files a PITCH for anything overhaul-class (P5: only 3 things wait for you).",
-        "PROTOCOLS.md (P1-P14) is law: the beat self-audits it every cycle; removing a protocol trips SAFE mode (proven in test)."
-      ]
-    },
-    {
-      "build": "v66",
-      "title": "M1 — real, verified elements you can actually use",
-      "at": "2026-07-05",
-      "podcast": "docs/tutorials/m1-podcast.wav",
-      "interactive": [
-        {"go": "tools", "look_for": ".el-badge", "try": "Open the Tools tab — every card now wears a verification badge: ✓ verified (2+ sources + live test), ◆ niche-verified (kept forever), unverified (never shown as real), ✗ dead (hidden)."},
-        {"go": "tools", "look_for": ".el-actions", "try": "On any card: ⚡ Activate copies a ready recipe · 🥞/🟢 Open jumps into the code (<10s; green = pre-warmed, instant) · 🦾 Use for a task sends it to EXCAVA · ▶ Video plays the real source."},
-        {"go": "element/tool:claude", "look_for": ".el-detail-hero", "try": "Click 🔍 Detail on any card: the full element — embedded source-video bundle, related elements (really shown together), enrichment evidence, install line."},
-        {"go": "excava", "look_for": ".os-log", "try": "Three new 24/7 lanes: hourly discovery (GitHub/HN/ProductHunt/social — new tools land same-day), deep-retrieve (rebuilds thin items from FULL transcripts+READMEs), and the rolling verifier (2-source standard, conflicts noted)."}
-      ],
-      "steps": [
-        "All 6,422 hub items are now ONE element model with verification: ✓ needs 2+ independent sources AND a live link test; below the bar = 'unverified', never shown as real; dead = hidden only after 2 consecutive full failures; niche kept forever (your P3 law).",
-        "Every card on Skills/Tools/Models/Prompts/Connectors/Designs has the action row: Activate / Open (<10s, pre-warmed instant) / Use-for-a-task / Video / Source / Detail.",
-        "The 🔍 Detail view (#element/<id>) shows the source-video bundle, 3-8 truly-related elements, enrichment evidence and trust.",
-        "CORE SPOT-ON lanes run 24/7: hourly discovery agent (same-day new tools), 2-hourly deep-retrieve (stub-rate → 0), 6-hourly verify+relate+prewarm (rolling weekly full pass)."
-      ]
-    },
-    {
-      "build": "v65",
-      "title": "Creators live + connectors verification + your Direction card",
-      "at": "2026-07-03",
-      "steps": [
-        "Cockpit → 🦾 Created by EXCAVA card: everything the Creators department made — each item is labeled, self-tested, and re-tested independently before its first use. 'Packages' = your term for multi-element bundles.",
-        "Connectors tab: a progress line now shows sandbox verification (your 'test-run everything' decision) marching through all 1,142 in CI batches; the tab shrinks to verified-only as results land (D5).",
-        "Cockpit → 🧭 Direction & tutorials card: state direction with the box (opens a prefilled 'EXCAVA: direction …' issue); EXCAVA's reading of each direction appears under it next beat — correct it by re-stating. This walkthrough list lives there too.",
-        "New goal G9 Agency/Orchestration on the North Star: scores how truly agentic the OS is (bus depth, hand-offs, autonomy under the gate)."
-      ]
-    },
-    {
-      "build": "v64",
-      "title": "The living OS: fleet health, trace viewer, daemon feed",
-      "at": "2026-07-03",
-      "steps": [
-        "Cockpit → 🛠 Fleet health: all 11 departments with their real workers, counters, and who's resting under backpressure.",
-        "Cockpit → 🚌 Live bus queue: click any task to open its REAL trace — including why a department was chosen over the runners-up.",
-        "Cockpit → 📡 OS events: the daemon feed — every pipeline lane's runs now become OS events, so EXCAVA sees the whole machine.",
-        "Floor bots are now real registered agents carrying their actual bus tasks (hover one). Safe/kill mode drops a maintenance overlay on the floor."
-      ]
-    },
-    {
-      "build": "v63",
-      "title": "You drive it: send box, kill switch, approval queue",
-      "at": "2026-07-03",
-      "steps": [
-        "Cockpit → 🕹 You drive it: type a task, hit send — it opens a prefilled GitHub issue; CI queues it at owner rank and replies a receipt (works from your phone).",
-        "Same card: 🔴 kill / 🟡 safe / 🟢 run switches, and the priority-weights dial ('EXCAVA: weight access 95').",
-        "Cockpit → 🖊 Approval queue: the ONLY things waiting on you, each with a one-click approve link."
-      ]
-    },
-    {
-      "build": "v62",
-      "title": "Heavy Machinery cockpit + the OS spine underneath",
-      "at": "2026-07-02",
-      "steps": [
-        "The cockpit became the home tab: living floor, task inbox, North-Star bars.",
-        "Underneath, Phase 0 built the file bus: departments pass work with validated hand-off docs; everything is traced in data/excava/."
-      ]
+     "go": "excava",
+     "look_for": ".ex-grid",
+     "try": "Proof it's real (M4.6): ① the newest artifact the hourly beats built while you were away (unattended), and ② the path from a typed goal to a runnable package. Both live on the cockpit."
     }
-  ]
+   ],
+   "steps": [
+    "HORSE (M4.2): 10 agents each fully execute a goal on varied free engines; results scored against your work-taste (M3.11b) and the best merged into one deliverable. Trigger: console /horse or 'EXCAVA: HORSE <goal>'. Runs on the CI beat; merged artifact lands in Results.",
+    "Packages (M4.3): reusable kits in data/packages.json — assemble (loose names → real element ids), pin the frequent, edit, Run-all (kit → one EXCAVA task) / Run-each, Save-to-EXCAVA. Grown by you + room artifacts + brain-graph cluster orders.",
+    "Parent launcher (M4.4): launcher/ 'ORBIT' — its OWN calm minimal brand (deliberately not Heavy-Machinery); a project-cube grid; each cube is a full context switch to the project's own app; EXCAVA-made projects auto-appear.",
+    "Hub-as-database (M4.5): src/build_hub_api.py publishes docs/hub_api.json (packages fully resolved to element install+url + a compact index of the real elements); refreshed every beat; any project pulls a package via the endpoint or the activator.",
+    "M4.1 portable activator is on the Opus track (compressed-hub SKILL.md + live fetch, obeys the triggers, works offline) — Fable shipped M4.2–M4.6.",
+    "Prove-real (M4.6): the cockpit shows (a) the newest artifact a beat built unattended, and (b) the goal → runnable-package path — the two acceptance proofs for 'real'."
+   ]
+  },
+  {
+   "build": "v78",
+   "title": "M3 SHIPPED — the new look: monsters, the isometric factory, results, taste, mobile",
+   "at": "2026-07-06",
+   "podcast": "docs/tutorials/m3-podcast.wav",
+   "interactive": [
+    {
+     "go": "excava",
+     "look_for": ".ex-floor.iso",
+     "try": "The floor is now an ISOMETRIC factory (M3.3): each department is its own building on a ring around the core, a monster at the door, a roof lamp = its real status. Click a building to ENTER it — a side-view cutaway opens (lead office / agent floor / worker line) with the real named lead and real bus counters."
+    },
+    {
+     "go": "excava",
+     "look_for": ".fx",
+     "try": "The animation catalog (M3.4): weld=fix, hammer=build, magnify=test, stamp=verify, party=deliver, dig=research, film=media, carry=hand-off, wave=pitch, sleep=idle, pancake=open. Every prop on the floor is a REAL last-beat event — hover one to see which."
+    },
+    {
+     "go": "rooms",
+     "look_for": ".msg .ava.has-m",
+     "try": "The 11-species monster CAST (M3.2) now fronts every chat bubble — suited leads and agents, each matched to its department. Same faces walk the floor and the cutaways."
+    },
+    {
+     "go": "results",
+     "look_for": ".result-card",
+     "try": "The 📦 Results feed (M3.7): everything EXCAVA produced, attributed to who made it, filter by day / department / maker. Open it, send it to a project, or jump to the making-of chat. A 'new' count rides the tab."
+    },
+    {
+     "go": "excava",
+     "look_for": ".constel",
+     "try": "The North Star is now a CONSTELLATION (M3.8): the 9 goals orbit the core as distinct stars, size = live score. Click a star to open its goal, score and gap."
+    },
+    {
+     "go": "taste",
+     "look_for": "[data-wtaste]",
+     "try": "The 🎛 Taste panel (M3.11b): two editable profiles — DESIGN taste (learned from Arena votes, tunable) and WORK taste (6 dials that feed HORSE). Drag a slider; it saves instantly. 💾 Save to EXCAVA persists it for the cloud beats."
+    }
+   ],
+   "steps": [
+    "Monster cast (M3.2): 11 code-drawn species, one per department, each with a suited named lead, an agent, and a small worker — wired into the Rooms bubbles, the floor stations, and the walking bus bots.",
+    "Isometric factory floor + cutaways (M3.3): department buildings on a ring around the core; entering a department opens a side-view cutaway with the real staff and live bus counters; a floor clock shows the beat number (M2.7 timing readout).",
+    "Animation catalog (M3.4): 11 distinct action props, each spawned from a real bus/beat event — lively but purposeful, never decorative.",
+    "Final card visual (M3.6): refined-neobrutalist cards — organic radii, chunky borders, resting hard shadows, brushed grain; the action row appears on hover/focus.",
+    "Results feed (M3.7), North-Star constellation (M3.8), brain graph explore-to-package (M3.9): the three ways to see and reuse what EXCAVA makes.",
+    "Steering (M3.11): a header bell + count, a dismissible approval banner, a monster that walks up on new approvals, and pitches that open as conversations you approve or decline.",
+    "Editable taste (M3.11b) + mobile pass (M3.12): tune design-taste and work-taste by hand; on a phone you read, review, approve and send — execution (run buttons) stays on the desktop/cloud."
+   ]
+  },
+  {
+   "build": "v68",
+   "title": "M3 slice 1 — the console, the Rooms showpiece, the design system",
+   "at": "2026-07-05",
+   "podcast": "docs/tutorials/m3a-podcast.wav",
+   "interactive": [
+    {
+     "go": "excava",
+     "look_for": ".console-hero",
+     "try": "The cockpit now opens with 'HOW CAN EXCAVA HELP?' — type a task, pick a department (or auto-route), 🎙 speak it, ＋ attach context, or tap a /trigger chip (NOSG/HORSE/PLAN/RESEARCH/WATCH). Enter dispatches."
+    },
+    {
+     "go": "rooms",
+     "look_for": ".warroom",
+     "try": "The new 🗣 Rooms tab — the showpiece: real agent conversations as a messenger. War rooms get the red round-table frame; every bubble shows agent · engine · ms; 👔 leads sit raised. Pick rooms from the rail; days divide the scroll."
+    },
+    {
+     "go": "excava",
+     "look_for": ".console-digest",
+     "try": "'While you were away' under the console = the last real beat actions (P13's digest, first form)."
+    }
+   ],
+   "steps": [
+    "Console hero (M3.10 part 1): full bar — dept selector, mic (browser speech-to-text), attach, slash-triggers parsed to P6 trigger words; dispatches at owner rank via the issue channel.",
+    "Rooms tab (M3.5): messenger UI over data/excava/chats day archives — bubbles with agent·engine·ms badges, suited leads raised, war-room round-table styling, room rail, artifact line.",
+    "App shell (M3.1 part 1): left sidebar on wide screens; design tokens (M3.0) live in docs/design/tokens.css — yellow+warm-ink, metal frames, greenery, organic shapes, industrial type.",
+    "Recovered + hardened: a UTF-8 corruption from a careless build-bump was caught and fixed from git history; build bumps now go through UTF-8-safe tooling only."
+   ]
+  },
+  {
+   "build": "v67",
+   "title": "M2 — real agents: named cast, live conversations, artifacts",
+   "at": "2026-07-05",
+   "podcast": "docs/tutorials/m2-podcast.wav",
+   "interactive": [
+    {
+     "go": "excava",
+     "look_for": ".os-log",
+     "try": "The beat log now shows rooms advancing: named agents (Echo, Marrow, Ledger, Bastion, Nova…) speak via real free engines each CI beat — watch for 'X spoke (engine, ms)'."
+    },
+    {
+     "go": "excava",
+     "look_for": ".fleet",
+     "try": "Fleet health now reflects 38 named agents across 11 departments — leads wear suits, checkers push back by design (debate → converge)."
+    },
+    {
+     "go": "excava",
+     "look_for": "#ex-send-input",
+     "try": "Send a task: it becomes a WAR ROOM — doer proposes, checker challenges, lead states 'DECISION:' and a real artifact (package / bus task / labeled creation) is committed."
+    }
+   ],
+   "steps": [
+    "38 NAMED agents staff the 11 departments (roster: python -m src.excava_agents --roster): suited leads with personas that match the department AND change behavior; doers; skeptic checkers; improvers.",
+    "Conversations are the work mechanism (src/excava_chat.py): dept/cross/group/WAR rooms, real engine calls per message (agent · engine badge is truth), archived by day under data/excava/chats/, replayable.",
+    "Engines (M2.1): 9 free families first-class + optional self-hosted Hermes + optional OmniRoute gateway + Claude premium on your Pro (tight daily cap). Lease arbiter (M2.2): per-dept daily budgets, per-engine RPM, zero runaway.",
+    "Rooms produce ARTIFACTS on convergence: packages (data/packages.json), bus tasks, or G-12-labeled creations — transcript is proof, artifact is the point.",
+    "Self-improvement is real (M2.8): auto-tunes budgets, retires silent rooms, logs to improvements.jsonl — and files a PITCH for anything overhaul-class (P5: only 3 things wait for you).",
+    "PROTOCOLS.md (P1-P14) is law: the beat self-audits it every cycle; removing a protocol trips SAFE mode (proven in test)."
+   ]
+  },
+  {
+   "build": "v66",
+   "title": "M1 — real, verified elements you can actually use",
+   "at": "2026-07-05",
+   "podcast": "docs/tutorials/m1-podcast.wav",
+   "interactive": [
+    {
+     "go": "tools",
+     "look_for": ".el-badge",
+     "try": "Open the Tools tab — every card now wears a verification badge: ✓ verified (2+ sources + live test), ◆ niche-verified (kept forever), unverified (never shown as real), ✗ dead (hidden)."
+    },
+    {
+     "go": "tools",
+     "look_for": ".el-actions",
+     "try": "On any card: ⚡ Activate copies a ready recipe · 🥞/🟢 Open jumps into the code (<10s; green = pre-warmed, instant) · 🦾 Use for a task sends it to EXCAVA · ▶ Video plays the real source."
+    },
+    {
+     "go": "element/tool:claude",
+     "look_for": ".el-detail-hero",
+     "try": "Click 🔍 Detail on any card: the full element — embedded source-video bundle, related elements (really shown together), enrichment evidence, install line."
+    },
+    {
+     "go": "excava",
+     "look_for": ".os-log",
+     "try": "Three new 24/7 lanes: hourly discovery (GitHub/HN/ProductHunt/social — new tools land same-day), deep-retrieve (rebuilds thin items from FULL transcripts+READMEs), and the rolling verifier (2-source standard, conflicts noted)."
+    }
+   ],
+   "steps": [
+    "All 6,422 hub items are now ONE element model with verification: ✓ needs 2+ independent sources AND a live link test; below the bar = 'unverified', never shown as real; dead = hidden only after 2 consecutive full failures; niche kept forever (your P3 law).",
+    "Every card on Skills/Tools/Models/Prompts/Connectors/Designs has the action row: Activate / Open (<10s, pre-warmed instant) / Use-for-a-task / Video / Source / Detail.",
+    "The 🔍 Detail view (#element/<id>) shows the source-video bundle, 3-8 truly-related elements, enrichment evidence and trust.",
+    "CORE SPOT-ON lanes run 24/7: hourly discovery agent (same-day new tools), 2-hourly deep-retrieve (stub-rate → 0), 6-hourly verify+relate+prewarm (rolling weekly full pass)."
+   ]
+  },
+  {
+   "build": "v65",
+   "title": "Creators live + connectors verification + your Direction card",
+   "at": "2026-07-03",
+   "steps": [
+    "Cockpit → 🦾 Created by EXCAVA card: everything the Creators department made — each item is labeled, self-tested, and re-tested independently before its first use. 'Packages' = your term for multi-element bundles.",
+    "Connectors tab: a progress line now shows sandbox verification (your 'test-run everything' decision) marching through all 1,142 in CI batches; the tab shrinks to verified-only as results land (D5).",
+    "Cockpit → 🧭 Direction & tutorials card: state direction with the box (opens a prefilled 'EXCAVA: direction …' issue); EXCAVA's reading of each direction appears under it next beat — correct it by re-stating. This walkthrough list lives there too.",
+    "New goal G9 Agency/Orchestration on the North Star: scores how truly agentic the OS is (bus depth, hand-offs, autonomy under the gate)."
+   ]
+  },
+  {
+   "build": "v64",
+   "title": "The living OS: fleet health, trace viewer, daemon feed",
+   "at": "2026-07-03",
+   "steps": [
+    "Cockpit → 🛠 Fleet health: all 11 departments with their real workers, counters, and who's resting under backpressure.",
+    "Cockpit → 🚌 Live bus queue: click any task to open its REAL trace — including why a department was chosen over the runners-up.",
+    "Cockpit → 📡 OS events: the daemon feed — every pipeline lane's runs now become OS events, so EXCAVA sees the whole machine.",
+    "Floor bots are now real registered agents carrying their actual bus tasks (hover one). Safe/kill mode drops a maintenance overlay on the floor."
+   ]
+  },
+  {
+   "build": "v63",
+   "title": "You drive it: send box, kill switch, approval queue",
+   "at": "2026-07-03",
+   "steps": [
+    "Cockpit → 🕹 You drive it: type a task, hit send — it opens a prefilled GitHub issue; CI queues it at owner rank and replies a receipt (works from your phone).",
+    "Same card: 🔴 kill / 🟡 safe / 🟢 run switches, and the priority-weights dial ('EXCAVA: weight access 95').",
+    "Cockpit → 🖊 Approval queue: the ONLY things waiting on you, each with a one-click approve link."
+   ]
+  },
+  {
+   "build": "v62",
+   "title": "Heavy Machinery cockpit + the OS spine underneath",
+   "at": "2026-07-02",
+   "steps": [
+    "The cockpit became the home tab: living floor, task inbox, North-Star bars.",
+    "Underneath, Phase 0 built the file bus: departments pass work with validated hand-off docs; everything is traced in data/excava/."
+   ]
+  },
+  {
+   "build": "v94-v98",
+   "title": "REHAB WAVE 1 — decide everything IN THE APP: approvals, pitches, the truth chip",
+   "at": "2026-07-12",
+   "interactive": [
+    {
+     "go": "excava",
+     "look_for": "[data-open-approval]",
+     "try": "Every item waiting on YOU now has a 'Review & decide' button. Click one: plain-language explanation, a review box, Approve/Decline. Pitches carry WHO asks, the NEED with real numbers, HOW important, WHAT'S missing — plus tools EXCAVA found in its own hub."
+    },
+    {
+     "go": "excava",
+     "look_for": ".ex-task",
+     "try": "THE TRUTH CHIP: after you decide, the chip says 'NOT SENT — tap to send' in orange until the cloud really received it. One extra click ('Send to the cloud beat' → Submit) finishes it. If it says 'sent ✓', EXCAVA has it."
+    }
+   ],
+   "steps": [
+    "Approval queue → Review & decide → read who/need/importance/missing → Approve or Decline with a note",
+    "Watch the chip: orange NOT-SENT until you complete the send — no more silent lost reviews"
+   ]
+  },
+  {
+   "build": "v102",
+   "title": "REHAB WAVE 2 — the app is ALIVE: live refresh while you're in it",
+   "at": "2026-07-12",
+   "interactive": [
+    {
+     "go": "excava",
+     "look_for": "#live-dot",
+     "try": "Next to the build badge: '🟢 live · checked HH:MM'. Every 60s the app checks the cloud beat; when new data lands it refreshes the tab you're on and says 'new data HH:MM'. It never refreshes while a modal is open — no yanking you mid-decision."
+    }
+   ],
+   "steps": [
+    "Leave the app open — it updates itself; the dot tells you when"
+   ]
+  },
+  {
+   "build": "v99-v106",
+   "title": "REHAB WAVE 3 — watch it honestly: engine health, experiments, the token diet",
+   "at": "2026-07-12",
+   "interactive": [
+    {
+     "go": "excava",
+     "look_for": ".card h3",
+     "try": "🔌 Engine health: every free AI brain, its real status (healthy / quota-429 / bad-model), measured hourly by a canary. 🧪 Self-experiments: what EXCAVA runs on ITSELF — live vs next, honestly labeled."
+    },
+    {
+     "go": "effectiveness",
+     "look_for": ".pv-table",
+     "try": "🥗 Token diet: the saving laws WITH numbers — per-day turns and ≈tokens/turn from real transcripts. If a law has no number, it's a claim; this card is the number."
+    }
+   ],
+   "steps": [
+    "Excava tab: engine health + experiments cards",
+    "Effectiveness tab: the token-diet card — watch tokens/turn fall"
+   ]
+  },
+  {
+   "build": "v107-v108",
+   "title": "REHAB WAVE 4 — meet your staff: agent track records + department history",
+   "at": "2026-07-12",
+   "interactive": [
+    {
+     "go": "rooms",
+     "look_for": ".pv-table",
+     "try": "👥 Agents — track record: who actually works (turns, rooms), which brains each borrowed, and the latest position it committed to. Hit-rate arrives as initiatives complete."
+    },
+    {
+     "go": "rooms",
+     "look_for": ".room-meta a.pill[data-room]",
+     "try": "📜 Department HISTORY: inside any department's room, a strip of its earlier conversations — one click opens any past transcript. 431 conversations are on file; all reachable now."
+    },
+    {
+     "go": "rooms",
+     "look_for": "[data-room]",
+     "try": "Honest flags on the rail: 🗣 = a department that only TALKS (no real tool yet — executor queued); ⛔ = honestly blocked on an owner resource."
+    }
+   ],
+   "steps": [
+    "Rooms tab, scroll down: the agents table",
+    "Open any dept room: the 📜 history strip",
+    "Rail flags: 🗣 talk-only, ⛔ blocked — the app never pretends"
+   ]
+  }
+ ]
 }

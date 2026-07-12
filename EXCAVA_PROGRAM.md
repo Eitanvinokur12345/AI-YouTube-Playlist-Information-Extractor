@@ -96,7 +96,12 @@ the GitHub cron remains the runtime until they decide. ('Sonat' resolved = Claud
    → P2 COMPLETE.
 6. **P5 Visual dept + Designs tab overhaul** — auto-ADD every design, quality-filter the junk, then tasks.
 7. **P6 Department interconnection** — depts ↔ brain systems/protocols, surfaced in the Developer tab.
-7½. **TUTORIAL SYSTEM OVERHAUL (owner 2026-07-12, 'soon'): 'so many things have been added that I'm
+7½. **TUTORIAL SYSTEM OVERHAUL — WAVE 1 DONE+verified v109: four REHAB WAVE walkthroughs cover
+   v94-v108 (decide+pitches+truth-chip · live refresh · engine-health/experiments/token-diet ·
+   agents/history/honest-flags), each with an interactive tour; ROOT-CAUSE FIX: the walkthrough list
+   showed the OLDEST 4 entries (slice(0,4)) so new tutorials could never appear — now newest-first.
+   Tour verified live (navigates + highlights the decide button). REMAINING: coverage for older
+   fundamentals (what is the bus/beat/departments — a 'start here' tour) + per-tab help. ORIGINAL:** 'so many things have been added that I'm
    starting to lose my bearings' — the walkthrough/tutorial system must catch up with everything
    shipped (v94-v108: decide modal, pitches, live refresh, diet card, agents card, history strips…).
    HIGH priority after the external-action spec.**

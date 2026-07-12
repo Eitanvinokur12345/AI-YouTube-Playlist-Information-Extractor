@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v108";
+const APP_BUILD = "v109";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2276,7 +2276,10 @@ async function renderExcava() {
     ? `<div class="ex-maint"><b>${mode === "kill" ? "⛔ KILL SWITCH — the OS is stopped" : "🔧 MAINTENANCE — safe mode, assess only"}</b></div>` : "";
   // ── PHASE 6: the DIRECTION LOOP + CHANGE TUTORIALS (D2 — the loop that was missed once) ──
   const dirList = ((dirs && dirs.directions) || []).filter(d => d.status === "active").slice(-4).reverse();
-  const tutList = ((tuts && tuts.tutorials) || []).slice(0, 4);
+  // newest first — the old slice(0,4) took the OLDEST entries, so new walkthroughs (the whole
+  // point of the Phase-6 law) could never appear; part of why the owner 'lost his bearings'
+  const tutList = ((tuts && tuts.tutorials) || [])
+    .slice().sort((a, b) => String(b.at || "").localeCompare(String(a.at || ""))).slice(0, 5);
   _tourTuts = tutList;                                // M3.13: expose for the interactive tour runner
   const directionHTML = `
     <div class="card" style="border-top:3px solid var(--gold)">

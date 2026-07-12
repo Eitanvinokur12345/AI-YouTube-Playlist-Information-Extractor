@@ -107,8 +107,10 @@ agents — the system must run on a genuine agent-based platform' → spec via q
 memory/stance is layer 1; what else makes an agent 'true' — persistence? initiative? tools-of-its-own?).
 **SI-ADVANCED (owner):** experiments specifically designed to drive AGENT improvement (not just system
 health) — design next SI wave after R3 paging.
-**TOKEN-DIET VISIBILITY (owner: 'I can't verify it'):** an Effectiveness-tab card showing the laws +
-measurable caps — NEXT TICK. **OPEN-S resolved:** = open-source tools must be usable in-app; umbrella.
+**TOKEN-DIET VISIBILITY — DONE+verified v106:** 🥗 card in the Effectiveness tab: both laws, the hard
+caps as pills, and per-day turns + ≈tokens/turn from real transcripts (honest read: turns LENGTHENED
+after the plain-language switch — the newly wired Caveman no-filler prompt law is the counterweight;
+the card exists to watch that line fall). **OPEN-S resolved:** = open-source tools must be usable in-app; umbrella.
 
 **Standing checks each tick:** newest room-turn timestamp (beat health) · engine_health.json real HTTP status per
 engine · any tier-2.5 auto-added agents · supervisor real_pct + movement + systemcheck + proof.

@@ -164,7 +164,9 @@ def _prompt(room: dict, sp: dict, hist: list[dict]) -> str:
     return (f"You are {sp.get('name')} — {sp.get('persona', '')}\n"
             f"Team law (obey): free-only; real-not-display; quality first; task-relative value.\n"
             f"STYLE (obey): speak in PLAIN LANGUAGE a non-engineer can follow — talk about DECISIONS, "
-            f"reasons, and trade-offs, NOT shell commands, code, regex, or file paths. Full sentences.\n"
+            f"reasons, and trade-offs, NOT shell commands, code, regex, or file paths. Full sentences. "
+            f"NO FILLER (Caveman law): no preamble, no restating the goal, no 'I think we should' — "
+            f"every sentence carries new content.\n"
             f"ROOM ({room['kind']}): {room['goal']}\nDone-criteria: {room['done_criteria']}\n"
             f"Conversation so far:\n{convo}\n\nYour turn. {inst}")
 

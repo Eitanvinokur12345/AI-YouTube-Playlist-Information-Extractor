@@ -477,6 +477,11 @@ def _beat(args) -> int:
             if ab:
                 beat_log.append(f"experiment formation-ab: winner={ab.get('winner_today')} "
                                 f"(judge {ab['judge']['engine']}); tally {ab['wins']}")
+            try:
+                from src import token_diet
+                token_diet.measure()               # owner-visible diet numbers, cheap
+            except Exception:
+                pass
             ht = exp.run_huge_task_split()
             if ht:
                 beat_log.append(f"experiment huge-task-split: '{ht['goal'][:50]}' → "

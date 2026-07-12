@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v105";
+const APP_BUILD = "v106";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1799,7 +1799,7 @@ async function renderDevConstruction() {
 const DIM_LABEL = { quality: "Quality", quantity: "Quantity", form: "Form", time: "Time",
   tokens: "Tokens", ease_external: "Ext.access", ease_project: "Proj.access", ease_user: "User access" };
 async function renderEffectiveness() {
-  const d = await load("effectiveness.json");
+  const [d, diet] = await Promise.all([load("effectiveness.json"), load("excava/token_diet.json")]);
   if (!d || !d.lanes) {
     view.innerHTML = `<div class="card"><h3>Extraction Effectiveness</h3>${empty(
       "Scoreboard not generated yet — it runs every analysis cycle (~3h).")}</div>`;
@@ -1807,6 +1807,19 @@ async function renderEffectiveness() {
   }
   const dims = d.dimensions || [];
   let html = await prioritiesPanel();
+  // TOKEN DIET — owner 2026-07-12: "you say it's happening but I can't verify it — show me in a tab"
+  if (diet && diet.per_day) {
+    const rows = diet.per_day.map(x =>
+      `<tr><td>${esc(x.day)}</td><td>${esc(x.turns)}</td><td><b>~${esc(x.approx_tokens_per_turn)}</b></td></tr>`).join("");
+    const caps = Object.entries(diet.hard_caps || {}).map(([k, v]) =>
+      `<span class="pill" title="${esc(k)}">${esc(k.replace(/_/g, " "))}: <b>${esc(v)}</b></span>`).join(" ");
+    html += `<div class="card"><h3>🥗 Token diet <span class="sub">— the saving laws, with numbers you can check (not a claim)</span></h3>
+      ${(diet.laws || []).map(l => `<p class="sub">• ${esc(l)}</p>`).join("")}
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin:6px 0">${caps}</div>
+      <table class="pv-table"><thead><tr><th>day</th><th>agent turns</th><th>≈ tokens per turn</th></tr></thead>
+        <tbody>${rows}</tbody></table>
+      <p class="sub">${esc(diet.note || "")} Honest read: turns got LONGER after the plain-language switch (prose beats bash in words) — the new no-filler law is the counterweight; watch this line fall.</p></div>`;
+  }
   html += `<div class="card"><h3>Extraction Effectiveness &amp; Rigidity</h3>
     <p class="hint">🎯 ${esc(d.north_star || "")}</p>
     <p class="sub">🌐 <b>Public hub API</b> (for external/future systems): <a href="../data/hub.json">data/hub.json</a> — a CORS-open, machine-readable manifest of every dataset · <a href="../HUB_API.md">HUB_API.md</a></p>

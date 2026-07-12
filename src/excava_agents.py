@@ -197,6 +197,52 @@ BLOCKED = {"watch": "video-analysis engine capacity (Gemini free quota is exhaus
            "transcripts": "a residential IP (your PC) — cloud CI is IP-blocked from draining captions"}
 
 
+# R3-4 SYSCALL LAYER (AIOS's idea; owner-ranked #4): every generic tool run passes ONE gate that
+# checks the TASK actually matches what the tool DOES. Root cause it kills: mining "completed"
+# 8 'Resolve links batch' checkpoints by running its discovery agent (+0 links, coverage fell) —
+# a tool ran, so the supervisor saw "real work", but it was the WRONG tool for the task.
+TOOL_DOMAIN = {
+    "src.security_scan":  {"secret", "leak", "scan", "security", "malware", "injection", "guard"},
+    "src.self_check":     {"self-improvement", "improve", "check", "stack", "review", "optimize"},
+    "src.build_memory":   {"memory", "embed", "index", "recall", "vector", "semantic"},
+    "src.trend_watch":    {"news", "announce", "release", "trend", "changelog"},
+    "src.discovery_agent": {"mine", "mining", "source", "discover", "competitor", "directory", "gather"},
+    "src.collect_designs": {"design", "screenshot", "visual", "taste", "arena"},
+    "src.power_scan":     {"power", "capability", "engine", "key", "capacity", "upgrade"},
+    # the links LANE is a CI workflow, not a department tool — its vocabulary is foreign to
+    # every department tool, so link-resolution tasks can never be "completed" by a wrong tool
+    "(links-lane, external)": {"link", "links", "resolve", "coverage", "unlinked"},
+}
+
+
+def _task_tool_fit(task: dict, tool: str) -> bool:
+    """True when running `tool` can plausibly serve `task`. Generic department-advancement tasks
+    pass; a task whose words clearly belong to a DIFFERENT tool's domain fails the gate.
+    Word-boundary matching ('check' must not match inside 'checkpoint')."""
+    import re as _re
+    words = set(_re.findall(r"[a-z][a-z-]+", (str(task.get("title", "")) + " "
+                                              + str(task.get("detail", ""))).lower()))
+    dom = TOOL_DOMAIN.get(tool)
+    if not dom:
+        return True
+    if words & dom:
+        return True
+    foreign = set().union(*TOOL_DOMAIN.values()) - dom
+    return len(words & foreign) < 2                      # 2+ foreign-domain words = wrong tool
+
+
+def _syslog(dept: str, tool: str, task: dict, fit: bool, outcome: str) -> None:
+    """The kernel's uniform tool-call trace (data/excava/syscalls.jsonl) — the supervisor can
+    audit EVERY tool call the same way, which is the whole point of a syscall layer."""
+    import json as _j
+    from datetime import datetime, timezone
+    p = DATA / "excava" / "syscalls.jsonl"
+    with open(p, "a", encoding="utf-8") as fh:
+        fh.write(_j.dumps({"at": datetime.now(timezone.utc).isoformat(), "dept": dept,
+                           "tool": tool, "task": task.get("id", ""), "fit": fit,
+                           "outcome": outcome}, ensure_ascii=False) + "\n")
+
+
 def _work_generic(task: dict) -> dict:
     """Do REAL work when the department has a runnable tool (run it, report real output). If the
     department is truly BLOCKED (needs an owner resource) say so honestly. Otherwise produce an HONEST
@@ -207,8 +253,16 @@ def _work_generic(task: dict) -> dict:
     if dept in BLOCKED and dept not in REAL_TOOL:        # honest 'can't', not a fake plan
         return {"kind": "complete",
                 "result": f"BLOCKED — {dept} needs {BLOCKED[dept]}. No fake work done; waiting on the owner."}
+    tool = REAL_TOOL.get(dept, "")
+    if tool and not _task_tool_fit(task, tool):          # SYSCALL GATE: refuse the wrong tool
+        _syslog(dept, tool, task, False, "refused-mismatch")
+        return {"kind": "fail",
+                "reason": f"SYSCALL MISMATCH — this task asks for work outside what {dept}'s tool "
+                          f"({tool}) does; refusing to run the wrong tool and stamp it done. "
+                          "Escalate to the right lane or the owner."}
     real = _run_real_tool(dept)                          # FIRST: try to actually DO the work
     if real and real["ok"]:
+        _syslog(dept, real["tool"], task, True, "ran-ok")
         friendly = real["tool"].split(".")[-1].replace("_", " ")   # 'src.self_check' -> 'self check'
         return {"kind": "complete", "result": f"Ran the {friendly}. {real['tail']}"}
     slug = re.sub(r"[^a-z0-9]+", "-", str(task.get("title", tid)).lower())[:48].strip("-") or tid

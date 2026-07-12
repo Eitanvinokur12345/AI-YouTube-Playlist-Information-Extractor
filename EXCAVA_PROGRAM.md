@@ -125,7 +125,13 @@ honest finding: 0 stale hub elements right now — verify lane runs too often fo
 staleness to show; REAL staleness so far is at the CAPABILITY layer (openrouter/cerebras),
 now durably logged in staleness_events.jsonl instead of one-off memory notes; Power/SI-type
 room prompts get a live stale-capability warning, verified: fires for Power, silent for
-Security) → impact-scheduler → syscall-layer.**
+Security) → impact-scheduler DONE (war > at-risk-goal depts > others > group-chat-last; verified) →
+syscall-layer DONE (v-code 2026-07-12: _task_tool_fit gate in _work_generic REFUSES wrong-tool runs
+with an honest fail→escalation instead of a fake done — verified against the EXACT historical facade
+(mining 'completing' link-resolution checkpoints: now refused) + 3 controls; every generic tool call
+logged to syscalls.jsonl so the supervisor can audit calls uniformly). **R3 COMPLETE — all four
+owner-ranked upgrades live.** Next layers when due: TRUE-AGENT-PLATFORM spec (question sequence) +
+SI agent-improvement experiments.**
 **TRUE AGENT PLATFORM (owner, new thread):** 'we are using engines; I'm not certain they qualify as true
 agents — the system must run on a genuine agent-based platform' → spec via question sequence (per-agent
 memory/stance is layer 1; what else makes an agent 'true' — persistence? initiative? tools-of-its-own?).

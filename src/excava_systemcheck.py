@@ -74,6 +74,13 @@ def check() -> list[dict]:
     except Exception as e:
         out.append(_c("departments executable", False, f"agent layer broken: {e}", "critical"))
 
+    # 3b. guardrails PROVEN firing (owner 2026-07-12: 'check firmly that everything works')
+    gf = _load("excava/guardrail_fire.json")
+    if gf:
+        out.append(_c("guardrails fire", gf.get("fired", 0) == gf.get("total", -1),
+                      f"{gf.get('fired', 0)}/{gf.get('total', 0)} enforcement gates PROVEN to refuse "
+                      "what they must (triggered, not listed)"))
+
     # 4. work is REAL (supervisor real_pct)
     sup = _load("excava/supervisor.json")
     rp = sup.get("real_pct", 0)

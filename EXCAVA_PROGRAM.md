@@ -190,8 +190,10 @@ the card exists to watch that line fall). **OPEN-S resolved:** = open-source too
 **Q-SEQUENCE 2026-07-12 (late): VISUAL/VISUALIZATION boundary HARDENED (owner: keep both) — Visual =
 mine OTHER people's designs (action tier), Visualization = OUR screens (decision tier); both mandates
 rewritten with explicit hand-over rules; new-room goals carry the boundary (old open rooms close out
-naturally). QUEUED BY OWNER ANSWERS: (a) GUARDRAIL FIRING TEST — 'needs to be done firmly to check
-everything is working': a test that each G-rule's enforcement point actually triggers; (b) GRAPH
+naturally). QUEUED BY OWNER ANSWERS: (a) GUARDRAIL FIRING TEST — DONE+verified: 10/10 enforcement gates TRIGGERED and proven to refuse
+(syscall wrong-tool, hallucination grounding, initiative cap/output-tier/group blocks, both
+reroutes, outward unapproved, memory isolation, tier-2 regression) — daily in the beat +
+a systemcheck line; sandboxed, side-effect-safe; (b) GRAPH
 EXPANSION — brain graph must include Q&A/problems/history, 'not all information is in it yet'.**
 
 **Standing checks each tick:** newest room-turn timestamp (beat health) · engine_health.json real HTTP status per

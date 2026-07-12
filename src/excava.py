@@ -518,6 +518,21 @@ def _beat(args) -> int:
                 beat_log.append(agent_issue.execute_if_approved())
             except Exception:
                 pass
+            try:
+                from src import guardrail_test
+                from datetime import datetime as _dt, timezone as _tz
+                gf = DATA / "excava" / "guardrail_fire.json"
+                stale = True
+                try:
+                    prev = json.loads(gf.read_text(encoding="utf-8"))
+                    stale = (_dt.now(_tz.utc) - _dt.fromisoformat(prev["generated_at"])).total_seconds() > 22 * 3600
+                except Exception:
+                    pass
+                if stale:
+                    r = guardrail_test.run()      # owner law: gates must be SEEN firing, daily
+                    beat_log.append(f"guardrail-fire: {r['fired']}/{r['total']} gates proven")
+            except Exception:
+                pass
             ht = exp.run_huge_task_split()
             if ht:
                 beat_log.append(f"experiment huge-task-split: '{ht['goal'][:50]}' → "

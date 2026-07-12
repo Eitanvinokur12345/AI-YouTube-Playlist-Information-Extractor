@@ -187,6 +187,13 @@ caps as pills, and per-day turns + ≈tokens/turn from real transcripts (honest 
 after the plain-language switch — the newly wired Caveman no-filler prompt law is the counterweight;
 the card exists to watch that line fall). **OPEN-S resolved:** = open-source tools must be usable in-app; umbrella.
 
+**Q-SEQUENCE 2026-07-12 (late): VISUAL/VISUALIZATION boundary HARDENED (owner: keep both) — Visual =
+mine OTHER people's designs (action tier), Visualization = OUR screens (decision tier); both mandates
+rewritten with explicit hand-over rules; new-room goals carry the boundary (old open rooms close out
+naturally). QUEUED BY OWNER ANSWERS: (a) GUARDRAIL FIRING TEST — 'needs to be done firmly to check
+everything is working': a test that each G-rule's enforcement point actually triggers; (b) GRAPH
+EXPANSION — brain graph must include Q&A/problems/history, 'not all information is in it yet'.**
+
 **Standing checks each tick:** newest room-turn timestamp (beat health) · engine_health.json real HTTP status per
 engine · any tier-2.5 auto-added agents · supervisor real_pct + movement + systemcheck + proof.
 

@@ -445,8 +445,28 @@ def _beat(args) -> int:
             from src import excava_chat as chat
             chat.ensure_default_rooms()
             open_rooms = [r for r in chat.load_rooms()["rooms"] if r["status"] == "open"]
-            # advance ALL open rooms each beat (was [:4]) so every department's room actually talks —
-            # group chat + war + all 12 depts. Owner: 'none of the departments have made calls'.
+            # R3-3 IMPACT SCHEDULING (owner-ranked #3, AIOS's idea): engine budget goes to the
+            # conversations that matter most, not list order. war (owner task) > departments
+            # whose goal serves the weakest North-Star goals > the rest; group chat last (its
+            # decisions audit 100% self-improvement). Every room still gets advanced across
+            # beats — this orders WITHIN a beat's budget, it doesn't starve anyone.
+            weak_goals = " ".join(
+                (g.get("name", "") + " " + g.get("gap", "")).lower()
+                for g in (_load("goals_status.json", []) or [])
+                if isinstance(g, dict) and g.get("score", 100) < 65)
+
+            def _impact(r):
+                if r.get("kind") == "war":
+                    return 0                       # owner's task — always first
+                gl = (r.get("goal", "") or "").lower()
+                dept = (r.get("dept", "") or "").lower()
+                if dept and (dept in weak_goals or any(
+                        w in weak_goals for w in gl.split()[:6] if len(w) > 4)):
+                    return 1                       # serves an at-risk goal
+                if r.get("kind") == "group":
+                    return 3                       # audits 100% SI — cheapest seat
+                return 2
+            open_rooms.sort(key=_impact)
             for r in open_rooms[:18]:
                 for line in chat.advance(r["id"], turns=2):
                     beat_log.append(line)

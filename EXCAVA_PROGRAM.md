@@ -33,6 +33,10 @@ Accessibility split into two staffed departments (v96) · Proof files open in-ap
 SI-2 hourly engine-benchmark canary + health-aware engine picking + 🔌 panel (v99, cerebras id fix pending CI
 proof) · SI-3 autonomy enforced + tier-2.5 auto-staffing (sandbox-proven) + 🧪 experiments roster in-app (v100).
 
+**R1 STATUS (2026-07-12): waiting on the owner's PARENTS' OK — Oracle requires address + card identity
+verification and the owner is 17; he is asking first, which is exactly right. No pressure in reports;
+the GitHub cron remains the runtime until they decide. ('Sonat' resolved = Claude Sonnet, the model.)**
+
 **NOW → NEXT (approved order — self-improvement first):**
 1. **SI-4a Golden-task regression suite** — ~6 fixed engine-free tasks (bus routing, package assembly,
    pitch v2 generation, humanize, hub-candidate search, pitch-survival in approvals) → `run_regression()` →

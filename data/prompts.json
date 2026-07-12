@@ -4495,6 +4495,83 @@
       "source_url": "https://www.youtube.com/watch?v=KbAqmdKf85Q",
       "discovered_via": "mine_feeds (gemini-video)",
       "added_at": "2026-07-11T23:40:21.451931+00:00"
+    },
+    {
+      "title": "Scrape Trending GitHub Repos",
+      "purpose": "To instruct a Claude Code agent to scrape trending GitHub repositories for a given week.",
+      "prompt_text": "scrape trending github repos for that week, no repo, model is opus 4.7",
+      "category": "automation",
+      "slug": "scrape-trending-github-repos",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=Ka-N1DSQhN0",
+      "discovered_via": "mine_feeds (gemini-video)",
+      "added_at": "2026-07-12T11:51:41.650871+00:00"
+    },
+    {
+      "title": "Schedule Weekly Report",
+      "purpose": "To schedule a routine to run weekly and produce a report.",
+      "prompt_text": "Every monday at 9am, just produce a report",
+      "category": "automation",
+      "slug": "schedule-weekly-report",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=Ka-N1DSQhN0",
+      "discovered_via": "mine_feeds (gemini-video)",
+      "added_at": "2026-07-12T11:51:41.650871+00:00"
+    },
+    {
+      "title": "Build page from design system",
+      "purpose": "To instruct an AI agent to build a page based on a provided design system.",
+      "prompt_text": "build me a page that looks like this.",
+      "category": "design",
+      "slug": "build-page-from-design-system",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=KbvGBQzf61w",
+      "discovered_via": "mine_feeds (gemini-video)",
+      "added_at": "2026-07-12T11:51:41.650871+00:00"
+    },
+    {
+      "title": "Build landing page matching design system",
+      "purpose": "To instruct Claude to build a landing page that matches an extracted design system.",
+      "prompt_text": "Build me a landing page that matches this design system",
+      "category": "design",
+      "slug": "build-landing-page-matching-design-system",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=KbvGBQzf61w",
+      "discovered_via": "mine_feeds (gemini-video)",
+      "added_at": "2026-07-12T11:51:41.650871+00:00"
+    },
+    {
+      "title": "Local Business Lead Enrichment Pipeline",
+      "purpose": "To build a fully enriched, personalized lead list for cold outreach using Apify for scraping and Claude for orchestration.",
+      "prompt_text": "# Local Business Lead Enrichment Pipeline\n\nYou are going to build me a fully enriched, personalized lead list for cold outreach. Use the Apify MCP for all scraping (or Local CSV if Sheets isn't connected for output).\n\n## Inputs I'll Give You:\n`target_niche`: (e.g. dental practices, law firms, real estate agents)\n`target_location`: (e.g. Austin, TX)\n`target_count`: (e.g. 100)\n\nAsk me for these three things before starting if I haven't provided them.\n\n## What To Do\n\n### Step 1 - Source the list\nUse Apify actor `compass/google-places` to scrape businesses matching the niche in the location.\n\nInput:\n```json\n{\n  \"query\": \"{{target_niche}}\",\n  \"locationQuery\": \"{{location}}\",\n  \"maxItems\": \"{{target_count}}\",\n  \"language\": \"en\",\n  \"reviews_max_items\": \"true\",\n  \"maxReviews\": \"0\"\n}\n```\n\nFilter results:\n`reviewCount` >= `15`\n`reviewScore` between `3.5` and `4.7` (room for pain, but legit business)\n`Must have a website`\n\n### Step 2 - Scrape recent reviews\nFor each business with a `placeId`, use `compass/google-maps-reviews-scraper`.\n\nInput:\n```json\n{\n  \"placeId\": \"{{placeId from Step 1}}\",\n  \"maxReviews\": \"2\",\n  \"language\": \"en\"\n}\n```\n\nKeep only the 2 most recent reviews with stars >= 4 per business. If none exist, leave those columns blank.\n\n### Step 3 - Crawl their websites\nFor each business with a `website`, use `apify/website-content-crawler`.\n\nInput:\n```json\n{\n  \"url\": \"{{website}}\",\n  \"max_depth\": \"1\",\n  \"max_pages\": \"5\",\n  \"screenshot\": \"true\",\n  \"proxy_type\": \"auto\",\n  \"user_agent\": \"desktop\"\n}\n```\n\nFrom the returned HTML/Markdown, detect and store as `business_strings`:\nSearch for: `contact us`, `about us`, `team`, `services`, `pricing`, `testimonials`, `case studies`, `blog`, `news`, `faq`, `careers`, `privacy policy`, `terms of service`, `sitemap`, `booking system`, `members`, `use the system of fraud`\n\nExtract from `about us` and `team`: `owner name`, `owner email`, `owner phone`, `owner job title`, `owner pattern`\n\nFor each business website, use `apify/website-contact-crawler`.\n\nInput:\n```json\n{\n  \"url\": \"{{website}}\"\n}\n```\n\nOutput: `emails`, `phone_numbers`, `social_media_links`\n\nCombine all data into a single spreadsheet.",
+      "category": "lead-generation",
+      "slug": "local-business-lead-enrichment-pipeline",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=Kkm-TMKTRmc",
+      "discovered_via": "mine_feeds (gemini-video)",
+      "added_at": "2026-07-12T11:51:41.650871+00:00"
+    },
+    {
+      "title": "Generate Canva designs",
+      "purpose": "To instruct Claude to create various graphic designs using the integrated Canva tool.",
+      "prompt_text": "Generate hundreds of Canva designs directly inside of Claude in less than an hour. I'm talking flyers, Instagram carousels, banners, posters, and you can automate all of it directly inside of Claude.",
+      "category": "design",
+      "slug": "generate-canva-designs",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=Km7DQXSbF5s",
+      "discovered_via": "mine_feeds (gemini-video)",
+      "added_at": "2026-07-12T11:51:41.650871+00:00"
+    },
+    {
+      "title": "Generate aesthetic flyers for video editing services",
+      "purpose": "To generate specific types of marketing materials for a video editing business.",
+      "prompt_text": "Here are 4 aesthetic flyers - cinematic, editorial, and actually meaningful for your brand! Each one is designed around your video editing services with a dark, high-end feel.",
+      "category": "marketing",
+      "slug": "generate-aesthetic-flyers-for-video-editing-services",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=Km7DQXSbF5s",
+      "discovered_via": "mine_feeds (gemini-video)",
+      "added_at": "2026-07-12T11:51:41.650871+00:00"
     }
   ]
 }

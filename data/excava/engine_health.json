@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-11T23:31:25.150214+00:00",
+ "generated_at": "2026-07-12T01:29:17.595593+00:00",
  "experiment": "engine-benchmark (golden-task canary)",
  "golden_prompt": "Reply with exactly these two words and nothing else: benchmark ok",
  "results": [
@@ -7,55 +7,55 @@
    "engine": "groq",
    "status": "healthy",
    "valid": true,
-   "ms": 74,
+   "ms": 284,
    "model": "llama-3.3-70b-versatile"
   },
   {
    "engine": "sambanova",
    "status": "healthy",
    "valid": true,
-   "ms": 279,
+   "ms": 411,
    "model": "Meta-Llama-3.3-70B-Instruct"
   },
   {
    "engine": "mistral",
    "status": "healthy",
    "valid": true,
-   "ms": 319,
+   "ms": 374,
    "model": "mistral-small-latest"
   },
   {
    "engine": "gh-models",
-   "status": "quota-429",
-   "ms": 121,
-   "model": "openai/gpt-4o-mini",
-   "note": "quota-429: Too many requests. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/git"
+   "status": "healthy",
+   "valid": true,
+   "ms": 1142,
+   "model": "openai/gpt-4o-mini"
   },
   {
    "engine": "cerebras",
    "status": "bad-model-404",
-   "ms": 176,
+   "ms": 301,
    "model": "llama3.1-8b",
    "note": "bad-model-404: {\"message\":\"Model does not exist or you do not have access to it.\",\"type\":\"not_found_error\",\"param\":\"model\",\"code\":\"model_not_found\"}"
   },
   {
    "engine": "gemini",
    "status": "quota-429",
-   "ms": 159,
+   "ms": 147,
    "model": "gemini-2.0-flash",
    "note": "quota-429: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error,"
   },
   {
    "engine": "openrouter",
    "status": "quota-429",
-   "ms": 3572,
+   "ms": 156,
    "model": "meta-llama/llama-3.3-70b-instruct:free",
    "note": "quota-429: {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"meta-llama/llama-3.3-70b-instruct:free is temporarily rate-limited upstream. Please"
   },
   {
    "engine": "nvidia",
    "status": "TimeoutError",
-   "ms": 60174,
+   "ms": 60154,
    "model": "meta/llama-3.3-70b-instruct",
    "note": "TimeoutError: The read operation timed out"
   },
@@ -72,12 +72,12 @@
  ],
  "ranking": [
   "groq",
-  "sambanova",
   "mistral",
+  "sambanova",
   "gh-models",
   "gemini",
-  "cerebras",
   "openrouter",
+  "cerebras",
   "nvidia",
   "hermes",
   "omniroute"

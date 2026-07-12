@@ -166,6 +166,19 @@ def _page_context(room: dict) -> str:
         if hits:
             block = ("KNOWN FROM THE HUB (use if relevant): " + "; ".join(
                 f"{h['name']} — {h.get('what', '')[:55]}" for h in hits))[:200] + "\n"
+        # R3-2 TEMPORAL VALIDITY (Zep's idea): only capability/power rooms need to know facts
+        # can go stale (a free model going paid, a key losing access) — noise everywhere else.
+        goal_l = room.get("goal", "").lower()
+        if any(w in goal_l for w in ("power", "capability", "engine", "model", "self-improve")):
+            try:
+                ev = json.loads((ROOT / "data" / "excava" / "temporal_validity.json")
+                                .read_text(encoding="utf-8")).get("recent_staleness_events", [])
+                if ev:
+                    last = ev[-1]
+                    block += (f"FACTS CAN GO STALE: {last['what']} just did ({last['now_true']}) — "
+                             f"don't assume a capability still works; check first.\n")[:220]
+            except Exception:
+                pass
         _PAGE_CACHE[rid] = block
         return block
     except Exception:

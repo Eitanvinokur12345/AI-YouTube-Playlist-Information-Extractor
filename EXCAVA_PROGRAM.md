@@ -116,7 +116,12 @@ regardless of quota; fixed + stub-verified). NEXT beat's canary reveals each eng
 **R3 ORDER (owner 2026-07-12): context-paging DONE (v-code 2026-07-12: every room turn now carries a
 ≤200-char 'KNOWN FROM THE HUB' block — keyword recall over 7.9k elements, per-room cache, regression
 gate passed; semantic recall upgrades it when Gemini quota returns; LIVE proof = agents citing hub
-items in fresh transcripts) → temporal-validity → impact-scheduler → syscall-layer.**
+items in fresh transcripts) → temporal-validity DONE (v-code 2026-07-12: reuses elements_verified.json, no new store;
+honest finding: 0 stale hub elements right now — verify lane runs too often for element-level
+staleness to show; REAL staleness so far is at the CAPABILITY layer (openrouter/cerebras),
+now durably logged in staleness_events.jsonl instead of one-off memory notes; Power/SI-type
+room prompts get a live stale-capability warning, verified: fires for Power, silent for
+Security) → impact-scheduler → syscall-layer.**
 **TRUE AGENT PLATFORM (owner, new thread):** 'we are using engines; I'm not certain they qualify as true
 agents — the system must run on a genuine agent-based platform' → spec via question sequence (per-agent
 memory/stance is layer 1; what else makes an agent 'true' — persistence? initiative? tools-of-its-own?).

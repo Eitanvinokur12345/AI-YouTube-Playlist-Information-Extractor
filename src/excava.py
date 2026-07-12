@@ -482,6 +482,11 @@ def _beat(args) -> int:
                 token_diet.measure()               # owner-visible diet numbers, cheap
             except Exception:
                 pass
+            try:
+                from src import temporal_validity
+                temporal_validity.build()          # R3-2: age report + staleness event log
+            except Exception:
+                pass
             ht = exp.run_huge_task_split()
             if ht:
                 beat_log.append(f"experiment huge-task-split: '{ht['goal'][:50]}' → "

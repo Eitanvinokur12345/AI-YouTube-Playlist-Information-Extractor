@@ -147,6 +147,58 @@ def _dispatch_workers(room: dict, doer: dict, n: int) -> str:
     return f"[dispatched {n} workers: {', '.join(ids[:3])}{'…' if n > 3 else ''} — done, dissolved]"
 
 
+#  AGENT-PLATFORM LAYER 1 (owner build order 2026-07-12): PER-AGENT PERSISTENT MEMORY.
+#  An agent that remembers its own positions across rooms and days stops being an
+#  interchangeable engine-borrower and starts being a colleague (AGENTIC_OS_STUDY §6).
+#  Store: data/excava/agent_memory/<agent-id>.jsonl · read into its turns, capped tight.
+AGENT_MEM_DIR = DATA / "excava" / "agent_memory"
+AGENT_MEM_KEEP = 30          # last N remembered items per agent
+AGENT_MEM_RECALL = 2         # how many the agent re-reads per turn (token diet is watching)
+
+
+def _remember_turn(sp: dict, room: dict, text: str) -> None:
+    """After an agent speaks, keep the essence of what it argued — its first substantive
+    sentence, or its DECISION line — so tomorrow's turns can be consistent with today's."""
+    try:
+        aid = sp.get("id", "")
+        if not aid:
+            return
+        core = ""
+        for ln in text.splitlines():
+            ln = ln.strip()
+            if ln.upper().startswith("DECISION"):
+                core = ln
+                break
+            if len(ln) > 30 and not core:
+                core = ln
+        if not core:
+            return
+        AGENT_MEM_DIR.mkdir(parents=True, exist_ok=True)
+        p = AGENT_MEM_DIR / f"{aid}.jsonl"
+        rows = p.read_text(encoding="utf-8").splitlines() if p.exists() else []
+        rows.append(json.dumps({"at": datetime.now(timezone.utc).isoformat()[:16],
+                                "room": room.get("id", "")[:34], "said": core[:160]},
+                               ensure_ascii=False))
+        p.write_text("\n".join(rows[-AGENT_MEM_KEEP:]) + "\n", encoding="utf-8")
+    except Exception:
+        pass                                             # memory must never break a turn
+
+
+def _recall_agent(sp: dict) -> str:
+    """The agent's own memory, injected into its turn — capped hard (diet law)."""
+    try:
+        p = AGENT_MEM_DIR / f"{sp.get('id', '')}.jsonl"
+        if not p.exists():
+            return ""
+        rows = [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines()[-AGENT_MEM_RECALL:]]
+        if not rows:
+            return ""
+        return ("YOUR OWN MEMORY (be consistent with what you argued before): "
+                + " | ".join(r["said"][:80] for r in rows))[:220] + "\n"
+    except Exception:
+        return ""
+
+
 _PAGE_CACHE: dict = {}
 
 
@@ -207,7 +259,7 @@ def _prompt(room: dict, sp: dict, hist: list[dict]) -> str:
             f"NO FILLER (Caveman law): no preamble, no restating the goal, no 'I think we should' — "
             f"every sentence carries new content.\n"
             f"ROOM ({room['kind']}): {room['goal']}\nDone-criteria: {room['done_criteria']}\n"
-            + _page_context(room) +
+            + _page_context(room) + _recall_agent(sp) +
             f"Conversation so far:\n{convo}\n\nYour turn. {inst}")
 
 
@@ -281,6 +333,7 @@ def advance(room_id: str, turns: int = 2) -> list[str]:
         if sp.get("role") == "doer" and room["turns"] == 2:
             text += "\n" + _dispatch_workers(room, sp, random.randint(2, 4))
         _post(room, sp["id"], sp.get("name", sp["id"]), f"{r['engine']}/{r['model']}", text, r["ms"])
+        _remember_turn(sp, room, text)      # layer-1 agent memory: what it argued persists
         room["turns"] += 1
         room["last_turn_ms"] = r["ms"]
         log.append(f"{room['id']}: {sp.get('name')} spoke ({r['engine']}, {r['ms']}ms) t{room['turns']}")

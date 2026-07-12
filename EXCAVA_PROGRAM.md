@@ -59,6 +59,18 @@ proof) · SI-3 autonomy enforced + tier-2.5 auto-staffing (sandbox-proven) + �
 4. **P1 Live refresh** — DONE+verified v102: the app polls the beat stamp every 60s while open; on new
    data it drops the cache, re-renders the ACTIVE tab, and pulses "🟢 live · new data HH:MM" next to the
    build badge; never refreshes while a modal is open or the tab is hidden (browser-verified end-to-end).
+4½b. **DECISION-VOLUME POLICY — CONFIRMED 2026-07-12:** decision-heavy tier =
+   improve/power/visualization/accessibility (debate IS their job); everyone else must let
+   decisions lead to ACTION (owner: 'the emphasis should be on action') — enforcement
+   (every-room-ends-in-artifact vs case-by-case) decided per department over coming ticks.
+   data/excava/dept_tiers.json is the record. AUDIT v2 (owner-requested upgrade): replaced
+   pure vocabulary with GROUNDING — hallucinated_pct (foreign-tech-stack mentions; this repo
+   is Python/JS/JSON only) + artifact_output_ratio (decisions referencing a REAL existing
+   file). Result validates the owner's instinct exactly: CREATORS is worst on both new
+   metrics — 17% hallucinated, 0.17 ratio (room debates a FICTIONAL Rust/cargo project,
+   'excava-core'/'cargo build', with zero link to the real assemble_packages() builder).
+   Owner explicitly DEFERRED the fix — folds into a bigger CREATORS OVERHAUL (queued in
+   reminders.json, NOT a quick prompt patch — do not touch the room brief yet).
 4½. **DECISION AUDIT — DONE+verified (priority-0 bus task completed):** 284 real decisions audited
    (src/decision_audit.py, mechanical): 13% are self-improvement — concentrated in WAR-ROOM (18/18),
    GROUP-CHAT (2/2) and legacy links rooms; the 13 departments themselves are 0-5% SI (they hold

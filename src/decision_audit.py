@@ -31,6 +31,17 @@ SELF_IMP = {"interface", "dashboard", "screen", "panel", "tab", "card", "button"
             "workflow", "process", "pipeline", "excava", "formation", "debate", "summary",
             "contrast", "focus", "navigation", "changelog", "standardize", "refactor"}
 
+# GROUNDING v2 (owner 2026-07-12: build an artifact-output-ratio metric — the vocabulary audit
+# rated Creators 0% self-improvement while its rooms were debating a FICTIONAL Rust/cargo
+# project with zero connection to the real package builder). Two cheap, honest signals:
+#  1. FOREIGN-STACK markers this repo never uses (Python/JS/JSON only) — a near-certain
+#     hallucination flag when they appear in a decision.
+#  2. REAL PATH grounding — does the decision reference a file that actually exists here.
+FOREIGN_STACK = re.compile(
+    r"\b(cargo|rustc|npm install|pip install|mvn|gradle|go mod|docker build|"
+    r"dotnet|composer require|yarn add)\b", re.I)
+REAL_PATH = re.compile(r"[\w][\w./-]{2,60}\.(?:json|py|md|jsonl|js)\b")
+
 
 def _dept_vocab() -> dict[str, set]:
     reg = json.load(open(ROOT / "data" / "excava" / "agents.json", encoding="utf-8"))
@@ -79,23 +90,46 @@ def audit() -> dict:
         mi, si = len(words & mission_words), len(words & si_words)
         verdict = "mission" if mi > si else "self-improvement" if si > mi else "mixed"
         p = per.setdefault(dept, {"total": 0, "mission": 0, "self-improvement": 0, "mixed": 0,
-                                  "si_examples": []})
+                                  "si_examples": [], "hallucinated": 0, "grounded": 0,
+                                  "hallucination_examples": []})
         p["total"] += 1
         p[verdict] += 1
         if verdict == "self-improvement" and len(p["si_examples"]) < 2:
             first = next((l.strip() for l in txt.splitlines()
                           if l.strip() and not l.startswith(("#", ">"))), "")[:110]
             p["si_examples"].append({"file": f.name, "gist": first})
+        # GROUNDING v2: foreign-stack mention = near-certain hallucination (this repo is
+        # Python/JS/JSON only); a real existing path = grounded in what actually ships.
+        foreign = FOREIGN_STACK.search(txt)
+        paths = REAL_PATH.findall(txt)
+        real_hit = any((ROOT / pth).exists() or (ROOT / "data" / pth).exists()
+                       or (ROOT / "src" / pth).exists() for pth in paths)
+        if foreign:
+            p["hallucinated"] += 1
+            if len(p["hallucination_examples"]) < 2:
+                p["hallucination_examples"].append({"file": f.name,
+                    "flag": foreign.group(0), "gist": txt.split("**Decision:**")[-1][:120].strip()})
+        elif real_hit:
+            p["grounded"] += 1
     for d, p in per.items():
         p["si_pct"] = round(100 * p["self-improvement"] / max(p["total"], 1))
+        p["grounded_pct"] = round(100 * p["grounded"] / max(p["total"], 1))
+        p["hallucinated_pct"] = round(100 * p["hallucinated"] / max(p["total"], 1))
+        p["artifact_output_ratio"] = round(p["grounded"] / max(p["total"] - p["hallucinated"], 1), 2)
     total = sum(p["total"] for p in per.values())
     si_total = sum(p["self-improvement"] for p in per.values())
+    hall_total = sum(p["hallucinated"] for p in per.values())
     report = {"generated_at": datetime.now(timezone.utc).isoformat(),
               "decisions_audited": total,
               "self_improvement_pct_overall": round(100 * si_total / max(total, 1)),
+              "hallucinated_pct_overall": round(100 * hall_total / max(total, 1)),
               "per_department": per,
               "rule": "SI-type decisions belong to the improve department's external arms; "
                       "departments keep mission decisions (owner law 2026-07-11).",
+              "metric_v2": "artifact_output_ratio = grounded decisions / (total - hallucinated). "
+                           "1.0 = every non-hallucinated decision references something real that "
+                           "ships. hallucinated_pct = decisions inventing a foreign tech stack "
+                           "(owner caught: Creators debating a fictional Rust/cargo project).",
               "next_layer": "SI liaison agent per department (tier-2.5) routes these."}
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
     return report
@@ -109,9 +143,11 @@ def main() -> int:
         pass
     r = audit()
     print(f"decision-audit: {r['decisions_audited']} decisions; "
-          f"{r['self_improvement_pct_overall']}% are self-improvement, not mission")
-    for d, p in sorted(r["per_department"].items(), key=lambda x: -x[1]["si_pct"]):
-        print(f"  {d:<14} {p['si_pct']:>3}% SI  ({p['self-improvement']}/{p['total']})")
+          f"{r['self_improvement_pct_overall']}% self-improvement, "
+          f"{r['hallucinated_pct_overall']}% hallucinated (foreign tech stack)")
+    for d, p in sorted(r["per_department"].items(), key=lambda x: -x[1]["hallucinated_pct"]):
+        print(f"  {d:<14} hallucinated {p['hallucinated_pct']:>3}%  grounded {p['grounded_pct']:>3}%  "
+              f"ratio={p['artifact_output_ratio']}  SI {p['si_pct']:>3}%  ({p['total']} decisions)")
     return 0
 
 

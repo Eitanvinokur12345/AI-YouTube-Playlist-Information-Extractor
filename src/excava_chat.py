@@ -216,6 +216,19 @@ def _propose_from_decision(room: dict, sp: dict, decision_text: str) -> str:
         core = (m.group(1).strip() if m else "").strip()
         if len(core) < 20:
             return ""                                    # nothing concrete enough to act on
+        # PROPOSAL-TIME GROUNDING (2026-07-12, non-negotiable before external action): a decision
+        # that hallucinates a foreign tech stack (the Creators Rust/cargo theater) must NOT become
+        # real bus work. Same detector the decision audit uses — one law, two enforcement points.
+        try:
+            from src.decision_audit import FOREIGN_STACK
+            if FOREIGN_STACK.search(decision_text):
+                from src.excava_agents import _syslog
+                _syslog(room.get("dept", ""), "initiative", {"id": room.get("id", "")}, False,
+                        "initiative-refused-ungrounded")
+                return (f"{room['id']}: initiative REFUSED — {sp.get('name')}'s decision mentions a "
+                        "foreign tech stack (likely hallucinated); not putting it on the bus")
+        except Exception:
+            pass
         b = bus.read_bus()
         mine_open = sum(1 for t in b.get("tasks", [])
                         if t.get("source") == f"agent:{aid}"

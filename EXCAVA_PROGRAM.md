@@ -140,7 +140,11 @@ task on the bus, attributed 'agent:<id>', priority-2, capped at 2 open per agent
 outcome links from BIRTH: agent_record now counts proposed vs shipped = the real hit-rate; sandbox-
 verified incl. cap + refusal + attribution, live bus untouched; LIVE proof = first real initiative
 tasks in CI beats) →
-4) broader EXTERNAL ACTION. Explainer written into AGENTIC_OS_STUDY.md §6 per his ask. A/B LAW: DEBATE
+3½) PROPOSAL-TIME GROUNDING — DONE+verified: an initiative whose decision mentions a foreign tech
+stack is REFUSED before touching the bus (same detector as the audit — one law, two enforcement
+points; refusals syscall-traced; sandbox-verified: cargo-decision refused, grounded decision passed) →
+4) broader EXTERNAL ACTION — needs the OWNER'S SPEC (question sequence next; outward gate applies to
+every step). Explainer written into AGENTIC_OS_STUDY.md §6 per his ask. A/B LAW: DEBATE
 STAYS regardless of the judge's tally (auto-flip disabled in code; experiment stays advisory). SI-CONTINUOUS
 (owner): self-improvement runs continuously & independently, improving agents AND other agents over time —
 a distinct SI branch, possibly its own tab; design next SI wave.** (original thread note:) 'we are using engines; I'm not certain they qualify as true

@@ -133,7 +133,9 @@ logged to syscalls.jsonl so the supervisor can audit calls uniformly). **R3 COMP
 owner-ranked upgrades live.** Next layers when due: TRUE-AGENT-PLATFORM spec (question sequence) +
 SI agent-improvement experiments.**
 **TRUE AGENT PLATFORM — SPEC LOCKED 2026-07-12 (owner build order): 1) per-agent persistent MEMORY — DONE+verified (each agent's argued positions persist to agent_memory/<id>.jsonl, capped 30; its own last 2 injected into its turns ≤220 chars; isolation verified: agents never see each other's memory; live proof = consistency across days in CI transcripts) →
-2) visible TRACK RECORD per agent (in-app) → 3) INITIATIVE (agents propose bus tasks, capped+traced) →
+2) visible TRACK RECORD — DONE+verified v107 (👥 Agents card in Rooms: per-agent turns/rooms/engines/
+latest-held-position over 7 days from real transcripts — Scriv leads: 153 turns, 49 rooms, 5 brains;
+hit-rate honestly deferred to the initiative layer's decision→outcome links) → 3) INITIATIVE (agents propose bus tasks, capped+traced) →
 4) broader EXTERNAL ACTION. Explainer written into AGENTIC_OS_STUDY.md §6 per his ask. A/B LAW: DEBATE
 STAYS regardless of the judge's tally (auto-flip disabled in code; experiment stays advisory). SI-CONTINUOUS
 (owner): self-improvement runs continuously & independently, improving agents AND other agents over time —

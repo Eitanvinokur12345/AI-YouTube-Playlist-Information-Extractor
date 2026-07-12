@@ -507,6 +507,11 @@ def _beat(args) -> int:
                 temporal_validity.build()          # R3-2: age report + staleness event log
             except Exception:
                 pass
+            try:
+                from src import agent_record
+                agent_record.build()               # layer-2: per-agent track record for the app
+            except Exception:
+                pass
             ht = exp.run_huge_task_split()
             if ht:
                 beat_log.append(f"experiment huge-task-split: '{ht['goal'][:50]}' → "

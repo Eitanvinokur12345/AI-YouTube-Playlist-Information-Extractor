@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v106";
+const APP_BUILD = "v107";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -3163,11 +3163,24 @@ async function renderRooms(selId) {
       ${sel.last_turn_ms ? `<span>last turn ${sel.last_turn_ms}ms</span>` : ""}
       ${sel.artifact ? `<span>📦 artifact: <b>${esc(sel.artifact.kind)}</b> → ${esc(String(sel.artifact.ref || sel.artifact.id || ""))}</span>` : ""}</div>
     <div class="chat">${bubbles}${artInline}</div>`;
+  // AGENT-PLATFORM LAYER 2: the visible track record — judge which agents earn trust
+  const arecs = await load("excava/agent_records.json");
+  const actives = ((arecs && arecs.agents) || []).filter(a => a.turns_7d > 0).slice(0, 12);
+  const agentsCard = actives.length ? `
+    <div class="card"><h3>👥 Agents — track record <span class="sub">— ${esc(arecs.window || "7 days")}: who actually works, on which brains, holding what positions (accountability, study §6)</span></h3>
+      <table class="pv-table"><thead><tr><th>agent</th><th>dept · role</th><th>turns</th><th>rooms</th><th>brains used</th><th>latest held position</th></tr></thead>
+      <tbody>${actives.map(a => `<tr>
+        <td><b>${esc(a.name)}</b></td><td>${esc(a.dept)} · ${esc(a.role)}</td>
+        <td>${esc(a.turns_7d)}</td><td>${esc(a.rooms_7d)}</td>
+        <td>${esc((a.engines_used || []).length)} <span class="sub">(${esc((a.engines_used || []).join(", "))})</span></td>
+        <td class="sub">${esc(a.last_position || "— memory starts accumulating from the next beats")}</td></tr>`).join("")}
+      </tbody></table>
+      <p class="sub">${esc((arecs && arecs.note) || "")}</p></div>` : "";
   view.innerHTML = `
     <div class="card"><h3>🗣 Rooms <span class="sub">— agents work out loud; you're the boss watching (P13). War rooms are the showpiece.</span></h3>
       <div class="rooms-rail">${rail}</div>
       ${sel.kind === "war" ? `<div class="warroom"><div class="wr-head">⚔️ WAR ROOM — round table</div>${inner}</div>` : inner}
-    </div>`;
+    </div>${agentsCard}`;
   view.querySelectorAll("[data-room]").forEach(b =>
     b.addEventListener("click", () => renderRooms(b.dataset.room)));
   view.querySelectorAll("[data-open-results]").forEach(a =>

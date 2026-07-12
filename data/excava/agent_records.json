@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-12T17:31:36.653646+00:00",
+ "generated_at": "2026-07-12T19:43:09.133908+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 156,
+   "turns_7d": 157,
    "rooms_7d": 50,
    "engines_used": [
     "gh-models",
@@ -17,15 +17,15 @@
     "nvidia",
     "sambanova"
    ],
-   "positions_held": 3,
-   "last_position": "Reel's 45% threshold still risks under-reviewing decisions with high-stakes consequences that barely clear the bar, like"
+   "positions_held": 4,
+   "last_position": "Manual crawling locks in today’s coverage but guarantees tomorrow’s gap if the crawler is unavailable or the repo change"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 101,
+   "turns_7d": 102,
    "rooms_7d": 53,
    "engines_used": [
     "gh-models",
@@ -33,31 +33,31 @@
     "mistral",
     "sambanova"
    ],
-   "positions_held": 1,
-   "last_position": "Do the daily 30-minute manual crawl of the top 50 most-linked pages. It’s the fastest way to hit the +5% daily coverage "
+   "positions_held": 2,
+   "last_position": "Adopt the rule: log every confidence drop that changes an agent’s next action, but auto-flag only those below 50% for hu"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 101,
-   "rooms_7d": 53,
+   "turns_7d": 102,
+   "rooms_7d": 54,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 3,
-   "last_position": "We should run audio sentiment analysis first, as it allows us to quickly identify potential areas of ambiguity or high e"
+   "positions_held": 4,
+   "last_position": "Run the daily 30-minute manual crawl of the top 50 most-linked pages. It’s the fastest way to lock in +5% daily coverage"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 99,
+   "turns_7d": 100,
    "rooms_7d": 51,
    "engines_used": [
     "gh-models",
@@ -65,8 +65,8 @@
     "mistral",
     "sambanova"
    ],
-   "positions_held": 1,
-   "last_position": "The risk with manual crawling is that it may not be sustainable in the long term, and the coverage gains could be lost i"
+   "positions_held": 2,
+   "last_position": "The 50% threshold still misses high-impact decisions made at 46% confidence—like overriding a default with a risky alter"
   },
   {
    "id": "transcripts-w1",
@@ -85,6 +85,23 @@
    "last_position": "Log every confidence drop that changes an agent’s next action, but auto-flag only those below 45% for human review withi"
   },
   {
+   "id": "improve-w1",
+   "name": "Sprocket",
+   "dept": "improve",
+   "role": "doer",
+   "turns_7d": 78,
+   "rooms_7d": 45,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "nvidia",
+    "sambanova"
+   ],
+   "positions_held": 2,
+   "last_position": "Add a mandatory prompt review step at the start of every task. This forces us to verify the prompt’s clarity, scope, and"
+  },
+  {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
@@ -101,28 +118,11 @@
    "last_position": "Do this: Build the single shared memory graph now. A unified graph lets us link ideas across tools and conversations fro"
   },
   {
-   "id": "improve-w1",
-   "name": "Sprocket",
-   "dept": "improve",
-   "role": "doer",
-   "turns_7d": 77,
-   "rooms_7d": 44,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "nvidia",
-    "sambanova"
-   ],
-   "positions_held": 1,
-   "last_position": "Add a mandatory prompt review step at the start of every task, enforced by the system before the lead can mark it \"in pr"
-  },
-  {
    "id": "visualization-w1",
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 73,
+   "turns_7d": 74,
    "rooms_7d": 39,
    "engines_used": [
     "gh-models",
@@ -130,28 +130,44 @@
     "mistral",
     "sambanova"
    ],
-   "positions_held": 1,
-   "last_position": "We should create interactive slides using Google Slides to own the visual presentation of the interface. This approach a"
+   "positions_held": 2,
+   "last_position": "Use Figma for a clickable prototype. It lets users *feel* the interface interact, which beats slides for liveliness and "
   },
   {
    "id": "visual-w1",
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 71,
-   "rooms_7d": 36,
+   "turns_7d": 72,
+   "rooms_7d": 37,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
-   "positions_held": 1,
-   "last_position": "Adopt the Beverage Cans site’s bright pink as a *single* accent color for interactive elements (buttons, hover states, a"
+   "positions_held": 2,
+   "last_position": "Adopt the Beverage Cans site’s bright pink as a single accent color for interactive elements. It stands out against the "
   },
   {
    "id": "visual-checker",
    "name": "Squint",
    "dept": "visual",
+   "role": "checker",
+   "turns_7d": 71,
+   "rooms_7d": 36,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 2,
+   "last_position": "Bright pink as an accent risks making the AI site feel like a toy, not a tool—users expect seriousness from AI products."
+  },
+  {
+   "id": "visualization-checker",
+   "name": "Pane",
+   "dept": "visualization",
    "role": "checker",
    "turns_7d": 70,
    "rooms_7d": 35,
@@ -161,8 +177,8 @@
     "mistral",
     "sambanova"
    ],
-   "positions_held": 1,
-   "last_position": "Using bright pink as an accent color may come across as overly playful and unprofessional for an AI tool, risking erosio"
+   "positions_held": 2,
+   "last_position": "Figma prototypes solve the liveliness problem but create a new risk: users mistake a polished mockup for a finished prod"
   },
   {
    "id": "memory-checker",
@@ -195,22 +211,6 @@
    ],
    "positions_held": 0,
    "last_position": ""
-  },
-  {
-   "id": "visualization-checker",
-   "name": "Pane",
-   "dept": "visualization",
-   "role": "checker",
-   "turns_7d": 69,
-   "rooms_7d": 35,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 1,
-   "last_position": "Google Slides is a display tool, not an interactive one—it can’t simulate real interface behavior. The real risk is mist"
   },
   {
    "id": "security-w1",
@@ -249,16 +249,16 @@
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 66,
-   "rooms_7d": 33,
+   "turns_7d": 67,
+   "rooms_7d": 34,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 1,
-   "last_position": "The mandatory review step could lead to review fatigue, where reviewers gloss over prompts due to their frequency, under"
+   "positions_held": 2,
+   "last_position": "Mandatory prompt review risks review fatigue where reviewers gloss over prompts after the 10th task, turning a safeguard"
   },
   {
    "id": "security-checker",
@@ -421,6 +421,22 @@
    "proposed": 1
   },
   {
+   "id": "memory-lead",
+   "name": "Root",
+   "dept": "memory",
+   "role": "lead",
+   "turns_7d": 34,
+   "rooms_7d": 34,
+   "engines_used": [
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 1,
+   "last_position": "DECISION: Build the single shared memory graph now—unified from day one to keep recall coherent as we scale, despite the",
+   "proposed": 1
+  },
+  {
    "id": "creators-lead",
    "name": "Nova",
    "dept": "creators",
@@ -455,21 +471,6 @@
    "shipped": 1
   },
   {
-   "id": "memory-lead",
-   "name": "Root",
-   "dept": "memory",
-   "role": "lead",
-   "turns_7d": 33,
-   "rooms_7d": 33,
-   "engines_used": [
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 0,
-   "last_position": ""
-  },
-  {
    "id": "improve-lead",
    "name": "Ratchet",
    "dept": "improve",
@@ -483,7 +484,8 @@
    ],
    "positions_held": 1,
    "last_position": "DECISION: Enforce a risk-based prompt review at task definition time, not execution, with complexity/uncertainty thresho",
-   "proposed": 1
+   "proposed": 1,
+   "shipped": 1
   },
   {
    "id": "security-lead",
@@ -535,15 +537,16 @@
    "name": "Iris",
    "dept": "watch",
    "role": "lead",
-   "turns_7d": 20,
-   "rooms_7d": 20,
+   "turns_7d": 21,
+   "rooms_7d": 21,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
-   "positions_held": 0,
-   "last_position": ""
+   "positions_held": 1,
+   "last_position": "DECISION: Run both audio sentiment analysis and visual analysis in parallel, then flag only meaningful contradictions be",
+   "proposed": 1
   },
   {
    "id": "accessibility-w1",

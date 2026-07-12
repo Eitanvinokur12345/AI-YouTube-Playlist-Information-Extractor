@@ -13,7 +13,7 @@ once counts fully. Scoreboard: rehab_plan.json coverage (now 208 total · 4 in-p
 every tick may move it, question sequences drain 'unreviewed'.**
 **CONFIRMED ROUND 1 (owner order, 2026-07-11): R1 free-VPS 24/7 — READY, awaiting owner approve:
 deploy/vps_setup.sh written (Oracle Always Free + systemd timer, 5-min beats forever); v2 pitch in the
-in-app decide queue with the 10-min guide (signup + fine-grained token + one command) · R2 more retrieval sources · R3 EXCAVA external +
+in-app decide queue with the 10-min guide (signup + fine-grained token + one command) · R2 more retrieval sources — v1 DONE (HuggingFace trending models+spaces + arXiv cs.AI/CL/LG joined the hourly discovery sweep, keyless, live-verified; next: wire finds into element creation) · R3 EXCAVA external +
 internal capabilities · R4 post-extraction verification · R5 visual data analysis. REMINDERS LEDGER lives at
 data/excava/reminders.json (owner: nothing may be forgotten) — the loop re-reads it; miner refills it.**
 

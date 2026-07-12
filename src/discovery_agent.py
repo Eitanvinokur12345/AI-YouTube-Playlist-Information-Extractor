@@ -130,6 +130,44 @@ def producthunt(limit: int) -> list[dict]:
     return out[:limit]
 
 
+def huggingface_new(limit: int) -> list[dict]:
+    """R2 (owner priority #2, raised 34x): HuggingFace trending models + spaces — keyless JSON
+    API, and models/spaces are EXACTLY the hub's element types (the hub holds only ~416 models)."""
+    out = []
+    for kind, url in (("model", f"https://huggingface.co/api/models?sort=likes7d&limit={min(limit, 20)}"),
+                      ("space", f"https://huggingface.co/api/spaces?sort=likes7d&limit={min(limit, 20)}")):
+        try:
+            rows = json.loads(_get(url))
+        except Exception:
+            continue
+        for r in rows if isinstance(rows, list) else []:
+            rid = r.get("id") or r.get("modelId") or ""
+            if not rid:
+                continue
+            tag = r.get("pipeline_tag") or (", ".join(r.get("tags", [])[:3]))
+            out.append(_item(f"huggingface-{kind}", f"{rid} — {tag}"[:200],
+                             f"https://huggingface.co/{'spaces/' if kind == 'space' else ''}{rid}",
+                             quality=f"{r.get('likes', 0)} likes"))
+    return out[:limit]
+
+
+def arxiv_new(limit: int) -> list[dict]:
+    """R2: newest arXiv AI papers (free Atom API) — where capabilities appear before tools do."""
+    raw = _get("http://export.arxiv.org/api/query?search_query=cat:cs.AI+OR+cat:cs.CL+OR+cat:cs.LG"
+               f"&sortBy=submittedDate&sortOrder=descending&max_results={min(limit, 15)}")
+    out = []
+    for entry in re.findall(r"<entry>(.*?)</entry>", raw, re.S):
+        t = re.search(r"<title>(.*?)</title>", entry, re.S)
+        u = re.search(r"<id>(.*?)</id>", entry)
+        s = re.search(r"<summary>(.*?)</summary>", entry, re.S)
+        if t and u:
+            title = re.sub(r"\s+", " ", t.group(1)).strip()
+            blurb = re.sub(r"\s+", " ", (s.group(1) if s else "")).strip()[:140]
+            out.append(_item("arxiv", f"{title} — {blurb}"[:210], u.group(1).strip(),
+                             quality="paper"))
+    return out[:limit]
+
+
 def main() -> int:
     import sys
     try:
@@ -141,7 +179,8 @@ def main() -> int:
     a = ap.parse_args()
     n = a.limit_per_source
 
-    found = github_new(n) + hackernews(n) + producthunt(n)
+    # R2 (owner 2026-07-11): two new keyless sources join the sweep — HuggingFace + arXiv
+    found = github_new(n) + hackernews(n) + producthunt(n) + huggingface_new(n) + arxiv_new(n)
 
     # the tier-1 social sweep rides along (Reddit RSS / Telegram / DDG / YT-beyond)
     social_new = 0

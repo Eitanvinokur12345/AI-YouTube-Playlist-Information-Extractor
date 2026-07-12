@@ -166,7 +166,7 @@ def run() -> list[str]:
     return out
 
 
-def _hub_candidates(terms: list[str], k: int = 3) -> list[dict]:
+def _hub_candidates(terms: list[str], k: int = 3, detail: bool = False) -> list[dict]:
     """SELF-USE (owner law 2026-07-10): before asking the owner for anything, search EXCAVA's OWN
     hub (elements_index.json, ~6.8k elements) for tools/skills that could solve the problem.
     Cheap keyword scoring, stdlib only; quality+verified break ties."""
@@ -185,7 +185,10 @@ def _hub_candidates(terms: list[str], k: int = 3) -> list[dict]:
         if e.get("name") in seen:
             continue
         seen.add(e.get("name"))
-        out.append({"id": e.get("id"), "name": e.get("name")})
+        item = {"id": e.get("id"), "name": e.get("name")}
+        if detail:                                   # R3-1 context paging wants the substance too
+            item["what"] = str(e.get("what", ""))[:90]
+        out.append(item)
         if len(out) >= k:
             break
     return out

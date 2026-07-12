@@ -147,6 +147,32 @@ def _dispatch_workers(room: dict, doer: dict, n: int) -> str:
     return f"[dispatched {n} workers: {', '.join(ids[:3])}{'…' if n > 3 else ''} — done, dissolved]"
 
 
+_PAGE_CACHE: dict = {}
+
+
+def _page_context(room: dict) -> str:
+    """R3-1 CONTEXT PAGING (owner-ranked #1 from the Agentic-OS study, Letta's idea): pull the
+    most relevant HUB knowledge into the debate so agents argue from what the project KNOWS,
+    not just recent chat. Keyword recall (quota-free), 2 items, hard-capped ~200 chars —
+    the token diet is watching. Cached per room (the goal doesn't change)."""
+    rid = room.get("id", "")
+    if rid in _PAGE_CACHE:
+        return _PAGE_CACHE[rid]
+    try:
+        from src.excava_selfimprove import _hub_candidates
+        terms = [w for w in re.findall(r"[a-z]{5,}", room.get("goal", "").lower())][:4]
+        hits = _hub_candidates(terms, k=2, detail=True) if terms else []
+        block = ""
+        if hits:
+            block = ("KNOWN FROM THE HUB (use if relevant): " + "; ".join(
+                f"{h['name']} — {h.get('what', '')[:55]}" for h in hits))[:200] + "\n"
+        _PAGE_CACHE[rid] = block
+        return block
+    except Exception:
+        _PAGE_CACHE[rid] = ""
+        return ""
+
+
 def _prompt(room: dict, sp: dict, hist: list[dict]) -> str:
     role = sp.get("role", "agent")
     closing = room["turns"] >= room["max_turns"] - 2
@@ -168,6 +194,7 @@ def _prompt(room: dict, sp: dict, hist: list[dict]) -> str:
             f"NO FILLER (Caveman law): no preamble, no restating the goal, no 'I think we should' — "
             f"every sentence carries new content.\n"
             f"ROOM ({room['kind']}): {room['goal']}\nDone-criteria: {room['done_criteria']}\n"
+            + _page_context(room) +
             f"Conversation so far:\n{convo}\n\nYour turn. {inst}")
 
 

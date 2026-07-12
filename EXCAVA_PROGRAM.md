@@ -101,7 +101,10 @@ benchmarks each engine in ISOLATION (no fallthrough mislabel), and CHAT-gemini g
 (bulk_analyze.call_gemini forced JSON + json.loads -> crashed on any free-form reply — gemini rooms were doomed
 regardless of quota; fixed + stub-verified). NEXT beat's canary reveals each engine's real reason -> fix precisely.
 
-**R3 ORDER (owner 2026-07-12): context-paging → temporal-validity → impact-scheduler → syscall-layer.**
+**R3 ORDER (owner 2026-07-12): context-paging DONE (v-code 2026-07-12: every room turn now carries a
+≤200-char 'KNOWN FROM THE HUB' block — keyword recall over 7.9k elements, per-room cache, regression
+gate passed; semantic recall upgrades it when Gemini quota returns; LIVE proof = agents citing hub
+items in fresh transcripts) → temporal-validity → impact-scheduler → syscall-layer.**
 **TRUE AGENT PLATFORM (owner, new thread):** 'we are using engines; I'm not certain they qualify as true
 agents — the system must run on a genuine agent-based platform' → spec via question sequence (per-agent
 memory/stance is layer 1; what else makes an agent 'true' — persistence? initiative? tools-of-its-own?).

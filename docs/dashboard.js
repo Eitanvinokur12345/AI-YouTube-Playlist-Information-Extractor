@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v107";
+const APP_BUILD = "v108";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -3129,8 +3129,10 @@ async function renderRooms(selId) {
   const warRail = list.filter(r => r.kind === "war").slice(0, 3).map(r =>
     `<button class="${r.id === sel.id ? "on" : ""} k-war" data-room="${esc(r.id)}" title="${esc(r.goal)}">⚔️ WAR: ${esc((r.dept || "cross-dept").toUpperCase())}</button>`).join("");
   const rail = groupRail + deptRail + warRail;
+  // P7 (owner pulled forward 2026-07-12): FULL per-department history — 14-day transcript
+  // window so older rooms actually load, + a history strip of the department's earlier rooms.
   const days = [];
-  for (let i = 3; i >= 0; i--) {
+  for (let i = 13; i >= 0; i--) {
     const d = new Date(Date.now() - i * 864e5).toISOString().slice(0, 10);
     days.push([d, await loadText(`excava/chats/${d}/${sel.id}.jsonl`)]);
   }
@@ -3156,12 +3158,22 @@ async function renderRooms(selId) {
       this room produced a <b>${esc(sel.artifact.kind || sel.artifact_kind || "artifact")}</b>:
       ${esc(String(sel.artifact.ref || sel.artifact.id || ""))}
       · <a href="#" data-open-results>see it in 📦 Results</a></div></div>` : "";
+  // the department's EARLIER conversations (owner: 'access the conversation history for each
+  // department') — every past room of the same dept, newest first, one click to open
+  const earlier = sel.dept ? list.filter(r =>
+    r.kind === sel.kind && r.dept === sel.dept && r.id !== sel.id).slice(0, 12) : [];
+  const historyStrip = earlier.length ? `
+    <div class="room-meta" style="flex-wrap:wrap">📜 <b>${esc((sel.dept || "").toUpperCase())} history</b> — ${earlier.length} earlier conversation${earlier.length > 1 ? "s" : ""}:
+      ${earlier.map(r => `<a class="pill" style="cursor:pointer" data-room="${esc(r.id)}"
+        title="${esc(r.goal)}">${esc((r.opened_at || r.id).slice(0, 10))} · ${esc(r.goal.slice(0, 36))}… ${r.status === "done" ? "✅" : "🟢"}</a>`).join(" ")}
+    </div>` : "";
   const inner = `
     <div class="room-meta"><span class="pill">${esc(sel.kind)}</span>
       <span>goal: <b>${esc(sel.goal)}</b></span><span>turns ${sel.turns}/${sel.max_turns}</span>
       <span>${sel.status === "done" ? "✅ closed" : "🟢 live"}</span>
       ${sel.last_turn_ms ? `<span>last turn ${sel.last_turn_ms}ms</span>` : ""}
       ${sel.artifact ? `<span>📦 artifact: <b>${esc(sel.artifact.kind)}</b> → ${esc(String(sel.artifact.ref || sel.artifact.id || ""))}</span>` : ""}</div>
+    ${historyStrip}
     <div class="chat">${bubbles}${artInline}</div>`;
   // AGENT-PLATFORM LAYER 2: the visible track record — judge which agents earn trust
   const arecs = await load("excava/agent_records.json");

@@ -96,7 +96,14 @@ the GitHub cron remains the runtime until they decide. ('Sonat' resolved = Claud
    → P2 COMPLETE.
 6. **P5 Visual dept + Designs tab overhaul** — auto-ADD every design, quality-filter the junk, then tasks.
 7. **P6 Department interconnection** — depts ↔ brain systems/protocols, surfaced in the Developer tab.
-8. **P7 Rooms/Results HISTORY views** — per-department all-conversations view; war rooms sectioned above;
+7½. **TUTORIAL SYSTEM OVERHAUL (owner 2026-07-12, 'soon'): 'so many things have been added that I'm
+   starting to lose my bearings' — the walkthrough/tutorial system must catch up with everything
+   shipped (v94-v108: decide modal, pitches, live refresh, diet card, agents card, history strips…).
+   HIGH priority after the external-action spec.**
+8. **P7 Rooms/Results HISTORY views** — PER-DEPT CONVERSATION HISTORY DONE+verified v108 (owner pulled
+   it forward: each dept room shows a 📜 history strip of its earlier conversations — one click opens
+   any past room's real transcript; window widened 4→14 days so older rooms actually load; verified:
+   CREATORS shows 12 earlier rooms, older transcript loads). Remaining from the original ask: — per-department all-conversations view; war rooms sectioned above;
    group-chat tab inside Rooms (owner re-confirmed; deliberately after the items above).
 
 **DECIDE-FLOW TRUTH FIX v105 (owner caught it: his VPS review never arrived):** a decision saved in the

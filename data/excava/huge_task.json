@@ -1,55 +1,50 @@
 {
- "generated_at": "2026-07-11T21:26:26.076499+00:00",
+ "generated_at": "2026-07-12T08:23:29.419078+00:00",
  "experiment": "huge-task-splitting",
- "goal": "Close the link gap: 4478 of 7845 elements have no verified link (G3)",
+ "goal": "Close the link gap: 4509 of 7885 elements have no verified link (G3)",
  "steps": [
   {
    "n": 1,
-   "title": "Measure the gap: 4478/7845 unlinked",
+   "title": "Measure the gap: 4509/7885 unlinked",
    "done_criterion": "the number is measured and recorded",
    "status": "done",
-   "result": "4478 unlinked of 7845 (57%)"
+   "result": "4509 unlinked of 7885 (57%)"
   },
   {
    "n": 2,
    "title": "Resolve links batch 1 (~400 elements, links lane)",
-   "done_criterion": "unlinked count drops below 4078",
-   "verify": "recount unlinked in elements_index.json",
-   "status": "queued",
-   "bus_id": "resolve-links-batch-1-40-5185"
+   "done_criterion": "link coverage reaches 45% (was 43%)",
+   "verify": "recompute linked/total pct in elements_index.json",
+   "status": "queued"
   },
   {
    "n": 3,
    "title": "Resolve links batch 2 (~400 elements, links lane)",
-   "done_criterion": "unlinked count drops below 3678",
-   "verify": "recount unlinked in elements_index.json",
-   "status": "queued",
-   "bus_id": "resolve-links-batch-2-40-5185"
+   "done_criterion": "link coverage reaches 47% (was 43%)",
+   "verify": "recompute linked/total pct in elements_index.json",
+   "status": "queued"
   },
   {
    "n": 4,
    "title": "Resolve links batch 3 (~400 elements, links lane)",
-   "done_criterion": "unlinked count drops below 3278",
-   "verify": "recount unlinked in elements_index.json",
-   "status": "queued",
-   "bus_id": "resolve-links-batch-3-40-5186"
+   "done_criterion": "link coverage reaches 49% (was 43%)",
+   "verify": "recompute linked/total pct in elements_index.json",
+   "status": "queued"
   },
   {
    "n": 5,
    "title": "Resolve links batch 4 (~400 elements, links lane)",
-   "done_criterion": "unlinked count drops below 2878",
-   "verify": "recount unlinked in elements_index.json",
-   "status": "queued",
-   "bus_id": "resolve-links-batch-4-40-5186"
+   "done_criterion": "link coverage reaches 51% (was 43%)",
+   "verify": "recompute linked/total pct in elements_index.json",
+   "status": "queued"
   },
   {
    "n": 6,
    "title": "Re-verify G3: coverage pct + goal score moved",
    "done_criterion": "G3 score in goals_status.json rises",
-   "status": "queued",
-   "bus_id": "re-verify-g3-coverage-pc-5186"
+   "status": "queued"
   }
  ],
- "enqueued_now": 5,
+ "enqueued_now": 0,
  "note": "A huge goal walked as small verified checkpoints on the bus — step 1 executed immediately; batches feed the existing links lane."
 }

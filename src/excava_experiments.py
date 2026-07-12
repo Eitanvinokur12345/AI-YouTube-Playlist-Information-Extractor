@@ -20,6 +20,7 @@ Free, stdlib-only. Run: python -m src.excava_experiments [--force]
 from __future__ import annotations
 
 import json
+import re
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -277,23 +278,36 @@ def run_huge_task_split(force: bool = False) -> dict | None:
               "done_criterion": "the number is measured and recorded", "status": "done",
               "result": f"{unlinked} unlinked of {total} ({round(100 * unlinked / max(total, 1))}%)"}]
     batch = 400
+    linked_pct = round(100 * (total - unlinked) / max(total, 1))
     for i in range(4):                                   # 4 checkpointed batches ≈ 1600 elements
         steps.append({"n": i + 2,
                       "title": f"Resolve links batch {i + 1} (~{batch} elements, links lane)",
-                      "done_criterion": f"unlinked count drops below {unlinked - batch * (i + 1)}",
-                      "verify": "recount unlinked in elements_index.json", "status": "queued"})
+                      # PERCENT criteria (owner tick 2026-07-12): the hub GROWS, so absolute
+                      # counts go stale — coverage percent is growth-proof
+                      "done_criterion": f"link coverage reaches {linked_pct + 2 * (i + 1)}% "
+                                        f"(was {linked_pct}%)",
+                      "verify": "recompute linked/total pct in elements_index.json",
+                      "status": "queued"})
     steps.append({"n": 6, "title": "Re-verify G3: coverage pct + goal score moved",
                   "done_criterion": "G3 score in goals_status.json rises", "status": "queued"})
+    # SELF-VERIFYING (facade caught 2026-07-12): checkpoints used to be bus tasks that the
+    # mining dept "completed" by running its own tool — marked done while coverage went DOWN.
+    # Now a checkpoint flips to done ONLY when its measured percent criterion is actually met;
+    # the links lane does the real resolving on its own cadence. No worker theater.
+    prev_steps = {}
+    try:
+        for s0 in json.load(open(HT_OUT, encoding="utf-8")).get("steps", []):
+            prev_steps[s0["n"]] = s0.get("status")
+    except Exception:
+        pass
     enq = 0
     for s in steps:
         if s["status"] != "queued":
             continue
-        t = bus.enqueue(s["title"], detail=f"Huge-task checkpoint {s['n']}/6 of: {goal}",
-                        department="mining", source="huge-task-split", priority=1,
-                        done_criteria=s["done_criterion"])
-        if t:
-            s["bus_id"] = t["id"]
-            enq += 1
+        m = re.search(r"reaches (\d+)%", s["done_criterion"])
+        if m and linked_pct >= int(m.group(1)):
+            s["status"] = "done"
+            s["result"] = f"criterion met: coverage {linked_pct}%"
     report = {"generated_at": _now(), "experiment": "huge-task-splitting",
               "goal": goal, "steps": steps, "enqueued_now": enq,
               "note": "A huge goal walked as small verified checkpoints on the bus — "

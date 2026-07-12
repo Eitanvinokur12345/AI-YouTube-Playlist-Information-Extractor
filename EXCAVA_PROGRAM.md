@@ -109,8 +109,11 @@ the GitHub cron remains the runtime until they decide. ('Sonat' resolved = Claud
    v94-v108 (decide+pitches+truth-chip · live refresh · engine-health/experiments/token-diet ·
    agents/history/honest-flags), each with an interactive tour; ROOT-CAUSE FIX: the walkthrough list
    showed the OLDEST 4 entries (slice(0,4)) so new tutorials could never appear — now newest-first.
-   Tour verified live (navigates + highlights the decide button). REMAINING: coverage for older
-   fundamentals (what is the bus/beat/departments — a 'start here' tour) + per-tab help. ORIGINAL:** 'so many things have been added that I'm
+   Tour verified live (navigates + highlights the decide button). WAVE 2 DONE+verified v110: pinned 'START HERE' 5-stop
+   fundamentals tour (hub=product, EXCAVA=beat/bus/departments, rooms=staff+honest flags, proof=trust,
+   approval-queue=you're the boss) — pinned-first sort so it always leads the walkthrough list.
+   LIVE PROOFS harvested this tick: 19 agent memories in CI + 5 real initiative tasks on the bus
+   (Lumen/Ratchet/Chroma/Root/…). REMAINING: per-tab help buttons. ORIGINAL:** 'so many things have been added that I'm
    starting to lose my bearings' — the walkthrough/tutorial system must catch up with everything
    shipped (v94-v108: decide modal, pitches, live refresh, diet card, agents card, history strips…).
    HIGH priority after the external-action spec.**

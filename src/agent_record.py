@@ -52,6 +52,20 @@ def build() -> dict:
                     rec[aid]["turns_7d"] += 1
                     rec[aid]["rooms_7d"].add(f.stem)
                     rec[aid]["engines_used"].add((m.get("engine") or "?").split("/")[0])
+    # layer-3 initiative: proposals + outcomes = the REAL hit-rate (owner asked 'what shipped
+    # from its decisions'; deferred at layer 2, honest from birth here)
+    try:
+        for t in json.load(open(DATA / "excava" / "bus.json", encoding="utf-8")).get("tasks", []):
+            src = str(t.get("source", ""))
+            if src.startswith("agent:"):
+                aid = src.split(":", 1)[1]
+                if aid in rec:
+                    r = rec[aid]
+                    r["proposed"] = r.get("proposed", 0) + 1
+                    if t.get("status") == "done":
+                        r["shipped"] = r.get("shipped", 0) + 1
+    except Exception:
+        pass
     # remembered positions (layer-1 memory)
     for p in (DATA / "excava" / "agent_memory").glob("*.jsonl"):
         aid = p.stem

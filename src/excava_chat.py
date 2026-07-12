@@ -199,6 +199,42 @@ def _recall_agent(sp: dict) -> str:
         return ""
 
 
+#  AGENT-PLATFORM LAYER 3 (owner build order 2026-07-12): INITIATIVE — when a room closes on a
+#  decision, the agent who converged it may put ONE follow-up task on the bus, attributed to it.
+#  Outcome links from BIRTH (the layer-2 lesson: never ship autonomy without outcome tracking):
+#  source='agent:<id>' + the decision artifact in detail → agent_record can compute a real
+#  hit-rate (proposed vs completed). Capped: max 2 open initiative tasks per agent, ever.
+INITIATIVE_CAP = 2
+
+
+def _propose_from_decision(room: dict, sp: dict, decision_text: str) -> str:
+    try:
+        aid = sp.get("id", "")
+        if not aid or room.get("kind") == "group":       # group chat audits 100% SI — no initiative
+            return ""
+        m = re.search(r"DECISION:\s*(.+?)(?:\.|$)", decision_text, re.I)
+        core = (m.group(1).strip() if m else "").strip()
+        if len(core) < 20:
+            return ""                                    # nothing concrete enough to act on
+        b = bus.read_bus()
+        mine_open = sum(1 for t in b.get("tasks", [])
+                        if t.get("source") == f"agent:{aid}"
+                        and t.get("status") in ("queued", "working", "held"))
+        if mine_open >= INITIATIVE_CAP:
+            return f"{room['id']}: initiative capped for {sp.get('name')} ({mine_open} open)"
+        t = bus.enqueue(f"[{sp.get('name', aid)}'s initiative] {core[:120]}",
+                        detail=f"Proposed by agent {aid} from the decision of room {room.get('id')} "
+                               f"(artifact: {json.dumps(room.get('artifact') or {})[:120]}). "
+                               "Outcome feeds this agent's hit-rate.",
+                        department=room.get("dept", ""), source=f"agent:{aid}", priority=2,
+                        done_criteria="the decision's concrete step is done and verifiable")
+        if t:
+            return f"{room['id']}: INITIATIVE — {sp.get('name')} proposed {t['id']}"
+        return ""
+    except Exception:
+        return ""                                        # initiative must never break a close
+
+
 _PAGE_CACHE: dict = {}
 
 
@@ -344,6 +380,9 @@ def advance(room_id: str, turns: int = 2) -> list[str]:
             _post(room, "system", "room", "", f"Room closed. Artifact: {json.dumps(art)}", 0)
             bus.event(room["id"], "room_closed", {"artifact": art, "turns": room["turns"]})
             log.append(f"{room['id']}: CLOSED with artifact {art}")
+            init = _propose_from_decision(room, sp, text)   # layer-3 INITIATIVE (capped, traced)
+            if init:
+                log.append(init)
             break
     if room["turns"] >= room["max_turns"] and room["status"] == "open":
         art = _artifact(room, _history(room, 2)[-1]["text"] if _history(room, 2) else room["goal"])

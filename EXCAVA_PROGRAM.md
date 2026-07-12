@@ -135,7 +135,11 @@ SI agent-improvement experiments.**
 **TRUE AGENT PLATFORM — SPEC LOCKED 2026-07-12 (owner build order): 1) per-agent persistent MEMORY — DONE+verified (each agent's argued positions persist to agent_memory/<id>.jsonl, capped 30; its own last 2 injected into its turns ≤220 chars; isolation verified: agents never see each other's memory; live proof = consistency across days in CI transcripts) →
 2) visible TRACK RECORD — DONE+verified v107 (👥 Agents card in Rooms: per-agent turns/rooms/engines/
 latest-held-position over 7 days from real transcripts — Scriv leads: 153 turns, 49 rooms, 5 brains;
-hit-rate honestly deferred to the initiative layer's decision→outcome links) → 3) INITIATIVE (agents propose bus tasks, capped+traced) →
+hit-rate honestly deferred to the initiative layer's decision→outcome links) → 3) INITIATIVE — DONE+verified (when an agent converges a room's DECISION, it may put ONE follow-up
+task on the bus, attributed 'agent:<id>', priority-2, capped at 2 open per agent, group-chat excluded;
+outcome links from BIRTH: agent_record now counts proposed vs shipped = the real hit-rate; sandbox-
+verified incl. cap + refusal + attribution, live bus untouched; LIVE proof = first real initiative
+tasks in CI beats) →
 4) broader EXTERNAL ACTION. Explainer written into AGENTIC_OS_STUDY.md §6 per his ask. A/B LAW: DEBATE
 STAYS regardless of the judge's tally (auto-flip disabled in code; experiment stays advisory). SI-CONTINUOUS
 (owner): self-improvement runs continuously & independently, improving agents AND other agents over time —

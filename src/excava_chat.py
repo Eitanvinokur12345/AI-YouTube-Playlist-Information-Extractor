@@ -495,6 +495,18 @@ def ensure_default_rooms() -> list[str]:
                     if a.get("department") and a.get("department") != "core"})
     intent = _load(DATA / "excava" / "intent.json", {}).get("departments", {})
     state = load_rooms()
+    # SELF-HEAL (owner 2026-07-13, complaint persisted): the reshape set NEW output-tier rooms to
+    # 3 turns, but rooms opened BEFORE it were grandfathered at 6 and kept debating. Clamp every
+    # open output-tier dept room to 3 turns each beat so old rooms actually ACT, not debate.
+    heavy, _o = _tiers()
+    _clamped = False
+    for r in state["rooms"]:
+        if (r.get("status") == "open" and r.get("kind") == "dept"
+                and r.get("dept") not in heavy and r.get("max_turns", 6) > 3):
+            r["max_turns"] = 3
+            _clamped = True
+    if _clamped:
+        save_rooms(state)
     open_depts = {r.get("dept") for r in state["rooms"] if r["status"] == "open" and r.get("kind") == "dept"}
     for d in depts:
         if d in open_depts:

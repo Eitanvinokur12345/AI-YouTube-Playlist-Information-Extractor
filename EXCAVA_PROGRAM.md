@@ -222,6 +222,16 @@ creation/assist = QUEUED (needs his which-repos + may-EXCAVA-PR answer — saved
 written per his ask: #1 Oracle VM (approved, parent-blocked) unlocks direct-write+multi-project; #2 fresh
 Cerebras + chat-only Gemini keys (2 min each) → 5-6 engines; nothing paid required.**
 
+**OWNER REALIGN 2026-07-13: (1) CREATORS decision complaint was RIGHT + my earlier 'reshape verified' was
+FALSE — the reshape set NEW rooms to 3 turns but the OPEN Creators room was grandfathered at 6 and kept
+debating. FIXED+verified: ensure_default_rooms now clamps every open output-tier room to 3 turns each beat
+(self-healing); Creators room migrated 6→3, all output-tier rooms clamped, regression 100%. (2) DIRECT-WRITE
+misread — he wants a REAL conversational EXCAVA (type 'use tool X for task Y' → it EXECUTES), not a message
+log; needs backend (VPS) or the beat reading+replying+dispatching. (3) TOOL ACCESS: 6 Gemini keys share ONE
+Google quota — useless to add more; TOOL_ACCESS_OPTIONS.md gives real options (different providers / paid
+OpenRouter balance / local Ollama on VPS). (4) TUTORIAL DEPARTMENT wanted (weekly, no decisions). (5) PITCHES
+need FAR more detail. (6) NEW_SESSION_PROMPT.md written. Question-ritual every 3rd beat (10+ Qs).**
+
 **Standing checks each tick:** newest room-turn timestamp (beat health) · engine_health.json real HTTP status per
 engine · any tier-2.5 auto-added agents · supervisor real_pct + movement + systemcheck + proof.
 

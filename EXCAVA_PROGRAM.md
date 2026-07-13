@@ -71,7 +71,12 @@ the GitHub cron remains the runtime until they decide. ('Sonat' resolved = Claud
    mission→own queue, 'standardize our workflow'→IMPROVE, 'upgrade our EXCAVA engine'→POWER, all
    syscall-traced. Initiative restricted to the decision-heavy tier. Decision-heavy rooms
    (improve/power/visualization/accessibility + war/group) keep the debate shape — deciding IS
-   their mission. LIVE PROOF pending: next beats' creators transcripts should read act-verify-ACT.**
+   their mission. LIVE-VERIFIED 2026-07-13: 22 room-action tasks on the bus, output-tier rooms closing with 'ACTION:'
+   (watch room: 'ACTION: Run parallel audio sentiment + visual analysis'); 0 cross-dept reroutes =
+   departments stayed on mission (the goal). REROUTE path still only SANDBOX-proven — no improvement-
+   conclusion has come up in an output-tier room yet to exercise it live. KNOWN HOLE: grounding gate
+   catches foreign-stack hallucinations, not topic-hallucination in native words (e.g. 'earnings call'
+   if no such video exists) — real-path check at proposal time is the fix, queued.**
 4½b. **DECISION-VOLUME POLICY — CONFIRMED 2026-07-12:** decision-heavy tier =
    improve/power/visualization/accessibility (debate IS their job); everyone else must let
    decisions lead to ACTION (owner: 'the emphasis should be on action') — enforcement

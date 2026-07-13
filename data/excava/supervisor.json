@@ -1,18 +1,18 @@
 {
- "generated_at": "2026-07-13T15:27:49.335122+00:00",
+ "generated_at": "2026-07-13T18:21:00.964128+00:00",
  "checked": 40,
- "real_pct": 69,
+ "real_pct": 67,
  "counts": {
-  "real": 25,
-  "noop": 9,
+  "real": 24,
+  "noop": 11,
   "failed": 0,
-  "planned": 2,
+  "planned": 1,
   "blocked": 4
  },
- "criticism": "WEAK: only 69% real of the last 40. 11 were hollow/failed/planned — that is theatre wearing a 'done' badge. Fix the flagged departments before adding anything. · DECISION DRIFT: 3 unit(s) mostly decide SELF-IMPROVEMENT, not their mission (links 100%; group-chat 100%; war-room 100%) — that work belongs to the improve department's external arms (decision_audit.json). · SINGLE-ENGINE DEBATE (owner flag 2026-07-11): 6 room(s) today ran entirely on ONE model (group-open-floor-any-agent-from-an (14 turns, all mistral); war-deliver-push-link-coverage-t-9 (6 turns, all mistral); war-deliver-push-link-coverage-t-3 (7 turns, all mistral)) — that is one engine talking to itself, not a real multi-model debate. The healthy-pool round-robin must spread it.",
+ "criticism": "WEAK: only 67% real of the last 40. 12 were hollow/failed/planned — that is theatre wearing a 'done' badge. Fix the flagged departments before adding anything. · DECISION DRIFT: 3 unit(s) mostly decide SELF-IMPROVEMENT, not their mission (links 100%; group-chat 100%; war-room 100%) — that work belongs to the improve department's external arms (decision_audit.json). · SINGLE-ENGINE DEBATE (owner flag 2026-07-11): 6 room(s) today ran entirely on ONE model (group-open-floor-any-agent-from-an (16 turns, all mistral); war-deliver-push-link-coverage-t-9 (7 turns, all mistral); war-deliver-push-link-coverage-t-3 (7 turns, all mistral)) — that is one engine talking to itself, not a real multi-model debate. The healthy-pool round-robin must spread it.",
  "long_term": {
   "verdict": "accumulating over time",
-  "detail": "over last 24 snapshots: done +436, artifacts +205, real_pct 74→69",
+  "detail": "over last 24 snapshots: done +436, artifacts +205, real_pct 77→67",
   "stagnant": false
  },
  "history": {
@@ -25,6 +25,69 @@
  },
  "intent_drift": [],
  "verdicts": [
+  {
+   "task": "security-safety-rate-the-66713",
+   "dept": "security",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+  },
+  {
+   "task": "news-refresh-the-ai-news-66713",
+   "dept": "news",
+   "verdict": "noop",
+   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
+   "result": "Ran the trend watch. trend_watch: 14 proposals (top score 10); queued 0 into self-improvement."
+  },
+  {
+   "task": "mining-discover-new-ai-r-66713",
+   "dept": "mining",
+   "verdict": "noop",
+   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
+   "result": "Ran the discovery agent. discovery: +0 new (of 157 sighted) → 814 queued; arxiv=30, gh-active=116, gh-new=45, hn-front=31, hn-new=94, huggingface-model=22, prod"
+  },
+  {
+   "task": "raise-g5-leverage-53-100-66713",
+   "dept": "creators",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Creators: 12 creations on record, 12 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane"
+  },
+  {
+   "task": "40-self-improvement-task-56328",
+   "dept": "improve",
+   "verdict": "noop",
+   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
+   "result": "Ran the self check. self-check: 40/50 (mechanical) | 0 new tasks | failing Qs: [1, 10, 12, 13, 14, 16, 20, 24, 45, 47]"
+  },
+  {
+   "task": "raise-g8-personal-fit-64-56329",
+   "dept": "visual",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the collect designs. collect_designs: 427 designs (kept 435 / dropped 424 repo-only + 5 dead/parked + 32 non-design; +0 AI-product, +27 seeds, +22 shown-in-"
+  },
+  {
+   "task": "watch-process-the-next-b-66713",
+   "dept": "watch",
+   "verdict": "blocked",
+   "note": "honestly BLOCKED — needs an owner resource; not faking work (this is the truth, not a facade)",
+   "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+  },
+  {
+   "task": "memory-embed-the-remaini-66713",
+   "dept": "memory",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Semantic index: 1455 vectors (model gemini-embedding-001); hub 5958 items → 4503 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
+  },
+  {
+   "task": "transcripts-drain-the-ne-35067",
+   "dept": "analysis",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "832 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runnin"
+  },
   {
    "task": "security-safety-rate-the-56329",
    "dept": "security",
@@ -237,69 +300,6 @@
   },
   {
    "task": "raise-g5-leverage-53-100-35513",
-   "dept": "creators",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Creators: 12 creations on record, 12 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane"
-  },
-  {
-   "task": "raise-g8-personal-fit-64-35513",
-   "dept": "visual",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Ran the collect designs. collect_designs: 438 designs (kept 438 / dropped 0 repo-only + 4 dead/parked + 22 non-design; +0 AI-product, +27 seeds, +21 shown-in-vi"
-  },
-  {
-   "task": "watch-process-the-next-b-35513",
-   "dept": "watch",
-   "verdict": "blocked",
-   "note": "honestly BLOCKED — needs an owner resource; not faking work (this is the truth, not a facade)",
-   "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
-  },
-  {
-   "task": "memory-embed-the-remaini-35513",
-   "dept": "memory",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Semantic index: 1454 vectors (model gemini-embedding-001); hub 5883 items → 4429 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
-  },
-  {
-   "task": "verify-the-next-200-of-5-98895",
-   "dept": "analysis",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "832 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runnin"
-  },
-  {
-   "task": "lumen-s-initiative-ship--29033",
-   "dept": "visualization",
-   "verdict": "planned",
-   "note": "STILL A PLAN, not execution — the hollow-work facade",
-   "result": "EXECUTION PLAN written (NOT executed) → data/excava/artifacts/task-lumen-s-initiative-ship-a-minimal-live-coded-ht.md; real execution still needs a wired visual"
-  },
-  {
-   "task": "security-safety-rate-the-35067",
-   "dept": "security",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
-  },
-  {
-   "task": "news-refresh-the-ai-news-35067",
-   "dept": "news",
-   "verdict": "noop",
-   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
-   "result": "Ran the trend watch. trend_watch: 14 proposals (top score 10); queued 0 into self-improvement."
-  },
-  {
-   "task": "mining-discover-new-ai-r-35067",
-   "dept": "mining",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Ran the discovery agent. discovery: +2 new (of 157 sighted) → 861 queued; arxiv=30, gh-active=117, gh-new=47, hn-front=31, hn-new=103, huggingface-model=21, pro"
-  },
-  {
-   "task": "raise-g5-leverage-53-100-35067",
    "dept": "creators",
    "verdict": "real",
    "note": "produced substantive real output",

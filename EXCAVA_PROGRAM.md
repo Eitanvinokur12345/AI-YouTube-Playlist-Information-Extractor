@@ -201,6 +201,12 @@ reroutes, outward unapproved, memory isolation, tier-2 regression) — daily in 
 a systemcheck line; sandboxed, side-effect-safe; (b) GRAPH
 EXPANSION — brain graph must include Q&A/problems/history, 'not all information is in it yet'.**
 
+**ROOMS-AS-OS v1 DONE+verified v111 (owner 2026-07-13): two-level nav — 15 scopes (14 depts + 🌐 GENERAL
+all inter-departmental); inside a dept, sub-tabs Conversations|War rooms|Group chat with live counts
+(11 / 0 / 4) and a scrollable room-list per scope; GENERAL shows all 36 cross-dept rooms; transcript
+opens, no console errors. NO-QUESTION MODE (owner ~5h): 4 rooms questions saved to pending_questions.json
+(per-dept vs shared group chat; war-room TYPES; GENERAL scope; do depts HAND OFF work or just view). OPEN v2: per-dept group chat + war-room types depend on those answers + a data-model change.**
+
 **Standing checks each tick:** newest room-turn timestamp (beat health) · engine_health.json real HTTP status per
 engine · any tier-2.5 auto-added agents · supervisor real_pct + movement + systemcheck + proof.
 

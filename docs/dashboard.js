@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v110";
+const APP_BUILD = "v111";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -3118,21 +3118,37 @@ async function renderRooms(selId) {
   }
   const agents = {};
   ((reg && reg.agents) || []).forEach(a => { agents[a.id] = a; });
-  const sel = list.find(r => r.id === selId) || list.find(r => r.status === "open") || list[0];
-  // BY DEPARTMENT (owner 2026-07-07): one rail entry per department (its latest room), labeled by
-  // the DEPARTMENT NAME — not the cryptic goal-title — plus the cross-department war room(s).
-  const deptLatest = {};
-  list.forEach(r => { if (r.kind === "dept" && r.dept && !deptLatest[r.dept]) deptLatest[r.dept] = r; });
-  const deptRail = Object.keys(deptLatest).sort().map(d => { const r = deptLatest[d];
-    const flag = talkOnly.has(d) ? ` <span title="honest flag: this department has no real tool wired — it debates and decides, but can't yet DO; an executor is queued in the program">🗣</span>`
-      : blockedD.has(d) ? ` <span title="honestly BLOCKED: needs an owner resource (e.g. engine quota)">⛔</span>` : "";
-    return `<button class="${r.id === sel.id ? "on" : ""}" data-room="${esc(r.id)}" title="${esc(r.goal)}">
-      ${_exIcon(d)} <b>${esc((d || "").toUpperCase())}</b>${r.status === "done" ? " ✓" : r.status === "open" ? " 🟢" : ""}${flag}</button>`; }).join("");
-  const groupRail = list.filter(r => r.kind === "group" && r.status === "open").slice(0, 1).map(r =>
-    `<button class="${r.id === sel.id ? "on" : ""} k-war" data-room="${esc(r.id)}" title="${esc(r.goal)}" style="background:oklch(0.92 0.06 280)">🏛 GROUP CHAT — all departments</button>`).join("");
-  const warRail = list.filter(r => r.kind === "war").slice(0, 3).map(r =>
-    `<button class="${r.id === sel.id ? "on" : ""} k-war" data-room="${esc(r.id)}" title="${esc(r.goal)}">⚔️ WAR: ${esc((r.dept || "cross-dept").toUpperCase())}</button>`).join("");
-  const rail = groupRail + deptRail + warRail;
+  // ROOMS-AS-OS (owner 2026-07-13): two-level nav. Level 1 = pick a DEPARTMENT or 🌐 GENERAL
+  // (all inter-departmental). Level 2 (inside a department) = sub-tabs: Conversations | War rooms
+  // | Group chat. Each list is the full scrollable history of that scope. A true OS shows the
+  // inter-departmental traffic, not one flat pile.
+  const depts = [...new Set(list.filter(r => r.kind === "dept" && r.dept).map(r => r.dept))].sort();
+  const rmSub = (sc, sb) => sc === "general"
+    ? list.filter(r => r.kind === "group" || r.kind === "war")
+    : sb === "war" ? list.filter(r => r.kind === "war" && r.dept === sc)
+    : sb === "group" ? list.filter(r => r.kind === "group")
+    : list.filter(r => r.kind === "dept" && r.dept === sc);
+  const selRoom0 = selId ? list.find(r => r.id === selId) : null;
+  let scope = state.roomScope;
+  if (selRoom0) scope = selRoom0.kind === "dept" ? selRoom0.dept : (state.roomScope || "general");
+  if (!scope || (scope !== "general" && !depts.includes(scope))) scope = depts[0] || "general";
+  let sub = state.roomSub || "convos";
+  if (selRoom0 && scope !== "general") sub = selRoom0.kind === "war" ? "war"
+    : selRoom0.kind === "group" ? "group" : "convos";
+  state.roomScope = scope; state.roomSub = sub;
+  const scopeRooms = rmSub(scope, sub);
+  const sel = scopeRooms.find(r => r.id === selId) || scopeRooms.find(r => r.status === "open")
+    || scopeRooms[0] || list[0];
+  const scopeRail = depts.map(d => {
+    const flag = talkOnly.has(d) ? " 🗣" : blockedD.has(d) ? " ⛔" : "";
+    return `<button class="${d === scope ? "on" : ""}" data-scope="${esc(d)}" title="${esc(d)} department${talkOnly.has(d) ? " — talk-only (no real tool yet)" : blockedD.has(d) ? " — blocked on an owner resource" : ""}">${_exIcon(d)} <b>${esc(d.toUpperCase())}</b>${flag}</button>`;
+  }).join("") + `<button class="${scope === "general" ? "on" : ""} k-war" data-scope="general" style="background:oklch(0.92 0.06 280)" title="every inter-departmental conversation">🌐 <b>GENERAL</b> — all cross-dept</button>`;
+  const subLabels = { convos: "💬 Conversations", war: "⚔️ War rooms", group: "🏛 Group chat" };
+  const subTabs = scope === "general" ? "" : `<div class="rooms-rail" style="margin-top:6px">${
+    ["convos", "war", "group"].map(s => `<button class="${s === sub ? "on" : ""}" data-roomsub="${s}">${subLabels[s]} (${rmSub(scope, s).length})</button>`).join("")}</div>`;
+  const roomList = `<div class="rooms-rail" style="margin-top:6px;max-height:120px;overflow-y:auto">${
+    scopeRooms.length ? scopeRooms.map(r => `<button class="${r.id === sel.id ? "on" : ""}" data-room="${esc(r.id)}" title="${esc(r.goal)}">${esc(String(r.created_at || r.opened_at || "").slice(0, 10))} · ${esc((r.goal || "").slice(0, 40))}… ${r.status === "done" ? "✅" : "🟢"}</button>`).join("")
+      : `<span class="sub">No ${scope === "general" ? "inter-departmental" : subLabels[sub].replace(/^\S+\s/, "").toLowerCase()} conversations yet — they appear as beats run.</span>`}</div>`;
   // P7 (owner pulled forward 2026-07-12): FULL per-department history — 14-day transcript
   // window so older rooms actually load, + a history strip of the department's earlier rooms.
   const days = [];
@@ -3162,22 +3178,12 @@ async function renderRooms(selId) {
       this room produced a <b>${esc(sel.artifact.kind || sel.artifact_kind || "artifact")}</b>:
       ${esc(String(sel.artifact.ref || sel.artifact.id || ""))}
       · <a href="#" data-open-results>see it in 📦 Results</a></div></div>` : "";
-  // the department's EARLIER conversations (owner: 'access the conversation history for each
-  // department') — every past room of the same dept, newest first, one click to open
-  const earlier = sel.dept ? list.filter(r =>
-    r.kind === sel.kind && r.dept === sel.dept && r.id !== sel.id).slice(0, 12) : [];
-  const historyStrip = earlier.length ? `
-    <div class="room-meta" style="flex-wrap:wrap">📜 <b>${esc((sel.dept || "").toUpperCase())} history</b> — ${earlier.length} earlier conversation${earlier.length > 1 ? "s" : ""}:
-      ${earlier.map(r => `<a class="pill" style="cursor:pointer" data-room="${esc(r.id)}"
-        title="${esc(r.goal)}">${esc((r.opened_at || r.id).slice(0, 10))} · ${esc(r.goal.slice(0, 36))}… ${r.status === "done" ? "✅" : "🟢"}</a>`).join(" ")}
-    </div>` : "";
   const inner = `
     <div class="room-meta"><span class="pill">${esc(sel.kind)}</span>
       <span>goal: <b>${esc(sel.goal)}</b></span><span>turns ${sel.turns}/${sel.max_turns}</span>
       <span>${sel.status === "done" ? "✅ closed" : "🟢 live"}</span>
       ${sel.last_turn_ms ? `<span>last turn ${sel.last_turn_ms}ms</span>` : ""}
       ${sel.artifact ? `<span>📦 artifact: <b>${esc(sel.artifact.kind)}</b> → ${esc(String(sel.artifact.ref || sel.artifact.id || ""))}</span>` : ""}</div>
-    ${historyStrip}
     <div class="chat">${bubbles}${artInline}</div>`;
   // AGENT-PLATFORM LAYER 2: the visible track record — judge which agents earn trust
   const arecs = await load("excava/agent_records.json");
@@ -3193,10 +3199,16 @@ async function renderRooms(selId) {
       </tbody></table>
       <p class="sub">${esc((arecs && arecs.note) || "")}</p></div>` : "";
   view.innerHTML = `
-    <div class="card"><h3>🗣 Rooms <span class="sub">— agents work out loud; you're the boss watching (P13). War rooms are the showpiece.</span></h3>
-      <div class="rooms-rail">${rail}</div>
-      ${sel.kind === "war" ? `<div class="warroom"><div class="wr-head">⚔️ WAR ROOM — round table</div>${inner}</div>` : inner}
+    <div class="card"><h3>🗣 Rooms — the OS's conversations <span class="sub">— pick a department or 🌐 GENERAL (all inter-departmental). Inside a department: Conversations, War rooms, and Group chat — each fully scrollable.</span></h3>
+      <div class="rooms-rail">${scopeRail}</div>
+      ${subTabs}
+      ${roomList}
+      <div style="margin-top:8px">${sel && sel.kind === "war" ? `<div class="warroom"><div class="wr-head">⚔️ WAR ROOM — round table</div>${inner}</div>` : inner}</div>
     </div>${agentsCard}`;
+  view.querySelectorAll("[data-scope]").forEach(b =>
+    b.addEventListener("click", () => { state.roomScope = b.dataset.scope; state.roomSub = "convos"; renderRooms(); }));
+  view.querySelectorAll("[data-roomsub]").forEach(b =>
+    b.addEventListener("click", () => { state.roomSub = b.dataset.roomsub; renderRooms(); }));
   view.querySelectorAll("[data-room]").forEach(b =>
     b.addEventListener("click", () => renderRooms(b.dataset.room)));
   view.querySelectorAll("[data-open-results]").forEach(a =>

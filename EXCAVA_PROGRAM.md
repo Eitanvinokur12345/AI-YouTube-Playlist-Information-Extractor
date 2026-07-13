@@ -214,6 +214,14 @@ graph — 100 things you said, 13 EXCAVA questions, 7 your answers, 7 problems f
 OWNER HISTORY hub; distinct colors; idempotent + beat-wired so a hub rebuild can't drop it; verified
 in browser (nodes present, canvas mounts, 0 errors). More owner data (tokens/backups) can join next.**
 
+**NEW OWNER DIRECTION 2026-07-13: (1) DIRECT WRITE — owner wants to command EXCAVA in-app, independent
+of Claude. v114 DONE+verified: 💬 You↔EXCAVA thread on the Excava tab merges his sent messages + EXCAVA's
+inbox receipts/status, with the command vocabulary; the composer already dispatches via the free channel.
+TRUE one-click (no GitHub step) needs the VPS backend (R1). (2) MULTI-PROJECT 'parent panel' + project
+creation/assist = QUEUED (needs his which-repos + may-EXCAVA-PR answer — saved). (3) RESOURCES_NEEDED.md
+written per his ask: #1 Oracle VM (approved, parent-blocked) unlocks direct-write+multi-project; #2 fresh
+Cerebras + chat-only Gemini keys (2 min each) → 5-6 engines; nothing paid required.**
+
 **Standing checks each tick:** newest room-turn timestamp (beat health) · engine_health.json real HTTP status per
 engine · any tier-2.5 auto-added agents · supervisor real_pct + movement + systemcheck + proof.
 

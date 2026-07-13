@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v113";
+const APP_BUILD = "v114";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1947,6 +1947,24 @@ async function _openArtifact(ref, title) {
   _showModal(title || ref.split("/").pop(), body);
 }
 // The in-app "send a task to EXCAVA" confirm — used by the console AND every dispatch button.
+// YOU ↔ EXCAVA (owner 2026-07-13: 'communicate and write directly to EXCAVA, independently of you').
+// Your sent messages (this device) + EXCAVA's inbox items and their status, as one visible two-way
+// thread — so you can SEE that you drive it directly and it acts. (True one-click without the GitHub
+// step needs a tiny always-on receiver — that rides on the VPS, R1.)
+function _commsThread(inbox) {
+  let mine = [];
+  try { mine = JSON.parse(localStorage.getItem("excavatortron.mytasks") || "[]"); } catch (_) {}
+  const inboxT = (inbox && inbox.tasks) || [];
+  const rows = [
+    ...mine.map(m => ({ who: "you", text: m.task, at: m.at, status: "sent from this device" })),
+    ...inboxT.map(t => ({ who: "excava", text: t.task, at: t.added_at, status: t.status || "queued" })),
+  ].sort((a, b) => String(b.at || "").localeCompare(String(a.at || ""))).slice(0, 14);
+  const bubble = r => `<div class="msg ${r.who === "you" ? "lead" : ""}" style="justify-content:${r.who === "you" ? "flex-end" : "flex-start"}">
+    <div class="bub" style="max-width:80%"><div class="who">${r.who === "you" ? "🧑 you" : "🦾 EXCAVA"} <span class="eng">${esc(String(r.at || "").slice(0, 16))} · ${esc(r.status)}</span></div>${esc(r.text || "")}</div></div>`;
+  return `<div class="card"><h3>💬 You ↔ EXCAVA <span class="sub">— write to EXCAVA directly (the bar above); here's your thread with it. It acts independently of Claude — CI reads your message, works it, and the status updates here.</span></h3>
+    <div class="chat" style="max-height:280px">${rows.length ? rows.map(bubble).join("") : `<p class="sub">No messages yet — type a task or a direction in the bar above and dispatch it. It reaches EXCAVA through the free channel and comes back here with a status.</p>`}</div>
+    <p class="sub">Commands EXCAVA understands directly: a plain <b>task</b> · <b>direction &lt;text&gt;</b> · <b>approve/decline &lt;id&gt;</b> · <b>weight &lt;area&gt; &lt;0-100&gt;</b> · <b>kill/safe/run</b> · <b>horse &lt;goal&gt;</b>. One-click-in-app (no GitHub step) arrives with the VPS.</p></div>`;
+}
 function _sendModal(title, body, decisionId) {
   try { const q = JSON.parse(localStorage.getItem("excavatortron.mytasks") || "[]");
     q.unshift({ task: title, at: new Date().toISOString() });
@@ -2388,6 +2406,7 @@ async function renderExcava() {
       <p class="sub" style="margin-top:8px">The floor is LIVE: each station is a real pipeline department (lamp = its actual status), each colored bot is a real registered agent carrying its department's actual bus task — hover one to see who it is and what it holds.</p>
     </div>
     ${driveHTML}
+    ${_commsThread(inbox)}
     ${capsHTML}
     ${guardHTML}
     ${proveHTML}

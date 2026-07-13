@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v111";
+const APP_BUILD = "v112";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1272,8 +1272,17 @@ async function renderSelfImprove() {
 
 // ── Tab: Grow Sources (suggest a channel when the playlist stalls) ────────────
 async function renderSources() {
-  const [data, gated] = await Promise.all([
-    load("channel_suggestions.json"), load("comment_gated.json")]);
+  const [data, gated, disc] = await Promise.all([
+    load("channel_suggestions.json"), load("comment_gated.json"),
+    load("discovered_elements.json")]);
+  // R2 (owner: 'more retrieval sources beyond the playlist') — what the new sources found
+  let discHTML = "";
+  if (disc && disc.elements && disc.elements.length) {
+    const bySrc = Object.entries(disc.by_source || {}).map(([s, n]) => `${esc(s)} ${esc(n)}`).join(" · ");
+    discHTML = `<div class="card"><h3>🛰 Newly discovered <span class="sub">— ${esc(disc.total)} finds from the new retrieval sources beyond the playlist (${esc(bySrc)}); status 'discovered' = mined, not yet verified into the hub</span></h3>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;max-height:260px;overflow-y:auto">${
+        disc.elements.slice(0, 40).map(e => `<a class="pill" href="${esc(e.url)}" target="_blank" rel="noopener" title="${esc(e.what)}">${esc(e.type)}: ${esc(e.name)}</a>`).join("")}</div></div>`;
+  }
   const sugs = (data && data.suggestions) || [];
   const pending = sugs.filter(s => (s.status || "pending") === "pending");
   const th = (data && data.threshold) || 25;
@@ -1309,7 +1318,7 @@ async function renderSources() {
         <p class="hint">${g.comment_keyword ? `Comment <code class="cmd">${esc(g.comment_keyword)}</code> on the video to get it.` : "Check the video's comments / pinned comment for the link."} &nbsp;<a href="${esc(g.source_url || yt(g.video_id))}" target="_blank" rel="noopener">Open video ↗</a></p>
       </div>`).join("");
   }
-  view.innerHTML = html;
+  view.innerHTML = discHTML + html;
 }
 
 // ── Tab: Prompts (master / guardrail / creation prompt library) ──────────────

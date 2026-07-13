@@ -513,6 +513,11 @@ def _beat(args) -> int:
             except Exception:
                 pass
             try:
+                from src import discover_promote
+                discover_promote.promote()         # R2: stage new-source finds for the Sources tab
+            except Exception:
+                pass
+            try:
                 from src import agent_issue
                 beat_log.append(agent_issue.draft_and_file())
                 beat_log.append(agent_issue.execute_if_approved())

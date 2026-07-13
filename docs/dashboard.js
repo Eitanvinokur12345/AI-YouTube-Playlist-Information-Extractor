@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v112";
+const APP_BUILD = "v113";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1386,6 +1386,9 @@ const GRAPH_COLORS = {
   home: "#d4a72c", hub: "#d4a72c", category: "#38bdf8", toolhub: "#a78bfa",
   skill: "#34d399", tool: "#f472b6", prompt: "#fbbf24", connector: "#60a5fa",
   star: "#f5c542", combo: "#fb923c",      // gold anchors ("don't change") + orange combinations
+  // OWNER LAYER (owner 2026-07-13: the graph must hold his Q&A/problems/history, not just elements)
+  "owner-hub": "#e11d48", "you-said": "#f87171", "excava-asked": "#c084fc",
+  "you-answered": "#4ade80", "problem-fixed": "#fbbf24",
 };
 function ensureGraphCss() {
   if (document.getElementById("graphcss")) return;
@@ -1451,7 +1454,7 @@ async function mountBrainGraph(host, file = "brain_graph.json", legend = null) {
   const L = data.links.map(l => ({ s: byId[l.source], t: byId[l.target] })).filter(l => l.s && l.t);
   const nbr = {}; N.forEach(n => nbr[n.id] = new Set());
   L.forEach(l => { l.s.deg++; l.t.deg++; nbr[l.s.id].add(l.t.id); nbr[l.t.id].add(l.s.id); });
-  const isHub = n => n.group === "home" || n.group === "category" || n.group === "toolhub" || n.group === "hub" || n.group === "combo";
+  const isHub = n => n.group === "home" || n.group === "category" || n.group === "toolhub" || n.group === "hub" || n.group === "combo" || n.group === "owner-hub";
   const rad = n => n.group === "home" ? 9 : n.group === "star" ? 5.5 : isHub(n) ? 6 + Math.min(4, n.deg / 8) : 3 + Math.min(3, n.deg / 3);
   const charge = n => isHub(n) ? 1500 : (n.group === "star" ? 720 : 560);   // hubs push others away harder
   N.forEach(n => n.q1 = charge(n));

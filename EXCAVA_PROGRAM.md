@@ -207,6 +207,13 @@ all inter-departmental); inside a dept, sub-tabs Conversations|War rooms|Group c
 opens, no console errors. NO-QUESTION MODE (owner ~5h): 4 rooms questions saved to pending_questions.json
 (per-dept vs shared group chat; war-room TYPES; GENERAL scope; do depts HAND OFF work or just view). OPEN v2: per-dept group chat + war-room types depend on those answers + a data-model change.**
 
+**R2 STAGE-2 DONE v112 (reconciled — last tick's program edit missed): 🛰 Newly discovered card in
+Sources shows HF/arXiv/GitHub/PH finds; auto-promote-to-hub = owner Q (saved). GRAPH EXPANSION DONE+
+verified v113 (owner: 'not ALL the info is in the graph'): 128 OWNER-LAYER nodes woven into the brain
+graph — 100 things you said, 13 EXCAVA questions, 7 your answers, 7 problems fixed, around a red 🧑
+OWNER HISTORY hub; distinct colors; idempotent + beat-wired so a hub rebuild can't drop it; verified
+in browser (nodes present, canvas mounts, 0 errors). More owner data (tokens/backups) can join next.**
+
 **Standing checks each tick:** newest room-turn timestamp (beat health) · engine_health.json real HTTP status per
 engine · any tier-2.5 auto-added agents · supervisor real_pct + movement + systemcheck + proof.
 

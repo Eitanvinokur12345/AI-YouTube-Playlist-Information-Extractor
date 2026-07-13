@@ -518,6 +518,11 @@ def _beat(args) -> int:
             except Exception:
                 pass
             try:
+                from src import graph_expand
+                graph_expand.expand()              # owner layer into the brain graph (idempotent)
+            except Exception:
+                pass
+            try:
                 from src import agent_issue
                 beat_log.append(agent_issue.draft_and_file())
                 beat_log.append(agent_issue.execute_if_approved())

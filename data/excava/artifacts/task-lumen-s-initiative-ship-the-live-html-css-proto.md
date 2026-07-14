@@ -1,59 +1,39 @@
-# [Lumen's initiative] Ship the live HTML/CSS prototype tonight with mocked API responses to validate core interactions end-to-end, owned by Fa
+# [Lumen's initiative] Ship the live HTML/CSS prototype tonight with mocked API responses to validate design decisions fast
 
-> visualization · task `lumen-s-initiative-ship--30293` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> visualization · task `lumen-s-initiative-ship--51003` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
 **Approach:**
-Mock API responses and ship a live HTML/CSS prototype with core interactions for end-to-end validation.
+Deliver a functional HTML/CSS prototype with mocked API responses to validate design decisions immediately.
 
 **Steps:**
-1. **Initialize prototype structure**
+1. **Initialize project structure**
    ```bash
-   mkdir -p prototype/{css,js,api} && touch prototype/index.html prototype/css/styles.css prototype/js/app.js prototype/api/mock.json
+   mkdir -p prototype/{css,js,api-mocks} && cd prototype
+   git init
+   touch index.html css/styles.css js/app.js api-mocks/mock-responses.json
    ```
 
-2. **Write minimal HTML/CSS skeleton**
-   ```html
-   <!-- prototype/index.html -->
-   <!DOCTYPE html>
-   <html lang="en">
-   <head>
-     <meta charset="UTF-8">
-     <title>Prototype</title>
-     <link rel="stylesheet" href="css/styles.css">
-   </head>
-   <body>
-     <div id="app"></div>
-     <script src="js/app.js"></script>
-   </body>
-   </html>
-   ```
-   ```css
-   /* prototype/css/styles.css */
-   body { font-family: sans-serif; margin: 0; }
-   #app { padding: 2rem; }
-   ```
+2. **Build static HTML/CSS skeleton**
+   - Write `index.html` with semantic structure matching design mocks (e.g., `<header>`, `<main>`, `<section>`).
+   - Style with `css/styles.css` using minimal, production-ready classes (e.g., `.card`, `.btn-primary`).
+   - Validate responsiveness with viewport meta tag and media queries.
 
 3. **Mock API responses**
-   ```json
-   /* prototype/api/mock.json */
-   {
-     "core_interaction": {
-       "status": "success",
-       "data": { "key": "mocked_value" }
-     }
-   }
-   ```
+   - Populate `api-mocks/mock-responses.json` with static JSON matching expected endpoints (e.g., `{ "data": [...] }`).
+   - Use `js/app.js` to fetch from `/api-mocks/mock-responses.json` (e.g., `fetch('/api-mocks/mock-responses.json')`).
 
-4. **Implement core interaction in JS**
-   ```javascript
-   /* prototype/js/app.js */
-   fetch('api/mock.json')
-     .then(res => res.json())
-     .then(data => {
-       document.getElementById('app').textContent = data.core_interaction.data.key;
-     });
-   ```
-
-5. **Serve prototype locally**
+4. **Test locally**
    ```bash
-   npx serve prototype --port 300
+   python3 -m http.server 8000 --bind 127.0.0.1
+   ```
+   - Open `http://localhost:8000` in browser to verify layout and mocked data rendering.
+
+5. **Deploy to shared preview**
+   ```bash
+   gh repo create prototype-preview --public --push --source=.
+   gh pages deploy --branch main
+   ```
+
+**Needs:**
+- Design mocks (SVG/Figma exports or screenshots) for HTML/CSS structure.
+- `gh

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-14T02:27:10.557032+00:00",
+ "generated_at": "2026-07-14T02:33:29.121784+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 183,
+   "turns_7d": 185,
    "rooms_7d": 56,
    "engines_used": [
     "gh-models",
@@ -18,7 +18,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Scriv: The hybrid 3-month window still lets teams game the system by dumping incidents right after recalculation, then c"
+   "last_position": "The hybrid 3-month locked tiers with rolling recalculation still introduces complexity that can lead to confusion and mi"
   },
   {
    "id": "analysis-w1",
@@ -41,8 +41,8 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 130,
-   "rooms_7d": 75,
+   "turns_7d": 132,
+   "rooms_7d": 76,
    "engines_used": [
     "gh-models",
     "groq",
@@ -50,7 +50,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Adopt Scriv’s **6-month locked tiers with published recalculation dates**, owned by Product Ops. Teams can’t game risk i"
+   "last_position": "Adopt **Scriv’s hybrid 3-month locked tiers with rolling recalculation inside the window**, owned by Product Ops. This f"
   },
   {
    "id": "analysis-checker",
@@ -89,8 +89,24 @@
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 104,
-   "rooms_7d": 69,
+   "turns_7d": 105,
+   "rooms_7d": 70,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "I will run the memory linking command to connect every existing memory ID in this session to ensure cohesive recall and "
+  },
+  {
+   "id": "visual-w1",
+   "name": "Easel",
+   "dept": "visual",
+   "role": "doer",
+   "turns_7d": 99,
+   "rooms_7d": 63,
    "engines_used": [
     "gh-models",
     "groq",
@@ -98,30 +114,14 @@
     "sambanova"
    ],
    "positions_held": 29,
-   "last_position": "I will run the memory linking command to connect every existing memory ID in this conversation to the Cross-AI Unified M"
-  },
-  {
-   "id": "visual-w1",
-   "name": "Easel",
-   "dept": "visual",
-   "role": "doer",
-   "turns_7d": 98,
-   "rooms_7d": 62,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 28,
-   "last_position": "Open the Beverage Cans website and screenshot its bright pink accent bar. This produces a visual reference of the bold c"
+   "last_position": "I will open the Beverage Cans website and take a screenshot of its bright pink accent bar. This will produce a visual re"
   },
   {
    "id": "improve-w1",
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 96,
+   "turns_7d": 97,
    "rooms_7d": 54,
    "engines_used": [
     "gh-models",
@@ -130,8 +130,8 @@
     "nvidia",
     "sambanova"
    ],
-   "positions_held": 20,
-   "last_position": "Run weekly automated scans of all prompts using exact string matching to flag duplicates. This catches literal copies fa"
+   "positions_held": 21,
+   "last_position": "Run weekly hybrid scans: exact string matching first, then light semantic scans. This catches literal copies fast and mo"
   },
   {
    "id": "visualization-w1",
@@ -170,7 +170,7 @@
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 85,
+   "turns_7d": 86,
    "rooms_7d": 43,
    "engines_used": [
     "gh-models",
@@ -178,8 +178,8 @@
     "mistral",
     "sambanova"
    ],
-   "positions_held": 20,
-   "last_position": "Sprocket’s exact-string scan risks missing 30-50% of near-duplicates that rephrase intent, letting redundant prompts sli"
+   "positions_held": 21,
+   "last_position": "Hybrid scans introduce complexity and may still miss significant rephrased prompts, which could lead to inefficiencies. "
   },
   {
    "id": "visual-checker",
@@ -262,6 +262,40 @@
    "last_position": ""
   },
   {
+   "id": "memory-lead",
+   "name": "Root",
+   "dept": "memory",
+   "role": "lead",
+   "turns_7d": 62,
+   "rooms_7d": 62,
+   "engines_used": [
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 29,
+   "last_position": "ACTION: Graft merges all conversation memory IDs into the Cross-AI Unified Memory graph, creating a cohesive recall stru",
+   "proposed": 1
+  },
+  {
+   "id": "visual-lead",
+   "name": "Chroma",
+   "dept": "visual",
+   "role": "lead",
+   "turns_7d": 62,
+   "rooms_7d": 62,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "nvidia",
+    "sambanova"
+   ],
+   "positions_held": 28,
+   "last_position": "ACTION: Chroma frames Easel’s screenshot of the Beverage Cans site’s bright pink accent bar and uploads it to the hub as",
+   "proposed": 1
+  },
+  {
    "id": "security-checker",
    "name": "Audit",
    "dept": "security",
@@ -278,53 +312,19 @@
    "last_position": ""
   },
   {
-   "id": "memory-lead",
-   "name": "Root",
-   "dept": "memory",
-   "role": "lead",
-   "turns_7d": 61,
-   "rooms_7d": 61,
-   "engines_used": [
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 28,
-   "last_position": "ACTION: Graft merges all conversation memory IDs into the Cross-AI Unified Memory system, producing a consolidated brain",
-   "proposed": 1
-  },
-  {
-   "id": "visual-lead",
-   "name": "Chroma",
-   "dept": "visual",
-   "role": "lead",
-   "turns_7d": 61,
-   "rooms_7d": 61,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "nvidia",
-    "sambanova"
-   ],
-   "positions_held": 27,
-   "last_position": "ACTION: Chroma frames Easel’s screenshot of the Beverage Cans site’s bright pink accent bar and uploads it to the hub as",
-   "proposed": 1
-  },
-  {
    "id": "news-w1",
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 57,
-   "rooms_7d": 33,
+   "turns_7d": 58,
+   "rooms_7d": 34,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
-   "positions_held": 6,
-   "last_position": "I’ll query the freshest AI-news digest from the newest official/company/national sources using the real-time news tool. "
+   "positions_held": 7,
+   "last_position": "I will query the latest AI news from official sources to compile the freshest updates. This will produce a digest of cur"
   },
   {
    "id": "transcripts-lead",
@@ -348,24 +348,24 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 53,
-   "rooms_7d": 28,
+   "turns_7d": 54,
+   "rooms_7d": 29,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 2,
-   "last_position": "Switch to the NVIDIA H100 with Llama 3.4 70B. It’s the only option that’s both proven and available right now—no dead-en"
+   "positions_held": 3,
+   "last_position": "Switch to the NVIDIA H100 with Llama 3.4 70B. It’s the only option that’s both proven in production and backward-compati"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 50,
-   "rooms_7d": 25,
+   "turns_7d": 51,
+   "rooms_7d": 26,
    "engines_used": [
     "gh-models",
     "groq",
@@ -373,8 +373,8 @@
     "nvidia",
     "sambanova"
    ],
-   "positions_held": 2,
-   "last_position": "The H100 with Llama 3.4 70B isn’t a free win—its \"proven\" status ignores the model’s freshness risk: Llama 3.4 70B is br"
+   "positions_held": 3,
+   "last_position": "The claim of a 12% speed gain with the H100 and Llama 3.4 70B ignores potential bottlenecks in integration or compatibil"
   },
   {
    "id": "news-checker",
@@ -391,6 +391,24 @@
    ],
    "positions_held": 0,
    "last_position": ""
+  },
+  {
+   "id": "visualization-lead",
+   "name": "Lumen",
+   "dept": "visualization",
+   "role": "lead",
+   "turns_7d": 44,
+   "rooms_7d": 44,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 11,
+   "last_position": "DECISION: Ship a live HTML/CSS prototype tonight with mocked API responses to test performance and responsiveness; the d",
+   "proposed": 11,
+   "shipped": 10
   },
   {
    "id": "analysis-lead",
@@ -422,24 +440,6 @@
    ],
    "positions_held": 0,
    "last_position": ""
-  },
-  {
-   "id": "visualization-lead",
-   "name": "Lumen",
-   "dept": "visualization",
-   "role": "lead",
-   "turns_7d": 43,
-   "rooms_7d": 43,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 10,
-   "last_position": "DECISION: Ship a live, minimal HTML/CSS demo of Excava’s core flow with mocked API data by tonight—visibility into real ",
-   "proposed": 10,
-   "shipped": 10
   },
   {
    "id": "watch-checker",
@@ -542,15 +542,15 @@
    "name": "Wire",
    "dept": "news",
    "role": "lead",
-   "turns_7d": 29,
-   "rooms_7d": 29,
+   "turns_7d": 30,
+   "rooms_7d": 30,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
-   "positions_held": 6,
-   "last_position": "ACTION: Query OpenAI’s blog and NVIDIA’s press site for the latest AI announcements, output a curated digest with decisi"
+   "positions_held": 7,
+   "last_position": "ACTION: Query OpenAI’s blog and NVIDIA’s press site for the latest AI announcements, then compile a digest stating the k"
   },
   {
    "id": "power-lead",
@@ -566,7 +566,8 @@
    ],
    "positions_held": 1,
    "last_position": "DECISION: Use NVIDIA B200 with Llama 3.3 70B—same compute class as H100 but with proven model stability and zero dead-en",
-   "proposed": 1
+   "proposed": 1,
+   "shipped": 1
   },
   {
    "id": "accessibility-w1",

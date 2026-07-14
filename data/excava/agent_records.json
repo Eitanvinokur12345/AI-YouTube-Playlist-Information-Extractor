@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-14T22:53:43.339777+00:00",
+ "generated_at": "2026-07-14T23:00:03.509411+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -25,8 +25,8 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 148,
-   "rooms_7d": 85,
+   "turns_7d": 149,
+   "rooms_7d": 86,
    "engines_used": [
     "gh-models",
     "groq",
@@ -34,7 +34,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Adopt **fixed 3-month tiers with mandatory 6-week mid-tier risk audits**, owned by Risk Ops. This forces teams to confro"
+   "last_position": "Adopt a **15-minute rolling cache with \"last modified\" timestamps and a visible warning banner** for raw transcripts. Th"
   },
   {
    "id": "watch-w1",
@@ -57,8 +57,8 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 125,
-   "rooms_7d": 64,
+   "turns_7d": 126,
+   "rooms_7d": 65,
    "engines_used": [
     "gh-models",
     "groq",
@@ -66,7 +66,23 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Improve the transcript retrieval tool to cache raw transcripts for 24 hours. This eliminates redundant API calls when th"
+   "last_position": "I will query the kimtaeyoon83/mcp-server-youtube-transcript tool for the pending video IDs. This will produce the raw tr"
+  },
+  {
+   "id": "analysis-checker",
+   "name": "Sift",
+   "dept": "analysis",
+   "role": "checker",
+   "turns_7d": 122,
+   "rooms_7d": 59,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 26,
+   "last_position": "The 15-minute cache still risks stale transcripts for legal/compliance teams—if a video is edited or retracted, a 15-min"
   },
   {
    "id": "memory-w1",
@@ -83,22 +99,6 @@
    ],
    "positions_held": 30,
    "last_position": "I will run the memory linking command to connect every existing memory ID in this conversation to the unified memory sys"
-  },
-  {
-   "id": "analysis-checker",
-   "name": "Sift",
-   "dept": "analysis",
-   "role": "checker",
-   "turns_7d": 121,
-   "rooms_7d": 58,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 25,
-   "last_position": "Risk Ops owning twice-per-cycle audits turns them into a bottleneck, not a solver. The real risk is teams deferring *all"
   },
   {
    "id": "visual-w1",
@@ -121,7 +121,7 @@
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 105,
+   "turns_7d": 106,
    "rooms_7d": 55,
    "engines_used": [
     "gh-models",
@@ -130,7 +130,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Ship the thin live API stub tonight, not mocked responses. It mimics real latency and forces us to define the actual con"
+   "last_position": "Ship a real API endpoint behind a feature flag tonight. It exposes real network variability and failure modes immediatel"
   },
   {
    "id": "improve-w1",
@@ -154,7 +154,7 @@
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 101,
+   "turns_7d": 102,
    "rooms_7d": 51,
    "engines_used": [
     "gh-models",
@@ -163,7 +163,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Pane: A thin live stub still hides the real cost—it’s a controlled simulation. The real risk is we optimize for a fake l"
+   "last_position": "Pane: A real API endpoint tonight risks burning dev hours on infrastructure we don’t need yet—it exposes real failure mo"
   },
   {
    "id": "improve-checker",
@@ -219,32 +219,32 @@
    "name": "Forge",
    "dept": "creators",
    "role": "doer",
-   "turns_7d": 75,
-   "rooms_7d": 41,
+   "turns_7d": 76,
+   "rooms_7d": 42,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 6,
-   "last_position": "I will draft the first \"UGC Factory\" package for the creators tab, an open-source package that generates customizable Cl"
+   "positions_held": 7,
+   "last_position": "I will draft the first \"UGC Factory\" package for the creators tab—an open-source npm package that generates user-generat"
   },
   {
    "id": "security-w1",
    "name": "Warden",
    "dept": "security",
    "role": "doer",
-   "turns_7d": 74,
-   "rooms_7d": 43,
+   "turns_7d": 75,
+   "rooms_7d": 44,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 6,
-   "last_position": "I will run the LLM Guard scanner on the input/output stream to detect leaks or injection attempts. The scan will produce"
+   "positions_held": 7,
+   "last_position": "I will run the LLM Guard scanner on the input/output stream to detect leaks or injection attempts. This will produce a r"
   },
   {
    "id": "visual-lead",
@@ -329,6 +329,23 @@
    "last_position": "Switch to the NVIDIA H100 with Llama 3.4 70B. It’s the fastest closed-source model we can run in-house, and the 70B size"
   },
   {
+   "id": "transcripts-lead",
+   "name": "Echo",
+   "dept": "transcripts",
+   "role": "lead",
+   "turns_7d": 64,
+   "rooms_7d": 64,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 18,
+   "last_position": "ACTION: Reel queries kimtaeyoon83/mcp-server-youtube-transcript for the pending video IDs to fetch the raw transcripts.",
+   "proposed": 2
+  },
+  {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
@@ -344,23 +361,6 @@
    ],
    "positions_held": 16,
    "last_position": "The real risk isn’t just cost or lock-in—it’s that neither model’s accuracy on EXCAVA’s specific task is proven. A bette"
-  },
-  {
-   "id": "transcripts-lead",
-   "name": "Echo",
-   "dept": "transcripts",
-   "role": "lead",
-   "turns_7d": 63,
-   "rooms_7d": 63,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 17,
-   "last_position": "ACTION: Reel queries kimtaeyoon83/mcp-server-youtube-transcript for video ID \"UCX6vwnh56Kz9ZzJn4Z6bQJw\" and confirms the",
-   "proposed": 2
   },
   {
    "id": "security-checker",
@@ -379,6 +379,22 @@
    "last_position": ""
   },
   {
+   "id": "mining-w1",
+   "name": "Pick",
+   "dept": "mining",
+   "role": "doer",
+   "turns_7d": 50,
+   "rooms_7d": 32,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 7,
+   "last_position": "I’ll run a targeted search across GitHub, Hacker News, Product Hunt, Reddit, and Telegram for AI tools with active commu"
+  },
+  {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
@@ -395,22 +411,6 @@
    "last_position": "DECISION: Ship the live HTML/CSS prototype tonight with mocked API responses and logging to expose interface failures un",
    "proposed": 17,
    "shipped": 17
-  },
-  {
-   "id": "mining-w1",
-   "name": "Pick",
-   "dept": "mining",
-   "role": "doer",
-   "turns_7d": 49,
-   "rooms_7d": 31,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 6,
-   "last_position": "I’ll run a targeted search across GitHub, Hacker News, Product Hunt, Reddit, and Telegram for \"AI tools 2024\" with a foc"
   },
   {
    "id": "news-lead",
@@ -496,16 +496,32 @@
    "name": "Nova",
    "dept": "creators",
    "role": "lead",
-   "turns_7d": 40,
-   "rooms_7d": 40,
+   "turns_7d": 41,
+   "rooms_7d": 41,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 6,
-   "last_position": "ACTION: Nova tests the \"UGC Factory\" package drafted by Forge, verifying its functionality, labeling the test results 'C"
+   "positions_held": 7,
+   "last_position": "ACTION: Nova tests the \"UGC Factory\" package drafted by Forge, verifying its functionality and labeling the artifact \"Cr"
+  },
+  {
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
+   "turns_7d": 38,
+   "rooms_7d": 38,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 7,
+   "last_position": "ACTION: Warden runs LLM Guard scanner on the input/output stream; report generated with leak/injection scan results."
   },
   {
    "id": "watch-lead",
@@ -523,22 +539,6 @@
    "last_position": "ACTION: At 10:12:00, I, Iris, feed the video into Gemini 3.1 Ultra’s multimodal pipeline to generate a report on non-tex",
    "proposed": 1,
    "shipped": 1
-  },
-  {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 37,
-   "rooms_7d": 37,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 6,
-   "last_position": "ACTION: Warden runs LLM Guard scanner on the input/output stream; report generated as security-w1_scan_report.txt"
   },
   {
    "id": "mining-checker",
@@ -560,16 +560,16 @@
    "name": "Dynamo",
    "dept": "power",
    "role": "lead",
-   "turns_7d": 31,
-   "rooms_7d": 31,
+   "turns_7d": 32,
+   "rooms_7d": 32,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
-   "positions_held": 7,
-   "last_position": "DECISION: Run a 10% live-data slice through NVIDIA H100 + Llama 3.4 70B and the latest accessible open model (Llama 3.3 ",
-   "proposed": 6,
+   "positions_held": 8,
+   "last_position": "DECISION: Run a 1% live-data pilot comparing NVIDIA H100 + Llama 3.4 70B against cloud-based Claude Mythos 5 and Opus 4.",
+   "proposed": 7,
    "shipped": 6
   },
   {
@@ -577,7 +577,23 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 31,
+   "turns_7d": 32,
+   "rooms_7d": 17,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 13,
+   "last_position": "Add a server-side skip link at the top of every page that jumps to the main content. This works without JavaScript and f"
+  },
+  {
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
+   "role": "checker",
+   "turns_7d": 30,
    "rooms_7d": 16,
    "engines_used": [
     "gh-models",
@@ -585,39 +601,23 @@
     "mistral",
     "sambanova"
    ],
-   "positions_held": 12,
-   "last_position": "Add a server-side skip link that works without JavaScript, placed at the very top of every page. This guarantees keyboar"
-  },
-  {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 29,
-   "rooms_7d": 15,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 12,
-   "last_position": "A server-side skip link still risks clutter if it’s always visible, and it doesn’t solve the core problem: screen reader"
+   "positions_held": 13,
+   "last_position": "Ramp’s server-side skip link risks cluttering every page load for sighted users who don’t need it. A better fix is a con"
   },
   {
    "id": "mining-lead",
    "name": "Boulder",
    "dept": "mining",
    "role": "lead",
-   "turns_7d": 24,
-   "rooms_7d": 24,
+   "turns_7d": 25,
+   "rooms_7d": 25,
    "engines_used": [
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 6,
-   "last_position": "ACTION: Mine GitHub, Hacker News, Product Hunt, Reddit, and Telegram for recent AI tools and discussions, filtering for "
+   "positions_held": 7,
+   "last_position": "ACTION: Mine GitHub, Hacker News, Product Hunt, Reddit, and Telegram for AI tools with active community engagement in th"
   },
   {
    "id": "accessibility-lead",
@@ -635,7 +635,7 @@
    "positions_held": 6,
    "last_position": "DECISION: Implement a hidden skip link that appears only on keyboard focus, ensuring instant navigation for screen reade",
    "proposed": 6,
-   "shipped": 5
+   "shipped": 6
   },
   {
    "id": "excava-core",

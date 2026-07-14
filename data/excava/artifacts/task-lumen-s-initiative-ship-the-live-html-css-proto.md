@@ -1,18 +1,15 @@
-# [Lumen's initiative] Ship the live HTML/CSS prototype tonight with mocked API responses to validate core flow and design clarity first, then 
+# [Lumen's initiative] Ship the live HTML/CSS prototype tonight with mocked API responses to validate real data flow without fragile dependenci
 
-> visualization · task `lumen-s-initiative-ship--97500` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> visualization · task `lumen-s-initiative-ship--776` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
 
-**Approach:**
-Mock the core user flow with static HTML/CSS first, then swap in real API endpoints later.
-
+**Approach:** Ship a live HTML/CSS prototype with mocked API responses to validate real data flow without fragile dependencies.
 **Steps:**
-1. Create `/prototype/` dir with `index.html`, `styles.css`, and `/mock-api/` subdir.
-2. Write `index.html` with the 3 key screens (list, detail, checkout) using semantic HTML and placeholder data.
-3. Add `styles.css` with the approved design tokens (colors, spacing, typography) and responsive breakpoints.
-4. Create `/mock-api/responses.json` with 3 mocked endpoints (`/items`, `/item/{id}`, `/checkout`) returning static JSON.
-5. Serve locally with `python -m http.server 8000` and validate flows with browser dev tools.
-
+1. Create a new branch `feature/prototype` from the `main` branch using `git checkout -b feature/prototype` to isolate prototype development.
+2. Develop the HTML/CSS prototype in a new directory `prototype` within the project root, using a tool like `npm init` to initialize a new Node.js project and `npm install` to manage dependencies.
+3. Configure a mock API server using a tool like `json-server` to provide mock API responses, and integrate it with the prototype using JavaScript fetch API or a library like Axios.
 **Needs:**
-- Approved design tokens file (`/design/tokens.json`).
-- `/prototype/` directory write permissions.
-- Python 3.x (for built-in server).
+* `git` for version control
+* `npm` for package management
+* `json-server` for mock API server
+* A code editor (e.g., Visual Studio Code)
+* Command-line interface (CLI) access to the project directory

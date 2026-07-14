@@ -1,15 +1,21 @@
-# [Lumen's initiative] Ship one live HTML/CSS demo of Excava’s core flow and one Figma clickable prototype side-by-side, then measure which exp
+# [Lumen's initiative] Ship one live HTML/CSS demo of Excava’s core flow with mocked API data via VeriTeknik proxy *and* one Figma clickable pr
 
-> visualization · task `lumen-s-initiative-ship--66743` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
+> visualization · task `lumen-s-initiative-ship--93003` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
-**Approach:** Create a live HTML/CSS demo and a Figma clickable prototype to compare and measure the effectiveness of Excava's core flow.
+```markdown
+**Approach:**
+Deliver a minimal, live HTML/CSS prototype of Excava’s core flow using mocked API data served through VeriTeknik proxy, plus a clickable Figma prototype.
+
 **Steps:**
-1. Develop a live HTML/CSS demo of Excava's core flow using a code editor like Visual Studio Code, and create an `index.html` file with embedded CSS to showcase the flow.
-2. Design a Figma clickable prototype of Excava's core flow, utilizing Figma's features to create an interactive and visually appealing model, and export it as a clickable prototype.
-3. Set up a comparison environment using a tool like GitHub Pages or a local web server to display both the live HTML/CSS demo and the Figma clickable prototype side-by-side.
+1. Clone the VeriTeknik proxy repo (`veriteknik-proxy`) and verify proxy config supports `/excava/api/*` routing.
+2. Create `/excava/demo/` dir in project; write `index.html`, `style.css`, and `mock-api.js` with static JSON responses matching Excava’s core endpoints.
+3. Run proxy locally (`npm run dev`), serve demo at `http://localhost:3000/excava/demo`, confirm mocked data loads.
+4. Export Figma file (`excava-core-flow.fig`) with frames for each core screen (login, dashboard, detail view); add interactive hotspots linking frames.
+5. Publish Figma prototype (share link) and push HTML/CSS/JS to `veriteknik-proxy/excava/demo/`; verify live demo works via proxy.
+
 **Needs:**
-* Access to Excava's core flow documentation and design assets
-* Figma account and design tools
-* Code editor (e.g., Visual Studio Code)
-* GitHub account and GitHub Pages or a local web server setup
-* Basic HTML, CSS, and Figma skills
+- Access to `veriteknik-proxy` repo (GitHub).
+- Figma file access (`excava-core-flow.fig`).
+- Node.js/npm for proxy dev server.
+- Excava core flow screenshots/wireframes (for mock data structure).
+```

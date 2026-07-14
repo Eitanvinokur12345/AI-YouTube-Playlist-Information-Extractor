@@ -523,6 +523,13 @@ def _beat(args) -> int:
             except Exception:
                 pass
             try:
+                from src import tutorial_dept
+                r = tutorial_dept.run()            # weekly, no decisions — writes a "what changed" recap
+                if r.get("wrote"):
+                    beat_log.append(f"tutorial-dept: weekly recap written ({r.get('changes')} changes)")
+            except Exception:
+                pass
+            try:
                 from src import agent_issue
                 beat_log.append(agent_issue.draft_and_file())
                 beat_log.append(agent_issue.execute_if_approved())

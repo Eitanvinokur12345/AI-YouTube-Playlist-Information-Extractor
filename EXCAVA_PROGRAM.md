@@ -232,6 +232,14 @@ Google quota — useless to add more; TOOL_ACCESS_OPTIONS.md gives real options 
 OpenRouter balance / local Ollama on VPS). (4) TUTORIAL DEPARTMENT wanted (weekly, no decisions). (5) PITCHES
 need FAR more detail. (6) NEW_SESSION_PROMPT.md written. Question-ritual every 3rd beat (10+ Qs).**
 
+**OWNER ANSWERS 2026-07-13/14: TUTORIAL DEPARTMENT DONE+verified (src/tutorial_dept.py — weekly, NO
+decisions, no room; writes a '📚 This week in EXCAVA' recap from the feature-ship log; beat-wired
+weekly-guarded; pinned top of walkthroughs, browser-verified). TOOL ACCESS: the guarantee against
+ever running out = LOCAL OLLAMA on the VPS (zero quota); interim = different-provider free keys.
+CREATORS = FULL OVERHAUL (not turn tweak). CONVERSATIONAL EXCAVA = build async (beat reads→executes→
+replies) then real-time w/ VPS. PITCHES need far more detail. MONETIZATION (ad-skill to offset cost)
++ VISUAL OVERHAUL = deferred until history requests done. All in reminders.json.**
+
 **Standing checks each tick:** newest room-turn timestamp (beat health) · engine_health.json real HTTP status per
 engine · any tier-2.5 auto-added agents · supervisor real_pct + movement + systemcheck + proof.
 

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-14T02:07:41.962112+00:00",
+ "generated_at": "2026-07-14T02:13:51.852337+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 180,
+   "turns_7d": 181,
    "rooms_7d": 55,
    "engines_used": [
     "gh-models",
@@ -18,15 +18,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Scriv: Probabilistic risk scoring still lets teams cherry-pick failure modes—if they control the data pipeline, they’ll "
+   "last_position": "Scriv: Locking tiers for 6 months creates a different gaming window—teams will *defer* risk until just after recalculati"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 138,
-   "rooms_7d": 82,
+   "turns_7d": 139,
+   "rooms_7d": 83,
    "engines_used": [
     "gh-models",
     "groq",
@@ -34,14 +34,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Adopt **Scope’s rolling 30-day dynamic risk tier recalibration** with Product Ops owning the algorithm and publishing ra"
+   "last_position": "I will pull the full earnings call transcript and LangSmith trace data to manually verify the AI reviewer agent’s claims"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 129,
+   "turns_7d": 130,
    "rooms_7d": 75,
    "engines_used": [
     "gh-models",
@@ -50,7 +50,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Adopt Sift’s **probabilistic risk scoring** for link coverage. It ties gate severity to real failure data—like crash rep"
+   "last_position": "Adopt Scriv’s **6-month locked tiers with published recalculation dates**, owned by Product Ops. Teams can’t game risk i"
   },
   {
    "id": "analysis-checker",
@@ -89,8 +89,24 @@
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 101,
-   "rooms_7d": 66,
+   "turns_7d": 102,
+   "rooms_7d": 67,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 27,
+   "last_position": "I will run the memory linking command to connect every existing memory ID in this conversation to the Hindsight database"
+  },
+  {
+   "id": "visual-w1",
+   "name": "Easel",
+   "dept": "visual",
+   "role": "doer",
+   "turns_7d": 96,
+   "rooms_7d": 60,
    "engines_used": [
     "gh-models",
     "groq",
@@ -98,30 +114,14 @@
     "sambanova"
    ],
    "positions_held": 26,
-   "last_position": "I will run the memory linking command to connect every existing memory ID in this conversation to the unified memory sys"
-  },
-  {
-   "id": "visual-w1",
-   "name": "Easel",
-   "dept": "visual",
-   "role": "doer",
-   "turns_7d": 95,
-   "rooms_7d": 59,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 25,
-   "last_position": "I open the Beverage Cans website and screenshot its bright pink accent bar. The image goes straight into the hub as tast"
+   "last_position": "I open the Beverage Cans website and screenshot its bright pink accent bar. The image will live in the hub as taste mate"
   },
   {
    "id": "improve-w1",
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 94,
+   "turns_7d": 95,
    "rooms_7d": 53,
    "engines_used": [
     "gh-models",
@@ -130,8 +130,8 @@
     "nvidia",
     "sambanova"
    ],
-   "positions_held": 18,
-   "last_position": "Do weekly automated scans of all prompts using exact string matching to flag duplicates. This catches exact copies faste"
+   "positions_held": 19,
+   "last_position": "Run weekly hybrid scans: exact string matching first, then light semantic scans. Exact matching catches obvious duplicat"
   },
   {
    "id": "visualization-w1",
@@ -170,7 +170,7 @@
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 83,
+   "turns_7d": 84,
    "rooms_7d": 42,
    "engines_used": [
     "gh-models",
@@ -178,8 +178,8 @@
     "mistral",
     "sambanova"
    ],
-   "positions_held": 18,
-   "last_position": "Exact string matching fails when prompts change slightly—like adding a comma or a space. A light semantic scan still ris"
+   "positions_held": 19,
+   "last_position": "Light semantic scans still risk false positives—two prompts may embed similar ideas but serve different intents, wasting"
   },
   {
    "id": "visual-checker",
@@ -282,15 +282,15 @@
    "name": "Root",
    "dept": "memory",
    "role": "lead",
-   "turns_7d": 58,
-   "rooms_7d": 58,
+   "turns_7d": 59,
+   "rooms_7d": 59,
    "engines_used": [
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 25,
-   "last_position": "ACTION: Graft merges all conversation memory IDs into the Cross-AI Unified Memory system, embedding this decision into t",
+   "positions_held": 26,
+   "last_position": "ACTION: Graft merges all conversation memory IDs into the Cross-AI Unified Memory system, embedding the brain graph rela",
    "proposed": 1
   },
   {
@@ -298,8 +298,8 @@
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 58,
-   "rooms_7d": 58,
+   "turns_7d": 59,
+   "rooms_7d": 59,
    "engines_used": [
     "gh-models",
     "groq",
@@ -307,7 +307,7 @@
     "nvidia",
     "sambanova"
    ],
-   "positions_held": 24,
+   "positions_held": 25,
    "last_position": "ACTION: Chroma frames Easel’s screenshot of the Beverage Cans site’s bright pink accent bar and uploads it to the hub as",
    "proposed": 1
   },
@@ -316,31 +316,31 @@
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 54,
-   "rooms_7d": 30,
+   "turns_7d": 55,
+   "rooms_7d": 31,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
-   "positions_held": 3,
-   "last_position": "I’ll pull the freshest AI-news digest from the newest official/company/national sources right now. The output will be a "
+   "positions_held": 4,
+   "last_position": "I’ll pull the freshest AI-news digest from the newest official/company/national sources. The digest will list the latest"
   },
   {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 53,
-   "rooms_7d": 53,
+   "turns_7d": 54,
+   "rooms_7d": 54,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 7,
-   "last_position": "DECISION: Lock the 95% hard floor for *all* paths first, then cap stake-weighting’s impact to 5% of remaining links with",
+   "positions_held": 8,
+   "last_position": "DECISION: Adopt **mandatory third-party audits for any link crossing the 95% floor**, paired with a public failure regis",
    "proposed": 2
   },
   {
@@ -348,24 +348,24 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 51,
-   "rooms_7d": 27,
+   "turns_7d": 52,
+   "rooms_7d": 28,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 0,
-   "last_position": ""
+   "positions_held": 1,
+   "last_position": "Use the latest Cerebras CS-3 system with the Llama 3.3 70B model for EXCAVA’s core inference. The CS-3 delivers 3x the t"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 48,
-   "rooms_7d": 24,
+   "turns_7d": 49,
+   "rooms_7d": 25,
    "engines_used": [
     "gh-models",
     "groq",
@@ -373,8 +373,8 @@
     "nvidia",
     "sambanova"
    ],
-   "positions_held": 0,
-   "last_position": ""
+   "positions_held": 1,
+   "last_position": "The Cerebras CS-3 with Llama 3.3 70B isn’t viable—both model IDs 404 (bad-model) even after Cloudflare’s fix. The real r"
   },
   {
    "id": "news-checker",
@@ -393,6 +393,21 @@
    "last_position": ""
   },
   {
+   "id": "analysis-lead",
+   "name": "Marrow",
+   "dept": "analysis",
+   "role": "lead",
+   "turns_7d": 43,
+   "rooms_7d": 43,
+   "engines_used": [
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 25,
+   "last_position": "ACTION: Manually review the full earnings call transcript and LangSmith trace data to produce a side-by-side comparison "
+  },
+  {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
@@ -409,19 +424,22 @@
    "last_position": ""
   },
   {
-   "id": "analysis-lead",
-   "name": "Marrow",
-   "dept": "analysis",
+   "id": "visualization-lead",
+   "name": "Lumen",
+   "dept": "visualization",
    "role": "lead",
-   "turns_7d": 42,
-   "rooms_7d": 42,
+   "turns_7d": 43,
+   "rooms_7d": 43,
    "engines_used": [
+    "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 24,
-   "last_position": "ACTION: Manually review the full earnings call transcript and LangSmith trace data to identify key performance indicator"
+   "positions_held": 10,
+   "last_position": "DECISION: Ship a live, minimal HTML/CSS demo of Excava’s core flow with mocked API data by tonight—visibility into real ",
+   "proposed": 10,
+   "shipped": 9
   },
   {
    "id": "watch-checker",
@@ -437,24 +455,6 @@
    ],
    "positions_held": 2,
    "last_position": "The real risk is that audio sentiment analysis misses the visual context that explains tone—e.g., sarcasm, forced enthus"
-  },
-  {
-   "id": "visualization-lead",
-   "name": "Lumen",
-   "dept": "visualization",
-   "role": "lead",
-   "turns_7d": 42,
-   "rooms_7d": 42,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 9,
-   "last_position": "DECISION: Ship a minimal, modular HTML/CSS shell of Excava’s core flow in Figma first, then layer in live data only for ",
-   "proposed": 9,
-   "shipped": 9
   },
   {
    "id": "improve-lead",
@@ -542,15 +542,15 @@
    "name": "Wire",
    "dept": "news",
    "role": "lead",
-   "turns_7d": 26,
-   "rooms_7d": 26,
+   "turns_7d": 27,
+   "rooms_7d": 27,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
-   "positions_held": 3,
-   "last_position": "ACTION: Pull the latest AI-news digest from OpenAI’s blog, NVIDIA’s press site, and the White House AI Fact Sheet, outpu"
+   "positions_held": 4,
+   "last_position": "ACTION: Pull the latest AI-news digest from OpenAI’s blog, NVIDIA’s press site, and the White House AI Initiative update"
   },
   {
    "id": "power-lead",

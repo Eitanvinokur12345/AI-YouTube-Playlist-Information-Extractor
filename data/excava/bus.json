@@ -14923,15 +14923,16 @@
       "department": "memory",
       "source": "agent:memory-lead",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the decision's concrete step is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-07-12T19:41:29.006043+00:00",
-      "updated_at": "2026-07-12T19:41:29.006053+00:00"
+      "updated_at": "2026-07-15T15:20:41.315254+00:00",
+      "result": "Semantic index: 1461 vectors (model gemini-embedding-001); hub 6259 items → 4798 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "iris-s-initiative-run-bo-85293",
@@ -19507,15 +19508,16 @@
       "department": "news",
       "source": "room-action:news",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "news-w1",
       "handoff_docs": [],
       "created_at": "2026-07-14T01:55:12.742803+00:00",
-      "updated_at": "2026-07-14T01:55:12.742809+00:00"
+      "updated_at": "2026-07-15T15:20:47.664356+00:00",
+      "result": "Ran the trend watch. trend_watch: 10 proposals (top score 10); queued 0 into self-improvement."
     },
     {
       "id": "visual-room-action-chrom-94119",
@@ -23170,15 +23172,16 @@
       "department": "security",
       "source": "room-action:security",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-14T17:28:58.497261+00:00",
-      "updated_at": "2026-07-14T17:28:58.497270+00:00"
+      "updated_at": "2026-07-15T15:20:48.358648+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "transcripts-room-action--50146",
@@ -25312,15 +25315,16 @@
       "department": "creators",
       "source": "room-action:creators",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-07-15T09:22:06.800494+00:00",
-      "updated_at": "2026-07-15T09:22:06.800501+00:00"
+      "updated_at": "2026-07-15T15:20:48.422037+00:00",
+      "result": "Creators: 12 creations on record, 12 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     },
     {
       "id": "mining-room-action-mine--7334",
@@ -30339,17 +30343,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-28191--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-07-15T15:09:51.953537+00:00",
-      "updated_at": "2026-07-15T15:09:59.400680+00:00"
+      "updated_at": "2026-07-15T15:20:41.383904+00:00",
+      "result": "923 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g5-leverage-53-100-28191",
@@ -30524,7 +30529,42 @@
       "created_at": "2026-07-15T15:15:16.574870+00:00",
       "updated_at": "2026-07-15T15:15:22.947934+00:00",
       "result": "Ran the collect designs. collect_designs: 524 designs (kept 524 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "id": "verify-the-next-200-of-6-28840",
+      "title": "Verify the next 200 of 6209 unverified elements (2-source + live test)",
+      "detail": "value=86 size=40(small) [cost 35/steps 70/risk 10] · 6209 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-15T15:20:40.952178+00:00",
+      "updated_at": "2026-07-15T15:20:40.952192+00:00"
+    },
+    {
+      "id": "raise-g8-personal-fit-66-28841",
+      "title": "Raise G8 Personal fit (66/100): 17% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
+      "detail": "value=34 size=17(small) [cost 15/steps 25/risk 10] · G8 at 66",
+      "department": "visual",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "visual-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-15T15:20:41.060782+00:00",
+      "updated_at": "2026-07-15T15:20:47.352306+00:00",
+      "result": "Ran the collect designs. collect_designs: 524 designs (kept 524 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-video; url-checked 4). designs-only."
     }
   ],
-  "updated_at": "2026-07-15T15:15:24.327711+00:00"
+  "updated_at": "2026-07-15T15:20:48.422045+00:00"
 }

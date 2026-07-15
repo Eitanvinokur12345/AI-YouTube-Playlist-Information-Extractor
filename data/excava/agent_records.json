@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-15T20:04:18.508582+00:00",
+ "generated_at": "2026-07-15T20:11:44.822987+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 228,
+   "turns_7d": 229,
    "rooms_7d": 58,
    "engines_used": [
     "gh-models",
@@ -18,7 +18,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "A hard 7-second lock with no overrides trades one failure mode for another: it guarantees no stale actions, but it also "
+   "last_position": "The hard 7-second lock with a visible countdown still risks users reflexively hitting refresh to clear the modal, turnin"
   },
   {
    "id": "analysis-w1",
@@ -41,7 +41,7 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 152,
+   "turns_7d": 153,
    "rooms_7d": 78,
    "engines_used": [
     "gh-models",
@@ -50,7 +50,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the **real-time sync check blocking actions if the log’s timestamp is older than the last edit by more than 7 seco"
+   "last_position": "Adopt the **7-second hard sync lock with a visible countdown and a mandatory \"refresh\" button—no overrides**. This guara"
   },
   {
    "id": "transcripts-w1",
@@ -170,8 +170,8 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 99,
-   "rooms_7d": 51,
+   "turns_7d": 100,
+   "rooms_7d": 52,
    "engines_used": [
     "gh-models",
     "groq",
@@ -179,7 +179,24 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "We should test Maverick 12B with real EXCAVA prompts to gauge its actual quality and identify potential fragmentation er"
+   "last_position": "We should switch to Llama 4 Maverick 12B for EXCAVA's 10K-token prompts because it's 3x faster than our current model an"
+  },
+  {
+   "id": "power-checker",
+   "name": "Torque",
+   "dept": "power",
+   "role": "checker",
+   "turns_7d": 97,
+   "rooms_7d": 49,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "nvidia",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "Maverick 12B’s 95% quality claim is a Fable 5 benchmark—real EXCAVA prompts may drop that to 80%. Instead, test Llama 4 "
   },
   {
    "id": "creators-w1",
@@ -196,23 +213,6 @@
    ],
    "positions_held": 29,
    "last_position": "I will draft the \"UGC Factory\" npm package for the creators tab. This package will provide tools for generating user-gen"
-  },
-  {
-   "id": "power-checker",
-   "name": "Torque",
-   "dept": "power",
-   "role": "checker",
-   "turns_7d": 96,
-   "rooms_7d": 48,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "nvidia",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "Maverick 12B’s real risk isn’t just fragmentation—it’s that splitting ultra-long documents forces EXCAVA to stitch outpu"
   },
   {
    "id": "improve-checker",
@@ -506,7 +506,7 @@
    "positions_held": 24,
    "last_position": "DECISION: Run a controlled A/B test comparing Llama 4 Maverick 12B against Llama 4 17B (256K context) on real EXCAVA 10K",
    "proposed": 22,
-   "shipped": 21
+   "shipped": 22
   },
   {
    "id": "news-checker",

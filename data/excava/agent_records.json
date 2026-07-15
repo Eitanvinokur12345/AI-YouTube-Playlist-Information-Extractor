@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-15T10:33:21.030826+00:00",
+ "generated_at": "2026-07-15T10:39:07.710828+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 208,
+   "turns_7d": 209,
    "rooms_7d": 57,
    "engines_used": [
     "gh-models",
@@ -18,7 +18,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The tiered system introduces multiple failure points, depending on real-time webhooks that can fail or be delayed. Inste"
+   "last_position": "The tiered system compounds risk by relying on real-time webhooks—if the downstream service misses an update or the webh"
   },
   {
    "id": "analysis-w1",
@@ -57,7 +57,7 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 134,
+   "turns_7d": 135,
    "rooms_7d": 68,
    "engines_used": [
     "gh-models",
@@ -66,7 +66,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the **tiered system**: real-time webhooks for edits/retractions push updates instantly to legal/compliance, while "
+   "last_position": "Adopt the **tiered system**: real-time webhooks push edits/retractions instantly to legal/compliance, while a 5-minute c"
   },
   {
    "id": "analysis-checker",
@@ -166,6 +166,22 @@
    "last_position": "Do a hybrid scan: exact string matching plus semantic similarity. This catches hard-coded values and direct references w"
   },
   {
+   "id": "creators-w1",
+   "name": "Forge",
+   "dept": "creators",
+   "role": "doer",
+   "turns_7d": 91,
+   "rooms_7d": 58,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 24,
+   "last_position": "I will draft the \"UGC Factory\" npm package for the creators tab, an open-source package that generates custom Claude ski"
+  },
+  {
    "id": "improve-checker",
    "name": "Gauge",
    "dept": "improve",
@@ -180,22 +196,6 @@
    ],
    "positions_held": 27,
    "last_position": "Hybrid scanning increases compute costs significantly, which can strain resources without guaranteeing a proportionate b"
-  },
-  {
-   "id": "creators-w1",
-   "name": "Forge",
-   "dept": "creators",
-   "role": "doer",
-   "turns_7d": 90,
-   "rooms_7d": 57,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 23,
-   "last_position": "I will draft the \"UGC Factory\" npm package for the creators tab, an open-source Claude Code skill that generates user-ge"
   },
   {
    "id": "security-w1",
@@ -235,7 +235,7 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 78,
+   "turns_7d": 79,
    "rooms_7d": 41,
    "engines_used": [
     "gh-models",
@@ -243,8 +243,8 @@
     "mistral",
     "sambanova"
    ],
-   "positions_held": 27,
-   "last_position": "Deploy Cerebras CS-3 with Llama 3.4 70B as EXCAVA’s primary engine. The CS-3’s wafer-scale design delivers 31 times the "
+   "positions_held": 28,
+   "last_position": "Deploy Llama 3.4 70B on rented GPUs from Lambda or RunPod as EXCAVA’s primary model. This approach offers a 0.5% capabil"
   },
   {
    "id": "news-w1",
@@ -267,7 +267,7 @@
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 75,
+   "turns_7d": 76,
    "rooms_7d": 38,
    "engines_used": [
     "gh-models",
@@ -276,8 +276,8 @@
     "nvidia",
     "sambanova"
    ],
-   "positions_held": 27,
-   "last_position": "Gearbox’s CS-3 pitch ignores the lock-in risk: EXCAVA’s pipeline would break if Cerebras drops model support or raises p"
+   "positions_held": 28,
+   "last_position": "Gearbox’s rented-GPU plan ignores the hidden cost of latency spikes—Lambda and RunPod’s shared instances can double resp"
   },
   {
    "id": "visual-lead",
@@ -398,16 +398,16 @@
    "name": "Nova",
    "dept": "creators",
    "role": "lead",
-   "turns_7d": 56,
-   "rooms_7d": 56,
+   "turns_7d": 57,
+   "rooms_7d": 57,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 23,
-   "last_position": "ACTION: Nova tests the \"UGC Factory\" npm package drafted by Forge, verifying its functionality and output."
+   "positions_held": 24,
+   "last_position": "ACTION: Nova tests the \"UGC Factory\" npm package drafted by Forge, verifying its functionality and labeling the result \""
   },
   {
    "id": "visualization-lead",
@@ -602,7 +602,7 @@
    "positions_held": 13,
    "last_position": "DECISION: Run a head-to-head A/B test between Llama 3.4 70B on Cerebras CS-3 and Llama 3.4 70B on existing GPU clusters—",
    "proposed": 11,
-   "shipped": 10
+   "shipped": 11
   },
   {
    "id": "mining-checker",
@@ -624,17 +624,17 @@
    "name": "Access",
    "dept": "accessibility",
    "role": "lead",
-   "turns_7d": 19,
-   "rooms_7d": 19,
+   "turns_7d": 20,
+   "rooms_7d": 20,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 11,
-   "last_position": "DECISION: Implement a hybrid skip link that is server-rendered, hidden by default, and revealed on focus via CSS. This w",
-   "proposed": 11,
+   "positions_held": 12,
+   "last_position": "DECISION: Implement a hybrid approach with a server-side skip link combined with a client-side enhancement, ensuring rel",
+   "proposed": 12,
    "shipped": 11
   },
   {

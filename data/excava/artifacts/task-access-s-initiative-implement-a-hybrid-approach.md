@@ -1,14 +1,37 @@
-# [Access's initiative] Implement a hybrid approach with a server-side skip link hidden by default, which is activated via client-side JavaScrip
+# [Access's initiative] Implement a hybrid approach with a server-side skip link combined with a client-side enhancement, ensuring reliable acce
 
-> accessibility · task `access-s-initiative-impl-9686` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
+> accessibility · task `access-s-initiative-impl-11926` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
-**Approach:** Implement a hybrid approach with a server-side skip link hidden by default, which is activated via client-side JavaScript
+```markdown
+**Approach:**
+Hybrid skip link combining server-rendered anchor with client-side JS to ensure visibility and keyboard operability.
+
 **Steps:**
-1. Create a new HTML file (e.g., `index.html`) and add a server-side skip link with a unique `id` (e.g., `skip-link`) and `style` attribute set to `display: none;` to hide it by default.
-2. Create a new JavaScript file (e.g., `script.js`) and add an event listener to the `document` object to listen for the `keydown` event, specifically for the `Tab` key, to activate the skip link when pressed.
-3. Use CSS to style the skip link with `position: absolute;` and `visibility: hidden;` to ensure it is accessible to screen readers but not visible on the page by default, and update the JavaScript file to toggle the `display` style property of the skip link when activated.
+1. **Server-side:** Add a hidden skip link in `_includes/head.html` (Jekyll) or equivalent layout:
+   ```html
+   <a href="#main-content" class="skip-link">Skip to main content</a>
+   ```
+   Style with `.skip-link { position: absolute; left: -9999px; top: 0; background: #000; color: #fff; }` and `.skip-link:focus { left: 0; }`.
+
+2. **Client-side:** Enhance with JS (`skip-link.js`) to handle dynamic content:
+   ```javascript
+   document.addEventListener('DOMContentLoaded', () => {
+     const skipLink = document.querySelector('.skip-link');
+     skipLink.addEventListener('click', (e) => {
+       e.preventDefault();
+       document.querySelector('#main-content').focus();
+     });
+   });
+   ```
+
+3. **Test:** Verify with:
+   ```bash
+   npm test -- --grep "skip link"  # or manual checks via keyboard tabbing
+   ```
+
 **Needs:**
-* A code editor (e.g., Visual Studio Code)
-* A web browser (e.g., Google Chrome) for testing
-* Basic HTML, CSS, and JavaScript knowledge
-* A screen reader (e.g., JAWS) for accessibility testing
+- Access to project’s templating system (e.g., Jekyll, Hugo, or custom).
+- `main-content` ID on the primary content container.
+- Node.js/npm for client-side testing (if applicable).
+- Keyboard/screen reader for manual verification.
+```

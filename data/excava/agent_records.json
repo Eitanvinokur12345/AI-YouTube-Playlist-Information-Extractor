@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-15T09:37:08.673115+00:00",
+ "generated_at": "2026-07-15T09:43:22.888868+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 202,
+   "turns_7d": 203,
    "rooms_7d": 57,
    "engines_used": [
     "gh-models",
@@ -18,7 +18,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The tiered system introduces reliance on webhooks that can fail, complicating what should be a straightforward transcrip"
+   "last_position": "The tiered system still assumes webhooks are reliable—if the downstream service misses a push or the webhook fails, lega"
   },
   {
    "id": "analysis-w1",
@@ -57,7 +57,7 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 131,
+   "turns_7d": 132,
    "rooms_7d": 68,
    "engines_used": [
     "gh-models",
@@ -66,7 +66,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Implement a **tiered system with real-time webhooks for edits and retractions, and a 5-minute cache for non-urgent reque"
+   "last_position": "Adopt a **tiered system**: real-time webhooks for edits/retractions, paired with a 5-minute cache for non-urgent request"
   },
   {
    "id": "memory-w1",
@@ -105,8 +105,8 @@
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 110,
-   "rooms_7d": 57,
+   "turns_7d": 111,
+   "rooms_7d": 58,
    "engines_used": [
     "gh-models",
     "groq",
@@ -114,7 +114,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "We should implement the real API endpoint behind the feature flag tonight, as this will give us authentic user behavior "
+   "last_position": "We should implement a dark theme for EXCAVA's interface. This choice enhances visual clarity and reduces eye strain, par"
   },
   {
    "id": "visual-w1",
@@ -137,8 +137,8 @@
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 106,
-   "rooms_7d": 53,
+   "turns_7d": 107,
+   "rooms_7d": 54,
    "engines_used": [
     "gh-models",
     "groq",
@@ -146,7 +146,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Pane: A thin stub with mocked latency and errors still risks hiding the real failures—users will abandon the interface l"
+   "last_position": "Pane: A dark theme hides real contrast issues in EXCAVA’s interface—users won’t notice unreadable text until they’re in "
   },
   {
    "id": "improve-w1",
@@ -186,32 +186,32 @@
    "name": "Warden",
    "dept": "security",
    "role": "doer",
-   "turns_7d": 82,
-   "rooms_7d": 51,
+   "turns_7d": 83,
+   "rooms_7d": 52,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 14,
-   "last_position": "I will run the LLM Guard scanner on the input/output stream to detect any potential leaks or injection vulnerabilities, "
+   "positions_held": 15,
+   "last_position": "I will run the LLM Guard scanner on the input/output stream to detect any potential security leaks or injection vulnerab"
   },
   {
    "id": "creators-w1",
    "name": "Forge",
    "dept": "creators",
    "role": "doer",
-   "turns_7d": 81,
-   "rooms_7d": 48,
+   "turns_7d": 82,
+   "rooms_7d": 49,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 14,
-   "last_position": "I will draft the first \"UGC Factory\" package for the creators tab, an open-source package that generates customizable Cl"
+   "positions_held": 15,
+   "last_position": "I will build the first \"UGC Factory\" package for the creators tab, which will produce a customizable and open-source pac"
   },
   {
    "id": "memory-lead",
@@ -245,6 +245,22 @@
    ],
    "positions_held": 26,
    "last_position": "Action: I will fetch the latest AI headlines from Reuters, BBC, and the White House AI pages. This will produce a fresh "
+  },
+  {
+   "id": "power-w1",
+   "name": "Gearbox",
+   "dept": "power",
+   "role": "doer",
+   "turns_7d": 73,
+   "rooms_7d": 38,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 22,
+   "last_position": "Deploy Llama 3.4 70B as EXCAVA’s primary model. It’s open-source, fully controllable, and benchmarks within 1-2% of Myth"
   },
   {
    "id": "visual-lead",
@@ -281,20 +297,21 @@
    "last_position": "The action of applying a muted coral accent to interactive elements and exporting a style guide is a suitable mission ta"
   },
   {
-   "id": "power-w1",
-   "name": "Gearbox",
+   "id": "power-checker",
+   "name": "Torque",
    "dept": "power",
-   "role": "doer",
-   "turns_7d": 72,
-   "rooms_7d": 38,
+   "role": "checker",
+   "turns_7d": 70,
+   "rooms_7d": 35,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
+    "nvidia",
     "sambanova"
    ],
-   "positions_held": 21,
-   "last_position": "Deploy Claude Mythos 5 as our primary model for EXCAVA. It offers superior performance and advanced capabilities that ca"
+   "positions_held": 22,
+   "last_position": "Llama 3.4's performance might closely match Mythos 5, but there’s a risk of stalling innovative advancements that propri"
   },
   {
    "id": "memory-checker",
@@ -311,23 +328,6 @@
    ],
    "positions_held": 2,
    "last_position": "The real risk with a single, shared memory graph is that it may become overly centralized and prone to single-point fail"
-  },
-  {
-   "id": "power-checker",
-   "name": "Torque",
-   "dept": "power",
-   "role": "checker",
-   "turns_7d": 69,
-   "rooms_7d": 35,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "nvidia",
-    "sambanova"
-   ],
-   "positions_held": 21,
-   "last_position": "Deploying Claude Mythos 5 poses a significant risk due to its proprietary nature, which could limit our flexibility and "
   },
   {
    "id": "transcripts-lead",
@@ -382,16 +382,16 @@
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 57,
-   "rooms_7d": 39,
+   "turns_7d": 58,
+   "rooms_7d": 40,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 14,
-   "last_position": "I will run a targeted search across GitHub and Reddit to gather information on the latest AI developments and tools. Thi"
+   "positions_held": 15,
+   "last_position": "I will run a targeted search on GitHub for repositories tagged with \"AI\" and \"research\" to gather real-world implementat"
   },
   {
    "id": "visualization-lead",
@@ -409,7 +409,7 @@
    "positions_held": 20,
    "last_position": "DECISION: Ship the controlled real API endpoint behind the feature flag tonight, limiting traffic to 5% of users, to qui",
    "proposed": 20,
-   "shipped": 18
+   "shipped": 19
   },
   {
    "id": "news-lead",
@@ -425,6 +425,22 @@
    ],
    "positions_held": 25,
    "last_position": "ACTION: Query Reuters, BBC, and the White House AI Fact Sheet for the latest AI policy and tech developments; output a c"
+  },
+  {
+   "id": "creators-lead",
+   "name": "Nova",
+   "dept": "creators",
+   "role": "lead",
+   "turns_7d": 48,
+   "rooms_7d": 48,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 15,
+   "last_position": "ACTION: Nova tests the \"UGC Factory\" package drafted by Forge, verifying its fun and functionality, then labels the test"
   },
   {
    "id": "news-checker",
@@ -443,20 +459,20 @@
    "last_position": ""
   },
   {
-   "id": "creators-lead",
-   "name": "Nova",
-   "dept": "creators",
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
    "role": "lead",
-   "turns_7d": 47,
-   "rooms_7d": 47,
+   "turns_7d": 46,
+   "rooms_7d": 46,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 14,
-   "last_position": "ACTION: Nova tests the \"UGC Factory\" package drafted by Forge, verifying its functionality and labeling the result \"Crea"
+   "positions_held": 15,
+   "last_position": "ACTION: Warden runs LLM Guard scanner on the input/output stream; security report is generated and delivered to the lead"
   },
   {
    "id": "improve-lead",
@@ -475,22 +491,6 @@
    "last_position": "DECISION: Adopt staged hybrid scans—exact string matching first, then semantic analysis only on flagged prompts—because ",
    "proposed": 14,
    "shipped": 14
-  },
-  {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 45,
-   "rooms_7d": 45,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 14,
-   "last_position": "ACTION: Warden runs LLM Guard scanner on the input/output stream; security report generated and sent to the lead for ver"
   },
   {
    "id": "analysis-lead",
@@ -608,33 +608,33 @@
    "name": "Boulder",
    "dept": "mining",
    "role": "lead",
-   "turns_7d": 32,
-   "rooms_7d": 32,
+   "turns_7d": 33,
+   "rooms_7d": 33,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 14,
-   "last_position": "ACTION: Mine GitHub, Hacker News, Product Hunt, Reddit, and Telegram for recent AI tools, papers, and discussions, then "
+   "positions_held": 15,
+   "last_position": "ACTION: I will filter through the list of GitHub repositories tagged with \"AI\" and \"research\" to identify and retain onl"
   },
   {
    "id": "accessibility-lead",
    "name": "Access",
    "dept": "accessibility",
    "role": "lead",
-   "turns_7d": 16,
-   "rooms_7d": 16,
+   "turns_7d": 17,
+   "rooms_7d": 17,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 8,
-   "last_position": "DECISION: Implement a hybrid approach with a server-side skip link using `display: none` that toggles visibility via cli",
-   "proposed": 8,
+   "positions_held": 9,
+   "last_position": "DECISION: Implement a hybrid skip link—always visible but hidden off-screen until focused, with a fallback to server-sid",
+   "proposed": 9,
    "shipped": 8
   },
   {

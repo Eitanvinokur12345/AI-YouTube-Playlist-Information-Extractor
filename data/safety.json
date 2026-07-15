@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-07-15T12:02:18.064251+00:00",
+  "generated_at": "2026-07-15T14:22:17.730612+00:00",
   "policy": "activator gate: safe = auto-activate, caution = warn, risky = block until confirmed",
   "summary": {
     "safe": 136,
-    "caution": 1128,
-    "risky": 37
+    "caution": 1129,
+    "risky": 36
   },
   "connectors": {
     "perplexity-mcp": {
@@ -194,9 +194,10 @@
     },
     "github-mcp-server": {
       "name": "GitHub MCP Server",
-      "rating": "risky",
+      "rating": "safe",
       "reasons": [
-        "requests broad system/shell/file access"
+        "official vendor",
+        "open source"
       ]
     },
     "mcp-toolbox-for-databases": {
@@ -6289,10 +6290,10 @@
     },
     "globalping": {
       "name": "Globalping",
-      "rating": "risky",
+      "rating": "caution",
       "reasons": [
-        "requests broad system/shell/file access",
-        "third-party (not an official vendor connector)"
+        "third-party (not an official vendor connector)",
+        "open source"
       ]
     },
     "gluestack-ui-mcp-server": {
@@ -7955,10 +7956,10 @@
     },
     "godoc-mcp-server": {
       "name": "godoc-mcp-server",
-      "rating": "caution",
+      "rating": "risky",
       "reasons": [
-        "third-party (not an official vendor connector)",
-        "open source"
+        "requests broad system/shell/file access",
+        "third-party (not an official vendor connector)"
       ]
     },
     "godot-mcp": {
@@ -8011,9 +8012,9 @@
     },
     "github-repos-manager-mcp-server": {
       "name": "GitHub Repos Manager MCP Server",
-      "rating": "safe",
+      "rating": "caution",
       "reasons": [
-        "official vendor",
+        "needs an API key / secret",
         "open source"
       ]
     },

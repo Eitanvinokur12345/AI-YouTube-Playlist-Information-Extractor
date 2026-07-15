@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-15T06:41:16.226042+00:00",
+ "generated_at": "2026-07-15T09:23:39.524963+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 200,
+   "turns_7d": 201,
    "rooms_7d": 57,
    "engines_used": [
     "gh-models",
@@ -18,7 +18,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Real-time webhooks still introduce a risk of system failure—if the webhook doesn't fire or if the downstream service has"
+   "last_position": "The tiered system still assumes webhooks are reliable—if the downstream service misses an update, legal/compliance gets "
   },
   {
    "id": "analysis-w1",
@@ -57,7 +57,7 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 130,
+   "turns_7d": 131,
    "rooms_7d": 68,
    "engines_used": [
     "gh-models",
@@ -66,7 +66,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will query the kimtaeyoon83/mcp-server-youtube-transcript tool for the pending videos to retrieve their full transcrip"
+   "last_position": "Implement a **tiered system with real-time webhooks for edits and retractions, and a 5-minute cache for non-urgent reque"
   },
   {
    "id": "memory-w1",
@@ -121,8 +121,8 @@
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 108,
-   "rooms_7d": 56,
+   "turns_7d": 109,
+   "rooms_7d": 57,
    "engines_used": [
     "gh-models",
     "groq",
@@ -130,15 +130,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Ship the real API endpoint behind the feature flag tonight. The real network behavior exposes actual latency and error p"
+   "last_position": "Ship the real API endpoint behind the feature flag tonight. The real network behavior will expose real data gaps and per"
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 104,
-   "rooms_7d": 52,
+   "turns_7d": 105,
+   "rooms_7d": 53,
    "engines_used": [
     "gh-models",
     "groq",
@@ -146,7 +146,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Pane: A thin stub with mocked latency and errors still risks hiding the real failure modes—network timeouts, partial pay"
+   "last_position": "Shipping the real API endpoint tonight introduces a significant risk of overwhelming our development resources with unfo"
   },
   {
    "id": "improve-w1",
@@ -182,6 +182,22 @@
    "last_position": "Hybrid scanning increases compute costs significantly, which can strain resources without guaranteeing a proportionate b"
   },
   {
+   "id": "security-w1",
+   "name": "Warden",
+   "dept": "security",
+   "role": "doer",
+   "turns_7d": 80,
+   "rooms_7d": 49,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 12,
+   "last_position": "I will run the LLM Guard scanner on the input/output stream to detect leaks or injection attempts. This will produce a r"
+  },
+  {
    "id": "memory-lead",
    "name": "Root",
    "dept": "memory",
@@ -199,35 +215,19 @@
    "proposed": 1
   },
   {
-   "id": "security-w1",
-   "name": "Warden",
-   "dept": "security",
-   "role": "doer",
-   "turns_7d": 79,
-   "rooms_7d": 48,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 11,
-   "last_position": "I will run the LLM Guard scanner on the input/output stream to detect leaks or injection attempts. This will produce a r"
-  },
-  {
    "id": "creators-w1",
    "name": "Forge",
    "dept": "creators",
    "role": "doer",
-   "turns_7d": 78,
-   "rooms_7d": 45,
+   "turns_7d": 79,
+   "rooms_7d": 46,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 11,
+   "positions_held": 12,
    "last_position": "I will draft the first \"UGC Factory\" package for the creators tab—an open-source npm package that generates user-generat"
   },
   {
@@ -285,7 +285,7 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 70,
+   "turns_7d": 71,
    "rooms_7d": 37,
    "engines_used": [
     "gh-models",
@@ -293,8 +293,8 @@
     "mistral",
     "sambanova"
    ],
-   "positions_held": 19,
-   "last_position": "Run Llama 3.4 70B on the NVIDIA H100. It’s the fastest closed-source model we can deploy right now, and the H100’s tenso"
+   "positions_held": 20,
+   "last_position": "We should deploy Claude Mythos 5, Anthropic's most powerful open-source model, to raise EXCAVA's capability. This option"
   },
   {
    "id": "memory-checker",
@@ -317,7 +317,7 @@
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 67,
+   "turns_7d": 68,
    "rooms_7d": 34,
    "engines_used": [
     "gh-models",
@@ -326,8 +326,8 @@
     "nvidia",
     "sambanova"
    ],
-   "positions_held": 19,
-   "last_position": "The real risk with using Llama 3.4 on the NVIDIA H100 revolves around dependency on a closed-source model which limits f"
+   "positions_held": 20,
+   "last_position": "Claude Mythos 5 isn’t open-source—it’s Anthropic’s proprietary model, so the flexibility claim is false. The real risk i"
   },
   {
    "id": "transcripts-lead",
@@ -382,16 +382,16 @@
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 54,
-   "rooms_7d": 36,
+   "turns_7d": 55,
+   "rooms_7d": 37,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 11,
-   "last_position": "I’ll run a targeted search across GitHub, Hacker News, Product Hunt, Reddit, and Telegram for \"AI agent mining tools\" an"
+   "positions_held": 12,
+   "last_position": "I will run a targeted search across GitHub, Hacker News, Product Hunt, Reddit, and Telegram to gather AI-related informa"
   },
   {
    "id": "visualization-lead",
@@ -465,16 +465,32 @@
    "name": "Nova",
    "dept": "creators",
    "role": "lead",
-   "turns_7d": 44,
-   "rooms_7d": 44,
+   "turns_7d": 45,
+   "rooms_7d": 45,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 11,
-   "last_position": "ACTION: Nova tests the \"UGC Factory\" package drafted by Forge, verifying its fun factor and functionality, then labels i"
+   "positions_held": 12,
+   "last_position": "ACTION: Nova tests the \"UGC Factory\" package drafted by Forge, verifying its functionality and ensuring all tests pass."
+  },
+  {
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
+   "turns_7d": 43,
+   "rooms_7d": 43,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 12,
+   "last_position": "ACTION: Warden runs LLM Guard scanner on the input/output stream; security report generated with detected anomalies outl"
   },
   {
    "id": "analysis-lead",
@@ -505,22 +521,6 @@
    ],
    "positions_held": 2,
    "last_position": "The real risk is that audio sentiment analysis misses the visual context that explains tone—e.g., sarcasm, forced enthus"
-  },
-  {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 42,
-   "rooms_7d": 42,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 11,
-   "last_position": "ACTION: Warden runs LLM Guard scanner on the input/output stream; security report generated confirming stream integrity."
   },
   {
    "id": "watch-lead",
@@ -608,33 +608,33 @@
    "name": "Boulder",
    "dept": "mining",
    "role": "lead",
-   "turns_7d": 29,
-   "rooms_7d": 29,
+   "turns_7d": 30,
+   "rooms_7d": 30,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 11,
-   "last_position": "ACTION: Mine GitHub, Hacker News, Product Hunt, Reddit, and Telegram for \"AI agent mining tools\" and \"AI-assisted resear"
+   "positions_held": 12,
+   "last_position": "ACTION: Mine GitHub, Hacker News, Product Hunt, Reddit, and Telegram for recent AI projects, tools, and discussions, the"
   },
   {
    "id": "accessibility-lead",
    "name": "Access",
    "dept": "accessibility",
    "role": "lead",
-   "turns_7d": 15,
-   "rooms_7d": 15,
+   "turns_7d": 16,
+   "rooms_7d": 16,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 7,
-   "last_position": "DECISION: Implement a hidden skip link that appears only after keyboard focus, tested for contrast and reduced motion. O",
-   "proposed": 7,
+   "positions_held": 8,
+   "last_position": "DECISION: Implement a hybrid approach with a server-side skip link using `display: none` that toggles visibility via cli",
+   "proposed": 8,
    "shipped": 7
   },
   {

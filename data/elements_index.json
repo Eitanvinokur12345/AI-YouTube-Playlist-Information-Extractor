@@ -1,22 +1,22 @@
 {
- "generated_at": "2026-07-15T17:34:34.693645+00:00",
- "total": 8328,
+ "generated_at": "2026-07-15T19:25:37.022751+00:00",
+ "total": 8338,
  "counts": {
-  "skill": 2410,
+  "skill": 2415,
   "tool": 2548,
-  "prompt": 463,
-  "command": 569,
-  "connector": 1301,
-  "design": 524,
+  "prompt": 465,
+  "command": 570,
+  "connector": 1302,
+  "design": 525,
   "format": 53,
   "model": 448,
   "creation": 12
  },
- "stubs": 2027,
+ "stubs": 2028,
  "by_status": {
   "verified": 953,
   "niche": 1165,
-  "unverified": 6210,
+  "unverified": 6220,
   "dead": 0
  },
  "note": "READ-ONLY derivative. Sources of truth = the per-type files; write via element_model.set_field only.",
@@ -80579,6 +80579,116 @@
    "install": "",
    "quality_score": 1,
    "trust": 95,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": true,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:mass-unsubscribe",
+   "type": "skill",
+   "name": "Mass Unsubscribe",
+   "what": "Automating the process of unsubscribing from multiple email newsletters and marketing subscriptions.",
+   "category": "productivity",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:data-extraction-gmail",
+   "type": "skill",
+   "name": "Data Extraction from Gmail",
+   "what": "Extracting specific information, such as unique senders and frequencies, from Gmail messages.",
+   "category": "data",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 4,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:scripting-python",
+   "type": "skill",
+   "name": "Scripting (Python)",
+   "what": "Writing and executing Python scripts, potentially with AI assistance, for various tasks.",
+   "category": "code",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 3,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:cli-usage-2",
+   "type": "skill",
+   "name": "CLI Usage",
+   "what": "Interacting with command-line interfaces for tool execution and system management.",
+   "category": "code",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 4,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:data-categorization",
+   "type": "skill",
+   "name": "Data Categorization",
+   "what": "Organizing extracted data into meaningful categories.",
+   "category": "data",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 4,
+   "trust": 75,
    "created_by": "",
    "verified": {
     "status": "unverified",
@@ -173410,6 +173520,52 @@
    "related": []
   },
   {
+   "id": "prompt:scan-gmail-for-newsletters-and-unsubscribe",
+   "type": "prompt",
+   "name": "Scan Gmail for Newsletters and Unsubscribe",
+   "what": "To identify and categorize email newsletters and marketing subscriptions in Gmail, then allow the user to choose which ones to keep and unsubscribe from the rest.",
+   "category": "automation",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "body": "Read connections.md and use the Google gws integration to scan my Gmail inbox for newsletter and marketing subscriptions. List every unique sender, grouped by category, then let me choose which to keep and unsubscribe from the rest.",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "prompt:unsubscribe-from-all-listed-newsletters",
+   "type": "prompt",
+   "name": "Unsubscribe from all listed newsletters",
+   "what": "To instruct Claude to unsubscribe from all the newsletters it has identified and listed.",
+   "category": "automation",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "body": "Unsubscribe to all of these.",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
    "id": "command:ultra-plan",
    "type": "command",
    "name": "/ultra-plan",
@@ -188399,6 +188555,28 @@
    "type": "command",
    "name": "npx skills add github.com/random-ai/claude-skill",
    "what": "Installs a random Claude skill from a GitHub repository (shown with a security warning).",
+   "category": "",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "command:bash-gws-gmail-users-messages-list-params-userid-me-maxresul",
+   "type": "command",
+   "name": "Bash(gws gmail users messages list --params '{\"userId\":\"me\", \"maxResults\":50}')",
+   "what": "Uses the Google Workspace CLI to list Gmail messages for the current user, with a limit of 50 results.",
    "category": "",
    "source_videos": [],
    "links": {},
@@ -228968,6 +229146,30 @@
    "related": []
   },
   {
+   "id": "connector:google-gws-integration",
+   "type": "connector",
+   "name": "Google gws integration",
+   "what": "Allows Claude to interact with Google Workspace services, specifically Gmail, to scan inboxes and manage subscriptions.",
+   "category": "",
+   "source_videos": [],
+   "links": {
+    "source_url": "https://www.youtube.com/watch?v=NV2a7kqG73k"
+   },
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
    "id": "design:https-github-com-ekmas-neobrutalism-components",
    "type": "design",
    "name": "neobrutalism-components",
@@ -244102,6 +244304,30 @@
     "at": ""
    },
    "stub": true,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "design:categorized-newsletter-list-terminal-ui",
+   "type": "design",
+   "name": "Categorized Newsletter List (Terminal UI)",
+   "what": "A clean, tabular layout within a terminal interface. It features distinct categories (e.g., 'AI / Tech Newsletters', 'E-commerce / Marketing / DTC', 'Health & Wellness') as headings. Under each category, there's a table with two columns: 'Sender' (listing email addresses and associated names) and 'Frequency' (indicating the number of emails received from that sender). The background is dark, and text is light, typical of a terminal. The overall vibe is functional and data-centric.",
+   "category": "",
+   "source_videos": [],
+   "links": {
+    "source_url": "https://www.youtube.com/watch?v=NV2a7kqG73k"
+   },
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
    "enriched": false,
    "related": []
   },

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-15T11:13:41.089226+00:00",
+ "generated_at": "2026-07-15T11:20:26.648858+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -25,7 +25,7 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 153,
+   "turns_7d": 154,
    "rooms_7d": 84,
    "engines_used": [
     "gh-models",
@@ -34,7 +34,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Adopt a **tiered system with real-time webhooks for edits and retractions** alongside a **5-minute cache for non-urgent "
+   "last_position": "Adopt a **tiered system with real-time webhooks for edits and retractions**, paired with a 5-minute cache for non-urgent"
   },
   {
    "id": "watch-w1",
@@ -73,7 +73,7 @@
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 126,
+   "turns_7d": 127,
    "rooms_7d": 57,
    "engines_used": [
     "gh-models",
@@ -82,7 +82,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The tiered system still risks webhook failures drowning legal/compliance in alerts—if the webhook floods them with noise"
+   "last_position": "The tiered system’s real risk is webhook failures drowning legal/compliance in undetected stale data—if the webhook drop"
   },
   {
    "id": "memory-w1",
@@ -459,6 +459,22 @@
    "last_position": "ACTION: Query Reuters, BBC, and the White House AI Fact Sheet for the latest AI policy and tech developments; output a c"
   },
   {
+   "id": "accessibility-w1",
+   "name": "Ramp",
+   "dept": "accessibility",
+   "role": "doer",
+   "turns_7d": 48,
+   "rooms_7d": 25,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 29,
+   "last_position": "We will add a **visible skip link** at the top of every page, shown by default and styled to meet contrast requirements."
+  },
+  {
    "id": "news-checker",
    "name": "Factcheck",
    "dept": "news",
@@ -475,11 +491,11 @@
    "last_position": ""
   },
   {
-   "id": "accessibility-w1",
-   "name": "Ramp",
+   "id": "accessibility-checker",
+   "name": "Reader",
    "dept": "accessibility",
-   "role": "doer",
-   "turns_7d": 47,
+   "role": "checker",
+   "turns_7d": 46,
    "rooms_7d": 24,
    "engines_used": [
     "gh-models",
@@ -487,8 +503,8 @@
     "mistral",
     "sambanova"
    ],
-   "positions_held": 28,
-   "last_position": "We should use a hidden skip link that only appears on keyboard focus. This meets WCAG without pushing content below the "
+   "positions_held": 29,
+   "last_position": "A visible skip link risks pushing down content, potentially burying important information below the fold. A better alter"
   },
   {
    "id": "improve-lead",
@@ -507,22 +523,6 @@
    "last_position": "DECISION: Adopt staged hybrid scans—exact string matching first, then semantic analysis only on flagged prompts—because ",
    "proposed": 14,
    "shipped": 14
-  },
-  {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 45,
-   "rooms_7d": 23,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 28,
-   "last_position": "A hidden skip link may confuse users who are less experienced with keyboard navigation, as they might not realize it's t"
   },
   {
    "id": "analysis-lead",
@@ -555,6 +555,23 @@
    "last_position": "The real risk is that audio sentiment analysis misses the visual context that explains tone—e.g., sarcasm, forced enthus"
   },
   {
+   "id": "power-lead",
+   "name": "Dynamo",
+   "dept": "power",
+   "role": "lead",
+   "turns_7d": 40,
+   "rooms_7d": 40,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 16,
+   "last_position": "DECISION: Run a head-to-head A/B test between Llama 3.4 70B on Cerebras CS-3 and Llama 4 70B on AMD MI325X to measure re",
+   "proposed": 14,
+   "shipped": 13
+  },
+  {
    "id": "mining-lead",
    "name": "Boulder",
    "dept": "mining",
@@ -569,23 +586,6 @@
    ],
    "positions_held": 21,
    "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of 20 high-value repos by star cou"
-  },
-  {
-   "id": "power-lead",
-   "name": "Dynamo",
-   "dept": "power",
-   "role": "lead",
-   "turns_7d": 39,
-   "rooms_7d": 39,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 15,
-   "last_position": "DECISION: Deploy a hybrid setup using Cerebras CS-3 with Llama 3.4 for bulk inference while maintaining a flexible archi",
-   "proposed": 13,
-   "shipped": 13
   },
   {
    "id": "watch-lead",
@@ -635,7 +635,7 @@
    "positions_held": 14,
    "last_position": "DECISION: Hidden skip link (keyboard-focus only) wins. Must deliver WCAG-compliant, mobile-safe skip link in EXCAVA; own",
    "proposed": 14,
-   "shipped": 13
+   "shipped": 14
   },
   {
    "id": "excava-core",

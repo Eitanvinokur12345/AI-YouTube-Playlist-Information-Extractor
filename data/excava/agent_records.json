@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-16T14:37:46.140640+00:00",
+ "generated_at": "2026-07-16T17:24:39.737690+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 240,
+   "turns_7d": 241,
    "rooms_7d": 55,
    "engines_used": [
     "gh-models",
@@ -18,14 +18,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Risk: Auto-generating changelog entries from PR titles/descriptions will inject noise—teams will game the system with va"
+   "last_position": "Scriv: Mandatory pre-review ticket links still let engineers game the system—teams will paste dead ticket IDs just to pa"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 183,
+   "turns_7d": 184,
    "rooms_7d": 102,
    "engines_used": [
     "gh-models",
@@ -34,22 +34,22 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Action: Run a full-text search across the earnings call transcript for all mentions of \"ticket link,\" \"commit,\" and \"PR\""
+   "last_position": "**Decision:** Product Ops must enforce a *single, locked changelog entry per ticket*, auto-generated from PR titles and "
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 161,
-   "rooms_7d": 83,
+   "turns_7d": 162,
+   "rooms_7d": 84,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Product Ops must enforce a *live, auto-validated link check* at PR merge time—any link in the PR descripti"
+   "last_position": "**Decision:** Require ticket links in PR titles or descriptions *before* review, but enforce them strictly only at merge"
   },
   {
    "id": "transcripts-w1",
@@ -72,7 +72,7 @@
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 136,
+   "turns_7d": 137,
    "rooms_7d": 55,
    "engines_used": [
     "gh-models",
@@ -81,7 +81,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is that post-merge enforcement turns ticket links into an afterthought—engineers will slap in any old tick"
+   "last_position": "Auto-generating changelog entries from PR noise will bury critical context under a mountain of \"fix bug\" titles, making "
   },
   {
    "id": "power-w1",
@@ -133,6 +133,22 @@
    "last_position": "I will run the memory linking command to connect every existing memory ID in this conversation to the unified memory sys"
   },
   {
+   "id": "visual-w1",
+   "name": "Easel",
+   "dept": "visual",
+   "role": "doer",
+   "turns_7d": 102,
+   "rooms_7d": 71,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "I will open the Beverage Cans website and take a screenshot of its vibrant pink hero section. This will produce a taste "
+  },
+  {
    "id": "visualization-w1",
    "name": "Facet",
    "dept": "visualization",
@@ -147,22 +163,6 @@
    ],
    "positions_held": 30,
    "last_position": "Ship a live contrast checker that updates in real time as users adjust the dark theme toggle. This forces us to fix visi"
-  },
-  {
-   "id": "visual-w1",
-   "name": "Easel",
-   "dept": "visual",
-   "role": "doer",
-   "turns_7d": 101,
-   "rooms_7d": 70,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "I will open the Beverage Cans website and take a screenshot of its vibrant pink can design. This will produce a taste ma"
   },
   {
    "id": "visualization-checker",
@@ -267,8 +267,8 @@
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 70,
-   "rooms_7d": 70,
+   "turns_7d": 71,
+   "rooms_7d": 71,
    "engines_used": [
     "gh-models",
     "groq",
@@ -276,7 +276,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as taste material for the hub.",
+   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as taste material in the hub.",
    "proposed": 1
   },
   {
@@ -543,17 +543,17 @@
    "name": "Ratchet",
    "dept": "improve",
    "role": "lead",
-   "turns_7d": 41,
-   "rooms_7d": 41,
+   "turns_7d": 42,
+   "rooms_7d": 42,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 14,
-   "last_position": "DECISION: Adopt staged hybrid scans—exact string matching first, then semantic analysis only on flagged prompts—because ",
-   "proposed": 14,
+   "positions_held": 15,
+   "last_position": "DECISION: Run semantic-only scanning live for low latency, queue exact-string matches for offline batch processing to ca",
+   "proposed": 15,
    "shipped": 14
   },
   {

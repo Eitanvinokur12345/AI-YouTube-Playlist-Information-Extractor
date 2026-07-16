@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-16T17:47:21.655564+00:00",
+ "generated_at": "2026-07-16T17:52:57.310793+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 246,
+   "turns_7d": 247,
    "rooms_7d": 56,
    "engines_used": [
     "gh-models",
@@ -18,7 +18,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Scriv: Live drafts sound clever until Product Ops becomes the bottleneck—engineers will game the system by dumping half-"
+   "last_position": "Scriv: Auto-generated changelogs from PR diffs assume every change maps cleanly to a ticket—teams will exploit this by s"
   },
   {
    "id": "analysis-w1",
@@ -56,7 +56,7 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 149,
+   "turns_7d": 150,
    "rooms_7d": 67,
    "engines_used": [
     "gh-models",
@@ -65,7 +65,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Product Ops must enforce *auto-generated changelog entries from PR titles and descriptions*, but with a *m"
+   "last_position": "**Decision:** Product Ops must enforce *auto-generated changelog entries from PR diffs*, with a *single human sign-off o"
   },
   {
    "id": "analysis-checker",
@@ -137,8 +137,8 @@
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 106,
-   "rooms_7d": 75,
+   "turns_7d": 107,
+   "rooms_7d": 76,
    "engines_used": [
     "gh-models",
     "groq",
@@ -146,7 +146,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will open the Beverage Cans website and take a screenshot of its vibrant pink can design to capture the color palette "
+   "last_position": "I will open the Beverage Cans website and take a screenshot of its vibrant pink hero section. This will produce a taste "
   },
   {
    "id": "visualization-w1",
@@ -185,7 +185,7 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 96,
+   "turns_7d": 97,
    "rooms_7d": 54,
    "engines_used": [
     "gh-models",
@@ -194,7 +194,23 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Do A/B test prompt hashing on 1% traffic for one week. Hashing catches rewording that silently changes behavior without "
+   "last_position": "Run a controlled prompt variant audit for one week: log every prompt change and flag semantic shifts with a lightweight "
+  },
+  {
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
+   "role": "checker",
+   "turns_7d": 86,
+   "rooms_7d": 43,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "Gauge: A weekly audit still misses drift that happens *between* audits—users get bad responses in real time. Instead, ru"
   },
   {
    "id": "creators-w1",
@@ -211,22 +227,6 @@
    ],
    "positions_held": 29,
    "last_position": "I will draft the \"UGC Factory\" npm package for the creators tab. This package will provide tools for generating user-gen"
-  },
-  {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 85,
-   "rooms_7d": 43,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "Hashing only flags exact rewordings—semantic drift slips through undetected. A 1% traffic slice risks bad responses with"
   },
   {
    "id": "security-w1",
@@ -249,8 +249,8 @@
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 75,
-   "rooms_7d": 75,
+   "turns_7d": 76,
+   "rooms_7d": 76,
    "engines_used": [
     "gh-models",
     "groq",
@@ -258,7 +258,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as a taste artifact in the hub.",
+   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as taste material in the hub.",
    "proposed": 1
   },
   {
@@ -284,16 +284,16 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 65,
-   "rooms_7d": 65,
+   "turns_7d": 66,
+   "rooms_7d": 66,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 28,
-   "last_position": "DECISION: Require every PR to include a live ticket link in the title or description *before review*, and enforce it str",
+   "positions_held": 29,
+   "last_position": "DECISION: Require ticket links in *all* PRs, enforced by an auto-reject bot that blocks merges without a valid ticket li",
    "proposed": 2
   },
   {

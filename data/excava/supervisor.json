@@ -1,18 +1,18 @@
 {
- "generated_at": "2026-07-16T17:24:41.059204+00:00",
+ "generated_at": "2026-07-16T18:22:09.300304+00:00",
  "checked": 40,
- "real_pct": 84,
+ "real_pct": 92,
  "counts": {
-  "real": 32,
-  "noop": 6,
+  "real": 36,
+  "noop": 3,
   "failed": 0,
   "planned": 0,
-  "blocked": 2
+  "blocked": 1
  },
- "criticism": "Acceptable: 84% of the last 40 completions did real work. Stay strict. · DECISION DRIFT: 3 unit(s) mostly decide SELF-IMPROVEMENT, not their mission (links 100%; group-chat 100%; war-room 100%) — that work belongs to the improve department's external arms (decision_audit.json). · SINGLE-ENGINE DEBATE (owner flag 2026-07-11): 1 room(s) today ran entirely on ONE model (war-deliver-push-link-coverage-t-3 (6 turns, all mistral)) — that is one engine talking to itself, not a real multi-model debate. The healthy-pool round-robin must spread it.",
+ "criticism": "Acceptable: 92% of the last 40 completions did real work. Stay strict. · DECISION DRIFT: 3 unit(s) mostly decide SELF-IMPROVEMENT, not their mission (links 100%; group-chat 100%; war-room 100%) — that work belongs to the improve department's external arms (decision_audit.json). · SINGLE-ENGINE DEBATE (owner flag 2026-07-11): 3 room(s) today ran entirely on ONE model (war-deliver-push-link-coverage-t-2 (7 turns, all mistral); war-deliver-push-link-coverage-t-4 (7 turns, all mistral); war-deliver-push-link-coverage-t-3 (7 turns, all mistral)) — that is one engine talking to itself, not a real multi-model debate. The healthy-pool round-robin must spread it.",
  "long_term": {
   "verdict": "accumulating over time",
-  "detail": "over last 24 snapshots: done -4, artifacts +194, real_pct 72→84",
+  "detail": "over last 24 snapshots: done +56, artifacts +207, real_pct 69→92",
   "stagnant": false
  },
  "history": {
@@ -26,84 +26,63 @@
  "intent_drift": [],
  "verdicts": [
   {
-   "task": "watch-process-the-next-b-85261",
-   "dept": "watch",
-   "verdict": "blocked",
-   "note": "honestly BLOCKED — needs an owner resource; not faking work (this is the truth, not a facade)",
-   "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
-  },
-  {
-   "task": "news-refresh-the-ai-news-28516",
-   "dept": "news",
+   "task": "ratchet-s-initiative-log-25711",
+   "dept": "improve",
    "verdict": "noop",
    "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
-   "result": "Ran the trend watch. trend_watch: 15 proposals (top score 10); queued 0 into self-improvement."
+   "result": "Ran the self check. self-check: 40/50 (mechanical) | 0 new tasks | failing Qs: [1, 10, 12, 13, 14, 16, 20, 24, 45, 47]"
   },
   {
-   "task": "raise-g5-leverage-53-100-28516",
-   "dept": "creators",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Creators: 12 creations on record, 12 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane"
-  },
-  {
-   "task": "security-safety-rate-the-28516",
+   "task": "security-room-action-war-97603",
    "dept": "security",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
   },
   {
-   "task": "raise-g8-personal-fit-66-22582",
-   "dept": "visual",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Ran the collect designs. collect_designs: 583 designs (kept 583 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-vi"
-  },
-  {
-   "task": "memory-embed-the-remaini-28516",
+   "task": "memory-room-action-graft-35561",
    "dept": "memory",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Semantic index: 1463 vectors (model gemini-embedding-001); hub 6368 items → 4905 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
   },
   {
-   "task": "verify-the-next-200-of-6-3580",
+   "task": "raise-g8-personal-fit-66-26029",
+   "dept": "visual",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the collect designs. collect_designs: 583 designs (kept 583 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-vi"
+  },
+  {
+   "task": "verify-the-next-200-of-6-25355",
    "dept": "analysis",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "923 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runnin"
   },
   {
-   "task": "mining-discover-new-ai-r-85261",
-   "dept": "mining",
-   "verdict": "noop",
-   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
-   "result": "Ran the discovery agent. discovery: +0 new (of 151 sighted) → 813 queued; arxiv=75, gh-active=119, gh-new=49, hn-front=32, hn-new=80, huggingface-model=33, prod"
-  },
-  {
-   "task": "security-safety-rate-the-85261",
+   "task": "security-room-action-war-87217",
    "dept": "security",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
   },
   {
-   "task": "raise-g8-personal-fit-66-12549",
-   "dept": "visual",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Ran the collect designs. collect_designs: 576 designs (kept 576 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-vi"
-  },
-  {
-   "task": "memory-embed-the-remaini-85261",
+   "task": "memory-room-action-graft-35117",
    "dept": "memory",
    "verdict": "real",
    "note": "produced substantive real output",
-   "result": "Semantic index: 1463 vectors (model gemini-embedding-001); hub 6363 items → 4900 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
+   "result": "Semantic index: 1463 vectors (model gemini-embedding-001); hub 6368 items → 4905 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
   },
   {
-   "task": "raise-g1-omniscience-66--97755",
+   "task": "raise-g8-personal-fit-66-25695",
+   "dept": "visual",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the collect designs. collect_designs: 583 designs (kept 583 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-vi"
+  },
+  {
+   "task": "raise-g1-omniscience-66--25018",
    "dept": "analysis",
    "verdict": "real",
    "note": "produced substantive real output",
@@ -117,193 +96,214 @@
    "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
   },
   {
-   "task": "40-self-improvement-task-3580",
+   "task": "security-room-action-war-71682",
+   "dept": "security",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+  },
+  {
+   "task": "raise-g8-personal-fit-66-25356",
+   "dept": "visual",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the collect designs. collect_designs: 583 designs (kept 583 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-vi"
+  },
+  {
+   "task": "memory-room-action-graft-29056",
+   "dept": "memory",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Semantic index: 1463 vectors (model gemini-embedding-001); hub 6368 items → 4905 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
+  },
+  {
+   "task": "transcripts-drain-the-ne-24681",
+   "dept": "analysis",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "923 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runnin"
+  },
+  {
+   "task": "ratchet-s-initiative-run-24701",
    "dept": "improve",
    "verdict": "noop",
    "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
    "result": "Ran the self check. self-check: 40/50 (mechanical) | 0 new tasks | failing Qs: [1, 10, 12, 13, 14, 16, 20, 24, 45, 47]"
   },
   {
-   "task": "security-safety-rate-the-85369",
+   "task": "security-room-action-war-70365",
    "dept": "security",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
   },
   {
-   "task": "raise-g8-personal-fit-66-97755",
+   "task": "raise-g8-personal-fit-66-25018",
    "dept": "visual",
    "verdict": "real",
    "note": "produced substantive real output",
-   "result": "Ran the collect designs. collect_designs: 576 designs (kept 576 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-vi"
+   "result": "Ran the collect designs. collect_designs: 583 designs (kept 583 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-vi"
   },
   {
-   "task": "memory-embed-the-remaini-85369",
+   "task": "memory-room-action-graft-15582",
    "dept": "memory",
    "verdict": "real",
    "note": "produced substantive real output",
-   "result": "Semantic index: 1463 vectors (model gemini-embedding-001); hub 6363 items → 4900 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
+   "result": "Semantic index: 1463 vectors (model gemini-embedding-001); hub 6368 items → 4905 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
   },
   {
-   "task": "verify-the-next-200-of-6-85368",
+   "task": "verify-the-next-200-of-6-24345",
    "dept": "analysis",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "923 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runnin"
   },
   {
-   "task": "raise-g8-personal-fit-67-85369",
+   "task": "security-room-action-war-69988",
+   "dept": "security",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+  },
+  {
+   "task": "raise-g8-personal-fit-66-24681",
    "dept": "visual",
    "verdict": "real",
    "note": "produced substantive real output",
-   "result": "Ran the collect designs. collect_designs: 576 designs (kept 576 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-vi"
+   "result": "Ran the collect designs. collect_designs: 583 designs (kept 583 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-vi"
   },
   {
-   "task": "transcripts-drain-the-ne-73716",
+   "task": "memory-room-action-graft-98938",
+   "dept": "memory",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Semantic index: 1463 vectors (model gemini-embedding-001); hub 6368 items → 4905 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
+  },
+  {
+   "task": "raise-g1-omniscience-66--23660",
    "dept": "analysis",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "923 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runnin"
   },
   {
-   "task": "lane-self-improvement-re-85368",
+   "task": "security-room-action-war-69601",
+   "dept": "security",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+  },
+  {
+   "task": "raise-g8-personal-fit-66-24345",
+   "dept": "visual",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the collect designs. collect_designs: 583 designs (kept 583 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-vi"
+  },
+  {
+   "task": "memory-room-action-graft-97265",
+   "dept": "memory",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Semantic index: 1463 vectors (model gemini-embedding-001); hub 6368 items → 4905 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
+  },
+  {
+   "task": "transcripts-drain-the-ne-23321",
+   "dept": "analysis",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "923 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runnin"
+  },
+  {
+   "task": "ratchet-s-initiative-run-23681",
    "dept": "improve",
    "verdict": "noop",
    "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
    "result": "Ran the self check. self-check: 40/50 (mechanical) | 0 new tasks | failing Qs: [1, 10, 12, 13, 14, 16, 20, 24, 45, 47]"
   },
   {
-   "task": "keep-the-designs-tab-pur-85368",
-   "dept": "visual",
-   "verdict": "noop",
-   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
-   "result": "Ran the collect designs. collect_designs: 540 designs (kept 540 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-vi"
-  },
-  {
-   "task": "raise-g1-omniscience-65--73485",
-   "dept": "analysis",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "923 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runnin"
-  },
-  {
-   "task": "dynamo-s-initiative-swit-73504",
-   "dept": "power",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Ran the power scan.   - Gemma 4 12B | Google DeepMind's open-source multimodal 12B model using an encoder-fr"
-  },
-  {
-   "task": "lane-external-mining-is--73715",
-   "dept": "mining",
-   "verdict": "noop",
-   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
-   "result": "Ran the discovery agent. discovery: +0 new (of 150 sighted) → 872 queued; arxiv=75, gh-active=119, gh-new=53, hn-front=32, hn-new=92, huggingface-model=32, prod"
-  },
-  {
-   "task": "security-safety-rate-the-73716",
+   "task": "security-safety-rate-the-23999",
    "dept": "security",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
   },
   {
-   "task": "raise-g8-personal-fit-66-73716",
+   "task": "raise-g8-personal-fit-66-23999",
    "dept": "visual",
    "verdict": "real",
    "note": "produced substantive real output",
-   "result": "Ran the collect designs. collect_designs: 531 designs (kept 531 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-vi"
+   "result": "Ran the collect designs. collect_designs: 583 designs (kept 583 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-vi"
   },
   {
-   "task": "memory-embed-the-remaini-73716",
+   "task": "memory-embed-the-remaini-23999",
    "dept": "memory",
    "verdict": "real",
    "note": "produced substantive real output",
-   "result": "Semantic index: 1461 vectors (model gemini-embedding-001); hub 6266 items → 4805 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
+   "result": "Semantic index: 1463 vectors (model gemini-embedding-001); hub 6368 items → 4905 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
   },
   {
-   "task": "verify-the-next-200-of-6-73141",
+   "task": "verify-the-next-200-of-6-22582",
    "dept": "analysis",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "923 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runnin"
   },
   {
-   "task": "security-safety-rate-the-73485",
+   "task": "security-safety-rate-the-3580",
    "dept": "security",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
   },
   {
-   "task": "raise-g8-personal-fit-66-73485",
+   "task": "raise-g8-personal-fit-66-23660",
    "dept": "visual",
    "verdict": "real",
    "note": "produced substantive real output",
-   "result": "Ran the collect designs. collect_designs: 531 designs (kept 531 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-vi"
+   "result": "Ran the collect designs. collect_designs: 583 designs (kept 583 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-vi"
   },
   {
-   "task": "memory-embed-the-remaini-73485",
+   "task": "memory-embed-the-remaini-23660",
    "dept": "memory",
    "verdict": "real",
    "note": "produced substantive real output",
-   "result": "Semantic index: 1461 vectors (model gemini-embedding-001); hub 6266 items → 4805 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
+   "result": "Semantic index: 1463 vectors (model gemini-embedding-001); hub 6368 items → 4905 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
   },
   {
-   "task": "transcripts-drain-the-ne-72799",
+   "task": "weakest-lane-deep-analys-22581",
    "dept": "analysis",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "923 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runnin"
   },
   {
-   "task": "security-safety-rate-the-73141",
+   "task": "security-safety-rate-the-97755",
    "dept": "security",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
   },
   {
-   "task": "raise-g8-personal-fit-66-73141",
+   "task": "raise-g8-personal-fit-66-23321",
    "dept": "visual",
    "verdict": "real",
    "note": "produced substantive real output",
-   "result": "Ran the collect designs. collect_designs: 531 designs (kept 531 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-vi"
+   "result": "Ran the collect designs. collect_designs: 583 designs (kept 583 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-vi"
   },
   {
-   "task": "memory-embed-the-remaini-73141",
+   "task": "memory-embed-the-remaini-22582",
    "dept": "memory",
    "verdict": "real",
    "note": "produced substantive real output",
-   "result": "Semantic index: 1461 vectors (model gemini-embedding-001); hub 6266 items → 4805 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
+   "result": "Semantic index: 1463 vectors (model gemini-embedding-001); hub 6368 items → 4905 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
   },
   {
-   "task": "raise-g1-omniscience-65--72460",
+   "task": "raise-g1-omniscience-66--3580",
    "dept": "analysis",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "923 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runnin"
-  },
-  {
-   "task": "dynamo-s-initiative-swit-72480",
-   "dept": "power",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Ran the power scan.   - Gemma 4 12B | Google DeepMind's open-source multimodal 12B model using an encoder-fr"
-  },
-  {
-   "task": "security-safety-rate-the-72799",
-   "dept": "security",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
-  },
-  {
-   "task": "raise-g8-personal-fit-66-72799",
-   "dept": "visual",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Ran the collect designs. collect_designs: 531 designs (kept 531 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-vi"
   }
  ]
 }

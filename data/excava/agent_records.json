@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-16T17:24:39.737690+00:00",
+ "generated_at": "2026-07-16T17:30:17.674811+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 241,
+   "turns_7d": 242,
    "rooms_7d": 55,
    "engines_used": [
     "gh-models",
@@ -18,7 +18,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Scriv: Mandatory pre-review ticket links still let engineers game the system—teams will paste dead ticket IDs just to pa"
+   "last_position": "Scriv: Manual structured changelogs create a new bottleneck—teams will delay PRs waiting for ticket owners to fill field"
   },
   {
    "id": "analysis-w1",
@@ -41,7 +41,7 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 162,
+   "turns_7d": 163,
    "rooms_7d": 84,
    "engines_used": [
     "gh-models",
@@ -49,7 +49,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Require ticket links in PR titles or descriptions *before* review, but enforce them strictly only at merge"
+   "last_position": "**Decision:** Product Ops must enforce *manual, structured changelog entries* with mandatory fields (impact, risk, rollb"
   },
   {
    "id": "transcripts-w1",
@@ -137,8 +137,8 @@
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 102,
-   "rooms_7d": 71,
+   "turns_7d": 103,
+   "rooms_7d": 72,
    "engines_used": [
     "gh-models",
     "groq",
@@ -185,16 +185,16 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 93,
-   "rooms_7d": 52,
+   "turns_7d": 94,
+   "rooms_7d": 53,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 29,
-   "last_position": "Adopt staged rollout: semantic-only scanning first, exact-string fallback only for edge cases. This cuts compute cost by"
+   "positions_held": 30,
+   "last_position": "Adopt staged rollout for prompt changes. This lets us test tweaks on a small slice of traffic before full deployment, ca"
   },
   {
    "id": "creators-w1",
@@ -217,16 +217,16 @@
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 82,
-   "rooms_7d": 41,
+   "turns_7d": 83,
+   "rooms_7d": 42,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 29,
-   "last_position": "Gauge: Staged rollout still misses 20% of reworded prompts—enough to let bad actors slip through in security-critical sy"
+   "positions_held": 30,
+   "last_position": "Staged rollout misses 20% of reworded prompts—enough to let bad variants slip through. Better: A/B test with *prompt has"
   },
   {
    "id": "security-w1",
@@ -267,8 +267,8 @@
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 71,
-   "rooms_7d": 71,
+   "turns_7d": 72,
+   "rooms_7d": 72,
    "engines_used": [
     "gh-models",
     "groq",
@@ -278,6 +278,23 @@
    "positions_held": 30,
    "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as taste material in the hub.",
    "proposed": 1
+  },
+  {
+   "id": "transcripts-lead",
+   "name": "Echo",
+   "dept": "transcripts",
+   "role": "lead",
+   "turns_7d": 65,
+   "rooms_7d": 65,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 28,
+   "last_position": "DECISION: Require every PR to include a live ticket link in the title or description *before review*, and enforce it str",
+   "proposed": 2
   },
   {
    "id": "news-w1",
@@ -294,23 +311,6 @@
    ],
    "positions_held": 26,
    "last_position": "Action: I will fetch the latest AI headlines from Reuters, BBC, and the White House AI pages. This will produce a fresh "
-  },
-  {
-   "id": "transcripts-lead",
-   "name": "Echo",
-   "dept": "transcripts",
-   "role": "lead",
-   "turns_7d": 64,
-   "rooms_7d": 64,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 27,
-   "last_position": "DECISION: Enforce live link checks at PR merge time with a 30-second retry window for transient failures, but log all fa",
-   "proposed": 2
   },
   {
    "id": "visual-checker",
@@ -554,7 +554,7 @@
    "positions_held": 15,
    "last_position": "DECISION: Run semantic-only scanning live for low latency, queue exact-string matches for offline batch processing to ca",
    "proposed": 15,
-   "shipped": 14
+   "shipped": 15
   },
   {
    "id": "news-checker",

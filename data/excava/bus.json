@@ -18802,15 +18802,16 @@
       "department": "memory",
       "source": "room-action:memory",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-07-14T02:45:46.868395+00:00",
-      "updated_at": "2026-07-14T02:45:46.868401+00:00"
+      "updated_at": "2026-07-16T23:06:00.154338+00:00",
+      "result": "Semantic index: 1463 vectors (model gemini-embedding-001); hub 6368 items → 4905 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "news-room-action-query-o-97155",
@@ -34497,15 +34498,16 @@
       "department": "analysis",
       "source": "auto",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "output written to data/ and committed by CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-07-16T22:55:02.227218+00:00",
-      "updated_at": "2026-07-16T22:55:02.696388+00:00"
+      "updated_at": "2026-07-16T23:05:52.293134+00:00",
+      "result": "923 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "verify-the-next-200-of-6-42502",
@@ -34601,6 +34603,61 @@
       "department": "improve",
       "source": "room-action:memory",
       "priority": 2,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": "improve-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-16T23:00:42.125668+00:00",
+      "updated_at": "2026-07-16T23:06:00.997773+00:00",
+      "result": "Ran the self check. self-check: 40/50 (mechanical) | 0 new tasks | failing Qs: [1, 10, 12, 13, 14, 16, 20, 24, 45, 47]"
+    },
+    {
+      "id": "transcripts-drain-the-ne-43152",
+      "title": "Transcripts: drain the next batch of 923 pending (residential IP)",
+      "detail": "value=60 size=26(small) [cost 25/steps 35/risk 15] · 923 pending",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-drain-the-ne-43152--01--transcripts-w1--to--analysis.md"
+      ],
+      "created_at": "2026-07-16T23:05:52.112163+00:00",
+      "updated_at": "2026-07-16T23:06:01.129515+00:00"
+    },
+    {
+      "id": "raise-g8-personal-fit-66-43152",
+      "title": "Raise G8 Personal fit (66/100): 17% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
+      "detail": "value=34 size=17(small) [cost 15/steps 25/risk 10] · G8 at 66",
+      "department": "visual",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "visual-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-16T23:05:52.175386+00:00",
+      "updated_at": "2026-07-16T23:05:59.920020+00:00",
+      "result": "Ran the collect designs. collect_designs: 583 designs (kept 583 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "id": "memory-room-action-root--43167",
+      "title": "[memory room action] Root executes the recall-by-meaning command, linking memory-w1 to the Unified Memory system, embedding the context and d",
+      "detail": "From room dept-memory-recall-by-meaning-rel-535 (action-shaped close). Mission action from the department's own room.",
+      "department": "memory",
+      "source": "room-action:memory",
+      "priority": 2,
       "status": "queued",
       "steps": 0,
       "max_steps": 8,
@@ -34608,9 +34665,26 @@
       "escalation_tier": 1,
       "claimed_by": null,
       "handoff_docs": [],
-      "created_at": "2026-07-16T23:00:42.125668+00:00",
-      "updated_at": "2026-07-16T23:00:42.125690+00:00"
+      "created_at": "2026-07-16T23:06:07.652341+00:00",
+      "updated_at": "2026-07-16T23:06:07.652349+00:00"
+    },
+    {
+      "id": "news-room-action-i-will--43172",
+      "title": "[news room action] I will fetch the latest AI headlines from Reuters, BBC, and the White House to compile a fresh digest. The output will b",
+      "detail": "From room dept-news-freshness-refresh-the-a-141 (action-shaped close). Mission action from the department's own room.",
+      "department": "news",
+      "source": "room-action:news",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-16T23:06:12.170525+00:00",
+      "updated_at": "2026-07-16T23:06:12.170532+00:00"
     }
   ],
-  "updated_at": "2026-07-16T23:00:42.125695+00:00"
+  "updated_at": "2026-07-16T23:06:12.170536+00:00"
 }

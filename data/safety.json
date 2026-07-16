@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-07-16T07:02:47.674420+00:00",
+  "generated_at": "2026-07-16T10:29:13.934496+00:00",
   "policy": "activator gate: safe = auto-activate, caution = warn, risky = block until confirmed",
   "summary": {
-    "safe": 137,
-    "caution": 1128,
+    "safe": 138,
+    "caution": 1130,
     "risky": 37
   },
   "connectors": {
@@ -10037,6 +10037,28 @@
       "reasons": [
         "official vendor"
       ]
+    },
+    "stripe-agent-api": {
+      "name": "Stripe AGENT API",
+      "rating": "safe",
+      "reasons": [
+        "official vendor"
+      ]
+    },
+    "chatgpt-plus-via-oauth": {
+      "name": "ChatGPT Plus via OAuth",
+      "rating": "caution",
+      "reasons": [
+        "needs an API key / secret",
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "nvidia-cloud-models-api": {
+      "name": "NVIDIA Cloud Models API",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
     }
   },
   "skills_flagged": {
@@ -10364,6 +10386,13 @@
     },
     "agentic-coding-ai": {
       "name": "Agentic Coding with AI",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "autonomous-purchasing": {
+      "name": "Autonomous purchasing",
       "rating": "caution",
       "reasons": [
         "the technique runs system/shell/file operations — review what it executes"

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-16T02:36:50.582524+00:00",
+ "generated_at": "2026-07-16T02:42:47.680207+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 224,
+   "turns_7d": 225,
    "rooms_7d": 51,
    "engines_used": [
     "gh-models",
@@ -18,15 +18,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The real risk isn’t vague thresholds—it’s that Product Ops will over-engineer them into rigid, one-size-fits-all rules t"
+   "last_position": "Product Ops defining thresholds upfront shifts the problem from gaming exit criteria to gaming the thresholds themselves"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 158,
-   "rooms_7d": 81,
+   "turns_7d": 159,
+   "rooms_7d": 82,
    "engines_used": [
     "gh-models",
     "groq",
@@ -34,14 +34,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Product Ops will define the breach thresholds for every snapshot’s exit criteria before the snapshot is created. This fo"
+   "last_position": "I will open the Earnings Call Analysis with AI Agents hub and pull the full transcript of the latest earnings call to an"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 154,
+   "turns_7d": 155,
    "rooms_7d": 80,
    "engines_used": [
     "gh-models",
@@ -49,7 +49,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt **Product Ops defining breach thresholds upfront** for every snapshot. This removes the gaming risk by forcing cle"
+   "last_position": "Adopt **Product Ops defining breach thresholds upfront** for every snapshot. This removes the temptation to game thresho"
   },
   {
    "id": "transcripts-w1",
@@ -104,8 +104,8 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 109,
-   "rooms_7d": 56,
+   "turns_7d": 110,
+   "rooms_7d": 57,
    "engines_used": [
     "gh-models",
     "groq",
@@ -113,15 +113,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Switch to Mistral Large 2 12.8B for all EXCAVA prompts. It’s the fastest stable 12B-class model with a 128K context wind"
+   "last_position": "Switch to Llama 4 Maverick 12B for all EXCAVA prompts above 5K tokens. It’s the strongest small model Anthropic offers, "
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 106,
-   "rooms_7d": 53,
+   "turns_7d": 107,
+   "rooms_7d": 54,
    "engines_used": [
     "gh-models",
     "groq",
@@ -130,7 +130,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Mistral Large 2’s 128K window is a red herring—EXCAVA’s prompts spike to 20K, but its *real* bottleneck is tool-call lat"
+   "last_position": "Maverick 12B’s 128K window is a lie—its real risk is prompt collapse under long contexts, and EXCAVA’s prompts spike to "
   },
   {
    "id": "visualization-w1",
@@ -390,7 +390,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Run a 24-hour A/B test between Qwen2.5-72B-Instruct and Mistral Large 2 12.8B on EXCAVA’s 20K-token prompts to",
    "proposed": 32,
-   "shipped": 31
+   "shipped": 32
   },
   {
    "id": "mining-w1",
@@ -506,6 +506,21 @@
    "last_position": "ACTION: Query Reuters, BBC, and the White House AI Fact Sheet for the latest AI policy and tech developments; output a c"
   },
   {
+   "id": "analysis-lead",
+   "name": "Marrow",
+   "dept": "analysis",
+   "role": "lead",
+   "turns_7d": 42,
+   "rooms_7d": 42,
+   "engines_used": [
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 29,
+   "last_position": "ACTION: Manually review the full earnings call transcript and LangSmith trace to extract decision-critical insights and "
+  },
+  {
    "id": "watch-lead",
    "name": "Iris",
    "dept": "watch",
@@ -521,21 +536,6 @@
    "last_position": "ACTION: At 10:25:00, Iris finalizes the decision-ready summary report on AI marketing, incorporating insights from the G",
    "proposed": 1,
    "shipped": 1
-  },
-  {
-   "id": "analysis-lead",
-   "name": "Marrow",
-   "dept": "analysis",
-   "role": "lead",
-   "turns_7d": 41,
-   "rooms_7d": 41,
-   "engines_used": [
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 28,
-   "last_position": "ACTION: Manually review the full earnings call transcript and LangSmith trace to extract decisions, reasons, and trade-o"
   },
   {
    "id": "improve-lead",

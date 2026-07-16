@@ -1,171 +1,6 @@
 {
   "events": [
     {
-      "task": "echo-s-initiative-run-a--98918",
-      "at": "2026-07-16T17:23:02.405771+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "weakest-lane-deep-analys-22581",
-      "at": "2026-07-16T17:23:02.441005+00:00",
-      "kind": "routed",
-      "chose": "analysis",
-      "over": [
-        "improve"
-      ],
-      "why": "best specialization match (1 hits)"
-    },
-    {
-      "task": "verify-the-next-200-of-6-3580",
-      "at": "2026-07-16T17:23:02.487909+00:00",
-      "kind": "claimed",
-      "by": "analysis-w1",
-      "department": "analysis"
-    },
-    {
-      "task": "verify-the-next-200-of-6-3580",
-      "at": "2026-07-16T17:23:02.525570+00:00",
-      "kind": "completed",
-      "by": "analysis-w1",
-      "result": "923 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-    },
-    {
-      "task": "memory-embed-the-remaini-28516",
-      "at": "2026-07-16T17:23:02.562004+00:00",
-      "kind": "claimed",
-      "by": "memory-w1",
-      "department": "memory"
-    },
-    {
-      "task": "memory-embed-the-remaini-28516",
-      "at": "2026-07-16T17:23:02.756750+00:00",
-      "kind": "completed",
-      "by": "memory-w1",
-      "result": "Semantic index: 1463 vectors (model gemini-embedding-001); hub 6368 items → 4905 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-    },
-    {
-      "task": "raise-g8-personal-fit-66-22582",
-      "at": "2026-07-16T17:23:02.792655+00:00",
-      "kind": "claimed",
-      "by": "visual-w1",
-      "department": "visual"
-    },
-    {
-      "task": "raise-g8-personal-fit-66-22582",
-      "at": "2026-07-16T17:23:10.586692+00:00",
-      "kind": "completed",
-      "by": "visual-w1",
-      "result": "Ran the collect designs. collect_designs: 583 designs (kept 583 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-video; url-checked 4). designs-only."
-    },
-    {
-      "task": "security-safety-rate-the-28516",
-      "at": "2026-07-16T17:23:10.622802+00:00",
-      "kind": "claimed",
-      "by": "security-w1",
-      "department": "security"
-    },
-    {
-      "task": "security-safety-rate-the-28516",
-      "at": "2026-07-16T17:23:11.321099+00:00",
-      "kind": "completed",
-      "by": "security-w1",
-      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
-    },
-    {
-      "task": "raise-g5-leverage-53-100-28516",
-      "at": "2026-07-16T17:23:11.357591+00:00",
-      "kind": "claimed",
-      "by": "creators-w1",
-      "department": "creators"
-    },
-    {
-      "task": "raise-g5-leverage-53-100-28516",
-      "at": "2026-07-16T17:23:11.394180+00:00",
-      "kind": "completed",
-      "by": "creators-w1",
-      "result": "Creators: 12 creations on record, 12 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
-    },
-    {
-      "task": "news-refresh-the-ai-news-28516",
-      "at": "2026-07-16T17:23:11.430797+00:00",
-      "kind": "claimed",
-      "by": "news-w1",
-      "department": "news"
-    },
-    {
-      "task": "news-refresh-the-ai-news-28516",
-      "at": "2026-07-16T17:23:11.729200+00:00",
-      "kind": "completed",
-      "by": "news-w1",
-      "result": "Ran the trend watch. trend_watch: 15 proposals (top score 10); queued 0 into self-improvement."
-    },
-    {
-      "task": "watch-process-the-next-b-85261",
-      "at": "2026-07-16T17:23:11.765885+00:00",
-      "kind": "claimed",
-      "by": "watch-w1",
-      "department": "watch"
-    },
-    {
-      "task": "watch-process-the-next-b-85261",
-      "at": "2026-07-16T17:23:11.802574+00:00",
-      "kind": "completed",
-      "by": "watch-w1",
-      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
-    },
-    {
-      "task": "dept-improve-self-improvement-rev-890",
-      "at": "2026-07-16T17:23:22.834570+00:00",
-      "kind": "room_closed",
-      "artifact": {
-        "kind": "decision",
-        "ref": "data/excava/artifacts/dept-improve-self-improvement-rev-890.md",
-        "at": "2026-07-16T17:23:22.834390+00:00",
-        "title": "improve: Self-improvement: review prompts/engines/routing/own-code; auto-apply s",
-        "by": "Ratchet"
-      },
-      "turns": 5
-    },
-    {
-      "task": "ratchet-s-initiative-run-22602",
-      "at": "2026-07-16T17:23:22.896974+00:00",
-      "kind": "enqueued",
-      "title": "[Ratchet's initiative] Run semantic-only scanning live for low latency, queue exact-string matches for offline batch processing to catch 100% o",
-      "source": "agent:improve-lead",
-      "priority": 2,
-      "department": "improve"
-    },
-    {
-      "task": "dept-visual-mine-great-designs-fr-658",
-      "at": "2026-07-16T17:23:29.994812+00:00",
-      "kind": "room_closed",
-      "artifact": {
-        "kind": "decision",
-        "ref": "data/excava/artifacts/dept-visual-mine-great-designs-fr-658.md",
-        "at": "2026-07-16T17:23:29.994638+00:00",
-        "title": "visual: MINE great designs FROM THE WEB into the hub — screenshots, taste materi",
-        "by": "Chroma"
-      },
-      "turns": 2
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-07-16T17:24:39.782554+00:00",
-      "kind": "lane_ran",
-      "lane": "Free analysis pool",
-      "status": "live",
-      "what": "Turns transcripts into skills/tools/connectors (free engines)"
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-07-16T17:24:39.783278+00:00",
-      "kind": "lane_ran",
-      "lane": "Deep analysis (night-gated)",
-      "status": "live",
-      "what": "Claude re-analysis + safety pass"
-    },
-    {
       "task": "raise-g8-personal-fit-66-22984",
       "at": "2026-07-16T17:29:44.623810+00:00",
       "kind": "enqueued",
@@ -301,6 +136,164 @@
         "kind": "decision",
         "ref": "data/excava/artifacts/dept-visual-mine-great-designs-fr-476.md",
         "at": "2026-07-16T17:30:10.824843+00:00",
+        "title": "visual: MINE great designs FROM THE WEB into the hub — screenshots, taste materi",
+        "by": "Chroma"
+      },
+      "turns": 2
+    },
+    {
+      "task": "transcripts-drain-the-ne-23321",
+      "at": "2026-07-16T17:35:21.143641+00:00",
+      "kind": "enqueued",
+      "title": "Transcripts: drain the next batch of 923 pending (residential IP)",
+      "source": "gap",
+      "priority": 1,
+      "department": "transcripts"
+    },
+    {
+      "task": "raise-g8-personal-fit-66-23321",
+      "at": "2026-07-16T17:35:21.201781+00:00",
+      "kind": "enqueued",
+      "title": "Raise G8 Personal fit (66/100): 17% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
+      "source": "gap",
+      "priority": 1,
+      "department": "visual"
+    },
+    {
+      "task": "empty-body-items-render--31649",
+      "at": "2026-07-16T17:35:21.219256+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "title-collisions-distinc-31649",
+      "at": "2026-07-16T17:35:21.219904+00:00",
+      "kind": "unroutable",
+      "why": "no department specialization matched"
+    },
+    {
+      "task": "lane-transcript-retrieva-77142",
+      "at": "2026-07-16T17:35:21.220580+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "push-link-coverage-towar-7020",
+      "at": "2026-07-16T17:35:21.221239+00:00",
+      "kind": "unroutable",
+      "why": "no department specialization matched"
+    },
+    {
+      "task": "echo-s-initiative-start--91479",
+      "at": "2026-07-16T17:35:21.221956+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "echo-s-initiative-run-a--98918",
+      "at": "2026-07-16T17:35:21.222632+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "raise-g1-omniscience-66--3580",
+      "at": "2026-07-16T17:35:21.278003+00:00",
+      "kind": "claimed",
+      "by": "analysis-w1",
+      "department": "analysis"
+    },
+    {
+      "task": "raise-g1-omniscience-66--3580",
+      "at": "2026-07-16T17:35:21.313468+00:00",
+      "kind": "completed",
+      "by": "analysis-w1",
+      "result": "923 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "task": "memory-embed-the-remaini-22582",
+      "at": "2026-07-16T17:35:21.346905+00:00",
+      "kind": "claimed",
+      "by": "memory-w1",
+      "department": "memory"
+    },
+    {
+      "task": "memory-embed-the-remaini-22582",
+      "at": "2026-07-16T17:35:21.536780+00:00",
+      "kind": "completed",
+      "by": "memory-w1",
+      "result": "Semantic index: 1463 vectors (model gemini-embedding-001); hub 6368 items → 4905 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "task": "raise-g8-personal-fit-66-23321",
+      "at": "2026-07-16T17:35:21.570187+00:00",
+      "kind": "claimed",
+      "by": "visual-w1",
+      "department": "visual"
+    },
+    {
+      "task": "raise-g8-personal-fit-66-23321",
+      "at": "2026-07-16T17:35:27.693171+00:00",
+      "kind": "completed",
+      "by": "visual-w1",
+      "result": "Ran the collect designs. collect_designs: 583 designs (kept 583 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "task": "security-safety-rate-the-97755",
+      "at": "2026-07-16T17:35:27.728386+00:00",
+      "kind": "claimed",
+      "by": "security-w1",
+      "department": "security"
+    },
+    {
+      "task": "security-safety-rate-the-97755",
+      "at": "2026-07-16T17:35:28.405771+00:00",
+      "kind": "completed",
+      "by": "security-w1",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "task": "transcripts-drain-the-ne-23321",
+      "at": "2026-07-16T17:35:28.439476+00:00",
+      "kind": "claimed",
+      "by": "transcripts-w1",
+      "department": "transcripts"
+    },
+    {
+      "task": "transcripts-drain-the-ne-23321",
+      "at": "2026-07-16T17:35:28.538168+00:00",
+      "kind": "handoff",
+      "from": "transcripts-w1",
+      "to": "analysis",
+      "doc": "data/excava/handoffs/transcripts-drain-the-ne-23321--01--transcripts-w1--to--analysis.md"
+    },
+    {
+      "task": "dept-improve-self-improvement-rev-349",
+      "at": "2026-07-16T17:35:39.892019+00:00",
+      "kind": "workers_dispatched",
+      "by": "improve-w1",
+      "n": 4,
+      "ids": [
+        "worker-3355",
+        "worker-4949",
+        "worker-2712",
+        "worker-8659"
+      ]
+    },
+    {
+      "task": "dept-improve-self-improvement-rev-349",
+      "at": "2026-07-16T17:35:39.893121+00:00",
+      "kind": "workers_dissolved",
+      "by": "improve-w1",
+      "n": 4
+    },
+    {
+      "task": "dept-visual-mine-great-designs-fr-368",
+      "at": "2026-07-16T17:35:50.125805+00:00",
+      "kind": "room_closed",
+      "artifact": {
+        "kind": "decision",
+        "ref": "data/excava/artifacts/dept-visual-mine-great-designs-fr-368.md",
+        "at": "2026-07-16T17:35:50.125629+00:00",
         "title": "visual: MINE great designs FROM THE WEB into the hub — screenshots, taste materi",
         "by": "Chroma"
       },

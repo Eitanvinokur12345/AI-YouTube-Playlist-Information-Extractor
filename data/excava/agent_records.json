@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-16T17:52:57.310793+00:00",
+ "generated_at": "2026-07-16T17:58:35.237374+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,8 +8,8 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 247,
-   "rooms_7d": 56,
+   "turns_7d": 248,
+   "rooms_7d": 57,
    "engines_used": [
     "gh-models",
     "groq",
@@ -18,14 +18,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Scriv: Auto-generated changelogs from PR diffs assume every change maps cleanly to a ticket—teams will exploit this by s"
+   "last_position": "The real risk is that machine-generated changelogs assume every change maps cleanly to a user-facing impact, which break"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 186,
+   "turns_7d": 187,
    "rooms_7d": 103,
    "engines_used": [
     "gh-models",
@@ -34,7 +34,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Product Ops must enforce *structured ticket templates with mandatory fields (impact, risk, rollback plan) "
+   "last_position": "**Decision:** Product Ops must enforce *ticket-linked PR summaries* where engineers manually map each PR’s changes to th"
   },
   {
    "id": "watch-w1",
@@ -56,8 +56,8 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 150,
-   "rooms_7d": 67,
+   "turns_7d": 151,
+   "rooms_7d": 68,
    "engines_used": [
     "gh-models",
     "groq",
@@ -65,14 +65,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Product Ops must enforce *auto-generated changelog entries from PR diffs*, with a *single human sign-off o"
+   "last_position": "**Decision:** Require every PR to include a machine-generated changelog snippet in the same commit."
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 139,
+   "turns_7d": 140,
    "rooms_7d": 56,
    "engines_used": [
     "gh-models",
@@ -81,7 +81,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Chisel’s plan still treats \"impact, risk, rollback plan\" as static fields, but user-facing behavior or core APIs drift w"
+   "last_position": "Sift: Chisel’s plan still treats the ticket as the single source of truth, but tickets rot faster than code—engineers wi"
   },
   {
    "id": "power-w1",
@@ -137,8 +137,8 @@
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 107,
-   "rooms_7d": 76,
+   "turns_7d": 108,
+   "rooms_7d": 77,
    "engines_used": [
     "gh-models",
     "groq",
@@ -146,7 +146,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will open the Beverage Cans website and take a screenshot of its vibrant pink hero section. This will produce a taste "
+   "last_position": "I will open the Beverage Cans website and take a screenshot of its vibrant pink can design to capture the color palette "
   },
   {
    "id": "visualization-w1",
@@ -229,6 +229,23 @@
    "last_position": "I will draft the \"UGC Factory\" npm package for the creators tab. This package will provide tools for generating user-gen"
   },
   {
+   "id": "visual-lead",
+   "name": "Chroma",
+   "dept": "visual",
+   "role": "lead",
+   "turns_7d": 77,
+   "rooms_7d": 77,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as a framed taste artifact in the hub.",
+   "proposed": 1
+  },
+  {
    "id": "security-w1",
    "name": "Warden",
    "dept": "security",
@@ -243,23 +260,6 @@
    ],
    "positions_held": 19,
    "last_position": "I will run the LLM Guard scanner on the input/output stream to detect any potential leaks or injections. This will produ"
-  },
-  {
-   "id": "visual-lead",
-   "name": "Chroma",
-   "dept": "visual",
-   "role": "lead",
-   "turns_7d": 76,
-   "rooms_7d": 76,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as taste material in the hub.",
-   "proposed": 1
   },
   {
    "id": "memory-lead",
@@ -507,6 +507,24 @@
    "last_position": "ACTION: Warden runs the LLM Guard scanner on the input/output stream; generates a security report confirming element int"
   },
   {
+   "id": "improve-lead",
+   "name": "Ratchet",
+   "dept": "improve",
+   "role": "lead",
+   "turns_7d": 44,
+   "rooms_7d": 44,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 17,
+   "last_position": "DECISION: Run a dual system—log all prompt changes instantly, auto-apply only if they pass a fast semantic diff check (e",
+   "proposed": 17,
+   "shipped": 16
+  },
+  {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
@@ -520,24 +538,6 @@
    ],
    "positions_held": 25,
    "last_position": "ACTION: Query Reuters, BBC, and the White House AI Fact Sheet for the latest AI policy and tech developments; output a c"
-  },
-  {
-   "id": "improve-lead",
-   "name": "Ratchet",
-   "dept": "improve",
-   "role": "lead",
-   "turns_7d": 43,
-   "rooms_7d": 43,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 16,
-   "last_position": "DECISION: Run a week-long A/B test on 1% traffic comparing staged rollout vs. prompt hashing, measuring error rates and ",
-   "proposed": 16,
-   "shipped": 16
   },
   {
    "id": "watch-lead",

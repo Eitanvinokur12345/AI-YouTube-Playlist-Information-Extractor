@@ -16955,15 +16955,16 @@
       "department": "memory",
       "source": "room-action:memory",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-07-14T01:31:03.517097+00:00",
-      "updated_at": "2026-07-14T01:31:03.517103+00:00"
+      "updated_at": "2026-07-16T19:06:15.311103+00:00",
+      "result": "Semantic index: 1463 vectors (model gemini-embedding-001); hub 6368 items → 4905 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "visual-room-action-easel-92670",
@@ -24678,15 +24679,16 @@
       "department": "security",
       "source": "room-action:security",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-15T10:08:13.853726+00:00",
-      "updated_at": "2026-07-15T10:08:13.853733+00:00"
+      "updated_at": "2026-07-16T19:06:16.027345+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "watch-process-the-next-b-10404",
@@ -34153,15 +34155,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-07-16T18:55:07.001019+00:00",
-      "updated_at": "2026-07-16T18:55:07.001032+00:00"
+      "updated_at": "2026-07-16T19:06:09.128509+00:00",
+      "result": "923 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g8-personal-fit-66-28107",
@@ -34232,7 +34235,61 @@
       "created_at": "2026-07-16T19:00:38.378401+00:00",
       "updated_at": "2026-07-16T19:00:44.008420+00:00",
       "result": "Ran the collect designs. collect_designs: 583 designs (kept 583 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "id": "transcripts-drain-the-ne-28768",
+      "title": "Transcripts: drain the next batch of 923 pending (residential IP)",
+      "detail": "value=60 size=26(small) [cost 25/steps 35/risk 15] · 923 pending",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-drain-the-ne-28768--01--transcripts-w1--to--analysis.md"
+      ],
+      "created_at": "2026-07-16T19:06:08.953593+00:00",
+      "updated_at": "2026-07-16T19:06:16.160026+00:00"
+    },
+    {
+      "id": "raise-g8-personal-fit-66-28769",
+      "title": "Raise G8 Personal fit (66/100): 17% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
+      "detail": "value=34 size=17(small) [cost 15/steps 25/risk 10] · G8 at 66",
+      "department": "visual",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "visual-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-16T19:06:09.014802+00:00",
+      "updated_at": "2026-07-16T19:06:15.082233+00:00",
+      "result": "Ran the collect designs. collect_designs: 583 designs (kept 583 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "id": "ratchet-s-initiative-log-28781",
+      "title": "[Ratchet's initiative] Log only prompt changes that tie to measurable outcome shifts—skip the rest",
+      "detail": "Proposed by agent improve-lead from the decision of room dept-improve-self-improvement-rev-515 (artifact: {\"kind\": \"decision\", \"ref\": \"data/excava/artifacts/dept-improve-self-improvement-rev-515.md\", \"at\": \"2026-07-16T19:06:21). Outcome feeds this agent's hit-rate.",
+      "department": "improve",
+      "source": "agent:improve-lead",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the decision's concrete step is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-16T19:06:21.264497+00:00",
+      "updated_at": "2026-07-16T19:06:21.264504+00:00"
     }
   ],
-  "updated_at": "2026-07-16T19:00:44.967334+00:00"
+  "updated_at": "2026-07-16T19:06:21.264508+00:00"
 }

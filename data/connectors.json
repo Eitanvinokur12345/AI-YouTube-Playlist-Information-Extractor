@@ -3046,7 +3046,10 @@
         "command": "activator: add the \"Model Context Protocol (MCP)\" MCP connector",
         "needs_key": false,
         "in_project": true
-      }
+      },
+      "also_seen_in": [
+        "https://dev.to/mr_manushukla/3-ways-to-expose-legacy-apis-to-ai-agents-before-the-28-july-2026-mcp-switch-3nnd"
+      ]
     },
     {
       "name": "OmniSocials",
@@ -31927,7 +31930,7 @@
       ],
       "setup": {
         "kind": "mcp connector",
-        "command": "activator: add the \"Claude to Arc Ads\" MCP connector",
+        "command": "claude mcp add claude-to-arc-ads -- npx -y claude-arcads",
         "needs_key": false,
         "in_project": true
       },
@@ -32008,7 +32011,13 @@
       ],
       "github": "https://github.com/s-morgan-jeffries/apple-mail-fast-mcp",
       "deploy_url": "https://vercel.com/new/clone?repository-url=https://github.com/s-morgan-jeffries/apple-mail-fast-mcp",
-      "links_verified_at": "2026-07-14T21:31:30.504072+00:00"
+      "links_verified_at": "2026-07-14T21:31:30.504072+00:00",
+      "setup": {
+        "kind": "mcp connector",
+        "command": "claude mcp add apple-mail -- npx -y apple-mail-fast-mcp",
+        "needs_key": false,
+        "in_project": true
+      }
     },
     {
       "name": "Supabase Connector",
@@ -32031,7 +32040,13 @@
       "github": "https://github.com/supabase/supabase",
       "deploy_url": "https://vercel.com/new/clone?repository-url=https://github.com/supabase/supabase",
       "homepage": "https://supabase.com/",
-      "links_verified_at": "2026-07-15T15:48:17.112156+00:00"
+      "links_verified_at": "2026-07-15T15:48:17.112156+00:00",
+      "setup": {
+        "kind": "mcp connector",
+        "command": "claude mcp add supabase-connector -- npx -y supabase",
+        "needs_key": false,
+        "in_project": true
+      }
     },
     {
       "name": "Google Meet AI Agent Integration",
@@ -32052,7 +32067,13 @@
           "url": "https://www.youtube.com/watch?v=MSKghNiehT8",
           "title": "🤖 AI agents now have faces and voices"
         }
-      ]
+      ],
+      "setup": {
+        "kind": "mcp connector",
+        "command": "activator: add the \"Google Meet AI Agent Integration\" MCP connector",
+        "needs_key": true,
+        "in_project": true
+      }
     },
     {
       "name": "Higgs MCP",
@@ -32072,7 +32093,13 @@
           "url": "https://www.youtube.com/watch?v=MrBmveaMjVE",
           "title": "Claude + Higgsfield is insane 😭 #higgsfieldpartner #claude #entrepreneur"
         }
-      ]
+      ],
+      "setup": {
+        "kind": "mcp connector",
+        "command": "activator: add the \"Higgs MCP\" MCP connector",
+        "needs_key": true,
+        "in_project": true
+      }
     },
     {
       "name": "Claude's Chrome Extension",
@@ -32092,7 +32119,13 @@
           "url": "https://www.youtube.com/watch?v=NCzV-CerZuI",
           "title": "Claude Just Replaced My Bookkeeper, Here’s How"
         }
-      ]
+      ],
+      "setup": {
+        "kind": "mcp connector",
+        "command": "activator: add the \"Claude's Chrome Extension\" MCP connector",
+        "needs_key": false,
+        "in_project": true
+      }
     },
     {
       "name": "Google gws integration",
@@ -32113,7 +32146,13 @@
           "url": "https://www.youtube.com/watch?v=NV2a7kqG73k",
           "title": "I Unsubscribed from 150 Email Newsletters with Claude"
         }
-      ]
+      ],
+      "setup": {
+        "kind": "mcp connector",
+        "command": "activator: add the \"Google gws integration\" MCP connector",
+        "needs_key": true,
+        "in_project": true
+      }
     },
     {
       "name": "Stripe AGENT API",
@@ -32133,7 +32172,13 @@
           "url": "https://www.youtube.com/watch?v=NYVnyQHs1Xs",
           "title": "AI Shopping is a Thing Now?"
         }
-      ]
+      ],
+      "setup": {
+        "kind": "mcp connector",
+        "command": "activator: add the \"Stripe AGENT API\" MCP connector",
+        "needs_key": true,
+        "in_project": true
+      }
     },
     {
       "name": "ChatGPT Plus via OAuth",
@@ -32153,7 +32198,13 @@
           "url": "https://www.youtube.com/watch?v=NwmWV9_JiD0",
           "title": "Nemo Claw vs OpenClaw: Security, Pricing, & Model Secrets REVEALED! #shorts"
         }
-      ]
+      ],
+      "setup": {
+        "kind": "mcp connector",
+        "command": "activator: add the \"ChatGPT Plus via OAuth\" MCP connector",
+        "needs_key": true,
+        "in_project": true
+      }
     },
     {
       "name": "NVIDIA Cloud Models API",
@@ -32174,8 +32225,32 @@
           "url": "https://www.youtube.com/watch?v=NwmWV9_JiD0",
           "title": "Nemo Claw vs OpenClaw: Security, Pricing, & Model Secrets REVEALED! #shorts"
         }
-      ]
+      ],
+      "setup": {
+        "kind": "mcp connector",
+        "command": "activator: add the \"NVIDIA Cloud Models API\" MCP connector",
+        "needs_key": true,
+        "in_project": true
+      }
+    },
+    {
+      "name": "Codebase Memory MCP",
+      "what_it_does": "Provides a map-based memory connector for coding agents to better understand codebases by leveraging the structure of imports and function calls instead of flat text search.",
+      "works_in": "both",
+      "free": true,
+      "url": "https://dev.to/aijasonz/codebase-memory-mcp-give-your-coding-agent-a-map-2026-535l",
+      "slug": "codebase-memory-mcp",
+      "source_type": "web_news",
+      "source_url": "https://dev.to/aijasonz/codebase-memory-mcp-give-your-coding-agent-a-map-2026-535l",
+      "discovered_via": "mine_feeds (dev.to AI Agents)",
+      "added_at": "2026-07-16T11:23:48.024870+00:00",
+      "setup": {
+        "kind": "mcp connector",
+        "command": "activator: add the \"Codebase Memory MCP\" MCP connector",
+        "needs_key": false,
+        "in_project": true
+      }
     }
   ],
-  "recipes_updated_at": "2026-07-14T11:17:22.970645+00:00"
+  "recipes_updated_at": "2026-07-16T11:29:36.705984+00:00"
 }

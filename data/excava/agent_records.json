@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-16T17:41:35.670898+00:00",
+ "generated_at": "2026-07-16T17:47:21.655564+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 244,
+   "turns_7d": 246,
    "rooms_7d": 56,
    "engines_used": [
     "gh-models",
@@ -18,7 +18,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Scriv: Auto-generating entries still lets teams game the system with vague PR titles like \"fix bug,\" and human review fo"
+   "last_position": "Scriv: Live drafts sound clever until Product Ops becomes the bottleneck—engineers will game the system by dumping half-"
   },
   {
    "id": "analysis-w1",
@@ -41,15 +41,15 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 163,
-   "rooms_7d": 84,
+   "turns_7d": 165,
+   "rooms_7d": 85,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Product Ops must enforce *manual, structured changelog entries* with mandatory fields (impact, risk, rollb"
+   "last_position": "**Decision:** Product Ops must enforce *live, ticket-linked changelog drafts* that auto-update from PR diffs, with human"
   },
   {
    "id": "transcripts-w1",
@@ -137,8 +137,8 @@
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 105,
-   "rooms_7d": 74,
+   "turns_7d": 106,
+   "rooms_7d": 75,
    "engines_used": [
     "gh-models",
     "groq",
@@ -146,7 +146,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will open the Beverage Cans website and take a screenshot of its vibrant pink hero section. This will produce a taste "
+   "last_position": "I will open the Beverage Cans website and take a screenshot of its vibrant pink can design to capture the color palette "
   },
   {
    "id": "visualization-w1",
@@ -185,8 +185,8 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 95,
-   "rooms_7d": 53,
+   "turns_7d": 96,
+   "rooms_7d": 54,
    "engines_used": [
     "gh-models",
     "groq",
@@ -194,7 +194,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Do A/B test prompt hashing on 1% traffic for one week. Hashing catches reworded prompts early by comparing semantic fing"
+   "last_position": "Do A/B test prompt hashing on 1% traffic for one week. Hashing catches rewording that silently changes behavior without "
   },
   {
    "id": "creators-w1",
@@ -217,8 +217,8 @@
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 84,
-   "rooms_7d": 42,
+   "turns_7d": 85,
+   "rooms_7d": 43,
    "engines_used": [
     "gh-models",
     "groq",
@@ -226,7 +226,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Hashing won’t catch semantic drift—only exact rewordings. The real risk is mistaking noise for signal: a hash collision "
+   "last_position": "Hashing only flags exact rewordings—semantic drift slips through undetected. A 1% traffic slice risks bad responses with"
   },
   {
    "id": "security-w1",
@@ -245,6 +245,23 @@
    "last_position": "I will run the LLM Guard scanner on the input/output stream to detect any potential leaks or injections. This will produ"
   },
   {
+   "id": "visual-lead",
+   "name": "Chroma",
+   "dept": "visual",
+   "role": "lead",
+   "turns_7d": 75,
+   "rooms_7d": 75,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as a taste artifact in the hub.",
+   "proposed": 1
+  },
+  {
    "id": "memory-lead",
    "name": "Root",
    "dept": "memory",
@@ -261,23 +278,6 @@
    "last_position": "ACTION: Graft executes the memory linking command to connect all conversation elements to the unified memory system, emb",
    "proposed": 1,
    "shipped": 1
-  },
-  {
-   "id": "visual-lead",
-   "name": "Chroma",
-   "dept": "visual",
-   "role": "lead",
-   "turns_7d": 74,
-   "rooms_7d": 74,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as taste material in the hub.",
-   "proposed": 1
   },
   {
    "id": "transcripts-lead",
@@ -537,7 +537,7 @@
    "positions_held": 16,
    "last_position": "DECISION: Run a week-long A/B test on 1% traffic comparing staged rollout vs. prompt hashing, measuring error rates and ",
    "proposed": 16,
-   "shipped": 15
+   "shipped": 16
   },
   {
    "id": "watch-lead",

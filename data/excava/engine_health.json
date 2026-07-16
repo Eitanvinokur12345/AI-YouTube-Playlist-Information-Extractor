@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-15T23:32:40.665697+00:00",
+ "generated_at": "2026-07-16T01:23:57.913927+00:00",
  "experiment": "engine-benchmark (golden-task canary)",
  "golden_prompt": "Reply with exactly these two words and nothing else: benchmark ok",
  "results": [
@@ -7,13 +7,13 @@
    "engine": "groq",
    "status": "healthy",
    "valid": true,
-   "ms": 266,
+   "ms": 400,
    "model": "llama-3.3-70b-versatile"
   },
   {
    "engine": "sambanova",
    "status": "quota-429",
-   "ms": 260,
+   "ms": 378,
    "model": "Meta-Llama-3.3-70B-Instruct",
    "note": "quota-429: Rate limit exceeded"
   },
@@ -21,20 +21,20 @@
    "engine": "mistral",
    "status": "healthy",
    "valid": true,
-   "ms": 380,
+   "ms": 1057,
    "model": "mistral-small-latest"
   },
   {
    "engine": "gh-models",
-   "status": "quota-429",
-   "ms": 434,
-   "model": "openai/gpt-4o-mini",
-   "note": "quota-429: Too many requests. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/git"
+   "status": "healthy",
+   "valid": true,
+   "ms": 1278,
+   "model": "openai/gpt-4o-mini"
   },
   {
    "engine": "cerebras",
    "status": "bad-model-404",
-   "ms": 236,
+   "ms": 147,
    "model": "llama3.1-8b",
    "note": "bad-model-404: {\"message\":\"Model does not exist or you do not have access to it.\",\"type\":\"not_found_error\",\"param\":\"model\",\"code\":\"model_not_found\"}"
   },
@@ -48,14 +48,14 @@
   {
    "engine": "openrouter",
    "status": "quota-429",
-   "ms": 470,
+   "ms": 284,
    "model": "meta-llama/llama-3.3-70b-instruct:free",
    "note": "quota-429: {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"meta-llama/llama-3.3-70b-instruct:free is temporarily rate-limited upstream. Please"
   },
   {
    "engine": "nvidia",
    "status": "TimeoutError",
-   "ms": 60133,
+   "ms": 60106,
    "model": "meta/llama-3.3-70b-instruct",
    "note": "TimeoutError: The read operation timed out"
   },
@@ -73,11 +73,11 @@
  "ranking": [
   "groq",
   "mistral",
-  "gemini",
-  "cerebras",
-  "sambanova",
   "gh-models",
+  "cerebras",
+  "gemini",
   "openrouter",
+  "sambanova",
   "nvidia",
   "hermes",
   "omniroute"

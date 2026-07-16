@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-16T17:58:35.237374+00:00",
+ "generated_at": "2026-07-16T18:04:12.499551+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 248,
+   "turns_7d": 249,
    "rooms_7d": 57,
    "engines_used": [
     "gh-models",
@@ -18,15 +18,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is that machine-generated changelogs assume every change maps cleanly to a user-facing impact, which break"
+   "last_position": "Scriv: Scope’s plan still assumes engineers will edit auto-generated summaries honestly—real risk is they’ll rubber-stam"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 187,
-   "rooms_7d": 103,
+   "turns_7d": 188,
+   "rooms_7d": 104,
    "engines_used": [
     "gh-models",
     "groq",
@@ -34,14 +34,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Product Ops must enforce *ticket-linked PR summaries* where engineers manually map each PR’s changes to th"
+   "last_position": "**Decision:** Require human-written changelog snippets for *every* PR, but exempt refactors, tests, and internal tooling"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 165,
+   "turns_7d": 166,
    "rooms_7d": 85,
    "engines_used": [
     "gh-models",
@@ -49,7 +49,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Product Ops must enforce *live, ticket-linked changelog drafts* that auto-update from PR diffs, with human"
+   "last_position": "**Decision:** Product Ops must enforce *auto-generated PR summaries* that engineers must *edit and approve* before merge"
   },
   {
    "id": "transcripts-w1",
@@ -72,8 +72,8 @@
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 140,
-   "rooms_7d": 56,
+   "turns_7d": 141,
+   "rooms_7d": 57,
    "engines_used": [
     "gh-models",
     "groq",
@@ -81,7 +81,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Sift: Chisel’s plan still treats the ticket as the single source of truth, but tickets rot faster than code—engineers wi"
+   "last_position": "The real risk is that exempting refactors, tests, and internal tooling turns the changelog into a Swiss cheese—gaps wher"
   },
   {
    "id": "power-w1",
@@ -137,8 +137,8 @@
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 108,
-   "rooms_7d": 77,
+   "turns_7d": 109,
+   "rooms_7d": 78,
    "engines_used": [
     "gh-models",
     "groq",
@@ -146,7 +146,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will open the Beverage Cans website and take a screenshot of its vibrant pink can design to capture the color palette "
+   "last_position": "I will open the Beverage Cans website and take a screenshot of its vibrant pink gradient background. This will produce a"
   },
   {
    "id": "visualization-w1",
@@ -165,6 +165,22 @@
    "last_position": "Ship a live contrast checker that updates in real time as users adjust the dark theme toggle. This forces us to fix visi"
   },
   {
+   "id": "improve-w1",
+   "name": "Sprocket",
+   "dept": "improve",
+   "role": "doer",
+   "turns_7d": 98,
+   "rooms_7d": 55,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "Run a controlled prompt variant audit for one week. Track every prompt change in a log, including the reason for the cha"
+  },
+  {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
@@ -181,28 +197,12 @@
    "last_position": "A live contrast checker adds complexity and may delay the rollout. Users might still overlook visibility problems if the"
   },
   {
-   "id": "improve-w1",
-   "name": "Sprocket",
-   "dept": "improve",
-   "role": "doer",
-   "turns_7d": 97,
-   "rooms_7d": 54,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "Run a controlled prompt variant audit for one week: log every prompt change and flag semantic shifts with a lightweight "
-  },
-  {
    "id": "improve-checker",
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 86,
-   "rooms_7d": 43,
+   "turns_7d": 87,
+   "rooms_7d": 44,
    "engines_used": [
     "gh-models",
     "groq",
@@ -210,7 +210,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Gauge: A weekly audit still misses drift that happens *between* audits—users get bad responses in real time. Instead, ru"
+   "last_position": "The risk isn’t just overhead—it’s that logging every tweak turns the audit into a bureaucracy that slows iteration. A be"
   },
   {
    "id": "creators-w1",
@@ -233,8 +233,8 @@
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 77,
-   "rooms_7d": 77,
+   "turns_7d": 78,
+   "rooms_7d": 78,
    "engines_used": [
     "gh-models",
     "groq",
@@ -242,7 +242,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as a framed taste artifact in the hub.",
+   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as taste material for the hub.",
    "proposed": 1
   },
   {
@@ -522,7 +522,7 @@
    "positions_held": 17,
    "last_position": "DECISION: Run a dual system—log all prompt changes instantly, auto-apply only if they pass a fast semantic diff check (e",
    "proposed": 17,
-   "shipped": 16
+   "shipped": 17
   },
   {
    "id": "news-lead",

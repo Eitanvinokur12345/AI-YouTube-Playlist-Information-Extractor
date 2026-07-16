@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-16T18:09:51.038361+00:00",
+ "generated_at": "2026-07-16T18:15:25.323580+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -25,7 +25,7 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 188,
+   "turns_7d": 189,
    "rooms_7d": 104,
    "engines_used": [
     "gh-models",
@@ -34,7 +34,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Require human-written changelog snippets for *every* PR, but exempt refactors, tests, and internal tooling"
+   "last_position": "**Decision:** Product Ops must enforce *ticket-linked PR summaries* where engineers manually map each PR’s changes to th"
   },
   {
    "id": "watch-w1",
@@ -72,7 +72,7 @@
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 141,
+   "turns_7d": 142,
    "rooms_7d": 57,
    "engines_used": [
     "gh-models",
@@ -81,7 +81,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is that exempting refactors, tests, and internal tooling turns the changelog into a Swiss cheese—gaps wher"
+   "last_position": "Chisel’s plan still treats the ticket as the single source of truth, but tickets rot faster than engineers—engineers wil"
   },
   {
    "id": "power-w1",
@@ -117,6 +117,22 @@
    "last_position": "Qwen2.5-72B’s 128K window solves truncation but ignores inference cost—its 72B size doubles Mistral Large 2’s compute, r"
   },
   {
+   "id": "visual-w1",
+   "name": "Easel",
+   "dept": "visual",
+   "role": "doer",
+   "turns_7d": 111,
+   "rooms_7d": 80,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "I will open the Beverage Cans website and take a screenshot of its vibrant pink branding. This will produce a taste mate"
+  },
+  {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
@@ -131,22 +147,6 @@
    ],
    "positions_held": 30,
    "last_position": "I will run the memory linking command to connect every existing memory ID in this conversation to the unified memory sys"
-  },
-  {
-   "id": "visual-w1",
-   "name": "Easel",
-   "dept": "visual",
-   "role": "doer",
-   "turns_7d": 110,
-   "rooms_7d": 79,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "I will open the Beverage Cans website and take a screenshot of its vibrant pink can design to capture the color palette "
   },
   {
    "id": "visualization-w1",
@@ -233,8 +233,8 @@
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 79,
-   "rooms_7d": 79,
+   "turns_7d": 80,
+   "rooms_7d": 80,
    "engines_used": [
     "gh-models",
     "groq",
@@ -242,7 +242,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as a taste artifact in the hub.",
+   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as taste material in the hub.",
    "proposed": 1
   },
   {
@@ -284,16 +284,16 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 66,
-   "rooms_7d": 66,
+   "turns_7d": 67,
+   "rooms_7d": 67,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 29,
-   "last_position": "DECISION: Require ticket links in *all* PRs, enforced by an auto-reject bot that blocks merges without a valid ticket li",
+   "positions_held": 30,
+   "last_position": "DECISION: Require human-written changelog snippets only for user-facing PRs; machine-generate boilerplate for internal c",
    "proposed": 2
   },
   {
@@ -491,6 +491,24 @@
    "last_position": "Hidden skip links confuse first-time keyboard users who don’t know they exist. A visible skip link risks pushing down co"
   },
   {
+   "id": "improve-lead",
+   "name": "Ratchet",
+   "dept": "improve",
+   "role": "lead",
+   "turns_7d": 45,
+   "rooms_7d": 45,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 18,
+   "last_position": "DECISION: Log only high-risk prompt changes (core routing, >5% metric shift, or new failure modes) with a lightweight ri",
+   "proposed": 18,
+   "shipped": 17
+  },
+  {
    "id": "security-lead",
    "name": "Bastion",
    "dept": "security",
@@ -505,24 +523,6 @@
    ],
    "positions_held": 19,
    "last_position": "ACTION: Warden runs the LLM Guard scanner on the input/output stream; generates a security report confirming element int"
-  },
-  {
-   "id": "improve-lead",
-   "name": "Ratchet",
-   "dept": "improve",
-   "role": "lead",
-   "turns_7d": 44,
-   "rooms_7d": 44,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 17,
-   "last_position": "DECISION: Run a dual system—log all prompt changes instantly, auto-apply only if they pass a fast semantic diff check (e",
-   "proposed": 17,
-   "shipped": 17
   },
   {
    "id": "news-lead",

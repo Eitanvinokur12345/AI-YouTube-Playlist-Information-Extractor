@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-07-17T09:20:20.792709+00:00",
+  "generated_at": "2026-07-17T10:16:30.793821+00:00",
   "name": "EXCAVA",
   "phase": "OS spine (Phase 0): bus + departments + hand-offs live; creators (OS-2) gated",
   "gate": {
     "checks": {
       "data_guard_ok": true,
       "security_clean": true,
-      "truth_access_G3": 53,
+      "truth_access_G3": 51,
       "G3_ready_for_outward": false
     },
     "internal_allowed": true,
@@ -14,7 +14,7 @@
     "outward_needs": "data_guard ok + security clean + G3>=70 + owner approval"
   },
   "memory": {
-    "vectors": 1464,
+    "vectors": 1479,
     "model": "gemini-embedding-001",
     "wired": true
   },
@@ -22,7 +22,7 @@
     "missing": [
       "github_token"
     ],
-    "checked_at": "2026-07-17T06:26:20.900917+00:00",
+    "checked_at": "2026-07-17T09:20:51.115229+00:00",
     "can_do": {
       "resolve-links": true,
       "analyze-videos": true,
@@ -106,11 +106,11 @@
     }
   ],
   "os": {
-    "beats": 412,
+    "beats": 422,
     "mode": "run",
     "bus": {
-      "open": 157,
-      "total": 1763,
+      "open": 164,
+      "total": 1818,
       "per_department": {
         "(unrouted)": {
           "queued": 6,
@@ -120,65 +120,65 @@
           "failed": 0
         },
         "links": {
-          "queued": 15,
+          "queued": 16,
           "working": 0,
           "done": 0,
           "held": 0,
           "failed": 0
         },
         "security": {
-          "queued": 2,
+          "queued": 0,
           "working": 3,
-          "done": 207,
+          "done": 215,
           "held": 0,
           "failed": 0
         },
         "watch": {
           "queued": 0,
           "working": 2,
-          "done": 130,
+          "done": 138,
           "held": 0,
           "failed": 0
         },
         "memory": {
-          "queued": 22,
+          "queued": 23,
           "working": 3,
-          "done": 222,
+          "done": 230,
           "held": 0,
           "failed": 0
         },
         "news": {
           "queued": 0,
           "working": 1,
-          "done": 175,
+          "done": 174,
           "held": 0,
           "failed": 0
         },
         "creators": {
           "queued": 0,
           "working": 1,
-          "done": 153,
+          "done": 161,
           "held": 0,
           "failed": 0
         },
         "analysis": {
-          "queued": 59,
+          "queued": 63,
           "working": 0,
-          "done": 242,
+          "done": 251,
           "held": 0,
           "failed": 0
         },
         "mining": {
           "queued": 0,
           "working": 1,
-          "done": 100,
+          "done": 99,
           "held": 0,
           "failed": 0
         },
         "visual": {
           "queued": 42,
           "working": 0,
-          "done": 242,
+          "done": 251,
           "held": 0,
           "failed": 0
         },
@@ -209,47 +209,56 @@
           "done": 16,
           "held": 0,
           "failed": 0
+        },
+        "transcripts": {
+          "queued": 3,
+          "working": 0,
+          "done": 0,
+          "held": 0,
+          "failed": 0
         }
       },
-      "last_handoff": "data/excava/handoffs/transcripts-drain-the-ne-80021--01--transcripts-w1--to--analysis.md"
+      "last_handoff": "data/excava/handoffs/transcripts-drain-the-ne-82732--01--transcripts-w1--to--analysis.md"
     },
     "beat_log": [
-      "pruned 48 finished task(s) to data/excava/archive/",
       "backlog: 6 real-gap task(s) queued; plan {'core': '3 small task(s) run in', 'links': '3 small task(s) run in', 'visual': '3 small task(s) run in', 'analysis': '3 small task(s) run in'}",
-      "analysis-w1: verify-the-next-200-of-6-60118 DONE",
-      "visual-w1: raise-g8-personal-fit-66-80021 DONE",
-      "memory-w1: memory-embed-the-remaini-23999 DONE",
-      "security-w1: security-safety-rate-the-23999 DONE",
-      "transcripts-w1: transcripts-drain-the-ne-80021 -> analysis (data/excava/handoffs/transcripts-drain-the-ne-80021--01--transcripts-w1--to--analysis.md)",
-      "watch-w1: watch-process-the-next-b-80021 DONE",
-      "dept-memory-recall-by-meaning-rel-410: Graft spoke (mistral, 737ms) t1",
-      "dept-memory-recall-by-meaning-rel-410: Root spoke (groq, 562ms) t2",
-      "dept-memory-recall-by-meaning-rel-410: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-memory-recall-by-meaning-rel-410.md', 'at': '2026-07-17T09:20:39.097805+00:00', 'title': 'memory: Recall by meaning, relate elements, build the brain graph, embed unembed', 'by': 'Root'}",
-      "dept-memory-recall-by-meaning-rel-410: ACTION queued → memory-room-action-root--80039",
-      "group-open-floor-any-agent-from-an-756: Reel spoke (mistral, 1253ms) t31",
-      "group-open-floor-any-agent-from-an-756: Scriv spoke (mistral, 1076ms) t32",
-      "experiment engine-benchmark: 3/10 healthy; ranking groq, mistral, gh-models, gemini",
+      "analysis-w1: transcripts-drain-the-ne-82732 DONE",
+      "visual-w1: raise-g8-personal-fit-66-83391 DONE",
+      "memory-w1: memory-embed-the-remaini-83391 DONE",
+      "transcripts-w1: transcripts-room-action--82422 -> analysis (data/excava/handoffs/transcripts-room-action--82422--01--transcripts-w1--to--analysis.md)",
+      "creators-w1: raise-g5-leverage-51-100-83391 DONE",
+      "security-w1: security-safety-rate-the-83391 DONE",
+      "watch-w1: watch-process-the-next-b-83391 DONE",
+      "dept-visualization-own-excava-s-o-487: Facet spoke (mistral, 867ms) t3",
+      "dept-visualization-own-excava-s-o-487: Pane spoke (mistral, 1169ms) t4",
+      "dept-transcripts-retrieve-real-fu-682: Reel spoke (mistral, 619ms) t1",
+      "dept-transcripts-retrieve-real-fu-682: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-transcripts-retrieve-real-fu-682.md', 'at': '2026-07-17T10:16:50.424729+00:00', 'title': 'transcripts: Retrieve REAL full transcripts/captions for pending videos (residen', 'by': 'Echo'}",
+      "dept-transcripts-retrieve-real-fu-682: ACTION queued → transcripts-room-action--83410",
+      "group-open-floor-any-agent-from-an-756: Chisel spoke (gh-models, 2045ms) t51",
+      "group-open-floor-any-agent-from-an-756: Sift spoke (mistral, 1239ms) t52",
+      "self-improve: archived silent room dept-security-paranoid-guard-scan-881 (safe, applied)",
+      "experiment engine-benchmark: 3/10 healthy; ranking groq, mistral, gh-models, cerebras",
       "experiment golden-task-regression: 100% (6/6 tasks pass)",
       "agent-issue: only 0 dead-link elements (<5) — no draft",
       "agent-issue: not approved — nothing posted",
       "TUTORIAL MISSING for dashboard v114 — Phase 6 law: every major change ships a walkthrough (data/tutorials.json)",
-      "memory master: +6 episodes"
+      "memory master: +9 episodes"
     ],
     "departments": [],
     "usage": {
       "analysis": {
-        "ticks": 364,
-        "done": 364,
+        "ticks": 374,
+        "done": 374,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-17T09:21:50.462106+00:00"
+        "last": "2026-07-17T10:18:01.568040+00:00"
       },
       "memory": {
-        "ticks": 360,
-        "done": 360,
+        "ticks": 370,
+        "done": 370,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-17T09:21:50.462112+00:00"
+        "last": "2026-07-17T10:18:01.568047+00:00"
       },
       "links": {
         "ticks": 53,
@@ -266,25 +275,25 @@
         "last": "2026-07-17T03:50:16.528982+00:00"
       },
       "mining": {
-        "ticks": 223,
-        "done": 223,
+        "ticks": 224,
+        "done": 224,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-17T06:42:54.823637+00:00"
+        "last": "2026-07-17T09:49:37.909749+00:00"
       },
       "visual": {
-        "ticks": 353,
-        "done": 353,
+        "ticks": 363,
+        "done": 363,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-17T09:21:50.462110+00:00"
+        "last": "2026-07-17T10:18:01.568045+00:00"
       },
       "creators": {
-        "ticks": 270,
-        "done": 270,
+        "ticks": 279,
+        "done": 279,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-17T06:42:54.823636+00:00"
+        "last": "2026-07-17T10:18:01.568053+00:00"
       },
       "news": {
         "ticks": 290,
@@ -294,25 +303,25 @@
         "last": "2026-07-17T06:42:54.823639+00:00"
       },
       "security": {
-        "ticks": 336,
-        "done": 336,
+        "ticks": 346,
+        "done": 346,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-17T09:21:50.462115+00:00"
+        "last": "2026-07-17T10:18:01.568055+00:00"
       },
       "transcripts": {
-        "ticks": 109,
+        "ticks": 117,
         "done": 0,
-        "handoffs": 109,
+        "handoffs": 117,
         "fails": 0,
-        "last": "2026-07-17T09:21:50.462118+00:00"
+        "last": "2026-07-17T10:18:01.568050+00:00"
       },
       "watch": {
-        "ticks": 256,
-        "done": 256,
+        "ticks": 266,
+        "done": 266,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-17T09:21:50.462120+00:00"
+        "last": "2026-07-17T10:18:01.568057+00:00"
       },
       "visualization": {
         "ticks": 21,
@@ -603,154 +612,159 @@
     ],
     "recent_events": [
       {
-        "task": "lane-transcript-retrieva-77142",
-        "at": "2026-07-17T09:20:21.556188+00:00",
-        "kind": "unroutable",
-        "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-      },
-      {
-        "task": "push-link-coverage-towar-7020",
-        "at": "2026-07-17T09:20:21.556822+00:00",
-        "kind": "unroutable",
-        "why": "no department specialization matched"
-      },
-      {
         "task": "echo-s-initiative-start--91479",
-        "at": "2026-07-17T09:20:21.557558+00:00",
+        "at": "2026-07-17T10:16:31.549924+00:00",
         "kind": "unroutable",
         "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
       },
       {
         "task": "echo-s-initiative-run-a--98918",
-        "at": "2026-07-17T09:20:21.558208+00:00",
+        "at": "2026-07-17T10:16:31.550593+00:00",
         "kind": "unroutable",
         "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
       },
       {
-        "task": "verify-the-next-200-of-6-60118",
-        "at": "2026-07-17T09:20:21.599366+00:00",
+        "task": "transcripts-drain-the-ne-82732",
+        "at": "2026-07-17T10:16:31.607499+00:00",
         "kind": "claimed",
         "by": "analysis-w1",
         "department": "analysis"
       },
       {
-        "task": "verify-the-next-200-of-6-60118",
-        "at": "2026-07-17T09:20:21.635220+00:00",
+        "task": "transcripts-drain-the-ne-82732",
+        "at": "2026-07-17T10:16:31.644470+00:00",
         "kind": "completed",
         "by": "analysis-w1",
         "result": "1036 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
       },
       {
-        "task": "raise-g8-personal-fit-66-80021",
-        "at": "2026-07-17T09:20:21.683776+00:00",
+        "task": "raise-g8-personal-fit-66-83391",
+        "at": "2026-07-17T10:16:31.679740+00:00",
         "kind": "claimed",
         "by": "visual-w1",
         "department": "visual"
       },
       {
-        "task": "raise-g8-personal-fit-66-80021",
-        "at": "2026-07-17T09:20:29.526031+00:00",
+        "task": "raise-g8-personal-fit-66-83391",
+        "at": "2026-07-17T10:16:37.473751+00:00",
         "kind": "completed",
         "by": "visual-w1",
-        "result": "Ran the collect designs. collect_designs: 647 designs (kept 649 / dropped 0 repo-only + 4 dead/parked + 36 non-design; +0 AI-product, +27 seeds, +33 shown-in-video; url-checked 4). designs-only."
+        "result": "Ran the collect designs. collect_designs: 647 designs (kept 647 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-video; url-checked 4). designs-only."
       },
       {
-        "task": "memory-embed-the-remaini-23999",
-        "at": "2026-07-17T09:20:29.560263+00:00",
+        "task": "memory-embed-the-remaini-83391",
+        "at": "2026-07-17T10:16:37.509098+00:00",
         "kind": "claimed",
         "by": "memory-w1",
         "department": "memory"
       },
       {
-        "task": "memory-embed-the-remaini-23999",
-        "at": "2026-07-17T09:20:29.754327+00:00",
+        "task": "memory-embed-the-remaini-83391",
+        "at": "2026-07-17T10:16:37.706034+00:00",
         "kind": "completed",
         "by": "memory-w1",
-        "result": "Semantic index: 1464 vectors (model gemini-embedding-001); hub 6428 items → 4964 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+        "result": "Semantic index: 1479 vectors (model gemini-embedding-001); hub 6627 items → 5148 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
       },
       {
-        "task": "security-safety-rate-the-23999",
-        "at": "2026-07-17T09:20:29.788301+00:00",
-        "kind": "claimed",
-        "by": "security-w1",
-        "department": "security"
-      },
-      {
-        "task": "security-safety-rate-the-23999",
-        "at": "2026-07-17T09:20:30.545624+00:00",
-        "kind": "completed",
-        "by": "security-w1",
-        "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
-      },
-      {
-        "task": "transcripts-drain-the-ne-80021",
-        "at": "2026-07-17T09:20:30.579737+00:00",
+        "task": "transcripts-room-action--82422",
+        "at": "2026-07-17T10:16:37.740777+00:00",
         "kind": "claimed",
         "by": "transcripts-w1",
         "department": "transcripts"
       },
       {
-        "task": "transcripts-drain-the-ne-80021",
-        "at": "2026-07-17T09:20:30.678122+00:00",
+        "task": "transcripts-room-action--82422",
+        "at": "2026-07-17T10:16:37.836594+00:00",
         "kind": "handoff",
         "from": "transcripts-w1",
         "to": "analysis",
-        "doc": "data/excava/handoffs/transcripts-drain-the-ne-80021--01--transcripts-w1--to--analysis.md"
+        "doc": "data/excava/handoffs/transcripts-room-action--82422--01--transcripts-w1--to--analysis.md"
       },
       {
-        "task": "watch-process-the-next-b-80021",
-        "at": "2026-07-17T09:20:30.712728+00:00",
+        "task": "raise-g5-leverage-51-100-83391",
+        "at": "2026-07-17T10:16:37.871412+00:00",
+        "kind": "claimed",
+        "by": "creators-w1",
+        "department": "creators"
+      },
+      {
+        "task": "raise-g5-leverage-51-100-83391",
+        "at": "2026-07-17T10:16:37.907170+00:00",
+        "kind": "completed",
+        "by": "creators-w1",
+        "result": "Creators: 12 creations on record, 12 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
+      },
+      {
+        "task": "security-safety-rate-the-83391",
+        "at": "2026-07-17T10:16:37.942428+00:00",
+        "kind": "claimed",
+        "by": "security-w1",
+        "department": "security"
+      },
+      {
+        "task": "security-safety-rate-the-83391",
+        "at": "2026-07-17T10:16:38.710723+00:00",
+        "kind": "completed",
+        "by": "security-w1",
+        "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+      },
+      {
+        "task": "watch-process-the-next-b-83391",
+        "at": "2026-07-17T10:16:38.746344+00:00",
         "kind": "claimed",
         "by": "watch-w1",
         "department": "watch"
       },
       {
-        "task": "watch-process-the-next-b-80021",
-        "at": "2026-07-17T09:20:30.746799+00:00",
+        "task": "watch-process-the-next-b-83391",
+        "at": "2026-07-17T10:16:38.781677+00:00",
         "kind": "completed",
         "by": "watch-w1",
         "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
       },
       {
-        "task": "dept-memory-recall-by-meaning-rel-410",
-        "at": "2026-07-17T09:20:39.098010+00:00",
+        "task": "dept-visualization-own-excava-s-o-487",
+        "at": "2026-07-17T10:16:41.972639+00:00",
+        "kind": "workers_dispatched",
+        "by": "visualization-w1",
+        "n": 3,
+        "ids": [
+          "worker-5037",
+          "worker-4004",
+          "worker-7381"
+        ]
+      },
+      {
+        "task": "dept-visualization-own-excava-s-o-487",
+        "at": "2026-07-17T10:16:41.973835+00:00",
+        "kind": "workers_dissolved",
+        "by": "visualization-w1",
+        "n": 3
+      },
+      {
+        "task": "dept-transcripts-retrieve-real-fu-682",
+        "at": "2026-07-17T10:16:50.425343+00:00",
         "kind": "room_closed",
         "artifact": {
           "kind": "decision",
-          "ref": "data/excava/artifacts/dept-memory-recall-by-meaning-rel-410.md",
-          "at": "2026-07-17T09:20:39.097805+00:00",
-          "title": "memory: Recall by meaning, relate elements, build the brain graph, embed unembed",
-          "by": "Root"
+          "ref": "data/excava/artifacts/dept-transcripts-retrieve-real-fu-682.md",
+          "at": "2026-07-17T10:16:50.424729+00:00",
+          "title": "transcripts: Retrieve REAL full transcripts/captions for pending videos (residen",
+          "by": "Echo"
         },
-        "turns": 2
+        "turns": 1
       },
       {
-        "task": "memory-room-action-root--80039",
-        "at": "2026-07-17T09:20:39.133199+00:00",
+        "task": "transcripts-room-action--83410",
+        "at": "2026-07-17T10:16:50.463315+00:00",
         "kind": "enqueued",
-        "title": "[memory room action] Root executes the recall-by-meaning command, linking memory-w1 to the unembedded elements and connecting them to the bra",
-        "source": "room-action:memory",
+        "title": "[transcripts room action] Run the kimtaeyoon83/mcp-server-youtube-transcript tool on the first pending video to fetch its full transcript with tim",
+        "source": "room-action:transcripts",
         "priority": 2,
-        "department": "memory"
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-17T09:21:50.068757+00:00",
-        "kind": "lane_ran",
-        "lane": "Free analysis pool",
-        "status": "live",
-        "what": "Turns transcripts into skills/tools/connectors (free engines)"
-      },
-      {
-        "task": "os-lanes",
-        "at": "2026-07-17T09:21:50.069554+00:00",
-        "kind": "lane_ran",
-        "lane": "Deep analysis (night-gated)",
-        "status": "live",
-        "what": "Claude re-analysis + safety pass"
+        "department": "transcripts"
       }
     ],
-    "memory_episodes": 6,
+    "memory_episodes": 9,
     "directions": [
       {
         "id": "dir-1",

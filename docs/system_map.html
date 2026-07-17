@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EXCAVA · System Map</title>
+<link rel="icon" href="icon.png">
+<style>
+  :root{
+    --bg:#f5f6f8; --panel:#fff; --ink:#161a20; --sub:#5b6572; --line:#e3e6ea;
+    --wired:#2e9e5b; --operator:#c98a12; --orphaned:#b4640e; --dead:#c23b3b; --accent:#e08a1e;
+    --shadow:0 1px 2px rgba(20,26,32,.06),0 4px 16px rgba(20,26,32,.05);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --bg:#0e1116; --panel:#161b22; --ink:#e7edf3; --sub:#8b95a3; --line:#232a34;
+      --wired:#3fb46b; --operator:#e0a838; --orphaned:#e08a3c; --dead:#e5605f; --accent:#f0a030;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 22px rgba(0,0,0,.35);}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:960px;margin:0 auto;padding:28px 20px 80px}
+  a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+  header.top{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:4px}
+  h1{font-size:22px;margin:0;letter-spacing:-.01em;font-weight:750}
+  .back{font-size:13px;color:var(--sub)}
+  .lede{color:var(--sub);font-size:14px;margin:8px 0 22px;max-width:70ch}
+  .lede b{color:var(--ink);font-weight:650}
+  .stamp{color:var(--sub);font-size:12px}
+  .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:0 0 22px}
+  @media (max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 12px;
+    box-shadow:var(--shadow);cursor:pointer;transition:transform .08s ease,border-color .1s}
+  .stat:hover{transform:translateY(-1px)}
+  .stat.on{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 35%,transparent)}
+  .stat .n{font-size:26px;font-weight:760;line-height:1}
+  .stat .k{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--sub);margin-top:6px}
+  .stat.wired .n{color:var(--wired)} .stat.operator .n{color:var(--operator)}
+  .stat.orphaned .n{color:var(--orphaned)} .stat.dead .n{color:var(--dead)} .stat.total .n{color:var(--ink)}
+  .controls{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+  input[type=search]{flex:1;min-width:180px;background:var(--panel);border:1px solid var(--line);
+    color:var(--ink);border-radius:10px;padding:9px 12px;font-size:14px;outline:none}
+  input[type=search]:focus{border-color:var(--accent)}
+  .legend{color:var(--sub);font-size:12.5px;margin:-4px 0 18px;line-height:1.7}
+  .legend b{color:var(--ink)}
+  .rows{display:flex;flex-direction:column;gap:7px}
+  .row{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 14px;
+    display:grid;grid-template-columns:12px 1fr auto;gap:12px;align-items:center;box-shadow:var(--shadow)}
+  .dot{width:9px;height:9px;border-radius:50%;margin-top:1px}
+  .dot.wired{background:var(--wired)} .dot.operator{background:var(--operator)}
+  .dot.orphaned{background:var(--orphaned)} .dot.dead{background:var(--dead)}
+  .name{font-weight:640;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13.5px}
+  .meta{color:var(--sub);font-size:12.5px;margin-top:3px}
+  .meta code{background:color-mix(in srgb,var(--ink) 7%,transparent);padding:1px 5px;border-radius:5px;
+    font-size:11.5px}
+  .badge{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;font-weight:700;
+    padding:3px 8px;border-radius:20px;white-space:nowrap}
+  .badge.wired{color:var(--wired);background:color-mix(in srgb,var(--wired) 15%,transparent)}
+  .badge.operator{color:var(--operator);background:color-mix(in srgb,var(--operator) 15%,transparent)}
+  .badge.orphaned{color:var(--orphaned);background:color-mix(in srgb,var(--orphaned) 15%,transparent)}
+  .badge.dead{color:var(--dead);background:color-mix(in srgb,var(--dead) 15%,transparent)}
+  .loc{color:var(--sub);font-size:11.5px;margin-left:8px}
+  .empty{color:var(--sub);text-align:center;padding:40px}
+  footer{color:var(--sub);font-size:12px;margin-top:28px;border-top:1px solid var(--line);padding-top:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>System Map</h1>
+    <a class="back" href="index.html">← EXCAVA cockpit</a>
+  </header>
+  <p class="lede">An honest census of every <b>src/</b> module: what actually runs. Rebuilt every
+    beat by <code>src/inventory.py</code>. <b>Wired</b> = CI or the beat runs it. <b>Operator</b> =
+    a human/agent runs it from the shell (a documented CLI, e.g. <code>git_safe</code>).
+    <b>Orphaned</b> = code imports it, but nothing runs that code. <b>Dead</b> = nothing imports it
+    and nothing runs it — the only kind safe to retire.</p>
+  <div class="stats" id="stats"></div>
+  <div class="controls">
+    <input type="search" id="q" placeholder="filter modules… (name, workflow, importer)">
+  </div>
+  <p class="legend" id="stamp"></p>
+  <div class="rows" id="rows"></div>
+  <footer id="foot"></footer>
+</div>
+<script>
+const STATUS = ["dead","orphaned","operator","wired"];          // most-actionable first
+let INV = null, filter = null, query = "";
+
+function runsVia(m){
+  if (m.invoked_by && m.invoked_by.length) return "runs in " + m.invoked_by.join(", ");
+  if (m.status === "wired") {
+    if (m.imported_by && m.imported_by.length)
+      return "reached via " + m.imported_by.slice(0,3).join(", ") + (m.imported_by.length>3?" +"+(m.imported_by.length-3):"");
+    return "the beat";
+  }
+  if (m.documented_in && m.documented_in.length) return "run by hand · " + m.documented_in[0];
+  if (m.imported_by && m.imported_by.length) return "imported by " + m.imported_by.join(", ");
+  return "nothing references it";
+}
+function esc(s){return String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
+
+function render(){
+  const s = INV.counts, total = INV.total;
+  const cards = [["total",total,"modules"],["wired",s.wired,"wired"],["operator",s.operator,"operator"],
+    ["orphaned",s.orphaned,"orphaned"],["dead",s.dead,"dead"]];
+  document.getElementById("stats").innerHTML = cards.map(([k,n,label])=>
+    `<div class="stat ${k} ${filter===k?'on':''}" data-f="${k}"><div class="n">${n}</div><div class="k">${label}</div></div>`).join("");
+  const when = new Date(INV.generated_at).toLocaleString();
+  document.getElementById("stamp").innerHTML =
+    `Last rebuilt ${esc(when)} · ${INV.entrypoints.length} entrypoints`;
+
+  let mods = Object.entries(INV.modules).map(([name,m])=>({name,...m}));
+  mods.sort((a,b)=> STATUS.indexOf(a.status)-STATUS.indexOf(b.status) || b.loc-a.loc || a.name.localeCompare(b.name));
+  const q = query.trim().toLowerCase();
+  mods = mods.filter(m=>{
+    if (filter && filter!=="total" && m.status!==filter) return false;
+    if (!q) return true;
+    return (m.name+" "+(m.invoked_by||[]).join(" ")+" "+(m.imported_by||[]).join(" ")+" "+(m.documented_in||[]).join(" ")).toLowerCase().includes(q);
+  });
+  const rows = document.getElementById("rows");
+  if (!mods.length){ rows.innerHTML = `<div class="empty">no modules match.</div>`; return; }
+  rows.innerHTML = mods.map(m=>`
+    <div class="row">
+      <span class="dot ${m.status}"></span>
+      <div>
+        <span class="name">${esc(m.name)}</span><span class="loc">${m.loc} loc</span>
+        <div class="meta">${esc(runsVia(m))}</div>
+      </div>
+      <span class="badge ${m.status}">${m.status}</span>
+    </div>`).join("");
+  document.getElementById("foot").textContent =
+    `${mods.length} of ${total} modules shown` + (filter&&filter!=="total"?` · filtered: ${filter}`:"");
+}
+
+document.getElementById("stats").addEventListener("click",e=>{
+  const c = e.target.closest("[data-f]"); if(!c) return;
+  const f = c.dataset.f;
+  filter = (f==="total") ? null : (filter===f ? null : f);   // click a status to toggle; total clears
+  render();
+});
+document.getElementById("q").addEventListener("input",e=>{query=e.target.value;render();});
+
+fetch("../data/excava/system_inventory.json",{cache:"no-store"})
+  .then(r=>r.json()).then(d=>{INV=d;render();})
+  .catch(()=>{document.getElementById("rows").innerHTML=
+    `<div class="empty">Could not load the system map yet. It is written by <code>python -m src.inventory</code> and refreshed every beat.</div>`;});
+</script>
+</body>
+</html>

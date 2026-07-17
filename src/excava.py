@@ -674,6 +674,14 @@ def _beat(args) -> int:
     except Exception:
         pass
 
+    try:                                    # SYSTEM MAP: honest wired/operator/orphaned/dead module census (the System Map page reads this)
+        from src.inventory import refresh as _inventory
+        inv = _inventory()
+        beat_log.append(f"system-map: {inv['counts']['wired']} wired · "
+                        f"{inv['counts']['operator']} operator · {inv['counts']['dead']} dead")
+    except Exception as e:
+        beat_log.append(f"system-map: skipped ({type(e).__name__})")
+
     try:                                    # SUPERVISOR: strict critic of every real-tool result (no facade survives a beat)
         from src.excava_supervisor import run as _supervise
         for line in _supervise():

@@ -1,0 +1,1648 @@
+{
+ "generated_at": "2026-07-17T10:27:12.511314+00:00",
+ "total": 98,
+ "counts": {
+  "wired": 82,
+  "operator": 16,
+  "orphaned": 0,
+  "dead": 0
+ },
+ "entrypoints": [
+  "add_to_playlist",
+  "backup_system",
+  "build_dev_doc",
+  "build_graph",
+  "build_hub_index",
+  "build_memory",
+  "build_models",
+  "build_pipeline_graph",
+  "build_recipes",
+  "bulk_analyze",
+  "collect_designs",
+  "coverage_log",
+  "cross_tab_check",
+  "data_guard",
+  "deep_retrieve",
+  "discovery_agent",
+  "effectiveness",
+  "element_model",
+  "excava",
+  "excava_channel",
+  "excava_creators",
+  "excava_engines",
+  "export_graphml",
+  "fetch",
+  "gemini_video_analyze",
+  "goals_check",
+  "health",
+  "improve_log",
+  "maintenance_check",
+  "mine_competitors",
+  "mine_feeds",
+  "mine_social",
+  "news",
+  "news_digest",
+  "pipeline_scout",
+  "pipeline_status",
+  "prewarm",
+  "priorities",
+  "recategorize",
+  "relate",
+  "resolve_comment_gated",
+  "resolve_links",
+  "resource_check",
+  "safety_check",
+  "security_scan",
+  "self_check",
+  "source_bundles",
+  "suggest_channels",
+  "supadata_fetch",
+  "token_startup",
+  "token_tips",
+  "trend_watch",
+  "verify_connectors",
+  "verify_elements",
+  "visual_extract",
+  "warm_shots"
+ ],
+ "modules": {
+  "activate": {
+   "status": "operator",
+   "loc": 134,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "add_to_playlist": {
+   "status": "wired",
+   "loc": 82,
+   "entrypoint": true,
+   "invoked_by": [
+    "sources.yml"
+   ],
+   "documented_in": [
+    "config.json",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "agent_issue": {
+   "status": "wired",
+   "loc": 128,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava",
+    "guardrail_test"
+   ],
+   "imports": [
+    "excava_agents"
+   ]
+  },
+  "agent_record": {
+   "status": "wired",
+   "loc": 110,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava"
+   ],
+   "imports": []
+  },
+  "analyze_batch": {
+   "status": "operator",
+   "loc": 792,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "brain/Architecture.md",
+    "data/dev_construction.json",
+    "data/improvement_suggestions.json",
+    "data/review_findings.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "backfill_transcripts": {
+   "status": "operator",
+   "loc": 252,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "NEXT_SESSION.md",
+    "brain/Systems and Protocols.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "transcribe_local"
+   ],
+   "imports": []
+  },
+  "backup_system": {
+   "status": "wired",
+   "loc": 134,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "build_brain": {
+   "status": "operator",
+   "loc": 260,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "NEXT_SESSION.md",
+    "data/dev_construction.json",
+    "docs/BIGGER_BRAIN.md"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "build_capabilities": {
+   "status": "wired",
+   "loc": 95,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava",
+    "excava_systemcheck"
+   ],
+   "imports": []
+  },
+  "build_dev_doc": {
+   "status": "wired",
+   "loc": 112,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml"
+   ],
+   "documented_in": [
+    "brain/Systems and Protocols.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "build_graph": {
+   "status": "wired",
+   "loc": 151,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml",
+    "mine.yml"
+   ],
+   "documented_in": [
+    "NEXT_SESSION.md",
+    "data/dev_construction.json",
+    "docs/dashboard.js"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "build_hub_api": {
+   "status": "wired",
+   "loc": 98,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "SESSION_HANDOFF.md",
+    "data/dev_construction.json",
+    "data/tutorials.json"
+   ],
+   "imported_by": [
+    "excava"
+   ],
+   "imports": []
+  },
+  "build_hub_index": {
+   "status": "wired",
+   "loc": 117,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml",
+    "gemini_video.yml",
+    "mine.yml"
+   ],
+   "documented_in": [
+    "brain/Systems and Protocols.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "build_memory": {
+   "status": "wired",
+   "loc": 114,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml",
+    "links.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava",
+    "excava_agents"
+   ],
+   "imports": []
+  },
+  "build_models": {
+   "status": "wired",
+   "loc": 86,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml",
+    "gemini_video.yml",
+    "mine.yml"
+   ],
+   "documented_in": [
+    "brain/Systems and Protocols.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "build_pipeline_graph": {
+   "status": "wired",
+   "loc": 129,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml",
+    "gemini_video.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "build_recipes": {
+   "status": "wired",
+   "loc": 97,
+   "entrypoint": true,
+   "invoked_by": [
+    "mine.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "bulk_analyze": {
+   "status": "wired",
+   "loc": 413,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml",
+    "engine_selftest.yml"
+   ],
+   "documented_in": [
+    "brain/Systems and Protocols.md",
+    "config.json",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "deep_retrieve",
+    "gemini_video_analyze",
+    "mine_competitors",
+    "mine_feeds",
+    "news_digest",
+    "resolve_comment_gated",
+    "resolve_links",
+    "visual_extract"
+   ],
+   "imports": []
+  },
+  "collect_designs": {
+   "status": "wired",
+   "loc": 315,
+   "entrypoint": true,
+   "invoked_by": [
+    "mine.yml",
+    "visual.yml"
+   ],
+   "documented_in": [
+    "PROOF.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava_agents"
+   ],
+   "imports": []
+  },
+  "coverage_log": {
+   "status": "wired",
+   "loc": 52,
+   "entrypoint": true,
+   "invoked_by": [
+    "links.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "cross_tab_check": {
+   "status": "wired",
+   "loc": 205,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml",
+    "gemini_video.yml",
+    "mine.yml"
+   ],
+   "documented_in": [
+    "NEXT_SESSION.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "data_guard": {
+   "status": "wired",
+   "loc": 71,
+   "entrypoint": true,
+   "invoked_by": [
+    "analyze.yml",
+    "bulk_analyze.yml",
+    "gemini_video.yml",
+    "links.yml",
+    "mine.yml",
+    "visual.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "decision_audit": {
+   "status": "wired",
+   "loc": 156,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "EXCAVA_PROGRAM.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava_chat",
+    "guardrail_test"
+   ],
+   "imports": []
+  },
+  "deep_retrieve": {
+   "status": "wired",
+   "loc": 209,
+   "entrypoint": true,
+   "invoked_by": [
+    "core_spoton.yml"
+   ],
+   "documented_in": [
+    "EXCAVA_V2_STEPS.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": [
+    "bulk_analyze",
+    "element_model"
+   ]
+  },
+  "discover_promote": {
+   "status": "wired",
+   "loc": 79,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava"
+   ],
+   "imports": []
+  },
+  "discovery_agent": {
+   "status": "wired",
+   "loc": 226,
+   "entrypoint": true,
+   "invoked_by": [
+    "core_spoton.yml"
+   ],
+   "documented_in": [
+    "EXCAVA_V2_STEPS.md",
+    "PROOF.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava_agents",
+    "guardrail_test"
+   ],
+   "imports": [
+    "mine_social"
+   ]
+  },
+  "effectiveness": {
+   "status": "wired",
+   "loc": 220,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml",
+    "gemini_video.yml",
+    "mine.yml"
+   ],
+   "documented_in": [
+    "IMPROVE.md",
+    "NEXT_SESSION.md",
+    "brain/Systems and Protocols.md",
+    "config.json",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "element_model": {
+   "status": "wired",
+   "loc": 231,
+   "entrypoint": true,
+   "invoked_by": [
+    "core_spoton.yml"
+   ],
+   "documented_in": [
+    "EXCAVA_V2_STEPS.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "deep_retrieve",
+    "prewarm",
+    "relate",
+    "verify_elements"
+   ],
+   "imports": []
+  },
+  "excava": {
+   "status": "wired",
+   "loc": 778,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml",
+    "excava_beat.yml"
+   ],
+   "documented_in": [
+    "AGENTIC_OS_STUDY.md",
+    "EXCAVA_PROGRAM.md",
+    "EXCAVA_V2_ADDITIONS.md",
+    "EXCAVA_V2_PLAN.md",
+    "PORTABLE_HARNESS.md",
+    "QUESTIONS.md",
+    "SESSION_HANDOFF.md",
+    "data/dev_construction.json",
+    "data/excava_config.json",
+    "data/excava_status.json"
+   ],
+   "imported_by": [
+    "excava_experiments",
+    "excava_systemcheck"
+   ],
+   "imports": [
+    "agent_issue",
+    "agent_record",
+    "build_capabilities",
+    "build_hub_api",
+    "build_memory",
+    "discover_promote",
+    "excava_agents",
+    "excava_backlog",
+    "excava_bus",
+    "excava_chat",
+    "excava_experiments",
+    "excava_proof",
+    "excava_selfimprove",
+    "excava_supervisor",
+    "excava_systemcheck",
+    "graph_expand",
+    "guardrail_test",
+    "guardrails",
+    "inventory",
+    "project_memory",
+    "temporal_validity",
+    "token_diet",
+    "tutorial_dept"
+   ]
+  },
+  "excava_agents": {
+   "status": "wired",
+   "loc": 351,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "EXCAVA_PROGRAM.md",
+    "EXCAVA_V2_PLAN.md",
+    "PORTABLE_HARNESS.md",
+    "data/dev_construction.json",
+    "data/tutorials.json"
+   ],
+   "imported_by": [
+    "agent_issue",
+    "excava",
+    "excava_chat",
+    "excava_supervisor",
+    "excava_systemcheck",
+    "guardrail_test"
+   ],
+   "imports": [
+    "build_memory",
+    "collect_designs",
+    "discovery_agent",
+    "excava_bus",
+    "excava_engines",
+    "power_scan",
+    "security_scan",
+    "self_check",
+    "trend_watch"
+   ]
+  },
+  "excava_backlog": {
+   "status": "wired",
+   "loc": 174,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "EXCAVA_V2_ADDITIONS.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava",
+    "excava_systemcheck"
+   ],
+   "imports": [
+    "excava_bus"
+   ]
+  },
+  "excava_bus": {
+   "status": "wired",
+   "loc": 325,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "EXCAVA_PROGRAM.md",
+    "PORTABLE_HARNESS.md",
+    "SESSION_HANDOFF.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava",
+    "excava_agents",
+    "excava_backlog",
+    "excava_chat",
+    "excava_experiments",
+    "excava_selfimprove"
+   ],
+   "imports": []
+  },
+  "excava_channel": {
+   "status": "wired",
+   "loc": 138,
+   "entrypoint": true,
+   "invoked_by": [
+    "excava_inbox.yml"
+   ],
+   "documented_in": [
+    "SESSION_HANDOFF.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": [
+    "horse"
+   ]
+  },
+  "excava_chat": {
+   "status": "wired",
+   "loc": 562,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "EXCAVA_V2_PLAN.md",
+    "EXCAVA_V2_STEPS.md",
+    "data/dev_construction.json",
+    "data/tutorials.json"
+   ],
+   "imported_by": [
+    "excava",
+    "excava_selfimprove",
+    "excava_systemcheck",
+    "guardrail_test"
+   ],
+   "imports": [
+    "decision_audit",
+    "excava_agents",
+    "excava_bus",
+    "excava_engines",
+    "excava_leases",
+    "excava_selfimprove"
+   ]
+  },
+  "excava_creators": {
+   "status": "wired",
+   "loc": 260,
+   "entrypoint": true,
+   "invoked_by": [
+    "creators.yml"
+   ],
+   "documented_in": [
+    "SESSION_HANDOFF.md",
+    "data/dev_construction.json",
+    "docs/dashboard.js"
+   ],
+   "imported_by": [
+    "excava_experiments"
+   ],
+   "imports": []
+  },
+  "excava_engines": {
+   "status": "wired",
+   "loc": 242,
+   "entrypoint": true,
+   "invoked_by": [
+    "engine_selftest.yml"
+   ],
+   "documented_in": [
+    "EXCAVA_V2_PLAN.md",
+    "EXCAVA_V2_STEPS.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava_agents",
+    "excava_chat",
+    "excava_experiments",
+    "excava_systemcheck",
+    "horse",
+    "power_scan"
+   ],
+   "imports": []
+  },
+  "excava_experiments": {
+   "status": "wired",
+   "loc": 407,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava"
+   ],
+   "imports": [
+    "excava",
+    "excava_bus",
+    "excava_creators",
+    "excava_engines",
+    "excava_selfimprove"
+   ]
+  },
+  "excava_leases": {
+   "status": "wired",
+   "loc": 128,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "EXCAVA_V2_STEPS.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava_chat"
+   ],
+   "imports": []
+  },
+  "excava_proof": {
+   "status": "wired",
+   "loc": 141,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava"
+   ],
+   "imports": []
+  },
+  "excava_selfimprove": {
+   "status": "wired",
+   "loc": 334,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "EXCAVA_V2_PLAN.md",
+    "EXCAVA_V2_STEPS.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava",
+    "excava_chat",
+    "excava_experiments"
+   ],
+   "imports": [
+    "excava_bus",
+    "excava_chat"
+   ]
+  },
+  "excava_supervisor": {
+   "status": "wired",
+   "loc": 214,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava",
+    "excava_systemcheck"
+   ],
+   "imports": [
+    "excava_agents"
+   ]
+  },
+  "excava_systemcheck": {
+   "status": "wired",
+   "loc": 156,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava"
+   ],
+   "imports": [
+    "build_capabilities",
+    "excava",
+    "excava_agents",
+    "excava_backlog",
+    "excava_chat",
+    "excava_engines",
+    "excava_supervisor",
+    "goals_check"
+   ]
+  },
+  "export_graphml": {
+   "status": "wired",
+   "loc": 118,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "external_review": {
+   "status": "operator",
+   "loc": 251,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "REVIEW.md",
+    "brain/Pipeline - Review.md",
+    "brain/Three-Agent Review.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "fetch": {
+   "status": "wired",
+   "loc": 684,
+   "entrypoint": true,
+   "invoked_by": [
+    "fetch.yml"
+   ],
+   "documented_in": [
+    "CLAUDE.md",
+    "README.md",
+    "brain/Architecture.md",
+    "brain/Cadence.md",
+    "brain/Operations and Setup.md",
+    "brain/Pipeline - Fetch.md",
+    "brain/Pipeline - News.md",
+    "config.json",
+    "data/dev_construction.json",
+    "data/improvement_suggestions.json",
+    "data/review_findings.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "gemini_video_analyze": {
+   "status": "wired",
+   "loc": 211,
+   "entrypoint": true,
+   "invoked_by": [
+    "gemini_video.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": [
+    "bulk_analyze",
+    "mine_feeds"
+   ]
+  },
+  "git_safe": {
+   "status": "operator",
+   "loc": 174,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "EXCAVA_END_PLAN.md",
+    "EXCAVA_EXECUTION_PROMPT.md",
+    "EXCAVA_MASTER_PROMPT.md",
+    "EXCAVA_PLAN_AND_PROMPT.md",
+    "EXCAVA_PROGRAM.md",
+    "EXCAVA_V2_ADDITIONS.md",
+    "GUARDRAILS.md",
+    "NEW_SESSION_PROMPT.md",
+    "OVERHAUL_INTERVIEW_PROMPT.md",
+    "SESSION_HANDOFF.md",
+    "data/dev_construction.json",
+    "data/guardrails_status.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "goals_check": {
+   "status": "wired",
+   "loc": 168,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml",
+    "links.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json",
+    "data/north_star.json"
+   ],
+   "imported_by": [
+    "excava_systemcheck"
+   ],
+   "imports": []
+  },
+  "graph_expand": {
+   "status": "wired",
+   "loc": 95,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava"
+   ],
+   "imports": []
+  },
+  "guardrail_test": {
+   "status": "wired",
+   "loc": 136,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava"
+   ],
+   "imports": [
+    "agent_issue",
+    "decision_audit",
+    "discovery_agent",
+    "excava_agents",
+    "excava_chat"
+   ]
+  },
+  "guardrails": {
+   "status": "wired",
+   "loc": 233,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "GUARDRAILS.md",
+    "SESSION_HANDOFF.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava"
+   ],
+   "imports": []
+  },
+  "health": {
+   "status": "wired",
+   "loc": 97,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml",
+    "gemini_video.yml",
+    "mine.yml"
+   ],
+   "documented_in": [
+    "brain/Systems and Protocols.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "history_mine": {
+   "status": "operator",
+   "loc": 127,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "EXCAVA_PROGRAM.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "horse": {
+   "status": "wired",
+   "loc": 159,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "EXCAVA_V2_STEPS.md",
+    "SESSION_HANDOFF.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava_channel"
+   ],
+   "imports": [
+    "excava_engines"
+   ]
+  },
+  "improve_log": {
+   "status": "wired",
+   "loc": 68,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "ingest_history": {
+   "status": "operator",
+   "loc": 118,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "inventory": {
+   "status": "wired",
+   "loc": 227,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "docs/system_map.html"
+   ],
+   "imported_by": [
+    "excava"
+   ],
+   "imports": [
+    "power_scan"
+   ]
+  },
+  "maintenance_check": {
+   "status": "wired",
+   "loc": 149,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml",
+    "gemini_video.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "make_monsters": {
+   "status": "operator",
+   "loc": 145,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "SESSION_HANDOFF.md",
+    "data/dev_construction.json",
+    "docs/dashboard.js"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "merge_dupes": {
+   "status": "operator",
+   "loc": 197,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "mine_competitors": {
+   "status": "wired",
+   "loc": 92,
+   "entrypoint": true,
+   "invoked_by": [
+    "mine.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": [
+    "bulk_analyze",
+    "mine_feeds"
+   ]
+  },
+  "mine_designs": {
+   "status": "operator",
+   "loc": 96,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "mine_feeds": {
+   "status": "wired",
+   "loc": 158,
+   "entrypoint": true,
+   "invoked_by": [
+    "mine.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "gemini_video_analyze",
+    "mine_competitors",
+    "resolve_comment_gated",
+    "visual_extract"
+   ],
+   "imports": [
+    "bulk_analyze"
+   ]
+  },
+  "mine_social": {
+   "status": "wired",
+   "loc": 224,
+   "entrypoint": true,
+   "invoked_by": [
+    "mine_social.yml"
+   ],
+   "documented_in": [
+    "EXCAVA_PROGRAM.md",
+    "SESSION_HANDOFF.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "discovery_agent"
+   ],
+   "imports": []
+  },
+  "news": {
+   "status": "wired",
+   "loc": 423,
+   "entrypoint": true,
+   "invoked_by": [
+    "news.yml"
+   ],
+   "documented_in": [
+    "CLAUDE.md",
+    "IMPROVE.md",
+    "PIPELINE.md",
+    "README.md",
+    "brain/Architecture.md",
+    "brain/Pipeline - News.md",
+    "brain/Systems and Protocols.md",
+    "data/dev_construction.json",
+    "data/effectiveness.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "news_digest": {
+   "status": "wired",
+   "loc": 105,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json",
+    "docs/dashboard.js"
+   ],
+   "imported_by": [],
+   "imports": [
+    "bulk_analyze"
+   ]
+  },
+  "oauth_setup": {
+   "status": "operator",
+   "loc": 48,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "NEXT_SESSION.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "pipeline_scout": {
+   "status": "wired",
+   "loc": 112,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "pipeline_status": {
+   "status": "wired",
+   "loc": 163,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml",
+    "gemini_video.yml",
+    "links.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "power_scan": {
+   "status": "wired",
+   "loc": 125,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "EXCAVA_PROGRAM.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava_agents",
+    "inventory"
+   ],
+   "imports": [
+    "excava_engines"
+   ]
+  },
+  "prewarm": {
+   "status": "wired",
+   "loc": 97,
+   "entrypoint": true,
+   "invoked_by": [
+    "core_spoton.yml"
+   ],
+   "documented_in": [
+    "EXCAVA_V2_STEPS.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": [
+    "element_model"
+   ]
+  },
+  "priorities": {
+   "status": "wired",
+   "loc": 100,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "process_video": {
+   "status": "operator",
+   "loc": 364,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "brain/Architecture.md",
+    "data/dev_construction.json",
+    "data/improvement_suggestions.json",
+    "data/review_findings.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "project_memory": {
+   "status": "wired",
+   "loc": 283,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "EXCAVA_PROGRAM.md",
+    "PORTABLE_HARNESS.md",
+    "PROJECT_MEMORY.md",
+    "SESSION_HANDOFF.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava"
+   ],
+   "imports": []
+  },
+  "recategorize": {
+   "status": "wired",
+   "loc": 80,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "relate": {
+   "status": "wired",
+   "loc": 79,
+   "entrypoint": true,
+   "invoked_by": [
+    "core_spoton.yml"
+   ],
+   "documented_in": [
+    "EXCAVA_V2_STEPS.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": [
+    "element_model"
+   ]
+  },
+  "requeue": {
+   "status": "operator",
+   "loc": 124,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "IMPROVE.md",
+    "config.json",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "resolve_comment_gated": {
+   "status": "wired",
+   "loc": 112,
+   "entrypoint": true,
+   "invoked_by": [
+    "mine.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": [
+    "bulk_analyze",
+    "mine_feeds"
+   ]
+  },
+  "resolve_links": {
+   "status": "wired",
+   "loc": 267,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml",
+    "links.yml"
+   ],
+   "documented_in": [
+    "data/created_by_excava.json",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": [
+    "bulk_analyze"
+   ]
+  },
+  "resource_check": {
+   "status": "wired",
+   "loc": 97,
+   "entrypoint": true,
+   "invoked_by": [
+    "links.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "safety_check": {
+   "status": "wired",
+   "loc": 107,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml"
+   ],
+   "documented_in": [
+    "SESSION_HANDOFF.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "security_preflight": {
+   "status": "operator",
+   "loc": 88,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json",
+    "docs/activator-skill.md"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "security_scan": {
+   "status": "wired",
+   "loc": 105,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml"
+   ],
+   "documented_in": [
+    "PROOF.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava_agents"
+   ],
+   "imports": []
+  },
+  "self_check": {
+   "status": "wired",
+   "loc": 191,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml"
+   ],
+   "documented_in": [
+    "NEXT_SESSION.md",
+    "brain/Systems and Protocols.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava_agents"
+   ],
+   "imports": []
+  },
+  "source_bundles": {
+   "status": "wired",
+   "loc": 79,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml",
+    "links.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "suggest_channels": {
+   "status": "wired",
+   "loc": 194,
+   "entrypoint": true,
+   "invoked_by": [
+    "sources.yml"
+   ],
+   "documented_in": [
+    "brain/Systems and Protocols.md",
+    "config.json",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "supadata_fetch": {
+   "status": "wired",
+   "loc": 180,
+   "entrypoint": true,
+   "invoked_by": [
+    "transcribe.yml"
+   ],
+   "documented_in": [
+    "NEXT_SESSION.md",
+    "brain/Systems and Protocols.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "temporal_validity": {
+   "status": "wired",
+   "loc": 104,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava"
+   ],
+   "imports": []
+  },
+  "token_diet": {
+   "status": "wired",
+   "loc": 74,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava"
+   ],
+   "imports": []
+  },
+  "token_startup": {
+   "status": "wired",
+   "loc": 66,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "token_tips": {
+   "status": "wired",
+   "loc": 64,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "transcribe_local": {
+   "status": "operator",
+   "loc": 183,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": [
+    "backfill_transcripts"
+   ]
+  },
+  "trend_watch": {
+   "status": "wired",
+   "loc": 175,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml",
+    "gemini_video.yml"
+   ],
+   "documented_in": [
+    "PROOF.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava_agents"
+   ],
+   "imports": []
+  },
+  "tutorial_dept": {
+   "status": "wired",
+   "loc": 103,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "EXCAVA_PROGRAM.md"
+   ],
+   "imported_by": [
+    "excava"
+   ],
+   "imports": []
+  },
+  "verify_connectors": {
+   "status": "wired",
+   "loc": 213,
+   "entrypoint": true,
+   "invoked_by": [
+    "connectors_verify.yml"
+   ],
+   "documented_in": [
+    "SESSION_HANDOFF.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "verify_elements": {
+   "status": "wired",
+   "loc": 167,
+   "entrypoint": true,
+   "invoked_by": [
+    "core_spoton.yml"
+   ],
+   "documented_in": [
+    "EXCAVA_V2_STEPS.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": [
+    "element_model"
+   ]
+  },
+  "visual_extract": {
+   "status": "wired",
+   "loc": 209,
+   "entrypoint": true,
+   "invoked_by": [
+    "visual.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": [
+    "bulk_analyze",
+    "mine_feeds"
+   ]
+  },
+  "warm_shots": {
+   "status": "wired",
+   "loc": 47,
+   "entrypoint": true,
+   "invoked_by": [
+    "mine.yml"
+   ],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
+  }
+ }
+}

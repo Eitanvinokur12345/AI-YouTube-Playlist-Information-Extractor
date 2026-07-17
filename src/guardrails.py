@@ -3,7 +3,7 @@ src/guardrails.py — the INFORMATION-LOSS GUARDRAILS (owner law, 2026-07-06).
 
 The project must never be "toppled" — no committed work lost, no data silently dropped,
 no push that only *looked* like it saved, no corruption shipped that breaks the dashboard.
-This module enforces 12 named guardrails, each a concrete check. It writes
+This module enforces 14 named guardrails, each a concrete check. It writes
 data/guardrails_status.json (for the cockpit) and APPENDS to data/guardrails_log.jsonl
 (never rewritten — a permanent audit trail).
 
@@ -188,6 +188,23 @@ def g_movement():
                "warn")
 
 
+def g_disk():
+    """Owner-critical 2026-07-17: a 100%-full disk silently broke a ship (`git bundle` → "Out of
+    diskspace"), and nothing was watching. Watch free space so the system NOTICES before the next
+    ship or beat dies. A ship's history bundle needs ~120 MB, so <250 MB free means the next ship
+    will fail — surfaced loudly here, in the panel the owner already trusts."""
+    import shutil
+    free_mb = shutil.disk_usage(str(ROOT)).free // (1024 * 1024)
+    if free_mb < 250:
+        return _ok("G-N", "Disk headroom", False,
+                   f"CRITICAL: only {free_mb} MB free — a ship WILL fail (bundle needs ~120 MB). "
+                   f"Free space now (prune _ATTIC/backups, clear the drive).", "warn")
+    if free_mb < 1024:
+        return _ok("G-N", "Disk headroom", False,
+                   f"LOW: {free_mb} MB free — under the 1 GB comfort line; a big ship could fail.", "warn")
+    return _ok("G-N", "Disk headroom", True, f"{free_mb} MB free on the repo drive.", "info")
+
+
 def _load_json(p, d):
     try:
         return json.loads(p.read_text(encoding="utf-8"))
@@ -196,7 +213,8 @@ def _load_json(p, d):
 
 
 CHECKS = [g_quarantine, g_msgfile, g_backup, g_mojibake, g_build_align, g_json,
-          g_remote_sync, g_collisions, g_handoff, g_memory, g_auditlog, g_watchdog, g_movement]
+          g_remote_sync, g_collisions, g_handoff, g_memory, g_auditlog, g_watchdog, g_movement,
+          g_disk]
 
 
 def run() -> dict:

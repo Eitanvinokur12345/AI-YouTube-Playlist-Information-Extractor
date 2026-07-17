@@ -33,7 +33,10 @@ ROOT = Path(__file__).parent.parent
 ATTIC = ROOT / "_ATTIC"
 # Canonical CI-OWNED paths — the only things safe-git ever reverts. Your source is never touched.
 CI_CHURN = ["data", "backups"]
-KEEP_BUNDLES = 12
+# 3, not 12: twelve ~120 MB full-history bundles hoarded ~1.4 GB and helped fill the disk to 100%,
+# which broke a ship (2026-07-17). History is fully in .git + on origin — bundles are only an extra
+# offline copy, so a few recent ones are plenty.
+KEEP_BUNDLES = 3
 
 
 def _ts() -> str:
@@ -52,14 +55,18 @@ def backup_bundle() -> Path:
     """Snapshot ALL of history into a git bundle. A bundle is a complete, offline-recoverable
     clone source — if the remote or the working copy is ever wrecked, `git clone <bundle>` restores."""
     (ATTIC / "backups").mkdir(parents=True, exist_ok=True)
-    dest = ATTIC / "backups" / f"repo-{_ts()}.bundle"
-    _git(["bundle", "create", str(dest), "--all"])
+    # PRUNE FIRST, then create. The old create-then-prune order died on a full disk — it tried to
+    # write the new ~120 MB bundle before freeing any of the old ones, so the ship failed with
+    # "Out of diskspace" (2026-07-17). Freeing to KEEP_BUNDLES-1 up front leaves room for the fresh
+    # bundle to land; history is never at risk (it lives in .git + origin).
     olds = sorted((ATTIC / "backups").glob("*.bundle"))
-    for old in olds[:-KEEP_BUNDLES]:
+    for old in olds[:max(0, len(olds) - (KEEP_BUNDLES - 1))]:
         try:
             old.unlink()
         except OSError:
             pass
+    dest = ATTIC / "backups" / f"repo-{_ts()}.bundle"
+    _git(["bundle", "create", str(dest), "--all"])
     return dest
 
 

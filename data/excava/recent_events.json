@@ -1,228 +1,6 @@
 {
   "events": [
     {
-      "task": "lane-transcript-retrieva-77142",
-      "at": "2026-07-17T09:20:21.556188+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "push-link-coverage-towar-7020",
-      "at": "2026-07-17T09:20:21.556822+00:00",
-      "kind": "unroutable",
-      "why": "no department specialization matched"
-    },
-    {
-      "task": "echo-s-initiative-start--91479",
-      "at": "2026-07-17T09:20:21.557558+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "echo-s-initiative-run-a--98918",
-      "at": "2026-07-17T09:20:21.558208+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "verify-the-next-200-of-6-60118",
-      "at": "2026-07-17T09:20:21.599366+00:00",
-      "kind": "claimed",
-      "by": "analysis-w1",
-      "department": "analysis"
-    },
-    {
-      "task": "verify-the-next-200-of-6-60118",
-      "at": "2026-07-17T09:20:21.635220+00:00",
-      "kind": "completed",
-      "by": "analysis-w1",
-      "result": "1036 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-    },
-    {
-      "task": "raise-g8-personal-fit-66-80021",
-      "at": "2026-07-17T09:20:21.683776+00:00",
-      "kind": "claimed",
-      "by": "visual-w1",
-      "department": "visual"
-    },
-    {
-      "task": "raise-g8-personal-fit-66-80021",
-      "at": "2026-07-17T09:20:29.526031+00:00",
-      "kind": "completed",
-      "by": "visual-w1",
-      "result": "Ran the collect designs. collect_designs: 647 designs (kept 649 / dropped 0 repo-only + 4 dead/parked + 36 non-design; +0 AI-product, +27 seeds, +33 shown-in-video; url-checked 4). designs-only."
-    },
-    {
-      "task": "memory-embed-the-remaini-23999",
-      "at": "2026-07-17T09:20:29.560263+00:00",
-      "kind": "claimed",
-      "by": "memory-w1",
-      "department": "memory"
-    },
-    {
-      "task": "memory-embed-the-remaini-23999",
-      "at": "2026-07-17T09:20:29.754327+00:00",
-      "kind": "completed",
-      "by": "memory-w1",
-      "result": "Semantic index: 1464 vectors (model gemini-embedding-001); hub 6428 items → 4964 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-    },
-    {
-      "task": "security-safety-rate-the-23999",
-      "at": "2026-07-17T09:20:29.788301+00:00",
-      "kind": "claimed",
-      "by": "security-w1",
-      "department": "security"
-    },
-    {
-      "task": "security-safety-rate-the-23999",
-      "at": "2026-07-17T09:20:30.545624+00:00",
-      "kind": "completed",
-      "by": "security-w1",
-      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
-    },
-    {
-      "task": "transcripts-drain-the-ne-80021",
-      "at": "2026-07-17T09:20:30.579737+00:00",
-      "kind": "claimed",
-      "by": "transcripts-w1",
-      "department": "transcripts"
-    },
-    {
-      "task": "transcripts-drain-the-ne-80021",
-      "at": "2026-07-17T09:20:30.678122+00:00",
-      "kind": "handoff",
-      "from": "transcripts-w1",
-      "to": "analysis",
-      "doc": "data/excava/handoffs/transcripts-drain-the-ne-80021--01--transcripts-w1--to--analysis.md"
-    },
-    {
-      "task": "watch-process-the-next-b-80021",
-      "at": "2026-07-17T09:20:30.712728+00:00",
-      "kind": "claimed",
-      "by": "watch-w1",
-      "department": "watch"
-    },
-    {
-      "task": "watch-process-the-next-b-80021",
-      "at": "2026-07-17T09:20:30.746799+00:00",
-      "kind": "completed",
-      "by": "watch-w1",
-      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
-    },
-    {
-      "task": "dept-memory-recall-by-meaning-rel-410",
-      "at": "2026-07-17T09:20:39.098010+00:00",
-      "kind": "room_closed",
-      "artifact": {
-        "kind": "decision",
-        "ref": "data/excava/artifacts/dept-memory-recall-by-meaning-rel-410.md",
-        "at": "2026-07-17T09:20:39.097805+00:00",
-        "title": "memory: Recall by meaning, relate elements, build the brain graph, embed unembed",
-        "by": "Root"
-      },
-      "turns": 2
-    },
-    {
-      "task": "memory-room-action-root--80039",
-      "at": "2026-07-17T09:20:39.133199+00:00",
-      "kind": "enqueued",
-      "title": "[memory room action] Root executes the recall-by-meaning command, linking memory-w1 to the unembedded elements and connecting them to the bra",
-      "source": "room-action:memory",
-      "priority": 2,
-      "department": "memory"
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-07-17T09:21:50.068757+00:00",
-      "kind": "lane_ran",
-      "lane": "Free analysis pool",
-      "status": "live",
-      "what": "Turns transcripts into skills/tools/connectors (free engines)"
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-07-17T09:21:50.069554+00:00",
-      "kind": "lane_ran",
-      "lane": "Deep analysis (night-gated)",
-      "status": "live",
-      "what": "Claude re-analysis + safety pass"
-    },
-    {
-      "task": "watch-process-the-next-b-80414",
-      "at": "2026-07-17T09:26:54.541568+00:00",
-      "kind": "enqueued",
-      "title": "Watch: process the next batch of 1036 pending videos",
-      "source": "gap",
-      "priority": 1,
-      "department": "watch"
-    },
-    {
-      "task": "raise-g8-personal-fit-66-80414",
-      "at": "2026-07-17T09:26:54.638445+00:00",
-      "kind": "enqueued",
-      "title": "Raise G8 Personal fit (66/100): 17% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
-      "source": "gap",
-      "priority": 1,
-      "department": "visual"
-    },
-    {
-      "task": "empty-body-items-render--31649",
-      "at": "2026-07-17T09:26:54.656385+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "title-collisions-distinc-31649",
-      "at": "2026-07-17T09:26:54.657195+00:00",
-      "kind": "unroutable",
-      "why": "no department specialization matched"
-    },
-    {
-      "task": "lane-transcript-retrieva-77142",
-      "at": "2026-07-17T09:26:54.657846+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "push-link-coverage-towar-7020",
-      "at": "2026-07-17T09:26:54.658490+00:00",
-      "kind": "unroutable",
-      "why": "no department specialization matched"
-    },
-    {
-      "task": "echo-s-initiative-start--91479",
-      "at": "2026-07-17T09:26:54.659248+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "echo-s-initiative-run-a--98918",
-      "at": "2026-07-17T09:26:54.659898+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "raise-g1-omniscience-66--60118",
-      "at": "2026-07-17T09:26:54.702298+00:00",
-      "kind": "claimed",
-      "by": "analysis-w1",
-      "department": "analysis"
-    },
-    {
-      "task": "raise-g1-omniscience-66--60118",
-      "at": "2026-07-17T09:26:54.738294+00:00",
-      "kind": "completed",
-      "by": "analysis-w1",
-      "result": "1036 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-    },
-    {
-      "task": "raise-g8-personal-fit-66-80414",
-      "at": "2026-07-17T09:26:54.787586+00:00",
-      "kind": "claimed",
-      "by": "visual-w1",
-      "department": "visual"
-    },
-    {
       "task": "raise-g8-personal-fit-66-80414",
       "at": "2026-07-17T09:27:03.189599+00:00",
       "kind": "completed",
@@ -292,6 +70,247 @@
       "source": "room-action:memory",
       "priority": 2,
       "department": "memory"
+    },
+    {
+      "task": "watch-process-the-next-b-80744",
+      "at": "2026-07-17T09:32:24.891764+00:00",
+      "kind": "enqueued",
+      "title": "Watch: process the next batch of 1036 pending videos",
+      "source": "gap",
+      "priority": 1,
+      "department": "watch"
+    },
+    {
+      "task": "raise-g3-truth-access-51-80744",
+      "at": "2026-07-17T09:32:24.964456+00:00",
+      "kind": "enqueued",
+      "title": "Raise G3 Truth & access (51/100): 51.6% of tools/skills have a real link (target: ~100%)",
+      "source": "gap",
+      "priority": 1,
+      "department": "links"
+    },
+    {
+      "task": "raise-g5-leverage-51-100-80744",
+      "at": "2026-07-17T09:32:24.998410+00:00",
+      "kind": "enqueued",
+      "title": "Raise G5 Leverage (51/100): leverage needs real, usable links first (= G3); then the OS creation agent",
+      "source": "gap",
+      "priority": 1,
+      "department": "creators"
+    },
+    {
+      "task": "raise-g8-personal-fit-66-80745",
+      "at": "2026-07-17T09:32:25.032326+00:00",
+      "kind": "enqueued",
+      "title": "Raise G8 Personal fit (66/100): 16% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
+      "source": "gap",
+      "priority": 1,
+      "department": "visual"
+    },
+    {
+      "task": "raise-g1-omniscience-67--80745",
+      "at": "2026-07-17T09:32:25.066022+00:00",
+      "kind": "enqueued",
+      "title": "Raise G1 Omniscience (67/100): 588/1555 videos analyzed (37.8%); 4/7 lanes live",
+      "source": "gap",
+      "priority": 1,
+      "department": "analysis"
+    },
+    {
+      "task": "empty-body-items-render--31649",
+      "at": "2026-07-17T09:32:25.083668+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "title-collisions-distinc-31649",
+      "at": "2026-07-17T09:32:25.084434+00:00",
+      "kind": "unroutable",
+      "why": "no department specialization matched"
+    },
+    {
+      "task": "lane-transcript-retrieva-77142",
+      "at": "2026-07-17T09:32:25.085107+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "push-link-coverage-towar-7020",
+      "at": "2026-07-17T09:32:25.085746+00:00",
+      "kind": "unroutable",
+      "why": "no department specialization matched"
+    },
+    {
+      "task": "echo-s-initiative-start--91479",
+      "at": "2026-07-17T09:32:25.086465+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "echo-s-initiative-run-a--98918",
+      "at": "2026-07-17T09:32:25.087122+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "raise-g1-omniscience-66--70477",
+      "at": "2026-07-17T09:32:25.128642+00:00",
+      "kind": "claimed",
+      "by": "analysis-w1",
+      "department": "analysis"
+    },
+    {
+      "task": "raise-g1-omniscience-66--70477",
+      "at": "2026-07-17T09:32:25.164126+00:00",
+      "kind": "completed",
+      "by": "analysis-w1",
+      "result": "1036 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "task": "raise-g8-personal-fit-66-80745",
+      "at": "2026-07-17T09:32:25.213727+00:00",
+      "kind": "claimed",
+      "by": "visual-w1",
+      "department": "visual"
+    },
+    {
+      "task": "raise-g8-personal-fit-66-80745",
+      "at": "2026-07-17T09:32:30.854149+00:00",
+      "kind": "completed",
+      "by": "visual-w1",
+      "result": "Ran the collect designs. collect_designs: 647 designs (kept 647 / dropped 0 repo-only + 4 dead/parked + 34 non-design; +0 AI-product, +27 seeds, +33 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "task": "memory-embed-the-remaini-70477",
+      "at": "2026-07-17T09:32:30.888942+00:00",
+      "kind": "claimed",
+      "by": "memory-w1",
+      "department": "memory"
+    },
+    {
+      "task": "memory-embed-the-remaini-70477",
+      "at": "2026-07-17T09:32:31.086763+00:00",
+      "kind": "completed",
+      "by": "memory-w1",
+      "result": "Semantic index: 1479 vectors (model gemini-embedding-001); hub 6627 items → 5148 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "task": "raise-g5-leverage-51-100-80744",
+      "at": "2026-07-17T09:32:31.121650+00:00",
+      "kind": "claimed",
+      "by": "creators-w1",
+      "department": "creators"
+    },
+    {
+      "task": "raise-g5-leverage-51-100-80744",
+      "at": "2026-07-17T09:32:31.156391+00:00",
+      "kind": "completed",
+      "by": "creators-w1",
+      "result": "Creators: 12 creations on record, 12 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
+    },
+    {
+      "task": "security-safety-rate-the-80021",
+      "at": "2026-07-17T09:32:31.190275+00:00",
+      "kind": "claimed",
+      "by": "security-w1",
+      "department": "security"
+    },
+    {
+      "task": "security-safety-rate-the-80021",
+      "at": "2026-07-17T09:32:31.950388+00:00",
+      "kind": "completed",
+      "by": "security-w1",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "task": "watch-process-the-next-b-80744",
+      "at": "2026-07-17T09:32:31.984642+00:00",
+      "kind": "claimed",
+      "by": "watch-w1",
+      "department": "watch"
+    },
+    {
+      "task": "watch-process-the-next-b-80744",
+      "at": "2026-07-17T09:32:32.018150+00:00",
+      "kind": "completed",
+      "by": "watch-w1",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+    },
+    {
+      "task": "dept-memory-recall-by-meaning-rel-125",
+      "at": "2026-07-17T09:32:41.054322+00:00",
+      "kind": "room_closed",
+      "artifact": {
+        "kind": "decision",
+        "ref": "data/excava/artifacts/dept-memory-recall-by-meaning-rel-125.md",
+        "at": "2026-07-17T09:32:41.054147+00:00",
+        "title": "memory: Recall by meaning, relate elements, build the brain graph, embed unembed",
+        "by": "Root"
+      },
+      "turns": 2
+    },
+    {
+      "task": "memory-room-action-conne-80761",
+      "at": "2026-07-17T09:32:41.089226+00:00",
+      "kind": "enqueued",
+      "title": "[memory room action] Connect all existing memory IDs in this conversation to the unified memory system, embedding all prior elements for enha",
+      "source": "room-action:memory",
+      "priority": 2,
+      "department": "memory"
+    },
+    {
+      "task": "dept-transcripts-retrieve-real-fu-342",
+      "at": "2026-07-17T09:32:49.315798+00:00",
+      "kind": "room_closed",
+      "artifact": {
+        "kind": "decision",
+        "ref": "data/excava/artifacts/dept-transcripts-retrieve-real-fu-342.md",
+        "at": "2026-07-17T09:32:49.315618+00:00",
+        "title": "transcripts: Retrieve REAL full transcripts/captions for pending videos (residen",
+        "by": "Echo"
+      },
+      "turns": 2
+    },
+    {
+      "task": "transcripts-room-action--80769",
+      "at": "2026-07-17T09:32:49.353789+00:00",
+      "kind": "enqueued",
+      "title": "[transcripts room action] Reel runs kimtaeyoon83/mcp-server-youtube-transcript on each pending video ID, saves the returned full transcript as a .",
+      "source": "room-action:transcripts",
+      "priority": 2,
+      "department": "transcripts"
+    },
+    {
+      "task": "os-lanes",
+      "at": "2026-07-17T09:32:56.772454+00:00",
+      "kind": "lane_ran",
+      "lane": "Gemini watch (audio+visual)",
+      "status": "live",
+      "what": "Watches videos directly — clears the backlog free"
+    },
+    {
+      "task": "os-lanes",
+      "at": "2026-07-17T09:32:56.773178+00:00",
+      "kind": "lane_ran",
+      "lane": "Transcript retrieval",
+      "status": "live",
+      "what": "Pulls captions (Supadata cloud + residential)"
+    },
+    {
+      "task": "os-lanes",
+      "at": "2026-07-17T09:32:56.773812+00:00",
+      "kind": "lane_ran",
+      "lane": "Deep analysis (night-gated)",
+      "status": "live",
+      "what": "Claude re-analysis + safety pass"
+    },
+    {
+      "task": "os-lanes",
+      "at": "2026-07-17T09:32:56.774443+00:00",
+      "kind": "lane_ran",
+      "lane": "AI news refresh",
+      "status": "live",
+      "what": "Refreshes official-site AI news"
     }
   ]
 }

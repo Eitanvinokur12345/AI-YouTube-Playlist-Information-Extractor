@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-17T19:50:46.381281+00:00",
+ "generated_at": "2026-07-17T21:25:20.363049+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,8 +8,8 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 262,
-   "rooms_7d": 55,
+   "turns_7d": 263,
+   "rooms_7d": 56,
    "engines_used": [
     "gh-models",
     "groq",
@@ -18,7 +18,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The risk isn’t the tool—it’s the single point of failure. If kimtaeyoon83/mcp-server-youtube-transcript breaks or gets r"
+   "last_position": "The real risk isn’t typos—it’s losing control of the narrative. If we automate transcripts without human review, we risk"
   },
   {
    "id": "analysis-w1",
@@ -41,8 +41,8 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 170,
-   "rooms_7d": 80,
+   "turns_7d": 172,
+   "rooms_7d": 82,
    "engines_used": [
     "gh-models",
     "groq",
@@ -50,7 +50,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Run the kimtaeyoon83/mcp-server-youtube-transcript tool on the first pending video. It will produce the full transcript/"
+   "last_position": "Run the kimtaeyoon83/mcp-server-youtube-transcript tool on the first pending vid. This gives us a clean, machine-readabl"
   },
   {
    "id": "watch-w1",
@@ -230,6 +230,22 @@
    "proposed": 1
   },
   {
+   "id": "creators-w1",
+   "name": "Forge",
+   "dept": "creators",
+   "role": "doer",
+   "turns_7d": 85,
+   "rooms_7d": 60,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "I will draft the \"UGC Factory\" npm package for the creators tab. This will produce a ready-to-use package labeled \"Creat"
+  },
+  {
    "id": "memory-lead",
    "name": "Root",
    "dept": "memory",
@@ -248,35 +264,19 @@
    "shipped": 1
   },
   {
-   "id": "creators-w1",
-   "name": "Forge",
-   "dept": "creators",
-   "role": "doer",
-   "turns_7d": 84,
-   "rooms_7d": 59,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "I will draft the \"UGC Factory\" npm package for the creators tab. This package will generate user-generated content skill"
-  },
-  {
    "id": "security-w1",
    "name": "Warden",
    "dept": "security",
    "role": "doer",
-   "turns_7d": 76,
-   "rooms_7d": 54,
+   "turns_7d": 77,
+   "rooms_7d": 55,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 25,
+   "positions_held": 26,
    "last_position": "I will run the LLM Guard scanner on the input/output stream of this conversation to detect leaks or injection attempts. "
   },
   {
@@ -284,8 +284,8 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 74,
-   "rooms_7d": 74,
+   "turns_7d": 75,
+   "rooms_7d": 75,
    "engines_used": [
     "gh-models",
     "groq",
@@ -293,7 +293,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Reel fetches transcript for video ID \"dQw4w9\" via kimtaeyoon83/mcp-server-youtube-transcript and confirms the ar",
+   "last_position": "ACTION: Reel fetches transcript for video ID \"dQw4w9\" via kimtaeyoon83/mcp-server-youtube-transcript, stores the output ",
    "proposed": 2
   },
   {
@@ -317,8 +317,8 @@
    "name": "Nova",
    "dept": "creators",
    "role": "lead",
-   "turns_7d": 58,
-   "rooms_7d": 58,
+   "turns_7d": 59,
+   "rooms_7d": 59,
    "engines_used": [
     "gh-models",
     "groq",
@@ -326,7 +326,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Nova tests the \"UGC Factory\" npm package drafted by Forge, verifying its functionality and labeling it 'Created "
+   "last_position": "ACTION: Nova tests the \"UGC Factory\" npm package drafted by Forge, verifying functionality and labeling the verified art"
   },
   {
    "id": "visual-checker",
@@ -345,6 +345,22 @@
    "last_position": "The action of applying a muted coral accent to interactive elements and exporting a style guide is a suitable mission ta"
   },
   {
+   "id": "accessibility-w1",
+   "name": "Ramp",
+   "dept": "accessibility",
+   "role": "doer",
+   "turns_7d": 55,
+   "rooms_7d": 28,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "Add a **hidden skip link** that only appears when focused via keyboard. This keeps the skip link out of sight for mouse "
+  },
+  {
    "id": "power-lead",
    "name": "Dynamo",
    "dept": "power",
@@ -360,22 +376,6 @@
    "last_position": "DECISION: Switch EXCAVA to DeepSeek-V3 671B for a 24-hour A/B test against Mistral Large 2 12.8B—prove a measurable 0.5%",
    "proposed": 36,
    "shipped": 36
-  },
-  {
-   "id": "accessibility-w1",
-   "name": "Ramp",
-   "dept": "accessibility",
-   "role": "doer",
-   "turns_7d": 54,
-   "rooms_7d": 28,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "Add a **large, high-contrast skip link** at the top of every page, visible by default."
   },
   {
    "id": "analysis-lead",
@@ -398,7 +398,7 @@
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 52,
+   "turns_7d": 53,
    "rooms_7d": 27,
    "engines_used": [
     "gh-models",
@@ -407,7 +407,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "A large, high-contrast skip link risks pushing primary content below the fold on small screens, hurting mobile users. A "
+   "last_position": "The hidden skip link still risks confusing first-time keyboard users who don’t know it exists until they tab—breaking th"
   },
   {
    "id": "memory-checker",
@@ -430,16 +430,16 @@
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 50,
-   "rooms_7d": 41,
+   "turns_7d": 51,
+   "rooms_7d": 42,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 25,
-   "last_position": "I will run a GitHub search for repositories tagged with \"AI\" and return the top 100 results sorted by stars. This will p"
+   "positions_held": 26,
+   "last_position": "I will run a GitHub search for repositories tagged with \"AI\" and return the top 100 by stars. This will produce a ranked"
   },
   {
    "id": "creators-checker",
@@ -461,33 +461,33 @@
    "name": "Bastion",
    "dept": "security",
    "role": "lead",
-   "turns_7d": 48,
-   "rooms_7d": 48,
+   "turns_7d": 49,
+   "rooms_7d": 49,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 25,
-   "last_position": "ACTION: Warden runs LLM Guard scanner on the input/output stream of this session; output is a security report flagging c"
+   "positions_held": 26,
+   "last_position": "ACTION: Warden runs LLM Guard scanner on the input/output stream of this session; output: real-time anomaly report gener"
   },
   {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 48,
-   "rooms_7d": 48,
+   "turns_7d": 49,
+   "rooms_7d": 49,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 23,
-   "last_position": "DECISION: Ship a real-time live contrast checker that warns users immediately, paired with a pre-submission validator th",
-   "proposed": 23,
+   "positions_held": 24,
+   "last_position": "DECISION: Ship the pre-submission contrast validator behind the feature flag tonight—it blocks unreadable themes but pai",
+   "proposed": 24,
    "shipped": 23
   },
   {
@@ -561,16 +561,16 @@
    "name": "Boulder",
    "dept": "mining",
    "role": "lead",
-   "turns_7d": 34,
-   "rooms_7d": 34,
+   "turns_7d": 35,
+   "rooms_7d": 35,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 25,
-   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of 100 with descriptions, star cou"
+   "positions_held": 26,
+   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of top 100 by stars with names, de"
   },
   {
    "id": "news-checker",

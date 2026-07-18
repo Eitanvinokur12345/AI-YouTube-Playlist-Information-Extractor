@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-18T03:04:26.518205+00:00",
+ "generated_at": "2026-07-18T03:10:49.302588+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 230,
+   "turns_7d": 231,
    "rooms_7d": 42,
    "engines_used": [
     "gh-models",
@@ -17,7 +17,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Sift’s checklist won’t stop the error—it just moves the blame. The real risk is that Creative will treat a static list a"
+   "last_position": "The real risk isn’t liability—it’s *inconsistency*. A static checklist won’t catch the error—it just moves the blame. In"
   },
   {
    "id": "analysis-w1",
@@ -55,7 +55,7 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 156,
+   "turns_7d": 157,
    "rooms_7d": 74,
    "engines_used": [
     "gh-models",
@@ -64,7 +64,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Product Ops should embed a *machine-verified brand/legal gate* in the repurposing tool: if Creative skips the review, th"
+   "last_position": "Product Ops should embed a *machine-verified brand/legal gate* in the repurposing pipeline that blocks any automated tra"
   },
   {
    "id": "analysis-checker",
@@ -230,6 +230,22 @@
    "shipped": 1
   },
   {
+   "id": "mining-w1",
+   "name": "Pick",
+   "dept": "mining",
+   "role": "doer",
+   "turns_7d": 72,
+   "rooms_7d": 63,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll run a GitHub search for repositories tagged with \"AI\" and return the top 20 by stars. This will produce a ranked li"
+  },
+  {
    "id": "improve-checker",
    "name": "Gauge",
    "dept": "improve",
@@ -244,22 +260,6 @@
    ],
    "positions_held": 30,
    "last_position": "The real risk isn’t missing minor tweaks—it’s that logging only \"decisions\" assumes we can predict which tweaks will mat"
-  },
-  {
-   "id": "mining-w1",
-   "name": "Pick",
-   "dept": "mining",
-   "role": "doer",
-   "turns_7d": 71,
-   "rooms_7d": 62,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll run a GitHub search for repositories tagged with \"AI\" and return the top 100 results sorted by stars. This will pro"
   },
   {
    "id": "transcripts-lead",
@@ -299,8 +299,8 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 62,
-   "rooms_7d": 31,
+   "turns_7d": 63,
+   "rooms_7d": 32,
    "engines_used": [
     "gh-models",
     "groq",
@@ -308,15 +308,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Add a **large, high-contrast skip link that only appears when keyboard focus reaches it**—it stays hidden until needed."
+   "last_position": "Add a **large, high-contrast skip link** at the top of every page, visible by default."
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 61,
-   "rooms_7d": 31,
+   "turns_7d": 62,
+   "rooms_7d": 32,
    "engines_used": [
     "gh-models",
     "groq",
@@ -324,7 +324,23 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "A skip link that only appears on focus risks being invisible to screen-reader users who rely on visual cues—many screen "
+   "last_position": "A large, always-visible skip link steals focus from the main content for sighted users on page load, harming sighted key"
+  },
+  {
+   "id": "mining-lead",
+   "name": "Boulder",
+   "dept": "mining",
+   "role": "lead",
+   "turns_7d": 56,
+   "rooms_7d": 56,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of top 20 by stars, then mine Prod"
   },
   {
    "id": "security-w1",
@@ -343,22 +359,6 @@
    "last_position": "I will run the LLM Guard scanner on this conversation's input/output stream to detect leaks, injection, or fake elements"
   },
   {
-   "id": "mining-lead",
-   "name": "Boulder",
-   "dept": "mining",
-   "role": "lead",
-   "turns_7d": 55,
-   "rooms_7d": 55,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of top 50 by stars with descriptio"
-  },
-  {
    "id": "creators-lead",
    "name": "Nova",
    "dept": "creators",
@@ -375,6 +375,24 @@
    "last_position": "ACTION: Nova tests the \"UGC Factory\" npm package drafted by Forge, verifying functionality and labeling it 'Created by E"
   },
   {
+   "id": "visualization-lead",
+   "name": "Lumen",
+   "dept": "visualization",
+   "role": "lead",
+   "turns_7d": 45,
+   "rooms_7d": 45,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Ship both the pre-submission contrast validator behind a feature flag and the live contrast checker with a non",
+   "proposed": 31,
+   "shipped": 30
+  },
+  {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
@@ -389,24 +407,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Marrow manually reviews the full earnings call transcript for all mentions of \"changelog,\" extracts decision poi"
-  },
-  {
-   "id": "visualization-lead",
-   "name": "Lumen",
-   "dept": "visualization",
-   "role": "lead",
-   "turns_7d": 44,
-   "rooms_7d": 44,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Ship the live contrast checker with a non-blocking, self-clearing warning AND the pre-submission validator beh",
-   "proposed": 30,
-   "shipped": 30
   },
   {
    "id": "power-lead",
@@ -524,7 +524,7 @@
    "positions_held": 24,
    "last_position": "DECISION: Implement a **persistent, zero-opacity skip link** that becomes visible on keyboard focus (via `opacity: 0` → ",
    "proposed": 24,
-   "shipped": 23
+   "shipped": 24
   },
   {
    "id": "memory-checker",

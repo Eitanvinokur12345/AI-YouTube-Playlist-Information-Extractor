@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-18T01:17:18.137803+00:00",
+ "generated_at": "2026-07-18T01:23:20.114904+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 218,
+   "turns_7d": 219,
    "rooms_7d": 42,
    "engines_used": [
     "gh-models",
@@ -17,7 +17,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The real risk isn’t liability—it’s *inconsistency*. A checklist won’t stop Creative from skipping steps when deadlines l"
+   "last_position": "Sift’s checklist won’t stop the risk—it’s a bandage on a broken process. The real risk is *inconsistency*: Legal’s check"
   },
   {
    "id": "analysis-w1",
@@ -55,8 +55,8 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 146,
-   "rooms_7d": 70,
+   "turns_7d": 148,
+   "rooms_7d": 71,
    "engines_used": [
     "gh-models",
     "groq",
@@ -64,7 +64,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Run the kimtaeyoon83/mcp-server-youtube-transcript tool on the first pending video. It will produce the full real transc"
+   "last_position": "Product Ops should embed the automated transcript as a *non-skippable step* in the repurposing tool, with Creative requi"
   },
   {
    "id": "analysis-checker",
@@ -246,6 +246,23 @@
    "last_position": "The real risk isn’t missing minor tweaks—it’s that logging only \"decisions\" assumes we can predict which tweaks will mat"
   },
   {
+   "id": "transcripts-lead",
+   "name": "Echo",
+   "dept": "transcripts",
+   "role": "lead",
+   "turns_7d": 64,
+   "rooms_7d": 64,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Reel fetches transcript for video ID \"dQw4w9\" via kimtaeyoon83/mcp-server-youtube-transcript and confirms the ar",
+   "proposed": 2
+  },
+  {
    "id": "creators-w1",
    "name": "Forge",
    "dept": "creators",
@@ -260,23 +277,6 @@
    ],
    "positions_held": 30,
    "last_position": "I will draft the \"UGC Factory\" npm package for the creators tab. This will produce a ready-to-install package that lets "
-  },
-  {
-   "id": "transcripts-lead",
-   "name": "Echo",
-   "dept": "transcripts",
-   "role": "lead",
-   "turns_7d": 63,
-   "rooms_7d": 63,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Reel fetches transcript for video ID \"dQw4w9\" via kimtaeyoon83/mcp-server-youtube-transcript and verifies the ou",
-   "proposed": 2
   },
   {
    "id": "security-w1",
@@ -299,22 +299,38 @@
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 53,
-   "rooms_7d": 44,
+   "turns_7d": 54,
+   "rooms_7d": 45,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 28,
-   "last_position": "I will run a GitHub search for repositories tagged with \"AI\" and return the top 100 by stars, capturing their names, des"
+   "positions_held": 29,
+   "last_position": "I will run a GitHub search for repositories tagged with \"AI\" and return the top 100 results sorted by stars. This will p"
   },
   {
    "id": "accessibility-w1",
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
+   "turns_7d": 52,
+   "rooms_7d": 26,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "Add a **hidden skip link** that only appears when focused via keyboard. This keeps the skip link out of sight for mouse "
+  },
+  {
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
+   "role": "checker",
    "turns_7d": 51,
    "rooms_7d": 26,
    "engines_used": [
@@ -324,7 +340,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Add a **large, high-contrast skip link** at the top of every page, visible by default. This ensures keyboard users can b"
+   "last_position": "The hidden skip link still risks confusing first-time keyboard users who don’t know it exists until they tab—adding a ti"
   },
   {
    "id": "creators-lead",
@@ -341,22 +357,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Nova tests the \"UGC Factory\" npm package drafted by Forge, verifying functionality and labeling it 'Created by E"
-  },
-  {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 50,
-   "rooms_7d": 26,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "A large, high-contrast skip link risks pushing primary content below the fold on small screens, making it harder for *al"
   },
   {
    "id": "analysis-lead",
@@ -408,6 +408,24 @@
    "last_position": "ACTION: Warden runs LLM Guard scanner on the input/output stream of this session — report generated: no leaks, injection"
   },
   {
+   "id": "visualization-lead",
+   "name": "Lumen",
+   "dept": "visualization",
+   "role": "lead",
+   "turns_7d": 39,
+   "rooms_7d": 39,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 25,
+   "last_position": "DECISION: Ship the pre-submission contrast validator behind a feature flag, paired with a real-time live checker that up",
+   "proposed": 25,
+   "shipped": 24
+  },
+  {
    "id": "watch-lead",
    "name": "Iris",
    "dept": "watch",
@@ -425,9 +443,9 @@
    "shipped": 1
   },
   {
-   "id": "visualization-lead",
-   "name": "Lumen",
-   "dept": "visualization",
+   "id": "mining-lead",
+   "name": "Boulder",
+   "dept": "mining",
    "role": "lead",
    "turns_7d": 38,
    "rooms_7d": 38,
@@ -437,26 +455,8 @@
     "mistral",
     "sambanova"
    ],
-   "positions_held": 24,
-   "last_position": "DECISION: Ship the pre-submission contrast validator behind the feature flag tonight—it blocks unreadable themes but pai",
-   "proposed": 24,
-   "shipped": 24
-  },
-  {
-   "id": "mining-lead",
-   "name": "Boulder",
-   "dept": "mining",
-   "role": "lead",
-   "turns_7d": 37,
-   "rooms_7d": 37,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 28,
-   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of 100 by stars with names, descri"
+   "positions_held": 29,
+   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of 100 entries with star counts, d"
   },
   {
    "id": "news-w1",

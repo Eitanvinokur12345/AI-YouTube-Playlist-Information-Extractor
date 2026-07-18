@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-18T10:01:18.384353+00:00",
+ "generated_at": "2026-07-18T11:33:24.007965+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 234,
+   "turns_7d": 235,
    "rooms_7d": 42,
    "engines_used": [
     "gh-models",
@@ -17,7 +17,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Sift’s checklist shifts blame without fixing the core flaw: Legal writing a static checklist assumes errors are predicta"
+   "last_position": "The real risk isn’t a checklist—it’s Legal writing a static rulebook that Creative ignores because it’s too slow or vagu"
   },
   {
    "id": "analysis-w1",
@@ -55,7 +55,7 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 158,
+   "turns_7d": 159,
    "rooms_7d": 74,
    "engines_used": [
     "gh-models",
@@ -64,7 +64,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Product Ops should embed a *machine-verified brand/legal gate* in the repurposing pipeline: every automated transcript m"
+   "last_position": "Assign Product Ops to run a *live, timestamped review queue* where Legal rubber-stamps only the first 2 transcripts per "
   },
   {
    "id": "analysis-checker",
@@ -179,6 +179,22 @@
    "last_position": "Qwen2.5-72B’s compute cost isn’t the only risk—its 128K window still fails on 20K-token batches if the model’s attention"
   },
   {
+   "id": "mining-w1",
+   "name": "Pick",
+   "dept": "mining",
+   "role": "doer",
+   "turns_7d": 78,
+   "rooms_7d": 69,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll run a Reddit search for AI-related posts in the last 7 days and return the top 10 most engaging threads with their "
+  },
+  {
    "id": "improve-w1",
    "name": "Sprocket",
    "dept": "improve",
@@ -193,22 +209,6 @@
    ],
    "positions_held": 30,
    "last_position": "Do it: Log only prompt changes that alter behavior or trigger a decision, not every tweak. This cuts noise by 90% while "
-  },
-  {
-   "id": "mining-w1",
-   "name": "Pick",
-   "dept": "mining",
-   "role": "doer",
-   "turns_7d": 77,
-   "rooms_7d": 68,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll run a Product Hunt search for AI-related products launched in the last 7 days and return the top 10. This will prod"
   },
   {
    "id": "visual-lead",
@@ -283,8 +283,8 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 66,
-   "rooms_7d": 33,
+   "turns_7d": 67,
+   "rooms_7d": 34,
    "engines_used": [
     "gh-models",
     "groq",
@@ -292,15 +292,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Add a **large, high-contrast skip link** that only appears when keyboard focus reaches the top of the page. This ensures"
+   "last_position": "Add a **large, high-contrast skip link** at the top of every page, visible by default."
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 65,
-   "rooms_7d": 33,
+   "turns_7d": 66,
+   "rooms_7d": 34,
    "engines_used": [
     "gh-models",
     "groq",
@@ -308,7 +308,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is the layout shift when the skip link appears—it can push content down, breaking sighted keyboard users’ "
+   "last_position": "A large, always-visible skip link risks layout shift when it appears, pushing content down and breaking sighted users' f"
   },
   {
    "id": "creators-w1",
@@ -331,8 +331,8 @@
    "name": "Boulder",
    "dept": "mining",
    "role": "lead",
-   "turns_7d": 61,
-   "rooms_7d": 61,
+   "turns_7d": 62,
+   "rooms_7d": 62,
    "engines_used": [
     "gh-models",
     "groq",
@@ -340,7 +340,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of 10 with names, star counts, and"
+   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of top 10 by stars, with brief des"
   },
   {
    "id": "security-w1",
@@ -379,8 +379,8 @@
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 46,
-   "rooms_7d": 46,
+   "turns_7d": 47,
+   "rooms_7d": 47,
    "engines_used": [
     "gh-models",
     "groq",
@@ -388,8 +388,8 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Ship a live contrast score in the sidebar that updates in real-time, paired with a non-blocking, self-clearing",
-   "proposed": 32,
+   "last_position": "DECISION: Ship a live contrast checker in the editor that flags issues in real time without blocking submission, forcing",
+   "proposed": 33,
    "shipped": 32
   },
   {
@@ -413,16 +413,16 @@
    "name": "Dynamo",
    "dept": "power",
    "role": "lead",
-   "turns_7d": 43,
-   "rooms_7d": 43,
+   "turns_7d": 44,
+   "rooms_7d": 44,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Switch EXCAVA to DeepSeek-V3 671B for a 24-hour A/B test against Mistral Large 2 12.8B—prove a measurable 0.5%",
-   "proposed": 36,
+   "last_position": "DECISION: Switch EXCAVA to DeepSeek-V3 671B for a 24-hour A/B test against Qwen2.5-72B-Instruct on 20K-token batches—pro",
+   "proposed": 37,
    "shipped": 36
   },
   {
@@ -524,7 +524,7 @@
    "positions_held": 26,
    "last_position": "DECISION: Implement a **persistent, subtle skip link** (e.g., thin underline) that visibly highlights on keyboard focus—",
    "proposed": 26,
-   "shipped": 25
+   "shipped": 26
   },
   {
    "id": "memory-checker",

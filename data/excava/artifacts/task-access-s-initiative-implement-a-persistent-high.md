@@ -1,41 +1,25 @@
-# [Access's initiative] Implement a **persistent, high-contrast skip link** at the top of every page, styled with reduced visual weight (e
+# [Access's initiative] Implement a **persistent, high-contrast skip link** (visible by default but compact) that expands to full visibility on 
 
-> accessibility · task `access-s-initiative-impl-40607` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> accessibility · task `access-s-initiative-impl-46167` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
 ```markdown
-**Approach:** Implement a persistent, high-contrast skip link at the top of every page with reduced visual weight for Access compliance.
+**Approach:**
+Implement a persistent skip link with high-contrast styling that expands to full visibility on focus, ensuring keyboard and screen reader accessibility.
 
 **Steps:**
-1. **Add skip link HTML** to the base template (e.g., `src/templates/base.html`):
-   ```html
-   <a href="#main-content" class="skip-link">Skip to main content</a>
-   ```
-2. **Style the skip link** in CSS (e.g., `src/styles/access.css`):
-   ```css
-   .skip-link {
-     position: absolute;
-     top: -40px;
-     left: 0;
-     background: #000;
-     color: #fff;
-     padding: 8px;
-     z-index: 1000;
-     transition: top 0.3s;
-   }
-   .skip-link:focus {
-     top: 0;
-   }
-   ```
-3. **Ensure `#main-content` anchor exists** in page templates (e.g., `src/templates/page.html`):
-   ```html
-   <main id="main-content" tabindex="-1">
-   ```
-4. **Test keyboard navigation** (Tab key) and screen reader compatibility (NVDA/JAWS).
-5. **Deploy changes** via CI/CD pipeline (e.g., `git commit -m "Add persistent skip link" && git push`).
+1. **Create skip link HTML/CSS:**
+   - Add `<a class="skip-link" href="#main-content">Skip to main content</a>` as the first focusable element in `<body>`.
+   - Style with `.skip-link { position: absolute; top: -40px; left: 0; background: #000; color: #fff; padding: 8px; z-index: 1000; transition: top 0.3s; }` and `.skip-link:focus { top: 0; }`.
+   - Ensure high contrast meets WCAG 2.1 AA (e.g., `#000` on `#fff` or `#0056b3` on `#fff`).
 
-**Needs:**
-- Access to the project’s base template (`src/templates/base.html`).
-- CSS file (`src/styles/access.css`) for styling.
-- CI/CD pipeline for deployment.
-- Testing tools (keyboard, screen reader).
-```
+2. **Add JavaScript for persistent visibility:**
+   - Use `localStorage` to track user preference for expanded state (e.g., `localStorage.setItem('skip-link-expanded', 'true')` on click/focus).
+   - Apply `.skip-link { top: 0; }` if `localStorage.getItem('skip-link-expanded') === 'true'`.
+
+3. **Test keyboard/screen reader flow:**
+   - Verify tab order places skip link first.
+   - Confirm screen readers announce "Skip to main content" and focus moves to `#main-content`.
+   - Test with high-contrast mode enabled (e.g., Windows HC or browser extensions).
+
+4. **Integrate into build pipeline:**
+   - Add CSS/JS to existing bundle (e.g., `src/styles/skip-link.css

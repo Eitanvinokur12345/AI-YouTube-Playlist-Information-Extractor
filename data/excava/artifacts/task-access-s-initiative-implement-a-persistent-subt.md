@@ -1,47 +1,47 @@
-# [Access's initiative] Implement a **persistent, subtle skip link** (e
+# [Access's initiative] Implement a **persistent, subtle skip link** (1px by 1px underline by default, expands to 2px on keyboard focus) at the 
 
-> accessibility · task `access-s-initiative-impl-68788` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> accessibility · task `access-s-initiative-impl-10004` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
 ```markdown
-**Approach:** Implement a persistent, subtle skip link using semantic HTML, CSS for subtlety, and JavaScript for persistence across navigation.
+**Approach:**
+Implement a persistent skip link using CSS/JS with minimal visual footprint that expands on keyboard focus, ensuring WCAG 2.1 AA compliance.
 
 **Steps:**
-1. **Add skip link HTML** to `src/layouts/base.html` (or equivalent base template):
+1. **Add HTML skip link** to `<body>` in `src/templates/base.html` (or equivalent layout file):
    ```html
    <a href="#main-content" class="skip-link">Skip to main content</a>
    ```
-   Place it as the first focusable element in `<body>`.
-
-2. **Style the skip link** in `src/styles/accessibility.css`:
+2. **Style skip link** in `src/assets/css/accessibility.css`:
    ```css
    .skip-link {
      position: absolute;
-     left: -9999px;
-     top: 0;
+     top: -40px;
+     left: 0;
      background: #000;
      color: #fff;
-     padding: 0.5rem 1rem;
-     z-index: 1000;
-     transition: left 0.3s;
+     padding: 8px;
+     z-index: 9999;
+     transition: top 0.3s, width 0.3s, height 0.3s;
+     width: 1px;
+     height: 1px;
+     overflow: hidden;
+     text-decoration: underline 1px;
    }
    .skip-link:focus {
-     left: 0;
+     top: 0;
+     width: auto;
+     height: auto;
+     text-decoration: underline 2px;
    }
    ```
-
-3. **Ensure `#main-content` target exists** in all page templates (e.g., `src/pages/*.html`):
-   ```html
-   <main id="main-content" tabindex="-1">
-     <!-- Page content -->
-   </main>
-   ```
-
-4. **Persist visibility** via JavaScript in `src/scripts/skip-link.js`:
+3. **Add JavaScript** in `src/assets/js/accessibility.js` to ensure `#main-content` exists:
    ```javascript
    document.addEventListener('DOMContentLoaded', () => {
-     const skipLink = document.querySelector('.skip-link');
-     if (localStorage.getItem('skipLinkSeen') !== 'true') {
-       skipLink.style.left = '0';
-       localStorage.setItem('skipLinkSeen', 'true');
+     if (!document.getElementById('main-content')) {
+       const main = document.createElement('main');
+       main.id = 'main-content';
+       document.body.insertBefore(main, document.body.firstChild);
      }
    });
+   ```
+4. **Import CSS/JS** in build

@@ -1,13 +1,44 @@
 # [Access's initiative] Implement a **persistent, compact, high-contrast skip link** (e
 
-> accessibility · task `access-s-initiative-impl-41734` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
+> accessibility · task `access-s-initiative-impl-42789` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
-**Approach:** Implement a persistent, compact, high-contrast skip link by modifying the existing HTML, CSS, and JavaScript code.
+```markdown
+**Approach:** Implement a persistent, compact, high-contrast skip link using semantic HTML, CSS, and minimal JavaScript, ensuring keyboard and screen reader compatibility.
+
 **Steps:**
-1. Create a new HTML element for the skip link and add it to the header of the webpage: `<a href="#main-content" class="skip-link">Skip to main content</a>`.
-2. Style the skip link with high contrast colors using CSS: `.skip-link { background-color: #000; color: #fff; padding: 0.5em; position: absolute; top: 0; left: 0; z-index: 1; }`.
-3. Add JavaScript code to focus the skip link on page load and enable keyboard navigation: `document.addEventListener('DOMContentLoaded', () => { const skipLink = document.querySelector('.skip-link'); skipLink.focus(); });`.
-**Needs:** 
-* A code editor (e.g. Visual Studio Code)
-* A web browser (e.g. Google Chrome) for testing
-* Existing HTML, CSS, and JavaScript files for the webpage
+1. **Create skip link HTML** in `src/skip-link.html`:
+   ```html
+   <a href="#main-content" class="skip-link">Skip to main content</a>
+   ```
+2. **Add CSS** in `src/styles/skip-link.css`:
+   ```css
+   .skip-link {
+     position: absolute;
+     top: -40px;
+     left: 0;
+     background: #000;
+     color: #fff;
+     padding: 8px;
+     z-index: 9999;
+     transition: top 0.3s;
+   }
+   .skip-link:focus {
+     top: 0;
+   }
+   ```
+3. **Inject skip link** into the base template via a build step (e.g., `scripts/build.js`):
+   ```javascript
+   const fs = require('fs');
+   const html = fs.readFileSync('src/index.html', 'utf8');
+   const skipLink = fs.readFileSync('src/skip-link.html', 'utf8');
+   const updatedHtml = html.replace('</head>', `${skipLink}</head>`);
+   fs.writeFileSync('dist/index.html', updatedHtml);
+   ```
+4. **Test** with:
+   - Keyboard navigation (Tab key).
+   - Screen reader (NVDA/JAWS) to verify announcement.
+   - High-contrast mode (Windows + `Ctrl + Alt + H`).
+
+**Needs:**
+- `src/index.html` (existing base template).
+- Node.js for

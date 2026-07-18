@@ -1,20 +1,20 @@
-# [Lumen's initiative] Ship the pre-submission contrast validator behind the feature flag tonight—it blocks unreadable themes but pairs with a 
+# [Lumen's initiative] Ship the pre-submission contrast validator behind a feature flag, paired with a real-time live checker that updates as u
 
-> visualization · task `lumen-s-initiative-ship--23415` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> visualization · task `lumen-s-initiative-ship--37765` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
+```markdown
 **Approach:**
-Deploy the pre-submission contrast validator behind a feature flag with zero downtime, ensuring it blocks unreadable themes while remaining toggleable.
+Enable the pre-submission contrast validator behind a feature flag and deploy a real-time live checker that updates as users interact with the interface.
 
 **Steps:**
-1. **Update the feature flag configuration** in `config/features.json` to enable `contrast_validator` for the target environment (e.g., `"contrast_validator": true`).
-2. **Deploy the validator service** via `./bin/deploy.sh --service contrast-validator --env staging` (or equivalent) to ensure the new logic is live but inactive.
-3. **Enable the validator** by flipping the feature flag in `config/features.json` to `"contrast_validator": true` and commit the change (`git commit -m "feat: enable contrast validator"`).
-4. **Run the validator in dry-run mode** for 10 minutes (`./bin/validate-themes.sh --dry-run`) to confirm it blocks unreadable themes without rejecting submissions.
-5. **Monitor error rates** via `./bin/metrics.sh --service contrast-validator` and roll back the flag if block rate exceeds 5% (`git revert HEAD && ./bin/deploy.sh`).
+1. Locate the contrast validator logic in the codebase (e.g., `src/validators/contrast.js` or similar) and wrap its core functionality in a feature flag check (e.g., `if (featureFlags.contrastValidatorEnabled)`).
+2. Add a new feature flag entry in the feature flag configuration (e.g., `config/features.json`) with a default value of `false` and documentation for toggling it.
+3. Implement the real-time live checker as a lightweight overlay or inline validator (e.g., `src/components/ContrastLiveChecker.vue`) that subscribes to DOM changes or user input events (e.g., `input`, `change`, `blur`) and recalculates contrast ratios dynamically.
+4. Add a new route or endpoint (e.g., `/api/contrast/live-check`) to handle real-time validation requests, if not already present, and ensure it’s called via a debounced fetch or WebSocket.
+5. Update the UI to display live feedback (e.g., color swatches with pass/fail indicators) and ensure it’s only visible when the feature flag is enabled.
 
 **Needs:**
-- Access to `config/features.json` in the target repo.
-- Deploy script (`./bin/deploy.sh`) with permissions for the staging/prod environment.
-- Validator service (`contrast-validator`) already containerized and registered in the deployment pipeline.
-- Metrics endpoint (`./bin/metrics.sh`) to track block rates.
-- Rollback capability via `git revert` and redeploy.
+- Access to the codebase repository (e.g., `git@github.com:org/repo.git`).
+- Feature flag system (e.g., LaunchDarkly, Unleash, or internal flag service) with permissions to add/modify flags.
+- Node.js/Python/etc. runtime and package manager (e.g., `npm`, `pip`) for dependency management.
+- DOM inspection tools (e.g.,

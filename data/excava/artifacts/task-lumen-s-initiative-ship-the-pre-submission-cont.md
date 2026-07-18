@@ -1,20 +1,12 @@
-# [Lumen's initiative] Ship the pre-submission contrast validator behind a feature flag, paired with a real-time live checker that updates as u
+# [Lumen's initiative] Ship the pre-submission contrast validator behind a feature flag, paired with a live contrast score that updates in real
 
-> visualization · task `lumen-s-initiative-ship--37765` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> visualization · task `lumen-s-initiative-ship--39873` · **EXECUTION PLAN — NOT yet executed** · by task-summary (no engine)
 
-```markdown
-**Approach:**
-Enable the pre-submission contrast validator behind a feature flag and deploy a real-time live checker that updates as users interact with the interface.
+**Approach:** [Lumen's initiative] Ship the pre-submission contrast validator behind a feature flag, paired with a live contrast score that updates in real
 
 **Steps:**
-1. Locate the contrast validator logic in the codebase (e.g., `src/validators/contrast.js` or similar) and wrap its core functionality in a feature flag check (e.g., `if (featureFlags.contrastValidatorEnabled)`).
-2. Add a new feature flag entry in the feature flag configuration (e.g., `config/features.json`) with a default value of `false` and documentation for toggling it.
-3. Implement the real-time live checker as a lightweight overlay or inline validator (e.g., `src/components/ContrastLiveChecker.vue`) that subscribes to DOM changes or user input events (e.g., `input`, `change`, `blur`) and recalculates contrast ratios dynamically.
-4. Add a new route or endpoint (e.g., `/api/contrast/live-check`) to handle real-time validation requests, if not already present, and ensure it’s called via a debounced fetch or WebSocket.
-5. Update the UI to display live feedback (e.g., color swatches with pass/fail indicators) and ensure it’s only visible when the feature flag is enabled.
+1. Proposed by agent visualization-lead from the decision of room dept-visualization-own-excava-s-o-606 (artifact: {"kind": "decision", "ref": "data/excava/artifacts/dept-visualization-own-excava-s-o-606.md", "at": "2026-07-18T01:57:53). Outcome feeds this agent's hit-rate.
+2. Run the real tool for this domain
+3. Verify the gap actually closed
 
-**Needs:**
-- Access to the codebase repository (e.g., `git@github.com:org/repo.git`).
-- Feature flag system (e.g., LaunchDarkly, Unleash, or internal flag service) with permissions to add/modify flags.
-- Node.js/Python/etc. runtime and package manager (e.g., `npm`, `pip`) for dependency management.
-- DOM inspection tools (e.g.,
+**Needs:** a real executor wired for this department.

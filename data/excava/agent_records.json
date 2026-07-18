@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-18T01:52:32.505850+00:00",
+ "generated_at": "2026-07-18T01:58:16.373288+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 222,
+   "turns_7d": 223,
    "rooms_7d": 42,
    "engines_used": [
     "gh-models",
@@ -17,7 +17,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The real risk isn’t liability—it’s *inconsistency*. A checklist won’t stop Creative from skipping steps when deadlines l"
+   "last_position": "The real risk isn’t a checklist—it’s *inconsistency*. A static checklist won’t catch edge cases like a guest’s offhand l"
   },
   {
    "id": "analysis-w1",
@@ -36,6 +36,22 @@
    "last_position": "Assign Product Ops to run a *machine-verified brand/legal gate* before any automated transcript is repurposed—this block"
   },
   {
+   "id": "transcripts-w1",
+   "name": "Reel",
+   "dept": "transcripts",
+   "role": "doer",
+   "turns_7d": 153,
+   "rooms_7d": 74,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "Legal should draft a *machine-verified brand/legal gate* that runs before any transcript hits Creative. This blocks bran"
+  },
+  {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
@@ -49,22 +65,6 @@
    ],
    "positions_held": 30,
    "last_position": "Legal drafts a *one-page, yes/no checklist* for Creative to verify transcripts before repurposing. This ensures disclaim"
-  },
-  {
-   "id": "transcripts-w1",
-   "name": "Reel",
-   "dept": "transcripts",
-   "role": "doer",
-   "turns_7d": 152,
-   "rooms_7d": 74,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "Product Ops should enforce a *machine-verified brand/legal gate* before any automated transcript is repurposed. This blo"
   },
   {
    "id": "analysis-checker",
@@ -283,8 +283,8 @@
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 59,
-   "rooms_7d": 50,
+   "turns_7d": 60,
+   "rooms_7d": 51,
    "engines_used": [
     "gh-models",
     "groq",
@@ -292,7 +292,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will run a GitHub search for repositories tagged with \"AI\" and return the top 100 results sorted by stars. This will p"
+   "last_position": "I will run a GitHub search for repositories tagged with \"AI\" and return the top 100 by stars, excluding forks, producing"
   },
   {
    "id": "security-w1",
@@ -315,6 +315,22 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
+   "turns_7d": 56,
+   "rooms_7d": 28,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "Add a **large, high-contrast skip link** that appears only when keyboard focus arrives at the top of the page. It stays "
+  },
+  {
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
+   "role": "checker",
    "turns_7d": 55,
    "rooms_7d": 28,
    "engines_used": [
@@ -324,23 +340,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Add a **large, high-contrast skip link** at the top of every page, visible by default. This ensures keyboard users can b"
-  },
-  {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 54,
-   "rooms_7d": 28,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "Hidden skip links still confuse first-time keyboard users who don’t know they exist. A large, always-visible skip link p"
+   "last_position": "The risk is that a skip link that only appears on focus will still be invisible to first-time keyboard users who don’t k"
   },
   {
    "id": "creators-lead",
@@ -379,8 +379,8 @@
    "name": "Boulder",
    "dept": "mining",
    "role": "lead",
-   "turns_7d": 43,
-   "rooms_7d": 43,
+   "turns_7d": 44,
+   "rooms_7d": 44,
    "engines_used": [
     "gh-models",
     "groq",
@@ -388,7 +388,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of the top 50 by stars with their "
+   "last_position": "ACTION: I will review the ranked list of trending AI projects from the GitHub search, discarding projects with low star "
   },
   {
    "id": "power-lead",
@@ -408,6 +408,24 @@
    "shipped": 36
   },
   {
+   "id": "visualization-lead",
+   "name": "Lumen",
+   "dept": "visualization",
+   "role": "lead",
+   "turns_7d": 41,
+   "rooms_7d": 41,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 27,
+   "last_position": "DECISION: Ship the pre-submission contrast validator behind a feature flag, paired with a live contrast score that updat",
+   "proposed": 27,
+   "shipped": 26
+  },
+  {
    "id": "security-lead",
    "name": "Bastion",
    "dept": "security",
@@ -422,24 +440,6 @@
    ],
    "positions_held": 28,
    "last_position": "ACTION: Warden runs LLM Guard scanner on the input/output stream of this session — report generated: no leaks, injection"
-  },
-  {
-   "id": "visualization-lead",
-   "name": "Lumen",
-   "dept": "visualization",
-   "role": "lead",
-   "turns_7d": 40,
-   "rooms_7d": 40,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 26,
-   "last_position": "DECISION: Ship a live contrast score with a one-click \"Accept risk\" toggle that updates in real time, logs the risk on s",
-   "proposed": 26,
-   "shipped": 26
   },
   {
    "id": "watch-lead",

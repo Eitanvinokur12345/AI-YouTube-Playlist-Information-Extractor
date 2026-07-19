@@ -1,28 +1,13 @@
-# [Access's initiative] Implement a **persistent, subtle skip link** (1px by 1px underline, high contrast on focus) placed *before* the first in
+# [Access's initiative] Implement a **persistent, subtle skip link** (1px by 1px underline) at the top of every page, visible only when keyboard
 
-> accessibility · task `access-s-initiative-impl-14543` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> accessibility · task `access-s-initiative-impl-17354` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
 
-```markdown
-**Approach:** Inject a persistent, subtle skip link (1px × 1px underline, high-contrast on focus) positioned before the first interactive element in the DOM.
-
+**Approach:** Implement a persistent, subtle skip link at the top of every page, visible only when keyboard navigation is used.
 **Steps:**
-1. Open `/src/templates/base.html` (or equivalent root template) and insert:
-   ```html
-   <a id="skip-link" href="#main-content" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;text-decoration:underline;color:#000;background:#fff;">Skip to main content</a>
-   ```
-   immediately before the first `<main>`, `<div id="main-content">`, or landmark role element.
-
-2. Add CSS to `/src/static/css/access.css` (or inline `<style>` in base.html):
-   ```css
-   #skip-link:focus { position:static;width:auto;height:auto;overflow:visible; }
-   ```
-
-3. Ensure `#main-content` exists in `/src/templates/base.html` (or add `<main id="main-content" role="main">`).
-
-4. Build assets and deploy; verify via keyboard tabbing that the link appears on `:focus` with ≥ 4.5:1 contrast.
-
+1. Create a new CSS class `.skip-link` with properties `position: absolute; width: 1px; height: 1px; overflow: hidden;` and add an `:focus` state with `width: auto; height: auto;` to make it visible when focused.
+2. Add an HTML element with the class `.skip-link` to the top of every page, containing a link to the main content area, using `<a href="#main-content" class="skip-link">Skip to main content</a>`.
+3. Modify the existing CSS file to include the `.skip-link` class and add a `1px` underline to the link when focused, using `:focus { text-decoration: underline; }`.
 **Needs:**
-- Write access to `/src/templates/base.html` and `/src/static/css/access.css` (or equivalent).
-- Browser with keyboard navigation (e.g., Chrome + NVDA/JAWS).
-- Contrast checker (e.g., WebAIM Contrast Checker) to confirm ≥ 4.5:1 on focus state.
-```
+* Access to the website's CSS file
+* Ability to edit HTML files for each page
+* A code editor or IDE (e.g. Visual Studio Code) to implement the changes

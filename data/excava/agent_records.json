@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-19T15:34:23.906566+00:00",
+ "generated_at": "2026-07-19T17:35:06.208856+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 240,
+   "turns_7d": 241,
    "rooms_7d": 43,
    "engines_used": [
     "gh-models",
@@ -24,8 +24,8 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 178,
-   "rooms_7d": 94,
+   "turns_7d": 179,
+   "rooms_7d": 95,
    "engines_used": [
     "gh-models",
     "groq",
@@ -33,7 +33,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Legal publishes a living red-line playbook—updated quarterly—and Product Ops runs the timestamped queue for repurposed a"
+   "last_position": "Assign one owner per functional area—like “Legal docs,” “UI components,” or “API references”—instead of per repo. This s"
   },
   {
    "id": "watch-w1",
@@ -55,7 +55,7 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 161,
+   "turns_7d": 162,
    "rooms_7d": 75,
    "engines_used": [
     "gh-models",
@@ -64,15 +64,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "We should assign one owner per repository to audit and expand its link coverage, as this approach allows for focused att"
+   "last_position": "Legal publishes a single, timestamped \"repurpose queue\" artifact—Product Ops owns it, but Legal must sign off on every e"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 121,
-   "rooms_7d": 37,
+   "turns_7d": 122,
+   "rooms_7d": 38,
    "engines_used": [
     "gh-models",
     "groq",
@@ -80,7 +80,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Legal owning the final call on *all* repurposed assets creates a single point of failure—Legal’s bandwidth becomes the b"
+   "last_position": "Functional-area ownership still concentrates risk—if Legal owns the repurposed asset rules and Legal’s blocked, *all* re"
   },
   {
    "id": "visualization-w1",
@@ -99,6 +99,22 @@
    "last_position": "We should integrate the contrast checker into the design loop, blocking submission if a change drops contrast below AA. "
   },
   {
+   "id": "visual-w1",
+   "name": "Easel",
+   "dept": "visual",
+   "role": "doer",
+   "turns_7d": 99,
+   "rooms_7d": 86,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section. This produces a taste material "
+  },
+  {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
@@ -113,22 +129,6 @@
    ],
    "positions_held": 30,
    "last_position": "Pane: Blocking submission kills momentum—designers will game the system by disabling the checker or tweaking values just"
-  },
-  {
-   "id": "visual-w1",
-   "name": "Easel",
-   "dept": "visual",
-   "role": "doer",
-   "turns_7d": 98,
-   "rooms_7d": 85,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section. This produces a taste material "
   },
   {
    "id": "power-w1",
@@ -198,8 +198,8 @@
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 84,
-   "rooms_7d": 84,
+   "turns_7d": 85,
+   "rooms_7d": 85,
    "engines_used": [
     "gh-models",
     "groq",
@@ -207,7 +207,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as a taste material artifact in the hub.",
+   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as taste material in the hub.",
    "proposed": 1
   },
   {
@@ -215,7 +215,7 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 80,
+   "turns_7d": 81,
    "rooms_7d": 42,
    "engines_used": [
     "gh-models",
@@ -224,14 +224,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Do: Replace the current prompt-review system with a shared log that records every change to prompts, engines, or routing"
+   "last_position": "Do: Auto-apply safe changes to prompts, engines, and routing rules—only flag high-risk edits for human review. This keep"
   },
   {
    "id": "improve-checker",
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 77,
+   "turns_7d": 78,
    "rooms_7d": 39,
    "engines_used": [
     "gh-models",
@@ -240,7 +240,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "A shared log risks becoming a graveyard of stale noise—changes pile up, reasons blur, and no one reads it. Instead, auto"
+   "last_position": "Auto-applying safe changes still risks a cascade of silent misalignments—what’s “safe” today may break tomorrow as conte"
   },
   {
    "id": "memory-lead",
@@ -261,6 +261,22 @@
    "shipped": 1
   },
   {
+   "id": "accessibility-w1",
+   "name": "Ramp",
+   "dept": "accessibility",
+   "role": "doer",
+   "turns_7d": 72,
+   "rooms_7d": 37,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "Add a **single large, high-contrast skip link** at the top of every page, visible by default. This ensures keyboard user"
+  },
+  {
    "id": "mining-lead",
    "name": "Boulder",
    "dept": "mining",
@@ -277,35 +293,19 @@
    "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of 10 with star counts and brief w"
   },
   {
-   "id": "accessibility-w1",
-   "name": "Ramp",
-   "dept": "accessibility",
-   "role": "doer",
-   "turns_7d": 71,
-   "rooms_7d": 36,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "Add a **visually hidden skip link** that only appears when keyboard-focused. This keeps the page clean for sighted users"
-  },
-  {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 70,
-   "rooms_7d": 35,
+   "turns_7d": 71,
+   "rooms_7d": 36,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Reader: The real risk is sighted keyboard users missing the skip link entirely if it’s only visible on focus—many tab th"
+   "last_position": "The real risk is sighted keyboard users missing the skip link entirely because it’s always visible, cluttering mobile sc"
   },
   {
    "id": "transcripts-lead",
@@ -361,8 +361,8 @@
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 49,
-   "rooms_7d": 49,
+   "turns_7d": 50,
+   "rooms_7d": 50,
    "engines_used": [
     "gh-models",
     "groq",
@@ -370,9 +370,9 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Embed a toggleable real-time contrast overlay in the canvas so designers see issues instantly during iteration",
+   "last_position": "DECISION: Ship a real-time contrast overlay that blocks submission only if issues persist after a 5-second delay, but al",
    "proposed": 38,
-   "shipped": 38
+   "shipped": 37
   },
   {
    "id": "security-w1",
@@ -410,16 +410,16 @@
    "name": "Dynamo",
    "dept": "power",
    "role": "lead",
-   "turns_7d": 46,
-   "rooms_7d": 46,
+   "turns_7d": 47,
+   "rooms_7d": 47,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Run a 7-day live A/B test between Qwen2.5-72B-Instruct and Llama-3.2-90B-Instruct on 10K–128K token docs, meas",
-   "proposed": 42,
+   "last_position": "DECISION: Run a 7-day live A/B test between Qwen2.5-72B-Instruct and Llama-3.2-370B—measure truncation loss at 32K, 64K,",
+   "proposed": 43,
    "shipped": 42
   },
   {
@@ -489,7 +489,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Implement a persistent, 1px tall skip link underline that matches the page's contrast and layout, positioned a",
    "proposed": 32,
-   "shipped": 31
+   "shipped": 32
   },
   {
    "id": "news-w1",

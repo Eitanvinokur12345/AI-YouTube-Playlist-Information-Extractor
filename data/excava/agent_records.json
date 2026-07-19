@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-19T21:28:18.424395+00:00",
+ "generated_at": "2026-07-19T23:34:32.803249+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,16 +8,17 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 243,
+   "turns_7d": 244,
    "rooms_7d": 43,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
+    "nvidia",
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The real risk isn’t Product Ops gaming the system—it’s Legal gaming the system by writing rules so vague that *every* re"
+   "last_position": "The real risk isn't Product Ops gaming the system, it's Legal being overwhelmed by trivial escalations, causing delays a"
   },
   {
    "id": "analysis-w1",
@@ -55,7 +56,7 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 162,
+   "turns_7d": 163,
    "rooms_7d": 75,
    "engines_used": [
     "gh-models",
@@ -64,7 +65,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Legal publishes a single, timestamped \"repurpose queue\" artifact—Product Ops owns it, but Legal must sign off on every e"
+   "last_position": "Legal publishes a single, timestamped \"repurpose queue\" artifact—owned by Product Ops—and Legal *only* reviews items fla"
   },
   {
    "id": "analysis-checker",
@@ -103,8 +104,8 @@
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 101,
-   "rooms_7d": 88,
+   "turns_7d": 102,
+   "rooms_7d": 89,
    "engines_used": [
     "gh-models",
     "groq",
@@ -112,7 +113,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section. This produces a high-quality ta"
+   "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section. The screenshot will be saved as"
   },
   {
    "id": "visualization-checker",
@@ -178,6 +179,24 @@
    "last_position": "I will run the memory linking command to connect every existing memory ID in this conversation to the unified memory sys"
   },
   {
+   "id": "visual-lead",
+   "name": "Chroma",
+   "dept": "visual",
+   "role": "lead",
+   "turns_7d": 88,
+   "rooms_7d": 88,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "nvidia",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Chroma frames Easel's vibrant screenshot of the Beverage Cans website as a design reference in the hub, labeling",
+   "proposed": 1
+  },
+  {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
@@ -192,23 +211,6 @@
    ],
    "positions_held": 30,
    "last_position": "I’ll run a GitHub search for AI-related repositories created in the last 7 days and return the top 10 most starred. This"
-  },
-  {
-   "id": "visual-lead",
-   "name": "Chroma",
-   "dept": "visual",
-   "role": "lead",
-   "turns_7d": 87,
-   "rooms_7d": 87,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as taste material in the hub.",
-   "proposed": 1
   },
   {
    "id": "improve-w1",
@@ -265,8 +267,8 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 73,
-   "rooms_7d": 37,
+   "turns_7d": 74,
+   "rooms_7d": 38,
    "engines_used": [
     "gh-models",
     "groq",
@@ -274,22 +276,22 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "We should add a **visually hidden skip link** that only appears when keyboard-focused, as this approach balances the nee"
+   "last_position": "Add a single large, high-contrast skip link at the top of every page. It must be visible at all times, not just on focus"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 72,
-   "rooms_7d": 36,
+   "turns_7d": 73,
+   "rooms_7d": 37,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is sighted keyboard users never discovering the hidden skip link because it’s invisible until tabbed—train"
+   "last_position": "The risk: A permanently visible skip link at full size blocks sighted keyboard users from the main content until they ta"
   },
   {
    "id": "mining-lead",
@@ -361,8 +363,8 @@
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 50,
-   "rooms_7d": 50,
+   "turns_7d": 51,
+   "rooms_7d": 51,
    "engines_used": [
     "gh-models",
     "groq",
@@ -370,9 +372,9 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Ship a real-time contrast overlay that blocks submission only if issues persist after a 5-second delay, but al",
-   "proposed": 38,
-   "shipped": 38
+   "last_position": "DECISION: Ship a real-time contrast overlay that flags *only* the worst offenders in the canvas during changes, but bloc",
+   "proposed": 37,
+   "shipped": 36
   },
   {
    "id": "security-w1",
@@ -390,6 +392,23 @@
    "last_position": "I will run the LLM Guard scanner on this conversation's input/output stream to detect leaks, injection, or fake elements"
   },
   {
+   "id": "power-lead",
+   "name": "Dynamo",
+   "dept": "power",
+   "role": "lead",
+   "turns_7d": 48,
+   "rooms_7d": 48,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Run a 7-day live A/B test between Qwen2.5-72B-Instruct and Llama-3.2-370B on a 100K document slice in our pipe",
+   "proposed": 44,
+   "shipped": 43
+  },
+  {
    "id": "creators-lead",
    "name": "Nova",
    "dept": "creators",
@@ -404,23 +423,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Nova tests the \"UGC Factory\" npm package drafted by Forge, verifying functionality and labeling it 'Created by E"
-  },
-  {
-   "id": "power-lead",
-   "name": "Dynamo",
-   "dept": "power",
-   "role": "lead",
-   "turns_7d": 47,
-   "rooms_7d": 47,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Run a 7-day live A/B test between Qwen2.5-72B-Instruct and Llama-3.2-370B—measure truncation loss at 32K, 64K,",
-   "proposed": 43,
-   "shipped": 43
   },
   {
    "id": "watch-lead",
@@ -454,8 +456,8 @@
    ],
    "positions_held": 28,
    "last_position": "DECISION: Adopt a hybrid system—auto-apply only regression-tested, low-risk changes with a one-line rationale in the sha",
-   "proposed": 27,
-   "shipped": 27
+   "proposed": 26,
+   "shipped": 26
   },
   {
    "id": "security-lead",
@@ -489,7 +491,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Implement a **large, high-contrast skip link that collapses to a visible icon on mobile**, visible by default ",
    "proposed": 33,
-   "shipped": 32
+   "shipped": 33
   },
   {
    "id": "news-w1",

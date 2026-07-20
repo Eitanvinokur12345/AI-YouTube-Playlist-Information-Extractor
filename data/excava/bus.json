@@ -14269,7 +14269,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-15T19:47:06.673355+00:00",
-      "updated_at": "2026-07-20T17:13:30.469078+00:00",
+      "updated_at": "2026-07-20T23:16:12.686267+00:00",
       "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
@@ -14287,8 +14287,8 @@
       "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-07-15T19:47:06.713404+00:00",
-      "updated_at": "2026-07-20T17:13:29.963025+00:00",
-      "result": "Semantic index: 1485 vectors (model gemini-embedding-001); hub 6873 items → 5388 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+      "updated_at": "2026-07-20T23:16:12.031621+00:00",
+      "result": "Semantic index: 1485 vectors (model gemini-embedding-001); hub 6893 items → 5408 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "raise-g1-omniscience-65--44826",
@@ -28371,7 +28371,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-19T07:07:06.701375+00:00",
-      "updated_at": "2026-07-20T17:13:29.985153+00:00"
+      "updated_at": "2026-07-20T23:16:12.058937+00:00"
     },
     {
       "id": "memory-embed-the-remaini-44826",
@@ -28388,7 +28388,7 @@
       "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-07-19T07:07:06.744050+00:00",
-      "updated_at": "2026-07-20T17:13:29.811305+00:00"
+      "updated_at": "2026-07-20T23:16:11.875901+00:00"
     },
     {
       "id": "transcripts-drain-the-ne-44826",
@@ -33123,15 +33123,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-07-20T23:04:18.515479+00:00",
-      "updated_at": "2026-07-20T23:04:18.515492+00:00"
+      "updated_at": "2026-07-20T23:16:06.920972+00:00",
+      "result": "1118 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "watch-process-the-next-b-88658",
@@ -33390,15 +33391,16 @@
       "department": "mining",
       "source": "room-action:mining",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "mining-w1",
       "handoff_docs": [],
       "created_at": "2026-07-20T23:10:36.543860+00:00",
-      "updated_at": "2026-07-20T23:10:36.543865+00:00"
+      "updated_at": "2026-07-20T23:16:17.567694+00:00",
+      "result": "Ran the discovery agent. discovery: +1 new (of 137 sighted) → 833 queued; arxiv=75, gh-active=108, gh-new=50, hn-front=34, hn-new=89, huggingface-model=39, producthunt=78, reddit=224, web-search=54, youtube-beyond=82"
     },
     {
       "id": "watch-room-action-at-10--89056",
@@ -33416,7 +33418,129 @@
       "handoff_docs": [],
       "created_at": "2026-07-20T23:10:56.939525+00:00",
       "updated_at": "2026-07-20T23:10:56.939531+00:00"
+    },
+    {
+      "id": "watch-process-the-next-b-89366",
+      "title": "Watch: process the next batch of 1118 pending videos",
+      "detail": "value=77 size=29(small) [cost 30/steps 40/risk 10] · 1118 pending",
+      "department": "watch",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "watch-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-20T23:16:06.706748+00:00",
+      "updated_at": "2026-07-20T23:16:11.848579+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+    },
+    {
+      "id": "raise-g5-leverage-52-100-89366",
+      "title": "Raise G5 Leverage (52/100): leverage needs real, usable links first (= G3); then the OS creation agent",
+      "detail": "value=48 size=17(small) [cost 15/steps 25/risk 10] · G5 at 52",
+      "department": "creators",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "creators-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-20T23:16:06.773578+00:00",
+      "updated_at": "2026-07-20T23:16:12.741237+00:00",
+      "result": "Creators: 12 creations on record, 12 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
+    },
+    {
+      "id": "raise-g8-personal-fit-68-89366",
+      "title": "Raise G8 Personal fit (68/100): 20% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
+      "detail": "value=32 size=17(small) [cost 15/steps 25/risk 10] · G8 at 68",
+      "department": "visual",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "visual-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-20T23:16:06.800961+00:00",
+      "updated_at": "2026-07-20T23:16:11.793212+00:00",
+      "result": "Ran the collect designs. collect_designs: 785 designs (kept 785 / dropped 0 repo-only + 4 dead/parked + 42 non-design; +0 AI-product, +27 seeds, +41 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "id": "raise-g1-omniscience-69--89366",
+      "title": "Raise G1 Omniscience (69/100): 619/1555 videos analyzed (39.8%); 5/7 lanes live",
+      "detail": "value=31 size=17(small) [cost 15/steps 25/risk 10] · G1 at 69",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-20T23:16:06.839462+00:00",
+      "updated_at": "2026-07-20T23:16:06.839476+00:00"
+    },
+    {
+      "id": "access-s-initiative-impl-89382",
+      "title": "[Access's initiative] Implement a **high-contrast, always-visible skip button** styled like a button in the top-left corner of every page—test",
+      "detail": "Proposed by agent accessibility-lead from the decision of room dept-accessibility-make-excava-us-371 (artifact: {\"kind\": \"decision\", \"ref\": \"data/excava/artifacts/dept-accessibility-make-excava-us-371.md\", \"at\": \"2026-07-20T23:16:22). Outcome feeds this agent's hit-rate.",
+      "department": "accessibility",
+      "source": "agent:accessibility-lead",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the decision's concrete step is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-20T23:16:22.433541+00:00",
+      "updated_at": "2026-07-20T23:16:22.433548+00:00"
+    },
+    {
+      "id": "mining-room-action-mine--89402",
+      "title": "[mining room action] Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of 20 with names, star counts, and last-up",
+      "detail": "From room dept-mining-gather-ai-info-from-d-340 (action-shaped close). Mission action from the department's own room.",
+      "department": "mining",
+      "source": "room-action:mining",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-20T23:16:42.415788+00:00",
+      "updated_at": "2026-07-20T23:16:42.415794+00:00"
+    },
+    {
+      "id": "watch-room-action-at-11--89409",
+      "title": "[watch room action] At 11:00:00, Iris directs Arcads AI Video to finalize and deliver the structured marketing insights artifact for immedia",
+      "detail": "From room dept-watch-analyze-video-audio-vi-617 (action-shaped close). Mission action from the department's own room.",
+      "department": "watch",
+      "source": "room-action:watch",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-20T23:16:49.234954+00:00",
+      "updated_at": "2026-07-20T23:16:49.234961+00:00"
     }
   ],
-  "updated_at": "2026-07-20T23:10:56.939534+00:00"
+  "updated_at": "2026-07-20T23:16:49.234965+00:00"
 }

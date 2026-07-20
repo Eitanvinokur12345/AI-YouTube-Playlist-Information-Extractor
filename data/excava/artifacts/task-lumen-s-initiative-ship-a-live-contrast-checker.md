@@ -1,47 +1,14 @@
-# [Lumen's initiative] Ship a live contrast checker in the editor that flags issues in real time without blocking submission, forcing users to 
+# [Lumen's initiative] Ship a live contrast checker that flashes red on violations *as you work* paired with a persistent "contrast debt" track
 
-> visualization · task `lumen-s-initiative-ship--74319` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> visualization · task `lumen-s-initiative-ship--70911` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
 
-**Approach:**
-Integrate a real-time contrast checker into the editor that flags contrast issues without blocking submission, using an existing accessibility library and editor hooks.
-
+**Approach:** Implement a live contrast checker with a flashing red alert for violations and a persistent contrast debt tracker.
 **Steps:**
-1. **Add a contrast checker dependency**
-   - Install `chroma-js` (or `tinycolor2`) via npm:
-     ```bash
-     npm install chroma-js --save-dev
-     ```
-   - Add to `package.json` under `dependencies` or `devDependencies` as needed.
-
-2. **Create a contrast checker utility**
-   - Add `src/utils/contrastChecker.js`:
-     ```javascript
-     import chroma from 'chroma-js';
-
-     export function checkContrast(foreground, background) {
-       const ratio = chroma.contrast(foreground, background);
-       return {
-         ratio,
-         passes: ratio >= 4.5, // WCAG AA threshold
-         message: ratio < 4.5 ? `Contrast ratio ${ratio.toFixed(2)}:1 fails WCAG AA` : null
-       };
-     }
-     ```
-
-3. **Integrate into the editor**
-   - Hook into the editor’s `onChange` event (e.g., in `src/editor/Editor.jsx`):
-     ```javascript
-     import { checkContrast } from '../utils/contrastChecker';
-
-     // Inside component
-     const handleChange = (content) => {
-       const { foreground, background } = extractColors(content); // Implement this
-       const result = checkContrast(foreground, background);
-       if (!result.passes) {
-         showInlineWarning(result.message); // Non-blocking UI flag
-       }
-     };
-     ```
-
-4. **Add UI feedback**
-   - Create a warning component (e.g., `src/components
+1. Create a new JavaScript file (`contrastChecker.js`) to contain the logic for the live contrast checker, utilizing the `color-convert` library to calculate contrast ratios between background and foreground colors.
+2. Develop a simple web page (`index.html`) that incorporates the contrast checker, displaying the contrast debt tracker and flashing red for violations, using HTML, CSS, and JavaScript.
+3. Integrate the `contrastChecker.js` file into the `index.html` page, setting up event listeners to update the contrast debt tracker in real-time as the user interacts with the page.
+**Needs:**
+* A code editor (e.g., Visual Studio Code) for writing and editing the JavaScript and HTML files
+* A web browser (e.g., Google Chrome) for testing the live contrast checker
+* The `color-convert` library, installed via npm (`npm install color-convert`) to calculate contrast ratios
+* Access to a version control system (e.g., Git) for tracking changes to the codebase

@@ -1,21 +1,19 @@
-# [Lumen's initiative] Ship a real-time contrast overlay that flags *only* the worst offenders in the canvas during changes, but blocks submiss
+# [Lumen's initiative] Ship a real-time contrast overlay that flashes red on violations *as you work* in the live preview—no build blocks, no w
 
-> visualization · task `lumen-s-initiative-ship--3861` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> visualization · task `lumen-s-initiative-ship--46682` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
-```markdown
 **Approach:**
-Implement a minimal real-time contrast overlay that highlights only the most severe contrast violations during canvas edits, without blocking submissive changes.
+Implement a real-time contrast overlay that flashes red on violations during live preview by injecting a lightweight JavaScript/CSS monitor into the preview pipeline.
 
 **Steps:**
-1. **Add a WASM-based contrast analyzer** to the canvas editor (using `wasm-pack` to compile Rust to WASM) that scans changed regions for WCAG AAA failures (contrast < 4.5:1 for text).
-2. **Overlay a semi-transparent red flash** (via CSS `::after` pseudo-element) only on the worst offenders (contrast < 3:1) for 1s after each edit, using `requestAnimationFrame` for smoothness.
-3. **Integrate with the existing diff system** by patching the `onChange` handler in `src/editor.ts` to trigger the analyzer and overlay updates.
-4. **Add a toggle in settings** (`localStorage` key `contrastOverlayEnabled`) to disable the feature without blocking submissive changes.
-5. **Test in staging** by manually editing text with low contrast (e.g., `#000` on `#fff`) and verifying the overlay appears only for the worst cases.
+1. **Inject overlay script** into the live preview server (e.g., Vite, Next.js, or custom dev server) via a plugin or middleware that injects a `<div>` overlay and a violation detector (e.g., regex/parser for contrast errors).
+2. **Hook into preview updates** to scan DOM/rendered content for violations (e.g., using `MutationObserver` or a custom linter like `stylelint` in watch mode).
+3. **Flash red on violations** by toggling a CSS class (e.g., `.contrast-violation { background: rgba(255,0,0,0.3); }`) with a 1s animation.
+4. **Log violations** to console/terminal for debugging (e.g., `console.error('Contrast violation:', element)`).
+5. **Test in dev** by forcing violations (e.g., adding low-contrast text) and verifying the overlay triggers.
 
 **Needs:**
-- Rust toolchain (`rustup`, `wasm-pack`) for contrast analyzer.
-- Access to `src/editor.ts` and canvas diff system.
-- CSS/JS environment for overlay rendering (existing build system).
-- Test cases with known low-contrast text (e.g., `#000` on `#f0f0f0`).
-```
+- Access to the live preview server’s config (e.g., `vite.config.js`, `next.config.js`, or dev server entry point).
+- A violation detection method (e.g., `stylelint` config file, custom regex for WCAG contrast ratios, or a DOM analyzer like `axe-core`).
+- Ability to inject scripts/styles (e.g., plugin support for the preview tool, or middleware access).
+- A sample page with known contrast violations for testing.

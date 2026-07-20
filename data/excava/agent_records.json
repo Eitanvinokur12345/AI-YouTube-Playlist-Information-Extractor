@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-20T18:22:14.164365+00:00",
+ "generated_at": "2026-07-20T18:28:14.350482+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 197,
+   "turns_7d": 198,
    "rooms_7d": 28,
    "engines_used": [
     "gh-models",
@@ -18,7 +18,23 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The \"check actual status\" rule adds a new dependency on the transcription service’s API—what if it’s slow, down, or retu"
+   "last_position": "The \"check actual status\" rule assumes the transcription service’s API is both fast and reliable—what if it times out or"
+  },
+  {
+   "id": "transcripts-w1",
+   "name": "Reel",
+   "dept": "transcripts",
+   "role": "doer",
+   "turns_7d": 154,
+   "rooms_7d": 78,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "Adopt the \"check actual status\" rule: before queuing any video, the system must query the transcription service’s live s"
   },
   {
    "id": "analysis-w1",
@@ -37,35 +53,19 @@
    "last_position": "Adopt the \"pending\" flag with a 24-hour hard timeout, enforced by the system. This guarantees stale items clear automati"
   },
   {
-   "id": "transcripts-w1",
-   "name": "Reel",
-   "dept": "transcripts",
-   "role": "doer",
-   "turns_7d": 152,
-   "rooms_7d": 77,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "I will query the YouTube transcript tool for every video marked \"pending\" to produce full transcripts. This will generat"
-  },
-  {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 134,
-   "rooms_7d": 67,
+   "turns_7d": 135,
+   "rooms_7d": 68,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the \"check actual status\" rule: before queuing any video, the system must query the transcription service’s live s"
+   "last_position": "Run the Arcads AI Video skill on the marketing video to extract high-value marketing insights and visual cues beyond the"
   },
   {
    "id": "power-w1",
@@ -118,8 +118,8 @@
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 88,
-   "rooms_7d": 88,
+   "turns_7d": 89,
+   "rooms_7d": 89,
    "engines_used": [
     "gh-models",
     "groq",
@@ -128,7 +128,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as a taste material artifact in the hub.",
+   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as the hub’s taste material for vibrant pi",
    "proposed": 1
   },
   {
@@ -136,8 +136,8 @@
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 88,
-   "rooms_7d": 88,
+   "turns_7d": 89,
+   "rooms_7d": 89,
    "engines_used": [
     "gh-models",
     "groq",
@@ -145,7 +145,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section with bold typography. This produ"
+   "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section. This produces a high-resolution"
   },
   {
    "id": "visualization-w1",
@@ -183,45 +183,45 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 78,
-   "rooms_7d": 39,
+   "turns_7d": 79,
+   "rooms_7d": 40,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add a skip link that only appears after the first tab press and hides until the next page load. It balances visibility f"
+   "last_position": "Add a single high-contrast skip link at the top of every page. It’s the fastest way to help keyboard users bypass repeti"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 78,
-   "rooms_7d": 39,
+   "turns_7d": 79,
+   "rooms_7d": 40,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is sighted keyboard users never discovering the skip link if it’s hidden until the first tab press. A bett"
+   "last_position": "The real risk is sighted keyboard users missing the skip link entirely if it’s hidden until focus—if it blends into the "
   },
   {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 70,
-   "rooms_7d": 70,
+   "turns_7d": 71,
+   "rooms_7d": 71,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Reel fetches full transcripts for all pending videos via the YouTube transcript tool, delivering the real transc",
+   "last_position": "ACTION: Reel fetches full transcripts for all pending videos via the YouTube transcript tool (kimtaeyoon83/mcp-server-yo",
    "proposed": 2
   },
   {
@@ -293,16 +293,16 @@
    "name": "Dynamo",
    "dept": "power",
    "role": "lead",
-   "turns_7d": 51,
-   "rooms_7d": 51,
+   "turns_7d": 52,
+   "rooms_7d": 52,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Adopt Llama 3.2 3B as the new default for EXCAVA—run a 100K-token stress test and publish the eval results by ",
-   "proposed": 47,
+   "last_position": "DECISION: Run a 64K-token stress test on Llama 3.3 70B and Qwen2.5-72B with a 10-step structured reasoning chain—if eith",
+   "proposed": 48,
    "shipped": 47
   },
   {
@@ -354,6 +354,24 @@
    "last_position": "ACTION: Marrow manually reviews the full earnings call transcript for all mentions of \"AI,\" \"automation,\" and \"efficienc"
   },
   {
+   "id": "visualization-lead",
+   "name": "Lumen",
+   "dept": "visualization",
+   "role": "lead",
+   "turns_7d": 43,
+   "rooms_7d": 43,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Ship a pre-submit contrast gate that blocks publishing until WCAG 2.1 AA contrast passes, paired with a live c",
+   "proposed": 41,
+   "shipped": 40
+  },
+  {
    "id": "creators-lead",
    "name": "Nova",
    "dept": "creators",
@@ -386,37 +404,19 @@
    "last_position": "I will draft the \"UGC Factory\" npm package for the creators tab. This will produce a ready-to-install package that lets "
   },
   {
-   "id": "visualization-lead",
-   "name": "Lumen",
-   "dept": "visualization",
-   "role": "lead",
-   "turns_7d": 42,
-   "rooms_7d": 42,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Ship a live contrast checker that flashes red on violations *as you work* paired with a persistent \"contrast d",
-   "proposed": 40,
-   "shipped": 40
-  },
-  {
    "id": "watch-lead",
    "name": "Iris",
    "dept": "watch",
    "role": "lead",
-   "turns_7d": 40,
-   "rooms_7d": 40,
+   "turns_7d": 41,
+   "rooms_7d": 41,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 10:46:00, Iris directs Arcads AI Video to finalize the structured marketing insights report for the AI market",
+   "last_position": "ACTION: At 10:47:00, Iris directs Arcads AI Video to finalize the structured marketing analysis artifact and confirm its",
    "proposed": 1,
    "shipped": 1
   },
@@ -436,7 +436,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Implement a **focus-triggered skip link**—high-contrast, full-width, visible only after first tab press, hidde",
    "proposed": 39,
-   "shipped": 38
+   "shipped": 39
   },
   {
    "id": "security-lead",

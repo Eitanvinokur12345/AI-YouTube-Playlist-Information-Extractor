@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-20T23:05:05.084760+00:00",
+ "generated_at": "2026-07-20T23:11:03.459489+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -41,7 +41,7 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 157,
+   "turns_7d": 158,
    "rooms_7d": 78,
    "engines_used": [
     "gh-models",
@@ -50,45 +50,45 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the automated weekly diff rule: Product Ops builds a script that compares the queued video list against the transc"
+   "last_position": "Product Ops builds a real-time checksum validator that pulls the transcription file’s checksum directly from the service"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 147,
-   "rooms_7d": 77,
+   "turns_7d": 148,
+   "rooms_7d": 78,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run the Arcads AI Video skill on the marketing video to extract high-value moments beyond the transcript. This will prod"
+   "last_position": "Run the Arcads AI Video skill on the marketing video to extract high-value marketing insights. This will produce a struc"
   },
   {
    "id": "power-w1",
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 110,
-   "rooms_7d": 55,
+   "turns_7d": 111,
+   "rooms_7d": 56,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt Mistral Large 2 for EXCAVA. It’s the only model we’ve verified with stable 128K-context performance, giving us a 0"
+   "last_position": "Adopt Qwen2.5-72B for EXCAVA. It’s the cheapest 128K-context model with proven performance on long-context tasks, giving"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 110,
-   "rooms_7d": 55,
+   "turns_7d": 111,
+   "rooms_7d": 56,
    "engines_used": [
     "gh-models",
     "groq",
@@ -96,14 +96,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Mistral Large 2’s \"stable 128K\" claim rests on no public benchmark—our own tests show it degrades past 64K, so the 0.5% "
+   "last_position": "Qwen2.5-72B’s 128K claim is vendor marketing—our tests show it collapses past 32K, so the 0.7% bump is likely illusion. "
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 106,
+   "turns_7d": 107,
    "rooms_7d": 27,
    "engines_used": [
     "gh-models",
@@ -111,7 +111,38 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The automated weekly diff still trusts the transcription service’s output files—flakiness could hide in their filenames,"
+   "last_position": "The real-time checksum validator still trusts the transcription service’s checksum API—flakiness could hide in their own"
+  },
+  {
+   "id": "visualization-w1",
+   "name": "Facet",
+   "dept": "visualization",
+   "role": "doer",
+   "turns_7d": 92,
+   "rooms_7d": 47,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "Ship a live contrast checker that runs after every major design change. It flags low-contrast elements in real time, so "
+  },
+  {
+   "id": "visualization-checker",
+   "name": "Pane",
+   "dept": "visualization",
+   "role": "checker",
+   "turns_7d": 92,
+   "rooms_7d": 47,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The live contrast checker trains designers to ignore warnings like seatbelt chimes—if every tweak spams alerts, they’ll "
   },
   {
    "id": "visual-lead",
@@ -148,42 +179,11 @@
    "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section. This produces a taste material "
   },
   {
-   "id": "visualization-w1",
-   "name": "Facet",
-   "dept": "visualization",
-   "role": "doer",
-   "turns_7d": 91,
-   "rooms_7d": 46,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "Ship the pre-commit hook that blocks merges with WCAG AA contrast failures. It forces designers to fix problems before t"
-  },
-  {
-   "id": "visualization-checker",
-   "name": "Pane",
-   "dept": "visualization",
-   "role": "checker",
-   "turns_7d": 91,
-   "rooms_7d": 46,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "The pre-commit hook blocks merges, but it risks slowing down designers who need to quickly test and iterate on other asp"
-  },
-  {
    "id": "accessibility-w1",
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 85,
+   "turns_7d": 86,
    "rooms_7d": 43,
    "engines_used": [
     "gh-models",
@@ -191,14 +191,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add a single high-contrast skip link at the top of every page. It’s the fastest way to help keyboard users bypass repeti"
+   "last_position": "Add a small, high-contrast skip icon always visible in the top-left corner of every page. It stays visible without distr"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 85,
+   "turns_7d": 86,
    "rooms_7d": 43,
    "engines_used": [
     "gh-models",
@@ -206,7 +206,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is sighted keyboard users missing the skip link entirely if it’s hidden until focus—it defeats the purpose"
+   "last_position": "The real risk is sighted keyboard users treating the always-visible skip icon as decorative—ignoring it entirely because"
   },
   {
    "id": "transcripts-lead",
@@ -229,8 +229,8 @@
    "name": "Boulder",
    "dept": "mining",
    "role": "lead",
-   "turns_7d": 63,
-   "rooms_7d": 63,
+   "turns_7d": 64,
+   "rooms_7d": 64,
    "engines_used": [
     "gh-models",
     "groq",
@@ -238,22 +238,22 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of 20 repos with names, star count"
+   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of the top 10 by stars created in "
   },
   {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 63,
-   "rooms_7d": 63,
+   "turns_7d": 64,
+   "rooms_7d": 64,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll run a Reddit search for AI-related posts in the last 7 days and return the top 20 threads with titles, upvotes, and"
+   "last_position": "I’ll run a GitHub search for AI-related repositories created in the last 7 days and return the top 10 most starred ones."
   },
   {
    "id": "memory-lead",
@@ -310,15 +310,15 @@
    "name": "Iris",
    "dept": "watch",
    "role": "lead",
-   "turns_7d": 50,
-   "rooms_7d": 50,
+   "turns_7d": 51,
+   "rooms_7d": 51,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 10:56:00, Iris directs Arcads AI Video to finalize and deliver the structured report identifying key emotiona",
+   "last_position": "ACTION: At 10:57:00, Iris directs Arcads AI Video to finalize and deliver the structured marketing insights report.",
    "proposed": 1,
    "shipped": 1
   },
@@ -386,7 +386,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Ship a live contrast checker *inside* the design tool that flashes red on violations *as you work*, paired wit",
    "proposed": 43,
-   "shipped": 42
+   "shipped": 43
   },
   {
    "id": "creators-lead",

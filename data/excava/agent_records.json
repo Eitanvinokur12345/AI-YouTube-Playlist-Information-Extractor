@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-20T22:42:02.405061+00:00",
+ "generated_at": "2026-07-20T22:47:48.972535+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 201,
+   "turns_7d": 202,
    "rooms_7d": 28,
    "engines_used": [
     "gh-models",
@@ -18,14 +18,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The 24-hour timeout still trusts the transcription service’s API to return accurate status—flakiness means it might say "
+   "last_position": "The 30-second manual step per video is a false economy—it scales poorly and shifts the bottleneck to human error. Instea"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 160,
+   "turns_7d": 161,
    "rooms_7d": 83,
    "engines_used": [
     "gh-models",
@@ -34,7 +34,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will run the YouTube transcript tool on every video marked \"pending\" to pull full transcripts using residential IP pac"
+   "last_position": "Adopt the \"verify against output files\" rule: before queuing any video, Product Ops must manually confirm the transcript"
   },
   {
    "id": "analysis-w1",
@@ -57,15 +57,15 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 142,
-   "rooms_7d": 73,
+   "turns_7d": 143,
+   "rooms_7d": 74,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the \"check actual status\" rule with a 24-hour hard timeout. Before queuing any video, the system queries the trans"
+   "last_position": "Run the Arcads AI Video skill on the marketing video to extract high-value marketing insights beyond the transcript. Thi"
   },
   {
    "id": "power-w1",
@@ -183,30 +183,30 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 82,
-   "rooms_7d": 41,
+   "turns_7d": 83,
+   "rooms_7d": 42,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add an always-visible, high-contrast skip link at the top of every page. This guarantees sighted keyboard users see it i"
+   "last_position": "Add a single high-contrast skip link at the top of every page. It’s the fastest way to let keyboard users bypass repetit"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 82,
-   "rooms_7d": 41,
+   "turns_7d": 83,
+   "rooms_7d": 42,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is sighted keyboard users treating the always-visible skip link as visual clutter, especially on dense pag"
+   "last_position": "The real risk is sighted keyboard users missing the skip link entirely if it’s hidden until focus—many never tab past th"
   },
   {
    "id": "transcripts-lead",
@@ -293,16 +293,16 @@
    "name": "Dynamo",
    "dept": "power",
    "role": "lead",
-   "turns_7d": 53,
-   "rooms_7d": 53,
+   "turns_7d": 54,
+   "rooms_7d": 54,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Benchmark Mistral Large 2 (128K) and Qwen2.5-72B on a 64K-token stress test with EXCAVA’s core tasks—results m",
-   "proposed": 49,
+   "last_position": "DECISION: Run a blind 128K-context head-to-head test on our longest power task comparing Mistral Large 2, Qwen2.5-72B, a",
+   "proposed": 50,
    "shipped": 49
   },
   {
@@ -358,15 +358,15 @@
    "name": "Iris",
    "dept": "watch",
    "role": "lead",
-   "turns_7d": 46,
-   "rooms_7d": 46,
+   "turns_7d": 47,
+   "rooms_7d": 47,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 10:52:00, Iris directs Arcads AI Video to finalize and deliver the structured marketing insights report for t",
+   "last_position": "ACTION: At 10:53:00, Iris directs Arcads AI Video to finalize and deliver the structured marketing insights report, incl",
    "proposed": 1,
    "shipped": 1
   },
@@ -375,8 +375,8 @@
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 44,
-   "rooms_7d": 44,
+   "turns_7d": 45,
+   "rooms_7d": 45,
    "engines_used": [
     "gh-models",
     "groq",
@@ -384,8 +384,8 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Ship a live contrast checker that flashes red on violations *as you work*—but pair it with a pre-submit gate t",
-   "proposed": 41,
+   "last_position": "DECISION: Ship a *gradual* contrast enforcement system—live warnings first, soft pre-commit blocks after 3 warnings, har",
+   "proposed": 42,
    "shipped": 41
   },
   {
@@ -436,7 +436,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Implement a **focus-triggered skip link**—high-contrast, full-width, and triggered by keyboard tab—with a fall",
    "proposed": 41,
-   "shipped": 40
+   "shipped": 41
   },
   {
    "id": "security-lead",

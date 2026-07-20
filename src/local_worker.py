@@ -66,17 +66,39 @@ def ensure_ollama() -> bool:
     return False
 
 
-def run_batch() -> dict:
-    """One deep_retrieve batch with the local brain; parse its honest summary line."""
+# Eitan's A2 verdict (2026-07-20): SEVERAL different local model FAMILIES, not one — the
+# drain alternates families by hour, so even the local tier has real diversity.
+MODELS = [m.strip() for m in os.environ.get(
+    "LOCAL_DRAIN_MODELS", "llama3.2:3b,qwen2.5:3b").split(",") if m.strip()]
+
+
+def pick_model() -> str:
+    from datetime import datetime, timezone as _tz
+    return MODELS[datetime.now(_tz.utc).hour % max(len(MODELS), 1)]
+
+
+def run_batch(model: str) -> dict:
+    """One deep_retrieve batch with the local brain; parse its honest summary line.
+    HARD 25-min ceiling: Ollama STREAMS, so a starved trickling response resets every
+    per-read socket timeout — the 22:01Z-hour run zombied 51 min at 1.3 CPU-sec. The
+    ceiling kills honestly; leftovers ship at the next run's recovery step."""
     env = dict(os.environ)
     env["HERMES_OLLAMA"] = "1"
-    env.setdefault("OLLAMA_MODEL", "llama3.2:3b")
+    env["OLLAMA_MODEL"] = model
     t0 = time.time()
-    r = subprocess.run([sys.executable, "-m", "src.deep_retrieve", "--limit", str(BATCH)],
-                       cwd=str(ROOT), env=env, capture_output=True, text=True, timeout=3000)
-    out = (r.stdout or "") + (r.stderr or "")
+    try:
+        r = subprocess.run([sys.executable, "-m", "src.deep_retrieve", "--limit", str(BATCH)],
+                           cwd=str(ROOT), env=env, capture_output=True, text=True, timeout=1500)
+        out = (r.stdout or "") + (r.stderr or "")
+        rc = r.returncode
+    except subprocess.TimeoutExpired as e:
+        out = ((e.stdout or b"").decode("utf-8", "replace") if isinstance(e.stdout, bytes)
+               else (e.stdout or ""))
+        out += "\nbatch hit the 25-min ceiling — killed (likely a trickling stream); " \
+               "partial work ships via the next run's recovery"
+        rc = -1
     m = re.search(r"(\d+) enriched \((\d+) descriptions upgraded\); stubs now (\d+)", out)
-    return {"ok": r.returncode == 0 and bool(m),
+    return {"ok": rc == 0 and bool(m),
             "enriched": int(m.group(1)) if m else 0,
             "upgraded": int(m.group(2)) if m else 0,
             "stubs": int(m.group(3)) if m else -1,
@@ -153,8 +175,9 @@ def main() -> int:
                                       "ships before the new batch (kill-safe drain)")
                 print(f"local-drain: RECOVERY of {recovered} stranded file(s): {out}")
 
+        model = pick_model()
         status = {"at": _now(), "host": os.environ.get("COMPUTERNAME", "local"),
-                  "model": os.environ.get("OLLAMA_MODEL", "llama3.2:3b"), "batch_limit": BATCH}
+                  "model": model, "batch_limit": BATCH}
         if recovered:
             status["recovered_files"] = recovered
         if not ensure_ollama():
@@ -163,7 +186,7 @@ def main() -> int:
             print("local-drain: OLLAMA DOWN — nothing done")
             return 1
 
-        batch = run_batch()
+        batch = run_batch(model)
         status.update({"ok": batch["ok"], **{k: batch[k] for k in
                        ("enriched", "upgraded", "stubs", "minutes")}, "note": batch["tail"]})
         STATUS.parent.mkdir(parents=True, exist_ok=True)

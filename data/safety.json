@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-07-20T20:10:35.147237+00:00",
+  "generated_at": "2026-07-20T23:32:49.513873+00:00",
   "policy": "activator gate: safe = auto-activate, caution = warn, risky = block until confirmed",
   "summary": {
     "safe": 141,
-    "caution": 1145,
-    "risky": 42
+    "caution": 1143,
+    "risky": 44
   },
   "connectors": {
     "perplexity-mcp": {
@@ -1045,6 +1045,7 @@
       "name": "Mediastack",
       "rating": "caution",
       "reasons": [
+        "needs an API key / secret",
         "third-party (not an official vendor connector)",
         "open source"
       ]
@@ -1111,6 +1112,7 @@
       "name": "MarketAux",
       "rating": "caution",
       "reasons": [
+        "needs an API key / secret",
         "third-party (not an official vendor connector)",
         "open source"
       ]
@@ -1143,6 +1145,7 @@
       "name": "Spaceflight News",
       "rating": "caution",
       "reasons": [
+        "needs an API key / secret",
         "third-party (not an official vendor connector)",
         "open source"
       ]
@@ -1248,6 +1251,7 @@
       "name": "MetaWeather",
       "rating": "caution",
       "reasons": [
+        "needs an API key / secret",
         "third-party (not an official vendor connector)",
         "open source"
       ]
@@ -1256,6 +1260,7 @@
       "name": "Meteorologisk Institutt",
       "rating": "caution",
       "reasons": [
+        "needs an API key / secret",
         "third-party (not an official vendor connector)",
         "open source"
       ]
@@ -1264,6 +1269,7 @@
       "name": "MicroWeather",
       "rating": "caution",
       "reasons": [
+        "needs an API key / secret",
         "third-party (not an official vendor connector)",
         "open source"
       ]
@@ -1394,6 +1400,7 @@
       "name": "The Muse",
       "rating": "caution",
       "reasons": [
+        "needs an API key / secret",
         "third-party (not an official vendor connector)",
         "open source"
       ]
@@ -6598,6 +6605,7 @@
       "name": "Mailgun",
       "rating": "caution",
       "reasons": [
+        "needs an API key / secret",
         "third-party (not an official vendor connector)",
         "open source"
       ]
@@ -8400,10 +8408,10 @@
     },
     "mcp-cli-adapter": {
       "name": "MCP-CLI Adapter",
-      "rating": "caution",
+      "rating": "risky",
       "reasons": [
-        "third-party (not an official vendor connector)",
-        "open source"
+        "requests broad system/shell/file access",
+        "third-party (not an official vendor connector)"
       ]
     },
     "mcp-expr-lang": {
@@ -8416,10 +8424,10 @@
     },
     "mcp-installer": {
       "name": "MCP Installer",
-      "rating": "caution",
+      "rating": "risky",
       "reasons": [
-        "third-party (not an official vendor connector)",
-        "open source"
+        "requests broad system/shell/file access",
+        "third-party (not an official vendor connector)"
       ]
     },
     "mcp-k8s-go": {
@@ -10349,6 +10357,13 @@
     },
     "dynamic-workflow-orchestration": {
       "name": "Dynamic Workflow Orchestration (Multi-Agent Parallelism)",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "ai-research-file-saving": {
+      "name": "AI-driven Research and File Saving",
       "rating": "caution",
       "reasons": [
         "the technique runs system/shell/file operations — review what it executes"

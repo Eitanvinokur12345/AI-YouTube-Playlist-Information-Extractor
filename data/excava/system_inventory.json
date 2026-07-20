@@ -1,11 +1,11 @@
 {
- "generated_at": "2026-07-20T14:43:24.000099+00:00",
- "total": 98,
+ "generated_at": "2026-07-20T17:08:17.895653+00:00",
+ "total": 99,
  "counts": {
   "wired": 82,
   "operator": 16,
   "orphaned": 0,
-  "dead": 0
+  "dead": 1
  },
  "entrypoints": [
   "add_to_playlist",
@@ -324,7 +324,6 @@
     "data/dev_construction.json"
    ],
    "imported_by": [
-    "deep_retrieve",
     "gemini_video_analyze",
     "mine_competitors",
     "mine_feeds",
@@ -416,7 +415,7 @@
   },
   "deep_retrieve": {
    "status": "wired",
-   "loc": 209,
+   "loc": 210,
    "entrypoint": true,
    "invoked_by": [
     "core_spoton.yml"
@@ -425,10 +424,12 @@
     "EXCAVA_V2_STEPS.md",
     "data/dev_construction.json"
    ],
-   "imported_by": [],
+   "imported_by": [
+    "local_worker"
+   ],
    "imports": [
-    "bulk_analyze",
-    "element_model"
+    "element_model",
+    "excava_engines"
    ]
   },
   "discover_promote": {
@@ -496,6 +497,7 @@
    ],
    "imported_by": [
     "deep_retrieve",
+    "local_worker",
     "prewarm",
     "relate",
     "verify_elements"
@@ -683,7 +685,7 @@
   },
   "excava_engines": {
    "status": "wired",
-   "loc": 242,
+   "loc": 243,
    "entrypoint": true,
    "invoked_by": [
     "engine_selftest.yml"
@@ -694,6 +696,7 @@
     "data/dev_construction.json"
    ],
    "imported_by": [
+    "deep_retrieve",
     "excava_agents",
     "excava_chat",
     "excava_experiments",
@@ -751,7 +754,7 @@
   },
   "excava_selfimprove": {
    "status": "wired",
-   "loc": 288,
+   "loc": 334,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
@@ -887,7 +890,9 @@
     "data/dev_construction.json",
     "data/guardrails_status.json"
    ],
-   "imported_by": [],
+   "imported_by": [
+    "local_worker"
+   ],
    "imports": []
   },
   "goals_check": {
@@ -941,7 +946,7 @@
   },
   "guardrails": {
    "status": "wired",
-   "loc": 251,
+   "loc": 274,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
@@ -1037,6 +1042,20 @@
    ],
    "imports": [
     "power_scan"
+   ]
+  },
+  "local_worker": {
+   "status": "dead",
+   "loc": 144,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [],
+   "imported_by": [],
+   "imports": [
+    "deep_retrieve",
+    "element_model",
+    "git_safe",
+    "project_memory"
    ]
   },
   "maintenance_check": {
@@ -1220,7 +1239,7 @@
   },
   "power_scan": {
    "status": "wired",
-   "loc": 116,
+   "loc": 125,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
@@ -1291,7 +1310,8 @@
     "data/dev_construction.json"
    ],
    "imported_by": [
-    "excava"
+    "excava",
+    "local_worker"
    ],
    "imports": []
   },

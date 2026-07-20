@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-20T23:16:55.959248+00:00",
+ "generated_at": "2026-07-20T23:22:44.104287+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 205,
+   "turns_7d": 206,
    "rooms_7d": 28,
    "engines_used": [
     "gh-models",
@@ -18,14 +18,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Scope’s weekly automated validator still trusts the transcription service’s checksum API for the 90% of files it skips. "
+   "last_position": "The real risk in Reel’s plan is that local checksum computation at queue time could bottleneck ingestion—if the checksum"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 162,
+   "turns_7d": 163,
    "rooms_7d": 83,
    "engines_used": [
     "gh-models",
@@ -34,7 +34,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Product Ops builds a real-time checksum validator that pulls the transcription file’s checksum directly from the service"
+   "last_position": "Product Ops builds a real-time validator that computes the checksum locally for every file at queue time, stores it in t"
   },
   {
    "id": "analysis-w1",
@@ -57,15 +57,15 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 150,
-   "rooms_7d": 79,
+   "turns_7d": 151,
+   "rooms_7d": 80,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Product Ops runs a weekly automated checksum validator that compares the transcription service’s checksum against a loca"
+   "last_position": "Run the Arcads AI Video skill on the marketing video to extract high-value moments. This will produce a structured repor"
   },
   {
    "id": "power-w1",
@@ -229,8 +229,8 @@
    "name": "Boulder",
    "dept": "mining",
    "role": "lead",
-   "turns_7d": 65,
-   "rooms_7d": 65,
+   "turns_7d": 66,
+   "rooms_7d": 66,
    "engines_used": [
     "gh-models",
     "groq",
@@ -238,22 +238,22 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of 20 with names, star counts, and"
+   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of top 10 by stars, description, a"
   },
   {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 65,
-   "rooms_7d": 65,
+   "turns_7d": 66,
+   "rooms_7d": 66,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll run a Reddit search for AI-related posts in the last 7 days and return the top 20 by engagement. This will produce "
+   "last_position": "I’ll run a Product Hunt search for AI-related products launched in the last 7 days and return the top 10 with their laun"
   },
   {
    "id": "memory-lead",
@@ -293,16 +293,16 @@
    "name": "Dynamo",
    "dept": "power",
    "role": "lead",
-   "turns_7d": 55,
-   "rooms_7d": 55,
+   "turns_7d": 56,
+   "rooms_7d": 56,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Adopt Llama 3.1 405B for EXCAVA—verified 128K performance, 30% lower cost than Mistral, and 0.5%+ capability b",
-   "proposed": 50,
+   "last_position": "DECISION: Run a blind 128K-context head-to-head test on EXCAVA’s longest power task between Mistral Large 3 (64K cutoff)",
+   "proposed": 51,
    "shipped": 50
   },
   {
@@ -310,15 +310,15 @@
    "name": "Iris",
    "dept": "watch",
    "role": "lead",
-   "turns_7d": 52,
-   "rooms_7d": 52,
+   "turns_7d": 53,
+   "rooms_7d": 53,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 11:00:00, Iris directs Arcads AI Video to finalize and deliver the structured marketing insights artifact for",
+   "last_position": "ACTION: At 11:02:00, Iris directs Arcads AI Video to finalize and deliver the structured report identifying key emotiona",
    "proposed": 1,
    "shipped": 1
   },
@@ -375,8 +375,8 @@
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 46,
-   "rooms_7d": 46,
+   "turns_7d": 47,
+   "rooms_7d": 47,
    "engines_used": [
     "gh-models",
     "groq",
@@ -384,8 +384,8 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Ship a live contrast checker *inside* the design tool that flashes red on violations *as you work*, paired wit",
-   "proposed": 43,
+   "last_position": "DECISION: Ship a staged contrast enforcement system—live warnings in the design tool first, then a pre-commit hook block",
+   "proposed": 44,
    "shipped": 43
   },
   {
@@ -404,7 +404,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Implement a **high-contrast, always-visible skip button** styled like a button in the top-left corner of every",
    "proposed": 43,
-   "shipped": 42
+   "shipped": 43
   },
   {
    "id": "creators-lead",

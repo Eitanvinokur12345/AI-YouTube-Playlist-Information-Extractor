@@ -110,6 +110,7 @@ def available() -> list[dict]:
         elif name == "hermes":
             if os.environ.get("HERMES_OLLAMA", "") != "1":
                 continue                                  # opt-in: only when a local Ollama runs
+            model = os.environ.get("OLLAMA_MODEL", model)  # host picks its size (3B laptop / 8B+ VPS)
         elif not _key(envs):
             continue
         out.append({"name": name, "kind": kind, "base": base, "model": model,

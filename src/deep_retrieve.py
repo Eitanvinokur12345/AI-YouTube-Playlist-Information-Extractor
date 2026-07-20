@@ -103,33 +103,27 @@ def homepage_meta(el: dict) -> str:
     return re.sub(r"\s+", " ", " · ".join(bits))[:500]
 
 
-def _llm_fuse(el: dict, sources: dict) -> str:
-    """CI-only polish: a free engine fuses the raw sources into 2-3 accurate sentences.
-    Skips gracefully with no keys (keyless enrichment already improved the element)."""
-    keys = [os.environ.get(k, "").strip() for k in
-            ["EXTERNAL_REVIEW_API_KEY", "GEMINI_API_KEY", "GEMINI_API_KEY_2", "GEMINI_API_KEY_3"]]
-    keys = [k for k in keys if k]
-    groq = os.environ.get("GROQ_API_KEY", "").strip()
-    if not keys and not groq:
-        return ""
+def _llm_fuse(el: dict, sources: dict) -> tuple[str, str]:
+    """LLM polish via the ENGINE LAYER (any brain that answers: CI free keys, or the local
+    zero-quota Ollama when HERMES_OLLAMA=1). Returns (text, engine) — ("", "") when no engine
+    answers, and keyless enrichment still upgrades the stub."""
     material = "\n\n".join(f"### {k}\n{v}" for k, v in sources.items() if v)[:9000]
+    if len(material) < 200:                  # thin material invites invention — keyless path instead
+        return "", ""
     prompt = (f"You are enriching a catalog entry. Element: {el['name']} (type: {el['type']}).\n"
               f"Current description: {el.get('what', '(none)')}\n\nRaw source material:\n{material}\n\n"
               "Write an ACCURATE, specific 2-3 sentence description of what this is and what it does, "
               "grounded ONLY in the material above. No hype, no invented facts. Reply with the "
               "description text only.")
     try:
-        from src.bulk_analyze import call_gemini, call_openai_compatible
-        if groq:
-            r = call_openai_compatible("https://api.groq.com/openai/v1", groq,
-                                       "llama-3.3-70b-versatile", prompt, 40)
-        else:
-            r = call_gemini(keys[0], "gemini-2.0-flash", prompt, 40)
-        text = r if isinstance(r, str) else (r.get("text") or r.get("content") or "")
-        text = re.sub(r"\s+", " ", str(text)).strip()
-        return text[:600] if 60 < len(text) < 900 else ""
+        from src import excava_engines as engines
+        r = engines.complete(prompt, dept="analysis", max_tokens=220)
+        if not r.get("ok"):
+            return "", ""
+        text = re.sub(r"\s+", " ", str(r.get("text", ""))).strip()
+        return (text[:600], r.get("engine", "?")) if 60 < len(text) < 900 else ("", "")
     except Exception:
-        return ""
+        return "", ""
 
 
 def enrich(el: dict, dry: bool = False) -> dict | None:
@@ -146,9 +140,9 @@ def enrich(el: dict, dry: bool = False) -> dict | None:
         sources["homepage-meta"] = h
     if not sources:
         return None                      # nothing recoverable (yet) — discovery may find more
-    fused = _llm_fuse(el, sources)
+    fused, engine = _llm_fuse(el, sources)
     if fused:
-        new_what, method = fused, "llm-fused"
+        new_what, method = fused, f"llm-fused:{engine}"   # provenance names the brain
     else:                                # keyless fallback: best raw source beats a stub
         raw = (r or h or t)
         first = re.split(r"(?<=[.!?])\s+", re.sub(r"[#*`\[\]]", "", raw).strip())
@@ -180,8 +174,15 @@ def main() -> int:
     a = ap.parse_args()
 
     idx = em.build()
+
+    def _fusable(e: dict) -> bool:
+        """Has ANY recoverable source (link or source video) — where the budget can actually work.
+        Unfusable stubs need DISCOVERY (new sources), not another futile fetch loop."""
+        L = e.get("links", {})
+        return bool(L.get("github") or L.get("website") or e.get("source_videos"))
+
     todo = sorted((e for e in idx["elements"] if e.get("stub") or not e.get("enriched")),
-                  key=lambda e: (not e.get("stub"), e["id"]))   # worst-first: stubs lead
+                  key=lambda e: (not e.get("stub"), not _fusable(e), e["id"]))  # stubs first, fusable first
     st = em._load("deep_retrieve_state.json", {"cursor": 0})
     start = st.get("cursor", 0) % max(len(todo), 1)
     batch = todo[start:start + a.limit]

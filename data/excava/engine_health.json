@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-20T07:45:32.927669+00:00",
+ "generated_at": "2026-07-20T11:26:37.481270+00:00",
  "experiment": "engine-benchmark (golden-task canary)",
  "golden_prompt": "Reply with exactly these two words and nothing else: benchmark ok",
  "results": [
@@ -7,13 +7,13 @@
    "engine": "groq",
    "status": "healthy",
    "valid": true,
-   "ms": 271,
+   "ms": 148,
    "model": "llama-3.3-70b-versatile"
   },
   {
    "engine": "sambanova",
    "status": "quota-429",
-   "ms": 433,
+   "ms": 195,
    "model": "Meta-Llama-3.3-70B-Instruct",
    "note": "quota-429: Rate limit exceeded"
   },
@@ -21,41 +21,41 @@
    "engine": "mistral",
    "status": "healthy",
    "valid": true,
-   "ms": 351,
+   "ms": 370,
    "model": "mistral-small-latest"
   },
   {
    "engine": "gh-models",
-   "status": "healthy",
-   "valid": true,
-   "ms": 793,
-   "model": "openai/gpt-4o-mini"
+   "status": "quota-429",
+   "ms": 151,
+   "model": "openai/gpt-4o-mini",
+   "note": "quota-429: Too many requests. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/git"
   },
   {
    "engine": "cerebras",
    "status": "bad-model-404",
-   "ms": 138,
+   "ms": 65,
    "model": "llama3.1-8b",
    "note": "bad-model-404: {\"message\":\"Model does not exist or you do not have access to it.\",\"type\":\"not_found_error\",\"param\":\"model\",\"code\":\"model_not_found\"}"
   },
   {
    "engine": "gemini",
    "status": "quota-429",
-   "ms": 124,
+   "ms": 148,
    "model": "gemini-2.0-flash",
    "note": "quota-429: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error,"
   },
   {
    "engine": "openrouter",
    "status": "bad-model-404",
-   "ms": 286,
+   "ms": 93,
    "model": "meta-llama/llama-3.3-70b-instruct:free",
    "note": "bad-model-404: {\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: meta-llama/llama-3.3-70b-instruct\",\"code\":40"
   },
   {
    "engine": "nvidia",
    "status": "TimeoutError",
-   "ms": 60134,
+   "ms": 60140,
    "model": "meta/llama-3.3-70b-instruct",
    "note": "TimeoutError: The read operation timed out"
   },
@@ -73,10 +73,10 @@
  "ranking": [
   "groq",
   "mistral",
-  "gh-models",
-  "gemini",
   "cerebras",
   "openrouter",
+  "gemini",
+  "gh-models",
   "sambanova",
   "nvidia",
   "hermes",

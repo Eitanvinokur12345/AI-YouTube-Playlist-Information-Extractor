@@ -3,7 +3,7 @@ src/guardrails.py — the INFORMATION-LOSS GUARDRAILS (owner law, 2026-07-06).
 
 The project must never be "toppled" — no committed work lost, no data silently dropped,
 no push that only *looked* like it saved, no corruption shipped that breaks the dashboard.
-This module enforces 14 named guardrails, each a concrete check. It writes
+This module enforces 15 named guardrails, each a concrete check. It writes
 data/guardrails_status.json (for the cockpit) and APPENDS to data/guardrails_log.jsonl
 (never rewritten — a permanent audit trail).
 
@@ -205,6 +205,29 @@ def g_disk():
     return _ok("G-N", "Disk headroom", True, f"{free_mb} MB free on the repo drive.", "info")
 
 
+def g_localfuel():
+    """The LOCAL DRAIN's pulse (2026-07-20): unattended enrichment on the owner's machine ships
+    data/excava/local_worker.json with every batch, so BOTH sides (CI reads the committed file,
+    local reads it live) can see whether the zero-quota brain is actually draining stubs. Stale
+    >26h = the scheduled task died (reboot, moved repo, Ollama gone) — say so before the stub
+    race is silently lost again."""
+    st = _load_json(DATA / "excava" / "local_worker.json", {})
+    if not st:
+        return _ok("G-O", "Local drain alive", False,
+                   "no local_worker.json yet — the unattended drain has never run.", "warn")
+    try:
+        age_h = (datetime.now(timezone.utc)
+                 - datetime.fromisoformat(st["at"])).total_seconds() / 3600
+    except Exception:
+        return _ok("G-O", "Local drain alive", False, "local_worker.json has no readable timestamp.", "warn")
+    detail = (f"last batch {age_h:.1f}h ago on {st.get('host', '?')} ({st.get('model', '?')}): "
+              f"{st.get('enriched', 0)} enriched, stubs {st.get('stubs', '?')}")
+    if age_h > 26:
+        return _ok("G-O", "Local drain alive", False,
+                   detail + " — STALE: the hourly task isn't running (PC off, or Ollama gone).", "warn")
+    return _ok("G-O", "Local drain alive", bool(st.get("ok")), detail, "warn" if not st.get("ok") else "info")
+
+
 def _load_json(p, d):
     try:
         return json.loads(p.read_text(encoding="utf-8"))
@@ -214,7 +237,7 @@ def _load_json(p, d):
 
 CHECKS = [g_quarantine, g_msgfile, g_backup, g_mojibake, g_build_align, g_json,
           g_remote_sync, g_collisions, g_handoff, g_memory, g_auditlog, g_watchdog, g_movement,
-          g_disk]
+          g_disk, g_localfuel]
 
 
 def run() -> dict:

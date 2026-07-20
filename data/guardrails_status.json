@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-20T14:43:23.667735+00:00",
- "total": 14,
- "passing": 12,
+ "generated_at": "2026-07-20T15:41:23.648020+00:00",
+ "total": 15,
+ "passing": 13,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -21,8 +21,8 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": false,
-   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
+   "ok": true,
+   "detail": "2 bundle(s); newest within 26h.",
    "severity": "warn"
   },
   {
@@ -36,7 +36,7 @@
    "id": "G-E",
    "name": "Build alignment",
    "ok": true,
-   "detail": "APP_BUILD v114 == SHELL_CACHE v114.",
+   "detail": "APP_BUILD v115 == SHELL_CACHE v115.",
    "severity": "warn"
   },
   {
@@ -64,28 +64,28 @@
    "id": "G-I",
    "name": "Handoff mentions live build",
    "ok": false,
-   "detail": "handoff does not mention the live build (v114) — update §0d so no context is lost.",
+   "detail": "handoff does not mention the live build (v115) — update §0d so no context is lost.",
    "severity": "warn"
   },
   {
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "4114 memory episodes on record.",
+   "detail": "4115 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "0 guardrail runs logged (append-only, never rewritten).",
+   "detail": "11 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
    "id": "G-L",
    "name": "Uncommitted-work watchdog",
-   "ok": true,
-   "detail": "no stray source files uncommitted.",
+   "ok": false,
+   "detail": "10 untracked source file(s) not committed — commit or quarantine so nothing is lost: EXCAVA_END_PLAN.md, EXCAVA_EXECUTION_PROMPT.md, EXCAVA_FUNDAMENTALS.md, EXCAVA_MASTER_AUDIT.md",
    "severity": "warn"
   },
   {
@@ -99,7 +99,14 @@
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "89804 MB free on the repo drive.",
+   "detail": "6260 MB free on the repo drive.",
+   "severity": "info"
+  },
+  {
+   "id": "G-O",
+   "name": "Local drain alive",
+   "ok": true,
+   "detail": "last batch 0.1h ago on EITAN-PC (llama3.2:3b): 9 enriched, stubs 2303",
    "severity": "info"
   }
  ]

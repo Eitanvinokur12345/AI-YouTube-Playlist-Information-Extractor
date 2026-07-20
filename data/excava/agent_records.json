@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-20T18:28:14.350482+00:00",
+ "generated_at": "2026-07-20T18:31:52.793559+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -25,7 +25,23 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 154,
+   "turns_7d": 155,
+   "rooms_7d": 79,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "I will run the YouTube transcript tool on every video marked \"pending\" to pull the full transcripts. This will produce r"
+  },
+  {
+   "id": "analysis-w1",
+   "name": "Chisel",
+   "dept": "analysis",
+   "role": "doer",
+   "turns_7d": 155,
    "rooms_7d": 78,
    "engines_used": [
     "gh-models",
@@ -37,58 +53,42 @@
    "last_position": "Adopt the \"check actual status\" rule: before queuing any video, the system must query the transcription service’s live s"
   },
   {
-   "id": "analysis-w1",
-   "name": "Chisel",
-   "dept": "analysis",
-   "role": "doer",
-   "turns_7d": 154,
-   "rooms_7d": 78,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "Adopt the \"pending\" flag with a 24-hour hard timeout, enforced by the system. This guarantees stale items clear automati"
-  },
-  {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 135,
-   "rooms_7d": 68,
+   "turns_7d": 136,
+   "rooms_7d": 69,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run the Arcads AI Video skill on the marketing video to extract high-value marketing insights and visual cues beyond the"
+   "last_position": "Run the Arcads AI Video skill on the marketing video to extract high-value marketing insights beyond the transcript. The"
   },
   {
    "id": "power-w1",
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 104,
-   "rooms_7d": 52,
+   "turns_7d": 105,
+   "rooms_7d": 53,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt Llama 3.3 70B for EXCAVA. It’s the only model with proven 128K context that actually works—no vendor fluff, no hid"
+   "last_position": "Adopt Qwen2.5-72B for EXCAVA. It’s the cheapest 128K-context model with proven performance, giving us more runs per doll"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 104,
-   "rooms_7d": 52,
+   "turns_7d": 105,
+   "rooms_7d": 53,
    "engines_used": [
     "gh-models",
     "groq",
@@ -96,14 +96,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Torque: Llama 3.3 70B’s 128K claim isn’t proven—our last test showed it fails at 64K under structured reasoning, not 128"
+   "last_position": "Qwen2.5-72B’s 128K claim is vendor marketing—our tests show it collapses past 32K, so the long-context advantage is a my"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 103,
+   "turns_7d": 104,
    "rooms_7d": 27,
    "engines_used": [
     "gh-models",
@@ -111,15 +111,15 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The \"pending\" flag with a 24-hour timeout doesn’t solve the core problem: the transcription system still can’t reliably "
+   "last_position": "The \"check actual status\" rule still risks false positives if the transcription service’s API is flaky—stale data could "
   },
   {
    "id": "visual-lead",
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 89,
-   "rooms_7d": 89,
+   "turns_7d": 90,
+   "rooms_7d": 90,
    "engines_used": [
     "gh-models",
     "groq",
@@ -128,7 +128,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as the hub’s taste material for vibrant pi",
+   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as a taste material artifact in the hub fo",
    "proposed": 1
   },
   {
@@ -136,8 +136,8 @@
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 89,
-   "rooms_7d": 89,
+   "turns_7d": 90,
+   "rooms_7d": 90,
    "engines_used": [
     "gh-models",
     "groq",
@@ -145,15 +145,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section. This produces a high-resolution"
+   "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section. This produces a taste material "
   },
   {
    "id": "visualization-w1",
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 85,
-   "rooms_7d": 43,
+   "turns_7d": 86,
+   "rooms_7d": 44,
    "engines_used": [
     "gh-models",
     "groq",
@@ -161,29 +161,29 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Ship a pre-submit contrast gate that blocks builds with insufficient contrast. It forces the fix before the design harde"
+   "last_position": "Ship a live contrast checker that runs after every major design change. It flags low-contrast elements in real time so d"
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 85,
-   "rooms_7d": 43,
+   "turns_7d": 86,
+   "rooms_7d": 44,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The pre-submit gate doesn’t kill the seatbelt-alarm problem—it just moves it to the last possible second. Designers will"
+   "last_position": "The live contrast checker risks training designers to ignore warnings like seatbelt alarms—it trains them to dismiss rea"
   },
   {
    "id": "accessibility-w1",
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 79,
+   "turns_7d": 80,
    "rooms_7d": 40,
    "engines_used": [
     "gh-models",
@@ -191,14 +191,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add a single high-contrast skip link at the top of every page. It’s the fastest way to help keyboard users bypass repeti"
+   "last_position": "Add a single high-contrast skip link at the top of every page, always visible. It’s the fastest way to help keyboard use"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 79,
+   "turns_7d": 80,
    "rooms_7d": 40,
    "engines_used": [
     "gh-models",
@@ -206,22 +206,22 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is sighted keyboard users missing the skip link entirely if it’s hidden until focus—if it blends into the "
+   "last_position": "The real risk is sighted keyboard users treating the skip link as visual noise—if it’s always visible but blends into th"
   },
   {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 71,
-   "rooms_7d": 71,
+   "turns_7d": 72,
+   "rooms_7d": 72,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Reel fetches full transcripts for all pending videos via the YouTube transcript tool (kimtaeyoon83/mcp-server-yo",
+   "last_position": "ACTION: Reel fetches full transcripts for all pending videos via the YouTube transcript tool and delivers the real, comp",
    "proposed": 2
   },
   {
@@ -303,7 +303,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Run a 64K-token stress test on Llama 3.3 70B and Qwen2.5-72B with a 10-step structured reasoning chain—if eith",
    "proposed": 48,
-   "shipped": 47
+   "shipped": 48
   },
   {
    "id": "improve-w1",
@@ -369,7 +369,24 @@
    "positions_held": 30,
    "last_position": "DECISION: Ship a pre-submit contrast gate that blocks publishing until WCAG 2.1 AA contrast passes, paired with a live c",
    "proposed": 41,
-   "shipped": 40
+   "shipped": 41
+  },
+  {
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 42,
+   "rooms_7d": 42,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: At 10:48:00, Iris directs Arcads AI Video to finalize and deliver the structured marketing insights report from ",
+   "proposed": 1,
+   "shipped": 1
   },
   {
    "id": "creators-lead",
@@ -402,23 +419,6 @@
    ],
    "positions_held": 30,
    "last_position": "I will draft the \"UGC Factory\" npm package for the creators tab. This will produce a ready-to-install package that lets "
-  },
-  {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 41,
-   "rooms_7d": 41,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: At 10:47:00, Iris directs Arcads AI Video to finalize the structured marketing analysis artifact and confirm its",
-   "proposed": 1,
-   "shipped": 1
   },
   {
    "id": "accessibility-lead",

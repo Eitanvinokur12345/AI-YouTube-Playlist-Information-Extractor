@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-20T18:03:04.200384+00:00",
+ "generated_at": "2026-07-20T18:10:08.709866+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 195,
+   "turns_7d": 196,
    "rooms_7d": 28,
    "engines_used": [
     "gh-models",
@@ -18,7 +18,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The \"pending\" flag with a 24-hour timeout still assumes the transcription system can detect completion—what if it can’t?"
+   "last_position": "The \"pending\" flag with a 24-hour timeout still assumes the transcription system can reliably detect completion—what if "
   },
   {
    "id": "analysis-w1",
@@ -41,8 +41,8 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 148,
-   "rooms_7d": 74,
+   "turns_7d": 150,
+   "rooms_7d": 75,
    "engines_used": [
     "gh-models",
     "groq",
@@ -50,22 +50,22 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I’ll fetch full transcripts for all videos flagged \"pending\" using the YouTube transcript tool. This will produce a set "
+   "last_position": "Adopt Reel’s \"pending\" flag with a 24-hour hard timeout, enforced by the system. This gives Product Ops a simple, visibl"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 130,
-   "rooms_7d": 64,
+   "turns_7d": 131,
+   "rooms_7d": 65,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt Reel’s \"pending\" flag with a hard 24-hour timeout, enforced by the system. This gives Product Ops a simple, visibl"
+   "last_position": "Run the Arcads AI Video skill on the marketing video to extract high-value marketing insights and visual cues. This will"
   },
   {
    "id": "analysis-checker",
@@ -118,8 +118,8 @@
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 85,
-   "rooms_7d": 85,
+   "turns_7d": 86,
+   "rooms_7d": 86,
    "engines_used": [
     "gh-models",
     "groq",
@@ -128,7 +128,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as taste material for the hub.",
+   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as taste material for the motion graphics ",
    "proposed": 1
   },
   {
@@ -136,8 +136,8 @@
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 85,
-   "rooms_7d": 85,
+   "turns_7d": 86,
+   "rooms_7d": 86,
    "engines_used": [
     "gh-models",
     "groq",
@@ -145,7 +145,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Open the Beverage Cans website and take a screenshot of its vibrant pink hero section. This produces a taste material ar"
+   "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section. The image will land in the hub "
   },
   {
    "id": "visualization-w1",
@@ -183,45 +183,45 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 76,
-   "rooms_7d": 38,
+   "turns_7d": 77,
+   "rooms_7d": 39,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add a skip link that only appears after the first tab press and hides until the next tab cycle. This keeps the interface"
+   "last_position": "Add a single high-contrast skip link at the top of every page. It’s the fastest way to let keyboard users bypass repetit"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 76,
-   "rooms_7d": 38,
+   "turns_7d": 77,
+   "rooms_7d": 39,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is sighted keyboard users missing the skip link if it’s hidden until the first tab press—many won’t know i"
+   "last_position": "The real risk is sighted keyboard users missing the skip link entirely if it’s hidden behind a high-contrast overlay. A "
   },
   {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 67,
-   "rooms_7d": 67,
+   "turns_7d": 68,
+   "rooms_7d": 68,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Reel fetches full transcripts for all pending videos via the YouTube transcript tool and confirms each transcrip",
+   "last_position": "ACTION: Reel fetches full transcripts for all pending videos via the YouTube transcript server and stores the raw, unfil",
    "proposed": 2
   },
   {
@@ -289,6 +289,23 @@
    "last_position": "I will run the memory linking command to connect every existing memory ID in this conversation to the unified memory sys"
   },
   {
+   "id": "power-lead",
+   "name": "Dynamo",
+   "dept": "power",
+   "role": "lead",
+   "turns_7d": 51,
+   "rooms_7d": 51,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Adopt Llama 3.2 3B as the new default for EXCAVA—run a 100K-token stress test and publish the eval results by ",
+   "proposed": 47,
+   "shipped": 47
+  },
+  {
    "id": "improve-w1",
    "name": "Sprocket",
    "dept": "improve",
@@ -319,23 +336,6 @@
    ],
    "positions_held": 30,
    "last_position": "Auto-applying safe changes still risks a cascade of silent misalignments—what’s “safe” today may break tomorrow as conte"
-  },
-  {
-   "id": "power-lead",
-   "name": "Dynamo",
-   "dept": "power",
-   "role": "lead",
-   "turns_7d": 50,
-   "rooms_7d": 50,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Run a 64K-token stress test on both Qwen2.5-72B and Mistral Large 2.1—winner gets adopted for EXCAVA now; Torq",
-   "proposed": 47,
-   "shipped": 47
   },
   {
    "id": "analysis-lead",
@@ -390,8 +390,8 @@
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 41,
-   "rooms_7d": 41,
+   "turns_7d": 42,
+   "rooms_7d": 42,
    "engines_used": [
     "gh-models",
     "groq",
@@ -399,9 +399,26 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Ship a post-submit contrast gate that flags WCAG AA violations in staging, blocking releases until fixed—no li",
-   "proposed": 39,
+   "last_position": "DECISION: Ship a live contrast checker that flashes red on violations *as you work* paired with a persistent \"contrast d",
+   "proposed": 40,
    "shipped": 39
+  },
+  {
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 38,
+   "rooms_7d": 38,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: At 10:44:00, Iris directs Arcads AI Video to finalize the structured marketing insights report and deliver it to",
+   "proposed": 1,
+   "shipped": 1
   },
   {
    "id": "accessibility-lead",
@@ -419,24 +436,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Implement a **focus-triggered skip link**—high-contrast, full-width, appearing on first tab press and hiding a",
    "proposed": 38,
-   "shipped": 37
-  },
-  {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 37,
-   "rooms_7d": 37,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: At 10:43:00, Iris directs Arcads AI Video to finalize the structured marketing insights report and deliver it to",
-   "proposed": 1,
-   "shipped": 1
+   "shipped": 38
   },
   {
    "id": "security-lead",

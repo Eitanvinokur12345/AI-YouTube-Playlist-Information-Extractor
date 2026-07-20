@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-19T23:34:32.803249+00:00",
+ "generated_at": "2026-07-20T04:25:41.675032+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,8 +8,8 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 244,
-   "rooms_7d": 43,
+   "turns_7d": 187,
+   "rooms_7d": 27,
    "engines_used": [
     "gh-models",
     "groq",
@@ -25,8 +25,8 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 180,
-   "rooms_7d": 95,
+   "turns_7d": 149,
+   "rooms_7d": 77,
    "engines_used": [
     "gh-models",
     "groq",
@@ -34,30 +34,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Legal publishes a *time-stamped, auto-approved queue* for repurposed assets that fall outside the living red-line playbo"
-  },
-  {
-   "id": "watch-w1",
-   "name": "Scope",
-   "dept": "watch",
-   "role": "doer",
-   "turns_7d": 169,
-   "rooms_7d": 80,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Legal publishes a single, public \"Repurpose Rules Matrix\" — a one-page table listing every asset type (video, image, tex"
+   "last_position": "Legal publishes a *time-stamped, auto-approved queue* for repurposed assets, with Product Ops responsible for logging ev"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 163,
-   "rooms_7d": 75,
+   "turns_7d": 131,
+   "rooms_7d": 60,
    "engines_used": [
     "gh-models",
     "groq",
@@ -68,11 +53,72 @@
    "last_position": "Legal publishes a single, timestamped \"repurpose queue\" artifact—owned by Product Ops—and Legal *only* reviews items fla"
   },
   {
+   "id": "watch-w1",
+   "name": "Scope",
+   "dept": "watch",
+   "role": "doer",
+   "turns_7d": 113,
+   "rooms_7d": 50,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Legal publishes a single, public \"Repurpose Rules Matrix\" — a one-page table listing every asset type (video, image, tex"
+  },
+  {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 123,
+   "turns_7d": 98,
+   "rooms_7d": 26,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The real risk isn’t edge cases slipping—it’s Product Ops gaming the system by over-escalating trivial issues to avoid ac"
+  },
+  {
+   "id": "power-w1",
+   "name": "Gearbox",
+   "dept": "power",
+   "role": "doer",
+   "turns_7d": 93,
+   "rooms_7d": 47,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Adopt Llama-3.2-370B for EXCAVA. Its 128K context window is the only proven one at this scale, cutting truncation losses"
+  },
+  {
+   "id": "power-checker",
+   "name": "Torque",
+   "dept": "power",
+   "role": "checker",
+   "turns_7d": 93,
+   "rooms_7d": 47,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "Llama-3.2-370B’s \"proven\" 128K window is only proven in Meta’s stack—our 3B model chokes on 64K inputs today, and no tes"
+  },
+  {
+   "id": "visualization-w1",
+   "name": "Facet",
+   "dept": "visualization",
+   "role": "doer",
+   "turns_7d": 74,
    "rooms_7d": 38,
    "engines_used": [
     "gh-models",
@@ -81,63 +127,48 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Legal owning the final call on *all* repurposed assets doesn’t just move the bottleneck—it guarantees it. Product Ops wi"
-  },
-  {
-   "id": "visualization-w1",
-   "name": "Facet",
-   "dept": "visualization",
-   "role": "doer",
-   "turns_7d": 104,
-   "rooms_7d": 54,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "Ship a pre-submission gate that blocks only when contrast drops below WCAG AA, but lets trivial slips slide. This forces"
-  },
-  {
-   "id": "visual-w1",
-   "name": "Easel",
-   "dept": "visual",
-   "role": "doer",
-   "turns_7d": 102,
-   "rooms_7d": 89,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section. The screenshot will be saved as"
+   "last_position": "Ship a live contrast checker that runs after every major design change. This keeps contrast violations visible in real t"
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 101,
-   "rooms_7d": 51,
+   "turns_7d": 74,
+   "rooms_7d": 38,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Pane: A live checker trains us to ignore warnings like a car’s seatbelt alarm—we’ll mute it. Better: a pre-submission ga"
+  },
+  {
+   "id": "visual-lead",
+   "name": "Chroma",
+   "dept": "visual",
+   "role": "lead",
+   "turns_7d": 72,
+   "rooms_7d": 72,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
+    "nvidia",
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Pane: A pre-submission gate still trains us to treat contrast as a hurdle, not a habit—designers will delay fixes until "
+   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as the taste material artifact for the hub",
+   "proposed": 1
   },
   {
-   "id": "power-w1",
-   "name": "Gearbox",
-   "dept": "power",
+   "id": "visual-w1",
+   "name": "Easel",
+   "dept": "visual",
    "role": "doer",
-   "turns_7d": 96,
-   "rooms_7d": 48,
+   "turns_7d": 72,
+   "rooms_7d": 72,
    "engines_used": [
     "gh-models",
     "groq",
@@ -145,15 +176,45 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Adopt Llama-3.2-370B for EXCAVA. It’s the only model with a proven 128K context window in our stack, so we avoid betting"
+   "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section. This produces a taste material "
   },
   {
-   "id": "power-checker",
-   "name": "Torque",
-   "dept": "power",
+   "id": "accessibility-w1",
+   "name": "Ramp",
+   "dept": "accessibility",
+   "role": "doer",
+   "turns_7d": 68,
+   "rooms_7d": 34,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Add a visually hidden skip link that only appears when keyboard focus arrives. It slides in from the top edge in 200 ms,"
+  },
+  {
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 96,
-   "rooms_7d": 48,
+   "turns_7d": 68,
+   "rooms_7d": 34,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The real risk is sighted keyboard users never discovering the hidden skip link. A permanently visible skip link at full "
+  },
+  {
+   "id": "mining-lead",
+   "name": "Boulder",
+   "dept": "mining",
+   "role": "lead",
+   "turns_7d": 62,
+   "rooms_7d": 62,
    "engines_used": [
     "gh-models",
     "groq",
@@ -161,15 +222,48 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Llama-3.2-370B’s \"proven\" 128K window is only proven in *their* stack—not ours. Our 3B model chokes at 32K; that’s a sys"
+   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of 10 with star counts and brief w"
+  },
+  {
+   "id": "mining-w1",
+   "name": "Pick",
+   "dept": "mining",
+   "role": "doer",
+   "turns_7d": 62,
+   "rooms_7d": 62,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll run a GitHub search for AI-related repositories created in the last 7 days and return the top 10 most starred. This"
+  },
+  {
+   "id": "memory-lead",
+   "name": "Root",
+   "dept": "memory",
+   "role": "lead",
+   "turns_7d": 57,
+   "rooms_7d": 57,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Root connects memory IDs [Graft (memory-w1)] to the unified memory system, embedding all recalled elements into ",
+   "proposed": 1,
+   "shipped": 1
   },
   {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 90,
-   "rooms_7d": 78,
+   "turns_7d": 57,
+   "rooms_7d": 57,
    "engines_used": [
     "gh-models",
     "groq",
@@ -179,46 +273,28 @@
    "last_position": "I will run the memory linking command to connect every existing memory ID in this conversation to the unified memory sys"
   },
   {
-   "id": "visual-lead",
-   "name": "Chroma",
-   "dept": "visual",
+   "id": "transcripts-lead",
+   "name": "Echo",
+   "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 88,
-   "rooms_7d": 88,
+   "turns_7d": 53,
+   "rooms_7d": 53,
    "engines_used": [
     "gh-models",
     "groq",
-    "mistral",
-    "nvidia",
-    "sambanova"
+    "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Chroma frames Easel's vibrant screenshot of the Beverage Cans website as a design reference in the hub, labeling",
-   "proposed": 1
-  },
-  {
-   "id": "mining-w1",
-   "name": "Pick",
-   "dept": "mining",
-   "role": "doer",
-   "turns_7d": 87,
-   "rooms_7d": 78,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll run a GitHub search for AI-related repositories created in the last 7 days and return the top 10 most starred. This"
+   "last_position": "DECISION: Assign *two owners per functional slice* (one domain owner + one Legal owner) to audit and expand link coverag",
+   "proposed": 2
   },
   {
    "id": "improve-w1",
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 81,
-   "rooms_7d": 42,
+   "turns_7d": 50,
+   "rooms_7d": 25,
    "engines_used": [
     "gh-models",
     "groq",
@@ -233,8 +309,8 @@
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 78,
-   "rooms_7d": 39,
+   "turns_7d": 50,
+   "rooms_7d": 25,
    "engines_used": [
     "gh-models",
     "groq",
@@ -245,110 +321,12 @@
    "last_position": "Auto-applying safe changes still risks a cascade of silent misalignments—what’s “safe” today may break tomorrow as conte"
   },
   {
-   "id": "memory-lead",
-   "name": "Root",
-   "dept": "memory",
-   "role": "lead",
-   "turns_7d": 74,
-   "rooms_7d": 74,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Root connects memory IDs [Graft (memory-w1)] to the unified memory system, embedding all recalled elements into ",
-   "proposed": 1,
-   "shipped": 1
-  },
-  {
-   "id": "accessibility-w1",
-   "name": "Ramp",
-   "dept": "accessibility",
-   "role": "doer",
-   "turns_7d": 74,
-   "rooms_7d": 38,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "Add a single large, high-contrast skip link at the top of every page. It must be visible at all times, not just on focus"
-  },
-  {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 73,
-   "rooms_7d": 37,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "The risk: A permanently visible skip link at full size blocks sighted keyboard users from the main content until they ta"
-  },
-  {
-   "id": "mining-lead",
-   "name": "Boulder",
-   "dept": "mining",
-   "role": "lead",
-   "turns_7d": 71,
-   "rooms_7d": 71,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of 10 with star counts and brief w"
-  },
-  {
-   "id": "transcripts-lead",
-   "name": "Echo",
-   "dept": "transcripts",
-   "role": "lead",
-   "turns_7d": 68,
-   "rooms_7d": 68,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Assign *two owners per functional slice* (one domain owner + one Legal owner) to audit and expand link coverag",
-   "proposed": 2
-  },
-  {
-   "id": "creators-w1",
-   "name": "Forge",
-   "dept": "creators",
-   "role": "doer",
-   "turns_7d": 57,
-   "rooms_7d": 47,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "I will draft the \"UGC Factory\" npm package for the creators tab. This will produce a ready-to-install package that lets "
-  },
-  {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
    "role": "lead",
-   "turns_7d": 54,
-   "rooms_7d": 54,
+   "turns_7d": 49,
+   "rooms_7d": 49,
    "engines_used": [
     "gh-models",
     "groq",
@@ -359,12 +337,29 @@
    "last_position": "ACTION: Marrow manually reviews the full earnings call transcript for all mentions of \"AI,\" \"automation,\" and \"efficienc"
   },
   {
+   "id": "power-lead",
+   "name": "Dynamo",
+   "dept": "power",
+   "role": "lead",
+   "turns_7d": 46,
+   "rooms_7d": 46,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Run a 7-day live A/B test between Qwen2.5-72B-Instruct and Llama-3.2-370B on a 100K document slice in our pipe",
+   "proposed": 44,
+   "shipped": 44
+  },
+  {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 51,
-   "rooms_7d": 51,
+   "turns_7d": 37,
+   "rooms_7d": 37,
    "engines_used": [
     "gh-models",
     "groq",
@@ -374,47 +369,15 @@
    "positions_held": 30,
    "last_position": "DECISION: Ship a real-time contrast overlay that flags *only* the worst offenders in the canvas during changes, but bloc",
    "proposed": 37,
-   "shipped": 36
-  },
-  {
-   "id": "security-w1",
-   "name": "Warden",
-   "dept": "security",
-   "role": "doer",
-   "turns_7d": 48,
-   "rooms_7d": 39,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 28,
-   "last_position": "I will run the LLM Guard scanner on this conversation's input/output stream to detect leaks, injection, or fake elements"
-  },
-  {
-   "id": "power-lead",
-   "name": "Dynamo",
-   "dept": "power",
-   "role": "lead",
-   "turns_7d": 48,
-   "rooms_7d": 48,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Run a 7-day live A/B test between Qwen2.5-72B-Instruct and Llama-3.2-370B on a 100K document slice in our pipe",
-   "proposed": 44,
-   "shipped": 43
+   "shipped": 37
   },
   {
    "id": "creators-lead",
    "name": "Nova",
    "dept": "creators",
    "role": "lead",
-   "turns_7d": 47,
-   "rooms_7d": 47,
+   "turns_7d": 36,
+   "rooms_7d": 36,
    "engines_used": [
     "gh-models",
     "groq",
@@ -425,63 +388,28 @@
    "last_position": "ACTION: Nova tests the \"UGC Factory\" npm package drafted by Forge, verifying functionality and labeling it 'Created by E"
   },
   {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 42,
-   "rooms_7d": 42,
+   "id": "creators-w1",
+   "name": "Forge",
+   "dept": "creators",
+   "role": "doer",
+   "turns_7d": 36,
+   "rooms_7d": 36,
    "engines_used": [
     "gh-models",
     "groq",
-    "mistral"
+    "mistral",
+    "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 10:29:00, Iris finalizes the one-page *approval matrix* for Creative to flag high-risk traits in AI-generated",
-   "proposed": 1,
-   "shipped": 1
-  },
-  {
-   "id": "improve-lead",
-   "name": "Ratchet",
-   "dept": "improve",
-   "role": "lead",
-   "turns_7d": 39,
-   "rooms_7d": 39,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 28,
-   "last_position": "DECISION: Adopt a hybrid system—auto-apply only regression-tested, low-risk changes with a one-line rationale in the sha",
-   "proposed": 26,
-   "shipped": 26
-  },
-  {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 38,
-   "rooms_7d": 38,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 28,
-   "last_position": "ACTION: Warden runs LLM Guard scanner on the input/output stream of this session — report generated: no leaks, injection"
+   "last_position": "I will draft the \"UGC Factory\" npm package for the creators tab. This will produce a ready-to-install package that lets "
   },
   {
    "id": "accessibility-lead",
    "name": "Access",
    "dept": "accessibility",
    "role": "lead",
-   "turns_7d": 36,
-   "rooms_7d": 36,
+   "turns_7d": 33,
+   "rooms_7d": 33,
    "engines_used": [
     "gh-models",
     "groq",
@@ -498,8 +426,8 @@
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 34,
-   "rooms_7d": 33,
+   "turns_7d": 32,
+   "rooms_7d": 32,
    "engines_used": [
     "gh-models",
     "groq",
@@ -514,8 +442,8 @@
    "name": "Wire",
    "dept": "news",
    "role": "lead",
-   "turns_7d": 29,
-   "rooms_7d": 29,
+   "turns_7d": 28,
+   "rooms_7d": 28,
    "engines_used": [
     "gh-models",
     "mistral"
@@ -524,110 +452,70 @@
    "last_position": "ACTION: Fetch the latest AI headlines from Reuters, BBC, and the White House AI Fact Sheet, compile into a digest with s"
   },
   {
-   "id": "visual-checker",
-   "name": "Squint",
-   "dept": "visual",
-   "role": "checker",
-   "turns_7d": 27,
-   "rooms_7d": 14,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 3,
-   "last_position": "The action of applying a muted coral accent to interactive elements and exporting a style guide is a suitable mission ta"
-  },
-  {
-   "id": "watch-checker",
-   "name": "Frame",
-   "dept": "watch",
-   "role": "checker",
-   "turns_7d": 26,
-   "rooms_7d": 13,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 2,
-   "last_position": "The real risk is that audio sentiment analysis misses the visual context that explains tone—e.g., sarcasm, forced enthus"
-  },
-  {
-   "id": "memory-checker",
-   "name": "Prune",
-   "dept": "memory",
-   "role": "checker",
-   "turns_7d": 24,
-   "rooms_7d": 13,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 2,
-   "last_position": "The real risk with a single, shared memory graph is that it may become overly centralized and prone to single-point fail"
-  },
-  {
-   "id": "creators-checker",
-   "name": "Vet",
-   "dept": "creators",
-   "role": "checker",
-   "turns_7d": 21,
-   "rooms_7d": 11,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 0,
-   "last_position": ""
-  },
-  {
-   "id": "mining-checker",
-   "name": "Assay",
-   "dept": "mining",
-   "role": "checker",
-   "turns_7d": 18,
-   "rooms_7d": 9,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 0,
-   "last_position": ""
-  },
-  {
-   "id": "security-checker",
-   "name": "Audit",
+   "id": "security-lead",
+   "name": "Bastion",
    "dept": "security",
-   "role": "checker",
-   "turns_7d": 18,
-   "rooms_7d": 9,
+   "role": "lead",
+   "turns_7d": 28,
+   "rooms_7d": 28,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral",
     "sambanova"
    ],
-   "positions_held": 0,
-   "last_position": ""
+   "positions_held": 28,
+   "last_position": "ACTION: Warden runs LLM Guard scanner on the input/output stream of this session — report generated: no leaks, injection"
   },
   {
-   "id": "news-checker",
-   "name": "Factcheck",
-   "dept": "news",
-   "role": "checker",
-   "turns_7d": 2,
-   "rooms_7d": 1,
+   "id": "security-w1",
+   "name": "Warden",
+   "dept": "security",
+   "role": "doer",
+   "turns_7d": 28,
+   "rooms_7d": 28,
    "engines_used": [
+    "gh-models",
     "groq",
+    "mistral"
+   ],
+   "positions_held": 28,
+   "last_position": "I will run the LLM Guard scanner on this conversation's input/output stream to detect leaks, injection, or fake elements"
+  },
+  {
+   "id": "improve-lead",
+   "name": "Ratchet",
+   "dept": "improve",
+   "role": "lead",
+   "turns_7d": 25,
+   "rooms_7d": 25,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
     "sambanova"
    ],
-   "positions_held": 0,
-   "last_position": ""
+   "positions_held": 28,
+   "last_position": "DECISION: Adopt a hybrid system—auto-apply only regression-tested, low-risk changes with a one-line rationale in the sha",
+   "proposed": 25,
+   "shipped": 25
+  },
+  {
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 24,
+   "rooms_7d": 24,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: At 10:29:00, Iris finalizes the one-page *approval matrix* for Creative to flag high-risk traits in AI-generated",
+   "proposed": 1,
+   "shipped": 1
   },
   {
    "id": "excava-core",
@@ -652,10 +540,87 @@
    "last_position": ""
   },
   {
+   "id": "watch-checker",
+   "name": "Frame",
+   "dept": "watch",
+   "role": "checker",
+   "turns_7d": 0,
+   "rooms_7d": 0,
+   "engines_used": [],
+   "positions_held": 2,
+   "last_position": "The real risk is that audio sentiment analysis misses the visual context that explains tone—e.g., sarcasm, forced enthus"
+  },
+  {
+   "id": "memory-checker",
+   "name": "Prune",
+   "dept": "memory",
+   "role": "checker",
+   "turns_7d": 0,
+   "rooms_7d": 0,
+   "engines_used": [],
+   "positions_held": 2,
+   "last_position": "The real risk with a single, shared memory graph is that it may become overly centralized and prone to single-point fail"
+  },
+  {
+   "id": "mining-checker",
+   "name": "Assay",
+   "dept": "mining",
+   "role": "checker",
+   "turns_7d": 0,
+   "rooms_7d": 0,
+   "engines_used": [],
+   "positions_held": 0,
+   "last_position": ""
+  },
+  {
+   "id": "visual-checker",
+   "name": "Squint",
+   "dept": "visual",
+   "role": "checker",
+   "turns_7d": 0,
+   "rooms_7d": 0,
+   "engines_used": [],
+   "positions_held": 3,
+   "last_position": "The action of applying a muted coral accent to interactive elements and exporting a style guide is a suitable mission ta"
+  },
+  {
+   "id": "news-checker",
+   "name": "Factcheck",
+   "dept": "news",
+   "role": "checker",
+   "turns_7d": 0,
+   "rooms_7d": 0,
+   "engines_used": [],
+   "positions_held": 0,
+   "last_position": ""
+  },
+  {
    "id": "improve-improver",
    "name": "Overhaul",
    "dept": "improve",
    "role": "improver",
+   "turns_7d": 0,
+   "rooms_7d": 0,
+   "engines_used": [],
+   "positions_held": 0,
+   "last_position": ""
+  },
+  {
+   "id": "security-checker",
+   "name": "Audit",
+   "dept": "security",
+   "role": "checker",
+   "turns_7d": 0,
+   "rooms_7d": 0,
+   "engines_used": [],
+   "positions_held": 0,
+   "last_position": ""
+  },
+  {
+   "id": "creators-checker",
+   "name": "Vet",
+   "dept": "creators",
+   "role": "checker",
    "turns_7d": 0,
    "rooms_7d": 0,
    "engines_used": [],

@@ -176,10 +176,15 @@ def main() -> int:
     idx = em.build()
 
     def _fusable(e: dict) -> bool:
-        """Has ANY recoverable source (link or source video) — where the budget can actually work.
-        Unfusable stubs need DISCOVERY (new sources), not another futile fetch loop."""
+        """Has a source we can actually READ RIGHT NOW: a repo/site link, or a source video
+        whose full transcript is already on disk. Video-only stubs with no local transcript
+        are NOT fusable yet — they wait for the transcript drain, instead of burning batch
+        slots on instant no-source failures (24/24 slots wasted on 2026-07-20)."""
         L = e.get("links", {})
-        return bool(L.get("github") or L.get("website") or e.get("source_videos"))
+        if L.get("github") or L.get("website"):
+            return True
+        return any((DATA / "processed" / f"{v}.json").exists()
+                   for v in (e.get("source_videos") or [])[:3])
 
     todo = sorted((e for e in idx["elements"] if e.get("stub") or not e.get("enriched")),
                   key=lambda e: (not e.get("stub"), not _fusable(e), e["id"]))  # stubs first, fusable first

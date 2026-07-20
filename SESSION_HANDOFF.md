@@ -93,7 +93,22 @@ because the beat only had exhausted Gemini). Fixed + PROVEN end-to-end:
   the acted-on object) · THEN 7 Visualization+Power depts + 2 pitch conditions + pitch-monster (§J/§K/§M
   of EXCAVA_V2_ADDITIONS.md) · 8 M5 + breadth. Rule: "done" = a real artifact shown, never a rendered card.
 
-## 0d. EXCAVA v2 BUILD STATE (2026-07-06, Fable executing EXCAVA_V2_STEPS.md — continue HERE; live build v84)
+## 0d. THE END PLAN LOOP (2026-07-20, Fable — live build v115; continue HERE)
+EXCAVA_END_PLAN.md (now IN the repo, with MASTER_AUDIT/FUNDAMENTALS/the rest) is the definitive plan;
+an hourly /loop session advances it one wired increment at a time. **State after loop session 1:**
+- **M1.C1 drain is KILL-PROOF**: local_worker.py does RECOVERY-FIRST shipping (a killed run's work
+  ships seconds into the next start — proven live, b47988f6d), holds the machine awake mid-batch,
+  takes a run lock; git_safe sync rebases with --autostash; task EXCAVA-LocalDrain survives battery
+  + catches up missed runs. The WHY chain (project_memory files) ships with the drain.
+- **Batch selection is honest**: fresh-fusable pool 677 (fusable = link OR transcript ON DISK —
+  1,307 was counting ~500 transcript-less phantoms; 24 slots burned at 0 before the fix, 4/8
+  enriched after). Failed elements cool down 3 days (attempts log in deep_retrieve_state.json).
+- **NEXT (in order):** (1) check G-O + git log that the hourly scheduled run enriches >0 and
+  self-ships with the fusable fix; (2) transcript backfill feeds the ~500 video-only stubs (gentle,
+  residential); (3) M1 continues per EXCAVA_V2_STEPS.md — enrichment-at-scale, then trust gate /
+  detail view / RELATE. The 122-item MASTER_AUDIT awaits Eitan's verdicts (clickable, 4/batch).
+
+## 0d-old. EXCAVA v2 BUILD STATE (2026-07-06, Fable executing EXCAVA_V2_STEPS.md; was live build v84)
 - **M1 ✅ COMPLETE (v66, dd665b39):** element model (6,422 els, schema+index+set_field) · deep_retrieve
   (full-source enrichment, stubs-first) · discovery_agent (hourly; GitHub/HN/PH/social; live-tested 58 new)
   · verify_elements (2-source+live, rolling+on-access, conflicts noted) · relate (4,796 with related) ·

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-20T22:36:13.652539+00:00",
+ "generated_at": "2026-07-20T22:42:02.405061+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 200,
+   "turns_7d": 201,
    "rooms_7d": 28,
    "engines_used": [
     "gh-models",
@@ -18,15 +18,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The \"check actual status\" rule ignores the transcription service’s known flakiness—one extra API call per video won’t fi"
+   "last_position": "The 24-hour timeout still trusts the transcription service’s API to return accurate status—flakiness means it might say "
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 159,
-   "rooms_7d": 82,
+   "turns_7d": 160,
+   "rooms_7d": 83,
    "engines_used": [
     "gh-models",
     "groq",
@@ -34,7 +34,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will run the YouTube transcript tool on every video marked \"pending\" to pull the full transcripts. This will produce a"
+   "last_position": "I will run the YouTube transcript tool on every video marked \"pending\" to pull full transcripts using residential IP pac"
   },
   {
    "id": "analysis-w1",
@@ -57,22 +57,22 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 140,
-   "rooms_7d": 72,
+   "turns_7d": 142,
+   "rooms_7d": 73,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run the Arcads AI Video skill on the marketing video to extract high-value marketing insights from both audio and visual"
+   "last_position": "Adopt the \"check actual status\" rule with a 24-hour hard timeout. Before queuing any video, the system queries the trans"
   },
   {
    "id": "power-w1",
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 107,
+   "turns_7d": 108,
    "rooms_7d": 54,
    "engines_used": [
     "gh-models",
@@ -80,14 +80,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt Qwen2.5-72B for EXCAVA. It’s the cheapest 128K-context model with proven performance on power tasks, giving us a 0"
+   "last_position": "Adopt Mistral Large 2 for EXCAVA. It’s the only model we’ve verified with stable 128K context, avoiding Qwen2.5-72B’s co"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 107,
+   "turns_7d": 108,
    "rooms_7d": 54,
    "engines_used": [
     "gh-models",
@@ -96,7 +96,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Qwen2.5-72B’s 128K claim is vendor marketing—our tests show it collapses past 32K, so adopting it risks silent failures "
+   "last_position": "Mistral Large 2’s stable 128K claim still lacks independent verification beyond our tests—frontier models like Opus 4.8 "
   },
   {
    "id": "analysis-checker",
@@ -152,7 +152,7 @@
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 88,
+   "turns_7d": 89,
    "rooms_7d": 45,
    "engines_used": [
     "gh-models",
@@ -161,14 +161,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Ship a live contrast checker that runs after every major design change. It flags any text or UI element below WCAG AA co"
+   "last_position": "Ship a pre-commit hook that blocks merges with WCAG AA contrast failures. It forces immediate fixes at the point of crea"
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 88,
+   "turns_7d": 89,
    "rooms_7d": 45,
    "engines_used": [
     "gh-models",
@@ -176,7 +176,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The live contrast checker trains designers to ignore warnings like seatbelt alarms—users will learn to dismiss them too."
+   "last_position": "The pre-commit hook doesn’t solve the seatbelt-alarm problem—it just moves the friction earlier, making designers resent"
   },
   {
    "id": "accessibility-w1",
@@ -213,15 +213,15 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 75,
-   "rooms_7d": 75,
+   "turns_7d": 76,
+   "rooms_7d": 76,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Echo re-checks each transcript fetched by Reel to confirm it exists and marks any missing ones for re-fetch befo",
+   "last_position": "ACTION: Echo re-checks each transcript fetched by Reel to confirm it exists and matches the video’s content before marki",
    "proposed": 2
   },
   {
@@ -358,15 +358,15 @@
    "name": "Iris",
    "dept": "watch",
    "role": "lead",
-   "turns_7d": 45,
-   "rooms_7d": 45,
+   "turns_7d": 46,
+   "rooms_7d": 46,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 10:51:00, Iris directs Arcads AI Video to finalize the structured marketing insights report and deliver it to",
+   "last_position": "ACTION: At 10:52:00, Iris directs Arcads AI Video to finalize and deliver the structured marketing insights report for t",
    "proposed": 1,
    "shipped": 1
   },
@@ -425,8 +425,8 @@
    "name": "Access",
    "dept": "accessibility",
    "role": "lead",
-   "turns_7d": 40,
-   "rooms_7d": 40,
+   "turns_7d": 41,
+   "rooms_7d": 41,
    "engines_used": [
     "gh-models",
     "groq",
@@ -434,8 +434,8 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Implement a **focus-triggered skip link**—high-contrast, full-width, animated on focus—visible only to keyboar",
-   "proposed": 40,
+   "last_position": "DECISION: Implement a **focus-triggered skip link**—high-contrast, full-width, and triggered by keyboard tab—with a fall",
+   "proposed": 41,
    "shipped": 40
   },
   {

@@ -25,7 +25,14 @@
      "id": "skill:meta-ads-mcp-integration",
      "name": "Meta Ads MCP Integration"
     }
-   ]
+   ],
+   "plan": [
+    "Add a scheduled lane that each beat does the one action that moves G3 (e.g. process N more items, fill N gaps) and records the score delta.",
+    "Re-score the goal after each run so you watch the number climb in the cockpit.",
+    "Stop the lane automatically once G3 clears its target, so it never runs wastefully."
+   ],
+   "effort": "Small: reuses the existing lane machinery; ~1 beat to add, then it self-runs.",
+   "reversible": "Fully reversible — remove the lane entry and nothing else is touched; it only adds work, never deletes."
   },
   {
    "id": "pitch-53860",
@@ -52,7 +59,14 @@
      "id": "tool:openai-realtime-api",
      "name": "OpenAI Realtime API"
     }
-   ]
+   ],
+   "plan": [
+    "Confirm exactly what 'fetch-transcripts' needs (a free key, a quota bump, or a tool wire-up) and show it to you as one clear ask if it needs anything from you.",
+    "Wire 'fetch-transcripts' into the beat behind the existing autonomy gate.",
+    "Re-run the 4 stuck items and report which ones cleared."
+   ],
+   "effort": "Depends on the resource: if it's a free key you paste, minutes; if it needs a build, ~1 beat.",
+   "reversible": "Reversible — the resource is added, not swapped; unblocked items can be paused again and nothing existing is removed."
   },
   {
    "id": "pitch-37587",

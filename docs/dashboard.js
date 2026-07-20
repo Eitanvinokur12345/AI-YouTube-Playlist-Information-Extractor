@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v114";
+const APP_BUILD = "v115";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2600,6 +2600,11 @@ function openApproval(id) {
   modal.hidden = false;
   const close = () => { modal.hidden = true; };
   const row = (label, val) => val ? `<p class="sub" style="margin:.15rem 0"><b>${label}:</b> ${esc(val)}</p>` : "";
+  const planList = (p.plan && p.plan.length)
+    ? `<p class="sub" style="margin:.4rem 0 .1rem"><b>The plan — exactly what EXCAVA will do if you approve:</b></p>`
+      + `<ol style="margin:.1rem 0 .3rem 1.1rem;padding:0">`
+      + p.plan.map(s => `<li class="sub" style="margin:.12rem 0">${esc(s)}</li>`).join("") + `</ol>`
+    : "";
   const hub = (p.hub_candidates || []).map(c =>
     `<a class="pill" href="#element/${encodeURIComponent(c.id)}" title="${esc(c.id)}">${esc(c.name)}</a>`).join(" ");
   modal.innerHTML = `<div class="pitch-box">
@@ -2610,6 +2615,9 @@ function openApproval(id) {
     ${row("The need", p.need || p.why)}
     ${row("How important", p.importance)}
     ${row("What's missing", p.missing)}
+    ${planList}
+    ${row("Effort", p.effort)}
+    ${row("Reversible?", p.reversible)}
     ${hub ? `<p class="sub" style="margin:.3rem 0 .1rem"><b>What EXCAVA found in its own hub</b> (click to open):</p><p style="margin:.1rem 0 .4rem">${hub}</p>` : ""}
     ${!p.need && p.why ? "" : (p.why && p.need ? `<p class="sub" style="opacity:.7;font-size:.82em">raw trigger: ${esc(p.why)}</p>` : "")}
     <label class="sub" style="display:block;margin:.5rem 0 .2rem">Your review / note (optional — the cloud beat and history keep it):</label>

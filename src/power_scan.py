@@ -88,6 +88,15 @@ def scan() -> dict:
                             "surviving model.",
                     "importance": f"High — capacity is the proven bottleneck; this is free (hub quality {best['quality']}/10).",
                     "missing": "The owner's yes (new tools from scratch are tier-3 by the autonomy contract).",
+                    "plan": [f"Pull '{best['name']}' from the hub and read its interface (it's already "
+                             "indexed, quality " + str(best["quality"]) + "/10).",
+                             "Wire it into the engine/canary pool behind the autonomy gate so the "
+                             "rooms can draw on it as extra free capacity.",
+                             "Run the golden-task regression, then report the new healthy-engine count "
+                             "in-app so you see capacity actually went up."],
+                    "effort": "Small: it's a hub adoption, not a build — roughly one beat to wire and test.",
+                    "reversible": "Fully reversible — remove it from the pool and capacity returns to "
+                                  "today's; no existing engine or data is touched.",
                     "hub_candidates": [{"id": best["id"], "name": best["name"]}],
                     "at": _now(), "status": "pending"})
                 pit_p.write_text(json.dumps(pitched, ensure_ascii=False, indent=1), encoding="utf-8")

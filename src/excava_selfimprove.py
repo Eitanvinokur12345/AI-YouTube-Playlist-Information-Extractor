@@ -152,15 +152,31 @@ def run() -> list[str]:
     # PITCHES: big changes that need Eitan — grounded in REAL telemetry, deduped, routed to the
     # SAME in-app decide flow (each pitch cites the number that triggered it, so it's never invented).
     pitched = _load(EXDIR / "pitches.json", {"pitches": []})
-    have = {p.get("what") for p in pitched.get("pitches", [])}
-    new_pitches = _gen_pitches(have)
-    if new_pitches:
-        pitched.setdefault("pitches", []).extend(new_pitches)
+    # Generate every valid candidate (no skip) so EXISTING pitches get UPGRADED in place with the
+    # new boss-level detail (plan/effort/reversible) instead of being frozen at their old shape.
+    candidates = _gen_pitches(set())
+    by_what = {p.get("what"): p for p in pitched.get("pitches", [])}
+    _DETAIL = ("plan", "effort", "reversible", "requested_by", "need", "importance",
+               "missing", "hub_candidates")
+    new_pitches, patched = [], 0
+    for c in candidates:
+        ex = by_what.get(c["what"])
+        if ex is None:
+            pitched.setdefault("pitches", []).append(c)
+            new_pitches.append(c)
+        else:  # backfill only the detail fields the existing pitch is missing (keep status/at/review)
+            for k in _DETAIL:
+                if not ex.get(k) and c.get(k):
+                    ex[k] = c[k]
+                    patched += 1
+    if new_pitches or patched:
         (EXDIR / "pitches.json").write_text(json.dumps(pitched, ensure_ascii=False, indent=1),
                                             encoding="utf-8")
         for pitch in new_pitches:
             _log("pitch", pitch["what"], pitch["why"], False)
             out.append(f"self-improve: PITCH filed — {pitch['what']} (awaits owner)")
+        if patched:
+            out.append(f"self-improve: enriched {patched} existing pitch field(s) with plan/effort/reversibility")
         # NOTE: pitches reach the approval queue via excava._approvals_sync, which reads pitches.json
         # as the source of truth every beat — so they survive the queue rebuild instead of being wiped.
     return out
@@ -203,6 +219,7 @@ def _gen_pitches(have: set) -> list[dict]:
 
     def add(what: str, why: str, klass: str, owner_what: str, *, requested_by: str = "",
             need: str = "", importance: str = "", missing: str = "",
+            plan: list[str] | None = None, effort: str = "", reversible: str = "",
             hub_terms: list[str] | None = None) -> None:
         if what in have:
             return
@@ -210,6 +227,9 @@ def _gen_pitches(have: set) -> list[dict]:
                         "class": klass, "owner_what": owner_what, "at": _now(), "status": "pending",
                         "requested_by": requested_by, "need": need, "importance": importance,
                         "missing": missing,
+                        # PITCH V3 (owner 2026-07-13 'I'm the boss, I need all the details'):
+                        # a concrete step-by-step plan, the effort, and how reversible it is.
+                        "plan": plan or [], "effort": effort, "reversible": reversible,
                         "hub_candidates": _hub_candidates(hub_terms) if hub_terms else []})
         have.add(what)
 
@@ -227,6 +247,16 @@ def _gen_pitches(have: set) -> list[dict]:
             importance="High — when engines are out, ALL departments stop talking and producing.",
             missing="A router that tries engine after engine automatically (OmniRoute is installed "
                     "on your PC but not wired into the cloud beat).",
+            plan=["Add an OmniRoute config listing the healthy engines in priority order (groq → "
+                  "mistral → gh-models → nvidia), read from the existing canary.",
+                  "Wrap the one function every room already calls to reach an engine so that on a "
+                  "429/timeout it falls to the next engine instead of failing the turn.",
+                  "Run the golden-task regression + a forced-outage test to prove a room survives "
+                  "all-engines-busy before it ships.",
+                  "Log every fallback to the beat trace so you can see in-app when it saved a turn."],
+            effort="Small–medium: ~1 beat to wire, no new dependency (OmniRoute already on your PC).",
+            reversible="Fully reversible — it's one wrapper behind a flag; turning the flag off "
+                       "restores today's single-engine behavior with zero data change.",
             hub_terms=["router", "gateway", "fallback", "openrouter"])
 
     # B. the lowest at-risk North-Star goal -> a dedicated build lane (focused push)
@@ -248,6 +278,14 @@ def _gen_pitches(have: set) -> list[dict]:
                        "lane leaves the weakest link weakest.",
             missing="A recurring CI lane whose only job is closing this goal's gap (like the analysis "
                     "and links lanes that already exist for other goals).",
+            plan=[f"Add a scheduled lane that each beat does the one action that moves {g['id']} "
+                  "(e.g. process N more items, fill N gaps) and records the score delta.",
+                  "Re-score the goal after each run so you watch the number climb in the cockpit.",
+                  f"Stop the lane automatically once {g['id']} clears its target, so it never runs "
+                  "wastefully."],
+            effort="Small: reuses the existing lane machinery; ~1 beat to add, then it self-runs.",
+            reversible="Fully reversible — remove the lane entry and nothing else is touched; it only "
+                       "adds work, never deletes.",
             hub_terms=[w for w in str(g.get("name", "")).lower().split() if len(w) > 3][:3])
 
     # C. a resource that keeps BLOCKING work -> obtain/enable it (deeper access)
@@ -272,6 +310,14 @@ def _gen_pitches(have: set) -> list[dict]:
                  "unblock clears them all.",
             importance=f"Medium-high — {len(miss)} real tasks wait on this single resource.",
             missing=f"A working way to do '{label}' in the cloud beat (quota, key, or tool).",
+            plan=[f"Confirm exactly what '{label}' needs (a free key, a quota bump, or a tool wire-up) "
+                  "and show it to you as one clear ask if it needs anything from you.",
+                  f"Wire '{label}' into the beat behind the existing autonomy gate.",
+                  f"Re-run the {len(miss)} stuck items and report which ones cleared."],
+            effort="Depends on the resource: if it's a free key you paste, minutes; if it needs a "
+                   "build, ~1 beat.",
+            reversible="Reversible — the resource is added, not swapped; unblocked items can be paused "
+                       "again and nothing existing is removed.",
             hub_terms=[t for t in re.split(r"[^a-z0-9]+", label.lower()) if len(t) > 3][:3])
 
     return pitches

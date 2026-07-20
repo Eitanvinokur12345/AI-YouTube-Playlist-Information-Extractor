@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-20T22:59:15.310100+00:00",
+ "generated_at": "2026-07-20T23:05:05.084760+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 203,
+   "turns_7d": 204,
    "rooms_7d": 28,
    "engines_used": [
     "gh-models",
@@ -25,7 +25,7 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 161,
+   "turns_7d": 162,
    "rooms_7d": 83,
    "engines_used": [
     "gh-models",
@@ -34,7 +34,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the \"verify against output files\" rule: before queuing any video, Product Ops must manually confirm the transcript"
+   "last_position": "Product Ops builds a real-time checksum validator that pulls the transcription file’s checksum directly from the service"
   },
   {
    "id": "analysis-w1",
@@ -57,15 +57,15 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 146,
-   "rooms_7d": 76,
+   "turns_7d": 147,
+   "rooms_7d": 77,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Product Ops builds a real-time checksum validator: when a video is queued, the system pulls the transcription file’s che"
+   "last_position": "Run the Arcads AI Video skill on the marketing video to extract high-value moments beyond the transcript. This will prod"
   },
   {
    "id": "power-w1",
@@ -183,30 +183,30 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 84,
-   "rooms_7d": 42,
+   "turns_7d": 85,
+   "rooms_7d": 43,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add an always-visible skip link at the top of every page, styled to match the header’s contrast and spacing. This ensure"
+   "last_position": "Add a single high-contrast skip link at the top of every page. It’s the fastest way to help keyboard users bypass repeti"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 84,
-   "rooms_7d": 42,
+   "turns_7d": 85,
+   "rooms_7d": 43,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is sighted keyboard users treating the always-visible skip link as decorative—ignoring it because it looks"
+   "last_position": "The real risk is sighted keyboard users missing the skip link entirely if it’s hidden until focus—it defeats the purpose"
   },
   {
    "id": "transcripts-lead",
@@ -229,8 +229,8 @@
    "name": "Boulder",
    "dept": "mining",
    "role": "lead",
-   "turns_7d": 62,
-   "rooms_7d": 62,
+   "turns_7d": 63,
+   "rooms_7d": 63,
    "engines_used": [
     "gh-models",
     "groq",
@@ -238,22 +238,22 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of 10 with star counts and brief w"
+   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of 20 repos with names, star count"
   },
   {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 62,
-   "rooms_7d": 62,
+   "turns_7d": 63,
+   "rooms_7d": 63,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll run a GitHub search for AI-related repositories created in the last 7 days and return the top 10 most starred. This"
+   "last_position": "I’ll run a Reddit search for AI-related posts in the last 7 days and return the top 20 threads with titles, upvotes, and"
   },
   {
    "id": "memory-lead",
@@ -293,17 +293,34 @@
    "name": "Dynamo",
    "dept": "power",
    "role": "lead",
-   "turns_7d": 54,
-   "rooms_7d": 54,
+   "turns_7d": 55,
+   "rooms_7d": 55,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Run a blind 128K-context head-to-head test on our longest power task comparing Mistral Large 2, Qwen2.5-72B, a",
+   "last_position": "DECISION: Adopt Llama 3.1 405B for EXCAVA—verified 128K performance, 30% lower cost than Mistral, and 0.5%+ capability b",
    "proposed": 50,
    "shipped": 50
+  },
+  {
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 50,
+   "rooms_7d": 50,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: At 10:56:00, Iris directs Arcads AI Video to finalize and deliver the structured report identifying key emotiona",
+   "proposed": 1,
+   "shipped": 1
   },
   {
    "id": "improve-w1",
@@ -354,29 +371,12 @@
    "last_position": "ACTION: Marrow manually reviews the full earnings call transcript for all mentions of \"AI,\" \"automation,\" and \"efficienc"
   },
   {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 49,
-   "rooms_7d": 49,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: At 10:55:00, Iris directs Arcads AI Video to finalize and deliver the curated standout scenes and messaging cues",
-   "proposed": 1,
-   "shipped": 1
-  },
-  {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 45,
-   "rooms_7d": 45,
+   "turns_7d": 46,
+   "rooms_7d": 46,
    "engines_used": [
     "gh-models",
     "groq",
@@ -384,8 +384,8 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Ship a *gradual* contrast enforcement system—live warnings first, soft pre-commit blocks after 3 warnings, har",
-   "proposed": 42,
+   "last_position": "DECISION: Ship a live contrast checker *inside* the design tool that flashes red on violations *as you work*, paired wit",
+   "proposed": 43,
    "shipped": 42
   },
   {
@@ -436,7 +436,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Implement a focus-triggered skip link with a 100ms delay—high-contrast, full-width, keyboard-only visible. Res",
    "proposed": 42,
-   "shipped": 41
+   "shipped": 42
   },
   {
    "id": "security-lead",

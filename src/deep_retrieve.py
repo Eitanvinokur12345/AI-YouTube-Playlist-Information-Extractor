@@ -26,7 +26,7 @@ import json
 import os
 import re
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from src import element_model as em
@@ -184,24 +184,40 @@ def main() -> int:
     todo = sorted((e for e in idx["elements"] if e.get("stub") or not e.get("enriched")),
                   key=lambda e: (not e.get("stub"), not _fusable(e), e["id"]))  # stubs first, fusable first
     st = em._load("deep_retrieve_state.json", {"cursor": 0})
+    # Spend the batch where it can WORK. The old absolute cursor walked a list that re-sorts
+    # and SHRINKS every run (enriched elements drop out), so it double-skipped fresh fusable
+    # stubs and parked whole batches on unfusable ones (16:00Z drain run: 1 of 25). Now:
+    # fusable stubs not attempted in the last 3 days come first; the cursor walk survives
+    # only as the fallback polish lane once the fresh pool is drained.
+    todo_ids = {e["id"] for e in todo}
+    attempts = {k: v for k, v in st.get("attempts", {}).items() if k in todo_ids}
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=3)).isoformat()
+    fresh = [e for e in todo if e.get("stub") and _fusable(e) and attempts.get(e["id"], "") < cutoff]
+    batch = fresh[:a.limit]
     start = st.get("cursor", 0) % max(len(todo), 1)
-    batch = todo[start:start + a.limit]
+    if len(batch) < a.limit:
+        have = {e["id"] for e in batch}
+        filler = [e for e in todo[start:start + a.limit] if e["id"] not in have]
+        batch += filler[:a.limit - len(batch)]
+        st["cursor"] = start + a.limit
     done = upgraded = 0
     for el in batch:
+        if not a.dry_run:
+            attempts[el["id"]] = _now()
         r = enrich(el, a.dry_run)
         if r:
             done += 1
             upgraded += r["new"]
-    st["cursor"] = start + len(batch)
+    st["attempts"] = attempts
     st["todo_at_last_run"] = len(todo)
     st["updated_at"] = _now()
     STATE.write_text(json.dumps(st, ensure_ascii=False, indent=2), encoding="utf-8")
     if not a.dry_run:
         idx2 = em.build()
-        print(f"deep-retrieve: batch {start}..{start + len(batch)} of {len(todo)} thin elements; "
+        print(f"deep-retrieve: batch of {len(batch)} (fresh-fusable pool {len(fresh)}) from {len(todo)} thin elements; "
               f"{done} enriched ({upgraded} descriptions upgraded); stubs now {idx2['stubs']}")
     else:
-        print(f"[dry] would process {len(batch)} of {len(todo)}")
+        print(f"[dry] would process {len(batch)} of {len(todo)} (fresh-fusable pool {len(fresh)})")
     return 0
 
 

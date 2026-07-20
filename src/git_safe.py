@@ -117,7 +117,9 @@ def sync() -> list:
     SOURCE conflict it aborts and surfaces it — never silently drops your code."""
     revert_ci_churn()
     moved = quarantine_collisions()
-    r = subprocess.run(["git", "pull", "--rebase", "--no-edit"], cwd=str(ROOT), text=True, capture_output=True)
+    # --autostash: an unattended ship must not die because a live session left a modified
+    # file behind (proven 2026-07-20: the drain's recovery ship failed on exactly that).
+    r = subprocess.run(["git", "pull", "--rebase", "--autostash", "--no-edit"], cwd=str(ROOT), text=True, capture_output=True)
     while r.returncode != 0 and "conflict" in (r.stdout + r.stderr).lower():
         conflicted = [f for f in _git(["diff", "--name-only", "--diff-filter=U"]).splitlines() if f]
         src = [f for f in conflicted if not f.startswith(("data/", "backups/"))]

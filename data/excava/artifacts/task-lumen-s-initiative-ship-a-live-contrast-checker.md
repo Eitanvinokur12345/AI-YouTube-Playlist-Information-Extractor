@@ -1,14 +1,16 @@
-# [Lumen's initiative] Ship a live contrast checker that flashes red on violations *as you work* paired with a persistent "contrast debt" track
+# [Lumen's initiative] Ship a live contrast checker that flashes red on violations *as you work*—but pair it with a pre-submit gate that blocks
 
-> visualization · task `lumen-s-initiative-ship--70911` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
+> visualization · task `lumen-s-initiative-ship--86284` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
 
-**Approach:** Implement a live contrast checker with a flashing red alert for violations and a persistent contrast debt tracker.
+**Approach:** Implement a live contrast checker with a pre-submit gate using existing tools and workflows.
 **Steps:**
-1. Create a new JavaScript file (`contrastChecker.js`) to contain the logic for the live contrast checker, utilizing the `color-convert` library to calculate contrast ratios between background and foreground colors.
-2. Develop a simple web page (`index.html`) that incorporates the contrast checker, displaying the contrast debt tracker and flashing red for violations, using HTML, CSS, and JavaScript.
-3. Integrate the `contrastChecker.js` file into the `index.html` page, setting up event listeners to update the contrast debt tracker in real-time as the user interacts with the page.
+1. Create a new GitHub Actions workflow in `.github/workflows/contrast-checker.yml` to run a live contrast checker on each pull request, utilizing tools like `axe` or `pa11y` to scan for accessibility issues.
+2. Configure the live contrast checker to flash red on violations using a library like `color-contrast-checker`, and integrate it with the existing codebase using a linter or code analyzer like `eslint`.
+3. Set up a pre-submit gate using GitHub's built-in `actions/checkout` and `actions/upload-artifact` to block submissions that fail the contrast checker, ensuring that only accessible code is merged into the main branch.
 **Needs:**
-* A code editor (e.g., Visual Studio Code) for writing and editing the JavaScript and HTML files
-* A web browser (e.g., Google Chrome) for testing the live contrast checker
-* The `color-convert` library, installed via npm (`npm install color-convert`) to calculate contrast ratios
-* Access to a version control system (e.g., Git) for tracking changes to the codebase
+* GitHub Actions
+* `axe` or `pa11y` for accessibility scanning
+* `color-contrast-checker` library
+* `eslint` for code analysis
+* `actions/checkout` and `actions/upload-artifact` for pre-submit gate functionality
+* Access to the main code repository and GitHub Actions workflow configuration

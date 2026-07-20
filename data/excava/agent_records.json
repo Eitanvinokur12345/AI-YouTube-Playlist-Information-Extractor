@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-20T22:30:14.036548+00:00",
+ "generated_at": "2026-07-20T22:36:13.652539+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -25,8 +25,8 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 158,
-   "rooms_7d": 81,
+   "turns_7d": 159,
+   "rooms_7d": 82,
    "engines_used": [
     "gh-models",
     "groq",
@@ -34,14 +34,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the \"check actual status\" rule. A live API check before queuing prevents duplicates with near-zero delay, cutting "
+   "last_position": "I will run the YouTube transcript tool on every video marked \"pending\" to pull the full transcripts. This will produce a"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 155,
+   "turns_7d": 156,
    "rooms_7d": 78,
    "engines_used": [
     "gh-models",
@@ -50,45 +50,45 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the \"check actual status\" rule: before queuing any video, the system must query the transcription service’s live s"
+   "last_position": "Adopt the \"check actual status\" rule with a 24-hour hard timeout: before queuing any video, the system queries the trans"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 139,
-   "rooms_7d": 71,
+   "turns_7d": 140,
+   "rooms_7d": 72,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run the Arcads AI Video skill on the marketing video to extract high-value marketing insights beyond the transcript. Thi"
+   "last_position": "Run the Arcads AI Video skill on the marketing video to extract high-value marketing insights from both audio and visual"
   },
   {
    "id": "power-w1",
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 106,
-   "rooms_7d": 53,
+   "turns_7d": 107,
+   "rooms_7d": 54,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt Mistral Large 2 (128K) for EXCAVA. It’s the only model we’ve verified with stable 128K context in our tests, givin"
+   "last_position": "Adopt Qwen2.5-72B for EXCAVA. It’s the cheapest 128K-context model with proven performance on power tasks, giving us a 0"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 106,
-   "rooms_7d": 53,
+   "turns_7d": 107,
+   "rooms_7d": 54,
    "engines_used": [
     "gh-models",
     "groq",
@@ -96,14 +96,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Mistral Large 2 may have stable 128K context, but its performance on complex tasks is untested, making it a gamble. The "
+   "last_position": "Qwen2.5-72B’s 128K claim is vendor marketing—our tests show it collapses past 32K, so adopting it risks silent failures "
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 104,
+   "turns_7d": 105,
    "rooms_7d": 27,
    "engines_used": [
     "gh-models",
@@ -111,7 +111,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The \"check actual status\" rule still risks false positives if the transcription service’s API is flaky—stale data could "
+   "last_position": "The 24-hour timeout doesn’t solve the flakiness—it just masks it by turning stale data into stale decisions. A better al"
   },
   {
    "id": "visual-lead",
@@ -152,8 +152,8 @@
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 87,
-   "rooms_7d": 44,
+   "turns_7d": 88,
+   "rooms_7d": 45,
    "engines_used": [
     "gh-models",
     "groq",
@@ -161,29 +161,29 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "We should ship a pre-submit contrast gate that blocks builds with insufficient contrast. This approach ensures that desi"
+   "last_position": "Ship a live contrast checker that runs after every major design change. It flags any text or UI element below WCAG AA co"
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 87,
-   "rooms_7d": 44,
+   "turns_7d": 88,
+   "rooms_7d": 45,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The pre-submit gate doesn’t kill the seatbelt-alarm problem—it just moves it to the build queue. Designers will still le"
+   "last_position": "The live contrast checker trains designers to ignore warnings like seatbelt alarms—users will learn to dismiss them too."
   },
   {
    "id": "accessibility-w1",
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 81,
+   "turns_7d": 82,
    "rooms_7d": 41,
    "engines_used": [
     "gh-models",
@@ -191,14 +191,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add a single high-contrast skip link at the top of every page. It’s the fastest way to let keyboard users bypass repetit"
+   "last_position": "Add an always-visible, high-contrast skip link at the top of every page. This guarantees sighted keyboard users see it i"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 81,
+   "turns_7d": 82,
    "rooms_7d": 41,
    "engines_used": [
     "gh-models",
@@ -206,22 +206,22 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is sighted keyboard users missing the skip link entirely if it’s hidden until focused—it becomes visual no"
+   "last_position": "The real risk is sighted keyboard users treating the always-visible skip link as visual clutter, especially on dense pag"
   },
   {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 74,
-   "rooms_7d": 74,
+   "turns_7d": 75,
+   "rooms_7d": 75,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Echo re-checks each transcript fetched by Reel to confirm it exists and is complete before marking the video as ",
+   "last_position": "ACTION: Echo re-checks each transcript fetched by Reel to confirm it exists and marks any missing ones for re-fetch befo",
    "proposed": 2
   },
   {
@@ -303,7 +303,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Benchmark Mistral Large 2 (128K) and Qwen2.5-72B on a 64K-token stress test with EXCAVA’s core tasks—results m",
    "proposed": 49,
-   "shipped": 48
+   "shipped": 49
   },
   {
    "id": "improve-w1",
@@ -358,15 +358,15 @@
    "name": "Iris",
    "dept": "watch",
    "role": "lead",
-   "turns_7d": 44,
-   "rooms_7d": 44,
+   "turns_7d": 45,
+   "rooms_7d": 45,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 10:50:00, Iris directs Arcads AI Video to finalize and deliver the structured marketing insights artifact.",
+   "last_position": "ACTION: At 10:51:00, Iris directs Arcads AI Video to finalize the structured marketing insights report and deliver it to",
    "proposed": 1,
    "shipped": 1
   },
@@ -386,7 +386,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Ship a live contrast checker that flashes red on violations *as you work*—but pair it with a pre-submit gate t",
    "proposed": 41,
-   "shipped": 40
+   "shipped": 41
   },
   {
    "id": "creators-lead",

@@ -56,6 +56,7 @@ jobs:
           python -m src.resolve_links --limit "${{ github.event.inputs.limit || '800' }}" --sleep 0.5 || true
           python -m src.build_memory --limit 150 --sleep 0.3 || true
           python -m src.memory_brain census || true   # refresh the one-brain census (M1 unify-memory)
+          python -m src.excava_engines --brains || true   # refresh the brain-family roster (M2)
 
       - name: Source bundles + status + guard
         if: always()

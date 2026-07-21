@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-21T11:38:47.417217+00:00",
+ "generated_at": "2026-07-21T11:58:10.797125+00:00",
  "total": 15,
  "passing": 13,
  "critical_failures": 0,
@@ -36,7 +36,7 @@
    "id": "G-E",
    "name": "Build alignment",
    "ok": true,
-   "detail": "APP_BUILD v118 == SHELL_CACHE v118.",
+   "detail": "APP_BUILD v119 == SHELL_CACHE v119.",
    "severity": "warn"
   },
   {
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": true,
-   "detail": "HEAD == origin/main (work is really saved).",
+   "ok": false,
+   "detail": "NOT in sync (behind/ahead: 2\t0) — a push may not have landed.",
    "severity": "warn"
   },
   {
@@ -64,7 +64,7 @@
    "id": "G-I",
    "name": "Handoff mentions live build",
    "ok": false,
-   "detail": "handoff does not mention the live build (v118) — update §0d so no context is lost.",
+   "detail": "handoff does not mention the live build (v119) — update §0d so no context is lost.",
    "severity": "warn"
   },
   {
@@ -78,14 +78,14 @@
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "19 guardrail runs logged (append-only, never rewritten).",
+   "detail": "20 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
    "id": "G-L",
    "name": "Uncommitted-work watchdog",
-   "ok": false,
-   "detail": "1 untracked source file(s) not committed — commit or quarantine so nothing is lost: src/memory_brain.py",
+   "ok": true,
+   "detail": "no stray source files uncommitted.",
    "severity": "warn"
   },
   {
@@ -99,14 +99,14 @@
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "5731 MB free on the repo drive.",
+   "detail": "5492 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": true,
-   "detail": "last batch 0.6h ago on EITAN-PC (qwen2.5:3b): 19 enriched, stubs 2170",
+   "detail": "last batch 1.0h ago on EITAN-PC (qwen2.5:3b): 19 enriched, stubs 2170",
    "severity": "info"
   }
  ]

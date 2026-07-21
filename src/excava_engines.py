@@ -48,6 +48,15 @@ CATALOG = [
      ["OPENROUTER_API_KEY"], "reasoning"),
     ("nvidia",     "openai", "https://integrate.api.nvidia.com/v1",   "meta/llama-3.3-70b-instruct",
      ["NVIDIA_API_KEY"], "grounded"),
+    # ── M2 BRAIN FAMILIES — distinct model LINEAGES (§2), free via OpenRouter's :free tier. They
+    # answer only where OPENROUTER_API_KEY lives (CI / the VPS, §12). IDs track the plan's targets
+    # (GLM-5.2 / DeepSeek V4 / Kimi K2.7) — bump each when the free tier lists the newer release.
+    ("glm",        "openai", "https://openrouter.ai/api/v1",          "z-ai/glm-4.6",
+     ["OPENROUTER_API_KEY"], "grounded"),
+    ("deepseek",   "openai", "https://openrouter.ai/api/v1",          "deepseek/deepseek-chat-v3-0324:free",
+     ["OPENROUTER_API_KEY"], "reasoning"),
+    ("kimi",       "openai", "https://openrouter.ai/api/v1",          "moonshotai/kimi-k2:free",
+     ["OPENROUTER_API_KEY"], "reasoning"),
     ("hermes",     "ollama", "http://localhost:11434/v1",             "hermes3",
      [], "reasoning"),
     ("omniroute",  "openai", "",                                      "auto",
@@ -119,6 +128,22 @@ def available() -> list[dict]:
     if rank:
         out.sort(key=lambda e: rank.get(e["name"], 99))
     return out
+
+
+def families() -> list[dict]:
+    """The plan's 3-4 GENERALIST brains (§2), by lineage — distinct FAMILIES, not a blend, so
+    a debate crosses real training lineages (same-model-only-prompt-twist is banned: correlated
+    errors). 'live' = an engine here serves it now; 'needs-key' = configured, waiting on the
+    OpenRouter key (§12). Local Qwen/Llama via Ollama is the zero-quota family."""
+    av = {e["name"] for e in available()}
+    roster = [
+        ("GLM-5.2",     "Zhipu",              "leader · code & repos",   "glm",    "z-ai/glm-4.6"),
+        ("DeepSeek V4", "DeepSeek",           "reasoning · cheap",       "deepseek", "deepseek-chat-v3"),
+        ("Qwen / Llama","Alibaba/Meta (local)","zero-quota · vision/tool","hermes",  os.environ.get("OLLAMA_MODEL", "qwen2.5:3b")),
+        ("Kimi K2.7",   "Moonshot",           "long-context · ingest",   "kimi",   "moonshotai/kimi-k2"),
+    ]
+    return [{"family": f, "lineage": lin, "role": role, "engine": eng, "model": mdl,
+             "status": "live" if eng in av else "needs-key"} for f, lin, role, eng, mdl in roster]
 
 
 def pick_engine(dept: str = "", difficulty: str = "normal") -> dict | None:
@@ -223,7 +248,20 @@ def main() -> int:
         pass
     ap = argparse.ArgumentParser()
     ap.add_argument("--selftest", action="store_true")
+    ap.add_argument("--brains", action="store_true", help="write the brain-family roster for the cockpit")
     a = ap.parse_args()
+    if a.brains:
+        from datetime import datetime, timezone
+        roster = families()
+        doc = {"generated_at": datetime.now(timezone.utc).isoformat(), "brains": roster,
+               "live": sum(1 for r in roster if r["status"] == "live"), "total": len(roster),
+               "note": "the plan's 3-4 generalist brains (§2), distinct lineages; GLM/DeepSeek/Kimi "
+                       "need OPENROUTER_API_KEY (§12), Qwen/Llama run local zero-quota"}
+        out = Path(__file__).parent.parent / "data" / "excava" / "brains.json"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps(doc, ensure_ascii=False, indent=1), encoding="utf-8")
+        print(f"brains roster: {doc['live']}/{doc['total']} live -> {[r['family']+':'+r['status'] for r in roster]}")
+        return 0
     av = available()
     print(f"engines available here: {[e['name'] for e in av] or 'NONE (keys live in CI secrets)'}")
     if a.selftest:

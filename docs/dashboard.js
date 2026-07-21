@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v118";
+const APP_BUILD = "v119";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2161,13 +2161,13 @@ async function renderCrew(tab) {
   }, 6000);
 }
 async function renderExcava() {
-  const [ex, ps, inbox, gs, rc, ap, excfg, reg, dirs, tuts, made, grd, caps, engh, expr, dec, membrain] = await Promise.all([load("excava_status.json"),
+  const [ex, ps, inbox, gs, rc, ap, excfg, reg, dirs, tuts, made, grd, caps, engh, expr, dec, membrain, brains] = await Promise.all([load("excava_status.json"),
     load("pipeline_status.json"), load("excava_inbox.json"), load("goals_status.json"),
     load("resources.json"), load("excava_approvals.json"), load("excava_config.json"),
     load("excava/agents.json"), load("excava_direction.json"), load("tutorials.json"),
     load("created_by_excava.json"), load("guardrails_status.json"), load("excava/capabilities.json"),
     load("excava/engine_health.json"), load("excava/experiments.json"), load("excava/overhaul_decisions.json"),
-    load("excava/memory_brain.json")]);
+    load("excava/memory_brain.json"), load("excava/brains.json")]);
   const gate = (ex && ex.gate) || {}, mem = (ex && ex.memory) || {};
   const os = (ex && ex.os) || {};
   const mode = os.mode || (excfg && excfg.mode) || "run";
@@ -2498,6 +2498,14 @@ async function renderExcava() {
     ${fleetHTML}
     ${queueHTML}
     ${apHTML}
+    ${brains && brains.brains ? `<div class="card" style="border-top:3px solid oklch(0.62 0.17 280)">
+      <h3>🧠 The Brains <span class="sub">— the ${brains.total} generalist model FAMILIES behind the agents (distinct lineages, not a blend — §2) · <b>${brains.live}/${brains.total} live</b></span></h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin-top:8px">
+        ${brains.brains.map(b => `<div class="card" style="margin:0;border-left:3px solid ${b.status === "live" ? "oklch(0.62 0.16 148)" : "oklch(0.62 0.02 90)"}">
+          <b>${esc(b.family)}</b> <span class="pill" style="background:${b.status === "live" ? "var(--gold-soft)" : "transparent"}">${b.status === "live" ? "✓ live" : "🔑 needs key"}</span>
+          <p class="sub" style="margin:4px 0 0">${esc(b.lineage)} · ${esc(b.role)}<br><code>${esc(b.model)}</code></p></div>`).join("")}
+      </div>
+      <p class="sub" style="margin-top:8px">Qwen/Llama run local (zero quota); GLM · DeepSeek · Kimi answer once <code>OPENROUTER_API_KEY</code> is set (free tier, §12) — then a debate crosses four real lineages.</p></div>` : ""}
     ${engh && engh.results ? `<div class="card"><h3>🔌 Engine health <span class="sub">— hourly benchmark canary (a self-improvement experiment): each free engine answers one golden prompt; agents prefer the healthy ones</span></h3>
       <div style="display:flex;flex-wrap:wrap;gap:6px">${engh.results.map(r => {
         const c = r.status === "healthy" ? "oklch(0.62 0.16 148)" : r.status === "no-key" ? "oklch(0.6 0.02 90)" : "oklch(0.6 0.18 25)";

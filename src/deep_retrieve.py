@@ -25,6 +25,7 @@ import argparse
 import json
 import os
 import re
+import time
 import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -171,6 +172,13 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=40)
     ap.add_argument("--dry-run", action="store_true")
+    # HARD in-loop deadline (seconds). The subprocess-level timeout in local_worker did NOT
+    # stop a 793-minute batch on 2026-07-20 (qwen run, ceiling code confirmed present) —
+    # Windows subprocess.run(timeout=) failed to interrupt the socket-blocked child. A
+    # cooperative check between elements CANNOT be defeated that way: each enrich() has
+    # bounded per-request timeouts, so the loop always returns to check the clock.
+    ap.add_argument("--deadline", type=float,
+                    default=float(os.environ.get("DEEP_RETRIEVE_DEADLINE", "720")))
     a = ap.parse_args()
 
     idx = em.build()
@@ -205,8 +213,14 @@ def main() -> int:
         filler = [e for e in todo[start:start + a.limit] if e["id"] not in have]
         batch += filler[:a.limit - len(batch)]
         st["cursor"] = start + a.limit
-    done = upgraded = 0
+    done = upgraded = attempted = 0
+    t0 = time.time()
+    stopped_early = False
     for el in batch:
+        if a.deadline and time.time() - t0 > a.deadline:   # never pin the owner's PC again
+            stopped_early = True
+            break
+        attempted += 1
         if not a.dry_run:
             attempts[el["id"]] = _now()
         r = enrich(el, a.dry_run)
@@ -219,8 +233,9 @@ def main() -> int:
     STATE.write_text(json.dumps(st, ensure_ascii=False, indent=2), encoding="utf-8")
     if not a.dry_run:
         idx2 = em.build()
+        tag = f" — STOPPED at {a.deadline:.0f}s deadline after {attempted}/{len(batch)}" if stopped_early else ""
         print(f"deep-retrieve: batch of {len(batch)} (fresh-fusable pool {len(fresh)}) from {len(todo)} thin elements; "
-              f"{done} enriched ({upgraded} descriptions upgraded); stubs now {idx2['stubs']}")
+              f"{done} enriched ({upgraded} descriptions upgraded); stubs now {idx2['stubs']}{tag}")
     else:
         print(f"[dry] would process {len(batch)} of {len(todo)} (fresh-fusable pool {len(fresh)})")
     return 0

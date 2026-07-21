@@ -77,24 +77,32 @@ def pick_model() -> str:
     return MODELS[datetime.now(_tz.utc).hour % max(len(MODELS), 1)]
 
 
+# The batch's REAL stop is deep_retrieve's in-loop --deadline (cooperative, cannot be defeated
+# by a socket-blocked child). 2026-07-20 proved the subprocess timeout alone is NOT enough:
+# a 793-minute qwen batch ran with the ceiling code present and never got interrupted. The
+# wrapper timeout here is only a backstop = deadline + 3 min, and if it DOES fire we kill the
+# whole child TREE (taskkill /T), because the hung inference may be a grandchild.
+DEADLINE = int(os.environ.get("DEEP_RETRIEVE_DEADLINE", "720"))   # 12 min of enrichment/run
+
+
 def run_batch(model: str) -> dict:
-    """One deep_retrieve batch with the local brain; parse its honest summary line.
-    HARD 25-min ceiling: Ollama STREAMS, so a starved trickling response resets every
-    per-read socket timeout — the 22:01Z-hour run zombied 51 min at 1.3 CPU-sec. The
-    ceiling kills honestly; leftovers ship at the next run's recovery step."""
+    """One deep_retrieve batch with the local brain; parse its honest summary line."""
     env = dict(os.environ)
     env["HERMES_OLLAMA"] = "1"
     env["OLLAMA_MODEL"] = model
+    env["DEEP_RETRIEVE_DEADLINE"] = str(DEADLINE)
     t0 = time.time()
+    p = subprocess.Popen([sys.executable, "-m", "src.deep_retrieve", "--limit", str(BATCH),
+                          "--deadline", str(DEADLINE)], cwd=str(ROOT), env=env,
+                         stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
     try:
-        r = subprocess.run([sys.executable, "-m", "src.deep_retrieve", "--limit", str(BATCH)],
-                           cwd=str(ROOT), env=env, capture_output=True, text=True, timeout=1500)
-        out = (r.stdout or "") + (r.stderr or "")
-        rc = r.returncode
-    except subprocess.TimeoutExpired as e:
-        out = ((e.stdout or b"").decode("utf-8", "replace") if isinstance(e.stdout, bytes)
-               else (e.stdout or ""))
-        out += "\nbatch hit the 25-min ceiling — killed (likely a trickling stream); " \
+        out, _ = p.communicate(timeout=DEADLINE + 180)
+        rc = p.returncode
+    except subprocess.TimeoutExpired:
+        subprocess.run(["taskkill", "/F", "/T", "/PID", str(p.pid)],
+                       capture_output=True)                 # kill child + grandchildren
+        out = (p.communicate()[0] or "")
+        out += "\nbatch blew past the deadline backstop — whole tree killed; " \
                "partial work ships via the next run's recovery"
         rc = -1
     m = re.search(r"(\d+) enriched \((\d+) descriptions upgraded\); stubs now (\d+)", out)
@@ -156,7 +164,7 @@ def main() -> int:
     # One drain at a time: a fresh lock means another run (scheduled or manual) is live.
     # A lock older than 50 min is a corpse from a killed run — take over.
     try:
-        if LOCK.exists() and time.time() - LOCK.stat().st_mtime < 3000:
+        if LOCK.exists() and time.time() - LOCK.stat().st_mtime < DEADLINE + 600:
             print("local-drain: another run holds the lock — skipping")
             return 0
         LOCK.parent.mkdir(parents=True, exist_ok=True)

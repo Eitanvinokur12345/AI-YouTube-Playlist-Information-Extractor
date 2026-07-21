@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v115";
+const APP_BUILD = "v116";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2109,12 +2109,12 @@ async function renderCrew(tab) {
   }, 6000);
 }
 async function renderExcava() {
-  const [ex, ps, inbox, gs, rc, ap, excfg, reg, dirs, tuts, made, grd, caps, engh, expr] = await Promise.all([load("excava_status.json"),
+  const [ex, ps, inbox, gs, rc, ap, excfg, reg, dirs, tuts, made, grd, caps, engh, expr, dec] = await Promise.all([load("excava_status.json"),
     load("pipeline_status.json"), load("excava_inbox.json"), load("goals_status.json"),
     load("resources.json"), load("excava_approvals.json"), load("excava_config.json"),
     load("excava/agents.json"), load("excava_direction.json"), load("tutorials.json"),
     load("created_by_excava.json"), load("guardrails_status.json"), load("excava/capabilities.json"),
-    load("excava/engine_health.json"), load("excava/experiments.json")]);
+    load("excava/engine_health.json"), load("excava/experiments.json"), load("excava/overhaul_decisions.json")]);
   const gate = (ex && ex.gate) || {}, mem = (ex && ex.memory) || {};
   const os = (ex && ex.os) || {};
   const mode = os.mode || (excfg && excfg.mode) || "run";
@@ -2392,6 +2392,20 @@ async function renderExcava() {
           <span class="cap-s">${capLabel[c.status] || c.status}</span>
           <b>${esc(c.name)}</b> <span class="cap-d">${_exIcon(c.department)} ${esc(c.department)}</span></div>`).join("")}</div>
     </div>` : "";
+  // ── OVERHAUL DECISIONS: the ~300 calls are the OWNER'S — verdicts land here and gate every milestone (END PLAN §7) ──
+  const di = (dec && dec.items) || [];
+  const decided = di.filter(i => i.verdict);
+  const nextIds = di.filter(i => !i.verdict).slice(0, 4).map(i => "#" + i.id).join(" ");
+  const vHue = { keep: 150, fix: 60, improve: 230, rebuild: 300, wire: 280, backlog: 80, remove: 28 };
+  const decHTML = di.length ? `
+    <div class="card" style="border-top:3px solid oklch(0.7 0.14 60)">
+      <h3>🗳 Overhaul decisions <span class="sub">— <b>${decided.length}/${di.length}</b> decided by the owner · verdicts gate every milestone (§7) · next clickable batch: ${nextIds || "all decided"}</span></h3>
+      <div class="cap-grid">${decided.slice(-8).reverse().map(i => `
+        <div class="cap" title="${esc(i.what || "")}${i.note ? " — " + esc(i.note) : ""}">
+          <span class="cap-s" style="color:oklch(0.55 0.15 ${vHue[i.verdict] || 230})">${esc(i.verdict.toUpperCase())}</span>
+          <b>#${i.id} ${esc(i.title)}</b></div>`).join("")}</div>
+      <p class="sub" style="margin-top:6px">Answer in-session (clickable, 4 per batch), bulk-write "12: rebuild" lines from <a target="_blank" href="${GH_REPO}/blob/main/EXCAVA_MASTER_AUDIT.md">EXCAVA_MASTER_AUDIT.md</a>, or <code>python -m src.audit_decisions set &lt;id&gt; &lt;verdict&gt;</code> — decisions persist in data/excava/overhaul_decisions.json.</p>
+    </div>` : "";
   view.innerHTML = `
     <div class="card" style="border-top:3px solid var(--gold)">
       <h3>🦾 EXCAVA <span class="sub">— the agentic OS running this project</span>
@@ -2408,6 +2422,7 @@ async function renderExcava() {
     ${driveHTML}
     ${_commsThread(inbox)}
     ${capsHTML}
+    ${decHTML}
     ${guardHTML}
     ${proveHTML}
     ${directionHTML}

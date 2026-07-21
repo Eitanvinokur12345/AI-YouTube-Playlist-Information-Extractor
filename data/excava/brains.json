@@ -1,22 +1,13 @@
 {
- "generated_at": "2026-07-21T19:47:31.037507+00:00",
+ "generated_at": "2026-07-21T20:36:11.558618+00:00",
  "brains": [
-  {
-   "family": "Qwen / Llama",
-   "lineage": "Alibaba/Meta · local Ollama",
-   "role": "zero-quota · vision/tool",
-   "engine": "hermes",
-   "model": "qwen2.5:3b",
-   "status": "live",
-   "core": true
-  },
   {
    "family": "DeepSeek V4",
    "lineage": "DeepSeek",
    "role": "reasoning · cheap",
    "engine": "openrouter",
    "model": "deepseek/deepseek-chat-v3-0324:free",
-   "status": "needs-key",
+   "status": "live",
    "core": true
   },
   {
@@ -25,7 +16,7 @@
    "role": "leader · code & repos",
    "engine": "glm",
    "model": "z-ai/glm-4.5-air:free",
-   "status": "needs-key",
+   "status": "live",
    "core": true
   },
   {
@@ -34,6 +25,15 @@
    "role": "long-context · ingest",
    "engine": "kimi",
    "model": "moonshotai/kimi-k2:free",
+   "status": "live",
+   "core": true
+  },
+  {
+   "family": "Qwen / Llama",
+   "lineage": "Alibaba/Meta · local Ollama",
+   "role": "zero-quota · vision/tool",
+   "engine": "hermes",
+   "model": "hermes3",
    "status": "needs-key",
    "core": true
   },
@@ -43,7 +43,7 @@
    "role": "grounded · reliable",
    "engine": "gh-models",
    "model": "openai/gpt-4o-mini",
-   "status": "needs-key",
+   "status": "live",
    "core": false
   },
   {
@@ -52,7 +52,7 @@
    "role": "grounded · long-context",
    "engine": "gemini",
    "model": "gemini-2.0-flash",
-   "status": "needs-key",
+   "status": "live",
    "core": false
   },
   {
@@ -61,7 +61,7 @@
    "role": "fast · high-throughput",
    "engine": "groq",
    "model": "llama-3.3-70b-versatile",
-   "status": "needs-key",
+   "status": "live",
    "core": false
   },
   {
@@ -70,24 +70,30 @@
    "role": "fast generalist · multilingual",
    "engine": "mistral",
    "model": "mistral-small-latest",
-   "status": "needs-key",
+   "status": "live",
    "core": false
   }
  ],
- "live": 1,
+ "live": 7,
  "total": 8,
  "debate": [
   {
-   "engine": "hermes",
-   "lineage": "qwen-local",
-   "model": "qwen2.5:3b"
+   "engine": "groq",
+   "lineage": "llama",
+   "model": "llama-3.3-70b-versatile"
+  },
+  {
+   "engine": "mistral",
+   "lineage": "mistral",
+   "model": "mistral-small-latest"
   }
  ],
  "debate_lineages": [
-  "qwen-local"
+  "llama",
+  "mistral"
  ],
  "spoke_today": {
-  "mistral": 241,
+  "mistral": 245,
   "llama": 18,
   "gpt": 14,
   "glm": 10

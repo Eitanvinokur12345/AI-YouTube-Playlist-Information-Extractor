@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v117";
+const APP_BUILD = "v118";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2161,12 +2161,13 @@ async function renderCrew(tab) {
   }, 6000);
 }
 async function renderExcava() {
-  const [ex, ps, inbox, gs, rc, ap, excfg, reg, dirs, tuts, made, grd, caps, engh, expr, dec] = await Promise.all([load("excava_status.json"),
+  const [ex, ps, inbox, gs, rc, ap, excfg, reg, dirs, tuts, made, grd, caps, engh, expr, dec, membrain] = await Promise.all([load("excava_status.json"),
     load("pipeline_status.json"), load("excava_inbox.json"), load("goals_status.json"),
     load("resources.json"), load("excava_approvals.json"), load("excava_config.json"),
     load("excava/agents.json"), load("excava_direction.json"), load("tutorials.json"),
     load("created_by_excava.json"), load("guardrails_status.json"), load("excava/capabilities.json"),
-    load("excava/engine_health.json"), load("excava/experiments.json"), load("excava/overhaul_decisions.json")]);
+    load("excava/engine_health.json"), load("excava/experiments.json"), load("excava/overhaul_decisions.json"),
+    load("excava/memory_brain.json")]);
   const gate = (ex && ex.gate) || {}, mem = (ex && ex.memory) || {};
   const os = (ex && ex.os) || {};
   const mode = os.mode || (excfg && excfg.mode) || "run";
@@ -2458,6 +2459,20 @@ async function renderExcava() {
           <b>#${i.id} ${esc(i.title)}</b></div>`).join("")}</div>
       <p class="sub" style="margin-top:6px">Answer in-session (clickable, 4 per batch), bulk-write "12: rebuild" lines from <a target="_blank" href="${GH_REPO}/blob/main/EXCAVA_MASTER_AUDIT.md">EXCAVA_MASTER_AUDIT.md</a>, or <code>python -m src.audit_decisions set &lt;id&gt; &lt;verdict&gt;</code> — decisions persist in data/excava/overhaul_decisions.json.</p>
     </div>` : "";
+  // ── ONE-BRAIN MEMORY: the formerly-fragmented stores now answer to a single recall() (M1) ──
+  const mb = membrain || {};
+  const mbStores = mb.stores || {};
+  const mbLabel = { "why-log": "🧾 WHY-log (episodes)", "hub": "🛢 hub semantic index",
+    "brain-graph": "🕸 brain graph", "agent-log": "🗣 agent conversations", "pipeline": "⚙ pipeline graph" };
+  const memHTML = mb.total_records ? `
+    <div class="card" style="border-top:3px solid oklch(0.62 0.17 280)">
+      <h3>🧠 One-Brain Memory <span class="sub">— <b>${mb.total_records.toLocaleString()}</b> records across <b>${mb.n_stores}</b> formerly-separate stores, now one <code>recall()</code> every agent calls (M1: unify memory)</span></h3>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px">
+        ${Object.entries(mbStores).sort((a, b) => b[1] - a[1]).map(([s, n]) =>
+          `<span class="pill" title="${esc(s)}">${mbLabel[s] || s}: <b>${n.toLocaleString()}</b></span>`).join("")}
+      </div>
+      <p class="sub" style="margin-top:8px">One deterministic façade (<code>python -m src.memory_brain recall "…"</code>) spans all of them — no more hand-querying five files. Semantic re-rank (the hub vectors) layers on next.</p>
+    </div>` : "";
   view.innerHTML = `
     <div class="card" style="border-top:3px solid var(--gold)">
       <h3>🦾 EXCAVA <span class="sub">— the agentic OS running this project</span>
@@ -2475,6 +2490,7 @@ async function renderExcava() {
     ${_commsThread(inbox)}
     ${capsHTML}
     ${decHTML}
+    ${memHTML}
     ${guardHTML}
     ${proveHTML}
     ${directionHTML}

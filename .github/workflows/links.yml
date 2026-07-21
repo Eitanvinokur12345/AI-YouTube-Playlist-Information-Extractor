@@ -55,6 +55,7 @@ jobs:
           python -m src.resource_check || true
           python -m src.resolve_links --limit "${{ github.event.inputs.limit || '800' }}" --sleep 0.5 || true
           python -m src.build_memory --limit 150 --sleep 0.3 || true
+          python -m src.memory_brain census || true   # refresh the one-brain census (M1 unify-memory)
 
       - name: Source bundles + status + guard
         if: always()

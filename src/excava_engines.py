@@ -44,14 +44,14 @@ CATALOG = [
     ("gemini",     "gemini", "",                                      "gemini-2.0-flash",
      ["EXTERNAL_REVIEW_API_KEY", "GEMINI_API_KEY", "GEMINI_API_KEY_2", "GEMINI_API_KEY_3",
       "GEMINI_API_KEY_4", "GEMINI_API_KEY_5", "GEMINI_API_KEY_6"], "grounded"),
-    ("openrouter", "openai", "https://openrouter.ai/api/v1",          "meta-llama/llama-3.3-70b-instruct:free",
+    ("openrouter", "openai", "https://openrouter.ai/api/v1",          "deepseek/deepseek-chat-v3-0324:free",
      ["OPENROUTER_API_KEY"], "reasoning"),
     ("nvidia",     "openai", "https://integrate.api.nvidia.com/v1",   "meta/llama-3.3-70b-instruct",
      ["NVIDIA_API_KEY"], "grounded"),
     # ── M2 BRAIN FAMILIES — distinct model LINEAGES (§2), free via OpenRouter's :free tier. They
     # answer only where OPENROUTER_API_KEY lives (CI / the VPS, §12). IDs track the plan's targets
     # (GLM-5.2 / DeepSeek V4 / Kimi K2.7) — bump each when the free tier lists the newer release.
-    ("glm",        "openai", "https://openrouter.ai/api/v1",          "z-ai/glm-4.6",
+    ("glm",        "openai", "https://openrouter.ai/api/v1",          "z-ai/glm-4.5-air:free",
      ["OPENROUTER_API_KEY"], "grounded"),
     ("deepseek",   "openai", "https://openrouter.ai/api/v1",          "deepseek/deepseek-chat-v3-0324:free",
      ["OPENROUTER_API_KEY"], "reasoning"),
@@ -137,7 +137,7 @@ def families() -> list[dict]:
     OpenRouter key (§12). Local Qwen/Llama via Ollama is the zero-quota family."""
     av = {e["name"] for e in available()}
     roster = [
-        ("GLM-5.2",     "Zhipu",              "leader · code & repos",   "glm",    "z-ai/glm-4.6"),
+        ("GLM-5.2",     "Zhipu",              "leader · code & repos",   "glm",    "z-ai/glm-4.5-air:free"),
         ("DeepSeek V4", "DeepSeek",           "reasoning · cheap",       "deepseek", "deepseek-chat-v3"),
         ("Qwen / Llama","Alibaba/Meta (local)","zero-quota · vision/tool","hermes",  os.environ.get("OLLAMA_MODEL", "qwen2.5:3b")),
         ("Kimi K2.7",   "Moonshot",           "long-context · ingest",   "kimi",   "moonshotai/kimi-k2"),

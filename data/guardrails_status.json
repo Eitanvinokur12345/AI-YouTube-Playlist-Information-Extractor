@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-21T10:50:13.656151+00:00",
+ "generated_at": "2026-07-21T11:13:42.282146+00:00",
  "total": 15,
- "passing": 13,
+ "passing": 15,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": false,
-   "detail": "NOT in sync (behind/ahead: 1\t0) — a push may not have landed.",
+   "ok": true,
+   "detail": "HEAD == origin/main (work is really saved).",
    "severity": "warn"
   },
   {
@@ -63,22 +63,22 @@
   {
    "id": "G-I",
    "name": "Handoff mentions live build",
-   "ok": false,
-   "detail": "handoff does not mention the live build (v117) — update §0d so no context is lost.",
+   "ok": true,
+   "detail": "SESSION_HANDOFF.md references v117.",
    "severity": "warn"
   },
   {
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "4122 memory episodes on record.",
+   "detail": "4150 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "17 guardrail runs logged (append-only, never rewritten).",
+   "detail": "18 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -92,21 +92,21 @@
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "1447 tasks done, 12 departments moving",
+   "detail": "1442 tasks done, 12 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "6009 MB free on the repo drive.",
+   "detail": "5661 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": true,
-   "detail": "last batch 0.5h ago on EITAN-PC (llama3.2:3b): 3 enriched, stubs 2196",
+   "detail": "last batch 0.2h ago on EITAN-PC (qwen2.5:3b): 19 enriched, stubs 2170",
    "severity": "info"
   }
  ]

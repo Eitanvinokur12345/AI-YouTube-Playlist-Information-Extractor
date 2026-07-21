@@ -99,8 +99,15 @@ def _as_list(v) -> list:
 
 
 def _min_bar(el: dict) -> bool:
-    """M1.C3 minimum enrichment+verification bar: real info + a live anchor."""
+    """M1.C3 minimum enrichment+verification bar: real info + a real anchor.
+    LINK-based elements (tool/skill/connector/model/design) anchor on a live link or a source
+    video. TEXT elements (prompt/command/format) ARE their content — a system prompt has no
+    website; its substantial body IS the anchor, and M1.C3 verifies text by schema+security,
+    not liveness. Requiring an external link on text types silently discarded 424 already-
+    PASSED prompts (all shown 'unverified' in the hub) — the content is the anchor here."""
     has_info = len(el.get("what", "")) >= STUB_CHARS or bool(el.get("body"))
+    if el.get("type") in ("prompt", "command", "format"):
+        return has_info
     anchored = bool(el.get("links", {}).get("website") or el.get("links", {}).get("github")
                     or el.get("source_videos") or el.get("links", {}).get("source_url"))
     return has_info and anchored

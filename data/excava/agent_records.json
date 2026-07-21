@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-21T16:14:19.912556+00:00",
+ "generated_at": "2026-07-21T16:20:57.425233+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 209,
+   "turns_7d": 210,
    "rooms_7d": 25,
    "engines_used": [
     "gh-models",
@@ -19,7 +19,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The proposed solution still centralizes trust in Security Ops. If their validator library is compromised, it creates a s"
+   "last_position": "Security Ops owning the validator library shifts risk from a central service to a central library: one flaw in their cod"
   },
   {
    "id": "transcripts-w1",
@@ -42,7 +42,7 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 161,
+   "turns_7d": 162,
    "rooms_7d": 86,
    "engines_used": [
     "gh-models",
@@ -51,7 +51,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Require all systems to generate and sign their own checksums, with Security Ops providing a centralized verification ser"
+   "last_position": "Security Ops builds and ships a single, signed checksum validator library that every team must integrate into their buil"
   },
   {
    "id": "analysis-w1",
@@ -74,7 +74,7 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 129,
+   "turns_7d": 130,
    "rooms_7d": 65,
    "engines_used": [
     "gh-models",
@@ -83,14 +83,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt Qwen2.5-72B-Instruct for EXCAVA. It delivers 128K context with strong reasoning, verified on real tasks, and outpe"
+   "last_position": "Adopt Qwen2.5-72B-Instruct for EXCAVA. It’s the only model with verified 128K context and strong reasoning in our tests,"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 129,
+   "turns_7d": 130,
    "rooms_7d": 65,
    "engines_used": [
     "gh-models",
@@ -99,7 +99,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Qwen2.5's claim of 128K context remains unverified, and our tests indicate it experiences context loss past 32K. A bette"
+   "last_position": "Qwen2.5-72B’s unverified 128K claim is a real risk—past 32K, context loss breaks long-document tasks. Run identical benc"
   },
   {
    "id": "analysis-checker",
@@ -442,8 +442,8 @@
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 39,
-   "rooms_7d": 39,
+   "turns_7d": 40,
+   "rooms_7d": 40,
    "engines_used": [
     "gh-models",
     "groq",
@@ -451,22 +451,22 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will fetch the latest AI headlines from Reuters, BBC, and the White House, to gather current information on artificial"
+   "last_position": "I will fetch the latest AI headlines from Reuters, BBC, and the White House. This will produce a concise digest of the n"
   },
   {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
    "role": "lead",
-   "turns_7d": 35,
-   "rooms_7d": 35,
+   "turns_7d": 36,
+   "rooms_7d": 36,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Fetch and verify the latest AI headlines from Reuters, BBC, and the White House, then compile the digest with so"
+   "last_position": "ACTION: Verify the fetched AI headlines from Reuters, BBC, and the White House against two independent sources to ensure"
   },
   {
    "id": "security-lead",

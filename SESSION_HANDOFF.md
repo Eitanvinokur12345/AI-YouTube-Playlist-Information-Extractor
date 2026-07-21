@@ -93,7 +93,18 @@ because the beat only had exhausted Gemini). Fixed + PROVEN end-to-end:
   the acted-on object) · THEN 7 Visualization+Power depts + 2 pitch conditions + pitch-monster (§J/§K/§M
   of EXCAVA_V2_ADDITIONS.md) · 8 M5 + breadth. Rule: "done" = a real artifact shown, never a rendered card.
 
-## 0d. THE END PLAN LOOP (2026-07-21, Fable — live build v118; continue HERE)
+## 0d. THE END PLAN LOOP (2026-07-21, Fable — live build v120; continue HERE)
+**M2 UNDERWAY.** Sessions 8-10: 4 brain families in the engine CATALOG (GLM/DeepSeek/Kimi via
+OpenRouter free + local Qwen/Llama); OpenRouter key VERIFIED (Eitan's secret OPENROUTER_API_KEY_REAL,
+workflows repointed, selftest 11/11, glm/deepseek/kimi all PASS); `engines.debate_engines(n)` dedups
+by model LINEAGE so a room debate crosses DISTINCT families (the 4 llama providers were correlated-
+error same-model — now collapsed to 1), wired into excava_chat; 🧠 Brains card shows it. Drain
+WATCHDOG added (daemon os._exit at deadline+90s — a 180-min run happened when one enrich() blocked).
+**NEXT M2:** rooms PRODUCE committed artifacts across families in CI (verify a real multi-lineage
+debate runs on the beat now the key is live); then the 5-class layer (Router/Agent/Tool/Room/Element)
++ leases/budgets + named roster. bulk_analyze still uses the RETIRED openrouter llama slug (cosmetic).
+
+## 0d-v118. (2026-07-21, v118 — one-brain memory)
 **Session 7 (v118):** M1 unify-memory READ SIDE — `src/memory_brain.py` federates all 5 memory
 stores behind ONE deterministic `recall()` + `census()`; 🧠 One-Brain card on excava tab (8,579
 records/4 stores), wired into the links beat. Confirmed sandbox-verify-all-types is correctly wired

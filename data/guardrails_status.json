@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-21T10:26:32.749833+00:00",
+ "generated_at": "2026-07-21T10:42:11.246987+00:00",
  "total": 15,
- "passing": 14,
+ "passing": 12,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -21,8 +21,8 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": true,
-   "detail": "3 bundle(s); newest within 26h.",
+   "ok": false,
+   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
    "severity": "warn"
   },
   {
@@ -71,42 +71,42 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "4121 memory episodes on record.",
+   "detail": "4148 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "15 guardrail runs logged (append-only, never rewritten).",
+   "detail": "0 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
    "id": "G-L",
    "name": "Uncommitted-work watchdog",
-   "ok": true,
-   "detail": "no stray source files uncommitted.",
+   "ok": false,
+   "detail": "19 untracked source file(s) not committed — commit or quarantine so nothing is lost: other-skills/gemini-omni/ai-character-consistency-2/SKILL.md, other-skills/gemini-omni/ai-scene-manipulation/SKILL.md, other-skills/gemini-omni/ai-video-generation-image-text/SKILL.md, other-skills/graphify/accelerated-ai-information-retrieval/SKILL.md",
    "severity": "warn"
   },
   {
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "1447 tasks done, 12 departments moving",
+   "detail": "1442 tasks done, 12 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "3824 MB free on the repo drive.",
+   "detail": "88907 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": true,
-   "detail": "last batch 0.1h ago on EITAN-PC (llama3.2:3b): 3 enriched, stubs 2196",
+   "detail": "last batch 0.3h ago on EITAN-PC (llama3.2:3b): 3 enriched, stubs 2196",
    "severity": "info"
   }
  ]

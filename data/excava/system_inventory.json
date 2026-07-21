@@ -1,8 +1,8 @@
 {
- "generated_at": "2026-07-21T10:42:11.439835+00:00",
- "total": 100,
+ "generated_at": "2026-07-21T14:23:31.159121+00:00",
+ "total": 101,
  "counts": {
-  "wired": 82,
+  "wired": 83,
   "operator": 18,
   "orphaned": 0,
   "dead": 0
@@ -37,6 +37,7 @@
   "health",
   "improve_log",
   "maintenance_check",
+  "memory_brain",
   "mine_competitors",
   "mine_feeds",
   "mine_social",
@@ -498,7 +499,7 @@
   },
   "element_model": {
    "status": "wired",
-   "loc": 231,
+   "loc": 238,
    "entrypoint": true,
    "invoked_by": [
     "core_spoton.yml"
@@ -697,10 +698,11 @@
   },
   "excava_engines": {
    "status": "wired",
-   "loc": 243,
+   "loc": 281,
    "entrypoint": true,
    "invoked_by": [
-    "engine_selftest.yml"
+    "engine_selftest.yml",
+    "links.yml"
    ],
    "documented_in": [
     "EXCAVA_V2_PLAN.md",
@@ -1099,6 +1101,20 @@
    "documented_in": [
     "SESSION_HANDOFF.md",
     "data/dev_construction.json",
+    "docs/dashboard.js"
+   ],
+   "imported_by": [],
+   "imports": []
+  },
+  "memory_brain": {
+   "status": "wired",
+   "loc": 145,
+   "entrypoint": true,
+   "invoked_by": [
+    "links.yml"
+   ],
+   "documented_in": [
+    "SESSION_HANDOFF.md",
     "docs/dashboard.js"
    ],
    "imported_by": [],

@@ -93,7 +93,15 @@ because the beat only had exhausted Gemini). Fixed + PROVEN end-to-end:
   the acted-on object) · THEN 7 Visualization+Power depts + 2 pitch conditions + pitch-monster (§J/§K/§M
   of EXCAVA_V2_ADDITIONS.md) · 8 M5 + breadth. Rule: "done" = a real artifact shown, never a rendered card.
 
-## 0d. THE END PLAN LOOP (2026-07-21, Fable — live build v117; continue HERE)
+## 0d. THE END PLAN LOOP (2026-07-21, Fable — live build v118; continue HERE)
+**Session 7 (v118):** M1 unify-memory READ SIDE — `src/memory_brain.py` federates all 5 memory
+stores behind ONE deterministic `recall()` + `census()`; 🧠 One-Brain card on excava tab (8,579
+records/4 stores), wired into the links beat. Confirmed sandbox-verify-all-types is correctly wired
+(designs/skills NOT join-suppressed — genuinely thin/dead-link). **M1 core now essentially complete;
+NEXT: semantic re-rank (layer memory_index vectors onto recall), make agents actually CALL
+memory_brain.recall at decision time (write side of unify-memory), then M2 (engine layer + 5 classes).**
+
+
 **Session 5 (v117):** shipped 🛢 **The Hub** — one browsable/searchable library across ALL 9,573
 elements (type + verification filters, global-search box), reusing the element layer (eidx/elBadge/
 elementActions). Nav button + `renderHub()` + route. Browser-verified: type-filter and search both

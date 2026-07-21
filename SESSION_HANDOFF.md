@@ -93,7 +93,16 @@ because the beat only had exhausted Gemini). Fixed + PROVEN end-to-end:
   the acted-on object) · THEN 7 Visualization+Power depts + 2 pitch conditions + pitch-monster (§J/§K/§M
   of EXCAVA_V2_ADDITIONS.md) · 8 M5 + breadth. Rule: "done" = a real artifact shown, never a rendered card.
 
-## 0d. THE END PLAN LOOP (2026-07-20, Fable — live build v115; continue HERE)
+## 0d. THE END PLAN LOOP (2026-07-21, Fable — live build v117; continue HERE)
+**Session 5 (v117):** shipped 🛢 **The Hub** — one browsable/searchable library across ALL 9,573
+elements (type + verification filters, global-search box), reusing the element layer (eidx/elBadge/
+elementActions). Nav button + `renderHub()` + route. Browser-verified: type-filter and search both
+correct. This is item 13/21 (the usable hub browser). Trust-gate dead-prune is MOOT (0 dead elements).
+Also: drain proven bounded (2.7-min scheduled run under the new 12-min in-loop deadline); PC set to
+never-sleep on AC + task WakeToRun (owner's call, until VPS — revert values in memory end-plan-loop).
+Next: audit batch 5-8; M1 remaining = sandbox-verify-all-types / unify-memory; then M2.
+
+**(prior)** 
 EXCAVA_END_PLAN.md (now IN the repo, with MASTER_AUDIT/FUNDAMENTALS/the rest) is the definitive plan;
 an hourly /loop session advances it one wired increment at a time. **State after loop session 1:**
 - **M1.C1 drain is KILL-PROOF**: local_worker.py does RECOVERY-FIRST shipping (a killed run's work

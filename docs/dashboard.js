@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v116";
+const APP_BUILD = "v117";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -269,6 +269,58 @@ async function renderElement(id) {
       ${vids.map(v => `<iframe width="100%" height="180" src="https://www.youtube.com/embed/${encodeURIComponent(v)}" frameborder="0" allowfullscreen loading="lazy" style="border-radius:10px;border:1.5px solid var(--line)"></iframe>`).join("")}</div></div>` : ""}
     ${rel.length ? `<div class="card"><h3>🧠 Related <span class="sub">— shown together / same topic (M1.7)</span></h3>
       <div class="el-rel">${rel.map(r => `<a href="#element/${encodeURIComponent(r.id)}">${_exIcon(r.type)} ${esc(r.name)} ${elBadge(r)}</a>`).join("")}</div></div>` : ""}`;
+}
+// ── M1.C13/21: THE HUB — one browsable, searchable library across ALL element types ──
+// Every per-type tab shows one slice; this is the whole 9,500-element hub in one place,
+// filterable by type + verification, searchable by the global box. Reuses eidx / elBadge /
+// elementActions (Ponytail — no new data, no new action code).
+async function renderHub() {
+  const ix = await eidx();
+  const all = Object.values(ix.byId);
+  const typeF = state.hubType || "all", statusF = state.hubStatus || "all", query = q();
+  const tCounts = {};
+  all.forEach(e => { tCounts[e.type] = (tCounts[e.type] || 0) + 1; });
+  const types = Object.keys(tCounts).sort((a, b) => tCounts[b] - tCounts[a]);
+  let list = all;
+  if (typeF !== "all") list = list.filter(e => e.type === typeF);
+  if (statusF !== "all") list = list.filter(e => ((e.verified || {}).status || "unverified") === statusF);
+  if (query) list = list.filter(e =>
+    (e.name + " " + (e.what || "") + " " + (e.category || "") + " " + e.type).toLowerCase().includes(query));
+  const rank = { verified: 0, niche: 1, unverified: 2, dead: 3 };
+  list.sort((a, b) => (rank[(a.verified || {}).status] ?? 2) - (rank[(b.verified || {}).status] ?? 2)
+    || String(a.name).localeCompare(String(b.name)));
+  const CAP = 120, shown = list.slice(0, CAP);
+  const chip = (attr, val, label, on) =>
+    `<button class="qr-btn${on ? " on" : ""}" ${attr}="${val}" style="${on ? "background:var(--gold);border-color:var(--gold-line);color:#1a1205" : ""}">${label}</button>`;
+  const nVer = all.filter(e => (e.verified || {}).status === "verified").length;
+  const nNiche = all.filter(e => (e.verified || {}).status === "niche").length;
+  view.innerHTML = `
+    <div class="card" style="border-top:3px solid var(--gold)">
+      <h3>🛢 The Hub <span class="sub">— the whole library, one place · <b>${all.length.toLocaleString()}</b> elements · ${nVer.toLocaleString()} verified · ${nNiche.toLocaleString()} niche · type the search box above to filter</span></h3>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 4px">
+        ${chip("data-hubtype", "all", `All types (${all.length.toLocaleString()})`, typeF === "all")}
+        ${types.map(t => chip("data-hubtype", t, `${_exIcon(t)} ${t} (${tCounts[t]})`, typeF === t)).join("")}
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        ${chip("data-hubstatus", "all", "any status", statusF === "all")}
+        ${chip("data-hubstatus", "verified", "✓ verified", statusF === "verified")}
+        ${chip("data-hubstatus", "niche", "◆ niche", statusF === "niche")}
+        ${chip("data-hubstatus", "unverified", "unverified", statusF === "unverified")}
+      </div>
+      <p class="sub" style="margin-top:8px">${list.length.toLocaleString()} match${list.length === 1 ? "" : "es"}${list.length > CAP ? ` · showing the first ${CAP} (narrow with the search box or a type)` : ""}</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px">
+      ${shown.map(e => `
+        <div class="card" style="margin:0">
+          <h3 style="font-size:15px"><a href="#element/${encodeURIComponent(e.id)}" style="color:inherit;text-decoration:none">${_exIcon(e.type)} ${esc(e.name)}</a> ${elBadge(e)}</h3>
+          <p class="sub" style="min-height:32px">${esc((e.what || "(deep-retrieve will enrich this)").slice(0, 140))}</p>
+          ${elementActions(e, true)}
+        </div>`).join("") || empty(query ? `No elements match "${esc(state.query)}".` : "No elements.")}
+    </div>`;
+  view.querySelectorAll("[data-hubtype]").forEach(b =>
+    b.onclick = () => { state.hubType = b.dataset.hubtype; show("hub"); });
+  view.querySelectorAll("[data-hubstatus]").forEach(b =>
+    b.onclick = () => { state.hubStatus = b.dataset.hubstatus; show("hub"); });
 }
 
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, c =>
@@ -3396,6 +3448,7 @@ async function resultsBadge() {                       // M3.7: the "new" count o
 
 async function renderTab(tab) {
   if (tab === "excava") return renderExcava();
+  if (tab === "hub") return renderHub();
   if (tab === "rooms") return renderRooms();
   if (tab === "proof") return renderProof(await load("excava/proof.json"));
   if (tab === "results") return renderResults();

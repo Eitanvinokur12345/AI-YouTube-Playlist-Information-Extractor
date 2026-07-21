@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-21T10:42:11.246987+00:00",
+ "generated_at": "2026-07-21T10:50:13.656151+00:00",
  "total": 15,
- "passing": 12,
+ "passing": 13,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -21,8 +21,8 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": false,
-   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
+   "ok": true,
+   "detail": "3 bundle(s); newest within 26h.",
    "severity": "warn"
   },
   {
@@ -36,7 +36,7 @@
    "id": "G-E",
    "name": "Build alignment",
    "ok": true,
-   "detail": "APP_BUILD v116 == SHELL_CACHE v116.",
+   "detail": "APP_BUILD v117 == SHELL_CACHE v117.",
    "severity": "warn"
   },
   {
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": true,
-   "detail": "HEAD == origin/main (work is really saved).",
+   "ok": false,
+   "detail": "NOT in sync (behind/ahead: 1\t0) — a push may not have landed.",
    "severity": "warn"
   },
   {
@@ -64,49 +64,49 @@
    "id": "G-I",
    "name": "Handoff mentions live build",
    "ok": false,
-   "detail": "handoff does not mention the live build (v116) — update §0d so no context is lost.",
+   "detail": "handoff does not mention the live build (v117) — update §0d so no context is lost.",
    "severity": "warn"
   },
   {
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "4148 memory episodes on record.",
+   "detail": "4122 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "0 guardrail runs logged (append-only, never rewritten).",
+   "detail": "17 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
    "id": "G-L",
    "name": "Uncommitted-work watchdog",
-   "ok": false,
-   "detail": "19 untracked source file(s) not committed — commit or quarantine so nothing is lost: other-skills/gemini-omni/ai-character-consistency-2/SKILL.md, other-skills/gemini-omni/ai-scene-manipulation/SKILL.md, other-skills/gemini-omni/ai-video-generation-image-text/SKILL.md, other-skills/graphify/accelerated-ai-information-retrieval/SKILL.md",
+   "ok": true,
+   "detail": "no stray source files uncommitted.",
    "severity": "warn"
   },
   {
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "1442 tasks done, 12 departments moving",
+   "detail": "1447 tasks done, 12 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "88907 MB free on the repo drive.",
+   "detail": "6009 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": true,
-   "detail": "last batch 0.3h ago on EITAN-PC (llama3.2:3b): 3 enriched, stubs 2196",
+   "detail": "last batch 0.5h ago on EITAN-PC (llama3.2:3b): 3 enriched, stubs 2196",
    "severity": "info"
   }
  ]

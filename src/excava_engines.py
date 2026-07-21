@@ -134,6 +134,28 @@ def debate_engines(n: int = 3) -> list[dict]:
     return out
 
 
+def spoke_today() -> dict:
+    """Which model LINEAGES actually POSTED in rooms today — real proof the debate crosses families,
+    not just the configured roster. Reads the day's committed chat transcripts (data/excava/chats)."""
+    from collections import Counter
+    from datetime import datetime, timezone
+    day = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    chats = Path(__file__).parent.parent / "data" / "excava" / "chats" / day
+    c: Counter = Counter()
+    if chats.exists():
+        for f in chats.glob("*.jsonl"):
+            try:
+                for line in f.read_text(encoding="utf-8", errors="replace").splitlines():
+                    if not line.strip():
+                        continue
+                    eng = (json.loads(line).get("engine", "") or "").split("/")[0]
+                    if eng and eng != "system":
+                        c[LINEAGE.get(eng, eng)] += 1
+            except Exception:
+                continue
+    return dict(c.most_common())
+
+
 def available() -> list[dict]:
     """Engines whose keys/endpoints exist right now (never raises), ordered by measured health
     (benchmark ranking) when fresh, else catalog order."""
@@ -285,6 +307,7 @@ def main() -> int:
         doc = {"generated_at": datetime.now(timezone.utc).isoformat(), "brains": roster,
                "live": sum(1 for r in roster if r["status"] == "live"), "total": len(roster),
                "debate": debate, "debate_lineages": sorted({d["lineage"] for d in debate}),
+               "spoke_today": spoke_today(),
                "note": "the plan's 3-4 generalist brains (§2), distinct lineages; a debate crosses "
                        "DISTINCT lineages only (never the same model twice); GLM/DeepSeek/Kimi need "
                        "OPENROUTER_API_KEY (§12), Qwen/Llama run local zero-quota"}

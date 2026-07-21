@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v120";
+const APP_BUILD = "v121";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2506,7 +2506,8 @@ async function renderExcava() {
           <p class="sub" style="margin:4px 0 0">${esc(b.lineage)} · ${esc(b.role)}<br><code>${esc(b.model)}</code></p></div>`).join("")}
       </div>
       <p class="sub" style="margin-top:8px">Qwen/Llama run local (zero quota); GLM · DeepSeek · Kimi answer once <code>OPENROUTER_API_KEY</code> is set (free tier, §12) — then a debate crosses four real lineages.</p>
-      ${(brains.debate_lineages || []).length ? `<p class="sub" style="margin-top:4px">⚔ A debate now picks <b>DISTINCT lineages only</b> (never the same model on two providers — §2 correlated-errors ban): <b>${brains.debate_lineages.map(esc).join(" · ")}</b></p>` : ""}</div>` : ""}
+      ${(brains.debate_lineages || []).length ? `<p class="sub" style="margin-top:4px">⚔ A debate now picks <b>DISTINCT lineages only</b> (never the same model on two providers — §2 correlated-errors ban): <b>${brains.debate_lineages.map(esc).join(" · ")}</b></p>` : ""}
+      ${Object.keys(brains.spoke_today || {}).length ? `<p class="sub" style="margin-top:4px">🗣 Actually spoke in rooms today: ${Object.entries(brains.spoke_today).map(([l, n]) => `<b>${esc(l)}</b> ${n}`).join(" · ")} — real turns, not just the roster</p>` : ""}</div>` : ""}
     ${engh && engh.results ? `<div class="card"><h3>🔌 Engine health <span class="sub">— hourly benchmark canary (a self-improvement experiment): each free engine answers one golden prompt; agents prefer the healthy ones</span></h3>
       <div style="display:flex;flex-wrap:wrap;gap:6px">${engh.results.map(r => {
         const c = r.status === "healthy" ? "oklch(0.62 0.16 148)" : r.status === "no-key" ? "oklch(0.6 0.02 90)" : "oklch(0.6 0.18 25)";

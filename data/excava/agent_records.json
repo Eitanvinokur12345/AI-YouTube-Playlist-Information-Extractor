@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-21T03:59:20.245645+00:00",
+ "generated_at": "2026-07-21T07:13:24.519548+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -41,7 +41,7 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 141,
+   "turns_7d": 142,
    "rooms_7d": 63,
    "engines_used": [
     "gh-models",
@@ -50,45 +50,45 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Product Ops builds a real-time validator that computes the checksum locally for every file at queue time, stores it in t"
+   "last_position": "Product Ops builds a rolling 10% random checksum audit *daily* on the queue, logging mismatches and auto-pausing ingesti"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 138,
-   "rooms_7d": 68,
+   "turns_7d": 139,
+   "rooms_7d": 69,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run the Arcads AI Video skill on the marketing video to extract high-value moments and insights beyond the transcript. T"
+   "last_position": "Run the Arcads AI Video skill on the marketing video to extract high-value marketing insights from audio and visual cues"
   },
   {
    "id": "power-w1",
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 114,
-   "rooms_7d": 57,
+   "turns_7d": 115,
+   "rooms_7d": 58,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt Mistral Large 3 for EXCAVA. It’s the only model with a verified 128K-context window that’s actually usable in prod"
+   "last_position": "Adopt Qwen2.5-72B for EXCAVA. It’s the cheapest 128K-context model with proven performance on long-context tasks, giving"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 114,
-   "rooms_7d": 57,
+   "turns_7d": 115,
+   "rooms_7d": 58,
    "engines_used": [
     "gh-models",
     "groq",
@@ -96,14 +96,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Mistral Large 3’s \"verified\" 128K claim rests on a single internal test—no public benchmark exists, so we’re gambling on"
+   "last_position": "Qwen2.5-72B’s 128K claim is vendor marketing—our tests show it collapses past 32K, so the \"long-context\" benefit is a li"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 101,
+   "turns_7d": 102,
    "rooms_7d": 23,
    "engines_used": [
     "gh-models",
@@ -111,7 +111,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Chisel’s plan still trusts the transcription service’s checksum API for the 90% of files it skips. Product Ops should in"
+   "last_position": "The rolling 10% daily audit still risks missing silent corruption—if the bad batch hits the 90% unchecked, we’re back to"
   },
   {
    "id": "visualization-w1",
@@ -227,8 +227,8 @@
    "name": "Boulder",
    "dept": "mining",
    "role": "lead",
-   "turns_7d": 69,
-   "rooms_7d": 69,
+   "turns_7d": 70,
+   "rooms_7d": 70,
    "engines_used": [
     "gh-models",
     "groq",
@@ -236,22 +236,22 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of the top 20 repositories by star"
+   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of the top 10 by stars, with brief"
   },
   {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 69,
-   "rooms_7d": 69,
+   "turns_7d": 70,
+   "rooms_7d": 70,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll run a Reddit search for AI-related posts in the last 7 days and return the top 10 most relevant threads with their "
+   "last_position": "I will run a Reddit search for AI-related posts in the last 7 days and return the top result. This will produce a single"
   },
   {
    "id": "power-lead",
@@ -269,6 +269,21 @@
    "last_position": "DECISION: Run a blind 32K vs. 128K head-to-head on EXCAVA’s longest power tasks with both Mistral Large 3 and Qwen2.5-72",
    "proposed": 47,
    "shipped": 47
+  },
+  {
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 46,
+   "rooms_7d": 46,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: At 11:10:00, Iris directs Arcads AI Video to finalize and deliver the structured marketing insights report from "
   },
   {
    "id": "memory-lead",
@@ -304,21 +319,6 @@
    "last_position": "I will run the memory linking command to connect every existing memory ID in this conversation to the unified memory sys"
   },
   {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 45,
-   "rooms_7d": 45,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: At 11:08:00, Iris directs Arcads AI Video to finalize and deliver the structured AI marketing insights report."
-  },
-  {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
@@ -333,8 +333,8 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Ship a staged contrast enforcement system—live warnings in the design tool first, then a pre-commit hook block",
-   "proposed": 37,
-   "shipped": 37
+   "proposed": 36,
+   "shipped": 36
   },
   {
    "id": "accessibility-lead",

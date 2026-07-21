@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v121";
+const APP_BUILD = "v122";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2499,13 +2499,13 @@ async function renderExcava() {
     ${queueHTML}
     ${apHTML}
     ${brains && brains.brains ? `<div class="card" style="border-top:3px solid oklch(0.62 0.17 280)">
-      <h3>🧠 The Brains <span class="sub">— the ${brains.total} generalist model FAMILIES behind the agents (distinct lineages, not a blend — §2) · <b>${brains.live}/${brains.total} live</b></span></h3>
+      <h3>🧠 The Brains <span class="sub">— every distinct model LINEAGE is a brain (a model + a role — the model does the talking) · <b>${brains.live}/${brains.total} live</b> · ${(brains.brains.filter(b => b.core).length)} plan-core + ${(brains.brains.filter(b => !b.core).length)} existing good models</span></h3>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin-top:8px">
         ${brains.brains.map(b => `<div class="card" style="margin:0;border-left:3px solid ${b.status === "live" ? "oklch(0.62 0.16 148)" : "oklch(0.62 0.02 90)"}">
-          <b>${esc(b.family)}</b> <span class="pill" style="background:${b.status === "live" ? "var(--gold-soft)" : "transparent"}">${b.status === "live" ? "✓ live" : "🔑 needs key"}</span>
+          <b>${esc(b.family)}</b> ${b.core ? '<span class="pill" title="one of the plan’s 3-4 generalist brains (§2)">★ core</span>' : ""} <span class="pill" style="background:${b.status === "live" ? "var(--gold-soft)" : "transparent"}">${b.status === "live" ? "✓ live" : "🔑 needs key"}</span>
           <p class="sub" style="margin:4px 0 0">${esc(b.lineage)} · ${esc(b.role)}<br><code>${esc(b.model)}</code></p></div>`).join("")}
       </div>
-      <p class="sub" style="margin-top:8px">Qwen/Llama run local (zero quota); GLM · DeepSeek · Kimi answer once <code>OPENROUTER_API_KEY</code> is set (free tier, §12) — then a debate crosses four real lineages.</p>
+      <p class="sub" style="margin-top:8px">Qwen/Llama run local (zero quota); GLM · DeepSeek · Kimi need <code>OPENROUTER_API_KEY</code> (§12). Mistral · Gemini · GPT · Llama are the project’s existing good models — first-class brains, live in CI. All of them feed the debate.</p>
       ${(brains.debate_lineages || []).length ? `<p class="sub" style="margin-top:4px">⚔ A debate now picks <b>DISTINCT lineages only</b> (never the same model on two providers — §2 correlated-errors ban): <b>${brains.debate_lineages.map(esc).join(" · ")}</b></p>` : ""}
       ${Object.keys(brains.spoke_today || {}).length ? `<p class="sub" style="margin-top:4px">🗣 Actually spoke in rooms today: ${Object.entries(brains.spoke_today).map(([l, n]) => `<b>${esc(l)}</b> ${n}`).join(" · ")} — real turns, not just the roster</p>` : ""}</div>` : ""}
     ${engh && engh.results ? `<div class="card"><h3>🔌 Engine health <span class="sub">— hourly benchmark canary (a self-improvement experiment): each free engine answers one golden prompt; agents prefer the healthy ones</span></h3>

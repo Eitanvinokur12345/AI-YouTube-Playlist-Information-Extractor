@@ -179,20 +179,42 @@ def available() -> list[dict]:
     return out
 
 
+# Every distinct model LINEAGE is a brain — the 4 plan brains (§2, core=True) AND the existing
+# good project models (Mistral / Gemini / GPT / Meta-Llama), which are strong distinct lineages
+# already doing most of the talking. A brain = a model family given a role; the model does the
+# talking. More real lineages = more diversity, so all of them belong in the roster + the debate.
+LINEAGE_META = {
+    "glm":        ("GLM-5.2",       "Zhipu",                        "leader · code & repos",   True),
+    "deepseek":   ("DeepSeek V4",   "DeepSeek",                     "reasoning · cheap",       True),
+    "qwen-local": ("Qwen / Llama",  "Alibaba/Meta · local Ollama",  "zero-quota · vision/tool", True),
+    "kimi":       ("Kimi K2.7",     "Moonshot",                     "long-context · ingest",   True),
+    "mistral":    ("Mistral",       "Mistral AI (EU)",              "fast generalist · multilingual", False),
+    "gemini":     ("Gemini",        "Google",                       "grounded · long-context", False),
+    "gpt":        ("GPT-4o-mini",   "OpenAI · GitHub Models",       "grounded · reliable",     False),
+    "llama":      ("Llama-3.3 70B", "Meta · Groq/Cerebras/SambaNova/Nvidia", "fast · high-throughput", False),
+}
+
+
 def families() -> list[dict]:
-    """The plan's 3-4 GENERALIST brains (§2), by lineage — distinct FAMILIES, not a blend, so
-    a debate crosses real training lineages (same-model-only-prompt-twist is banned: correlated
-    errors). 'live' = an engine here serves it now; 'needs-key' = configured, waiting on the
-    OpenRouter key (§12). Local Qwen/Llama via Ollama is the zero-quota family."""
+    """EVERY distinct model lineage the project can field, as a brain (§2 diversity). A brain is a
+    model family + role; the MODEL does the talking. The 4 plan brains are core=True; the existing
+    good models (Mistral/Gemini/GPT/Llama) are first-class brains too. 'live' = an engine here
+    serves that lineage now; 'needs-key' = configured, waiting on its key (§12)."""
     av = {e["name"] for e in available()}
-    roster = [
-        ("GLM-5.2",     "Zhipu",              "leader · code & repos",   "glm",    "z-ai/glm-4.5-air:free"),
-        ("DeepSeek V4", "DeepSeek",           "reasoning · cheap",       "deepseek", "deepseek-chat-v3"),
-        ("Qwen / Llama","Alibaba/Meta (local)","zero-quota · vision/tool","hermes",  os.environ.get("OLLAMA_MODEL", "qwen2.5:3b")),
-        ("Kimi K2.7",   "Moonshot",           "long-context · ingest",   "kimi",   "moonshotai/kimi-k2"),
-    ]
-    return [{"family": f, "lineage": lin, "role": role, "engine": eng, "model": mdl,
-             "status": "live" if eng in av else "needs-key"} for f, lin, role, eng, mdl in roster]
+    seen: dict = {}
+    for name, kind, base, model, envs, tier in CATALOG:
+        lin = LINEAGE.get(name, name)
+        if lin == "gateway":                       # omniroute is a router, not a lineage
+            continue
+        live = name in av
+        mdl = os.environ.get("OLLAMA_MODEL", model) if name == "hermes" else model
+        if lin not in seen or (live and seen[lin]["status"] != "live"):
+            fam, prov, role, core = LINEAGE_META.get(lin, (lin.title(), lin, "generalist", False))
+            seen[lin] = {"family": fam, "lineage": prov, "role": role, "engine": name,
+                         "model": mdl, "status": "live" if live else "needs-key", "core": core}
+    roster = list(seen.values())
+    roster.sort(key=lambda b: (not b["core"], b["status"] != "live", b["family"]))
+    return roster
 
 
 def pick_engine(dept: str = "", difficulty: str = "normal") -> dict | None:

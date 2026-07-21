@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-21T21:42:39.904656+00:00",
+ "generated_at": "2026-07-21T23:32:36.455579+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -58,7 +58,7 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 166,
+   "turns_7d": 167,
    "rooms_7d": 71,
    "engines_used": [
     "gh-models",
@@ -67,15 +67,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Security Ops will publish the signed append-only log to **Arweave only**, with built-in timestamping and a 7-day dispute"
+   "last_position": "Security Ops will publish the signed append-only log to **Arweave and a public Git repo mirrored to IPFS**, with a check"
   },
   {
    "id": "power-w1",
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 152,
-   "rooms_7d": 76,
+   "turns_7d": 153,
+   "rooms_7d": 77,
    "engines_used": [
     "gh-models",
     "glm",
@@ -83,15 +83,15 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt Qwen3-235B-A22B-Instruct for EXCAVA. It delivers near-frontier reasoning at 30% lower VRAM than DeepSeek-R1-671B, "
+   "last_position": "Adopt Qwen3-235B-A22B-Instruct for EXCAVA. It’s the strongest open model we can run in-house right now, delivering near-"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 152,
-   "rooms_7d": 76,
+   "turns_7d": 153,
+   "rooms_7d": 77,
    "engines_used": [
     "gh-models",
     "glm",
@@ -100,14 +100,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Qwen3-235B-A22B-Instruct’s \"active parameters\" claim is marketing—its 235B total parameters still demand near-DeepSeek V"
+   "last_position": "Qwen3-235B-A22B-Instruct’s \"active parameters\" claim is marketing—its 235B total params, but only 22B active, means it’s"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 120,
+   "turns_7d": 121,
    "rooms_7d": 25,
    "engines_used": [
     "gh-models",
@@ -116,7 +116,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Scriv: The real risk isn’t stale copies—it’s that Arweave’s gateway or indexing service could silently drop or alter the"
+   "last_position": "Scriv: The real risk isn’t Microsoft or IPFS—it’s that Security Ops’ PGP key becomes the single point of failure. A leak"
   },
   {
    "id": "visualization-w1",
@@ -225,7 +225,7 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Adopt Qwen3-235B-A22B-Instruct for EXCAVA—run a 48-hour blind A/B stress test vs DeepSeek-R1-671B to confirm 0",
-   "proposed": 57,
+   "proposed": 56,
    "shipped": 56
   },
   {
@@ -341,6 +341,37 @@
    "last_position": "ACTION: Marrow manually reviews the full LangSmith documentation and public case studies to extract concrete examples of"
   },
   {
+   "id": "improve-w1",
+   "name": "Sprocket",
+   "dept": "improve",
+   "role": "doer",
+   "turns_7d": 43,
+   "rooms_7d": 22,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DO: Replace the current prompt-review system with a shared log that records every change to prompts, engines, and routin"
+  },
+  {
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
+   "role": "checker",
+   "turns_7d": 43,
+   "rooms_7d": 22,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "A shared log risks becoming a graveyard of stale noise, where changes pile up and reasons for modifications get lost. Th"
+  },
+  {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
@@ -355,8 +386,8 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Ship a staged contrast enforcement system—live warnings in the design tool first, then a pre-commit hook block",
-   "proposed": 34,
-   "shipped": 34
+   "proposed": 32,
+   "shipped": 32
   },
   {
    "id": "accessibility-lead",
@@ -373,39 +404,8 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Implement a **high-contrast, always-visible skip button** styled like a button in the top-left corner of every",
-   "proposed": 38,
-   "shipped": 38
-  },
-  {
-   "id": "improve-w1",
-   "name": "Sprocket",
-   "dept": "improve",
-   "role": "doer",
-   "turns_7d": 42,
-   "rooms_7d": 21,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Do: Auto-apply safe changes to prompts, engines, and routing rules—only flag high-risk edits for human review. This keep"
-  },
-  {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 42,
-   "rooms_7d": 21,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "Auto-applying safe changes still risks a cascade of silent misalignments—what’s “safe” today may break tomorrow as conte"
+   "proposed": 37,
+   "shipped": 37
   },
   {
    "id": "creators-lead",

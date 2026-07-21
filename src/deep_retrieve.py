@@ -25,6 +25,7 @@ import argparse
 import json
 import os
 import re
+import threading
 import time
 import urllib.request
 from datetime import datetime, timedelta, timezone
@@ -216,6 +217,15 @@ def main() -> int:
     done = upgraded = attempted = 0
     t0 = time.time()
     stopped_early = False
+    # WATCHDOG: the between-element check below can't fire while a SINGLE enrich() is blocked in a
+    # slow Ollama stream — that is how a batch ran 180 min on 2026-07-21 despite the 12-min deadline.
+    # This daemon timer hard-exits the process at deadline+90s no matter where execution is stuck.
+    # Safe: enrich() persists each element to element_overrides.json AS IT GOES, so completed work
+    # survives, and the next drain run's recovery step ships whatever landed. Never pins the PC again.
+    if a.deadline and not a.dry_run:
+        wd = threading.Timer(a.deadline + 90, lambda: os._exit(0))
+        wd.daemon = True
+        wd.start()
     for el in batch:
         if a.deadline and time.time() - t0 > a.deadline:   # never pin the owner's PC again
             stopped_early = True

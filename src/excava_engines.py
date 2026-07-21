@@ -107,6 +107,33 @@ def healthy(report: dict | None = None) -> list[dict]:
         return av
 
 
+# Model LINEAGE per engine — §2 diversity is about training lineage, NOT provider. groq / cerebras /
+# sambanova / nvidia ALL serve the same llama-3.3-70b, so three of them in a "debate" is same-model
+# correlated errors (banned). The OpenRouter fallback resolves to deepseek here too.
+LINEAGE = {
+    "groq": "llama", "cerebras": "llama", "sambanova": "llama", "nvidia": "llama",
+    "gh-models": "gpt", "gemini": "gemini", "mistral": "mistral",
+    "glm": "glm", "deepseek": "deepseek", "openrouter": "deepseek", "kimi": "kimi",
+    "hermes": "qwen-local", "omniroute": "gateway",
+}
+
+
+def debate_engines(n: int = 3) -> list[dict]:
+    """The Router's cross-family pick: up to n engines of DISTINCT model LINEAGES, health-ordered.
+    This is what makes a debate REAL diversity (§2) — never two providers of one model, never the
+    same lineage twice (correlated errors). Fewer than n families available -> return what exists."""
+    seen, out = set(), []
+    for e in healthy():
+        lin = LINEAGE.get(e["name"], e["name"])
+        if lin in seen:
+            continue
+        seen.add(lin)
+        out.append(e)
+        if len(out) >= n:
+            break
+    return out
+
+
 def available() -> list[dict]:
     """Engines whose keys/endpoints exist right now (never raises), ordered by measured health
     (benchmark ranking) when fresh, else catalog order."""
@@ -253,10 +280,14 @@ def main() -> int:
     if a.brains:
         from datetime import datetime, timezone
         roster = families()
+        debate = [{"engine": e["name"], "lineage": LINEAGE.get(e["name"], e["name"]),
+                   "model": e["model"]} for e in debate_engines(4)]
         doc = {"generated_at": datetime.now(timezone.utc).isoformat(), "brains": roster,
                "live": sum(1 for r in roster if r["status"] == "live"), "total": len(roster),
-               "note": "the plan's 3-4 generalist brains (§2), distinct lineages; GLM/DeepSeek/Kimi "
-                       "need OPENROUTER_API_KEY (§12), Qwen/Llama run local zero-quota"}
+               "debate": debate, "debate_lineages": sorted({d["lineage"] for d in debate}),
+               "note": "the plan's 3-4 generalist brains (§2), distinct lineages; a debate crosses "
+                       "DISTINCT lineages only (never the same model twice); GLM/DeepSeek/Kimi need "
+                       "OPENROUTER_API_KEY (§12), Qwen/Llama run local zero-quota"}
         out = Path(__file__).parent.parent / "data" / "excava" / "brains.json"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps(doc, ensure_ascii=False, indent=1), encoding="utf-8")

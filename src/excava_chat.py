@@ -438,7 +438,9 @@ def advance(room_id: str, turns: int = 2) -> list[str]:
         # every room's first turn indexed pool[0], so 17 rooms burst the same engine at once and
         # fell through to the lone survivor. The offset spreads rooms across engines while keeping
         # consecutive speakers in one room on DIFFERENT models.
-        av = engines.healthy()
+        # Distinct model LINEAGES only (§2) — never two providers of the same llama, never the same
+        # family twice in one debate. debate_engines() dedups by lineage; the offset spreads rooms.
+        av = engines.debate_engines(4)
         off = sum(ord(ch) for ch in room["id"][-6:])
         eng = av[(off + room["turns"]) % len(av)] if av else None
         r = engines.complete(_prompt(room, sp, _history(room)), engine=eng,

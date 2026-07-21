@@ -1,13 +1,13 @@
 {
- "generated_at": "2026-07-21T18:39:48.776894+00:00",
+ "generated_at": "2026-07-21T19:18:19.716305+00:00",
  "brains": [
   {
    "family": "GLM-5.2",
    "lineage": "Zhipu",
    "role": "leader · code & repos",
    "engine": "glm",
-   "model": "z-ai/glm-4.6",
-   "status": "live"
+   "model": "z-ai/glm-4.5-air:free",
+   "status": "needs-key"
   },
   {
    "family": "DeepSeek V4",
@@ -15,7 +15,7 @@
    "role": "reasoning · cheap",
    "engine": "deepseek",
    "model": "deepseek-chat-v3",
-   "status": "live"
+   "status": "needs-key"
   },
   {
    "family": "Qwen / Llama",
@@ -23,7 +23,7 @@
    "role": "zero-quota · vision/tool",
    "engine": "hermes",
    "model": "qwen2.5:3b",
-   "status": "needs-key"
+   "status": "live"
   },
   {
    "family": "Kimi K2.7",
@@ -31,10 +31,20 @@
    "role": "long-context · ingest",
    "engine": "kimi",
    "model": "moonshotai/kimi-k2",
-   "status": "live"
+   "status": "needs-key"
   }
  ],
- "live": 3,
+ "live": 1,
  "total": 4,
- "note": "the plan's 3-4 generalist brains (§2), distinct lineages; GLM/DeepSeek/Kimi need OPENROUTER_API_KEY (§12), Qwen/Llama run local zero-quota"
+ "debate": [
+  {
+   "engine": "hermes",
+   "lineage": "qwen-local",
+   "model": "qwen2.5:3b"
+  }
+ ],
+ "debate_lineages": [
+  "qwen-local"
+ ],
+ "note": "the plan's 3-4 generalist brains (§2), distinct lineages; a debate crosses DISTINCT lineages only (never the same model twice); GLM/DeepSeek/Kimi need OPENROUTER_API_KEY (§12), Qwen/Llama run local zero-quota"
 }

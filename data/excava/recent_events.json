@@ -1,190 +1,6 @@
 {
   "events": [
     {
-      "task": "transcripts-drain-the-ne-47948",
-      "at": "2026-07-22T19:24:44.763751+00:00",
-      "kind": "completed",
-      "by": "analysis-w1",
-      "result": "1147 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-    },
-    {
-      "task": "raise-g8-personal-fit-68-48284",
-      "at": "2026-07-22T19:24:44.796957+00:00",
-      "kind": "claimed",
-      "by": "visual-w1",
-      "department": "visual"
-    },
-    {
-      "task": "raise-g8-personal-fit-68-48284",
-      "at": "2026-07-22T19:24:49.138466+00:00",
-      "kind": "completed",
-      "by": "visual-w1",
-      "result": "Ran the collect designs. collect_designs: 876 designs (kept 876 / dropped 0 repo-only + 4 dead/parked + 42 non-design; +0 AI-product, +27 seeds, +41 shown-in-video; url-checked 4). designs-only."
-    },
-    {
-      "task": "memory-embed-the-remaini-48284",
-      "at": "2026-07-22T19:24:49.171734+00:00",
-      "kind": "claimed",
-      "by": "memory-w1",
-      "department": "memory"
-    },
-    {
-      "task": "memory-embed-the-remaini-48284",
-      "at": "2026-07-22T19:24:49.369362+00:00",
-      "kind": "completed",
-      "by": "memory-w1",
-      "result": "Semantic index: 1494 vectors (model gemini-embedding-001); hub 7110 items → 5616 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-    },
-    {
-      "task": "watch-room-action-at-10--87315",
-      "at": "2026-07-22T19:24:49.402590+00:00",
-      "kind": "claimed",
-      "by": "watch-w1",
-      "department": "watch"
-    },
-    {
-      "task": "watch-room-action-at-10--87315",
-      "at": "2026-07-22T19:24:49.435389+00:00",
-      "kind": "completed",
-      "by": "watch-w1",
-      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
-    },
-    {
-      "task": "security-safety-rate-the-48284",
-      "at": "2026-07-22T19:24:49.468110+00:00",
-      "kind": "claimed",
-      "by": "security-w1",
-      "department": "security"
-    },
-    {
-      "task": "security-safety-rate-the-48284",
-      "at": "2026-07-22T19:24:50.250977+00:00",
-      "kind": "completed",
-      "by": "security-w1",
-      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
-    },
-    {
-      "task": "creators-room-action-nov-47973",
-      "at": "2026-07-22T19:24:50.284153+00:00",
-      "kind": "claimed",
-      "by": "creators-w1",
-      "department": "creators"
-    },
-    {
-      "task": "creators-room-action-nov-47973",
-      "at": "2026-07-22T19:24:50.318875+00:00",
-      "kind": "completed",
-      "by": "creators-w1",
-      "result": "Creators: 12 creations on record, 12 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
-    },
-    {
-      "task": "dept-creators-build-packages-enri-110",
-      "at": "2026-07-22T19:25:57.538236+00:00",
-      "kind": "room_closed",
-      "artifact": {
-        "kind": "decision",
-        "ref": "data/excava/artifacts/dept-creators-build-packages-enri-110.md",
-        "at": "2026-07-22T19:25:57.538074+00:00",
-        "title": "creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Crea",
-        "by": "Nova"
-      },
-      "turns": 2
-    },
-    {
-      "task": "rerouted-creators-power--48357",
-      "at": "2026-07-22T19:25:57.576133+00:00",
-      "kind": "enqueued",
-      "title": "[rerouted creators→power] Nova tests the \"UGC Factory\" npm package in the creators tab, verifies functionality, and labels the resulting artifact ",
-      "source": "room-action:creators",
-      "priority": 2,
-      "department": "power"
-    },
-    {
-      "task": "security-safety-rate-the-48670",
-      "at": "2026-07-22T19:31:10.513867+00:00",
-      "kind": "enqueued",
-      "title": "Security: safety-rate the next batch of 1339 connectors/skills",
-      "source": "gap",
-      "priority": 1,
-      "department": "security"
-    },
-    {
-      "task": "memory-embed-the-remaini-48670",
-      "at": "2026-07-22T19:31:10.555201+00:00",
-      "kind": "enqueued",
-      "title": "Memory: embed the remaining unembedded of 9930 elements for full recall",
-      "source": "gap",
-      "priority": 1,
-      "department": "memory"
-    },
-    {
-      "task": "transcripts-drain-the-ne-48670",
-      "at": "2026-07-22T19:31:10.596136+00:00",
-      "kind": "enqueued",
-      "title": "Transcripts: drain the next batch of 1147 pending (residential IP)",
-      "source": "gap",
-      "priority": 1,
-      "department": "transcripts"
-    },
-    {
-      "task": "raise-g8-personal-fit-68-48670",
-      "at": "2026-07-22T19:31:10.644728+00:00",
-      "kind": "enqueued",
-      "title": "Raise G8 Personal fit (68/100): 21% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
-      "source": "gap",
-      "priority": 1,
-      "department": "visual"
-    },
-    {
-      "task": "empty-body-items-render--31649",
-      "at": "2026-07-22T19:31:10.672982+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "title-collisions-distinc-31649",
-      "at": "2026-07-22T19:31:10.673707+00:00",
-      "kind": "unroutable",
-      "why": "no department specialization matched"
-    },
-    {
-      "task": "lane-transcript-retrieva-77142",
-      "at": "2026-07-22T19:31:10.674329+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "push-link-coverage-towar-7020",
-      "at": "2026-07-22T19:31:10.675019+00:00",
-      "kind": "unroutable",
-      "why": "no department specialization matched"
-    },
-    {
-      "task": "echo-s-initiative-start--91479",
-      "at": "2026-07-22T19:31:10.675722+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "echo-s-initiative-run-a--98918",
-      "at": "2026-07-22T19:31:10.676517+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "connectors-dropped-4-rec-30418",
-      "at": "2026-07-22T19:31:10.677612+00:00",
-      "kind": "unroutable",
-      "why": "no department specialization matched"
-    },
-    {
-      "task": "verify-the-next-200-of-6-48284",
-      "at": "2026-07-22T19:31:10.724623+00:00",
-      "kind": "claimed",
-      "by": "analysis-w1",
-      "department": "analysis"
-    },
-    {
       "task": "verify-the-next-200-of-6-48284",
       "at": "2026-07-22T19:31:10.759741+00:00",
       "kind": "completed",
@@ -294,6 +110,190 @@
       "at": "2026-07-22T19:32:23.479094+00:00",
       "kind": "enqueued",
       "title": "[rerouted creators→power] Nova tests the \"UGC Factory\" npm package in the creators tab, verifying its output matches the documented example and la",
+      "source": "room-action:creators",
+      "priority": 2,
+      "department": "power"
+    },
+    {
+      "task": "verify-the-next-200-of-6-49054",
+      "at": "2026-07-22T19:37:34.591777+00:00",
+      "kind": "enqueued",
+      "title": "Verify the next 200 of 6276 unverified elements (2-source + live test)",
+      "source": "gap",
+      "priority": 1,
+      "department": "analysis"
+    },
+    {
+      "task": "security-safety-rate-the-49054",
+      "at": "2026-07-22T19:37:34.641163+00:00",
+      "kind": "enqueued",
+      "title": "Security: safety-rate the next batch of 1339 connectors/skills",
+      "source": "gap",
+      "priority": 1,
+      "department": "security"
+    },
+    {
+      "task": "memory-embed-the-remaini-49054",
+      "at": "2026-07-22T19:37:34.682219+00:00",
+      "kind": "enqueued",
+      "title": "Memory: embed the remaining unembedded of 9930 elements for full recall",
+      "source": "gap",
+      "priority": 1,
+      "department": "memory"
+    },
+    {
+      "task": "raise-g8-personal-fit-68-49054",
+      "at": "2026-07-22T19:37:34.746560+00:00",
+      "kind": "enqueued",
+      "title": "Raise G8 Personal fit (68/100): 21% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
+      "source": "gap",
+      "priority": 1,
+      "department": "visual"
+    },
+    {
+      "task": "empty-body-items-render--31649",
+      "at": "2026-07-22T19:37:34.775780+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "title-collisions-distinc-31649",
+      "at": "2026-07-22T19:37:34.776478+00:00",
+      "kind": "unroutable",
+      "why": "no department specialization matched"
+    },
+    {
+      "task": "lane-transcript-retrieva-77142",
+      "at": "2026-07-22T19:37:34.777158+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "push-link-coverage-towar-7020",
+      "at": "2026-07-22T19:37:34.777815+00:00",
+      "kind": "unroutable",
+      "why": "no department specialization matched"
+    },
+    {
+      "task": "echo-s-initiative-start--91479",
+      "at": "2026-07-22T19:37:34.778502+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "echo-s-initiative-run-a--98918",
+      "at": "2026-07-22T19:37:34.779207+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "connectors-dropped-4-rec-30418",
+      "at": "2026-07-22T19:37:34.779904+00:00",
+      "kind": "unroutable",
+      "why": "no department specialization matched"
+    },
+    {
+      "task": "transcripts-drain-the-ne-48670",
+      "at": "2026-07-22T19:37:34.822717+00:00",
+      "kind": "claimed",
+      "by": "analysis-w1",
+      "department": "analysis"
+    },
+    {
+      "task": "transcripts-drain-the-ne-48670",
+      "at": "2026-07-22T19:37:34.857624+00:00",
+      "kind": "completed",
+      "by": "analysis-w1",
+      "result": "1147 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "task": "raise-g8-personal-fit-68-49054",
+      "at": "2026-07-22T19:37:34.891109+00:00",
+      "kind": "claimed",
+      "by": "visual-w1",
+      "department": "visual"
+    },
+    {
+      "task": "raise-g8-personal-fit-68-49054",
+      "at": "2026-07-22T19:37:40.129594+00:00",
+      "kind": "completed",
+      "by": "visual-w1",
+      "result": "Ran the collect designs. collect_designs: 876 designs (kept 876 / dropped 0 repo-only + 4 dead/parked + 42 non-design; +0 AI-product, +27 seeds, +41 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "task": "memory-embed-the-remaini-49054",
+      "at": "2026-07-22T19:37:40.164054+00:00",
+      "kind": "claimed",
+      "by": "memory-w1",
+      "department": "memory"
+    },
+    {
+      "task": "memory-embed-the-remaini-49054",
+      "at": "2026-07-22T19:37:40.358244+00:00",
+      "kind": "completed",
+      "by": "memory-w1",
+      "result": "Semantic index: 1494 vectors (model gemini-embedding-001); hub 7110 items → 5616 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "task": "watch-room-action-at-10--88006",
+      "at": "2026-07-22T19:37:40.391789+00:00",
+      "kind": "claimed",
+      "by": "watch-w1",
+      "department": "watch"
+    },
+    {
+      "task": "watch-room-action-at-10--88006",
+      "at": "2026-07-22T19:37:40.424797+00:00",
+      "kind": "completed",
+      "by": "watch-w1",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+    },
+    {
+      "task": "security-safety-rate-the-49054",
+      "at": "2026-07-22T19:37:40.457776+00:00",
+      "kind": "claimed",
+      "by": "security-w1",
+      "department": "security"
+    },
+    {
+      "task": "security-safety-rate-the-49054",
+      "at": "2026-07-22T19:37:41.233808+00:00",
+      "kind": "completed",
+      "by": "security-w1",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "task": "rerouted-creators-power--48743",
+      "at": "2026-07-22T19:37:41.267263+00:00",
+      "kind": "claimed",
+      "by": "power-w1",
+      "department": "power"
+    },
+    {
+      "task": "rerouted-creators-power--48743",
+      "at": "2026-07-22T19:37:41.483039+00:00",
+      "kind": "completed",
+      "by": "power-w1",
+      "result": "Ran the power scan. Local MCP server that gives AI agents a dozen do"
+    },
+    {
+      "task": "dept-creators-build-packages-enri-581",
+      "at": "2026-07-22T19:38:05.849216+00:00",
+      "kind": "room_closed",
+      "artifact": {
+        "kind": "decision",
+        "ref": "data/excava/artifacts/dept-creators-build-packages-enri-581.md",
+        "at": "2026-07-22T19:38:05.849051+00:00",
+        "title": "creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Crea",
+        "by": "Nova"
+      },
+      "turns": 2
+    },
+    {
+      "task": "rerouted-creators-power--49085",
+      "at": "2026-07-22T19:38:05.887577+00:00",
+      "kind": "enqueued",
+      "title": "[rerouted creators→power] Nova tests the \"UGC Factory\" npm package in the creators tab, verifies functionality, and labels the result \"Created by ",
       "source": "room-action:creators",
       "priority": 2,
       "department": "power"

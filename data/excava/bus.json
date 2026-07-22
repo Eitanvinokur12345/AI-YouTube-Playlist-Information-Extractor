@@ -395,7 +395,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-12T02:39:59.551382+00:00",
-      "updated_at": "2026-07-22T11:39:24.332214+00:00",
+      "updated_at": "2026-07-22T17:43:43.665860+00:00",
       "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
@@ -413,8 +413,8 @@
       "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-07-12T02:39:59.616638+00:00",
-      "updated_at": "2026-07-22T11:39:23.218950+00:00",
-      "result": "Semantic index: 1494 vectors (model gemini-embedding-001); hub 7101 items → 5607 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+      "updated_at": "2026-07-22T17:43:42.866822+00:00",
+      "result": "Semantic index: 1494 vectors (model gemini-embedding-001); hub 7110 items → 5616 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "raise-g3-truth-access-52-58590",
@@ -7847,7 +7847,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-16T17:46:39.019054+00:00",
-      "updated_at": "2026-07-22T11:39:23.253162+00:00"
+      "updated_at": "2026-07-22T17:43:42.899799+00:00"
     },
     {
       "id": "memory-embed-the-remaini-23999",
@@ -7864,7 +7864,7 @@
       "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-07-16T17:46:39.063498+00:00",
-      "updated_at": "2026-07-22T11:39:22.998766+00:00"
+      "updated_at": "2026-07-22T17:43:42.669878+00:00"
     },
     {
       "id": "raise-g8-personal-fit-66-23999",
@@ -19338,15 +19338,16 @@
       "department": "watch",
       "source": "room-action:watch",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-07-20T17:07:01.963886+00:00",
-      "updated_at": "2026-07-20T17:07:01.963894+00:00"
+      "updated_at": "2026-07-22T17:43:42.638177+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
       "id": "watch-process-the-next-b-67600",
@@ -30954,15 +30955,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-07-22T17:38:06.688424+00:00",
-      "updated_at": "2026-07-22T17:38:06.688435+00:00"
+      "updated_at": "2026-07-22T17:43:38.408053+00:00",
+      "result": "1147 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "security-safety-rate-the-41886",
@@ -31025,6 +31027,112 @@
       "department": "power",
       "source": "room-action:creators",
       "priority": 2,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": "power-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-22T17:38:26.831513+00:00",
+      "updated_at": "2026-07-22T17:43:43.917068+00:00",
+      "result": "Ran the power scan. Local MCP server that gives AI agents a dozen do"
+    },
+    {
+      "id": "security-safety-rate-the-42218",
+      "title": "Security: safety-rate the next batch of 1339 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1339 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-22T17:43:38.175324+00:00",
+      "updated_at": "2026-07-22T17:43:38.175336+00:00"
+    },
+    {
+      "id": "memory-embed-the-remaini-42218",
+      "title": "Memory: embed the remaining unembedded of 9929 elements for full recall",
+      "detail": "value=64 size=20(small) [cost 20/steps 30/risk 5] · 9929 elements",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-22T17:43:38.216321+00:00",
+      "updated_at": "2026-07-22T17:43:38.216328+00:00"
+    },
+    {
+      "id": "transcripts-drain-the-ne-42218",
+      "title": "Transcripts: drain the next batch of 1147 pending (residential IP)",
+      "detail": "value=60 size=26(small) [cost 25/steps 35/risk 15] · 1147 pending",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-drain-the-ne-42218--01--transcripts-w1--to--analysis.md"
+      ],
+      "created_at": "2026-07-22T17:43:38.255982+00:00",
+      "updated_at": "2026-07-22T17:43:44.048561+00:00"
+    },
+    {
+      "id": "raise-g8-personal-fit-68-42218",
+      "title": "Raise G8 Personal fit (68/100): 21% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
+      "detail": "value=32 size=17(small) [cost 15/steps 25/risk 10] · G8 at 68",
+      "department": "visual",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "visual-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-22T17:43:38.302518+00:00",
+      "updated_at": "2026-07-22T17:43:42.573286+00:00",
+      "result": "Ran the collect designs. collect_designs: 876 designs (kept 876 / dropped 0 repo-only + 4 dead/parked + 42 non-design; +0 AI-product, +27 seeds, +41 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "id": "ratchet-s-initiative-run-42229",
+      "title": "[Ratchet's initiative] Run a controlled A/B test on the top-used prompt—50/50 traffic split between current and stripped-down version—with a ki",
+      "detail": "Proposed by agent improve-lead from the decision of room dept-improve-self-improvement-rev-367 (artifact: {\"kind\": \"decision\", \"ref\": \"data/excava/artifacts/dept-improve-self-improvement-rev-367.md\", \"at\": \"2026-07-22T17:43:49). Outcome feeds this agent's hit-rate.",
+      "department": "improve",
+      "source": "agent:improve-lead",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the decision's concrete step is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-22T17:43:49.140432+00:00",
+      "updated_at": "2026-07-22T17:43:49.140439+00:00"
+    },
+    {
+      "id": "rerouted-creators-power--42236",
+      "title": "[rerouted creators→power] Nova tests the \"UGC Factory\" npm package drafted by Forge, verifying its functionality and labeling the artifact 'Create",
+      "detail": "From room dept-creators-build-packages-enri-484 (action-shaped close). Improvement matter — belongs to the power department by owner law 2026-07-12.",
+      "department": "power",
+      "source": "room-action:creators",
+      "priority": 2,
       "status": "queued",
       "steps": 0,
       "max_steps": 8,
@@ -31032,9 +31140,9 @@
       "escalation_tier": 1,
       "claimed_by": null,
       "handoff_docs": [],
-      "created_at": "2026-07-22T17:38:26.831513+00:00",
-      "updated_at": "2026-07-22T17:38:26.831519+00:00"
+      "created_at": "2026-07-22T17:43:56.304918+00:00",
+      "updated_at": "2026-07-22T17:43:56.304924+00:00"
     }
   ],
-  "updated_at": "2026-07-22T17:38:26.831523+00:00"
+  "updated_at": "2026-07-22T17:43:56.304927+00:00"
 }

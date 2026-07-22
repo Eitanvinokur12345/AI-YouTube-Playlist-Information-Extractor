@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v123";
+const APP_BUILD = "v124";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2499,12 +2499,12 @@ async function renderExcava() {
     ${queueHTML}
     ${apHTML}
     ${brains && brains.brains ? `<div class="card" style="border-top:3px solid oklch(0.62 0.17 280)">
-      <h3>🧠 The Brains <span class="sub">— a brain = a benchmark-ranked <b>LEAD</b> model + a distinct-lineage <b>SUPPORT</b> (levels of support, real fallback) · rank is EARNED by measured quality, not the plan’s list</span></h3>
+      <h3>🧠 The Brains <span class="sub">— a brain = a <b>LEAD</b> model + a <b>COMPLEMENTARY-strength SUPPORT</b> of a different lineage (real fallback) · brains are PEERS (the only ranking is inside a brain, so none dominates the conversation)</span></h3>
       ${(brains.assembled_brains || []).length ? `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin:8px 0">
         ${brains.assembled_brains.map(b => `<div class="card" style="margin:0;border-left:3px solid var(--gold)">
-          <b>Brain ${b.rank}</b> <span class="pill" title="benchmark rank">#${b.rank} by measured quality</span>
-          <p class="sub" style="margin:5px 0 0">⭐ lead: <b>${esc((b.lead||{}).lineage||"—")}</b> <code>${esc((b.lead||{}).model||"")}</code><br>
-          🛟 support: ${b.support ? `<b>${esc(b.support.lineage)}</b> <code>${esc(b.support.model)}</code> — answers if the lead fails` : "<i>none yet (needs a 2nd live lineage)</i>"}</p></div>`).join("")}
+          <b>Brain ${esc(b.id)}</b> <span class="pill" title="brains are equal peers — no dominance order">peer</span>
+          <p class="sub" style="margin:5px 0 0">⭐ lead: <b>${esc((b.lead||{}).lineage||"—")}</b> <span class="pill">${esc((b.lead||{}).tier||"")}</span> <code>${esc((b.lead||{}).model||"")}</code><br>
+          🛟 support: ${b.support ? `<b>${esc(b.support.lineage)}</b> <span class="pill">${esc(b.support.tier||"")}</span> <code>${esc(b.support.model)}</code> — complements the lead, answers if it fails` : "<i>none yet (needs a 2nd live lineage)</i>"}</p></div>`).join("")}
       </div>` : ""}
       <p class="sub" style="margin-top:4px"><b>All lineages</b> that can be a lead or support (${brains.live}/${brains.total} live):</p>
       <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">

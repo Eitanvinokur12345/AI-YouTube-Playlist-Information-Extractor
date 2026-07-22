@@ -134,13 +134,21 @@ def debate_engines(n: int = 3) -> list[dict]:
     return out
 
 
+# A lead's COMPLEMENTARY support tier (Eitan: pair a reasoning-heavy lead with a fast support and
+# vice-versa, so the two cover each other's weaknesses — not just a different lineage).
+COMPLEMENT = {"reasoning": ("fast", "grounded"), "fast": ("reasoning", "grounded"),
+              "grounded": ("fast", "reasoning"), "gateway": ("fast", "reasoning")}
+
+
 def brains(k: int = 4) -> list[dict]:
-    """A BRAIN = a benchmark-TOP-tier LEAD model + a distinct-lineage SUPPORT model (levels of
-    support). Eitan's design (2026-07-21): rank is EARNED by measured quality (the engine-health
-    benchmark that orders available()), NEVER the plan's list; and a brain is built from TWO models,
-    a lead backed by a different-lineage support that answers if the lead fails — internal
-    cross-lineage diversity + a real fallback in every brain. Leads are the top-k DISTINCT lineages;
-    each support is the best remaining model of a lineage different from its lead."""
+    """A BRAIN = a top-quality LEAD model + a COMPLEMENTARY-strength SUPPORT of a DIFFERENT lineage
+    (Eitan's design, 2026-07-21). Two rules he set:
+    · The ONLY ranking is INSIDE a brain (lead over its support). The assembled brains are PEERS —
+      never ranked against each other, because a dominant brain would negate the agents' equal
+      conversation. Leads are still chosen by measured quality (top-k distinct lineages), but the
+      brains themselves carry no dominance order.
+    · Support is COMPLEMENTARY: a reasoning lead is backed by a fast support (and vice-versa), so
+      the pair covers each other's weaknesses. It answers if the lead fails (a real fallback)."""
     pool = available()                              # health-ordered when the benchmark is fresh
     leads, seen = [], set()
     for e in pool:
@@ -153,22 +161,24 @@ def brains(k: int = 4) -> list[dict]:
             break
     used = {e["name"] for e in leads}
     out = []
-    for i, lead in enumerate(leads):
+    for lead in leads:
         llin = LINEAGE.get(lead["name"], lead["name"])
-        support = next((e for e in pool if e["name"] not in used
-                        and LINEAGE.get(e["name"], e["name"]) not in (llin, "gateway")), None)
+        want = COMPLEMENT.get(lead.get("tier", ""), ("fast", "reasoning", "grounded"))
+        cands = [e for e in pool if e["name"] not in used
+                 and LINEAGE.get(e["name"], e["name"]) not in (llin, "gateway")]
+        support = next((e for e in cands if e.get("tier") in want), None) or (cands[0] if cands else None)
         if support:
             used.add(support["name"])
-        out.append({"rank": i + 1, "lead": lead, "support": support})
+        out.append({"id": chr(65 + len(out)), "lead": lead, "support": support})   # A, B, C, D — PEERS
     return out
 
 
 def _brain_card(b: dict) -> dict:
-    """JSON-safe brain summary for the cockpit (no secrets — engine names + models only)."""
+    """JSON-safe brain summary for the cockpit (no secrets — engine names + models + tier only)."""
     def s(e):
         return None if not e else {"engine": e["name"], "model": e["model"],
-                                   "lineage": LINEAGE.get(e["name"], e["name"])}
-    return {"rank": b["rank"], "lead": s(b["lead"]), "support": s(b["support"])}
+                                   "lineage": LINEAGE.get(e["name"], e["name"]), "tier": e.get("tier", "")}
+    return {"id": b["id"], "lead": s(b["lead"]), "support": s(b["support"])}
 
 
 def spoke_today() -> dict:

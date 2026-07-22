@@ -1,13 +1,22 @@
 {
- "generated_at": "2026-07-22T14:21:35.642985+00:00",
+ "generated_at": "2026-07-22T15:41:58.492961+00:00",
  "brains": [
+  {
+   "family": "Qwen / Llama",
+   "lineage": "Alibaba/Meta · local Ollama",
+   "role": "zero-quota · vision/tool",
+   "engine": "hermes",
+   "model": "qwen2.5:3b",
+   "status": "live",
+   "core": true
+  },
   {
    "family": "DeepSeek V4",
    "lineage": "DeepSeek",
    "role": "reasoning · cheap",
    "engine": "openrouter",
    "model": "deepseek/deepseek-chat-v3-0324:free",
-   "status": "live",
+   "status": "needs-key",
    "core": true
   },
   {
@@ -16,7 +25,7 @@
    "role": "leader · code & repos",
    "engine": "glm",
    "model": "z-ai/glm-4.5-air:free",
-   "status": "live",
+   "status": "needs-key",
    "core": true
   },
   {
@@ -25,15 +34,6 @@
    "role": "long-context · ingest",
    "engine": "kimi",
    "model": "moonshotai/kimi-k2:free",
-   "status": "live",
-   "core": true
-  },
-  {
-   "family": "Qwen / Llama",
-   "lineage": "Alibaba/Meta · local Ollama",
-   "role": "zero-quota · vision/tool",
-   "engine": "hermes",
-   "model": "hermes3",
    "status": "needs-key",
    "core": true
   },
@@ -43,7 +43,7 @@
    "role": "grounded · reliable",
    "engine": "gh-models",
    "model": "openai/gpt-4o-mini",
-   "status": "live",
+   "status": "needs-key",
    "core": false
   },
   {
@@ -52,7 +52,7 @@
    "role": "grounded · long-context",
    "engine": "gemini",
    "model": "gemini-2.0-flash",
-   "status": "live",
+   "status": "needs-key",
    "core": false
   },
   {
@@ -61,7 +61,7 @@
    "role": "fast · high-throughput",
    "engine": "groq",
    "model": "llama-3.3-70b-versatile",
-   "status": "live",
+   "status": "needs-key",
    "core": false
   },
   {
@@ -70,31 +70,36 @@
    "role": "fast generalist · multilingual",
    "engine": "mistral",
    "model": "mistral-small-latest",
-   "status": "live",
+   "status": "needs-key",
    "core": false
   }
  ],
- "live": 7,
+ "live": 1,
  "total": 8,
+ "assembled_brains": [
+  {
+   "rank": 1,
+   "lead": {
+    "engine": "hermes",
+    "model": "qwen2.5:3b",
+    "lineage": "qwen-local"
+   },
+   "support": null
+  }
+ ],
  "debate": [
   {
-   "engine": "groq",
-   "lineage": "llama",
-   "model": "llama-3.3-70b-versatile"
-  },
-  {
-   "engine": "mistral",
-   "lineage": "mistral",
-   "model": "mistral-small-latest"
+   "engine": "hermes",
+   "lineage": "qwen-local",
+   "model": "qwen2.5:3b"
   }
  ],
  "debate_lineages": [
-  "llama",
-  "mistral"
+  "qwen-local"
  ],
  "spoke_today": {
   "mistral": 45,
   "llama": 2
  },
- "note": "the plan's 3-4 generalist brains (§2), distinct lineages; a debate crosses DISTINCT lineages only (never the same model twice); GLM/DeepSeek/Kimi need OPENROUTER_API_KEY (§12), Qwen/Llama run local zero-quota"
+ "note": "a BRAIN = a benchmark-ranked LEAD model + a distinct-lineage SUPPORT model (levels of support, real fallback); rank is EARNED by measured quality, not the plan's list. The lineage roster below shows every model that can be a lead/support; GLM/DeepSeek/Kimi need OPENROUTER_API_KEY (§12)."
 }

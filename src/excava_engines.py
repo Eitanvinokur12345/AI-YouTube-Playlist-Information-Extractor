@@ -134,6 +134,43 @@ def debate_engines(n: int = 3) -> list[dict]:
     return out
 
 
+def brains(k: int = 4) -> list[dict]:
+    """A BRAIN = a benchmark-TOP-tier LEAD model + a distinct-lineage SUPPORT model (levels of
+    support). Eitan's design (2026-07-21): rank is EARNED by measured quality (the engine-health
+    benchmark that orders available()), NEVER the plan's list; and a brain is built from TWO models,
+    a lead backed by a different-lineage support that answers if the lead fails — internal
+    cross-lineage diversity + a real fallback in every brain. Leads are the top-k DISTINCT lineages;
+    each support is the best remaining model of a lineage different from its lead."""
+    pool = available()                              # health-ordered when the benchmark is fresh
+    leads, seen = [], set()
+    for e in pool:
+        lin = LINEAGE.get(e["name"], e["name"])
+        if lin == "gateway" or lin in seen:
+            continue
+        seen.add(lin)
+        leads.append(e)
+        if len(leads) >= k:
+            break
+    used = {e["name"] for e in leads}
+    out = []
+    for i, lead in enumerate(leads):
+        llin = LINEAGE.get(lead["name"], lead["name"])
+        support = next((e for e in pool if e["name"] not in used
+                        and LINEAGE.get(e["name"], e["name"]) not in (llin, "gateway")), None)
+        if support:
+            used.add(support["name"])
+        out.append({"rank": i + 1, "lead": lead, "support": support})
+    return out
+
+
+def _brain_card(b: dict) -> dict:
+    """JSON-safe brain summary for the cockpit (no secrets — engine names + models only)."""
+    def s(e):
+        return None if not e else {"engine": e["name"], "model": e["model"],
+                                   "lineage": LINEAGE.get(e["name"], e["name"])}
+    return {"rank": b["rank"], "lead": s(b["lead"]), "support": s(b["support"])}
+
+
 def spoke_today() -> dict:
     """Which model LINEAGES actually POSTED in rooms today — real proof the debate crosses families,
     not just the configured roster. Reads the day's committed chat transcripts (data/excava/chats)."""
@@ -326,13 +363,16 @@ def main() -> int:
         roster = families()
         debate = [{"engine": e["name"], "lineage": LINEAGE.get(e["name"], e["name"]),
                    "model": e["model"]} for e in debate_engines(4)]
+        assembled = [_brain_card(b) for b in brains(4)]
         doc = {"generated_at": datetime.now(timezone.utc).isoformat(), "brains": roster,
                "live": sum(1 for r in roster if r["status"] == "live"), "total": len(roster),
+               "assembled_brains": assembled,
                "debate": debate, "debate_lineages": sorted({d["lineage"] for d in debate}),
                "spoke_today": spoke_today(),
-               "note": "the plan's 3-4 generalist brains (§2), distinct lineages; a debate crosses "
-                       "DISTINCT lineages only (never the same model twice); GLM/DeepSeek/Kimi need "
-                       "OPENROUTER_API_KEY (§12), Qwen/Llama run local zero-quota"}
+               "note": "a BRAIN = a benchmark-ranked LEAD model + a distinct-lineage SUPPORT model "
+                       "(levels of support, real fallback); rank is EARNED by measured quality, not "
+                       "the plan's list. The lineage roster below shows every model that can be a "
+                       "lead/support; GLM/DeepSeek/Kimi need OPENROUTER_API_KEY (§12)."}
         out = Path(__file__).parent.parent / "data" / "excava" / "brains.json"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps(doc, ensure_ascii=False, indent=1), encoding="utf-8")

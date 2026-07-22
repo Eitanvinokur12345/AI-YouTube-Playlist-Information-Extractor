@@ -438,14 +438,19 @@ def advance(room_id: str, turns: int = 2) -> list[str]:
         # every room's first turn indexed pool[0], so 17 rooms burst the same engine at once and
         # fell through to the lone survivor. The offset spreads rooms across engines while keeping
         # consecutive speakers in one room on DIFFERENT models.
-        # Distinct model LINEAGES only (§2) — never two providers of the same llama, never the same
-        # family twice in one debate. debate_engines() dedups by lineage; the offset spreads rooms.
-        av = engines.debate_engines(4)
+        # A BRAIN = a benchmark-ranked LEAD + a distinct-lineage SUPPORT (Eitan 2026-07-21). The
+        # speaker uses a whole brain: its lead answers, and if the lead fails its SUPPORT answers
+        # (levels of support — a real fallback WITHIN the brain). Consecutive speakers get different
+        # brains (distinct lineages, §2); the per-room offset spreads rooms across brains.
+        brs = engines.brains(4)
         off = sum(ord(ch) for ch in room["id"][-6:])
-        eng = av[(off + room["turns"]) % len(av)] if av else None
-        r = engines.complete(_prompt(room, sp, _history(room)), engine=eng,
-                             dept=dept, difficulty="hard" if sp.get("role") == "lead" else "normal",
-                             max_tokens=260)
+        br = brs[(off + room["turns"]) % len(brs)] if brs else None
+        prompt = _prompt(room, sp, _history(room))
+        diff = "hard" if sp.get("role") == "lead" else "normal"
+        r = engines.complete(prompt, engine=br["lead"], dept=dept, difficulty=diff, max_tokens=260) \
+            if br else {"ok": False, "error": "no brains available here"}
+        if br and not r["ok"] and br.get("support"):          # the brain's own support steps in
+            r = engines.complete(prompt, engine=br["support"], dept=dept, difficulty=diff, max_tokens=260)
         if not r["ok"]:
             log.append(f"{room['id']}: no engine here ({r.get('error', '')[:50]}) — resumes in CI")
             break

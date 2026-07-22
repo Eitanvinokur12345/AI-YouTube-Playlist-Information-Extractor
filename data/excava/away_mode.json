@@ -4,7 +4,8 @@
  "owner": "Eitan",
  "owner_instruction": "Away ~1 week. Run the OFFLINE loop, keep the program going, do NOT work the brains subsystem, batch ALL questions to QUESTIONS.md (never AskUserQuestion), and proceed on sensible defaults. Exit when Eitan posts that he's back.",
  "rules": [
-  "Each session: standing checks -> ONE wired+visible increment on a NON-brain front -> browser-verify READ side -> log WHY -> ship via `python -m src.git_safe ship` -> harsh criticism of both.",
+  "Each session: standing checks -> ONE wired+visible increment on a NON-brain front -> verify the READ side via CLI/DATA (guardrails, read the generated json/html, assertions) NOT the browser (browser tools can prompt / are flaky headless while unattended) -> log WHY -> ship via `python -m src.git_safe ship` -> harsh criticism of both.",
+  "PERMISSIONS: .claude/settings.json allowlists the loop's commands (python/git/node/read utils) so autonomous tool calls do NOT stall on 'Allow Once'. Stay inside that allowlist; git push --force / git clean / rm -rf are DENIED. If a needed command is outside it, log the need to QUESTIONS.md and skip it — never block waiting for approval.",
   "NON-brain fronts to advance: M1 polish, M3 shell/design, the Hub, self-improvement dept, per-department executors, deterministic enrichment, the audit backlog machinery, cleanup. NOT the engine/brains subsystem (enough done there for now).",
   "NEVER call AskUserQuestion. If a question or decision arises (spontaneous OR part of the plan), append it to QUESTIONS.md under 'Away-week questions' with my chosen default, then proceed on that default.",
   "Cadence while unattended: hourly (conserve resources; no one is watching for fast feedback).",

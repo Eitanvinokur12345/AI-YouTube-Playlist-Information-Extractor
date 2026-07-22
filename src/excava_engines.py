@@ -44,13 +44,13 @@ CATALOG = [
     ("gemini",     "gemini", "",                                      "gemini-2.0-flash",
      ["EXTERNAL_REVIEW_API_KEY", "GEMINI_API_KEY", "GEMINI_API_KEY_2", "GEMINI_API_KEY_3",
       "GEMINI_API_KEY_4", "GEMINI_API_KEY_5", "GEMINI_API_KEY_6"], "grounded"),
-    ("openrouter", "openai", "https://openrouter.ai/api/v1",          "deepseek/deepseek-chat-v3-0324:free",
-     ["OPENROUTER_API_KEY"], "reasoning"),
     ("nvidia",     "openai", "https://integrate.api.nvidia.com/v1",   "meta/llama-3.3-70b-instruct",
      ["NVIDIA_API_KEY"], "grounded"),
-    # ── M2 BRAIN FAMILIES — distinct model LINEAGES (§2), free via OpenRouter's :free tier. They
-    # answer only where OPENROUTER_API_KEY lives (CI / the VPS, §12). IDs track the plan's targets
-    # (GLM-5.2 / DeepSeek V4 / Kimi K2.7) — bump each when the free tier lists the newer release.
+    # ── M2 BRAIN FAMILIES — distinct model LINEAGES (§2). OpenRouter is a TRANSPORT (aggregator),
+    # NOT a model: it is the base_url that CARRIES these models, each named by its real lineage.
+    # (A generic "openrouter" engine was removed — it was pinned to deepseek-chat-v3, a phantom
+    # duplicate of the deepseek entry that double-counted one model in the benchmark.) Free :free
+    # tier, answer only where OPENROUTER_API_KEY lives (CI / VPS, §12); IDs track the plan's targets.
     ("glm",        "openai", "https://openrouter.ai/api/v1",          "z-ai/glm-4.5-air:free",
      ["OPENROUTER_API_KEY"], "grounded"),
     ("deepseek",   "openai", "https://openrouter.ai/api/v1",          "deepseek/deepseek-chat-v3-0324:free",
@@ -113,7 +113,7 @@ def healthy(report: dict | None = None) -> list[dict]:
 LINEAGE = {
     "groq": "llama", "cerebras": "llama", "sambanova": "llama", "nvidia": "llama",
     "gh-models": "gpt", "gemini": "gemini", "mistral": "mistral",
-    "glm": "glm", "deepseek": "deepseek", "openrouter": "deepseek", "kimi": "kimi",
+    "glm": "glm", "deepseek": "deepseek", "kimi": "kimi",
     "hermes": "qwen-local", "omniroute": "gateway",
 }
 

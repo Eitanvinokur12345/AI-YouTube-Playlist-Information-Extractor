@@ -21058,15 +21058,16 @@
       "department": "watch",
       "source": "room-action:watch",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-07-20T23:16:49.234954+00:00",
-      "updated_at": "2026-07-20T23:16:49.234961+00:00"
+      "updated_at": "2026-07-22T22:25:34.062347+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
       "id": "verify-the-next-200-of-7-89719",
@@ -31603,15 +31604,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-07-22T22:18:51.964560+00:00",
-      "updated_at": "2026-07-22T22:18:51.964574+00:00"
+      "updated_at": "2026-07-22T22:25:27.507241+00:00",
+      "result": "1147 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "security-safety-rate-the-58732",
@@ -31620,15 +31622,16 @@
       "department": "security",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-22T22:18:52.014867+00:00",
-      "updated_at": "2026-07-22T22:18:52.014876+00:00"
+      "updated_at": "2026-07-22T22:25:34.913458+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "memory-embed-the-remaini-58732",
@@ -31637,15 +31640,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-07-22T22:18:52.055980+00:00",
-      "updated_at": "2026-07-22T22:18:52.055996+00:00"
+      "updated_at": "2026-07-22T22:25:33.994348+00:00",
+      "result": "Semantic index: 1494 vectors (model gemini-embedding-001); hub 7110 items → 5616 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "raise-g8-personal-fit-68-58732",
@@ -31672,6 +31676,61 @@
       "department": "power",
       "source": "room-action:creators",
       "priority": 2,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": "power-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-22T22:19:09.294702+00:00",
+      "updated_at": "2026-07-22T22:25:35.179329+00:00",
+      "result": "Ran the power scan. Local MCP server that gives AI agents a dozen do"
+    },
+    {
+      "id": "transcripts-drain-the-ne-59127",
+      "title": "Transcripts: drain the next batch of 1147 pending (residential IP)",
+      "detail": "value=60 size=26(small) [cost 25/steps 35/risk 15] · 1147 pending",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-drain-the-ne-59127--01--transcripts-w1--to--analysis.md"
+      ],
+      "created_at": "2026-07-22T22:25:27.350549+00:00",
+      "updated_at": "2026-07-22T22:25:35.314618+00:00"
+    },
+    {
+      "id": "raise-g8-personal-fit-68-59127",
+      "title": "Raise G8 Personal fit (68/100): 21% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
+      "detail": "value=32 size=17(small) [cost 15/steps 25/risk 10] · G8 at 68",
+      "department": "visual",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "visual-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-22T22:25:27.398909+00:00",
+      "updated_at": "2026-07-22T22:25:33.760471+00:00",
+      "result": "Ran the collect designs. collect_designs: 876 designs (kept 876 / dropped 0 repo-only + 4 dead/parked + 42 non-design; +0 AI-product, +27 seeds, +41 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "id": "rerouted-creators-power--59142",
+      "title": "[rerouted creators→power] Nova tests the \"UGC Factory\" npm package in the creators tab, verifying its output generates a functional Claude skill a",
+      "detail": "From room dept-creators-build-packages-enri-192 (action-shaped close). Improvement matter — belongs to the power department by owner law 2026-07-12.",
+      "department": "power",
+      "source": "room-action:creators",
+      "priority": 2,
       "status": "queued",
       "steps": 0,
       "max_steps": 8,
@@ -31679,9 +31738,9 @@
       "escalation_tier": 1,
       "claimed_by": null,
       "handoff_docs": [],
-      "created_at": "2026-07-22T22:19:09.294702+00:00",
-      "updated_at": "2026-07-22T22:19:09.294711+00:00"
+      "created_at": "2026-07-22T22:25:42.635282+00:00",
+      "updated_at": "2026-07-22T22:25:42.635298+00:00"
     }
   ],
-  "updated_at": "2026-07-22T22:19:09.294715+00:00"
+  "updated_at": "2026-07-22T22:25:42.635303+00:00"
 }

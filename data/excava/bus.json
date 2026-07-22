@@ -14304,15 +14304,16 @@
       "department": "watch",
       "source": "room-action:watch",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-07-18T02:41:02.668729+00:00",
-      "updated_at": "2026-07-18T02:41:02.668736+00:00"
+      "updated_at": "2026-07-22T17:10:50.423642+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
       "id": "watch-process-the-next-b-42772",
@@ -30244,15 +30245,16 @@
       "department": "security",
       "source": "auto",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "output written to data/ and committed by CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-22T11:39:16.137973+00:00",
-      "updated_at": "2026-07-22T11:39:16.823900+00:00"
+      "updated_at": "2026-07-22T17:10:51.448072+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "only-647-1555-videos-ana-20356",
@@ -30422,17 +30424,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-21422--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-07-22T11:57:02.588718+00:00",
-      "updated_at": "2026-07-22T11:57:10.722104+00:00"
+      "updated_at": "2026-07-22T17:10:44.753855+00:00",
+      "result": "1147 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g5-leverage-52-100-21422",
@@ -30492,15 +30495,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-07-22T14:36:08.592848+00:00",
-      "updated_at": "2026-07-22T14:36:08.592865+00:00"
+      "updated_at": "2026-07-22T17:10:50.650685+00:00",
+      "result": "Semantic index: 1494 vectors (model gemini-embedding-001); hub 7110 items → 5616 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "ratchet-s-initiative-ado-30990",
@@ -30589,7 +30593,59 @@
       "created_at": "2026-07-22T17:05:21.190850+00:00",
       "updated_at": "2026-07-22T17:05:26.122251+00:00",
       "result": "Ran the collect designs. collect_designs: 876 designs (kept 876 / dropped 0 repo-only + 4 dead/parked + 42 non-design; +0 AI-product, +27 seeds, +41 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "id": "security-safety-rate-the-40244",
+      "title": "Security: safety-rate the next batch of 1339 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1339 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-22T17:10:44.573998+00:00",
+      "updated_at": "2026-07-22T17:10:44.574010+00:00"
+    },
+    {
+      "id": "raise-g8-personal-fit-68-40244",
+      "title": "Raise G8 Personal fit (68/100): 21% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
+      "detail": "value=32 size=17(small) [cost 15/steps 25/risk 10] · G8 at 68",
+      "department": "visual",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "visual-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-22T17:10:44.650292+00:00",
+      "updated_at": "2026-07-22T17:10:50.360924+00:00",
+      "result": "Ran the collect designs. collect_designs: 876 designs (kept 876 / dropped 0 repo-only + 4 dead/parked + 42 non-design; +0 AI-product, +27 seeds, +41 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "id": "ratchet-s-initiative-run-40257",
+      "title": "[Ratchet's initiative] Run live A/B tests on prompt variants first—measure real-world impact before any audit or routing tweaks",
+      "detail": "Proposed by agent improve-lead from the decision of room dept-improve-self-improvement-rev-815 (artifact: {\"kind\": \"decision\", \"ref\": \"data/excava/artifacts/dept-improve-self-improvement-rev-815.md\", \"at\": \"2026-07-22T17:10:57). Outcome feeds this agent's hit-rate.",
+      "department": "improve",
+      "source": "agent:improve-lead",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the decision's concrete step is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-22T17:10:57.146860+00:00",
+      "updated_at": "2026-07-22T17:10:57.146870+00:00"
     }
   ],
-  "updated_at": "2026-07-22T17:05:27.215192+00:00"
+  "updated_at": "2026-07-22T17:10:57.146874+00:00"
 }

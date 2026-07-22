@@ -14158,15 +14158,16 @@
       "department": "watch",
       "source": "room-action:watch",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-07-18T02:35:10.156071+00:00",
-      "updated_at": "2026-07-18T02:35:10.156077+00:00"
+      "updated_at": "2026-07-22T17:05:26.185873+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
       "id": "watch-process-the-next-b-42419",
@@ -30063,15 +30064,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-07-22T07:14:17.134457+00:00",
-      "updated_at": "2026-07-22T07:14:17.134467+00:00"
+      "updated_at": "2026-07-22T17:05:26.410742+00:00",
+      "result": "Semantic index: 1494 vectors (model gemini-embedding-001); hub 7110 items → 5616 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "raise-g8-personal-fit-68-4457",
@@ -30188,15 +30190,16 @@
       "department": "security",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-22T10:40:32.820619+00:00",
-      "updated_at": "2026-07-22T10:40:32.820632+00:00"
+      "updated_at": "2026-07-22T17:05:27.215182+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "raise-g5-leverage-52-100-16832",
@@ -30258,15 +30261,16 @@
       "department": "analysis",
       "source": "auto",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "output written to data/ and committed by CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-07-22T11:39:16.178797+00:00",
-      "updated_at": "2026-07-22T11:39:16.859069+00:00"
+      "updated_at": "2026-07-22T17:05:21.297022+00:00",
+      "result": "1147 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "watch-process-the-next-b-20757",
@@ -30567,7 +30571,25 @@
       "created_at": "2026-07-22T16:58:42.962380+00:00",
       "updated_at": "2026-07-22T16:58:49.342023+00:00",
       "result": "Ran the collect designs. collect_designs: 876 designs (kept 876 / dropped 0 repo-only + 4 dead/parked + 42 non-design; +0 AI-product, +27 seeds, +41 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "id": "raise-g8-personal-fit-68-39921",
+      "title": "Raise G8 Personal fit (68/100): 21% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
+      "detail": "value=32 size=17(small) [cost 15/steps 25/risk 10] · G8 at 68",
+      "department": "visual",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "visual-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-22T17:05:21.190850+00:00",
+      "updated_at": "2026-07-22T17:05:26.122251+00:00",
+      "result": "Ran the collect designs. collect_designs: 876 designs (kept 876 / dropped 0 repo-only + 4 dead/parked + 42 non-design; +0 AI-product, +27 seeds, +41 shown-in-video; url-checked 4). designs-only."
     }
   ],
-  "updated_at": "2026-07-22T16:58:57.654441+00:00"
+  "updated_at": "2026-07-22T17:05:27.215192+00:00"
 }

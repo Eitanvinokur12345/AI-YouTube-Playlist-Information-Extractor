@@ -2,6 +2,16 @@
 
 _Per your rule: questions live here + in memory so they never block work or waste tokens. Answer any subset, in any order, whenever you want. Each has my default so you can also just say "defaults"._
 
+---
+
+## ⏸ AWAY WEEK — batched while you're out (since 2026-07-21)
+You're away ~1 week; the offline loop is running (non-brain fronts, hourly) and collecting questions HERE instead of asking. Every question I hit this period is appended below with the default I proceeded on. I'll present this whole list the moment you're back. Contract: `data/excava/away_mode.json`.
+
+### Away-week questions
+_(none yet — I append here as they arise, and keep working on the default.)_
+
+---
+
 ## A. The new look ("Heavy Machinery" v58)
 1. **Direction check:** hazard-yellow + warm ink, chunky borders, hard offset shadows, Archivo Black display type — is this the right direction, or push further (more color pops per tab?) / pull back? _Default: keep, then add per-tab accent colors next pass._
 2. Dark mode variant of the same theme — wanted? _Default: later._

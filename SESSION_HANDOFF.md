@@ -94,8 +94,12 @@ because the beat only had exhausted Gemini). Fixed + PROVEN end-to-end:
   of EXCAVA_V2_ADDITIONS.md) · 8 M5 + breadth. Rule: "done" = a real artifact shown, never a rendered card.
 
 ## 0d. THE END PLAN LOOP (2026-07-23, Fable — live build v124; AWAY-WEEK, continue HERE)
+**⭐ REPO NOW ON D:\AI-YouTube-Skills** (migrated 2026-07-23 off the chronically-full C:; D: has 458 GB
+free). Fresh clone from GitHub, allowlist recreated, drain re-pointed to D:, `git_safe sync` verified
+from D:. The C:\Users\eitan\AI-YouTube-Skills copy is a STALE BACKUP. This commit was shipped FROM D:
+as end-to-end proof. When Claude opens on D:, re-arm the away CronCreate hourly job.
 **AWAY-WEEK (from 2026-07-23):** Eitan is away ~1 week; loop runs via a **CronCreate hourly job
-(id 6893acc4, session-only, app must stay open)** — NOT ScheduleWakeup (that died on usage caps).
+(session-only, app must stay open)** — NOT ScheduleWakeup (that died on usage caps).
 Away rules in data/excava/away_mode.json: non-brain increments only, CLI-verify (no browser), stay
 in .claude/settings.json allowlist, batch questions to QUESTIONS.md, never AskUserQuestion. The
 GitHub beat is the 24/7 cloud floor regardless. ⚠ **C: DISK CRITICAL (~380 MB free, 99.8% full with

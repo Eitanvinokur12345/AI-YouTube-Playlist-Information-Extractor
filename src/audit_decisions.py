@@ -84,6 +84,9 @@ def main() -> int:
     s.add_argument("verdict")
     s.add_argument("--note", default=None)
     sub.add_parser("status")
+    n = sub.add_parser("next")
+    n.add_argument("-n", type=int, default=4)
+    n.add_argument("--stage", action="store_true", help="append the batch to QUESTIONS.md for review")
     a = ap.parse_args()
     if a.cmd == "seed":
         doc = seed()
@@ -92,6 +95,24 @@ def main() -> int:
     elif a.cmd == "set":
         it = set_verdict(a.id, a.verdict, a.note)
         print(f"{it['id']}: {it['verdict']}  ({it['title'][:60]})")
+    elif a.cmd == "next":
+        doc = json.loads(OUT.read_text(encoding="utf-8"))
+        batch = [i for i in doc["items"] if not i["verdict"]][:a.n]
+        if not batch:
+            print("all decided — no open items")
+            return 0
+        lines = [f"- **#{i['id']} [{i['section']}] {i['title']}** — {i['what'][:140]}"
+                 f"  _(proposed: {i['claude_rec'][:80] or 'FIX'})_" for i in batch]
+        block = "\n".join(lines)
+        print(f"next {len(batch)} open audit decisions (§7):\n{block}")
+        if a.stage:
+            q = ROOT / "QUESTIONS.md"
+            stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+            hdr = (f"\n### Audit batch staged {stamp} — items #{batch[0]['id']}-#{batch[-1]['id']} "
+                   f"(confirm with: python -m src.audit_decisions set <id> <verdict>)\n")
+            with open(q, "a", encoding="utf-8") as fh:
+                fh.write(hdr + block + "\n")
+            print(f"staged {len(batch)} items -> {q}")
     else:
         doc = json.loads(OUT.read_text(encoding="utf-8"))
         counts: dict = {}

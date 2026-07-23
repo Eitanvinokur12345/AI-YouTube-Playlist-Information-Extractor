@@ -93,11 +93,16 @@ def recall(query: str, k: int = 8) -> dict:
     for store, text, cite in _records():
         overlap = len(q & _tok(text))
         if overlap:
-            scored.append((overlap, store, cite))
+            scored.append((overlap, cite.get("at", ""), store, cite))
             per_store[store] = per_store.get(store, 0) + 1
-    scored.sort(key=lambda x: -x[0])
-    hits = [{"store": s, "score": sc, **cite} for sc, s, cite in scored[:k]]
-    return {"query": query, "stores_hit": per_store, "total_matches": len(scored), "hits": hits}
+    # Rank by keyword overlap, THEN by recency (newest 'at' first) as the tiebreaker — so an agent
+    # reading memory gets the FRESHEST relevant context, not whichever store happened to iterate
+    # first. ISO timestamps sort chronologically as strings; records without 'at' (hub/graph nodes)
+    # carry "" and fall to the bottom of a tie, below dated why-log / agent-log entries.
+    scored.sort(key=lambda x: (x[0], x[1]), reverse=True)
+    hits = [{"store": s, "score": sc, **cite} for sc, _at, s, cite in scored[:k]]
+    return {"query": query, "stores_hit": per_store, "total_matches": len(scored),
+            "ranking": "overlap, then recency", "hits": hits}
 
 
 def census() -> dict:

@@ -1,19 +1,46 @@
-# [Access's initiative] Implement a **high-contrast, always-visible skip button** styled like a button in the top-left corner of every page—test
+# [Access's initiative] Implement a high-contrast, always-visible skip button that's styled to look like a functional element, allowing discover
 
-> accessibility · task `access-s-initiative-impl-89382` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
+> accessibility · task `access-s-initiative-impl-77909` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
-**Approach:** Implement a high-contrast, always-visible skip button in the top-left corner of every page
-### Steps:
-1. **Modify the base HTML template**: Edit the `index.html` file to include a `button` element with a high-contrast background color and foreground color, positioned at the top-left corner of the page using CSS.
-2. **Add CSS styles**: Create a new CSS class (e.g., `.skip-button`) in the `styles.css` file, defining the button's appearance, position, and visibility, ensuring it meets WCAG 2.1 contrast guidelines.
-3. **Implement button functionality**: Write JavaScript code in the `script.js` file to handle the button's click event, allowing users to skip to the main content of the page.
-4. **Test and validate**: Use tools like Lighthouse, WAVE, and a screen reader to test the skip button's visibility, contrast, and functionality on different devices and browsers.
-5. **Commit and deploy changes**: Commit the modified files to the repository using Git and deploy the updated code to the production environment.
+```markdown
+**Approach:**
+Implement a persistent, high-contrast skip link styled as a functional UI element, positioned to remain visible and accessible during all interactions.
+
+**Steps:**
+1. **Add HTML Skip Button**
+   Insert `<a href="#main-content" class="skip-link">Skip to content</a>` as the first element in `<body>`.
+   *File:* `src/index.html` (or equivalent root template).
+
+2. **Add CSS for High Contrast & Visibility**
+   Style `.skip-link` with:
+   ```css
+   .skip-link {
+     position: absolute;
+     top: 0;
+     left: 0;
+     background: #000;
+     color: #fff;
+     padding: 0.5rem 1rem;
+     z-index: 9999;
+     transform: translateY(-100%);
+     transition: transform 0.3s;
+   }
+   .skip-link:focus {
+     transform: translateY(0);
+   }
+   ```
+   *File:* `src/styles/main.css` (or project CSS entry).
+
+3. **Add JavaScript for Persistence**
+   Ensure skip link remains visible if JS is enabled (fallback to static high-contrast button if JS disabled).
+   *File:* `src/scripts/skip-link.js` (or existing JS bundle).
+
+4. **Test with Screen Reader & Keyboard**
+   Verify:
+   - Tab order includes skip link.
+   - Screen reader announces it.
+   - Focus styles meet WCAG 2.1 AA contrast (4.5:1 for text).
 
 **Needs:**
-* Access to the `index.html`, `styles.css`, and `script.js` files
-* A code editor (e.g., Visual Studio Code)
-* Git version control system
-* Lighthouse and WAVE accessibility testing tools
-* A screen reader (e.g., NVDA) for testing
-* Deployment access to the production environment
+- **Tooling:** Git, text editor (VS Code/Vim), browser dev tools.
+- **Access:** Screen reader (

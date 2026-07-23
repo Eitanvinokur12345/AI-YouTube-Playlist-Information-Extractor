@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-22T22:15:52.204894+00:00",
+ "generated_at": "2026-07-23T00:12:37.430568+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -101,19 +101,19 @@
     "tier": "fast"
    },
    "support": {
-    "engine": "nvidia",
-    "model": "meta/llama-3.3-70b-instruct",
-    "lineage": "llama",
+    "engine": "gemini",
+    "model": "gemini-2.0-flash",
+    "lineage": "gemini",
     "tier": "grounded"
    }
   },
   {
    "id": "C",
    "lead": {
-    "engine": "gh-models",
-    "model": "openai/gpt-4o-mini",
-    "lineage": "gpt",
-    "tier": "grounded"
+    "engine": "deepseek",
+    "model": "deepseek/deepseek-chat-v3-0324:free",
+    "lineage": "deepseek",
+    "tier": "reasoning"
    },
    "support": {
     "engine": "sambanova",
@@ -125,10 +125,10 @@
   {
    "id": "D",
    "lead": {
-    "engine": "gemini",
-    "model": "gemini-2.0-flash",
-    "lineage": "gemini",
-    "tier": "grounded"
+    "engine": "kimi",
+    "model": "moonshotai/kimi-k2:free",
+    "lineage": "kimi",
+    "tier": "reasoning"
    },
    "support": {
     "engine": "cerebras",
@@ -154,9 +154,6 @@
   "llama",
   "mistral"
  ],
- "spoke_today": {
-  "mistral": 180,
-  "llama": 17
- },
+ "spoke_today": {},
  "note": "a BRAIN = a benchmark-ranked LEAD model + a distinct-lineage SUPPORT model (levels of support, real fallback); rank is EARNED by measured quality, not the plan's list. The lineage roster below shows every model that can be a lead/support; GLM/DeepSeek/Kimi need OPENROUTER_API_KEY (§12)."
 }

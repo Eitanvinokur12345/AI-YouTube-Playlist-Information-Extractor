@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-22T23:32:22.284969+00:00",
+ "generated_at": "2026-07-23T03:39:57.347201+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,8 +8,8 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 240,
-   "rooms_7d": 25,
+   "turns_7d": 202,
+   "rooms_7d": 23,
    "engines_used": [
     "gh-models",
     "glm",
@@ -19,17 +19,16 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Reel’s ingest override still risks creating a new bottleneck—teams will rush to label everything “high-risk” at ingest t"
+   "last_position": "Data Protection’s override at ingest won’t work—teams will game the system by slapping “high-risk” labels on everything "
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 180,
-   "rooms_7d": 79,
+   "turns_7d": 158,
+   "rooms_7d": 75,
    "engines_used": [
-    "gh-models",
     "groq",
     "mistral"
    ],
@@ -41,24 +40,25 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 176,
-   "rooms_7d": 86,
+   "turns_7d": 158,
+   "rooms_7d": 84,
    "engines_used": [
     "gh-models",
     "glm",
     "groq",
-    "mistral"
+    "mistral",
+    "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Adopt **automated risk scoring at export time with a mandatory, time-boxed override by the data owner’s direct manager**"
+   "last_position": "We should adopt **automated risk scoring at export time with a mandatory, time-boxed override by the data owner's direct"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 163,
-   "rooms_7d": 61,
+   "turns_7d": 142,
+   "rooms_7d": 59,
    "engines_used": [
     "gh-models",
     "groq",
@@ -68,12 +68,27 @@
    "last_position": "Adopt **automated risk scoring at ingest with a mandatory override by the data owner’s direct manager**, enforced by Eng"
   },
   {
+   "id": "analysis-checker",
+   "name": "Sift",
+   "dept": "analysis",
+   "role": "checker",
+   "turns_7d": 105,
+   "rooms_7d": 22,
+   "engines_used": [
+    "glm",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Chisel’s plan outsources legal risk to managers who lack Data Protection expertise—mislabeling could still trigger fines"
+  },
+  {
    "id": "power-w1",
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 138,
-   "rooms_7d": 69,
+   "turns_7d": 97,
+   "rooms_7d": 49,
    "engines_used": [
     "gh-models",
     "glm",
@@ -88,8 +103,8 @@
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 138,
-   "rooms_7d": 69,
+   "turns_7d": 97,
+   "rooms_7d": 49,
    "engines_used": [
     "gh-models",
     "glm",
@@ -100,88 +115,12 @@
    "last_position": "Qwen3-235B-A22B-Instruct’s MoE latency claim ignores sharding overhead—if EXCAVA’s pipeline can’t keep all active expert"
   },
   {
-   "id": "analysis-checker",
-   "name": "Sift",
-   "dept": "analysis",
-   "role": "checker",
-   "turns_7d": 126,
-   "rooms_7d": 24,
-   "engines_used": [
-    "gh-models",
-    "glm",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Chisel’s plan outsources legal risk to managers who lack Data Protection expertise—mislabeling could still trigger fines"
-  },
-  {
-   "id": "accessibility-w1",
-   "name": "Ramp",
-   "dept": "accessibility",
-   "role": "doer",
-   "turns_7d": 74,
-   "rooms_7d": 37,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Add a single high-contrast skip link that only appears when focused, paired with a bright focus ring. This keeps the ski"
-  },
-  {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 74,
-   "rooms_7d": 37,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "The real risk is sighted keyboard users missing the skip link entirely—even when focused—because it’s invisible until ta"
-  },
-  {
-   "id": "creators-lead",
-   "name": "Nova",
-   "dept": "creators",
-   "role": "lead",
-   "turns_7d": 73,
-   "rooms_7d": 73,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Nova tests the \"UGC Factory\" npm package in the creators tab, verifying its functionality and output, to ensure "
-  },
-  {
-   "id": "creators-w1",
-   "name": "Forge",
-   "dept": "creators",
-   "role": "doer",
-   "turns_7d": 73,
-   "rooms_7d": 73,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will draft the \"UGC Factory\" npm package in the creators tab, labeled \"Created by EXCAVA.\" This will produce a ready-t"
-  },
-  {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 72,
-   "rooms_7d": 72,
+   "turns_7d": 68,
+   "rooms_7d": 68,
    "engines_used": [
     "gh-models",
     "groq",
@@ -190,23 +129,6 @@
    "positions_held": 30,
    "last_position": "ACTION: Query kimtaeyoon83/mcp-server-youtube-transcript via residential IP for the first pending video’s full caption f",
    "proposed": 2
-  },
-  {
-   "id": "power-lead",
-   "name": "Dynamo",
-   "dept": "power",
-   "role": "lead",
-   "turns_7d": 70,
-   "rooms_7d": 70,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Adopt Llama-3.3-70B-Instruct for EXCAVA—run a 24-hour blind A/B test against Qwen3-235B-A22B-Instruct to confi",
-   "proposed": 36,
-   "shipped": 36
   },
   {
    "id": "visual-lead",
@@ -240,66 +162,6 @@
    "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section. This produces a taste material "
   },
   {
-   "id": "mining-lead",
-   "name": "Boulder",
-   "dept": "mining",
-   "role": "lead",
-   "turns_7d": 65,
-   "rooms_7d": 65,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of 10 with names, descriptions, st"
-  },
-  {
-   "id": "mining-w1",
-   "name": "Pick",
-   "dept": "mining",
-   "role": "doer",
-   "turns_7d": 65,
-   "rooms_7d": 65,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll run a Reddit search for AI-related posts in the last 7 days and return the top 10 most engaging threads with their "
-  },
-  {
-   "id": "visualization-w1",
-   "name": "Facet",
-   "dept": "visualization",
-   "role": "doer",
-   "turns_7d": 64,
-   "rooms_7d": 33,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Ship a live contrast checker that runs after every major design change. It flags low-contrast elements in real time, so "
-  },
-  {
-   "id": "visualization-checker",
-   "name": "Pane",
-   "dept": "visualization",
-   "role": "checker",
-   "turns_7d": 64,
-   "rooms_7d": 33,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "The live contrast checker risks training designers to ignore warnings like seatbelt chimes—if every minor tweak triggers"
-  },
-  {
    "id": "watch-lead",
    "name": "Iris",
    "dept": "watch",
@@ -313,6 +175,139 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: At 11:42:00, Iris directs Arcads AI Video to execute the Arcads Claude Code Skill — Arcads AI Video — Agent Skil"
+  },
+  {
+   "id": "visualization-w1",
+   "name": "Facet",
+   "dept": "visualization",
+   "role": "doer",
+   "turns_7d": 60,
+   "rooms_7d": 30,
+   "engines_used": [
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "We should implement a pre-commit hook that blocks merges for severe contrast violations, as this approach balances enfor"
+  },
+  {
+   "id": "visualization-checker",
+   "name": "Pane",
+   "dept": "visualization",
+   "role": "checker",
+   "turns_7d": 60,
+   "rooms_7d": 30,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The pre-commit hook blocks merges but risks slowing designers who need to iterate fast—blocking a merge isn’t the same a"
+  },
+  {
+   "id": "accessibility-w1",
+   "name": "Ramp",
+   "dept": "accessibility",
+   "role": "doer",
+   "turns_7d": 56,
+   "rooms_7d": 28,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Add a single high-contrast skip link that only appears when focused, paired with a bright focus ring. This keeps the ski"
+  },
+  {
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
+   "role": "checker",
+   "turns_7d": 56,
+   "rooms_7d": 28,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The real risk is sighted keyboard users missing the skip link entirely—even when focused—because it’s invisible until ta"
+  },
+  {
+   "id": "creators-lead",
+   "name": "Nova",
+   "dept": "creators",
+   "role": "lead",
+   "turns_7d": 54,
+   "rooms_7d": 54,
+   "engines_used": [
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Nova tests the \"UGC Factory\" npm package in the creators tab, verifies its functionality, and outputs a report o"
+  },
+  {
+   "id": "creators-w1",
+   "name": "Forge",
+   "dept": "creators",
+   "role": "doer",
+   "turns_7d": 54,
+   "rooms_7d": 54,
+   "engines_used": [
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "I will draft the \"UGC Factory\" npm package in the creators tab, labeled \"Created by EXCAVA\", to produce a customizable C"
+  },
+  {
+   "id": "mining-lead",
+   "name": "Boulder",
+   "dept": "mining",
+   "role": "lead",
+   "turns_7d": 53,
+   "rooms_7d": 53,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of 10 with names, descriptions, st"
+  },
+  {
+   "id": "mining-w1",
+   "name": "Pick",
+   "dept": "mining",
+   "role": "doer",
+   "turns_7d": 53,
+   "rooms_7d": 53,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll run a Reddit search for AI-related posts in the last 7 days and return the top 10 most engaging threads with their "
+  },
+  {
+   "id": "power-lead",
+   "name": "Dynamo",
+   "dept": "power",
+   "role": "lead",
+   "turns_7d": 49,
+   "rooms_7d": 49,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Adopt Llama-3.3-70B-Instruct for EXCAVA—run a 24-hour blind A/B test against Qwen3-235B-A22B-Instruct to confi",
+   "proposed": 28,
+   "shipped": 28
   },
   {
    "id": "improve-w1",
@@ -344,23 +339,6 @@
    "last_position": "Shadow testing replays traffic but misses the real risk: it only catches mismatches in *output*, not in *behavior*—like "
   },
   {
-   "id": "accessibility-lead",
-   "name": "Access",
-   "dept": "accessibility",
-   "role": "lead",
-   "turns_7d": 36,
-   "rooms_7d": 36,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Implement a **high-contrast, always-visible skip button** styled like a button in the top-left corner of every",
-   "proposed": 27,
-   "shipped": 27
-  },
-  {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
@@ -381,11 +359,9 @@
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 32,
-   "rooms_7d": 32,
+   "turns_7d": 29,
+   "rooms_7d": 29,
    "engines_used": [
-    "gh-models",
-    "groq",
     "mistral"
    ],
    "positions_held": 30,
@@ -394,34 +370,20 @@
    "shipped": 29
   },
   {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
+   "id": "accessibility-lead",
+   "name": "Access",
+   "dept": "accessibility",
    "role": "lead",
-   "turns_7d": 25,
-   "rooms_7d": 25,
+   "turns_7d": 28,
+   "rooms_7d": 28,
    "engines_used": [
-    "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Warden runs LLM Guard scanner on this conversation’s input/output stream; output is a security report flagging a"
-  },
-  {
-   "id": "security-w1",
-   "name": "Warden",
-   "dept": "security",
-   "role": "doer",
-   "turns_7d": 25,
-   "rooms_7d": 25,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will run the LLM Guard scanner on this conversation’s input/output stream to detect leaks, injection, or tampering. Th"
+   "last_position": "DECISION: Implement a high-contrast, always-visible skip button that's styled to look like a functional element, allowin",
+   "proposed": 28,
+   "shipped": 27
   },
   {
    "id": "improve-lead",
@@ -484,6 +446,33 @@
    ],
    "positions_held": 30,
    "last_position": "I will fetch the latest AI headlines from Reuters, BBC, and the White House using the real-time news tool. This will pro"
+  },
+  {
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
+   "turns_7d": 15,
+   "rooms_7d": 15,
+   "engines_used": [
+    "gh-models",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Warden runs LLM Guard scanner on this conversation’s input/output stream; output is a security report flagging a"
+  },
+  {
+   "id": "security-w1",
+   "name": "Warden",
+   "dept": "security",
+   "role": "doer",
+   "turns_7d": 15,
+   "rooms_7d": 15,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I will run the LLM Guard scanner on this conversation’s input/output stream to detect leaks, injection, or tampering. Th"
   },
   {
    "id": "news-lead",

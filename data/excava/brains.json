@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-23T12:02:57.280983+00:00",
+ "generated_at": "2026-07-23T14:30:19.150300+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -80,20 +80,35 @@
   {
    "id": "A",
    "lead": {
+    "engine": "groq",
+    "model": "llama-3.3-70b-versatile",
+    "lineage": "llama",
+    "tier": "fast"
+   },
+   "support": {
+    "engine": "glm",
+    "model": "z-ai/glm-4.5-air:free",
+    "lineage": "glm",
+    "tier": "grounded"
+   }
+  },
+  {
+   "id": "B",
+   "lead": {
     "engine": "mistral",
     "model": "mistral-small-latest",
     "lineage": "mistral",
     "tier": "fast"
    },
    "support": {
-    "engine": "gemini",
-    "model": "gemini-2.0-flash",
-    "lineage": "gemini",
+    "engine": "nvidia",
+    "model": "meta/llama-3.3-70b-instruct",
+    "lineage": "llama",
     "tier": "grounded"
    }
   },
   {
-   "id": "B",
+   "id": "C",
    "lead": {
     "engine": "gh-models",
     "model": "openai/gpt-4o-mini",
@@ -101,23 +116,8 @@
     "tier": "grounded"
    },
    "support": {
-    "engine": "groq",
-    "model": "llama-3.3-70b-versatile",
-    "lineage": "llama",
-    "tier": "fast"
-   }
-  },
-  {
-   "id": "C",
-   "lead": {
-    "engine": "kimi",
-    "model": "moonshotai/kimi-k2:free",
-    "lineage": "kimi",
-    "tier": "reasoning"
-   },
-   "support": {
-    "engine": "cerebras",
-    "model": "llama3.1-8b",
+    "engine": "sambanova",
+    "model": "Meta-Llama-3.3-70B-Instruct",
     "lineage": "llama",
     "tier": "fast"
    }
@@ -125,16 +125,16 @@
   {
    "id": "D",
    "lead": {
-    "engine": "deepseek",
-    "model": "deepseek/deepseek-chat-v3-0324:free",
-    "lineage": "deepseek",
-    "tier": "reasoning"
+    "engine": "gemini",
+    "model": "gemini-2.0-flash",
+    "lineage": "gemini",
+    "tier": "grounded"
    },
    "support": {
-    "engine": "glm",
-    "model": "z-ai/glm-4.5-air:free",
-    "lineage": "glm",
-    "tier": "grounded"
+    "engine": "cerebras",
+    "model": "llama3.1-8b",
+    "lineage": "llama",
+    "tier": "fast"
    }
   }
  ],

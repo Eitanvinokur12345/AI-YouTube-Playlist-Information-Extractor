@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-23T03:44:44.008173+00:00",
+ "generated_at": "2026-07-23T06:39:16.515513+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -80,44 +80,44 @@
   {
    "id": "A",
    "lead": {
+    "engine": "groq",
+    "model": "llama-3.3-70b-versatile",
+    "lineage": "llama",
+    "tier": "fast"
+   },
+   "support": {
+    "engine": "glm",
+    "model": "z-ai/glm-4.5-air:free",
+    "lineage": "glm",
+    "tier": "grounded"
+   }
+  },
+  {
+   "id": "B",
+   "lead": {
     "engine": "mistral",
     "model": "mistral-small-latest",
     "lineage": "mistral",
     "tier": "fast"
    },
    "support": {
-    "engine": "kimi",
-    "model": "moonshotai/kimi-k2:free",
-    "lineage": "kimi",
-    "tier": "reasoning"
-   }
-  },
-  {
-   "id": "B",
-   "lead": {
-    "engine": "sambanova",
-    "model": "Meta-Llama-3.3-70B-Instruct",
+    "engine": "nvidia",
+    "model": "meta/llama-3.3-70b-instruct",
     "lineage": "llama",
-    "tier": "fast"
-   },
-   "support": {
-    "engine": "gh-models",
-    "model": "openai/gpt-4o-mini",
-    "lineage": "gpt",
     "tier": "grounded"
    }
   },
   {
    "id": "C",
    "lead": {
-    "engine": "deepseek",
-    "model": "deepseek/deepseek-chat-v3-0324:free",
-    "lineage": "deepseek",
-    "tier": "reasoning"
+    "engine": "gh-models",
+    "model": "openai/gpt-4o-mini",
+    "lineage": "gpt",
+    "tier": "grounded"
    },
    "support": {
-    "engine": "groq",
-    "model": "llama-3.3-70b-versatile",
+    "engine": "sambanova",
+    "model": "Meta-Llama-3.3-70B-Instruct",
     "lineage": "llama",
     "tier": "fast"
    }
@@ -140,14 +140,14 @@
  ],
  "debate": [
   {
-   "engine": "mistral",
-   "lineage": "mistral",
-   "model": "mistral-small-latest"
-  },
-  {
    "engine": "sambanova",
    "lineage": "llama",
    "model": "Meta-Llama-3.3-70B-Instruct"
+  },
+  {
+   "engine": "mistral",
+   "lineage": "mistral",
+   "model": "mistral-small-latest"
   }
  ],
  "debate_lineages": [
@@ -155,8 +155,8 @@
   "mistral"
  ],
  "spoke_today": {
-  "llama": 5,
-  "mistral": 2
+  "mistral": 16,
+  "llama": 9
  },
  "note": "a BRAIN = a benchmark-ranked LEAD model + a distinct-lineage SUPPORT model (levels of support, real fallback); rank is EARNED by measured quality, not the plan's list. The lineage roster below shows every model that can be a lead/support; GLM/DeepSeek/Kimi need OPENROUTER_API_KEY (§12)."
 }

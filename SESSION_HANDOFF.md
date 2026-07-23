@@ -93,8 +93,19 @@ because the beat only had exhausted Gemini). Fixed + PROVEN end-to-end:
   the acted-on object) · THEN 7 Visualization+Power depts + 2 pitch conditions + pitch-monster (§J/§K/§M
   of EXCAVA_V2_ADDITIONS.md) · 8 M5 + breadth. Rule: "done" = a real artifact shown, never a rendered card.
 
-## 0d. THE END PLAN LOOP (2026-07-21, Fable — live build v120; continue HERE)
-**M2 UNDERWAY.** Sessions 8-10: 4 brain families in the engine CATALOG (GLM/DeepSeek/Kimi via
+## 0d. THE END PLAN LOOP (2026-07-23, Fable — live build v124; AWAY-WEEK, continue HERE)
+**AWAY-WEEK (from 2026-07-23):** Eitan is away ~1 week; loop runs via a **CronCreate hourly job
+(id 6893acc4, session-only, app must stay open)** — NOT ScheduleWakeup (that died on usage caps).
+Away rules in data/excava/away_mode.json: non-brain increments only, CLI-verify (no browser), stay
+in .claude/settings.json allowlist, batch questions to QUESTIONS.md, never AskUserQuestion. The
+GitHub beat is the 24/7 cloud floor regardless. ⚠ **C: DISK CRITICAL (~380 MB free, 99.8% full with
+Eitan's own files)** — the cloud beat is unaffected, but the LOCAL drain + this cron loop ship from
+C: and will FAIL if it hits 0. Eitan must free several GB. Since v120: brains reworked to LEAD+SUPPORT
+peers with complementary pairing (v122-124), spoke_today usage tally, phantom 'openrouter' engine
+removed (it's a transport not a model). **NEXT (non-brain):** M1/M3 polish, Hub, self-improve dept,
+deterministic enrichment, audit-backlog machinery, cleanup.
+
+**(prior, v120) M2 UNDERWAY.** Sessions 8-10: 4 brain families in the engine CATALOG (GLM/DeepSeek/Kimi via
 OpenRouter free + local Qwen/Llama); OpenRouter key VERIFIED (Eitan's secret OPENROUTER_API_KEY_REAL,
 workflows repointed, selftest 11/11, glm/deepseek/kimi all PASS); `engines.debate_engines(n)` dedups
 by model LINEAGE so a room debate crosses DISTINCT families (the 4 llama providers were correlated-

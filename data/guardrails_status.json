@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-23T10:43:17.807187+00:00",
+ "generated_at": "2026-07-23T12:10:31.102910+00:00",
  "total": 15,
  "passing": 12,
  "critical_failures": 0,
@@ -21,8 +21,8 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": false,
-   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
+   "ok": true,
+   "detail": "2 bundle(s); newest within 26h.",
    "severity": "warn"
   },
   {
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": true,
-   "detail": "HEAD == origin/main (work is really saved).",
+   "ok": false,
+   "detail": "NOT in sync (behind/ahead: 3\t1) — a push may not have landed.",
    "severity": "warn"
   },
   {
@@ -71,21 +71,21 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "4778 memory episodes on record.",
+   "detail": "4704 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "0 guardrail runs logged (append-only, never rewritten).",
+   "detail": "28 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
    "id": "G-L",
    "name": "Uncommitted-work watchdog",
-   "ok": false,
-   "detail": "18 untracked source file(s) not committed — commit or quarantine so nothing is lost: other-skills/figma/ux-design/SKILL.md, other-skills/stainless/automated-api-docs/SKILL.md, other-skills/stainless/update-sdk-all-languages/SKILL.md, other-skills/usertesting/user-research/SKILL.md",
+   "ok": true,
+   "detail": "no stray source files uncommitted.",
    "severity": "warn"
   },
   {
@@ -98,15 +98,15 @@
   {
    "id": "G-N",
    "name": "Disk headroom",
-   "ok": true,
-   "detail": "88904 MB free on the repo drive.",
-   "severity": "info"
+   "ok": false,
+   "detail": "LOW: 376 MB free — under the 1 GB comfort line; a big ship could fail.",
+   "severity": "warn"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": true,
-   "detail": "last batch 10.6h ago on EITAN-PC (llama3.2:3b): 12 enriched, stubs 1997",
+   "detail": "last batch 0.5h ago on EITAN-PC (qwen2.5:3b): 0 enriched, stubs 2006",
    "severity": "info"
   }
  ]

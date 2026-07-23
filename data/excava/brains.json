@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-23T06:39:16.515513+00:00",
+ "generated_at": "2026-07-23T09:36:04.837016+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -140,22 +140,28 @@
  ],
  "debate": [
   {
-   "engine": "sambanova",
+   "engine": "groq",
    "lineage": "llama",
-   "model": "Meta-Llama-3.3-70B-Instruct"
+   "model": "llama-3.3-70b-versatile"
   },
   {
    "engine": "mistral",
    "lineage": "mistral",
    "model": "mistral-small-latest"
+  },
+  {
+   "engine": "gh-models",
+   "lineage": "gpt",
+   "model": "openai/gpt-4o-mini"
   }
  ],
  "debate_lineages": [
+  "gpt",
   "llama",
   "mistral"
  ],
  "spoke_today": {
-  "mistral": 16,
+  "mistral": 21,
   "llama": 9
  },
  "note": "a BRAIN = a benchmark-ranked LEAD model + a distinct-lineage SUPPORT model (levels of support, real fallback); rank is EARNED by measured quality, not the plan's list. The lineage roster below shows every model that can be a lead/support; GLM/DeepSeek/Kimi need OPENROUTER_API_KEY (§12)."

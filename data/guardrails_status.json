@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-23T12:10:31.102910+00:00",
+ "generated_at": "2026-07-23T17:58:48.556026+00:00",
  "total": 15,
- "passing": 12,
+ "passing": 14,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -21,8 +21,8 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": true,
-   "detail": "2 bundle(s); newest within 26h.",
+   "ok": false,
+   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
    "severity": "warn"
   },
   {
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": false,
-   "detail": "NOT in sync (behind/ahead: 3\t1) — a push may not have landed.",
+   "ok": true,
+   "detail": "HEAD == origin/main (work is really saved).",
    "severity": "warn"
   },
   {
@@ -63,22 +63,22 @@
   {
    "id": "G-I",
    "name": "Handoff mentions live build",
-   "ok": false,
-   "detail": "handoff does not mention the live build (v124) — update §0d so no context is lost.",
+   "ok": true,
+   "detail": "SESSION_HANDOFF.md references v124.",
    "severity": "warn"
   },
   {
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "4704 memory episodes on record.",
+   "detail": "4752 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "28 guardrail runs logged (append-only, never rewritten).",
+   "detail": "0 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -92,21 +92,21 @@
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "1451 tasks done, 12 departments moving",
+   "detail": "1423 tasks done, 12 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
-   "ok": false,
-   "detail": "LOW: 376 MB free — under the 1 GB comfort line; a big ship could fail.",
-   "severity": "warn"
+   "ok": true,
+   "detail": "88890 MB free on the repo drive.",
+   "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": true,
-   "detail": "last batch 0.5h ago on EITAN-PC (qwen2.5:3b): 0 enriched, stubs 2006",
+   "detail": "last batch 1.0h ago on EITAN-PC (qwen2.5:3b): 1 enriched, stubs 2006",
    "severity": "info"
   }
  ]

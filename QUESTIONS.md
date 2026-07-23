@@ -8,7 +8,12 @@ _Per your rule: questions live here + in memory so they never block work or wast
 You're away ~1 week; the offline loop is running (non-brain fronts, hourly) and collecting questions HERE instead of asking. Every question I hit this period is appended below with the default I proceeded on. I'll present this whole list the moment you're back. Contract: `data/excava/away_mode.json`.
 
 ### Away-week questions
-_(none yet — I append here as they arise, and keep working on the default.)_
+
+**Overhaul audit — next decision batch (§7; items 5–8 of 122).** These are YOURS to decide; I did NOT auto-apply them — `data/excava/overhaul_decisions.json` stays OPEN. My proposed verdict on each (confirm or change with `python -m src.audit_decisions set <id> <verdict>`):
+- **#5 "Should I just buy Gemini Pro?"** → proposed **REMOVE the worry.** The free path (VPS + Ollama + the free model pool) is real and proven this week — 11/11 engines answered, four brain families live. Paying is unnecessary.
+- **#6 Direct in-app write to EXCAVA (no GitHub step)** → proposed **REBUILD.** Async-via-GitHub works now; true real-time in-app write needs the VPS (ties to A1, which you already KEEP'd).
+- **#7 API keys work offline / without your PC** → proposed **KEEP the answer (yes).** Proven this week: the cloud beat ran the keys 24/7 with your machine off; the VPS will too.
+- **#8 EXCAVATORTRON = HUB, EXCAVA = agents (naming)** → proposed **KEEP + lock everywhere.** This is the canonical naming and it's used consistently across the code and docs.
 
 ---
 

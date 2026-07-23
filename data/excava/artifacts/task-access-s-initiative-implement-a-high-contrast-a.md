@@ -1,46 +1,44 @@
-# [Access's initiative] Implement a high-contrast, always-visible skip button that's styled to look like a functional element, allowing discover
+# [Access's initiative] Implement a high-contrast, always-visible skip button that's styled like a small button, to ensure all users, including 
 
-> accessibility · task `access-s-initiative-impl-77909` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> accessibility · task `access-s-initiative-impl-78971` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
 ```markdown
 **Approach:**
-Implement a persistent, high-contrast skip link styled as a functional UI element, positioned to remain visible and accessible during all interactions.
+Add a fixed-position, high-contrast skip button to the top-left of every page, visible at all times, that skips to main content.
 
 **Steps:**
-1. **Add HTML Skip Button**
-   Insert `<a href="#main-content" class="skip-link">Skip to content</a>` as the first element in `<body>`.
-   *File:* `src/index.html` (or equivalent root template).
+1. **Create skip button HTML/CSS**
+   - Add `<a href="#main-content" class="skip-button">Skip to main content</a>` to the `<body>` start in `src/layouts/base.html`.
+   - Add CSS in `src/styles/skip-button.css`:
+     ```css
+     .skip-button {
+       position: fixed;
+       top: 0;
+       left: 0;
+       z-index: 9999;
+       padding: 8px 12px;
+       background: #000;
+       color: #fff;
+       font-size: 14px;
+       text-decoration: none;
+       border: 2px solid #fff;
+       border-radius: 4px;
+       margin: 8px;
+     }
+     .skip-button:focus {
+       outline: 2px solid #ff0;
+       outline-offset: 2px;
+     }
+     ```
+   - Import `skip-button.css` in `src/styles/main.css`.
 
-2. **Add CSS for High Contrast & Visibility**
-   Style `.skip-link` with:
-   ```css
-   .skip-link {
-     position: absolute;
-     top: 0;
-     left: 0;
-     background: #000;
-     color: #fff;
-     padding: 0.5rem 1rem;
-     z-index: 9999;
-     transform: translateY(-100%);
-     transition: transform 0.3s;
-   }
-   .skip-link:focus {
-     transform: translateY(0);
-   }
-   ```
-   *File:* `src/styles/main.css` (or project CSS entry).
+2. **Add target for skip button**
+   - Add `<main id="main-content" tabindex="-1"></main>` after `<header>` in `src/layouts/base.html`.
 
-3. **Add JavaScript for Persistence**
-   Ensure skip link remains visible if JS is enabled (fallback to static high-contrast button if JS disabled).
-   *File:* `src/scripts/skip-link.js` (or existing JS bundle).
-
-4. **Test with Screen Reader & Keyboard**
-   Verify:
-   - Tab order includes skip link.
-   - Screen reader announces it.
-   - Focus styles meet WCAG 2.1 AA contrast (4.5:1 for text).
+3. **Test high contrast & keyboard**
+   - Run `npx eslint --rule 'color-contrast: error'` to enforce WCAG 2.1 AA contrast.
+   - Manually test with screen reader (NVDA/JAWS) and keyboard tab navigation.
 
 **Needs:**
-- **Tooling:** Git, text editor (VS Code/Vim), browser dev tools.
-- **Access:** Screen reader (
+- `src/layouts/base.html` (must edit)
+-

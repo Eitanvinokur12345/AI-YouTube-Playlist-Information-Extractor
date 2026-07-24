@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-24T18:02:57.607454+00:00",
+ "generated_at": "2026-07-24T19:58:59.254207+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,8 +8,8 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 156,
-   "rooms_7d": 15,
+   "turns_7d": 158,
+   "rooms_7d": 17,
    "engines_used": [
     "gh-models",
     "glm",
@@ -18,22 +18,22 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "The real risk in Sift’s plan is that Data Protection’s override becomes a rubber stamp—teams will game the system by sla"
+   "last_position": "The real risk in Reel’s plan is that automated risk scoring becomes a black box that Data Protection can’t meaningfully "
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 134,
-   "rooms_7d": 67,
+   "turns_7d": 136,
+   "rooms_7d": 69,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt **automated risk scoring at ingest with a mandatory override by Data Protection**, enforced by Engineering. This e"
+   "last_position": "We should implement automated risk scoring during data ingestion with a mandatory override by the Data Protection team. "
   },
   {
    "id": "watch-w1",
@@ -151,8 +151,8 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 66,
-   "rooms_7d": 33,
+   "turns_7d": 67,
+   "rooms_7d": 34,
    "engines_used": [
     "gh-models",
     "groq",
@@ -160,21 +160,21 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Add a **high-contrast skip link** that appears *only* when focused, with a bold outline and a bright background that doe"
+   "last_position": "We should add a single high-contrast skip link at the top of every page that only appears when focused, allowing keyboar"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 66,
-   "rooms_7d": 33,
+   "turns_7d": 67,
+   "rooms_7d": 34,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is that a high-contrast skip link still risks blending into the page if the contrast isn’t *exactly* right"
+   "last_position": "The real risk is that a high-contrast skip link still risks blending into the page when focused, defeating its purpose. "
   },
   {
    "id": "transcripts-lead",
@@ -316,15 +316,16 @@
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 34,
-   "rooms_7d": 34,
+   "turns_7d": 35,
+   "rooms_7d": 35,
    "engines_used": [
     "gh-models",
+    "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Implement a dark theme by default with a persistent light-theme toggle, ensuring high visibility and control f",
-   "proposed": 32,
+   "last_position": "DECISION: We will default to system preference with a temporary high-contrast override that resets after each session an",
+   "proposed": 33,
    "shipped": 32
   },
   {
@@ -341,7 +342,7 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Implement a **bold, full-width skip bar** that appears only when focused, with high-contrast colors and no lay",
-   "proposed": 33,
+   "proposed": 32,
    "shipped": 32
   },
   {
@@ -390,6 +391,36 @@
    "last_position": "ACTION: Marrow manually reviews the full earnings call transcript and LangSmith traces to produce a decision-ready artif"
   },
   {
+   "id": "memory-lead",
+   "name": "Root",
+   "dept": "memory",
+   "role": "lead",
+   "turns_7d": 21,
+   "rooms_7d": 21,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Root links all prior memory IDs in this room to the Cross-AI Unified Memory and integrates them into the brain g"
+  },
+  {
+   "id": "memory-w1",
+   "name": "Graft",
+   "dept": "memory",
+   "role": "doer",
+   "turns_7d": 21,
+   "rooms_7d": 21,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I will run the memory linking command to connect every existing memory ID in this thread to the unified memory system, e"
+  },
+  {
    "id": "news-w1",
    "name": "Scoop",
    "dept": "news",
@@ -403,36 +434,6 @@
    ],
    "positions_held": 30,
    "last_position": "I will fetch the latest AI headlines from Reuters, BBC, and the White House. This will produce an updated digest of curr"
-  },
-  {
-   "id": "memory-lead",
-   "name": "Root",
-   "dept": "memory",
-   "role": "lead",
-   "turns_7d": 20,
-   "rooms_7d": 20,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Root links all existing memory IDs from this conversation to the Hindsight memory database, embedding them in th"
-  },
-  {
-   "id": "memory-w1",
-   "name": "Graft",
-   "dept": "memory",
-   "role": "doer",
-   "turns_7d": 20,
-   "rooms_7d": 20,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will run the memory linking command to connect every existing memory ID within this conversation to the Hindsight memo"
   },
   {
    "id": "news-lead",
@@ -454,27 +455,28 @@
    "name": "Bastion",
    "dept": "security",
    "role": "lead",
-   "turns_7d": 15,
-   "rooms_7d": 15,
+   "turns_7d": 16,
+   "rooms_7d": 16,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Warden runs LLM Guard scanner on this conversation’s input/output stream; output is a security report flagging a"
+   "last_position": "ACTION: Warden runs LLM Guard scanner on this conversation’s input/output stream; output: report flagging any hostile, f"
   },
   {
    "id": "security-w1",
    "name": "Warden",
    "dept": "security",
    "role": "doer",
-   "turns_7d": 15,
-   "rooms_7d": 15,
+   "turns_7d": 16,
+   "rooms_7d": 16,
    "engines_used": [
+    "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will run the LLM Guard scanner on this conversation’s input/output stream to detect leaks, injection, or tampering. Th"
+   "last_position": "I will run the LLM Guard scanner on this conversation's input/output stream to detect any potential security leaks or in"
   },
   {
    "id": "improve-lead",

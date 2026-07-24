@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v124";
+const APP_BUILD = "v125";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -169,7 +169,7 @@ function elementActions(e, always) {
   const warm = _ewarm && _ewarm[e.id];
   const vid = (e.source_videos || [])[0];
   const acts = [];
-  acts.push(`<button class="primary" data-el-activate="${esc(e.id)}" title="Copy the activation recipe (full setup lands in M4)">⚡ Activate</button>`);
+  acts.push(`<button class="primary" data-el-activate="${esc(e.id)}" title="Copy the ready-to-use payload for this element — the prompt text, a paste-ready MCP config, or the setup + repo">⚡ Activate</button>`);
   acts.push(`<button data-el-open="${esc(e.id)}" title="${warm ? "Pre-warmed — opens instantly" : "Derives a runnable target (<10s)"}">${warm ? "🟢" : "🥞"} Open</button>`);
   acts.push(`<a target="_blank" href="${_exIssue("EXCAVA: use " + e.name + " for a task", "Element: " + e.id)}" title="Send to the EXCAVA console as a task">🦾 Use for a task</a>`);
   if (vid) acts.push(`<a target="_blank" href="${yt(vid)}">▶ Video</a>`);
@@ -196,17 +196,69 @@ async function elOpen(id, btn) {
     : (links.website || links.source_url || "");
   setTimeout(() => { btn.innerHTML = old; if (target) window.open(target, "_blank"); }, 600);
 }
+/*<<ACTIVATION>>*/
+// Type-aware ACTIVATION payload (M1.4 · items 14/16 "6 element types USABLE, not links"):
+// hand back the ONE thing you actually need for THIS element type, paste-ready —
+//   prompt/command → the raw text you paste into your AI
+//   connector      → a paste-ready MCP-server config skeleton + the repo holding the exact command
+//   skill/tool/…   → a clean setup card (what it is · install · real repo/site links)
+// Pure (no DOM / no globals) so it is unit-tested headless in scratchpad/test_activation.mjs.
+function _slug(s) { return String(s || "server").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 40) || "server"; }
+function _cleanLine(s) {
+  return String(s || "").replace(/!\[[^\]]*\]\([^)]*\)/g, "").replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/[#>*`|]+/g, " ").replace(/\s+/g, " ").trim().slice(0, 200);
+}
+// Best-effort MCP launch command from a REAL install string; null when we can't know it honestly
+// (→ the config gets a clearly-labelled placeholder instead of a fabricated command).
+function _mcpCmd(inst) {
+  const m = String(inst || "").trim().match(/\b(npx|uvx|uv|pnpm|bunx|docker|python|node)\b[^\n]*/i);
+  if (!m) return null;
+  // Strip trailing prose annotations so they don't become fake args:
+  //   "npx @playwright/mcp (open-source)" · "uvx foo — needs a key" · "npx bar, then configure"
+  const line = m[0].split(/\s+[—–-]\s+/)[0].split(/[,;]/)[0].replace(/\s*\([^)]*\)\s*/g, " ").trim();
+  const p = line.split(/\s+/).filter(Boolean);
+  return p.length ? { command: p[0], args: p.slice(1) } : null;
+}
+function activationRecipe(e) {
+  const L = (e && e.links) || {}, t = (e && e.type) || "";
+  const gh = L.github || (/github\.com/.test(L.website || "") ? L.website : "") || (/github\.com/.test(L.source_url || "") ? L.source_url : "");
+  const site = (L.website && !/github\.com/.test(L.website)) ? L.website : "";
+  const src = L.source_url || "";
+  const inst = (e && (e.install || e.install_or_source)) || "";
+  // PROMPT / COMMAND — the payload IS the text you paste (commands store the text in `name`).
+  if (t === "prompt" || t === "command") {
+    const text = ((e.body || "").trim()) || (t === "command" ? (e.name || "").trim() : "") || (e.what || "").trim() || (e.name || "");
+    return { label: t, kind: "paste", text, note: "Paste this straight into your AI." };
+  }
+  // CONNECTOR (MCP server) — paste-ready config skeleton + the repo that holds the exact command.
+  if (t === "connector") {
+    const cmd = _mcpCmd(inst);
+    const cfg = { mcpServers: { [_slug(e.name)]: cmd ? { command: cmd.command, args: cmd.args } : { command: "npx", args: ["-y", "<package — see the repo README>"] } } };
+    const text = [`// MCP server: ${e.name}`,
+      gh ? `// Repo (the exact run command is in its README): ${gh}` : "",
+      inst ? `// Install: ${inst}` : "",
+      cmd ? "" : "// NOTE: fill command/args from the repo before saving this.",
+      JSON.stringify(cfg, null, 2)].filter(Boolean).join("\n");
+    return { label: "MCP config", kind: "mcp", text, note: "Add to your MCP client config; confirm the command from the repo." };
+  }
+  // SKILL / TOOL / MODEL / DESIGN / FORMAT — a clean setup card.
+  const lines = [`# ${e.name} — ${t}`];
+  const w = _cleanLine(e.what); if (w) lines.push(`# ${w}`);
+  if (inst) lines.push(inst);
+  if (gh) lines.push(`# Repo: ${gh}`);
+  if (site) lines.push(`# Site: ${site}`);
+  if (!inst && !gh && !site && src) lines.push(`# Source: ${src}`);
+  return { label: "setup", kind: "setup", text: lines.filter(Boolean).join("\n"), note: gh ? "Open the repo, then run the install." : "" };
+}
+/*<</ACTIVATION>>*/
 function elActivate(id, btn) {
   const e = _eidx && _eidx.byId[id];
   if (!e) return;
-  const recipe = [`# Activate: ${e.name} (${e.type}) — from Excavatortron`,
-    e.what ? `# What: ${e.what}` : "",
-    e.install ? `${e.install}` : "",
-    e.body ? e.body : "",
-    (e.links || {}).github ? `# Repo: ${e.links.github}` : "",
-    (e.links || {}).website ? `# Site: ${e.links.website}` : ""].filter(Boolean).join("\n");
-  try { navigator.clipboard.writeText(recipe); } catch (_) {}
-  const t = btn.textContent; btn.textContent = "✓ copied recipe"; setTimeout(() => { btn.textContent = t; }, 1400);
+  const r = activationRecipe(e);
+  try { navigator.clipboard.writeText(r.text); } catch (_) {}
+  const t = btn.textContent, ot = btn.title;
+  btn.textContent = "✓ " + r.label + " copied"; if (r.note) btn.title = r.note;
+  setTimeout(() => { btn.textContent = t; btn.title = ot; }, 1600);
 }
 // One delegated handler for every action row on any tab
 document.addEventListener("click", (ev) => {

@@ -93,7 +93,7 @@ because the beat only had exhausted Gemini). Fixed + PROVEN end-to-end:
   the acted-on object) · THEN 7 Visualization+Power depts + 2 pitch conditions + pitch-monster (§J/§K/§M
   of EXCAVA_V2_ADDITIONS.md) · 8 M5 + breadth. Rule: "done" = a real artifact shown, never a rendered card.
 
-## 0d. THE END PLAN LOOP (2026-07-23, Fable — live build v124; AWAY-WEEK, continue HERE)
+## 0d. THE END PLAN LOOP (2026-07-24, Opus fire — live build v125; AWAY-WEEK, continue HERE)
 **⭐ REPO NOW ON D:\AI-YouTube-Skills** (migrated 2026-07-23 off the chronically-full C:; D: has 458 GB
 free). Fresh clone from GitHub, allowlist recreated, drain re-pointed to D:, `git_safe sync` verified
 from D:. The C:\Users\eitan\AI-YouTube-Skills copy is a STALE BACKUP. This commit was shipped FROM D:
@@ -108,6 +108,20 @@ C: and will FAIL if it hits 0. Eitan must free several GB. Since v120: brains re
 peers with complementary pairing (v122-124), spoke_today usage tally, phantom 'openrouter' engine
 removed (it's a transport not a model). **NEXT (non-brain):** M1/M3 polish, Hub, self-improve dept,
 deterministic enrichment, audit-backlog machinery, cleanup.
+
+**LOOP FIRE v125 (2026-07-24, Opus — type-aware Activate: a HUB usability win, deliberately NOT more
+meta-machinery.)** The prior 3 away fires shipped observability (logger→digest→pulse), which their own
+criticism flagged as "meta-machinery, not product." This one is real product per items 14/16 "6 element
+types USABLE, not links": `elActivate` dumped one generic blob for every element; now the pure
+`activationRecipe(e)` (docs/dashboard.js, marked `/*<<ACTIVATION>>*/`) hands back the ONE paste-ready
+thing per type — prompt/command → the raw text (594/594 prompts verbatim, 759 commands via `name` since
+0 carry a body); connector → a paste-ready **MCP-server JSON config** + the repo holding the exact
+command (1,370/1,370 valid JSON, 928 cite their repo, `_mcpCmd` strips "(open-source)"-style prose so 0
+polluted args); skill/tool/model/design/format → a clean setup card. Verified headless over ALL 10,133
+elements via scratchpad/test_activation.mjs (ALL PASS), not the browser (away-rule). **Still stalled
+(brain-gated → for Eitan's return):** the local drain enriches 0 (G-O) because deep_retrieve rides the
+brains subsystem away-mode won't touch. **NEXT (non-brain):** surface the same MCP config in the element
+DETAIL view; add a "ready to use" hub filter (has-link AND enriched); M3 polish.
 
 **(prior, v120) M2 UNDERWAY.** Sessions 8-10: 4 brain families in the engine CATALOG (GLM/DeepSeek/Kimi via
 OpenRouter free + local Qwen/Llama); OpenRouter key VERIFIED (Eitan's secret OPENROUTER_API_KEY_REAL,

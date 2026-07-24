@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-24T19:58:59.254207+00:00",
+ "generated_at": "2026-07-24T21:41:35.774669+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -57,23 +57,23 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 106,
-   "rooms_7d": 38,
+   "turns_7d": 108,
+   "rooms_7d": 40,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt **automated risk scoring at ingest with a mandatory override by Data Protection**, enforced by Engineering. This c"
+   "last_position": "Adopt **mandatory Data Protection sign-off on the automated risk scoring model before any data is ingested**. This ensur"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 82,
-   "rooms_7d": 14,
+   "turns_7d": 84,
+   "rooms_7d": 16,
    "engines_used": [
     "glm",
     "groq",
@@ -81,7 +81,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is that Data Protection’s mandatory override at ingest becomes a bottleneck—teams will game the system by "
+   "last_position": "Chisel’s plan outsources legal risk to Data Protection by making them the sole sign-off on the scoring model—if the mode"
   },
   {
    "id": "power-w1",
@@ -151,7 +151,7 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 67,
+   "turns_7d": 68,
    "rooms_7d": 34,
    "engines_used": [
     "gh-models",
@@ -160,21 +160,21 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "We should add a single high-contrast skip link at the top of every page that only appears when focused, allowing keyboar"
+   "last_position": "Add a **persistent, high-contrast skip link** at the top of every page, styled to always stand out against the backgroun"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 67,
+   "turns_7d": 68,
    "rooms_7d": 34,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is that a high-contrast skip link still risks blending into the page when focused, defeating its purpose. "
+   "last_position": "The real risk is that a persistent skip link clutters the top of every page, breaking visual flow for sighted users who "
   },
   {
    "id": "transcripts-lead",
@@ -326,7 +326,7 @@
    "positions_held": 30,
    "last_position": "DECISION: We will default to system preference with a temporary high-contrast override that resets after each session an",
    "proposed": 33,
-   "shipped": 32
+   "shipped": 33
   },
   {
    "id": "accessibility-lead",
@@ -350,29 +350,29 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 28,
-   "rooms_7d": 14,
+   "turns_7d": 29,
+   "rooms_7d": 15,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run a shadow test first: replay 100% of real user traffic through the new prompt engine in parallel, compare outputs to "
+   "last_position": "Run a shadow test first: replay 100% of real user traffic through the new prompt engine without affecting responses. Thi"
   },
   {
    "id": "improve-checker",
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 28,
-   "rooms_7d": 14,
+   "turns_7d": 29,
+   "rooms_7d": 15,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Shadow testing replays traffic but misses the real risk: it only catches mismatches in *output*, not in *behavior*—like "
+   "last_position": "Shadow testing replays traffic but misses the real risk: silent failures only surface when users interact with the new s"
   },
   {
    "id": "analysis-lead",
@@ -455,28 +455,28 @@
    "name": "Bastion",
    "dept": "security",
    "role": "lead",
-   "turns_7d": 16,
-   "rooms_7d": 16,
+   "turns_7d": 17,
+   "rooms_7d": 17,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Warden runs LLM Guard scanner on this conversation’s input/output stream; output: report flagging any hostile, f"
+   "last_position": "ACTION: Warden runs LLM Guard scanner on this conversation’s input/output stream; report generated — no injection/leakag"
   },
   {
    "id": "security-w1",
    "name": "Warden",
    "dept": "security",
    "role": "doer",
-   "turns_7d": 16,
-   "rooms_7d": 16,
+   "turns_7d": 17,
+   "rooms_7d": 17,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will run the LLM Guard scanner on this conversation's input/output stream to detect any potential security leaks or in"
+   "last_position": "I will run the LLM Guard scanner on this conversation’s input/output stream to detect any injection or leakage risks. Th"
   },
   {
    "id": "improve-lead",

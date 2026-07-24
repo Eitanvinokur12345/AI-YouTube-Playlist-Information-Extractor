@@ -4,6 +4,9 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+## 2026-07-24
+- **~18:00 (fire 5, unattended)** — Shipped `src/pulse.py` → **PULSE.md** + `pulse.json`: one-glance "is it actually working?" status that federates guardrails, movement, drain, open questions, the away-log and recent commits into a single file at the repo root (open it, no server). It refuses to cheerlead — the first run surfaced a HIDDEN regression the green dashboard hid: the done-counter has fallen 1566→1256 over three days while "depts moving" sat flat at 12. Commit `24f0a3bb5`.
+
 ## 2026-07-23
 - **~16:59 (fire 4, 2nd unattended)** — Added `python -m src.audit_decisions next [--stage]`: prints the next open §7 decision batch with proposed verdicts, and `--stage` appends it to QUESTIONS.md — so staging the 118 open decisions is one deterministic command instead of hand-writing each batch. Verified via CLI: prints items 5–8.
 - **~16:44 (fire 3, first true unattended fire — always-allow confirmed)** — Improved `memory_brain.recall`: it ranked only by keyword overlap, so ties fell back to store-iteration order and stale context could outrank fresh. Now the tiebreaker is RECENCY (newest `at` first), so agents reading the one-brain get the freshest relevant memory. Verified via CLI: equal-score hits now order Jul 23 → Jul 22 → Jul 11.

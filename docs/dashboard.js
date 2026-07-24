@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v125";
+const APP_BUILD = "v126";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -250,6 +250,13 @@ function activationRecipe(e) {
   if (!inst && !gh && !site && src) lines.push(`# Source: ${src}`);
   return { label: "setup", kind: "setup", text: lines.filter(Boolean).join("\n"), note: gh ? "Open the repo, then run the install." : "" };
 }
+// M1 hub: is this element ACTIONABLE right now? (drives the "ready to use" hub filter — items 16/21)
+// prompt/command carry paste-text; every other type needs a real link or install anchor, not a bare stub.
+function elReady(e) {
+  const t = (e && e.type) || "", L = (e && e.links) || {};
+  if (t === "prompt" || t === "command") return !!(((e.body || "").trim()) || ((e.name || "").trim()));
+  return !!(L.github || L.website || L.source_url || (e && (e.install || e.install_or_source)));
+}
 /*<</ACTIVATION>>*/
 function elActivate(id, btn) {
   const e = _eidx && _eidx.byId[id];
@@ -336,6 +343,7 @@ async function renderHub() {
   let list = all;
   if (typeF !== "all") list = list.filter(e => e.type === typeF);
   if (statusF !== "all") list = list.filter(e => ((e.verified || {}).status || "unverified") === statusF);
+  if (state.hubReady) list = list.filter(elReady);
   if (query) list = list.filter(e =>
     (e.name + " " + (e.what || "") + " " + (e.category || "") + " " + e.type).toLowerCase().includes(query));
   const rank = { verified: 0, niche: 1, unverified: 2, dead: 3 };
@@ -346,9 +354,10 @@ async function renderHub() {
     `<button class="qr-btn${on ? " on" : ""}" ${attr}="${val}" style="${on ? "background:var(--gold);border-color:var(--gold-line);color:#1a1205" : ""}">${label}</button>`;
   const nVer = all.filter(e => (e.verified || {}).status === "verified").length;
   const nNiche = all.filter(e => (e.verified || {}).status === "niche").length;
+  const nReady = all.filter(elReady).length;
   view.innerHTML = `
     <div class="card" style="border-top:3px solid var(--gold)">
-      <h3>🛢 The Hub <span class="sub">— the whole library, one place · <b>${all.length.toLocaleString()}</b> elements · ${nVer.toLocaleString()} verified · ${nNiche.toLocaleString()} niche · type the search box above to filter</span></h3>
+      <h3>🛢 The Hub <span class="sub">— the whole library, one place · <b>${all.length.toLocaleString()}</b> elements · ${nVer.toLocaleString()} verified · ${nNiche.toLocaleString()} niche · <b>${nReady.toLocaleString()}</b> ready to use · type the search box above to filter</span></h3>
       <div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 4px">
         ${chip("data-hubtype", "all", `All types (${all.length.toLocaleString()})`, typeF === "all")}
         ${types.map(t => chip("data-hubtype", t, `${_exIcon(t)} ${t} (${tCounts[t]})`, typeF === t)).join("")}
@@ -358,6 +367,8 @@ async function renderHub() {
         ${chip("data-hubstatus", "verified", "✓ verified", statusF === "verified")}
         ${chip("data-hubstatus", "niche", "◆ niche", statusF === "niche")}
         ${chip("data-hubstatus", "unverified", "unverified", statusF === "unverified")}
+        <span style="width:1px;background:var(--line);margin:0 2px"></span>
+        ${chip("data-hubready", "1", `▶ ready to use (${nReady.toLocaleString()})`, !!state.hubReady)}
       </div>
       <p class="sub" style="margin-top:8px">${list.length.toLocaleString()} match${list.length === 1 ? "" : "es"}${list.length > CAP ? ` · showing the first ${CAP} (narrow with the search box or a type)` : ""}</p>
     </div>
@@ -373,6 +384,8 @@ async function renderHub() {
     b.onclick = () => { state.hubType = b.dataset.hubtype; show("hub"); });
   view.querySelectorAll("[data-hubstatus]").forEach(b =>
     b.onclick = () => { state.hubStatus = b.dataset.hubstatus; show("hub"); });
+  view.querySelectorAll("[data-hubready]").forEach(b =>
+    b.onclick = () => { state.hubReady = !state.hubReady; show("hub"); });
 }
 
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, c =>

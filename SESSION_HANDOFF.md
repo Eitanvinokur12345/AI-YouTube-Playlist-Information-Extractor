@@ -93,7 +93,7 @@ because the beat only had exhausted Gemini). Fixed + PROVEN end-to-end:
   the acted-on object) · THEN 7 Visualization+Power depts + 2 pitch conditions + pitch-monster (§J/§K/§M
   of EXCAVA_V2_ADDITIONS.md) · 8 M5 + breadth. Rule: "done" = a real artifact shown, never a rendered card.
 
-## 0d. THE END PLAN LOOP (2026-07-24, Opus fire — live build v125; AWAY-WEEK, continue HERE)
+## 0d. THE END PLAN LOOP (2026-07-24, Opus fire — live build v126; AWAY-WEEK, continue HERE)
 **⭐ REPO NOW ON D:\AI-YouTube-Skills** (migrated 2026-07-23 off the chronically-full C:; D: has 458 GB
 free). Fresh clone from GitHub, allowlist recreated, drain re-pointed to D:, `git_safe sync` verified
 from D:. The C:\Users\eitan\AI-YouTube-Skills copy is a STALE BACKUP. This commit was shipped FROM D:
@@ -120,8 +120,14 @@ command (1,370/1,370 valid JSON, 928 cite their repo, `_mcpCmd` strips "(open-so
 polluted args); skill/tool/model/design/format → a clean setup card. Verified headless over ALL 10,133
 elements via scratchpad/test_activation.mjs (ALL PASS), not the browser (away-rule). **Still stalled
 (brain-gated → for Eitan's return):** the local drain enriches 0 (G-O) because deep_retrieve rides the
-brains subsystem away-mode won't touch. **NEXT (non-brain):** surface the same MCP config in the element
-DETAIL view; add a "ready to use" hub filter (has-link AND enriched); M3 polish.
+brains subsystem away-mode won't touch.
+**v126 (next fire, Opus):** shipped the **"▶ ready to use" hub filter + count** — one click narrows the
+10,133-element pile to the **6,505 (64%)** that are actionable NOW (paste-text for prompt/command, or a
+real link/install anchor), hiding 3,628 stubs. Reuses v125's readiness via a shared pure `elReady(e)`
+(Ponytail); node-verified over all elements (fp/fn = 0). Composes with Activate: filter → paste.
+**NEXT (non-brain):** surface the MCP config in the element DETAIL view; per-type readiness hints on
+cards; a Hub default-sort that floats ready-to-use up; M3 polish. **Real hub problem still parked
+(brain-gated):** local drain enriches 0 (G-O) — needs Eitan / the brains subsystem.
 
 **(prior, v120) M2 UNDERWAY.** Sessions 8-10: 4 brain families in the engine CATALOG (GLM/DeepSeek/Kimi via
 OpenRouter free + local Qwen/Llama); OpenRouter key VERIFIED (Eitan's secret OPENROUTER_API_KEY_REAL,

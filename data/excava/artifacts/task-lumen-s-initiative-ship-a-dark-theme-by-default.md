@@ -1,36 +1,33 @@
-# [Lumen's initiative] Ship a dark theme by default with an auto-switching contrast system (ambient light/time-based) and a manual override tog
+# [Lumen's initiative] Ship a dark theme by default with an auto-switching contrast system based on ambient light and battery level, plus a per
 
-> visualization · task `lumen-s-initiative-ship--36655` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> visualization · task `lumen-s-initiative-ship--65338` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
 ```markdown
 **Approach:**
-Implement a dark theme by default with dynamic contrast adjustment based on ambient light/time and a manual toggle, using system APIs and CSS variables.
+Implement a system-wide dark theme with auto-switching contrast based on ambient light and battery level, plus user override persistence.
 
 **Steps:**
-1. **Add CSS variables & dark theme**
-   - Create `src/styles/theme.css` with:
-     ```css
-     :root {
-       --color-bg: #121212;
-       --color-text: #e0e0e0;
-       --color-accent: #bb86fc;
-       --contrast-ratio: 1;
-     }
-     .dark { /* default */ }
-     .light { --color-bg: #ffffff; --color-text: #121212; }
-     .high-contrast { --contrast-ratio: 2; }
-     ```
-   - Update `src/App.css` to use these variables and add `.light`/`.high-contrast` classes.
+1. **Add theme system**
+   - Create `src/theme/` with `dark.css` and `light.css` (minimal contrast variants).
+   - Add `src/theme/switcher.js` to detect ambient light (via `AmbientLightSensor` API) and battery level (via `navigator.getBattery()`).
+   - Implement `theme.set(themeName)` and `theme.savePreference(themeName)` using `localStorage`.
 
-2. **Auto-switching contrast (ambient light/time)**
-   - Add `src/utils/theme.js`:
-     ```js
-     export function updateTheme() {
-       const isDay = (new Date().getHours() >= 6 && new Date().getHours() < 18) ||
-                    (window.matchMedia('(prefers-color-scheme: light)').matches);
-       const ambientLight = window.matchMedia('(prefers-color-scheme: dark)').matches ? 0.2 : 0.8;
-       document.documentElement.classList.toggle('light', isDay);
-       document.documentElement.classList.toggle('high-contrast', ambientLight < 0.5);
-     }
-     ```
-   - Call `updateTheme()` on load and subscribe to `prefers-color-scheme`/`amb
+2. **Integrate with UI framework**
+   - Patch the main CSS bundle to include `dark.css` as default.
+   - Modify the app’s root component to call `theme.switcher.init()` on load.
+   - Add a toggle button in the settings panel that calls `theme.set('auto')` or `theme.set('dark')`/`theme.set('light')`.
+
+3. **Add persistence**
+   - Extend `theme.savePreference()` to store user override in `localStorage` under `userTheme`.
+   - On init, check `userTheme` first; if unset, fall back to auto-switching logic.
+
+4. **Test & validate**
+   - Run `npm run test:theme` (add this script to `package.json` if missing) to verify contrast changes in mocked light/dark/battery states.
+   - Manually test on devices with/without ambient light sensor.
+
+5. **Deploy**
+   - Commit changes to `src/theme/` and framework patches.
+   - Tag release `v2.1.0-theme-auto` and push to `main`.
+
+**Needs:**
+- Access to `

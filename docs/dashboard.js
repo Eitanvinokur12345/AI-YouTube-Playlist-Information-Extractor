@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v128";
+const APP_BUILD = "v129";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -3118,12 +3118,12 @@ async function renderTaste() {
   const designSliders = styleKeys.length ? styleKeys.slice(0, 10).map(k => {
     const pct = Math.round(100 * a.styles[k] / maxS);
     return `<div class="tp-row"><label>${esc(k)}</label>
-      <input type="range" min="0" max="100" value="${pct}" data-dtaste="${esc(k)}">
+      <input type="range" min="0" max="100" value="${pct}" data-dtaste="${esc(k)}" aria-label="${esc(k)} design taste, 0 to 100">
       <b class="tp-val">${pct}</b></div>`;
   }).join("") : `<p class="sub">No design taste yet — vote in the Design Arena (Designs tab) and your styles appear here to fine-tune. You can also add one below.</p>`;
   const workSliders = WORK_DIMS.map(([k, lo, hi]) =>
     `<div class="tp-row wide"><label>${esc(k)} <span class="sub">${lo} ↔ ${hi}</span></label>
-      <input type="range" min="0" max="100" value="${wt[k]}" data-wtaste="${esc(k)}">
+      <input type="range" min="0" max="100" value="${wt[k]}" data-wtaste="${esc(k)}" aria-label="${esc(k)} work taste, ${esc(lo)} to ${esc(hi)}">
       <b class="tp-val">${wt[k]}</b></div>`).join("");
   view.innerHTML = `
     <div class="card" style="border-top:3px solid var(--gold)">

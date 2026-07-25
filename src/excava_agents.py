@@ -169,7 +169,8 @@ REAL_TOOL = {"security": "src.security_scan", "improve": "src.self_check",
              "news": "src.trend_watch",
              "mining": "src.discovery_agent",    # intent: DIVERSE sources (GitHub/HN/PH/Reddit), not the playlist
              "visual": "src.collect_designs",    # intent: mine AI DESIGNS (not just warm screenshots)
-             "power": "src.power_scan"}          # owner 2026-07-11: find capacity WITHOUT a manual key
+             "power": "src.power_scan",          # owner 2026-07-11: find capacity WITHOUT a manual key
+             "accessibility": "src.accessibility_scan"}  # 2026-07-25: WCAG lint over EXCAVA's own shell
 
 
 def _run_real_tool(dept: str) -> dict | None:
@@ -209,6 +210,8 @@ TOOL_DOMAIN = {
     "src.discovery_agent": {"mine", "mining", "source", "discover", "competitor", "directory", "gather"},
     "src.collect_designs": {"design", "screenshot", "visual", "taste", "arena"},
     "src.power_scan":     {"power", "capability", "engine", "key", "capacity", "upgrade"},
+    "src.accessibility_scan": {"accessibility", "a11y", "wcag", "contrast", "keyboard", "screen-reader",
+                               "aria", "alt", "label", "reduced-motion"},
     # the links LANE is a CI workflow, not a department tool — its vocabulary is foreign to
     # every department tool, so link-resolution tasks can never be "completed" by a wrong tool
     "(links-lane, external)": {"link", "links", "resolve", "coverage", "unlinked"},

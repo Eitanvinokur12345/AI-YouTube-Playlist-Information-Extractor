@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-25T11:20:47.976990+00:00",
+ "generated_at": "2026-07-25T13:55:45.648457+00:00",
  "total": 10212,
  "counts": {
   "skill": 3066,
@@ -12,7 +12,7 @@
   "model": 523,
   "creation": 14
  },
- "stubs": 2033,
+ "stubs": 2029,
  "by_status": {
   "verified": 2104,
   "niche": 1649,
@@ -21849,7 +21849,7 @@
     ],
     "n_sources": 1,
     "method": "keyless-extract",
-    "at": "2026-07-22T12:02:57.177008+00:00"
+    "at": "2026-07-25T13:00:37.217876+00:00"
    },
    "verified": {
     "status": "unverified",
@@ -54993,7 +54993,7 @@
     ],
     "n_sources": 1,
     "method": "keyless-extract",
-    "at": "2026-07-22T12:02:59.842197+00:00"
+    "at": "2026-07-25T13:00:38.697528+00:00"
    },
    "verified": {
     "status": "unverified",
@@ -55176,7 +55176,7 @@
     ],
     "n_sources": 1,
     "method": "keyless-extract",
-    "at": "2026-07-22T12:02:56.971696+00:00"
+    "at": "2026-07-25T13:00:37.023601+00:00"
    },
    "verified": {
     "status": "unverified",
@@ -97813,7 +97813,7 @@
     ],
     "n_sources": 1,
     "method": "keyless-extract",
-    "at": "2026-07-22T12:02:57.311875+00:00"
+    "at": "2026-07-25T13:00:37.420642+00:00"
    },
    "verified": {
     "status": "unverified",
@@ -104186,7 +104186,9 @@
    "what": "A technique for fine-tuning large language models by injecting low-rank adapters to efficiently transfer knowledge without harming the base model.",
    "category": "code",
    "source_videos": [],
-   "links": {},
+   "links": {
+    "github": "https://github.com/microsoft/LoRA"
+   },
    "install": "",
    "quality_score": 1,
    "trust": 75,
@@ -193136,7 +193138,10 @@
    "what": "A pretrained transformer-based language model widely used for natural language understanding tasks.",
    "category": "research",
    "source_videos": [],
-   "links": {},
+   "links": {
+    "website": "https://huggingface.co/bert-base-uncased",
+    "github": "https://github.com/google-research/bert"
+   },
    "install": "",
    "quality_score": 1,
    "trust": 75,
@@ -193177,22 +193182,32 @@
    "id": "tool:splade",
    "type": "tool",
    "name": "SPLADE",
-   "what": "A sparse retriever model for neural information retrieval.",
+   "what": "SPLADE (Sparse Leveraged Pruning And Distillation Encoder) is a neural retrieval model that adopts a sparse representation approach inspired by BERT's MLM head, leveraging soft and hardnegative pruning to improve efficiency in inverted index use and lexical matching interpretability. It aims to achieve effective and efficient first-stage ranking through pre-trained language model initialization and training optimization techniques. SPLADE enables the learning of query/document sparse expansion to generalize on out-of-domain data across different task datasets.",
    "category": "research",
    "source_videos": [],
-   "links": {},
+   "links": {
+    "github": "https://github.com/naver/splade"
+   },
    "install": "",
    "quality_score": 1,
    "trust": 75,
    "created_by": "",
+   "enriched": true,
+   "enrichment": {
+    "sources": [
+     "github-readme"
+    ],
+    "n_sources": 1,
+    "method": "llm-fused:hermes",
+    "at": "2026-07-25T12:02:49.135526+00:00"
+   },
    "verified": {
     "status": "unverified",
     "method": "",
     "sources": 0,
     "at": ""
    },
-   "stub": true,
-   "enriched": false,
+   "stub": false,
    "related": []
   },
   {
@@ -193246,7 +193261,9 @@
    "what": "Trade crypto with low fees",
    "category": "other",
    "source_videos": [],
-   "links": {},
+   "links": {
+    "website": "https://www.binance.com/"
+   },
    "install": "",
    "quality_score": 1,
    "trust": 75,
@@ -193265,44 +193282,64 @@
    "id": "tool:ledger",
    "type": "tool",
    "name": "Ledger",
-   "what": "Secure your crypto hardware wallet",
+   "what": "A security tool for storing and managing cryptocurrencies such as Bitcoin, Ethereum, XRP, Monero, and others to protect against unauthorized access.",
    "category": "security",
    "source_videos": [],
-   "links": {},
+   "links": {
+    "website": "https://www.ledger.com/"
+   },
    "install": "",
    "quality_score": 1,
    "trust": 75,
    "created_by": "",
+   "enriched": true,
+   "enrichment": {
+    "sources": [
+     "homepage-meta"
+    ],
+    "n_sources": 1,
+    "method": "llm-fused:hermes",
+    "at": "2026-07-25T12:01:48.933561+00:00"
+   },
    "verified": {
     "status": "unverified",
     "method": "",
     "sources": 0,
     "at": ""
    },
-   "stub": true,
-   "enriched": false,
+   "stub": false,
    "related": []
   },
   {
    "id": "tool:crypto-com",
    "type": "tool",
    "name": "Crypto.com",
-   "what": "Buy, sell, and earn crypto",
+   "what": "Crypto.com is a crypto exchange platform that allows users to buy, sell, store, and trade over 400+ cryptocurrencies on its secure and trusted platform.",
    "category": "other",
    "source_videos": [],
-   "links": {},
+   "links": {
+    "website": "https://crypto.com/"
+   },
    "install": "",
    "quality_score": 1,
    "trust": 75,
    "created_by": "",
+   "enriched": true,
+   "enrichment": {
+    "sources": [
+     "homepage-meta"
+    ],
+    "n_sources": 1,
+    "method": "llm-fused:hermes",
+    "at": "2026-07-25T12:01:37.416468+00:00"
+   },
    "verified": {
     "status": "unverified",
     "method": "",
     "sources": 0,
     "at": ""
    },
-   "stub": true,
-   "enriched": false,
+   "stub": false,
    "related": []
   },
   {
@@ -276527,7 +276564,7 @@
    "id": "connector:apidog",
    "type": "connector",
    "name": "Apidog",
-   "what": "Tool to try the 'effort' parameter feature in Claude Opus 5",
+   "what": "This connector allows experimentation with the 'effort' parameter feature in Claude Opus 5, a parameter that suggests a trade-off between cost (toughness to compute) and ability in terms of quality of results. By utilizing this tool, users can explore the effect of altering this balance on their CLaude models. It enables testing of how changing \"effort\" impacts performance and accuracy in Claude Opus 5.",
    "category": "",
    "source_videos": [],
    "links": {
@@ -276538,14 +276575,22 @@
    "quality_score": null,
    "trust": 75,
    "created_by": "",
+   "enriched": true,
+   "enrichment": {
+    "sources": [
+     "homepage-meta"
+    ],
+    "n_sources": 1,
+    "method": "llm-fused:hermes",
+    "at": "2026-07-25T12:01:26.108912+00:00"
+   },
    "verified": {
     "status": "unverified",
     "method": "",
     "sources": 0,
     "at": ""
    },
-   "stub": true,
-   "enriched": false,
+   "stub": false,
    "related": []
   },
   {

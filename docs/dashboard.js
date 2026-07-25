@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v127";
+const APP_BUILD = "v128";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -1148,6 +1148,25 @@ async function renderSelfImprove() {
   let html = "";
   html += await goalsPanel();
   html += await prioritiesPanel();
+
+  // ── Program pulse (src/pulse.py, refreshed every beat) — the ONE honest movement number, incl. a
+  //    RED alarm when the done-counter goes BACKWARD, which the all-green guardrails otherwise hide. ──
+  const pulse = await load("excava/pulse.json");
+  if (pulse) {
+    const mv = pulse.movement || {}, dr = pulse.drain || {}, gq = pulse.guardrails || {}, qs = pulse.questions || {};
+    const dlt = Number(mv.delta || 0), dcls = dlt < 0 ? "bad" : dlt > 0 ? "good" : "warn", dsign = dlt > 0 ? "+" : "";
+    html += `<div class="card" style="border-left:4px solid ${dlt < 0 ? "#b91c1c" : "var(--gold)"}">
+      <h3>🫀 Program pulse <span class="sub">— one honest glance · ${esc(fmtDate(pulse.generated_at))}</span></h3>
+      <div class="metrics" style="gap:14px">
+        <span class="metric"><b class="${dcls}">${dsign}${dlt}</b> tasks done / ${esc(mv.delta_span_h ?? "?")}h${dlt < 0 ? " ⚠ BACKWARD" : ""}</span>
+        <span class="metric"><b>${esc(mv.done ?? "?")}</b> done · ${esc(mv.depts_moving ?? "?")} depts moving</span>
+        <span class="metric"><b>${esc(gq.passing ?? "?")}/${esc(gq.total ?? "?")}</b> guardrails</span>
+        <span class="metric">drain ${dr.alive ? "🟢" : "🔴"} <b>${esc(dr.enriched ?? 0)}</b> enriched · ${esc(dr.stubs ?? "?")} stubs</span>
+        <span class="metric"><b>${esc(qs.open ?? "?")}</b> open questions</span>
+      </div>
+      ${dlt < 0 ? `<p class="sub" style="color:#b91c1c;margin-top:6px">⚠ The done-counter fell ${dlt} while ${esc(mv.depts_moving)} depts still read "moving" — a real decline the green guardrails hide. Worth a look (could be re-scoping, could be a regression).</p>` : ""}
+    </div>`;
+  }
 
   // ── Countdown to the next self-improvement run + proof of what it last changed ──
   const nextImprove = (() => {

@@ -62,6 +62,7 @@ jobs:
           while [ "$SECONDS" -lt "$END" ]; do
             n=$((n+1)); echo "── beat cycle $n ($(date -u +%H:%MZ)) ──"
             python -m src.excava || true
+            python -m src.pulse || true          # refresh the one-glance program pulse (data/excava/pulse.json)
             git add data
             git commit -m "excava-beat #$n: $(date -u +%Y-%m-%dT%H:%MZ)" || echo "nothing to commit"
             git pull --rebase --autostash origin main || true

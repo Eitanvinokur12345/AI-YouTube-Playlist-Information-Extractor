@@ -93,7 +93,7 @@ because the beat only had exhausted Gemini). Fixed + PROVEN end-to-end:
   the acted-on object) · THEN 7 Visualization+Power depts + 2 pitch conditions + pitch-monster (§J/§K/§M
   of EXCAVA_V2_ADDITIONS.md) · 8 M5 + breadth. Rule: "done" = a real artifact shown, never a rendered card.
 
-## 0d. THE END PLAN LOOP (2026-07-24, Opus fire — live build v127; AWAY-WEEK, continue HERE)
+## 0d. THE END PLAN LOOP (2026-07-25, Opus fire — live build v128; AWAY-WEEK, continue HERE)
 **⭐ REPO NOW ON D:\AI-YouTube-Skills** (migrated 2026-07-23 off the chronically-full C:; D: has 458 GB
 free). Fresh clone from GitHub, allowlist recreated, drain re-pointed to D:, `git_safe sync` verified
 from D:. The C:\Users\eitan\AI-YouTube-Skills copy is a STALE BACKUP. This commit was shipped FROM D:
@@ -134,6 +134,16 @@ proposed a deterministic (no-LLM) GitHub-metadata enricher for Eitan's approval 
 producing browse-polish of diminishing value until the enrichment/brain front is unblocked. THREE
 browse-layer fires in a row (v125/126/127) is the honest signal that away-mode has run its useful course
 on the Hub read-side.
+**v128 (Opus, 2026-07-25 — PIVOTED off the hub as promised):** wired the DEAD pulse tool to run every beat
+(`python -m src.pulse` added to excava_beat.yml → refreshes data/excava/pulse.json; PULSE.md at root is
+deliberately NOT auto-committed — a churny non-data file would be a git_safe source-conflict and could break
+an unattended ship) and gave it an in-app consumer: a 🫀 **Program pulse** card on the self-improve tab
+(guardrails/drain/open-Qs + the done-counter DELTA in RED when negative). It exposes a real ongoing
+regression the all-green guardrails hide: done has fallen **1566→1256→1130 (delta −128)** over days while 12
+depts still read "moving." **NEXT: DIAGNOSE that decline** (re-scoping vs real loss — the done-counter
+semantics in movement.json / state.json usage), don't just display it. **Correction to my v125–127 claims:**
+the drain is NOT "stalled at 0" — it enriches ~1–20/batch, just slowly vs 2,027 stubs; the
+deterministic-enricher escalation in QUESTIONS.md stands to ACCELERATE it, not revive a corpse.
 
 **(prior, v120) M2 UNDERWAY.** Sessions 8-10: 4 brain families in the engine CATALOG (GLM/DeepSeek/Kimi via
 OpenRouter free + local Qwen/Llama); OpenRouter key VERIFIED (Eitan's secret OPENROUTER_API_KEY_REAL,

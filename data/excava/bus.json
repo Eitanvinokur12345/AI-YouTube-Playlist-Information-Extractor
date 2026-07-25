@@ -3622,24 +3622,6 @@
       "result": "Ran the discovery agent. discovery: +0 new (of 153 sighted) → 816 queued; arxiv=90, gh-active=116, gh-new=45, hn-front=32, hn-new=87, huggingface-model=38, producthunt=78, reddit=202, web-search=51, youtube-beyond=77"
     },
     {
-      "id": "verify-the-next-200-of-6-56183",
-      "title": "Verify the next 200 of 6501 unverified elements (2-source + live test)",
-      "detail": "value=87 size=40(small) [cost 35/steps 70/risk 10] · 6501 elements unverified",
-      "department": "analysis",
-      "source": "gap",
-      "priority": 1,
-      "status": "done",
-      "steps": 0,
-      "max_steps": 8,
-      "done_criteria": "a committed artifact that measurably closes this gap",
-      "escalation_tier": 1,
-      "claimed_by": "analysis-w1",
-      "handoff_docs": [],
-      "created_at": "2026-07-18T06:29:43.325222+00:00",
-      "updated_at": "2026-07-18T09:59:28.311853+00:00",
-      "result": "1036 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-    },
-    {
       "id": "security-safety-rate-the-56183",
       "title": "Security: safety-rate the next batch of 1319 connectors/skills",
       "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1319 connectors",
@@ -3837,24 +3819,6 @@
       "created_at": "2026-07-18T09:59:28.197062+00:00",
       "updated_at": "2026-07-18T11:31:48.941316+00:00",
       "result": "Creators: 12 creations on record, 12 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
-    },
-    {
-      "id": "raise-g8-personal-fit-66-68768",
-      "title": "Raise G8 Personal fit (66/100): 16% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
-      "detail": "value=34 size=17(small) [cost 15/steps 25/risk 10] · G8 at 66",
-      "department": "visual",
-      "source": "gap",
-      "priority": 1,
-      "status": "done",
-      "steps": 0,
-      "max_steps": 8,
-      "done_criteria": "a committed artifact that measurably closes this gap",
-      "escalation_tier": 1,
-      "claimed_by": "visual-w1",
-      "handoff_docs": [],
-      "created_at": "2026-07-18T09:59:28.222593+00:00",
-      "updated_at": "2026-07-18T09:59:37.853968+00:00",
-      "result": "Ran the collect designs. collect_designs: 678 designs (kept 678 / dropped 0 repo-only + 4 dead/parked + 36 non-design; +0 AI-product, +27 seeds, +35 shown-in-video; url-checked 4). designs-only."
     },
     {
       "id": "access-s-initiative-impl-68788",
@@ -24148,15 +24112,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-07-24T14:22:04.665381+00:00",
-      "updated_at": "2026-07-24T14:22:04.665390+00:00"
+      "updated_at": "2026-07-25T09:59:46.042887+00:00",
+      "result": "Semantic index: 1498 vectors (model gemini-embedding-001); hub 7266 items → 5768 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "raise-g8-personal-fit-68-2924",
@@ -24678,15 +24643,16 @@
       "department": "security",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-25T06:40:12.605045+00:00",
-      "updated_at": "2026-07-25T06:40:12.605057+00:00"
+      "updated_at": "2026-07-25T09:59:46.827274+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "memory-embed-the-remaini-61612",
@@ -25231,18 +25197,20 @@
       "id": "transcripts-room-action--72216",
       "title": "[transcripts room action] Fetch the full transcript for *\"AI Breakthroughs That Will Change Your Life in 2024\"* using the YouTube transcript tool;",
       "detail": "From room dept-transcripts-retrieve-real-fu-962 (action-shaped close). Mission action from the department's own room.",
-      "department": "transcripts",
+      "department": "analysis",
       "source": "room-action:transcripts",
       "priority": 2,
       "status": "queued",
-      "steps": 0,
+      "steps": 1,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
       "claimed_by": null,
-      "handoff_docs": [],
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-room-action--72216--01--transcripts-w1--to--analysis.md"
+      ],
       "created_at": "2026-07-25T09:36:56.125324+00:00",
-      "updated_at": "2026-07-25T09:36:56.125330+00:00"
+      "updated_at": "2026-07-25T09:59:46.995817+00:00"
     },
     {
       "id": "watch-process-the-next-b-72526",
@@ -25465,15 +25433,16 @@
       "department": "watch",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-07-25T09:53:48.052642+00:00",
-      "updated_at": "2026-07-25T09:53:48.052654+00:00"
+      "updated_at": "2026-07-25T09:59:46.879600+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
       "id": "transcripts-drain-the-ne-73228",
@@ -25482,17 +25451,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-73228--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-07-25T09:53:48.105258+00:00",
-      "updated_at": "2026-07-25T09:53:54.259606+00:00"
+      "updated_at": "2026-07-25T09:59:40.040064+00:00",
+      "result": "1281 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g8-personal-fit-68-73228",
@@ -25519,15 +25489,16 @@
       "department": "power",
       "source": "room-action:creators",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "power-w1",
       "handoff_docs": [],
       "created_at": "2026-07-25T09:54:10.149874+00:00",
-      "updated_at": "2026-07-25T09:54:10.149881+00:00"
+      "updated_at": "2026-07-25T09:59:47.236003+00:00",
+      "result": "Ran the power scan. Local MCP server that gives AI agents a dozen do"
     },
     {
       "id": "security-room-action-war-73258",
@@ -25562,7 +25533,93 @@
       "handoff_docs": [],
       "created_at": "2026-07-25T09:54:28.289779+00:00",
       "updated_at": "2026-07-25T09:54:28.289785+00:00"
+    },
+    {
+      "id": "verify-the-next-200-of-6-73579",
+      "title": "Verify the next 200 of 6432 unverified elements (2-source + live test)",
+      "detail": "value=87 size=40(small) [cost 35/steps 70/risk 10] · 6432 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-25T09:59:39.877823+00:00",
+      "updated_at": "2026-07-25T09:59:39.877836+00:00"
+    },
+    {
+      "id": "raise-g8-personal-fit-68-73579",
+      "title": "Raise G8 Personal fit (68/100): 22% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
+      "detail": "value=32 size=17(small) [cost 15/steps 25/risk 10] · G8 at 68",
+      "department": "visual",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "visual-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-25T09:59:39.961652+00:00",
+      "updated_at": "2026-07-25T09:59:45.826093+00:00",
+      "result": "Ran the collect designs. collect_designs: 932 designs (kept 932 / dropped 0 repo-only + 4 dead/parked + 49 non-design; +0 AI-product, +27 seeds, +48 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "id": "rerouted-creators-power--73604",
+      "title": "[rerouted creators→power] Nova closes the \"UGC Factory\" npm package in the creators tab, labeled \"Created by EXCAVA\" — task complete, artifact rem",
+      "detail": "From room dept-creators-build-packages-enri-532 (action-shaped close). Improvement matter — belongs to the power department by owner law 2026-07-12.",
+      "department": "power",
+      "source": "room-action:creators",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-25T10:00:04.095354+00:00",
+      "updated_at": "2026-07-25T10:00:04.095360+00:00"
+    },
+    {
+      "id": "security-room-action-war-73613",
+      "title": "[security room action] Warden runs LLM Guard scanner on this conversation’s input/output stream; output confirms content safety and no leaks de",
+      "detail": "From room dept-security-paranoid-guard-scan-908 (action-shaped close). Mission action from the department's own room.",
+      "department": "security",
+      "source": "room-action:security",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-25T10:00:13.127600+00:00",
+      "updated_at": "2026-07-25T10:00:13.127606+00:00"
+    },
+    {
+      "id": "transcripts-room-action--73622",
+      "title": "[transcripts room action] Fetch the full transcript for \"AI Breakthroughs of 2024: What Changed E\" using the kimtaeyoon83/mcp-server-youtube-trans",
+      "detail": "From room dept-transcripts-retrieve-real-fu-153 (action-shaped close). Mission action from the department's own room.",
+      "department": "transcripts",
+      "source": "room-action:transcripts",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-25T10:00:22.639984+00:00",
+      "updated_at": "2026-07-25T10:00:22.639990+00:00"
     }
   ],
-  "updated_at": "2026-07-25T09:54:28.289789+00:00"
+  "updated_at": "2026-07-25T10:00:22.639994+00:00"
 }

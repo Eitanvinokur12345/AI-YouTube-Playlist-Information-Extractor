@@ -2,9 +2,9 @@
   "version": 2,
   "updated_at": "2026-07-12T20:02:25.172195+00:00",
   "tiers": {
-    "1": "named AGENTS (doer/checker/improver) — persistent identities; they spawn generic ephemeral WORKERS",
-    "2": "named LEADS — suit-and-tie personas, first escalation stop, raised above their bubble in chats",
-    "3": "core — the orchestrator"
+    "1": "named AGENTS (doer/checker/improver) \u2014 persistent identities; they spawn generic ephemeral WORKERS",
+    "2": "named LEADS \u2014 suit-and-tie personas, first escalation stop, raised above their bubble in chats",
+    "3": "core \u2014 the orchestrator"
   },
   "cast_note": "M2.3 owner rules: personality matches the department AND affects tone+behavior; debate-then-converge; EXCAVA proposed this cast, Eitan tweaks names freely.",
   "departments": {
@@ -73,7 +73,7 @@
       "lane_hint": "External mining"
     },
     "visual": {
-      "purpose": "MINE great designs FROM THE WEB into the hub — screenshots, taste material, design patterns by OTHER makers. HARD BOUNDARY (owner 2026-07-12): NOT EXCAVA's own interface — anything about OUR screens/colors/layout belongs to Visualization; hand it over, don't propose it here.",
+      "purpose": "MINE great designs FROM THE WEB into the hub \u2014 screenshots, taste material, design patterns by OTHER makers. HARD BOUNDARY (owner 2026-07-12): NOT EXCAVA's own interface \u2014 anything about OUR screens/colors/layout belongs to Visualization; hand it over, don't propose it here.",
       "capability": "visual-extract",
       "specialization": [
         "design",
@@ -148,7 +148,7 @@
       "lane_hint": null
     },
     "visualization": {
-      "purpose": "Own EXCAVA'S OWN interface — visibility, liveliness, clarity, enjoyment, speed of OUR screens. HARD BOUNDARY (owner 2026-07-12): NOT hunting external designs — finding other people's design work belongs to Visual; you may USE what Visual mined as inspiration.",
+      "purpose": "Own EXCAVA'S OWN interface \u2014 visibility, liveliness, clarity, enjoyment, speed of OUR screens. HARD BOUNDARY (owner 2026-07-12): NOT hunting external designs \u2014 finding other people's design work belongs to Visual; you may USE what Visual mined as inspiration.",
       "capability": "present",
       "specialization": [
         "ui",
@@ -167,7 +167,7 @@
       "lane_hint": "Visualization"
     },
     "power": {
-      "purpose": "raise EXCAVA capability by even 0.5% — new tools, best/newest models, combine elements, change agent formation; show a POWER % that can exceed 100",
+      "purpose": "raise EXCAVA capability by even 0.5% \u2014 new tools, best/newest models, combine elements, change agent formation; show a POWER % that can exceed 100",
       "capability": "power",
       "specialization": [
         "power",
@@ -181,7 +181,7 @@
       "lane_hint": "Power"
     },
     "accessibility": {
-      "purpose": "make EXCAVA usable by EVERYONE — colour contrast, mobile/touch targets, reduced-motion, keyboard navigation and screen-reader support (WCAG); find and fix accessibility barriers",
+      "purpose": "make EXCAVA usable by EVERYONE \u2014 colour contrast, mobile/touch targets, reduced-motion, keyboard navigation and screen-reader support (WCAG); find and fix accessibility barriers",
       "capability": null,
       "specialization": [
         "accessibility",
@@ -197,6 +197,18 @@
         "legibility"
       ],
       "lane_hint": "Accessibility"
+    },
+    "links": {
+      "purpose": "assess link-resolution coverage (website/github/codespaces) and hand off freshness gaps to memory; the resolver lane itself runs as a CI workflow",
+      "capability": "resolve-links",
+      "specialization": [
+        "link",
+        "links",
+        "resolve",
+        "coverage",
+        "unlinked"
+      ],
+      "lane_hint": "Link resolver + verifier"
     }
   },
   "agents": [
@@ -252,7 +264,7 @@
       "tier": 1,
       "department": "transcripts",
       "role": "checker",
-      "persona": "Scriv: the skeptic — pushes back before the room converges; verifies more than asked.",
+      "persona": "Scriv: the skeptic \u2014 pushes back before the room converges; verifies more than asked.",
       "engine_pref": "grounded",
       "scoped_tools": [
         "src.backfill_transcripts",
@@ -267,7 +279,7 @@
       "tier": 2,
       "department": "analysis",
       "role": "lead",
-      "persona": "Methodical to the bone — digs to the core of every video; behavior: refuses to summarize from a description when a transcript exists.",
+      "persona": "Methodical to the bone \u2014 digs to the core of every video; behavior: refuses to summarize from a description when a transcript exists.",
       "engine_pref": "grounded",
       "suit": true,
       "scoped_tools": [
@@ -298,7 +310,7 @@
       "tier": 1,
       "department": "analysis",
       "role": "checker",
-      "persona": "Sift: the skeptic — pushes back before the room converges; verifies more than asked.",
+      "persona": "Sift: the skeptic \u2014 pushes back before the room converges; verifies more than asked.",
       "engine_pref": "grounded",
       "scoped_tools": [
         "src.bulk_analyze",
@@ -312,7 +324,7 @@
       "tier": 1,
       "department": "analysis",
       "role": "improver",
-      "persona": "Refine: ambitious optimizer — finds the better way, measures it.",
+      "persona": "Refine: ambitious optimizer \u2014 finds the better way, measures it.",
       "engine_pref": "reasoning",
       "scoped_tools": [
         "src.bulk_analyze",
@@ -353,7 +365,7 @@
       "tier": 1,
       "department": "watch",
       "role": "checker",
-      "persona": "Frame: the skeptic — pushes back before the room converges; verifies more than asked.",
+      "persona": "Frame: the skeptic \u2014 pushes back before the room converges; verifies more than asked.",
       "engine_pref": "grounded",
       "scoped_tools": [
         "src.gemini_video_analyze"
@@ -394,7 +406,7 @@
       "tier": 1,
       "department": "memory",
       "role": "checker",
-      "persona": "Prune: the skeptic — pushes back before the room converges; verifies more than asked.",
+      "persona": "Prune: the skeptic \u2014 pushes back before the room converges; verifies more than asked.",
       "engine_pref": "grounded",
       "scoped_tools": [
         "src.build_memory",
@@ -438,7 +450,7 @@
       "tier": 1,
       "department": "mining",
       "role": "checker",
-      "persona": "Assay: the skeptic — pushes back before the room converges; verifies more than asked.",
+      "persona": "Assay: the skeptic \u2014 pushes back before the room converges; verifies more than asked.",
       "engine_pref": "grounded",
       "scoped_tools": [
         "src.mine_competitors",
@@ -483,7 +495,7 @@
       "tier": 1,
       "department": "visual",
       "role": "checker",
-      "persona": "Squint: the skeptic — pushes back before the room converges; verifies more than asked.",
+      "persona": "Squint: the skeptic \u2014 pushes back before the room converges; verifies more than asked.",
       "engine_pref": "grounded",
       "scoped_tools": [
         "src.visual_extract",
@@ -524,7 +536,7 @@
       "tier": 1,
       "department": "news",
       "role": "checker",
-      "persona": "Factcheck: the skeptic — pushes back before the room converges; verifies more than asked.",
+      "persona": "Factcheck: the skeptic \u2014 pushes back before the room converges; verifies more than asked.",
       "engine_pref": "grounded",
       "scoped_tools": [
         "src.trend_watch"
@@ -569,7 +581,7 @@
       "tier": 1,
       "department": "improve",
       "role": "checker",
-      "persona": "Gauge: the skeptic — pushes back before the room converges; verifies more than asked.",
+      "persona": "Gauge: the skeptic \u2014 pushes back before the room converges; verifies more than asked.",
       "engine_pref": "grounded",
       "scoped_tools": [
         "src.pipeline_scout",
@@ -584,7 +596,7 @@
       "tier": 1,
       "department": "improve",
       "role": "improver",
-      "persona": "Overhaul: ambitious optimizer — finds the better way, measures it.",
+      "persona": "Overhaul: ambitious optimizer \u2014 finds the better way, measures it.",
       "engine_pref": "reasoning",
       "scoped_tools": [
         "src.pipeline_scout",
@@ -630,7 +642,7 @@
       "tier": 1,
       "department": "security",
       "role": "checker",
-      "persona": "Audit: the skeptic — pushes back before the room converges; verifies more than asked.",
+      "persona": "Audit: the skeptic \u2014 pushes back before the room converges; verifies more than asked.",
       "engine_pref": "grounded",
       "scoped_tools": [
         "src.security_scan",
@@ -671,7 +683,7 @@
       "tier": 1,
       "department": "creators",
       "role": "checker",
-      "persona": "Vet: the skeptic — pushes back before the room converges; verifies more than asked.",
+      "persona": "Vet: the skeptic \u2014 pushes back before the room converges; verifies more than asked.",
       "engine_pref": "grounded",
       "scoped_tools": [
         "src.excava_creators"
@@ -683,7 +695,7 @@
       "tier": 1,
       "department": "creators",
       "role": "improver",
-      "persona": "Remix: ambitious optimizer — finds the better way, measures it.",
+      "persona": "Remix: ambitious optimizer \u2014 finds the better way, measures it.",
       "engine_pref": "reasoning",
       "scoped_tools": [
         "src.excava_creators"
@@ -722,7 +734,7 @@
       "tier": 1,
       "department": "visualization",
       "role": "checker",
-      "persona": "Pane: the skeptic — pushes back before the room converges; verifies more than asked.",
+      "persona": "Pane: the skeptic \u2014 pushes back before the room converges; verifies more than asked.",
       "engine_pref": "grounded",
       "scoped_tools": [
         "src.excava_bus",
@@ -762,7 +774,7 @@
       "tier": 1,
       "department": "power",
       "role": "checker",
-      "persona": "Torque: the skeptic — pushes back before the room converges; verifies more than asked.",
+      "persona": "Torque: the skeptic \u2014 pushes back before the room converges; verifies more than asked.",
       "engine_pref": "grounded",
       "scoped_tools": [
         "src.excava_bus",
@@ -775,7 +787,7 @@
       "tier": 2,
       "department": "accessibility",
       "role": "lead",
-      "persona": "Access: insists every person can use it — refuses a screen that fails contrast, keyboard, or a screen reader.",
+      "persona": "Access: insists every person can use it \u2014 refuses a screen that fails contrast, keyboard, or a screen reader.",
       "engine_pref": "reasoning",
       "suit": true,
       "scoped_tools": [
@@ -789,7 +801,7 @@
       "tier": 1,
       "department": "accessibility",
       "role": "doer",
-      "persona": "Ramp: hands-on a11y fixer; adds the aria label, the focus ring, the touch target — and proves it.",
+      "persona": "Ramp: hands-on a11y fixer; adds the aria label, the focus ring, the touch target \u2014 and proves it.",
       "engine_pref": "fast",
       "scoped_tools": [
         "src.excava_bus",
@@ -802,11 +814,39 @@
       "tier": 1,
       "department": "accessibility",
       "role": "checker",
-      "persona": "Reader: audits like a screen-reader user — tabs through everything and flags what it cannot reach.",
+      "persona": "Reader: audits like a screen-reader user \u2014 tabs through everything and flags what it cannot reach.",
       "engine_pref": "grounded",
       "scoped_tools": [
         "src.excava_bus",
         "src.excava_chat"
+      ]
+    },
+    {
+      "id": "links-w1",
+      "name": "Anchor",
+      "tier": 1,
+      "department": "links",
+      "role": "doer",
+      "persona": "Anchor: tracks link coverage like a ledger \u2014 reports the real percentage and what is still unlinked, never rounds up.",
+      "engine_pref": "fast",
+      "scoped_tools": [
+        "src.excava_bus",
+        "src.excava_chat",
+        "src.resolve_links"
+      ]
+    },
+    {
+      "id": "links-checker",
+      "name": "Tether",
+      "tier": 1,
+      "department": "links",
+      "role": "checker",
+      "persona": "Tether: the skeptic on coverage math \u2014 re-derives pct from linked/total before trusting the headline number.",
+      "engine_pref": "grounded",
+      "scoped_tools": [
+        "src.excava_bus",
+        "src.excava_chat",
+        "src.resolve_links"
       ]
     }
   ]

@@ -169,22 +169,32 @@ def g_watchdog():
 
 def g_movement():
     """Owner law 2026-07-06: EACH loop, confirm work is actually MOVING (not all at 0). Tracks the
-    bus done-count over time; flags a STALL if it hasn't risen across the last 3 checks."""
+    bus done-count over time; flags a STALL if it hasn't risen across the last 3 checks.
+
+    FIX 2026-07-25: this used to count ONLY tasks still sitting in the live bus.json. But
+    src.excava_bus.prune() moves finished tasks older than 7 days OUT to data/excava/archive/,
+    so the live count naturally FALLS as archiving outpaces fresh completions — a false
+    stall/regression (the fire-5 AWAY_LOG entry saw exactly this: 1566 -> 1256 while depts
+    stayed active). Add the archived done-total (tallied by prune() into archive_totals.json)
+    back in, so the tracked number is cumulative and only ever rises."""
     mv = DATA / "excava" / "movement.json"
     bus = _load_json(DATA / "excava" / "bus.json", {})
-    done = sum(1 for t in bus.get("tasks", []) if t.get("status") == "done")
+    live_done = sum(1 for t in bus.get("tasks", []) if t.get("status") == "done")
+    archived_done = _load_json(DATA / "excava" / "archive_totals.json", {}).get("done", 0)
+    done = live_done + archived_done
     depts = len({t.get("department") for t in bus.get("tasks", [])
                  if t.get("status") == "done" and t.get("department") not in (None, "core")})
     hist = _load_json(mv, {"history": []}).get("history", [])
-    hist.append({"at": _now(), "done": done, "depts_moving": depts})
+    hist.append({"at": _now(), "done": done, "live_done": live_done, "depts_moving": depts})
     hist = hist[-30:]
     mv.parent.mkdir(parents=True, exist_ok=True)
-    mv.write_text(json.dumps({"history": hist, "done": done, "depts_moving": depts},
+    mv.write_text(json.dumps({"history": hist, "done": done, "live_done": live_done, "depts_moving": depts},
                              ensure_ascii=False, indent=1), encoding="utf-8")
     recent = [h["done"] for h in hist[-4:]]
     stalled = len(recent) >= 4 and len(set(recent)) == 1        # 4 checks, zero movement
     return _ok("G-M", "Work is moving (not all at 0)", not stalled,
-               f"{done} tasks done, {depts} departments moving" + (" — STALLED (no new completions in the last 4 beats)" if stalled else ""),
+               f"{done} tasks done all-time ({live_done} live in bus), {depts} departments moving"
+               + (" — STALLED (no new completions in the last 4 beats)" if stalled else ""),
                "warn")
 
 

@@ -31,6 +31,7 @@ BUS = EXDIR / "bus.json"
 STATE = EXDIR / "state.json"
 HANDOFFS = EXDIR / "handoffs"
 TRACES = EXDIR / "traces"
+ARCHIVE_TOTALS = EXDIR / "archive_totals.json"
 
 # G-4: a hand-off without ALL of these (non-empty) is REJECTED. This is the gate that keeps
 # context flowing between departments instead of evaporating between cron beats.
@@ -261,10 +262,17 @@ def recover_leases(max_h: float = LEASE_H) -> list[str]:
 
 def prune(days: int = PRUNE_DAYS) -> int:
     """Memory pruning: finished (done/failed) tasks older than N days move to
-    data/excava/archive/YYYY-MM.jsonl — the bus stays small, history stays complete."""
+    data/excava/archive/YYYY-MM.jsonl — the bus stays small, history stays complete.
+
+    Archiving removes them from bus.json, so anything that counts "done" from the live
+    bus alone (g_movement) sees the count FALL as pruning outpaces fresh completions —
+    a false stall/regression signal. Tally what leaves here into ARCHIVE_TOTALS so the
+    live count can be added back to a cumulative, monotonically-rising total (see
+    src/guardrails.py::g_movement)."""
     bus = read_bus()
     cutoff = datetime.now(timezone.utc).timestamp() - days * 86400
     keep, moved = [], 0
+    moved_counts = {"done": 0, "failed": 0}
     for t in bus["tasks"]:
         try:
             ts = datetime.fromisoformat(t["updated_at"]).timestamp()
@@ -276,11 +284,17 @@ def prune(days: int = PRUNE_DAYS) -> int:
             with open(arch / f"{datetime.now(timezone.utc):%Y-%m}.jsonl", "a", encoding="utf-8") as fh:
                 fh.write(json.dumps(t, ensure_ascii=False) + "\n")
             moved += 1
+            moved_counts[t["status"]] = moved_counts.get(t["status"], 0) + 1
         else:
             keep.append(t)
     if moved:
         bus["tasks"] = keep
         _write_bus(bus)
+        totals = _read(ARCHIVE_TOTALS, {"done": 0, "failed": 0})
+        for k, v in moved_counts.items():
+            totals[k] = totals.get(k, 0) + v
+        totals["updated_at"] = _now()
+        _atomic_write(ARCHIVE_TOTALS, totals)
     return moved
 
 

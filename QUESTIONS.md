@@ -15,6 +15,17 @@ You're away ~1 week; the offline loop is running (non-brain fronts, hourly) and 
 - **#7 API keys work offline / without your PC** → proposed **KEEP the answer (yes).** Proven this week: the cloud beat ran the keys 24/7 with your machine off; the VPS will too.
 - **#8 EXCAVATORTRON = HUB, EXCAVA = agents (naming)** → proposed **KEEP + lock everywhere.** This is the canonical naming and it's used consistently across the code and docs.
 
+**The real hub blocker: enrichment is stalled at 0, and away-mode can't fix it (decision for your return).**
+Three loop fires this week shipped read-side hub wins (v125 type-aware Activate · v126 "ready to use" filter
+· v127 inline payload in the detail view). All real, but all BROWSE-layer — because the actual problem is
+CONTENT: 3,628 of 10,133 elements are bare stubs and the local drain has enriched **0** for days (guardrail
+G-O). deep_retrieve rides the brains/Ollama subsystem, which away-mode tells me not to touch, so I keep
+polishing how you browse the library instead of filling it. → **Proposed default (on your return):** stand up
+a DETERMINISTIC enricher (no LLM) that fills stubs from real sources — GitHub API repo description / topics /
+homepage / README first line for the ~1,600 repo elements — network-bounded with a hard timeout (the 793-min
+hang lesson). Free, non-brain, attacks completeness directly. Until you approve a network front or lift the
+brain freeze, these fires keep producing browse-layer polish of diminishing value.
+
 ---
 
 ## A. The new look ("Heavy Machinery" v58)

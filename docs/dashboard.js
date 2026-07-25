@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v126";
+const APP_BUILD = "v127";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -315,7 +315,6 @@ async function renderElement(id) {
         <span class="pill">${esc(e.type)}</span> ${elBadge(e)}
         ${e.created_by === "EXCAVA" ? '<span class="pill" style="background:var(--gold-soft)">🦾 Created by EXCAVA</span>' : ""}</div>
       <p>${esc(e.what || "(deep-retrieve will enrich this element on its next pass)")}</p>
-      ${e.body ? `<pre style="white-space:pre-wrap;font-size:12.5px;background:var(--panel2);border:1.5px solid var(--line);border-radius:9px;padding:10px">${esc(e.body)}</pre>` : ""}
       ${elementActions(e, true)}
       <p class="sub" style="margin-top:10px">
         ${e.category ? `category: <b>${esc(e.category)}</b> · ` : ""}trust ${e.trust || "?"} ·
@@ -323,6 +322,11 @@ async function renderElement(id) {
         ${enr.method ? ` · enriched via ${esc(enr.method)} [${(enr.sources || []).map(esc).join(", ")}]` : ""}</p>
       ${e.install ? `<p class="sub"><b>Install / source:</b> <code>${esc(e.install)}</code></p>` : ""}
     </div>
+    ${(() => { const r = activationRecipe(e); return r.text ? `<div class="card" style="border-left:3px solid var(--gold)">
+      <h3 style="font-size:14px">⚡ Ready to use <span class="sub">— ${esc(r.label)}${r.note ? " · " + esc(r.note) : ""}</span>
+        <button class="copy-btn" data-copy="${esc(r.text)}" title="Copy the ready-to-use payload" style="float:right">copy</button></h3>
+      <pre style="white-space:pre-wrap;font-size:12.5px;background:var(--panel2);border:1.5px solid var(--line);border-radius:9px;padding:10px;max-height:360px;overflow:auto">${esc(r.text)}</pre>
+    </div>` : ""; })()}
     ${vids.length ? `<div class="card"><h3>🎬 Source video${vids.length > 1 ? " bundle" : ""} <span class="sub">— where it was really shown</span></h3>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px">
       ${vids.map(v => `<iframe width="100%" height="180" src="https://www.youtube.com/embed/${encodeURIComponent(v)}" frameborder="0" allowfullscreen loading="lazy" style="border-radius:10px;border:1.5px solid var(--line)"></iframe>`).join("")}</div></div>` : ""}

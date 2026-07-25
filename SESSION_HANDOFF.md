@@ -93,7 +93,7 @@ because the beat only had exhausted Gemini). Fixed + PROVEN end-to-end:
   the acted-on object) · THEN 7 Visualization+Power depts + 2 pitch conditions + pitch-monster (§J/§K/§M
   of EXCAVA_V2_ADDITIONS.md) · 8 M5 + breadth. Rule: "done" = a real artifact shown, never a rendered card.
 
-## 0d. THE END PLAN LOOP (2026-07-24, Opus fire — live build v126; AWAY-WEEK, continue HERE)
+## 0d. THE END PLAN LOOP (2026-07-24, Opus fire — live build v127; AWAY-WEEK, continue HERE)
 **⭐ REPO NOW ON D:\AI-YouTube-Skills** (migrated 2026-07-23 off the chronically-full C:; D: has 458 GB
 free). Fresh clone from GitHub, allowlist recreated, drain re-pointed to D:, `git_safe sync` verified
 from D:. The C:\Users\eitan\AI-YouTube-Skills copy is a STALE BACKUP. This commit was shipped FROM D:
@@ -125,9 +125,15 @@ brains subsystem away-mode won't touch.
 10,133-element pile to the **6,505 (64%)** that are actionable NOW (paste-text for prompt/command, or a
 real link/install anchor), hiding 3,628 stubs. Reuses v125's readiness via a shared pure `elReady(e)`
 (Ponytail); node-verified over all elements (fp/fn = 0). Composes with Activate: filter → paste.
-**NEXT (non-brain):** surface the MCP config in the element DETAIL view; per-type readiness hints on
-cards; a Hub default-sort that floats ready-to-use up; M3 polish. **Real hub problem still parked
-(brain-gated):** local drain enriches 0 (G-O) — needs Eitan / the brains subsystem.
+**v127 (this fire, Opus):** the element DETAIL view now SHOWS the ready-to-use payload inline
+(`activationRecipe(e)` in a readable, copyable block) instead of hiding it behind the Activate clipboard
+button; de-duped the old body `<pre>`. Reuses v125/v126 (Ponytail), node --check + unit test green.
+**NEXT (non-brain):** per-type readiness hints on cards; a Hub default-sort that floats ready-to-use up;
+M3 polish. **Real hub problem ESCALATED to QUESTIONS.md (brain-gated):** local drain enriches 0 (G-O); I
+proposed a deterministic (no-LLM) GitHub-metadata enricher for Eitan's approval — these fires keep
+producing browse-polish of diminishing value until the enrichment/brain front is unblocked. THREE
+browse-layer fires in a row (v125/126/127) is the honest signal that away-mode has run its useful course
+on the Hub read-side.
 
 **(prior, v120) M2 UNDERWAY.** Sessions 8-10: 4 brain families in the engine CATALOG (GLM/DeepSeek/Kimi via
 OpenRouter free + local Qwen/Llama); OpenRouter key VERIFIED (Eitan's secret OPENROUTER_API_KEY_REAL,

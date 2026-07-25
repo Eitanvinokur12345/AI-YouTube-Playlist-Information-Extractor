@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-25T21:29:15.133847+00:00",
+ "generated_at": "2026-07-25T23:34:07.430217+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 171,
+   "turns_7d": 172,
    "rooms_7d": 20,
    "engines_used": [
     "gh-models",
@@ -18,14 +18,14 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Scope’s pre-approved thresholds don’t audit the links—they just certify the model’s output against *its own* definition "
+   "last_position": "Pre-approved thresholds still let the model’s logic hide behind numbers—Data Protection can’t audit what they don’t see."
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 136,
+   "turns_7d": 137,
    "rooms_7d": 74,
    "engines_used": [
     "gh-models",
@@ -35,7 +35,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "We should adopt pre-approved model thresholds set jointly by Engineering and Data, and then use Gluestack UI MCP Server "
+   "last_position": "Adopt **pre-approved model thresholds** set jointly by Engineering and Data Protection before any data ingestion. This m"
   },
   {
    "id": "transcripts-w1",
@@ -121,8 +121,8 @@
    "name": "Nova",
    "dept": "creators",
    "role": "lead",
-   "turns_7d": 68,
-   "rooms_7d": 68,
+   "turns_7d": 69,
+   "rooms_7d": 69,
    "engines_used": [
     "gh-models",
     "groq",
@@ -130,15 +130,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Nova closes the \"UGC Factory\" npm package in the creators tab, labeled \"Created by EXCAVA\" and marked as tested."
+   "last_position": "ACTION: Nova closes the \"UGC Factory\" npm package in the creators tab, labeled \"Created by EXCAVA,\" to test its independ"
   },
   {
    "id": "creators-w1",
    "name": "Forge",
    "dept": "creators",
    "role": "doer",
-   "turns_7d": 68,
-   "rooms_7d": 68,
+   "turns_7d": 69,
+   "rooms_7d": 69,
    "engines_used": [
     "gh-models",
     "groq",
@@ -146,7 +146,23 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will build the \"UGC Factory\" package, which will produce a customizable Claude skill that can be tweaked to fit specif"
+   "last_position": "I will draft the \"UGC Factory\" npm package in the creators tab, labeled \"Created by EXCAVA.\" It will produce a customiza"
+  },
+  {
+   "id": "transcripts-lead",
+   "name": "Echo",
+   "dept": "transcripts",
+   "role": "lead",
+   "turns_7d": 64,
+   "rooms_7d": 64,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Split effort 50% Kaedim (audit transcripts + product pages against access gate) and 50% Gluestack UI MCP Serve",
+   "proposed": 2
   },
   {
    "id": "accessibility-w1",
@@ -177,22 +193,6 @@
    ],
    "positions_held": 30,
    "last_position": "The real risk is that a persistent skip link clutters the top of every page, breaking visual flow for sighted users who "
-  },
-  {
-   "id": "transcripts-lead",
-   "name": "Echo",
-   "dept": "transcripts",
-   "role": "lead",
-   "turns_7d": 63,
-   "rooms_7d": 63,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Split effort 50% Kaedim (transcripts + product pages) and 50% Glue, but only after running a side-by-side test",
-   "proposed": 2
   },
   {
    "id": "visualization-w1",
@@ -311,8 +311,8 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Adopt Llama-3.3-70B-Instruct for EXCAVA—run a 24-hour blind A/B test against Qwen3-235B-A22B-Instruct to confi",
-   "proposed": 25,
-   "shipped": 25
+   "proposed": 23,
+   "shipped": 23
   },
   {
    "id": "improve-w1",
@@ -358,8 +358,8 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: We will default to system preference with a temporary high-contrast override that resets after each session an",
-   "proposed": 22,
-   "shipped": 22
+   "proposed": 20,
+   "shipped": 20
   },
   {
    "id": "accessibility-lead",
@@ -375,30 +375,30 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Implement a **bold, full-width skip bar** that appears only when keyboard-focused, with high contrast and no h",
-   "proposed": 23,
-   "shipped": 23
+   "proposed": 21,
+   "shipped": 21
   },
   {
    "id": "security-lead",
    "name": "Bastion",
    "dept": "security",
    "role": "lead",
-   "turns_7d": 30,
-   "rooms_7d": 30,
+   "turns_7d": 31,
+   "rooms_7d": 31,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Warden runs LLM Guard scanner on this conversation’s input/output stream; output: \"SCAN COMPLETE — NO LEAKS, INJ"
+   "last_position": "ACTION: Warden runs LLM Guard scanner on this conversation’s input/output stream, producing a scan report flagging anoma"
   },
   {
    "id": "security-w1",
    "name": "Warden",
    "dept": "security",
    "role": "doer",
-   "turns_7d": 30,
-   "rooms_7d": 30,
+   "turns_7d": 31,
+   "rooms_7d": 31,
    "engines_used": [
     "gh-models",
     "groq",
@@ -467,8 +467,8 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Run a 5% canary rollout alongside a 48-hour shadow test that measures output accuracy against a ground truth, ",
-   "proposed": 17,
-   "shipped": 17
+   "proposed": 15,
+   "shipped": 15
   },
   {
    "id": "memory-lead",

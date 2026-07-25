@@ -68,6 +68,18 @@ def main() -> None:
         if a != b and a in nodes and b in nodes:
             links.append({"source": a, "target": b})
 
+    def uniq_nid(base: str) -> str:
+        """Guarantee a fresh node id for a per-ITEM node. Two distinct skills/tools/prompts/
+        connectors can share a slug or name (a real data collision, not a duplicate reference —
+        each is only visited once in these loops), and `node()` silently keeps the first writer
+        and drops the rest, which is exactly the bug where distinct items overwrote one another
+        onto a single graph node. Hub ids (cat:/toolhub:/Home) are intentionally reused across
+        items and must NOT go through this — only call it for a new per-item nid."""
+        nid, i = base, 2
+        while nid in nodes:
+            nid = f"{base}#{i}"; i += 1
+        return nid
+
     home = node("Home", "Excavatortron", "home")
     conn_hub = node("hub:connectors", "Connectors", "hub"); link(conn_hub, home)
     cat_ids: dict = {}
@@ -100,7 +112,7 @@ def main() -> None:
         items.sort(key=lambda kt: _q(kt[1]), reverse=True)
         for rank, (kind, x) in enumerate(items[:CAP_PER_HUB]):
             slug = str(x.get("slug") or x.get("name") or x.get("skill_name") or rank)
-            nid = f"{kind}:{slug}"
+            nid = uniq_nid(f"{kind}:{slug}")
             is_star = (slug in starred_slugs) or (rank < STARS_PER_CAT and _q(x) >= 8)
             node(nid, x.get("name") or x.get("skill_name") or slug,
                  "star" if is_star else kind, x.get("source_url"), q=_q(x))
@@ -110,10 +122,10 @@ def main() -> None:
             included[nid] = x
 
     for p in prompts:                                   # only 24 prompts — show them all
-        nid = "prompt:" + str(p.get("slug") or p.get("title") or len(nodes))
+        nid = uniq_nid("prompt:" + str(p.get("slug") or p.get("title") or len(nodes)))
         node(nid, p.get("title"), "prompt", p.get("source_url")); link(nid, cat_hub(p.get("category")))
     for c in sorted(conns, key=_q, reverse=True)[:CONN_CAP]:
-        nid = "conn:" + str(c.get("slug") or c.get("name") or len(nodes))
+        nid = uniq_nid("conn:" + str(c.get("slug") or c.get("name") or len(nodes)))
         node(nid, c.get("name"), "connector", c.get("url")); link(nid, conn_hub)
         included[nid] = c
 

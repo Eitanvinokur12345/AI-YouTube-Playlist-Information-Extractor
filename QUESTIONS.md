@@ -15,6 +15,8 @@ You're away ~1 week; the offline loop is running (non-brain fronts, hourly) and 
 - **#7 API keys work offline / without your PC** → proposed **KEEP the answer (yes).** Proven this week: the cloud beat ran the keys 24/7 with your machine off; the VPS will too.
 - **#8 EXCAVATORTRON = HUB, EXCAVA = agents (naming)** → proposed **KEEP + lock everywhere.** This is the canonical naming and it's used consistently across the code and docs.
 
+**Fire 6 (2026-07-25) — delivery channel for a Claude Code *web* session.** This fire ran from a scheduled cloud session, which (unlike your local CronCreate loop / the GitHub Actions beat) is gated to develop on a feature branch and open a PR rather than `git_safe ship`-ing straight to `main`. So this increment lands as a PR, not a direct commit — a real mechanical difference in how it shows up in your history. Proposed default: **accept PRs from web-session fires the same as direct commits** (review at your convenience, they carry the same standing-checks/regression proof); say so here if you'd rather they queue for your explicit merge only. _Default: treat as equivalent to a direct commit; merge whenever convenient._
+
 ---
 
 ## A. The new look ("Heavy Machinery" v58)

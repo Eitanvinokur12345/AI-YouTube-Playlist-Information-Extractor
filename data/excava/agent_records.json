@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-25T06:41:34.078254+00:00",
+ "generated_at": "2026-07-25T09:13:00.835716+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 150,
+   "turns_7d": 151,
    "rooms_7d": 16,
    "engines_used": [
     "gh-models",
@@ -18,14 +18,14 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "The pre-approved thresholds assume all datasets behave the same, but real ingestion risks vary by source—one bad feed co"
+   "last_position": "The real risk in Scope’s pre-approved thresholds is that Data Protection will see every ingest flagged as \"medium\" or hi"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 125,
+   "turns_7d": 126,
    "rooms_7d": 69,
    "engines_used": [
     "gh-models",
@@ -35,37 +35,37 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Adopt **joint Engineering and Data Protection approval of the automated risk scoring model’s logic before ingestion**, w"
+   "last_position": "Adopt **pre-approved model thresholds** set jointly by Engineering and Data Protection before ingestion, with Data Prote"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 115,
-   "rooms_7d": 52,
+   "turns_7d": 116,
+   "rooms_7d": 53,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll fetch the full transcript for the pending video using the approved YouTube transcript tool. This will produce a cle"
+   "last_position": "I’ll fetch the full transcript for the pending video using the approved YouTube transcript tool. This will produce a com"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 101,
-   "rooms_7d": 38,
+   "turns_7d": 102,
+   "rooms_7d": 39,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt **pre-approved model thresholds set jointly by Engineering and Data Protection** before any ingestion begins, with"
+   "last_position": "We should adopt the baseline thresholds with override capability, as it balances consistency with the need to adapt to v"
   },
   {
    "id": "power-w1",
@@ -104,8 +104,8 @@
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 78,
-   "rooms_7d": 15,
+   "turns_7d": 79,
+   "rooms_7d": 16,
    "engines_used": [
     "glm",
     "groq",
@@ -113,7 +113,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Pre-approved thresholds still make Data Protection a bottleneck—they turn every ingest into a binary gatekeeper, not a r"
+   "last_position": "Override capability turns Data into a human bottleneck again—every adjustment needs justification, review, and logging, "
   },
   {
    "id": "accessibility-w1",
@@ -195,16 +195,47 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 50,
-   "rooms_7d": 50,
+   "turns_7d": 51,
+   "rooms_7d": 51,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Fetch the full transcript for the pending video using the approved YouTube transcript tool and verify its comple",
+   "last_position": "ACTION: Fetch the full transcript for the pending video using the approved YouTube transcript tool; verify the output is",
    "proposed": 2
+  },
+  {
+   "id": "creators-lead",
+   "name": "Nova",
+   "dept": "creators",
+   "role": "lead",
+   "turns_7d": 51,
+   "rooms_7d": 51,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Nova finalizes the \"UGC Factory\" npm package in the creators tab, producing a functional open-source Claude Code"
+  },
+  {
+   "id": "creators-w1",
+   "name": "Forge",
+   "dept": "creators",
+   "role": "doer",
+   "turns_7d": 51,
+   "rooms_7d": 51,
+   "engines_used": [
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "I will draft the \"UGC Factory\" npm package in the creators tab, labeled \"Created by EXCAVA.\" This will produce a ready-t"
   },
   {
    "id": "mining-lead",
@@ -235,49 +266,19 @@
    "last_position": "I’ll run a Reddit search for AI-related posts in the last 7 days and return the top 20 most upvoted threads with their t"
   },
   {
-   "id": "creators-lead",
-   "name": "Nova",
-   "dept": "creators",
-   "role": "lead",
-   "turns_7d": 50,
-   "rooms_7d": 50,
-   "engines_used": [
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Nova tests the \"UGC Factory\" npm package in the creators tab, verifies it generates a functional open-source Cla"
-  },
-  {
-   "id": "creators-w1",
-   "name": "Forge",
-   "dept": "creators",
-   "role": "doer",
-   "turns_7d": 50,
-   "rooms_7d": 50,
-   "engines_used": [
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "I will draft the \"UGC Factory\" npm package in the creators tab, labeled \"Created by EXCAVA.\" This will produce a ready-t"
-  },
-  {
    "id": "visual-lead",
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 47,
-   "rooms_7d": 47,
+   "turns_7d": 48,
+   "rooms_7d": 48,
    "engines_used": [
     "gh-models",
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as a taste material artifact in the hub.",
+   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as a taste material reference for color an",
    "proposed": 1,
    "shipped": 1
   },
@@ -286,13 +287,13 @@
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 47,
-   "rooms_7d": 47,
+   "turns_7d": 48,
+   "rooms_7d": 48,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section. This produces a taste material "
+   "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section. The image will land in the hub "
   },
   {
    "id": "power-lead",
@@ -312,6 +313,35 @@
    "shipped": 27
   },
   {
+   "id": "improve-w1",
+   "name": "Sprocket",
+   "dept": "improve",
+   "role": "doer",
+   "turns_7d": 32,
+   "rooms_7d": 16,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run a 24-hour canary deployment to 5% of users with real-time quality and latency monitoring. This catches silent failur"
+  },
+  {
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
+   "role": "checker",
+   "turns_7d": 32,
+   "rooms_7d": 16,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Canary deployments still miss silent failures—like a prompt that degrades answers for a niche user segment not in the 5%"
+  },
+  {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
@@ -325,8 +355,8 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: We will default to system preference with a temporary high-contrast override that resets after each session an",
-   "proposed": 25,
-   "shipped": 25
+   "proposed": 24,
+   "shipped": 24
   },
   {
    "id": "accessibility-lead",
@@ -344,35 +374,6 @@
    "last_position": "DECISION: Implement a **bold, full-width skip bar** that appears only when keyboard-focused, with high contrast and no h",
    "proposed": 25,
    "shipped": 25
-  },
-  {
-   "id": "improve-w1",
-   "name": "Sprocket",
-   "dept": "improve",
-   "role": "doer",
-   "turns_7d": 31,
-   "rooms_7d": 16,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Do a shadow test on the new prompt before rolling it out. This lets us catch hidden flaws by replaying real traffic with"
-  },
-  {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 31,
-   "rooms_7d": 16,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Shadow testing misses silent failures—like a prompt that degrades answers over time without crashing. A better alternati"
   },
   {
    "id": "analysis-lead",
@@ -470,27 +471,27 @@
    "name": "Bastion",
    "dept": "security",
    "role": "lead",
-   "turns_7d": 12,
-   "rooms_7d": 12,
+   "turns_7d": 13,
+   "rooms_7d": 13,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Warden runs LLM Guard scanner on this conversation’s input/output stream; output: real-time security report conf"
+   "last_position": "ACTION: Warden runs LLM Guard scanner on this conversation’s input/output stream; output: \"SECURE — no leaks, injection,"
   },
   {
    "id": "security-w1",
    "name": "Warden",
    "dept": "security",
    "role": "doer",
-   "turns_7d": 12,
-   "rooms_7d": 12,
+   "turns_7d": 13,
+   "rooms_7d": 13,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will run the LLM Guard scanner on this conversation’s input/output stream to detect leaks, injection, or fake elements"
+   "last_position": "I will run the LLM Guard scanner on this conversation’s input/output stream to detect leaks, injection, or tampering. Th"
   },
   {
    "id": "excava-core",

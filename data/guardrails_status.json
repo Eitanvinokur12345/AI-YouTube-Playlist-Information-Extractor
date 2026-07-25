@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-25T19:46:46.338596+00:00",
+ "generated_at": "2026-07-25T21:29:16.596337+00:00",
  "total": 15,
- "passing": 14,
+ "passing": 13,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -36,7 +36,7 @@
    "id": "G-E",
    "name": "Build alignment",
    "ok": true,
-   "detail": "APP_BUILD v128 == SHELL_CACHE v128.",
+   "detail": "APP_BUILD v129 == SHELL_CACHE v129.",
    "severity": "warn"
   },
   {
@@ -63,8 +63,8 @@
   {
    "id": "G-I",
    "name": "Handoff mentions live build",
-   "ok": true,
-   "detail": "SESSION_HANDOFF.md references v128.",
+   "ok": false,
+   "detail": "handoff does not mention the live build (v129) — update §0d so no context is lost.",
    "severity": "warn"
   },
   {
@@ -92,21 +92,21 @@
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "1124 tasks done, 12 departments moving",
+   "detail": "1121 tasks done, 12 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "88841 MB free on the repo drive.",
+   "detail": "88836 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": true,
-   "detail": "last batch 0.8h ago on EITAN-PC (qwen2.5:3b): 14 enriched, stubs 2026",
+   "detail": "last batch 1.5h ago on EITAN-PC (llama3.2:3b): 16 enriched, stubs 2026",
    "severity": "info"
   }
  ]

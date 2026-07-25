@@ -1,8 +1,8 @@
 {
- "generated_at": "2026-07-25T19:46:46.674732+00:00",
- "total": 102,
+ "generated_at": "2026-07-25T21:29:16.935892+00:00",
+ "total": 103,
  "counts": {
-  "wired": 84,
+  "wired": 85,
   "operator": 18,
   "orphaned": 0,
   "dead": 0
@@ -68,6 +68,19 @@
   "warm_shots"
  ],
  "modules": {
+  "accessibility_scan": {
+   "status": "wired",
+   "loc": 132,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "excava_agents"
+   ],
+   "imports": []
+  },
   "activate": {
    "status": "operator",
    "loc": 134,
@@ -572,7 +585,7 @@
   },
   "excava_agents": {
    "status": "wired",
-   "loc": 351,
+   "loc": 354,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
@@ -591,6 +604,7 @@
     "guardrail_test"
    ],
    "imports": [
+    "accessibility_scan",
     "build_memory",
     "collect_designs",
     "discovery_agent",

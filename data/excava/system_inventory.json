@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-07-25T15:44:09.352744+00:00",
+ "generated_at": "2026-07-25T17:33:46.608681+00:00",
  "total": 102,
  "counts": {
-  "wired": 83,
-  "operator": 19,
+  "wired": 84,
+  "operator": 18,
   "orphaned": 0,
   "dead": 0
  },
@@ -47,6 +47,7 @@
   "pipeline_status",
   "prewarm",
   "priorities",
+  "pulse",
   "recategorize",
   "relate",
   "resolve_comment_gated",
@@ -142,7 +143,6 @@
    "invoked_by": [],
    "documented_in": [
     "AWAY_LOG.md",
-    "PULSE.md",
     "QUESTIONS.md",
     "data/dev_construction.json",
     "docs/dashboard.js"
@@ -1355,14 +1355,18 @@
    "imports": []
   },
   "pulse": {
-   "status": "operator",
+   "status": "wired",
    "loc": 227,
-   "entrypoint": false,
-   "invoked_by": [],
+   "entrypoint": true,
+   "invoked_by": [
+    "excava_beat.yml"
+   ],
    "documented_in": [
     "AWAY_LOG.md",
     "PULSE.md",
-    "data/dev_construction.json"
+    "SESSION_HANDOFF.md",
+    "data/dev_construction.json",
+    "docs/dashboard.js"
    ],
    "imported_by": [],
    "imports": []

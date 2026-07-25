@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-25T09:31:04.249126+00:00",
+ "generated_at": "2026-07-25T09:37:03.025804+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 155,
+   "turns_7d": 156,
    "rooms_7d": 17,
    "engines_used": [
     "gh-models",
@@ -18,7 +18,7 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Pre-approved thresholds shift the black-box problem upstream: Data Protection signs off on rigid rules they can’t explai"
+   "last_position": "The real risk in Scope’s pre-approved thresholds is that they shift the black-box problem upstream—engineers set the thr"
   },
   {
    "id": "watch-w1",
@@ -42,38 +42,38 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 121,
-   "rooms_7d": 57,
+   "turns_7d": 123,
+   "rooms_7d": 58,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will retrieve the full transcript for the pending video titled *\"AI Breakthroughs of 2024: What Changed Everything\"* u"
+   "last_position": "Adopt **pre-approved model thresholds** set jointly by Engineering and Data Protection before ingestion, with Data Prote"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 103,
-   "rooms_7d": 39,
+   "turns_7d": 104,
+   "rooms_7d": 40,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt **pre-approved model thresholds set jointly by Engineering and Data Protection** before any data ingestion. This r"
+   "last_position": "We should implement a balanced approach by adopting a minimum viable coverage rule of 50% for all videos before prioriti"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 80,
-   "rooms_7d": 16,
+   "turns_7d": 81,
+   "rooms_7d": 17,
    "engines_used": [
     "glm",
     "groq",
@@ -81,7 +81,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Scriv’s pre-approved thresholds still make Data Protection a bottleneck—they turn every override into a policy debate in"
+   "last_position": "The 50% rule locks us into a false equality—niche videos may never reach the threshold, while popular ones stall waiting"
   },
   {
    "id": "power-w1",
@@ -181,16 +181,47 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 55,
-   "rooms_7d": 55,
+   "turns_7d": 56,
+   "rooms_7d": 56,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Fetch the full transcript for *\"AI Breakthroughs of 2024: What Changed Everything\"* using the approved YouTube t",
+   "last_position": "ACTION: Fetch the full transcript for *\"AI Breakthroughs That Will Change Your Life in 2024\"* using the YouTube transcri",
    "proposed": 2
+  },
+  {
+   "id": "creators-lead",
+   "name": "Nova",
+   "dept": "creators",
+   "role": "lead",
+   "turns_7d": 55,
+   "rooms_7d": 55,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Nova finalizes the \"UGC Factory\" npm package in the creators tab, producing a labeled \"Created by EXCAVA\" artifa"
+  },
+  {
+   "id": "creators-w1",
+   "name": "Forge",
+   "dept": "creators",
+   "role": "doer",
+   "turns_7d": 55,
+   "rooms_7d": 55,
+   "engines_used": [
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "I will draft the \"UGC Factory\" npm package in the creators tab, labeled \"Created by EXCAVA\". This will produce a new ski"
   },
   {
    "id": "watch-lead",
@@ -205,37 +236,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: At 11:43:00, Iris directs Arcads AI Video to generate a timestamped Data Protection risk report for the marketin"
-  },
-  {
-   "id": "creators-lead",
-   "name": "Nova",
-   "dept": "creators",
-   "role": "lead",
-   "turns_7d": 54,
-   "rooms_7d": 54,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Nova finalizes the \"UGC Factory\" npm package in the creators tab, labeled \"Created by EXCAVA,\" and it is ready f"
-  },
-  {
-   "id": "creators-w1",
-   "name": "Forge",
-   "dept": "creators",
-   "role": "doer",
-   "turns_7d": 54,
-   "rooms_7d": 54,
-   "engines_used": [
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "I will draft the \"UGC Factory\" npm package in the creators tab, labeled \"Created by EXCAVA.\" This will produce a ready-t"
   },
   {
    "id": "mining-lead",
@@ -427,15 +427,16 @@
    "name": "Ratchet",
    "dept": "improve",
    "role": "lead",
-   "turns_7d": 16,
-   "rooms_7d": 16,
+   "turns_7d": 17,
+   "rooms_7d": 17,
    "engines_used": [
+    "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Run a staged rollout—start with synthetic user tasks on the full dataset, then a 5% canary with real-time qual",
-   "proposed": 16,
+   "last_position": "DECISION: Run a 5% canary rollout alongside a 48-hour shadow test that measures output accuracy against a ground truth, ",
+   "proposed": 17,
    "shipped": 16
   },
   {
@@ -443,28 +444,29 @@
    "name": "Bastion",
    "dept": "security",
    "role": "lead",
-   "turns_7d": 16,
-   "rooms_7d": 16,
+   "turns_7d": 17,
+   "rooms_7d": 17,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Warden runs LLM Guard scanner on this conversation’s input/output stream; output: \"CLEAN — no leaks, injection, "
+   "last_position": "ACTION: Warden runs LLM Guard scanner on this conversation’s input/output stream; output: security report generated by L"
   },
   {
    "id": "security-w1",
    "name": "Warden",
    "dept": "security",
    "role": "doer",
-   "turns_7d": 16,
-   "rooms_7d": 16,
+   "turns_7d": 17,
+   "rooms_7d": 17,
    "engines_used": [
+    "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will run the LLM Guard scanner on this conversation’s input/output stream to detect leaks, injection, or tampering. Th"
+   "last_position": "I will run the LLM Guard scanner on this conversation’s input/output stream. This will produce a security report identif"
   },
   {
    "id": "memory-lead",

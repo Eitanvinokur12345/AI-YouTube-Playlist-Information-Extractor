@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-25T17:33:46.332152+00:00",
+ "generated_at": "2026-07-25T19:06:17.157770+00:00",
  "total": 15,
- "passing": 14,
+ "passing": 15,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -21,8 +21,8 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": false,
-   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
+   "ok": true,
+   "detail": "1 bundle(s); newest within 26h.",
    "severity": "warn"
   },
   {
@@ -36,7 +36,7 @@
    "id": "G-E",
    "name": "Build alignment",
    "ok": true,
-   "detail": "APP_BUILD v128 == SHELL_CACHE v128.",
+   "detail": "APP_BUILD v129 == SHELL_CACHE v129.",
    "severity": "warn"
   },
   {
@@ -64,7 +64,7 @@
    "id": "G-I",
    "name": "Handoff mentions live build",
    "ok": true,
-   "detail": "SESSION_HANDOFF.md references v128.",
+   "detail": "SESSION_HANDOFF.md references v129.",
    "severity": "warn"
   },
   {
@@ -78,7 +78,7 @@
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "0 guardrail runs logged (append-only, never rewritten).",
+   "detail": "6 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -92,21 +92,21 @@
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "1129 tasks done, 12 departments moving",
+   "detail": "1129 tasks in bus (snapshot), 12 departments moving, 659 beats cumulative",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "88846 MB free on the repo drive.",
+   "detail": "30443 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": true,
-   "detail": "last batch 1.6h ago on EITAN-PC (llama3.2:3b): 20 enriched, stubs 2027",
+   "detail": "last batch 1.1h ago on EITAN-PC (llama3.2:3b): 0 enriched, stubs 2027",
    "severity": "info"
   }
  ]

@@ -168,23 +168,32 @@ def g_watchdog():
 
 
 def g_movement():
-    """Owner law 2026-07-06: EACH loop, confirm work is actually MOVING (not all at 0). Tracks the
-    bus done-count over time; flags a STALL if it hasn't risen across the last 3 checks."""
+    """Owner law 2026-07-06: EACH loop, confirm work is actually MOVING (not all at 0).
+
+    `done`/`depts_moving` (bus.json's current status==done tasks) are a SNAPSHOT of a bounded
+    working set — old completed tasks age out of bus.json to make room for new ones, so this
+    count churns (and can fall) even while the program keeps completing new work. A prior fire
+    diagnosed this as a false regression (see src/pulse.py's `_throughput`, 2026-07-25): the
+    true, only-rises total lives in state.json's `usage[dept].done`. Stall detection here now
+    keys off that cumulative total (via `state.json["beats"]`, which only increments) instead
+    of the churning snapshot, so a bus-array eviction can no longer read as a stall."""
     mv = DATA / "excava" / "movement.json"
     bus = _load_json(DATA / "excava" / "bus.json", {})
     done = sum(1 for t in bus.get("tasks", []) if t.get("status") == "done")
     depts = len({t.get("department") for t in bus.get("tasks", [])
                  if t.get("status") == "done" and t.get("department") not in (None, "core")})
+    beats = _load_json(DATA / "excava" / "state.json", {}).get("beats", 0)
     hist = _load_json(mv, {"history": []}).get("history", [])
-    hist.append({"at": _now(), "done": done, "depts_moving": depts})
+    hist.append({"at": _now(), "done": done, "depts_moving": depts, "beats": beats})
     hist = hist[-30:]
     mv.parent.mkdir(parents=True, exist_ok=True)
-    mv.write_text(json.dumps({"history": hist, "done": done, "depts_moving": depts},
+    mv.write_text(json.dumps({"history": hist, "done": done, "depts_moving": depts, "beats": beats},
                              ensure_ascii=False, indent=1), encoding="utf-8")
-    recent = [h["done"] for h in hist[-4:]]
-    stalled = len(recent) >= 4 and len(set(recent)) == 1        # 4 checks, zero movement
+    recent = [h.get("beats", 0) for h in hist[-4:]]
+    stalled = len(recent) >= 4 and len(set(recent)) == 1        # 4 checks, zero new beats completed
     return _ok("G-M", "Work is moving (not all at 0)", not stalled,
-               f"{done} tasks done, {depts} departments moving" + (" — STALLED (no new completions in the last 4 beats)" if stalled else ""),
+               f"{done} tasks in bus (snapshot), {depts} departments moving, {beats} beats cumulative"
+               + (" — STALLED (no new beats in the last 4 checks)" if stalled else ""),
                "warn")
 
 

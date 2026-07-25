@@ -98,6 +98,36 @@ def _movement() -> dict:
             "delta_span_h": round(span, 1) if span else None, "points": len(hist)}
 
 
+def _throughput() -> dict:
+    """The REAL movement number, as opposed to `_movement()`'s bus snapshot.
+
+    `_movement()` reads movement.json's `done`, which is `len([t for t in bus.json.tasks if
+    status==done])` at the moment a beat ran. bus.json is a bounded working set — old completed
+    tasks age out of it to make room for new ones — so that count churns (and can fall) even
+    while the program keeps completing NEW work. This surfaced as a false "regression" (done
+    1566 -> 1256 -> 1130) that a prior fire displayed but did not diagnose.
+
+    state.json's `usage[dept]` is different: `beat()` only ever increments `ticks`/`done` there,
+    per department, once per completed tick — it never shrinks. Summing it is the honest
+    cumulative total. A dept with ticks>0 but done==0 (all handoffs, e.g. links/transcripts) is a
+    real stall signal that the bus snapshot's flat 'depts moving' count hides.
+    """
+    st = _load(DATA / "excava" / "state.json", {})
+    usage = st.get("usage", {}) or {}
+    if not usage:
+        return {}
+    completed_total = sum(v.get("done", 0) for v in usage.values())
+    stalled = sorted(d for d, v in usage.items() if v.get("ticks", 0) > 0 and v.get("done", 0) == 0)
+    top = sorted(((d, v.get("done", 0)) for d, v in usage.items()), key=lambda kv: -kv[1])[:5]
+    return {
+        "completed_total": completed_total,
+        "beats": st.get("beats", 0),
+        "n_depts": len(usage),
+        "stalled_depts": stalled,
+        "top": top,
+    }
+
+
 def _drain() -> dict:
     st = _load(DATA / "excava" / "local_worker.json", {})
     if not st:
@@ -147,6 +177,7 @@ def build() -> dict:
         "generated_at": _now().isoformat(),
         "guardrails": _guardrails(),
         "movement": _movement(),
+        "throughput": _throughput(),
         "drain": _drain(),
         "questions": _questions(),
         "away": _away(),
@@ -170,7 +201,7 @@ def _arrow(delta) -> str:
 
 
 def _render(d: dict) -> str:
-    g, mv, dr, q, aw = d["guardrails"], d["movement"], d["drain"], d["questions"], d["away"]
+    g, mv, tp, dr, q, aw = d["guardrails"], d["movement"], d.get("throughput") or {}, d["drain"], d["questions"], d["away"]
     gl = (f"{g['passing']}/{g['total']} passing, {g['critical']} critical"
           if g.get("total") else "no status")
     drain = ("never run" if not dr.get("age_h") and dr.get("age_h") != 0 else
@@ -188,11 +219,21 @@ def _render(d: dict) -> str:
         f"- **local drain:** {drain}",
         "",
         "## Movement",
-        f"- **tasks done (rolling):** {mv['done']}{_arrow(mv['delta'])}{span}",
-        f"- **departments moving:** {mv['depts_moving']}",
     ]
-    if mv.get("delta") is not None and mv["delta"] < 0:
-        lines.append("- ⚠ _the done-counter is DECLINING — worth a look; a flat 'depts moving' hides it._")
+    if tp:
+        lines.append(f"- **completed (cumulative, only rises):** {tp['completed_total']} "
+                      f"across {tp['n_depts']} depts · {tp['beats']} beats")
+        top_str = ", ".join(f"{d} {n}" for d, n in tp["top"])
+        lines.append(f"- **in the bus right now:** {mv['done']} done (live snapshot — churns every "
+                      f"beat, NOT a trend) · top: {top_str}")
+        if tp["stalled_depts"]:
+            lines.append(f"- ⚠ **never completed a task (0 cumulative):** "
+                          f"{', '.join(tp['stalled_depts'])} — the real stall signal, unlike the churning snapshot above.")
+    else:
+        lines.append(f"- **tasks done (rolling):** {mv['done']}{_arrow(mv['delta'])}{span}")
+        lines.append(f"- **departments moving:** {mv['depts_moving']}")
+        if mv.get("delta") is not None and mv["delta"] < 0:
+            lines.append("- ⚠ _the done-counter is DECLINING — worth a look; a flat 'depts moving' hides it._")
     lines += [
         "",
         "## Away loop",

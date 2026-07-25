@@ -145,6 +145,35 @@ semantics in movement.json / state.json usage), don't just display it. **Correct
 the drain is NOT "stalled at 0" — it enriches ~1–20/batch, just slowly vs 2,027 stubs; the
 deterministic-enricher escalation in QUESTIONS.md stands to ACCELERATE it, not revive a corpse.
 
+**v129 (Sonnet 5, 2026-07-25 — DIAGNOSED the v128 decline; it was never a regression):** the "done" number
+in movement.json is `len([t in bus.json.tasks if status==done])` — a SNAPSHOT of a bounded working set.
+bus.json ages old completed tasks out to make room for new ones, so that count churns (and falls) even while
+the program keeps completing new work; the 1566→1256→1130 "decline" was this churn, not lost progress. Found
+the real cumulative counter already exists and only ever rises: `state.json["usage"][dept] = {ticks, done,
+handoffs, fails}`, incremented once per completed tick, never decremented (currently sums to 4353 across 14
+depts over 659 beats — matching, almost to the beat, an ORPHANED throughput block that was already sitting
+uncommitted in data/excava/pulse.json from a prior fire whose source change to pulse.py was never actually
+committed, so it was one beat away from being silently overwritten back to the misleading number).
+Reimplemented it as `pulse._throughput()` (reads state.json, sums usage.done, flags depts with ticks>0 but
+done==0 as real stalls — currently links + transcripts, both handoff-only), wired into `build()`+`_render()`
+so PULSE.md/pulse.json carry it going forward, and updated the dashboard's Program pulse card to show the
+cumulative total + the true stalled-dept list instead of alarming on the snapshot delta. Also fixed **G-M**
+(guardrails.py) which had the SAME bug — its stall detector watched the bus snapshot too, so it false-fired
+"STALLED" the instant nothing NEW happened to complete in the observation window even though beats kept
+advancing; it now keys off `state.json["beats"]` (monotonic) instead. Verified: `python -m src.pulse`
+regenerates cleanly with the new throughput block, `node --check docs/dashboard.js` OK, `python -m src.guardrails`
+15/15 (G-M correctly reports cumulative beats, no false stall). Build bumped v128→v129.
+**Checked, not a bug:** `_work_links`/`_work_transcripts` (excava_agents.py) always `return {"kind":
+"handoff"...}` (or "fail") — never "complete" — so 0 cumulative `done` for those two is BY DESIGN (pure
+relay departments: links→memory, transcripts→analysis), not a stall. Corrected the stalled-dept framing above
+before shipping so the next fire doesn't chase a non-bug.
+**HARSH CRITICISM:** I initially wrote this up as an open mystery ("find out why") before actually reading
+`excava_agents.py` — the same "display the finding, skip the diagnosis" shortcut v128 criticized itself for.
+Reading the two work functions took under a minute; there was no excuse to leave it as a question for the
+next fire. Also: this whole fire stayed on the observability/self-improve front for the fourth time running
+(v125-128 were also here) — the actual product (Hub, M3 shell) hasn't moved. That imbalance is worth a look.
+**NEXT (non-brain):** M1/M3 polish (Hub, shell/design) — the observability front has had its turn four times running.
+
 **(prior, v120) M2 UNDERWAY.** Sessions 8-10: 4 brain families in the engine CATALOG (GLM/DeepSeek/Kimi via
 OpenRouter free + local Qwen/Llama); OpenRouter key VERIFIED (Eitan's secret OPENROUTER_API_KEY_REAL,
 workflows repointed, selftest 11/11, glm/deepseek/kimi all PASS); `engines.debate_engines(n)` dedups

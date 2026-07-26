@@ -5,6 +5,9 @@ name: CORE SPOT-ON (discovery + deep-retrieve + verify)
 #     social -> the gated intake queue. Same-day freshness.
 #   - deep-retrieve (M1.C1): every 2h, a batch of thin elements gets rebuilt from FULL
 #     sources (real transcripts + README + homepage) and LLM-fused on the free pool.
+#   - github-meta-enrich (M1.C1, deterministic, non-brain): HOURLY, the GitHub REST API's own
+#     description/topics fill github-linked stubs directly — no LLM, no local drain dependency,
+#     so it makes progress even when deep-retrieve's brain step is skipped/off.
 #   - verify-elements (M1.2/C3): every 6h, a rolling batch is checked to the >=2-source +
 #     live-test standard; conflicts reconciled+noted; dead only after 2 consecutive failures.
 #
@@ -51,6 +54,12 @@ jobs:
           else
             echo "odd hour - skipped (runs every 2nd hour)"
           fi
+
+      - name: GitHub-metadata enrich (hourly, deterministic — no LLM/brain)
+        if: ${{ !cancelled() }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python -m src.github_meta_enrich --limit 60
 
       - name: Verify elements (every 6th hour)
         if: ${{ !cancelled() }}

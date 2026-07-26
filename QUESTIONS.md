@@ -15,6 +15,16 @@ You're away ~1 week; the offline loop is running (non-brain fronts, hourly) and 
 - **#7 API keys work offline / without your PC** → proposed **KEEP the answer (yes).** Proven this week: the cloud beat ran the keys 24/7 with your machine off; the VPS will too.
 - **#8 EXCAVATORTRON = HUB, EXCAVA = agents (naming)** → proposed **KEEP + lock everywhere.** This is the canonical naming and it's used consistently across the code and docs.
 
+**2026-07-26 (fire 10) — deterministic GitHub-metadata enricher BUILT, per the proposed default below.**
+`src/github_meta_enrich.py` now fills github-linked stub descriptions from the GitHub REST API's
+own `description`/`topics` (no LLM, no Ollama, no local-drain dependency) and is wired hourly into
+`core_spoton.yml`. Could not live-verify against the real API from this cloud session (its proxy
+scopes GitHub access to just this repo — 403 on other repos) — logic verified via dry-run +
+mocked-metadata unit check instead; real end-to-end proof needs the next `core_spoton` Action run
+and a PULSE.md stub-count check (see AWAY_LOG fire 10). This does NOT replace the LLM-fused path
+for non-GitHub stubs (video-only elements, sites without API metadata) — deep-retrieve + the local
+drain are still the only path for those. Original blocker note preserved below for context.
+
 **The real hub blocker: enrichment is stalled at 0, and away-mode can't fix it (decision for your return).**
 Three loop fires this week shipped read-side hub wins (v125 type-aware Activate · v126 "ready to use" filter
 · v127 inline payload in the detail view). All real, but all BROWSE-layer — because the actual problem is

@@ -5,6 +5,37 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-26
+- **~19:0x (fire 10, unattended, cloud session)** — Attacked the actual blocker fire 5/9 flagged
+  instead of a sixth piece of plumbing: built `src/github_meta_enrich.py`, a fully deterministic
+  (no LLM, no Ollama) enricher that fills github-linked stub descriptions straight from the
+  GitHub REST API's own `description`/`topics` fields, falling back to `deep_retrieve`'s
+  README-first-sentences extractor only when the API gives nothing. Wired it into
+  `core_spoton.yml` to run HOURLY (vs. deep-retrieve's every-2h + local-drain's PC-dependent
+  cadence), so stub-filling no longer depends on EITAN-PC being on. Verified: dry-run correctly
+  found the 22 github-linked stub elements currently unfusable by deep-retrieve's LLM path; a
+  mocked-metadata unit check (no real network, no file writes) proved `describe()` builds a
+  factual sentence + topics from repo metadata and routes to the right per-type field via
+  `DESC_FIELD`/`element_model.set_field`. Could NOT live-verify against the real GitHub API from
+  this cloud session — its proxy scopes GitHub access to this one repo and returned 403 on
+  `api.github.com/repos/Instagram/LibCST` (not a code bug: `deep_retrieve.py`'s own raw-network
+  calls would hit the identical wall here) — the real un-proxied GitHub Actions runner is what
+  actually exercises this end to end starting the next hourly `core_spoton` run; watch stub
+  count in PULSE.md to confirm. `python -m src.guardrails`: 13/15, 0 critical (G-C stale-backup
+  self-heals on ship; G-L flagged this new file pre-commit, resolves on this commit).
+  **Harsh self-criticism:** I did not (and could not, from this sandbox) prove the happy path
+  end-to-end before shipping — that's a real gap, mitigated only by the mocked unit check and by
+  the fact the code path is structurally identical to `deep_retrieve.py`'s already-proven
+  network calls; if it fails silently in CI it will show up as `github-meta-enrich` making 0
+  progress in the next PULSE.md refresh and needs a follow-up fire to check the Action's own
+  logs, not just guardrails. Also a repo-convention judgment call, now the THIRD cloud fire to
+  make it (fires 8 and 9 both flagged this unconfirmed): pushed via `python -m src.git_safe
+  ship`, which hardcodes `origin HEAD:main` per `away_mode.json`'s explicit instruction and the
+  tool's own documented 2026-07-26 fix — not this session's default per-branch/PR harness
+  convention. Continuing the established, self-documented pattern rather than re-litigating it
+  a third time, but it is still genuinely unconfirmed by Eitan and stays flagged in QUESTIONS.md.
+  Scope stayed narrow (one enricher, one workflow wire) — did not touch the ~13 stray
+  `kind-shannon-*` branches, still someone else's problem.
+
 - **~16:5x (fire 9, unattended, cloud session)** — Built the standing-checks entrypoint fire 8
   queued (twice now, per QUESTIONS.md) instead of re-diagnosing the same symptoms by hand a
   third time: new `src/standing_checks.py` — `python -m src.standing_checks` in one call (a)

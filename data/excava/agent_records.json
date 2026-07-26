@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-26T21:30:46.556094+00:00",
+ "generated_at": "2026-07-26T23:32:02.285587+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 188,
+   "turns_7d": 189,
    "rooms_7d": 28,
    "engines_used": [
     "gh-models",
@@ -18,7 +18,7 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is that redacted indicators still leak enough tactical data to guide attackers—even partial hashes or time"
+   "last_position": "The real risk is that a *generic* alert still leaks the breach *threshold*—which attackers can map to our detection sens"
   },
   {
    "id": "watch-w1",
@@ -42,7 +42,7 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 138,
+   "turns_7d": 139,
    "rooms_7d": 68,
    "engines_used": [
     "gh-models",
@@ -51,22 +51,22 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** The AE auto-publishes a *redacted* excerpt (threshold, breach status, timestamp) immediately, then Securit"
+   "last_position": "**Decision:** The AE auto-publishes a *generic* breach alert (threshold breached, timestamp, no excerpt) immediately, th"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 114,
-   "rooms_7d": 44,
+   "turns_7d": 115,
+   "rooms_7d": 45,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will deep-analyze the LangSmith observability platform’s documentation and GitHub repo to extract its core value propo"
+   "last_position": "I will deep-analyze LangSmith’s documentation and public-facing materials to extract its core observability features, tr"
   },
   {
    "id": "analysis-checker",
@@ -276,16 +276,16 @@
    "name": "Dynamo",
    "dept": "power",
    "role": "lead",
-   "turns_7d": 36,
-   "rooms_7d": 36,
+   "turns_7d": 37,
+   "rooms_7d": 37,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Adopt Llama-3.3-70B-Instruct for EXCAVA—run a 24-hour blind A/B test against Qwen3-235B-A22B-Instruct to confi",
-   "proposed": 20,
+   "last_position": "DECISION: Run a 48-hour blind A/B stress test between DeepSeek-R1-671B on 4xA100 nodes (distributed, redundant) and Qwen",
+   "proposed": 21,
    "shipped": 20
   },
   {
@@ -354,15 +354,30 @@
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 22,
-   "rooms_7d": 22,
+   "turns_7d": 23,
+   "rooms_7d": 23,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll fetch the latest AI headlines from Reuters, BBC, and the White House using the news tool. This will produce a fresh"
+   "last_position": "I’ll fetch the latest AI headlines from Reuters, BBC, and the White House. This will produce a fresh digest of the newes"
+  },
+  {
+   "id": "news-lead",
+   "name": "Wire",
+   "dept": "news",
+   "role": "lead",
+   "turns_7d": 21,
+   "rooms_7d": 21,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Fetch verified AI headlines from Reuters, BBC, and the White House, compile into a digest with timestamps and so"
   },
   {
    "id": "mining-lead",
@@ -393,21 +408,6 @@
    ],
    "positions_held": 30,
    "last_position": "I will run a Reddit search for AI-related posts in the last 7 days and return the top 10 posts with the most engagement."
-  },
-  {
-   "id": "news-lead",
-   "name": "Wire",
-   "dept": "news",
-   "role": "lead",
-   "turns_7d": 20,
-   "rooms_7d": 20,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Fetch verified AI headlines from Reuters, BBC, and the White House via the news tool."
   },
   {
    "id": "visualization-lead",
@@ -448,8 +448,8 @@
    "name": "Marrow",
    "dept": "analysis",
    "role": "lead",
-   "turns_7d": 16,
-   "rooms_7d": 16,
+   "turns_7d": 17,
+   "rooms_7d": 17,
    "engines_used": [
     "gh-models",
     "glm",
@@ -457,7 +457,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Marrow manually reviews the full LangSmith documentation, GitHub repo, and at least one real-world use case to e"
+   "last_position": "ACTION: Marrow manually reviews the full LangSmith documentation and GitHub repository to extract its core observability"
   },
   {
    "id": "improve-lead",
@@ -510,27 +510,28 @@
    "name": "Anchor",
    "dept": "links",
    "role": "doer",
-   "turns_7d": 6,
-   "rooms_7d": 6,
+   "turns_7d": 7,
+   "rooms_7d": 7,
    "engines_used": [
     "groq",
     "mistral"
    ],
-   "positions_held": 6,
-   "last_position": "I will run a full audit of the department's link inventory using the link-checking tool to identify broken or outdated l"
+   "positions_held": 7,
+   "last_position": "I will run a full audit of the department’s link inventory using the link-checker to identify all broken or outdated lin"
   },
   {
    "id": "links-lead-x",
    "name": "LinLea",
    "dept": "links",
    "role": "lead",
-   "turns_7d": 6,
-   "rooms_7d": 6,
+   "turns_7d": 7,
+   "rooms_7d": 7,
    "engines_used": [
+    "groq",
     "mistral"
    ],
-   "positions_held": 6,
-   "last_position": "ACTION: Anchor delivers the cleaned link inventory report with dead links removed by [date]."
+   "positions_held": 7,
+   "last_position": "ACTION: Anchor delivers the cleaned link inventory report with dead links removed and redirects updated, to advance the "
   },
   {
    "id": "links-checker",

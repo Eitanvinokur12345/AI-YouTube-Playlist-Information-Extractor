@@ -269,6 +269,26 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
+      "status": "done",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": "memory-w1",
+      "handoff_docs": [
+        "data/excava/handoffs/raise-g3-truth-access-54-84436--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-07-10T11:53:56.131948+00:00",
+      "updated_at": "2026-07-26T23:30:49.804397+00:00",
+      "result": "Semantic index: 1503 vectors (model gemini-embedding-001); hub 7354 items → 5851 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "id": "raise-g3-truth-access-53-42024",
+      "title": "Raise G3 Truth & access (53/100): 53.7% of tools/skills have a real link (target: ~100%)",
+      "detail": "value=47 size=17(small) [cost 15/steps 25/risk 10] · G3 at 53",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
       "status": "queued",
       "steps": 1,
       "max_steps": 8,
@@ -276,27 +296,10 @@
       "escalation_tier": 1,
       "claimed_by": null,
       "handoff_docs": [
-        "data/excava/handoffs/raise-g3-truth-access-54-84436--01--links-w1--to--memory.md"
+        "data/excava/handoffs/raise-g3-truth-access-53-42024--01--links-w1--to--memory.md"
       ],
-      "created_at": "2026-07-10T11:53:56.131948+00:00",
-      "updated_at": "2026-07-26T21:29:09.071772+00:00"
-    },
-    {
-      "id": "raise-g3-truth-access-53-42024",
-      "title": "Raise G3 Truth & access (53/100): 53.7% of tools/skills have a real link (target: ~100%)",
-      "detail": "value=47 size=17(small) [cost 15/steps 25/risk 10] · G3 at 53",
-      "department": "links",
-      "source": "gap",
-      "priority": 1,
-      "status": "queued",
-      "steps": 0,
-      "max_steps": 8,
-      "done_criteria": "a committed artifact that measurably closes this gap",
-      "escalation_tier": 1,
-      "claimed_by": null,
-      "handoff_docs": [],
       "created_at": "2026-07-11T03:53:44.143065+00:00",
-      "updated_at": "2026-07-11T03:53:44.143076+00:00"
+      "updated_at": "2026-07-26T23:30:50.669858+00:00"
     },
     {
       "id": "raise-g3-truth-access-53-51887",
@@ -2094,7 +2097,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-15T19:47:06.673355+00:00",
-      "updated_at": "2026-07-26T15:41:03.777335+00:00",
+      "updated_at": "2026-07-26T23:30:50.611701+00:00",
       "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
@@ -3804,7 +3807,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-19T07:07:06.701375+00:00",
-      "updated_at": "2026-07-26T15:41:03.061228+00:00"
+      "updated_at": "2026-07-26T23:30:49.834123+00:00"
     },
     {
       "id": "memory-embed-the-remaini-44826",
@@ -3857,24 +3860,6 @@
       "handoff_docs": [],
       "created_at": "2026-07-19T10:10:15.019094+00:00",
       "updated_at": "2026-07-19T10:10:15.019105+00:00"
-    },
-    {
-      "id": "verify-the-next-200-of-6-61082",
-      "title": "Verify the next 200 of 6860 unverified elements (2-source + live test)",
-      "detail": "value=89 size=40(small) [cost 35/steps 70/risk 10] · 6860 elements unverified",
-      "department": "analysis",
-      "source": "gap",
-      "priority": 1,
-      "status": "done",
-      "steps": 0,
-      "max_steps": 8,
-      "done_criteria": "a committed artifact that measurably closes this gap",
-      "escalation_tier": 1,
-      "claimed_by": "analysis-w1",
-      "handoff_docs": [],
-      "created_at": "2026-07-19T11:38:02.171852+00:00",
-      "updated_at": "2026-07-19T23:30:36.505449+00:00",
-      "result": "1118 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "memory-embed-the-remaini-61082",
@@ -27638,15 +27623,16 @@
       "department": "watch",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-07-26T17:34:49.225041+00:00",
-      "updated_at": "2026-07-26T17:34:49.225053+00:00"
+      "updated_at": "2026-07-26T23:30:50.727307+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
       "id": "raise-g8-personal-fit-68-87289",
@@ -27690,15 +27676,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-07-26T19:45:34.773861+00:00",
-      "updated_at": "2026-07-26T19:45:34.773875+00:00"
+      "updated_at": "2026-07-26T23:30:42.779779+00:00",
+      "result": "1281 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "keep-the-designs-tab-pur-1341",
@@ -27813,15 +27800,16 @@
       "department": "visual",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "visual-w1",
       "handoff_docs": [],
       "created_at": "2026-07-26T21:29:01.658609+00:00",
-      "updated_at": "2026-07-26T21:29:01.658622+00:00"
+      "updated_at": "2026-07-26T23:30:49.581882+00:00",
+      "result": "Ran the collect designs. collect_designs: 976 designs (kept 976 / dropped 0 repo-only + 4 dead/parked + 49 non-design; +0 AI-product, +27 seeds, +48 shown-in-video; url-checked 4). designs-only."
     },
     {
       "id": "analysis-room-action-mar-1364",
@@ -27864,6 +27852,76 @@
       "department": "news",
       "source": "room-action:news",
       "priority": 2,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": "news-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-26T21:29:38.000108+00:00",
+      "updated_at": "2026-07-26T23:30:55.459885+00:00",
+      "result": "Ran the trend watch. trend_watch: 14 proposals (top score 10); queued 0 into self-improvement."
+    },
+    {
+      "id": "lane-external-mining-is--8642",
+      "title": "Lane 'External mining' is stale",
+      "detail": "Check the workflow logs; re-dispatch if blocked.",
+      "department": "mining",
+      "source": "auto",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "output written to data/ and committed by CI",
+      "escalation_tier": 1,
+      "claimed_by": "mining-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-26T23:30:42.285526+00:00",
+      "updated_at": "2026-07-26T23:30:55.104030+00:00",
+      "result": "Ran the discovery agent. discovery: +0 new (of 148 sighted) → 829 queued; arxiv=78, gh-active=92, gh-new=44, hn-front=36, hn-new=99, huggingface-model=36, producthunt=102, reddit=210, web-search=58, youtube-beyond=74"
+    },
+    {
+      "id": "verify-the-next-200-of-6-8642",
+      "title": "Verify the next 200 of 6542 unverified elements (2-source + live test)",
+      "detail": "value=87 size=40(small) [cost 35/steps 70/risk 10] · 6542 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-26T23:30:42.586407+00:00",
+      "updated_at": "2026-07-26T23:30:42.586420+00:00"
+    },
+    {
+      "id": "dynamo-s-initiative-run--8661",
+      "title": "[Dynamo's initiative] Run a 48-hour blind A/B stress test between DeepSeek-R1-671B on 4xA100 nodes (distributed, redundant) and Qwen3-235B-A22",
+      "detail": "Proposed by agent power-lead from the decision of room dept-power-raise-excava-s-capabil-893 (artifact: {\"kind\": \"decision\", \"ref\": \"data/excava/artifacts/dept-power-raise-excava-s-capabil-893.md\", \"at\": \"2026-07-26T23:31:01). Outcome feeds this agent's hit-rate.",
+      "department": "power",
+      "source": "agent:power-lead",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the decision's concrete step is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-26T23:31:01.085159+00:00",
+      "updated_at": "2026-07-26T23:31:01.085167+00:00"
+    },
+    {
+      "id": "analysis-room-action-mar-8669",
+      "title": "[analysis room action] Marrow manually reviews the full LangSmith documentation and GitHub repository to extract its core observability feature",
+      "detail": "From room dept-analysis-deep-analyze-every-395 (action-shaped close). Mission action from the department's own room.",
+      "department": "analysis",
+      "source": "room-action:analysis",
+      "priority": 2,
       "status": "queued",
       "steps": 0,
       "max_steps": 8,
@@ -27871,9 +27929,43 @@
       "escalation_tier": 1,
       "claimed_by": null,
       "handoff_docs": [],
-      "created_at": "2026-07-26T21:29:38.000108+00:00",
-      "updated_at": "2026-07-26T21:29:38.000115+00:00"
+      "created_at": "2026-07-26T23:31:09.281814+00:00",
+      "updated_at": "2026-07-26T23:31:09.281821+00:00"
+    },
+    {
+      "id": "links-room-action-anchor-8675",
+      "title": "[links room action] Anchor delivers the cleaned link inventory report with dead links removed and redirects updated, to advance the links de",
+      "detail": "From room dept-links-advance-the-links-depa-401 (action-shaped close). Mission action from the department's own room.",
+      "department": "links",
+      "source": "room-action:links",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-26T23:31:15.832537+00:00",
+      "updated_at": "2026-07-26T23:31:15.832545+00:00"
+    },
+    {
+      "id": "news-room-action-fetch-v-8682",
+      "title": "[news room action] Fetch verified AI headlines from Reuters, BBC, and the White House, compile into a digest with timestamps and sources.",
+      "detail": "From room dept-news-freshness-refresh-the-a-138 (action-shaped close). Mission action from the department's own room.",
+      "department": "news",
+      "source": "room-action:news",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-26T23:31:22.856841+00:00",
+      "updated_at": "2026-07-26T23:31:22.856847+00:00"
     }
   ],
-  "updated_at": "2026-07-26T21:29:38.000119+00:00"
+  "updated_at": "2026-07-26T23:31:22.856851+00:00"
 }

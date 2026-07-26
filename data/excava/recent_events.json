@@ -1,182 +1,6 @@
 {
   "events": [
     {
-      "task": "echo-s-initiative-run-a--98918",
-      "at": "2026-07-26T01:42:03.660768+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "connectors-dropped-4-rec-30418",
-      "at": "2026-07-26T01:42:03.661424+00:00",
-      "kind": "unroutable",
-      "why": "no department specialization matched"
-    },
-    {
-      "task": "verify-the-next-200-of-6-29797",
-      "at": "2026-07-26T01:42:03.713024+00:00",
-      "kind": "claimed",
-      "by": "analysis-w1",
-      "department": "analysis"
-    },
-    {
-      "task": "verify-the-next-200-of-6-29797",
-      "at": "2026-07-26T01:42:03.744150+00:00",
-      "kind": "completed",
-      "by": "analysis-w1",
-      "result": "1281 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-    },
-    {
-      "task": "raise-g8-personal-fit-68-30123",
-      "at": "2026-07-26T01:42:03.772586+00:00",
-      "kind": "claimed",
-      "by": "visual-w1",
-      "department": "visual"
-    },
-    {
-      "task": "raise-g8-personal-fit-68-30123",
-      "at": "2026-07-26T01:42:10.269712+00:00",
-      "kind": "completed",
-      "by": "visual-w1",
-      "result": "Ran the collect designs. collect_designs: 932 designs (kept 932 / dropped 0 repo-only + 4 dead/parked + 49 non-design; +0 AI-product, +27 seeds, +48 shown-in-video; url-checked 4). designs-only."
-    },
-    {
-      "task": "security-safety-rate-the-30123",
-      "at": "2026-07-26T01:42:10.297766+00:00",
-      "kind": "claimed",
-      "by": "security-w1",
-      "department": "security"
-    },
-    {
-      "task": "security-safety-rate-the-30123",
-      "at": "2026-07-26T01:42:11.123496+00:00",
-      "kind": "completed",
-      "by": "security-w1",
-      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
-    },
-    {
-      "task": "memory-embed-the-remaini-30123",
-      "at": "2026-07-26T01:42:11.151768+00:00",
-      "kind": "claimed",
-      "by": "memory-w1",
-      "department": "memory"
-    },
-    {
-      "task": "memory-embed-the-remaini-30123",
-      "at": "2026-07-26T01:42:11.347570+00:00",
-      "kind": "completed",
-      "by": "memory-w1",
-      "result": "Semantic index: 1498 vectors (model gemini-embedding-001); hub 7289 items → 5791 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-    },
-    {
-      "task": "watch-process-the-next-b-30123",
-      "at": "2026-07-26T01:42:11.376921+00:00",
-      "kind": "claimed",
-      "by": "watch-w1",
-      "department": "watch"
-    },
-    {
-      "task": "watch-process-the-next-b-30123",
-      "at": "2026-07-26T01:42:11.405432+00:00",
-      "kind": "completed",
-      "by": "watch-w1",
-      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
-    },
-    {
-      "task": "transcripts-drain-the-ne-30123",
-      "at": "2026-07-26T01:42:11.434953+00:00",
-      "kind": "claimed",
-      "by": "transcripts-w1",
-      "department": "transcripts"
-    },
-    {
-      "task": "transcripts-drain-the-ne-30123",
-      "at": "2026-07-26T01:42:11.526685+00:00",
-      "kind": "handoff",
-      "from": "transcripts-w1",
-      "to": "analysis",
-      "doc": "data/excava/handoffs/transcripts-drain-the-ne-30123--01--transcripts-w1--to--analysis.md"
-    },
-    {
-      "task": "war-deliver-push-link-coverage-t-267",
-      "at": "2026-07-26T01:42:15.292349+00:00",
-      "kind": "workers_dispatched",
-      "by": "analysis-w1",
-      "n": 4,
-      "ids": [
-        "worker-9547",
-        "worker-1777",
-        "worker-7324",
-        "worker-6518"
-      ]
-    },
-    {
-      "task": "war-deliver-push-link-coverage-t-267",
-      "at": "2026-07-26T01:42:15.293383+00:00",
-      "kind": "workers_dissolved",
-      "by": "analysis-w1",
-      "n": 4
-    },
-    {
-      "task": "security-safety-rate-the-44826",
-      "at": "2026-07-26T01:47:28.568253+00:00",
-      "kind": "lease_expired",
-      "after_h": 6.0,
-      "was": "security-w1"
-    },
-    {
-      "task": "memory-embed-the-remaini-44826",
-      "at": "2026-07-26T01:47:28.569262+00:00",
-      "kind": "lease_expired",
-      "after_h": 6.0,
-      "was": "memory-w1"
-    },
-    {
-      "task": "verify-the-next-200-of-6-30448",
-      "at": "2026-07-26T01:47:28.949700+00:00",
-      "kind": "enqueued",
-      "title": "Verify the next 200 of 6458 unverified elements (2-source + live test)",
-      "source": "gap",
-      "priority": 1,
-      "department": "analysis"
-    },
-    {
-      "task": "watch-process-the-next-b-30448",
-      "at": "2026-07-26T01:47:28.985068+00:00",
-      "kind": "enqueued",
-      "title": "Watch: process the next batch of 1281 pending videos",
-      "source": "gap",
-      "priority": 1,
-      "department": "watch"
-    },
-    {
-      "task": "security-safety-rate-the-30448",
-      "at": "2026-07-26T01:47:29.014292+00:00",
-      "kind": "enqueued",
-      "title": "Security: safety-rate the next batch of 1381 connectors/skills",
-      "source": "gap",
-      "priority": 1,
-      "department": "security"
-    },
-    {
-      "task": "memory-embed-the-remaini-30449",
-      "at": "2026-07-26T01:47:29.049827+00:00",
-      "kind": "enqueued",
-      "title": "Memory: embed the remaining unembedded of 10212 elements for full recall",
-      "source": "gap",
-      "priority": 1,
-      "department": "memory"
-    },
-    {
-      "task": "raise-g8-personal-fit-68-30449",
-      "at": "2026-07-26T01:47:29.106292+00:00",
-      "kind": "enqueued",
-      "title": "Raise G8 Personal fit (68/100): 22% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
-      "source": "gap",
-      "priority": 1,
-      "department": "visual"
-    },
-    {
       "task": "empty-body-items-render--31649",
       "at": "2026-07-26T01:47:29.122257+00:00",
       "kind": "unroutable",
@@ -287,6 +111,173 @@
       "kind": "completed",
       "by": "watch-w1",
       "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+    },
+    {
+      "task": "watch-process-the-next-b-30774",
+      "at": "2026-07-26T01:52:54.577108+00:00",
+      "kind": "enqueued",
+      "title": "Watch: process the next batch of 1281 pending videos",
+      "source": "gap",
+      "priority": 1,
+      "department": "watch"
+    },
+    {
+      "task": "transcripts-drain-the-ne-30774",
+      "at": "2026-07-26T01:52:54.630048+00:00",
+      "kind": "enqueued",
+      "title": "Transcripts: drain the next batch of 1281 pending (residential IP)",
+      "source": "gap",
+      "priority": 1,
+      "department": "transcripts"
+    },
+    {
+      "task": "raise-g8-personal-fit-68-30774",
+      "at": "2026-07-26T01:52:54.670253+00:00",
+      "kind": "enqueued",
+      "title": "Raise G8 Personal fit (68/100): 22% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
+      "source": "gap",
+      "priority": 1,
+      "department": "visual"
+    },
+    {
+      "task": "empty-body-items-render--31649",
+      "at": "2026-07-26T01:52:54.698064+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "title-collisions-distinc-31649",
+      "at": "2026-07-26T01:52:54.698938+00:00",
+      "kind": "unroutable",
+      "why": "no department specialization matched"
+    },
+    {
+      "task": "lane-transcript-retrieva-77142",
+      "at": "2026-07-26T01:52:54.699643+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "push-link-coverage-towar-7020",
+      "at": "2026-07-26T01:52:54.700269+00:00",
+      "kind": "unroutable",
+      "why": "no department specialization matched"
+    },
+    {
+      "task": "echo-s-initiative-start--91479",
+      "at": "2026-07-26T01:52:54.700962+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "echo-s-initiative-run-a--98918",
+      "at": "2026-07-26T01:52:54.701630+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "connectors-dropped-4-rec-30418",
+      "at": "2026-07-26T01:52:54.702298+00:00",
+      "kind": "unroutable",
+      "why": "no department specialization matched"
+    },
+    {
+      "task": "verify-the-next-200-of-6-30448",
+      "at": "2026-07-26T01:52:54.738126+00:00",
+      "kind": "claimed",
+      "by": "analysis-w1",
+      "department": "analysis"
+    },
+    {
+      "task": "verify-the-next-200-of-6-30448",
+      "at": "2026-07-26T01:52:54.768668+00:00",
+      "kind": "completed",
+      "by": "analysis-w1",
+      "result": "1281 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "task": "raise-g8-personal-fit-68-30774",
+      "at": "2026-07-26T01:52:54.797310+00:00",
+      "kind": "claimed",
+      "by": "visual-w1",
+      "department": "visual"
+    },
+    {
+      "task": "raise-g8-personal-fit-68-30774",
+      "at": "2026-07-26T01:53:01.575628+00:00",
+      "kind": "completed",
+      "by": "visual-w1",
+      "result": "Ran the collect designs. collect_designs: 932 designs (kept 932 / dropped 0 repo-only + 4 dead/parked + 49 non-design; +0 AI-product, +27 seeds, +48 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "task": "security-safety-rate-the-30448",
+      "at": "2026-07-26T01:53:01.603772+00:00",
+      "kind": "claimed",
+      "by": "security-w1",
+      "department": "security"
+    },
+    {
+      "task": "security-safety-rate-the-30448",
+      "at": "2026-07-26T01:53:02.427377+00:00",
+      "kind": "completed",
+      "by": "security-w1",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "task": "memory-embed-the-remaini-30449",
+      "at": "2026-07-26T01:53:02.455295+00:00",
+      "kind": "claimed",
+      "by": "memory-w1",
+      "department": "memory"
+    },
+    {
+      "task": "memory-embed-the-remaini-30449",
+      "at": "2026-07-26T01:53:02.656489+00:00",
+      "kind": "completed",
+      "by": "memory-w1",
+      "result": "Semantic index: 1498 vectors (model gemini-embedding-001); hub 7289 items → 5791 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "task": "watch-process-the-next-b-30774",
+      "at": "2026-07-26T01:53:02.685014+00:00",
+      "kind": "claimed",
+      "by": "watch-w1",
+      "department": "watch"
+    },
+    {
+      "task": "watch-process-the-next-b-30774",
+      "at": "2026-07-26T01:53:02.713016+00:00",
+      "kind": "completed",
+      "by": "watch-w1",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+    },
+    {
+      "task": "transcripts-drain-the-ne-30774",
+      "at": "2026-07-26T01:53:02.740771+00:00",
+      "kind": "claimed",
+      "by": "transcripts-w1",
+      "department": "transcripts"
+    },
+    {
+      "task": "transcripts-drain-the-ne-30774",
+      "at": "2026-07-26T01:53:02.829949+00:00",
+      "kind": "handoff",
+      "from": "transcripts-w1",
+      "to": "analysis",
+      "doc": "data/excava/handoffs/transcripts-drain-the-ne-30774--01--transcripts-w1--to--analysis.md"
+    },
+    {
+      "task": "war-deliver-push-link-coverage-t-267",
+      "at": "2026-07-26T01:53:08.465858+00:00",
+      "kind": "room_closed",
+      "artifact": {
+        "kind": "decision",
+        "ref": "data/excava/artifacts/war-deliver-push-link-coverage-t-267.md",
+        "at": "2026-07-26T01:53:08.465686+00:00",
+        "title": "Deliver: Push link coverage toward 100% at +5%/day (the access gate)",
+        "by": "Echo"
+      },
+      "turns": 7
     }
   ]
 }

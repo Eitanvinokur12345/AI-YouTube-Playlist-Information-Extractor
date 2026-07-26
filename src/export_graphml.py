@@ -44,6 +44,7 @@ def main() -> int:
 
     nodes: dict[str, dict] = {}
     edges: list[tuple[str, str]] = []
+    skipped = 0
 
     def node(nid, label, typ, category="", quality=0, url=""):
         if nid not in nodes:
@@ -59,26 +60,58 @@ def main() -> int:
         tid = "tool:" + str(t or "claude").lower()
         node(tid, t or "claude", "toolhub"); return tid
 
+    # MAINTENANCE FIX (same class of bug build_brain.py already solved for the Obsidian vault,
+    # now ported here): when BOTH slug and name/title were missing, `str(None)` produced the
+    # literal id "skill:None" — every such record collapsed onto ONE node, silently overwriting
+    # each other (the "title collision" symptom) and rendering as a contentless "None" label (the
+    # "blank white node" symptom). `ident()` requires a real non-empty identifier; records without
+    # one are skipped instead of merged into a junk shared node. `has_body()` additionally skips
+    # records with no real content, mirroring build_graph.py / build_brain.py's own definition.
+    def ident(*vals):
+        for v in vals:
+            s = str(v or "").strip()
+            if s:
+                return s
+        return None
+
+    def has_body(*vals):
+        return any(str(v or "").strip() for v in vals)
+
     node("ROOT", "Excavatortron", "root")
     for s in skills:
-        nid = "skill:" + str(s.get("slug") or s.get("skill_name"))
+        key = ident(s.get("slug"), s.get("skill_name"))
+        if not key or not has_body(s.get("description"), s.get("use_case"), s.get("tips")):
+            skipped += 1; continue
+        nid = "skill:" + key
         node(nid, s.get("skill_name") or s.get("slug"), "skill", s.get("category"),
              s.get("quality_score"), s.get("homepage") or s.get("github") or s.get("source_url"))
         edges += [(nid, cat(s.get("category"))), (nid, thub(s.get("target_tool") or "claude"))]
     for t in tools:
-        nid = "tool:" + str(t.get("slug") or t.get("name"))
+        key = ident(t.get("slug"), t.get("name"))
+        if not key or not has_body(t.get("description")):
+            skipped += 1; continue
+        nid = "tool:" + key
         node(nid, t.get("name") or t.get("slug"), "tool", t.get("category"),
              t.get("quality_score"), t.get("homepage") or t.get("github") or t.get("url"))
         edges.append((nid, cat(t.get("category"))))
     for m in models:
-        nid = "model:" + str(m.get("slug") or m.get("name"))
+        key = ident(m.get("slug"), m.get("name"))
+        if not key:
+            skipped += 1; continue
+        nid = "model:" + key
         node(nid, m.get("name") or m.get("slug"), "model", m.get("category"), m.get("quality_score"))
         edges.append((nid, cat(m.get("category"))))
     for p in prompts:
-        nid = "prompt:" + str(p.get("slug") or p.get("title"))
+        key = ident(p.get("slug"), p.get("title"))
+        if not key:
+            skipped += 1; continue
+        nid = "prompt:" + key
         node(nid, p.get("title"), "prompt", p.get("category")); edges.append((nid, cat(p.get("category"))))
     for c in conns:
-        nid = "conn:" + str(c.get("slug") or c.get("name"))
+        key = ident(c.get("slug"), c.get("name"))
+        if not key or not has_body(c.get("what_it_does"), c.get("description")):
+            skipped += 1; continue
+        nid = "conn:" + key
         node(nid, c.get("name"), "connector", "", c.get("quality_score"),
              c.get("homepage") or c.get("url")); edges.append((nid, "ROOT"))
     for nid in list(nodes):
@@ -109,7 +142,9 @@ def main() -> int:
     lines += ['</graph>', '</graphml>']
     OUT.write_text("\n".join(lines), encoding="utf-8")
     print(f"export_graphml: {len(nodes)} nodes, {len(edges)} edges -> data/brain.graphml "
-          f"(load into Graphify / Gephi / Neo4j / yEd). Generated {datetime.now(timezone.utc).isoformat()}.")
+          f"(load into Graphify / Gephi / Neo4j / yEd) (+{skipped} empty-body/unidentified records "
+          f"skipped so they don't render as blank or colliding nodes). "
+          f"Generated {datetime.now(timezone.utc).isoformat()}.")
     return 0
 
 

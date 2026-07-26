@@ -87,6 +87,23 @@ def main() -> None:
         return tid
 
     included: dict = {}     # item-node-id -> the source record (for combo co-occurrence)
+    skipped = 0              # empty-body / unidentifiable items left out (never shown as blank dots)
+
+    # MAINTENANCE FIX (ported from build_brain.py, which already solved this for the Obsidian
+    # vault): an item with no real body became a blank 'white' graph node, and two items that
+    # both lack a slug/name fell back to the same per-category RANK ("skill:0" in category A
+    # collided with "skill:0" in category B) — the second one silently overwrote the first.
+    # Skipping empty-body items and requiring a real, non-empty identifier fixes both at once.
+    def has_body(kind, x):
+        fields = ("description", "use_case", "tips") if kind == "skill" else ("description",)
+        return any(str(x.get(f, "")).strip() for f in fields)
+
+    def ident(*vals):
+        for v in vals:
+            s = str(v or "").strip()
+            if s:
+                return s
+        return None
 
     # group skills + tools by category, keep the top CAP by quality (so the graph is the BEST of each)
     by_cat: dict = defaultdict(list)
@@ -98,8 +115,12 @@ def main() -> None:
     for cat, items in by_cat.items():
         cid = cat_hub(cat)
         items.sort(key=lambda kt: _q(kt[1]), reverse=True)
-        for rank, (kind, x) in enumerate(items[:CAP_PER_HUB]):
-            slug = str(x.get("slug") or x.get("name") or x.get("skill_name") or rank)
+        rank = 0
+        for kind, x in items[:CAP_PER_HUB]:
+            slug = ident(x.get("slug"), x.get("name"), x.get("skill_name"))
+            if not slug or not has_body(kind, x):
+                skipped += 1
+                continue
             nid = f"{kind}:{slug}"
             is_star = (slug in starred_slugs) or (rank < STARS_PER_CAT and _q(x) >= 8)
             node(nid, x.get("name") or x.get("skill_name") or slug,
@@ -108,12 +129,21 @@ def main() -> None:
             if kind == "skill":
                 link(nid, tool_hub(x.get("target_tool") or "claude"))
             included[nid] = x
+            rank += 1
 
     for p in prompts:                                   # only 24 prompts — show them all
-        nid = "prompt:" + str(p.get("slug") or p.get("title") or len(nodes))
+        slug = ident(p.get("slug"), p.get("title"))
+        if not slug:
+            skipped += 1; continue
+        nid = "prompt:" + slug
         node(nid, p.get("title"), "prompt", p.get("source_url")); link(nid, cat_hub(p.get("category")))
     for c in sorted(conns, key=_q, reverse=True)[:CONN_CAP]:
-        nid = "conn:" + str(c.get("slug") or c.get("name") or len(nodes))
+        if not has_body("conn", {"description": (c.get("what_it_does") or c.get("description") or "")}):
+            skipped += 1; continue
+        slug = ident(c.get("slug"), c.get("name"))
+        if not slug:
+            skipped += 1; continue
+        nid = "conn:" + slug
         node(nid, c.get("name"), "connector", c.get("url")); link(nid, conn_hub)
         included[nid] = c
 
@@ -137,13 +167,14 @@ def main() -> None:
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "counts": {"skills": len(skills), "tools": len(tools), "prompts": len(prompts),
                    "connectors": len(conns), "nodes": len(nodes), "links": len(links),
-                   "stars": n_star, "combos": min(len(combos), MAX_COMBOS)},
+                   "stars": n_star, "combos": min(len(combos), MAX_COMBOS), "skipped_empty_or_unidentified": skipped},
         "nodes": list(nodes.values()),
         "links": links,
     }
     (DATA / "brain_graph.json").write_text(json.dumps(out, ensure_ascii=False), encoding="utf-8")
     print(f"brain_graph.json: {len(nodes)} nodes ({n_star} stars, {min(len(combos), MAX_COMBOS)} combos), "
-          f"{len(links)} links — capped from {len(skills) + len(tools)} items for readability.")
+          f"{len(links)} links — capped from {len(skills) + len(tools)} items for readability "
+          f"(+{skipped} empty-body/unidentified items skipped so they don't render as blank or colliding nodes).")
 
 
 if __name__ == "__main__":

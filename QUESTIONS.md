@@ -49,7 +49,11 @@ forward — keep both running and merge periodically, or point the cloud session
 so there's only ever one line; (b) how to reconcile the 24h of divergent data — a JSON-aware merge
 per file (union sets, prefer newer timestamps) is doable but is real work I shouldn't do silently
 on data this size without your sign-off. Until decided, I'd rather flag this every fire than let
-the branches drift further apart.
+the branches drift further apart. **PR:** https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/pull/14
+(draft — stays draft until you pick the reconciliation strategy above). Also fixed a related
+landmine while here: `src/git_safe.py`'s `push()` hardcoded `HEAD:main`, so running `ship` on any
+non-`main` branch (like this one) would have force-fed its divergent history straight onto `main`
+with no review. Now branch-aware (pushes to the current branch's own name).
 
 **2026-07-26 (fire 6) — orphaned branch found: away-fire work landed on a branch that never reached `main`.**
 While diagnosing why guardrails dropped 15/15→13/15 (real cause: fixed in this fire — see AWAY_LOG/

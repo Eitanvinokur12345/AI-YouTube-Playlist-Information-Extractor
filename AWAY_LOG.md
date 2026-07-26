@@ -5,6 +5,28 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-26
+- **~11:0x (fire 8, unattended, "Claude Code on the web" scheduled slot)** — Standing checks: fetched
+  `origin/main` (was exactly `HEAD` — this session's branch had already been merged), fixed the recurring
+  no-upstream-tracking symptom fires 6–7 both hit (`git branch --set-upstream-to=origin/main`), confirmed
+  guardrails 13/15 (only G-C history-bundle freshness and the now-resolved G-G remote-sync stale-ref reading).
+  **Found a real process conflict before touching product work:** this scheduled slot's platform policy is
+  hard-unconditional branch+PR, never a direct push to `main` — but `git_safe.py` and every other fire this
+  week intentionally push straight to `main` with no PR (see its 2026-07-26 comment; ~40+ bot commits/day on
+  `main`, zero PRs). Picking either side unilaterally seemed worse than surfacing it: overriding my session's
+  platform rule risks an unreviewed direct write outside its guardrails; following it verbatim recreates the
+  exact "stray branch nobody merges" failure fires 6–7 already spent effort fixing. Did the minimum-footprint
+  safe thing — wrote up the conflict in QUESTIONS.md (this fire's entry, no default proposed, it's a process
+  decision not a product one), opened a single small doc-only PR with just that + this log entry, and sent a
+  push notification so it doesn't sit unread like the orphaned branches did. **Harsh self-criticism:** this is
+  the third fire in four (6, 7, 8) that produced zero user-visible product movement — pure process/plumbing
+  again, and this time not even a code fix, just a flagged decision. I chose not to attempt the queued
+  deterministic-stub-enricher work (the actual highest-value item per fire 7's own notes) specifically
+  *because* I couldn't be confident any of it would land safely on `main` this fire, which is a defensible
+  call given the conflict but also means the real backlog (3,628 stub elements, `deep_retrieve` stalled at 0)
+  is still completely untouched after three fires of talking about it. If the branch/PR answer comes back
+  "match the bot convention," the very next thing worth doing is exactly that enricher — it's fully speced
+  and just waiting on a safe place to land.
+
 - **~09:5x (fire 7, unattended)** — Standing checks: `git fetch --prune` found 14 stray
   `claude/kind-shannon-*` session branches on origin, one of them (`ae4swi`) still carrying real,
   never-landed work flagged in QUESTIONS.md — commit `1205385a` "wire the links department into

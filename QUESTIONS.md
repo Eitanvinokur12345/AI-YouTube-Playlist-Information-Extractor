@@ -55,6 +55,27 @@ There are still ~13 other `kind-shannon-*` branches on origin of unknown content
 (diff each against `main`, land or explicitly discard) remains unstarted and should be the next fire's focus
 if nothing higher-priority is queued.
 
+**2026-07-26 (fire 8) — this fire's own execution harness enforces branch+PR, conflicting with the
+established direct-to-main convention. Flagging instead of guessing.** This fire ran under a scheduled
+"Claude Code on the web" session whose platform-level policy is unconditional: work happens on a
+per-session branch (`claude/kind-shannon-ns8ivg`), never pushed straight to `main`, and a PR is opened for
+review. That is the opposite of every prior fire's behavior — `git_safe.py push()`/`ship()` intentionally
+hardcode `push origin HEAD:main` (see its 2026-07-26 comment), and the last 24h of history is dozens of
+bot commits landing on `main` directly with zero PRs, which is clearly this project's real, working, owner-
+sanctioned pattern (an unattended loop that stops to open PRs nobody reviews would just stall). Overriding
+my session policy to push straight to `main` would break an explicit, unconditional platform rule; following
+it and opening a normal PR would recreate the *exact* stray-branch failure fires 6–7 already flagged as
+actively harmful (real work stranded off `main`, silently rotting). Neither default felt safe to pick
+unilaterally, so this fire did the minimum-footprint safe thing instead: documented the conflict here
+(this entry) and in `AWAY_LOG.md`, opened ONE small doc-only PR carrying just those two file changes (nothing
+that depends on being merged promptly — safe to sit), and notified you directly rather than letting a fifth
+fire quietly hit the same wall. **No default proposed** — this is a platform/process decision, not a product
+one: on your return, either (a) reconfigure this scheduled slot to match the existing bot identity/direct-push
+convention if that's intentional, or (b) confirm you want future "Claude Code on the web" fires to go through
+review, accepting that they'll then need a human (or a different automation) to actually merge each one so
+work doesn't strand. Until answered, further fires from *this* scheduled slot should keep defaulting to
+(branch + PR + flag here) rather than guessing differently each time.
+
 ---
 
 ## A. The new look ("Heavy Machinery" v58)

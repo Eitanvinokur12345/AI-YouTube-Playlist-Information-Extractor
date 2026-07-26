@@ -5,6 +5,41 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-26
+- **~06:05 (cloud web session, unattended)** — Triaged the PR pile-up this scheduled "EXCAVA END PLAN" task has
+  been producing: it fires as a fresh Claude Code **web** session each time, which is gated to a feature
+  branch + draft PR (no direct push to `main`, matching PRs #4/#6/#7/#8's own findings) — so nine prior fires
+  each left a throwaway `claude/kind-shannon-*` branch with an open, unmerged draft PR (#1–#9 at time of
+  writing), and at least two fixes were independently reproduced twice (G-M movement metric: #5 and #9; the
+  links-department registration below: #3 and #10) because no fire can see what a sibling fire already
+  shipped on another branch. Checked what had *actually* landed on `main` versus what was still only sitting
+  on a stranded branch, since several PR descriptions were stale on this point:
+  - `accessibility_scan.py` (PR #1's contribution) — **already on `main`**, wired into `excava_agents.py`.
+  - The G-M cumulative-movement fix (PRs #5/#9) — **already on `main`** (guardrails reports a monotonic
+    "tasks done" total; the false-decline bug is gone).
+  - The links-department registration (PRs #3/#10) — **still genuinely missing.** `src/excava_agents.py`
+    already implements `_work_links` and its `TOOL_DOMAIN` keywords, but `data/excava/agents.json` never
+    registered a `links` entry under `departments{}` or any agent scoped to it, so `pick_department()` always
+    returned "no department specialization matched" for link-coverage tasks — a real, silent stall. Fixed
+    it here (third independent implementation of the same idea, but the first to land): registered
+    `departments.links` (keywords `link/links/resolve/coverage/unlinked`, matching the existing
+    `TOOL_DOMAIN["(links-lane, external)"]` set) plus two tier-1 agents, **Anchor** (doer) and **Tether**
+    (checker), both scoped to `src.resolve_links` + `src.excava_bus`. Verified `pick_department()` now
+    routes a real link-coverage priority string to `links` with a staffed worker (previously: no match).
+  - The title-collision maintenance issue (PR #2's contribution) — **still genuinely missing**
+    (`maintenance.json` still reports the same 10-item collision list PR #2 fixed on its own branch:
+    Higgsfield AI, Claude Opus 4.8, Llama, Hermes, the codebase-knowledge-graph duplicate). Left untouched
+    this fire — it's a data-merge across `skills.json`/`tools.json`/`brain_graph.json`, all under heavy
+    concurrent write traffic from the live 24/7 pipeline, and doing that carefully needed more scope than
+    one bounded increment should spend touching files another automation writes every few minutes.
+  **Harsh self-criticism:** this is the *fourth* session to point out the branch-policy mismatch (after
+  #6/#7/#8/#10) without anyone actually merging or closing the backlog — repeating the observation a fifth
+  time adds nothing, so this entry instead does one real thing (lands the links fix) and stops proposing.
+  The owner still needs to manually triage: merge this PR, then close #3/#9/#10 (superseded — #9's G-M fix
+  and #10's copy of the links fix are both already redundant with `main`/this PR) and #1 (superseded, already
+  on `main`). #2 (title collisions) is still a real, open, unclaimed fix. #11 is unrelated normal `analyze`
+  pipeline work and should be reviewed on its own merits. Verified via CLI only (`python -m src.guardrails` →
+  14/15, 0 critical; `python -m src.excava_systemcheck` → 11/11).
+
 - **~03:10 (fire 6, unattended)** — Standing checks found `sync` broken (this session's local branch had no
   upstream — a one-time `--set-upstream-to=origin/main` fixed it, no data lost, HEAD==origin/main after).
   Diagnosed the guardrails 15/15→13/15 drop from PULSE.md/pulse.json: the real 2 failures were G-C (CI's beat

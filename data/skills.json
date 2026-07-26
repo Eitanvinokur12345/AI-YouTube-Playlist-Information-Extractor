@@ -102676,6 +102676,51 @@
       ],
       "video_quality_score": 4,
       "low_quality_source": true
+    },
+    {
+      "skill_name": "LLM Fingerprinting via Random-Number Test",
+      "slug": "llm-fingerprinting-random-number-test",
+      "category": "research",
+      "description": "Repeatedly ask a model to output a random number and analyze the distribution pattern of its answers; different LLMs have distinct number-generation biases that act like a fingerprint. Reported to distinguish models with roughly 80% accuracy.",
+      "use_case": "Identifying which underlying LLM a black-box product is actually running, or verifying a vendor claim about which model powers a feature.",
+      "output": "A confidence estimate of which model produced a given set of responses",
+      "quality_score": 5,
+      "model_version": null,
+      "company": null,
+      "country": null,
+      "open_source": false,
+      "target_tool": "other",
+      "is_claude_skill": false,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "ChatGPT",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Gemini",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=D6cBsAWwCd0",
+      "source_video_id": "D6cBsAWwCd0",
+      "tips": [
+        "Ask the same model for a random number many times and look at which numbers it favors — the skew is a rough fingerprint for telling models apart."
+      ],
+      "slash_commands": [],
+      "general_tips": [],
+      "relevance": "A cheap, no-API-access way to sanity-check which model actually powers a black-box AI product.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "D6cBsAWwCd0"
+      ],
+      "video_quality_score": 5,
+      "low_quality_source": false
     }
   ],
   "recipes_updated_at": "2026-07-25T11:04:07.208331+00:00"

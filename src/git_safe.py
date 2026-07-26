@@ -70,6 +70,10 @@ def backup_bundle() -> Path:
     return dest
 
 
+def current_branch() -> str:
+    return _git(["rev-parse", "--abbrev-ref", "HEAD"])
+
+
 def quarantine_collisions() -> list:
     """Move untracked files that WOULD collide with incoming commits into _ATTIC/quarantine.
     This unblocks a rebase with ZERO deletion — the files stay, just out of the way, reviewable."""
@@ -77,10 +81,19 @@ def quarantine_collisions() -> list:
     untracked = [f for f in _git(["ls-files", "--others", "--exclude-standard"]).splitlines() if f]
     if not untracked:
         return []
+    # Compare against the CURRENT branch's own remote tip, not a hardcoded "main" — on a per-session
+    # branch (e.g. a cloud Claude Code session on claude/<name>) origin/main can be a different line
+    # of history entirely, and diffing against it here would quarantine files that don't actually
+    # collide with anything incoming on THIS branch (2026-07-26, found while fixing push() below).
+    branch = current_branch()
+    ref = f"origin/{branch}" if branch != "HEAD" else "origin/main"
     try:
-        origin_files = set(_git(["ls-tree", "-r", "--name-only", "origin/main"]).splitlines())
+        origin_files = set(_git(["ls-tree", "-r", "--name-only", ref]).splitlines())
     except RuntimeError:
-        origin_files = set()
+        try:
+            origin_files = set(_git(["ls-tree", "-r", "--name-only", "origin/main"]).splitlines())
+        except RuntimeError:
+            origin_files = set()
     qdir = ATTIC / "quarantine" / _ts()
     moved = []
     for f in untracked:
@@ -138,17 +151,19 @@ def sync() -> list:
 
 
 def push() -> str:
-    """The safe push: back up history, sync, push, then PROVE it landed (origin == HEAD)."""
+    """The safe push: back up history, sync, push, then PROVE it landed (origin == <this branch>)."""
     backup_bundle()
     sync()
-    # Explicit refspec (2026-07-26 fix): a plain `git push` relies on push.default/the local
-    # branch name matching its upstream, which breaks whenever the working branch isn't
-    # literally called "main" (e.g. a per-session branch tracking origin/main) — "The upstream
-    # branch of your current branch does not match the name of your current branch." Every other
-    # check in this module already hardcodes origin/main (see sync/quarantine_collisions), so
-    # doing the same here is consistent, not a new assumption.
-    _git(["push", "origin", "HEAD:main"])
-    head, origin = _git(["rev-parse", "HEAD"]), _git(["rev-parse", "origin/main"])
+    # 2026-07-26 correction: the previous fix here hardcoded `HEAD:main`, meaning ANY branch this
+    # ran on would push straight onto origin/main — harmless when the local branch already IS main,
+    # but actively dangerous on a genuinely separate branch (e.g. a cloud Claude Code session on
+    # claude/<name>, which diverges from main and is required to go through a PR, never a direct
+    # push). Found live: this fire's branch had drifted 50 commits each way from origin/main, and a
+    # `ship` here would have force-fed that divergent history straight onto main. Push to the
+    # CURRENT branch's own name instead — identical behavior when branch == "main", safe otherwise.
+    branch = current_branch()
+    _git(["push", "origin", f"HEAD:{branch}"])
+    head, origin = _git(["rev-parse", "HEAD"]), _git(["rev-parse", f"origin/{branch}"])
     if head != origin:
         raise RuntimeError(f"push did NOT land — origin ({origin[:9]}) != HEAD ({head[:9]}). Investigate before continuing.")
     return head[:9]

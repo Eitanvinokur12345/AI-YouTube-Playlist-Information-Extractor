@@ -5,6 +5,46 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-26
+- **~20:0x (fire 11, unattended, cloud session) — cross-tab check now resolves boilerplate ties
+  instead of flagging them forever, and one live crash-bug was found and closed along the way.**
+  Non-brain cleanup front (`src/cross_tab_check.py`, the Step-5 skill/tool single-tab guarantee).
+  It had 5 skill/tool slug collisions permanently stuck at "kept-both (tie — needs review)" —
+  `claude-code`, `claude-projects`, `find-skills`, `frontend-design`, `ai-code-generation`. Read
+  all 10 records (5 skill + 5 tool pairs): every one of the 5 "skills" was a bare-product-name
+  stub with `tips: []`, no `slash_commands`, no `general_tips` — the exact anti-boilerplate
+  pattern CLAUDE.md's Step 3 forbids ("Claude Code is an AI tool by Anthropic. It assists with
+  software development...", verbatim from `skills/claude-code/SKILL.md`), while the paired TOOL
+  record for the same name was always the richer, factual one. Added `_has_concrete_technique()`
+  as the tie-break: a tie where the skill side has zero captured technique evidence now resolves
+  to the tool, deletes the skill's now-orphaned `SKILL.md` package folder (mirrors Step 5's merge
+  cleanup), and logs to `data/_removed_cross_tab.json` as before — a genuine tie (either side has
+  real evidence) still just gets flagged, unchanged. Along the way found `data/index.json` (the
+  compact skill dedup cache `analyze_batch.py`'s Step-3 "index-first dedup" trusts) is
+  incrementally maintained and NEVER pruned when a skill is deleted elsewhere — a stale
+  `index.json["claude-code"]` entry pointing at nothing would make the next video that mentions
+  "Claude Code" hit `existing=None` in `analyze_batch.py`'s merge branch and crash on
+  `existing['tips'] = ...` (NoneType). Fixed by having `cross_tab_check.py` prune the index entry
+  whenever it drops a skill, and manually cleared the one stale entry my own run left before that
+  fix landed. Verified end-to-end via CLI/data only: dry-run showed the correct verdict change
+  first; applied run actually removed the 5 stubs from `skills.json` (3124→3119), left
+  `tools.json` untouched (2848), deleted `skills/claude-code/` from disk, logged all 5 to
+  `_removed_cross_tab.json`, pruned `index.json`; re-ran `cross_tab_check` → 0 collisions;
+  `python3 -c "json.load(...)"` on every touched file confirmed valid JSON; `python -m
+  src.guardrails` → 14/15 (only G-C, cleared by `python -m src.git_safe backup` this same fire →
+  15/14 momentarily, G-M flaps STALLED/OK on beat timing noise unrelated to this change, 0
+  critical either way). **Harsh self-criticism:** the fix is narrow by design (only fires on a
+  genuine 0-evidence tie, so it can't touch any of the thousands of non-colliding or
+  non-boilerplate skills), but that narrowness means it only resolved the 5 collisions that
+  existed *today* — nothing stops five more identical `mine_feeds (gemini-video)` stubs from
+  piling up tomorrow and sitting as new ties until the next cross-tab run catches them (it does
+  run every bulk-analyze cycle per the module's own docstring, so the lag is bounded, not
+  unbounded, but it's still lag). I did not go fix `mine_feeds`/`gemini_video_analyze.py` itself
+  to stop emitting bare-product-name "skills" at the source — that's the actual root cause and a
+  bigger, riskier change I did not have the review budget to make safely unattended this fire.
+  The `existing=None` crash I fixed was one I created the precondition for (by deleting skills
+  without pruning the index) rather than a pre-existing bug I went hunting for — worth being
+  honest that "found and fixed a crash" here means "fixed a crash my own change would have
+  caused," not an independent audit win.
 - **~19:1x (heartbeat check, fires 1–10) — storage OK, no limits exceeded, all 10 fires landed.**
   Disk: 30 GB free on the repo drive (guardrail G-N), no cleanup needed. `origin/main` ==
   local HEAD, verified by `git_safe push()`'s own post-push check on both of this fire's

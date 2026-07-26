@@ -4,6 +4,9 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+## 2026-07-26
+- **~02:00 (fire 6, unattended)** — Chased down the "done-counter declining" alarm this log flagged on 2026-07-24 (fire 5) and PULSE.md was STILL showing it, worse, two days later (1137, ▼-105). Root cause: `g_movement()` recomputed "done" by scanning `bus.json` live, but `excava_bus.prune()` archives finished tasks out of the bus after 7 days by design — the metric was structurally guaranteed to fall over time regardless of real progress. A true monotonic total already existed at `state.json['usage'][dept]['done']` (never pruned) and nobody was reading it. Fixed `g_movement()` to sum from there; guardrails now correctly report 4460 cumulative completions instead of a fake decline. Also flagged G-C (stale history bundle) and G-I (handoff doesn't mention live build v129) as pre-existing, unrelated warns — left for a future fire, not urgent. PR #9 (draft, not yet merged — this session works via branch+PR, not direct-to-main push).
+
 ## 2026-07-24
 - **~18:00 (fire 5, unattended)** — Shipped `src/pulse.py` → **PULSE.md** + `pulse.json`: one-glance "is it actually working?" status that federates guardrails, movement, drain, open questions, the away-log and recent commits into a single file at the repo root (open it, no server). It refuses to cheerlead — the first run surfaced a HIDDEN regression the green dashboard hid: the done-counter has fallen 1566→1256 over three days while "depts moving" sat flat at 12. Commit `24f0a3bb5`.
 

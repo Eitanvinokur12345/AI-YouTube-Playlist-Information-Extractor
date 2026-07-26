@@ -65,22 +65,22 @@ There are still ~13 other `kind-shannon-*` branches on origin of unknown content
 (diff each against `main`, land or explicitly discard) remains unstarted and should be the next fire's focus
 if nothing higher-priority is queued.
 
-**2026-07-26 (fire 12) — anti-boilerplate gate moved to point-of-creation; 2 real offenders found
-but NOT retroactively cleaned up yet (queuing as next-fire task).** Root-caused fire 11's own
-open item: `src/bulk_analyze.py` and `src/mine_feeds.py` (shared by `gemini_video_analyze.py`)
-now block a bare-product-name "skill" (CLAUDE.md's own forbidden template, e.g. "X is an AI tool
-by Y. It enhances productivity...") BEFORE it's written, not just after the fact via
-`cross_tab_check`. See AWAY_LOG fire 12 for the full verification (5 synthetic tests + a read-only
-sweep of all 3,119 real skills: 2 flagged, 0 false positives). Those 2 real offenders
-("client-onboarding" / Zoho-CRM-copy description, "social-media-post-generation" / same pattern)
-are STILL in `skills.json` today — this fire deliberately scoped to the creation-time fix only,
-not a retroactive sweep, to keep the unattended change small. → **Proposed default: next fire
-(or `src/cross_tab_check.py`'s own next run, if it gets a similar description-boilerplate pass
-added) should reuse `bulk_analyze.is_boilerplate_skill()` to reroute those 2 specific records
-into `tools.json` and remove them from `skills.json` + delete any orphaned `SKILL.md` folder** —
-same quarantine/log pattern fire 11 already established (`data/_removed_cross_tab.json`), just a
-different trigger (no matching tool by name, only a boilerplate description). Low risk, 2 known
-records, already identified by slug — a small, well-scoped follow-up, not a new investigation.
+**2026-07-26 (fires 12→13) — anti-boilerplate gate moved to point-of-creation; the 2 real
+offenders found are now cleaned up too — DONE, both halves landed this run.** Fire 12 root-caused
+fire 11's open item: `src/bulk_analyze.py` and `src/mine_feeds.py` (shared by
+`gemini_video_analyze.py`) now block a bare-product-name "skill" (CLAUDE.md's own forbidden
+template, e.g. "X is an AI tool by Y. It enhances productivity...") BEFORE it's written. Fire 13
+(same run, right after) added `src/cross_tab_check.sweep_orphan_boilerplate()` — a permanent
+second net wired into `main()` (so it runs every `bulk_analyze.yml` cycle) that reuses the same
+gate retroactively and catches a boilerplate skill even with NO matching tool name to collide
+with. Applied for real: `skills.json` 3119→3117, `tools.json` 2848→2850 (both records rerouted
+as tools, not dropped). See AWAY_LOG fires 12 & 13 for full verification. **One loose end fire 13
+flagged, worth a human glance whenever convenient (not urgent):** the 2 rerouted tool records
+are named after the original SKILL's (generic) name — "Client Onboarding" and "Social media post
+generation" — rather than the actual product the description is about ("Zoho CRM" in the first
+case), because extracting the real product name from scraped landing-page copy wasn't worth an
+extra LLM call for 2 records. Both are factually correct, just oddly titled; fine to rename
+by hand or leave as-is. _Default: leave as-is; low priority._
 
 **2026-07-26 (fire 11) — commit-signature / "Unverified" badge on GitHub, declined to rewrite history.**
 This session's local hook flagged fire 11's two commits (`e849f557`, `83d2685f`) as showing "Unverified"

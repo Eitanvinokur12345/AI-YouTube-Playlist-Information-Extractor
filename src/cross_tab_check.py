@@ -249,6 +249,89 @@ def run(apply: bool = True) -> dict:
     return report
 
 
+def sweep_orphan_boilerplate(apply: bool = True) -> dict:
+    """A SECOND, narrower net alongside run() above. run() only catches a boilerplate skill
+    when it collides (by slug/name) with a SAME-NAMED tool — but a stub can be boilerplate
+    under a name that never got filed as a tool at all (e.g. skill_name "Client Onboarding"
+    whose description is just scraped "Zoho CRM is an AI-powered online CRM solution that
+    streamlines..." copy — no tool named "Client Onboarding" exists to collide with, so run()'s
+    matching never sees it). Reuses src/bulk_analyze.is_boilerplate_skill() — the SAME gate
+    fire 12 wired in at the point of creation (bulk_analyze.merge_skills / mine_feeds.merge) —
+    so this is a retroactive pass with an already-proven-precise rule (0 false positives across
+    all 3,119 real skills when this was verified before shipping). A caught record is REROUTED
+    into tools.json (never silently dropped — CLAUDE.md Step 3's own instruction: "record the
+    tool ... and emit no skill"), or just removed if an equivalent tool already exists. Frozen/
+    starred records are never touched (Golden rule #8), same as run()."""
+    from src.bulk_analyze import is_boilerplate_skill, norm as _bnorm  # local import: avoid a
+    # module-load cycle (bulk_analyze doesn't import this module, but keep the coupling minimal)
+
+    skills_d = _load("skills.json")
+    tools_d = _load("tools.json")
+    skills = list(skills_d.get("skills", []))
+    tools = list(tools_d.get("tools", []))
+    frozen = _frozen_slugs()
+    tool_by_name = {_bnorm(t.get("name")): t for t in tools}
+
+    keep, removed, rerouted, deleted_pkg_dirs = [], [], [], []
+    for s in skills:
+        slug = s.get("slug") or ""
+        if _is_frozen(s) or _norm(slug) in frozen:
+            keep.append(s)
+            continue
+        if not is_boilerplate_skill(s, set(tool_by_name.keys())):
+            keep.append(s)
+            continue
+        removed.append({"tab": "skills", "name": s.get("skill_name"), "slug": slug,
+                        "source_url": s.get("source_url"),
+                        "reason": "boilerplate sweep — zero technique evidence + vendor-template description"})
+        name_key = _bnorm(s.get("skill_name"))
+        if name_key and name_key not in tool_by_name:
+            stub = {
+                "name": s.get("skill_name") or "", "slug": slug or _norm(s.get("skill_name") or ""),
+                "category": s.get("category") or "other", "description": s.get("description") or "",
+                "quality_score": s.get("quality_score") or 1, "model_version": s.get("model_version"),
+                "company": s.get("company"), "country": s.get("country"),
+                "open_source": s.get("open_source", False),
+                "target_tool": s.get("target_tool") or "other",
+                "endorsement_video_ids": s.get("endorsement_video_ids") or [],
+                "mentions": len(s.get("endorsement_video_ids") or []) or 1,
+                "source_video_id": s.get("source_video_id"), "source_type": s.get("source_type"),
+                "source_url": s.get("source_url"),
+                "discovered_via": "cross_tab_check (boilerplate sweep, ex-skill)",
+                "added_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            }
+            if apply:
+                tools.append(stub)
+                tool_by_name[name_key] = stub
+            rerouted.append(stub.get("slug"))
+        if apply:
+            pkg = _skill_pkg_dir(s)
+            if pkg is not None:
+                shutil.rmtree(pkg, ignore_errors=True)
+                deleted_pkg_dirs.append(str(pkg.relative_to(ROOT)))
+
+    if apply and removed:
+        skills_d["skills"] = keep
+        tools_d["tools"] = tools
+        _save("skills.json", skills_d)
+        _save("tools.json", tools_d)
+        idx = _load("index.json")
+        if isinstance(idx, dict):
+            for r in removed:
+                if r.get("slug"):
+                    idx.pop(r["slug"], None)
+            _save("index.json", idx)
+        log = _load("_removed_cross_tab.json")
+        if not isinstance(log, dict):
+            log = {"removed": []}
+        log["removed"] = (log.get("removed", []) + removed)[-500:]
+        _save("_removed_cross_tab.json", log)
+
+    return {"checked_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "found": len(removed), "rerouted_to_tools": len(rerouted),
+            "deleted_pkg_dirs": deleted_pkg_dirs, "removed": removed}
+
+
 def main() -> None:
     apply = "--dry-run" not in sys.argv
     r = run(apply=apply)
@@ -261,6 +344,16 @@ def main() -> None:
     if r.get("deleted_pkg_dirs"):
         print(f"  deleted {len(r['deleted_pkg_dirs'])} orphaned SKILL.md folder(s): "
               f"{', '.join(r['deleted_pkg_dirs'])}")
+
+    r2 = sweep_orphan_boilerplate(apply=apply)
+    if r2["found"]:
+        print(f"{head}boilerplate sweep: {r2['found']} orphan boilerplate skill(s) found — "
+              f"{r2['rerouted_to_tools']} rerouted to Tools, rest merged into an existing tool.")
+        for rec in r2["removed"]:
+            print(f"  - {rec['name']}  ({rec['slug']}) -> tools.json  [{rec['reason']}]")
+        if r2.get("deleted_pkg_dirs"):
+            print(f"  deleted {len(r2['deleted_pkg_dirs'])} orphaned SKILL.md folder(s): "
+                  f"{', '.join(r2['deleted_pkg_dirs'])}")
 
 
 if __name__ == "__main__":

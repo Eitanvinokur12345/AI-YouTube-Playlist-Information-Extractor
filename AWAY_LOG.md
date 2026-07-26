@@ -5,6 +5,51 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-26
+- **~21:2x (fire 13, unattended, cloud session) — the 2 real boilerplate offenders fire 12 found
+  but deliberately left alone are now cleaned up, via a NEW second net in `cross_tab_check.py`
+  that closes the gap fire 12's own self-criticism named.** Non-brain cleanup front, same
+  module fire 11 already owns. Fire 12's `is_boilerplate_skill()` gate only fires at creation
+  time on a NEW candidate; `cross_tab_check.run()`'s existing collision logic only catches a
+  boilerplate skill that shares a slug/name with an EXISTING tool — neither one would ever touch
+  "Client Onboarding" (whose description is scraped Zoho-CRM landing-page copy) or "Social media
+  post generation" (same pattern), because no tool named either of those things exists to
+  collide with. Added `sweep_orphan_boilerplate()`: reuses fire 12's exact
+  `bulk_analyze.is_boilerplate_skill()` gate but scans EVERY skill (not just tool-colliding
+  ones), reroutes a match into `tools.json` as a real tool record (never silently dropped — the
+  CLAUDE.md line this whole chain traces back to: "record the tool ... and emit no skill"),
+  deletes any orphaned `SKILL.md` package, and logs to the same `data/_removed_cross_tab.json`
+  audit trail `run()` already uses (added a `reason` field so the two nets are distinguishable
+  in the log). Wired into `main()` right after `run()`, so it runs automatically every
+  `bulk_analyze.yml` cycle (`python -m src.cross_tab_check` is already a step there) — a real
+  standing second line of defense, not a one-off script. Verified: `--dry-run` first, found
+  exactly the same 2 records fire 12 had already identified read-only (no drift, no surprises);
+  applied for real — `skills.json` 3119→3117, `tools.json` 2848→2850 (both records rerouted, not
+  merged into anything pre-existing, since neither "Client Onboarding" nor "Social media post
+  generation" had a same-named tool), 1 orphaned `SKILL.md` folder deleted
+  (`other-skills/higgsfield-ai/social-media-post-generation` — quality_score 5 had earned it a
+  package; the other record's quality_score was 1, below the package threshold, so it never had
+  one to clean up), `index.json` pruned for both dropped slugs (the same staleness class fire 11
+  fixed a crash for). `python3 -c "json.load(...)"` on all 4 touched data files; `python -m
+  src.guardrails` → 14/15, 0 critical (same known-flappy G-M, unrelated). Zero frozen/starred
+  records touched (checked `stars.json` + per-record flags before removal, same as `run()`).
+  **Harsh self-criticism:** the new tool records are honest but low-quality — I named them
+  after the SKILL's (often generic) name ("Client Onboarding", "Social media post generation")
+  rather than the actual product the description is really about ("Zoho CRM"), because
+  extracting the real product name out of scraped landing-page copy reliably would need another
+  LLM call or a much fussier regex, and I chose not to build that unattended for 2 records. The
+  result: `tools.json` now has 2 more entries that are technically correct (a real product with
+  a real description) but oddly named and easy for a human skimming the Tools tab to find
+  confusing ("Client Onboarding" reads like a technique, not a CRM product) — a small data-
+  quality debt trade against not losing the record or over-scoping this fire. `quality_score: 1`
+  on the Zoho-CRM one also just carries over from the original (mediocre-source) skill record
+  unchanged; I did not re-score it as a tool, which is a fair reason it might be a weak one to
+  even keep — a human pass on these 2 specific records would be cheap and is a reasonable ask
+  for Eitan's return rather than mine to force through unattended. I did not go looking for MORE
+  orphan-boilerplate cases beyond what fire 12's read-only sweep already found — `sweep_orphan_
+  boilerplate()` will only prove its ongoing value the next time `bulk_analyze.yml` runs and
+  either finds 0 (nothing new slipped through — good) or something (the second net earning its
+  keep) — that's for a future PULSE.md/heartbeat check to notice, not this fire.
+
 - **~21:1x (fire 12, unattended, cloud session) — anti-boilerplate gate moved to the point of
   creation: bare-product-name "skills" are now blocked BEFORE they're written, in the same
   free-lane extractors fire 11 suspected (`bulk_analyze.py`, and `mine_feeds.py`'s shared

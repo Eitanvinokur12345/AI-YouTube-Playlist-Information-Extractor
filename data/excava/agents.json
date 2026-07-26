@@ -197,6 +197,18 @@
         "legibility"
       ],
       "lane_hint": "Accessibility"
+    },
+    "links": {
+      "purpose": "assess and report link-coverage status for the hub (which sourced elements still lack a resolved source URL) and hand off to the external CI resolver lane; a relay department, not the coverage lever itself",
+      "capability": null,
+      "specialization": [
+        "link",
+        "links",
+        "resolve",
+        "coverage",
+        "unlinked"
+      ],
+      "lane_hint": "Resolve links batch"
     }
   },
   "agents": [
@@ -807,6 +819,32 @@
       "scoped_tools": [
         "src.excava_bus",
         "src.excava_chat"
+      ]
+    },
+    {
+      "id": "links-w1",
+      "name": "Anchor",
+      "tier": 1,
+      "department": "links",
+      "role": "doer",
+      "persona": "Anchor: tracks down where each element's real source lives and pins it down.",
+      "engine_pref": "fast",
+      "scoped_tools": [
+        "src.resolve_links",
+        "src.excava_bus"
+      ]
+    },
+    {
+      "id": "links-checker",
+      "name": "Tether",
+      "tier": 1,
+      "department": "links",
+      "role": "checker",
+      "persona": "Tether: double-checks a resolved link actually points at the right thing before it counts as coverage.",
+      "engine_pref": "grounded",
+      "scoped_tools": [
+        "src.resolve_links",
+        "src.excava_bus"
       ]
     }
   ]

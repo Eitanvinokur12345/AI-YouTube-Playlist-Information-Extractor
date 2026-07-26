@@ -111,10 +111,26 @@ def commit(message: str, add=None) -> str:
     return _git(["rev-parse", "--short", "HEAD"])
 
 
+def ensure_upstream() -> bool:
+    """Every fresh per-session branch starts with NO upstream tracking, which makes
+    `git pull --rebase` (used below) fail outright — fires 6 and 7 both had to notice this by
+    hand and fix it one-off (2026-07-26, AWAY_LOG). Fixing it here, at the top of sync(), means
+    every ship/push call self-heals instead of relying on a fire to spot the symptom.
+    Returns True if a tracking branch was just set (so callers can note it happened)."""
+    r = subprocess.run(["git", "rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{u}"],
+                        cwd=str(ROOT), text=True, capture_output=True)
+    if r.returncode == 0:
+        return False
+    branch = _git(["rev-parse", "--abbrev-ref", "HEAD"])
+    _git(["branch", "--set-upstream-to=origin/main", branch], check=False)
+    return True
+
+
 def sync() -> list:
     """Make the tree rebase-safe, then rebase onto origin. Returns what got quarantined.
     Auto-resolves the recurring CI-data-churn conflict (data/* → take incoming), but for a real
     SOURCE conflict it aborts and surfaces it — never silently drops your code."""
+    ensure_upstream()
     revert_ci_churn()
     moved = quarantine_collisions()
     # --autostash: an unattended ship must not die because a live session left a modified

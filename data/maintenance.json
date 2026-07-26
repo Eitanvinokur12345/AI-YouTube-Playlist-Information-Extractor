@@ -1,23 +1,9 @@
 {
-  "generated_at": "2026-07-26T17:34:25.846771+00:00",
-  "health_score": 40,
+  "generated_at": "2026-07-26T18:02:54.502209+00:00",
+  "health_score": 48,
   "grade": "D",
   "issue_count": 7,
   "issues": [
-    {
-      "severity": "high",
-      "area": "brain",
-      "issue": "Empty-body items render as blank 'white' nodes in the brain graph",
-      "count": 187,
-      "fix": "Skip empty-body items from the brain (or backfill a one-line description) so they stop appearing as contentless dots.",
-      "sample": [
-        "AITER v3",
-        "Amazon Echo Dot Max",
-        "ChatGPT Enterprise",
-        "Claude SDK",
-        "Cloud Sonic"
-      ]
-    },
     {
       "severity": "high",
       "area": "brain",
@@ -55,6 +41,20 @@
         "automation (431)",
         "integration (170)",
         "research (509)"
+      ]
+    },
+    {
+      "severity": "medium",
+      "area": "data",
+      "issue": "Items with no description (excluded from both brain renders, still hollow records)",
+      "count": 187,
+      "fix": "Backfill via deep_retrieve/analysis; these no longer break the graph but stay useless in search/detail views until they have real content.",
+      "sample": [
+        "AITER v3",
+        "Amazon Echo Dot Max",
+        "ChatGPT Enterprise",
+        "Claude SDK",
+        "Cloud Sonic"
       ]
     },
     {

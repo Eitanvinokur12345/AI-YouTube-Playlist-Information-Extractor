@@ -5,6 +5,50 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-26
+- **~18:0x (fire 10, unattended, cloud session — Claude Code GitHub Action harness)** — First
+  correction: QUESTIONS.md's "the real hub blocker: enrichment is stalled at 0, deterministic
+  GitHub-metadata enricher still unbuilt" is STALE — `src/deep_retrieve.py` already exists
+  (keyless README/homepage/transcript extraction + optional LLM fuse, hard per-request timeouts,
+  a watchdog thread against the 793-min-hang class of bug) and is actively running: stubs are
+  down from the 3,628 QUESTIONS.md cited to **2,052** (`data/elements_index.json`), and
+  `deep_retrieve_state.json`/guardrail G-O both show real recent batches. Didn't rebuild it —
+  would have been pure duplication of already-working code. Actual increment this fire: the
+  in-app knowledge graph (`src/build_graph.py`, feeds `data/brain_graph.json` for the dashboard)
+  plotted every skill/tool/connector with zero body-emptiness check, so items with no
+  description/use_case/tips still rendered as blank "white" dots — `maintenance_check.py`'s own
+  §1 check had flagged exactly this (187 items) as a standing "high" severity issue, and
+  `src/build_brain.py` (the separate Obsidian export) already had the equivalent skip but
+  `build_graph.py` never got the same fix. Added `_has_body()` (mirrors maintenance_check's own
+  field list per type) and skip empty-body skills/tools/connectors before they're plotted.
+  Verified via CLI (per away-mode's "verify via CLI/DATA, not the browser" rule): regenerated
+  `brain_graph.json` (1873 nodes, reports "+187 empty-body items skipped"), then cross-checked
+  by loading skills/tools/connectors.json directly and confirming **zero** of the 187 known
+  empty-body ids appear as graph nodes. Re-ran `maintenance_check.py`: same 187 items still show
+  up (that check reads raw source data, not the graph — correctly unchanged), but I retitled/
+  re-severitied that finding from "high/brain — renders as blank nodes" to "medium/data — no
+  longer breaks either render, still a content gap deep_retrieve keeps draining" since the render
+  bug it originally described is now fixed; maintenance grade moved 40→48/100 on that alone.
+  `python -m src.guardrails`: 13/15, 0 critical (unchanged from before this fire). **Harsh
+  self-criticism:** small, single-file fix — real but narrow; the bigger-ticket "review the ~13
+  stray `kind-shannon-*` branches" and "sweep the open QUESTIONS.md items" debt from fires 6-9 is
+  still untouched, and I spent real time re-verifying deep_retrieve's status by hand instead of
+  that being a one-command standing check (fires 8/9 built exactly that pattern for git hygiene;
+  the equivalent for "which named blockers are actually still open" doesn't exist yet — queuing
+  it). **Judgment call, flagged like fire 8's:** this session runs under the Claude Code GitHub
+  Action harness, which assigns a per-session branch (`claude/kind-shannon-ybw9ue`) and instructs
+  "never push to a different branch without explicit permission" + open a PR — this directly
+  conflicts with `git_safe.push()`'s hardcoded `git push origin HEAD:main` (the convention 30+
+  prior bot-driven fires used). Investigated: those prior fires' commits are all authored by
+  `skills-tracker-bot <actions@users.noreply.github.com>` — a service-account CI identity, not a
+  branch-mandated interactive session like this one — so "zero PRs so far" reflects a different
+  actor under different rules, not evidence this session should also bypass its own harness's
+  branch/PR requirement. I did NOT run `git_safe ship`/`push` this fire; I committed and pushed to
+  `claude/kind-shannon-ybw9ue` and opened a draft PR instead. Eitan should confirm on return
+  whether cloud Claude-Code-on-the-web fires should keep doing that (safer default, an explicit
+  approval gate before anything lands on `main`) or whether he wants this harness's git identity
+  granted direct-to-main rights to match the bot fires — either way this is now the second fire in
+  a row flagging the same unresolved question, so it shouldn't need a third.
+
 - **~16:5x (fire 9, unattended, cloud session)** — Built the standing-checks entrypoint fire 8
   queued (twice now, per QUESTIONS.md) instead of re-diagnosing the same symptoms by hand a
   third time: new `src/standing_checks.py` — `python -m src.standing_checks` in one call (a)

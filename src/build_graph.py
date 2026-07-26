@@ -41,6 +41,16 @@ def _q(x):
     return x.get("quality_score") or 0
 
 
+def _has_body(kind, x):
+    """Mirrors maintenance_check.py's empty-body test: an item with none of these fields
+    filled has nothing to show once plotted, and renders as a blank 'white' dot in the graph.
+    Skip it here instead (build_brain.py's Obsidian export already does the same)."""
+    fields = {"skill": ("description", "use_case", "tips"),
+              "tool": ("description",),
+              "connector": ("what_it_does", "description")}[kind]
+    return any(str(x.get(f, "")).strip() for f in fields)
+
+
 def _vid(x):
     v = x.get("endorsement_video_ids") or []
     return (v[0] if v else None) or x.get("source_video_id")
@@ -90,10 +100,17 @@ def main() -> None:
 
     # group skills + tools by category, keep the top CAP by quality (so the graph is the BEST of each)
     by_cat: dict = defaultdict(list)
+    skipped_empty = 0
     for s in skills:
-        by_cat[str(s.get("category") or "other").lower()].append(("skill", s))
+        if _has_body("skill", s):
+            by_cat[str(s.get("category") or "other").lower()].append(("skill", s))
+        else:
+            skipped_empty += 1
     for t in tools:
-        by_cat[str(t.get("category") or "other").lower()].append(("tool", t))
+        if _has_body("tool", t):
+            by_cat[str(t.get("category") or "other").lower()].append(("tool", t))
+        else:
+            skipped_empty += 1
 
     for cat, items in by_cat.items():
         cid = cat_hub(cat)
@@ -112,7 +129,13 @@ def main() -> None:
     for p in prompts:                                   # only 24 prompts — show them all
         nid = "prompt:" + str(p.get("slug") or p.get("title") or len(nodes))
         node(nid, p.get("title"), "prompt", p.get("source_url")); link(nid, cat_hub(p.get("category")))
-    for c in sorted(conns, key=_q, reverse=True)[:CONN_CAP]:
+    conns_with_body = []
+    for c in conns:
+        if _has_body("connector", c):
+            conns_with_body.append(c)
+        else:
+            skipped_empty += 1
+    for c in sorted(conns_with_body, key=_q, reverse=True)[:CONN_CAP]:
         nid = "conn:" + str(c.get("slug") or c.get("name") or len(nodes))
         node(nid, c.get("name"), "connector", c.get("url")); link(nid, conn_hub)
         included[nid] = c
@@ -137,13 +160,15 @@ def main() -> None:
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "counts": {"skills": len(skills), "tools": len(tools), "prompts": len(prompts),
                    "connectors": len(conns), "nodes": len(nodes), "links": len(links),
-                   "stars": n_star, "combos": min(len(combos), MAX_COMBOS)},
+                   "stars": n_star, "combos": min(len(combos), MAX_COMBOS),
+                   "skipped_empty_body": skipped_empty},
         "nodes": list(nodes.values()),
         "links": links,
     }
     (DATA / "brain_graph.json").write_text(json.dumps(out, ensure_ascii=False), encoding="utf-8")
     print(f"brain_graph.json: {len(nodes)} nodes ({n_star} stars, {min(len(combos), MAX_COMBOS)} combos), "
-          f"{len(links)} links — capped from {len(skills) + len(tools)} items for readability.")
+          f"{len(links)} links — capped from {len(skills) + len(tools)} items for readability "
+          f"(+{skipped_empty} empty-body items skipped so they don't render as blank nodes).")
 
 
 if __name__ == "__main__":

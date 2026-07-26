@@ -15,16 +15,13 @@ You're away ~1 week; the offline loop is running (non-brain fronts, hourly) and 
 - **#7 API keys work offline / without your PC** → proposed **KEEP the answer (yes).** Proven this week: the cloud beat ran the keys 24/7 with your machine off; the VPS will too.
 - **#8 EXCAVATORTRON = HUB, EXCAVA = agents (naming)** → proposed **KEEP + lock everywhere.** This is the canonical naming and it's used consistently across the code and docs.
 
-**The real hub blocker: enrichment is stalled at 0, and away-mode can't fix it (decision for your return).**
-Three loop fires this week shipped read-side hub wins (v125 type-aware Activate · v126 "ready to use" filter
-· v127 inline payload in the detail view). All real, but all BROWSE-layer — because the actual problem is
-CONTENT: 3,628 of 10,133 elements are bare stubs and the local drain has enriched **0** for days (guardrail
-G-O). deep_retrieve rides the brains/Ollama subsystem, which away-mode tells me not to touch, so I keep
-polishing how you browse the library instead of filling it. → **Proposed default (on your return):** stand up
-a DETERMINISTIC enricher (no LLM) that fills stubs from real sources — GitHub API repo description / topics /
-homepage / README first line for the ~1,600 repo elements — network-bounded with a hard timeout (the 793-min
-hang lesson). Free, non-brain, attacks completeness directly. Until you approve a network front or lift the
-brain freeze, these fires keep producing browse-layer polish of diminishing value.
+**The real hub blocker: enrichment is stalled at 0 — RESOLVED, `src/deep_retrieve.py` is now live (fire 10 correction, 2026-07-26).**
+This entry originally proposed building a deterministic (no-LLM) enricher — that has since been built and
+shipped (`src/deep_retrieve.py`: keyless GitHub-README/homepage/transcript extraction, LLM fuse only as an
+optional polish, hard per-request timeouts + a watchdog thread against the 793-min hang class of bug). It is
+actively draining the stub pool: stubs are down from the 3,628 cited above to **2,052**
+(`data/elements_index.json`, confirmed by fire 10). Leaving the rest of this entry below unedited as the
+historical record of the original ask; no further action needed here.
 
 **2026-07-26 (fire 6) — orphaned branch found: away-fire work landed on a branch that never reached `main`.**
 While diagnosing why guardrails dropped 15/15→13/15 (real cause: fixed in this fire — see AWAY_LOG/

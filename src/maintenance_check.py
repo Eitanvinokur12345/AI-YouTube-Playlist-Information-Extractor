@@ -65,10 +65,13 @@ def main() -> int:
     e_to = empty(tools, ["description"], "name")
     e_co = empty(conns, ["what_it_does", "description"], "name")
     if e_sk or e_to or e_co:
-        add("high", "brain", "Empty-body items render as blank 'white' nodes in the brain graph",
+        # build_graph.py (fire 10, 2026-07-26) now skips these from the dashboard graph AND
+        # build_brain.py already skipped them from the Obsidian export — so this is no longer a
+        # RENDER bug, just the underlying data-completeness gap (same pool deep_retrieve drains).
+        add("medium", "data", "Items with no description (excluded from both brain renders, still hollow records)",
             len(e_sk) + len(e_to) + len(e_co),
-            "Skip empty-body items from the brain (or backfill a one-line description) so they "
-            "stop appearing as contentless dots.", e_sk + e_to + e_co)
+            "Backfill via deep_retrieve/analysis; these no longer break the graph but stay useless "
+            "in search/detail views until they have real content.", e_sk + e_to + e_co)
 
     # 2) Title collisions: many items map to the SAME Obsidian note filename -> they overwrite each
     #    other and the hub links all point at one node (a giant white star).

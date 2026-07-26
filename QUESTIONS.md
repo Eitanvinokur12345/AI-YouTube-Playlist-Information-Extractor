@@ -65,6 +65,22 @@ There are still ~13 other `kind-shannon-*` branches on origin of unknown content
 (diff each against `main`, land or explicitly discard) remains unstarted and should be the next fire's focus
 if nothing higher-priority is queued.
 
+**2026-07-26 (fire 11) — commit-signature / "Unverified" badge on GitHub, declined to rewrite history.**
+This session's local hook flagged fire 11's two commits (`e849f557`, `83d2685f`) as showing "Unverified"
+on GitHub (no GPG/SSH signature — the committer email was already `noreply@anthropic.com`, so email wasn't
+the actual gap) and suggested `commit --amend --reset-author` + a rebase against `origin/...` to fix it. I did
+**not** do this: (a) amending author metadata doesn't add a cryptographic signature, so the suggested fix
+wouldn't actually produce a "Verified" badge — there's no signing key configured anywhere in this repo's
+tooling; (b) the fix as given implies a rebase + force-push on a branch the `skills-tracker-bot` CI identity
+is *also* actively committing/pushing to every 20–90 min (see `18c3ac3f` interleaved right between fire 11's
+two commits) — rewriting history there risks a race against a concurrent CI push, and force-push isn't
+something to do unattended without your sign-off regardless. **Default: leave commits as-is** (they're
+correctly on `origin/main` — `git_safe.push()` already verifies `origin == HEAD` after every ship — just
+cosmetically "Unverified"); if you want real "Verified" badges going forward, that needs either a GPG/SSH
+signing key added to this environment's git config, or switching these commits to go through the GitHub API
+(which auto-signs as "GitHub verified") instead of local `git push`. Neither is a fire-sized decision to make
+unilaterally.
+
 ---
 
 ## A. The new look ("Heavy Machinery" v58)

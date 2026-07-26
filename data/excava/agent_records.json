@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-26T19:47:07.335461+00:00",
+ "generated_at": "2026-07-26T21:30:46.556094+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 187,
+   "turns_7d": 188,
    "rooms_7d": 28,
    "engines_used": [
     "gh-models",
@@ -18,14 +18,14 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is that Security’s 15-minute follow-up window becomes a target for attackers who now know *exactly* when w"
+   "last_position": "The real risk is that redacted indicators still leak enough tactical data to guide attackers—even partial hashes or time"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 150,
+   "turns_7d": 151,
    "rooms_7d": 89,
    "engines_used": [
     "gh-models",
@@ -35,7 +35,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** The AI Executive Assistant (AE) should auto-publish the threshold, breach status, and a *time-stamped exce"
+   "last_position": "**Decision:** The AI Executive Assistant (AE) auto-publishes a *redacted* excerpt (threshold breached, timestamp, redact"
   },
   {
    "id": "transcripts-w1",
@@ -58,15 +58,15 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 113,
-   "rooms_7d": 43,
+   "turns_7d": 114,
+   "rooms_7d": 44,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** The AI Executive Assistant (AE) auto-publishes a *generic* breach alert (threshold breached, timestamp, no"
+   "last_position": "I will deep-analyze the LangSmith observability platform’s documentation and GitHub repo to extract its core value propo"
   },
   {
    "id": "analysis-checker",
@@ -90,7 +90,7 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 71,
+   "turns_7d": 72,
    "rooms_7d": 36,
    "engines_used": [
     "gh-models",
@@ -99,14 +99,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt Qwen3-235B-A22B-Instruct for EXCAVA. Its MoE design cuts latency 30-40% versus dense models while keeping reasonin"
+   "last_position": "Adopt DeepSeek-R1-671B on a single 8xA100 node for EXCAVA. Its dense architecture avoids sharding stalls that MoE models"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 71,
+   "turns_7d": 72,
    "rooms_7d": 36,
    "engines_used": [
     "gh-models",
@@ -115,7 +115,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Qwen3-235B-A22B-Instruct’s MoE latency claim ignores sharding overhead—EXCAVA’s real-time tasks will stall when the mode"
+   "last_position": "DeepSeek-R1-671B’s 8xA100 node locks us into a single point of failure—if that node dies, EXCAVA’s power tasks halt enti"
   },
   {
    "id": "creators-lead",
@@ -354,15 +354,15 @@
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 21,
-   "rooms_7d": 21,
+   "turns_7d": 22,
+   "rooms_7d": 22,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will fetch the latest AI headlines from Reuters, BBC, and the White House. This will produce an updated digest of curr"
+   "last_position": "I’ll fetch the latest AI headlines from Reuters, BBC, and the White House using the news tool. This will produce a fresh"
   },
   {
    "id": "mining-lead",
@@ -395,6 +395,21 @@
    "last_position": "I will run a Reddit search for AI-related posts in the last 7 days and return the top 10 posts with the most engagement."
   },
   {
+   "id": "news-lead",
+   "name": "Wire",
+   "dept": "news",
+   "role": "lead",
+   "turns_7d": 20,
+   "rooms_7d": 20,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Fetch verified AI headlines from Reuters, BBC, and the White House via the news tool."
+  },
+  {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
@@ -408,8 +423,8 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: We will default to system preference with a temporary high-contrast override that resets after each session an",
-   "proposed": 18,
-   "shipped": 18
+   "proposed": 17,
+   "shipped": 17
   },
   {
    "id": "accessibility-lead",
@@ -429,27 +444,12 @@
    "shipped": 18
   },
   {
-   "id": "news-lead",
-   "name": "Wire",
-   "dept": "news",
-   "role": "lead",
-   "turns_7d": 19,
-   "rooms_7d": 19,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Fetch and verify the latest AI headlines from Reuters, BBC, and the White House, then compile a concise digest w"
-  },
-  {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
    "role": "lead",
-   "turns_7d": 15,
-   "rooms_7d": 15,
+   "turns_7d": 16,
+   "rooms_7d": 16,
    "engines_used": [
     "gh-models",
     "glm",
@@ -457,7 +457,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Marrow manually reviews the full earnings call transcript and LangSmith traces to produce a decision-ready artif"
+   "last_position": "ACTION: Marrow manually reviews the full LangSmith documentation, GitHub repo, and at least one real-world use case to e"
   },
   {
    "id": "improve-lead",
@@ -473,8 +473,8 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Run a 5% canary rollout alongside a 48-hour shadow test that measures output accuracy against a ground truth, ",
-   "proposed": 13,
-   "shipped": 13
+   "proposed": 12,
+   "shipped": 12
   },
   {
    "id": "memory-lead",
@@ -510,27 +510,27 @@
    "name": "Anchor",
    "dept": "links",
    "role": "doer",
-   "turns_7d": 5,
-   "rooms_7d": 5,
+   "turns_7d": 6,
+   "rooms_7d": 6,
    "engines_used": [
     "groq",
     "mistral"
    ],
-   "positions_held": 5,
-   "last_position": "I’ll run a full audit of the department’s link inventory using the link-checker tool. This will produce a report listing"
+   "positions_held": 6,
+   "last_position": "I will run a full audit of the department's link inventory using the link-checking tool to identify broken or outdated l"
   },
   {
    "id": "links-lead-x",
    "name": "LinLea",
    "dept": "links",
    "role": "lead",
-   "turns_7d": 5,
-   "rooms_7d": 5,
+   "turns_7d": 6,
+   "rooms_7d": 6,
    "engines_used": [
     "mistral"
    ],
-   "positions_held": 5,
-   "last_position": "ACTION: Anchor delivers the cleaned link inventory report with dead links removed."
+   "positions_held": 6,
+   "last_position": "ACTION: Anchor delivers the cleaned link inventory report with dead links removed by [date]."
   },
   {
    "id": "links-checker",

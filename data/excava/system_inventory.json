@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-26T19:47:09.127564+00:00",
+ "generated_at": "2026-07-26T21:30:48.345765+00:00",
  "total": 105,
  "counts": {
   "wired": 86,
@@ -142,6 +142,7 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
+    "AWAY_LOG.md",
     "brain/Architecture.md",
     "data/dev_construction.json",
     "data/improvement_suggestions.json",
@@ -342,18 +343,21 @@
   },
   "bulk_analyze": {
    "status": "wired",
-   "loc": 413,
+   "loc": 480,
    "entrypoint": true,
    "invoked_by": [
     "bulk_analyze.yml",
     "engine_selftest.yml"
    ],
    "documented_in": [
+    "AWAY_LOG.md",
+    "QUESTIONS.md",
     "brain/Systems and Protocols.md",
     "config.json",
     "data/dev_construction.json"
    ],
    "imported_by": [
+    "cross_tab_check",
     "gemini_video_analyze",
     "mine_competitors",
     "mine_feeds",
@@ -396,7 +400,7 @@
   },
   "cross_tab_check": {
    "status": "wired",
-   "loc": 205,
+   "loc": 361,
    "entrypoint": true,
    "invoked_by": [
     "bulk_analyze.yml",
@@ -404,11 +408,15 @@
     "mine.yml"
    ],
    "documented_in": [
+    "AWAY_LOG.md",
     "NEXT_SESSION.md",
+    "QUESTIONS.md",
     "data/dev_construction.json"
    ],
    "imported_by": [],
-   "imports": []
+   "imports": [
+    "bulk_analyze"
+   ]
   },
   "data_guard": {
    "status": "wired",
@@ -896,12 +904,13 @@
   },
   "gemini_video_analyze": {
    "status": "wired",
-   "loc": 211,
+   "loc": 214,
    "entrypoint": true,
    "invoked_by": [
     "gemini_video.yml"
    ],
    "documented_in": [
+    "AWAY_LOG.md",
     "data/dev_construction.json"
    ],
    "imported_by": [],
@@ -1202,12 +1211,14 @@
   },
   "mine_feeds": {
    "status": "wired",
-   "loc": 158,
+   "loc": 178,
    "entrypoint": true,
    "invoked_by": [
     "mine.yml"
    ],
    "documented_in": [
+    "AWAY_LOG.md",
+    "QUESTIONS.md",
     "data/dev_construction.json"
    ],
    "imported_by": [

@@ -141,7 +141,13 @@ def push() -> str:
     """The safe push: back up history, sync, push, then PROVE it landed (origin == HEAD)."""
     backup_bundle()
     sync()
-    _git(["push"])
+    # Explicit refspec (2026-07-26 fix): a plain `git push` relies on push.default/the local
+    # branch name matching its upstream, which breaks whenever the working branch isn't
+    # literally called "main" (e.g. a per-session branch tracking origin/main) — "The upstream
+    # branch of your current branch does not match the name of your current branch." Every other
+    # check in this module already hardcodes origin/main (see sync/quarantine_collisions), so
+    # doing the same here is consistent, not a new assumption.
+    _git(["push", "origin", "HEAD:main"])
     head, origin = _git(["rev-parse", "HEAD"]), _git(["rev-parse", "origin/main"])
     if head != origin:
         raise RuntimeError(f"push did NOT land — origin ({origin[:9]}) != HEAD ({head[:9]}). Investigate before continuing.")

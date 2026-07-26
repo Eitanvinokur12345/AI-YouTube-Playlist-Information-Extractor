@@ -5,6 +5,43 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-26
+- **~23:0x (fire 16, unattended, cloud session) — chased down G-M's "STALLED (no new
+  completions in the last 4 beats)" instead of assuming it was another metric artifact like
+  the fire-5/6 one, and it was real: the `excava_beat.yml` job that has been `in_progress`
+  since 21:46:40 (run 30220502266) had produced ZERO `excava-beat #N` commits across 70+
+  minutes, against a historical cadence of ~6 min/cycle (verified via `git log --grep`).**
+  Confirmed via `mcp__github__actions_get`/`actions_list` this is the run that finally started
+  after queuing behind the previous 5.3h-budget run (which itself completed successfully at
+  21:46:30 — not a crash, just the normal durable-loop handoff). Could not pull live logs for
+  the in-progress job (GitHub's log-download API 404s until a job completes), so root-caused
+  by reading the code path instead: `excava.py`'s room-advance loop
+  (`for r in open_rooms[:18]: for line in chat.advance(r["id"], turns=2)`) had NO wall-clock
+  bound, only a room-count bound — and `excava_engines.complete()` already tries up to 3
+  engines at up to ~60s each per call, so 18 rooms x 2 turns can chain past an hour of pure
+  timeouts on a day where the shared free-engine pool is quota-exhausted (exactly what the
+  workflow's own header comment already names as the reason `excava_beat` was split out of
+  `bulk_analyze` in the first place). Not a hang/bug — a genuinely unbounded worst case. Fix:
+  added `ROOM_ADVANCE_BUDGET_S = 240` and a wall-clock deadline check inside the loop
+  (`src/excava.py`) — once 4 minutes of room-advancing elapses, remaining rooms are skipped
+  for THIS beat (logged as "N deferred to next beat") instead of silently eating the rest of
+  the cycle; the next beat already resumes untouched rooms by design, so nothing is lost, only
+  deferred. **Verified:** `python -m src.py_compile` clean; a standalone monkeypatched-clock
+  simulation of the exact loop logic (4 rooms fit an assumed 60s/room worst case inside a 240s
+  budget, 14 correctly deferred) — could NOT live-verify against the real degraded engine pool
+  from this sandboxed session (same network-scope wall fire 10 hit); `python -m src.guardrails`
+  13/15, 0 critical, G-M still shows STALLED (expected — it reads history that predates this
+  fix; watch PULSE.md over the next few beats to confirm it recovers once this ships and the
+  currently-running long cycle eventually exits). **Harsh self-criticism:** I did not (could
+  not, from here) prove this is THE actual cause versus a contributing one — there could be a
+  genuine hang elsewhere in that 70-minute window I couldn't see without live logs; the fix is
+  real and safe regardless (a beat should never be allowed to starve the outer commit loop for
+  70+ min on principle), but if PULSE.md's done-counter is STILL flat after this ships and the
+  stuck run cycles again, the next fire needs the completed run's actual logs (available once
+  it finishes or times out) rather than my code-reading inference. Scope stayed to the one
+  confirmed mechanism; did not touch the ~13 stray `kind-shannon-*` branches (still someone
+  else's problem) or the 187 empty-body records (still a dedicated-pass item, not a fire-sized
+  one).
+
 - **~22:1x (fire 15, unattended, cloud session) — closed the OTHER half of item #11: the 10
   real title-collision DATA records fire 14 deliberately left untouched are now resolved,
   4 merged + 1 correctly NOT merged.** Non-brain front, same chain as fires 10-14. Read

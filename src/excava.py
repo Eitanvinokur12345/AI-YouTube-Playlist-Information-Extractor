@@ -31,6 +31,7 @@ import hashlib
 import json
 import os
 import re
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -45,6 +46,14 @@ NOW = datetime.now(timezone.utc).isoformat()
 G3_OUTWARD = 70          # truth/access must be this high before EXCAVA may create/publish
 OUTWARD = {"create", "promote", "publish", "self-code", "leverage"}
 MAX_TICKS_PER_BEAT = 10  # every department can execute each beat (owner: dizzying pace, no cross-waiting)
+ROOM_ADVANCE_BUDGET_S = 240  # 2026-07-26 fire 16: cap wall-clock on rooms so an engine-outage day
+                              # (each complete() call already bounded at ~3x60s, but 18 rooms x 2
+                              # turns can still chain past an hour with everything failing) can't
+                              # silently swallow the whole beat and delay the durable loop's commit
+                              # by 70+ min — confirmed live via excava_beat.yml run 30220502266,
+                              # which produced zero "excava-beat #" commits across a 70+ min cycle
+                              # while historical cadence is ~6 min/cycle. Remaining rooms just wait
+                              # for the next beat (already the documented behavior on any exit path).
 REDONE_WINDOW_H = 20     # don't re-enqueue a same-title task finished within this window
 FAIL_STREAK = 3          # Phase 2 backpressure: this many straight failures rests a department
 COOLDOWN_H = 6           # ...for this long (self-healing: it resumes on its own, traced)
@@ -467,9 +476,18 @@ def _beat(args) -> int:
                     return 3                       # audits 100% SI — cheapest seat
                 return 2
             open_rooms.sort(key=_impact)
+            room_deadline = time.monotonic() + ROOM_ADVANCE_BUDGET_S
+            advanced, skipped = 0, 0
             for r in open_rooms[:18]:
+                if time.monotonic() >= room_deadline:
+                    skipped += 1
+                    continue
                 for line in chat.advance(r["id"], turns=2):
                     beat_log.append(line)
+                advanced += 1
+            if skipped:
+                beat_log.append(f"rooms: {advanced} advanced, {skipped} deferred to next beat "
+                                 f"(room-advance budget {ROOM_ADVANCE_BUDGET_S}s hit — likely engine outage/quota)")
         except Exception as e:
             beat_log.append(f"rooms: skipped ({type(e).__name__})")
 

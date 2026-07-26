@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-26T19:47:08.785867+00:00",
+ "generated_at": "2026-07-26T21:00:47.312989+00:00",
  "total": 15,
- "passing": 15,
+ "passing": 14,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -21,9 +21,9 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": true,
-   "detail": "n/a in CI — the beat pushes straight to origin each cycle, bypassing git_safe/local bundles by design.",
-   "severity": "info"
+   "ok": false,
+   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
+   "severity": "warn"
   },
   {
    "id": "G-D",
@@ -99,14 +99,14 @@
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "88836 MB free on the repo drive.",
+   "detail": "30477 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": true,
-   "detail": "last batch 13.8h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026",
+   "detail": "last batch 15.0h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026",
    "severity": "info"
   }
  ]

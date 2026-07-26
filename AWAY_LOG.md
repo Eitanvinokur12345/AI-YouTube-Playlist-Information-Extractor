@@ -5,6 +5,29 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-26
+- **~13:0x (cloud-scheduled fire, unattended)** — This fire fired from a cloud-hosted Claude Code
+  session (claude.ai/code), not the local PC loop this file otherwise tracks — a different
+  execution environment than the away-mode contract and `git_safe.py` permission notes assume
+  (no local git-hook freeze risk here, but a branch+draft-PR workflow instead of direct-to-`main`
+  pushes). Ran standing checks only: `git fetch --prune` (found 4 more new stray session branches
+  since fire 7), guardrails (13/15, 0 critical — G-C history-bundle-freshness and G-G remote-sync
+  are the same known non-critical flags), and a full remote branch sweep. Found **15 stray
+  `claude/kind-shannon-*` branches** on origin (grew from ~13–14 at fire 7); this session's own
+  branch (`ym7kbd`) happened to be an exact match for `origin/main`'s tip (0 ahead/behind) purely
+  because of when it was cloned. Diffed one stray branch (`ae4swi`, the one fires 6/7 partially
+  ported fixes from) fully against `main`: 331 files changed, ~77k/~76k lines inserted/deleted —
+  confirms these are independently-rewritten trees, not a handful of unmerged commits; reconciling
+  any of them needs real content review, not a mechanical merge. Logged full findings +  a
+  proposed default (treat cloud-scheduled fires as audit/docs-only, don't attempt destructive
+  branch surgery unattended) in QUESTIONS.md for Eitan's return. **Harsh self-criticism:** did
+  zero product-facing work this fire — purely diagnostic, and the diagnosis itself (branch count,
+  environment mismatch) is something fire 7 already half-flagged; the concrete new information is
+  just "it's 15 not 13, and one diff is 77k lines." Deliberately did NOT attempt the branch sweep
+  fire 7 nominated as "next fire's focus" because doing it safely (content-level review across 15
+  branches with fully rewritten histories) is far beyond what a single unattended cloud fire
+  should risk getting wrong; that's a defensible call but it also means the actual backlog item is
+  still exactly where fire 7 left it — untouched.
+
 - **~09:5x (fire 7, unattended)** — Standing checks: `git fetch --prune` found 14 stray
   `claude/kind-shannon-*` session branches on origin, one of them (`ae4swi`) still carrying real,
   never-landed work flagged in QUESTIONS.md — commit `1205385a` "wire the links department into

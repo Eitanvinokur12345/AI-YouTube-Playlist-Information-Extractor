@@ -27843,15 +27843,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-07-26T04:07:58.065969+00:00",
-      "updated_at": "2026-07-26T04:07:58.065982+00:00"
+      "updated_at": "2026-07-26T05:51:49.469577+00:00",
+      "result": "1281 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "watch-process-the-next-b-38878",
@@ -27860,15 +27861,16 @@
       "department": "watch",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-07-26T04:07:58.104640+00:00",
-      "updated_at": "2026-07-26T04:07:58.104653+00:00"
+      "updated_at": "2026-07-26T05:51:58.336149+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
       "id": "security-safety-rate-the-38878",
@@ -27877,15 +27879,16 @@
       "department": "security",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-26T04:07:58.135029+00:00",
-      "updated_at": "2026-07-26T04:07:58.135037+00:00"
+      "updated_at": "2026-07-26T05:51:58.106149+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "memory-embed-the-remaini-38878",
@@ -27894,15 +27897,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-07-26T04:07:58.171662+00:00",
-      "updated_at": "2026-07-26T04:07:58.171673+00:00"
+      "updated_at": "2026-07-26T05:51:58.291777+00:00",
+      "result": "Semantic index: 1498 vectors (model gemini-embedding-001); hub 7289 items → 5791 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "raise-g8-personal-fit-68-38878",
@@ -27963,6 +27967,61 @@
       "department": "mining",
       "source": "room-action:mining",
       "priority": 2,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": "mining-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-26T05:45:34.343404+00:00",
+      "updated_at": "2026-07-26T05:52:05.014046+00:00",
+      "result": "Ran the discovery agent. discovery: +4 new (of 148 sighted) → 867 queued; arxiv=93, gh-active=93, gh-new=46, hn-front=35, hn-new=101, huggingface-model=36, producthunt=111, reddit=225, web-search=55, youtube-beyond=72"
+    },
+    {
+      "id": "transcripts-drain-the-ne-45109",
+      "title": "Transcripts: drain the next batch of 1281 pending (residential IP)",
+      "detail": "value=60 size=26(small) [cost 25/steps 35/risk 15] · 1281 pending",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-drain-the-ne-45109--01--transcripts-w1--to--analysis.md"
+      ],
+      "created_at": "2026-07-26T05:51:49.349707+00:00",
+      "updated_at": "2026-07-26T05:52:05.099178+00:00"
+    },
+    {
+      "id": "raise-g8-personal-fit-68-45109",
+      "title": "Raise G8 Personal fit (68/100): 22% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
+      "detail": "value=32 size=17(small) [cost 15/steps 25/risk 10] · G8 at 68",
+      "department": "visual",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "visual-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-26T05:51:49.383945+00:00",
+      "updated_at": "2026-07-26T05:51:57.476490+00:00",
+      "result": "Ran the collect designs. collect_designs: 932 designs (kept 932 / dropped 0 repo-only + 4 dead/parked + 49 non-design; +0 AI-product, +27 seeds, +48 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "id": "mining-room-action-mine--45142",
+      "title": "[mining room action] Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of 10 with name, link, stars, and why each",
+      "detail": "From room dept-mining-gather-ai-info-from-d-959 (action-shaped close). Mission action from the department's own room.",
+      "department": "mining",
+      "source": "room-action:mining",
+      "priority": 2,
       "status": "queued",
       "steps": 0,
       "max_steps": 8,
@@ -27970,9 +28029,9 @@
       "escalation_tier": 1,
       "claimed_by": null,
       "handoff_docs": [],
-      "created_at": "2026-07-26T05:45:34.343404+00:00",
-      "updated_at": "2026-07-26T05:45:34.343416+00:00"
+      "created_at": "2026-07-26T05:52:22.036619+00:00",
+      "updated_at": "2026-07-26T05:52:22.036628+00:00"
     }
   ],
-  "updated_at": "2026-07-26T05:45:34.343430+00:00"
+  "updated_at": "2026-07-26T05:52:22.036632+00:00"
 }

@@ -1,8 +1,8 @@
 {
- "generated_at": "2026-07-26T17:37:21.989279+00:00",
- "total": 104,
+ "generated_at": "2026-07-26T19:47:09.127564+00:00",
+ "total": 105,
  "counts": {
-  "wired": 85,
+  "wired": 86,
   "operator": 19,
   "orphaned": 0,
   "dead": 0
@@ -33,6 +33,7 @@
   "export_graphml",
   "fetch",
   "gemini_video_analyze",
+  "github_meta_enrich",
   "goals_check",
   "health",
   "improve_log",
@@ -454,6 +455,7 @@
     "data/dev_construction.json"
    ],
    "imported_by": [
+    "github_meta_enrich",
     "local_worker"
    ],
    "imports": [
@@ -526,6 +528,7 @@
    ],
    "imported_by": [
     "deep_retrieve",
+    "github_meta_enrich",
     "local_worker",
     "prewarm",
     "relate",
@@ -931,6 +934,24 @@
     "standing_checks"
    ],
    "imports": []
+  },
+  "github_meta_enrich": {
+   "status": "wired",
+   "loc": 184,
+   "entrypoint": true,
+   "invoked_by": [
+    "core_spoton.yml"
+   ],
+   "documented_in": [
+    "AWAY_LOG.md",
+    "QUESTIONS.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": [
+    "deep_retrieve",
+    "element_model"
+   ]
   },
   "goals_check": {
    "status": "wired",

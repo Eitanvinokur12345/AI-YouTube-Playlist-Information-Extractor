@@ -5,6 +5,56 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-26
+- **~22:1x (fire 15, unattended, cloud session) — closed the OTHER half of item #11: the 10
+  real title-collision DATA records fire 14 deliberately left untouched are now resolved,
+  4 merged + 1 correctly NOT merged.** Non-brain front, same chain as fires 10-14. Read
+  `maintenance_check.py`'s 5-title sample (of its 10-count) and pulled the FULL description of
+  every colliding record before touching anything — refused to blind-merge on name match
+  alone. 4 were genuine same-product duplicates the automated slug-dedup missed: skills.json's
+  two identical "Codebase Knowledge Graph for Claude Code Token Savings" records (same source
+  video, same technique, just two different slugs); tools.json's "Higgsfield AI" / "Higgsfield"
+  (same platform, two videos covering different features); "Claude Opus 4.8" / "Claude Opus
+  4.8" (same model, one mis-categorized as "productivity" instead of "code"); "Llama" / "Llama"
+  (same Meta model). Merged each per CLAUDE.md Step 3 (skills) / Step 3b (tools) compare-and-
+  keep-best: kept the higher-`quality_score` record, unioned tips/endorsement_video_ids/
+  compatibility, backed the loser up to `deleted_skills.json` (skills) with reason+timestamp
+  matching the file's existing convention, logged every merge to `merge_log.json` (matching the
+  2026-06-03 gemini-N merges already on record there), pruned `index.json`, deleted the
+  redundant `skills/code-knowledge-graph-for-claude-code/SKILL.md` folder (Step 5). The 5th
+  pair, "Hermes" (hermes-coding-harness) / "Hermes" (hermes-skill-runner), was NOT merged —
+  their descriptions are genuinely different products (an agentic coding harness vs a self-
+  hosted skill runner that pairs with "SkillSmith") that just happen to share a brand name;
+  merging would have destroyed real, distinct information. Disambiguated the display names
+  instead ("Hermes (Coding Harness)" / "Hermes (Skill Runner)"), exactly the fix
+  `maintenance_check.py`'s own issue text already suggests ("de-duplicate OR suffix"). Checked
+  `data/stars.json` (doesn't exist — no frozen records exist yet) and every record's own
+  `starred`/`locked` flags (all `None`) first, per Golden rule #8. **Verified:** zero duplicate
+  slugs left in either `skills.json` or `tools.json` (`Counter` check); re-ran
+  `maintenance_check` — the "Title collisions" issue type is now completely ABSENT from the
+  report (was 10, health score 40→48); rebuilt `brain_graph.json`/`brain.graphml` with fire
+  14's fixed generators so the merges propagate cleanly — 0 duplicate node ids in both, same
+  Counter check as fire 14. `python -m src.guardrails` → 15/15, 0 critical (G-C/G-G — backup-
+  freshness/remote-sync — both self-heal inside `git_safe`'s own push sequence). Shipped via
+  `git_safe ship` (commit `3cf78daf`). **Harsh self-criticism:** the 187 empty-body records
+  (the OTHER number in item #11) are still untouched — that's real content backfill across 187
+  distinct records, and writing 187 rushed one-line descriptions unattended in one fire's time
+  budget would trade a honestly-flagged stub for a plausibly-wrong one, which is a worse
+  outcome; it needs a dedicated enrichment pass (deep_retrieve, or a deterministic filler like
+  fire 10's GitHub-metadata one), not another maintenance fire, and I said so explicitly in
+  QUESTIONS.md rather than leaving a vague "later." Only investigated the 5 pairs
+  `maintenance_check`'s own (5-capped) sample surfaced for its 10-count — trusted its Counter
+  logic rather than independently re-deriving whether other collisions exist beyond what it
+  reported, which is reasonable (fire 14 read that logic closely enough to trust it) but not
+  independently re-verified from scratch. The merge script itself lived in `/tmp` scratch, not
+  a new `src/` module — a deliberate scope call: this was 5 specific, individually-investigated
+  pairs, not a general "auto-merge same-named records" tool, and building that generically
+  would risk exactly the blind-merge mistake the Hermes case shows is unsafe for a problem this
+  small. Fifth-plus fire in a row on the non-brain-front data/graph-quality chain (10→11→12→
+  13→14→15) — the loop's own recurring self-criticism (fires 8, 12, 14) about M1-M5 brain/agent-
+  orchestra work going untouched applies here too, doubly so now that it's two fires in the
+  same run; a future fire with a real time budget and/or the brain-front unblocked should
+  prioritize that.
+
 - **~22:0x (fire 14, unattended, cloud session) — QUESTIONS.md item #11 (owner default: yes):
   ported build_brain.py's proven empty-body-skip + unique-id fix into the two OTHER
   brain-graph generators that still had it, `build_graph.py` (dashboard in-page graph) and

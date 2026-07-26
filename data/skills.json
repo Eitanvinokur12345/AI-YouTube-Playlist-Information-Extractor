@@ -17798,7 +17798,10 @@
       "source_video_id": "1X6aW0zzSaw",
       "tips": [
         "Use a queryable code graph (like Graphify) with Claude Code to avoid re-reading files on every query.",
-        "Pre-index your codebase into a knowledge graph to dramatically reduce token usage in Claude Code sessions."
+        "Pre-index your codebase into a knowledge graph to dramatically reduce token usage in Claude Code sessions.",
+        "Let Claude Code install Graphify directly rather than doing it manually — just ask it to set up Graphify for the current repo.",
+        "Clone a repo first (e.g. Flask) to give Claude Code a real codebase to index and demonstrate the token savings.",
+        "Query the graph at any time without re-reading files — the graph persists between Claude Code sessions."
       ],
       "slash_commands": [],
       "general_tips": [
@@ -20006,60 +20009,6 @@
         "kind": "claude skill",
         "command": "activator: set me up with \"Gemini to Magnific Cinematic Social Video Workflow\"",
         "target": "gemini",
-        "needs_key": false,
-        "in_project": true
-      },
-      "link_tries": 6
-    },
-    {
-      "slug": "code-knowledge-graph-for-claude-code",
-      "skill_name": "Codebase Knowledge Graph for Claude Code Token Savings",
-      "category": "code",
-      "description": "Uses Graphify to convert a code repository into a queryable knowledge graph, so Claude Code can answer questions about the codebase without re-reading files on every query. Drastically reduces token consumption (up to 71x) by indexing file, function, and module relationships once and querying them repeatedly.",
-      "use_case": "Reducing Claude Code token spend on large codebases by maintaining a persistent graph index that the agent queries instead of re-reading source files.",
-      "output": "A queryable codebase graph that Claude Code can traverse to answer architectural questions, find dependencies, and locate functions without file reads.",
-      "quality_score": 5,
-      "model_version": null,
-      "company": null,
-      "country": null,
-      "open_source": true,
-      "target_tool": "claude",
-      "is_claude_skill": true,
-      "compatibility": [
-        {
-          "tool": "Claude",
-          "up_to_version": "any"
-        }
-      ],
-      "multi_tool": false,
-      "source_type": "youtube",
-      "source_url": "https://www.youtube.com/watch?v=1X6aW0zzSaw",
-      "source_video_id": "1X6aW0zzSaw",
-      "tips": [
-        "Let Claude Code install Graphify directly rather than doing it manually — just ask it to set up Graphify for the current repo.",
-        "Clone a repo first (e.g. Flask) to give Claude Code a real codebase to index and demonstrate the token savings.",
-        "Query the graph at any time without re-reading files — the graph persists between Claude Code sessions."
-      ],
-      "slash_commands": [],
-      "general_tips": [],
-      "relevance": "Critical for cost-effective use of Claude Code on large codebases — prevents repeated file reads and makes agent sessions dramatically cheaper.",
-      "popularity_signals": [],
-      "endorsement_video_ids": [
-        "1X6aW0zzSaw"
-      ],
-      "video_quality_score": 5,
-      "low_quality_source": false,
-      "source_videos": [
-        {
-          "id": "1X6aW0zzSaw",
-          "url": "https://www.youtube.com/watch?v=1X6aW0zzSaw",
-          "title": "This map stops Claude Code re-reading your files"
-        }
-      ],
-      "setup": {
-        "kind": "claude skill",
-        "command": "activator: set me up with \"Codebase Knowledge Graph for Claude Code Token Savings\"",
-        "target": "claude",
         "needs_key": false,
         "in_project": true
       },

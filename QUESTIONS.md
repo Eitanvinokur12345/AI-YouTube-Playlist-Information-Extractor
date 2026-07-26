@@ -42,6 +42,26 @@ fix stuck on an abandoned branch is equivalent to no fix; (b) someone (next fire
 registry") and land it or discard it explicitly, rather than leaving it to rot. _No further branches checked
 this fire — there are ~9 other `kind-shannon-*` branches on origin whose contents are unknown; worth a sweep._
 
+**2026-07-26 (~08:00) — the branch sweep happened, and the pile-up is now resolved, but the root cause is a
+decision for you.** By the time this fire ran, the "9 other branches" above had grown to 10 open draft PRs
+(#1–#10), plus an 11th (#12) from a session that tried to triage the pile-up but only closed the loop
+partially. This fire closed #1, #3, #5, #9, #10, #12 as superseded (their real contributions were either
+already on `main` independently via the live 24/7 automation, or landed cleanly in this fire's own commit),
+and left #2 / #11 open for dedicated review (see `AWAY_LOG.md` for why). **The underlying gap that produced
+all ten branches is still open and will recur on the very next firing**: this scheduled task runs as a fresh
+Claude Code web session each time, gated to its own new throwaway branch + draft PR (no direct push to
+`main`, unlike the local CronCreate loop / GitHub Actions beat which both use `git_safe ship` straight to
+`main`). Two real fixes were independently written 2–3× each before anyone merged either copy, purely
+because no firing could see a sibling firing's branch.
+9. **How should the scheduled "EXCAVA END PLAN — Away" task manage its own branch/PR lifecycle going
+   forward?** Options: (a) always resume the *same* long-lived branch (e.g. keep reusing
+   `claude/kind-shannon-dmi5se` and rebase it onto `main` each firing, PR updates in place instead of a new
+   PR per firing); (b) grant it merge authority for its own small, verified, low-risk diffs so it can close
+   its own loop without a human in between firings; (c) leave it as-is and accept that a human triage pass
+   (merge/close) is required between firings, budgeting for that. _Default: (a) — cheapest fix, keeps a
+   human merge step, and stops the branch count from growing unbounded; will do this from the next firing
+   unless you set a different default here._
+
 ---
 
 ## A. The new look ("Heavy Machinery" v58)

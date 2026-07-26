@@ -5,6 +5,37 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-26
+- **~08:00 (cloud web session, unattended) — PR pile-up resolved, not just re-flagged.** Four prior sessions
+  (#6/#7/#8/#10, then #12) each pointed out that this scheduled task fires as a fresh Claude Code **web**
+  session pinned to its own throwaway `claude/kind-shannon-*` branch (no direct push to `main`), so ten
+  sibling firings piled up ten open draft PRs (#1–#10, then #12) with no one actually merging or closing
+  any of them — and the same links-department fix got independently rewritten three times (#3, #10, #12)
+  because no firing could see a sibling's unmerged branch. This fire broke that cycle instead of adding an
+  eleventh branch to the pile:
+  - Rebased the (real, small) fix clean onto current `main` — registered `departments.links` +
+    two tier-1 agents (**Anchor**/**Tether**) in `data/excava/agents.json`, since `src/excava_agents.py`
+    already implements `_work_links`/`TOOL_DOMAIN` for it but nothing in the registry routed to it.
+    Verified `pick_department()` now matches a real link-coverage priority string to `links` with a
+    staffed worker (previously: no match). `python -m src.guardrails` → 14/15, 0 critical (G-C stale-backup
+    warn is pre-existing/unrelated). Deliberately did **not** carry over PR #12's stale status-snapshot
+    diffs (`movement.json`/`guardrails_status.json`) — main had moved ~2h/dozens of commits since #12's
+    base, and committing those would have overwritten fresher numbers the live 24/7 beat had already written.
+  - Closed #1, #3, #5, #9, #10, #12 on GitHub as superseded (their real contributions are either already on
+    `main` independently, or landed cleanly in this fire's commit) — each closed with a one-line reason
+    pointing at what superseded it, not silently.
+  - Left #2 (title-collision cleanup) and #11 (9-video analyze batch) **open, untouched** — #2's
+    `mergeable_state` is already `dirty` against current `main` (too stale, touches the same
+    heavily-written `skills.json`/`tools.json`/`brain_graph.json` the live pipeline edits every few
+    minutes — needs a fresh redo, not a force-merge); #11 is unrelated normal `analyze` pipeline output
+    that deserves review on its own content, not folded into a branch-hygiene triage.
+  **Harsh self-criticism:** this is the fifth session to touch this exact problem — the first four each
+  restated it instead of resolving it, which is its own failure mode (repeating a diagnosis burns a whole
+  fire's budget for zero new state). The actual fix is 39 lines; the surrounding coordination failure cost
+  far more collective effort than the fix itself. Root cause still stands unaddressed: **this scheduled
+  task should either target one stable long-lived branch it always resumes, or be given merge authority
+  up front**, so a sixth firing doesn't start this exact cycle over on an eleventh branch. Flagging that
+  as a concrete decision in `QUESTIONS.md` rather than leaving it implicit.
+
 - **~03:10 (fire 6, unattended)** — Standing checks found `sync` broken (this session's local branch had no
   upstream — a one-time `--set-upstream-to=origin/main` fixed it, no data lost, HEAD==origin/main after).
   Diagnosed the guardrails 15/15→13/15 drop from PULSE.md/pulse.json: the real 2 failures were G-C (CI's beat

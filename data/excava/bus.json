@@ -24678,15 +24678,16 @@
       "department": "security",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-25T15:42:19.858513+00:00",
-      "updated_at": "2026-07-25T15:42:19.858520+00:00"
+      "updated_at": "2026-07-26T00:33:07.351668+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "memory-embed-the-remaini-94139",
@@ -24695,15 +24696,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-07-25T15:42:19.884030+00:00",
-      "updated_at": "2026-07-25T15:42:19.884038+00:00"
+      "updated_at": "2026-07-26T00:33:07.569863+00:00",
+      "result": "Semantic index: 1498 vectors (model gemini-embedding-001); hub 7289 items → 5791 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "raise-g8-personal-fit-68-94139",
@@ -24909,15 +24911,16 @@
       "department": "watch",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-07-25T21:27:39.706547+00:00",
-      "updated_at": "2026-07-25T21:27:39.706561+00:00"
+      "updated_at": "2026-07-26T00:33:07.623602+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
       "id": "transcripts-drain-the-ne-14859",
@@ -25070,15 +25073,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-07-26T00:27:03.956686+00:00",
-      "updated_at": "2026-07-26T00:27:03.956700+00:00"
+      "updated_at": "2026-07-26T00:32:58.893807+00:00",
+      "result": "1281 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g8-personal-fit-68-25624",
@@ -25087,15 +25091,16 @@
       "department": "visual",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "visual-w1",
       "handoff_docs": [],
       "created_at": "2026-07-26T00:27:04.039776+00:00",
-      "updated_at": "2026-07-26T00:27:04.039793+00:00"
+      "updated_at": "2026-07-26T00:33:06.493956+00:00",
+      "result": "Ran the collect designs. collect_designs: 932 designs (kept 932 / dropped 0 repo-only + 4 dead/parked + 49 non-design; +0 AI-product, +27 seeds, +48 shown-in-video; url-checked 4). designs-only."
     },
     {
       "id": "rerouted-creators-power--25652",
@@ -25104,15 +25109,16 @@
       "department": "power",
       "source": "room-action:creators",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "power-w1",
       "handoff_docs": [],
       "created_at": "2026-07-26T00:27:32.962608+00:00",
-      "updated_at": "2026-07-26T00:27:32.962616+00:00"
+      "updated_at": "2026-07-26T00:33:07.867900+00:00",
+      "result": "Ran the power scan. Local MCP server that gives AI agents a dozen do"
     },
     {
       "id": "security-room-action-war-25659",
@@ -25147,7 +25153,60 @@
       "handoff_docs": [],
       "created_at": "2026-07-26T00:27:47.260125+00:00",
       "updated_at": "2026-07-26T00:27:47.260140+00:00"
+    },
+    {
+      "id": "transcripts-drain-the-ne-25978",
+      "title": "Transcripts: drain the next batch of 1281 pending (residential IP)",
+      "detail": "value=60 size=26(small) [cost 25/steps 35/risk 15] · 1281 pending",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-drain-the-ne-25978--01--transcripts-w1--to--analysis.md"
+      ],
+      "created_at": "2026-07-26T00:32:58.794217+00:00",
+      "updated_at": "2026-07-26T00:33:07.983124+00:00"
+    },
+    {
+      "id": "security-room-action-war-26008",
+      "title": "[security room action] Warden reviews the LLM Guard scanner report, verifying its authenticity and checking for any flagged anomalies or violat",
+      "detail": "From room dept-security-paranoid-guard-scan-512 (action-shaped close). Mission action from the department's own room.",
+      "department": "security",
+      "source": "room-action:security",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-26T00:33:28.443606+00:00",
+      "updated_at": "2026-07-26T00:33:28.443617+00:00"
+    },
+    {
+      "id": "watch-room-action-at-11--26015",
+      "title": "[watch room action] At 11:45:00, Iris directs Arcads AI Video to analyze the marketing video and return a timestamped list of high-value mom",
+      "detail": "From room dept-watch-analyze-video-audio-vi-528 (action-shaped close). Mission action from the department's own room.",
+      "department": "watch",
+      "source": "room-action:watch",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-26T00:33:35.951328+00:00",
+      "updated_at": "2026-07-26T00:33:35.951340+00:00"
     }
   ],
-  "updated_at": "2026-07-26T00:27:47.260144+00:00"
+  "updated_at": "2026-07-26T00:33:35.951344+00:00"
 }

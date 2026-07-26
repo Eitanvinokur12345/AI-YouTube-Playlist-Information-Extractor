@@ -20,9 +20,10 @@ Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Lo
     warn is pre-existing/unrelated). Deliberately did **not** carry over PR #12's stale status-snapshot
     diffs (`movement.json`/`guardrails_status.json`) — main had moved ~2h/dozens of commits since #12's
     base, and committing those would have overwritten fresher numbers the live 24/7 beat had already written.
-  - Closed #1, #3, #5, #9, #10, #12 on GitHub as superseded (their real contributions are either already on
-    `main` independently, or landed cleanly in this fire's commit) — each closed with a one-line reason
-    pointing at what superseded it, not silently.
+  - Closed #1, #3, #4, #5, #6, #7, #8, #9, #10, #12 on GitHub — all ten had either an already-superseded real
+    contribution (accessibility executor, the G-M fix, the v129 build bump, this same links-department fix
+    three times over) or were pure diagnostic/status-snapshot chores with no functional diff left to add —
+    each closed with a one-line reason pointing at what superseded it, not silently.
   - Left #2 (title-collision cleanup) and #11 (9-video analyze batch) **open, untouched** — #2's
     `mergeable_state` is already `dirty` against current `main` (too stale, touches the same
     heavily-written `skills.json`/`tools.json`/`brain_graph.json` the live pipeline edits every few

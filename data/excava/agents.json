@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated_at": "2026-07-12T20:02:25.172195+00:00",
+  "updated_at": "2026-07-26T09:59:48.714212+00:00",
   "tiers": {
     "1": "named AGENTS (doer/checker/improver) — persistent identities; they spawn generic ephemeral WORKERS",
     "2": "named LEADS — suit-and-tie personas, first escalation stop, raised above their bubble in chats",
@@ -197,6 +197,18 @@
         "legibility"
       ],
       "lane_hint": "Accessibility"
+    },
+    "links": {
+      "purpose": "assess link-coverage across the hub and hand off freshness status to memory",
+      "capability": "resolve-links",
+      "specialization": [
+        "link",
+        "links",
+        "resolve",
+        "coverage",
+        "unlinked"
+      ],
+      "lane_hint": "Link coverage assessment"
     }
   },
   "agents": [
@@ -807,6 +819,30 @@
       "scoped_tools": [
         "src.excava_bus",
         "src.excava_chat"
+      ]
+    },
+    {
+      "id": "links-w1",
+      "name": "Anchor",
+      "tier": 1,
+      "department": "links",
+      "role": "doer",
+      "persona": "Anchor: hands-on links specialist; does the work, shows the work.",
+      "engine_pref": "fast",
+      "scoped_tools": [
+        "src.resolve_links"
+      ]
+    },
+    {
+      "id": "links-checker",
+      "name": "Tether",
+      "tier": 1,
+      "department": "links",
+      "role": "checker",
+      "persona": "Tether: the skeptic — pushes back before the room converges; verifies more than asked.",
+      "engine_pref": "grounded",
+      "scoped_tools": [
+        "src.resolve_links"
       ]
     }
   ]

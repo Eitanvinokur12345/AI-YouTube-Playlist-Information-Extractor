@@ -42,6 +42,19 @@ fix stuck on an abandoned branch is equivalent to no fix; (b) someone (next fire
 registry") and land it or discard it explicitly, rather than leaving it to rot. _No further branches checked
 this fire — there are ~9 other `kind-shannon-*` branches on origin whose contents are unknown; worth a sweep._
 
+**2026-07-26 (fire 7) — `1205385a` landed; the branch problem is confirmed recurring, not a fluke.**
+Ported the stranded `links`-department fix by hand (no merge-base with `main` after the history rewrite, so
+a real merge/cherry-pick wasn't possible) — see AWAY_LOG fire 7. This session's own branch ALSO had no
+upstream tracking configured (same symptom fire 6 hit and one-time-fixed on its own branch) — the second
+occurrence in two fires confirms proposal (a) above isn't optional, it's necessary: every fresh session
+branch starts detached from `origin/main` and silently loses work if the session doesn't notice and doesn't
+run `git_safe push`. → **New proposed default:** add a standing-checks step (start of every fire, before any
+other work) that unconditionally runs `git branch --set-upstream-to=origin/main` on the current branch — 
+cheap, idempotent, and removes the whole failure class instead of relying on each fire to notice the symptom.
+There are still ~13 other `kind-shannon-*` branches on origin of unknown content (grew from ~9); a full sweep
+(diff each against `main`, land or explicitly discard) remains unstarted and should be the next fire's focus
+if nothing higher-priority is queued.
+
 ---
 
 ## A. The new look ("Heavy Machinery" v58)

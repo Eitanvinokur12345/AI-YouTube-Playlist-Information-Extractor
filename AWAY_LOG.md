@@ -5,6 +5,30 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-26
+- **~09:5x (fire 7, unattended)** — Standing checks: `git fetch --prune` found 14 stray
+  `claude/kind-shannon-*` session branches on origin, one of them (`ae4swi`) still carrying real,
+  never-landed work flagged in QUESTIONS.md — commit `1205385a` "wire the links department into
+  the agent registry". Its branch shares no merge-base with `main` (history has been rebased/
+  rewritten since), so a git merge/cherry-pick wasn't viable; ported the fix by hand instead:
+  registered a `links` department (capability `resolve-links`, keywords matching
+  `excava_agents.py`'s `TOOL_DOMAIN` links-lane entry) plus two tier-1 agents (Anchor: doer,
+  Tether: checker) scoped to `src.resolve_links` in `data/excava/agents.json`. Verified:
+  `pick_department()` now routes a link-coverage task to `links` (4 keyword hits, scoped worker
+  found — previously "no scoped worker (G-7)"); `guardrail_test` still 10/10; `guardrails` 14/15
+  (only G-C, history-bundle freshness, which `git_safe push` itself fixes by taking a bundle
+  before pushing). Also fixed this session's own branch: it had no upstream tracking configured,
+  which would have made `git_safe`'s `pull --rebase` fail — set
+  `--set-upstream-to=origin/main` (same one-time fix fire 6 needed on its branch; this is now the
+  SECOND session in two fires to hit this, so it is a real recurring setup gap, not a fluke —
+  flagged in QUESTIONS.md). **Harsh self-criticism:** this closes exactly the "land it or discard
+  it" ask QUESTIONS.md raised for `1205385a`, but I did not sweep the other 13 stray branches this
+  fire (no time budget for 13 unknown diffs against a rebased history) — they're still an unknown
+  liability and the underlying cause (every scheduled session gets a fresh throwaway branch name,
+  and `git_safe push()` only saves work if that session remembers to run it) is unfixed. A cleaner
+  fix would be a standing-checks step that force-sets upstream tracking automatically at session
+  start, rather than relying on each fire noticing the symptom after the fact — queuing that as
+  the concrete next-fire task.
+
 - **~03:10 (fire 6, unattended)** — Standing checks found `sync` broken (this session's local branch had no
   upstream — a one-time `--set-upstream-to=origin/main` fixed it, no data lost, HEAD==origin/main after).
   Diagnosed the guardrails 15/15→13/15 drop from PULSE.md/pulse.json: the real 2 failures were G-C (CI's beat

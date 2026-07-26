@@ -102,6 +102,62 @@ def norm(s: str) -> str:
     return re.sub(r"[^a-z0-9]", "", (s or "").lower())
 
 
+# ── anti-boilerplate gate (CLAUDE.md Step 3), applied AT THE POINT OF CREATION ──────────
+# Root-cause fix for the pattern src/cross_tab_check.py cleans up after the fact (see its
+# _has_concrete_technique): the free-lane extractors (bulk_analyze, mine_feeds, gemini_video_
+# analyze — all share this module's merge helpers) sometimes get a bare-product-name "skill"
+# back from the LLM despite the prompt's own anti-boilerplate instruction (weaker/free models
+# don't always obey it). A denylist of a few bare vendor words ("claude", "gemini", ...) catches
+# single-word echoes but NOT two/three-word ones ("Claude Code", "Frontend Design", "AI Code
+# Generation") — exactly the collisions fire 11 found stuck in cross_tab_check's tie-review
+# queue. This catches those BEFORE they're written, so cross_tab_check has less to clean up.
+_BOILERPLATE_TRIGGER_RE = re.compile(
+    r"is an ai[- ](tool|assistant|application|platform|product|service|powered)\b", re.I)
+_BOILERPLATE_VERB_RE = re.compile(
+    r"\b(enhance|assist|help|streamlin|automat|improve|optimi[sz]e|productivity)", re.I)
+_BOILERPLATE_USE_CASE_RE = re.compile(
+    r"^using .{1,60} for (productivity|automation)( tasks)?\.?$", re.I)
+
+
+def _looks_boilerplate_desc(desc: str) -> bool:
+    """'<Name> is an AI tool/AI-powered <noun> that helps/streamlines/enhances/assists ...' —
+    the vendor-boilerplate template CLAUDE.md Step 3 names verbatim ('is an AI tool by <Y>. It
+    enhances productivity through AI-powered features'). Requires BOTH the trigger phrase and a
+    nearby generic verb (within ~160 chars) so a merely-factual sentence that happens to say
+    'AI-powered' isn't enough on its own."""
+    m = _BOILERPLATE_TRIGGER_RE.search(desc)
+    if not m:
+        return False
+    return bool(_BOILERPLATE_VERB_RE.search(desc[m.end(): m.end() + 160]))
+
+
+def has_concrete_technique(it: dict) -> bool:
+    """CLAUDE.md Step 3's anti-boilerplate gate: a skill needs real captured technique
+    evidence — tips, slash commands, or general tips — beyond just restating what the product
+    is. Mirrors src/cross_tab_check.py's _has_concrete_technique exactly (same test, applied
+    earlier in the pipeline)."""
+    return bool(it.get("tips")) or bool(it.get("slash_commands")) or bool(it.get("general_tips"))
+
+
+def is_boilerplate_skill(it: dict, tool_names: set | None = None) -> bool:
+    """True when a 'skill' candidate is actually a bare product-name stub that belongs in
+    tools.json, not here (CLAUDE.md Step 3: 'A candidate skill is INVALID... skill_name is a
+    bare product/vendor/model name... description is a template ... enhances productivity
+    through AI-powered features'). Deliberately conservative — fires ONLY when there is ZERO
+    captured technique evidence AND (the description/use_case matches the forbidden template,
+    OR the same name was also returned as a tool in this batch) — so a genuine niche technique
+    that simply has no tips filled in yet (the common case; verified against live data before
+    shipping this) is never misfiled just for lacking tips."""
+    if has_concrete_technique(it):
+        return False
+    desc = str(it.get("description") or "")
+    use_case = str(it.get("use_case") or "")
+    if _looks_boilerplate_desc(desc) or _BOILERPLATE_USE_CASE_RE.match(use_case.strip()):
+        return True
+    name = norm(it.get("skill_name") or it.get("name") or "")
+    return bool(name) and bool(tool_names) and name in tool_names
+
+
 # ── Gemini call (stdlib, same shape as src/external_review.py) ──────────────────
 def call_gemini(api_key: str, model: str, prompt: str, timeout: int) -> dict:
     url = (f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
@@ -179,15 +235,20 @@ def build_prompt(rec: dict, transcript_chars: int) -> str:
 
 
 # ── merges (deterministic, dedup) ──────────────────────────────────────────────
-def merge_skills(store: dict, items: list, vid: str) -> int:
+def merge_skills(store: dict, items: list, vid: str, tools_store: dict | None = None, stats: dict | None = None) -> int:
     arr = store.setdefault("skills", [])
     by = {norm(s.get("skill_name")): s for s in arr}
     by_slug = {s.get("slug") for s in arr}
+    tool_names = {norm(t.get("name")) for t in (tools_store or {}).get("tools", [])} if tools_store else set()
     added = 0
     for it in items or []:
         name = it.get("skill_name", "").strip()
         if not name or norm(name) in {"claude", "chatgpt", "gemini", "make", "anthropic", "openai", "mcp"}:
             continue  # anti-boilerplate guard on our side too
+        if is_boilerplate_skill(it, tool_names):
+            if stats is not None:
+                stats["boilerplate_skipped"] = stats.get("boilerplate_skipped", 0) + 1
+            continue  # bare product-name stub, zero technique evidence -> belongs in tools.json
         key = norm(name)
         if key in by:
             ev = by[key].setdefault("endorsement_video_ids", [])
@@ -357,6 +418,7 @@ def main() -> int:
     seen = set(skills.get("videos_seen", []))
 
     done = skip = ns = nt = npr = nc = 0
+    boiler_stats: dict = {}
     ERR_LIMIT = 3                                # drop an engine after this many errors in a row
     errs = {e["name"]: 0 for e in engines}
     disabled: set = set()
@@ -385,8 +447,10 @@ def main() -> int:
         errs[eng["name"]] = 0                     # a success clears the streak
         per_engine[eng["name"]] += 1
         if result.get("relevant") is not False:
-            ns += merge_skills(skills, result.get("skills"), vid)
+            # tools FIRST so merge_skills can see this video's own tool candidates too (not just
+            # tools.json's prior state) when checking the same-name-in-both-arrays boilerplate signal.
             nt += merge_tools(tools, result.get("tools"), vid)
+            ns += merge_skills(skills, result.get("skills"), vid, tools, boiler_stats)
             npr += merge_prompts(prompts, result.get("prompts"), vid)
             nc += merge_connectors(connectors, result.get("connectors"), vid)
         seen.add(vid)
@@ -403,8 +467,11 @@ def main() -> int:
     save(DATA / "prompts.json", prompts)
     save(DATA / "connectors.json", connectors)
     by_eng = ", ".join(f"{n}:{c}" for n, c in per_engine.items())
+    nb = boiler_stats.get("boilerplate_skipped", 0)
     print(f"\nbulk_analyze done: {done} videos [{by_eng}] | +{ns} skills, +{nt} tools, "
-          f"+{npr} prompts, +{nc} connectors | {skip} left pending. NO Claude-Pro tokens used.")
+          f"+{npr} prompts, +{nc} connectors | {skip} left pending"
+          + (f" | {nb} bare-product-name skill stub(s) caught pre-write, routed to tools instead" if nb else "")
+          + ". NO Claude-Pro tokens used.")
     return 0
 
 

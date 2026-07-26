@@ -65,6 +65,23 @@ There are still ~13 other `kind-shannon-*` branches on origin of unknown content
 (diff each against `main`, land or explicitly discard) remains unstarted and should be the next fire's focus
 if nothing higher-priority is queued.
 
+**2026-07-26 (fire 12) — anti-boilerplate gate moved to point-of-creation; 2 real offenders found
+but NOT retroactively cleaned up yet (queuing as next-fire task).** Root-caused fire 11's own
+open item: `src/bulk_analyze.py` and `src/mine_feeds.py` (shared by `gemini_video_analyze.py`)
+now block a bare-product-name "skill" (CLAUDE.md's own forbidden template, e.g. "X is an AI tool
+by Y. It enhances productivity...") BEFORE it's written, not just after the fact via
+`cross_tab_check`. See AWAY_LOG fire 12 for the full verification (5 synthetic tests + a read-only
+sweep of all 3,119 real skills: 2 flagged, 0 false positives). Those 2 real offenders
+("client-onboarding" / Zoho-CRM-copy description, "social-media-post-generation" / same pattern)
+are STILL in `skills.json` today — this fire deliberately scoped to the creation-time fix only,
+not a retroactive sweep, to keep the unattended change small. → **Proposed default: next fire
+(or `src/cross_tab_check.py`'s own next run, if it gets a similar description-boilerplate pass
+added) should reuse `bulk_analyze.is_boilerplate_skill()` to reroute those 2 specific records
+into `tools.json` and remove them from `skills.json` + delete any orphaned `SKILL.md` folder** —
+same quarantine/log pattern fire 11 already established (`data/_removed_cross_tab.json`), just a
+different trigger (no matching tool by name, only a boilerplate description). Low risk, 2 known
+records, already identified by slug — a small, well-scoped follow-up, not a new investigation.
+
 **2026-07-26 (fire 11) — commit-signature / "Unverified" badge on GitHub, declined to rewrite history.**
 This session's local hook flagged fire 11's two commits (`e849f557`, `83d2685f`) as showing "Unverified"
 on GitHub (no GPG/SSH signature — the committer email was already `noreply@anthropic.com`, so email wasn't

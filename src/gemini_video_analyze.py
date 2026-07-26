@@ -173,8 +173,11 @@ def main() -> int:
         if not res.get("relevant", True):
             continue
         url = f"https://www.youtube.com/watch?v={vid}"
-        ns += merge(skills, "skills", "skill_name", res.get("skills"), url, "gemini-video")
+        # tools FIRST so the skills merge can see this video's own tool candidates (not just
+        # tools.json's prior state) for the anti-boilerplate same-name-in-both-arrays signal —
+        # this is the exact "gemini-video" stub source fire 11 flagged as still unfixed.
         nt += merge(tools, "tools", "name", res.get("tools"), url, "gemini-video")
+        ns += merge(skills, "skills", "skill_name", res.get("skills"), url, "gemini-video", tools_store=tools)
         nc += merge(conns, "connectors", "name", res.get("connectors"), url, "gemini-video")
         npr += merge(prompts, "prompts", "title", res.get("prompts"), url, "gemini-video")
         ncm += merge(cmds, "commands", "command", res.get("commands"), url, "gemini-video")

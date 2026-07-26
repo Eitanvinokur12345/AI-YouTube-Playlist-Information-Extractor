@@ -21,7 +21,8 @@ import os
 import time
 from pathlib import Path
 
-from src.bulk_analyze import (CATEGORIES, NOW, extract, load, norm, save, slugify)
+from src.bulk_analyze import (CATEGORIES, NOW, extract, is_boilerplate_skill, load, norm, save,
+                              slugify)
 
 ROOT = Path(__file__).parent.parent
 DATA = ROOT / "data"
@@ -64,16 +65,29 @@ def news_prompt(entry: dict) -> str:
     )
 
 
-def merge(store: dict, key: str, namefield: str, items: list, url: str, src: str) -> int:
+def merge(store: dict, key: str, namefield: str, items: list, url: str, src: str,
+          tools_store: dict | None = None) -> int:
+    """Shared merge used for skills/tools/connectors alike (by mine_feeds AND
+    gemini_video_analyze, which imports this fn). For key=="skills", pass the already-updated
+    `tools_store` (merge tools FIRST in the caller) so the anti-boilerplate gate can also catch
+    a bare-product-name 'skill' that was echoed as a tool too — see bulk_analyze.is_boilerplate_skill,
+    the same point-of-creation gate bulk_analyze.merge_skills uses."""
     arr = store.setdefault(key, [])
     by = {norm(x.get(namefield, "")): x for x in arr}
     by_slug = {x.get("slug") for x in arr}
     boiler = {"claude", "chatgpt", "gemini", "openai", "anthropic", "make", "mcp", "ai", "gpt"}
+    tool_names = set()
+    if key == "skills" and tools_store is not None:
+        tool_names = {norm(t.get("name", "")) for t in tools_store.get("tools", [])}
     added = 0
+    boilerplate_skipped = 0
     for it in items or []:
         name = (it.get(namefield) or "").strip()
         if not name or norm(name) in boiler:
             continue
+        if key == "skills" and is_boilerplate_skill(it, tool_names):
+            boilerplate_skipped += 1
+            continue  # bare product-name stub, zero technique evidence -> belongs in tools.json
         k = norm(name)
         if k in by:
             seen = by[k].setdefault("also_seen_in", [])
@@ -90,6 +104,9 @@ def merge(store: dict, key: str, namefield: str, items: list, url: str, src: str
         if key in ("skills", "tools") and rec.get("category") not in CATEGORIES:
             rec["category"] = "other"
         arr.append(rec); by[k] = rec; added += 1
+    if boilerplate_skipped:
+        print(f"  [{src}] skipped {boilerplate_skipped} bare-product-name skill stub(s) "
+              f"pre-write (zero technique evidence — belongs in tools.json instead)")
     return added
 
 
@@ -138,8 +155,11 @@ def main() -> int:
         done += 1
         if not isinstance(r, dict) or not r.get("relevant", True):
             continue
-        ns += merge(skills, "skills", "skill_name", r.get("skills"), e.get("url", ""), e.get("source_name", ""))
+        # tools FIRST so the skills merge can see this entry's own tool candidates (not just
+        # tools.json's prior state) for the anti-boilerplate same-name-in-both-arrays signal.
         nt += merge(tools, "tools", "name", r.get("tools"), e.get("url", ""), e.get("source_name", ""))
+        ns += merge(skills, "skills", "skill_name", r.get("skills"), e.get("url", ""), e.get("source_name", ""),
+                    tools_store=tools)
         nc += merge(conns, "connectors", "name", r.get("connectors"), e.get("url", ""), e.get("source_name", ""))
 
     if ns:

@@ -5,6 +5,73 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-26
+- **~21:1x (fire 12, unattended, cloud session) — anti-boilerplate gate moved to the point of
+  creation: bare-product-name "skills" are now blocked BEFORE they're written, in the same
+  free-lane extractors fire 11 suspected (`bulk_analyze.py`, and `mine_feeds.py`'s shared
+  `merge()` which `gemini_video_analyze.py` also imports).** First: fire 10's GitHub-metadata
+  enricher is CONFIRMED working with hard evidence — the real (un-proxied) GitHub Actions runner
+  ran it in workflow run `30218575686` / job `89836888193` / commit `c16ed596` (2026-07-26T20:15Z)
+  and logged `github-meta-enrich: batch of 22 (fresh pool 22) from 22 github-linked stubs; 22
+  processed (9 descriptions upgraded); stubs now 2044` — closes fire 10's open item for real, not
+  just via guardrails. Non-brain front: this fire's own increment. Investigated fire 11's own
+  named follow-up ("root cause... a bigger, riskier change I did not have the review budget to
+  make safely unattended") — read `src/mine_feeds.py`, `src/gemini_video_analyze.py`,
+  `src/bulk_analyze.py`, and `src/analyze_batch.py` end to end. Found the actual mechanism:
+  `bulk_analyze.py`'s `merge_skills()` and `mine_feeds.py`'s shared `merge()` (imported by
+  `gemini_video_analyze.py` too — the exact "gemini-video" stub source fire 11 named) each carry
+  their own anti-boilerplate denylist, but it's a ~7-word EXACT-match set (`{"claude","chatgpt",
+  "gemini","openai","anthropic","make","mcp"}` / similar in mine_feeds) — it blocks a bare
+  "Claude" but not "Claude Code", "Claude Projects", "Frontend Design", "AI Code Generation" —
+  precisely the 5 slugs fire 11 found stuck in `cross_tab_check`'s tie queue. `src/analyze_batch.py`
+  turned out to be a RED HERRING: confirmed via `.github/workflows/analyze.yml` that the real
+  Claude-driven analyze stage runs `anthropics/claude-code-action` reading CLAUDE.md directly —
+  `analyze_batch.py` is dead code, never invoked by any workflow (hardcoded `TODAY = datetime(2026,
+  6, 3, ...)` and its own legacy `AI_TOOLS` knowledge base are giveaways); did not touch it, and
+  said so plainly rather than silently fixing something inert. Fix: added `is_boilerplate_skill()`
+  to `bulk_analyze.py` (imported by `mine_feeds.py`, which `gemini_video_analyze.py` already
+  imports from) — fires ONLY when a skill candidate has ZERO captured technique evidence (no
+  tips/slash_commands/general_tips, mirroring `cross_tab_check._has_concrete_technique` exactly)
+  AND EITHER its description/use_case matches the literal forbidden template CLAUDE.md quotes
+  ("is an AI tool ... enhances productivity" / "is an AI-powered X that streamlines/helps/...")
+  OR the same name was also returned as a tool in the same batch. Reordered all three call sites
+  (`bulk_analyze.main()`, `mine_feeds.main()`, `gemini_video_analyze.main()`) to merge tools
+  BEFORE skills so the name-collision signal is live, not stale. **Verification, two layers, no
+  live LLM key needed:** (1) 5 synthetic unit tests reproduce the exact fire-11 pattern (a video
+  naming "Claude Code" as both skill+tool with empty tips) — tool kept, skill correctly blocked
+  (0 added); a real technique WITH tips sharing a product name is never touched; a boilerplate
+  description alone (no tool-name collision) is still caught; a genuine no-tips niche technique
+  ("GitHub Repository Monitoring and Iteration" — real text sampled from today's actual
+  `skills.json`) is correctly NOT flagged. (2) Ran the new `is_boilerplate_skill()` **read-only**
+  against all 3,119 real skills in the live `skills.json` — flagged exactly 2, both genuine
+  pre-existing junk records found in the process ("Client Onboarding" whose description is
+  scraped Zoho-CRM landing-page copy; "Social media post generation" ditto for a generic
+  generator tool) — 0 false positives against the other 3,117, including 2,406 skills with no
+  tips at all (spot-checked 15 at random: things like "No-Code App Development", "Agent Swarm
+  Execution", "Direct Preference Optimization (DPO)" — real techniques that just lack tips, not
+  boilerplate; the gate correctly leaves every one of them alone). `python3 -c "ast.parse(...)"`
+  on all 3 touched files; `python -m src.guardrails` → 14/15, 0 critical (only the known-flappy
+  G-M "stalled" noise, unrelated). One stray artifact from my own test run cleaned up before
+  shipping: `merge_skills()` calls `write_skill_md()`, so running it against a >=5-quality
+  synthetic test record wrote a real (fake) `skills/github-repo-monitor/SKILL.md` to disk —
+  caught by G-L before commit, deleted, re-ran guardrails clean. Left the 2 real offenders
+  in `skills.json` untouched — this fire is the point-of-creation fix only, not a retroactive
+  sweep; flagged as a good, small, low-risk next task in QUESTIONS.md. **Harsh self-criticism:**
+  the "same name in both arrays this batch" signal only catches a collision within ONE response —
+  it does nothing for a skill named in video A that collides with a tool named only in video B
+  (that gap is still `cross_tab_check`'s job, running after the fact, same as before this fire;
+  I did not change that division of labor, just made the point-of-creation half stronger). The
+  boilerplate-description regex is necessarily a guess at CLAUDE.md's prose template and could
+  miss a differently-worded stub a future LLM emits (a smarter model might phrase the same
+  vendor-echo without ever using "AI tool" or "AI-powered" — this is pattern-matching, not
+  semantic understanding, and will need retuning as stub phrasing drifts) — I biased hard toward
+  ZERO false positives (proven against all 3,119 real records) over maximum recall, which is the
+  right call for something unattended and irreversible-if-wrong, but it means some future stubs
+  will still slip through to `cross_tab_check` rather than being caught here. I also did NOT
+  build the retroactive sweep for the 2 confirmed real offenders sitting in `skills.json` right
+  now — could have reused the exact same gate to fix them today; left them for a cheap next fire
+  instead of stretching this one's scope, but that is a deliberate scope call, not an oversight,
+  and it means the dashboard shows 2 known-bad records one fire longer than strictly necessary.
+
 - **~20:0x (fire 11, unattended, cloud session) — cross-tab check now resolves boilerplate ties
   instead of flagging them forever, and one live crash-bug was found and closed along the way.**
   Non-brain cleanup front (`src/cross_tab_check.py`, the Step-5 skill/tool single-tab guarantee).

@@ -55,6 +55,23 @@ There are still ~13 other `kind-shannon-*` branches on origin of unknown content
 (diff each against `main`, land or explicitly discard) remains unstarted and should be the next fire's focus
 if nothing higher-priority is queued.
 
+**2026-07-26 (fire 8) — RESOLVED: the proposed standing-checks automation is now live.** `python -m
+src.git_safe standing-checks` fetches + idempotently sets upstream to `origin/main` when missing; see
+AWAY_LOG fire 8. Stray branch count is now **17** (was 14, was 9) — still growing, still unswept; whoever
+has time for N unknown diffs against a rebased history should make this the priority, since deferring it
+keeps making it more expensive, not less.
+
+**2026-07-26 (fire 8) — NEW: this fire's session can't push straight to `main` like fires 1–7 did.**
+Fires 1–7 all shipped via `python -m src.git_safe ship`, which pushes `HEAD:main` directly — that assumes
+the running session has direct push rights to `main` (true for, e.g., the GitHub Actions beat, and
+apparently true for whatever host fires 1–7 ran on). This fire's session is scoped by its harness to its
+own branch + a pull request, and does NOT push to `main` directly — so this fire's fix ships as a PR
+instead. **Needs your call:** should every "away fire" session from now on assume PR-based shipping (safer,
+reviewable, but means someone has to merge each PR before the next fire builds on it — a new bottleneck this
+loop wasn't designed around), or is direct-to-`main` still the intended mode for unattended fires specifically
+(in which case this fire's PR is the odd one out, not the new normal)? _No default — genuinely depends on
+which environment/permissions you want future fires to run under._
+
 ---
 
 ## A. The new look ("Heavy Machinery" v58)

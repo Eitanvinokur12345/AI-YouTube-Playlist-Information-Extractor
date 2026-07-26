@@ -5,6 +5,31 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-26
+- **~04:xx (fire 7, unattended, cloud "Claude Code on the web" scheduled session)** — Landed the
+  stranded `links`-department fix flagged in QUESTIONS.md: `data/excava/agents.json` never
+  registered a `links` entry under `departments{}` or any agent with `department == "links"`, even
+  though `src/excava_agents.py` already implements `_work_links` and dispatches it via the `WORK`
+  table. `pick_department()` therefore always returned "no department specialization matched" for
+  link-coverage tasks — an honest stall, not a fake-done. Registered `departments.links`
+  (capability `resolve-links`, specialization keywords matching `TOOL_DOMAIN`'s existing
+  `(links-lane, external)` set: link/links/resolve/coverage/unlinked) plus two tier-1 agents —
+  Anchor (doer) and Tether (checker), both scoped to `src.resolve_links` + `src.excava_bus`. This
+  is a fresh application of the same fix an earlier parallel away-fire session
+  (`origin/claude/kind-shannon-ae4swi`, PR #3) already wrote and verified on its own now-orphaned
+  branch — that branch's PR is still open/unmerged, so I reproduced the fix directly on this
+  session's branch instead of waiting on a cross-branch merge nobody has actioned. **Verified:**
+  `pick_department()` on the real "Push link coverage toward 100%..." priority string now routes
+  to `links` with a staffed worker (was: no match); `python -m src.guardrails` → 14/15, 0 critical
+  (unchanged from before this fix — the one warn, G-C stale-backup, is pre-existing and unrelated);
+  `python -m src.excava_systemcheck` → 11/11 working, 0 critical.
+  **Housekeeping note (this session type only):** this fire ran as a scheduled "Claude Code on the
+  web" session pinned to branch `claude/kind-shannon-2phix4`, which cannot push directly to `main`
+  the way `python -m src.git_safe ship` / the GitHub Actions beat do — work here ships via a PR
+  instead. There are now at least 9 other open, unmerged draft PRs from prior firings of this same
+  scheduled task (`#1`-`#9`), several of which independently re-diagnosed the same guardrail bug or
+  produced no-op status snapshots because they couldn't tell prior firings had already covered the
+  ground. Flagged in QUESTIONS.md for Eitan: these PRs need a merge/close pass, and the scheduled
+  task would do less duplicate work if it read the other open PRs before starting.
 - **~03:10 (fire 6, unattended)** — Standing checks found `sync` broken (this session's local branch had no
   upstream — a one-time `--set-upstream-to=origin/main` fixed it, no data lost, HEAD==origin/main after).
   Diagnosed the guardrails 15/15→13/15 drop from PULSE.md/pulse.json: the real 2 failures were G-C (CI's beat

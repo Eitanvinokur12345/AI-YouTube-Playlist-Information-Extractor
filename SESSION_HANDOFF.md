@@ -145,6 +145,15 @@ semantics in movement.json / state.json usage), don't just display it. **Correct
 the drain is NOT "stalled at 0" — it enriches ~1–20/batch, just slowly vs 2,027 stubs; the
 deterministic-enricher escalation in QUESTIONS.md stands to ACCELERATE it, not revive a corpse.
 
+**v129 (away fire 7, unattended, cloud PR-branch session, 2026-07-26 — landed the stranded `links`
+department fix):** registered `departments.links` + agents Anchor/Tether in `data/excava/agents.json`
+(the fix QUESTIONS.md flagged as stranded on the unmerged `origin/claude/kind-shannon-ae4swi` branch,
+PR #3) so link-coverage tasks route to a staffed worker instead of "no department specialization
+matched". Verified via `pick_department()` + `python -m src.guardrails` (14/15, 0 critical, unchanged)
++ `python -m src.excava_systemcheck` (11/11). **Escalated to QUESTIONS.md: this scheduled task has now
+produced 10 branches / 9 open draft PRs, none merged — needs a triage/merge pass, not another fire
+re-deriving the same fixes.**
+
 **v129 (away fire 6, unattended, 2026-07-26 — live build v129, DIAGNOSED v128's decline):** the "falling
 done-counter" was a metric bug, not real loss: `g_movement()` in src/guardrails.py recounted "done" LIVE
 from `data/excava/bus.json`, but `excava_bus.prune()` deliberately archives finished tasks out of the bus

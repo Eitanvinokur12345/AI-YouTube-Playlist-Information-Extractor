@@ -42,6 +42,27 @@ fix stuck on an abandoned branch is equivalent to no fix; (b) someone (next fire
 registry") and land it or discard it explicitly, rather than leaving it to rot. _No further branches checked
 this fire — there are ~9 other `kind-shannon-*` branches on origin whose contents are unknown; worth a sweep._
 
+**2026-07-26 (fire 7) — landed the links-department fix (again, on a different branch); the real
+problem is now the PILE of unmerged PRs, not this one fix.** I re-applied the same `links` department
+registration fix directly on this fire's branch (`claude/kind-shannon-2phix4`) — see `AWAY_LOG.md`
+"fire 7" — since the version on `ae4swi` (PR #3, still open) hadn't been merged and cross-branch
+merges aren't something this session type can do unattended. **That means the SAME fix now exists,
+independently written, on at least 2 branches (`ae4swi` and `2phix4`), and neither is `main`.** This
+confirms (a) from the fire-6 proposal above and sharpens it: the scheduled "END PLAN Away mode" task
+that fires this session type does NOT get a fresh branch each time reliably — it has produced at least
+10 different `claude/kind-shannon-*` branches so far (9 with open PRs: #1-#9, plus this one, not yet
+opened) — most doing small, real, valid work, but **none merged**, so the fixes never reach `main` or
+even see each other. Two of those PRs (#5 "fix guardrails" and #9 "fix guardrails, again") independently
+re-fixed the identical G-M metric bug because neither session could see the other had already done it.
+→ **Proposed default:** Eitan (or a dedicated cleanup session with merge rights) should triage the 9-10
+open draft PRs from this scheduled task — merge the ones with real, verified diffs (PR #1 accessibility
+executor, #2 title-collision cleanup, #3 links-department wiring — now superseded by this fire's copy,
+close it — #5 or #9 whichever G-M fix is cleanest) and close the rest as superseded/no-op. Longer term,
+either (a) point the scheduled task's git identity at a stable, reusable branch instead of a fresh one
+per firing so work accumulates in one place, or (b) grant it a path to merge its own small, verified
+PRs automatically instead of leaving review-and-merge as an unbounded manual backlog. Until one of
+those lands, every firing risks re-deriving work a sibling firing already did.
+
 ---
 
 ## A. The new look ("Heavy Machinery" v58)

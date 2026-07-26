@@ -197,6 +197,18 @@
         "legibility"
       ],
       "lane_hint": "Accessibility"
+    },
+    "links": {
+      "purpose": "assess link-coverage progress and hand off freshness gaps to memory",
+      "capability": "resolve-links",
+      "specialization": [
+        "link",
+        "links",
+        "resolve",
+        "coverage",
+        "unlinked"
+      ],
+      "lane_hint": "links+memory (fast lane)"
     }
   },
   "agents": [
@@ -807,6 +819,32 @@
       "scoped_tools": [
         "src.excava_bus",
         "src.excava_chat"
+      ]
+    },
+    {
+      "id": "links-w1",
+      "name": "Anchor",
+      "tier": 1,
+      "department": "links",
+      "role": "doer",
+      "persona": "Anchor: methodical link-coverage tracker; reports the real percentage, never rounds up.",
+      "engine_pref": "fast",
+      "scoped_tools": [
+        "src.resolve_links",
+        "src.excava_bus"
+      ]
+    },
+    {
+      "id": "links-checker",
+      "name": "Tether",
+      "tier": 1,
+      "department": "links",
+      "role": "checker",
+      "persona": "Tether: verifies the coverage math against coverage_log.json before anyone calls it done.",
+      "engine_pref": "grounded",
+      "scoped_tools": [
+        "src.resolve_links",
+        "src.excava_bus"
       ]
     }
   ]

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-26T04:08:53.855095+00:00",
+ "generated_at": "2026-07-26T05:46:44.427287+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -58,7 +58,7 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 108,
+   "turns_7d": 109,
    "rooms_7d": 41,
    "engines_used": [
     "gh-models",
@@ -66,14 +66,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Link the Kaedim assets first, but only the ones that block the bus task. Kaedim’s assets are high-value and likely to co"
+   "last_position": "**Decision:** Auto-publish only the threshold and breach status within 5 minutes, then publish the generic risk category"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 93,
+   "turns_7d": 94,
    "rooms_7d": 26,
    "engines_used": [
     "gh-models",
@@ -83,7 +83,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Linking only the Kaedim assets that block the bus task still risks creating dependencies on a format that may not align "
+   "last_position": "Chisel’s 30-minute delay still leaks direction—\"breach category pending at ~09:42 UTC\" tells attackers the breach is bei"
   },
   {
    "id": "power-w1",
@@ -154,15 +154,15 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 65,
-   "rooms_7d": 65,
+   "turns_7d": 66,
+   "rooms_7d": 66,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Run a 24-hour Kaedim output test through the link checker now, then run a parallel audit of the scanner’s craw",
+   "last_position": "DECISION: Audit all missing links first, then prioritize Kaedim assets only if they align with the bus task’s validated ",
    "proposed": 2
   },
   {
@@ -414,6 +414,35 @@
    "last_position": "ACTION: Fetch and verify the latest AI headlines from Reuters, BBC, and the White House, then compile a concise digest w"
   },
   {
+   "id": "mining-lead",
+   "name": "Boulder",
+   "dept": "mining",
+   "role": "lead",
+   "turns_7d": 16,
+   "rooms_7d": 16,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of relevant projects, Pick does th"
+  },
+  {
+   "id": "mining-w1",
+   "name": "Pick",
+   "dept": "mining",
+   "role": "doer",
+   "turns_7d": 16,
+   "rooms_7d": 16,
+   "engines_used": [
+    "gh-models",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I will conduct a search on Reddit for AI-related posts from the last seven days to gather insights and trends in the fie"
+  },
+  {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
@@ -428,34 +457,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Marrow manually reviews the full earnings call transcript and LangSmith traces to produce a decision-ready artif"
-  },
-  {
-   "id": "mining-lead",
-   "name": "Boulder",
-   "dept": "mining",
-   "role": "lead",
-   "turns_7d": 15,
-   "rooms_7d": 15,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of 20 with stars, last commit date"
-  },
-  {
-   "id": "mining-w1",
-   "name": "Pick",
-   "dept": "mining",
-   "role": "doer",
-   "turns_7d": 15,
-   "rooms_7d": 15,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll run a Reddit search for AI-related posts in the last 7 days and return the top 20 most upvoted threads with their t"
   },
   {
    "id": "improve-lead",

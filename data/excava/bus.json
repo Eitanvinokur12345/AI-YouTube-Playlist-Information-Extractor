@@ -395,7 +395,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-12T02:39:59.551382+00:00",
-      "updated_at": "2026-07-25T23:32:37.264507+00:00",
+      "updated_at": "2026-07-26T05:45:21.315503+00:00",
       "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
@@ -413,7 +413,7 @@
       "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-07-12T02:39:59.616638+00:00",
-      "updated_at": "2026-07-25T23:32:37.481474+00:00",
+      "updated_at": "2026-07-26T05:45:21.610678+00:00",
       "result": "Semantic index: 1498 vectors (model gemini-embedding-001); hub 7289 items → 5791 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
@@ -2467,7 +2467,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-16T17:46:39.019054+00:00",
-      "updated_at": "2026-07-25T23:32:36.500916+00:00"
+      "updated_at": "2026-07-26T05:45:20.577695+00:00"
     },
     {
       "id": "memory-embed-the-remaini-23999",
@@ -2484,7 +2484,7 @@
       "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-07-16T17:46:39.063498+00:00",
-      "updated_at": "2026-07-25T23:32:37.290984+00:00"
+      "updated_at": "2026-07-26T05:45:21.388331+00:00"
     },
     {
       "id": "visual-room-action-chrom-24031",
@@ -5115,7 +5115,7 @@
       "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-07-20T04:23:42.438764+00:00",
-      "updated_at": "2026-07-25T23:32:37.536197+00:00",
+      "updated_at": "2026-07-26T05:45:21.949997+00:00",
       "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
@@ -17034,7 +17034,7 @@
       "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-07-22T11:57:02.523239+00:00",
-      "updated_at": "2026-07-25T23:32:37.509519+00:00"
+      "updated_at": "2026-07-26T05:45:21.738224+00:00"
     },
     {
       "id": "transcripts-drain-the-ne-21422",
@@ -27805,17 +27805,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-35399--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-07-26T03:09:59.679059+00:00",
-      "updated_at": "2026-07-26T03:10:08.179178+00:00"
+      "updated_at": "2026-07-26T05:45:11.157802+00:00",
+      "result": "1281 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g8-personal-fit-68-35399",
@@ -27910,16 +27911,68 @@
       "department": "visual",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "visual-w1",
       "handoff_docs": [],
       "created_at": "2026-07-26T04:07:58.228413+00:00",
-      "updated_at": "2026-07-26T04:07:58.228426+00:00"
+      "updated_at": "2026-07-26T05:45:20.542954+00:00",
+      "result": "Ran the collect designs. collect_designs: 932 designs (kept 932 / dropped 0 repo-only + 4 dead/parked + 49 non-design; +0 AI-product, +27 seeds, +48 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "id": "2755-tools-skills-still--44710",
+      "title": "2755 tools/skills still have no real link (46.6%)",
+      "detail": "The link-resolver runs each cycle; this falls as it works. Add Gemini keys to speed it.",
+      "department": "security",
+      "source": "auto",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "output written to data/ and committed by CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-26T05:45:10.719737+00:00",
+      "updated_at": "2026-07-26T05:45:11.080611+00:00"
+    },
+    {
+      "id": "weakest-lane-deep-analys-44710",
+      "title": "Weakest lane: Deep analysis (Claude, night-gated)",
+      "detail": "Lowest effectiveness (6.8/10) — the improve stage targets it.",
+      "department": "analysis",
+      "source": "auto",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "output written to data/ and committed by CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-26T05:45:10.753502+00:00",
+      "updated_at": "2026-07-26T05:45:11.105050+00:00"
+    },
+    {
+      "id": "mining-room-action-mine--44734",
+      "title": "[mining room action] Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of relevant projects, Pick does the work a",
+      "detail": "From room dept-mining-gather-ai-info-from-d-493 (action-shaped close). Mission action from the department's own room.",
+      "department": "mining",
+      "source": "room-action:mining",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-26T05:45:34.343404+00:00",
+      "updated_at": "2026-07-26T05:45:34.343416+00:00"
     }
   ],
-  "updated_at": "2026-07-26T04:08:11.148799+00:00"
+  "updated_at": "2026-07-26T05:45:34.343430+00:00"
 }

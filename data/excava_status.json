@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-26T07:12:38.003183+00:00",
+  "generated_at": "2026-07-26T10:20:32.301359+00:00",
   "name": "EXCAVA",
   "phase": "OS spine (Phase 0): bus + departments + hand-offs live; creators (OS-2) gated",
   "gate": {
@@ -14,7 +14,7 @@
     "outward_needs": "data_guard ok + security clean + G3>=70 + owner approval"
   },
   "memory": {
-    "vectors": 1498,
+    "vectors": 1502,
     "model": "gemini-embedding-001",
     "wired": true
   },
@@ -22,7 +22,7 @@
     "missing": [
       "github_token"
     ],
-    "checked_at": "2026-07-26T06:47:57.460869+00:00",
+    "checked_at": "2026-07-26T09:22:53.871453+00:00",
     "can_do": {
       "resolve-links": true,
       "analyze-videos": true,
@@ -36,7 +36,7 @@
   },
   "next_action": {
     "do": "Push link coverage toward 100% at +5%/day (the access gate)",
-    "area": "unrouted",
+    "area": "memory",
     "type": "internal",
     "source": "owner",
     "task_id": "push-link-coverage-towar-7020",
@@ -93,42 +93,41 @@
       "why_held": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
     },
     {
-      "priority": "Push link coverage toward 100% at +5%/day (the access gate)",
+      "priority": "'connectors' dropped 4 records",
       "why_held": "no department specialization matched"
-    },
-    {
-      "priority": "[Echo's initiative] Start with the 30-minute daily manual crawl of the top 50 most-linked pages to lock in +5% daily coverage today, then ha",
-      "why_held": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "priority": "[Echo's initiative] Run a 30-minute daily manual crawl of the repo’s current top 50 most-linked pages to lock in +5% daily coverage while we",
-      "why_held": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
     }
   ],
   "os": {
-    "beats": 697,
+    "beats": 698,
     "mode": "run",
     "bus": {
-      "open": 331,
-      "total": 1564,
+      "open": 338,
+      "total": 1568,
       "per_department": {
         "(unrouted)": {
-          "queued": 7,
+          "queued": 4,
           "working": 0,
           "done": 0,
           "held": 0,
           "failed": 0
         },
+        "memory": {
+          "queued": 40,
+          "working": 3,
+          "done": 162,
+          "held": 0,
+          "failed": 0
+        },
         "links": {
-          "queued": 21,
+          "queued": 23,
           "working": 0,
           "done": 0,
           "held": 0,
           "failed": 0
         },
         "security": {
-          "queued": 43,
-          "working": 4,
+          "queued": 45,
+          "working": 3,
           "done": 162,
           "held": 0,
           "failed": 0
@@ -137,13 +136,6 @@
           "queued": 17,
           "working": 3,
           "done": 177,
-          "held": 0,
-          "failed": 0
-        },
-        "memory": {
-          "queued": 37,
-          "working": 4,
-          "done": 162,
           "held": 0,
           "failed": 0
         },
@@ -162,23 +154,23 @@
           "failed": 0
         },
         "visual": {
-          "queued": 58,
+          "queued": 59,
           "working": 1,
-          "done": 216,
+          "done": 215,
           "held": 0,
           "failed": 0
         },
         "mining": {
-          "queued": 2,
+          "queued": 3,
           "working": 1,
           "done": 31,
           "held": 0,
           "failed": 0
         },
         "analysis": {
-          "queued": 129,
+          "queued": 132,
           "working": 1,
-          "done": 206,
+          "done": 205,
           "held": 0,
           "failed": 0
         },
@@ -192,7 +184,7 @@
         "improve": {
           "queued": 0,
           "working": 0,
-          "done": 36,
+          "done": 35,
           "held": 0,
           "failed": 0
         },
@@ -211,59 +203,72 @@
           "failed": 0
         }
       },
-      "last_handoff": "data/excava/handoffs/transcripts-drain-the-ne-45109--01--transcripts-w1--to--analysis.md"
+      "last_handoff": "data/excava/handoffs/transcripts-drain-the-ne-61232--01--transcripts-w1--to--analysis.md"
     },
     "beat_log": [
-      "lease expired -> re-queued watch-process-the-next-b-28516 (crash recovery)",
-      "lease expired -> re-queued security-safety-rate-the-28516 (crash recovery)",
-      "lease expired -> re-queued memory-embed-the-remaini-28516 (crash recovery)",
-      "lease expired -> re-queued raise-g5-leverage-52-100-21422 (crash recovery)",
-      "pruned 6 finished task(s) to data/excava/archive/",
-      "backlog: 3 real-gap task(s) queued; plan {'core': '3 small task(s) run in', 'links': '3 small task(s) run in', 'analysis': '3 small task(s) run in', 'visual': '3 small task(s) run in'}",
-      "analysis-w1: transcripts-drain-the-ne-45109 DONE",
-      "visual-w1: raise-g8-personal-fit-68-49958 DONE",
-      "security-w1: security-safety-rate-the-28516 DONE",
-      "memory-w1: memory-embed-the-remaini-28516 DONE",
-      "watch-w1: watch-process-the-next-b-28516 DONE",
-      "mining-w1: lane-external-mining-is--49958 DONE",
-      "creators-w1: raise-g5-leverage-52-100-21422 DONE",
-      "war-deliver-push-link-coverage-t-870: Scope spoke (mistral, 1130ms) t5",
-      "war-deliver-push-link-coverage-t-870: Scriv spoke (mistral, 1146ms) t6",
-      "dept-mining-gather-ai-info-from-d-861: Pick spoke (mistral, 702ms) t1",
-      "dept-mining-gather-ai-info-from-d-861: Boulder spoke (mistral, 541ms) t2",
-      "dept-mining-gather-ai-info-from-d-861: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-mining-gather-ai-info-from-d-861.md', 'at': '2026-07-26T07:13:05.378823+00:00', 'title': 'mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Teleg', 'by': 'Boulder'}",
-      "dept-mining-gather-ai-info-from-d-861: ACTION queued → mining-room-action-mine--49985",
-      "group-open-floor-any-agent-from-an-729: Chisel spoke (mistral, 1022ms) t57",
-      "group-open-floor-any-agent-from-an-729: Sift spoke (groq, 697ms) t58",
-      "experiment engine-benchmark: 2/12 healthy; ranking mistral, nvidia, kimi, deepseek",
+      "lease expired -> re-queued security-safety-rate-the-85261 (crash recovery)",
+      "lease expired -> re-queued watch-process-the-next-b-85261 (crash recovery)",
+      "lease expired -> re-queued mining-discover-new-ai-r-85261 (crash recovery)",
+      "lease expired -> re-queued memory-embed-the-remaini-85261 (crash recovery)",
+      "lease expired -> re-queued news-refresh-the-ai-news-28516 (crash recovery)",
+      "lease expired -> re-queued raise-g5-leverage-53-100-28516 (crash recovery)",
+      "lease expired -> re-queued verify-the-next-200-of-6-44826 (crash recovery)",
+      "lease expired -> re-queued security-safety-rate-the-44826 (crash recovery)",
+      "lease expired -> re-queued memory-embed-the-remaini-44826 (crash recovery)",
+      "lease expired -> re-queued raise-g8-personal-fit-67-21422 (crash recovery)",
+      "pruned 3 finished task(s) to data/excava/archive/",
+      "backlog: 5 real-gap task(s) queued; plan {'core': '3 small task(s) run in', 'links': '3 small task(s) run in', 'analysis': '3 small task(s) run in', 'visual': '3 small task(s) run in'}",
+      "analysis-w1: verify-the-next-200-of-6-44826 DONE",
+      "visual-w1: raise-g8-personal-fit-67-21422 DONE",
+      "security-w1: security-safety-rate-the-85261 DONE",
+      "memory-w1: memory-embed-the-remaini-85261 DONE",
+      "links-w1: push-link-coverage-towar-7020 -> memory (data/excava/handoffs/push-link-coverage-towar-7020--01--links-w1--to--memory.md)",
+      "watch-w1: watch-process-the-next-b-85261 DONE",
+      "mining-w1: mining-discover-new-ai-r-85261 DONE",
+      "creators-w1: raise-g5-leverage-53-100-28516 DONE",
+      "news-w1: news-refresh-the-ai-news-28516 DONE",
+      "transcripts-w1: transcripts-drain-the-ne-61232 -> analysis (data/excava/handoffs/transcripts-drain-the-ne-61232--01--transcripts-w1--to--analysis.md)",
+      "war-deliver-push-link-coverage-t-870: Echo spoke (mistral, 734ms) t7",
+      "war-deliver-push-link-coverage-t-870: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/war-deliver-push-link-coverage-t-870.md', 'at': '2026-07-26T10:20:54.590142+00:00', 'title': 'Deliver: Push link coverage toward 100% at +5%/day (the access gate)', 'by': 'Echo'}",
+      "war-deliver-push-link-coverage-t-870: initiative capped for Echo (2 open)",
+      "dept-links-advance-the-links-depa-133: Anchor spoke (mistral, 653ms) t1",
+      "dept-links-advance-the-links-depa-133: Tether spoke (gh-models, 1355ms) t2",
+      "dept-mining-gather-ai-info-from-d-868: Pick spoke (groq, 558ms) t1",
+      "dept-mining-gather-ai-info-from-d-868: Boulder spoke (mistral, 752ms) t2",
+      "dept-mining-gather-ai-info-from-d-868: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-mining-gather-ai-info-from-d-868.md', 'at': '2026-07-26T10:21:09.875273+00:00', 'title': 'mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Teleg', 'by': 'Boulder'}",
+      "dept-mining-gather-ai-info-from-d-868: ACTION queued → mining-room-action-mine--61269",
+      "group-open-floor-any-agent-from-an-729: Echo spoke (mistral, 737ms) t59",
+      "group-open-floor-any-agent-from-an-729: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/group-open-floor-any-agent-from-an-729.md', 'at': '2026-07-26T10:21:15.960771+00:00', 'title': 'Open floor — any agent from any department: name the single best cross-departmen', 'by': 'Echo'}",
+      "self-improve: ADDED AGENT LinLea (lead) to links [tier 2.5]",
+      "experiment engine-benchmark: 3/12 healthy; ranking groq, mistral, gh-models, kimi",
       "experiment golden-task-regression: 100% (6/6 tasks pass)",
       "agent-issue: DRAFT filed for owner approval (6 dead links cited)",
       "agent-issue: not approved — nothing posted",
       "TUTORIAL MISSING for dashboard v129 — Phase 6 law: every major change ships a walkthrough (data/tutorials.json)",
-      "memory master: +12 episodes"
+      "memory master: +25 episodes"
     ],
     "departments": [],
     "usage": {
       "analysis": {
-        "ticks": 649,
-        "done": 649,
+        "ticks": 650,
+        "done": 650,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-26T07:14:13.449201+00:00"
+        "last": "2026-07-26T10:22:20.094893+00:00"
       },
       "memory": {
-        "ticks": 645,
-        "done": 645,
+        "ticks": 646,
+        "done": 646,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-26T07:14:13.449210+00:00"
+        "last": "2026-07-26T10:22:20.094898+00:00"
       },
       "links": {
-        "ticks": 53,
+        "ticks": 54,
         "done": 0,
-        "handoffs": 53,
+        "handoffs": 54,
         "fails": 0,
-        "last": "2026-07-08T07:08:10.372708+00:00"
+        "last": "2026-07-26T10:22:20.094899+00:00"
       },
       "improve": {
         "ticks": 89,
@@ -273,53 +278,53 @@
         "last": "2026-07-26T01:08:17.968681+00:00"
       },
       "mining": {
-        "ticks": 321,
-        "done": 321,
+        "ticks": 322,
+        "done": 322,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-26T07:14:13.449215+00:00"
+        "last": "2026-07-26T10:22:20.094902+00:00"
       },
       "visual": {
-        "ticks": 638,
-        "done": 638,
+        "ticks": 639,
+        "done": 639,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-26T07:14:13.449205+00:00"
+        "last": "2026-07-26T10:22:20.094895+00:00"
       },
       "creators": {
-        "ticks": 458,
-        "done": 458,
+        "ticks": 459,
+        "done": 459,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-26T07:14:13.449217+00:00"
+        "last": "2026-07-26T10:22:20.094905+00:00"
       },
       "news": {
-        "ticks": 339,
-        "done": 339,
+        "ticks": 340,
+        "done": 340,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-26T04:08:54.315198+00:00"
+        "last": "2026-07-26T10:22:20.094906+00:00"
       },
       "security": {
-        "ticks": 621,
-        "done": 621,
+        "ticks": 622,
+        "done": 622,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-26T07:14:13.449208+00:00"
+        "last": "2026-07-26T10:22:20.094897+00:00"
       },
       "transcripts": {
-        "ticks": 262,
+        "ticks": 263,
         "done": 0,
-        "handoffs": 262,
+        "handoffs": 263,
         "fails": 0,
-        "last": "2026-07-26T05:52:29.418584+00:00"
+        "last": "2026-07-26T10:22:20.094908+00:00"
       },
       "watch": {
-        "ticks": 540,
-        "done": 540,
+        "ticks": 541,
+        "done": 541,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-26T07:14:13.449212+00:00"
+        "last": "2026-07-26T10:22:20.094900+00:00"
       },
       "visualization": {
         "ticks": 56,
@@ -347,7 +352,7 @@
       "ok": true,
       "problems": []
     },
-    "approvals_pending": 10,
+    "approvals_pending": 7,
     "backpressure": {
       "analysis": {
         "streak": 0,
@@ -440,12 +445,12 @@
       {
         "id": "push-link-coverage-towar-7020",
         "title": "Push link coverage toward 100% at +5%/day (the access gate)",
-        "department": "",
+        "department": "memory",
         "status": "queued",
-        "steps": 0,
+        "steps": 1,
         "priority": 0,
         "source": "owner",
-        "doc": null
+        "doc": "data/excava/handoffs/push-link-coverage-towar-7020--01--links-w1--to--memory.md"
       },
       {
         "id": "raise-g3-truth-access-53-7021",
@@ -590,7 +595,7 @@
       {
         "id": "echo-s-initiative-start--91479",
         "title": "[Echo's initiative] Start with the 30-minute daily manual crawl of the top 50 most-linked ",
-        "department": "",
+        "department": "links",
         "status": "queued",
         "steps": 0,
         "priority": 2,
@@ -610,142 +615,150 @@
     ],
     "recent_events": [
       {
-        "task": "connectors-dropped-4-rec-30418",
-        "at": "2026-07-26T07:12:38.758712+00:00",
-        "kind": "unroutable",
-        "why": "no department specialization matched"
-      },
-      {
-        "task": "lane-external-mining-is--49958",
-        "at": "2026-07-26T07:12:38.788825+00:00",
-        "kind": "routed",
-        "chose": "mining",
-        "over": [],
-        "why": "best specialization match (1 hits)"
-      },
-      {
-        "task": "transcripts-drain-the-ne-45109",
-        "at": "2026-07-26T07:12:38.826740+00:00",
+        "task": "push-link-coverage-towar-7020",
+        "at": "2026-07-26T10:20:42.828787+00:00",
         "kind": "claimed",
-        "by": "analysis-w1",
-        "department": "analysis"
+        "by": "links-w1",
+        "department": "links"
       },
       {
-        "task": "transcripts-drain-the-ne-45109",
-        "at": "2026-07-26T07:12:38.858266+00:00",
-        "kind": "completed",
-        "by": "analysis-w1",
-        "result": "1281 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+        "task": "push-link-coverage-towar-7020",
+        "at": "2026-07-26T10:20:42.849004+00:00",
+        "kind": "handoff",
+        "from": "links-w1",
+        "to": "memory",
+        "doc": "data/excava/handoffs/push-link-coverage-towar-7020--01--links-w1--to--memory.md"
       },
       {
-        "task": "raise-g8-personal-fit-68-49958",
-        "at": "2026-07-26T07:12:38.887893+00:00",
-        "kind": "claimed",
-        "by": "visual-w1",
-        "department": "visual"
-      },
-      {
-        "task": "raise-g8-personal-fit-68-49958",
-        "at": "2026-07-26T07:12:46.153583+00:00",
-        "kind": "completed",
-        "by": "visual-w1",
-        "result": "Ran the collect designs. collect_designs: 932 designs (kept 932 / dropped 0 repo-only + 4 dead/parked + 49 non-design; +0 AI-product, +27 seeds, +48 shown-in-video; url-checked 4). designs-only."
-      },
-      {
-        "task": "security-safety-rate-the-28516",
-        "at": "2026-07-26T07:12:46.182685+00:00",
-        "kind": "claimed",
-        "by": "security-w1",
-        "department": "security"
-      },
-      {
-        "task": "security-safety-rate-the-28516",
-        "at": "2026-07-26T07:12:46.954998+00:00",
-        "kind": "completed",
-        "by": "security-w1",
-        "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
-      },
-      {
-        "task": "memory-embed-the-remaini-28516",
-        "at": "2026-07-26T07:12:46.984996+00:00",
-        "kind": "claimed",
-        "by": "memory-w1",
-        "department": "memory"
-      },
-      {
-        "task": "memory-embed-the-remaini-28516",
-        "at": "2026-07-26T07:12:47.182146+00:00",
-        "kind": "completed",
-        "by": "memory-w1",
-        "result": "Semantic index: 1498 vectors (model gemini-embedding-001); hub 7289 items → 5791 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-      },
-      {
-        "task": "watch-process-the-next-b-28516",
-        "at": "2026-07-26T07:12:47.211387+00:00",
+        "task": "watch-process-the-next-b-85261",
+        "at": "2026-07-26T10:20:42.868520+00:00",
         "kind": "claimed",
         "by": "watch-w1",
         "department": "watch"
       },
       {
-        "task": "watch-process-the-next-b-28516",
-        "at": "2026-07-26T07:12:47.239968+00:00",
+        "task": "watch-process-the-next-b-85261",
+        "at": "2026-07-26T10:20:42.887872+00:00",
         "kind": "completed",
         "by": "watch-w1",
         "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
       },
       {
-        "task": "lane-external-mining-is--49958",
-        "at": "2026-07-26T07:12:47.268434+00:00",
+        "task": "mining-discover-new-ai-r-85261",
+        "at": "2026-07-26T10:20:42.907377+00:00",
         "kind": "claimed",
         "by": "mining-w1",
         "department": "mining"
       },
       {
-        "task": "lane-external-mining-is--49958",
-        "at": "2026-07-26T07:12:51.284856+00:00",
+        "task": "mining-discover-new-ai-r-85261",
+        "at": "2026-07-26T10:20:48.507127+00:00",
         "kind": "completed",
         "by": "mining-w1",
-        "result": "Ran the discovery agent. discovery: +4 new (of 147 sighted) → 871 queued; arxiv=93, gh-active=93, gh-new=46, hn-front=35, hn-new=101, huggingface-model=37, producthunt=114, reddit=225, web-search=55, youtube-beyond=72"
+        "result": "Ran the discovery agent. discovery: +1 new (of 147 sighted) → 805 queued; arxiv=78, gh-active=92, gh-new=44, hn-front=34, hn-new=93, huggingface-model=36, producthunt=102, reddit=198, web-search=54, youtube-beyond=74"
       },
       {
-        "task": "raise-g5-leverage-52-100-21422",
-        "at": "2026-07-26T07:12:51.314145+00:00",
+        "task": "raise-g5-leverage-53-100-28516",
+        "at": "2026-07-26T10:20:48.527636+00:00",
         "kind": "claimed",
         "by": "creators-w1",
         "department": "creators"
       },
       {
-        "task": "raise-g5-leverage-52-100-21422",
-        "at": "2026-07-26T07:12:51.343055+00:00",
+        "task": "raise-g5-leverage-53-100-28516",
+        "at": "2026-07-26T10:20:48.547565+00:00",
         "kind": "completed",
         "by": "creators-w1",
         "result": "Creators: 14 creations on record, 14 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
       },
       {
-        "task": "dept-mining-gather-ai-info-from-d-861",
-        "at": "2026-07-26T07:13:05.378991+00:00",
+        "task": "news-refresh-the-ai-news-28516",
+        "at": "2026-07-26T10:20:48.567524+00:00",
+        "kind": "claimed",
+        "by": "news-w1",
+        "department": "news"
+      },
+      {
+        "task": "news-refresh-the-ai-news-28516",
+        "at": "2026-07-26T10:20:48.812432+00:00",
+        "kind": "completed",
+        "by": "news-w1",
+        "result": "Ran the trend watch. trend_watch: 16 proposals (top score 10); queued 0 into self-improvement."
+      },
+      {
+        "task": "transcripts-drain-the-ne-61232",
+        "at": "2026-07-26T10:20:48.832732+00:00",
+        "kind": "claimed",
+        "by": "transcripts-w1",
+        "department": "transcripts"
+      },
+      {
+        "task": "transcripts-drain-the-ne-61232",
+        "at": "2026-07-26T10:20:48.886269+00:00",
+        "kind": "handoff",
+        "from": "transcripts-w1",
+        "to": "analysis",
+        "doc": "data/excava/handoffs/transcripts-drain-the-ne-61232--01--transcripts-w1--to--analysis.md"
+      },
+      {
+        "task": "war-deliver-push-link-coverage-t-870",
+        "at": "2026-07-26T10:20:54.590293+00:00",
         "kind": "room_closed",
         "artifact": {
           "kind": "decision",
-          "ref": "data/excava/artifacts/dept-mining-gather-ai-info-from-d-861.md",
-          "at": "2026-07-26T07:13:05.378823+00:00",
+          "ref": "data/excava/artifacts/war-deliver-push-link-coverage-t-870.md",
+          "at": "2026-07-26T10:20:54.590142+00:00",
+          "title": "Deliver: Push link coverage toward 100% at +5%/day (the access gate)",
+          "by": "Echo"
+        },
+        "turns": 7
+      },
+      {
+        "task": "dept-mining-gather-ai-info-from-d-868",
+        "at": "2026-07-26T10:21:09.875393+00:00",
+        "kind": "room_closed",
+        "artifact": {
+          "kind": "decision",
+          "ref": "data/excava/artifacts/dept-mining-gather-ai-info-from-d-868.md",
+          "at": "2026-07-26T10:21:09.875273+00:00",
           "title": "mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Teleg",
           "by": "Boulder"
         },
         "turns": 2
       },
       {
-        "task": "mining-room-action-mine--49985",
-        "at": "2026-07-26T07:13:05.412370+00:00",
+        "task": "mining-room-action-mine--61269",
+        "at": "2026-07-26T10:21:09.896789+00:00",
         "kind": "enqueued",
-        "title": "[mining room action] Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of 10 with names, URLs, star counts, and a",
+        "title": "[mining room action] Mine GitHub for repositories tagged \"AI\" and \"research,\" output a ranked list of top 10 by stars and forks, then mine Ha",
         "source": "room-action:mining",
         "priority": 2,
         "department": "mining"
       },
       {
+        "task": "group-open-floor-any-agent-from-an-729",
+        "at": "2026-07-26T10:21:15.960911+00:00",
+        "kind": "room_closed",
+        "artifact": {
+          "kind": "decision",
+          "ref": "data/excava/artifacts/group-open-floor-any-agent-from-an-729.md",
+          "at": "2026-07-26T10:21:15.960771+00:00",
+          "title": "Open floor — any agent from any department: name the single best cross-departmen",
+          "by": "Echo"
+        },
+        "turns": 59
+      },
+      {
         "task": "os-lanes",
-        "at": "2026-07-26T07:14:13.079143+00:00",
+        "at": "2026-07-26T10:22:19.805919+00:00",
+        "kind": "lane_ran",
+        "lane": "Gemini watch (audio+visual)",
+        "status": "live",
+        "what": "Watches videos directly — clears the backlog free"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-26T10:22:19.806362+00:00",
         "kind": "lane_ran",
         "lane": "Free analysis pool",
         "status": "live",
@@ -753,14 +766,22 @@
       },
       {
         "task": "os-lanes",
-        "at": "2026-07-26T07:14:13.079771+00:00",
+        "at": "2026-07-26T10:22:19.806708+00:00",
         "kind": "lane_ran",
         "lane": "Deep analysis (night-gated)",
         "status": "live",
         "what": "Claude re-analysis + safety pass"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-26T10:22:19.807018+00:00",
+        "kind": "lane_ran",
+        "lane": "AI news refresh",
+        "status": "live",
+        "what": "Refreshes official-site AI news"
       }
     ],
-    "memory_episodes": 12,
+    "memory_episodes": 25,
     "directions": [
       {
         "id": "dir-1",
@@ -842,7 +863,7 @@
     }
   ],
   "stack_review": {
-    "candidates_available": 1646,
+    "candidates_available": 1668,
     "note": "EXCAVA reviews its stack each cycle: integrate the best free per-process tool, combine overlaps, offload weak ones. Top open process gaps: "
   }
 }

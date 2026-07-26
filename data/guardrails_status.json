@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-26T10:02:32.121047+00:00",
+ "generated_at": "2026-07-26T10:22:20.772704+00:00",
  "total": 15,
- "passing": 15,
+ "passing": 14,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -22,8 +22,8 @@
    "id": "G-C",
    "name": "History backup fresh",
    "ok": true,
-   "detail": "2 bundle(s); newest within 26h.",
-   "severity": "warn"
+   "detail": "n/a in CI — the beat pushes straight to origin each cycle, bypassing git_safe/local bundles by design.",
+   "severity": "info"
   },
   {
    "id": "G-D",
@@ -71,42 +71,42 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "4817 memory episodes on record.",
+   "detail": "4842 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "1 guardrail runs logged (append-only, never rewritten).",
+   "detail": "0 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
    "id": "G-L",
    "name": "Uncommitted-work watchdog",
-   "ok": true,
-   "detail": "no stray source files uncommitted.",
+   "ok": false,
+   "detail": "19 untracked source file(s) not committed — commit or quarantine so nothing is lost: other-skills/apify/web-scraping-ai-connectors/SKILL.md, other-skills/chatgpt/ai-email-summarization/SKILL.md, other-skills/claude-design/animated-data-visualization/SKILL.md, other-skills/claude-design/animated-map-generation/SKILL.md",
    "severity": "warn"
   },
   {
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "4562 tasks done, 12 departments moving",
+   "detail": "4570 tasks done, 12 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "30375 MB free on the repo drive.",
+   "detail": "88824 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": true,
-   "detail": "last batch 4.0h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026",
+   "detail": "last batch 4.4h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026",
    "severity": "info"
   }
  ]

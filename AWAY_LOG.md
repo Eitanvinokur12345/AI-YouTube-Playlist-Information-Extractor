@@ -5,6 +5,19 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-26
+- **~09:00 (fire 7, unattended, cloud session on `claude/kind-shannon-wmdl24`)** — Verified the orphan-
+  branch problem flagged last fire is worse than one stray commit: THIS cloud session's own branch has
+  been running the full pipeline (beat/drain/analyze/connectors-verify/news) independently of `main` for
+  ~24h with no PR ever opened — `origin/main...HEAD` is 50/50 diverged. Opened a draft PR to surface it
+  rather than risk a blind merge across ~350 changed files including huge JSON stores; did not touch any
+  data. Full detail + the decision needed from Eitan: `QUESTIONS.md` (fire 7 entry). Also re-verified the
+  `ae4swi` orphan from fire 6: its actual code changes (accessibility dept routing, dashboard.js v129
+  polish) are ALL already present on this branch — that specific orphan is safe to abandon, only its
+  data-only churn remains unmerged (not worth reconciling). Ran `accessibility_scan` fresh: 0 issues.
+  Guardrails 13/15 here (G-C/G-G fail for reasons specific to this ungit-safe'd sandbox — expected, not a
+  regression). **Harsh self-criticism:** I chose to stop and escalate instead of pushing another product
+  increment this fire — the branch-divergence finding is real and growing, and adding more commits to an
+  unreconciled branch would only deepen the exact problem I'm flagging, so surfacing it took priority.
 - **~03:10 (fire 6, unattended)** — Standing checks found `sync` broken (this session's local branch had no
   upstream — a one-time `--set-upstream-to=origin/main` fixed it, no data lost, HEAD==origin/main after).
   Diagnosed the guardrails 15/15→13/15 drop from PULSE.md/pulse.json: the real 2 failures were G-C (CI's beat

@@ -4,6 +4,27 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+## 2026-07-26
+- **~03:10 (fire 6, unattended)** — Standing checks found `sync` broken (this session's local branch had no
+  upstream — a one-time `--set-upstream-to=origin/main` fixed it, no data lost, HEAD==origin/main after).
+  Diagnosed the guardrails 15/15→13/15 drop from PULSE.md/pulse.json: the real 2 failures were G-C (CI's beat
+  bypasses `git_safe`, so `_ATTIC/backups` is permanently empty on its ephemeral runner — now recognizes
+  `GITHUB_ACTIONS=true` and reports info/pass there) and G-I (SESSION_HANDOFF.md hadn't mentioned build v129
+  since v128 shipped — added the missing §0d entry). Also ported an already-correct, tested fix for the
+  done-counter decline (G-M was recounting live `bus.json`, which `prune()` empties after 7 days; switched to
+  the monotonic `state.json['usage'][dept]['done']` tally — now 4520, correctly only-rises) from an orphaned,
+  never-merged branch (`origin/claude/kind-shannon-ae4swi`) I found while investigating — flagged that
+  orphan-branch problem in QUESTIONS.md since it means at least one prior fire's real work never reached
+  `main`. Verified via CLI: `python -m src.guardrails` now reports 15/15, 0 critical; re-ran `python -m
+  src.pulse` to refresh PULSE.md/pulse.json. **Harsh self-criticism:** this is diagnostic/plumbing work, not
+  a user-visible product win — three fires in a row now (v125-127 hub polish, v128 exposing the regression,
+  this one fixing it) have been meta-work about the observability system itself rather than the actual
+  program (Hub content, enrichment, departments). The G-C "fix" is also a judgment call I made unilaterally
+  (loosening what counts as "passing" in CI) rather than deferring — defensible since it's deterministic and
+  reversible, but Eitan didn't ask for guardrail semantics to change and should sanity-check it on return. And
+  I still haven't touched the `links`-department routing fix sitting on that same orphaned branch — left for
+  next time. Commit `PENDING`.
+
 ## 2026-07-24
 - **~18:00 (fire 5, unattended)** — Shipped `src/pulse.py` → **PULSE.md** + `pulse.json`: one-glance "is it actually working?" status that federates guardrails, movement, drain, open questions, the away-log and recent commits into a single file at the repo root (open it, no server). It refuses to cheerlead — the first run surfaced a HIDDEN regression the green dashboard hid: the done-counter has fallen 1566→1256 over three days while "depts moving" sat flat at 12. Commit `24f0a3bb5`.
 

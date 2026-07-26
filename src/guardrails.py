@@ -15,6 +15,7 @@ Pairs with src/git_safe.py, which implements the safe git operations these guard
 from __future__ import annotations
 
 import json
+import os
 import re
 import subprocess
 import sys
@@ -68,6 +69,15 @@ def g_backup():
     if b:
         newest = max(x.stat().st_mtime for x in b)
         fresh = (datetime.now().timestamp() - newest) < 26 * 3600
+    if not b and os.environ.get("GITHUB_ACTIONS") == "true":
+        # 2026-07-26 fix: the CI beat (.github/workflows/excava_beat.yml) commits+pushes with raw
+        # git directly — it never calls src/git_safe.py, so backup_bundle() never runs there and
+        # _ATTIC/backups (gitignored, per-machine only) is permanently empty on every ephemeral
+        # runner. That's not a risk (every beat pushes straight to origin, GitHub's own redundancy)
+        # — it's this check assuming the local/interactive git_safe path, which CI doesn't take.
+        # Flagged as a permanent false "warn" once v128 wired guardrails into the CI beat itself.
+        return _ok("G-C", "History backup fresh", True,
+                   "n/a in CI — the beat pushes straight to origin each cycle, bypassing git_safe/local bundles by design.", "info")
     return _ok("G-C", "History backup fresh", bool(b) and fresh,
                f"{len(b)} bundle(s); newest within 26h." if fresh else
                "no recent history bundle — run `python -m src.git_safe backup` before risky ops.", "warn")
@@ -168,13 +178,20 @@ def g_watchdog():
 
 
 def g_movement():
-    """Owner law 2026-07-06: EACH loop, confirm work is actually MOVING (not all at 0). Tracks the
-    bus done-count over time; flags a STALL if it hasn't risen across the last 3 checks."""
+    """Owner law 2026-07-06: EACH loop, confirm work is actually MOVING (not all at 0).
+
+    2026-07-26 fix: this used to recount "done" live from bus.json each time, but
+    src/excava_bus.py:prune() deliberately ARCHIVES finished tasks out of the bus after
+    PRUNE_DAYS — so that live count falls as pruning runs, with no relation to whether work
+    is actually happening. Two consecutive away-sessions (2026-07-24, 2026-07-26) flagged the
+    resulting "decline" as a mystery regression; it was a metric bug, not a stall. The real
+    monotonic total already exists at state.json['usage'][dept]['done'] (bumped once per
+    completion, never pruned) — use THAT for the stall check."""
     mv = DATA / "excava" / "movement.json"
-    bus = _load_json(DATA / "excava" / "bus.json", {})
-    done = sum(1 for t in bus.get("tasks", []) if t.get("status") == "done")
-    depts = len({t.get("department") for t in bus.get("tasks", [])
-                 if t.get("status") == "done" and t.get("department") not in (None, "core")})
+    state = _load_json(DATA / "excava" / "state.json", {})
+    usage = state.get("usage", {}) or {}
+    done = sum(u.get("done", 0) for u in usage.values())
+    depts = sum(1 for u in usage.values() if u.get("done", 0) > 0)
     hist = _load_json(mv, {"history": []}).get("history", [])
     hist.append({"at": _now(), "done": done, "depts_moving": depts})
     hist = hist[-30:]

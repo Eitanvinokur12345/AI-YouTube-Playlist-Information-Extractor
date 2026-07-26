@@ -188,11 +188,13 @@ def _render(d: dict) -> str:
         f"- **local drain:** {drain}",
         "",
         "## Movement",
-        f"- **tasks done (rolling):** {mv['done']}{_arrow(mv['delta'])}{span}",
-        f"- **departments moving:** {mv['depts_moving']}",
+        f"- **tasks completed (cumulative, only rises):** {mv['done']}{_arrow(mv['delta'])}{span}",
+        f"- **departments with a completion on record:** {mv['depts_moving']}",
     ]
     if mv.get("delta") is not None and mv["delta"] < 0:
-        lines.append("- ⚠ _the done-counter is DECLINING — worth a look; a flat 'depts moving' hides it._")
+        lines.append("- ⚠ _cumulative completions FELL — that should be impossible; check state.json['usage'] wasn't reset or corrupted._")
+    elif mv.get("delta") == 0 and mv.get("delta_span_h") and mv["delta_span_h"] > 12:
+        lines.append("- ⚠ _flat for over 12h — genuinely no completions anywhere, worth a look._")
     lines += [
         "",
         "## Away loop",

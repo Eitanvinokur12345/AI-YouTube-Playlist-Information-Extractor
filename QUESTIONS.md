@@ -26,6 +26,22 @@ homepage / README first line for the ~1,600 repo elements — network-bounded wi
 hang lesson). Free, non-brain, attacks completeness directly. Until you approve a network front or lift the
 brain freeze, these fires keep producing browse-layer polish of diminishing value.
 
+**2026-07-26 (fire 6) — orphaned branch found: away-fire work landed on a branch that never reached `main`.**
+While diagnosing why guardrails dropped 15/15→13/15 (real cause: fixed in this fire — see AWAY_LOG/
+SESSION_HANDOFF §0d v129), I found `origin/claude/kind-shannon-ae4swi`, a branch that diverged from `main`
+after beat #17 (2026-07-26T01:58Z) and already contains a correct, tested fix for the exact same done-counter
+metric bug (G-M) plus an unrelated `links`-department routing fix — fully written, verified, committed with
+a proper message — but never merged/shipped to `main`. It sat idle 11+ beats while `main` kept the bug. This
+means at least one earlier away-fire (or a parallel session) did real, good work that got silently stranded
+because it ran on its own branch instead of `main` and nothing forced a merge. I ported the G-M fix myself
+into `main` this fire (small enough to redo by hand safely), but the `links`-routing fix on that branch is
+still stranded and unreviewed. → **Proposed default:** (a) every away-fire session should verify, before
+shipping, that its working branch either IS `main` or gets merged into `main` before the session ends — a
+fix stuck on an abandoned branch is equivalent to no fix; (b) someone (next fire, or you) should look at
+`origin/claude/kind-shannon-ae4swi`'s `1205385a` commit ("wire the links department into the agent
+registry") and land it or discard it explicitly, rather than leaving it to rot. _No further branches checked
+this fire — there are ~9 other `kind-shannon-*` branches on origin whose contents are unknown; worth a sweep._
+
 ---
 
 ## A. The new look ("Heavy Machinery" v58)

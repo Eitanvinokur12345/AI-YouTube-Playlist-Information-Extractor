@@ -145,6 +145,24 @@ semantics in movement.json / state.json usage), don't just display it. **Correct
 the drain is NOT "stalled at 0" — it enriches ~1–20/batch, just slowly vs 2,027 stubs; the
 deterministic-enricher escalation in QUESTIONS.md stands to ACCELERATE it, not revive a corpse.
 
+**v129 (away fire 6, unattended, 2026-07-26 — live build v129, DIAGNOSED v128's decline):** the "falling
+done-counter" was a metric bug, not real loss: `g_movement()` in src/guardrails.py recounted "done" LIVE
+from `data/excava/bus.json`, but `excava_bus.prune()` deliberately archives finished tasks out of the bus
+after 7 days — so the live count falls as pruning runs, unrelated to whether work is happening. Switched it
+to sum the monotonic `state.json['usage'][dept]['done']` tally instead (bumped once per completion, never
+pruned) — now reads **4520 cumulative**, correctly only-rises. Reworded pulse.py's Movement section to match
+(cumulative-only-rises framing; a genuine flat->0 warns separately from a numeric fall, which should now be
+impossible). Also found + fixed **why guardrails read 13/15 instead of 15/15** since v128: (a) this v128
+change made the CI beat run `src/guardrails.py` on its OWN ephemeral runner every 10 min — but the beat
+commits/pushes with RAW git (not `src.git_safe`), so it never calls `backup_bundle()`, and `_ATTIC/backups`
+(gitignored, per-machine) is permanently empty there; G-C now recognizes `GITHUB_ACTIONS=true` and reports
+`info`/pass instead of a permanent false "warn" (local/interactive runs are unaffected — they still need a
+real bundle). (b) This handoff hadn't mentioned the live build since v128 shipped — that's this paragraph.
+**Honest side-note:** while diagnosing, found an UNMERGED branch (`origin/claude/kind-shannon-ae4swi`,
+diverged after beat #17) already containing this exact G-M fix plus a routing fix for the `links` department
+— a parallel away-fire session did this work first but it never reached `main`. Flagged in QUESTIONS.md:
+away-fire sessions need a rule against silently orphaning work on divergent branches.
+
 **(prior, v120) M2 UNDERWAY.** Sessions 8-10: 4 brain families in the engine CATALOG (GLM/DeepSeek/Kimi via
 OpenRouter free + local Qwen/Llama); OpenRouter key VERIFIED (Eitan's secret OPENROUTER_API_KEY_REAL,
 workflows repointed, selftest 11/11, glm/deepseek/kimi all PASS); `engines.debate_engines(n)` dedups

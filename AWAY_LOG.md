@@ -5,6 +5,29 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-26
+- **~14:2x (fire 8, unattended)** — Landed the fix fire 7 queued: `git_safe.py` now has a
+  `standing_checks()` function + `python -m src.git_safe standing-checks` CLI command that
+  unconditionally fetches, and — only if the current branch has no upstream configured —
+  sets it to `origin/main`. This is the exact automation fire 7 proposed ("add a standing-checks
+  step... that unconditionally runs `git branch --set-upstream-to=origin/main`") after hitting the
+  missing-upstream failure for the SECOND time in two fires. Ran it on this session's own branch:
+  confirmed it had no upstream (third occurrence of the same gap — now fixed at the source instead
+  of per-branch), and it also surfaced **17** stray `kind-shannon-*` branches on origin (up from 14
+  in fire 7, 9 in fire 6) — the sweep to land-or-discard them is still unstarted and growing more
+  expensive every fire it's deferred. **Harsh self-criticism:** this is the second fire in a row
+  that fixes the *tooling* rather than the *program* (Hub content, enrichment, departments) — three
+  of the last four fires (6, 7, 8) have now been about the away-loop's own plumbing. It's a real,
+  queued, well-scoped fix (not scope creep) but the backlog of actual product work isn't shrinking.
+  I also did not run the branch sweep despite flagging it as growing — same excuse as fire 7 (no
+  budget for N unknown diffs against rebased history in one sitting) but the number is only getting
+  worse, so it should be treated as urgent, not perpetually deferred, next time. Separately: this
+  fire's session operates under a stricter branch/PR policy than fires 1–7 assumed (no direct push
+  to `main` — only to this session's own branch, via pull request) — so unlike prior fires this
+  commit ships via a PR rather than `git_safe ship`'s direct-to-main push; `git_safe`'s `push()`/
+  `ship()` themselves are UNCHANGED (still correct for sessions that do have direct-push rights,
+  e.g. the GitHub Actions beat) — flagged in QUESTIONS.md so a human can reconcile the two
+  operating modes rather than have future fires guess which one they're in.
+
 - **~09:5x (fire 7, unattended)** — Standing checks: `git fetch --prune` found 14 stray
   `claude/kind-shannon-*` session branches on origin, one of them (`ae4swi`) still carrying real,
   never-landed work flagged in QUESTIONS.md — commit `1205385a` "wire the links department into

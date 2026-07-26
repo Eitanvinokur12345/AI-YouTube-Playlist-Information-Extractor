@@ -14,6 +14,7 @@ Every op is subprocess with an ARGUMENT LIST (no shell = no quoting/mangling) an
 `git bundle` backup of the whole history first, so nothing is ever unrecoverable.
 
 CLI:
+  python -m src.git_safe standing-checks        # run FIRST, every fire: fixes missing upstream
   python -m src.git_safe backup                 # snapshot history -> _ATTIC/backups/*.bundle
   python -m src.git_safe commit  -m "msg" [-a p1 p2 ...]
   python -m src.git_safe sync                   # revert CI churn + quarantine collisions + rebase
@@ -49,6 +50,29 @@ def _git(args, check=True) -> str:
     if check and r.returncode != 0:
         raise RuntimeError(f"git {' '.join(args)} failed:\n{(r.stderr or r.stdout).strip()}")
     return (r.stdout or "").strip()
+
+
+def standing_checks() -> dict:
+    """Run FIRST, every fire — before any other work (AWAY_LOG fire 6 + fire 7).
+    Every fresh session branch starts with NO upstream tracking configured, which makes the bare
+    `git pull --rebase` inside sync() fail outright ("no upstream configured") — fire 6 hit this,
+    fire 7 hit it again on an unrelated branch, confirming it's a recurring setup gap rather than a
+    fluke. This closes the whole failure class unconditionally instead of relying on each fire to
+    notice the symptom after the fact and one-time-fix its own branch.
+    Returns a small report dict so a fire can log what it found without re-deriving it."""
+    _git(["fetch", "origin", "--prune", "--quiet"], check=False)
+    branch = _git(["rev-parse", "--abbrev-ref", "HEAD"])
+    had_upstream = True
+    try:
+        _git(["rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{u}"])
+    except RuntimeError:
+        had_upstream = False
+        _git(["branch", f"--set-upstream-to=origin/main", branch])
+    stray = [
+        b.strip().removeprefix("origin/") for b in _git(["branch", "-r"]).splitlines()
+        if "kind-shannon" in b and "HEAD ->" not in b
+    ]
+    return {"branch": branch, "fixed_upstream": not had_upstream, "stray_session_branches": stray}
 
 
 def backup_bundle() -> Path:
@@ -160,12 +184,17 @@ def main() -> int:
     except Exception:
         pass
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["backup", "commit", "sync", "push", "ship"])
+    ap.add_argument("cmd", choices=["standing-checks", "backup", "commit", "sync", "push", "ship"])
     ap.add_argument("-m", "--message", default="")
     ap.add_argument("-a", "--add", nargs="*", default=[])
     args = ap.parse_args()
 
-    if args.cmd == "backup":
+    if args.cmd == "standing-checks":
+        r = standing_checks()
+        fixed = "fixed missing upstream -> origin/main" if r["fixed_upstream"] else "upstream OK"
+        print(f"standing-checks: branch={r['branch']}; {fixed}; "
+              f"{len(r['stray_session_branches'])} stray kind-shannon-* branch(es) on origin")
+    elif args.cmd == "backup":
         print(f"backup -> {backup_bundle().relative_to(ROOT)}")
     elif args.cmd == "commit":
         if not args.message:

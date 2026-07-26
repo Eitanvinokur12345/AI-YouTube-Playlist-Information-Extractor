@@ -5,6 +5,49 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-26
+- **~22:0x (fire 14, unattended, cloud session) — QUESTIONS.md item #11 (owner default: yes):
+  ported build_brain.py's proven empty-body-skip + unique-id fix into the two OTHER
+  brain-graph generators that still had it, `build_graph.py` (dashboard in-page graph) and
+  `export_graphml.py` (Graphify/Gephi export).** Non-brain front, deterministic, no LLM.
+  Read `build_brain.py` first — it already carries a "MAINTENANCE FIX" comment block from an
+  earlier fire: items with no real body were plotted as blank "white" graph nodes, and items
+  with no slug/name collided onto the SAME note title, silently overwriting each other.
+  `build_graph.py` had the identical root cause via a different mechanism: its fallback id used
+  the per-category loop `rank` (0, 1, 2…) when slug/name were missing, so "skill:0" in one
+  category collided with "skill:0" in another. `export_graphml.py` was actually worse: when
+  BOTH slug and name/skill_name were missing, `str(None)` produced the literal id `"skill:None"`
+  — every such record across the whole library collapsed onto one shared node. Ported the same
+  two guards (`has_body()`: skip if no description/use_case/tips for a skill, no description for
+  a tool, no what_it_does/description for a connector; `ident()`: require a real non-empty
+  slug/name, never fall back to an index or `None`) into both files, matching build_brain.py's
+  already-proven definitions field-for-field. **Verified:** re-ran both generators —
+  `build_graph.py` → 1872 nodes, 0 duplicate ids, 3 empty/unidentified items skipped (out of the
+  curated top-55-per-category pool, so few were affected there); `export_graphml.py` → 8569
+  nodes, 0 duplicate ids, 218 empty/unidentified records skipped (it walks the FULL library, not
+  a curated top-N, so it had far more junk to catch) — confirmed via `grep` for any literal
+  `"skill:None"`/`"tool:None"`/etc. id or `>None<` label (zero matches) and a Python `Counter`
+  over every `<node id>` in `brain.graphml` (zero duplicates). `python -m src.guardrails` → 14/15,
+  0 critical (only G-O info-level, unrelated). `python -m src.standing_checks` first: local
+  `origin/main` cache was stale by one commit and this session's branch had no upstream tracking
+  — both self-healed automatically (the `ensure_upstream()`/re-fetch fixes fires 6–8 built),
+  nothing lost. Shipped via `git_safe ship` straight to `main` (commit `de3a16ab`), same
+  convention as 30+ prior fires. **Harsh self-criticism:** this fixes the GRAPH-RENDERING half of
+  item #11 (what the dashboard and Graphify actually display), but NOT `maintenance_check.py`'s
+  187-empty/10-collision COUNT — that metric reads `skills.json`/`tools.json`/`connectors.json`
+  directly, i.e. real records with genuinely empty descriptions or two distinct records sharing
+  one title, which is a data-enrichment problem (the same stalled "0 stubs/day" blocker already
+  tracked elsewhere in QUESTIONS.md), not something a graph-code fix can move. I did not
+  re-run `maintenance_check` expecting the score to change, and it won't — flagging that
+  explicitly so a future fire (or Eitan) doesn't mistake this commit for having closed #11's
+  underlying data debt, only its visible rendering symptom. I also did not touch the 10 actual
+  title-colliding records or the 187 actual empty-body records themselves — that's real content
+  work (backfill a description, or merge/rename a duplicate), squarely in "advance a milestone"
+  territory rather than a one-fire fix, and a reasonable next non-brain-front task if nothing
+  higher-priority is queued. Fourth-plus fire in a row on the non-brain-front data/graph-quality
+  chain (10→13→14) rather than the actual M1–M5 brain/agent-orchestra work — repeating the same
+  self-criticism fires 8 and 12 already made; a future fire with a bigger time budget and/or the
+  brain-front unblocked should prioritize that over a fifth piece of this same chain.
+
 - **~21:2x (fire 13, unattended, cloud session) — the 2 real boilerplate offenders fire 12 found
   but deliberately left alone are now cleaned up, via a NEW second net in `cross_tab_check.py`
   that closes the gap fire 12's own self-criticism named.** Non-brain cleanup front, same

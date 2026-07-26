@@ -118,7 +118,7 @@ The 6 goals miss two things we now actually build for:
 
 ## D. Program gaps I found (will do unless you object)
 10. `formats.json` is collected but has no tab — fold formats INTO the Designs tab as a "Formats" filter? _Default: yes._
-11. Brain graph still has ~191 empty "white" nodes + 10 title collisions — clean next maintenance pass? _Default: yes._
+11. ~~Brain graph still has ~191 empty "white" nodes + 10 title collisions — clean next maintenance pass?~~ — PARTIALLY RESOLVED 2026-07-26 (fire 14): the RENDERING half is fixed — `build_graph.py` and `export_graphml.py` now skip empty-body/unidentified records instead of plotting them as blank or colliding nodes (ported from `build_brain.py`'s already-working fix; see AWAY_LOG fire 14). The underlying DATA half is NOT resolved — `maintenance_check.py` still reports 187 empty-body records and 10 real title collisions in `skills.json`/`tools.json`/`connectors.json` themselves; that needs content backfill/dedup, tracked with the stalled-enrichment blocker elsewhere in this file. _Default: yes, continue — next pass should tackle the 10 actual duplicate-titled records (rename/merge) and spot-fix the highest-value empty-body records._
 12. ~~Transcript lane blocked on `YT_PROXY_URL`~~ — RESOLVED 2026-07-02: Bright Data's residential-proxy tier needs a card on file even for free credits, which conflicts with the free-only rule, so declined. Not a blocker — Gemini-watches-video (already running) is the free analysis path, just slower per video than a transcript read would be. Cockpit now shows this as an optional "(skipped by choice)" chip, not a red MISSING.
 
 ## C2. EXCAVA conversation — installment 2 (answer anytime)

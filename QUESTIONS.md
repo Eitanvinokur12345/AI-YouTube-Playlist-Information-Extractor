@@ -26,6 +26,31 @@ homepage / README first line for the ~1,600 repo elements — network-bounded wi
 hang lesson). Free, non-brain, attacks completeness directly. Until you approve a network front or lift the
 brain freeze, these fires keep producing browse-layer polish of diminishing value.
 
+**2026-07-26 (fire 7) — TWO FULL COPIES of the pipeline have been running in parallel for ~24h+, never merged; a PR is now open to surface it (needs your merge decision).**
+This cloud-scheduled session runs on its own branch, `claude/kind-shannon-wmdl24` (per this
+environment's contract: cloud Claude Code sessions must not push straight to `main`). But nobody
+ever opened a pull request for it, and every fire on this branch has kept running the FULL real
+pipeline (excava-beat, local-drain, analyze, bulk-analyze, connectors-verify, news, core-spoton,
+social-intake — all of it) directly on this branch, exactly like `main` does via GitHub Actions.
+Result: as of this fire, `origin/main` and this branch have **50 commits each that only exist on
+their own side** (`git rev-list --left-right --count origin/main...HEAD` → `50  50`), diverging
+since ~2026-07-25T09:00Z. Both sides have been separately fetching/analyzing videos, running
+drains, updating `data/skills.json` / `tools.json` / `models.json` / `bus.json` / the whole
+`data/excava/*` state — i.e. two DIFFERENT versions of the hub have been growing side by side for
+over a day, each with content the other doesn't have. This is worse than the single-commit
+orphan found last fire (#`ae4swi`, still unresolved below) — it's not one stray fix, it's a
+second live copy of the entire program.
+I did **not** attempt to auto-merge — the diff is ~350 files including multi-thousand-line
+JSON stores (`bus.json`, `elements_index.json`, `models.json`...) where a wrong merge could
+silently drop one side's real work. Instead this fire opened a **draft PR** (`claude/kind-shannon-
+wmdl24` → `main`) purely to make the divergence visible in GitHub's UI and stop it from growing
+invisibly. → **This needs your call, not a default:** (a) which side is authoritative going
+forward — keep both running and merge periodically, or point the cloud session at `main` somehow
+so there's only ever one line; (b) how to reconcile the 24h of divergent data — a JSON-aware merge
+per file (union sets, prefer newer timestamps) is doable but is real work I shouldn't do silently
+on data this size without your sign-off. Until decided, I'd rather flag this every fire than let
+the branches drift further apart.
+
 **2026-07-26 (fire 6) — orphaned branch found: away-fire work landed on a branch that never reached `main`.**
 While diagnosing why guardrails dropped 15/15→13/15 (real cause: fixed in this fire — see AWAY_LOG/
 SESSION_HANDOFF §0d v129), I found `origin/claude/kind-shannon-ae4swi`, a branch that diverged from `main`

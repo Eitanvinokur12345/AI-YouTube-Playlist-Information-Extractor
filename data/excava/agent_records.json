@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-27T19:02:20.484676+00:00",
+ "generated_at": "2026-07-27T19:08:57.517724+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 255,
+   "turns_7d": 256,
    "rooms_7d": 31,
    "engines_used": [
     "gh-models",
@@ -17,7 +17,23 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk with a dedicated \"risk context\" field is that agents will game it—selecting \"legal\" to auto-tag anything t"
+   "last_position": "Scriv: The two-step gate still lets agents game the dropdown—selecting \"risk-related\" for any sentence with \"legal\" to f"
+  },
+  {
+   "id": "transcripts-w1",
+   "name": "Reel",
+   "dept": "transcripts",
+   "role": "doer",
+   "turns_7d": 194,
+   "rooms_7d": 91,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "Do this: Enforce a two-step gate in Transcripts—auto-tag only when \"legal,\" \"compliance,\" or \"regulatory\" appear in a fu"
   },
   {
    "id": "watch-w1",
@@ -36,22 +52,6 @@
    ],
    "positions_held": 30,
    "last_position": "Do this: Enforce a dedicated \"risk context\" field in Transcripts—agents must select \"legal,\" \"compliance,\" or \"regulator"
-  },
-  {
-   "id": "transcripts-w1",
-   "name": "Reel",
-   "dept": "transcripts",
-   "role": "doer",
-   "turns_7d": 192,
-   "rooms_7d": 90,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll query the YouTube transcript tool for the first pending video ID to retrieve its full transcript. This will produce"
   },
   {
    "id": "analysis-w1",
@@ -91,8 +91,8 @@
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 92,
-   "rooms_7d": 46,
+   "turns_7d": 93,
+   "rooms_7d": 47,
    "engines_used": [
     "gh-models",
     "groq",
@@ -100,30 +100,30 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Make the timeline a fixed-height strip at the top, always visible, with a subtle highlight on the current event. This ke"
+   "last_position": "Make the timeline a fixed-height strip at the top, always visible, with a subtle vertical line marking the current momen"
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 92,
-   "rooms_7d": 46,
+   "turns_7d": 93,
+   "rooms_7d": 47,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Pane: A fixed-height strip hides decaying decisions under fresh noise—users will miss the *critical* new signal in the s"
+   "last_position": "Pane: A fixed-height strip buries critical decisions under noise if events pile—users scroll to find what matters, losin"
   },
   {
    "id": "power-w1",
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 90,
-   "rooms_7d": 45,
+   "turns_7d": 91,
+   "rooms_7d": 46,
    "engines_used": [
     "gh-models",
     "glm",
@@ -131,15 +131,15 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt DeepSeek-R1-671B as EXCAVA’s primary inference engine. Its dense 671B parameter stack delivers consistent latency "
+   "last_position": "Adopt Qwen3-235B-A22B-Instruct as EXCAVA’s primary inference engine. Its MoE design delivers 235B active parameters with"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 90,
-   "rooms_7d": 45,
+   "turns_7d": 91,
+   "rooms_7d": 46,
    "engines_used": [
     "gh-models",
     "glm",
@@ -147,15 +147,15 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DeepSeek-R1-671B’s fixed per-token cost on Cerebras CS-3 will still drown EXCAVA in bills—its 671B dense stack demands 4"
+   "last_position": "Qwen3-235B-A22B’s MoE routing overhead will spike EXCAVA’s latency at scale—its 22B experts force per-token gating, drow"
   },
   {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 85,
-   "rooms_7d": 85,
+   "turns_7d": 86,
+   "rooms_7d": 86,
    "engines_used": [
     "gh-models",
     "groq",
@@ -169,8 +169,8 @@
    "name": "Nova",
    "dept": "creators",
    "role": "lead",
-   "turns_7d": 84,
-   "rooms_7d": 83,
+   "turns_7d": 85,
+   "rooms_7d": 84,
    "engines_used": [
     "gh-models",
     "groq",
@@ -178,15 +178,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Nova closes the \"Skill Creator for Claude\" npm package in the creators tab, labeled \"Created by EXCAVA\" with a t"
+   "last_position": "ACTION: Nova closes the \"Skill Creator for Claude\" npm package in the creators tab, labeled \"Created by EXCAVA\" — the pa"
   },
   {
    "id": "creators-w1",
    "name": "Forge",
    "dept": "creators",
    "role": "doer",
-   "turns_7d": 84,
-   "rooms_7d": 83,
+   "turns_7d": 85,
+   "rooms_7d": 84,
    "engines_used": [
     "gh-models",
     "groq",
@@ -194,7 +194,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I’ll draft the \"Skill Creator for Claude\" npm package in the creators tab, labeled \"Created by EXCAVA\" with a test plan."
+   "last_position": "I’ll draft the \"Skill Creator for Claude\" npm package in the creators tab, labeled \"Created by EXCAVA.\" This will produc"
   },
   {
    "id": "watch-lead",
@@ -216,7 +216,7 @@
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 62,
+   "turns_7d": 63,
    "rooms_7d": 62,
    "engines_used": [
     "gh-models",
@@ -224,15 +224,15 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will now pull the freshest AI-related headlines from Reuters, BBC, and the White House press feeds. The result will be"
+   "last_position": "I will query Reuters, BBC, and the White House press feeds for the latest AI-related headlines. This will produce a fres"
   },
   {
    "id": "accessibility-w1",
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 61,
-   "rooms_7d": 31,
+   "turns_7d": 62,
+   "rooms_7d": 32,
    "engines_used": [
     "gh-models",
     "groq",
@@ -240,29 +240,29 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Add a **programmatic focus trap** that forces focus into `<main role=\"main\">` on every route change or dynamic content i"
+   "last_position": "We should add a high-contrast skip link at the top of every page that jumps straight to the main content, because this a"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 61,
-   "rooms_7d": 31,
+   "turns_7d": 62,
+   "rooms_7d": 32,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Forcing focus into `<main role=\"main\">` on every route change can be jarring for users who rely on screen readers, as it"
+   "last_position": "A single high-contrast skip link fails users who rely on screen readers when the page reloads or route changes—focus jum"
   },
   {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
    "role": "lead",
-   "turns_7d": 59,
+   "turns_7d": 60,
    "rooms_7d": 59,
    "engines_used": [
     "gh-models",
@@ -270,36 +270,36 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Fetch latest AI headlines from Reuters, BBC, and White House press feeds into a single digest titled \"AI-News Di"
+   "last_position": "ACTION: Fetch latest AI headlines from Reuters, BBC, and White House press feeds into a digest titled \"AI News Digest [C"
   },
   {
    "id": "visual-lead",
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 54,
-   "rooms_7d": 53,
+   "turns_7d": 55,
+   "rooms_7d": 54,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Chroma frames Easel’s vibrant pink hero screenshot of the Beverage Cans website and stores it in the hub as tast"
+   "last_position": "ACTION: Chroma frames Easel’s vibrant pink hero screenshot of the Beverage Cans website as a taste material file in the "
   },
   {
    "id": "visual-w1",
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 54,
-   "rooms_7d": 53,
+   "turns_7d": 55,
+   "rooms_7d": 54,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section. This produces a high-quality ta"
+   "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section. This produces a taste material "
   },
   {
    "id": "visualization-lead",
@@ -339,37 +339,37 @@
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 41,
-   "rooms_7d": 41,
+   "turns_7d": 42,
+   "rooms_7d": 42,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will run the memory linking command to connect every existing memory to ensure the brain graph is fully embedded. This"
+   "last_position": "I will run the memory linking command to connect every existing memory to enhance recall by meaning and build the brain "
   },
   {
    "id": "links-w1",
    "name": "Anchor",
    "dept": "links",
    "role": "doer",
-   "turns_7d": 40,
-   "rooms_7d": 40,
+   "turns_7d": 41,
+   "rooms_7d": 41,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll run the full audit of the department’s link inventory using the link-checker. This will produce a complete report o"
+   "last_position": "I’ll run the full audit of the department’s link inventory using the link-checker tool. This will produce a complete rep"
   },
   {
    "id": "links-lead-x",
    "name": "LinLea",
    "dept": "links",
    "role": "lead",
-   "turns_7d": 40,
-   "rooms_7d": 40,
+   "turns_7d": 41,
+   "rooms_7d": 41,
    "engines_used": [
     "groq",
     "mistral"
@@ -382,30 +382,30 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 38,
-   "rooms_7d": 18,
+   "turns_7d": 39,
+   "rooms_7d": 19,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the **24-hour canary deployment to 5% of users** first. It’s the fastest way to validate prompt changes without fu"
+   "last_position": "Adopt the **Claude Self-Improvement Skill Pack** to automate prompt tuning and routing. It’s the fastest way to reduce m"
   },
   {
    "id": "improve-checker",
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 38,
-   "rooms_7d": 18,
+   "turns_7d": 39,
+   "rooms_7d": 19,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Gauge: A 5% canary still risks reputational damage if the broken prompt triggers user complaints before we detect it—spe"
+   "last_position": "The 5% canary is a gamble on reputational damage—broken prompts leak to real users before we even know they’re broken. A"
   },
   {
    "id": "analysis-lead",
@@ -422,6 +422,21 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Pull the full LangSmith GitHub repository and documentation to extract the earnings call transcript and analysis"
+  },
+  {
+   "id": "mining-w1",
+   "name": "Pick",
+   "dept": "mining",
+   "role": "doer",
+   "turns_7d": 36,
+   "rooms_7d": 36,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Action: Run a Reddit search for AI-related posts in the last 7 days and return the top 20 results with titles, upvotes, "
   },
   {
    "id": "security-lead",
@@ -455,21 +470,6 @@
    "last_position": "I will run the LLM Guard scanner on this conversation’s input/output stream to detect malicious content or data leaks. T"
   },
   {
-   "id": "mining-w1",
-   "name": "Pick",
-   "dept": "mining",
-   "role": "doer",
-   "turns_7d": 35,
-   "rooms_7d": 35,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Action: Run a Reddit search for AI-related posts from the last 7 days and return the top 20 results with titles, URLs, a"
-  },
-  {
    "id": "accessibility-lead",
    "name": "Access",
    "dept": "accessibility",
@@ -492,14 +492,14 @@
    "name": "Root",
    "dept": "memory",
    "role": "lead",
-   "turns_7d": 26,
-   "rooms_7d": 26,
+   "turns_7d": 27,
+   "rooms_7d": 27,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Root executes the memory linking command to embed all prior memory IDs into a unified brain graph, producing a f"
+   "last_position": "ACTION: Root executes the memory linking command to embed all prior memory IDs i | OUTPUT: Unified memory graph with all"
   },
   {
    "id": "mining-lead",

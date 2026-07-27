@@ -2,13 +2,13 @@
 
 > **Do not trust these words — click the links.** Every link below goes to the RAW committed file or
 > the GitHub Actions log. Those are GitHub's records, not numbers I generated. Verify anything yourself.
-> Generated 2026-07-07T18:42:39.564986+00:00 · commit `4638d71f`
+> Generated 2026-07-27T15:01:03.088664+00:00 · commit `b130f00d`
 
 ## Independently-checkable reality
-- **Supervisor real_pct:** 65%  ({'real': 26, 'noop': 9, 'failed': 0, 'planned': 5}) — [raw supervisor.json](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/excava/supervisor.json)
-- **Movement (done trend):** [284, 292, 300, 308, 316, 324] — [raw movement.json](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/excava/movement.json)
-- **Change since last beat:** no measurable change this beat
-- **Live totals (recompute yourself):** 6978 elements · 222 verified · 3162 with a real link · 692 designs · 11 creations
+- **Supervisor real_pct:** 100%  ({'real': 32, 'noop': 0, 'failed': 0, 'planned': 0, 'blocked': 8}) — [raw supervisor.json](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/excava/supervisor.json)
+- **Movement (done trend):** [5014, 5014, 5076, 5081, 5127, 5132] — [raw movement.json](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/excava/movement.json)
+- **Change since last beat:** designs -22
+- **Live totals (recompute yourself):** 10374 elements · 2103 verified · 4246 with a real link · 956 designs · 15 creations
 
 ## SEE the agents talk (the real conversations)
 - [Room transcripts by day](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/tree/main/data/excava/chats) — open a `.jsonl`, read what the agents actually said.
@@ -18,14 +18,17 @@
 ## What each department produced (latest) — click the evidence file to verify
 | department | verdict | actual output | raw evidence (click) |
 |---|---|---|---|
-| **analysis** | real | 616 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + l | [`data/elements_index.json`](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/elements_index.json) |
-| **creators** | real | Creators: 11 creations on record, 11 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily cre | [`data/created_by_excava.json`](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/created_by_excava.json) |
-| **improve** | ? | produced data/excava/artifacts/task-34-self-improvement-tasks-queued.md (by sambanova) | [`data/self_check.json`](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/self_check.json) |
-| **memory** | real | Semantic index: 1439 vectors (model gemini-embedding-001); hub 5238 items → 3799 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass com | [`data/brain_graph.json`](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/brain_graph.json) |
-| **mining** | noop | RAN src.discovery_agent (real work): discovery: +0 new (of 99 sighted) → 386 queued; gh-active=50, gh-new=18, hn-front=24, hn-new=48, producthunt=39,  | [`data/connectors.json`](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/connectors.json) |
-| **news** | noop | RAN src.trend_watch (real work): trend_watch: 14 proposals (top score 10); queued 0 into self-improvement. | [`data/weekly_web_news.json`](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/weekly_web_news.json) |
-| **security** | real | RAN src.security_scan (real work): security_scan: 0 secret leak(s), 0 injection-suspect records flagged. | [`data/security.json`](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/security.json) |
-| **visual** | real | RAN src.collect_designs (real work): collect_designs: 263 designs (kept 263 / dropped 0 repo-only + 5 dead/parked + 13 non-design; +0 AI-product, +27  | [`data/designs.json`](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/designs.json) |
-| **watch** | planned | EXECUTION PLAN written (NOT executed) → data/excava/artifacts/task-watch-process-the-next-batch-of-616-pending-vide.md; real execution still needs a w | [`data/_pending`](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/tree/main/data/_pending) |
+| **accessibility** | ? | Ran the accessibility scan. accessibility_scan: 0 issue(s) — clean | — |
+| **analysis** | real | 1315 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned +  | [`data/elements_index.json`](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/elements_index.json) |
+| **creators** | ? | Creators: 15 creations on record, 15 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily cre | [`data/created_by_excava.json`](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/created_by_excava.json) |
+| **improve** | ? | Ran the self check. self-check: 40/50 (mechanical) | 0 new tasks | failing Qs: [1, 10, 12, 13, 14, 16, 20, 24, 45, 47] | [`data/self_check.json`](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/self_check.json) |
+| **memory** | real | Semantic index: 1504 vectors (model gemini-embedding-001); hub 7360 items → 5856 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass com | [`data/brain_graph.json`](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/brain_graph.json) |
+| **mining** | ? | Ran the discovery agent. discovery: +2 new (of 146 sighted) → 808 queued; arxiv=78, gh-active=95, gh-new=40, hn-front=35, hn-new=88, huggingface-model | [`data/connectors.json`](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/connectors.json) |
+| **news** | ? | Ran the trend watch. trend_watch: 10 proposals (top score 10); queued 0 into self-improvement. | [`data/weekly_web_news.json`](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/weekly_web_news.json) |
+| **power** | ? | Ran the power scan.   - Together AI | Cloud inference platform hosting 200+ open-source models including Lla | — |
+| **security** | real | Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged. | [`data/security.json`](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/security.json) |
+| **visual** | real | Ran the collect designs. collect_designs: 956 designs (kept 956 / dropped 22 repo-only + 4 dead/parked + 49 non-design; +0 AI-product, +27 seeds, +48  | [`data/designs.json`](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/designs.json) |
+| **visualization** | ? | Ran the liveliness scan. liveliness_scan: 0 issue(s) — clean | — |
+| **watch** | blocked | BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner. | [`data/_pending`](https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/tree/main/data/_pending) |
 
 _Verdicts: **real** = ran a real tool / real assessment · **noop** = ran but produced nothing · **planned** = wrote a plan, did not execute · **failed**. The supervisor grades these against your intent charter + your 5-session history._

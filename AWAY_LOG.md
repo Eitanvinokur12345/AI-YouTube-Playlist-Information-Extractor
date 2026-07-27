@@ -4,6 +4,71 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+- **~16:1x (fire 32, unattended, cloud session) — found and fixed the real reason most of the
+  2045 stubs are unreachable: a data-shape bug hiding already-downloaded transcripts, not a
+  missing-source problem.** Broke down all 2045 stubs by type first (skill 480, tool 604,
+  command 523, connector 245, model 143, design 39, creation 10, format 1) and by what
+  addressable signal they carry: only 30 have `links.github`, 10 more via the website-fallback
+  fire 31 added (matches its 24-pool finding); 328 have a non-github `links.website`; 408 have
+  only a `source_url` (almost always just the source video's own YouTube URL, not a distinct
+  homepage); 934 have neither link. Investigated the two other candidate lanes the brief named
+  and ruled both out honestly: PyPI/npm keyless registry lookup has **zero** addressable pool —
+  no stub anywhere in the data carries a pip/npm install signal — and a new plain URL-title
+  fetcher would have just duplicated `deep_retrieve.py`'s existing `homepage_meta()` pillar,
+  which already covers every `website`-link stub keylessly. So the "biggest slice" wasn't a new
+  API integration at all — it was a bug in the plumbing everything else already runs through.
+  **The bug:** `element_model.build()` did a blind `str(v)` on every `source_videos` entry, but
+  some discovery pipelines (mine_feeds/gemini-video) store `{id, url, title}` dicts there
+  instead of bare ids — `str()`'ing a dict produces an unusable Python-repr string, which
+  silently hid the element's own already-downloaded transcript file
+  (`data/processed/<id>.json`) from `deep_retrieve.py`'s transcript pillar for **3,371 elements
+  hub-wide (736 of them stubs)** — this is exactly the "1,290 no-link stubs need... a
+  transcript" population fire 31 flagged, except many of them already HAD one on disk; the id
+  was just corrupted on the way in. Fixed `_video_id()` to extract the real id from a dict
+  entry. Verified live: `deep_retrieve --dry-run` fresh-fusable stub pool jumped **271 → 1003**
+  after the fix plus a targeted cooldown-clear (`data/deep_retrieve_state.json`) for the
+  specific ids whose 3-day retry cooldown had been recorded against the broken code, not a
+  genuine "nothing new" outcome. **Then caught a real-data regression the fix itself exposed
+  before shipping it:** a first real batch of 15 "enriched" 14 elements — but inspecting the
+  actual written text showed garbage: connector "Asana" got a description fused from an
+  unrelated `@getviktor` pitch video, "Apify" from a generic "3 things about Claude" short —
+  neither video ever mentioned the element. Root cause: `deep_retrieve.transcript_excerpt()`
+  treated "element name not found anywhere in this video's text" identically to "found at
+  position 0," so it silently grabbed the START of an irrelevant transcript/description instead
+  of skipping. This bug pre-dates this fire but was dormant — it only fires when a stub is
+  fusable via transcript-only with no real per-video relevance signal, which is precisely the
+  population this fire's fix just unlocked at scale (going from a handful to 1003 elements makes
+  a previously-rare failure mode common). **Reverted that bad test output**
+  (`data/connectors.json`, `element_overrides.json`, `deep_retrieve_state.json` back to HEAD)
+  before it could ship, added a relevance guard (a video only counts as a source when the
+  element's name is actually findable in its transcript/description text; otherwise skip it —
+  a remaining stub beats a wrong one), and re-ran: the same 15-element batch now correctly
+  enriches only the **1** genuinely-relevant match (`connector:arvow-api` — "arvow" is actually
+  in that video's description) and honestly declines the other 14 instead of inventing
+  descriptions. That 14:1 signal-to-noise ratio is itself useful information: most of the
+  newly-fusable pool will need the relevance bar to clear before real progress shows up in the
+  stub count, so expect the CI's existing hourly `deep_retrieve` run (already wired, no new
+  workflow step needed) to drain this slowly and honestly rather than in one big drop. Shipped
+  both fixes together via `python -m src.git_safe ship`, commit `2c03b759`, verified
+  `origin/main == HEAD`; deliberately left `data/guardrails_status.json` and
+  `data/excava/movement.json` (touched only as a side effect of running `guardrails.py` locally
+  against a slightly-behind checkout) OUT of the commit — genuine CI churn, not this fire's work.
+  **Network note (same wall fire 31 hit):** `api.github.com` and arbitrary external hosts
+  (`jasper.ai`, `youtube.com` oembed) return 403 from this sandbox's proxy; `pypi.org` and
+  `registry.npmjs.org` are allow-listed and reachable (confirmed by curl, which is exactly why
+  the PyPI/npm dead-end above could be ruled out with real evidence instead of guesswork) — but
+  since this fire's actual fix and verification ran entirely off transcript files already on
+  disk, no live external fetch was needed to prove it end-to-end, unlike fire 10/31's enrichers.
+  **Harsh self-criticism:** I nearly shipped a regression — the first "14 enriched" number
+  looked like a clean win and I did not initially inspect the actual written text before almost
+  moving on; only reading the real `what_it_does` values caught it. That is a real near-miss
+  worth naming, not just the eventual good outcome. The relevance guard is also conservative by
+  design (many genuinely-related videos that just don't literally repeat the element's exact
+  name string will still be skipped) — a token-overlap or fuzzy match would recover more, but
+  that's a deliberate quality-over-quantity trade I made under this week's "no LLM" constraint
+  rather than a gap I ran out of time for. Left the ~13 stray `kind-shannon-*` branches and the
+  branch-vs-main shipping convention untouched again (still someone else's/Eitan's call).
+
 - **~16:0x (fire 31, unattended, cloud session) — returned to the actual blocker (hub enrichment)
   instead of a 5th straight fire of workflow-git plumbing, and verified the deterministic
   GitHub-metadata enricher fire 10 built end-to-end for the first time via REAL production

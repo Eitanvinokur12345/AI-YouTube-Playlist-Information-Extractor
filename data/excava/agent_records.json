@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-27T05:22:53.706301+00:00",
+ "generated_at": "2026-07-27T05:28:54.511983+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 182,
+   "turns_7d": 183,
    "rooms_7d": 26,
    "engines_used": [
     "gh-models",
@@ -17,14 +17,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "A *time-only* alert still leaks the *exact moment* of detection—attackers can correlate that timestamp with external eve"
+   "last_position": "A *time-only* alert leaks the *exact moment* of detection—attackers can correlate that timestamp with other events to pi"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 148,
+   "turns_7d": 149,
    "rooms_7d": 87,
    "engines_used": [
     "gh-models",
@@ -215,8 +215,8 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 37,
-   "rooms_7d": 19,
+   "turns_7d": 38,
+   "rooms_7d": 20,
    "engines_used": [
     "gh-models",
     "groq",
@@ -224,37 +224,37 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "We should always show the skip link but style it off-screen until focus arrives, as this ensures screen-reader users can"
+   "last_position": "Add a single high-contrast skip link at the top of every page that only appears when focused. This ensures keyboard user"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 37,
-   "rooms_7d": 19,
+   "turns_7d": 38,
+   "rooms_7d": 20,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Risk: Always-showing skip links clutter the top of the page for sighted users who never need them, especially on mobile "
+   "last_position": "Risk: A single skip link at top fails when the page has multiple distinct navigation blocks (e.g., main nav, sidebar nav"
   },
   {
    "id": "power-lead",
    "name": "Dynamo",
    "dept": "power",
    "role": "lead",
-   "turns_7d": 36,
-   "rooms_7d": 36,
+   "turns_7d": 37,
+   "rooms_7d": 37,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Run a 48-hour blind A/B stress test on EXCAVA’s 8xA100 with NVLink comparing Qwen3-235B-A22B-Instruct (8-exper",
-   "proposed": 23,
+   "last_position": "DECISION: Run a 48-hour blind A/B stress test on EXCAVA’s 8xA100 with NVLink comparing Qwen3-235B-A22B-Instruct vs DeepS",
+   "proposed": 24,
    "shipped": 23
   },
   {
@@ -321,29 +321,44 @@
    "name": "Wire",
    "dept": "news",
    "role": "lead",
-   "turns_7d": 30,
-   "rooms_7d": 30,
+   "turns_7d": 31,
+   "rooms_7d": 31,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Fetch verified AI headlines from Reuters, BBC, and the White House press releases; output: top 5 newest AI devel"
+   "last_position": "ACTION: Fetch verified AI headlines from Reuters, BBC, and the White House via their official RSS feeds and compile them"
   },
   {
    "id": "news-w1",
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 30,
-   "rooms_7d": 30,
+   "turns_7d": 31,
+   "rooms_7d": 31,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll fetch the latest AI headlines from Reuters, BBC, and the White House press releases. The output will be a concise d"
+   "last_position": "I’ll pull the latest AI headlines from Reuters, BBC, and the White House press feed. This will produce a fresh digest of"
+  },
+  {
+   "id": "memory-w1",
+   "name": "Graft",
+   "dept": "memory",
+   "role": "doer",
+   "turns_7d": 24,
+   "rooms_7d": 24,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Action: I will run the memory linking command to connect every existing memory I have to the unified memory system. This"
   },
   {
    "id": "improve-w1",
@@ -375,21 +390,6 @@
    "last_position": "Canary deployments still miss silent failures—like a prompt that degrades answer accuracy without changing latency or us"
   },
   {
-   "id": "memory-w1",
-   "name": "Graft",
-   "dept": "memory",
-   "role": "doer",
-   "turns_7d": 23,
-   "rooms_7d": 23,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Action: I will run the memory linking command to connect every existing memory I have to the unified memory system. This"
-  },
-  {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
@@ -404,6 +404,34 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Deep-analyze the full LangSmith GitHub repository and documentation to extract its architecture, logging mechani"
+  },
+  {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 21,
+   "rooms_7d": 21,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 21,
+   "last_position": "I will run a full audit of the department’s link inventory using the link-checker tool. This will produce a complete rep"
+  },
+  {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 21,
+   "rooms_7d": 21,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 21,
+   "last_position": "ACTION: Anchor delivers the cleaned link inventory report with dead links removed."
   },
   {
    "id": "mining-lead",
@@ -436,48 +464,20 @@
    "last_position": "I will run a Reddit search for AI-related posts in the last 7 days and return the top 10 posts with the most engagement."
   },
   {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 20,
-   "rooms_7d": 20,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 20,
-   "last_position": "I will run a full audit of the department’s link inventory using the link-checker tool. This will produce a complete rep"
-  },
-  {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
-   "role": "lead",
-   "turns_7d": 20,
-   "rooms_7d": 20,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 20,
-   "last_position": "ACTION: Anchor delivers the cleaned link inventory report with dead links removed to the team by EOD."
-  },
-  {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 19,
-   "rooms_7d": 19,
+   "turns_7d": 20,
+   "rooms_7d": 20,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Default to system theme on first load, with a one-time prompt offering a high-contrast theme if system contras",
-   "proposed": 19,
+   "last_position": "DECISION: Default to system theme on first load with a one-time prompt offering a prominent top-right toggle for manual ",
+   "proposed": 20,
    "shipped": 19
   },
   {
@@ -495,7 +495,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Implement a **bold, full-width skip bar** that’s always visible but styled off-screen until focus arrives; tes",
    "proposed": 19,
-   "shipped": 18
+   "shipped": 19
   },
   {
    "id": "memory-lead",

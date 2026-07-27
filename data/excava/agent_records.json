@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-27T12:04:45.078927+00:00",
+ "generated_at": "2026-07-27T12:10:36.399576+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -41,8 +41,8 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 153,
-   "rooms_7d": 71,
+   "turns_7d": 154,
+   "rooms_7d": 72,
    "engines_used": [
     "gh-models",
     "groq",
@@ -50,14 +50,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Adopt the *fully randomized delay* with hard operational bounds (e.g., 15–60 minutes, no clustering). This"
+   "last_position": "I will run the transcript retrieval tool on the pending video queue. This will produce full transcripts or captions for "
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 132,
+   "turns_7d": 133,
    "rooms_7d": 50,
    "engines_used": [
     "gh-models",
@@ -65,14 +65,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Implement a *dynamic adaptive delay* that adjusts the alert timing based on the operators' recent response"
+   "last_position": "**Decision:** Adopt the *semi-randomized delay* with a rolling 30-minute average and ±15-minute jitter, recalculated aft"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 110,
+   "turns_7d": 111,
    "rooms_7d": 28,
    "engines_used": [
     "gh-models",
@@ -82,7 +82,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The *dynamic adaptive delay* may inadvertently create a feedback loop where attackers can manipulate the system by influ"
+   "last_position": "The *semi-randomized delay* still poses a risk of predictability based on the rolling average, which could be exploited "
   },
   {
    "id": "power-w1",
@@ -121,15 +121,15 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 69,
-   "rooms_7d": 69,
+   "turns_7d": 70,
+   "rooms_7d": 70,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Reel runs the transcript retrieval tool on the pending video queue to fetch real full transcripts/captions with ",
+   "last_position": "ACTION: Echo verifies the existence and completeness of the transcripts produced by Reel, checking for any gaps or missi",
    "proposed": 2
   },
   {
@@ -292,8 +292,8 @@
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 34,
-   "rooms_7d": 34,
+   "turns_7d": 35,
+   "rooms_7d": 35,
    "engines_used": [
     "groq",
     "mistral"
@@ -308,13 +308,31 @@
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 34,
-   "rooms_7d": 34,
+   "turns_7d": 35,
+   "rooms_7d": 35,
    "engines_used": [
+    "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section. This produces a taste material "
+   "last_position": "I will browse the Beverage Cans website and take a screenshot of its vibrant pink hero section. This will produce a visu"
+  },
+  {
+   "id": "visualization-lead",
+   "name": "Lumen",
+   "dept": "visualization",
+   "role": "lead",
+   "turns_7d": 34,
+   "rooms_7d": 34,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Default to a single dark theme with a manual light-mode toggle, proven by Manus and Graphify dashboards; test ",
+   "proposed": 34,
+   "shipped": 33
   },
   {
    "id": "security-lead",
@@ -346,23 +364,6 @@
    ],
    "positions_held": 30,
    "last_position": "I will run the LLM Guard scanner on this conversation’s input/output stream to detect leaks, injection, or fake elements"
-  },
-  {
-   "id": "visualization-lead",
-   "name": "Lumen",
-   "dept": "visualization",
-   "role": "lead",
-   "turns_7d": 33,
-   "rooms_7d": 33,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Implement a simple dark theme with a manual light-mode toggle, prioritizing clarity and visibility. The result",
-   "proposed": 33,
-   "shipped": 33
   },
   {
    "id": "memory-w1",
@@ -518,15 +519,15 @@
    "name": "Ratchet",
    "dept": "improve",
    "role": "lead",
-   "turns_7d": 12,
-   "rooms_7d": 12,
+   "turns_7d": 13,
+   "rooms_7d": 13,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Run a 5% canary rollout alongside a 48-hour shadow test that measures output accuracy against a ground truth, ",
-   "proposed": 12,
+   "last_position": "DECISION: Conduct a 48-hour dual-prompt A/B test with 10% of users receiving the new prompt and forced feedback collecti",
+   "proposed": 13,
    "shipped": 12
   },
   {

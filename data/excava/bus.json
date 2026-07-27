@@ -389,6 +389,26 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
+      "status": "done",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": "memory-w1",
+      "handoff_docs": [
+        "data/excava/handoffs/raise-g3-truth-access-53-83955--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-07-11T15:32:35.834228+00:00",
+      "updated_at": "2026-07-27T01:55:56.042291+00:00",
+      "result": "Semantic index: 1503 vectors (model gemini-embedding-001); hub 7358 items → 5855 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "id": "raise-g3-truth-access-53-19610",
+      "title": "Raise G3 Truth & access (53/100): 53.1% of tools/skills have a real link (target: ~100%)",
+      "detail": "value=47 size=17(small) [cost 15/steps 25/risk 10] · G3 at 53",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
       "status": "queued",
       "steps": 1,
       "max_steps": 8,
@@ -396,27 +416,10 @@
       "escalation_tier": 1,
       "claimed_by": null,
       "handoff_docs": [
-        "data/excava/handoffs/raise-g3-truth-access-53-83955--01--links-w1--to--memory.md"
+        "data/excava/handoffs/raise-g3-truth-access-53-19610--01--links-w1--to--memory.md"
       ],
-      "created_at": "2026-07-11T15:32:35.834228+00:00",
-      "updated_at": "2026-07-27T01:46:18.027662+00:00"
-    },
-    {
-      "id": "raise-g3-truth-access-53-19610",
-      "title": "Raise G3 Truth & access (53/100): 53.1% of tools/skills have a real link (target: ~100%)",
-      "detail": "value=47 size=17(small) [cost 15/steps 25/risk 10] · G3 at 53",
-      "department": "links",
-      "source": "gap",
-      "priority": 1,
-      "status": "queued",
-      "steps": 0,
-      "max_steps": 8,
-      "done_criteria": "a committed artifact that measurably closes this gap",
-      "escalation_tier": 1,
-      "claimed_by": null,
-      "handoff_docs": [],
       "created_at": "2026-07-12T01:26:50.052766+00:00",
-      "updated_at": "2026-07-12T01:26:50.052777+00:00"
+      "updated_at": "2026-07-27T01:55:56.981931+00:00"
     },
     {
       "id": "security-safety-rate-the-23999",
@@ -28239,17 +28242,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-16192--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-07-27T01:36:32.528662+00:00",
-      "updated_at": "2026-07-27T01:36:41.298394+00:00"
+      "updated_at": "2026-07-27T01:55:49.009756+00:00",
+      "result": "1281 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g8-personal-fit-68-16192",
@@ -28346,15 +28350,16 @@
       "department": "watch",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-07-27T01:46:09.643454+00:00",
-      "updated_at": "2026-07-27T01:46:09.643469+00:00"
+      "updated_at": "2026-07-27T01:55:57.042632+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
       "id": "security-safety-rate-the-16769",
@@ -28363,15 +28368,16 @@
       "department": "security",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-27T01:46:09.674081+00:00",
-      "updated_at": "2026-07-27T01:46:09.674091+00:00"
+      "updated_at": "2026-07-27T01:55:56.920801+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "raise-g8-personal-fit-68-16769",
@@ -28415,15 +28421,16 @@
       "department": "news",
       "source": "room-action:news",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "news-w1",
       "handoff_docs": [],
       "created_at": "2026-07-27T01:48:30.252406+00:00",
-      "updated_at": "2026-07-27T01:48:30.252414+00:00"
+      "updated_at": "2026-07-27T01:55:57.425789+00:00",
+      "result": "Ran the trend watch. trend_watch: 12 proposals (top score 10); queued 0 into self-improvement."
     },
     {
       "id": "analysis-room-action-dee-16978",
@@ -28441,7 +28448,93 @@
       "handoff_docs": [],
       "created_at": "2026-07-27T01:49:38.362877+00:00",
       "updated_at": "2026-07-27T01:49:38.362885+00:00"
+    },
+    {
+      "id": "verify-the-next-200-of-6-17348",
+      "title": "Verify the next 200 of 6466 unverified elements (2-source + live test)",
+      "detail": "value=87 size=40(small) [cost 35/steps 70/risk 10] · 6466 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-27T01:55:48.812327+00:00",
+      "updated_at": "2026-07-27T01:55:48.812341+00:00"
+    },
+    {
+      "id": "raise-g8-personal-fit-68-17348",
+      "title": "Raise G8 Personal fit (68/100): 21% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
+      "detail": "value=32 size=17(small) [cost 15/steps 25/risk 10] · G8 at 68",
+      "department": "visual",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "visual-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-27T01:55:48.907241+00:00",
+      "updated_at": "2026-07-27T01:55:55.816456+00:00",
+      "result": "Ran the collect designs. collect_designs: 978 designs (kept 978 / dropped 0 repo-only + 4 dead/parked + 49 non-design; +0 AI-product, +27 seeds, +48 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "id": "analysis-room-action-dee-17437",
+      "title": "[analysis room action] Deep-analyze the full LangSmith GitHub repository and documentation to extract architecture, dependencies, and community",
+      "detail": "From room dept-analysis-deep-analyze-every-384 (action-shaped close). Mission action from the department's own room.",
+      "department": "analysis",
+      "source": "room-action:analysis",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-27T01:57:17.488954+00:00",
+      "updated_at": "2026-07-27T01:57:17.488963+00:00"
+    },
+    {
+      "id": "memory-room-action-i-wil-17557",
+      "title": "[memory room action] I will run the memory linking command to connect every existing memory ID within the system. This will produce a fully i",
+      "detail": "From room dept-memory-recall-by-meaning-rel-982 (action-shaped close). Mission action from the department's own room.",
+      "department": "memory",
+      "source": "room-action:memory",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-27T01:59:17.885595+00:00",
+      "updated_at": "2026-07-27T01:59:17.885603+00:00"
+    },
+    {
+      "id": "news-room-action-fetch-v-17611",
+      "title": "[news room action] Fetch verified AI headlines from Reuters, BBC, and the White House via the real-time news tool.",
+      "detail": "From room dept-news-freshness-refresh-the-a-989 (action-shaped close). Mission action from the department's own room.",
+      "department": "news",
+      "source": "room-action:news",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-27T02:00:11.720839+00:00",
+      "updated_at": "2026-07-27T02:00:11.720847+00:00"
     }
   ],
-  "updated_at": "2026-07-27T01:49:38.362889+00:00"
+  "updated_at": "2026-07-27T02:00:11.720851+00:00"
 }

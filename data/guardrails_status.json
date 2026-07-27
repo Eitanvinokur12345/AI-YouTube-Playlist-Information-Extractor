@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-27T04:04:27.514150+00:00",
+ "generated_at": "2026-07-27T04:26:07.703520+00:00",
  "total": 16,
- "passing": 14,
+ "passing": 16,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -21,9 +21,9 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": false,
-   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
-   "severity": "warn"
+   "ok": true,
+   "detail": "n/a in CI — the beat pushes straight to origin each cycle, bypassing git_safe/local bundles by design.",
+   "severity": "info"
   },
   {
    "id": "G-D",
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "5015 memory episodes on record.",
+   "detail": "5034 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "3 guardrail runs logged (append-only, never rewritten).",
+   "detail": "0 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -91,29 +91,29 @@
   {
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
-   "ok": false,
-   "detail": "4657 tasks done, 12 departments moving — STALLED (no new completions in the last 4 beats)",
+   "ok": true,
+   "detail": "4664 tasks done, 12 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "30440 MB free on the repo drive.",
+   "detail": "88814 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": true,
-   "detail": "last batch 22.1h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026",
+   "detail": "last batch 22.4h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026",
    "severity": "info"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
    "ok": true,
-   "detail": "last 'excava-beat #N' commit 2.1h ago.",
+   "detail": "last 'excava-beat #N' commit 2.4h ago.",
    "severity": "warn"
   }
  ]

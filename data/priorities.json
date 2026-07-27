@@ -1,61 +1,61 @@
 {
-  "generated_at": "2026-07-26T23:30:18.540517+00:00",
+  "generated_at": "2026-07-27T04:23:35.889821+00:00",
   "priorities": [
     {
       "rank": 1,
       "impact": 100,
       "area": "access",
-      "title": "2794 tools/skills still have no real link (46.9%)",
+      "title": "2797 tools/skills still have no real link (46.9%)",
       "detail": "The link-resolver runs each cycle; this falls as it works. Add Gemini keys to speed it."
     },
     {
       "rank": 2,
-      "impact": 98,
-      "area": "regression",
-      "title": "'skills' dropped 1 records",
-      "detail": "Restore from the last good backup; investigate what removed them."
-    },
-    {
-      "rank": 3,
-      "impact": 98,
-      "area": "regression",
-      "title": "'tools' dropped 3 records",
-      "detail": "Restore from the last good backup; investigate what removed them."
-    },
-    {
-      "rank": 4,
       "impact": 85,
       "area": "pipeline",
       "title": "Lane 'External mining' is stale",
       "detail": "Check the workflow logs; re-dispatch if blocked."
     },
     {
-      "rank": 5,
+      "rank": 3,
       "impact": 85,
       "area": "pipeline",
       "title": "Lane 'Self-improvement review' is idle",
       "detail": "Check the workflow logs; re-dispatch if blocked."
     },
     {
-      "rank": 6,
+      "rank": 4,
       "impact": 70,
       "area": "maintenance",
       "title": "Empty-body items render as blank 'white' nodes in the brain graph (187)",
       "detail": "Skip empty-body items from the brain (or backfill a one-line description) so they stop appearing as contentless dots."
     },
     {
-      "rank": 7,
+      "rank": 5,
       "impact": 70,
       "area": "maintenance",
       "title": "Pipeline lanes overdue — retrieval/analysis may have stalled (3)",
       "detail": "Check the workflow logs for these lanes; re-dispatch if blocked."
     },
     {
-      "rank": 8,
+      "rank": 6,
       "impact": 55,
       "area": "pipeline",
       "title": "Lane 'Transcript retrieval' is slow",
       "detail": "Overdue vs its cadence."
+    },
+    {
+      "rank": 7,
+      "impact": 50,
+      "area": "backlog",
+      "title": "Only 678/1557 videos analyzed (43.5%)",
+      "detail": "Add free Gemini keys (GEMINI_API_KEY_2/_3) to multiply throughput."
+    },
+    {
+      "rank": 8,
+      "impact": 45,
+      "area": "effectiveness",
+      "title": "Weakest lane: Deep analysis (Claude, night-gated)",
+      "detail": "Lowest effectiveness (6.8/10) — the improve stage targets it."
     }
   ]
 }

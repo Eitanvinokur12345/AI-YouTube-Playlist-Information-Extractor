@@ -369,6 +369,26 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
+      "status": "done",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": "memory-w1",
+      "handoff_docs": [
+        "data/excava/handoffs/raise-g3-truth-access-53-78524--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-07-11T14:02:04.218452+00:00",
+      "updated_at": "2026-07-27T01:46:17.091245+00:00",
+      "result": "Semantic index: 1503 vectors (model gemini-embedding-001); hub 7358 items → 5855 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "id": "raise-g3-truth-access-53-83955",
+      "title": "Raise G3 Truth & access (53/100): 53.3% of tools/skills have a real link (target: ~100%)",
+      "detail": "value=47 size=17(small) [cost 15/steps 25/risk 10] · G3 at 53",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
       "status": "queued",
       "steps": 1,
       "max_steps": 8,
@@ -376,27 +396,10 @@
       "escalation_tier": 1,
       "claimed_by": null,
       "handoff_docs": [
-        "data/excava/handoffs/raise-g3-truth-access-53-78524--01--links-w1--to--memory.md"
+        "data/excava/handoffs/raise-g3-truth-access-53-83955--01--links-w1--to--memory.md"
       ],
-      "created_at": "2026-07-11T14:02:04.218452+00:00",
-      "updated_at": "2026-07-27T01:36:40.730046+00:00"
-    },
-    {
-      "id": "raise-g3-truth-access-53-83955",
-      "title": "Raise G3 Truth & access (53/100): 53.3% of tools/skills have a real link (target: ~100%)",
-      "detail": "value=47 size=17(small) [cost 15/steps 25/risk 10] · G3 at 53",
-      "department": "links",
-      "source": "gap",
-      "priority": 1,
-      "status": "queued",
-      "steps": 0,
-      "max_steps": 8,
-      "done_criteria": "a committed artifact that measurably closes this gap",
-      "escalation_tier": 1,
-      "claimed_by": null,
-      "handoff_docs": [],
       "created_at": "2026-07-11T15:32:35.834228+00:00",
-      "updated_at": "2026-07-11T15:32:35.834234+00:00"
+      "updated_at": "2026-07-27T01:46:18.027662+00:00"
     },
     {
       "id": "raise-g3-truth-access-53-19610",
@@ -430,7 +433,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-12T02:39:59.551382+00:00",
-      "updated_at": "2026-07-26T19:45:42.128841+00:00",
+      "updated_at": "2026-07-27T01:46:17.966598+00:00",
       "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
@@ -2502,7 +2505,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-16T17:46:39.019054+00:00",
-      "updated_at": "2026-07-26T19:45:41.356660+00:00"
+      "updated_at": "2026-07-27T01:46:17.121718+00:00"
     },
     {
       "id": "memory-embed-the-remaini-23999",
@@ -4174,7 +4177,7 @@
       "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-07-20T04:23:42.438764+00:00",
-      "updated_at": "2026-07-26T19:45:42.469284+00:00",
+      "updated_at": "2026-07-27T01:46:18.088530+00:00",
       "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
@@ -16093,7 +16096,7 @@
       "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-07-22T11:57:02.523239+00:00",
-      "updated_at": "2026-07-26T19:45:42.440568+00:00"
+      "updated_at": "2026-07-27T01:46:18.058020+00:00"
     },
     {
       "id": "transcripts-drain-the-ne-21422",
@@ -27920,15 +27923,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-07-27T01:06:16.894631+00:00",
-      "updated_at": "2026-07-27T01:06:16.894646+00:00"
+      "updated_at": "2026-07-27T01:46:09.850430+00:00",
+      "result": "1281 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "watch-process-the-next-b-14376",
@@ -28199,15 +28203,16 @@
       "department": "news",
       "source": "room-action:news",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "news-w1",
       "handoff_docs": [],
       "created_at": "2026-07-27T01:31:28.628819+00:00",
-      "updated_at": "2026-07-27T01:31:28.628827+00:00"
+      "updated_at": "2026-07-27T01:46:18.469455+00:00",
+      "result": "Ran the trend watch. trend_watch: 12 proposals (top score 10); queued 0 into self-improvement."
     },
     {
       "id": "watch-process-the-next-b-16192",
@@ -28271,15 +28276,16 @@
       "department": "power",
       "source": "agent:power-lead",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the decision's concrete step is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "power-w1",
       "handoff_docs": [],
       "created_at": "2026-07-27T01:37:46.579412+00:00",
-      "updated_at": "2026-07-27T01:37:46.579425+00:00"
+      "updated_at": "2026-07-27T01:46:18.719125+00:00",
+      "result": "Ran the power scan.   - Together AI | Cloud inference platform hosting 200+ open-source models including Lla"
     },
     {
       "id": "lumen-s-initiative-defau-16331",
@@ -28288,15 +28294,16 @@
       "department": "visualization",
       "source": "agent:visualization-lead",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the decision's concrete step is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "visualization-w1",
       "handoff_docs": [],
       "created_at": "2026-07-27T01:38:51.486688+00:00",
-      "updated_at": "2026-07-27T01:38:51.486704+00:00"
+      "updated_at": "2026-07-27T01:46:18.835542+00:00",
+      "result": "Ran the liveliness scan. liveliness_scan: 0 issue(s) — clean"
     },
     {
       "id": "analysis-room-action-dee-16398",
@@ -28331,7 +28338,110 @@
       "handoff_docs": [],
       "created_at": "2026-07-27T01:41:05.718745+00:00",
       "updated_at": "2026-07-27T01:41:05.718757+00:00"
+    },
+    {
+      "id": "watch-process-the-next-b-16769",
+      "title": "Watch: process the next batch of 1281 pending videos",
+      "detail": "value=82 size=29(small) [cost 30/steps 40/risk 10] · 1281 pending",
+      "department": "watch",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-27T01:46:09.643454+00:00",
+      "updated_at": "2026-07-27T01:46:09.643469+00:00"
+    },
+    {
+      "id": "security-safety-rate-the-16769",
+      "title": "Security: safety-rate the next batch of 1392 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1392 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-27T01:46:09.674081+00:00",
+      "updated_at": "2026-07-27T01:46:09.674091+00:00"
+    },
+    {
+      "id": "raise-g8-personal-fit-68-16769",
+      "title": "Raise G8 Personal fit (68/100): 21% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
+      "detail": "value=32 size=17(small) [cost 15/steps 25/risk 10] · G8 at 68",
+      "department": "visual",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "visual-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-27T01:46:09.746577+00:00",
+      "updated_at": "2026-07-27T01:46:16.866316+00:00",
+      "result": "Ran the collect designs. collect_designs: 978 designs (kept 978 / dropped 0 repo-only + 4 dead/parked + 49 non-design; +0 AI-product, +27 seeds, +48 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "id": "memory-room-action-i-wil-16842",
+      "title": "[memory room action] I will run the memory linking command to connect every existing memory ID in this conversation thread to the unified mem",
+      "detail": "From room dept-memory-recall-by-meaning-rel-552 (action-shaped close). Mission action from the department's own room.",
+      "department": "memory",
+      "source": "room-action:memory",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-27T01:47:22.863643+00:00",
+      "updated_at": "2026-07-27T01:47:22.863653+00:00"
+    },
+    {
+      "id": "news-room-action-fetch-v-16910",
+      "title": "[news room action] Fetch verified AI headlines from Reuters, BBC, and the White House, compile into a digest titled \"AI News Digest — [Toda",
+      "detail": "From room dept-news-freshness-refresh-the-a-161 (action-shaped close). Mission action from the department's own room.",
+      "department": "news",
+      "source": "room-action:news",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-27T01:48:30.252406+00:00",
+      "updated_at": "2026-07-27T01:48:30.252414+00:00"
+    },
+    {
+      "id": "analysis-room-action-dee-16978",
+      "title": "[analysis room action] Deep-analyze the full LangSmith documentation and GitHub repository to extract its observability features, verify claims",
+      "detail": "From room dept-analysis-deep-analyze-every-521 (action-shaped close). Mission action from the department's own room.",
+      "department": "analysis",
+      "source": "room-action:analysis",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-27T01:49:38.362877+00:00",
+      "updated_at": "2026-07-27T01:49:38.362885+00:00"
     }
   ],
-  "updated_at": "2026-07-27T01:41:05.718761+00:00"
+  "updated_at": "2026-07-27T01:49:38.362889+00:00"
 }

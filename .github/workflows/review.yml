@@ -54,8 +54,8 @@ jobs:
           enabled = bool(review.get("enabled", True))
           schedule = os.environ.get("SCHEDULE", "")
           event = os.environ.get("EVENT", "")
-          weekly = (schedule == "0 23 * * 6")
-          daily  = (schedule == "0 23 * * 0-5")
+          weekly = (schedule == "0 23 * * 3,6")
+          daily  = (schedule == "0 23 * * 0-2,4-5")
           now = datetime.datetime.now(datetime.timezone.utc)
           # anchor the first-week window in data/ (not config) on first ever run
           p = pathlib.Path("data/review_state.json")

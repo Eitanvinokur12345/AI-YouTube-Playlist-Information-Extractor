@@ -188,6 +188,12 @@ now floats ready-to-use elements up (`renderHub()` in docs/dashboard.js sorts by
 then the existing verified-rank/name tiebreak) — the item v127 queued as NEXT. Full detail + harsh
 self-criticism in AWAY_LOG.md (fire 24 entry) — that file is now the per-fire log; this §0d section
 just carries the live-build pointer forward for G-I.
+**(fire 25, unattended, cloud session, 2026-07-27 — no dashboard build bump, this was a backend/CI fix):**
+found + fixed `review.yml`'s nightly self-improvement quality gate silently no-op'ing every real
+scheduled run since ~2026-06-21 (a stale cron-string comparison in its own "plan this run" step);
+plus a small `tools.json` quality-score data-quality fix. Full detail + harsh self-criticism in
+AWAY_LOG.md (fire 25 entry); open question in QUESTIONS.md. This fire developed on its own branch
++ PR per this session's platform harness, not straight-to-main via `git_safe` like most prior fires.
 
 **(prior, v120) M2 UNDERWAY.** Sessions 8-10: 4 brain families in the engine CATALOG (GLM/DeepSeek/Kimi via
 OpenRouter free + local Qwen/Llama); OpenRouter key VERIFIED (Eitan's secret OPENROUTER_API_KEY_REAL,

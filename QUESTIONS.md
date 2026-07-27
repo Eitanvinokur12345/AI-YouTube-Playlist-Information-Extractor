@@ -9,6 +9,35 @@ You're away ~1 week; the offline loop is running (non-brain fronts, hourly) and 
 
 ### Away-week questions
 
+**2026-07-27 (fire 25) — `review.yml`'s nightly self-improvement quality gate was silently
+no-op'ing for 5+ weeks; fixed, but only simulation-verified, not a live end-to-end run.**
+Full root-cause + fix in AWAY_LOG.md (fire 25 entry): a cron string in `review.yml`'s "Plan this
+run" step was never updated when the actual trigger schedule changed to add Wednesday, so every
+real scheduled run since ~2026-06-21 evaluated `run=false` and skipped straight to a no-op commit
+— while the job itself still reported "success" every night, hiding it. Fixed the two comparison
+strings; verified via an offline Python simulation of the exact plan logic (pre-fix reproduces the
+bug, post-fix runs correctly on Wed/Sat and stays first-week-gated the other 5 days) — did **not**
+`workflow_dispatch` a real run to prove it live end-to-end (that would burn a real Claude Code
+Action run on your subscription token unattended, a judgment call I left to you or the next real
+Wed/Sat 23:00 UTC firing). → **Ask:** either confirm you're fine waiting for the next scheduled
+Wed/Sat slot to self-prove this, or manually `workflow_dispatch` review.yml once to get immediate
+confirmation. _Default: wait for the natural Wed/Sat slot; low urgency, it was already silently
+broken for 5 weeks so a few more days costs nothing new._
+
+**2026-07-27 (fire 25) — two small tools.json data-quality gaps found while fixing the above, not
+yet acted on.** (a) The "Air Canada Chatbot" tool record's `description` looks like a wrong scrape
+— generic airline-booking-page marketing copy, not anything about the actual chatbot/lawsuit the
+source video discusses — worth a human glance or a re-scrape, not rewritten from general knowledge
+I can't verify against the source page from this sandbox. (b) `tools.json` is NOT currently sorted
+in the `mentions desc → quality_score desc → name` order CLAUDE.md's Step 3b calls for after every
+edit — spot-checked and found a "GPT" entry with `mentions: 1` despite carrying 13
+`endorsement_video_ids`, suggesting `mentions` itself may be stale/unreliable in places. Skipped
+doing the full resort this fire since blindly applying it now would (i) produce a ~32,000-line diff
+for an unrelated 6-record fix and (ii) silently paper over the `mentions` inconsistency instead of
+surfacing it. → **Proposed default:** a dedicated future fire audits `mentions` vs
+`endorsement_video_ids` counts across `tools.json` first, fixes any drift, THEN does the one real
+resort — rather than resorting on top of possibly-wrong counts. _Low priority, not urgent._
+
 **Overhaul audit — next decision batch (§7; items 5–8 of 122).** These are YOURS to decide; I did NOT auto-apply them — `data/excava/overhaul_decisions.json` stays OPEN. My proposed verdict on each (confirm or change with `python -m src.audit_decisions set <id> <verdict>`):
 - **#5 "Should I just buy Gemini Pro?"** → proposed **REMOVE the worry.** The free path (VPS + Ollama + the free model pool) is real and proven this week — 11/11 engines answered, four brain families live. Paying is unnecessary.
 - **#6 Direct in-app write to EXCAVA (no GitHub step)** → proposed **REBUILD.** Async-via-GitHub works now; true real-time in-app write needs the VPS (ties to A1, which you already KEEP'd).

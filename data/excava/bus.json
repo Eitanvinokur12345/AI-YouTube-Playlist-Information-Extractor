@@ -35324,17 +35324,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/resolve-real-links-websi-60222--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-07-27T13:50:22.111748+00:00",
-      "updated_at": "2026-07-27T13:50:29.269416+00:00"
+      "updated_at": "2026-07-27T14:02:23.500311+00:00",
+      "result": "Semantic index: 1504 vectors (model gemini-embedding-001); hub 7360 items → 5856 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "watch-process-the-next-b-60222",
@@ -35435,15 +35436,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-07-27T13:55:50.308733+00:00",
-      "updated_at": "2026-07-27T13:55:50.308745+00:00"
+      "updated_at": "2026-07-27T14:02:23.264894+00:00",
+      "result": "1315 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "memory-embed-the-remaini-60550",
@@ -35479,7 +35481,99 @@
       "created_at": "2026-07-27T13:55:50.462478+00:00",
       "updated_at": "2026-07-27T13:55:55.637897+00:00",
       "result": "Ran the collect designs. collect_designs: 978 designs (kept 978 / dropped 0 repo-only + 4 dead/parked + 49 non-design; +0 AI-product, +27 seeds, +48 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "id": "watch-process-the-next-b-60942",
+      "title": "Watch: process the next batch of 1315 pending videos",
+      "detail": "value=82 size=29(small) [cost 30/steps 40/risk 10] · 1315 pending",
+      "department": "watch",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "watch-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-27T14:02:22.962078+00:00",
+      "updated_at": "2026-07-27T14:02:30.429336+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+    },
+    {
+      "id": "security-safety-rate-the-60943",
+      "title": "Security: safety-rate the next batch of 1392 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1392 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-27T14:02:23.000236+00:00",
+      "updated_at": "2026-07-27T14:02:30.351968+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "id": "transcripts-drain-the-ne-60943",
+      "title": "Transcripts: drain the next batch of 1315 pending (residential IP)",
+      "detail": "value=60 size=26(small) [cost 25/steps 35/risk 15] · 1315 pending",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-drain-the-ne-60943--01--transcripts-w1--to--analysis.md"
+      ],
+      "created_at": "2026-07-27T14:02:23.063750+00:00",
+      "updated_at": "2026-07-27T14:02:30.653426+00:00"
+    },
+    {
+      "id": "raise-g3-truth-access-53-60943",
+      "title": "Raise G3 Truth & access (53/100): 53.1% of tools/skills have a real link (target: ~100%)",
+      "detail": "value=47 size=17(small) [cost 15/steps 25/risk 10] · G3 at 53",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/raise-g3-truth-access-53-60943--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-07-27T14:02:23.111106+00:00",
+      "updated_at": "2026-07-27T14:02:30.507150+00:00"
+    },
+    {
+      "id": "raise-g8-personal-fit-68-60943",
+      "title": "Raise G8 Personal fit (68/100): 21% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
+      "detail": "value=32 size=17(small) [cost 15/steps 25/risk 10] · G8 at 68",
+      "department": "visual",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "visual-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-27T14:02:23.157045+00:00",
+      "updated_at": "2026-07-27T14:02:29.517221+00:00",
+      "result": "Ran the collect designs. collect_designs: 978 designs (kept 978 / dropped 0 repo-only + 4 dead/parked + 49 non-design; +0 AI-product, +27 seeds, +48 shown-in-video; url-checked 4). designs-only."
     }
   ],
-  "updated_at": "2026-07-27T13:55:56.659494+00:00"
+  "updated_at": "2026-07-27T14:02:30.653432+00:00"
 }

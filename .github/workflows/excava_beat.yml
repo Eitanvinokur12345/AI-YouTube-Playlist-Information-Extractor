@@ -61,8 +61,16 @@ jobs:
           n=0
           while [ "$SECONDS" -lt "$END" ]; do
             n=$((n+1)); echo "── beat cycle $n ($(date -u +%H:%MZ)) ──"
-            python -m src.excava || true
-            python -m src.pulse || true          # refresh the one-glance program pulse (data/excava/pulse.json)
+            # 2026-07-27 (fire 27): src.excava's own ROOM_ADVANCE_BUDGET_S=240 only checks the
+            # clock BETWEEN rooms, not inside a single chat.advance()/engine call — so one call that
+            # doesn't return (an outage that doesn't cleanly error, a retry storm, anything the
+            # in-process budget can't see) can wedge the whole beat with zero commits for the rest
+            # of the run's 340-min timeout. Confirmed live: run 30250614002 sat >50 min past its last
+            # "excava-beat #45" commit with no new one. `timeout` is an outer guard the inner code
+            # can never defeat — worst case this cycle is skipped and the NEXT one (10 min later)
+            # gets a clean shot instead of the whole 5.3h run being lost to one bad cycle.
+            timeout 280 python -m src.excava || echo "excava beat cycle timed out or errored — continuing to next cycle"
+            timeout 60 python -m src.pulse || true          # refresh the one-glance program pulse (data/excava/pulse.json)
             git add data
             git commit -m "excava-beat #$n: $(date -u +%Y-%m-%dT%H:%MZ)" || echo "nothing to commit"
             git pull --rebase --autostash origin main || true

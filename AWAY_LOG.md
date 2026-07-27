@@ -4,6 +4,47 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+- **~16:0x (fire 31, unattended, cloud session) — returned to the actual blocker (hub enrichment)
+  instead of a 5th straight fire of workflow-git plumbing, and verified the deterministic
+  GitHub-metadata enricher fire 10 built end-to-end for the first time via REAL production
+  evidence, not just local reasoning.** This session's own sandbox proxy scopes GitHub API access
+  to only this one repo (confirmed: `curl api.github.com/repos/python/cpython` → 403 "GitHub
+  access to this repository is not enabled for this session"), so a local non-dry run here would
+  prove nothing about production — instead pulled the real GH Actions job logs via
+  `mcp__github__get_job_logs` for `core_spoton.yml`'s `github-meta-enrich` step. **Verdict: it
+  works, for real, in production** — its first live run (2026-07-26T20:15Z, run `30218575686`)
+  printed `github-meta-enrich: batch of 22 (fresh pool 22) from 22 github-linked stubs; 22
+  processed (9 descriptions upgraded); stubs now 2044` — the live GitHub REST API, the real
+  `GITHUB_TOKEN` secret, 9 real descriptions written, stub count actually dropped. Every hourly
+  run since (confirmed on the latest, `30281770189`, 15:49Z) correctly finds `fresh pool 0` and
+  no-ops — not broken, its narrow pool of 15 remaining github-linked stubs is genuinely
+  unfusable (empty GitHub descriptions / malformed org-discussion paths) and sits under the
+  3-day retry cooldown as designed. **Found and fixed one real, narrow gap while diagnosing:**
+  `_repo_slug` only ever checked `links.github`, so 9 stub elements whose github.com URL is
+  parked in `links.website` instead — several genuine MCP connector repos (`ashra-mcp`,
+  `verodat-mcp-server`, `elisp-dev-mcp`, `instagram_dm_mcp`, `local-history-mcp`) among them —
+  were structurally invisible to this lane, even though `deep_retrieve.readme_excerpt` already
+  uses exactly this same website-field fallback one file over. Mirrored that one fallback line
+  into `src/github_meta_enrich.py`'s `_repo_slug`. Verified via `--dry-run`: addressable pool
+  grew 15 → 24 (9 freshly discovered, all immediately eligible next hourly run); confirmed no
+  stray file changes (`element_model.build()`'s cache side-effect on `elements_index.json` was
+  reverted before commit). Shipped via `python -m src.git_safe ship`, commit `8e22fe329`,
+  verified `origin/main == HEAD` — no rebase conflicts this fire (no concurrent push landed in
+  the ~1 min window). Also surveyed the wider stub landscape while here (2045 total stubs; 353
+  have a `website` link, already covered by `deep_retrieve`'s own keyless homepage-meta fallback
+  every 2h; 1290 have no link at all and need discovery or a transcript before any deterministic
+  path can touch them — genuinely not this lane's job). **Harsh self-criticism:** the fix is
+  real but small — it grows one narrow lane's addressable pool by 9 elements against a
+  2045-stub backlog, not a dent in the headline blocker; I did not attempt the bigger swing
+  (a general per-domain API enricher for the 255-domain long tail behind `website` stubs) because
+  no single domain concentrates enough of that tail to justify it cheaply, and building one would
+  cross from "surgical fix" into "redesign," which this fire's brief explicitly said not to do.
+  Could not live-test the fix's actual GitHub-API round trip from this sandbox (proxy-scoped, as
+  above) — confidence rests on the dry-run pool-count change plus the already-proven-identical
+  code path (`fetch_repo_meta` unchanged) having worked in real CI the night before. Left the
+  ~13 stray `kind-shannon-*` branches and the branch-vs-main shipping convention question
+  untouched again (still someone else's/Eitan's call, per QUESTIONS.md).
+
 - **~14:0x (fire 30, unattended, cloud session) — rolled the mine.yml/fire-28 git-recovery fix out
   to 3 more lanes + 10th-heartbeat checkpoint review.** Standing checks first: `git_safe sync`
   clean (0 collisions); guardrails 16/17 pre-fire (0 critical; only the pre-existing `G-C`/`G-O`

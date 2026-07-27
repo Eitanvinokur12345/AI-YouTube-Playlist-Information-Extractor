@@ -4,6 +4,52 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+- **~17:0x (fire 33, unattended, cloud session) — standing checks first, then closed self-check #20
+  ("No duplicate model entries") with a real slug-alias merge, not a suppression.** Standing checks:
+  `git fetch`/`git status` clean, HEAD == origin/main (34b8f542, excava-beat #54); guardrails
+  15/17 passing, 0 critical (the one warn, G-G "not in sync," was a stale mid-cycle read from the
+  beat's own commit — resolved by the time I checked, not a real gap); confirmed the beat bot
+  (`.github/workflows/excava_beat.yml`) is still running every ~5-6 min on its own (54 beats today)
+  draining the "small" backlog lane itself, so this session's marginal value is the same as fires
+  31/32: hunt a real defect the mechanical beat can't reason about, not re-do what it already does.
+  Read `data/self_check.json` (the mechanical 50-question spec check): 40/50, with #20 flagging
+  "1 dup(s)" in `models.json`. Found it: `slug:"qwen"` (name "Qwen", version "3", quality 5, 2 video
+  endorsements, github/homepage/setup filled in) and `slug:"qwen3"` (name "Qwen3", no version,
+  quality 1, sourced only from a MarkTechPost article, no video) are the same model split across
+  two slugs — exactly the "never split one product across two slugs — merge aliases" case
+  CLAUDE.md's Step 3b names explicitly. Confirmed the identical split exists in `tools.json` too
+  (models.json's `models` array mirrors tools.json's model-typed rows) and neither record is
+  frozen (`data/stars.json` has no qwen entry, no `starred`/`locked` field on either). Merged: kept
+  the richer `qwen` record in both files (higher quality_score, real endorsements, verified
+  github/homepage links — per the rule, keep-the-richer rather than average the two), folded
+  `qwen3`'s one distinct fact forward by appending its MarkTechPost source URL to `qwen`'s
+  `also_seen_in` list (the only genuinely new signal it carried), then dropped the `qwen3` row from
+  both files. Did **not** touch the ~25 other `qwen3-*`-prefixed slugs (`qwen3-8b`, `qwen3-coder`,
+  etc.) — those are real distinct models, not the same alias collision, and merging them would have
+  been scope creep past what #20 actually flagged. Verified live, not just reasoned: re-ran
+  `python -m src.self_check` — score moved 40→41, #20 dropped out of the failing list, `tools.json`
+  count correctly ticked 2847→2846. **Caught my own side effect before it shipped:** an earlier
+  `python -m src.excava_supervisor --help` probe (checking whether standing-check tooling existed)
+  didn't just print help — it ran the real supervisor and touched
+  `data/excava/supervisor.json`/`supervisor_longterm.jsonl`; `git status` after the fix caught both
+  as unrelated diffs and I reverted them before commit, keeping this fire's diff to exactly the
+  duplicate-merge plus the two verification files (`self_check.json`, `improvement_tasks.json`)
+  it legitimately regenerates. Shipped via `python -m src.git_safe ship`. **Harsh self-criticism:**
+  this is a real but tiny fix — one duplicate out of 3121 skills + 2846 tools + 523 models, not a
+  dent in the headline M1 blocker (hub enrichment) fires 31/32 were chasing; I picked it because it
+  was cheap, certain, and independently verifiable in one cycle, not because it was the single
+  highest-value item in the backlog (`data/excava/backlog.json`'s top-ranked candidate is "verify
+  the next 200 of 6404 unverified elements," value 87 vs this task's untracked ~5) — the mechanical
+  beat already runs that lane continuously, so I judged a certain small fix beat a speculative
+  contribution to a lane already being worked, but that's a judgment call, not a proven-optimal one.
+  I did not go looking for the same alias-collision pattern anywhere else in the ~10k-element hub
+  (e.g. via a systematic near-duplicate-name scan across all 2846 tools) — #20's dup-count is now 0
+  for the exact-key check it runs, but a fuzzier scan would likely surface more of the same class of
+  bug; left that as a bigger, separate fire rather than open-ending this one. Left the branch-vs-main
+  shipping question (this session runs under `claude/kind-shannon-q3ocaa`, but `git_safe.py`
+  deliberately tracks `origin/main` regardless of local branch name, matching fires 1-32's own
+  precedent) untouched again — still Eitan's call, per `QUESTIONS.md`.
+
 - **~16:1x (fire 32, unattended, cloud session) — found and fixed the real reason most of the
   2045 stubs are unreachable: a data-shape bug hiding already-downloaded transcripts, not a
   missing-source problem.** Broke down all 2045 stubs by type first (skill 480, tool 604,

@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-07-27T00:58:51.857266+00:00",
- "total": 15,
+ "generated_at": "2026-07-27T01:08:47.594831+00:00",
+ "total": 16,
  "passing": 13,
  "critical_failures": 0,
  "guardrails": [
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": true,
-   "detail": "HEAD == origin/main (work is really saved).",
+   "ok": false,
+   "detail": "NOT in sync (behind/ahead: 0\t1) — a push may not have landed.",
    "severity": "warn"
   },
   {
@@ -78,7 +78,7 @@
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "1 guardrail runs logged (append-only, never rewritten).",
+   "detail": "4 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -99,14 +99,21 @@
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "30473 MB free on the repo drive.",
+   "detail": "30471 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": true,
-   "detail": "last batch 19.0h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026",
+   "detail": "last batch 19.1h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026",
+   "severity": "info"
+  },
+  {
+   "id": "G-P",
+   "name": "Beat heartbeat commit freshness",
+   "ok": true,
+   "detail": "shallow clone — not enough local history to find an 'excava-beat #N' commit either way; not a stall signal, just a checkout-depth limit.",
    "severity": "info"
   }
  ]

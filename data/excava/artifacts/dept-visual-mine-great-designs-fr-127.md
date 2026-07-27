@@ -1,15 +1,16 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-127` (dept) · 2026-07-27T12:04:37.884870+00:00
-> Participants: Easel, Chroma · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-visual-mine-great-designs-fr-127` (dept) · 2026-07-27T21:09:12.483372+00:00
+> Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
 
-**Decision:** Incorporate vibrant screenshots from the web as taste material artifacts in the hub.
+**Decision:**
 
-**Plan:**  
-1. Identify and collect vibrant design elements from various websites.  
-2. Take high-quality screenshots of these elements, ensuring clarity and vibrancy.  
-3. Frame these screenshots in the hub as taste material artifacts.  
-4. Organize the artifacts by category for easy navigation and reference.  
-5. Regularly update the collection to include new and trending designs.  
+**Plan:**
+1. Capture high-quality screenshots of vibrant color sections from design-heavy websites.
+2. Extract bold typography examples from the same or similar sources.
+3. Organize screenshots into a structured hub folder (e.g., `/taste-materials/color`, `/taste-materials/typography`).
+4. Tag artifacts with metadata (source URL, date, design principle).
+5. Curate a "top picks" subset for quick reference.
+6. Automate repetitive capture tasks (e.g., browser extensions) for efficiency.
 
-**What changed:** The process to curate and document taste materials was formalized to enhance the design hub.
+**What changed:** Screenshots of vibrant color and bold typography from Beverage Cans website are now framed as reusable taste materials in the hub.

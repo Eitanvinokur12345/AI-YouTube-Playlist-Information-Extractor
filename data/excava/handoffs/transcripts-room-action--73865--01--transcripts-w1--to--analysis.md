@@ -1,0 +1,25 @@
+# Hand-off — [transcripts room action] Query the YouTube transcript tool for each pending video ID using the residential IP and gentle pacing to retrieve the r
+
+| | |
+|---|---|
+| task | `transcripts-room-action--73865` (step 1/8) |
+| from | **transcripts-w1** |
+| to | **analysis** department |
+| at | 2026-07-27T18:12:15.466039+00:00 |
+
+## What was done
+Residential drain state assessed: **1315 videos re-queued** in data/_pending/ with recovered/updated records awaiting deep re-analysis; 1391 still lack a real transcript. Today's drain auto-stopped on an IP block (correct behavior — bursting escalates the block); the remainder retries next residential session.
+
+## Artifacts (where the work lives)
+- `data/_pending/`
+- `data/processed/`
+- `src/backfill_transcripts.py`
+
+## What remains
+Deep re-extraction of the 1315 pending records under the anti-boilerplate gate, then draining the remaining 1391 on future residential sessions (gentle pacing).
+
+## Context the next agent needs
+bulk_analyze consumes data/_pending hourly. Records carry transcript_source='transcript' + caption_complete=true when the caption spans the full video; incomplete captions were deliberately left for Whisper.
+
+## Done criteria (unchanged unless stated)
+the stated action is done and verifiable

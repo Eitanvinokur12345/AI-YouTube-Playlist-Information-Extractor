@@ -4,6 +4,44 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+- **~17:5x (fire 34, unattended, cloud session) — standing checks caught a critical guardrail
+  failure the beat/core-spoton commits had been silently shipping: `data/designs.json` was
+  broken JSON.** `python -m src.guardrails` opened at 14/17, 1 CRITICAL: G-F "BROKEN JSON:
+  data/designs.json." Read it: 978 unresolved `<<<<<<< HEAD` / `=======` / `>>>>>>>
+  a636f916753764c238578341c1e7da00a713f8a8` git conflict-marker blocks scattered through the
+  file, one per record's `added_at` field plus the trailing `updated_at`. That commit hash
+  matches `a636f916` — "analyze: safety commit 2026-07-27T17:15Z" — in this session's own git
+  log, so a merge/rebase around that safety-commit point left the conflict unresolved and it
+  got committed as-is; the file has been invalid JSON since. Verified before touching anything
+  that every single conflict was cosmetic, not a real content fork: programmatically diffed all
+  978 HEAD-vs-theirs blocks with timestamps normalized out — 0 structural differences, only the
+  `added_at`/`updated_at` values differed (HEAD consistently newer: 17:16:35 vs 17:11:01).
+  Resolved by keeping HEAD's timestamp throughout (a plain regex substitution, not a hand edit —
+  978 identical-shape blocks), then confirmed with `json.load`: 978 design records, valid,
+  `updated_at` intact. Re-ran guardrails: **15/17, 0 critical** — G-F now passes; the only two
+  remaining warns are G-C (stale history bundle, self-heals on `git_safe` push) and G-O (local
+  PC drain 36h stale — PC-off/Ollama-off, not fixable from a cloud session, same as every prior
+  fire). Also caught and reverted a side effect before committing: running `guardrails.py`
+  locally in this sandbox wrote a bogus low `"done": 34, "depts_moving": 10"` entry into
+  `data/excava/movement.json` (real cumulative count is 5237+) and touched
+  `data/guardrails_status.json` — both `git checkout --`'d back to HEAD so this commit's diff is
+  exactly the designs.json fix, matching the precedent fires 6 and 32 already set for not
+  shipping local-run noise. **Harsh self-criticism:** this is a real, live bug — the Designs tab
+  (and anything else that `json.load`s this file, including `build_hub_index`/`build_hub_api`)
+  has been broken since the conflicting commit landed, and neither the hourly beat nor
+  core-spoton caught it because G-F only runs inside this guardrails entrypoint, not inside the
+  commit path itself — that's the actual gap, and I did not fix it: `git_safe.commit()`/`push()`
+  still don't run a JSON-validity check before shipping, so the same class of bug (an unresolved
+  conflict marker slipping into a committed data file) can recur on the very next merge. A
+  proper fix would wire `guardrails.run()` (or at least the G-F JSON check) as a pre-push gate
+  inside `git_safe.py` itself, not something a fire has to notice by hand — queuing that as the
+  concrete next-fire task. I also did not scan the OTHER ~30 top-level `data/*.json` files for
+  the same conflict-marker pattern beyond what G-F's own JSON-parse check already covers (a
+  parse failure would have caught any of them the same way it caught this one, so the risk is
+  low, but it was not an exhaustive grep-for-`<<<<<<<` sweep). Standing checks: `origin/main` ==
+  local HEAD before starting, no stray uncommitted source files, disk headroom fine (30.4GB
+  free). Shipping via `python -m src.git_safe ship`.
+
 - **~17:0x (fire 33, unattended, cloud session) — standing checks first, then closed self-check #20
   ("No duplicate model entries") with a real slug-alias merge, not a suppression.** Standing checks:
   `git fetch`/`git status` clean, HEAD == origin/main (34b8f542, excava-beat #54); guardrails

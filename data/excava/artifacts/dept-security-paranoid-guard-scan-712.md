@@ -1,0 +1,16 @@
+# security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (not fake/dead); DETECT
+
+> Decision artifact · room `dept-security-paranoid-guard-scan-712` (dept) · 2026-07-27T22:34:43.101287+00:00
+> Participants: Warden, Bastion · synthesized by mistral/mistral-small-latest
+
+**Decision:**
+
+**Plan:**
+1. Run the LLM Guard scanner on the conversation’s input/output stream to detect leaks or injection attempts.
+2. Generate a security report confirming whether the conversation’s content is clean or flagged for anomalies.
+3. Verify all elements (inputs, outputs, references) are real and not fake/dead.
+4. If anomalies are detected, quarantine the conversation and initiate a manual review.
+5. Log the scan results and any actions taken for audit purposes.
+6. Proceed only if the report confirms clean status.
+
+**What changed:** Scanner execution and verification initiated.

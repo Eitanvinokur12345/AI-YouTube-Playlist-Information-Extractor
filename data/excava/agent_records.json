@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-27T05:46:41.918087+00:00",
+ "generated_at": "2026-07-27T05:52:34.390231+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 185,
+   "turns_7d": 186,
    "rooms_7d": 26,
    "engines_used": [
     "gh-models",
@@ -17,7 +17,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "A *time-only* alert leaks the *exact moment* of detection—attackers can correlate it with other signals to pinpoint our "
+   "last_position": "A *time-only* alert still leaks the *exact moment* of detection—attackers can correlate it with their own logs to pinpoi"
   },
   {
    "id": "watch-w1",
@@ -41,7 +41,7 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 136,
+   "turns_7d": 137,
    "rooms_7d": 66,
    "engines_used": [
     "gh-models",
@@ -89,8 +89,8 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 76,
-   "rooms_7d": 38,
+   "turns_7d": 77,
+   "rooms_7d": 39,
    "engines_used": [
     "gh-models",
     "glm",
@@ -98,15 +98,15 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt DeepSeek-R1-671B on EXCAVA’s 8xA100 node. Its dense architecture avoids MoE sharding overhead, delivering consiste"
+   "last_position": "Adopt Qwen3-235B-A22B-Instruct for EXCAVA. Its MoE design cuts latency 30-40% while keeping accuracy high—directly raisi"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 76,
-   "rooms_7d": 38,
+   "turns_7d": 77,
+   "rooms_7d": 39,
    "engines_used": [
     "gh-models",
     "glm",
@@ -114,7 +114,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DeepSeek-R1-671B’s \"consistent 6x throughput\" is a fantasy if its per-token compute cost collapses EXCAVA’s batch size—p"
+   "last_position": "Qwen3-235B’s MoE claim ignores sharding overhead—EXCAVA’s 8xA100 node can’t hide the latency spike when routing 235B par"
   },
   {
    "id": "creators-lead",
@@ -184,8 +184,8 @@
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 42,
-   "rooms_7d": 21,
+   "turns_7d": 43,
+   "rooms_7d": 22,
    "engines_used": [
     "gh-models",
     "groq",
@@ -193,29 +193,29 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Choose system preference by default, with a manual override in settings. This respects user habits and avoids forcing a "
+   "last_position": "Choose a dark theme by default with a manual light-mode toggle. High contrast improves visibility in low light, which ma"
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 42,
-   "rooms_7d": 21,
+   "turns_7d": 43,
+   "rooms_7d": 22,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk with defaulting to system preference is that it may not align with the optimal theme for our specific inte"
+   "last_position": "The real risk isn’t preference—it’s habituation. Users won’t switch from dark mode once they’re used to it, even if ligh"
   },
   {
    "id": "accessibility-w1",
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 40,
+   "turns_7d": 41,
    "rooms_7d": 21,
    "engines_used": [
     "gh-models",
@@ -224,21 +224,21 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Add a single high-contrast skip link at the very top of every page that jumps directly to the main content. This fixes k"
+   "last_position": "We should add a set of skip links, one per major region, to allow users to jump directly to the section they need. This "
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 40,
+   "turns_7d": 41,
    "rooms_7d": 21,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Risk: A single skip link fails when pages have *three* or more distinct navigation blocks (e.g., header, sidebar, footer"
+   "last_position": "Risk: A set of skip links risks cluttering the page for *all* users—especially on mobile or reduced-motion settings—if n"
   },
   {
    "id": "power-lead",
@@ -255,36 +255,36 @@
    "positions_held": 30,
    "last_position": "DECISION: Run a 48-hour blind A/B stress test on EXCAVA’s 8xA100 node with identical input batches for Qwen3-235B-A22B-I",
    "proposed": 25,
-   "shipped": 24
+   "shipped": 25
   },
   {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
    "role": "lead",
-   "turns_7d": 34,
-   "rooms_7d": 34,
+   "turns_7d": 35,
+   "rooms_7d": 35,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Fetch verified AI headlines from Reuters, BBC, and the White House press feeds, compile into a single digest wit"
+   "last_position": "ACTION: Fetch verified AI headlines from Reuters, BBC, and the White House press feeds via t | output: fresh AI-news dig"
   },
   {
    "id": "news-w1",
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 34,
-   "rooms_7d": 34,
+   "turns_7d": 35,
+   "rooms_7d": 35,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll query Reuters, BBC, and the White House press feeds for the latest AI headlines and compile them into a single dige"
+   "last_position": "I’ll query Reuters, BBC, and the White House press feeds for the latest AI headlines. The result will be a fresh AI-news"
   },
   {
    "id": "security-lead",
@@ -361,6 +361,34 @@
    "last_position": "Action: I will run the memory linking command to connect every existing memory I have into a unified graph. This will pr"
   },
   {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 25,
+   "rooms_7d": 25,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 25,
+   "last_position": "I will run a full audit of the department’s link inventory using the link-checker tool. This will produce a complete rep"
+  },
+  {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 25,
+   "rooms_7d": 25,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 25,
+   "last_position": "ACTION: Anchor delivers the cleaned link inventory report with dead links removed."
+  },
+  {
    "id": "improve-w1",
    "name": "Sprocket",
    "dept": "improve",
@@ -388,34 +416,6 @@
    ],
    "positions_held": 30,
    "last_position": "Canary deployments still miss silent failures—like a prompt that degrades answer accuracy without changing latency or us"
-  },
-  {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 24,
-   "rooms_7d": 24,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 24,
-   "last_position": "I will run a full audit of the department’s link inventory using the link-checker tool. This will produce a complete rep"
-  },
-  {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
-   "role": "lead",
-   "turns_7d": 24,
-   "rooms_7d": 24,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 24,
-   "last_position": "ACTION: Anchor delivers the cleaned link inventory report with dead links removed."
   },
   {
    "id": "analysis-lead",
@@ -448,7 +448,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Default to system theme on first load, with a one-time prompt offering permanent override in settings. Result:",
    "proposed": 21,
-   "shipped": 20
+   "shipped": 21
   },
   {
    "id": "mining-lead",

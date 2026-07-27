@@ -4,6 +4,76 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+- **~20:0x (fire 36, unattended, cloud session) — chased self_check's #1 flagged failure
+  ("routine kept pace, no stalled backlog", pending=1315) to its real root cause instead of
+  another plumbing detour, and found a genuine silent-failure-masking bug in analyze.yml's own
+  health reporting.** Standing checks first: local `origin/main` cache stale (re-fetched, HEAD
+  matched, nothing at risk); upstream tracking missing (set to `origin/main`); guardrails
+  15/17, 0 critical. `self_check.json` (41/50) flags 9 failing questions; #1/#45 both point at
+  the same stalled `data/_pending` backlog (1315, growing slowly since catch-up activated at
+  1036 on 07-17 —10 days, net +279, despite catch-up's 1000-batch/newest-first/30-min-sprint
+  config being active the whole time). Pulled real GH Actions history for `analyze.yml`
+  (`mcp__github__actions_list` / `get_job_logs`, not local reasoning) instead of guessing:
+  every daytime run (~14-16/day) shows step 4 "Analyze pending videos" as `skipped` — expected,
+  by design, the `cadence.night_window` gate (23:00-07:00 Asia/Jerusalem) that protects the
+  shared Claude Pro/Max token from draining during Eitan's working hours. But the 4 REAL
+  attempts inside last night's window (07-26 22:26Z, 23:26Z, 07-27 01:05Z, 02:25Z) all FAILED
+  identically: Claude Code SDK `result` came back `is_error:true` after exactly 1 turn, $0
+  cost, ~2 seconds — the classic signature of the OAuth exchange itself failing before any
+  real work starts, matching the workflow's own built-in `token_hint` diagnostic verbatim
+  ("expired Claude subscription token... update the CLAUDE_CODE_OAUTH_TOKEN_REAL secret").
+  **But `data/status.json` was reading `analyze_ok: true, token_hint: ""` the whole time** —
+  not because the problem was fixed, but because the "Record analyze health" step treated
+  `skipped` identically to `success` and blindly reset both fields on every one of the ~14-16
+  daily skips, overwriting the failure flag within 1-3 hours of it being set and before anyone
+  (Eitan, the pulse dashboard, a future fire) could see it. Fixed
+  `.github/workflows/analyze.yml`: `skipped` now leaves `analyze_ok`/`token_hint` untouched,
+  same as `cancelled` already did — only a genuine `success` (real Claude run completed) clears
+  a prior failure. Shipped via `python -m src.git_safe ship`, commit `7b89597f`, verified
+  `origin/main == HEAD`. **Then manually dispatched `analyze.yml` via
+  `mcp__github__actions_run_trigger`** (`workflow_dispatch` explicitly overrides the night gate
+  per the workflow's own comment) — both to get a live, current read on whether the token
+  problem is still active (the four failures are ~18-42h old; status unknown since, because
+  every attempt since has been gated, not attempted) and, if it isn't, to put a real dent in
+  the 1315-backlog instead of leaving it for tonight's window. **Result, confirmed live:** run
+  `30300850025` failed the same way in 19 seconds — the token problem is CURRENT, not stale.
+  **And a second, independent, more fundamental bug turned up while checking why the fix
+  hadn't visibly landed on origin:** after that dispatched run finished, `origin/main` was
+  still sitting at the fix commit — no new commit from the run at all, despite its "Commit any
+  remaining changes" step reporting success. Pulled that step's own log: it committed locally
+  fine, then `git push` failed with `remote: Invalid username or token. Password
+  authentication is not supported for Git operations.` — the exact same failure the very first
+  (pre-fix) log dump had also shown at 02:26Z, meaning **every real analyze attempt has been
+  silently losing its safety-commit push, success or failure, for as long as this pattern has
+  existed** — the "skipped" fix was correct but blind to this second bug. Root cause, traced
+  precisely: `claude-code-action` rewrites the git remote URL to its own OIDC-exchanged
+  installation token while it runs, then explicitly `curl -X DELETE .../installation/token`s
+  (revokes) that same token in its own post-step cleanup — which fires BEFORE this workflow's
+  later "Commit any remaining changes" step, so that step's plain `git push` authenticates
+  with an already-revoked token. Fixed by re-pointing `origin` at the standard job
+  `GITHUB_TOKEN` (already granted `contents: write` by this workflow's own `permissions:`
+  block) at the top of that step, before anything else runs. Shipped both fixes via `python -m
+  src.git_safe ship` (skip-masking as `7b89597f`, the push-auth fix as a second commit on
+  top), verified `origin/main == HEAD` after each. **This second fix is the more load-bearing
+  of the two: even a perfectly healthy Claude token would have kept failing to save anything,
+  on every single real attempt.** Still unconfirmed and NOT fixable from here: whether the
+  Claude-side `is_error:true` (0 cost, 1 turn, ~2s — matching the workflow's own token_hint
+  diagnosis) really is an expired `CLAUDE_CODE_OAUTH_TOKEN_REAL`; that needs `claude
+  setup-token` run on Eitan's own authenticated device and the GitHub secret updated — no
+  sandboxed session can do that for him. The next real attempt — tonight's night window, or
+  another manual dispatch after Eitan renews the token — is what will actually prove the
+  pipeline moves videos again; this fire only proves what's broken and fixes what's fixable
+  from here. **Harsh self-criticism:** I nearly wrote this entry up as done right after seeing
+  the dispatched run go "in_progress," before it actually finished — only checking back caught
+  the second, more consequential bug; that's a real near-miss in how close I came to
+  under-verifying. I also did not audit whether `review.yml`/`improve.yml` (both also
+  night-scheduled, both presumably also invoke `claude-code-action`) share either of these two
+  bugs — if they use the same inline health-recording snippet and the same post-Claude commit
+  step, they very likely have the identical push-auth failure, and I scoped this fire to the
+  one workflow self_check flagged rather than sweeping every Claude-invoking lane. Left the
+  ~13-20 stray `kind-shannon-*` branches and the branch-vs-main shipping convention untouched
+  again (still Eitan's call, per `QUESTIONS.md`).
+
 - **~19:0x (fire 35, unattended, cloud session) — rolled the mine.yml/fire-28 git-recovery fix out
   to the 3 highest-cadence lanes still on the old silent-discard pattern: `news.yml` (6-hourly —
   the highest-cadence file left after fire 30's pass), `gemini_video.yml` (2×/day), `visual.yml`

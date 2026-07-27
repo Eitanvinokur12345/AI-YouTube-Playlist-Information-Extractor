@@ -5,6 +5,77 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-27
+- **~01:0x (fire 18, unattended, cloud session) — G-M's STALLED read was real, but it was fire
+  16's own already-diagnosed bug catching an already-in-flight job, not a new one: cancelled the
+  zombie `excava_beat.yml` run and added the guardrail that would have caught it directly.**
+  Non-brain front (`src/guardrails.py`, GH Actions ops). Standing checks were already run before
+  this fire started (per the harness setup): stale `origin/main` cache re-fetched clean, HEAD
+  matched, upstream already tracking `origin/main`; `python -m src.guardrails` 13/15, 0 critical,
+  with G-M reading "4616 tasks done, 12 departments moving — STALLED (no new completions in the
+  last 4 beats)". Investigated properly instead of assuming it was another metric artifact (the
+  fire-5/6 class of bug): read `data/excava/state.json`'s `usage` tally (4616, matches G-M) and
+  `data/excava/movement.json`'s history — the counter climbed 4602→4609→4616 in lockstep with
+  `bulk-analyze (free pool)` commits (21:30, 23:32), then sat flat at 4616 across three more
+  guardrail checks (00:04, 00:58, 00:58). That pattern — done-counter moving only on
+  `bulk_analyze.yml`'s own periodic call to `python -m src.excava`, never on anything else —
+  pointed straight at the DEDICATED `excava_beat.yml` heartbeat (which should call the same
+  function every ~5-10 min for its whole 5.3h run and commit `excava-beat #N: <ts>` each cycle)
+  being dead in the water. Confirmed via `mcp__github__actions_list`/`actions_get`: run
+  `30220502266` had been sitting `in_progress` since `21:09:56Z`, its "beat" job's core step
+  running uninterrupted since `21:46:40Z` — over 3 hours with zero step progress — and because
+  the workflow's concurrency group has `cancel-in-progress: false`, that one zombie run was
+  starving every later trigger: run `#287` (created 22:14Z) sat queued and was eventually
+  cancelled UNRUN, and run `#288` (created 23:16Z, the newest at investigation time) sat
+  "pending" with **zero jobs started** for 1h44m. The clincher: the stuck run's checkout step
+  completed at `21:46:40Z` on head commit `670778f4` — fire 16's wall-clock fix (`f4efe22d`,
+  bounding the previously-unbounded room-advance loop to 240s) didn't land until `23:03:33Z`, over
+  an hour LATER. So this is exactly the bug fire 16 already fixed, just caught in a job that had
+  already checked out the pre-fix code before the fix existed — the fix is real and correct, it
+  simply can't retroactively heal an in-flight run. Fire 17's "confirmed the fix worked" reading
+  (G-M "moving", +46 over 13.6h) was likely reading `bulk_analyze`'s independent bumps, not proof
+  the dedicated beat loop had actually recovered — this fire is the first to catch that the two
+  signals aren't the same thing. **Fix, two parts:** (1) operational — cancelled the zombie run
+  (`30220502266`) via `mcp__github__actions_run_trigger` `cancel_workflow_run` rather than waiting
+  out its remaining ~2.5h budget; confirmed run `#289` started immediately after and is actively
+  executing on the already-fixed code (re-checked via `actions_get`, job steps progressing past
+  checkout). (2) durable — added `G-P` "Beat heartbeat commit freshness" to `src/guardrails.py`:
+  reads git history directly (no network) for the last `excava-beat #N` commit and flags it stale
+  past 6h, so this exact "dedicated loop wedged, done-counter still ticks from a DIFFERENT caller"
+  gap surfaces automatically instead of needing a manual GH Actions API investigation like this
+  one. Made it shallow-clone-safe on purpose: this very sandbox's checkout is shallow (`git
+  rev-parse --is-shallow-repository` → true, only 50 commits of local history, boundary at
+  `b44a3846`/2026-07-26T16:01:59Z) and `actions/checkout@v4` itself defaults to `fetch-depth: 1` —
+  a naive "no match found = STALE" would have been a permanent false alarm on every shallow
+  checkout (which may be the CI norm, not the exception); "not found + shallow" now reports
+  `info`/pass instead, "not found + full history" still fails for real. **Verified:** `python -m
+  src.guardrails` → 13/16 passing, 0 critical (G-P present, correctly reads "shallow clone — not a
+  stall signal" here); 4 synthetic monkeypatched cases for `g_beat_heartbeat()` (fresh-30min →
+  pass, stale-10h → fail, not-found+shallow → pass/info, not-found+full-history → fail) all landed
+  correctly; `python3 -c "import ast; ast.parse(...)"` clean; `python -m src.pulse` re-run.
+  Confirmed via live `mcp__github__actions_get` calls (not guessed) that run `30220502266` is
+  `completed`/`cancelled` and run `#289` is `in_progress` with real job progress. **Harsh
+  self-criticism:** I did NOT wait to see `state.json`'s `usage` tally actually tick up from
+  run `#289` before shipping — room-advance + a real completion can take longer than this fire's
+  budget to observe, so the "proof" here is "the blocker is gone and a fresh run on fixed code is
+  executing," not "a new task definitely completed" — the next fire (or Eitan) should glance at
+  PULSE.md's movement number to confirm it actually rises, not just assume this fixed it. Cancelling
+  a live CI run unattended is also a step beyond what prior fires did (16/17 only read and reasoned
+  about stuck runs, never touched them) — I judged it safe (reversible, zero visible work being
+  done, cron re-triggers regardless) and flagged it explicitly in QUESTIONS.md rather than treating
+  it as obviously fine; if Eitan disagrees with agents cancelling CI on their own judgment, that's
+  now a concrete precedent to push back on. The `G-P` 6h threshold is a guess calibrated against
+  this one incident (a 3h+ hang) with slack for legitimate quota-exhaustion queueing, not a
+  scientifically derived number — a future fire may need to retune it if it either false-alarms
+  during a long-but-healthy quota drought or misses a shorter real hang. Scope stayed to this one
+  mechanism: did not touch the ~13 stray `kind-shannon-*` branches, the 187 empty-body records, or
+  sweep for OTHER possibly-zombied runs across the repo's other 20 workflows (only checked
+  `excava_beat.yml`, the one G-M pointed at). **Branch/PR flag for Eitan:** this session's harness
+  required committing on `claude/kind-shannon-hcwmum` and opening a PR into `main` (draft PR
+  #20) instead of the established away-mode convention of shipping straight to `main` via `python
+  -m src.git_safe ship` (confirmed `src/git_safe.py:166` hardcodes `origin HEAD:main`, which this
+  session's instructions explicitly said not to use for the final push) — noting the deviation
+  factually, same as prior fires flagged their own convention choices.
+
 - **~00:0x (fire 17, unattended, cloud session) — confirmed fire 16's wall-clock fix actually
   recovered the stall, then gave "visualization" (the last talk_only department) a real
   executor.** Standing checks first (`python -m src.standing_checks`): local `origin/main` cache

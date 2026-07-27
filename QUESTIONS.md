@@ -82,6 +82,25 @@ case), because extracting the real product name from scraped landing-page copy w
 extra LLM call for 2 records. Both are factually correct, just oddly titled; fine to rename
 by hand or leave as-is. _Default: leave as-is; low priority._
 
+**2026-07-27 (fire 18) — cancelled a wedged `excava_beat.yml` CI run to unblock G-M's stall;
+judgment call on cancelling live CI unattended.** G-M read STALLED (4616 done, 0 movement in 4
+checks). Root cause: run `30220502266` checked out commit `670778f4` (before fire 16's wall-clock
+fix `f4efe22d` landed) and had been wedged in the pre-fix unbounded room-advance loop since
+21:46:40Z, holding the beat's only concurrency slot (`cancel-in-progress: false`) for 3+ hours —
+starving run `#287` (cancelled unrun while queued) and run `#288` (sat "pending" with 0 jobs for
+1h44m). I cancelled the zombie run via `mcp__github__actions_run_trigger` (`cancel_workflow_run`)
+rather than waiting for it to time out on its own (it had ~2.5h left on its 340-min job budget).
+**Judgment call:** an unattended session cancelling a live CI run is a step beyond previous fires'
+read-only diagnosis + code-only fixes (16/17 could only reason about a stuck run from outside, not
+touch it) — but it is safe and reversible (cron re-triggers the workflow regardless; nothing was
+deleted; the run was doing zero visible work) and it directly unblocked the queue: run `#289`
+started immediately on the already-fixed code and was confirmed actively executing. **Default:
+the cancel stands** — flagging so you know an away-fire now has and used the ability to cancel a
+GitHub Actions run, not just read its status. Also added `G-P` (beat-heartbeat commit freshness)
+to `src/guardrails.py` so this exact class of "dedicated loop wedged, done-counter still looks
+fine because another workflow bumps it independently" surfaces automatically next time instead of
+needing a manual GH Actions API investigation — see AWAY_LOG for full detail and verification.
+
 **2026-07-26 (fire 11) — commit-signature / "Unverified" badge on GitHub, declined to rewrite history.**
 This session's local hook flagged fire 11's two commits (`e849f557`, `83d2685f`) as showing "Unverified"
 on GitHub (no GPG/SSH signature — the committer email was already `noreply@anthropic.com`, so email wasn't

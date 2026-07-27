@@ -4,6 +4,57 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+## 2026-07-27
+- **~00:0x (fire 17, unattended, cloud session) — confirmed fire 16's wall-clock fix actually
+  recovered the stall, then gave "visualization" (the last talk_only department) a real
+  executor.** Standing checks first (`python -m src.standing_checks`): local `origin/main` cache
+  was stale (`1f9ed759`→`3cf7b311`), upstream tracking missing on this session's branch — both
+  auto-healed, nothing lost. Re-ran `python -m src.guardrails` + `python -m src.pulse`: G-M read
+  "Work is moving" — 4616 done (▲+46 over 13.6h), NOT stalled — confirming fire 16's
+  `ROOM_ADVANCE_BUDGET_S` wall-clock bound in `excava.py` did fix the real hang (the long-running
+  `excava_beat` cycle it described has since produced completions again). Then picked the next
+  concrete, well-scoped gap from `excava_systemcheck`'s own "departments executable" line:
+  "visualization" was the one remaining `talk_only` department (`right_tool: null` in
+  `intent.json`) — staffed but unable to do real work, same class of gap `accessibility` had
+  before fire ~ (2026-07-25) got `src.accessibility_scan`. Built `src/liveliness_scan.py`: a
+  read-only, deterministic (no LLM/network) scan matching the department's own charter
+  ("visibility, liveliness, clarity... OUR screens") — (1) broken local asset refs in
+  `docs/*.html` (`src=`/`href=` pointing at a same-repo file that doesn't exist), (2) shipped
+  placeholder text (`Lorem ipsum`, bare `TODO`/`FIXME`, leaked JS artifacts `undefined`/`NaN`/
+  `[object Object]` in static markup, template-literal-aware so `${x}` code isn't misread as
+  content), (3) data liveliness — every `data/*.json` file `dashboard.js` actually fetches must
+  exist, parse, and carry a non-empty payload (an empty top-level list/dict is a screen that
+  would render blank). First real run against the live dashboard came back clean (0 issues) —
+  a genuinely clean shell, not a bug: a synthetic sanity check (fake broken `<img src>`, fake
+  `Lorem ipsum` text, a `${x || "undefined"}` template expression) proved the detectors actually
+  fire and don't false-positive on template code. One real false positive DID surface on the
+  first live run and was fixed before shipping: "Coming Soon" is EXCAVA's own real, intentional
+  tab name (the upcoming-tools view), not unfinished-content boilerplate — dropped that pattern
+  rather than ship a checker that nags about a legitimate feature. Wired it in exactly like
+  `accessibility_scan`: `REAL_TOOL["visualization"] = "src.liveliness_scan"` +
+  `TOOL_DOMAIN` keywords in `excava_agents.py`, `intent.json`'s `right_tool` set from `null`.
+  **Verified:** `python -m src.excava_systemcheck` → "departments executable" now
+  **13/14 have a real executor, `talk_only: []`** (was 12/14, `talk_only: ["visualization"]`);
+  direct call to `_run_real_tool("visualization")` returns `{"ok": true, "tool":
+  "src.liveliness_scan", "tail": "liveliness_scan: 0 issue(s) — clean"}` and `_task_tool_fit`
+  correctly routes a visualization-worded task to it; `python -m py_compile` clean on both
+  touched files; `python -m src.guardrails` → 14/15, 0 critical (only G-C, self-heals on ship;
+  G-L flagged the new file pre-commit, resolves on this commit; G-M's own live window shows
+  STALLED again simply because this fire did infra work, not analyze/bulk-analyze work — the
+  done-counter genuinely didn't move in that narrow window, not a regression, same known-flappy
+  behavior past fires already noted). **Harsh self-criticism:** a first-run "clean, 0 issues"
+  result is honest but unproven against a REAL break — I have not yet seen this scanner catch a
+  genuine problem in this repo's own shell (only the synthetic unit check proves the logic
+  fires), so its true value is unconfirmed until either a future regression trips it or someone
+  seeds a deliberate break to watch it catch. The data-liveliness check only covers the 7
+  `data/*.json` paths `dashboard.js` references by literal string match — a dynamically
+  constructed fetch path (template-built, not a literal `data/...json` substring) would be
+  invisible to it, same brittleness class `accessibility_scan` already accepts for JS-templated
+  HTML. Scope stayed to one department, one new module — did not touch the 187 empty-body
+  records, the ~13 stray `kind-shannon-*` branches, or the `watch`/`transcripts` BLOCKED
+  departments (both still genuinely blocked on owner resources: Gemini quota / a residential
+  IP — not something a fire should route around).
+
 ## 2026-07-26
 - **~23:0x (fire 16, unattended, cloud session) — chased down G-M's "STALLED (no new
   completions in the last 4 beats)" instead of assuming it was another metric artifact like

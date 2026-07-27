@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-27T18:34:31.615595+00:00",
+ "generated_at": "2026-07-27T18:41:10.942221+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 252,
+   "turns_7d": 253,
    "rooms_7d": 31,
    "engines_used": [
     "gh-models",
@@ -17,14 +17,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk with a one-way sync from Transcripts to Risk is that Risk inherits noise they can’t filter—Transcripts tag"
+   "last_position": "The real risk with auto-tagging by keyword is false positives—\"legal\" could appear in a casual mention, not a real risk,"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 191,
+   "turns_7d": 192,
    "rooms_7d": 101,
    "engines_used": [
     "gh-models",
@@ -35,15 +35,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Run Arcads AI Video on the latest AI marketing demo to extract visual cues. This will produce a structured analysis of v"
+   "last_position": "Do this: Keep two separate Notion databases—one for risk items, one for transcript requests—both owned by Ops. Add an au"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 187,
-   "rooms_7d": 86,
+   "turns_7d": 188,
+   "rooms_7d": 87,
    "engines_used": [
     "gh-models",
     "groq",
@@ -51,15 +51,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will query the YouTube transcript tool for the first pending video ID using the mcp-server-youtube-transcript. This wi"
+   "last_position": "I will query the YouTube transcript tool for the first pending video ID using the resident IP and gentle pacing. This wi"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 167,
-   "rooms_7d": 64,
+   "turns_7d": 168,
+   "rooms_7d": 65,
    "engines_used": [
     "gh-models",
     "groq",
@@ -67,7 +67,7 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Do this: Keep two separate Notion databases—one for risk items, one for transcript requests—both owned by Ops. Add a man"
+   "last_position": "I will fetch the full earnings call transcript from the BloodHound-MCP server to analyze its content. This will produce "
   },
   {
    "id": "analysis-checker",
@@ -154,23 +154,23 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 81,
-   "rooms_7d": 81,
+   "turns_7d": 82,
+   "rooms_7d": 82,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Query kimtaeyoon83/mcp-server-youtube-transcript for the first pending video ID to retrieve its full transcript "
+   "last_position": "ACTION: Query kimtaeyoon83/mcp-server-youtube-transcript for the first pending video ID using resident IP and gentle pac"
   },
   {
    "id": "creators-lead",
    "name": "Nova",
    "dept": "creators",
    "role": "lead",
-   "turns_7d": 80,
-   "rooms_7d": 79,
+   "turns_7d": 81,
+   "rooms_7d": 80,
    "engines_used": [
     "gh-models",
     "groq",
@@ -178,15 +178,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Nova closes the \"Skill Creator for Claude\" npm package in the creators tab, labeled \"Created by EXCAVA\" with tes"
+   "last_position": "ACTION: Nova closes the \"Skill Creator for Claude\" npm package in the creators tab, labeled \"Created by EXCAVA\" with REA"
   },
   {
    "id": "creators-w1",
    "name": "Forge",
    "dept": "creators",
    "role": "doer",
-   "turns_7d": 80,
-   "rooms_7d": 79,
+   "turns_7d": 81,
+   "rooms_7d": 80,
    "engines_used": [
     "gh-models",
     "groq",
@@ -194,7 +194,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will draft the \"Skill Creator for Claude\" npm package in the creators tab, labeled \"Created by EXCAVA.\" This will prod"
+   "last_position": "I’ll draft the \"Skill Creator for Claude\" npm package in the creators tab, labeled \"Created by EXCAVA.\" It will include "
   },
   {
    "id": "watch-lead",
@@ -210,6 +210,21 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: At 12:25:00, Iris directs Arcads AI Video to compile and output a structured visual-audio analysis of the latest"
+  },
+  {
+   "id": "news-w1",
+   "name": "Scoop",
+   "dept": "news",
+   "role": "doer",
+   "turns_7d": 59,
+   "rooms_7d": 59,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I will query Reuters, BBC, and the White House press feeds for the latest AI headlines. This will produce a fresh AI-new"
   },
   {
    "id": "accessibility-w1",
@@ -243,68 +258,69 @@
    "last_position": "Reader: A visible skip link *and* `<main role=\"main\">` still fails when dynamic content loads—VoiceOver users get stuck "
   },
   {
-   "id": "news-w1",
-   "name": "Scoop",
-   "dept": "news",
-   "role": "doer",
-   "turns_7d": 58,
-   "rooms_7d": 58,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will query Reuters, BBC, and the White House press feeds for the latest AI-related headlines. This will produce a fres"
-  },
-  {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
    "role": "lead",
-   "turns_7d": 55,
-   "rooms_7d": 55,
+   "turns_7d": 56,
+   "rooms_7d": 56,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Fetch latest AI headlines from Reuters, BBC, and White House press feeds into a digest titled \"AI News Digest [Y"
+   "last_position": "ACTION: Fetch latest AI headlines from Reuters, BBC, and White House press feeds into a single digest file named \"AI-new"
   },
   {
    "id": "visual-lead",
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 50,
-   "rooms_7d": 49,
+   "turns_7d": 51,
+   "rooms_7d": 50,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Chroma frames Easel’s vibrant pink hero screenshot of the Beverage Cans website into the taste material hub as a"
+   "last_position": "ACTION: Chroma frames Easel’s vibrant pink hero screenshot of the Beverage Cans website into the hub as taste material."
   },
   {
    "id": "visual-w1",
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 50,
-   "rooms_7d": 49,
+   "turns_7d": 51,
+   "rooms_7d": 50,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section. The image will show the bold co"
+   "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section. This produces a taste material "
   },
   {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
+   "role": "lead",
+   "turns_7d": 45,
+   "rooms_7d": 45,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Use a fixed-height live timeline strip at the top of EXCAVA with a high-contrast badge for the newest event on",
+   "proposed": 2
+  },
+  {
+   "id": "power-lead",
+   "name": "Dynamo",
+   "dept": "power",
    "role": "lead",
    "turns_7d": 44,
    "rooms_7d": 44,
@@ -314,24 +330,8 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Implement a filtered live timeline at the top of EXCAVA’s interface, highlighting only high-importance decisio",
-   "proposed": 2
-  },
-  {
-   "id": "power-lead",
-   "name": "Dynamo",
-   "dept": "power",
-   "role": "lead",
-   "turns_7d": 43,
-   "rooms_7d": 43,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Run a 48-hour blind A/B stress test on EXCAVA’s 8xA100 node comparing pruned DeepSeek-R1-405B vs. DeepSeek-R1-",
-   "proposed": 3,
+   "last_position": "DECISION: Run a 48-hour blind A/B stress test on EXCAVA’s 8xA100 node comparing Qwen3-235B-A22B vs DeepSeek-R1-671B—thro",
+   "proposed": 4,
    "shipped": 2
   },
   {
@@ -339,15 +339,43 @@
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 37,
-   "rooms_7d": 37,
+   "turns_7d": 38,
+   "rooms_7d": 38,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will run the memory linking command to connect every existing memory to ensure the brain graph is fully embedded. This"
+   "last_position": "I will run the memory linking command to connect every existing memory to enhance recall by meaning. This will produce a"
+  },
+  {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 37,
+   "rooms_7d": 37,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll run a full audit of the department’s link inventory using the link-checker tool. This will produce a complete repor"
+  },
+  {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 37,
+   "rooms_7d": 37,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Anchor delivers the cleaned link inventory report with dead links removed by end of day."
   },
   {
    "id": "improve-w1",
@@ -411,40 +439,12 @@
    "last_position": "I will run the LLM Guard scanner on this conversation’s input/output stream to detect malicious content or data leaks. T"
   },
   {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 36,
-   "rooms_7d": 36,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will run a full audit of the department’s link inventory using the link-checker tool. This will produce a complete rep"
-  },
-  {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
-   "role": "lead",
-   "turns_7d": 36,
-   "rooms_7d": 36,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Anchor delivers the cleaned link inventory report with dead links removed."
-  },
-  {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
    "role": "lead",
-   "turns_7d": 33,
-   "rooms_7d": 33,
+   "turns_7d": 34,
+   "rooms_7d": 34,
    "engines_used": [
     "gh-models",
     "glm",
@@ -452,30 +452,30 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Pull the full LangSmith GitHub repository and documentation to extract the complete source for deep analysis, ou"
+   "last_position": "ACTION: Pull the full LangSmith GitHub repository and documentation to extract the earnings call analysis agent's design"
   },
   {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 31,
-   "rooms_7d": 31,
+   "turns_7d": 32,
+   "rooms_7d": 32,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Run a Reddit search for AI-related posts from the last 7 days and return the top 10 most engaging threads with t"
+   "last_position": "Action: Run a Reddit search for AI-related posts in the last 7 days and return the top 20 results with titles, URLs, and"
   },
   {
    "id": "accessibility-lead",
    "name": "Access",
    "dept": "accessibility",
    "role": "lead",
-   "turns_7d": 29,
-   "rooms_7d": 29,
+   "turns_7d": 30,
+   "rooms_7d": 30,
    "engines_used": [
     "gh-models",
     "groq",
@@ -483,8 +483,8 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Add a **high-contrast skip link at page top** *and* ensure every page has a `<main role=\"main\">` landmark *plu",
-   "proposed": 3,
+   "last_position": "DECISION: Add a **persistent, high-contrast skip link** that always jumps to `<main role=\"main\">`—tested with VoiceOver ",
+   "proposed": 4,
    "shipped": 2
   },
   {
@@ -492,14 +492,14 @@
    "name": "Root",
    "dept": "memory",
    "role": "lead",
-   "turns_7d": 22,
-   "rooms_7d": 22,
+   "turns_7d": 23,
+   "rooms_7d": 23,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Root executes the memory linking command to embed all prior memory IDs into a unified network, producing a fully"
+   "last_position": "ACTION: Root executes the memory linking command to embed all prior memory IDs into the consolidated brain graph, produc"
   },
   {
    "id": "mining-lead",
@@ -521,14 +521,14 @@
    "name": "Ratchet",
    "dept": "improve",
    "role": "lead",
-   "turns_7d": 17,
-   "rooms_7d": 17,
+   "turns_7d": 18,
+   "rooms_7d": 18,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Run a 48-hour shadow test at 5% traffic first, then auto-apply only changes that cut error rates by 10% or mor",
+   "last_position": "DECISION: Run a 1% canary for 48 hours with dual-prompt A/B logging and SLA monitoring, then auto-apply only if error ra",
    "proposed": 3,
    "shipped": 1
   },

@@ -29,6 +29,21 @@ Next-highest cadence among those: `bulk_analyze.yml` (every 2h) and `analyze.yml
 30-min catch-up cron that's normally a no-op) — good candidates for the next fire that picks this up.
 The generic cross-lane "success but nothing landed" guardrail is still unbuilt, still the deeper fix.
 
+**UPDATE (fire 30):** rolled the fix out to the next 3 highest-cadence remaining lanes —
+`bulk_analyze.yml` (every 2h), `analyze.yml` (every 3h), and `connectors_verify.yml` (every 6h) —
+re-verified with a fresh, cleaner throwaway-bare-remote repro (explicit `main` branch on both
+sides, a genuine `data/data_guard.json` conflict between two clones): rebase fails → aborts →
+merge retry also conflicts → auto-resolve-ours on `data_guard.json` only → merge commits → push
+succeeds → HEAD stays on a real branch (never detached) → the other clone's real content
+(`A-content`) survives all the way to a fresh clone of the remote. **7 of 19 files now fixed**
+(`mine.yml`, `excava_beat.yml`, `core_spoton.yml`, `links.yml`, `bulk_analyze.yml`, `analyze.yml`,
+`connectors_verify.yml`); **12 still exposed**: `discover.yml`, `news.yml`, `creators.yml`,
+`fetch.yml`, `gemini_video.yml`, `improve.yml`, `review.yml`, `sources.yml`, `transcribe.yml`,
+`visual.yml`, `mine_social.yml`, `excava_inbox.yml`. All remaining ones are daily-or-less cadence
+(the sub-6h lanes are now all covered), so the marginal risk per remaining file is lower — still
+worth finishing for completeness, no longer the highest-leverage next fire task. The generic
+cross-lane "success but nothing landed" guardrail is still unbuilt, still the deeper fix.
+
 **2026-07-26 (fire 10) — deterministic GitHub-metadata enricher BUILT, per the proposed default below.**
 `src/github_meta_enrich.py` now fills github-linked stub descriptions from the GitHub REST API's
 own `description`/`topics` (no LLM, no Ollama, no local-drain dependency) and is wired hourly into

@@ -4,6 +4,46 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+- **~14:0x (fire 30, unattended, cloud session) — rolled the mine.yml/fire-28 git-recovery fix out
+  to 3 more lanes + 10th-heartbeat checkpoint review.** Standing checks first: `git_safe sync`
+  clean (0 collisions); guardrails 16/17 pre-fire (0 critical; only the pre-existing `G-C`/`G-O`
+  warns). Continued fire 28/29's rollout (per `QUESTIONS.md`'s staged default: "a few files per
+  fire, highest-cadence first") to the next 3 of the 15 still-exposed workflow files, ranked by
+  cron cadence: `bulk_analyze.yml` (2h), `analyze.yml` (3h), `connectors_verify.yml` (6h) — same
+  abort-rebase→retry-merge→auto-resolve-`data_guard.json`-in-favor block fires 28/29 proved,
+  adapted only for each file's own commit-step context. **Verified, not assumed:** `yaml.safe_load`
+  + `bash -n` pass on all three edited steps; ran a fresh, cleaner repro than fire 28/29's own
+  (explicit `main` branch on both a bare remote and two clones, avoiding the ambiguous
+  default-branch mix-up my first repro attempt hit) — confirmed the rebase fails on a genuine
+  `data/data_guard.json` conflict, aborts cleanly, the merge retry also conflicts, auto-resolve-ours
+  fires, the merge commit lands on a real branch (HEAD never detached), push succeeds, and the
+  other side's real content survives all the way to a fresh clone of the remote. `guardrails`
+  15/17 after (0 critical; only the same two pre-existing warns). **7 of 19 files now fixed**
+  (`mine.yml`, `excava_beat.yml`, `core_spoton.yml`, `links.yml`, `bulk_analyze.yml`, `analyze.yml`,
+  `connectors_verify.yml`); **12 remaining, all daily-or-less cadence** — the sub-6h lanes are now
+  fully covered, so the marginal risk per remaining file is materially lower than it was.
+  **10th-heartbeat review** (owner's away-mode asks for a check-in every 10 fires; last one was
+  fire 20): storage 30.4GB free on the repo drive (`G-N`, healthy, no cleanup needed); fire 29
+  completed cleanly (its commits are on `origin/main`, confirmed via `git log`/`git_safe sync`,
+  not just assumed); no operational limits exceeded (0 critical guardrail failures throughout this
+  window, `supervisor.json` reads 100% real of the last 40 department completions). Across fires
+  21-29: 2 real live-hang catches + fixes in the beat's room-advance budget (fires 21, 27), a
+  genuine false-positive fix in the project's own honesty tool (`trend_watch`, fire 23), a Hub
+  UX default-sort fix (fire 24), the QUESTIONS.md #10 formats-tab merge (fire 22), and the
+  git-recovery-fix saga that fires 28/29/this-one have been jointly landing — nothing found
+  silently broken or abandoned mid-fix. **Harsh self-criticism:** this is now the fourth fire in a
+  row (28, 29, 30, plus fire 26/27's heartbeat work) that is infra/plumbing rather than a
+  user-visible Hub/product change — defensible since each one is closing a PROVEN silent-data-loss
+  bug class across real CI lanes, but the M1/M2 program content itself (Hub enrichment, department
+  depth) has now gone several fires without a direct touch; flagging for the next fire with a
+  bigger time budget to pick program work over the remaining 12 lower-cadence workflow files,
+  which are lower-value per the cadence math already worked out in QUESTIONS.md. Did not build the
+  generic cross-lane "success but nothing landed" guardrail (still the deeper, unbuilt fix noted
+  since fire 28). Also did not touch the news-dept wiring drift or the single-engine-debate flag
+  supervisor.json surfaces — both correctly out of scope (the former is parked for Eitan's own
+  decision per fire 23's note; the latter lives in the engine/brains subsystem, which away-mode
+  explicitly says to leave alone this week).
+
 - **~12:1x (fire 28, unattended, cloud session) — confirmed fire 27's heartbeat fix actually
   resumed a healthy cadence (not just one lucky beat), then found and fixed a SECOND, independent
   instance of the same failure class fire 25 first named: a job reporting "success" while silently

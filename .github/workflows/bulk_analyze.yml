@@ -178,5 +178,21 @@ jobs:
           git add data skills other-skills backups 2>/dev/null || true
           git commit -m "bulk-analyze (free pool): $(date -u +%Y-%m-%dT%H:%MZ)" \
             || echo "nothing to commit"
-          git pull --rebase --autostash origin main || true
+          # 2026-07-27 (away fire 30): same git-recovery fix as mine.yml/fire 28 and
+          # excava_beat/core_spoton/links/fire 29 — every 2h, one of the busiest lanes, so a
+          # plain `|| true` on a rebase conflict silently discards a full run's real work
+          # (HEAD left detached, `git push` then fails and is swallowed). Abort a failed rebase
+          # and retry as a merge; if that also conflicts, auto-resolve only the known-stateless
+          # data/data_guard.json in our favor. Any other conflict is left unresolved on purpose
+          # (degrades to today's push-skipped, never worse).
+          if ! git pull --rebase --autostash origin main; then
+            echo "rebase failed — aborting and retrying as a merge"
+            git rebase --abort 2>/dev/null || true
+            if ! git pull --no-rebase --no-edit origin main; then
+              echo "merge also conflicted — auto-resolving known-stateless data_guard.json in our favor"
+              git checkout --ours -- data/data_guard.json 2>/dev/null || true
+              git add data/data_guard.json 2>/dev/null || true
+              git commit --no-edit || echo "unresolved conflict outside data_guard.json — leaving for manual/next-run recovery"
+            fi
+          fi
           git push || echo "push skipped"

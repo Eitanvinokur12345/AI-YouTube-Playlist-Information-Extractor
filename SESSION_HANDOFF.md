@@ -230,6 +230,12 @@ highest-cadence remaining lanes — `excava_beat.yml` (~10 min), `core_spoton.ym
 (hourly) — re-verified against the same throwaway-bare-remote repro. 4/19 workflow files now carry
 the fix; 15 still exposed (`bulk_analyze.yml`/`analyze.yml` are next by cadence). Full detail + harsh
 self-criticism in AWAY_LOG.md fire 29 entry; running tally in QUESTIONS.md's fire-28 entry.
+**Fire 30 (2026-07-27, backend-only, 10th-heartbeat checkpoint):** rolled the same git-recovery fix
+out to `bulk_analyze.yml` (2h), `analyze.yml` (3h), `connectors_verify.yml` (6h) — re-verified via a
+fresh bare-remote repro. 7/19 workflow files now carry the fix; all sub-6h-cadence lanes are covered,
+12 remaining are daily-or-less. 10th-heartbeat review: storage/guardrails/previous-run all healthy,
+nothing broken across fires 21-29. Full detail in AWAY_LOG.md fire 30 entry; running tally in
+QUESTIONS.md's fire-28 entry.
 
 **(prior, v120) M2 UNDERWAY.** Sessions 8-10: 4 brain families in the engine CATALOG (GLM/DeepSeek/Kimi via
 OpenRouter free + local Qwen/Llama); OpenRouter key VERIFIED (Eitan's secret OPENROUTER_API_KEY_REAL,

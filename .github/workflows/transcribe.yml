@@ -59,5 +59,18 @@ jobs:
           git add data/_pending data/processed 2>/dev/null || true
           git commit -m "transcribe (supadata): $(date -u +%Y-%m-%dT%H:%MZ)" \
             || echo "nothing to commit"
-          git pull --rebase --autostash origin main || true
+          # On a rebase conflict (another lane pushed in the same window), abort a
+          # failed rebase and retry as a merge; auto-resolve only the known-stateless
+          # data/data_guard.json in our favor. Any other conflict is left unresolved on purpose
+          # (degrades to today's push-skipped, never worse).
+          if ! git pull --rebase --autostash origin main; then
+            echo "rebase failed — aborting and retrying as a merge"
+            git rebase --abort 2>/dev/null || true
+            if ! git pull --no-rebase --no-edit origin main; then
+              echo "merge also conflicted — auto-resolving known-stateless data_guard.json in our favor"
+              git checkout --ours -- data/data_guard.json 2>/dev/null || true
+              git add data/data_guard.json 2>/dev/null || true
+              git commit --no-edit || echo "unresolved conflict outside data_guard.json — leaving for manual/next-run recovery"
+            fi
+          fi
           git push || echo "push skipped"

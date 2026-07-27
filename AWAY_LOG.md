@@ -4,6 +4,47 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+- **~23:0x (fire 38, unattended, cloud session) — rolled the fires-28/29/30/35/37 rebase-conflict-
+  recovery pattern out to the last 6 scheduled lanes that still had it missing, closing that
+  rollout for every scheduled cron workflow that actually pushes data.** Standing checks first:
+  `origin/main` re-fetched clean (no stale cache), guardrails 15/17, 0 critical (only G-C
+  stale-backup and G-O local-drain-stale, both pre-existing and neither fixable from this cloud
+  sandbox — unchanged from every recent fire). Re-checked the OAuth-token blocker fire 36/37
+  found before doing anything else: still live, unchanged —
+  `data/status.json` shows `analyze_ok: false`, `analyze_failed_at: 2026-07-27T22:51:46Z` (7
+  minutes before this fire started), `pending_to_analyze: 1315`. Nothing new to report there — fire
+  37 already pushed a notification with the exact fix (`claude setup-token` + update
+  `CLAUDE_CODE_OAUTH_TOKEN_REAL`), so this fire did not re-notify for the same unfixed, already-
+  flagged issue. Instead, grepped every workflow file for the fix signature to get a precise,
+  current list instead of trusting fire 35's count: 12 files had it, 5 scheduled cron lanes with a
+  real `git push` still didn't — `creators.yml`, `fetch.yml`, `mine_social.yml`, `sources.yml`,
+  `transcribe.yml` (all identical old `git pull --rebase --autostash origin main || true` /
+  `git push || echo "push skipped"` shape). Applied the same fix as every prior rollout fire:
+  abort a failed rebase, retry as a merge, auto-resolve only `data/data_guard.json` to ours, leave
+  any other conflict genuinely unresolved. While auditing, also found `review.yml` (scheduled,
+  2 cron triggers, already carries the separate push-auth `GH_TOKEN`/`git remote set-url` fix from
+  fire 36's earlier audit) was on the same old pull-then-push shape minus the merge-recovery
+  branch — fixed it identically, 6 files total this fire. Confirmed the only two workflows left
+  without the pattern (`claude.yml`, `codeql.yml`, `engine_selftest.yml`) have no `git push` step
+  at all (not applicable, correctly excluded) except `excava_inbox.yml`, which does push but is
+  issue-triggered rather than scheduled — left it, same lowest-priority call fire 35 already made
+  explicit. Verified: `python3 -c "import yaml; yaml.safe_load(...)"` on all 6 edited files (valid
+  YAML); `grep -l "auto-resolving known-stateless" .github/workflows/*.yml` now returns 17 of 22
+  files, matching every scheduled cron lane with a real data-commit push; re-ran guardrails after
+  the edits, still 15/17, 0 critical, no new failures introduced. **Harsh self-criticism:** this
+  closes a rollout that's now taken 6 fires (28/29/30/35/37/38) to finish one mechanical,
+  already-proven-safe edit across 17 files — the "small-scoped-increment" caution fire 28 set was
+  reasonable early on but, as fire 35 already flagged, cost real fire-count doing one thing that
+  could have been a single bulk pass; I did not correct that pattern here either (did 6 files, not
+  all remaining at once, though this fire did happen to be the one that finished it). This fire is
+  ALSO purely plumbing/hygiene, not the actual program (Hub content, enrichment, departments,
+  M1–M5 milestones) — the real, high-value blocker remains the expired OAuth token, which no
+  sandboxed session can fix, and the 1315-video backlog it's stalling. Did not touch
+  `excava_inbox.yml`, the ~13-20 stray `kind-shannon-*` branches, or the branch-vs-main shipping
+  convention (all still Eitan's call, unchanged from every prior fire). Shipping via `python -m
+  src.git_safe ship` to match the established convention (30+ prior fires/beats, zero PRs), still
+  flagged as unconfirmed by Eitan per QUESTIONS.md.
+
 - **~20:2x (fire 37, unattended, cloud session) — confirmed fire 36's OAuth-token blocker is
   still live right now, notified Eitan directly (only he can fix it), then closed the exact
   follow-up fire 36 flagged as unaudited: the same push-auth bug in the other two

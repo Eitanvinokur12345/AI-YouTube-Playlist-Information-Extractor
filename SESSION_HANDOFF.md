@@ -163,6 +163,27 @@ diverged after beat #17) already containing this exact G-M fix plus a routing fi
 — a parallel away-fire session did this work first but it never reached `main`. Flagged in QUESTIONS.md:
 away-fire sessions need a rule against silently orphaning work on divergent branches.
 
+**v130 (away fire 22, unattended, cloud session, 2026-07-27 — live build v130):** landed QUESTIONS.md
+item #10 ("`formats.json` is collected but has no tab — fold formats INTO the Designs tab as a
+Formats filter? Default: yes"), open and pre-approved since the fire-9-era gaps pass. The Designs tab
+now merges `data/formats.json`'s 95 layout/diagram patterns into the same list as the 978 website/app
+designs, with a new content-type subnav (**All / Websites·apps / 📐 Formats (95)**) alongside the
+existing style filter. Format cards render distinctly (no screenshot — there isn't one to fetch;
+instead the kind pill, description, and `rebuild_hint`) and stay out of the ⚔ Arena pool (no live URL
+to compare). Verified via CLI/data per away-mode rule (no browser): `node --check docs/dashboard.js`
+passes; a Python simulation of the merge/slugify logic against the real `data/formats.json` +
+`data/designs.json` confirms all 95 formats map with a non-empty slug/name and the existing 978
+designs are untouched. **Harsh self-criticism:** did not verify in an actual browser (correctly
+deferred per the away-mode rule, but it does mean a real rendering/CSS issue could still be hiding —
+next attended session should open the Designs tab and glance at a Formats card). Picked this item over
+grinding `backlog.json`'s `queued_now` (verify-next-200-elements, watch-batch, etc.) because fire 20
+already flagged that hand-running backlog items duplicates what the CI beat already drives
+continuously every 10 min — this was instead a genuine one-off wiring gap only a session-based fire
+would notice and fix. Did not touch the brains subsystem, did not delete any of the ~20 confirmed-safe
+stray branches (still deferred to Eitan per fire 19), and did not re-litigate the false-alarm/wedged-
+beat investigation fires 16/17/19/20/21 already closed out (checked the Actions run history first —
+current beat run is healthy, landing heartbeats normally since fire 21's fix).
+
 **(prior, v120) M2 UNDERWAY.** Sessions 8-10: 4 brain families in the engine CATALOG (GLM/DeepSeek/Kimi via
 OpenRouter free + local Qwen/Llama); OpenRouter key VERIFIED (Eitan's secret OPENROUTER_API_KEY_REAL,
 workflows repointed, selftest 11/11, glm/deepseek/kimi all PASS); `engines.debate_engines(n)` dedups

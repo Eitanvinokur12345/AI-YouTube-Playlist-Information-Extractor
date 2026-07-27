@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v129";
+const APP_BUILD = "v130";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -3255,9 +3255,13 @@ function _wireMshots(scope) {
 function renderDesigns(d) {
   let list = (d && d.designs) || [];
   const a = _arena(), mode = state.designMode || "gallery", styleFilter = state.designStyle || "all";
+  const kindFilter = state.designKind || "all";        // all | designs | formats
+  if (kindFilter === "designs") list = list.filter(x => !x._isFormat);
+  else if (kindFilter === "formats") list = list.filter(x => x._isFormat);
   if (styleFilter !== "all") list = list.filter(x => (x.style_tags || []).includes(styleFilter));
   if (q()) list = list.filter(x => hit(x.name, x.look, (x.kind || ""), (x.tech || []).join(" "), (x.style_tags || []).join(" ")));
   const taste = _arenaTaste(a);
+  const nFormats = ((d && d.designs) || []).filter(x => x._isFormat).length;
   const STYLES = ["all", "bold", "colorful", "playful", "brutalist", "minimal", "retro", "dark", "gradient"];
   let html = `<div class="card"><h3>🎨 Designs <span class="sub">— tuned to your taste</span>
       <span class="pl-badge ${mode === "arena" ? "pl-live" : "pl-slow"}" style="margin-left:8px">${mode === "arena" ? "ARENA" : "GALLERY"}</span></h3>
@@ -3265,10 +3269,15 @@ function renderDesigns(d) {
     <div class="subnav"><button class="${mode === "gallery" ? "active" : ""}" data-mode="gallery">Gallery</button>
       <button class="${mode === "arena" ? "active" : ""}" data-mode="arena">⚔ Arena</button></div>
     ${_tastePanel(a)}
-    ${mode === "gallery" ? `<div class="subnav">` + STYLES.map(s => `<button class="${styleFilter === s ? "active" : ""}" data-style="${s}">${s}</button>`).join("") + `</div>` : ""}</div>`;
+    ${mode === "gallery" ? `<div class="subnav">
+        <button class="${kindFilter === "all" ? "active" : ""}" data-kind="all">All</button>
+        <button class="${kindFilter === "designs" ? "active" : ""}" data-kind="designs">Websites/apps</button>
+        <button class="${kindFilter === "formats" ? "active" : ""}" data-kind="formats" title="Reusable visual layouts &amp; diagram patterns seen in videos (charts, org charts, infographics…)">📐 Formats (${nFormats})</button>
+      </div>
+      <div class="subnav">` + STYLES.map(s => `<button class="${styleFilter === s ? "active" : ""}" data-style="${s}">${s}</button>`).join("") + `</div>` : ""}</div>`;
 
   if (mode === "arena") {
-    const pool = list.filter(x => (x.source_url || x.homepage));
+    const pool = list.filter(x => !x._isFormat && (x.source_url || x.homepage));
     if (pool.length < 2) { view.innerHTML = html + empty("Need a couple more designs with previews for the arena — the visual protocol is adding them."); _designHooks(); return; }
     const i = Math.floor(Math.random() * pool.length); let j = Math.floor(Math.random() * pool.length);
     while (j === i) j = Math.floor(Math.random() * pool.length);
@@ -3287,6 +3296,17 @@ function renderDesigns(d) {
   if (!list.length) { view.innerHTML = html + empty(q() ? `No designs match "${esc(state.query)}".` : "No designs yet — the visual protocol watches the videos and collect_designs pulls AI websites each cycle."); _designHooks(); return; }
   const SRC = { "ai-product": "AI product", "ai-builder": "AI builder", "gallery": "gallery", "dribbble": "concept", "video": "from video", "visual": "from video", "oss": "open-source" };
   html += list.map(x => {
+    if (x._isFormat) {
+      const buildCmd = `activator: recreate the "${x.name}" layout`;
+      return `<div class="card design-card format-card">
+        <h3>📐 ${esc(x.name || "Format")} <span class="pill">${esc(x.kind || "format")}</span>
+          <span class="mentions">from video</span></h3>
+        ${x.description ? `<p>${esc(x.description)}</p>` : ""}
+        ${x.rebuild_hint ? `<p class="sub"><b>Rebuild:</b> ${esc(x.rebuild_hint)}</p>` : ""}
+        <div class="sub">Build: <code>${esc(buildCmd)}</code> <button class="copy-btn" data-copy="${esc(buildCmd)}" title="Copy build command">copy</button></div>
+        ${linksRow(x)}
+      </div>`;
+    }
     const liked = (a.wins || {})[x.slug];
     const src = SRC[x.source_type] || x.source_type || "";
     const match = taste.length && (x.style_tags || []).some(t => taste.slice(0, 3).includes(t));
@@ -3305,6 +3325,7 @@ function renderDesigns(d) {
 }
 function _designHooks() {
   view.querySelectorAll("[data-style]").forEach(b => b.addEventListener("click", () => { state.designStyle = b.dataset.style; renderTab("designs"); }));
+  view.querySelectorAll("[data-kind]").forEach(b => b.addEventListener("click", () => { state.designKind = b.dataset.kind; renderTab("designs"); }));
   view.querySelectorAll("[data-mode]").forEach(b => b.addEventListener("click", () => { state.designMode = b.dataset.mode; renderTab("designs"); }));
   view.querySelectorAll("[data-pick]").forEach(b => b.addEventListener("click", () => window.arenaVote(b.dataset.pick, (b.dataset.tags || "").split(",").filter(Boolean))));
   view.querySelectorAll("[data-like]").forEach(b => b.addEventListener("click", () => window.arenaVote(b.dataset.like, (b.dataset.tags || "").split(",").filter(Boolean))));
@@ -3582,7 +3603,17 @@ async function renderTab(tab) {
   if (tab === "improvement") return renderImprovement();
   if (tab === "tips") return renderTips();
   if (tab === "news") return renderNews();
-  if (tab === "designs") return renderDesigns(await _plusCreations(await load("designs.json"), "design", "designs"));
+  if (tab === "designs") {
+    const withCreations = await _plusCreations(await load("designs.json"), "design", "designs");
+    const formats = await load("formats.json");
+    const fmtList = ((formats && formats.formats) || []).map(f => ({
+      ...f, _isFormat: true, style_tags: [],
+      look: f.description || "", slug: f.slug || (f.name || "").toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+    }));
+    const merged = Object.assign({}, withCreations || {});
+    merged.designs = (fmtList).concat((withCreations && withCreations.designs) || []);
+    return renderDesigns(merged);
+  }
   if (tab === "connectors") return renderConnectors(await load("connectors.json"));
   if (tab === "sources") return renderSources();
   if (tab === "selfimprove") return renderSelfImprove();

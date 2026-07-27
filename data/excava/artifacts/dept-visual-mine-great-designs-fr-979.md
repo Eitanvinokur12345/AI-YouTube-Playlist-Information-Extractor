@@ -1,15 +1,14 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-979` (dept) · 2026-07-27T12:10:28.154183+00:00
-> Participants: Easel, Chroma · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-visual-mine-great-designs-fr-979` (dept) · 2026-07-27T17:44:43.685722+00:00
+> Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
 
-**Decision:** Capture the vibrant pink hero section from the Beverage Cans website and add it to the design hub.  
+**Decision:**
 
-**Plan:**  
-1. Easel will browse the Beverage Cans website.  
-2. Capture a screenshot of the vibrant pink hero section.  
-3. Frame the screenshot as a taste material artifact.  
-4. Add the framed screenshot to the design hub for reference.  
-5. Ensure proper attribution to the source in the hub.  
+**Plan:**
+1. Browse the Beverage Cans website and capture a screenshot of its vibrant pink hero section.
+2. Add the screenshot to the hub as a visual reference for design inspiration.
+3. Frame the screenshot as a taste material artifact in the hub.
+4. Repeat for additional design pattern references as needed.
 
-**What changed:** The decision to include a specific vibrant screenshot for design inspiration was made based on Easel's proposal.
+**What changed:** Screenshot of Beverage Cans' pink hero section added to hub as taste material.

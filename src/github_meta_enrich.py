@@ -45,8 +45,14 @@ def _now() -> str:
 
 
 def _repo_slug(el: dict) -> tuple[str, str] | None:
-    gh = el.get("links", {}).get("github", "") or ""
-    m = GH_RE.search(gh)
+    """The repo's owner/name, from links.github OR (fire 31 fix) a github.com URL parked in
+    links.website instead — the same fallback deep_retrieve.readme_excerpt already uses. Several
+    real connector/MCP stubs (e.g. an *-mcp GitHub repo) store their URL under `website`, not
+    `github`, and were silently invisible to this enricher's narrow github-only lookup."""
+    L = el.get("links", {}) or {}
+    gh = L.get("github", "") or ""
+    web = L.get("website", "") or ""
+    m = GH_RE.search(gh) or (GH_RE.search(web) if "github.com" in web else None)
     if not m:
         return None
     return m.group(1), m.group(2).removesuffix(".git")

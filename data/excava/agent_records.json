@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
- "generated_at": "2026-07-27T20:14:20.740423+00:00",
-=======
- "generated_at": "2026-07-27T20:11:35.623999+00:00",
->>>>>>> a48ea726328a1f108cdf6ea93cf2014ae3b0c00f
+ "generated_at": "2026-07-27T20:43:15.605330+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -62,8 +58,8 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 174,
-   "rooms_7d": 67,
+   "turns_7d": 175,
+   "rooms_7d": 68,
    "engines_used": [
     "gh-models",
     "groq",
@@ -71,7 +67,7 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Do this: Transcripts auto-flags any sentence with a risk keyword (\"legal,\" \"compliance,\" \"regulatory\") *and* a verb of c"
+   "last_position": "I will run BloodHound-MCP on the full transcript to map every risk keyword (\"legal,\" \"compliance,\" etc.) to its sentence"
   },
   {
    "id": "analysis-checker",
@@ -154,6 +150,39 @@
    "last_position": "DeepSeek-V3-671B-Instruct’s MoE routing still adds latency—benchmarks show ~15-20% slower than flat 70B models on EXCAVA"
   },
   {
+   "id": "creators-lead",
+   "name": "Nova",
+   "dept": "creators",
+   "role": "lead",
+   "turns_7d": 95,
+   "rooms_7d": 93,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Build a new Claude skill package using UGC Factory, output labeled 'Created by EXCAVA', tested by Forge."
+  },
+  {
+   "id": "creators-w1",
+   "name": "Forge",
+   "dept": "creators",
+   "role": "doer",
+   "turns_7d": 95,
+   "rooms_7d": 93,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "nvidia",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "I will build a package for a new Claude skill, using the UGC Factory open-source code to generate the necessary componen"
+  },
+  {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
@@ -167,46 +196,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Query kimtaeyoon83/mcp-server-youtube-transcript for the first pending video ID to retrieve its full transcript."
-  },
-  {
-   "id": "creators-lead",
-   "name": "Nova",
-   "dept": "creators",
-   "role": "lead",
-   "turns_7d": 93,
-   "rooms_7d": 92,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-<<<<<<< HEAD
-   "last_position": "ACTION: Nova closes the \"UGC Factory\" npm package in the creators tab, labeled \"Created by EXCAVA\" with its test file, d"
-=======
-   "last_position": "ACTION: Nova closes the \"UGC Factory\" npm package in the creators tab, labeled \"Created by EXCAVA\" with a test file, and"
->>>>>>> a48ea726328a1f108cdf6ea93cf2014ae3b0c00f
-  },
-  {
-   "id": "creators-w1",
-   "name": "Forge",
-   "dept": "creators",
-   "role": "doer",
-   "turns_7d": 93,
-   "rooms_7d": 92,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-<<<<<<< HEAD
-   "last_position": "I draft the \"UGC Factory\" npm package in the creators tab, labeled \"Created by EXCAVA\" with a test file. It generates cu"
-=======
-   "last_position": "I draft the \"UGC Factory\" npm package in the creators tab, labeled \"Created by EXCAVA\" with a test file. This package wi"
->>>>>>> a48ea726328a1f108cdf6ea93cf2014ae3b0c00f
   },
   {
    "id": "watch-lead",
@@ -239,6 +228,37 @@
    "last_position": "I’ll query Reuters, BBC, and the White House press feeds for the latest AI-related headlines. The output will be a conci"
   },
   {
+   "id": "accessibility-w1",
+   "name": "Ramp",
+   "dept": "accessibility",
+   "role": "doer",
+   "turns_7d": 69,
+   "rooms_7d": 35,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "Add a server-rendered skip link inside the first 100 bytes of every page’s HTML. This guarantees the link is present bef"
+  },
+  {
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
+   "role": "checker",
+   "turns_7d": 69,
+   "rooms_7d": 35,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The server-rendered skip link still risks a false positive: if the user tabs before the page finishes rendering, they la"
+  },
+  {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
@@ -252,37 +272,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Query Reuters, BBC, and White House press feeds for latest AI headlines, compile a 3-sentence digest with source"
-  },
-  {
-   "id": "accessibility-w1",
-   "name": "Ramp",
-   "dept": "accessibility",
-   "role": "doer",
-   "turns_7d": 67,
-   "rooms_7d": 34,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "Add a skip link that appears only after the page finishes loading, so it never blocks the first tab stop. This keeps the"
-  },
-  {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 67,
-   "rooms_7d": 34,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "A skip link that flashes in after load still risks a race condition where the first tab stop shifts mid-navigation, brea"
   },
   {
    "id": "visual-lead",
@@ -318,19 +307,43 @@
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 50,
-   "rooms_7d": 49,
+   "turns_7d": 53,
+   "rooms_7d": 50,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-<<<<<<< HEAD
-   "last_position": "Action: I will run the memory linking command to connect every existing memory to the central graph. This will produce a"
-=======
-   "last_position": "Action: I will run the memory linking command to connect every existing memory to the unified memory system. This will p"
->>>>>>> a48ea726328a1f108cdf6ea93cf2014ae3b0c00f
+   "last_position": "I will embed the current conversation’s key elements into the Hindsight memory database via the MCP server, creating a s"
+  },
+  {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 52,
+   "rooms_7d": 50,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll run a fresh crawl of the department’s link inventory using Screaming Frog, filtering for 404s, 301 chains, and last"
+  },
+  {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 52,
+   "rooms_7d": 50,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Anchor (links-w1) delivers the clean, prioritized list of decayed or low-value links (ranked by traffic loss and"
   },
   {
    "id": "visualization-lead",
@@ -345,40 +358,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Fixed-height timeline strip at the top of EXCAVA, always visible. The strip must show playback marks clearly w",
-   "proposed": 2
-  },
-  {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 49,
-   "rooms_7d": 49,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll run the full audit of the department’s link inventory using the link-checker tool. This will produce a complete lis"
-  },
-  {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
-   "role": "lead",
-   "turns_7d": 49,
-   "rooms_7d": 49,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-<<<<<<< HEAD
-   "last_position": "ACTION: Anchor delivers the cleaned link inventory report with dead links removed."
-=======
-   "last_position": "ACTION: Anchor delivers the cleaned link inventory report with dead links removed and active links verified."
->>>>>>> a48ea726328a1f108cdf6ea93cf2014ae3b0c00f
+   "last_position": "DECISION: Fixed-height timeline strip at the top of EXCAVA, always visible. The strip must show playback marks clearly w"
   },
   {
    "id": "power-lead",
@@ -393,62 +373,60 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Adopt Llama-3.2-90B-Instruct as EXCAVA’s primary inference engine, run a 48-hour blind A/B stress test against",
-   "proposed": 7,
-   "shipped": 6
-  },
-  {
-   "id": "mining-w1",
-   "name": "Pick",
-   "dept": "mining",
-   "role": "doer",
-   "turns_7d": 44,
-   "rooms_7d": 44,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Action: Run a Reddit search for AI-related posts in the last 7 days and return the top 10 most engaging threads with the"
+   "last_position": "DECISION: Adopt Llama-3.2-90B-Instruct as EXCAVA’s primary inference engine, run a 48-hour blind A/B stress test against"
   },
   {
    "id": "improve-w1",
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 44,
-   "rooms_7d": 21,
+   "turns_7d": 46,
+   "rooms_7d": 22,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the forked and audited Claude Self-Improvement Skill Pack with a 5% rollout to 10% of tasks. It’s the only option "
+   "last_position": "Adopt the original Skill Pack’s 5% verbosity reduction in a pilot run. It’s already proven in production, so we avoid th"
   },
   {
    "id": "improve-checker",
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 44,
-   "rooms_7d": 21,
+   "turns_7d": 46,
+   "rooms_7d": 22,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The forked Skill Pack’s \"production-proven\" claim is unverified—Cerebras’ model IDs just failed, proving even vetted set"
+   "last_position": "The pilot risks wasting time proving the obvious—original verbosity isn’t the bottleneck. Instead, test the 5% reduction"
+  },
+  {
+   "id": "mining-w1",
+   "name": "Pick",
+   "dept": "mining",
+   "role": "doer",
+   "turns_7d": 45,
+   "rooms_7d": 44,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 34,
+   "last_position": ""
   },
   {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
    "role": "lead",
-   "turns_7d": 36,
-   "rooms_7d": 36,
+   "turns_7d": 37,
+   "rooms_7d": 37,
    "engines_used": [
     "gh-models",
     "glm",
@@ -456,7 +434,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Pull the full LangSmith GitHub repository and documentation to extract the earnings call transcript and analysis"
+   "last_position": "ACTION: Pull the full LangSmith GitHub repository and documentation to extract the earnings call transcript, then run Bl"
   },
   {
    "id": "security-lead",
@@ -494,8 +472,8 @@
    "name": "Access",
    "dept": "accessibility",
    "role": "lead",
-   "turns_7d": 34,
-   "rooms_7d": 34,
+   "turns_7d": 35,
+   "rooms_7d": 35,
    "engines_used": [
     "gh-models",
     "groq",
@@ -503,39 +481,37 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Implement a skip link that starts off-screen (position: absolute; left: -9999px) and moves to the top of the v",
-   "proposed": 5,
-   "shipped": 3
+   "last_position": "DECISION: Implement a hybrid skip link—server-rendered in first 100 bytes *and* first focusable element with `tabindex=\"",
+   "proposed": 1
   },
   {
    "id": "memory-lead",
    "name": "Root",
    "dept": "memory",
    "role": "lead",
-   "turns_7d": 30,
-   "rooms_7d": 30,
+   "turns_7d": 32,
+   "rooms_7d": 31,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Root executes the memory linking command to embed all prior memory IDs into the central graph, creating bidirect"
+   "last_position": "ACTION: Root executes the memory linking command to embed the graft (memory-w1) into the Hindsight memory database, crea"
   },
   {
    "id": "improve-lead",
    "name": "Ratchet",
    "dept": "improve",
    "role": "lead",
-   "turns_7d": 22,
-   "rooms_7d": 21,
+   "turns_7d": 23,
+   "rooms_7d": 22,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Run a 1% canary for 48 hours with dual-prompt A/B logging and SLA monitoring on the original Skill Pack’s audi",
-   "proposed": 5,
-   "shipped": 3
+   "last_position": "DECISION: Run a 1% canary for 48 hours with dual-prompt A/B logging and SLA, comparing the forked Skill Pack’s 5% verbos",
+   "proposed": 1
   },
   {
    "id": "mining-lead",

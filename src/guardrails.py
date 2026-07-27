@@ -3,7 +3,7 @@ src/guardrails.py — the INFORMATION-LOSS GUARDRAILS (owner law, 2026-07-06).
 
 The project must never be "toppled" — no committed work lost, no data silently dropped,
 no push that only *looked* like it saved, no corruption shipped that breaks the dashboard.
-This module enforces 15 named guardrails, each a concrete check. It writes
+This module enforces 16 named guardrails, each a concrete check. It writes
 data/guardrails_status.json (for the cockpit) and APPENDS to data/guardrails_log.jsonl
 (never rewritten — a permanent audit trail).
 
@@ -245,6 +245,47 @@ def g_localfuel():
     return _ok("G-O", "Local drain alive", bool(st.get("ok")), detail, "warn" if not st.get("ok") else "info")
 
 
+def g_beat_heartbeat():
+    """2026-07-27 (fire 18): G-M's "done" counter is fed by ANY caller of `python -m src.excava`
+    (bulk_analyze.yml calls it once per run too), so it can look healthy even when the DEDICATED
+    excava_beat.yml heartbeat — which should commit "excava-beat #N: <ts>" every ~5-10 min for its
+    whole 5.3h run — is actually wedged. Fire 16/17 diagnosed exactly this by hand (an unbounded
+    room-advance loop hanging inside one already-running job, starving the GH Actions concurrency
+    queue for 3+ hours while G-M's lagging done-counter still read "moving"). This check reads the
+    git history directly (no network) for the last real "excava-beat #N" commit and flags it stale
+    — an early, cheap signal the done-counter alone misses.
+
+    Shallow-clone caveat: a fresh checkout (this sandbox, and `actions/checkout@v4`'s own
+    fetch-depth=1 default) may not have enough local history to find ANY match even when the
+    heartbeat is perfectly healthy — that is a checkout-depth artifact, not evidence of a stall,
+    so a shallow repo with zero matches reports "info" (can't tell), never a false "STALE" warn.
+    A match IS still meaningfully aged even in a shallow clone (its timestamp is real), so a found
+    commit is always evaluated for staleness regardless of clone depth."""
+    log = _git(["log", "-1", "--format=%ad", "--date=iso-strict", "--grep=^excava-beat #", "origin/main"])
+    if not log:
+        log = _git(["log", "-1", "--format=%ad", "--date=iso-strict", "--grep=^excava-beat #"])
+    if not log:
+        shallow = _git(["rev-parse", "--is-shallow-repository"]) == "true"
+        if shallow:
+            return _ok("G-P", "Beat heartbeat commit freshness", True,
+                       "shallow clone — not enough local history to find an 'excava-beat #N' "
+                       "commit either way; not a stall signal, just a checkout-depth limit.", "info")
+        return _ok("G-P", "Beat heartbeat commit freshness", False,
+                   "no 'excava-beat #N' commit found in (full) history — the dedicated heartbeat "
+                   "loop has never landed a per-cycle commit.", "warn")
+    try:
+        age_h = (datetime.now(timezone.utc) - datetime.fromisoformat(log)).total_seconds() / 3600
+    except Exception:
+        return _ok("G-P", "Beat heartbeat commit freshness", False,
+                   f"could not parse heartbeat commit date: {log!r}", "warn")
+    stale = age_h > 6          # normal cadence is ~5-10 min inside a run; 6h is generous slack for
+                                # cron queueing/quota-exhaustion cycles without a real per-cycle commit
+    return _ok("G-P", "Beat heartbeat commit freshness", not stale,
+               f"last 'excava-beat #N' commit {age_h:.1f}h ago" +
+               (" — STALE: the dedicated heartbeat loop isn't landing per-cycle commits (check for "
+                "a wedged/queued excava_beat.yml run)." if stale else "."), "warn")
+
+
 def _load_json(p, d):
     try:
         return json.loads(p.read_text(encoding="utf-8"))
@@ -254,7 +295,7 @@ def _load_json(p, d):
 
 CHECKS = [g_quarantine, g_msgfile, g_backup, g_mojibake, g_build_align, g_json,
           g_remote_sync, g_collisions, g_handoff, g_memory, g_auditlog, g_watchdog, g_movement,
-          g_disk, g_localfuel]
+          g_disk, g_localfuel, g_beat_heartbeat]
 
 
 def run() -> dict:

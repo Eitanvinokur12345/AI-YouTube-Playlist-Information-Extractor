@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-27T01:11:54.920429+00:00",
- "total": 15,
- "passing": 15,
+ "generated_at": "2026-07-27T02:02:28.639634+00:00",
+ "total": 16,
+ "passing": 13,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -21,9 +21,9 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": true,
-   "detail": "n/a in CI — the beat pushes straight to origin each cycle, bypassing git_safe/local bundles by design.",
-   "severity": "info"
+   "ok": false,
+   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
+   "severity": "warn"
   },
   {
    "id": "G-D",
@@ -71,43 +71,50 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "4972 memory episodes on record.",
+   "detail": "5007 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "0 guardrail runs logged (append-only, never rewritten).",
+   "detail": "3 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
    "id": "G-L",
    "name": "Uncommitted-work watchdog",
-   "ok": true,
-   "detail": "no stray source files uncommitted.",
+   "ok": false,
+   "detail": "2 untracked source file(s) not committed — commit or quarantine so nothing is lost: other-skills/comfyui/comfyui-cinematography-pre-prompt/SKILL.md, other-skills/other/llm-fingerprinting-random-number-test/SKILL.md",
    "severity": "warn"
   },
   {
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
-   "ok": true,
-   "detail": "4625 tasks done, 12 departments moving",
+   "ok": false,
+   "detail": "4651 tasks done, 12 departments moving — STALLED (no new completions in the last 4 beats)",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "89088 MB free on the repo drive.",
+   "detail": "30437 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": true,
-   "detail": "last batch 19.2h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026",
+   "detail": "last batch 20.0h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026",
    "severity": "info"
+  },
+  {
+   "id": "G-P",
+   "name": "Beat heartbeat commit freshness",
+   "ok": true,
+   "detail": "last 'excava-beat #N' commit 0.2h ago.",
+   "severity": "warn"
   }
  ]
 }

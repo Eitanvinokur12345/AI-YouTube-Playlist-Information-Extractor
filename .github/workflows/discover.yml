@@ -63,10 +63,32 @@ jobs:
       - name: Safety commit
         if: always()
         run: |
+          # away fire 37: same two bugs fire 36 found and fixed in analyze.yml, ported here —
+          # this workflow shares the identical claude-code-action + safety-commit shape.
+          # (1) claude-code-action rewrites the git remote to its own OIDC-exchanged
+          # installation token, then revokes that token in its own post-step cleanup, which
+          # runs BEFORE this step — so a plain `git push` here always fails with "Invalid
+          # username or token" on any real (non-skipped) run. Re-point at the standard job
+          # GITHUB_TOKEN first (already granted contents:write by this workflow's permissions).
+          git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
           git config user.name "skills-tracker-bot"
           git config user.email "actions@users.noreply.github.com"
           git add data 2>/dev/null || true
           git commit -m "discover: $(date -u +%Y-%m-%dT%H:%MZ) — new web/GitHub/MCP tools" \
             || echo "nothing to commit"
-          git pull --rebase --autostash origin main || true
+          # (2) same rebase-conflict-recovery as the other 10 lanes (fires 28-35): a plain
+          # `|| true` on a rebase conflict silently discards this run's real work (HEAD left
+          # detached, push then fails and is swallowed). Abort and retry as a merge; if that
+          # also conflicts, auto-resolve only the known-stateless data/data_guard.json in our
+          # favor. Any other conflict is left unresolved on purpose (degrades to push-skipped).
+          if ! git pull --rebase --autostash origin main; then
+            echo "rebase failed — aborting and retrying as a merge"
+            git rebase --abort 2>/dev/null || true
+            if ! git pull --no-rebase --no-edit origin main; then
+              echo "merge also conflicted — auto-resolving known-stateless data_guard.json in our favor"
+              git checkout --ours -- data/data_guard.json 2>/dev/null || true
+              git add data/data_guard.json 2>/dev/null || true
+              git commit --no-edit || echo "unresolved conflict outside data_guard.json — leaving for manual/next-run recovery"
+            fi
+          fi
           git push || echo "push skipped"

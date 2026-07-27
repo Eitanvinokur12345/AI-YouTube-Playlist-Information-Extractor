@@ -4,6 +4,50 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+- **~20:2x (fire 37, unattended, cloud session) — confirmed fire 36's OAuth-token blocker is
+  still live right now, notified Eitan directly (only he can fix it), then closed the exact
+  follow-up fire 36 flagged as unaudited: the same push-auth bug in the other two
+  claude-code-action lanes.** Standing checks: `origin/main` cache stale (re-fetched, HEAD
+  matched, nothing at risk); guardrails 15/17, 0 critical (G-C stale-backup and G-O local-drain
+  both pre-existing, neither fixable from a cloud sandbox). Pulled live GH Actions state instead
+  of trusting yesterday's numbers: `analyze.yml`'s most recent scheduled run (20:12Z, inside the
+  night window) still shows `origin/main`'s `data/status.json` at `analyze_ok: false`,
+  `analyze_failed_at: 2026-07-27T20:07:21Z`, `last_analyze_ok_at: 2026-06-14` — the token problem
+  is current, not stale, and the real pipeline hasn't analyzed a video in 6+ weeks (pending
+  backlog 1316, still growing). Fire 36's `skipped`-vs-`success` fix is working correctly (the
+  failure is now visibly persisted instead of masked) but the underlying token still needs Eitan
+  to run `claude setup-token` on his own device and update `CLAUDE_CODE_OAUTH_TOKEN_REAL` — no
+  sandboxed session can do that step, so sent a push notification with the exact fix instead of
+  quietly re-logging it a second time. **Then did the audit fire 36 explicitly left open:**
+  checked every workflow using `claude-code-action` (`analyze`, `claude`, `discover`, `improve`,
+  `review`) against the OIDC-token-revocation bug fire 36 found and fixed in `analyze.yml`.
+  `claude.yml` doesn't have a separate safety-commit step (relies on the action's own built-in PR
+  flow) so it's unaffected. `review.yml` already had the `git remote set-url` fix. `improve.yml`
+  and `discover.yml` did NOT — same shape, same bug: `claude-code-action` revokes its OIDC
+  installation token in its own post-step cleanup before the "commit any remaining changes" /
+  "safety commit" step runs, so any real (non-skipped) improve or discover run has been silently
+  losing its safety-commit push too. Fixed both the same way as `analyze.yml`: re-point `origin`
+  at the job's own `GITHUB_TOKEN` before pushing. While in both files, also closed them out of
+  the separate fires-28-35 rebase-conflict-recovery rollout in the same edit (they were 2 of the
+  9 files fire 35 listed as not-yet-done) — abort-and-retry-as-merge with a `data_guard.json`-only
+  auto-resolve, identical to the other 11 lanes. Verified: `python3 -c "import yaml;
+  yaml.safe_load(...)"` on both edited files (valid YAML); `git status --short` after guardrails
+  ran showed only the two intended workflow diffs (reverted the `movement.json`/
+  `guardrails_status.json` local-run noise guardrails itself writes, matching fires 6/32/34's
+  precedent); re-ran guardrails clean at 15/17, 0 critical, diff unchanged. **Harsh
+  self-criticism:** I cannot live-verify either fix the way fire 34 verified a JSON repair,
+  because it only manifests on a real `claude-code-action` run and I'm not triggering `improve`/
+  `discover` manually mid-fire (both are heavier, longer-running lanes than `analyze`, and
+  `discover` in particular does live web search — an unnecessary cost/risk for a mechanical,
+  already-proven-safe one-line auth fix); the next natural firing of either workflow (Sat 20:00
+  UTC for improve, Sun/Tue/Thu 01:00 UTC for discover) is what actually proves it, not this fire.
+  That leaves 9 files (not 7) still on the fires-28-35 rebase-recovery pattern only:
+  `creators.yml`, `excava_inbox.yml`, `fetch.yml`, `mine_social.yml`, `sources.yml`,
+  `transcribe.yml` lack it — `creators.yml` doesn't use `claude-code-action` at all so it was
+  never at risk of the auth bug specifically, only the older conflict-swallowing one. Did not
+  touch the ~13-20 stray `kind-shannon-*` branches or the branch-vs-main shipping convention
+  (both still Eitan's call, unchanged from every prior fire).
+
 - **~20:0x (fire 36, unattended, cloud session) — chased self_check's #1 flagged failure
   ("routine kept pace, no stalled backlog", pending=1315) to its real root cause instead of
   another plumbing detour, and found a genuine silent-failure-masking bug in analyze.yml's own

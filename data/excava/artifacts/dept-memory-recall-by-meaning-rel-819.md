@@ -1,13 +1,15 @@
 # memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.
 
-> Decision artifact · room `dept-memory-recall-by-meaning-rel-819` (dept) · 2026-07-14T03:05:03.031332+00:00
+> Decision artifact · room `dept-memory-recall-by-meaning-rel-819` (dept) · 2026-07-27T18:20:12.078663+00:00
 > Participants: Graft, Root · synthesized by gh-models/openai/gpt-4o-mini
 
-**Decision:** Execute the memory linking command to integrate all conversation elements into the unified memory system.  
+**Decision:** Execute the memory linking command to create a unified brain graph with cross-referenced connections.  
+
 **Plan:**  
-1. Run the memory linking command to connect existing memory IDs.  
-2. Embed the context of this debate into the brain graph.  
-3. Ensure all decisions and contextual elements are retrievable for future recall by meaning.  
-4. Verify the integrity of the unified memory system after embedding.  
-5. Document the process for future reference and improvements.  
-**What changed:** The context and decisions of the conversation are now integrated into the memory system for better access in the future.
+1. Identify all existing memories and their associated IDs.  
+2. Run the memory linking command across the entire memory database.  
+3. Establish connections between memories based on meaning rather than just tags.  
+4. Generate the unified brain graph and visualize the relationships.  
+5. Test the graph for accuracy and ensure no memories are left unlinked.  
+
+**What changed:** The decision to execute the memory linking command formalizes the approach to improve memory recall and relationships.

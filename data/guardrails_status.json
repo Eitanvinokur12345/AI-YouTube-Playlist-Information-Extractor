@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-07-27T09:06:07.588830+00:00",
- "total": 16,
+ "generated_at": "2026-07-27T10:00:35.165982+00:00",
+ "total": 17,
  "passing": 15,
  "critical_failures": 0,
  "guardrails": [
@@ -21,8 +21,8 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": true,
-   "detail": "3 bundle(s); newest within 26h.",
+   "ok": false,
+   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
    "severity": "warn"
   },
   {
@@ -78,7 +78,7 @@
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "4 guardrail runs logged (append-only, never rewritten).",
+   "detail": "1 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -99,21 +99,28 @@
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "29385 MB free on the repo drive.",
+   "detail": "30473 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 27.1h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 28.0h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
    "ok": true,
-   "detail": "last 'excava-beat #N' commit 0.0h ago.",
+   "detail": "last 'excava-beat #N' commit 0.9h ago.",
+   "severity": "warn"
+  },
+  {
+   "id": "G-Q",
+   "name": "Core-spoton heartbeat freshness",
+   "ok": true,
+   "detail": "last 'core-spoton:' commit 0.9h ago.",
    "severity": "warn"
   }
  ]

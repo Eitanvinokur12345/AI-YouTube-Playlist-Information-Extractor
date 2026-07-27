@@ -3,7 +3,7 @@ src/guardrails.py — the INFORMATION-LOSS GUARDRAILS (owner law, 2026-07-06).
 
 The project must never be "toppled" — no committed work lost, no data silently dropped,
 no push that only *looked* like it saved, no corruption shipped that breaks the dashboard.
-This module enforces 16 named guardrails, each a concrete check. It writes
+This module enforces 17 named guardrails, each a concrete check. It writes
 data/guardrails_status.json (for the cockpit) and APPENDS to data/guardrails_log.jsonl
 (never rewritten — a permanent audit trail).
 
@@ -286,6 +286,48 @@ def g_beat_heartbeat():
                 "a wedged/queued excava_beat.yml run)." if stale else "."), "warn")
 
 
+def g_core_spoton_heartbeat():
+    """2026-07-27 (fire 26): fire 25 fixed a live bug where core_spoton.yml's date-arithmetic
+    (`$(( $(date -u +%H) % N ))`) hit bash's leading-zero-is-octal rule at exactly 08:xx/09:xx UTC
+    every day, crashing three steps and (before that fire's `!cancelled()` fix) silently discarding
+    the run's real work when the Commit step defaulted to skipped. That fire's own self-criticism
+    flagged the gap this closes: no guardrail cross-references whether the HOURLY core-spoton beat
+    is actually landing its "core-spoton: <ts>" commit — a full audit of every OTHER workflow file
+    confirmed (2026-07-27) core_spoton.yml's three now-fixed lines were the only date-in-arithmetic
+    sites in the repo, so this is pure forward-looking observability, not a live-bug patch.
+
+    Mirrors G-P's git-log-only approach (no GitHub Actions API call, no new permissions needed):
+    the discovery-agent step runs unconditionally every hour and almost always finds something to
+    add, so a long gap with zero "core-spoton:" commits is a strong, cheap signal something upstream
+    is broken (cron disabled, a step now raising before Commit, a bad rebase) even though it can't
+    distinguish that from "ran but genuinely had nothing new" the way a job-level API check could.
+    Same shallow-clone caveat as G-P: can't-tell reports info, never a false stale warn."""
+    log = _git(["log", "-1", "--format=%ad", "--date=iso-strict", "--grep=^core-spoton: ", "origin/main"])
+    if not log:
+        log = _git(["log", "-1", "--format=%ad", "--date=iso-strict", "--grep=^core-spoton: "])
+    if not log:
+        shallow = _git(["rev-parse", "--is-shallow-repository"]) == "true"
+        if shallow:
+            return _ok("G-Q", "Core-spoton heartbeat freshness", True,
+                       "shallow clone — not enough local history to find a 'core-spoton:' commit "
+                       "either way; not a stall signal, just a checkout-depth limit.", "info")
+        return _ok("G-Q", "Core-spoton heartbeat freshness", False,
+                   "no 'core-spoton:' commit found in (full) history — the hourly M1.C pipeline "
+                   "has never landed a per-cycle commit.", "warn")
+    try:
+        age_h = (datetime.now(timezone.utc) - datetime.fromisoformat(log)).total_seconds() / 3600
+    except Exception:
+        return _ok("G-Q", "Core-spoton heartbeat freshness", False,
+                   f"could not parse core-spoton commit date: {log!r}", "warn")
+    stale = age_h > 4          # cron is hourly (`5 * * * *`); 4h is generous slack for GH Actions
+                                # cron throttling/queueing before it's a real signal, not a false alarm
+    return _ok("G-Q", "Core-spoton heartbeat freshness", not stale,
+               f"last 'core-spoton:' commit {age_h:.1f}h ago" +
+               (" — STALE: the hourly discovery/deep-retrieve/verify pipeline hasn't committed in "
+                "over 4h (check for a wedged run, a broken step before Commit, or cron disabled)."
+                if stale else "."), "warn")
+
+
 def _load_json(p, d):
     try:
         return json.loads(p.read_text(encoding="utf-8"))
@@ -295,7 +337,7 @@ def _load_json(p, d):
 
 CHECKS = [g_quarantine, g_msgfile, g_backup, g_mojibake, g_build_align, g_json,
           g_remote_sync, g_collisions, g_handoff, g_memory, g_auditlog, g_watchdog, g_movement,
-          g_disk, g_localfuel, g_beat_heartbeat]
+          g_disk, g_localfuel, g_beat_heartbeat, g_core_spoton_heartbeat]
 
 
 def run() -> dict:

@@ -183,6 +183,11 @@ would notice and fix. Did not touch the brains subsystem, did not delete any of 
 stray branches (still deferred to Eitan per fire 19), and did not re-litigate the false-alarm/wedged-
 beat investigation fires 16/17/19/20/21 already closed out (checked the Actions run history first —
 current beat run is healthy, landing heartbeats normally since fire 21's fix).
+**v131 (away fire 24, unattended, cloud session, 2026-07-27 — live build v131):** Hub default-sort
+now floats ready-to-use elements up (`renderHub()` in docs/dashboard.js sorts by `elReady()` first,
+then the existing verified-rank/name tiebreak) — the item v127 queued as NEXT. Full detail + harsh
+self-criticism in AWAY_LOG.md (fire 24 entry) — that file is now the per-fire log; this §0d section
+just carries the live-build pointer forward for G-I.
 
 **(prior, v120) M2 UNDERWAY.** Sessions 8-10: 4 brain families in the engine CATALOG (GLM/DeepSeek/Kimi via
 OpenRouter free + local Qwen/Llama); OpenRouter key VERIFIED (Eitan's secret OPENROUTER_API_KEY_REAL,

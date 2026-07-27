@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-27T05:34:55.135694+00:00",
+ "generated_at": "2026-07-27T05:40:51.722343+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -57,7 +57,7 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 118,
+   "turns_7d": 119,
    "rooms_7d": 48,
    "engines_used": [
     "gh-models",
@@ -72,7 +72,7 @@
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 96,
+   "turns_7d": 97,
    "rooms_7d": 26,
    "engines_used": [
     "gh-models",
@@ -82,14 +82,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is that a *time-only* alert still leaks *when* we detected the breach—attackers correlate timestamps to ma"
+   "last_position": "A *time-only* alert leaks the exact moment we detected the breach—handing attackers a clock to correlate with their own "
   },
   {
    "id": "power-w1",
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 75,
+   "turns_7d": 76,
    "rooms_7d": 38,
    "engines_used": [
     "gh-models",
@@ -98,14 +98,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt Qwen3-235B-A22B-Instruct for EXCAVA. Its MoE design cuts latency 30-40% while keeping accuracy high, giving us a r"
+   "last_position": "Adopt DeepSeek-R1-671B on EXCAVA’s 8xA100 node. Its dense architecture avoids MoE sharding overhead, delivering consiste"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 75,
+   "turns_7d": 76,
    "rooms_7d": 38,
    "engines_used": [
     "gh-models",
@@ -114,7 +114,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Qwen3-235B’s MoE claim ignores sharding overhead—EXCAVA’s 8xA100 node can’t hide it. DeepSeek-R1-671B’s dense architectu"
+   "last_position": "DeepSeek-R1-671B’s \"consistent 6x throughput\" is a fantasy if its per-token compute cost collapses EXCAVA’s batch size—p"
   },
   {
    "id": "creators-lead",
@@ -184,7 +184,7 @@
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 41,
+   "turns_7d": 42,
    "rooms_7d": 21,
    "engines_used": [
     "gh-models",
@@ -193,14 +193,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Choose a high-contrast dark theme by default, with a manual light-mode toggle. This maximizes visibility and reduces eye"
+   "last_position": "Choose system preference by default, with a manual override in settings. This respects user habits and avoids forcing a "
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 41,
+   "turns_7d": 42,
    "rooms_7d": 21,
    "engines_used": [
     "gh-models",
@@ -208,7 +208,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk isn’t preference—it’s habituation. Users won’t switch from dark mode if it’s the default, even if they pre"
+   "last_position": "The real risk with defaulting to system preference is that it may not align with the optimal theme for our specific inte"
   },
   {
    "id": "accessibility-w1",
@@ -256,6 +256,35 @@
    "last_position": "DECISION: Run a 48-hour blind A/B stress test on EXCAVA’s 8xA100 with NVLink comparing Qwen3-235B-A22B-Instruct vs DeepS",
    "proposed": 24,
    "shipped": 24
+  },
+  {
+   "id": "news-lead",
+   "name": "Wire",
+   "dept": "news",
+   "role": "lead",
+   "turns_7d": 33,
+   "rooms_7d": 33,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Fetch verified AI headlines from Reuters, BBC, and the White House via their official RSS feeds and press releas"
+  },
+  {
+   "id": "news-w1",
+   "name": "Scoop",
+   "dept": "news",
+   "role": "doer",
+   "turns_7d": 33,
+   "rooms_7d": 33,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll fetch the latest AI headlines from Reuters, BBC, and the White House press releases. This will produce a fresh dige"
   },
   {
    "id": "security-lead",
@@ -317,48 +346,19 @@
    "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section. This produces a taste artifact "
   },
   {
-   "id": "news-lead",
-   "name": "Wire",
-   "dept": "news",
-   "role": "lead",
-   "turns_7d": 32,
-   "rooms_7d": 32,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Fetch verified AI headlines from Reuters, BBC, and the White House press feed; output a digest listing the newes"
-  },
-  {
-   "id": "news-w1",
-   "name": "Scoop",
-   "dept": "news",
-   "role": "doer",
-   "turns_7d": 32,
-   "rooms_7d": 32,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll fetch the latest AI headlines from Reuters, BBC, and the White House press feed. The output will be a concise diges"
-  },
-  {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 25,
-   "rooms_7d": 25,
+   "turns_7d": 26,
+   "rooms_7d": 26,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: I will run the memory linking command to connect every existing memory I have about memory systems and tools. Th"
+   "last_position": "Action: I will run the memory linking command to connect every existing memory I have into a unified graph. This will pr"
   },
   {
    "id": "improve-w1",
@@ -390,6 +390,34 @@
    "last_position": "Canary deployments still miss silent failures—like a prompt that degrades answer accuracy without changing latency or us"
   },
   {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 23,
+   "rooms_7d": 23,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 23,
+   "last_position": "I will run a full audit of the department’s link inventory using the link-checker tool. This will produce a complete rep"
+  },
+  {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 23,
+   "rooms_7d": 23,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 23,
+   "last_position": "ACTION: Anchor delivers the cleaned link inventory report with dead links removed."
+  },
+  {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
@@ -404,34 +432,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Deep-analyze the full LangSmith GitHub repository and documentation to extract its architecture, logging mechani"
-  },
-  {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 22,
-   "rooms_7d": 22,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 22,
-   "last_position": "I will run a full audit of the department’s link inventory using the link-checker tool to identify all broken, outdated,"
-  },
-  {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
-   "role": "lead",
-   "turns_7d": 22,
-   "rooms_7d": 22,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 22,
-   "last_position": "ACTION: Anchor delivers the cleaned link inventory report with dead links removed."
   },
   {
    "id": "mining-lead",
@@ -485,16 +485,16 @@
    "name": "Access",
    "dept": "accessibility",
    "role": "lead",
-   "turns_7d": 19,
-   "rooms_7d": 19,
+   "turns_7d": 20,
+   "rooms_7d": 20,
    "engines_used": [
     "groq",
     "mistral",
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Implement a **bold, full-width skip bar** that’s always visible but styled off-screen until focus arrives; tes",
-   "proposed": 19,
+   "last_position": "DECISION: Add a **bold, full-width skip bar** at the top *and* bottom of every page, plus **one skip link per distinct n",
+   "proposed": 20,
    "shipped": 19
   },
   {

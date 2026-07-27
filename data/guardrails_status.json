@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-27T03:07:39.930547+00:00",
+ "generated_at": "2026-07-27T04:04:27.514150+00:00",
  "total": 16,
- "passing": 15,
+ "passing": 14,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -21,8 +21,8 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": true,
-   "detail": "2 bundle(s); newest within 26h.",
+   "ok": false,
+   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
    "severity": "warn"
   },
   {
@@ -78,7 +78,7 @@
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "5 guardrail runs logged (append-only, never rewritten).",
+   "detail": "3 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -99,21 +99,21 @@
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "30343 MB free on the repo drive.",
+   "detail": "30440 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": true,
-   "detail": "last batch 21.1h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026",
+   "detail": "last batch 22.1h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026",
    "severity": "info"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
    "ok": true,
-   "detail": "last 'excava-beat #N' commit 1.1h ago.",
+   "detail": "last 'excava-beat #N' commit 2.1h ago.",
    "severity": "warn"
   }
  ]

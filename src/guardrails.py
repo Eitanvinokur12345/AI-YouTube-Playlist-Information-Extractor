@@ -299,6 +299,14 @@ CHECKS = [g_quarantine, g_msgfile, g_backup, g_mojibake, g_build_align, g_json,
 
 
 def run() -> dict:
+    # 2026-07-27 (fire 21): g_remote_sync and g_beat_heartbeat both read the LOCAL cached
+    # `origin/main` ref. standing_checks.py fetches before calling here, so it's always fresh —
+    # but `python -m src.guardrails` run on its own (as this fire itself just did) reads
+    # whatever origin/main happened to be cached at container-start, producing a phantom
+    # "50 commits behind" / "38h stale beat" false alarm that four separate diagnoses already
+    # traced to this exact cause (fires 16/17/19/20, AWAY_LOG.md). One quiet fetch here removes
+    # the whole failure class instead of relying on the caller to remember it.
+    subprocess.run(["git", "fetch", "origin", "main", "--quiet"], cwd=str(ROOT), capture_output=True)
     results = [c() for c in CHECKS]
     crit_fail = [r for r in results if not r["ok"] and r["severity"] == "critical"]
     status = {"generated_at": _now(), "total": len(results),

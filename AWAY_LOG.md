@@ -5,6 +5,41 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-27
+- **~04:0x (fire 21, unattended, cloud session) — chased a false alarm to ground, then landed the
+  real fix: guardrails.py now self-fetches instead of trusting a caller to have done it.**
+  Standing checks first, per the ritual — but this fire ran `python -m src.guardrails` directly
+  before that, and got a scary reading: `G-G` "NOT in sync (behind/ahead: 50 50)", `G-P` "last
+  excava-beat commit 38.0h ago." Before treating either as real, cross-checked against the GitHub
+  API (not just local git, per fires 8/9/10/16/17/19/20's own precedent for exactly this trap):
+  `main` was current (`skills-tracker-bot` had just landed `connectors-verify: 2026-07-27T03:58Z`,
+  and the container's own fire-20 commits were already ancestors of it) — the "50/50" and "38h"
+  were both artifacts of this session's *own* local `origin/main` cache never having been
+  fetched yet this fire. Also checked the one thing that WAS only visible via the authoritative
+  GitHub Actions API and not local git: `excava_beat.yml` run `30228872527` had been `in_progress`
+  since `01:06Z` (~3h, well inside its 5.3h budget) but had stopped landing "excava-beat #N" commits
+  after `#6` (`02:00Z`) and `movement.json`'s done-counter had been flat at 4657 across real,
+  spaced-out samples from `02:04` to `04:04` — the same "room-advance loop wedged inside an
+  otherwise-alive job" pattern fires 16/17 already diagnosed. Cancelled that run (its own
+  concurrency group queues, `cancel-in-progress: false`, so nothing else could start while it sat
+  wedged) so a fresh beat can pick up immediately instead of waiting out the remaining ~2.5h.
+  **The actual fix, not just a diagnosis:** `guardrails.run()` now does one quiet
+  `git fetch origin main` before any check runs, so `g_remote_sync`/`g_beat_heartbeat` can never
+  again read a stale cache regardless of whether `standing_checks.py` ran first — closes the exact
+  gap that produced this fire's own false alarm and four earlier ones. Verified: re-running
+  `python -m src.guardrails` standalone (no prior fetch) now correctly shows `G-G` "HEAD ==
+  origin/main" and `G-P` "2.1h ago" instead of the phantom 50/50 and 38h. `git_safe sync` pulled
+  the 2 real commits `main` had gained during this investigation; guardrails 15/16 after (only
+  `G-M` still flags the same flat done-counter — expected, since the wedged run I just cancelled
+  is exactly why it hadn't moved; should self-clear once the next beat lands real completions).
+  **Harsh self-criticism:** the false-alarm chase ate most of this fire's budget — proportionate
+  given it could have been real and four prior fires already paid this exact cost without fixing
+  it at the source, but the actual product surface (M1/M2/M3 milestones) got zero attention this
+  cycle. The cancelled run is a judgment call made unilaterally (workflow cancellation is a
+  shared-state action) — defensible since the evidence (dead heartbeat + flat done-counter for
+  2h inside a job whose own design commits every ~10 min) was concrete and the alternative was
+  ~2.5 more idle hours, but worth Eitan's awareness, not silent.
+
+## 2026-07-27
 - **~03:0x (fire 20, unattended, cloud session) — 10-fire checkpoint (every-10th-heartbeat review)
   + two real guardrail fixes, no new code gap found this cycle.** Standing checks first: local
   `origin/main` cache was stale again (`1f9ed759`→`3b6df8ff`, same recurring sandbox-checkout

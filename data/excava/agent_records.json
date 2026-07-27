@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-27T04:26:06.096336+00:00",
+ "generated_at": "2026-07-27T04:51:48.310940+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 178,
+   "turns_7d": 179,
    "rooms_7d": 26,
    "engines_used": [
     "gh-models",
@@ -17,14 +17,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is that a *generic* alert still leaks the breach *threshold*—which attackers can map to our detection sens"
+   "last_position": "The real risk of a *time-only* alert is that it leaks the *exact moment* of detection—useful for attackers to correlate "
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 146,
+   "turns_7d": 147,
    "rooms_7d": 87,
    "engines_used": [
     "gh-models",
@@ -34,7 +34,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** The AI Executive Assistant (AE) auto-publishes a *redacted* excerpt (threshold breached, timestamp, redact"
+   "last_position": "**Decision:** The AI Executive Assistant (AE) auto-publishes a *time-only* alert (timestamp, no threshold, no data) imme"
   },
   {
    "id": "transcripts-w1",
@@ -215,17 +215,47 @@
    "name": "Dynamo",
    "dept": "power",
    "role": "lead",
-   "turns_7d": 34,
-   "rooms_7d": 34,
+   "turns_7d": 35,
+   "rooms_7d": 35,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Adopt Qwen3-235B-A22B-Instruct for EXCAVA with strict 8-expert cap, real-time GPU memory kill-switch at 90%, a",
-   "proposed": 21,
+   "last_position": "DECISION: Run a 48-hour blind A/B stress test on EXCAVA’s 8xA100 with NVLink—Qwen3-235B-A22B-Instruct (8-expert cap) vs ",
+   "proposed": 22,
    "shipped": 21
+  },
+  {
+   "id": "accessibility-w1",
+   "name": "Ramp",
+   "dept": "accessibility",
+   "role": "doer",
+   "turns_7d": 34,
+   "rooms_7d": 18,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "We should add a single high-contrast skip link at the top of every page that only becomes visible on keyboard focus, all"
+  },
+  {
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
+   "role": "checker",
+   "turns_7d": 34,
+   "rooms_7d": 18,
+   "engines_used": [
+    "gh-models",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The real risk is that a persistent skip link clutters the top of every page, even when unused. A better alternative is t"
   },
   {
    "id": "security-lead",
@@ -257,36 +287,6 @@
    ],
    "positions_held": 30,
    "last_position": "I will run the LLM Guard scanner on this conversation’s input/output stream to detect leaks, injection, or fake elements"
-  },
-  {
-   "id": "accessibility-w1",
-   "name": "Ramp",
-   "dept": "accessibility",
-   "role": "doer",
-   "turns_7d": 33,
-   "rooms_7d": 17,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "Add a **persistent, high-contrast skip link** at the top of every page, styled to always stand out against the backgroun"
-  },
-  {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 33,
-   "rooms_7d": 17,
-   "engines_used": [
-    "gh-models",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "The real risk is that a persistent skip link clutters the top of every page, breaking visual flow for sighted users who "
   },
   {
    "id": "visual-lead",
@@ -321,29 +321,29 @@
    "name": "Wire",
    "dept": "news",
    "role": "lead",
-   "turns_7d": 24,
-   "rooms_7d": 24,
+   "turns_7d": 25,
+   "rooms_7d": 25,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Fetch verified AI headlines from Reuters, BBC, and the White House, compile into a digest titled \"AI Headlines D"
+   "last_position": "ACTION: Fetch verified AI headlines from Reuters, BBC, and the White House via the real-time news scraper, output a conc"
   },
   {
    "id": "news-w1",
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 24,
-   "rooms_7d": 24,
+   "turns_7d": 25,
+   "rooms_7d": 25,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll fetch the latest AI headlines from Reuters, BBC, and the White House. This will produce a curated digest of the new"
+   "last_position": "I’ll fetch the latest AI headlines from Reuters, BBC, and the White House using the real-time news scraper. The output w"
   },
   {
    "id": "improve-w1",
@@ -425,32 +425,32 @@
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 17,
-   "rooms_7d": 17,
+   "turns_7d": 18,
+   "rooms_7d": 18,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: I will run the memory linking command to connect every existing memory I have about memory systems and recall me"
+   "last_position": "Action: I will run the memory linking command to connect every existing memory I have to the unified memory system. This"
   },
   {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 17,
-   "rooms_7d": 17,
+   "turns_7d": 18,
+   "rooms_7d": 18,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Default to system theme on first load, with a single one-time prompt offering a high-contrast override; no per",
+   "last_position": "DECISION: Default to our custom dark theme on first load with a one-time prompt offering high-contrast light mode as the",
    "proposed": 18,
-   "shipped": 18
+   "shipped": 17
   },
   {
    "id": "accessibility-lead",
@@ -470,6 +470,34 @@
    "shipped": 17
   },
   {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 15,
+   "rooms_7d": 15,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 15,
+   "last_position": "I will run a full audit of the department’s link inventory using the link-checker tool. This will produce a complete lis"
+  },
+  {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 15,
+   "rooms_7d": 15,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 15,
+   "last_position": "ACTION: Anchor delivers the cleaned link inventory report with dead links removed."
+  },
+  {
    "id": "memory-lead",
    "name": "Root",
    "dept": "memory",
@@ -482,34 +510,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Root executes the memory linking command to embed all prior memory IDs in this room into the Cross-AI Unified Me"
-  },
-  {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 14,
-   "rooms_7d": 14,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 14,
-   "last_position": "I will run a full audit of the department’s link inventory using the link-checker tool. This will produce a complete rep"
-  },
-  {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
-   "role": "lead",
-   "turns_7d": 14,
-   "rooms_7d": 14,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 14,
-   "last_position": "ACTION: Anchor delivers the cleaned link inventory report with dead links removed."
   },
   {
    "id": "improve-lead",

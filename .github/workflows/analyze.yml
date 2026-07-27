@@ -160,12 +160,17 @@ jobs:
                   "update the CLAUDE_CODE_OAUTH_TOKEN_REAL GitHub secret. Otherwise check the "
                   "Actions log for the failing step."
               )
-          elif outcome in ("success", "skipped", ""):
+          elif outcome in ("success", ""):
               st["analyze_ok"] = True
               st["token_hint"] = ""
               if outcome == "success":
                   st["last_analyze_ok_at"] = now
-          # 'cancelled' leaves the previous flag as-is
+          # 'skipped' (night-gate / empty-backlog no-op) and 'cancelled' leave the previous
+          # flag as-is — a skip did not attempt real work, so it must never overwrite a real
+          # failure recorded by an earlier attempt (away fire 36: a "skipped" outcome was
+          # silently healing analyze_ok back to true ~14-16x/day regardless of whether the
+          # night-window's actual Claude run had failed hours earlier, hiding the failure from
+          # anything reading data/status.json).
           p.parent.mkdir(parents=True, exist_ok=True)
           p.write_text(json.dumps(st, indent=2, ensure_ascii=False), encoding="utf-8")
           print("analyze_ok:", st.get("analyze_ok"), "outcome:", outcome)

@@ -49,7 +49,7 @@ jobs:
           GEMINI_API_KEY_3: ${{ secrets.GEMINI_API_KEY_3 }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: |
-          if [ $(( $(date -u +%H) % 2 )) -eq 0 ]; then
+          if [ $((10#$(date -u +%H) % 2)) -eq 0 ]; then
             python -m src.deep_retrieve --limit 60
           else
             echo "odd hour - skipped (runs every 2nd hour)"
@@ -64,7 +64,7 @@ jobs:
       - name: Verify elements (every 6th hour)
         if: ${{ !cancelled() }}
         run: |
-          if [ $(( $(date -u +%H) % 6 )) -eq 0 ]; then
+          if [ $((10#$(date -u +%H) % 6)) -eq 0 ]; then
             python -m src.verify_elements --limit 300
           else
             echo "not a verify hour - skipped (every 6h)"
@@ -73,7 +73,7 @@ jobs:
       - name: Relate + prewarm (every 6th hour, after verify)
         if: ${{ !cancelled() }}
         run: |
-          if [ $(( $(date -u +%H) % 6 )) -eq 0 ]; then
+          if [ $((10#$(date -u +%H) % 6)) -eq 0 ]; then
             python -m src.relate && python -m src.prewarm --top 80
           else
             echo "not a relate/prewarm hour"
@@ -84,6 +84,7 @@ jobs:
         run: python -m src.element_model
 
       - name: Commit
+        if: ${{ !cancelled() }}
         run: |
           git config user.name "skills-tracker-bot"
           git config user.email "actions@users.noreply.github.com"

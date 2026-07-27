@@ -4,6 +4,56 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+- **~09:0x (fire 25, unattended, cloud session) — found and fixed a real, live, twice-daily
+  data-loss bug in `core_spoton.yml` (the M1.C "#1 priority" pipeline), confirmed via live CI
+  logs, not speculation.** Standing checks first: `python -m src.standing_checks` — local cache
+  of `origin/main` was stale (re-fetched, HEAD matched after, nothing lost — the same recurring
+  pattern fires 8/9/16/17/19/20/21/23/24 already documented); upstream tracking already set;
+  guardrails 14/16 pre-fire, 0 critical (`G-C` stale backup + `G-O` PC-drain-stale, both expected/
+  self-healing, not new). Went looking for the actual blocker QUESTIONS.md/fire 9/10 flagged
+  (enrichment stalled) rather than more browse-layer polish (four fires in a row — 24, and
+  before that 21/22/23 by their own admission — had already done Hub/browse work). My local
+  clone was shallow, which briefly made it LOOK like `core-spoton` commits had stopped landing
+  since 2026-07-25T15:13Z — `git fetch --unshallow` proved that false (199 `core-spoton` commits
+  exist, most recent `070b752e8` at 2026-07-27T04:47Z) before I acted on it, so no wasted fix
+  chasing a phantom. While confirming that, `mcp__github__actions_list` on the real workflow-run
+  history showed the MOST RECENT run (`30250801398`, 2026-07-27T08:40Z) had `conclusion: failure`
+  — pulled its job log directly: `Deep retrieve`, `Verify elements`, and `Relate + prewarm` all
+  died with `bash: 08: value too great for base (error token is "08")`. Root cause: all three
+  steps gate on `$(( $(date -u +%H) % N ))`, and bash's arithmetic context treats a leading-zero
+  numeral as OCTAL — "08"/"09" aren't valid octal digits, so the shell errors out at exactly
+  those two UTC hours, every single day. Confirmed the blast radius from the same run's job list:
+  the final `Commit` step (no `if:` guard, so it defaults to `success()`) came back `conclusion:
+  skipped` — meaning that hour's real, already-completed `Discovery agent` and `GitHub-metadata
+  enrich` work (new elements queued, stub descriptions fetched) was silently thrown away when the
+  ephemeral runner was torn down, twice a day, for as long as this file has existed. **Fixed both
+  the root cause and the blast radius, both narrowly scoped:** (1) `10#` -prefixed all three
+  `date -u +%H` arithmetic expressions (`$((10#$(date -u +%H) % 2))` /  `% 6` ×2) so bash always
+  reads the hour as base-10; (2) added `if: ${{ !cancelled() }}` to the `Commit` step — the exact
+  guard every other step in this same file already uses — so a future unrelated step failure
+  can no longer silently discard already-completed real work. **Verified, not assumed:** a bash
+  loop replaying every hour 00–23 through both the old and new expressions reproduces the exact
+  live error at 08/09 under the old code and confirms all 24 hours resolve to the correct
+  mod-2/mod-6 parity under the fix (0 mismatches); `python3 -c "import yaml; yaml.safe_load(...)"`
+  confirms the edited workflow file is still valid YAML. Could not re-run the actual GitHub Actions
+  job from here to prove it green (no dispatch trigger fired this fire) — the real proof lands at
+  the next 08:xx/09:xx UTC `core_spoton` run; worth a PULSE.md/Actions-tab glance after 2026-07-28
+  09:00Z to confirm `Commit` no longer shows `skipped` at those hours. `python -m src.guardrails`:
+  13/16 before ship (0 critical; `G-G` flagged only because origin had moved again during this
+  investigation — resolved by the ship's own sync). **Harsh self-criticism:** this bug has
+  presumably existed since `core_spoton.yml` was authored, discarding 2 hours' worth of discovery/
+  enrichment work per day for an unknown number of days/weeks — real, compounding, and invisible
+  to every prior fire's guardrails/systemcheck/pulse, because none of those tools cross-reference
+  live Actions-run conclusions against local git history; that gap in the observability stack is
+  itself still open (a `core-spoton run failed AND its commit was skipped` signal has no guardrail
+  today, and I did not build one this fire — flagging as the concrete next-fire candidate instead
+  of stretching this one further). I also did not audit the OTHER ~18 workflow files in
+  `.github/workflows/` for the same octal-arithmetic pattern beyond a single repo-wide grep for
+  `%H`/`%M` inside `))` — the grep is a reliable net for this exact idiom but wouldn't catch a
+  differently-shaped date-arithmetic bug elsewhere. Followed the same direct-to-`main`
+  `git_safe ship` convention as every fire since 7 (still genuinely unconfirmed by Eitan, still
+  flagged in QUESTIONS.md, not re-litigated here a further time).
+
 - **~07:0x (fire 24, unattended, cloud session, live build v131) — Hub default-sort now floats
   ready-to-use elements up.** Standing checks: local HEAD was 1 commit behind `origin/main`
   (`4e6b667d2`) — `git_safe sync` cleared it, no loss; guardrails 15/16 both before and after (only

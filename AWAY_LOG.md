@@ -5,6 +5,44 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-27
+- **~02:0x (fire 19, unattended, cloud session) — finally ran the branch sweep fires 6/7/9
+  kept flagging as unstarted, and it paid off: found and landed two genuinely stranded pieces
+  of real work instead of a symptom-free audit.** Standing checks first: local `origin/main`
+  cache stale (`1f9ed759`→`fef8223f`, re-fetched, nothing lost), upstream tracking missing on
+  this session's branch (auto-fixed); guardrails 14/15 pre-fire. Then, rather than re-diagnosing
+  the ~20 `claude/kind-shannon-*` branches by hand again, checked systematically: for every
+  branch, diffed file lists against `origin/main` restricted to `src/*.py` (zero hits — no
+  source-code file is stranded anywhere) and then to docs/skills/json (a handful of shared
+  SKILL.md paths absent from `main`, traced to fires 12/13/15's own deliberate anti-boilerplate/
+  dedup removals — confirmed via their AWAY_LOG entries, not assumed innocent). Two branches did
+  carry real, never-landed content: (1) `kind-shannon-hcwmum` (3 commits, fire 18) had a fully
+  written, correct `G-P` "beat heartbeat commit freshness" guardrail in `src/guardrails.py` that
+  never reached `main` — ported verbatim, guardrails now defines 16 checks. (2) `kind-shannon-
+  yj1a6g` (a day-old branch, pre-dates a history rewrite) had already fully analyzed two videos
+  — `SpO5qVQxxP0`, `D6cBsAWwCd0` — that were STILL sitting untouched in `main`'s own
+  `data/_pending/`, with real non-boilerplate skills (a ComfyUI cinematography pre-prompt
+  technique; an LLM-fingerprinting-via-random-number technique), a ComfyUI tool endorsement, and
+  filled news summaries. Rather than let the normal pipeline redo that work from scratch, ported
+  all of it: `skills.json` + `index.json` + both `SKILL.md` packages (`other-skills/comfyui/`,
+  `other-skills/other/`), the `tools.json` ComfyUI endorsement, `daily_news.json` summaries,
+  moved both files `_pending`→`processed`, and updated `run_report`/cumulative counters
+  (`total_videos_analyzed` 1520→1522; `total_tools` corrected 844→2847, which was already stale
+  before this fire — nobody had recomputed it against the real file count in a while). **Verified:**
+  `python -m src.guardrails` → G-P now reports "last 'excava-beat #N' commit 0.2h ago" (passing);
+  all 9 touched JSON files re-parse clean; `git_safe ship` confirmed `origin == HEAD` after push.
+  **Harsh self-criticism:** did NOT delete any of the ~20 stray branches even though most are now
+  confirmed safe to remove (superseded or deliberately-obsoleted content) — branch deletion is a
+  destructive, harder-to-reverse action than anything else this fire did, and no prior fire has
+  taken it unilaterally either; leaving it as an explicit, cheap decision for Eitan
+  (`git push origin --delete <branch>` for the confirmed-stale ones) rather than doing it myself
+  in an unattended run. Also did not re-verify EVERY one of the 20 branches commit-by-commit
+  (only the ones whose file-diff showed something main didn't already have) — the file-diff
+  heuristic can't catch a case where a branch modified an EXISTING file's *content* differently
+  from main without adding/removing files; considered this an acceptable bound given the sweep's
+  goal (find stranded new capability, not audit every historical line) but flagging the gap
+  honestly. G-M still reads "STALLED" — same known-flappy artifact prior fires already documented
+  for infra/audit-heavy fires, not a new regression.
+
 - **~00:0x (fire 17, unattended, cloud session) — confirmed fire 16's wall-clock fix actually
   recovered the stall, then gave "visualization" (the last talk_only department) a real
   executor.** Standing checks first (`python -m src.standing_checks`): local `origin/main` cache

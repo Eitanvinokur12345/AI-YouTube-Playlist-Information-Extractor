@@ -98,6 +98,17 @@ signing key added to this environment's git config, or switching these commits t
 (which auto-signs as "GitHub verified") instead of local `git push`. Neither is a fire-sized decision to make
 unilaterally.
 
+**2026-07-27 (fire 19) — the branch sweep finally ran; two real gaps found and landed, ~20 branches now safe to delete.**
+Checked every `claude/kind-shannon-*` branch for content `main` lacks (file-diff, not full history reread — see
+AWAY_LOG fire 19 for the method and its one acknowledged blind spot). Found zero stranded source code, and landed
+the two real gaps that did exist: a `G-P` guardrail from `kind-shannon-hcwmum` (fire 18) and two already-analyzed
+videos' worth of skills/tools/news from `kind-shannon-yj1a6g`. Everything else on every other branch is either
+already independently on `main` or was deliberately removed by later cleanup fires (12/13/15) — confirmed via
+`deleted_skills.json`/`merge_log.json`, not assumed. → **Decision for you:** all ~20 stray branches are now
+confirmed safe to delete (`git push origin --delete <branch>` for each) — I did not delete them myself since
+branch deletion is harder to reverse than anything else this fire touched and no prior fire has done it
+unilaterally either. _Default: delete them next time you're at a terminal; low priority, no urgency._
+
 ---
 
 ## A. The new look ("Heavy Machinery" v58)

@@ -1,16 +1,16 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-987` (dept) · 2026-07-18T02:23:22.060470+00:00
-> Participants: Pick, Boulder · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-987` (dept) · 2026-07-27T19:47:02.108873+00:00
+> Participants: Pick · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Use GitHub’s advanced search to query repositories tagged with both "AI" and "research."
-2. Sort results by stars (descending) and limit to the top 100 entries.
-3. Extract for each repository: name, description, star count, and URL.
-4. Format the output as a markdown table with columns: Rank, Repository, Description, Stars, Link.
-5. Validate entries for relevance (e.g., exclude non-research AI projects like tutorials or apps).
-6. Output the final table in GitHub-flavored markdown.
+1. Run a Reddit search for AI-related posts in the last 7 days.
+2. Filter results by upvotes and comments to identify the top 10 most engaging threads.
+3. Extract titles, URLs, and generate a 1-sentence summary for each thread.
+4. Compile the curated list into a GitHub markdown table.
+5. Share the output with the team for review.
+6. Proceed to synthesize insights from the threads for broader AI trend analysis.
 
-**What changed:** Prioritized GitHub research repositories over generic "AI" tags.
+**What changed:** Focus shifted from broad multi-platform scraping to a targeted Reddit-first approach to gather high-engagement AI discussions efficiently.

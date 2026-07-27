@@ -1,15 +1,16 @@
 # creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Created by EXCAVA' + tes
 
-> Decision artifact · room `dept-creators-build-packages-enri-955` (dept) · 2026-07-15T10:44:50.747633+00:00
-> Participants: Forge, Nova · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-creators-build-packages-enri-955` (dept) · 2026-07-27T19:46:39.974784+00:00
+> Participants: Forge, Nova · synthesized by mistral/mistral-small-latest
 
-**Decision:** Approve the development of the "UGC Factory" npm package and complete the necessary testing.
+**Decision:**
 
 **Plan:**
-1. Forge will draft the "UGC Factory" npm package for the creators tab, including all necessary files labeled "Created by EXCAVA."
-2. The package will include a README, license, and example usage files to assist users.
-3. Nova will perform testing on the "UGC Factory" npm package to ensure its functionality and reliability.
-4. Any issues discovered during testing will be addressed before final release.
-5. Once testing is complete, the package will be published for public use.
+1. Draft the "Skill Creator for Claude" npm package in the creators tab.
+2. Label the package artifact as "Created by EXCAVA."
+3. Mark the package as completed in the creators tab.
+4. Enrich the creators tab with additional relevant packages.
+5. Draft new elements under the creators tab as needed.
+6. Ensure all artifacts are labeled "Created by EXCAVA."
 
-**What changed:** The decision was made to move forward with the creation and testing of the "UGC Factory" npm package.
+**What changed:** The "Skill Creator for Claude" npm package was finalized and marked as completed under the creators tab.

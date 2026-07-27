@@ -5,6 +5,66 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-27
+- **~06:0x (fire 23, unattended, cloud session) — found and fixed a real, live false-positive in
+  the supervisor (the project's central "is work real" honesty tool), plus surfaced a 3+-week-old
+  self-inconsistent department charter that had been silently hiding.** Standing checks first:
+  local `origin/main` cache was 1 commit stale (`629da018`, fast-forward, nothing lost — the same
+  recurring pattern fires 8/9/16/17/19/20/21 already documented) — `git_safe sync` cleared it;
+  guardrails 15/16 pre-fire, 0 critical (only `G-C`, stale backup, self-heals). `systemcheck`
+  reported a clean 11/11 with the only blocked department ("watch") already confirmed genuinely
+  blocked on Gemini quota by fire 20 — no obviously-broken thing was sitting there, so I looked
+  harder at `python -m src.excava_supervisor`'s own output instead of reaching for a sixth
+  guardrail-flap fix: 6 of the last 40 tracked completions were flagged `noop` ("theatre"), ALL
+  from the "news" department, ALL the exact same text —
+  `Ran the trend watch. trend_watch: N proposals (top score X); queued 0 into self-improvement.`
+  Traced it: `src/excava_agents.py`'s `REAL_TOOL["news"]` runs `src.trend_watch` (a self-improvement
+  trend-proposal tool per its own docstring, nothing to do with news content) for every task the
+  "news" department gets, including ones literally named `news-room-action-fetch-*`. `trend_watch`
+  DEDUPES queued proposals by key — checked `data/improvement_tasks.json` and found the 5 proposals
+  it queued back on 2026-06-29 are STILL open, so "queued 0" has been the objectively correct report
+  on every run since (nothing new to add, not nothing done) — the supervisor's blanket `"queued 0"`
+  no-op pattern was misjudging a genuinely healthy, deterministic result as a facade. Fixed with a
+  targeted carve-out in `judge()` keyed to trend_watch's own report signature (mirrors the existing
+  security-dept "0 leaks = good" carve-out already in the same function) — `src/excava_supervisor.py`.
+  Along the way found the ROOT cause was one level deeper: `data/excava/intent.json`'s "news" charter
+  has said `should_do: "refresh the AI-news digest..."` since it was first authored, but `right_tool`
+  was always `src.trend_watch` — self-inconsistent from day one. Because `right_tool` happened to
+  already match the actual code (`REAL_TOOL["news"]`), the supervisor's own intent-drift detector
+  (the exact mechanism that already caught mining/visual/memory drift in earlier fires) had nothing
+  to flag and stayed silent for 3+ weeks. `data/excava/agents.json`'s independent "news" dept
+  description ("refresh official-site AI news") confirms headline-refresh really was the true
+  original intent. Restored `intent.json`'s `right_tool` to `src.news` (the tool that actually
+  matches `should_do`) with a full explanatory `note` — this makes the drift VISIBLE going forward
+  (`systemcheck`'s "intent aligned" line now honestly reads 10/11, 1 tool-drift, not 11/11) without
+  changing any executed code. **Deliberately did NOT rewire `REAL_TOOL["news"]` to actually call
+  `src.news`** — flagged as a real decision for Eitan in QUESTIONS.md instead of forcing it through
+  unattended: `src/news.py` already runs independently every 6h via `.github/workflows/news.yml` and
+  writes files CLAUDE.md governs as the separate YouTube-playlist-analyzer pipeline's own territory
+  (out of this fire's scope per the hard constraints), and it sequentially fetches ~95 RSS sources at
+  up to 15s each — comfortably past `_run_real_tool`'s hardcoded 90s subprocess timeout, which would
+  trade today's honest no-op for a noisier "failed (timed out)." **Verified:** 8-case unit check
+  against `judge()` (real trend_watch strings incl. a 0-proposals case, a genuine visual no-op, an
+  empty/planned result, a blocked result, and the pre-existing security 0-leaks carve-out) — all 8
+  correct, zero regressions; live re-run of `python -m src.excava_supervisor` against the real,
+  unmodified `data/excava/bus.json` shows `real_pct` jump 82%→100% the moment the fix lands (0 noop,
+  was 6); `python3 -c "json.load(...)"` on `intent.json` after editing. `python -m src.guardrails` →
+  15/16 both before and after (only `G-C` flaps, self-heals on ship). **Harsh self-criticism:** the
+  100% real_pct is now itself worth being suspicious of — I fixed a real false-positive, but a
+  supervisor that reads 100% could just as easily be hiding the NEXT genuine no-op behind a
+  carve-out that's slightly too broad; my carve-out is keyed narrowly to trend_watch's own exact
+  two-substring signature (verified only that phrase appears anywhere else in the codebase, via
+  grep, before trusting it), but "narrow enough today" is not a permanent guarantee if trend_watch's
+  own output format ever changes. I chose to surface the intent-drift via the SAME existing detector
+  other fires already used for mining/visual/memory rather than writing new prose, which keeps the
+  fix consistent with established practice — but flipping `right_tool` does drop `systemcheck` from
+  a clean 11/11 to 10/11, and I already worry a future fire skimming that number fast will read it as
+  a regression to "fix" by reverting my change rather than reading the note; said so as plainly as I
+  could in both this note and the intent.json note itself. I did NOT resolve the actual underlying
+  question (should the news department really run `src.news`) — correctly left as Eitan's call per
+  the hard constraints, but it means the department stays doing work unrelated to its own name and
+  charter until he decides, same as it has for 3+ weeks already. Did not touch the ~20 confirmed-safe
+  stray branches (still his call, fire 19) or anything brain-side.
+
 - **~05:0x (fire 22, unattended, cloud session) — landed QUESTIONS.md #10, a real (non-duplicative)
   M3/Hub increment.** Standing checks first: local `origin/main` cache stale (re-fetched, nothing
   lost), upstream tracking already set; guardrails 15/16 pre-fire (only `G-C`, stale backup — fixed

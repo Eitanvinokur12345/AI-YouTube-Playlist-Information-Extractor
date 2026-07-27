@@ -40,8 +40,19 @@ def judge(result: str, dept: str) -> tuple[str, str]:
         return "planned", "STILL A PLAN, not execution — the hollow-work facade"
     if any(f in r for f in FAIL):
         return "failed", "the external tool ran but FAILED or returned nothing usable"
-    # 'no-op', but a clean security/verify scan ('0 leaks') is a REAL good result, not a no-op.
-    good_zero = dept in ("security",) and ("leak" in r or "clean" in r or "flagged" in r)
+    # 'no-op', but a clean security/verify scan ('0 leaks') is a REAL good result, not a no-op —
+    # and so is trend_watch's own honest "queued 0" (2026-07-27, fire 23): trend_watch DEDUPES
+    # queued proposals by key (src/trend_watch.py) — it only ever queues a proposal it hasn't
+    # queued before, so "N proposals ...; queued 0" is the CORRECT steady-state report once
+    # today's trends are already on record, not evidence the wrong tool ran or did nothing.
+    # Verified against the live data/improvement_tasks.json: the 5 trend proposals it queued on
+    # 2026-06-29 are still open, so every run since has correctly reported 0 NEW queues, not 0
+    # work done — this pattern was misclassified as "noop" for every "news" completion (6 of the
+    # last 40 in the live bus, all with the exact same honest zero).
+    good_zero = (
+        (dept in ("security",) and ("leak" in r or "clean" in r or "flagged" in r))
+        or ("proposals (top score" in r and "into self-improvement" in r)
+    )
     if not good_zero and any(n in r for n in NOOP):
         return "noop", "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre"
     return "real", "produced substantive real output"

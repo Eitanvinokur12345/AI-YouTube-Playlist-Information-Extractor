@@ -37,8 +37,9 @@
     },
     "news": {
       "should_do": "Freshness: refresh the AI-news digest from the newest official/company/national sources.",
-      "right_tool": "src.trend_watch",
-      "success_looks_like": "fresh news items added this cycle"
+      "right_tool": "src.news",
+      "success_looks_like": "fresh news items added this cycle",
+      "note": "2026-07-27 (fire 23): this charter was SELF-INCONSISTENT since it was authored — should_do/success_looks_like always described headline-refreshing, but right_tool was always 'src.trend_watch' (a self-improvement trend-proposal tool, unrelated to news content; see src/trend_watch.py's own docstring). data/excava/agents.json's 'news' dept purpose ('refresh official-site AI news') independently confirms headline-refresh was the true intended job. Restored right_tool to the actual matching tool (src.news) so the supervisor's existing intent-drift detector (the same one that caught mining/visual/memory drift) now correctly SURFACES this instead of silently agreeing with the wrong wiring. Deliberately did NOT rewire src/excava_agents.py's REAL_TOOL to match — src.news already runs independently on its own dedicated schedule (.github/workflows/news.yml, every 6h) and writes files governed by the separate YouTube-playlist-analyzer pipeline (CLAUDE.md); routing the EXCAVA bus/department path through it too risks a write race with that schedule and would very likely exceed _run_real_tool's 90s subprocess timeout (95 RSS sources, up to 15s each). That wiring decision needs Eitan's call — see QUESTIONS.md."
     },
     "improve": {
       "should_do": "Self-improvement: review prompts/engines/routing/own-code; auto-apply safe changes; pitch the 5 conditions.",

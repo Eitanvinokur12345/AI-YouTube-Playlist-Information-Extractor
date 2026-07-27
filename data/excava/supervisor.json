@@ -1,18 +1,18 @@
 {
- "generated_at": "2026-07-27T05:22:55.847977+00:00",
+ "generated_at": "2026-07-27T06:07:47.864002+00:00",
  "checked": 40,
- "real_pct": 79,
+ "real_pct": 100,
  "counts": {
-  "real": 27,
-  "noop": 7,
+  "real": 34,
+  "noop": 0,
   "failed": 0,
   "planned": 0,
   "blocked": 6
  },
- "criticism": "WEAK: only 79% real of the last 40. 7 were hollow/failed/planned — that is theatre wearing a 'done' badge. Fix the flagged departments before adding anything. · DECISION DRIFT: 3 unit(s) mostly decide SELF-IMPROVEMENT, not their mission (links 100%; group-chat 100%; war-room 100%) — that work belongs to the improve department's external arms (decision_audit.json). · SINGLE-ENGINE DEBATE (owner flag 2026-07-11): 1 room(s) today ran entirely on ONE model (group-open-floor-any-agent-from-an (14 turns, all mistral)) — that is one engine talking to itself, not a real multi-model debate. The healthy-pool round-robin must spread it.",
+ "criticism": "Acceptable: 100% of the last 40 completions did real work. Stay strict. · INTENT DRIFT: 1 dept(s) wired to the WRONG tool for what you wanted — news→wants src.news not src.trend_watch · DECISION DRIFT: 3 unit(s) mostly decide SELF-IMPROVEMENT, not their mission (links 100%; group-chat 100%; war-room 100%) — that work belongs to the improve department's external arms (decision_audit.json). · SINGLE-ENGINE DEBATE (owner flag 2026-07-11): 1 room(s) today ran entirely on ONE model (group-open-floor-any-agent-from-an (26 turns, all mistral)) — that is one engine talking to itself, not a real multi-model debate. The healthy-pool round-robin must spread it.",
  "long_term": {
   "verdict": "accumulating over time",
-  "detail": "over last 24 snapshots: done +160, artifacts +116, real_pct 97→79",
+  "detail": "over last 24 snapshots: done +195, artifacts +124, real_pct 94→100",
   "stagnant": false
  },
  "history": {
@@ -23,283 +23,291 @@
   "sessions": 5,
   "since": "2026-06-06"
  },
- "intent_drift": [],
+ "intent_drift": [
+  {
+   "dept": "news",
+   "wants": "src.news",
+   "wired": "src.trend_watch",
+   "should_do": "Freshness: refresh the AI-news digest from the newest official/company/national sources.",
+   "note": "WRONG TOOL for intent — news should run src.news (Freshness: refresh the AI-news digest from the newest offici) but is wired to src.trend_watch"
+  }
+ ],
  "verdicts": [
   {
-   "task": "news-room-action-fetch-v-29331",
+   "task": "news-room-action-fetch-v-31534",
    "dept": "news",
-   "verdict": "noop",
-   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
-   "result": "Ran the trend watch. trend_watch: 12 proposals (top score 10); queued 0 into self-improvement."
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the trend watch. trend_watch: 10 proposals (top score 10); queued 0 into self-improvement."
   },
   {
-   "task": "watch-process-the-next-b-29655",
+   "task": "watch-process-the-next-b-31858",
    "dept": "watch",
    "verdict": "blocked",
    "note": "honestly BLOCKED — needs an owner resource; not faking work (this is the truth, not a facade)",
    "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
   },
   {
-   "task": "security-safety-rate-the-29655",
+   "task": "security-safety-rate-the-31858",
    "dept": "security",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
   },
   {
-   "task": "raise-g3-truth-access-51-80744",
+   "task": "memory-embed-the-remaini-44826",
    "dept": "memory",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Semantic index: 1504 vectors (model gemini-embedding-001); hub 7360 items → 5856 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
   },
   {
-   "task": "raise-g8-personal-fit-68-29655",
+   "task": "raise-g8-personal-fit-68-31858",
    "dept": "visual",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the collect designs. collect_designs: 978 designs (kept 978 / dropped 0 repo-only + 4 dead/parked + 49 non-design; +0 AI-product, +27 seeds, +48 shown-in-vi"
   },
   {
-   "task": "verify-the-next-200-of-6-29294",
+   "task": "verify-the-next-200-of-6-31505",
    "dept": "analysis",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "1279 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
   },
   {
-   "task": "lumen-s-initiative-defau-28956",
+   "task": "lumen-s-initiative-defau-31174",
    "dept": "visualization",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the liveliness scan. liveliness_scan: 0 issue(s) — clean"
   },
   {
-   "task": "dynamo-s-initiative-run--28950",
+   "task": "dynamo-s-initiative-run--31169",
    "dept": "power",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the power scan.   - Together AI | Cloud inference platform hosting 200+ open-source models including Lla"
   },
   {
-   "task": "news-room-action-fetch-v-28983",
+   "task": "news-room-action-fetch-v-31194",
    "dept": "news",
-   "verdict": "noop",
-   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
-   "result": "Ran the trend watch. trend_watch: 12 proposals (top score 10); queued 0 into self-improvement."
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the trend watch. trend_watch: 10 proposals (top score 10); queued 0 into self-improvement."
   },
   {
-   "task": "watch-process-the-next-b-29294",
+   "task": "watch-process-the-next-b-31505",
    "dept": "watch",
    "verdict": "blocked",
    "note": "honestly BLOCKED — needs an owner resource; not faking work (this is the truth, not a facade)",
    "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
   },
   {
-   "task": "security-safety-rate-the-29294",
+   "task": "security-safety-rate-the-31505",
    "dept": "security",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
   },
   {
-   "task": "memory-embed-the-remaini-23999",
+   "task": "raise-g3-truth-access-52-63096",
    "dept": "memory",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Semantic index: 1504 vectors (model gemini-embedding-001); hub 7360 items → 5856 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
   },
   {
-   "task": "raise-g8-personal-fit-68-29294",
+   "task": "raise-g8-personal-fit-68-31505",
    "dept": "visual",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the collect designs. collect_designs: 978 designs (kept 978 / dropped 0 repo-only + 4 dead/parked + 49 non-design; +0 AI-product, +27 seeds, +48 shown-in-vi"
   },
   {
-   "task": "transcripts-drain-the-ne-28934",
+   "task": "transcripts-drain-the-ne-31155",
    "dept": "analysis",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "1279 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
   },
   {
-   "task": "news-room-action-fetch-v-28623",
+   "task": "news-room-action-fetch-v-30844",
    "dept": "news",
-   "verdict": "noop",
-   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
-   "result": "Ran the trend watch. trend_watch: 12 proposals (top score 10); queued 0 into self-improvement."
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the trend watch. trend_watch: 10 proposals (top score 10); queued 0 into self-improvement."
   },
   {
-   "task": "access-s-initiative-impl-28590",
+   "task": "access-s-initiative-add--30813",
    "dept": "accessibility",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the accessibility scan. accessibility_scan: 0 issue(s) — clean"
   },
   {
-   "task": "watch-process-the-next-b-28934",
+   "task": "watch-process-the-next-b-31155",
    "dept": "watch",
    "verdict": "blocked",
    "note": "honestly BLOCKED — needs an owner resource; not faking work (this is the truth, not a facade)",
    "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
   },
   {
-   "task": "security-safety-rate-the-28934",
+   "task": "security-safety-rate-the-31155",
    "dept": "security",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
   },
   {
-   "task": "memory-embed-the-remaini-28516",
+   "task": "raise-g3-truth-access-52-17290",
    "dept": "memory",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Semantic index: 1504 vectors (model gemini-embedding-001); hub 7360 items → 5856 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
   },
   {
-   "task": "raise-g8-personal-fit-68-28934",
+   "task": "raise-g8-personal-fit-68-31155",
    "dept": "visual",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the collect designs. collect_designs: 978 designs (kept 978 / dropped 0 repo-only + 4 dead/parked + 49 non-design; +0 AI-product, +27 seeds, +48 shown-in-vi"
   },
   {
-   "task": "verify-the-next-200-of-6-28573",
+   "task": "verify-the-next-200-of-6-30799",
    "dept": "analysis",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "1279 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
   },
   {
-   "task": "news-room-action-fetch-v-28250",
+   "task": "news-room-action-fetch-v-30475",
    "dept": "news",
-   "verdict": "noop",
-   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
-   "result": "Ran the trend watch. trend_watch: 12 proposals (top score 10); queued 0 into self-improvement."
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the trend watch. trend_watch: 10 proposals (top score 10); queued 0 into self-improvement."
   },
   {
-   "task": "watch-process-the-next-b-28573",
+   "task": "watch-process-the-next-b-30799",
    "dept": "watch",
    "verdict": "blocked",
    "note": "honestly BLOCKED — needs an owner resource; not faking work (this is the truth, not a facade)",
    "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
   },
   {
-   "task": "security-safety-rate-the-28574",
+   "task": "security-safety-rate-the-30438",
    "dept": "security",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
   },
   {
-   "task": "memory-embed-the-remaini-85261",
+   "task": "raise-g3-truth-access-52-97714",
    "dept": "memory",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Semantic index: 1504 vectors (model gemini-embedding-001); hub 7360 items → 5856 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
   },
   {
-   "task": "raise-g8-personal-fit-68-28574",
+   "task": "raise-g8-personal-fit-68-30799",
    "dept": "visual",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the collect designs. collect_designs: 978 designs (kept 978 / dropped 0 repo-only + 4 dead/parked + 49 non-design; +0 AI-product, +27 seeds, +48 shown-in-vi"
   },
   {
-   "task": "transcripts-drain-the-ne-28212",
+   "task": "transcripts-drain-the-ne-30438",
    "dept": "analysis",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "1279 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
   },
   {
-   "task": "lumen-s-initiative-defau-27869",
+   "task": "lumen-s-initiative-defau-30100",
    "dept": "visualization",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the liveliness scan. liveliness_scan: 0 issue(s) — clean"
   },
   {
-   "task": "dynamo-s-initiative-run--27864",
+   "task": "dynamo-s-initiative-run--30095",
    "dept": "power",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the power scan.   - Together AI | Cloud inference platform hosting 200+ open-source models including Lla"
   },
   {
-   "task": "news-room-action-fetch-v-27901",
+   "task": "news-room-action-fetch-v-30127",
    "dept": "news",
-   "verdict": "noop",
-   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
-   "result": "Ran the trend watch. trend_watch: 12 proposals (top score 10); queued 0 into self-improvement."
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the trend watch. trend_watch: 10 proposals (top score 10); queued 0 into self-improvement."
   },
   {
-   "task": "watch-process-the-next-b-28212",
+   "task": "watch-process-the-next-b-30438",
    "dept": "watch",
    "verdict": "blocked",
    "note": "honestly BLOCKED — needs an owner resource; not faking work (this is the truth, not a facade)",
    "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
   },
   {
-   "task": "security-safety-rate-the-28212",
+   "task": "security-safety-rate-the-44826",
    "dept": "security",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
   },
   {
-   "task": "raise-g3-truth-access-53-28999",
+   "task": "raise-g3-truth-access-52-89340",
    "dept": "memory",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Semantic index: 1504 vectors (model gemini-embedding-001); hub 7360 items → 5856 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
   },
   {
-   "task": "raise-g8-personal-fit-68-28212",
+   "task": "raise-g8-personal-fit-68-30438",
    "dept": "visual",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the collect designs. collect_designs: 978 designs (kept 978 / dropped 0 repo-only + 4 dead/parked + 49 non-design; +0 AI-product, +27 seeds, +48 shown-in-vi"
   },
   {
-   "task": "verify-the-next-200-of-6-27844",
+   "task": "verify-the-next-200-of-6-30078",
    "dept": "analysis",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "1279 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
   },
   {
-   "task": "news-room-action-fetch-v-26296",
+   "task": "news-room-action-fetch-v-29704",
    "dept": "news",
-   "verdict": "noop",
-   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
+   "verdict": "real",
+   "note": "produced substantive real output",
    "result": "Ran the trend watch. trend_watch: 12 proposals (top score 10); queued 0 into self-improvement."
   },
   {
-   "task": "rerouted-analysis-improv-26277",
-   "dept": "improve",
-   "verdict": "noop",
-   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
-   "result": "Ran the self check. self-check: 40/50 (mechanical) | 0 new tasks | failing Qs: [1, 10, 12, 13, 14, 16, 20, 24, 45, 47]"
+   "task": "access-s-initiative-impl-29671",
+   "dept": "accessibility",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the accessibility scan. accessibility_scan: 0 issue(s) — clean"
   },
   {
-   "task": "watch-process-the-next-b-26243",
+   "task": "watch-process-the-next-b-30079",
    "dept": "watch",
    "verdict": "blocked",
    "note": "honestly BLOCKED — needs an owner resource; not faking work (this is the truth, not a facade)",
    "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
   },
   {
-   "task": "security-safety-rate-the-26243",
+   "task": "security-safety-rate-the-30079",
    "dept": "security",
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
   },
   {
-   "task": "raise-g3-truth-access-52-58590",
+   "task": "raise-g3-truth-access-52-83707",
    "dept": "memory",
    "verdict": "real",
    "note": "produced substantive real output",

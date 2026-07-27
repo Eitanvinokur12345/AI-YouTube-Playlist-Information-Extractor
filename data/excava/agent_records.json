@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-27T05:09:50.927072+00:00",
+ "generated_at": "2026-07-27T05:15:51.816346+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 181,
+   "turns_7d": 182,
    "rooms_7d": 26,
    "engines_used": [
     "gh-models",
@@ -17,7 +17,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "A *time-only* alert leaks the *exact moment* of detection—attackers can correlate that timestamp with external events to"
+   "last_position": "A *time-only* alert still leaks the *exact moment* of detection—attackers can correlate that timestamp with external eve"
   },
   {
    "id": "watch-w1",
@@ -41,7 +41,7 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 134,
+   "turns_7d": 135,
    "rooms_7d": 66,
    "engines_used": [
     "gh-models",
@@ -89,8 +89,8 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 72,
-   "rooms_7d": 36,
+   "turns_7d": 73,
+   "rooms_7d": 37,
    "engines_used": [
     "gh-models",
     "glm",
@@ -98,15 +98,15 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt DeepSeek-R1-671B on the 8xA100 node. Its dense 671B parameters deliver consistent reasoning depth without sharding"
+   "last_position": "Adopt Qwen3-235B-A22B-Instruct for EXCAVA. Its MoE design cuts latency 30-40% while keeping quality high, freeing up com"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 72,
-   "rooms_7d": 36,
+   "turns_7d": 73,
+   "rooms_7d": 37,
    "engines_used": [
     "gh-models",
     "glm",
@@ -114,7 +114,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DeepSeek-R1-671B’s \"safer bet\" is a trap—its dense architecture caps us at 671B parameters, while Qwen3-235B-A22B-Instru"
+   "last_position": "Qwen3-235B’s MoE claim ignores sharding overhead—EXCAVA’s 8xA100 node can’t hide it, so latency spikes will eat the \"30-"
   },
   {
    "id": "creators-lead",
@@ -184,7 +184,38 @@
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 38,
+   "turns_7d": 39,
+   "rooms_7d": 20,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "Choose a persistent dark theme with a manual toggle to light mode. This matches Manus’ competitive edge in dark-themed i"
+  },
+  {
+   "id": "visualization-checker",
+   "name": "Pane",
+   "dept": "visualization",
+   "role": "checker",
+   "turns_7d": 39,
+   "rooms_7d": 20,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Pane: The real risk isn’t preference—it’s habituation. Users won’t switch from dark mode once they’re locked in, even if"
+  },
+  {
+   "id": "accessibility-w1",
+   "name": "Ramp",
+   "dept": "accessibility",
+   "role": "doer",
+   "turns_7d": 37,
    "rooms_7d": 19,
    "engines_used": [
     "gh-models",
@@ -193,22 +224,21 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "We should default to a high-contrast light theme with an optional dark mode toggle, prioritizing accessibility and clari"
+   "last_position": "We should always show the skip link but style it off-screen until focus arrives, as this ensures screen-reader users can"
   },
   {
-   "id": "visualization-checker",
-   "name": "Pane",
-   "dept": "visualization",
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 38,
+   "turns_7d": 37,
    "rooms_7d": 19,
    "engines_used": [
     "gh-models",
-    "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Pane: The real risk is habituation to the *light* theme—users will ignore the toggle just as they ignore the dark toggle"
+   "last_position": "Risk: Always-showing skip links clutter the top of the page for sighted users who never need them, especially on mobile "
   },
   {
    "id": "power-lead",
@@ -225,37 +255,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Run a 48-hour blind A/B stress test on EXCAVA’s 8xA100 with NVLink comparing Qwen3-235B-A22B-Instruct (8-exper",
    "proposed": 23,
-   "shipped": 22
-  },
-  {
-   "id": "accessibility-w1",
-   "name": "Ramp",
-   "dept": "accessibility",
-   "role": "doer",
-   "turns_7d": 36,
-   "rooms_7d": 19,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "Add a single high-contrast skip link at the top of every page that only appears when keyboard focus arrives. This guaran"
-  },
-  {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 36,
-   "rooms_7d": 19,
-   "engines_used": [
-    "gh-models",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Risk: Hiding the skip link until first tab press means screen-reader users who rely on virtual cursors never see it—so t"
+   "shipped": 23
   },
   {
    "id": "security-lead",
@@ -321,29 +321,29 @@
    "name": "Wire",
    "dept": "news",
    "role": "lead",
-   "turns_7d": 28,
-   "rooms_7d": 28,
+   "turns_7d": 29,
+   "rooms_7d": 29,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Fetch verified AI headlines from Reuters, BBC, and the White House press releases; compile a digest with dates, "
+   "last_position": "ACTION: Fetch verified AI headlines from Reuters, BBC, and the White House via their official RSS feeds and press releas"
   },
   {
    "id": "news-w1",
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 28,
-   "rooms_7d": 28,
+   "turns_7d": 29,
+   "rooms_7d": 29,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll pull the latest AI headlines from Reuters, BBC, and the White House press releases. The digest will list the newest"
+   "last_position": "I’ll fetch the latest AI headlines from Reuters, BBC, and the White House press releases now. This will produce a fresh,"
   },
   {
    "id": "improve-w1",
@@ -395,15 +395,15 @@
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 21,
-   "rooms_7d": 21,
+   "turns_7d": 22,
+   "rooms_7d": 22,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: I will run the memory linking command to connect every existing memory I have to the unified memory system. This"
+   "last_position": "Action: I will run the memory linking command to connect every existing memory I have to the Hindsight memory database. "
   },
   {
    "id": "mining-lead",
@@ -450,7 +450,35 @@
    "positions_held": 30,
    "last_position": "DECISION: Default to system theme on first load, with a one-time prompt offering a high-contrast theme if system contras",
    "proposed": 19,
-   "shipped": 18
+   "shipped": 19
+  },
+  {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 19,
+   "rooms_7d": 19,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 19,
+   "last_position": "I will run a full audit of the department’s link inventory using the link-checker tool to identify all broken, outdated,"
+  },
+  {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 19,
+   "rooms_7d": 19,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 19,
+   "last_position": "ACTION: Anchor delivers the cleaned link inventory report with dead links removed and a summary of fixes prioritized by "
   },
   {
    "id": "accessibility-lead",
@@ -468,34 +496,6 @@
    "last_position": "DECISION: Implement a **bold, full-width skip bar** that’s always visible but **only high-contrast on keyboard focus**, ",
    "proposed": 18,
    "shipped": 18
-  },
-  {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 18,
-   "rooms_7d": 18,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 18,
-   "last_position": "I will run a full audit of the department’s link inventory using the link-checker tool to identify broken or outdated li"
-  },
-  {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
-   "role": "lead",
-   "turns_7d": 18,
-   "rooms_7d": 18,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 18,
-   "last_position": "ACTION: Anchor delivers the cleaned link inventory report with dead links removed."
   },
   {
    "id": "memory-lead",

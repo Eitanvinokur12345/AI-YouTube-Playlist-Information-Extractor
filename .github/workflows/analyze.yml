@@ -213,6 +213,16 @@ jobs:
       - name: Commit any remaining changes
         if: always()
         run: |
+          # away fire 36: when the Claude step actually runs (success OR failure — anything
+          # but "skipped"), claude-code-action rewrites the git remote URL to use its own
+          # OIDC-exchanged installation token, then explicitly DELETEs/revokes that same token
+          # in its own post-step cleanup — which runs BEFORE this step. Every push here was
+          # therefore failing with "Invalid username or token" on any real (non-skipped)
+          # attempt, success or failure, silently losing the safety commit (verified live:
+          # runs 30232131344 and 30300850025 both committed locally then failed to push with
+          # this exact error). Re-point the remote at the standard job GITHUB_TOKEN first —
+          # it's already granted contents:write by this workflow's own permissions: block.
+          git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
           git config user.name "skills-tracker-bot"
           git config user.email "actions@users.noreply.github.com"
           git add data skills other-skills docs 2>/dev/null || true

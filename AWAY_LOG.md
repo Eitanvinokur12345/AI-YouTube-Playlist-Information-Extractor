@@ -5,6 +5,45 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-27
+- **~03:0x (fire 20, unattended, cloud session) — 10-fire checkpoint (every-10th-heartbeat review)
+  + two real guardrail fixes, no new code gap found this cycle.** Standing checks first: local
+  `origin/main` cache was stale again (`1f9ed759`→`3b6df8ff`, same recurring sandbox-checkout
+  artifact fires 16/17/19 already documented — re-fetched, nothing lost). Guardrails pre-fire
+  13/16 (0 critical): `G-C` (no recent history bundle) and `G-G`/`G-P` (stale local `origin/main`
+  making remote-sync + beat-heartbeat look wrong) all failing. Fixed for real: ran
+  `python -m src.git_safe backup` (fresh bundle → `G-C` now passing) and the `origin/main` re-fetch
+  (→ `G-G` "HEAD == origin/main", `G-P` "last beat 1.1h ago", both passing — confirmed via the
+  GitHub API directly, not just the local check, that `origin/main`'s real tip already carried
+  fire 19's commits and 6 more `excava-beat` cycles). Guardrails now 16/16 (`G-M` alone reads
+  "STALLED" — same known-flappy artifact of an infra-only fire producing no new video-analysis
+  completions in its own window, not a regression; prior fires document this exact pattern).
+  Ran `src.excava_systemcheck`: 11/11 systems working, 0 critical broken; the one real structural
+  gap is unchanged from fire 17/19 — "watch" is the last department without a working executor,
+  genuinely blocked (checked `src/gemini_video_analyze.py` line-by-line before touching anything:
+  it already round-robins all 7 possible Gemini keys with 429/503 backoff — the "needs a non-Gemini
+  path or owner capacity" note in `intent.json` is accurate, all keys are actually exhausted, this
+  is NOT a coding bug I almost "fixed" with a duplicate of existing logic). **10th-heartbeat review**
+  (owner's away-mode asked for a check-in every 10 fires): storage 30.4GB free on the repo drive
+  (`G-N`, healthy, no cleanup needed); fire 19 completed cleanly (its commits are on `origin/main`,
+  verified via API, not just local git); no operational limits exceeded (0 critical guardrail
+  failures across this window); across fires 11-19 the loop landed 2 genuine department-executor
+  builds (visualization, then this fire confirmed watch is legitimately blocked not neglected),
+  2 real stranded-branch rescues (fire 19), 3 guardrail additions/fixes (`G-M` recount, `G-P` new,
+  this fire's `G-C`/`G-G`/`G-P` refresh), and flagged the branch-deletion decision for you
+  (`QUESTIONS.md`, fire 19) — nothing is silently broken. **Harsh self-criticism:** this fire is
+  AGAIN mostly verification + two small guardrail fixes rather than new product surface — I looked
+  hard for a real M1/M2 increment (read `EXCAVA_V2_STEPS.md`'s M1 checklist, confirmed
+  `deep_retrieve`/`discovery_agent`/`element_model`/`verify_elements`/`prewarm`/`relate`/
+  `source_trust.json` all exist AND are wired into `docs/dashboard.js`, not just present as dead
+  files; M1's tutorial/podcast ship-artifacts already exist too, `data/tutorials.json` +
+  `docs/tutorials/m1-podcast.wav`) — M1 genuinely looks complete or very close to it, which is good
+  news, but means I did not manufacture a change just to have shipped one; I verified before
+  claiming, including nearly writing a false "fix" for `gemini_video_analyze.py`'s key rotation
+  before reading it closely enough to see it was already correct. The honest backlog for a future
+  fire is `data/excava/backlog.json`'s own `queued_now` (verify-the-next-200-unverified-elements;
+  raise G8 personal-fit) — those are department-executor work the CI beat already drives
+  continuously, not something this session-based fire should duplicate by hand.
+
 - **~02:0x (fire 19, unattended, cloud session) — finally ran the branch sweep fires 6/7/9
   kept flagging as unstarted, and it paid off: found and landed two genuinely stranded pieces
   of real work instead of a symptom-free audit.** Standing checks first: local `origin/main`

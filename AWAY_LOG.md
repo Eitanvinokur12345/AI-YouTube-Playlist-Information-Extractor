@@ -4,6 +4,61 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+- **~11:0x (fire 27, unattended, cloud session) — caught the exact heartbeat-hang class G-Q
+  (fire 26) can't see, live, and fixed the outer guard instead of waiting for a GH-Actions-API
+  cross-reference.** Standing checks first: local ref stale (re-fetched, HEAD matched after, no
+  loss — the recurring pattern); upstream re-set; guardrails 14/17, 0 critical. `G-M` read
+  "STALLED (no new completions in the last 4 beats)" — checked `data/excava/movement.json`'s
+  history directly: `done` had been flat at 4947 across four checks spanning 09:06→10:58, ~2h,
+  even though other specialized tools (creators/social-intake/connectors-verify) kept committing
+  normally in that window. Cross-referenced against the live GitHub Actions run history
+  (`mcp__github__actions_list`), not just local git log: the current `excava_beat.yml` run
+  (`30250614002`) had been sitting in its "Run the beat" step since 10:07:51Z with **zero**
+  `excava-beat #46` commit — over 50 minutes and counting past #45 (09:05Z) — a live reproduction
+  of the exact hang class fire 16/17 diagnosed three weeks ago. Root cause, read from
+  `src/excava.py`'s room-advance block (lines ~479-490): `ROOM_ADVANCE_BUDGET_S=240` is checked
+  ONLY at the top of the per-room loop (`if time.monotonic() >= room_deadline: skip`) — it can
+  never interrupt a single `chat.advance()`/engine `complete()` call already in flight, so one
+  call that doesn't cleanly return (each individual HTTP call does carry a 45-60s
+  `urllib.request` timeout per `src/excava_engines.py`, so this isn't a raw socket hang — more
+  likely a retry/pool-selection path that doesn't hit those guarded calls, or a resource load
+  stall elsewhere in the same room-advance path) wedges the WHOLE beat for the rest of the run's
+  340-min job timeout, holding the `skills-tracker-excava-beat` concurrency slot the entire time
+  and starving every subsequent scheduled trigger (this is why the current run's own
+  `run_started_at` was 08:37 but its job didn't actually start until 10:07 — 90 min queued behind
+  a prior wedge). **Fix, narrowly scoped, matches the guardrail-not-rewrite pattern:** wrapped the
+  per-cycle `python -m src.excava` (and `src.pulse`) call in `excava_beat.yml`'s bash loop with
+  `timeout 280` / `timeout 60` — an OUTER guard the inner budget logic can never be defeated by;
+  worst case one 10-min cycle is sacrificed instead of the whole 5.3h run. Did NOT touch
+  `src/excava.py`'s room-advance logic itself (a real per-call timeout there would be the more
+  precise fix, but I didn't have a confirmed stack trace of which exact call was stuck — from
+  this sandbox, in-progress job logs 404 until the job completes, so I could only prove the SHAPE
+  of the hang, not its exact line). Cancelled the stuck run (`30250614002`) via
+  `mcp__github__actions_run_trigger` so the next cron trigger picks up the fix within ~10 min
+  instead of waiting out the remaining ~4h of the old run's timeout. Verified:
+  `yaml.safe_load()` parses the edited workflow; `python -m src.guardrails` 15/17 both before and
+  after (0 critical either time; G-M/G-O unchanged and expected — G-M won't clear until a beat
+  actually lands a completion under the new guard, G-O is PC-off as always). Shipped via
+  `python -m src.git_safe ship` (commit `28d4e3ab2`, verified `origin==HEAD`).
+  **Harsh self-criticism:** this is a mitigation, not a proof of root cause — I inferred the hang
+  site from the code shape (the one loop whose internal budget can't reach inner calls) and the
+  live symptom (zero commits, 50+ min, matching fire 16/17's exact prior diagnosis), but I never
+  saw an actual stack trace or log line naming which call is stuck, so there's a real chance the
+  true culprit is something else entirely in the same beat sequence (systemcheck/supervisor/proof
+  all run after rooms in `_beat()` and I did not audit them with the same scrutiny this fire —
+  next fire should, if the outer timeout alone doesn't make `excava-beat #N` commits resume
+  cleanly). I also did not add per-call timeouts inside `chat.advance()`/`complete()`'s actual
+  call sites, which is the more surgical fix fire 16/17 arguably should have landed the first
+  time — the outer `timeout` is a blunter, faster, safer-to-ship instrument for an unattended
+  cloud fire with no way to single-step the hang locally, but it trades precision for safety.
+  Left G-Q (fire 26's new guardrail) as-is even though this exact incident is a textbook case of
+  what it's supposed to catch eventually — G-Q watches `core-spoton:` commits, a DIFFERENT
+  workflow, so it correctly did not fire here; an equivalent beat-specific staleness guardrail
+  keyed to `excava-beat #N` commit age (G-P already tracks freshness but at "warn", not tied to
+  an active-hang alert) is the concrete next-fire candidate if this recurs. Did not touch the
+  Hub/enrichment/brains fronts other fires have flagged as the bigger blocked levers — this fire
+  was entirely about an active, live, currently-bleeding operational bug, which took priority.
+
 - **~10:0x (fire 26, unattended, cloud session) — closed the observability gap fire 25 flagged:
   added guardrail G-Q (`src/guardrails.py`) that reads git history for the last "core-spoton: <ts>"
   commit and flags it stale past 4h (hourly cron + generous slack), mirroring G-P's existing

@@ -198,6 +198,17 @@ self-criticism (G-Q's real limit: can't see a mid-run failure after a normal-loo
 landed) in AWAY_LOG.md fire 25/26 entries. **NEXT non-brain candidate left open by fire 26:** either
 the GitHub-Actions-API version of this same check (needs `actions: read` added to core_spoton.yml's
 permissions — flag to Eitan first, don't just add it), or go back to Hub/M3 polish/self-improve dept.
+**Fire 27 (2026-07-27, backend-only):** caught `excava_beat.yml`'s heartbeat LIVE-WEDGED (run
+`30250614002`, >50 min with zero `excava-beat #N` commits past #45, G-M's "STALLED" line was the
+tell), root-caused to `ROOM_ADVANCE_BUDGET_S` only being checked BETWEEN rooms, never inside a single
+in-flight `chat.advance()`/engine call — the exact hang class fire 16/17 partially fixed weeks ago.
+Wrapped the per-cycle `python -m src.excava`/`pulse` calls in bash `timeout` (an outer guard the
+inner budget logic can't be defeated by) and cancelled the stuck run so the fix takes effect on the
+next cron trigger instead of waiting out its remaining ~4h. Full detail + harsh self-criticism
+(this is a mitigation, not a proven root cause — no stack trace, just the code shape + live symptom)
+in AWAY_LOG.md fire 27 entry. **NEXT:** confirm `excava-beat #N` commits resume after this ship; if
+they don't, the hang is elsewhere in `_beat()` (systemcheck/supervisor/proof run after rooms and
+weren't audited this fire).
 
 **(prior, v120) M2 UNDERWAY.** Sessions 8-10: 4 brain families in the engine CATALOG (GLM/DeepSeek/Kimi via
 OpenRouter free + local Qwen/Llama); OpenRouter key VERIFIED (Eitan's secret OPENROUTER_API_KEY_REAL,

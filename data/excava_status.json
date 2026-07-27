@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-07-27T22:41:58.406781+00:00",
+  "generated_at": "2026-07-27T22:58:58.122745+00:00",
   "name": "EXCAVA",
   "phase": "OS spine (Phase 0): bus + departments + hand-offs live; creators (OS-2) gated",
   "gate": {
     "checks": {
-      "data_guard_ok": true,
+      "data_guard_ok": false,
       "security_clean": true,
       "truth_access_G3": 53,
       "G3_ready_for_outward": false
     },
-    "internal_allowed": true,
+    "internal_allowed": false,
     "outward_allowed": false,
     "outward_needs": "data_guard ok + security clean + G3>=70 + owner approval"
   },
@@ -35,88 +35,76 @@
     }
   },
   "next_action": {
-    "do": "2796 tools/skills still have no real link (46.9%)",
-    "area": "links",
+    "do": "'tools' dropped 1 records",
+    "area": "unrouted",
     "type": "internal",
     "source": "auto",
-    "task_id": "2796-tools-skills-still--92118",
+    "task_id": "tools-dropped-1-records-92118",
     "use_tools": [
       {
-        "id": "skills:addy-osmani-agent-skills-library",
-        "name": "Addy Osmani Agent-Skills Library",
+        "id": "skills:audit-database-queries",
+        "name": "Audit database queries",
         "type": "skills",
-        "score": 0.637
+        "score": 0.574
       },
       {
-        "id": "skills:doubt-driven-agent-development",
-        "name": "Doubt-Driven Agent Development",
+        "id": "skills:data-analysis",
+        "name": "Data Analysis",
         "type": "skills",
-        "score": 0.626
+        "score": 0.572
       },
       {
-        "id": "skills:claude-skills-leaderboard-discovery",
-        "name": "Claude Code Skills Leaderboard Discovery",
+        "id": "skills:ce-debug",
+        "name": "CE Debug",
         "type": "skills",
-        "score": 0.621
+        "score": 0.571
       },
       {
-        "id": "tools:agent-skills",
-        "name": "agent-skills (Addy Osmani)",
-        "type": "tools",
-        "score": 0.62
+        "id": "skills:data-retrieval",
+        "name": "Data Retrieval",
+        "type": "skills",
+        "score": 0.556
       },
       {
-        "id": "skills:claude-self-improvement-skills",
-        "name": "Claude Self-Improvement Skill Pack",
+        "id": "skills:build-fix",
+        "name": "Fix a failing build",
         "type": "skills",
-        "score": 0.606
+        "score": 0.555
       },
       {
         "id": "skills:tool-use",
         "name": "Tool use",
         "type": "skills",
-        "score": 0.605
+        "score": 0.553
       }
     ]
   },
-  "holding": [
-    {
-      "priority": "'tools' dropped 1 records",
-      "why_held": "no department specialization matched"
-    }
-  ],
+  "holding": [],
   "os": {
-    "beats": 1,
+    "beats": 2,
     "mode": "run",
     "bus": {
-      "open": 14,
-      "total": 23,
+      "open": 13,
+      "total": 30,
       "per_department": {
         "memory": {
-          "queued": 1,
+          "queued": 2,
           "working": 0,
-          "done": 1,
+          "done": 2,
           "held": 0,
           "failed": 0
         },
         "visual": {
-          "queued": 1,
+          "queued": 0,
           "working": 0,
-          "done": 1,
-          "held": 0,
-          "failed": 0
-        },
-        "links": {
-          "queued": 4,
-          "working": 0,
-          "done": 0,
+          "done": 2,
           "held": 0,
           "failed": 0
         },
         "mining": {
-          "queued": 2,
+          "queued": 1,
           "working": 0,
-          "done": 1,
+          "done": 2,
           "held": 0,
           "failed": 0
         },
@@ -128,9 +116,9 @@
           "failed": 0
         },
         "watch": {
-          "queued": 1,
+          "queued": 0,
           "working": 0,
-          "done": 1,
+          "done": 2,
           "held": 0,
           "failed": 0
         },
@@ -142,23 +130,44 @@
           "failed": 0
         },
         "analysis": {
-          "queued": 1,
+          "queued": 2,
           "working": 0,
-          "done": 1,
+          "done": 2,
+          "held": 0,
+          "failed": 0
+        },
+        "links": {
+          "queued": 3,
+          "working": 0,
+          "done": 0,
           "held": 0,
           "failed": 0
         },
         "security": {
           "queued": 1,
           "working": 0,
-          "done": 1,
+          "done": 2,
           "held": 0,
           "failed": 0
         },
         "news": {
           "queued": 1,
           "working": 0,
-          "done": 1,
+          "done": 2,
+          "held": 0,
+          "failed": 0
+        },
+        "creators": {
+          "queued": 0,
+          "working": 0,
+          "done": 2,
+          "held": 0,
+          "failed": 0
+        },
+        "power": {
+          "queued": 1,
+          "working": 0,
+          "done": 0,
           "held": 0,
           "failed": 0
         },
@@ -168,71 +177,31 @@
           "done": 0,
           "held": 0,
           "failed": 0
-        },
-        "creators": {
-          "queued": 0,
-          "working": 0,
-          "done": 1,
-          "held": 0,
-          "failed": 0
         }
       },
-      "last_handoff": "data/excava/handoffs/push-link-coverage-towar-92118--01--links-w1--to--memory.md"
+      "last_handoff": "data/excava/handoffs/transcripts-drain-the-ne-92118--01--transcripts-w1--to--analysis.md"
     },
     "beat_log": [
-      "backlog: 11 real-gap task(s) queued; plan {'core': '3 small task(s) run in', 'analysis': '1 small task(s) run in', 'links': '2 small task(s) run in', 'watch': '1 small task(s) run in'}",
-      "links-w1: push-link-coverage-towar-92118 -> memory (data/excava/handoffs/push-link-coverage-towar-92118--01--links-w1--to--memory.md)",
-      "mining-w1: lane-external-mining-is--92118 DONE",
-      "visual-w1: keep-the-designs-tab-pur-92118 DONE",
-      "watch-w1: lane-gemini-watch-audio--92118 DONE",
-      "analysis-w1: verify-the-next-200-of-6-92118 DONE",
-      "creators-w1: raise-g5-leverage-53-100-92118 DONE",
-      "improve-w1: lane-self-improvement-re-92118 DONE",
-      "memory-w1: push-link-coverage-towar-92118 DONE",
-      "news-w1: news-refresh-the-ai-news-92118 DONE",
-      "security-w1: security-safety-rate-the-92118 DONE",
-      "dept-accessibility-make-excava-us-927: no engine here (cerebras:bad-model-404: {\"message\":\"Model does not) — resumes in CI",
-      "dept-analysis-deep-analyze-every-673: Chisel spoke (mistral, 942ms) t1",
-      "dept-analysis-deep-analyze-every-673: Marrow spoke (mistral, 2199ms) t2",
-      "dept-analysis-deep-analyze-every-673: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-analysis-deep-analyze-every-673.md', 'at': '2026-07-27T22:42:18.283552+00:00', 'title': 'analysis: Deep-analyze every element from its FULL source (whole transcript/repo', 'by': 'Marrow'}",
-      "dept-analysis-deep-analyze-every-673: ACTION queued → analysis-room-action-blo-92138",
-      "dept-creators-build-packages-enri-285: no engine here (cerebras:bad-model-404: {\"message\":\"Model does not) — resumes in CI",
-      "dept-improve-self-improvement-rev-216: Sprocket spoke (mistral, 1181ms) t1",
-      "dept-improve-self-improvement-rev-216: Gauge spoke (mistral, 1124ms) t2",
-      "dept-links-advance-the-links-depa-446: Anchor spoke (mistral, 739ms) t1",
-      "dept-links-advance-the-links-depa-446: LinLea spoke (mistral, 614ms) t2",
-      "dept-links-advance-the-links-depa-446: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-links-advance-the-links-depa-446.md', 'at': '2026-07-27T22:42:32.887569+00:00', 'title': \"links: advance the links department's mission\", 'by': 'LinLea'}",
-      "dept-links-advance-the-links-depa-446: ACTION queued → links-room-action-anchor-92152",
-      "dept-memory-recall-by-meaning-rel-758: Graft spoke (mistral, 994ms) t1",
-      "dept-memory-recall-by-meaning-rel-758: no engine here (cerebras:bad-model-404: {\"message\":\"Model does not) — resumes in CI",
-      "dept-mining-gather-ai-info-from-d-792: Pick spoke (mistral, 948ms) t1",
-      "dept-mining-gather-ai-info-from-d-792: Boulder spoke (mistral, 690ms) t2",
-      "dept-mining-gather-ai-info-from-d-792: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-mining-gather-ai-info-from-d-792.md', 'at': '2026-07-27T22:42:44.053297+00:00', 'title': 'mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Teleg', 'by': 'Boulder'}",
-      "dept-mining-gather-ai-info-from-d-792: ACTION queued → mining-room-action-sweep-92164",
-      "dept-news-freshness-refresh-the-a-656: Scoop spoke (mistral, 691ms) t1",
-      "dept-news-freshness-refresh-the-a-656: Wire spoke (mistral, 719ms) t2",
-      "dept-news-freshness-refresh-the-a-656: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-news-freshness-refresh-the-a-656.md', 'at': '2026-07-27T22:42:50.504649+00:00', 'title': 'news: Freshness: refresh the AI-news digest from the newest official/company/nat', 'by': 'Wire'}",
-      "dept-news-freshness-refresh-the-a-656: ACTION queued → news-room-action-wire-co-92170",
-      "dept-power-raise-excava-s-capabil-197: no engine here (cerebras:bad-model-404: {\"message\":\"Model does not) — resumes in CI",
-      "dept-security-paranoid-guard-scan-404: Warden spoke (mistral, 684ms) t1",
-      "dept-security-paranoid-guard-scan-404: Bastion spoke (mistral, 649ms) t2",
-      "dept-security-paranoid-guard-scan-404: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-security-paranoid-guard-scan-404.md', 'at': '2026-07-27T22:42:57.643956+00:00', 'title': 'security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (no', 'by': 'Bastion'}",
-      "dept-security-paranoid-guard-scan-404: ACTION queued → security-room-action-war-92177",
-      "dept-transcripts-retrieve-real-fu-632: no engine here (cerebras:bad-model-404: {\"message\":\"Model does not) — resumes in CI",
-      "dept-visual-mine-great-designs-fr-849: Easel spoke (mistral, 782ms) t1",
-      "dept-visual-mine-great-designs-fr-849: no engine here (cerebras:bad-model-404: {\"message\":\"Model does not) — resumes in CI",
-      "dept-visualization-own-excava-s-o-211: Facet spoke (mistral, 919ms) t1",
-      "dept-visualization-own-excava-s-o-211: Pane spoke (mistral, 1155ms) t2",
-      "dept-watch-analyze-video-audio-vi-411: Scope spoke (mistral, 722ms) t1",
-      "dept-watch-analyze-video-audio-vi-411: no engine here (cerebras:bad-model-404: {\"message\":\"Model does not) — resumes in CI",
-      "group-open-floor-any-agent-from-an-450: Reel spoke (mistral, 1169ms) t1",
-      "group-open-floor-any-agent-from-an-450: Scriv spoke (mistral, 1363ms) t2",
-      "experiment engine-benchmark: 3/12 healthy; ranking groq, mistral, nvidia, kimi",
-      "experiment golden-task-regression: 100% (6/6 tasks pass)",
+      "HOLD ALL — verification gate failing (fix data_guard/security first)",
       "TUTORIAL MISSING for dashboard v131 — Phase 6 law: every major change ships a walkthrough (data/tutorials.json)",
-      "memory master: +6172 episodes"
+      "memory master: +24 episodes"
     ],
-    "departments": [],
+    "departments": [
+      "accessibility",
+      "analysis",
+      "creators",
+      "improve",
+      "links",
+      "memory",
+      "mining",
+      "news",
+      "power",
+      "security",
+      "transcripts",
+      "visual",
+      "visualization",
+      "watch"
+    ],
     "usage": {
       "links": {
         "ticks": 1,
@@ -309,7 +278,7 @@
       "ok": true,
       "problems": []
     },
-    "approvals_pending": 4,
+    "approvals_pending": 3,
     "backpressure": {
       "links": {
         "streak": 0,
@@ -350,19 +319,13 @@
       "security": {
         "streak": 0,
         "cooldown_until": ""
+      },
+      "transcripts": {
+        "streak": 0,
+        "cooldown_until": ""
       }
     },
     "tasks": [
-      {
-        "id": "2796-tools-skills-still--92118",
-        "title": "2796 tools/skills still have no real link (46.9%)",
-        "department": "links",
-        "status": "queued",
-        "steps": 0,
-        "priority": 1,
-        "source": "auto",
-        "doc": null
-      },
       {
         "id": "tools-dropped-1-records-92118",
         "title": "'tools' dropped 1 records",
@@ -384,26 +347,6 @@
         "doc": null
       },
       {
-        "id": "watch-process-the-next-b-92118",
-        "title": "Watch: process the next batch of 1315 pending videos",
-        "department": "watch",
-        "status": "queued",
-        "steps": 0,
-        "priority": 1,
-        "source": "gap",
-        "doc": null
-      },
-      {
-        "id": "mining-discover-new-ai-r-92118",
-        "title": "Mining: discover new AI repos/tools + verify this cycle",
-        "department": "mining",
-        "status": "queued",
-        "steps": 0,
-        "priority": 1,
-        "source": "gap",
-        "doc": null
-      },
-      {
         "id": "memory-embed-the-remaini-92118",
         "title": "Memory: embed the remaining unembedded of 10374 elements for full recall",
         "department": "memory",
@@ -416,27 +359,17 @@
       {
         "id": "transcripts-drain-the-ne-92118",
         "title": "Transcripts: drain the next batch of 1315 pending (residential IP)",
-        "department": "transcripts",
+        "department": "analysis",
         "status": "queued",
-        "steps": 0,
+        "steps": 1,
         "priority": 1,
         "source": "gap",
-        "doc": null
+        "doc": "data/excava/handoffs/transcripts-drain-the-ne-92118--01--transcripts-w1--to--analysis.md"
       },
       {
         "id": "raise-g3-truth-access-53-92118",
         "title": "Raise G3 Truth & access (53/100): 53.1% of tools/skills have a real link (target: ~100%)",
         "department": "links",
-        "status": "queued",
-        "steps": 0,
-        "priority": 1,
-        "source": "gap",
-        "doc": null
-      },
-      {
-        "id": "raise-g8-personal-fit-68-92118",
-        "title": "Raise G8 Personal fit (68/100): 21% of designs taste-tagged; Arena learning live; NOSG wir",
-        "department": "visual",
         "status": "queued",
         "steps": 0,
         "priority": 1,
@@ -492,211 +425,212 @@
         "priority": 2,
         "source": "room-action:security",
         "doc": null
+      },
+      {
+        "id": "rerouted-creators-power--92637",
+        "title": "[rerouted creators→power] Forge drafts the \"UGC Factory\" package as an open-source npm ski",
+        "department": "power",
+        "status": "queued",
+        "steps": 0,
+        "priority": 2,
+        "source": "room-action:creators",
+        "doc": null
+      },
+      {
+        "id": "memory-room-action-graft-92708",
+        "title": "[memory room action] Graft embeds the goal and known context into the memory graph as a st",
+        "department": "memory",
+        "status": "queued",
+        "steps": 0,
+        "priority": 2,
+        "source": "room-action:memory",
+        "doc": null
+      },
+      {
+        "id": "transcripts-room-action--92774",
+        "title": "[transcripts room action] Reel queries kimtaeyoon83/mcp-server-youtube-transcript via resi",
+        "department": "transcripts",
+        "status": "queued",
+        "steps": 0,
+        "priority": 2,
+        "source": "room-action:transcripts",
+        "doc": null
       }
     ],
     "recent_events": [
       {
-        "task": "raise-g5-leverage-53-100-92118",
-        "at": "2026-07-27T22:42:06.847968+00:00",
-        "kind": "claimed",
-        "by": "creators-w1",
-        "department": "creators"
-      },
-      {
-        "task": "raise-g5-leverage-53-100-92118",
-        "at": "2026-07-27T22:42:06.849360+00:00",
-        "kind": "completed",
-        "by": "creators-w1",
-        "result": "Creators: 15 creations on record, 15 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
-      },
-      {
-        "task": "lane-self-improvement-re-92118",
-        "at": "2026-07-27T22:42:06.850611+00:00",
-        "kind": "claimed",
-        "by": "improve-w1",
-        "department": "improve"
-      },
-      {
-        "task": "lane-self-improvement-re-92118",
-        "at": "2026-07-27T22:42:07.709050+00:00",
-        "kind": "completed",
-        "by": "improve-w1",
-        "result": "Ran the self check. self-check: 40/50 (mechanical) | 0 new tasks | failing Qs: [1, 10, 12, 13, 14, 16, 24, 42, 45, 47]"
-      },
-      {
-        "task": "push-link-coverage-towar-92118",
-        "at": "2026-07-27T22:42:07.710348+00:00",
-        "kind": "claimed",
-        "by": "memory-w1",
-        "department": "memory"
-      },
-      {
-        "task": "push-link-coverage-towar-92118",
-        "at": "2026-07-27T22:42:07.872923+00:00",
-        "kind": "completed",
-        "by": "memory-w1",
-        "result": "Semantic index: 1504 vectors (model gemini-embedding-001); hub 7359 items → 5855 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-      },
-      {
-        "task": "news-refresh-the-ai-news-92118",
-        "at": "2026-07-27T22:42:07.874192+00:00",
-        "kind": "claimed",
-        "by": "news-w1",
-        "department": "news"
-      },
-      {
-        "task": "news-refresh-the-ai-news-92118",
-        "at": "2026-07-27T22:42:08.176045+00:00",
-        "kind": "completed",
-        "by": "news-w1",
-        "result": "Ran the trend watch. trend_watch: 10 proposals (top score 10); queued 0 into self-improvement."
-      },
-      {
-        "task": "security-safety-rate-the-92118",
-        "at": "2026-07-27T22:42:08.177363+00:00",
+        "task": "security-safety-rate-the-92556",
+        "at": "2026-07-27T22:49:21.259915+00:00",
         "kind": "claimed",
         "by": "security-w1",
         "department": "security"
       },
       {
-        "task": "security-safety-rate-the-92118",
-        "at": "2026-07-27T22:42:08.927593+00:00",
+        "task": "security-safety-rate-the-92556",
+        "at": "2026-07-27T22:49:22.004253+00:00",
         "kind": "completed",
         "by": "security-w1",
         "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
       },
       {
-        "task": "dept-analysis-deep-analyze-every-673",
-        "at": "2026-07-27T22:42:18.283730+00:00",
+        "task": "raise-g5-leverage-53-100-92556",
+        "at": "2026-07-27T22:49:22.005814+00:00",
+        "kind": "claimed",
+        "by": "creators-w1",
+        "department": "creators"
+      },
+      {
+        "task": "raise-g5-leverage-53-100-92556",
+        "at": "2026-07-27T22:49:22.007324+00:00",
+        "kind": "completed",
+        "by": "creators-w1",
+        "result": "Creators: 15 creations on record, 15 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
+      },
+      {
+        "task": "2796-tools-skills-still--92118",
+        "at": "2026-07-27T22:49:22.008834+00:00",
+        "kind": "claimed",
+        "by": "memory-w1",
+        "department": "memory"
+      },
+      {
+        "task": "2796-tools-skills-still--92118",
+        "at": "2026-07-27T22:49:22.171589+00:00",
+        "kind": "completed",
+        "by": "memory-w1",
+        "result": "Semantic index: 1504 vectors (model gemini-embedding-001); hub 7359 items → 5855 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+      },
+      {
+        "task": "transcripts-drain-the-ne-92118",
+        "at": "2026-07-27T22:49:22.173487+00:00",
+        "kind": "claimed",
+        "by": "transcripts-w1",
+        "department": "transcripts"
+      },
+      {
+        "task": "transcripts-drain-the-ne-92118",
+        "at": "2026-07-27T22:49:22.239302+00:00",
+        "kind": "handoff",
+        "from": "transcripts-w1",
+        "to": "analysis",
+        "doc": "data/excava/handoffs/transcripts-drain-the-ne-92118--01--transcripts-w1--to--analysis.md"
+      },
+      {
+        "task": "raise-g8-personal-fit-68-92118",
+        "at": "2026-07-27T22:49:22.240795+00:00",
+        "kind": "claimed",
+        "by": "visual-w1",
+        "department": "visual"
+      },
+      {
+        "task": "raise-g8-personal-fit-68-92118",
+        "at": "2026-07-27T22:49:23.418587+00:00",
+        "kind": "completed",
+        "by": "visual-w1",
+        "result": "EXECUTION PLAN written (NOT executed) → data/excava/artifacts/task-raise-g8-personal-fit-68-100-21-of-designs-taste.md; real execution still needs a wired visual tool"
+      },
+      {
+        "task": "watch-process-the-next-b-92118",
+        "at": "2026-07-27T22:49:23.425866+00:00",
+        "kind": "claimed",
+        "by": "watch-w1",
+        "department": "watch"
+      },
+      {
+        "task": "watch-process-the-next-b-92118",
+        "at": "2026-07-27T22:49:23.427515+00:00",
+        "kind": "completed",
+        "by": "watch-w1",
+        "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+      },
+      {
+        "task": "dept-creators-build-packages-enri-285",
+        "at": "2026-07-27T22:50:37.311104+00:00",
         "kind": "room_closed",
         "artifact": {
           "kind": "decision",
-          "ref": "data/excava/artifacts/dept-analysis-deep-analyze-every-673.md",
-          "at": "2026-07-27T22:42:18.283552+00:00",
-          "title": "analysis: Deep-analyze every element from its FULL source (whole transcript/repo",
-          "by": "Marrow"
+          "ref": "data/excava/artifacts/dept-creators-build-packages-enri-285.md",
+          "at": "2026-07-27T22:50:37.310900+00:00",
+          "title": "creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Crea",
+          "by": "Nova"
         },
         "turns": 2
       },
       {
-        "task": "analysis-room-action-blo-92138",
-        "at": "2026-07-27T22:42:18.285300+00:00",
+        "task": "rerouted-creators-power--92637",
+        "at": "2026-07-27T22:50:37.312936+00:00",
         "kind": "enqueued",
-        "title": "[analysis room action] BloodHound-MCP maps every spoken claim in the full earnings call transcript to its exact source lines, flags gaps/assump",
-        "source": "room-action:analysis",
+        "title": "[rerouted creators→power] Forge drafts the \"UGC Factory\" package as an open-source npm skill for Claude Code, labels it \"Created by EXCAVA,\" and e",
+        "source": "room-action:creators",
         "priority": 2,
-        "department": "analysis"
+        "department": "power"
       },
       {
-        "task": "dept-links-advance-the-links-depa-446",
-        "at": "2026-07-27T22:42:32.887744+00:00",
+        "task": "dept-improve-self-improvement-rev-216",
+        "at": "2026-07-27T22:50:40.689825+00:00",
+        "kind": "workers_dispatched",
+        "by": "improve-w1",
+        "n": 3,
+        "ids": [
+          "worker-7140",
+          "worker-2928",
+          "worker-1949"
+        ]
+      },
+      {
+        "task": "dept-improve-self-improvement-rev-216",
+        "at": "2026-07-27T22:50:40.690943+00:00",
+        "kind": "workers_dissolved",
+        "by": "improve-w1",
+        "n": 3
+      },
+      {
+        "task": "dept-memory-recall-by-meaning-rel-758",
+        "at": "2026-07-27T22:51:48.737886+00:00",
         "kind": "room_closed",
         "artifact": {
           "kind": "decision",
-          "ref": "data/excava/artifacts/dept-links-advance-the-links-depa-446.md",
-          "at": "2026-07-27T22:42:32.887569+00:00",
-          "title": "links: advance the links department's mission",
-          "by": "LinLea"
+          "ref": "data/excava/artifacts/dept-memory-recall-by-meaning-rel-758.md",
+          "at": "2026-07-27T22:51:48.737693+00:00",
+          "title": "memory: Recall by meaning, relate elements, build the brain graph, embed unembed",
+          "by": "Root"
         },
         "turns": 2
       },
       {
-        "task": "links-room-action-anchor-92152",
-        "at": "2026-07-27T22:42:32.889199+00:00",
+        "task": "memory-room-action-graft-92708",
+        "at": "2026-07-27T22:51:48.739663+00:00",
         "kind": "enqueued",
-        "title": "[links room action] Anchor compiles and delivers a prioritized report of broken/outdated links with their locations to the team by EOD today",
-        "source": "room-action:links",
+        "title": "[memory room action] Graft embeds the goal and known context into the memory graph as a structured recall node linking \"Recall by meaning, re",
+        "source": "room-action:memory",
         "priority": 2,
-        "department": "links"
+        "department": "memory"
       },
       {
-        "task": "dept-mining-gather-ai-info-from-d-792",
-        "at": "2026-07-27T22:42:44.053498+00:00",
+        "task": "dept-transcripts-retrieve-real-fu-632",
+        "at": "2026-07-27T22:52:54.329504+00:00",
         "kind": "room_closed",
         "artifact": {
           "kind": "decision",
-          "ref": "data/excava/artifacts/dept-mining-gather-ai-info-from-d-792.md",
-          "at": "2026-07-27T22:42:44.053297+00:00",
-          "title": "mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Teleg",
-          "by": "Boulder"
+          "ref": "data/excava/artifacts/dept-transcripts-retrieve-real-fu-632.md",
+          "at": "2026-07-27T22:52:54.329302+00:00",
+          "title": "transcripts: Retrieve REAL full transcripts/captions for pending videos (residen",
+          "by": "Echo"
         },
         "turns": 2
       },
       {
-        "task": "mining-room-action-sweep-92164",
-        "at": "2026-07-27T22:42:44.055072+00:00",
+        "task": "transcripts-room-action--92774",
+        "at": "2026-07-27T22:52:54.331224+00:00",
         "kind": "enqueued",
-        "title": "[mining room action] Sweep GitHub for repos tagged \"AI\" and \"research,\" output ranked list of 20–30 with one-line summaries and links.",
-        "source": "room-action:mining",
+        "title": "[transcripts room action] Reel queries kimtaeyoon83/mcp-server-youtube-transcript via residential IP to fetch full, real transcripts for all pendi",
+        "source": "room-action:transcripts",
         "priority": 2,
-        "department": "mining"
-      },
-      {
-        "task": "dept-news-freshness-refresh-the-a-656",
-        "at": "2026-07-27T22:42:50.504828+00:00",
-        "kind": "room_closed",
-        "artifact": {
-          "kind": "decision",
-          "ref": "data/excava/artifacts/dept-news-freshness-refresh-the-a-656.md",
-          "at": "2026-07-27T22:42:50.504649+00:00",
-          "title": "news: Freshness: refresh the AI-news digest from the newest official/company/nat",
-          "by": "Wire"
-        },
-        "turns": 2
-      },
-      {
-        "task": "news-room-action-wire-co-92170",
-        "at": "2026-07-27T22:42:50.506326+00:00",
-        "kind": "enqueued",
-        "title": "[news room action] Wire compiles a fresh AI-news digest from today’s official/company/national announcements, distilling each item to its d",
-        "source": "room-action:news",
-        "priority": 2,
-        "department": "news"
-      },
-      {
-        "task": "dept-security-paranoid-guard-scan-404",
-        "at": "2026-07-27T22:42:57.644136+00:00",
-        "kind": "room_closed",
-        "artifact": {
-          "kind": "decision",
-          "ref": "data/excava/artifacts/dept-security-paranoid-guard-scan-404.md",
-          "at": "2026-07-27T22:42:57.643956+00:00",
-          "title": "security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (no",
-          "by": "Bastion"
-        },
-        "turns": 2
-      },
-      {
-        "task": "security-room-action-war-92177",
-        "at": "2026-07-27T22:42:57.645682+00:00",
-        "kind": "enqueued",
-        "title": "[security room action] Warden runs LLM Guard scanner on current conversation; outputs security report confirming no leaks/injections exist.",
-        "source": "room-action:security",
-        "priority": 2,
-        "department": "security"
+        "department": "transcripts"
       }
     ],
-    "memory_episodes": 6172,
-    "directions": [
-      {
-        "id": "dir-1",
-        "text": "Free-only forever; quality over quantity; every step deepens EXCAVA's integration (daemon-grade, not cosmetic); I don't babysit — park questions, proceed on defaults.",
-        "at": "2026-07-03T00:00:00+00:00",
-        "via": "standing rules (SESSION_HANDOFF §4)",
-        "status": "active",
-        "excava_reading": "Baseline law, seeded at Phase-6 birth: applies to every department and every phase; the guardrails file is its enforcement arm.",
-        "acknowledged_at": "2026-07-03T00:00:00+00:00"
-      },
-      {
-        "id": "dir-2",
-        "text": "Creations enter the project autonomously when labeled 'Created by EXCAVA', with an independent test before first use; creators may build MCP servers, connectors, tools; multi-element bundles are called PACKAGES.",
-        "at": "2026-07-03T00:00:00+00:00",
-        "via": "P3 checkpoint answer",
-        "status": "active",
-        "excava_reading": "Creators department staffed under guardrail G-12; the label and test_before_run are mechanical, not optional.",
-        "acknowledged_at": "2026-07-03T00:00:00+00:00"
-      }
-    ],
+    "memory_episodes": 24,
+    "directions": [],
     "tutorials": {
       "current_build": "v131",
       "covered": false,

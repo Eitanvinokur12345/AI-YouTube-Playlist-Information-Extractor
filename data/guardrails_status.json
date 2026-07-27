@@ -1,8 +1,8 @@
 {
- "generated_at": "2026-07-27T22:44:11.534965+00:00",
+ "generated_at": "2026-07-27T22:59:00.072496+00:00",
  "total": 17,
- "passing": 14,
- "critical_failures": 1,
+ "passing": 16,
+ "critical_failures": 0,
  "guardrails": [
   {
    "id": "G-A",
@@ -42,15 +42,15 @@
   {
    "id": "G-F",
    "name": "JSON integrity",
-   "ok": false,
-   "detail": "BROKEN JSON: data/guardrails_status.json, data/designs.json",
+   "ok": true,
+   "detail": "all top-level data/ + docs/ JSON parses.",
    "severity": "critical"
   },
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": false,
-   "detail": "NOT in sync (behind/ahead: 11\t1) — a push may not have landed.",
+   "ok": true,
+   "detail": "HEAD == origin/main (work is really saved).",
    "severity": "warn"
   },
   {
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "24359 memory episodes on record.",
+   "detail": "24383 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "1 guardrail runs logged (append-only, never rewritten).",
+   "detail": "2 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -99,21 +99,21 @@
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "89043 MB free on the repo drive.",
+   "detail": "89051 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 40.7h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 41.0h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
    "ok": true,
-   "detail": "last 'excava-beat #N' commit 0.2h ago.",
+   "detail": "last 'excava-beat #N' commit 0.1h ago.",
    "severity": "warn"
   },
   {

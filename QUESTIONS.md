@@ -127,6 +127,16 @@ signing key added to this environment's git config, or switching these commits t
 (which auto-signs as "GitHub verified") instead of local `git push`. Neither is a fire-sized decision to make
 unilaterally.
 
+**2026-07-27 (fire 34) — same "Unverified" badge issue as fire 11 recurred; same decision stands, no new action taken.**
+This fire's stop hook flagged commit `b75ae37d` (the designs.json conflict-marker fix) as
+"Unverified" for the identical reason fire 11 already investigated and decided: the SSH
+signature is present but unverifiable locally (empty `commit_signing_key.pub`), and by the time
+the hook fired, `origin/main` had already moved 2 commits past mine (`excava-beat #7` + a merge)
+via the independent CI beat — so the suggested amend+force-push would rewrite shared history a
+concurrent process is actively building on, not just a cosmetic fix. Declined again, same
+reasoning as fire 11's entry above; not re-litigating it a second time unless you want to add a
+real signing key to this environment (the actual fix, still unbuilt, still your call).
+
 **2026-07-27 (fire 19) — the branch sweep finally ran; two real gaps found and landed, ~20 branches now safe to delete.**
 Checked every `claude/kind-shannon-*` branch for content `main` lacks (file-diff, not full history reread — see
 AWAY_LOG fire 19 for the method and its one acknowledged blind spot). Found zero stranded source code, and landed

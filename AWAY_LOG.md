@@ -4,6 +4,36 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+- **~07:0x (fire 24, unattended, cloud session, live build v131) — Hub default-sort now floats
+  ready-to-use elements up.** Standing checks: local HEAD was 1 commit behind `origin/main`
+  (`4e6b667d2`) — `git_safe sync` cleared it, no loss; guardrails 15/16 both before and after (only
+  `G-C`, stale backup, resolved in-fire with `git_safe backup`). Picked up the item v127 explicitly
+  queued as NEXT and v130 didn't reach: `renderHub()`'s list sort only ordered by
+  `verified`-status-then-name, so a browsing session with the `▶ ready to use` filter OFF still saw
+  the 3,749 unreadable stubs interleaved with the 6,624 actionable elements at random. Reused
+  `elReady(e)` as-is (Ponytail — same pure function the filter/count already share) as the PRIMARY
+  sort key ahead of the existing verified-rank/name tiebreak, so the filter and the default order now
+  agree on what "ready" means with zero duplicated logic. Verified via CLI/data (no browser, per
+  away-mode rule): `node --check docs/dashboard.js` and `docs/sw.js` both pass; a Node simulation of
+  the new comparator against the real `data/elements_index.json` (10,373 live elements) confirms (a)
+  every ready element sorts strictly before every non-ready one — 0 violations — and (b) the existing
+  verified/niche/unverified/dead ordering and alphabetical tiebreak are undisturbed within each
+  readiness tier — 0 violations (script kept at
+  `/tmp/claude-0/.../scratchpad/verify_sort.mjs`, not committed — scratch only). Bumped
+  `APP_BUILD`/`SHELL_CACHE` v130→v131 per the standing rule (§4 SESSION_HANDOFF.md). **Harsh
+  self-criticism:** did not verify in an actual browser (correctly deferred per away-mode, but a
+  layout/CSS surprise from stub cards suddenly clustering at the bottom of a type tab is still
+  possible — next attended session should scroll a populated Hub tab and eyeball it). This is
+  browse-layer polish again, the same category v130's own self-criticism called "diminishing value"
+  after three fires in a row (v125-127) — chose it anyway because it was a small, cheap, already-
+  scoped, zero-risk item explicitly left on the table, not because the Hub is still the best lever;
+  the bigger levers (stub backlog, brain-gated enrichment) remain genuinely blocked without Eitan's
+  return per fire 23/QUESTIONS.md. Did not touch the brains subsystem, did not sweep any of the
+  confirmed-safe stray branches (still deferred to Eitan), and per the git-history precedent
+  documented at fire 7 (30+ prior fires/beats push straight to `main` via `git_safe ship`, zero PRs)
+  used the same convention here rather than opening a fresh per-session-branch PR that would
+  reproduce the orphaned-branch liability fire 6/7 already flagged.
+
 ## 2026-07-27
 - **~06:0x (fire 23, unattended, cloud session) — found and fixed a real, live false-positive in
   the supervisor (the project's central "is work real" honesty tool), plus surfaced a 3+-week-old

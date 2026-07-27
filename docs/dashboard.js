@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v130";
+const APP_BUILD = "v131";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -351,7 +351,10 @@ async function renderHub() {
   if (query) list = list.filter(e =>
     (e.name + " " + (e.what || "") + " " + (e.category || "") + " " + e.type).toLowerCase().includes(query));
   const rank = { verified: 0, niche: 1, unverified: 2, dead: 3 };
-  list.sort((a, b) => (rank[(a.verified || {}).status] ?? 2) - (rank[(b.verified || {}).status] ?? 2)
+  // v131: default sort floats ready-to-use elements up first (item 21/v127-NEXT) — only matters
+  // when the ▶ ready filter is OFF, since elReady() already narrows the list when it's on.
+  list.sort((a, b) => (elReady(b) - elReady(a))
+    || (rank[(a.verified || {}).status] ?? 2) - (rank[(b.verified || {}).status] ?? 2)
     || String(a.name).localeCompare(String(b.name)));
   const CAP = 120, shown = list.slice(0, CAP);
   const chip = (attr, val, label, on) =>

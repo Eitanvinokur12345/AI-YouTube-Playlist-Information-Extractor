@@ -225,6 +225,11 @@ throwaway repro before landing). The identical fragile pattern exists in 18 OTHE
 (scoped to the one file with proven evidence); flagged in QUESTIONS.md as the next-fire candidate,
 prioritizing high-cadence lanes first. Full detail + harsh self-criticism in AWAY_LOG.md fire 28
 entry.
+**Fire 29 (2026-07-27, backend-only):** rolled fire 28's `mine.yml` git-recovery fix out to the 3
+highest-cadence remaining lanes — `excava_beat.yml` (~10 min), `core_spoton.yml` and `links.yml`
+(hourly) — re-verified against the same throwaway-bare-remote repro. 4/19 workflow files now carry
+the fix; 15 still exposed (`bulk_analyze.yml`/`analyze.yml` are next by cadence). Full detail + harsh
+self-criticism in AWAY_LOG.md fire 29 entry; running tally in QUESTIONS.md's fire-28 entry.
 
 **(prior, v120) M2 UNDERWAY.** Sessions 8-10: 4 brain families in the engine CATALOG (GLM/DeepSeek/Kimi via
 OpenRouter free + local Qwen/Llama); OpenRouter key VERIFIED (Eitan's secret OPENROUTER_API_KEY_REAL,

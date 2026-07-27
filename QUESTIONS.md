@@ -19,6 +19,16 @@ You're away ~1 week; the offline loop is running (non-brain fronts, hourly) and 
 
 **2026-07-27 (fire 28) — the same "job succeeds, real work silently lost" bug fire 25 found in `core_spoton.yml` also exists in `mine.yml` (fixed) and the identical fragile pattern is shared by 19 workflow files (not fixed).** Live GH Actions logs confirmed `mine.yml`'s 2026-07-26 run reported "success" on every step while a full day's real mining (+5 skills, +31 tools, +3 connectors) was silently discarded: `git pull --rebase --autostash origin main` conflicted on the fully-regenerated `data/data_guard.json`, left HEAD detached, and `git push || echo "push skipped"` swallowed the failure. Fixed `mine.yml` only (verified against a real bare git remote — see AWAY_LOG fire 28 entry for the full repro/fix detail) since that's the one place I have PROVEN live evidence. `grep -rl "git pull --rebase --autostash" .github/workflows/*.yml` shows the exact same fragile pattern in 19 of ~22 workflow files total (`analyze.yml`, `bulk_analyze.yml`, `connectors_verify.yml`, `core_spoton.yml`, `creators.yml`, `discover.yml`, `excava_beat.yml`, `excava_inbox.yml`, `fetch.yml`, `gemini_video.yml`, `improve.yml`, `links.yml`, `mine_social.yml`, `news.yml`, `review.yml`, `sources.yml`, `transcribe.yml`, `visual.yml`, plus `mine.yml` now fixed) — any of them could hit the identical silent-loss bug the next time two lanes happen to commit within the same few minutes. → **Proposed default: yes, roll the same fix out to the rest, one or a few files per fire, prioritizing the highest-cadence/highest-value lanes first** (the busier a lane, the more likely a same-window collision) — did NOT do all 18 in this fire on purpose (small-scoped-increment rule); parking here so it doesn't only live buried in AWAY_LOG. A generic guardrail that detects "job succeeded but no matching commit landed" across ALL lanes (extending `pipeline_status.json`'s staleness view or cross-referencing the GH Actions API) would catch this bug class the moment it recurs, instead of waiting ~2 days for a staleness threshold to trip — flagged as a second, independent follow-up candidate.
 
+**UPDATE (fire 29):** rolled the fix out to the 3 highest-cadence remaining lanes —
+`excava_beat.yml` (every ~10 min), `core_spoton.yml` and `links.yml` (both hourly) — re-verified
+against the same throwaway-bare-remote repro fire 28 used. **4 of 19 files now fixed** (`mine.yml` +
+these 3); **15 still exposed**: `analyze.yml`, `bulk_analyze.yml`, `discover.yml`,
+`connectors_verify.yml`, `news.yml`, `creators.yml`, `fetch.yml`, `gemini_video.yml`, `improve.yml`,
+`review.yml`, `sources.yml`, `transcribe.yml`, `visual.yml`, `mine_social.yml`, `excava_inbox.yml`.
+Next-highest cadence among those: `bulk_analyze.yml` (every 2h) and `analyze.yml` (every 3h, plus a
+30-min catch-up cron that's normally a no-op) — good candidates for the next fire that picks this up.
+The generic cross-lane "success but nothing landed" guardrail is still unbuilt, still the deeper fix.
+
 **2026-07-26 (fire 10) — deterministic GitHub-metadata enricher BUILT, per the proposed default below.**
 `src/github_meta_enrich.py` now fills github-linked stub descriptions from the GitHub REST API's
 own `description`/`topics` (no LLM, no Ollama, no local-drain dependency) and is wired hourly into

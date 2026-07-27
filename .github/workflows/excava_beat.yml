@@ -73,7 +73,23 @@ jobs:
             timeout 60 python -m src.pulse || true          # refresh the one-glance program pulse (data/excava/pulse.json)
             git add data
             git commit -m "excava-beat #$n: $(date -u +%Y-%m-%dT%H:%MZ)" || echo "nothing to commit"
-            git pull --rebase --autostash origin main || true
+            # 2026-07-27 (away fire 29): same fix as mine.yml/fire 28 — this is the highest-cadence
+            # lane of all (a beat every ~10 min), so a same-window collision with another lane is
+            # the MOST likely place to hit the "rebase conflicts, push-skipped swallows it, job
+            # still reads success" bug. On rebase failure, abort (restores the local commit — no
+            # loss) and retry as a merge; if that also conflicts, auto-resolve only the known-
+            # stateless data/data_guard.json in our favor and finish the merge. Any other
+            # conflicting file is left unresolved on purpose (degrades to today's push-skipped).
+            if ! git pull --rebase --autostash origin main; then
+              echo "rebase failed — aborting and retrying as a merge"
+              git rebase --abort 2>/dev/null || true
+              if ! git pull --no-rebase --no-edit origin main; then
+                echo "merge also conflicted — auto-resolving known-stateless data_guard.json in our favor"
+                git checkout --ours -- data/data_guard.json 2>/dev/null || true
+                git add data/data_guard.json 2>/dev/null || true
+                git commit --no-edit || echo "unresolved conflict outside data_guard.json — leaving for manual/next-cycle recovery"
+              fi
+            fi
             git push || echo "push skipped"
             [ "$SECONDS" -lt "$END" ] && sleep 300 || true
           done

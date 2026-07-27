@@ -86,6 +86,45 @@ Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Lo
   counts as program work per the task brief's guidance, not pure meta-plumbing, but it's still
   infra-shaped work, not a user-visible Hub change).
 
+- **~13:0x (fire 29, unattended, cloud session) — rolled fire 28's `mine.yml` git-recovery fix out
+  to the 3 highest-cadence lanes of the remaining 18, per QUESTIONS.md's staged default ("a few
+  files per fire, highest-cadence first").** Standing checks first: `python -m src.standing_checks`
+  — clear to work (a stale local `origin/main` ref and a missing upstream tracking ref, both
+  auto-healed, nothing lost); `guardrails` 15/17 pre-fire (0 critical; only the pre-existing
+  `G-C`/`G-O` warns). Ranked the 18 unfixed files in `QUESTIONS.md`'s fire-28 list by cron cadence:
+  `excava_beat.yml` (every ~10 min, by far the busiest — a beat loop, so the SAME job body hits this
+  code path repeatedly for hours) > `core_spoton.yml` and `links.yml` (both hourly) > everything
+  else (2h+). Fixed those three with the identical abort-rebase→retry-merge→auto-resolve-
+  `data_guard.json`-in-favor recovery block fire 28 proved in `mine.yml`, adapted only for each
+  file's own indentation/loop context (`excava_beat.yml`'s block sits inside its internal `while`
+  loop, so the fix runs every ~10-min cycle, not just once per job). **Verified, not assumed:**
+  `yaml.safe_load()` passes on all three edited files; independently re-ran fire 28's own
+  throwaway-bare-remote repro (two local clones, a genuine `data/data_guard.json` content conflict
+  between them) against this exact shell block in isolation — confirmed the rebase fails, aborts
+  cleanly, the merge retry also conflicts on `data_guard.json`, the auto-resolve-ours fires, the
+  merge commit lands, and the push succeeds with no detached HEAD and no lost commit. Post-edit
+  `guardrails`: 14/17 (0 critical; `G-M` newly shows "STALLED (no new completions in the last 4
+  beats)" — checked `data/excava/movement.json`'s raw history before treating this as a regression:
+  `done` climbed 4657→5014 across the day in bursts separated by flat multi-sample stretches of a
+  few minutes each, and this fire's own edits are workflow YAML, not department task completions, so
+  a flat window right after landing is expected noise, not something this fire caused or should
+  chase). **Harsh self-criticism:** stopped at 3 of the 18 remaining files (deliberately, same
+  small-scoped-increment discipline as fire 28) — `analyze.yml`, `bulk_analyze.yml`, `discover.yml`,
+  `connectors_verify.yml`, `news.yml`, `creators.yml`, `fetch.yml`, `gemini_video.yml`,
+  `improve.yml`, `review.yml`, `sources.yml`, `transcribe.yml`, `visual.yml`, `mine_social.yml`,
+  `excava_inbox.yml` (15 files) still carry the fragile pattern and remain exposed to the identical
+  silent-loss bug the next time two lanes collide in the same push window. I have NOT live-verified
+  any of the three fixes against the real GitHub Actions runner yet (only the isolated shell-block
+  repro and static YAML validation) — the real test is whether a genuine collision on one of these
+  three lanes, the next time it happens, produces a landed merge commit instead of a swallowed
+  `push skipped`; nothing currently makes that outcome visible after the fact beyond reading the
+  next colliding run's own log by hand. Also did not build the generic "job succeeded but no
+  matching commit landed" cross-lane guardrail QUESTIONS.md flagged as the deeper fix — that would
+  catch this bug class the moment it recurs on any of the 15 still-unfixed files, instead of only
+  the 4 now covered; left as the next candidate. Updated `QUESTIONS.md`'s fire-28 entry and this
+  file to reflect 4/19 done, 15 remaining, so the next fire (or a fire after that) can pick up where
+  this one stopped rather than re-scanning from zero.
+
 - **~11:0x (fire 27, unattended, cloud session) — caught the exact heartbeat-hang class G-Q
   (fire 26) can't see, live, and fixed the outer guard instead of waiting for a GH-Actions-API
   cross-reference.** Standing checks first: local ref stale (re-fetched, HEAD matched after, no

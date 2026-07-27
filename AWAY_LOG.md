@@ -5,6 +5,38 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-27
+- **~05:0x (fire 22, unattended, cloud session) — landed QUESTIONS.md #10, a real (non-duplicative)
+  M3/Hub increment.** Standing checks first: local `origin/main` cache stale (re-fetched, nothing
+  lost), upstream tracking already set; guardrails 15/16 pre-fire (only `G-C`, stale backup — fixed
+  with `python -m src.git_safe backup`). `python -m src.excava_systemcheck`: 11/11, all critical OK
+  — no broken system to chase this fire (unlike 16/17/19/21). Checked recent Actions run history via
+  the GitHub API for the excava-beat workflow: mostly `cancelled` conclusions, but confirmed via the
+  concurrency-group + 5.3h-job + 10-min-cron math (`cancel-in-progress: false`, one queue slot) that
+  this is the DESIGNED supersession pattern fires 16/17/19/20/21 already understood, not a new
+  regression — the current run (started right after fire 21's fix) is alive and landing heartbeats
+  normally. Rather than re-diagnose an already-closed area or hand-grind `backlog.json`'s
+  `queued_now` (fire 20 already flagged that as duplicating what the CI beat drives continuously),
+  picked the one item in QUESTIONS.md §D marked "will do unless you object, default: yes" that was
+  still open: **#10, fold `formats.json` into the Designs tab as a content-type filter.** Shipped:
+  `docs/dashboard.js` — the Designs tab now merges `data/formats.json`'s 95 layout/diagram records
+  into the same gallery as the 978 website/app designs, behind a new subnav (All / Websites·apps /
+  📐 Formats (95)) alongside the existing style-tag filter; format cards render distinctly (kind pill
+  + description + `rebuild_hint`, no screenshot — there isn't one) and are excluded from the ⚔ Arena
+  pool (no live URL to compare two of). Bumped `APP_BUILD`/`SHELL_CACHE` v129→v130 and added the
+  matching SESSION_HANDOFF.md §0d entry (G-E/G-I both require this in lockstep — learned from the
+  fires that built those guardrails). **Verified via CLI/data, not the browser** (away-mode rule):
+  `node --check docs/dashboard.js` passes; a Python simulation of the exact merge/slugify logic
+  against the real `data/formats.json` + `data/designs.json` confirms all 95 formats map to a
+  non-empty slug/name and the 978 existing designs are untouched. Guardrails 16/16 after (0 critical)
+  once synced. **Harsh self-criticism:** could not verify the actual rendered card/CSS in a real
+  browser from this unattended session — the away-mode rule is correct to forbid it here (flaky
+  headless, can prompt), but it is a real residual risk; next attended session should open the
+  Designs tab and glance at a Formats card before trusting this is pixel-clean. Also did not touch
+  the ~20 confirmed-safe stray branches (still Eitan's call, per fire 19) or the brains subsystem
+  (out of scope per `away_mode.json`). Scope stayed to the one queued item — did not try to also
+  knock out backlog.json entries or re-open the excava-beat cancellation investigation just because
+  I'd already gathered the Actions data for it.
+
 - **~04:0x (fire 21, unattended, cloud session) — chased a false alarm to ground, then landed the
   real fix: guardrails.py now self-fetches instead of trusting a caller to have done it.**
   Standing checks first, per the ritual — but this fire ran `python -m src.guardrails` directly

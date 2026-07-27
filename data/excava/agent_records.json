@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-27T07:47:33.547314+00:00",
+ "generated_at": "2026-07-27T07:53:07.659230+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,8 +8,8 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 197,
-   "rooms_7d": 27,
+   "turns_7d": 199,
+   "rooms_7d": 28,
    "engines_used": [
     "gh-models",
     "glm",
@@ -17,14 +17,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Sliding-window alerts still leak system sensitivity: attackers can brute-force the trigger at 30-minute intervals and ma"
+   "last_position": "The jittered sliding-window still leaks *system load* through alert clustering—if alerts spike at 35-40 minutes but tape"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 155,
+   "turns_7d": 156,
    "rooms_7d": 88,
    "engines_used": [
     "gh-models",
@@ -34,15 +34,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Publish the *fixed-delay* alert (\"Agent X detected at 45 minutes\") as the default."
+   "last_position": "**Decision:** Publish the *jittered sliding-window* alert (\"Agent X detected at a random time between 30-45 minutes, plu"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 144,
-   "rooms_7d": 68,
+   "turns_7d": 145,
+   "rooms_7d": 69,
    "engines_used": [
     "gh-models",
     "groq",
@@ -50,7 +50,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Publish the *sliding-window* alert (\"Agent X detected at a random time between 30-45 minutes after trigger"
+   "last_position": "**Decision:** Publish the *sliding-window* alert over the *randomized-delay* alert."
   },
   {
    "id": "analysis-w1",
@@ -184,8 +184,8 @@
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 56,
-   "rooms_7d": 28,
+   "turns_7d": 57,
+   "rooms_7d": 29,
    "engines_used": [
     "gh-models",
     "groq",
@@ -193,22 +193,22 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Choose a persistent dark theme with a manual toggle that remembers the user’s last choice. Dark mode by default cuts eye"
+   "last_position": "Adopt a persistent dark theme with a manual light-mode toggle that remembers the user’s choice. Dark themes reduce eye s"
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 56,
-   "rooms_7d": 28,
+   "turns_7d": 57,
+   "rooms_7d": 29,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk isn’t just inconsistency fatigue—it’s *habituation failure*. Users won’t toggle back after the first switc"
+   "last_position": "The real risk isn’t just battery drain—it’s *habituation failure*. Users will toggle light mode in bright rooms, then fo"
   },
   {
    "id": "accessibility-w1",
@@ -361,7 +361,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Default to system preference for dark mode with a one-time manual override that persists across sessions.",
    "proposed": 28,
-   "shipped": 27
+   "shipped": 28
   },
   {
    "id": "memory-w1",

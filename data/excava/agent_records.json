@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-27T11:58:55.605065+00:00",
+ "generated_at": "2026-07-27T12:04:45.078927+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 210,
+   "turns_7d": 211,
    "rooms_7d": 28,
    "engines_used": [
     "gh-models",
@@ -17,7 +17,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The *hybrid delay* still risks creating exploitable patterns, as attackers may analyze the spread of alerts to identify "
+   "last_position": "The *fully randomized delay* ignores operational reality: operators will distrust alerts that arrive at 15 minutes one d"
   },
   {
    "id": "watch-w1",
@@ -41,8 +41,8 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 151,
-   "rooms_7d": 70,
+   "turns_7d": 153,
+   "rooms_7d": 71,
    "engines_used": [
     "gh-models",
     "groq",
@@ -50,7 +50,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will run the transcript retrieval tool on the pending video queue using the residential IP and gentle pacing settings."
+   "last_position": "**Decision:** Adopt the *fully randomized delay* with hard operational bounds (e.g., 15–60 minutes, no clustering). This"
   },
   {
    "id": "analysis-w1",
@@ -117,6 +117,22 @@
    "last_position": "DeepSeek-R1-671B’s dense architecture won’t fix EXCAVA’s latency spikes—its per-token compute still bottlenecks on the 8"
   },
   {
+   "id": "transcripts-lead",
+   "name": "Echo",
+   "dept": "transcripts",
+   "role": "lead",
+   "turns_7d": 69,
+   "rooms_7d": 69,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Reel runs the transcript retrieval tool on the pending video queue to fetch real full transcripts/captions with ",
+   "proposed": 2
+  },
+  {
    "id": "creators-lead",
    "name": "Nova",
    "dept": "creators",
@@ -149,27 +165,11 @@
    "last_position": "I will draft the \"UGC Factory\" npm package in the creators tab, labeled \"Created by EXCAVA.\" It will generate customizab"
   },
   {
-   "id": "transcripts-lead",
-   "name": "Echo",
-   "dept": "transcripts",
-   "role": "lead",
-   "turns_7d": 68,
-   "rooms_7d": 68,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Reel runs the transcript retrieval tool on the pending video queue with residential IP and gentle pacing, produc",
-   "proposed": 2
-  },
-  {
    "id": "visualization-w1",
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 67,
+   "turns_7d": 68,
    "rooms_7d": 34,
    "engines_used": [
     "gh-models",
@@ -178,14 +178,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Implement a single dark theme by default with a manual toggle to light mode. This maximizes visual clarity and reduces e"
+   "last_position": "Implement a system-aware default theme that automatically switches to dark mode in low-light conditions and light mode i"
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 67,
+   "turns_7d": 68,
    "rooms_7d": 34,
    "engines_used": [
     "gh-models",
@@ -193,7 +193,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk isn’t user preference—it’s locking ourselves into a theme system before we know how users actually engage "
+   "last_position": "The real risk isn’t implementation complexity—it’s assuming users *want* their environment dictating their theme. A bett"
   },
   {
    "id": "watch-lead",
@@ -292,14 +292,14 @@
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 33,
-   "rooms_7d": 33,
+   "turns_7d": 34,
+   "rooms_7d": 34,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Chroma frames Easel's vibrant screenshot of the Beverage Cans website as a reference for the Claude Design Motio",
+   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as a taste material artifact in the hub.",
    "proposed": 1,
    "shipped": 1
   },
@@ -308,8 +308,8 @@
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 33,
-   "rooms_7d": 33,
+   "turns_7d": 34,
+   "rooms_7d": 34,
    "engines_used": [
     "mistral"
    ],
@@ -380,6 +380,35 @@
    "last_position": "Action: I will run the memory linking command to connect every existing memory I have into a unified graph. This will pr"
   },
   {
+   "id": "improve-w1",
+   "name": "Sprocket",
+   "dept": "improve",
+   "role": "doer",
+   "turns_7d": 26,
+   "rooms_7d": 13,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run a 24-hour canary deployment to 5% of users with real-time quality and latency monitoring. This gives us live data on"
+  },
+  {
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
+   "role": "checker",
+   "turns_7d": 26,
+   "rooms_7d": 13,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Gauge: Canary deployments still miss silent failures—like a prompt that degrades answer quality without spiking latency "
+  },
+  {
    "id": "accessibility-lead",
    "name": "Access",
    "dept": "accessibility",
@@ -395,35 +424,6 @@
    "last_position": "DECISION: Use **one high-contrast \"Skip to main content\" link at page top** for all pages, with a fallback option to add",
    "proposed": 25,
    "shipped": 25
-  },
-  {
-   "id": "improve-w1",
-   "name": "Sprocket",
-   "dept": "improve",
-   "role": "doer",
-   "turns_7d": 25,
-   "rooms_7d": 13,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Implement a shadow test on the new prompt before a full rollout. This allows us to gather data on its performance withou"
-  },
-  {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 25,
-   "rooms_7d": 13,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Shadow testing only gives us a partial view of the prompt's performance, as it may not catch silent quality drops that u"
   },
   {
    "id": "links-w1",

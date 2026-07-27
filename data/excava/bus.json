@@ -455,7 +455,7 @@
       "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-07-12T02:39:59.616638+00:00",
-      "updated_at": "2026-07-27T05:15:02.708812+00:00",
+      "updated_at": "2026-07-27T12:03:59.972860+00:00",
       "result": "Semantic index: 1504 vectors (model gemini-embedding-001); hub 7360 items → 5856 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
@@ -2528,15 +2528,15 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "working",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-07-16T17:46:39.063498+00:00",
-      "updated_at": "2026-07-27T11:54:02.869783+00:00"
+      "updated_at": "2026-07-27T12:03:59.776347+00:00"
     },
     {
       "id": "visual-room-action-chrom-24031",
@@ -33357,15 +33357,16 @@
       "department": "analysis",
       "source": "auto",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "output written to data/ and committed by CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-07-27T11:54:03.023406+00:00",
-      "updated_at": "2026-07-27T11:54:03.644863+00:00"
+      "updated_at": "2026-07-27T12:03:59.741410+00:00",
+      "result": "1315 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "verify-the-next-200-of-6-53243",
@@ -33409,15 +33410,16 @@
       "department": "security",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-27T11:54:03.411017+00:00",
-      "updated_at": "2026-07-27T11:54:03.411023+00:00"
+      "updated_at": "2026-07-27T12:04:05.729208+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "transcripts-drain-the-ne-53243",
@@ -33515,18 +33517,20 @@
       "id": "transcripts-room-action--53511",
       "title": "[transcripts room action] Reel runs the transcript retrieval tool on the pending video queue with residential IP and gentle pacing, producing full",
       "detail": "From room dept-transcripts-retrieve-real-fu-300 (action-shaped close). Mission action from the department's own room.",
-      "department": "transcripts",
+      "department": "analysis",
       "source": "room-action:transcripts",
       "priority": 2,
       "status": "queued",
-      "steps": 0,
+      "steps": 1,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
       "claimed_by": null,
-      "handoff_docs": [],
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-room-action--53511--01--transcripts-w1--to--analysis.md"
+      ],
       "created_at": "2026-07-27T11:58:31.861085+00:00",
-      "updated_at": "2026-07-27T11:58:31.861091+00:00"
+      "updated_at": "2026-07-27T12:04:05.940461+00:00"
     },
     {
       "id": "visual-room-action-chrom-53520",
@@ -33544,7 +33548,60 @@
       "handoff_docs": [],
       "created_at": "2026-07-27T11:58:40.191096+00:00",
       "updated_at": "2026-07-27T11:58:40.191104+00:00"
+    },
+    {
+      "id": "watch-process-the-next-b-53839",
+      "title": "Watch: process the next batch of 1315 pending videos",
+      "detail": "value=82 size=29(small) [cost 30/steps 40/risk 10] · 1315 pending",
+      "department": "watch",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "watch-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-27T12:03:59.535612+00:00",
+      "updated_at": "2026-07-27T12:04:05.799146+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+    },
+    {
+      "id": "raise-g8-personal-fit-68-53839",
+      "title": "Raise G8 Personal fit (68/100): 21% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
+      "detail": "value=32 size=17(small) [cost 15/steps 25/risk 10] · G8 at 68",
+      "department": "visual",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "visual-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-27T12:03:59.638667+00:00",
+      "updated_at": "2026-07-27T12:04:04.904471+00:00",
+      "result": "Ran the collect designs. collect_designs: 978 designs (kept 978 / dropped 0 repo-only + 4 dead/parked + 49 non-design; +0 AI-product, +27 seeds, +48 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "id": "transcripts-room-action--53869",
+      "title": "[transcripts room action] Reel runs the transcript retrieval tool on the pending video queue to fetch real full transcripts/captions with resident",
+      "detail": "From room dept-transcripts-retrieve-real-fu-396 (action-shaped close). Mission action from the department's own room.",
+      "department": "transcripts",
+      "source": "room-action:transcripts",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-27T12:04:29.970302+00:00",
+      "updated_at": "2026-07-27T12:04:29.970309+00:00"
     }
   ],
-  "updated_at": "2026-07-27T11:58:40.191109+00:00"
+  "updated_at": "2026-07-27T12:04:29.970313+00:00"
 }

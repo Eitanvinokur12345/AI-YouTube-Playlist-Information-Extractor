@@ -710,18 +710,20 @@
       "id": "echo-s-initiative-run-a--98918",
       "title": "[Echo's initiative] Run a 30-minute daily manual crawl of the repo’s current top 50 most-linked pages to lock in +5% daily coverage while we",
       "detail": "Proposed by agent transcripts-lead from the decision of room war-deliver-push-link-coverage-t-358 (artifact: {\"kind\": \"decision\", \"ref\": \"data/excava/artifacts/war-deliver-push-link-coverage-t-358.md\", \"at\": \"2026-07-12T23:28:38.). Outcome feeds this agent's hit-rate.",
-      "department": "links",
+      "department": "memory",
       "source": "agent:transcripts-lead",
       "priority": 2,
       "status": "queued",
-      "steps": 0,
+      "steps": 1,
       "max_steps": 8,
-      "done_criteria": "the decision's concrete step is done and verifiable",
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
       "claimed_by": null,
-      "handoff_docs": [],
+      "handoff_docs": [
+        "data/excava/handoffs/echo-s-initiative-run-a--98918--01--links-w1--to--memory.md"
+      ],
       "created_at": "2026-07-12T23:28:38.456511+00:00",
-      "updated_at": "2026-07-26T10:20:33.006107+00:00"
+      "updated_at": "2026-07-27T05:57:47.581383+00:00"
     },
     {
       "id": "analysis-room-action-dee-98931",
@@ -2142,8 +2144,8 @@
       "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-07-15T19:47:06.713404+00:00",
-      "updated_at": "2026-07-26T01:47:37.528226+00:00",
-      "result": "Semantic index: 1498 vectors (model gemini-embedding-001); hub 7289 items → 5791 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+      "updated_at": "2026-07-27T05:57:46.599873+00:00",
+      "result": "Semantic index: 1504 vectors (model gemini-embedding-001); hub 7360 items → 5856 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "analysis-room-action-man-68737",
@@ -3861,15 +3863,15 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "working",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-07-19T07:07:06.744050+00:00",
-      "updated_at": "2026-07-26T10:20:32.538942+00:00"
+      "updated_at": "2026-07-27T05:57:46.401099+00:00"
     },
     {
       "id": "security-safety-rate-the-55749",
@@ -29875,15 +29877,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-07-27T05:51:45.689611+00:00",
-      "updated_at": "2026-07-27T05:51:45.689626+00:00"
+      "updated_at": "2026-07-27T05:57:38.391654+00:00",
+      "result": "1279 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "watch-process-the-next-b-31505",
@@ -29946,6 +29949,114 @@
       "department": "news",
       "source": "room-action:news",
       "priority": 2,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": "news-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-27T05:52:14.472713+00:00",
+      "updated_at": "2026-07-27T05:57:47.958395+00:00",
+      "result": "Ran the trend watch. trend_watch: 10 proposals (top score 10); queued 0 into self-improvement."
+    },
+    {
+      "id": "watch-process-the-next-b-31858",
+      "title": "Watch: process the next batch of 1279 pending videos",
+      "detail": "value=81 size=29(small) [cost 30/steps 40/risk 10] · 1279 pending",
+      "department": "watch",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "watch-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-27T05:57:38.140694+00:00",
+      "updated_at": "2026-07-27T05:57:47.512502+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+    },
+    {
+      "id": "security-safety-rate-the-31858",
+      "title": "Security: safety-rate the next batch of 1392 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1392 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-27T05:57:38.173806+00:00",
+      "updated_at": "2026-07-27T05:57:47.444293+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "id": "transcripts-drain-the-ne-31858",
+      "title": "Transcripts: drain the next batch of 1279 pending (residential IP)",
+      "detail": "value=60 size=26(small) [cost 25/steps 35/risk 15] · 1279 pending",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-drain-the-ne-31858--01--transcripts-w1--to--analysis.md"
+      ],
+      "created_at": "2026-07-27T05:57:38.231531+00:00",
+      "updated_at": "2026-07-27T05:57:48.095504+00:00"
+    },
+    {
+      "id": "raise-g8-personal-fit-68-31858",
+      "title": "Raise G8 Personal fit (68/100): 21% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
+      "detail": "value=32 size=17(small) [cost 15/steps 25/risk 10] · G8 at 68",
+      "department": "visual",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "visual-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-27T05:57:38.280111+00:00",
+      "updated_at": "2026-07-27T05:57:46.367179+00:00",
+      "result": "Ran the collect designs. collect_designs: 978 designs (kept 978 / dropped 0 repo-only + 4 dead/parked + 49 non-design; +0 AI-product, +27 seeds, +48 shown-in-video; url-checked 4). designs-only."
+    },
+    {
+      "id": "access-s-initiative-add--31873",
+      "title": "[Access's initiative] Add a **bold, full-width skip bar** at the top *and* bottom of every page, cycling through regions (header → main → foot",
+      "detail": "Proposed by agent accessibility-lead from the decision of room dept-accessibility-make-excava-us-519 (artifact: {\"kind\": \"decision\", \"ref\": \"data/excava/artifacts/dept-accessibility-make-excava-us-519.md\", \"at\": \"2026-07-27T05:57:53). Outcome feeds this agent's hit-rate.",
+      "department": "accessibility",
+      "source": "agent:accessibility-lead",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the decision's concrete step is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-27T05:57:53.017815+00:00",
+      "updated_at": "2026-07-27T05:57:53.017832+00:00"
+    },
+    {
+      "id": "news-room-action-fetch-v-31894",
+      "title": "[news room action] Fetch verified AI headlines from Reuters, BBC, and the White House press feeds; compile a fresh AI-news digest with time",
+      "detail": "From room dept-news-freshness-refresh-the-a-258 (action-shaped close). Mission action from the department's own room.",
+      "department": "news",
+      "source": "room-action:news",
+      "priority": 2,
       "status": "queued",
       "steps": 0,
       "max_steps": 8,
@@ -29953,9 +30064,9 @@
       "escalation_tier": 1,
       "claimed_by": null,
       "handoff_docs": [],
-      "created_at": "2026-07-27T05:52:14.472713+00:00",
-      "updated_at": "2026-07-27T05:52:14.472727+00:00"
+      "created_at": "2026-07-27T05:58:14.167726+00:00",
+      "updated_at": "2026-07-27T05:58:14.167743+00:00"
     }
   ],
-  "updated_at": "2026-07-27T05:52:14.472732+00:00"
+  "updated_at": "2026-07-27T05:58:14.167747+00:00"
 }

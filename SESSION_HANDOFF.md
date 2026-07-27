@@ -189,6 +189,16 @@ then the existing verified-rank/name tiebreak) — the item v127 queued as NEXT.
 self-criticism in AWAY_LOG.md (fire 24 entry) — that file is now the per-fire log; this §0d section
 just carries the live-build pointer forward for G-I.
 
+**Fire 25 (2026-07-27, backend-only, no dashboard change):** fixed a live twice-daily data-loss bug
+in `core_spoton.yml` (bash octal-arithmetic on `date -u +%H` at 08/09 UTC) + hardened the Commit
+step. **Fire 26 (2026-07-27, backend-only):** closed half the observability gap fire 25 flagged —
+added guardrail G-Q (core-spoton commit-heartbeat freshness, git-log-only, mirrors G-P) and audited
+all 22 workflow files confirming no other octal-arithmetic site exists. Full detail + harsh
+self-criticism (G-Q's real limit: can't see a mid-run failure after a normal-looking commit already
+landed) in AWAY_LOG.md fire 25/26 entries. **NEXT non-brain candidate left open by fire 26:** either
+the GitHub-Actions-API version of this same check (needs `actions: read` added to core_spoton.yml's
+permissions — flag to Eitan first, don't just add it), or go back to Hub/M3 polish/self-improve dept.
+
 **(prior, v120) M2 UNDERWAY.** Sessions 8-10: 4 brain families in the engine CATALOG (GLM/DeepSeek/Kimi via
 OpenRouter free + local Qwen/Llama); OpenRouter key VERIFIED (Eitan's secret OPENROUTER_API_KEY_REAL,
 workflows repointed, selftest 11/11, glm/deepseek/kimi all PASS); `engines.debate_engines(n)` dedups

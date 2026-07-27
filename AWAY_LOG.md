@@ -4,6 +4,38 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+- **~10:0x (fire 26, unattended, cloud session) — closed the observability gap fire 25 flagged:
+  added guardrail G-Q (`src/guardrails.py`) that reads git history for the last "core-spoton: <ts>"
+  commit and flags it stale past 4h (hourly cron + generous slack), mirroring G-P's existing
+  git-log-only pattern for the excava-beat heartbeat — no GitHub Actions API call, no new
+  permissions needed. First did the OTHER half of fire 25's self-criticism: a repo-wide audit for
+  any date-in-bash-arithmetic site beyond the three already-fixed `core_spoton.yml` lines
+  (`grep -rnE '\$\(\([^)]*\$\(date'` across all 22 workflow files) — confirmed those three (all
+  already `10#`-prefixed) are the ONLY such sites; excava_beat.yml's `$(date -u +%H:%MZ)` calls are
+  string interpolation only, never inside an arithmetic context, so no octal risk there. **Verified,
+  not assumed:** ran `python -m src.guardrails` before (16 checks, matching AWAY_LOG's prior count)
+  and after (17/17 defined, 15/17 passing — the 2 warns are pre-existing G-C/G-O, unrelated to this
+  change) the edit; G-Q correctly read the real last core-spoton commit (0.9h old, not stale) rather
+  than erroring or reporting a false positive. Shipped via `python -m src.git_safe ship` (commit
+  `3b204892c`, verified origin==HEAD). Also fixed `GUARDRAILS.md`, which had drifted to "The 12
+  guardrails" and a table stopping at G-L even though the code already had G-M…P — added the G-Q row
+  and an explicit note that the table lags the code (didn't backfill G-M…P's rows myself; that's
+  separate scope, flagging rather than doing everything in one fire). **Harsh self-criticism:** this
+  guardrail can only detect "core-spoton hasn't committed in N hours," which is a strict subset of
+  what fire 25 actually asked for ("a core-spoton run failed AND its commit was skipped" specifically)
+  — a run that fails on a LATER step after some real work already landed a normal-looking commit
+  would NOT trip G-Q at all, since discovery_agent runs first and unconditionally and something
+  usually lands every hour regardless of downstream failures. A true fix needs the GitHub Actions
+  API (job-level step conclusions) cross-referenced against the commit, which core_spoton.yml's
+  `permissions: contents: write`-only token can't read without a scope change I did not make this
+  fire (not verified as safe/necessary without Eitan's read on adding `actions: read`). So: real
+  incremental value (catches the total-stall case, e.g. cron disabled or a crash before any step
+  runs), but the partial-silent-loss case fire 25 actually hit is still only caught by luck (as it
+  was) or a future fire building the API-based version. Left that distinction here rather than
+  overclaiming this closes the gap. Did not touch the brains subsystem or the Hub/enrichment fronts
+  other fires have flagged as the bigger blocked levers.
+
+
 - **~09:0x (fire 25, unattended, cloud session) — found and fixed a real, live, twice-daily
   data-loss bug in `core_spoton.yml` (the M1.C "#1 priority" pipeline), confirmed via live CI
   logs, not speculation.** Standing checks first: `python -m src.standing_checks` — local cache

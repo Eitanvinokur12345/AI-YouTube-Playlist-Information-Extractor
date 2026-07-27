@@ -44,6 +44,16 @@ succeeds → HEAD stays on a real branch (never detached) → the other clone's 
 worth finishing for completeness, no longer the highest-leverage next fire task. The generic
 cross-lane "success but nothing landed" guardrail is still unbuilt, still the deeper fix.
 
+**UPDATE (fire 35):** rolled the fix out to the 3 highest-remaining-cadence lanes — `news.yml`
+(every 6h), `gemini_video.yml` (2×/day), `visual.yml` (2×/day) — re-verified with a fresh
+throwaway-bare-remote repro. **10 of 19 files now fixed** (adds `news.yml`, `gemini_video.yml`,
+`visual.yml` to the fire-30 list); **9 still exposed**, all daily-or-less: `creators.yml`,
+`discover.yml`, `excava_inbox.yml`, `fetch.yml`, `improve.yml`, `mine_social.yml`, `review.yml`,
+`sources.yml`, `transcribe.yml`. Fire 35 flagged that the remaining files are a textually
+identical mechanical edit and asked whether a future fire should just do all 9 in one pass
+instead of another 3-file increment — no strong reason not to, just following the smaller-scope
+precedent fires 28-30 set. The generic cross-lane guardrail is still unbuilt.
+
 **2026-07-26 (fire 10) — deterministic GitHub-metadata enricher BUILT, per the proposed default below.**
 `src/github_meta_enrich.py` now fills github-linked stub descriptions from the GitHub REST API's
 own `description`/`topics` (no LLM, no Ollama, no local-drain dependency) and is wired hourly into

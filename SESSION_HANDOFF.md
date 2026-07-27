@@ -236,6 +236,13 @@ fresh bare-remote repro. 7/19 workflow files now carry the fix; all sub-6h-caden
 12 remaining are daily-or-less. 10th-heartbeat review: storage/guardrails/previous-run all healthy,
 nothing broken across fires 21-29. Full detail in AWAY_LOG.md fire 30 entry; running tally in
 QUESTIONS.md's fire-28 entry.
+**(Fires 31-34, backend-only: hub enrichment verification, a self-check closure, a live-heartbeat
+diagnosis, and a critical `data/designs.json` conflict-marker/broken-JSON fix — full detail in each
+fire's own AWAY_LOG.md entry.)**
+**Fire 35 (2026-07-27, backend-only):** rolled the git-recovery fix out to `news.yml` (6h),
+`gemini_video.yml` (2×/day), `visual.yml` (2×/day) — 10/19 workflow files now carry the fix, 9
+daily-or-less lanes remain. Re-verified via a fresh bare-remote repro. Full detail in AWAY_LOG.md
+fire 35 entry; running tally in QUESTIONS.md's fire-28 entry.
 
 **(prior, v120) M2 UNDERWAY.** Sessions 8-10: 4 brain families in the engine CATALOG (GLM/DeepSeek/Kimi via
 OpenRouter free + local Qwen/Llama); OpenRouter key VERIFIED (Eitan's secret OPENROUTER_API_KEY_REAL,

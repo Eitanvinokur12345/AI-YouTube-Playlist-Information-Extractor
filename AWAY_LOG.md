@@ -4,6 +4,38 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+- **~19:0x (fire 35, unattended, cloud session) — rolled the mine.yml/fire-28 git-recovery fix out
+  to the 3 highest-cadence lanes still on the old silent-discard pattern: `news.yml` (6-hourly —
+  the highest-cadence file left after fire 30's pass), `gemini_video.yml` (2×/day), `visual.yml`
+  (2×/day, whose old `git push || true` was the most silent variant of all — no message even on
+  skip).** Same fix as fires 28/29/30: abort a failed rebase, retry as a merge, auto-resolve only
+  the known-stateless `data/data_guard.json` in our favor, leave any other conflict genuinely
+  unresolved (degrades to today's push-skipped, never worse). **10 of 19 workflow files now carry
+  the fix** (was 7); 9 remain, all daily-or-less cadence (`creators.yml`, `discover.yml`,
+  `excava_inbox.yml`, `fetch.yml`, `improve.yml`, `mine_social.yml`, `review.yml`, `sources.yml`,
+  `transcribe.yml`) — `excava_inbox.yml` is issue-triggered, not scheduled, so it's the lowest
+  priority of the 9. Verified two ways: `python3 -c "import yaml; yaml.safe_load(...)"` on all
+  three edited files (valid YAML), and a fresh throwaway bare-remote repro (two clones diverge
+  `data/data_guard.json`, second one runs the exact new commit-step logic) — confirmed the old
+  code path would have hard-failed the push, the new one detects the rebase conflict, aborts,
+  merges, resolves `data_guard.json` to the local (ours) version, and pushes cleanly. Standing
+  checks first: local `origin/main` cache was stale (re-fetched, HEAD matched, nothing at risk);
+  upstream tracking was missing on this branch (set to `origin/main`); guardrails 15/17, 0
+  critical (only G-C stale-backup and G-O local-drain-stale, both pre-existing and neither
+  fixable from this cloud sandbox). Checked AWAY_LOG through fire 34 first to confirm no
+  concurrent fire had already picked up this same rollout since fire 30 — it hadn't (fire 31 went
+  to hub enrichment, fires 32-34 to other bugs), so this is a genuinely fresh increment, not a
+  duplicate. **Harsh self-criticism:** this is now the 4th fire touching this same rollout
+  (28/29/30/35) and still only scoped to 3 files again — small, deliberately-scoped, but at this
+  rate the remaining 9 daily-or-less files will take 2-3 more fires; a bulk single-fire rollout
+  across all remaining files (they're all textually identical edits) would close it faster and
+  the "small-scoped-increment" caution from fire 28 may now be overly conservative for a
+  mechanical, already-proven-safe change — worth reconsidering next fire. Did not build the
+  cross-lane "job succeeded but no commit landed" guardrail fire 28 also flagged as a second,
+  independent follow-up (still open in QUESTIONS.md) — this fire only extended the existing
+  per-lane mitigation. Did not touch the ~13-20 stray `kind-shannon-*` branches or the
+  branch-vs-main shipping convention question (both still Eitan's call).
+
 - **~17:5x (fire 34, unattended, cloud session) — standing checks caught a critical guardrail
   failure the beat/core-spoton commits had been silently shipping: `data/designs.json` was
   broken JSON.** `python -m src.guardrails` opened at 14/17, 1 CRITICAL: G-F "BROKEN JSON:

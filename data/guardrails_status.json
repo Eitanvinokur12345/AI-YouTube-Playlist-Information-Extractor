@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-27T00:04:08.975883+00:00",
+ "generated_at": "2026-07-27T00:58:51.857266+00:00",
  "total": 15,
- "passing": 15,
+ "passing": 13,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -21,8 +21,8 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": true,
-   "detail": "1 bundle(s); newest within 26h.",
+   "ok": false,
+   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
    "severity": "warn"
   },
   {
@@ -78,7 +78,7 @@
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "3 guardrail runs logged (append-only, never rewritten).",
+   "detail": "1 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -91,22 +91,22 @@
   {
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
-   "ok": true,
-   "detail": "4616 tasks done, 12 departments moving",
+   "ok": false,
+   "detail": "4616 tasks done, 12 departments moving — STALLED (no new completions in the last 4 beats)",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "30405 MB free on the repo drive.",
+   "detail": "30473 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": true,
-   "detail": "last batch 18.1h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026",
+   "detail": "last batch 19.0h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026",
    "severity": "info"
   }
  ]

@@ -1,15 +1,15 @@
 # memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.
 
-> Decision artifact · room `dept-memory-recall-by-meaning-rel-175` (dept) · 2026-07-14T03:17:36.715192+00:00
-> Participants: Graft, Root · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-memory-recall-by-meaning-rel-175` (dept) · 2026-07-27T22:12:03.467573+00:00
+> Participants: Graft, Root · synthesized by mistral/mistral-small-latest
 
-**Decision:** Execute the memory linking command to enhance recall and create a cohesive brain graph.
+**Decision:**
 
-**Plan:**  
-1. Run the memory linking command to connect all existing memory IDs in the department.  
-2. Identify and document all conversation elements for integration into the graph.  
-3. Create a coherent structure for the brain graph to enhance understanding of related concepts.  
-4. Test the updated brain graph for improved navigation of information.  
-5. Provide training for team members on utilizing the new graph for better memory recall.  
+**Plan:**
+1. Embed the session’s goal ("memory: Recall by meaning, relate elements, build the brain graph") into Hindsight via MCP, linking it to the graft’s intent.
+2. Structure the memory artifact to include the established constraints (e.g., fr[...]) and the graft’s role in synthesis.
+3. Ensure the artifact captures the debate’s key elements for recall by meaning and relational mapping.
+4. Validate the artifact’s completeness by cross-referencing the session’s goal and constraints.
+5. Store the artifact in Hindsight’s database for future retrieval and embedding.
 
-**What changed:** The command was executed to unify and enhance the existing memory framework.
+**What changed:** The graft’s intent and session constraints are now embedded as a structured memory artifact in Hindsight.

@@ -1,8 +1,8 @@
 {
- "generated_at": "2026-07-27T22:36:53.972783+00:00",
+ "generated_at": "2026-07-27T22:44:11.534965+00:00",
  "total": 17,
  "passing": 14,
- "critical_failures": 0,
+ "critical_failures": 1,
  "guardrails": [
   {
    "id": "G-A",
@@ -42,22 +42,22 @@
   {
    "id": "G-F",
    "name": "JSON integrity",
-   "ok": true,
-   "detail": "all top-level data/ + docs/ JSON parses.",
+   "ok": false,
+   "detail": "BROKEN JSON: data/guardrails_status.json, data/designs.json",
    "severity": "critical"
   },
   {
    "id": "G-G",
    "name": "Remote sync verified",
    "ok": false,
-   "detail": "NOT in sync (behind/ahead: 11\t0) — a push may not have landed.",
+   "detail": "NOT in sync (behind/ahead: 11\t1) — a push may not have landed.",
    "severity": "warn"
   },
   {
    "id": "G-H",
    "name": "No rebase-blocking collisions",
-   "ok": false,
-   "detail": "16 untracked file(s) would block a rebase — safe-git will quarantine them.",
+   "ok": true,
+   "detail": "no untracked file collides with incoming commits.",
    "severity": "warn"
   },
   {
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "18052 memory episodes on record.",
+   "detail": "24359 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "0 guardrail runs logged (append-only, never rewritten).",
+   "detail": "1 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -92,28 +92,28 @@
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "17 tasks done, 9 departments moving",
+   "detail": "9 tasks done, 9 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "89069 MB free on the repo drive.",
+   "detail": "89043 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 40.6h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 40.7h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
    "ok": true,
-   "detail": "last 'excava-beat #N' commit 0.1h ago.",
+   "detail": "last 'excava-beat #N' commit 0.2h ago.",
    "severity": "warn"
   },
   {

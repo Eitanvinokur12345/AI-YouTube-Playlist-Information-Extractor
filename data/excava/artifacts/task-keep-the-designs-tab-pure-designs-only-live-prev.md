@@ -1,25 +1,21 @@
 # Keep the Designs tab pure: designs only, live previews, taste-ranked
 
-> visual · task `keep-the-designs-tab-pur-83565` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> visual · task `keep-the-designs-tab-pur-92118` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
 **Approach:**
-Enforce a strict "designs-only" policy on the Designs tab by automating validation, archiving non-conformant content, and ensuring live previews are taste-ranked via a curated system.
+Implement a strict content filter for the Designs tab, ensuring only live previews and curated designs remain, ranked by aesthetic taste.
 
 **Steps:**
-1. **Audit Existing Content**
-   - Run `find ./designs -type f \! -name "*.png" \! -name "*.jpg" \! -name "*.webp" -exec mv {} ./archived/non-designs/ \;` to move non-image files to an archive.
-   - Use `grep -r "screenshot" ./designs --include="*.md"` to flag markdown files referencing screenshots; move them to `./archived/screenshot-references/`.
+1. **Audit existing content** – Run `find designs/ -type f \! -name "*.html" -o -name "*preview*"` to identify non-preview files (e.g., raw assets, unrendered designs).
+2. **Automate cleanup** – Use a script (e.g., `scripts/clean_designs.sh`) to:
+   - Delete non-HTML files (e.g., `.psd`, `.fig`, `.sketch`).
+   - Move unrendered designs to `/archive/` (preserve but hide).
+   - Keep only `.html` files with embedded previews (e.g., `<iframe src="live-preview">`).
+3. **Enforce live previews** – Add a GitHub Action (`.github/workflows/validate_previews.yml`) to block PRs without:
+   - A live preview URL (e.g., Vercel/Netlify deploy link in `README.md`).
+   - A screenshot in `/screenshots/` (auto-generated via Puppeteer if missing).
+4. **Taste-ranking system** – Add a `designs/.taste_rank` file with a 1–10 score per design, updated via PR review consensus (e.g., `git blame` tracks changes).
+5. **Purge violations** – Run `git filter-repo --invert-paths --path designs/ --path-exclude "*.html"` to rewrite history, then force-push to `main`.
 
-2. **Enforce Live Preview Requirement**
-   - Add a GitHub Actions workflow (`.github/workflows/validate-designs.yml`) that:
-     - Checks for `preview: true` in YAML frontmatter of each design file.
-     - Fails if `preview` is missing or `false`, blocking merges to `main`.
-
-3. **Taste-Ranking System**
-   - Create `./designs/.taste_rank.yaml` with a list of approved curators (GitHub usernames).
-   - Add a script (`scripts/rank_designs.py`) that:
-     - Scrapes GitHub reactions (👍/👎) on design files.
-     - Assigns a `taste_score` based on curator reactions (e.g., 👍 from curator = +2, 👎 = -1).
-     - Updates `./designs/.taste_rank.yaml` with scores.
-
-4. **Automated
+**Needs:**
+- `git filter-repo` installed (`pip install git-filter

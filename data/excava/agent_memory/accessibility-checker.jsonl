@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 {"at": "2026-07-27T06:03", "room": "dept-accessibility-make-excava-us-", "said": "The risk with a single skip link is that it may not be effective on pages with multiple distinct navigation sections, which could lead to further keyboard navig"}
 {"at": "2026-07-27T06:09", "room": "dept-accessibility-make-excava-us-", "said": "Risk: Multiple skip links risk overwhelming keyboard users with too many choices—each extra link adds tab stops, slowing navigation. A better alternative is a s"}
 {"at": "2026-07-27T06:21", "room": "dept-accessibility-make-excava-us-", "said": "Risk: A single skip link may fail on pages with multiple distinct content sections (e.g., dashboards with sidebars, modals, or dynamic content). Better alternat"}
 {"at": "2026-07-27T06:27", "room": "dept-accessibility-make-excava-us-", "said": "Risk: Too many skip links clutter the tab order, forcing keyboard users to cycle through them all before reaching content. Better alternative: Use ARIA landmark"}
+=======
+>>>>>>> ac0076f2712f73090f43ddf91027d96145eb0da7
 {"at": "2026-07-27T06:39", "room": "dept-accessibility-make-excava-us-", "said": "Risk: A single skip link fails on pages with multiple distinct content sections (e.g., dashboards with sidebars, modals, or repeated headers). Alternative: Add "}
 {"at": "2026-07-27T06:44", "room": "dept-accessibility-make-excava-us-", "said": "Risk: Context-aware skip links create a maze of tab stops—screen-reader users face more noise than value. Better alternative: Keep one skip link at the top, but"}
 {"at": "2026-07-27T06:56", "room": "dept-accessibility-make-excava-us-", "said": "Risk: A single skip link fails on pages with multiple distinct content sections—screen-reader users get stuck jumping to the same spot every time. Better altern"}
@@ -27,4 +30,12 @@
 {"at": "2026-07-27T20:19", "room": "dept-accessibility-make-excava-us-", "said": "Ramp’s skip link still risks a race: if JavaScript loads late, the link may arrive after the user has already tabbed past where it would land, breaking keyboard"}
 {"at": "2026-07-27T20:30", "room": "dept-accessibility-make-excava-us-", "said": "The server-rendered skip link still risks a false positive: if the user tabs before the page finishes rendering, they land on a broken link. A better fix is a h"}
 {"at": "2026-07-27T21:30", "room": "dept-accessibility-make-excava-us-", "said": "The skip link still fails if JavaScript loads late—users tab into a broken page and hit dead space. A server-rendered skip link with a real href=\"#main\" and CSS"}
+<<<<<<< HEAD
 {"at": "2026-07-27T22:34", "room": "dept-accessibility-make-excava-us-", "said": "The server-rendered skip link risks locking us into a single solution that might not work for all users—what if someone’s assistive tech ignores the anchor or t"}
+=======
+{"at": "2026-07-27T21:38", "room": "dept-accessibility-make-excava-us-", "said": "The server-rendered skip link risks locking in a suboptimal design if we later discover the #main target isn’t semantically correct for all page structures. A b"}
+{"at": "2026-07-27T21:57", "room": "dept-accessibility-make-excava-us-", "said": "A late-loading skip link traps keyboard users mid-tab before JavaScript runs, breaking the flow. A server-rendered skip link that hides until JavaScript confirm"}
+{"at": "2026-07-27T22:04", "room": "dept-accessibility-make-excava-us-", "said": "A server-rendered skip link locks us into a fixed target—what if we later need to change the main content region? A late-loading skip link with a fallback to th"}
+{"at": "2026-07-27T22:18", "room": "dept-accessibility-make-excava-us-", "said": "A server-rendered skip link risks locking us into a fixed target—what if the page structure changes later and the link points to a missing or wrong element? A l"}
+{"at": "2026-07-27T22:25", "room": "dept-accessibility-make-excava-us-", "said": "A server-rendered skip link to `<main>` still risks breaking if the page later omits `<main>` entirely—like during a redesign where content shifts to `<div role"}
+>>>>>>> ac0076f2712f73090f43ddf91027d96145eb0da7

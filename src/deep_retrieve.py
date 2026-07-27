@@ -58,8 +58,22 @@ def _get(url: str, timeout: int = 20) -> str:
 
 
 def transcript_excerpt(el: dict, chars: int = 6000) -> str:
-    """Full-source pillar 1: the element's source videos' real transcripts."""
+    """Full-source pillar 1: the element's source videos' real transcripts.
+
+    Fire 32: this used to grab a chunk starting at position 0 (or the whole description)
+    whenever the element's name simply wasn't found in the video's text — i.e. it silently
+    treated "not found" the same as "found at the very start." That produced confidently
+    WRONG descriptions once fire 32's source_videos fix (element_model.py) widened the
+    fusable pool: e.g. connector "Asana" got fused from an unrelated @getviktor pitch, and
+    "Apify" from a generic "3 things about Claude" video — neither video's text ever
+    mentioned the element at all. Now a video only counts as a source for THIS element when
+    its name is actually findable in the transcript/description; otherwise skip it. A
+    remaining stub is better than a wrong one (matches the project's own anti-invention rule)."""
     out = []
+    name = (el.get("name") or "").lower()
+    key = name.split()[0][:12] if name else ""
+    if not key:
+        return ""
     for vid in el.get("source_videos", [])[:3]:
         try:
             rec = json.load(open(DATA / "processed" / f"{vid}.json", encoding="utf-8"))
@@ -67,11 +81,12 @@ def transcript_excerpt(el: dict, chars: int = 6000) -> str:
             continue
         t = rec.get("transcript", "")
         if t and rec.get("transcript_source") == "transcript":
-            name = el["name"].lower()
-            pos = t.lower().find(name.split()[0][:12])
-            start = max(0, pos - 800) if pos > -1 else 0
+            pos = t.lower().find(key)
+            if pos == -1:
+                continue          # name not actually mentioned in this transcript — skip it
+            start = max(0, pos - 800)
             out.append(f"[video {vid} · {rec.get('title', '')}]\n{t[start:start + chars // 3]}")
-        elif rec.get("description"):
+        elif rec.get("description") and key in rec["description"].lower():
             out.append(f"[video {vid} description]\n{rec['description'][:800]}")
     return "\n\n".join(out)[:chars]
 

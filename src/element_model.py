@@ -98,6 +98,20 @@ def _as_list(v) -> list:
     return v if isinstance(v, list) else [v]
 
 
+def _video_id(v) -> str:
+    """Fire 32: a source_videos entry is normally a bare video-id string, but some discovery
+    pipelines (mine_feeds/gemini-video) store a full {id, url, title} dict instead. The old
+    code did a blind str(v) on every entry, which turned those dicts into an unusable Python
+    repr string (e.g. "{'id': 'abc123', 'url': ...}") — silently corrupting the id for 3,371
+    elements (736 of them stubs) and permanently hiding their already-downloaded local
+    transcript file (data/processed/<id>.json) from deep_retrieve.py's transcript pillar,
+    since it looks up that path by the literal string. Extract the real id when the entry is
+    a dict; fall back to the plain-string case unchanged."""
+    if isinstance(v, dict):
+        return str(v.get("id") or v.get("video_id") or v.get("url") or "").strip()
+    return str(v).strip()
+
+
 def _min_bar(el: dict) -> bool:
     """M1.C3 minimum enrichment+verification bar: real info + a real anchor.
     LINK-based elements (tool/skill/connector/model/design) anchor on a live link or a source
@@ -150,7 +164,9 @@ def build() -> dict:
                 "id": eid, "type": etype, "name": name,
                 "what": str(_get(it, m.get("what", []), ""))[:600],
                 "category": str(_get(it, m.get("cat", []), ""))[:60],
-                "source_videos": [str(v) for v in _as_list(_get(it, m.get("videos", []), []))][:12],
+                "source_videos": [vid for vid in
+                                  (_video_id(v) for v in _as_list(_get(it, m.get("videos", []), [])))
+                                  if vid][:12],
                 "links": {k: v for k, v in {
                     "website": _get(it, m.get("website", []), ""),
                     "github": _get(it, m.get("github", []), ""),

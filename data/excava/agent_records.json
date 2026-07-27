@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-27T12:10:36.399576+00:00",
+ "generated_at": "2026-07-27T12:16:27.291598+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 211,
+   "turns_7d": 212,
    "rooms_7d": 28,
    "engines_used": [
     "gh-models",
@@ -17,14 +17,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The *fully randomized delay* ignores operational reality: operators will distrust alerts that arrive at 15 minutes one d"
+   "last_position": "The *semi-randomized delay* still leaks a predictable anchor—the rolling 30-minute average—inviting attackers to model o"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 162,
+   "turns_7d": 163,
    "rooms_7d": 89,
    "engines_used": [
     "gh-models",
@@ -34,7 +34,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Publish the *hybrid delay* alert (\"Agent X detected at a random time between 20–50 minutes, with 60% of al"
+   "last_position": "**Decision:** Adopt the *semi-randomized delay* with a rolling 30-minute average and ±15-minute jitter, recalculated aft"
   },
   {
    "id": "transcripts-w1",
@@ -169,8 +169,8 @@
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 68,
-   "rooms_7d": 34,
+   "turns_7d": 69,
+   "rooms_7d": 35,
    "engines_used": [
     "gh-models",
     "groq",
@@ -178,22 +178,22 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Implement a system-aware default theme that automatically switches to dark mode in low-light conditions and light mode i"
+   "last_position": "Choose a system-aware default dark theme with a manual light-mode toggle. This maximizes visibility and liveliness in lo"
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 68,
-   "rooms_7d": 34,
+   "turns_7d": 69,
+   "rooms_7d": 35,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk isn’t implementation complexity—it’s assuming users *want* their environment dictating their theme. A bett"
+   "last_position": "The real risk isn’t user preference—it’s locking ourselves into a theme system before proving users *need* it. A better "
   },
   {
    "id": "watch-lead",
@@ -292,14 +292,14 @@
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 35,
-   "rooms_7d": 35,
+   "turns_7d": 36,
+   "rooms_7d": 36,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as a taste material artifact in the hub.",
+   "last_position": "ACTION: Chroma frames Easel’s vibrant screenshot of the Beverage Cans website as taste material in the hub.",
    "proposed": 1,
    "shipped": 1
   },
@@ -308,14 +308,14 @@
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 35,
-   "rooms_7d": 35,
+   "turns_7d": 36,
+   "rooms_7d": 36,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will browse the Beverage Cans website and take a screenshot of its vibrant pink hero section. This will produce a visu"
+   "last_position": "I open the Beverage Cans website and take a screenshot of its vibrant pink hero section to capture the design pattern. T"
   },
   {
    "id": "visualization-lead",
@@ -332,7 +332,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Default to a single dark theme with a manual light-mode toggle, proven by Manus and Graphify dashboards; test ",
    "proposed": 34,
-   "shipped": 33
+   "shipped": 34
   },
   {
    "id": "security-lead",
@@ -366,6 +366,35 @@
    "last_position": "I will run the LLM Guard scanner on this conversation’s input/output stream to detect leaks, injection, or fake elements"
   },
   {
+   "id": "improve-w1",
+   "name": "Sprocket",
+   "dept": "improve",
+   "role": "doer",
+   "turns_7d": 27,
+   "rooms_7d": 14,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Do a shadow test on the new prompt before full rollout. This lets us measure quality without affecting users. Trade-off:"
+  },
+  {
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
+   "role": "checker",
+   "turns_7d": 27,
+   "rooms_7d": 14,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Shadow testing alone won’t catch silent failures—like a prompt that degrades quality for a subset of users while metrics"
+  },
+  {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
@@ -379,35 +408,6 @@
    ],
    "positions_held": 30,
    "last_position": "Action: I will run the memory linking command to connect every existing memory I have into a unified graph. This will pr"
-  },
-  {
-   "id": "improve-w1",
-   "name": "Sprocket",
-   "dept": "improve",
-   "role": "doer",
-   "turns_7d": 26,
-   "rooms_7d": 13,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run a 24-hour canary deployment to 5% of users with real-time quality and latency monitoring. This gives us live data on"
-  },
-  {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 26,
-   "rooms_7d": 13,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Gauge: Canary deployments still miss silent failures—like a prompt that degrades answer quality without spiking latency "
   },
   {
    "id": "accessibility-lead",
@@ -528,7 +528,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Conduct a 48-hour dual-prompt A/B test with 10% of users receiving the new prompt and forced feedback collecti",
    "proposed": 13,
-   "shipped": 12
+   "shipped": 13
   },
   {
    "id": "links-checker",

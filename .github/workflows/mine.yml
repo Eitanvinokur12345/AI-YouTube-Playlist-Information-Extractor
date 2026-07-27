@@ -79,5 +79,30 @@ jobs:
           git add data skills other-skills 2>/dev/null || true
           git commit -m "mine-feeds (external → skills/tools/MCP): $(date -u +%Y-%m-%dT%H:%MZ)" \
             || echo "nothing to commit"
-          git pull --rebase --autostash origin main || true
+          # 2026-07-27 (away fire 28): confirmed live via the 2026-07-26 GH Actions job log that
+          # this exact "rebase || true; push || echo skipped" pattern silently DISCARDED a full
+          # day's real mining (+5 skills, +31 tools, +3 connectors, run 30199649757): the rebase
+          # conflicted on data/data_guard.json (both sides touch its "generated_at" line — it's a
+          # fully-regenerated, stateless health snapshot, so any concurrent lane rewriting it can
+          # collide), left HEAD detached, and "push skipped" reported the step (and whole job) as
+          # "success" while the local commit died with the ephemeral runner. This is the same
+          # failure CLASS fire 25 found in core_spoton.yml (a real success-labeled job silently
+          # discarding real work) via a different mechanism (rebase conflict, not octal
+          # arithmetic). Fix, verified against a real bare git remote (not just read, actually
+          # reproduced + fixed in a throwaway repo before landing here): on rebase failure, abort
+          # it (restores the branch + local commit — no loss) and retry as a plain merge; if THAT
+          # also conflicts, auto-resolve ONLY data/data_guard.json in our favor (safe — it carries
+          # no unique history) and finish the merge commit. Any OTHER conflicting file is left
+          # unresolved on purpose, so the step degrades to today's existing "push skipped" — never
+          # worse, just not silently better either.
+          if ! git pull --rebase --autostash origin main; then
+            echo "rebase failed — aborting and retrying as a merge"
+            git rebase --abort 2>/dev/null || true
+            if ! git pull --no-rebase --no-edit origin main; then
+              echo "merge also conflicted — auto-resolving known-stateless data_guard.json in our favor"
+              git checkout --ours -- data/data_guard.json 2>/dev/null || true
+              git add data/data_guard.json 2>/dev/null || true
+              git commit --no-edit || echo "unresolved conflict outside data_guard.json — leaving for manual/next-run recovery"
+            fi
+          fi
           git push || echo "push skipped"

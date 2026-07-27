@@ -209,6 +209,22 @@ next cron trigger instead of waiting out its remaining ~4h. Full detail + harsh 
 in AWAY_LOG.md fire 27 entry. **NEXT:** confirm `excava-beat #N` commits resume after this ship; if
 they don't, the hang is elsewhere in `_beat()` (systemcheck/supervisor/proof run after rooms and
 weren't audited this fire).
+**Fire 28 (2026-07-27, backend-only):** confirmed via live GH Actions API + two real post-fix
+`excava-beat` commits (not just one snapshot) that fire 27's heartbeat fix actually resumed a
+healthy cadence — `data/excava/movement.json`'s `done` counter also climbed 4947→4969 in the same
+window, so real department throughput resumed, not just empty heartbeats. Judged `G-P` already
+adequate for beat staleness (warn-level, 6h threshold, correctly reads "0.0h ago") — did not build
+a duplicate active-hang guardrail. Then found a SECOND live instance of fire 25's failure class (a
+"success" job silently discarding real work): `mine.yml`'s 2026-07-26 run mined +5 skills/+31
+tools/+3 connectors, committed locally, then a `git pull --rebase` conflict on the fully-regenerated
+`data/data_guard.json` left HEAD detached and `git push || echo "push skipped"` swallowed the
+failure — the whole job read "success" while that day's real mining died with the runner. Fixed
+`mine.yml`'s commit step (abort-and-merge recovery, verified against a real bare git remote in a
+throwaway repro before landing). The identical fragile pattern exists in 18 OTHER workflow files
+(`grep -rl "git pull --rebase --autostash" .github/workflows/*.yml`) — not touched this fire
+(scoped to the one file with proven evidence); flagged in QUESTIONS.md as the next-fire candidate,
+prioritizing high-cadence lanes first. Full detail + harsh self-criticism in AWAY_LOG.md fire 28
+entry.
 
 **(prior, v120) M2 UNDERWAY.** Sessions 8-10: 4 brain families in the engine CATALOG (GLM/DeepSeek/Kimi via
 OpenRouter free + local Qwen/Llama); OpenRouter key VERIFIED (Eitan's secret OPENROUTER_API_KEY_REAL,

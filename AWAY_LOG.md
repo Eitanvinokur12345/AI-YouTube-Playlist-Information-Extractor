@@ -4,6 +4,88 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+- **~12:1x (fire 28, unattended, cloud session) — confirmed fire 27's heartbeat fix actually
+  resumed a healthy cadence (not just one lucky beat), then found and fixed a SECOND, independent
+  instance of the same failure class fire 25 first named: a job reporting "success" while silently
+  discarding a full day's real work.** Standing checks first: `git_safe sync`/`git pull` (already
+  run before this fire started per the hand-off); guardrails 15/17 pre-fire (0 critical; only the
+  pre-existing `G-C`/`G-O` warns). **Part 1 — verify, don't assume:** `git log` showed only ONE
+  `excava-beat #N` commit (`#1` at 11:58:56Z) had landed since fire 27's fix (11:01:38Z) — not
+  enough on its own to call it "resumed," so I cross-checked live: `mcp__github__actions_list`
+  showed the post-fix run (`30263954890`) started executing within *seconds* of being queued (no
+  90-min stall like the wedged run fire 27 caught) and its first beat cycle committed in under a
+  minute; I then backgrounded a bounded git-log poll (`Bash run_in_background`, ~8 min budget) and
+  it caught `excava-beat #2` landing cleanly at 12:04:46Z, a normal ~6-min gap. Independently,
+  `data/excava/movement.json`'s `done` counter — which fire 27 itself had found STALLED flat at
+  4947 for ~2h before the fix — climbed 4947→4953→4959→4969 across 11:55–12:07, i.e. real
+  department task completions resumed, not just empty heartbeat commits. Also re-derived (from the
+  raw GH Actions run list, independently of AWAY_LOG's own prior claim) that the long run of
+  `cancelled` conclusions on `excava-beat` runs going back through 2026-07-26 is the DESIGNED
+  concurrency-queue-supersession behavior fire 22 already diagnosed (`cancel-in-progress: false` +
+  a 5.3h job + a 10-min cron only keeps the newest *queued*, not-yet-started run) — confirmed via
+  duration math (successful runs ran their full ~317–373 min; the "cancelled" ones were all queued,
+  never-started durations, not mid-run kills), not a second live hang. **Verdict: fire 27's fix
+  worked, confirmed via live Actions API + two real post-fix beat commits + resumed task
+  throughput, not a single-snapshot guess.** Per the task brief's item 2, also read `G-P`
+  (`src/guardrails.py`) in full: it already flags beat staleness past 6h at `warn` severity (not
+  critical) with a clear "check for a wedged/queued run" message and correctly read "0.0h ago" once
+  healthy — judged this ALREADY adequate for what it's for (an early, cheap, git-log-only signal)
+  and did NOT build a duplicate "active-hang alert," since the two real live-hang catches so far
+  (fire 27, and the Actions-API cross-check I just did) both needed a human/agent reading actual
+  Actions run state anyway — a git-log guardrail can't itself distinguish "wedged" from "queued
+  behind a long-but-healthy run," so a louder G-P wouldn't have added real signal here.
+  **Part 2 — real program work, since (a)/(b) were non-issues:** ran `maintenance_check.py` fresh
+  (not reusing a stale report) — grade D/48, flagged (among known issues) "Pipeline lanes overdue"
+  for `mine` (External mining) at 48.8h stale against a 12h cadence. Traced it past the obvious
+  guess (broken cron) into the actual GH Actions job log for the most recent `mine.yml` run
+  (`30199649757`, 2026-07-26): every step, INCLUDING "Commit results", reported `conclusion:
+  success` — but `git log` shows **zero** `mine-feeds` commit anywhere near that run's timestamps.
+  The raw log line explains it exactly: the run mined real content (`+5 skills, +31 tools, +3
+  connectors`), committed it locally (`[main 1956b3173] mine-feeds...`), then `git pull --rebase
+  --autostash origin main` hit `CONFLICT (content): Merge conflict in data/data_guard.json`
+  (another lane rewrote the same fully-regenerated "generated_at" line around the same time), left
+  HEAD detached mid-rebase, and `git push || echo "push skipped"` silently swallowed the resulting
+  `fatal: You are not currently on a branch` — so the whole job read "success" while that day's real
+  mining was destroyed with the ephemeral runner. **Same failure CLASS fire 25 found in
+  `core_spoton.yml`** (a green job silently discarding real work) but via a different, previously
+  unaudited mechanism (a rebase conflict, not octal arithmetic) — and a repo-wide grep confirmed the
+  exact fragile `git pull --rebase --autostash ... || true` / `git push || echo "push skipped"`
+  pattern is shared by **19 of the ~22 workflow files**, so this is likely not the only place it can
+  bite. **Fixed only `mine.yml`** (the one place I have PROVEN live evidence, not the other 18 —
+  deliberately scoped to one increment): on rebase failure, abort it (restores the branch + the
+  local commit, zero loss) and retry as a plain merge; if that also conflicts, auto-resolve ONLY
+  `data/data_guard.json` in our favor (verified safe — it's a fully-regenerated stateless health
+  snapshot with no accumulated history, confirmed by reading `src/data_guard.py` and the file
+  itself) and finish the merge commit; any OTHER conflicting file is left unresolved on purpose so
+  the step degrades to today's exact existing behavior (`push skipped`, non-fatal) rather than
+  risking a silently-wrong auto-resolution of real content. **Verified, not assumed:** reproduced
+  the EXACT failure shape twice in a throwaway git repo against a real bare remote (`git init
+  --bare`, not just a working tree) — (1) the `data_guard.json`-only conflict scenario: the fix
+  recovers cleanly, HEAD stays on `main` (never detached), the real new content
+  (`skillB-NEW-FROM-MINING` in the test) survives all the way to a fresh clone of the remote after
+  push; (2) a genuine content conflict in a non-`data_guard.json` file: the fix correctly leaves it
+  unresolved, push is skipped, remote is untouched — no worse than today, confirming the fallback
+  doesn't corrupt anything when the conflict is real. `yaml.safe_load()` + `bash -n` both pass on
+  the edited step. `python -m src.guardrails`: 15/17 before (0 critical; `G-G` briefly flagged
+  "2 behind" from the beat commits landing mid-fire, cleared by `git_safe sync`), 16/17 after (0
+  critical; only the pre-existing `G-O` PC-off warn remains). **Harsh self-criticism:** I fixed the
+  ONE workflow I have direct log evidence for, not the systemic pattern across all 19 — a future
+  fire could hit the identical silent-loss bug tomorrow in, say, `analyze.yml` or `discover.yml`,
+  and nothing today makes THAT visible either (flagging this explicitly in QUESTIONS.md rather than
+  quietly leaving it only here). I also did not add a guardrail that would catch a *future* instance
+  of this bug class generically (e.g., diffing "job succeeded" against "did a commit actually land"
+  across all lanes) — `pipeline_status.json`'s per-lane staleness check is what caught THIS one, but
+  only after ~2 days of silent loss, not the moment it happened; a same-run detection would need the
+  Actions API cross-referenced live, which none of these `|| echo` shell patterns do today. The
+  `data_guard.json`-favor-ours fallback is scoped correctly for what I verified, but I have not
+  proven it's the ONLY file whose regeneration pattern causes this exact collision — `health.json`,
+  `pipeline_status.json`, and `effectiveness.json` are all similarly fully-regenerated-every-run and
+  are plausible (unverified) candidates for the same conflict shape in other workflows; did not
+  extend the whitelist to them without direct evidence, on purpose. Did not touch the Hub/brains/
+  enrichment fronts directly (`mine.yml`'s own content pipeline IS an M1 enrichment lane, so this
+  counts as program work per the task brief's guidance, not pure meta-plumbing, but it's still
+  infra-shaped work, not a user-visible Hub change).
+
 - **~11:0x (fire 27, unattended, cloud session) — caught the exact heartbeat-hang class G-Q
   (fire 26) can't see, live, and fixed the outer guard instead of waiting for a GH-Actions-API
   cross-reference.** Standing checks first: local ref stale (re-fetched, HEAD matched after, no

@@ -5,6 +5,65 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-28 (continued)
+- **~22:0x (fire 54, unattended, cloud session) — unshallowed this sandbox's clone (it was shallow,
+  which G-T could only report as "9/16 can't-tell"), and the extra history immediately turned that
+  guardrail from mostly-blind into a real signal: found and fixed a genuine multi-week silent-skip
+  bug in `review.yml`, distinct from the git-rebase-collision class fires 25-53 have been chasing.**
+  Standing checks: `origin/main` 1 commit ahead at start (another lane's routine "analyze: safety
+  commit" landed mid-session, normal); guardrails 17/20 before, same steady-state trio (G-C self-
+  heals on ship; G-O local-drain-stale, PC off). Picked up fire 52/53's explicitly-deferred next
+  step ("sweep recent history for other 'ran successfully, zero matching commit' gaps") but via a
+  cheaper, permanent route than a one-off manual sweep: `git fetch --unshallow` (5,286 commits vs
+  the 54 this checkout had) so G-T (built fire 52) can actually see all 16 lanes instead of treating
+  9 of them as unknowable. **That alone surfaced real staleness G-T couldn't see before:**
+  `discover.yml` (903.9h), `improve.yml` (1253.7h), `review.yml` (910h) all past their generous
+  multiples of their own cron cadence. Investigated each via `mcp__github__actions_list` +
+  `get_job_logs` (not just git log) to find the actual cause per lane, since "stale" alone doesn't
+  say why: **(1) `review.yml` — real bug, fixed.** Its cron was widened from single-day
+  `"0 23 * * 6"`/`"0 23 * * 0-5"` to twice-weekly `"0 23 * * 3,6"`/`"0 23 * * 0-2,4-5"` at some
+  point (comment: "owner wants more frequent self-improvement"), but the "Plan this run" step's
+  `weekly = (schedule == "0 23 * * 6")` / `daily = (schedule == "0 23 * * 0-5")` comparisons were
+  never updated to the new literals — `github.event.schedule` reports the exact matched cron
+  string, so it's now NEVER equal to either old literal, `weekly`/`daily` are both permanently
+  False, and `run` falls through to the final `else: run = False` on every single trigger, every
+  day, forever. The job still reports SUCCESS (skipped steps don't fail a job), which is exactly
+  why nothing caught this by status alone — matches the timeline precisely (last real "review:"
+  commit 2026-06-21, right when the cron presumably changed). **Fix:** derive `weekly` from
+  `now.weekday() in (2, 5)` (Wed, Sat) instead of string-matching the cron literal, so it can never
+  drift out of sync with the schedule again the way the string comparison just did. Verified by
+  extracting the exact embedded Python from the YAML via `yaml.safe_load` and executing it
+  standalone (today, a Tuesday, correctly yields `run=false`; a table over all 7 `now.weekday()`
+  values confirms Wed/Sat are the only `weekly=True` days, matching the cron's `3,6` list exactly).
+  `improve.yml`'s equivalent block was NOT affected — checked it specifically since it shares the
+  same shape — its cron is genuinely single-day (`"0 20 * * 6"`) so its string comparison is still
+  correct; confirmed no other workflow file uses this weekly/daily string-comparison pattern at
+  all (`grep` across `.github/workflows/`, 2 hits, both accounted for). **(2) `discover.yml` +
+  `improve.yml`'s one Saturday failure — real but UNDIAGNOSED, correctly left unfixed.** Every
+  `discover.yml` run since 07-14 (7 straight) and `improve.yml`'s 07-25 run show conclusion:failure,
+  but not from a rebase conflict or the schedule-gate bug — the Claude Code Action's own result
+  JSON shows `is_error:true` with `num_turns:1`, `total_cost_usd:0`, ~1.9-2.2s duration: it errors
+  almost immediately, before any billable work, so the safety-commit step correctly finds "nothing
+  to commit" (that part is working as designed, not a bug). Ruled out a local cause — no commits
+  touched `discover.yml`/`DISCOVER.md`/`config.json` in the window the failures started. Could not
+  see the actual error text (`show_full_output` is off on both lanes, output redacted "for
+  security"), so did not guess at a fix — staged as QUESTIONS.md #30 with an explicit ask (turn on
+  `show_full_output` for one diagnostic cycle on just these two lanes, yes/no) rather than either
+  silently leaving it or unilaterally exposing more log content without checking first. Shipped
+  the one confirmed, verified fix via `python -m src.git_safe ship` (commit pending, this entry
+  written pre-ship per the established pattern — see the commit hash in git log immediately after
+  this entry's own commit). **Harsh self-criticism:** I fixed one real bug and left a second real
+  (if less certain) bug merely documented rather than chasing it further — defensible given the
+  redacted logs make it a guess without more data, but it means `discover.yml`'s 60-tools/week
+  pipeline has now been fully dead for two weeks and this fire didn't restore it, only diagnosed it
+  partially. I also did not verify the review.yml fix against a LIVE Wednesday or Saturday trigger
+  (can't — the next one is days away from this fire's clock) — my confidence rests on unit-testing
+  the extracted logic, not a real rerun; the true test is whether a "review:" commit lands this
+  coming Wednesday, which is something the next fire or a PULSE.md check should watch for. I also
+  unshallowed a 54-commit clone into a 5,286-commit one without checking whether that has any cost
+  implication for this sandbox (disk, time) — it completed in well under a minute and G-N still
+  shows ~30GB free, so this was a reasonable trade, but I did not ask before doing it since it's
+  read-only and reversible (a shallow clone is just a local view, not repo state).
+
 - **~19:5x (fire 53, unattended, cloud session) — landed fire 52's own queued next step: widened
   the known-stateless auto-resolve list past `data_guard.json` alone, across all 19 workflow
   lanes.** Picked up exactly where fire 52 left off (this is a fresh scheduled invocation of the

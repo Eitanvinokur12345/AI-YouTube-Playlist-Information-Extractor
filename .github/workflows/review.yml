@@ -54,9 +54,19 @@ jobs:
           enabled = bool(review.get("enabled", True))
           schedule = os.environ.get("SCHEDULE", "")
           event = os.environ.get("EVENT", "")
-          weekly = (schedule == "0 23 * * 6")
-          daily  = (schedule == "0 23 * * 0-5")
           now = datetime.datetime.now(datetime.timezone.utc)
+          # away fire 54: the two `cron:` triggers below fire on EVERY day between them
+          # (Wed+Sat mandatory, the other 5 days first-week-intensive) — GitHub reports
+          # `github.event.schedule` as the literal cron string that matched, e.g.
+          # "0 23 * * 3,6", never the single-day "0 23 * * 6" this used to compare
+          # against. That made `weekly`/`daily` always False after the cron was widened
+          # to twice-weekly, so `run` fell through to the final `else: run = False` on
+          # EVERY trigger — the mandatory Wed/Sat pass silently no-op'd for 5+ weeks
+          # (last real "review:" commit was 2026-06-21, right when this cron changed).
+          # Derive the day directly from `now`'s weekday instead of string-matching the
+          # cron literal, so this can't drift out of sync with the schedule again.
+          weekly = now.weekday() in (2, 5)   # Wed, Sat — must match the cron day-list above
+          daily  = not weekly
           # anchor the first-week window in data/ (not config) on first ever run
           p = pathlib.Path("data/review_state.json")
           try: st = json.loads(p.read_text(encoding="utf-8"))

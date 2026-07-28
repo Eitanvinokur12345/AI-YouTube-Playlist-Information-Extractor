@@ -1,9 +1,9 @@
 {
   "header": {
-    "run_time": "2026-07-28T10:01:12.754988-04:00",
+    "run_time": "2026-07-28T10:12:03.362003-04:00",
     "window": "last 7 days",
-    "covered_from": "2026-07-21T14:01:36+00:00",
-    "covered_to": "2026-07-27T14:00:40+00:00",
+    "covered_from": "2026-07-21T14:22:27+00:00",
+    "covered_to": "2026-07-27T14:08:00+00:00",
     "digest": [
       {
         "text": "Anthropic's Opus 5 blows past Fable 5 and GPT-5.6 Sol on the benchmark designed to measure real intelligence — The Decoder",
@@ -36,6 +36,30 @@
     ]
   },
   "entries": [
+    {
+      "url": "https://dev.to/__11f7ea740fa6/how-we-stopped-a-local-llm-from-inventing-joins-across-a-900-table-schema-6o0",
+      "title": "How we stopped a local LLM from inventing JOINs across a 900-table schema",
+      "source_name": "dev.to LLM",
+      "publishedAt": "2026-07-27T14:08:00+00:00",
+      "summary": "Practical notes from building an internal text-to-SQL agent. Everything runs on-prem: a local model behind a LiteLLM proxy, bge-m3 embeddings, Postgres with pgvector for retrieval, and ClickHouse as the target warehouse. Disclosure: English is not my native language. I wrote the original draft in Russian and used an LLM to help edit and translate it. The system, implementation details, and conclu…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/amedinat/the-caching-illusion-why-semantic-cache-wont-save-your-llm-budget-1ili",
+      "title": "The Caching Illusion: Why Semantic Cache Won't Save Your LLM Budget",
+      "source_name": "dev.to LLM",
+      "publishedAt": "2026-07-27T14:02:57+00:00",
+      "summary": "Everyone tells you to just drop a semantic cache in front of OpenAI or Anthropic to cut costs. I tried it. tbh, it's mostly an illusion. Here is the reality of AI agents: they don't ask the same questions twice. They inject dynamic context, timestamps, user-specific IDs, and multi-step reasoning traces into every single prompt. I looked at 50,000 requests from a basic RAG setup. The cache hit rat…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/promptra-team/nieirosiet-skachat-na-svoi-vps-za-200-lichnyi-aghient-v-telegram-s-pamiatiu-5f4g",
+      "title": "«нейросеть скачать» на свой VPS за 200 ₽: личный агент в Telegram с памятью",
+      "source_name": "dev.to LLM",
+      "publishedAt": "2026-07-27T14:02:17+00:00",
+      "summary": "Вбиваешь в поиск «нейросеть скачать» - а хочется на самом деле не инсталлятор. Хочется своего помощника: всегда онлайн, помнит, о чём вы говорили неделю назад, живёт в привычном Telegram и не просит зарубежную карту. В 2026 году такая штука собирается за один вечер и стоит 130-200 ₽ в месяц: арендуешь VPS, ставишь туда опенсорсного агента, привязываешь к бесплатному Telegram-боту - и получаешь ли…",
+      "source_type": "web"
+    },
     {
       "url": "https://www.zdnet.com/article/assume-ai-cybersecurity-attacks-are-the-future-43-percent-of-companies-have-already-experienced-it/",
       "title": "Assume AI cybersecurity attacks are the future: 43% of companies have already experienced it",
@@ -12882,46 +12906,6 @@
       "source_name": "Simon Willison",
       "publishedAt": "2026-07-21T14:22:27+00:00",
       "summary": "Nativ: Run AI models locally on your Mac Prince Canuma is the developer behind the excellent MLX-VLM Python library for running vision-LLMs using MLX on a Mac. I'm really excited about his new project, which wraps MLX in a full macOS desktop application. It's similar in shape to LM Studio, providing both a chat interface and a localhost API server for accessing models. The app picked up MLX model…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/aicodingpatterns/prompt-chaining-how-to-break-down-complex-tasks-into-simple-steps-4hjp",
-      "title": "Prompt Chaining: How to Break Down Complex Tasks Into Simple Steps",
-      "source_name": "dev.to Claude",
-      "publishedAt": "2026-07-21T14:12:02+00:00",
-      "summary": "The first time I tried to do something useful with an LLM in code, I asked it to do everything at once: \"analyze this review, extract the main emotions, classify it, and return the result in JSON\". The model tried, but somewhere in the process it lost the thread, mixed up steps, and the final JSON was useless. The solution wasn't a better model. It was breaking the problem down. Before we start:…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/aicodingpatterns/guardrails-for-ai-agents-how-to-implement-them-with-code-2o3h",
-      "title": "Guardrails for AI Agents: How to Implement Them (With Code)",
-      "source_name": "dev.to Claude",
-      "publishedAt": "2026-07-21T14:10:33+00:00",
-      "summary": "Imagine asking an AI assistant: \"delete the project's temporary files.\" The assistant thinks it knows which ones they are, but it's wrong... and deletes an important file ( .env.local ) with configuration data you need. The data is lost. Why did it happen? Because the assistant did exactly what it understood from your order, without thinking about whether it was safe to do so. Guardrails are safe…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/rulestack/what-survives-compaction-in-claude-code-and-how-to-keep-your-rules-alive-564p",
-      "title": "What survives compaction in Claude Code — and how to keep your rules alive",
-      "source_name": "dev.to Claude",
-      "publishedAt": "2026-07-21T14:08:02+00:00",
-      "summary": "Long Claude Code sessions eventually hit the context window ceiling. When they do, Claude Code runs compaction : it summarizes the conversation so far and starts a fresh window seeded with that summary. Work continues — but not everything you loaded at the start makes the trip. If you've ever watched an agent suddenly forget a rule it had been following for an hour, this is usually why. Here's wh…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.lesswrong.com/posts/FzGqnCkdKeTnZ9tjE/differential-acceleration-of-alignment-relevant-capabilities",
-      "title": "Differential acceleration of alignment-relevant capabilities is a bad bet",
-      "source_name": "LessWrong",
-      "publishedAt": "2026-07-21T14:04:58+00:00",
-      "summary": "There is an idea floating around in the rough shape of \"we need to accelerate capabilities that are differentially useful for safety research so AIs can help us make the future go better.\" The capabilities targeted are typically things bottlenecking alignment research, such as philosophical or conceptual reasoning. I feel nervous about this for two reasons. The first is that it's plausible that A…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/tekmag/kimi-work-moonshot-ais-desktop-agent-that-runs-300-ai-sub-agents-on-your-desktop-3lke",
-      "title": "Kimi Work: Moonshot AI's Desktop Agent That Runs 300 AI Sub-Agents on Your Desktop",
-      "source_name": "dev.to AI Agents",
-      "publishedAt": "2026-07-21T14:01:36+00:00",
-      "summary": "Moonshot AI’s Kimi Work is a downloadable desktop agent for macOS and Windows that runs up to 300 sub-agents in parallel on your local machine, automating file workflows, browser tasks, and scheduled jobs powered by the K2.6 model. The desktop agent race moved out of the cloud. Moonshot AI, the Beijing-based lab behind the Kimi series of open-weight models, released Kimi Work in June 2026 as a na…",
       "source_type": "web"
     }
   ]

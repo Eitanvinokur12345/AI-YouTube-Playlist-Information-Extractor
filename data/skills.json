@@ -10298,60 +10298,67 @@
       "link_tries": 6
     },
     {
+      "skill_name": "Impeccable",
       "slug": "impeccable",
-      "skill_name": "Impeccable — Claude Design Knowledge Skill",
       "category": "design",
-      "description": "A Claude skill that provides deep design knowledge and 18 specific commands to steer design results when you lack the precise vocabulary to describe what you want changed.",
-      "use_case": "When Claude-generated designs look off but you can't describe exactly how — use Impeccable's 18 commands to steer the design precisely.",
-      "output": "Professionally refined UI designs directed via specific design commands rather than vague feedback.",
-      "quality_score": 7,
+      "description": "A design-language and skill system that improves an AI coding agent's frontend design output, using 60 deterministic (non-LLM) detector rules to catch 'AI slop' design anti-patterns, plus a single `/impeccable` command with 23 subcommands (audit, polish, critique, animate, etc.) and a live browser iteration mode.",
+      "use_case": "Auditing and polishing AI-generated frontend UI so it doesn't look templated or generic.",
+      "output": "A design audit/polish pass on frontend code, flagging and fixing anti-pattern issues.",
+      "quality_score": 8,
       "model_version": null,
-      "company": null,
+      "company": "Paul Bakaus (open-source)",
       "country": null,
-      "open_source": false,
+      "open_source": true,
       "target_tool": "claude",
       "is_claude_skill": true,
       "compatibility": [
         {
           "tool": "Claude",
           "up_to_version": "any"
+        },
+        {
+          "tool": "Claude Code",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Cursor",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "GitHub Copilot",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Gemini CLI",
+          "up_to_version": "any"
         }
       ],
-      "multi_tool": false,
+      "multi_tool": true,
       "source_type": "youtube",
-      "source_url": "https://www.youtube.com/watch?v=0jnKJerpEWc",
-      "source_video_id": "0jnKJerpEWc",
+      "source_url": "https://www.youtube.com/watch?v=W1_hQoDYVXU",
+      "source_video_id": "W1_hQoDYVXU",
       "tips": [
+        "Install with `npx impeccable install` from the project root; set up `PRODUCT.md`/`DESIGN.md` so the agent has design context to follow.",
+        "Use the 60 deterministic detector rules to catch design anti-patterns without needing another LLM call.",
         "Impeccable gives you 18 specific commands to steer design when you can't find the right words",
         "Use the commands to iterate quickly: give a command, review result, apply another command"
       ],
-      "slash_commands": [],
+      "slash_commands": [
+        "/impeccable"
+      ],
       "general_tips": [
         "Having a specific command vocabulary eliminates the guesswork in AI design iteration"
       ],
-      "relevance": "Solves the vocabulary gap in AI design prompting by providing a library of precision design commands.",
-      "popularity_signals": [],
+      "relevance": "Directly targets the 'generic AI aesthetic' problem in AI-generated UI, which is one of the most common complaints about AI-built frontends.",
+      "popularity_signals": [
+        "51.6k GitHub stars"
+      ],
       "endorsement_video_ids": [
-        "0jnKJerpEWc"
+        "0jnKJerpEWc",
+        "W1_hQoDYVXU"
       ],
-      "video_quality_score": 6,
-      "low_quality_source": false,
-      "source_videos": [
-        {
-          "id": "0jnKJerpEWc",
-          "url": "https://www.youtube.com/watch?v=0jnKJerpEWc",
-          "title": "3 Tools That Turn Claude Into Pablo Picasso (Insane Design Results)"
-        }
-      ],
-      "links_verified_at": "2026-07-01T20:26:09.170486+00:00",
-      "setup": {
-        "kind": "claude skill",
-        "command": "activator: set me up with \"Impeccable — Claude Design Knowledge Skill\"",
-        "target": "claude",
-        "needs_key": false,
-        "in_project": true
-      },
-      "homepage": "https://www.anthropic.com/"
+      "video_quality_score": 7,
+      "low_quality_source": false
     },
     {
       "slug": "expo-react-native-ios-claude-code",
@@ -21059,37 +21066,56 @@
     {
       "skill_name": "Superpowers",
       "slug": "superpowers",
-      "category": "agents",
-      "description": "A complete software development methodology for coding agents, built on top of a set of composable skills and initial instructions to ensure agent usage. Provides a framework for building things start to finish.",
-      "use_case": "Enabling Claude to act as a full development team, building projects from start to finish.",
-      "quality_score": 1,
+      "category": "code",
+      "description": "A complete software-development methodology for coding agents built on composable skills: brainstorming and design refinement, strict TDD (RED-GREEN-REFACTOR), subagent-driven two-stage code review, git worktree management for parallel work, and systematic debugging with plan-based checkpoints.",
+      "use_case": "Giving a coding agent a full, structured development process (design -> TDD -> review -> verification) instead of ad-hoc one-shot coding.",
+      "output": "Code changes produced through a disciplined TDD + review + verification pipeline.",
+      "quality_score": 8,
+      "model_version": null,
+      "company": "obra (open-source)",
+      "country": null,
+      "open_source": true,
       "target_tool": "claude",
-      "tips": [],
-      "source_type": "web_news",
-      "source_url": "https://www.youtube.com/watch?v=1lx7X2g33rc",
-      "discovered_via": "mine_feeds (gemini-video)",
-      "added_at": "2026-06-20T08:52:09.743147+00:00",
-      "source_videos": [
+      "is_claude_skill": true,
+      "compatibility": [
         {
-          "id": "1lx7X2g33rc",
-          "url": "https://www.youtube.com/watch?v=1lx7X2g33rc",
-          "title": "These 5 Claude skills save hours of work"
+          "tool": "Claude Code",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Cursor",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "GitHub Copilot CLI",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Gemini CLI",
+          "up_to_version": "any"
         }
       ],
-      "setup": {
-        "kind": "claude skill",
-        "command": "activator: set me up with \"Superpowers\"",
-        "target": "claude",
-        "needs_key": false,
-        "in_project": true
-      },
-      "homepage": "https://superpowers.ai/",
-      "links_verified_at": "2026-07-01T22:39:13.745705+00:00",
-      "also_seen_in": [
-        "https://www.youtube.com/watch?v=O9pZNnNjC0M",
-        "https://www.youtube.com/watch?v=1lx7X2g33rc",
-        "https://www.youtube.com/watch?v=RBh7A-4e5iw"
-      ]
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=W1_hQoDYVXU",
+      "source_video_id": "W1_hQoDYVXU",
+      "tips": [
+        "Use its two-stage subagent code review and git worktree management to run parallel development safely.",
+        "Lean on its systematic debugging/verification process instead of guessing when something breaks."
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "A structured RED-GREEN-REFACTOR TDD cycle plus mandatory code review catches more bugs than letting a coding agent free-run."
+      ],
+      "relevance": "Gives any coding agent a disciplined, evidence-based development methodology instead of ad-hoc guessing.",
+      "popularity_signals": [
+        "262.2k GitHub stars"
+      ],
+      "endorsement_video_ids": [
+        "W1_hQoDYVXU"
+      ],
+      "video_quality_score": 7,
+      "low_quality_source": false
     },
     {
       "skill_name": "Audience and Offer Definition",
@@ -104566,6 +104592,133 @@
       ],
       "video_quality_score": 5,
       "low_quality_source": true
+    },
+    {
+      "skill_name": "Find Skills",
+      "slug": "find-skills",
+      "category": "agents",
+      "description": "A Claude Code skill (from Vercel Labs) that helps discover and install other agent skills when a user asks 'how do I do X' or 'find a skill for X', by searching the open skills.sh ecosystem via the Skills CLI.",
+      "use_case": "Locating and installing an existing community skill instead of writing a new workflow from scratch.",
+      "output": "A verified, installed skill matching the user's need.",
+      "quality_score": 6,
+      "model_version": null,
+      "company": "Vercel Labs",
+      "country": "USA",
+      "open_source": true,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude Code",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": false,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=W1_hQoDYVXU",
+      "source_video_id": "W1_hQoDYVXU",
+      "tips": [
+        "Check the skills.sh leaderboard first, then run `npx skills find [query]` to search, and verify quality before `npx skills add`."
+      ],
+      "slash_commands": [],
+      "general_tips": [],
+      "relevance": "Reduces duplicate work by surfacing existing community skills before building a new one from scratch.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "W1_hQoDYVXU"
+      ],
+      "video_quality_score": 7,
+      "low_quality_source": false
+    },
+    {
+      "skill_name": "Claude Mem",
+      "slug": "claude-mem",
+      "category": "agents",
+      "description": "A persistent memory system for Claude that captures everything an agent does during a session, compresses it with AI, and injects relevant context back into future sessions, with natural-language memory search and a web viewer for real-time memory streams.",
+      "use_case": "Keeping an agent's session history and decisions available across future sessions instead of losing them when context resets.",
+      "output": "A searchable, persistent memory store of past agent sessions injected as context in new ones.",
+      "quality_score": 8,
+      "model_version": null,
+      "company": "thedotmack (open-source)",
+      "country": null,
+      "open_source": true,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude Code",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Gemini",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=W1_hQoDYVXU",
+      "source_video_id": "W1_hQoDYVXU",
+      "tips": [
+        "Install with `npx claude-mem install` or `/plugin install claude-mem` inside Claude Code.",
+        "Use `<private>` tags to keep sensitive session content out of stored memory."
+      ],
+      "slash_commands": [],
+      "general_tips": [],
+      "relevance": "Cross-session memory is one of the most requested Claude Code features; this closes the gap without waiting for a native solution.",
+      "popularity_signals": [
+        "88.8k GitHub stars"
+      ],
+      "endorsement_video_ids": [
+        "W1_hQoDYVXU"
+      ],
+      "video_quality_score": 7,
+      "low_quality_source": false
+    },
+    {
+      "skill_name": "Task Observer",
+      "slug": "task-observer",
+      "category": "agents",
+      "description": "A meta-skill that monitors an agent's work sessions to automatically identify corrections, gaps, and repeating patterns, then generates structured recommendations for new or improved skills for human review.",
+      "use_case": "Continuously improving a growing library of custom skills by observing where the agent needed correction, instead of manually noticing patterns yourself.",
+      "output": "Structured observation logs and skill-improvement recommendations for review.",
+      "quality_score": 6,
+      "model_version": null,
+      "company": "Eoghan Henn / rebelytics",
+      "country": null,
+      "open_source": true,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude Cowork",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Claude",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=W1_hQoDYVXU",
+      "source_video_id": "W1_hQoDYVXU",
+      "tips": [
+        "Place `SKILL.md` plus its `references/` folder at `.claude/skills/task-observer/` for Claude Code, or upload via Settings -> Capabilities for Claude.ai.",
+        "Review its generated observation logs before implementing suggested skill changes rather than auto-applying them."
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "A meta-skill that watches for repeated corrections is a practical way to grow a skill library from real usage instead of guessing what skills you'll need."
+      ],
+      "relevance": "Self-improving skill libraries compound in value; an observer that surfaces patterns automatically keeps that process from being manual busywork.",
+      "popularity_signals": [
+        "1.3k GitHub stars"
+      ],
+      "endorsement_video_ids": [
+        "W1_hQoDYVXU"
+      ],
+      "video_quality_score": 7,
+      "low_quality_source": false
     }
   ],
   "recipes_updated_at": "2026-07-25T11:04:07.208331+00:00"

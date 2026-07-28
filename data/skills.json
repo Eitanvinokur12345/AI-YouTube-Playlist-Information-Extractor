@@ -104250,6 +104250,54 @@
       ],
       "video_quality_score": 4,
       "low_quality_source": true
+    },
+    {
+      "skill_name": "Two-Layer Prompt-Injection Defense (Scan-then-Gate)",
+      "slug": "two-layer-prompt-injection-defense",
+      "category": "agents",
+      "description": "A defense pattern for browser/tool-using agents that scans incoming data for injected instructions before the model ever sees it, then adds a second gate that blocks risky actions before they execute, even if a malicious instruction slips through.",
+      "use_case": "Hardening an AI agent that reads untrusted web/browser content against prompt-injection attacks that try to hijack its actions.",
+      "output": "An agent pipeline with a pre-model data scanner plus a pre-execution action gate.",
+      "quality_score": 6,
+      "model_version": null,
+      "company": "Anthropic",
+      "country": "USA",
+      "open_source": false,
+      "target_tool": "claude",
+      "is_claude_skill": false,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "ChatGPT",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Gemini",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=BUQb7kpmy7w",
+      "source_video_id": "BUQb7kpmy7w",
+      "tips": [
+        "Test injection defenses with a large scenario set (the cited benchmark used 129 browser-agent scenarios) rather than a handful of manual tries.",
+        "Measure the defense's effect explicitly: report attack-success-rate with the defense on vs off to show it actually helps."
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "Prompt injection is described by OpenAI as likely never fully solvable, so treat defenses as risk reduction, not a guarantee."
+      ],
+      "relevance": "Prompt injection is the top open security risk for browser- and tool-using agents; a concrete two-layer defense pattern is directly reusable in any agent build.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "BUQb7kpmy7w"
+      ],
+      "video_quality_score": 5,
+      "low_quality_source": true
     }
   ],
   "recipes_updated_at": "2026-07-25T11:04:07.208331+00:00"

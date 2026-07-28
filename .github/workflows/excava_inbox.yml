@@ -49,7 +49,25 @@ jobs:
           git add data
           git commit -m "excava-inbox: issue #${{ github.event.issue.number }} — $(date -u +%Y-%m-%dT%H:%MZ)" \
             || echo "nothing to commit"
-          git pull --rebase --autostash origin main || true
+          # 2026-07-28 (away fire 40): last of the 19 lanes to get the fire-28/mine.yml fix — this
+          # is the only issue-triggered (not scheduled) lane in the set, so it fires unpredictably
+          # relative to the beat lanes and was just as exposed to the same silent-loss pattern
+          # (rebase conflict on data/data_guard.json -> detached HEAD -> "push skipped" reads as
+          # success while the real inbox-applied task/config change is discarded). Same fix: abort
+          # a failed rebase and retry as a merge; if that also conflicts, auto-resolve only the
+          # known-stateless data/data_guard.json in our favor. Any other conflict is left
+          # unresolved on purpose (degrades to today's push-skipped, never worse). Rollout across
+          # all 19 originally-exposed workflow files is now complete.
+          if ! git pull --rebase --autostash origin main; then
+            echo "rebase failed — aborting and retrying as a merge"
+            git rebase --abort 2>/dev/null || true
+            if ! git pull --no-rebase --no-edit origin main; then
+              echo "merge also conflicted — auto-resolving known-stateless data_guard.json in our favor"
+              git checkout --ours -- data/data_guard.json 2>/dev/null || true
+              git add data/data_guard.json 2>/dev/null || true
+              git commit --no-edit || echo "unresolved conflict outside data_guard.json — leaving for manual/next-run recovery"
+            fi
+          fi
           git push || echo "push skipped"
 
       - name: Reply + close

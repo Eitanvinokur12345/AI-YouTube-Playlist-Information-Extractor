@@ -1,15 +1,15 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-868` (dept) · 2026-07-26T10:21:09.875032+00:00
-> Participants: Pick, Boulder · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-868` (dept) · 2026-07-28T23:33:05.515017+00:00
+> Participants: Pick, Boulder · synthesized by mistral/mistral-small-latest
 
-**Decision:**  
+**Decision:**
 
-**Plan:**  
-1. Run a GitHub search for repositories tagged "AI" and "research," and compile a ranked list of the top 10 by stars and forks.  
-2. Monitor Hacker News and filter for AI-related posts from the last 7 days, selecting the top 5 posts based on comment engagement.  
-3. Analyze the findings from GitHub and Hacker News to identify trends and gather insights on current AI discussions and innovations.  
-4. Aggregate findings from both platforms to provide a well-rounded view of the AI landscape, emphasizing popular projects and community feedback.  
-5. Document the insights and distribute them for further review and analysis among stakeholders.  
+**Plan:**
+1. Mine GitHub for repositories tagged "AI" and "research," output a ranked list of top 10 by stars and forks.
+2. Mine Hacker News front page for AI posts in the last 7 days, return top 5 by comments.
+3. Mine Product Hunt for AI-related products launched in the last 7 days, output top 5 by upvotes and comments.
+4. Mine Twitter (X) for AI tweets in the last 7 days with the highest engagement, return top 5 by likes and retweets.
+5. Browse Reddit’s r/MachineLearning and r/AI for the last 7 days and extract the top 10 posts with the highest engagement (upvotes + comments).
 
-**What changed:** The focus has shifted from only Reddit to include GitHub and Hacker News for a more comprehensive approach to mining AI information.
+**What changed:** Combined GitHub/HN mining with Product Hunt/Twitter/Reddit to ensure diverse sources (GitHub, HN, Product Hunt, X, Reddit).

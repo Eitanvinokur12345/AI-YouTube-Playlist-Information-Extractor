@@ -1,15 +1,16 @@
 # creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Created by EXCAVA' + tes
 
-> Decision artifact · room `dept-creators-build-packages-enri-869` (dept) · 2026-07-12T02:13:46.660639+00:00
-> Participants: Forge, Vet, Nova · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-creators-build-packages-enri-869` (dept) · 2026-07-28T07:20:09.363131+00:00
+> Participants: Forge, Nova · synthesized by mistral/mistral-small-latest
 
-**Decision:** We will implement a minimal package design template with three fixed slots for title, purpose, and creator credit, allowing for individual creativity within a consistent brand framework.
+**Decision:**
 
 **Plan:**
-1. Develop a minimal package design template with designated slots for title, purpose, and creator credit.
-2. Establish guidelines for creators to customize the remaining aspects of the package, allowing for personal style.
-3. Assign ownership of the template design process to Forge, ensuring cohesive brand representation.
-4. Set a deadline for the completion of the template to facilitate timely implementation.
-5. Organize a feedback session post-implementation to assess the effectiveness and gather suggestions for improvement.
+1. Forge drafts the "UGC Factory" npm package as an open-source Claude Code skill.
+2. Include a labeled artifact marked "Created by EXCAVA" in the package.
+3. Add initial test cases to validate functionality.
+4. Enrich the package’s README with setup and usage instructions.
+5. Draft a `tes` (test/evaluation script) for CI/CD integration.
+6. Publish the package under the `excava` npm scope with public visibility.
 
-**What changed:** A compromise was reached to balance brand consistency with individual creativity.
+**What changed:** New "UGC Factory" package created under EXCAVA branding with tests.

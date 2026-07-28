@@ -5,6 +5,53 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-28 (continued)
+- **~19:5x (fire 53, unattended, cloud session) — landed fire 52's own queued next step: widened
+  the known-stateless auto-resolve list past `data_guard.json` alone, across all 19 workflow
+  lanes.** Picked up exactly where fire 52 left off (this is a fresh scheduled invocation of the
+  same away-loop, continuing the prior session's work rather than re-deriving it — per the
+  program's "pay attention to what already happened last time" instruction). Standing checks
+  clean both before and after: `origin/main` in sync, upstream already tracked (fire 52 had just
+  fixed that), guardrails 17/20→18/20 (G-C healed by `git_safe ship`'s own backup step; same
+  known G-O local-drain-stale from EITAN-PC being off, unfixable from this cloud sandbox).
+  **What changed:** every one of the 19 `.github/workflows/*.yml` lanes had an identical
+  merge-conflict fallback that, on a genuine conflict (rebase fails, then a `--no-rebase` merge
+  also fails), auto-resolved ONLY `data/data_guard.json` in the run's favor and left any other
+  colliding file as an unresolved, uncommitted, push-skipped conflict — silently discarding that
+  run's real output on an ephemeral GH-hosted runner. Fire 52 found a live instance of exactly
+  this: a `bulk_analyze.yml` run at 17:56–18:00 UTC that executed successfully but never landed
+  its `health.json`/`effectiveness.json`/`hub.json`/`self_check.json`/`safety.json` writes,
+  because it collided with `excava-beat #3` committing the same shared `data/excava/*` state at
+  17:56:05. Widened the `git checkout --ours` / `git add` / fallback-echo triplet in all 19 files
+  to also cover `data/health.json`, `data/effectiveness.json`, `data/hub.json`,
+  `data/self_check.json`, `data/safety.json`, `data/guardrails_status.json` — the exact 6 files
+  fire 52 named as safe (each fully regenerated from scratch every run, no accumulated
+  cross-lane content) and explicitly NOT `data/excava/*` (real accumulated room/conversation
+  state — taking "ours" there could genuinely discard another lane's work, the opposite of the
+  fix's purpose). Used a Python script (not hand-editing 19 files) matched against the exact
+  existing block via regex, capturing each file's own indentation and its "next-run" vs
+  "next-cycle" wording (`excava_beat.yml` was the one outlier) so nothing else in any file moved.
+  **Verified:** `git diff --stat` shows exactly the expected 4-line change in all 19 files, 0
+  elsewhere; `yaml.safe_load()` parses all 19 files clean post-edit (a regex edit to CI YAML is
+  exactly the kind of change that silently breaks indentation if done by hand); manually
+  re-read the full diff for `bulk_analyze.yml` to confirm the new `--ours`/`add`/commit lines are
+  syntactically identical in shape to the original, just with 6 more paths. Shipped via
+  `python -m src.git_safe ship` (commit `0a7cc907e`, verified `origin == HEAD`).
+  **Harsh self-criticism:** I did not attempt fire 52's OTHER named follow-up — sweeping recent
+  history for other "ran successfully, zero matching commit" gaps beyond the one instance G-T
+  happened to flag — this fire scoped itself to landing the one concrete, well-specified next
+  step fire 52 staged, not opening a second investigation in the same fire. I also left the
+  ~13 comment lines (in 13 of the 19 files) that still say "auto-resolve only the known-stateless
+  data_guard.json" verbatim — cosmetic prose now slightly stale versus the code beneath it, but
+  rewriting differently-worded comments in 13 files for a non-functional accuracy nit felt like
+  scope creep against this fire's actual job; flagging it here instead in case a future fire has
+  spare budget for a pure comment-accuracy pass. Could not live-verify the actual failure mode
+  (an in-CI merge conflict on one of these 6 files) since that requires two lanes racing on the
+  real GH-hosted runner at once — this fire's evidence is fire 52's already-diagnosed real
+  instance plus static verification (parses, diffs correctly), not a fresh reproduction; the true
+  test is whether G-T stops flagging `bulk_analyze.yml`-class staleness on the next natural
+  lane collision, which is something a future PULSE.md/heartbeat check should watch for, not
+  something provable synchronously in this sandbox.
+
 - **~19:0x (fire 52, unattended, cloud session) — built the generic cross-lane heartbeat
   guardrail (G-T) that fires 28/29/30/35 kept flagging as "still unbuilt, still the deeper fix"
   since fire 28, AND it immediately surfaced a real, previously-unknown instance of exactly the

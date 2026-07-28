@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-28T23:33:39.394359+00:00",
+ "generated_at": "2026-07-28T23:40:12.105373+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 261,
+   "turns_7d": 262,
    "rooms_7d": 34,
    "engines_used": [
     "gh-models",
@@ -17,15 +17,15 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is that the weekly exec sync slide becomes a performative ritual—teams prep polished slides to avoid scrut"
+   "last_position": "The real risk is that the \"Decision Log\" becomes a performative checkbox—teams dump stale reasons into a shared doc to s"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 211,
-   "rooms_7d": 104,
+   "turns_7d": 213,
+   "rooms_7d": 105,
    "engines_used": [
     "gh-models",
     "groq",
@@ -33,15 +33,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will query the YouTube transcript server for all pending video IDs using the mcp-server-youtube-transcript tool. This "
+   "last_position": "**Decision:** Tie the Decision Log to the weekly exec sync by auto-generating a \"decisions made\" slide from Slack thread"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 204,
-   "rooms_7d": 98,
+   "turns_7d": 205,
+   "rooms_7d": 99,
    "engines_used": [
     "gh-models",
     "groq",
@@ -49,7 +49,7 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Action: Run BloodHound-MCP against the full earnings call transcript to map every stakeholder, claim, and data point wit"
+   "last_position": "Run BloodHound-MCP against the full earnings call transcript to map the conversation’s entities and relationships. This "
   },
   {
    "id": "watch-w1",
@@ -91,8 +91,8 @@
    "name": "Nova",
    "dept": "creators",
    "role": "lead",
-   "turns_7d": 118,
-   "rooms_7d": 112,
+   "turns_7d": 119,
+   "rooms_7d": 113,
    "engines_used": [
     "gh-models",
     "groq",
@@ -100,15 +100,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Publish the UGC Factory npm package as a ready-to-use module labeled \"Created by EXCAVA\" with a test file."
+   "last_position": "ACTION: Forge publishes the UGC Factory npm package as a ready-to-use module labeled \"Created by EXCAVA\" with test cover"
   },
   {
    "id": "creators-w1",
    "name": "Forge",
    "dept": "creators",
    "role": "doer",
-   "turns_7d": 118,
-   "rooms_7d": 112,
+   "turns_7d": 119,
+   "rooms_7d": 113,
    "engines_used": [
     "gh-models",
     "groq",
@@ -117,14 +117,92 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will draft the UGC Factory npm package as a new module, producing a ready-to-use package labeled \"Created by EXCAVA\" w"
+   "last_position": "I will draft the UGC Factory npm package as a new module, producing a ready-to-use package labeled \"Created by EXCAVA.\" "
   },
   {
    "id": "news-w1",
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
+   "turns_7d": 102,
+   "rooms_7d": 93,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll fetch the latest AI headlines from Reuters, BBC, and the White House press releases. The output will be a concise d"
+  },
+  {
+   "id": "visualization-w1",
+   "name": "Facet",
+   "dept": "visualization",
+   "role": "doer",
    "turns_7d": 101,
+   "rooms_7d": 50,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "Ship EXCAVA with a one-click dark/light toggle in the top-right corner, defaulting to dark but letting users lock their "
+  },
+  {
+   "id": "visualization-checker",
+   "name": "Pane",
+   "dept": "visualization",
+   "role": "checker",
+   "turns_7d": 101,
+   "rooms_7d": 50,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The real risk isn’t control—it’s that a toggle still assumes users *know* their preference upfront. Better alternative: "
+  },
+  {
+   "id": "power-w1",
+   "name": "Gearbox",
+   "dept": "power",
+   "role": "doer",
+   "turns_7d": 97,
+   "rooms_7d": 48,
+   "engines_used": [
+    "gh-models",
+    "glm",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Adopt **Claude Mythos 5** as EXCAVA’s primary reasoning engine. Its ceiling is 15% higher than Qwen2.5-72B on our hardes"
+  },
+  {
+   "id": "power-checker",
+   "name": "Torque",
+   "dept": "power",
+   "role": "checker",
+   "turns_7d": 97,
+   "rooms_7d": 48,
+   "engines_used": [
+    "gh-models",
+    "glm",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Mythos 5’s ceiling lift is real but fragile—its 20% latency spike will cripple EXCAVA’s real-time flow unless you shrink"
+  },
+  {
+   "id": "transcripts-lead",
+   "name": "Echo",
+   "dept": "transcripts",
+   "role": "lead",
+   "turns_7d": 95,
    "rooms_7d": 92,
    "engines_used": [
     "gh-models",
@@ -132,85 +210,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll pull the latest AI headlines from Reuters, BBC, and the White House press feed. This will produce a fresh digest of"
-  },
-  {
-   "id": "visualization-w1",
-   "name": "Facet",
-   "dept": "visualization",
-   "role": "doer",
-   "turns_7d": 100,
-   "rooms_7d": 50,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "Ship EXCAVA with a dark theme by default but auto-switch to light mode when the system detects high ambient light—this b"
-  },
-  {
-   "id": "visualization-checker",
-   "name": "Pane",
-   "dept": "visualization",
-   "role": "checker",
-   "turns_7d": 100,
-   "rooms_7d": 50,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "The real risk isn’t ambient light—it’s that auto-switching still assumes users *prefer* the system to decide for them. B"
-  },
-  {
-   "id": "power-w1",
-   "name": "Gearbox",
-   "dept": "power",
-   "role": "doer",
-   "turns_7d": 96,
-   "rooms_7d": 48,
-   "engines_used": [
-    "gh-models",
-    "glm",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Adopt **Qwen2.5-72B-Instruct** as EXCAVA’s primary reasoning engine. It’s the fastest 70B-class model we’ve tested, cutt"
-  },
-  {
-   "id": "power-checker",
-   "name": "Torque",
-   "dept": "power",
-   "role": "checker",
-   "turns_7d": 96,
-   "rooms_7d": 48,
-   "engines_used": [
-    "gh-models",
-    "glm",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Qwen2.5-72B-Instruct’s speed gain is a floor bump, not a ceiling lift—EXCAVA’s bottleneck isn’t latency, it’s the model’"
-  },
-  {
-   "id": "transcripts-lead",
-   "name": "Echo",
-   "dept": "transcripts",
-   "role": "lead",
-   "turns_7d": 94,
-   "rooms_7d": 91,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Query kimtaeyoon83/mcp-server-youtube-transcript via residential IP to fetch REAL full transcripts/captions for ",
+   "last_position": "ACTION: Query kimtaeyoon83/mcp-server-youtube-transcript via residential IP for all pending video IDs to retrieve real f",
    "proposed": 1
   },
   {
@@ -218,22 +218,22 @@
    "name": "Wire",
    "dept": "news",
    "role": "lead",
-   "turns_7d": 92,
-   "rooms_7d": 85,
+   "turns_7d": 93,
+   "rooms_7d": 86,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Wire compiles the latest AI headlines from Reuters, BBC, and White House press releases into a fresh digest, pos"
+   "last_position": "ACTION: Wire compiles the latest AI headlines from Reuters, BBC, and White House press releases into a two-source-verifi"
   },
   {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 82,
+   "turns_7d": 83,
    "rooms_7d": 77,
    "engines_used": [
     "gh-models",
@@ -241,43 +241,43 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: I will embed the unembedded elements from the conversation so far into the memory graph."
+   "last_position": "Action: I will run the memory linking command to connect every existing memory to enhance recall by meaning. This will p"
   },
   {
    "id": "links-w1",
    "name": "Anchor",
    "dept": "links",
    "role": "doer",
-   "turns_7d": 81,
-   "rooms_7d": 77,
+   "turns_7d": 82,
+   "rooms_7d": 78,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run the link-checker tool against the department’s live inventory to identify broken links. This will produce a report l"
+   "last_position": "Run the link-checker tool against the department’s live inventory to identify all broken links. This will produce a repo"
   },
   {
    "id": "links-lead-x",
    "name": "LinLea",
    "dept": "links",
    "role": "lead",
-   "turns_7d": 81,
-   "rooms_7d": 77,
+   "turns_7d": 82,
+   "rooms_7d": 78,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Anchor delivers the prioritized report of broken/outdated links with clear severity labels and suggested fixes t"
+   "last_position": "ACTION: Anchor runs the link-checker tool against the department’s live inventory and delivers the prioritized report of"
   },
   {
    "id": "accessibility-w1",
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 73,
+   "turns_7d": 74,
    "rooms_7d": 34,
    "engines_used": [
     "gh-models",
@@ -286,7 +286,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Add an always-visible, high-contrast focus ring to every interactive element. This guarantees keyboard users can see whe",
+   "last_position": "Add a single, high-contrast focus ring that appears immediately on key navigation and stays until another element is foc",
    "proposed": 1
   },
   {
@@ -294,7 +294,7 @@
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 72,
+   "turns_7d": 73,
    "rooms_7d": 34,
    "engines_used": [
     "gh-models",
@@ -302,7 +302,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The always-visible ring overloads sighted keyboard users—cognitive noise rises with long lists, and the 250 ms delay ris"
+   "last_position": "The always-visible ring creates real fatigue for sighted keyboard users in long forms—cognitive noise isn’t minor when e"
   },
   {
    "id": "improve-w1",
@@ -371,8 +371,8 @@
    "name": "Marrow",
    "dept": "analysis",
    "role": "lead",
-   "turns_7d": 61,
-   "rooms_7d": 58,
+   "turns_7d": 62,
+   "rooms_7d": 59,
    "engines_used": [
     "gh-models",
     "glm",
@@ -380,7 +380,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a structured entity-relationship gra"
+   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a structured graph of entities, rela"
   },
   {
    "id": "visual-lead",
@@ -513,15 +513,15 @@
    "name": "Ratchet",
    "dept": "improve",
    "role": "lead",
-   "turns_7d": 33,
-   "rooms_7d": 32,
+   "turns_7d": 34,
+   "rooms_7d": 33,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Gate auto-apply on two checks—first, a semantic diff against all edited files and their direct dependencies; s",
-   "proposed": 5,
+   "last_position": "DECISION: Run a 72-hour triple-arm test—current prompt forced feed, revised prompt forced feed, and revised prompt unfor",
+   "proposed": 6,
    "shipped": 4
   },
   {

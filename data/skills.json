@@ -83902,33 +83902,48 @@
       "skill_name": "Humanizer",
       "slug": "humanizer",
       "category": "writing",
-      "description": "Generates content in a human-like writing style, avoiding an AI-generated feel.",
-      "use_case": "Creating human-like text for any content generation task.",
-      "quality_score": 1,
+      "description": "A portable agent skill that rewrites AI-generated text to remove ~33 documented LLM writing tells (distilled from 500+ Wikipedia-tagged AI articles) while preserving the original facts and meaning.",
+      "use_case": "Running AI-drafted landing pages, proposals, and posts through a rewrite pass before publishing so they no longer read as AI-generated.",
+      "output": "Rewritten human-sounding text with AI 'tells' removed and facts preserved.",
+      "quality_score": 9,
+      "model_version": "2.9.1",
+      "company": "blader (open-source)",
+      "country": null,
+      "open_source": true,
       "target_tool": "claude",
-      "tips": [],
-      "source_type": "web_news",
-      "source_url": "https://www.youtube.com/watch?v=NrVSidALzb8",
-      "discovered_via": "mine_feeds (gemini-video)",
-      "added_at": "2026-07-16T07:22:06.413319+00:00",
-      "link_tries": 6,
-      "source_videos": [
+      "is_claude_skill": true,
+      "compatibility": [
         {
-          "id": "NrVSidALzb8",
-          "url": "https://www.youtube.com/watch?v=NrVSidALzb8",
-          "title": "5 Best Claude Skills Use for Free #claude #claudeai #claudeskills"
+          "tool": "Claude",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Claude Code",
+          "up_to_version": "any"
         }
       ],
-      "setup": {
-        "kind": "claude skill",
-        "command": "activator: set me up with \"Humanizer\"",
-        "target": "claude",
-        "needs_key": false,
-        "in_project": true
-      },
-      "also_seen_in": [
-        "https://www.youtube.com/watch?v=1wRoctFbLDk"
-      ]
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=dUHpFuUIyi0",
+      "source_video_id": "dUHpFuUIyi0",
+      "tips": [
+        "It's the stacking of multiple AI tells in the same rhythm that triggers detection, not any single word choice like the em dash.",
+        "Run a two-pass process: audit for 'obviously AI generated' patterns first, then rewrite to remove them.",
+        "Feed it examples of your own writing for voice calibration so output matches your real style, not a generic 'human' register."
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "AI-detection countermeasures work best when built from real detection criteria (e.g. Wikipedia's AI-article tagging manual) rather than guesswork."
+      ],
+      "relevance": "AI-generated content is increasingly flagged by readers and platforms; a rewrite pass that strips detectable patterns while keeping facts intact is broadly useful for any AI-assisted writing workflow.",
+      "popularity_signals": [
+        "31.6k GitHub stars, 2.9k forks"
+      ],
+      "endorsement_video_ids": [
+        "dUHpFuUIyi0"
+      ],
+      "video_quality_score": 7,
+      "low_quality_source": false
     },
     {
       "skill_name": "Prompt Master",

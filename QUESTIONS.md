@@ -9,6 +9,14 @@ You're away ~1 week; the offline loop is running (non-brain fronts, hourly) and 
 
 ### Away-week questions
 
+**2026-07-28 (fire 47) — the "away ~1 week" mark from `away_mode.json` (`since: 2026-07-21`) is
+reached today, and the exit condition ("Eitan posts any message indicating he's back") hasn't
+fired.** Flagging rather than assuming: away mode has no built-in expiry, only an explicit
+back-signal, so the loop is continuing on the same non-brain-fronts/hourly cadence unless told
+otherwise. _Default: keep running away mode until you actually say you're back — a calendar
+week alone isn't a stop signal, don't want a fire to silently go quiet on real work assuming
+you'll show up on schedule._
+
 **Overhaul audit — next decision batch (§7; items 5–8 of 122).** These are YOURS to decide; I did NOT auto-apply them — `data/excava/overhaul_decisions.json` stays OPEN. My proposed verdict on each (confirm or change with `python -m src.audit_decisions set <id> <verdict>`):
 - **#5 "Should I just buy Gemini Pro?"** → proposed **REMOVE the worry.** The free path (VPS + Ollama + the free model pool) is real and proven this week — 11/11 engines answered, four brain families live. Paying is unnecessary.
 - **#6 Direct in-app write to EXCAVA (no GitHub step)** → proposed **REBUILD.** Async-via-GitHub works now; true real-time in-app write needs the VPS (ties to A1, which you already KEEP'd).

@@ -5,6 +5,38 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-28 (continued)
+- **~14:0x (fire 47, unattended, cloud session) — verified the loop is actually landing on
+  `main` (it is; a false alarm from a stale local cache), then shipped the news dept's
+  backlog item: `python -m src.news` (web-news RSS refresh).** Standing checks first: local
+  `origin/main` looked 50 commits diverged from this session's branch with no merge-base —
+  investigated hard before touching anything (per the plan's own risk rules, a real divergence
+  would mean orphaned work) and confirmed it was a stale local ref from this container's
+  initial clone, not a real fork: `git_safe.push()` always does `git push origin HEAD:main`
+  regardless of the local branch's name, `git ls-remote --heads origin` shows the true remote
+  `main` exactly matches this session's HEAD, and there is no remote branch literally named
+  `claude/kind-shannon-l3z3nq` — it only ever existed locally. No action needed; logging the
+  method here so a future fire doesn't re-spend the same time re-diagnosing it. Guardrails
+  17/19, 0 critical (same steady state: G-C self-heals on ship, G-O PC-off/unfixable from a
+  cloud sandbox). Picked backlog's "News: refresh the AI-news digest" (value 62, cost 15, low
+  risk) since it was small, self-contained, and this session had already burned real time on
+  the branch investigation. Found `src/news.py` fails outright in a fresh cloud container:
+  `ModuleNotFoundError: pytz` — it's in `requirements.txt` but this sandbox's base image
+  doesn't pre-install it (the CI workflows `pip install -r requirements.txt` first, so they
+  don't hit this; a bare cloud dev session does). Installed it (`pip install pytz`) and ran the
+  refresh: only 2/95 RSS sources reachable (the rest 403 from this sandbox's outbound proxy —
+  Reddit, arXiv, HN, most vendor blogs), but got 16 items parsed, 3 new, `web_news_store.json`
+  262/1611/6628 (daily/weekly/monthly) — real if small progress, all three windowed JSON files
+  verified still valid. **Harsh self-criticism:** spent more of this fire's budget chasing a
+  divergence that turned out to be nothing than on the actual increment — should have run
+  `git ls-remote --heads origin` FIRST (30 seconds) instead of reasoning from a possibly-stale
+  local `git fetch`/`rev-parse` chain; queuing that as the standing-check order for next time.
+  Also didn't fix the missing-`pytz` gap at its root (no `requirements.txt` pre-install step
+  exists for fresh cloud sessions, only for CI) — a future fire should either add a session
+  setup hook or just accept every cloud-session news run pays this one-time pip cost. And the
+  2/95 reachable-source rate is a cloud-sandbox artifact (this proxy blocks most of those
+  hosts), not a real feed-health signal — don't let it read as "89 feeds broken" without
+  checking whether `news.yml`'s own CI run (full internet) sees the same failure rate first.
+
 - **~13:0x (fire 46, unattended, cloud session) — picked up fire 45's own named next-fire
   candidate (widen `broken_json()`'s scope) and, while doing it, found the same bug class was
   MUCH bigger than fire 45 realized: 78 corrupted `.jsonl` files, not 2.** Standing checks: local

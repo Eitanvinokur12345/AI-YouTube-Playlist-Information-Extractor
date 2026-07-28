@@ -13,9 +13,14 @@ The two failures this replaces:
 Every op is subprocess with an ARGUMENT LIST (no shell = no quoting/mangling) and takes a
 `git bundle` backup of the whole history first, so nothing is ever unrecoverable.
 
-A third check added 2026-07-28 (fire 39): `commit()` refuses to commit if any top-level
-data/ or docs/ JSON file is broken (e.g. unresolved conflict markers) — the same scope as
-guardrails.py's G-F, but BEFORE the bad file ever reaches a commit, not just flagged after.
+A third check added 2026-07-28 (fire 39): `commit()` refuses to commit if any data/ or docs/
+JSON file is broken (e.g. unresolved conflict markers) — the same scope as guardrails.py's G-F,
+but BEFORE the bad file ever reaches a commit, not just flagged after. Fire 46 (2026-07-28)
+widened this from top-level-only to the whole tree (`rglob`, ~3k files, ~1s) after fire 45 found
+the same bug one directory deeper in data/excava/, and added a sibling check + repair tool for
+*.jsonl append-logs (traces/agent_memory/chats/episodes.jsonl), where the identical marker-drop
+bug turned out to be far more widespread (78 files / 288 lines, all pre-dating the workflow
+push-safety rollout — see `repair_conflict_markers()`).
 
 CLI:
   python -m src.git_safe backup                 # snapshot history -> _ATTIC/backups/*.bundle
@@ -23,11 +28,13 @@ CLI:
   python -m src.git_safe sync                   # revert CI churn + quarantine collisions + rebase
   python -m src.git_safe push                   # backup -> sync -> push -> VERIFY origin==HEAD
   python -m src.git_safe ship -m "msg" -a p1 .. # commit -> push, one call (the everyday path)
+  python -m src.git_safe repair-conflicts        # strip bare conflict-marker lines from *.jsonl
 """
 from __future__ import annotations
 
 import argparse
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -113,18 +120,63 @@ def broken_json() -> list:
     can never be committed in the first place — not just noticed after the fact. Fire 34
     (2026-07-27, AWAY_LOG) found data/designs.json shipped with 978 unresolved git conflict
     markers because nothing checked JSON validity before that commit landed; G-F only catches it
-    when a fire happens to run guardrails by hand afterward. Scans top-level data/ + docs/ *.json
-    on disk (post-staging state, since json.loads reads the working tree, not the index)."""
+    when a fire happens to run guardrails by hand afterward. Fire 45 (2026-07-28) found the SAME
+    bug class one directory deeper — data/excava/supervisor.json + supervisor_longterm.jsonl
+    shipped with conflict markers and sat broken for ~13h because this scan (and G-F's) was
+    top-level-only (`glob`, not `rglob`) and never looked inside data/excava/. Recurses the
+    whole data/ + docs/ tree now (~3k *.json files, ~1.2s to parse — cheap enough to run on
+    every commit) so a nested collision can never slip past either check again."""
     bad = []
     for d in (DATA, DOCS):
         if not d.exists():
             continue
-        for f in d.glob("*.json"):
+        for f in d.rglob("*.json"):
             try:
                 json.loads(f.read_text(encoding="utf-8"))
             except Exception:
                 bad.append(str(f.relative_to(ROOT)))
     return bad
+
+
+_MARKER_RE = re.compile(r"^(<{7}(?: .*)?|={7}|>{7} \S+)$")
+
+
+def broken_jsonl_markers() -> dict:
+    """Sibling check for the OTHER half of the fire-45 bug class: *.jsonl append-logs (traces,
+    agent_memory, chats, project_memory/episodes.jsonl, ...) can't be `json.loads`-ed whole
+    (one JSON object per line, not one document), so broken_json() never looked at them — but
+    a rebase collision drops the exact same 3 bare marker lines into a jsonl file as into a
+    regular JSON one. Fire 46 (2026-07-28) found 78 files / 288 marker lines this way, all
+    pre-dating fires 28-41's workflow push-safety rollout (G-R) — historical damage the
+    preventive fix (correctly) stops from recurring but never cleaned up retroactively, and
+    nothing was watching for it going forward either. Returns {path: [line_indices]} for any
+    file that still has bare marker lines sitting in it."""
+    hits = {}
+    for d in (DATA, DOCS):
+        if not d.exists():
+            continue
+        for f in d.rglob("*.jsonl"):
+            lines = f.read_text(encoding="utf-8", errors="replace").split("\n")
+            idx = [i for i, l in enumerate(lines) if _MARKER_RE.match(l.strip())]
+            if idx:
+                hits[str(f.relative_to(ROOT))] = idx
+    return hits
+
+
+def repair_conflict_markers() -> dict:
+    """Strip ONLY the bare git conflict-marker lines `broken_jsonl_markers()` finds — every
+    real JSON-line record on both sides of a marker is a genuine historical event and is KEPT
+    (append-only law: this is a marker-removal, not a merge that has to pick a winner). Verifies
+    line-for-line that nothing but marker lines moved before writing. Returns {path: n_removed}."""
+    fixed = {}
+    for rel, idx in broken_jsonl_markers().items():
+        f = ROOT / rel
+        lines = f.read_text(encoding="utf-8", errors="replace").split("\n")
+        marker_set = set(idx)
+        kept = [l for i, l in enumerate(lines) if i not in marker_set]
+        f.write_text("\n".join(kept), encoding="utf-8")
+        fixed[rel] = len(idx)
+    return fixed
 
 
 def commit(message: str, add=None) -> str:
@@ -135,6 +187,13 @@ def commit(message: str, add=None) -> str:
         raise RuntimeError(
             "refusing to commit — broken JSON on disk (would ship a corrupt data file): "
             + ", ".join(bad[:5]) + (f" (+{len(bad) - 5} more)" if len(bad) > 5 else "")
+        )
+    bad_jsonl = broken_jsonl_markers()
+    if bad_jsonl:
+        raise RuntimeError(
+            "refusing to commit — unresolved conflict markers in .jsonl log(s) (run "
+            "`python -m src.git_safe repair-conflicts` first): "
+            + ", ".join(list(bad_jsonl)[:5]) + (f" (+{len(bad_jsonl) - 5} more)" if len(bad_jsonl) > 5 else "")
         )
     ATTIC.mkdir(parents=True, exist_ok=True)
     mf = ATTIC / "COMMIT_MSG.txt"
@@ -208,13 +267,21 @@ def main() -> int:
     except Exception:
         pass
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["backup", "commit", "sync", "push", "ship"])
+    ap.add_argument("cmd", choices=["backup", "commit", "sync", "push", "ship", "repair-conflicts"])
     ap.add_argument("-m", "--message", default="")
     ap.add_argument("-a", "--add", nargs="*", default=[])
     args = ap.parse_args()
 
     if args.cmd == "backup":
         print(f"backup -> {backup_bundle().relative_to(ROOT)}")
+    elif args.cmd == "repair-conflicts":
+        fixed = repair_conflict_markers()
+        if not fixed:
+            print("repair-conflicts: no bare conflict-marker lines found in any .jsonl.")
+        else:
+            for rel, n in fixed.items():
+                print(f"  {rel}: removed {n} marker line(s)")
+            print(f"repair-conflicts: cleaned {len(fixed)} file(s), {sum(fixed.values())} marker line(s) total.")
     elif args.cmd == "commit":
         if not args.message:
             print("commit needs -m"); return 1

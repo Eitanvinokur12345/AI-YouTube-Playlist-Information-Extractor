@@ -12,14 +12,11 @@
 {"at": "2026-07-27T19:53", "room": "dept-power-raise-excava-s-capabil-", "said": "DeepSeek-V3-671B-Instruct’s MoE routing still adds latency—benchmarks show ~15-20% slower than flat 70B models on EXCAVA’s hardware. Use Llama-3.2-90B-Instruct "}
 {"at": "2026-07-27T20:59", "room": "dept-power-raise-excava-s-capabil-", "said": "Qwen3-235B’s MoE routing overhead still adds ~15-20% latency versus dense models on EXCAVA’s workloads—benchmarks show it’s not a free win. Swap to DeepSeek-V3-"}
 {"at": "2026-07-27T21:08", "room": "dept-power-raise-excava-s-capabil-", "said": "DeepSeek-V3-671B’s router speed doesn’t fix EXCAVA’s core bottleneck: memory bandwidth. The 22B active parameters still hammer the same VRAM channels as Qwen3-2"}
-<<<<<<< HEAD
 {"at": "2026-07-27T22:35", "room": "dept-power-raise-excava-s-capabil-", "said": "Adopting Qwen3-235B-A22B-Instruct risks worsening EXCAVA’s memory bottleneck by 15-20% due to MoE routing overhead, which directly throttles throughput—its \"fra"}
-=======
 {"at": "2026-07-27T21:56", "room": "dept-power-raise-excava-s-capabil-", "said": "Qwen3-235B’s 128K context window cuts EXCAVA’s long-document performance by ~20% versus DeepSeek-V3-671B’s 1M—risking mission-critical tasks. The real alternati"}
 {"at": "2026-07-27T22:04", "room": "dept-power-raise-excava-s-capabil-", "said": "The real risk here is that Qwen3-235B's smaller context window might not just hurt long-document performance, but also compromise EXCAVA's ability to handle com"}
 {"at": "2026-07-27T22:19", "room": "dept-power-raise-excava-s-capabil-", "said": "Qwen3-235B’s 128K context window cuts EXCAVA’s long-document performance by ~20%—that’s the real risk, not latency. A better alternative is testing Llama-4-Mave"}
 {"at": "2026-07-27T22:25", "room": "dept-power-raise-excava-s-capabil-", "said": "Torque: Llama-4-Maverick-12B’s \"strong long-document performance\" is unproven—its spec sheet doesn’t guarantee a win over Qwen3-235B on EXCAVA’s actual workload"}
->>>>>>> ac0076f2712f73090f43ddf91027d96145eb0da7
 {"at": "2026-07-27T22:51", "room": "dept-power-raise-excava-s-capabil-", "said": "The Cerebras CS-3’s speed claim ignores the 404 errors we just saw with its model IDs—no access, no throughput. A safer play is testing **Mistral’s latest mixtr"}
 {"at": "2026-07-27T23:38", "room": "dept-power-raise-excava-s-capabil-", "said": "Mistral's mixtral-8x22B may not be the silver bullet we think it is, given its massive size and potential optimization issues on our stack. A more robust test w"}
 {"at": "2026-07-28T07:02", "room": "dept-power-raise-excava-s-capabil-", "said": "Mistral’s mixtral-8x22B isn’t a silver bullet—its 15% accuracy jump assumes perfect memory and compute, but we hit 404s on Cerebras’ model IDs last week, meanin"}

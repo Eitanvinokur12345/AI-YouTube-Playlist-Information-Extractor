@@ -10,15 +10,12 @@
 {"at": "2026-07-27T20:19", "room": "dept-accessibility-make-excava-us-", "said": "Ramp’s skip link still risks a race: if JavaScript loads late, the link may arrive after the user has already tabbed past where it would land, breaking keyboard"}
 {"at": "2026-07-27T20:30", "room": "dept-accessibility-make-excava-us-", "said": "The server-rendered skip link still risks a false positive: if the user tabs before the page finishes rendering, they land on a broken link. A better fix is a h"}
 {"at": "2026-07-27T21:30", "room": "dept-accessibility-make-excava-us-", "said": "The skip link still fails if JavaScript loads late—users tab into a broken page and hit dead space. A server-rendered skip link with a real href=\"#main\" and CSS"}
-<<<<<<< HEAD
 {"at": "2026-07-27T22:34", "room": "dept-accessibility-make-excava-us-", "said": "The server-rendered skip link risks locking us into a single solution that might not work for all users—what if someone’s assistive tech ignores the anchor or t"}
-=======
 {"at": "2026-07-27T21:38", "room": "dept-accessibility-make-excava-us-", "said": "The server-rendered skip link risks locking in a suboptimal design if we later discover the #main target isn’t semantically correct for all page structures. A b"}
 {"at": "2026-07-27T21:57", "room": "dept-accessibility-make-excava-us-", "said": "A late-loading skip link traps keyboard users mid-tab before JavaScript runs, breaking the flow. A server-rendered skip link that hides until JavaScript confirm"}
 {"at": "2026-07-27T22:04", "room": "dept-accessibility-make-excava-us-", "said": "A server-rendered skip link locks us into a fixed target—what if we later need to change the main content region? A late-loading skip link with a fallback to th"}
 {"at": "2026-07-27T22:18", "room": "dept-accessibility-make-excava-us-", "said": "A server-rendered skip link risks locking us into a fixed target—what if the page structure changes later and the link points to a missing or wrong element? A l"}
 {"at": "2026-07-27T22:25", "room": "dept-accessibility-make-excava-us-", "said": "A server-rendered skip link to `<main>` still risks breaking if the page later omits `<main>` entirely—like during a redesign where content shifts to `<div role"}
->>>>>>> ac0076f2712f73090f43ddf91027d96145eb0da7
 {"at": "2026-07-27T22:49", "room": "dept-accessibility-make-excava-us-", "said": "Ramp’s focus ring risks creating a \"forest of rings\" on dense screens, drowning users in visual noise. A better alternative: use a single, high-contrast ring th"}
 {"at": "2026-07-27T23:36", "room": "dept-accessibility-make-excava-us-", "said": "Ramp's moving focus ring may still be hard to track on complex screens with many interactive elements, risking users losing their place. A better alternative mi"}
 {"at": "2026-07-28T07:02", "room": "dept-accessibility-make-excava-us-", "said": "The single high-contrast ring still risks obscuring critical content on dense screens, especially for users with low vision who rely on context. A better altern"}

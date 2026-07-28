@@ -112,13 +112,13 @@ def g_build_align():
 def g_json():
     bad = []
     for d in (DATA, DOCS):
-        for f in d.glob("*.json"):
+        for f in d.rglob("*.json"):
             try:
                 json.loads(f.read_text(encoding="utf-8"))
             except Exception:
                 bad.append(str(f.relative_to(ROOT)))
     return _ok("G-F", "JSON integrity", not bad,
-               "all top-level data/ + docs/ JSON parses." if not bad else f"BROKEN JSON: {', '.join(bad[:5])}", "critical")
+               "all data/ + docs/ JSON parses (whole tree)." if not bad else f"BROKEN JSON: {', '.join(bad[:5])}", "critical")
 
 
 def g_remote_sync():
@@ -380,6 +380,23 @@ def g_push_safety_rollout():
     return _ok("G-R", "Push-safety fallback present in every shipping lane", ok, detail, "warn")
 
 
+def g_jsonl_markers():
+    """2026-07-28 (fire 46): G-F only ever `json.loads`-ed whole files, so it could never see a
+    conflict-marker collision in a *.jsonl append-log (traces/agent_memory/chats/episodes.jsonl —
+    one JSON object per LINE, not one document). Fire 46 found 78 such files / 288 marker lines
+    (all pre-dating G-R's workflow push-safety rollout) and shipped `git_safe.repair_conflict_markers()`
+    to clean them; this check is the ongoing watch so the same bug class can't silently reappear
+    and go unnoticed the way it did for ~a day before this fire found it by hand."""
+    from src.git_safe import broken_jsonl_markers
+    hits = broken_jsonl_markers()
+    ok = not hits
+    n = sum(len(v) for v in hits.values())
+    detail = ("no bare conflict-marker lines in any .jsonl append-log." if ok else
+              f"{n} marker line(s) across {len(hits)} file(s) — run "
+              "`python -m src.git_safe repair-conflicts`: " + ", ".join(list(hits)[:5]))
+    return _ok("G-S", "No conflict markers in .jsonl logs", ok, detail, "critical")
+
+
 def _load_json(p, d):
     try:
         return json.loads(p.read_text(encoding="utf-8"))
@@ -389,7 +406,8 @@ def _load_json(p, d):
 
 CHECKS = [g_quarantine, g_msgfile, g_backup, g_mojibake, g_build_align, g_json,
           g_remote_sync, g_collisions, g_handoff, g_memory, g_auditlog, g_watchdog, g_movement,
-          g_disk, g_localfuel, g_beat_heartbeat, g_core_spoton_heartbeat, g_push_safety_rollout]
+          g_disk, g_localfuel, g_beat_heartbeat, g_core_spoton_heartbeat, g_push_safety_rollout,
+          g_jsonl_markers]
 
 
 def run() -> dict:

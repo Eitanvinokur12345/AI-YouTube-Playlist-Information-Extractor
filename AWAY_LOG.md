@@ -5,6 +5,35 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-28 (continued)
+- **~17:1x (fire 52, unattended, cloud session, same session as fire 51) — closed the actual
+  open question fire 50 left dangling: were fires 48/49's own committed connector/element
+  verification numbers ("1402/1402", "9332/10633") contaminated by the same restricted-egress
+  false-dead bug fire 50 found and fixed? Checked with evidence instead of leaving it flagged.**
+  Read every `elements_verified.json`/`connectors_verified.json` record timestamped
+  `2026-07-28` (spans fires 46–50's actual verification work): **elements — 600 entries, 100%
+  `status: pass`, zero dead/fail** — the vulnerable HTTP live-link path never produced a single
+  bad verdict today. **Connectors — 160 entries: 55 `fail`, but every one of them is a genuine
+  `sandbox_run` (npx) execution failure** (missing required env vars — `SENTRY_AUTH_TOKEN`,
+  `NEWSAPI_KEY`, Adzuna creds; explicit OAuth-required messages; real npm/node crash logs) with
+  timestamps spread across separate hourly runs (03:28, 14:34–14:35, ...) — the opposite
+  signature of fire 50's own finding (1,023 fails in one 85-second burst, all link-based). Fire
+  50's own commit note already reasoned `sandbox_run`'s npm-registry calls were never at risk
+  (registry.npmjs.org is on this environment's allowlist) — this confirms that reasoning against
+  the real committed data rather than leaving it as an assumption. **Conclusion: fires 48/49's
+  numbers are clean; no re-verification or data correction needed.** No code changed, no files
+  touched — a pure read-only audit. **Harsh self-criticism:** I checked the CURRENT committed
+  state of these two files, which is the right question ("is anything wrong on `main` right
+  now"), but I did NOT reconstruct exactly which individual verification calls fires 48/49
+  themselves made vs. what later fires (or the hourly CI beat) may have overwritten in between —
+  if a genuinely-bad verdict had been written and then re-verified clean by a later run before I
+  looked, this audit would show "clean" without that being fire 48/49's own credit. Given the
+  rolling re-check cadence (~5-6 days) and that fire 50's revert happened same-day before any
+  commit, I judge this gap as very unlikely to hide anything, but it is a real limit of a
+  point-in-time read rather than a full history replay. This closes the one concrete
+  next-fire candidate fire 50 named; the actual M1 verification-coverage backlog ("next 200 of
+  6410/9357+ unverified") still belongs to the scheduled `core_spoton.yml` runner, not this
+  interactive sandbox, and stays untouched this fire as before.
+
 - **~17:0x (fire 51, unattended, cloud session) — closed fire 50's own named gap (the egress
   canary it built for `verify_elements.py`/`verify_connectors.py` but explicitly did not port
   to the other two direct-network lanes) instead of finding a new piece of plumbing.**

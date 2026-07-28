@@ -104298,6 +104298,60 @@
       ],
       "video_quality_score": 5,
       "low_quality_source": true
+    },
+    {
+      "skill_name": "Dual-Model Orchestration: Expensive Planner + Cheap Executor",
+      "slug": "dual-model-planner-executor-orchestration",
+      "category": "code",
+      "description": "A cost-saving workflow that splits a coding job between two models: an expensive frontier model does the judgment/planning (architecture, decisions) while a cheaper model does the bulk execution (typing out the code), passing work back and forth until the project is done for a fraction of the token cost.",
+      "use_case": "Cutting token/API spend on large coding projects by reserving the expensive model for high-judgment planning and delegating high-volume execution to a cheaper model.",
+      "output": "The same finished project output at roughly half the token cost of using one frontier model for everything.",
+      "quality_score": 7,
+      "model_version": null,
+      "company": "OpenAI / Anthropic",
+      "country": null,
+      "open_source": true,
+      "target_tool": "claude",
+      "is_claude_skill": false,
+      "compatibility": [
+        {
+          "tool": "Claude Code",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "ChatGPT",
+          "up_to_version": "GPT 5.6"
+        }
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=u8o8OAbLuDo",
+      "source_video_id": "u8o8OAbLuDo",
+      "tips": [
+        "Install the Codex Plugin for Claude Code (`/plugin marketplace add openai/codex-plugin-cc`, then `/codex:setup`) to run GPT models as the execution layer without leaving Claude Code.",
+        "Reserve the pricier frontier model for judgment/architecture calls; route repetitive 'follow the instructions' execution work to the cheaper model.",
+        "Requires a ChatGPT subscription or OpenAI API key plus Node.js 18.18+."
+      ],
+      "slash_commands": [
+        "/codex:review",
+        "/codex:adversarial-review",
+        "/codex:rescue",
+        "/codex:transfer",
+        "/codex:status",
+        "/codex:setup"
+      ],
+      "general_tips": [
+        "Most of a coding task's tokens go to mechanical execution, not high-level judgment — splitting the two across a cheap/expensive model pair cuts cost without changing output quality."
+      ],
+      "relevance": "Token cost is a real constraint on long agentic coding sessions; a planner/executor model split is a directly reusable pattern for reducing spend.",
+      "popularity_signals": [
+        "Codex Plugin for Claude Code has 30.1k GitHub stars, 2.0k forks"
+      ],
+      "endorsement_video_ids": [
+        "u8o8OAbLuDo"
+      ],
+      "video_quality_score": 6,
+      "low_quality_source": false
     }
   ],
   "recipes_updated_at": "2026-07-25T11:04:07.208331+00:00"

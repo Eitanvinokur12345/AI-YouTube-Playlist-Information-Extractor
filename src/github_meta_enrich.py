@@ -58,6 +58,24 @@ def _repo_slug(el: dict) -> tuple[str, str] | None:
     return m.group(1), m.group(2).removesuffix(".git")
 
 
+def _network_open() -> bool:
+    """Same fire-50 egress canary as verify_elements.py/verify_connectors.py, ported here and
+    to deep_retrieve.py: without it, a restricted-egress run's `fetch_repo_meta()` calls fail
+    silently and `main()` still records `attempts[el['id']]` for every element it touches
+    before checking whether the GitHub API call actually succeeded — burning the 3-day retry
+    cooldown on real fusable stubs over zero real attempts."""
+    for anchor in ("https://github.com", "https://www.wikipedia.org"):
+        try:
+            req = urllib.request.Request(anchor, headers={"User-Agent": "excava-github-meta-enrich"},
+                                          method="HEAD")
+            with urllib.request.urlopen(req, timeout=8) as r:
+                if r.status < 400:
+                    return True
+        except Exception:
+            continue
+    return False
+
+
 def fetch_repo_meta(owner: str, repo: str, timeout: int = 15) -> dict | None:
     """One keyless (or token-boosted) call to the GitHub REST API. None on any failure —
     a bad/renamed/private repo must never crash the batch."""
@@ -139,7 +157,15 @@ def main() -> int:
     ap.add_argument("--limit", type=int, default=60)
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--deadline", type=float, default=float(os.environ.get("GITHUB_META_ENRICH_DEADLINE", "300")))
+    ap.add_argument("--skip-network-check", action="store_true",
+                    help="bypass the egress canary (only for offline/schema-only testing)")
     a = ap.parse_args()
+
+    if not a.skip_network_check and not _network_open():
+        print("github-meta-enrich: ABORTED — network canary failed (github.com and "
+              "wikipedia.org both unreachable) — refusing to burn retry cooldowns on a run "
+              "that can't actually call the GitHub API. No files touched.")
+        return 0
 
     idx = em.build()
     todo = [e for e in idx["elements"] if e.get("stub") and _repo_slug(e)]

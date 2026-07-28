@@ -48,6 +48,29 @@ def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def _network_open() -> bool:
+    """Canary: is general internet egress actually open right now?
+
+    Fire 50 added this to verify_elements.py/verify_connectors.py after a restricted-egress
+    cloud sandbox silently mass-flagged live links as dead. This lane has the same exposure
+    from a different angle: `enrich()`'s network calls (README, homepage) fail silently and
+    `main()` still records `attempts[el['id']]` for every element it touches BEFORE checking
+    whether anything was actually fetched — so a blocked-egress run burns the 3-day retry
+    cooldown on a whole batch of genuinely fusable stubs over zero real attempts. Two
+    almost-never-simultaneously-down anchors: if BOTH are unreachable, egress is restricted
+    (or a true outage), and the batch must not run at all.
+    """
+    for anchor in ("https://github.com", "https://www.wikipedia.org"):
+        try:
+            req = urllib.request.Request(anchor, headers=UA, method="HEAD")
+            with urllib.request.urlopen(req, timeout=8) as r:
+                if r.status < 400:
+                    return True
+        except Exception:
+            continue
+    return False
+
+
 def _get(url: str, timeout: int = 20) -> str:
     try:
         req = urllib.request.Request(url, headers=UA)
@@ -195,7 +218,15 @@ def main() -> int:
     # bounded per-request timeouts, so the loop always returns to check the clock.
     ap.add_argument("--deadline", type=float,
                     default=float(os.environ.get("DEEP_RETRIEVE_DEADLINE", "720")))
+    ap.add_argument("--skip-network-check", action="store_true",
+                    help="bypass the egress canary (only for offline/schema-only testing)")
     a = ap.parse_args()
+
+    if not a.skip_network_check and not _network_open():
+        print("deep-retrieve: ABORTED — network canary failed (github.com and wikipedia.org "
+              "both unreachable) — refusing to burn retry cooldowns on a run that can't "
+              "actually fetch anything. No files touched.")
+        return 0
 
     idx = em.build()
 

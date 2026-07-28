@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-28T22:06:46.483107+00:00",
+ "generated_at": "2026-07-28T22:59:54.603411+00:00",
  "total": 20,
  "passing": 18,
  "critical_failures": 0,
@@ -22,8 +22,8 @@
    "id": "G-C",
    "name": "History backup fresh",
    "ok": true,
-   "detail": "1 bundle(s); newest within 26h.",
-   "severity": "warn"
+   "detail": "n/a in CI — the beat pushes straight to origin each cycle, bypassing git_safe/local bundles by design.",
+   "severity": "info"
   },
   {
    "id": "G-D",
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": true,
-   "detail": "HEAD == origin/main (work is really saved).",
+   "ok": false,
+   "detail": "NOT in sync (behind/ahead: 3\t0) — a push may not have landed.",
    "severity": "warn"
   },
   {
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "24689 memory episodes on record.",
+   "detail": "24699 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "2 guardrail runs logged (append-only, never rewritten).",
+   "detail": "0 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -92,42 +92,42 @@
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "141 tasks done, 10 departments moving",
+   "detail": "149 tasks done, 10 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "29830 MB free on the repo drive.",
+   "detail": "89267 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 64.1h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 65.0h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
    "ok": true,
-   "detail": "last 'excava-beat #N' commit 4.2h ago.",
-   "severity": "warn"
+   "detail": "shallow clone — not enough local history to find an 'excava-beat #N' commit either way; not a stall signal, just a checkout-depth limit.",
+   "severity": "info"
   },
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "last 'core-spoton:' commit 1.7h ago.",
+   "detail": "last 'core-spoton:' commit 0.8h ago.",
    "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
-   "ok": false,
-   "detail": "13/16 lane(s) landing on cadence — STALE: discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 903.9h ago (expected within 76h); improve.yml (weekly deep pass): last commit 1253.8h ago (expected within 192h); review.yml (twice-weekly): last commit 910.1h ago (expected within 100h)",
+   "ok": true,
+   "detail": "2/16 lane(s) landing on cadence, 14 can't-tell (shallow clone).",
    "severity": "warn"
   },
   {

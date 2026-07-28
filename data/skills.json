@@ -104390,6 +104390,93 @@
       ],
       "video_quality_score": 5,
       "low_quality_source": true
+    },
+    {
+      "skill_name": "research-skill",
+      "slug": "research-skill",
+      "category": "research",
+      "description": "A Claude Code / Codex skill that gives Claude a persistent, project-scoped knowledge base for research, so findings survive even after the conversation context is wiped or compacted. Supports quick and deep research depths plus a contrarian pass for source-independence.",
+      "use_case": "Keeping research findings gathered in one session available to Claude in later sessions on the same project, instead of re-researching from scratch each time.",
+      "output": "A persistent, project-scoped research knowledge base Claude can read and update across sessions.",
+      "quality_score": 6,
+      "model_version": null,
+      "company": "hec-ovi (open-source)",
+      "country": null,
+      "open_source": true,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude Code",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Codex",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=kqEToneO43g",
+      "source_video_id": "kqEToneO43g",
+      "tips": [
+        "Clone into your skills folder so Claude keeps a project-scoped research memory that survives context wipes across days or months.",
+        "Pair with claude-deep-research-skill: use research-skill to persist findings and claude-deep-research-skill to actually run deep research passes."
+      ],
+      "slash_commands": [],
+      "general_tips": [],
+      "relevance": "Claude losing all research context between sessions is a common pain point; a persistent project-scoped memory skill directly fixes it.",
+      "popularity_signals": [
+        "11 GitHub stars (hec-ovi/research-skill)"
+      ],
+      "endorsement_video_ids": [
+        "kqEToneO43g"
+      ],
+      "video_quality_score": 6,
+      "low_quality_source": false
+    },
+    {
+      "skill_name": "claude-deep-research-skill",
+      "slug": "claude-deep-research-skill",
+      "category": "research",
+      "description": "An enterprise-grade Claude Code research skill implementing an 8-phase pipeline (scope, plan, parallel retrieval, triangulation, synthesis, critique, refinement) with source credibility scoring, automated validation, and citation tracking that survives context compaction.",
+      "use_case": "Turning Claude Code into a proper deep-research agent that produces citation-backed reports (Markdown/HTML/PDF) instead of a single shallow web search.",
+      "output": "A citation-backed research report with source credibility scoring, in Markdown, HTML, or PDF.",
+      "quality_score": 7,
+      "model_version": null,
+      "company": "199-biotechnologies (open-source)",
+      "country": null,
+      "open_source": true,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude Code",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": false,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=kqEToneO43g",
+      "source_video_id": "kqEToneO43g",
+      "tips": [
+        "Install with `git clone https://github.com/199-biotechnologies/claude-deep-research-skill.git ~/.claude/skills/deep-research`.",
+        "Optionally install `search-cli` via Homebrew to enable multi-provider search (Brave, Serper, Exa, Jina, Firecrawl).",
+        "Pick a research mode by time budget: Quick, Standard, Deep, or UltraDeep (2-45 minutes)."
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "Citation tracking that survives context compaction is what lets a long research session stay accurate instead of hallucinating sources after the context window fills up."
+      ],
+      "relevance": "Turns Claude Code from a chat assistant into a structured research agent with credibility scoring — directly useful for anyone doing sourced research work inside Claude Code.",
+      "popularity_signals": [
+        "962 GitHub stars, 99 forks (199-biotechnologies/claude-deep-research-skill)"
+      ],
+      "endorsement_video_ids": [
+        "kqEToneO43g"
+      ],
+      "video_quality_score": 6,
+      "low_quality_source": false
     }
   ],
   "recipes_updated_at": "2026-07-25T11:04:07.208331+00:00"

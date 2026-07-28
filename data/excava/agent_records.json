@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-28T23:40:12.105373+00:00",
+ "generated_at": "2026-07-28T23:46:20.150166+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -24,7 +24,7 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 213,
+   "turns_7d": 214,
    "rooms_7d": 105,
    "engines_used": [
     "gh-models",
@@ -33,15 +33,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Tie the Decision Log to the weekly exec sync by auto-generating a \"decisions made\" slide from Slack thread"
+   "last_position": "**Action:** Query the YouTube transcript server (`kimtaeyoon83/mcp-server-youtube-transcript`) for all pending video IDs"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 205,
-   "rooms_7d": 99,
+   "turns_7d": 207,
+   "rooms_7d": 100,
    "engines_used": [
     "gh-models",
     "groq",
@@ -49,7 +49,7 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Run BloodHound-MCP against the full earnings call transcript to map the conversation’s entities and relationships. This "
+   "last_position": "**Decision:** Make the weekly exec sync slide the *single source of truth* for decisions by auto-generating it from Slac"
   },
   {
    "id": "watch-w1",
@@ -74,7 +74,7 @@
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 136,
+   "turns_7d": 137,
    "rooms_7d": 33,
    "engines_used": [
     "gh-models",
@@ -84,15 +84,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is that tying the Decision Log to exec syncs turns it into a performative ritual—teams log only to avoid e"
+   "last_position": "The real risk is that auto-generating a \"decisions made\" slide from Slack threads will miss the *why* and *trade-offs*—t"
   },
   {
    "id": "creators-lead",
    "name": "Nova",
    "dept": "creators",
    "role": "lead",
-   "turns_7d": 119,
-   "rooms_7d": 113,
+   "turns_7d": 120,
+   "rooms_7d": 114,
    "engines_used": [
     "gh-models",
     "groq",
@@ -100,15 +100,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Forge publishes the UGC Factory npm package as a ready-to-use module labeled \"Created by EXCAVA\" with test cover"
+   "last_position": "ACTION: Publish the UGC Factory npm package as a ready-to-use module labeled \"Created by EXCAVA\" with test coverage incl"
   },
   {
    "id": "creators-w1",
    "name": "Forge",
    "dept": "creators",
    "role": "doer",
-   "turns_7d": 119,
-   "rooms_7d": 113,
+   "turns_7d": 120,
+   "rooms_7d": 114,
    "engines_used": [
     "gh-models",
     "groq",
@@ -117,7 +117,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will draft the UGC Factory npm package as a new module, producing a ready-to-use package labeled \"Created by EXCAVA.\" "
+   "last_position": "I will draft the UGC Factory npm package as a new module, producing a ready-to-use generator for user-generated content "
   },
   {
    "id": "news-w1",
@@ -202,7 +202,7 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 95,
+   "turns_7d": 96,
    "rooms_7d": 92,
    "engines_used": [
     "gh-models",
@@ -210,7 +210,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Query kimtaeyoon83/mcp-server-youtube-transcript via residential IP for all pending video IDs to retrieve real f",
+   "last_position": "ACTION: Query kimtaeyoon83/mcp-server-youtube-transcript via residential IP to fetch full transcripts for all pending vi",
    "proposed": 1
   },
   {
@@ -233,15 +233,15 @@
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 83,
-   "rooms_7d": 77,
+   "turns_7d": 84,
+   "rooms_7d": 78,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: I will run the memory linking command to connect every existing memory to enhance recall by meaning. This will p"
+   "last_position": "Action: I will embed the unembedded elements from this conversation into the memory database using the Hindsight MCP ser"
   },
   {
    "id": "links-w1",
@@ -309,16 +309,31 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 70,
-   "rooms_7d": 33,
+   "turns_7d": 71,
+   "rooms_7d": 34,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DO: Run the 72-hour dual-prompt A/B test with 15% of users without forcing feed, measuring both engagement and feed qual",
+   "last_position": "Run a 72-hour dual-prompt A/B test with 15% of users, forcing feed. This tests whether the new prompt engine improves en",
    "proposed": 1
+  },
+  {
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
+   "role": "checker",
+   "turns_7d": 70,
+   "rooms_7d": 34,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The real risk isn’t 15% churn—it’s that forcing the feed *confounds the prompt’s effect with user fatigue*. A better alt"
   },
   {
    "id": "mining-w1",
@@ -334,21 +349,6 @@
    ],
    "positions_held": 30,
    "last_position": "I will browse Reddit’s r/MachineLearning and r/AI for the last 7 days and extract the top 10 posts with the highest enga"
-  },
-  {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 69,
-   "rooms_7d": 33,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "The real risk isn’t signal dilution—it’s *confounding the prompt’s effect with user behavior*. Without forcing feed, use"
   },
   {
    "id": "watch-lead",
@@ -371,8 +371,8 @@
    "name": "Marrow",
    "dept": "analysis",
    "role": "lead",
-   "turns_7d": 62,
-   "rooms_7d": 59,
+   "turns_7d": 63,
+   "rooms_7d": 60,
    "engines_used": [
     "gh-models",
     "glm",
@@ -380,7 +380,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a structured graph of entities, rela"
+   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a speaker influence graph, topic dom"
   },
   {
    "id": "visual-lead",
@@ -448,15 +448,15 @@
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 49,
-   "rooms_7d": 48,
+   "turns_7d": 50,
+   "rooms_7d": 49,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Ship EXCAVA with a persistent dark theme by default, paired with an *instant* high-contrast mode (one-button p",
+   "last_position": "DECISION: Ship EXCAVA with a persistent dark theme by default, paired with a one-click toggle in the top-right corner—no",
    "proposed": 2
   },
   {
@@ -464,15 +464,15 @@
    "name": "Dynamo",
    "dept": "power",
    "role": "lead",
-   "turns_7d": 48,
-   "rooms_7d": 48,
+   "turns_7d": 49,
+   "rooms_7d": 49,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Run a live 10-task blind A/B bench between Qwen2.5-72B-Instruct (primary) and Claude Mythos 5 (secondary) to m",
+   "last_position": "DECISION: Run a live 10-task blind A/B bench between Mythos 5 (full context) and Qwen2.5-72B-Instruct (context trimmed t",
    "proposed": 7,
    "shipped": 5
   },
@@ -496,8 +496,8 @@
    "name": "Access",
    "dept": "accessibility",
    "role": "lead",
-   "turns_7d": 35,
-   "rooms_7d": 33,
+   "turns_7d": 36,
+   "rooms_7d": 34,
    "engines_used": [
     "gh-models",
     "groq",
@@ -505,7 +505,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Ship a high-contrast focus ring that appears instantly on focus but fades to subtle after 125ms, ensuring clar",
+   "last_position": "DECISION: Ship a **high-contrast focus ring with a 125ms delay**, toggleable via keyboard shortcut, validated with Playw",
    "proposed": 2
   },
   {

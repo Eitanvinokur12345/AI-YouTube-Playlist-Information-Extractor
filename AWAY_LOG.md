@@ -5,6 +5,42 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-28 (continued)
+- **~09:0x (fire 44, unattended, cloud session) — answered fire 43's own queued follow-up: is
+  cross-family multi-brain debate actually happening, or just a beat cycle completing?** Standing
+  checks clean (same one-time stale-cache/missing-upstream gap every fresh session branch hits,
+  auto-fixed); guardrails 16/18, 0 critical — the same steady-state pair as recent fires (G-C
+  stale-backup, self-heals on ship; G-O local-drain-stale, PC off, not fixable from a cloud
+  sandbox) and both already logged, so not re-flagging as new. Read a live room trace
+  (`data/excava/traces/watch-room-action-at-12--91596.jsonl`) and a live hand-off
+  (`data/excava/handoffs/transcripts-room-action--89394--01--transcripts-w1--to--analysis.md`) end
+  to end instead of trusting the commit messages that reference them. **Finding, stated plainly:**
+  there is no cross-family debate running yet. A trace is one `enqueued` JSON event with a
+  templated title ("[watch room action] At 12:33:00, Iris directs Arcads AI Video Agent Skill Pack
+  to..."); a hand-off is a single markdown file written from one perspective, not a back-and-forth
+  between differently-sourced agents. "Rooms" and named residents (Iris, Anchor, Tether, ...) are
+  currently personas a single Claude session role-plays sequentially within one beat cycle — not
+  the distinct-model-family (GLM-5.2 / DeepSeek V4 / Qwen 3.6 / Kimi K2.7) architecture the END
+  PLAN's §2 describes. This is not a regression or a bug to fix reactively: it's the honest current
+  state of the M2 "engine layer" milestone, which QUESTIONS.md section C (items 6-9) already
+  correctly scopes as a **deferred build** waiting on Eitan's own architecture sign-off plus a
+  provisioned OpenRouter key (see plan §12, "what Eitan provides") — nothing in this cloud sandbox
+  can call GLM-5.2/DeepSeek/Qwen today, so wiring real inter-model debate isn't something a fire
+  can quietly do unprompted; it needs the key and the decision first. **What I did NOT do, and
+  why:** did not touch `src/excava_agents.py`/`src/excava_engines.py` to fake multi-brain-looking
+  output (would make the honest gap harder to see, not easier) and did not open a new QUESTIONS.md
+  item (C.6-9 already cover exactly this ground — a duplicate item would just fragment the
+  decision). Net effect of this fire is verification, not new code: confirms the "single-model
+  roleplay, not real multi-brain" read is accurate today, so the next fire that reaches M2 knows
+  precisely what "engine layer" still means to build rather than assuming rooms already work.
+  **Harsh self-criticism:** this is, once again, a verification/observability fire rather than
+  program-content work — the difference from the plumbing fires already self-criticized in this
+  log is that it directly answers a question the previous fire explicitly queued, rather than
+  finding a new piece of infrastructure to polish; but it still doesn't move Hub content,
+  enrichment, or department throughput, and I did not attempt any of those this fire either. Did
+  not touch the ~13 stray `kind-shannon-*` branches (still unswept, still someone else's problem).
+  Shipped straight to `origin/main` via `git_safe`, same 40+-fire convention, still unconfirmed by
+  Eitan.
+
 - **~07:0x (fire 43, unattended, cloud session) — the fire-42 fix wasn't enough: the very NEXT run
   inherited the exact same wedge by 2 minutes of bad timing, and this fire proved the real fix by
   watching a fresh cycle actually complete.** Standing checks clean (stale `origin/main` cache

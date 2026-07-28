@@ -5,6 +5,51 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-28 (continued)
+- **~17:0x (fire 51, unattended, cloud session) — closed fire 50's own named gap (the egress
+  canary it built for `verify_elements.py`/`verify_connectors.py` but explicitly did not port
+  to the other two direct-network lanes) instead of finding a new piece of plumbing.**
+  Standing checks: `origin/main` unchanged, HEAD in sync, only the recurring missing-upstream
+  gap (auto-repaired). Guardrails 16/19, 0 critical — identical steady-state trio to fire 50
+  (G-C self-heals on ship; G-M STALLED, accurate, this being another verification/plumbing
+  fire; G-O local-drain-stale, PC off). Read `deep_retrieve.py` and `github_meta_enrich.py`:
+  both record `attempts[el['id']]` (the 3-day retry cooldown) for every element they touch
+  BEFORE checking whether the network fetch actually succeeded — the exact bug class fire 50
+  fixed elsewhere, from a different angle (delayed real retries instead of writing false-dead
+  verdicts, since neither lane's failure path invents data, but the effect is the same: a
+  restricted-egress run silently burns real progress). Ported the identical two-anchor
+  `_network_open()` canary to both, with `--skip-network-check` for parity. **Verified live in
+  this sandbox** (whose own outbound HTTPS is itself proxy-restricted — the same condition
+  that caused fire 50's original finding): both scripts now print an ABORTED message and exit
+  0 with zero file writes (confirmed via `git status`/`diff` before/after); `--skip-network-check
+  --dry-run` lets both proceed past the canary normally (proves the guard doesn't block real
+  CI runs, which have unrestricted egress). `python3 -c "ast.parse(...)"` on both files;
+  guardrails re-run 16/19, 0 critical, unchanged. Reverted `data/deep_retrieve_state.json`
+  after the dry-run test touched its timestamp/attempts-filter fields as a side effect of a
+  pre-existing, unrelated quirk (its `STATE.write_text` isn't gated by `--dry-run`) — not this
+  fire's fix to make, and not real work to commit as if it were.
+  **Harsh self-criticism:** small delta again — a defensive guard on two lanes, not a new
+  capability Eitan can see or use, and I did not go audit whether fires 48/49/50's own actual
+  CI-scheduled runs (not this sandbox) were ever affected by restricted egress in the first
+  place — I have no evidence they were (their runner is `ubuntu-latest` with real egress, per
+  fire 50's own cross-check), so this is prevention of a sandbox-only failure mode from
+  recurring, not a fix to already-corrupted data. Did not touch M2, the still-unswept stray
+  `kind-shannon-*` branches (still someone else's problem, still Eitan's call per QUESTIONS.md
+  — deletion is harder to reverse than anything else and no fire has done it unilaterally), or
+  the "verify next 200 of 6410 unverified elements" backlog item fire 49 named as the actual
+  top-value candidate (still blocked from this sandbox by the same egress restriction; belongs
+  to the scheduled `core_spoton.yml` runner, not an interactive session).
+  **A real, load-bearing deviation from every one of the prior 50 fires, flagged explicitly:**
+  this session's own harness assigns a designated branch (`claude/kind-shannon-ko3yqt`) and
+  requires a draft pull request rather than a direct push to `main` — the opposite of the
+  `git_safe ship`-to-`main` convention every fire 1–50 used (each flagging it as unconfirmed by
+  Eitan but continuing it for consistency). Fires 8/9/48/49 all raised this exact tension and
+  deferred to the established pattern; this fire's own environment does not leave that choice
+  open — pushing straight to `main` here would violate this session's explicit platform
+  instruction ("never push to a different branch without explicit permission"). So this fire
+  pushes to its own branch and opens a draft PR instead, same code change, different delivery
+  mechanism. **Eitan: if you want cloud-hosted fires to always land on `main` directly (matching
+  every prior fire), you'll need to review and merge this PR yourself, or tell a future session
+  to merge its own PRs automatically** — QUESTIONS.md already has this open, still unanswered.
 - **~16:0x (fire 50, unattended, cloud session) — 10th-heartbeat checkpoint, PLUS a real
   finding: this session's own manual verification runs were silently poisoning live-link
   data with false dead/fail verdicts, caught before anything was committed, and now

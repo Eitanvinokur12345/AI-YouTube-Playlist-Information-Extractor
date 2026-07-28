@@ -5,6 +5,80 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-28 (continued)
+- **~11:1x (fire 45, unattended, cloud session) — advanced M1's own named target
+  (`deep_retrieve enrichment (stub≈0)`) plus found and fixed a second, real, currently-active
+  bug along the way: a false "hollow" reading in `excava_systemcheck.py` caused by two
+  data files that had been silently committed with unresolved git conflict markers still
+  inside them.** Standing checks: `git pull` first bumped ~20 stray remote-only
+  `claude/kind-shannon-*` branch refs into the local remote-tracking set (no local work
+  affected — just newly-visible refs, not touched further, still someone else's problem per
+  fires 7/19's own flagged backlog). Guardrails 16/18, 0 critical at the start (only G-C
+  stale-backup and G-O local-drain-stale, both the same steady-state as every recent fire);
+  `excava_systemcheck` read **10/11, all critical OK, but flagged `work is real (supervisor):
+  real_pct=0% ({})` — "mostly hollow"** — a genuinely alarming line if taken at face value
+  (every prior week this metric read 74-100%), so chased it instead of leaving M1 for a
+  guardrail-shaped distraction. Per the plan's own timeline (§9: M1 closes ~Jul29, still the
+  current milestone today) picked the M1 line item CLAUDE.md/END_PLAN name explicitly —
+  `deep_retrieve enrichment (stub≈0)` — reusing the existing, already-CI-scheduled tool
+  (Ponytail principle: `core_spoton.yml` already runs it hourly at `--limit 60`; this fire
+  just spent a manual budget beyond that cadence). Ran 5 real (non-dry) batches of 180 via
+  `python -m src.deep_retrieve --limit 180`, staging (`git add data/`) after every single
+  batch — the hard lesson of this fire, below. **Verified before/after with
+  `python -m src.element_model --count`:** `elements_index` stubs **2060 → 1922** (138 real
+  descriptions upgraded from stub to substantive, not a metric artifact), fresh-fusable pool
+  946 → 144 (the pool genuinely drained, not just cursor-walked past). **Second, independent
+  finding — the systemcheck alarm was real, not noise:** `data/excava/supervisor.json` and
+  `data/excava/supervisor_longterm.jsonl` both had literal `<<<<<<<`/`=======`/`>>>>>>>` git
+  conflict markers sitting inside them (from a concurrent-write collision around
+  2026-07-27T22:36Z), the exact same bug class fire 34 fixed for `data/designs.json` — except
+  `git_safe.broken_json()`'s commit-time guard only scans TOP-LEVEL `data/`+`docs/` JSON, so a
+  file one directory deeper (`data/excava/…`) slipped past it uncaught for ~13 hours, silently
+  breaking `src.excava_supervisor.py` (crashed outright when run by hand) and making
+  `excava_systemcheck.py`'s loader swallow the parse error and report a false `real_pct=0%`.
+  Fixed WITHOUT losing any real data (append-only law respected): stripped ONLY the 3 bare
+  marker lines from `supervisor_longterm.jsonl` — both real, genuinely-conflicting data rows on
+  either side of the markers were KEPT (278 → 278 real entries, just 3 junk lines removed, not
+  278 → fewer) — then let `python -m src.excava_supervisor` regenerate its always-fully-
+  overwritten `supervisor.json` cleanly from the now-clean log. Verified: both files parse,
+  `real_pct` now reads a sane 86-89% across two runs, `excava_systemcheck` no longer flags
+  "mostly hollow". **A real mistake made and caught mid-fire, said plainly:** my first attempt
+  at this called `python -m src.git_safe sync` with all this work sitting UNSTAGED in the
+  working tree — `sync()`'s own `revert_ci_churn()` does `git checkout -- data backups`
+  *before* rebasing, specifically to discard CI-regenerated churn, and its own docstring says
+  "anything you STAGED survives" — unstaged does not. It silently wiped every one of this
+  fire's edits (stub count read back as 2060, both broken files reappeared) with no git-level
+  recovery possible since nothing had been staged or committed. Re-did the entire batch a
+  second time, this time `git add`-ing after every single step before ever calling `sync`, and
+  shipped via `ship` (commit lands locally FIRST, so `push()`'s internal `sync()` rebases on
+  top of real committed history, which `revert_ci_churn` cannot touch). Net cost: one fully
+  duplicated round of work and network calls, no data actually lost in the end, but it should
+  not have happened — `git_safe.py`'s own `sync`/`revert_ci_churn` docstrings are correct and
+  I mis-sequenced around them; worth remembering (or worth a future fire adding a loud
+  assertion inside `revert_ci_churn()` when it's about to discard non-trivial unstaged `data/`
+  diffs, so this exact mistake can't repeat silently). Shipped as `0273b061` via
+  `python -m src.git_safe ship`, same 40+-fire direct-to-main convention, still unconfirmed by
+  Eitan. Guardrails after: **17/18**, 0 critical (G-C cleared by `push()`'s own backup step;
+  only G-O — local drain stale, PC off — remains, unfixable from a cloud sandbox).
+  **Harsh self-criticism:** the enrichment number (138 stubs) is real but small relative to the
+  ~7,800-thin-element backlog — this is incremental M1 progress, not "stub≈0" yet, and the
+  fresh-fusable pool (144 left) is now nearly drained, meaning the NEXT fire that wants more
+  from this exact lever will mostly hit unfusable video-only stubs waiting on the (PC-off,
+  currently stale per G-O) transcript drain, not more low-hanging fruit — say so plainly rather
+  than implying this lever has more easy juice than it does. The supervisor-conflict fix,
+  while real and verified, is scope beyond the single M1 enrichment increment the plan asked
+  for — defensible because it was a currently-active, systemcheck-flagged false alarm
+  (arguably closer to "if a check reports a failure, fix it" than a second unrelated feature),
+  but it is still two things shipped in one fire, and the self-inflicted duplicate-work mistake
+  above is a direct consequence of trying to do both without slowing down enough on the git
+  mechanics. Did not extend `broken_json()`'s scan to non-top-level `data/excava/*.json` (the
+  actual structural gap that let this slip through in the first place) — flagging it as the
+  concrete next-fire candidate rather than fixing it myself this fire, since it's a real,
+  slightly bigger, separate change (widening a guardrail's scope) that deserves its own
+  verification, not a rushed add-on after already re-doing one full batch of work. Did not
+  touch the ~13-20 stray `kind-shannon-*` branches (still unswept, still flagged, still
+  someone else's problem) or M2 (still correctly deferred per fire 44's finding — nothing
+  changed there this fire).
+
 - **~09:0x (fire 44, unattended, cloud session) — answered fire 43's own queued follow-up: is
   cross-family multi-brain debate actually happening, or just a beat cycle completing?** Standing
   checks clean (same one-time stale-cache/missing-upstream gap every fresh session branch hits,

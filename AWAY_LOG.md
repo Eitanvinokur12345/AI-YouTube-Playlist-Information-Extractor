@@ -5,6 +5,77 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-28 (continued)
+- **~19:0x (fire 52, unattended, cloud session) — built the generic cross-lane heartbeat
+  guardrail (G-T) that fires 28/29/30/35 kept flagging as "still unbuilt, still the deeper fix"
+  since fire 28, AND it immediately surfaced a real, previously-unknown instance of exactly the
+  bug class it was built to catch.** Standing checks: `origin/main` in sync after the usual
+  one-time missing-upstream repair; guardrails 17/19, 0 critical, same steady-state trio as
+  every recent fire (G-C self-heals on ship; G-O local-drain-stale, PC off, unfixable from a
+  cloud sandbox). This sandbox has the same policy-restricted egress fires 48-51 already
+  documented (confirmed again via `$HTTPS_PROXY/__agentproxy/status`), so no live-network
+  verification/enrichment work was attempted here — scoped this fire to code + git-history-only
+  work, same as fire 50's own conclusion about what a cloud session can safely do.
+  **Built:** `src/guardrails.py`'s `g_lane_heartbeats()` (new guardrail G-T) generalizes G-P/
+  G-Q's git-log-only per-lane commit-freshness check from just `excava_beat.yml`/
+  `core_spoton.yml` to the other 16 cron-scheduled workflow files (`excava_inbox.yml` excluded —
+  issue-triggered, no cadence). Same no-API, no-new-permissions approach: one commit-message
+  prefix per lane + a generous multiple of that lane's own cron cadence (pulled straight from
+  each `.yml`'s `cron:` line), so normal GH Actions queueing jitter can't trip a false alarm —
+  only a real multi-cycle gap can. Verified live: `python3 -c "ast.parse(...)"` on the touched
+  file; `python -m src.guardrails` runs clean, 17/20 (new total), 0 critical, and G-T reports
+  real per-lane ages for all 16 lanes it can see in this (apparently non-shallow) checkout.
+  **The finding, not manufactured — G-T's very first run flagged `bulk_analyze.yml` STALE (last
+  matching commit 8.0h old vs. a 6h generous slack for its 2h cadence).** Checked whether that's
+  real before writing it up: `mcp__github__actions_list` shows `bulk_analyze.yml` actually RAN
+  and reported `success` at 17:56-18:00 UTC today (and every ~2-4h before that, cron-throttling
+  jitter as expected) — so the workflow itself is healthy, cron is firing, nothing crashed. But
+  `git log` shows **zero** "bulk-analyze (free pool):" commit anywhere between 11:03 and now —
+  that whole 17:56-18:00 run's commit never reached `origin/main`. Ruled out "genuinely nothing
+  to commit" as the explanation: that run's own job log shows it executed 8 file-writing steps
+  (progress readout → `health.json`, effectiveness scoreboard → `effectiveness.json`, hub index
+  → `hub.json`, self-check → `self_check.json`, safety ratings → `safety.json`, plus its own
+  `python -m src.excava` call) — and `git log -- data/effectiveness.json` / `-- data/hub.json`
+  show those files' last update came from a *different* lane (`gemini-video`, 18:19:52), with no
+  trace of the 17:56-18:00 run touching them at all despite that run's own log explicitly
+  regenerating both. The bulk_analyze run overlapped almost exactly with `excava-beat #3`
+  committing at 17:56:05 — and `bulk_analyze.yml` itself calls `python -m src.excava`, the same
+  module `excava_beat.yml` runs in a tight ~10-min loop, so the two lanes are provably writing
+  the same `data/excava/*` state files at the same time. **Conclusion: this looks like the exact
+  same "job succeeds, real work silently discarded" bug class fires 25/28-41 already fixed for
+  `data/data_guard.json` specifically — but the fallback those fires shipped only auto-resolves
+  a conflict on `data_guard.json`; a conflict on any OTHER shared file (very plausibly one of
+  the mechanical readouts above, or an excava state file) still "degrades to push-skipped" on
+  purpose, and on an ephemeral GH-hosted runner, push-skipped == that run's real output is gone
+  forever, not just delayed.** Did NOT widen the auto-resolve list this fire — that touches the
+  same 19 workflow files as the original fix and deserves the same bare-repo-repro verification
+  fires 28-41 used before landing, which didn't fit this fire's remaining budget alongside
+  building+verifying G-T itself. Proposed concrete next step, staged in `QUESTIONS.md`: widen
+  the known-stateless auto-resolve list beyond `data_guard.json` to the small set of files that
+  are fully regenerated from scratch every run with no accumulated content across lanes
+  (`data/health.json`, `data/effectiveness.json`, `data/hub.json`, `data/self_check.json`,
+  `data/safety.json`, `data/guardrails_status.json`) — explicitly NOT `data/excava/*` (those
+  hold real accumulated memory/conversation state per the room protocol, and blindly taking
+  "ours" there could silently discard another lane's genuine content, the opposite of what this
+  fix is supposed to prevent). **Harsh self-criticism:** I found a real bug but shipped only the
+  detector, not the fix, on my own judgment call that a rushed, unverified widen-the-list edit
+  across 19 files carries more risk than the bug itself (bulk_analyze.yml is a free-tier lane
+  whose actual analysis step has been a no-op for a while anyway — see next paragraph — so the
+  concrete cost of this fire's finding is currently "some mechanical readouts lag," not lost
+  analysis work). I also did not check whether this same collision has quietly cost OTHER lanes
+  their own runs the same way — I only chased the one G-T happened to flag, not a full sweep of
+  recent history for other "ran successfully, zero matching commit" gaps; that sweep is a
+  cheap, valuable next-fire candidate now that G-T exists to make the gaps visible instead of
+  requiring the by-hand digging this fire just did. **Unrelated but worth recording since I was
+  already in `bulk_analyze.py`'s own logic while diagnosing this:** confirmed (not a bug) that
+  `bulk_analyze.yml`'s "0 videos" result today is CORRECT, not silently-broken — its free-tier
+  lane only ever picks pending videos with a REAL transcript (`transcript_source in ("transcript",
+  "whisper")`), and right now **0 of the 1,209 files in `data/_pending/` have one** (1,130
+  `description`-fallback, 79 `title`-fallback) — the transcript-fetch lane (`transcribe.yml`,
+  daily) has fallen behind video intake, not this lane silently failing. Worth a look on return:
+  if that gap keeps growing, the free bulk-analyze lane will stay permanently idle no matter how
+  healthy it reports. Shipped straight to `origin/main` via `git_safe`, same convention as every
+  fire since 8, still unconfirmed by Eitan.
+
 - **~18:0x (fire 51, unattended, cloud session) — ported fire 50's egress canary to the one
   other module it named but didn't reach: `src/github_meta_enrich.py`.** Standing checks:
   `origin/main` at `17d0bd1f` matched HEAD (only the recurring one-time missing-upstream gap,

@@ -348,6 +348,79 @@ def g_core_spoton_heartbeat():
                 if stale else "."), "warn")
 
 
+LANE_HEARTBEATS = [
+    # (commit-message prefix, generous max-stale hours, human label). Hours are a multiple of
+    # each lane's OWN cron cadence (see the workflow file) with the same slack philosophy as
+    # G-P/G-Q: wide enough that normal GH Actions cron queueing/throttling never trips a false
+    # alarm, tight enough that a real multi-cycle stall still gets caught in well under a week.
+    # `excava_inbox.yml` is deliberately excluded — issue-comment triggered, no cron cadence to
+    # be stale against.
+    ("analyze: ", 8, "analyze.yml (every 3h + 30m catch-up)"),
+    ("bulk-analyze (free pool): ", 6, "bulk_analyze.yml (every 2h)"),
+    ("connectors-verify: ", 14, "connectors_verify.yml (every 6h)"),
+    ("creators: ", 30, "creators.yml (daily 07:45 UTC)"),
+    ("discover: ", 76, "discover.yml (Sun/Tue/Thu 01:00 UTC)"),
+    ("fetch: ", 54, "fetch.yml (every 2 days)"),
+    ("gemini-video (watch & extract): ", 14, "gemini_video.yml (3x/day)"),
+    ("improve: ", 192, "improve.yml (weekly deep pass)"),
+    ("links+memory (fast lane): ", 4, "links.yml (hourly)"),
+    ("mine-feeds (external", 30, "mine.yml (daily)"),
+    ("social-intake (tier 1): ", 30, "mine_social.yml (daily)"),
+    ("news: ", 14, "news.yml (every 6h)"),
+    ("review: findings ", 100, "review.yml (twice-weekly)"),
+    ("sources: ", 30, "sources.yml (daily)"),
+    ("transcribe (supadata): ", 30, "transcribe.yml (daily)"),
+    ("visual-protocol + designs: ", 20, "visual.yml (2x/day)"),
+]
+
+
+def g_lane_heartbeats():
+    """2026-07-28 (fire 52): generalizes G-P/G-Q's git-log-only heartbeat check from just the
+    two highest-cadence lanes (excava_beat.yml, core_spoton.yml) to the other 16 cron-scheduled
+    workflow files. Fires 28-35 rolled the actual push-safety FIX out to all 19 workflow files
+    (now permanently watched by G-R, always green), but every one of those fires' own entries
+    explicitly flagged that the generic "job reports success but its per-cycle commit stopped
+    landing" WATCH — as opposed to the fix for the one bug class that used to cause it — was
+    still unbuilt for anything other than the beat/core-spoton pair (see QUESTIONS.md, first
+    raised fire 28, reaffirmed through fire 35: "the generic cross-lane guardrail is still
+    unbuilt, still the deeper fix"). This closes that gap the same cheap, no-API way: one
+    commit-message-prefix match + a generous multiple of each lane's own cron cadence, so normal
+    GH Actions queueing/throttling can never trip a false alarm — only a real multi-cycle stall
+    can. Same shallow-clone caveat as G-P/G-Q: a lane with zero matches in a shallow local clone
+    is reported as "can't tell" (info), never a false STALE."""
+    shallow = _git(["rev-parse", "--is-shallow-repository"]) == "true"
+    stale, cant_tell, ok_lanes = [], [], []
+    for prefix, max_h, label in LANE_HEARTBEATS:
+        log = _git(["log", "-1", "--format=%ad", "--date=iso-strict", f"--grep=^{prefix}", "origin/main"])
+        if not log:
+            log = _git(["log", "-1", "--format=%ad", "--date=iso-strict", f"--grep=^{prefix}"])
+        if not log:
+            (cant_tell if shallow else stale).append(
+                label if shallow else f"{label}: no commit found in full history")
+            continue
+        try:
+            age_h = (datetime.now(timezone.utc) - datetime.fromisoformat(log)).total_seconds() / 3600
+        except Exception:
+            cant_tell.append(f"{label}: unparseable date {log!r}")
+            continue
+        if age_h > max_h:
+            stale.append(f"{label}: last commit {age_h:.1f}h ago (expected within {max_h}h)")
+        else:
+            ok_lanes.append(label)
+
+    if shallow and not ok_lanes and not stale:
+        return _ok("G-T", "Workflow lane heartbeat freshness", True,
+                   f"shallow clone — not enough local history to check any of "
+                   f"{len(LANE_HEARTBEATS)} lanes; not a stall signal, just a checkout-depth limit.",
+                   "info")
+    ok = not stale
+    detail = f"{len(ok_lanes)}/{len(LANE_HEARTBEATS)} lane(s) landing on cadence"
+    if cant_tell:
+        detail += f", {len(cant_tell)} can't-tell (shallow clone)"
+    detail += (" — STALE: " + "; ".join(stale)) if stale else "."
+    return _ok("G-T", "Workflow lane heartbeat freshness", ok, detail, "warn")
+
+
 def g_push_safety_rollout():
     """2026-07-28 (fire 41): fires 28-40 spent eight separate rounds finding workflow files that
     commit+push their own data (`.github/workflows/*.yml`) WITHOUT the abort-rebase -> retry-as-
@@ -406,8 +479,8 @@ def _load_json(p, d):
 
 CHECKS = [g_quarantine, g_msgfile, g_backup, g_mojibake, g_build_align, g_json,
           g_remote_sync, g_collisions, g_handoff, g_memory, g_auditlog, g_watchdog, g_movement,
-          g_disk, g_localfuel, g_beat_heartbeat, g_core_spoton_heartbeat, g_push_safety_rollout,
-          g_jsonl_markers]
+          g_disk, g_localfuel, g_beat_heartbeat, g_core_spoton_heartbeat, g_lane_heartbeats,
+          g_push_safety_rollout, g_jsonl_markers]
 
 
 def run() -> dict:

@@ -9,6 +9,21 @@ You're away ~1 week; the offline loop is running (non-brain fronts, hourly) and 
 
 ### Away-week questions
 
+**2026-07-28 (fire 52) — new guardrail G-T found a real, previously-unknown commit-loss gap:
+the `data_guard.json`-only auto-resolve fallback (fires 25/28-41) doesn't cover other shared
+mechanical files, and `bulk_analyze.yml`'s 17:56-18:00 UTC run today lost its entire commit to
+exactly that gap (full evidence chain in AWAY_LOG.md's fire-52 entry).** → **Proposed default:**
+widen the known-stateless auto-resolve list in all 19 workflow files from just `data_guard.json`
+to also include `data/health.json`, `data/effectiveness.json`, `data/hub.json`,
+`data/self_check.json`, `data/safety.json`, `data/guardrails_status.json` — all fully
+regenerated from scratch every run, safe to take "ours" on conflict. Explicitly proposing to
+**NOT** touch `data/excava/*` the same way — those accumulate real memory/conversation content
+across lanes, and "ours" there would silently discard another lane's genuine work, the exact
+failure this fix exists to prevent. Did not implement this myself this fire (touches the same
+19 files as the original rollout and deserves the same bare-repo-repro verification those fires
+used before landing) — parking here for confirmation or for a future fire with the budget to do
+the repro properly.
+
 **2026-07-28 (fire 47) — the "away ~1 week" mark from `away_mode.json` (`since: 2026-07-21`) is
 reached today, and the exit condition ("Eitan posts any message indicating he's back") hasn't
 fired.** Flagging rather than assuming: away mode has no built-in expiry, only an explicit

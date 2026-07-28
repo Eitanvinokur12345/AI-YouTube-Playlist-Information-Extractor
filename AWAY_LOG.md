@@ -49,6 +49,18 @@ Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Lo
   granted direct-to-main rights to match the bot fires — either way this is now the second fire in
   a row flagging the same unresolved question, so it shouldn't need a third.
 
+  **Follow-up (~18:1x, same fire):** PR #19 was closed without merging shortly after opening —
+  read as the answer to the judgment call above (the PR-based flow isn't wanted; the repo's
+  existing direct-to-main convention stands). Per the closing instruction I received, I have NOT
+  reopened it and will NOT open a replacement PR for this change. The commit itself
+  (`c09aef26`, the empty-body graph fix + the QUESTIONS.md correction) is still sitting, unmerged,
+  on `origin/claude/kind-shannon-ybw9ue` — real work, not lost, just not on `main` yet. I'm not
+  unilaterally force-pushing it onto `main` from here either: "no PR" and "push straight to main"
+  are two different permissions, and only the first was clearly signaled by the closure. Next
+  fire (or Eitan directly) should either cherry-pick/merge `c09aef26` onto `main` via
+  `git_safe`, or say explicitly that closing = "land it yourself, direct-to-main is fine" so this
+  stops being a per-fire judgment call.
+
 - **~16:5x (fire 9, unattended, cloud session)** — Built the standing-checks entrypoint fire 8
   queued (twice now, per QUESTIONS.md) instead of re-diagnosing the same symptoms by hand a
   third time: new `src/standing_checks.py` — `python -m src.standing_checks` in one call (a)

@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-28T07:04:04.741984+00:00",
+ "generated_at": "2026-07-28T07:04:48.736637+00:00",
  "total": 18,
- "passing": 17,
+ "passing": 16,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -21,9 +21,9 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": true,
-   "detail": "n/a in CI — the beat pushes straight to origin each cycle, bypassing git_safe/local bundles by design.",
-   "severity": "info"
+   "ok": false,
+   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
+   "severity": "warn"
   },
   {
    "id": "G-D",
@@ -78,7 +78,7 @@
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "0 guardrail runs logged (append-only, never rewritten).",
+   "detail": "2 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -99,7 +99,7 @@
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "89065 MB free on the repo drive.",
+   "detail": "30406 MB free on the repo drive.",
    "severity": "info"
   },
   {
@@ -113,15 +113,15 @@
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
    "ok": true,
-   "detail": "shallow clone — not enough local history to find an 'excava-beat #N' commit either way; not a stall signal, just a checkout-depth limit.",
-   "severity": "info"
+   "detail": "last 'excava-beat #N' commit 0.0h ago.",
+   "severity": "warn"
   },
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "shallow clone — not enough local history to find a 'core-spoton:' commit either way; not a stall signal, just a checkout-depth limit.",
-   "severity": "info"
+   "detail": "last 'core-spoton:' commit 0.5h ago.",
+   "severity": "warn"
   },
   {
    "id": "G-R",

@@ -5,6 +5,48 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-28 (continued)
+- **~07:0x (fire 43, unattended, cloud session) — the fire-42 fix wasn't enough: the very NEXT run
+  inherited the exact same wedge by 2 minutes of bad timing, and this fire proved the real fix by
+  watching a fresh cycle actually complete.** Standing checks clean (stale `origin/main` cache
+  re-fetched, upstream re-tracked — the same one-time gap every fresh session branch hits).
+  Guardrails 15/18 at the start, 0 critical; G-M again read STALLED. Chased it via the GitHub
+  Actions API instead of re-noting it a third time: the run that started right after fire 42's own
+  cancel (`30329769303`) had checked out commit `02b6cad2` at 06:03:13 — TWO MINUTES before fire
+  42's `timeout -k` fix landed at 06:05:28 (`65c369a1`) — so it ran the pre-fix script and was
+  already 55+ minutes into cycle 1's "Run the beat" step with zero commits, the identical failure
+  class. Also surfaced a harder fact while diagnosing: the real `excava-beat #N` commit trail had
+  been dead since **#9 at 2026-07-25T10:00Z** — over 2.5 days, not the "4 beats"/couple-hours G-M's
+  own window implies — meaning this class of wedge (plus whatever preceded fire 27/42's fixes) has
+  likely been silently eating department throughput for days, not hours. Cancelled `30329769303`
+  (same accepted tradeoff fire 42 named: losing one in-flight, never-committed cycle to unblock the
+  concurrency-serialized queue) and, rather than waiting on the throttled `*/10` cron, dispatched a
+  fresh run directly via `workflow_dispatch` (`run_workflow` on `main`) so the now-current, `-k`-
+  hardened code got a clean shot immediately. **Verified for real, not assumed:** polled
+  `origin/main` in a background loop (`git fetch` every 15s, since raw `api.github.com` calls 403
+  from this sandbox per fire 10's finding, but the repo's own git remote works fine) until a new
+  commit landed — `excava-beat #1: 2026-07-28T07:04Z` (`ac341a99`) appeared at 07:04:13, ~2.5
+  minutes after the beat step started at 07:01:44, comfortably inside the `-k`-bounded budget and
+  nowhere near a wedge. Re-ran guardrails after syncing: G-M flipped OK, done-counter jumped
+  **26→34** (real department completions, not a metric artifact) and G-P now reads "0.0h ago" —
+  the clearest evidence yet that this was blocking real throughput, not just an observability
+  false alarm. 16/18 guardrails, 0 critical (only G-C stale-backup, self-heals on ship, and G-O
+  local-drain-stale, PC off, neither fixable from here). **Harsh self-criticism:** I did not
+  determine why the ORIGINAL cycle-1 hang happens at all (same gap fire 42 already admitted) — the
+  `-k` hardening guarantees any wedge now costs at most ~5 minutes instead of hours, but the
+  underlying hang in `src.excava` or something it calls is still unexplained and will recur; the
+  next fire that sees G-M/G-P flag again should pull that run's OWN early-cycle logs before they
+  age out, not just re-apply the same cancel-and-redispatch playbook a third time. I also spent
+  this fire's entire budget verifying one already-authored fix rather than advancing M2's actual
+  next line (`SESSION_HANDOFF.md`'s own "rooms PRODUCE committed artifacts across families ... then
+  the 5-class Router/Agent/Tool/Room/Element layer") — defensible because a wedged beat makes that
+  verification impossible anyway (you can't watch a multi-lineage debate land if the beat that runs
+  it dies silently on cycle 1), but it is still CI/ops plumbing, the same class self-criticism has
+  flagged as overrepresented since fire 8. Confirmed the beat is healthy now; did NOT go on to
+  actually inspect a room's transcript/debate content this fire to confirm cross-family debate is
+  real (vs. just "a beat cycle completed and committed something") — that's the natural next check
+  for whichever fire picks this up next. Shipped straight to `origin/main` via `git_safe`, same
+  40+-fire convention, still unconfirmed by Eitan (not re-litigating again).
+
 - **~06:0x (fire 42, unattended, cloud session) — found and unblocked a genuinely stuck beat run,
   fixed the root-cause wedge, and flagged that the away week is now at its 7-day mark.** Standing
   checks clean; guardrails 15/18, 0 critical (same steady-state as fire 41: G-C stale-backup and

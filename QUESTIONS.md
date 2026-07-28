@@ -9,6 +9,28 @@ You're away ~1 week; the offline loop is running (non-brain fronts, hourly) and 
 
 ### Away-week questions
 
+**2026-07-28 (fire 55) — closed the 12-PR branch pile-up (fires 6/7/16/18 flagged it repeatedly,
+this is the first fire to fully audit content instead of guessing), but 5 PRs remain genuinely
+open and the root cause is unfixed.** Full audit: `AWAY_LOG.md` fire-55 entry.
+- **PRs #2, #14, #18, #23, #25 — left open, need a look:** #2 (title-collision fix, likely
+  superseded by fire 15's later fix but real data-file conflict risk if merged blind), #14/#18
+  (git_safe.py branch-awareness / standing-checks automation — claimed already on main but not
+  conclusively verified), #23 (a "G-R analyze-pipeline-health" guardrail whose letter `G-R` now
+  means something *different* on main — fire 41's push-safety-rollout check — so this PR's idea,
+  if still wanted, needs re-lettering, not a direct merge), #25 (a 5,490-insertion element-
+  verification data dump from fire 44, probably stale after thousands more pipeline cycles).
+  **Proposed default:** leave closed-vs-merged as a manual call for the next fire with budget to
+  verify each individually — none looked safe to auto-decide either way.
+- **Root cause still unfixed: the branch-per-session + PR-required harness pattern will keep
+  regenerating this exact pile-up.** Every scheduled fire gets a fresh throwaway branch and (per
+  this harness) must open a PR for anything it pushes, but the project's own convention ships real
+  work straight to `main` via `git_safe ship` — so a PR opened after a successful ship is
+  redundant from the moment it's created, and nothing today closes it automatically. **Proposed
+  fix (not built):** after `git_safe ship` confirms `origin/main == HEAD`, the same fire should
+  check for and self-close its own now-redundant PR before ending, rather than relying on some
+  future fire to notice and clean up. Flagging for owner sign-off since it changes the away-loop's
+  standard end-of-fire routine, not just a one-off patch.
+
 **2026-07-28 (fire 52) — new guardrail G-T found a real, previously-unknown commit-loss gap:
 the `data_guard.json`-only auto-resolve fallback (fires 25/28-41) doesn't cover other shared
 mechanical files, and `bulk_analyze.yml`'s 17:56-18:00 UTC run today lost its entire commit to

@@ -5,6 +5,58 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-28 (continued)
+- **~23:xx (fire 55, unattended, cloud session) — audited and closed the branch/PR pile-up that
+  fires 6/7/16/18 flagged repeatedly and one prior session ("dmi5se") only partially fixed.**
+  Standing checks first: `python -m src.guardrails` 17/20, 0 critical — same steady-state trio
+  as fire 54 (G-C self-heals on ship, G-O local-drain-stale since the PC is off, G-T still shows
+  discover/improve/review.yml stale — expected, fire 54's review.yml fix can't prove itself until
+  the next Wed/Sat trigger). Committed the resulting telemetry snapshot refresh. Root cause of the
+  pile-up: this harness assigns each scheduled session a fixed branch (mine this fire:
+  `claude/kind-shannon-2u323r`) plus a PR-on-push requirement, while the project's own convention
+  (`GUARDRAILS.md`/`CLAUDE.md`) is to push real work straight to `origin/main` via
+  `python -m src.git_safe ship`. A session that does BOTH — ships to main AND opens its required
+  PR — leaves a PR whose content is already redundant on main under a *different* commit hash
+  (`git_safe ship` re-commits, it doesn't cherry-pick), and nobody closes it after. Confirmed via
+  full-history `git fetch --unshallow` (my own shallow clone showed `main`/`HEAD` as "unrelated
+  histories" at first — a clone artifact, not real corruption; matches exactly what fire 54 hit):
+  **18 open PRs** + **13 more `claude/kind-shannon-*` branches with no covering PR** (31 unmerged
+  refs total, ranging 1-9 commits each). Delegated the classification to a background agent
+  (verifying actual content overlap via patch diffs and main-content greps, not just branch-name
+  bookkeeping, since triple-dot diff against main is meaningless — main has moved ~5,300 commits
+  past every fork point). **Result: 29 of 31 were pure clutter** — either byte-identical fixes
+  already re-landed on main under a different SHA, or inert ephemeral telemetry-snapshot commits.
+  Closed 12 PRs (#28,27,26,22,21,20,19,17,16,15,13,11) with a comment on each citing the specific
+  main commit that already supersedes it. **Salvaged the only 2 fragments verified genuinely
+  missing:** (1) `src/deep_retrieve.py`'s network-egress canary from PR #27/commit `8c1c7bc4a`
+  (fire 51 ported it to `github_meta_enrich.py` only — that half was already on main, this half
+  wasn't; confirmed via `grep egress|canary` = empty before, patch applied cleanly, syntax/compile
+  checked, then actually ran it live with `--skip-network-check` as a real test — enriched 2
+  descriptions for real, JSON valid after, proving the rest of the file still works with the new
+  early-exit added); (2) `src/merge_json_array_conflict.py` from PR #24/commit `0b8dccf02`, a
+  generic JSON-array union-merge conflict resolver — added the standalone script only (inert until
+  invoked from a workflow's mid-conflict step), deliberately NOT the accompanying 18-workflow-yml
+  wiring diff from that same commit, since those files have moved substantially since fire 39 and
+  reapplying a stale diff risked real regressions. All salvage committed + pushed to my branch,
+  PR #29 opened/updated with the full write-up. **Left 5 PRs genuinely unresolved** (#2, #14, #18,
+  #23, #25) — not conclusively verified as already-merged, not obviously safe to auto-port either
+  (a data-file conflict risk, two unverified `git_safe.py` claims, and a guardrail-letter
+  collision) — documented rather than guessed at; see `QUESTIONS.md`.
+  **Harsh self-criticism:** I fixed the *symptom* (closed the redundant PRs sitting there today)
+  but not the *root cause* — the next scheduled fire will get its own fresh throwaway branch and
+  can just as easily grow PR #32, #33, ... the same way, since nothing stops a future session from
+  repeating the ship-to-main-then-leave-a-PR-open pattern. A real fix would be either (a) teaching
+  future fires to close their own PR right after `git_safe ship` confirms `origin/main == HEAD`,
+  or (b) not opening a PR at all when the branch's content is already on main by the time of
+  push — neither is built, only flagged here (again) for the next fire with budget for it. I also
+  did not delete the now-fully-superseded branches themselves (only closed the PRs) — the branch
+  refs are harmless clutter but still there; no tool available this fire to delete remote branches
+  safely, and per `GUARDRAILS.md`'s quarantine-never-delete spirit I'd rather leave a confirmed-
+  safe-to-delete branch alone than risk a destructive action I can't verify cleanly undoes. And of
+  the 5 unresolved PRs, #24's workflow-wiring half specifically still needs someone to actually
+  wire `merge_json_array_conflict.py` into the 18 lanes' conflict-recovery steps — the *tool* to
+  fix the exact "same-day double-write silently drops a whole run's commit" bug class now exists
+  on main, but isn't actually used by anything yet.
+
 - **~22:0x (fire 54, unattended, cloud session) — unshallowed this sandbox's clone (it was shallow,
   which G-T could only report as "9/16 can't-tell"), and the extra history immediately turned that
   guardrail from mostly-blind into a real signal: found and fixed a genuine multi-week silent-skip

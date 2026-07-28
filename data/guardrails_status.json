@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-28T20:02:07.566665+00:00",
+ "generated_at": "2026-07-28T21:44:53.144586+00:00",
  "total": 20,
- "passing": 18,
+ "passing": 17,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -22,8 +22,8 @@
    "id": "G-C",
    "name": "History backup fresh",
    "ok": true,
-   "detail": "2 bundle(s); newest within 26h.",
-   "severity": "warn"
+   "detail": "n/a in CI — the beat pushes straight to origin each cycle, bypassing git_safe/local bundles by design.",
+   "severity": "info"
   },
   {
    "id": "G-D",
@@ -71,63 +71,63 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "24661 memory episodes on record.",
+   "detail": "24689 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "4 guardrail runs logged (append-only, never rewritten).",
+   "detail": "0 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
    "id": "G-L",
    "name": "Uncommitted-work watchdog",
-   "ok": true,
-   "detail": "no stray source files uncommitted.",
+   "ok": false,
+   "detail": "3 untracked source file(s) not committed — commit or quarantine so nothing is lost: other-skills/codex-lifeos/ai-driven-development/SKILL.md, other-skills/codex-lifeos/automation-setup/SKILL.md, other-skills/gpt-image-2/image-generation-from-text/SKILL.md",
    "severity": "warn"
   },
   {
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "132 tasks done, 10 departments moving",
+   "detail": "141 tasks done, 10 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "30212 MB free on the repo drive.",
+   "detail": "88738 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 62.0h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 63.7h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
    "ok": true,
-   "detail": "last 'excava-beat #N' commit 2.1h ago.",
+   "detail": "last 'excava-beat #N' commit 3.8h ago.",
    "severity": "warn"
   },
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "last 'core-spoton:' commit 1.7h ago.",
+   "detail": "last 'core-spoton:' commit 1.4h ago.",
    "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
    "ok": false,
-   "detail": "8/16 lane(s) landing on cadence, 7 can't-tell (shallow clone) — STALE: bulk_analyze.yml (every 2h): last commit 9.0h ago (expected within 6h)",
+   "detail": "12/16 lane(s) landing on cadence — STALE: bulk_analyze.yml (every 2h): last commit 10.7h ago (expected within 6h); discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 903.6h ago (expected within 76h); improve.yml (weekly deep pass): last commit 1253.4h ago (expected within 192h); review.yml (twice-weekly): last commit 909.7h ago (expected within 100h)",
    "severity": "warn"
   },
   {

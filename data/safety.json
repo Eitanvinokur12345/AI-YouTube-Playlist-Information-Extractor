@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-07-28T10:59:42.129880+00:00",
+  "generated_at": "2026-07-28T21:41:36.331521+00:00",
   "policy": "activator gate: safe = auto-activate, caution = warn, risky = block until confirmed",
   "summary": {
-    "safe": 146,
-    "caution": 1210,
-    "risky": 44
+    "safe": 147,
+    "caution": 1220,
+    "risky": 47
   },
   "connectors": {
     "perplexity-mcp": {
@@ -2132,23 +2132,23 @@
     },
     "notion-webhook-triggers": {
       "name": "Notion Webhook Triggers",
-      "rating": "safe",
+      "rating": "risky",
       "reasons": [
-        "official vendor"
+        "requests broad system/shell/file access"
       ]
     },
     "notion-external-agents-api": {
       "name": "Notion External Agents API",
-      "rating": "safe",
+      "rating": "risky",
       "reasons": [
-        "official vendor"
+        "requests broad system/shell/file access"
       ]
     },
     "notion-agents-sdk": {
       "name": "Notion Agents SDK",
-      "rating": "safe",
+      "rating": "risky",
       "reasons": [
-        "official vendor"
+        "requests broad system/shell/file access"
       ]
     },
     "c-mcp-sdk": {
@@ -4822,10 +4822,10 @@
     },
     "rosenvladimirov-odoo-claude-mcp": {
       "name": "rosenvladimirov/odoo-claude-mcp",
-      "rating": "caution",
+      "rating": "risky",
       "reasons": [
-        "third-party (not an official vendor connector)",
-        "open source"
+        "requests broad system/shell/file access",
+        "third-party (not an official vendor connector)"
       ]
     },
     "rrmistry-tilt-mcp": {
@@ -7007,10 +7007,10 @@
     },
     "riza": {
       "name": "Riza",
-      "rating": "risky",
+      "rating": "caution",
       "reasons": [
-        "requests broad system/shell/file access",
-        "third-party (not an official vendor connector)"
+        "third-party (not an official vendor connector)",
+        "open source"
       ]
     },
     "root-signals": {
@@ -10515,6 +10515,7 @@
       "name": "ScrapeUnblocker/scrapeunblocker-mcp",
       "rating": "caution",
       "reasons": [
+        "needs an API key / secret",
         "third-party (not an official vendor connector)",
         "open source"
       ]
@@ -10776,6 +10777,105 @@
       "reasons": [
         "third-party (not an official vendor connector)"
       ]
+    },
+    "mcp-servers": {
+      "name": "MCP Servers",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "singhpratech-crimson-crab-mcp-template": {
+      "name": "singhpratech/crimson-crab-mcp-template",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)",
+        "open source"
+      ]
+    },
+    "gmail-integration": {
+      "name": "Gmail Integration",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "spotify-plugin": {
+      "name": "Spotify Plugin",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "notion-plugin": {
+      "name": "Notion Plugin",
+      "rating": "safe",
+      "reasons": [
+        "official vendor"
+      ]
+    },
+    "slack-plugin": {
+      "name": "Slack Plugin",
+      "rating": "safe",
+      "reasons": [
+        "official vendor"
+      ]
+    },
+    "beams": {
+      "name": "Beams",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "superhuman": {
+      "name": "Superhuman",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "pdf": {
+      "name": "PDF",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "anthropic-claude": {
+      "name": "Anthropic Claude",
+      "rating": "safe",
+      "reasons": [
+        "official vendor"
+      ]
+    },
+    "openai-gpt-4": {
+      "name": "OpenAI GPT-4",
+      "rating": "safe",
+      "reasons": [
+        "official vendor"
+      ]
+    },
+    "browse-external-ai": {
+      "name": "Browse External AI",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "browse-computer": {
+      "name": "Browse Computer",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "browse-web": {
+      "name": "Browse Web",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
     }
   },
   "skills_flagged": {
@@ -10788,13 +10888,6 @@
     },
     "agent-skills-modular-llm-software": {
       "name": "Agent Skills as Modular LLM Software",
-      "rating": "caution",
-      "reasons": [
-        "the technique runs system/shell/file operations — review what it executes"
-      ]
-    },
-    "ai-information-hierarchy": {
-      "name": "AI Information Hierarchy",
       "rating": "caution",
       "reasons": [
         "the technique runs system/shell/file operations — review what it executes"
@@ -10928,6 +11021,13 @@
     },
     "agentic-terminal-coding": {
       "name": "Agentic terminal coding",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "agentic-computer-use": {
+      "name": "Agentic computer use",
       "rating": "caution",
       "reasons": [
         "the technique runs system/shell/file operations — review what it executes"
@@ -11073,6 +11173,13 @@
         "the technique runs system/shell/file operations — review what it executes"
       ]
     },
+    "ai-agent-claw-architecture-replication": {
+      "name": "AI Agent Claw Architecture Replication",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
     "ai-agent-permission-safety-config": {
       "name": "AI Agent Permission and Safety Configuration",
       "rating": "caution",
@@ -11150,8 +11257,43 @@
         "the technique runs system/shell/file operations — review what it executes"
       ]
     },
+    "task-decomposition": {
+      "name": "Task Decomposition",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "agent-verification": {
+      "name": "Agent Verification",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "claim-checks": {
+      "name": "Claim Checks",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "session-mining": {
+      "name": "Session Mining",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
     "managing-projects-with-ai-2": {
       "name": "Managing projects with AI",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "live-internet-access-claude": {
+      "name": "Live Internet Access for Claude",
       "rating": "caution",
       "reasons": [
         "the technique runs system/shell/file operations — review what it executes"
@@ -11173,6 +11315,13 @@
     },
     "agent-swarm-execution": {
       "name": "Agent Swarm Execution",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "pr-generation": {
+      "name": "PR Generation",
       "rating": "caution",
       "reasons": [
         "the technique runs system/shell/file operations — review what it executes"
@@ -11208,6 +11357,20 @@
     },
     "corporate-network-attack-simulation": {
       "name": "Corporate network attack simulation",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "scheduling-tasks-2": {
+      "name": "Scheduling Tasks",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "image-generation-from-text": {
+      "name": "Image generation from text",
       "rating": "caution",
       "reasons": [
         "the technique runs system/shell/file operations — review what it executes"

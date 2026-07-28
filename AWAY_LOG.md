@@ -5,6 +5,55 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-28 (continued)
+- **~18:0x (fire 51, unattended, cloud session) — ported fire 50's egress canary to the one
+  other module it named but didn't reach: `src/github_meta_enrich.py`.** Standing checks:
+  `origin/main` at `17d0bd1f` matched HEAD (only the recurring one-time missing-upstream gap,
+  auto-repaired); guardrails 16/19, 0 critical, same steady-state trio as recent fires (G-C
+  self-heals on ship; G-M not stalled — 132 done, 10 depts moving; G-O local-drain-stale, PC
+  off, unfixable from a cloud sandbox). Read fire 50's own named gap: it added
+  `_network_open()` to `verify_elements.py`/`verify_connectors.py` after this sandbox's
+  policy-restricted proxy (403s any host outside a small allowlist) made those modules
+  silently write false dead/fail verdicts, but explicitly said it had NOT checked
+  `github_meta_enrich.py` or `deep_retrieve.py`, "both of which also do direct third-party
+  network calls and could have the identical failure mode." Read both before assuming they
+  needed the same fix — they don't have the identical shape. `deep_retrieve.py`'s `_get()`
+  already fails silently (returns `""` on any exception) and `enrich()` only ever *skips*
+  writing a new description when nothing was gathered — a stub stays an honestly-labeled stub,
+  no false verdict, so left it alone. `github_meta_enrich.py` is different and genuinely
+  broken under this sandbox's egress: `fetch_repo_meta()` catches `HTTPError` and treats ANY
+  403 from `api.github.com` as `{"_rate_limited": True}` — a signal `main()` treats as a hard
+  stop-the-whole-batch condition, printing "STOPPED (rate-limited)". A sandbox-proxy 403 looks
+  byte-for-byte identical to a real GitHub rate-limit over the wire, so a manual run here would
+  misdiagnose "this environment's proxy" as "GitHub throttled us" (the exact misattribution
+  class fire 50 caught) AND burn the first batch item's 3-day attempt cooldown for a call that
+  never really had a chance. **Fixed:** added the same two-anchor (`github.com` +
+  `wikipedia.org`) `_network_open()` canary and a `--skip-network-check` escape hatch, aborting
+  before `main()` builds any batch or writes `attempts`/STATE when egress looks closed — same
+  guarded-file set as before (nothing but the abort message on stdout). **Verified live, not
+  just read:** `python3 -m src.github_meta_enrich --limit 2` printed the abort message and
+  `git status --porcelain` showed zero file changes from the run; `--dry-run
+  --skip-network-check --limit 1` still completes normally end-to-end (`[dry] would process 1
+  of 23...`) proving the flag path and the rest of the module are untouched; `python3 -c
+  "ast.parse(...)"` on the file; `python -m src.guardrails` still 16/19, 0 critical, same as
+  before the change. **Harsh self-criticism:** this is a small, safe, cheap fix — exactly the
+  kind fire 49 flagged itself for picking over the backlog's actual highest-value item, and the
+  same critique applies here: I chose it because fire 50 had already done the hard diagnostic
+  work and named it precisely, not because I independently found the biggest lever. I did
+  confirm `deep_retrieve.py` genuinely doesn't need the same fix rather than skip the check
+  entirely, but that's still a two-file review, not the blanket sweep fire 50 also left undone
+  (a differently-shaped network-failure-mode bug could exist in `resolve_links.py`,
+  `mine_feeds.py`, `history_mine.py`, or other direct-`urllib`-using modules I did not read this
+  fire). I also did not re-run the diff fire 50 itself proposed — auditing fires 48/49's own
+  small live verification batches against a fresh canary-gated re-check for hidden false
+  dead/fail entries — that is still open and, unlike this fix, touches data that may already be
+  wrong in a committed file; a future fire with more budget should do that one, not another
+  network-canary port. `data/elements_index.json` picked up an incidental rebuild refresh
+  (timestamp + a couple of unrelated `links` fills from data already on disk) as a side effect
+  of `em.build()` running during the `--dry-run` verification call — committed alongside since
+  it's a derived cache reflecting already-committed source data, not new content this fire
+  invented. Shipped straight to `origin/main` via `git_safe`, same convention as every fire
+  since 8, still unconfirmed by Eitan.
+
 - **~16:0x (fire 50, unattended, cloud session) — 10th-heartbeat checkpoint, PLUS a real
   finding: this session's own manual verification runs were silently poisoning live-link
   data with false dead/fail verdicts, caught before anything was committed, and now

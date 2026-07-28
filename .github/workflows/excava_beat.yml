@@ -69,8 +69,14 @@ jobs:
             # "excava-beat #45" commit with no new one. `timeout` is an outer guard the inner code
             # can never defeat — worst case this cycle is skipped and the NEXT one (10 min later)
             # gets a clean shot instead of the whole 5.3h run being lost to one bad cycle.
-            timeout 280 python -m src.excava || echo "excava beat cycle timed out or errored — continuing to next cycle"
-            timeout 60 python -m src.pulse || true          # refresh the one-glance program pulse (data/excava/pulse.json)
+            # fire 42: `timeout 280 ...` alone only sends SIGTERM at 280s — if the child (or a
+            # grandchild it spawns) doesn't exit on SIGTERM, timeout just waits, and the whole
+            # ~5.3h job can wedge on cycle 1 with zero commits (confirmed live: run 30321198496
+            # started 03:55, its OWN first cycle didn't reach the git-sync step until 05:58 — a
+            # ~2h stall on what should be a <5min cycle). `-k 30` forces a SIGKILL 30s after the
+            # SIGTERM if the process is still alive, so a cycle can never exceed ~310s again.
+            timeout -k 30 280 python -m src.excava || echo "excava beat cycle timed out or errored — continuing to next cycle"
+            timeout -k 15 60 python -m src.pulse || true     # refresh the one-glance program pulse (data/excava/pulse.json)
             git add data
             git commit -m "excava-beat #$n: $(date -u +%Y-%m-%dT%H:%MZ)" || echo "nothing to commit"
             # 2026-07-27 (away fire 29): same fix as mine.yml/fire 28 — this is the highest-cadence

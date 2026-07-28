@@ -5,6 +5,46 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-28 (continued)
+- **~06:0x (fire 42, unattended, cloud session) — found and unblocked a genuinely stuck beat run,
+  fixed the root-cause wedge, and flagged that the away week is now at its 7-day mark.** Standing
+  checks clean; guardrails 15/18, 0 critical (same steady-state as fire 41: G-C stale-backup and
+  G-O local-drain-stale are both pre-existing/non-fixable from a cloud sandbox). G-M reported
+  STALLED — done-counter flat at 26 since 03:51, now over 2h — and this fire chased it to ground
+  instead of re-noting it as fire 41 did. Root cause via the GitHub Actions API (not guessing):
+  the beat's `excava_beat.yml` `cancel-in-progress: false` concurrency group had one run
+  (30321198496, started 03:55) silently wedged on its OWN first cycle — its git-sync step didn't
+  even fire until 05:58, ~2h into what should be a <5min cycle — which meant `timeout 280 python
+  -m src.excava` did NOT bound the call the way the comment above it (written by fire 27) assumed:
+  `timeout` alone only sends SIGTERM at 280s and then just waits if the process doesn't exit. That
+  wedge blocked the NEXT scheduled run (30329769303, queued since 04:48, over an hour) from ever
+  starting, because the lane's own concurrency group serializes them. Cancelled the wedged run via
+  `mcp__github__actions_run_trigger` (verified: the queued run flipped to `in_progress` within
+  seconds of the cancel), then landed the actual fix: `timeout -k 30 280 ...` / `timeout -k 15 60
+  ...` in `excava_beat.yml` so a still-alive process gets a hard SIGKILL 30s/15s after the SIGTERM
+  instead of the job just waiting on it — verified live with a throwaway `timeout -k 5 3 sleep 10`
+  (returned in ~8s with the expected 124 exit, not the full 10s), and `python3 -c "import yaml;
+  yaml.safe_load(...)"` confirms the edited workflow still parses. **Harsh self-criticism, said
+  plainly:** cancelling that run destroyed whatever real work its own wedged cycle had produced —
+  a local, never-pushed "excava-beat #1" commit that never got a chance to retry its sync on cycle
+  2. In hindsight the lower-risk move was probably to leave it running (away-mode's own "conserve
+  resources, no one watching for fast feedback" cadence tolerates a few more stalled hours better
+  than it tolerates losing a commit) and only land the `-k` fix for next time; I judged unblocking
+  a queue stuck over an hour as the higher-priority failure to fix, but that is a real, if small,
+  tradeoff against the project's own "quarantine, never lose work" law, not a clean win, and
+  Eitan should know it happened rather than read a sanitized "fixed a bug" summary. Did not
+  determine WHY the inner call hung for ~2h in the first place (no logs survive a cancelled run's
+  early cycles, and the tail I could pull only showed the aftermath) — `-k` guarantees this class
+  of wedge can never again cost more than ~5 minutes, but the underlying hang in `src.excava` (or
+  something it calls) is still unexplained and could recur; worth a follow-up fire if G-M flags
+  STALLED again with a *fresh* wedge (check the new run's own early-cycle logs before they age out
+  of the 30321198496 window). Stayed on the non-brain front the whole fire (CI/ops recovery, not
+  the engine/brains subsystem) per `away_mode.json`. **Also flagging, not acting on:** today,
+  2026-07-28, is exactly 7 days since `away_mode.json`'s `since: 2026-07-21` — the stated "~1
+  week" window is now up. `exit_condition` is Eitan posting that he's back, not a calendar date,
+  and no such message has arrived, so this fire continued per the standing instruction rather than
+  assuming an ambiguous signal — but the next fire (or Eitan on return) should treat the week as
+  elapsed, not as still-fresh.
+
 - **~05:0x (fire 41, unattended, cloud session) — built the guardrail fire 40 named as the real
   next-fire candidate, plus fixed a false-positive it introduced along the way.** Fire 40 closed
   the 19-file workflow rollout (every push-capable lane now has the abort-rebase->merge->auto-

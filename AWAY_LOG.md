@@ -4,6 +4,42 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+- **~00:0x (fire 39, unattended, cloud session) — closed the "generic cross-lane 'success but nothing
+  landed' guardrail" gap QUESTIONS.md (fires 25/28/29/30) flagged as still-unbuilt, for the single
+  highest-value lane: added `G-R` (Analyze pipeline health) to `src/guardrails.py`, reading
+  `data/status.json`'s own `analyze_ok`/`last_analyze_ok_at` flags instead of a git-log heartbeat.**
+  Standing checks first: `python -m src.git_safe backup` refreshed the stale G-C history bundle
+  (was failing across many recent fires, now fixed); re-confirmed the OAuth-token blocker fires
+  36/37/38 already found and notified Eitan about is STILL live and got WORSE, not better —
+  `data/status.json` now shows `analyze_ok: false` as of `2026-07-27T23:55:10Z` (a fresh failure,
+  10 minutes before this fire started, not a stale read), `last_analyze_ok_at` still `2026-06-14`
+  (6+ weeks), `pending_to_analyze: 1315`. Did NOT re-notify — fire 37 already sent the exact fix
+  (`claude setup-token` + update `CLAUDE_CODE_OAUTH_TOKEN_REAL`) and fire 38 confirmed unchanged;
+  a third identical ping for the same unfixed, already-flagged issue would be noise, matching fire
+  38's own judgment call. While confirming that, noticed something the prior 3 fires' git-log-only
+  heartbeat checks (G-P/G-Q style) would NOT have caught even if extended to `analyze.yml`:
+  `analyze.yml` lands an `"analyze: safety commit <ts>"` fallback commit on every scheduled run
+  regardless of whether the real Claude Code analysis step succeeded — so a naive heartbeat
+  extension would have reported this exact 6-week outage as "alive" the whole time. Built G-R
+  against the workflow's own self-reported `analyze_ok` flag instead, specifically to avoid that
+  false-negative. Verified: `python3 -m py_compile src/guardrails.py`; `python -m src.guardrails`
+  now reports 18 checks (was 17), G-R correctly flags `!!` with the live blocker detail, all other
+  guardrails unchanged (15/18 passing, 0 critical — G-C now fixed, G-G/G-O pre-existing and
+  unrelated to this change). Updated `GUARDRAILS.md`'s table + count to match (it had already
+  drifted behind the code once before, per its own docstring warning). **Harsh self-criticism:**
+  this is observability, not a fix — the actual blocker (expired OAuth token) still needs Eitan's
+  hands, and this guardrail can only ever confirm what's already known, not repair it; the
+  broader "generic guardrail for ALL 19 lanes" QUESTIONS.md asked for is still not built, and a
+  git-log-only version for the other lanes would still be blind to any lane with a similar
+  fallback-commit pattern — worth auditing for that specific anti-pattern before extending further,
+  not just copy-pasting G-P/G-Q's approach. **Also: this fire did NOT ship via `python -m
+  src.git_safe ship` to `main`** — this cloud session's harness assigned a fixed feature branch
+  (`claude/kind-shannon-w4pngo`) with an explicit "never push to a different branch without
+  permission" instruction, so work went there + a draft PR instead of the 30+-fire direct-to-main
+  convention this project has otherwise used. Same tension fires 6/35/38 already flagged as
+  Eitan's unconfirmed call — still unresolved, now with one more data point (a PR against a main
+  that moves every ~10 minutes will likely need a rebase before it can land cleanly).
+
 - **~23:0x (fire 38, unattended, cloud session) — rolled the fires-28/29/30/35/37 rebase-conflict-
   recovery pattern out to the last 6 scheduled lanes that still had it missing, closing that
   rollout for every scheduled cron workflow that actually pushes data.** Standing checks first:

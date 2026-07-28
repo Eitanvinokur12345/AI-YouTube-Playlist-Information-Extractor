@@ -151,7 +151,17 @@ def main() -> int:
     for r in ver.values():
         by[r.get("status", "?")] = by.get(r.get("status", "?"), 0) + 1
     conflicts = sum(1 for r in ver.values() if r.get("conflict"))
-    store["summary"] = {"checked": len(ver), "total": len(els), "by_status": by,
+    # Honest coverage (fire 48, 2026-07-28, same fix applied to verify_connectors.py):
+    # `ver` accumulates a verdict per element ID forever, but IDs go stale when elements
+    # are merged/deduped/pruned out of the live index — those ghosts still counted toward
+    # `checked`, slightly overstating real coverage (25 found live). This lane's own
+    # gap-detection (`fresh()` always re-includes anything unverified, regardless of cursor
+    # position) already guarantees every CURRENT element eventually gets checked, so this
+    # was never a completion-blocking bug like the connectors one — just an inflated number.
+    live_ids = {e["id"] for e in els}
+    live_checked = len(live_ids & set(ver.keys()))
+    store["summary"] = {"checked": live_checked, "total": len(els), "by_status": by,
+                        "stale_ghost_entries": len(ver) - live_checked,
                         "conflicts_noted": conflicts, "updated_at": _now(),
                         "standard": "M1.C3: >=2 sources + live test; rolling+on-access; dead only after 2 consecutive full failures"}
     OUT.write_text(json.dumps(store, ensure_ascii=False, indent=1), encoding="utf-8")

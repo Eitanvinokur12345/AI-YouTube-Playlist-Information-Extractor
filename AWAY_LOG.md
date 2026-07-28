@@ -5,6 +5,62 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-28 (continued)
+- **~13:0x (fire 46, unattended, cloud session) — picked up fire 45's own named next-fire
+  candidate (widen `broken_json()`'s scope) and, while doing it, found the same bug class was
+  MUCH bigger than fire 45 realized: 78 corrupted `.jsonl` files, not 2.** Standing checks: local
+  `origin/main` was 1 commit behind (a fresh CI beat), synced clean; guardrails 16/18 at the
+  start, 0 critical (same steady-state as fire 45: G-C self-heals on ship, G-O PC-off,
+  unfixable from a cloud sandbox); `excava_systemcheck` flagged 1 tool-drift (news → wired to
+  `src.trend_watch` not `src.news`) — checked it against `data/excava/intent.json`'s own note
+  and confirmed this is fire 23's DELIBERATE, already-documented decision (rewiring risks a
+  write race with `news.yml`'s independent 6h schedule; needs Eitan's call, already in
+  QUESTIONS.md) — correctly left untouched, not a fresh finding. Did the named task: widened
+  `git_safe.broken_json()` and `guardrails.py`'s G-F from top-level-only `glob("*.json")` to a
+  whole-tree `rglob("*.json")` (~3k files, ~1.2s, verified 0 false positives before shipping).
+  **Then went looking for whether the exact same bug (conflict markers slipping past a
+  scope-limited scanner) existed anywhere else, since the class had already recurred once — and
+  it had, far worse:** `*.json` files can be `json.loads`-ed whole, but `.jsonl` append-logs
+  (traces/, agent_memory/, chats/, `project_memory/episodes.jsonl`) are one JSON object PER
+  LINE, so neither `broken_json()` nor G-F could ever see a marker collision inside one — and a
+  targeted scan for bare `<<<<<<<`/`=======`/`>>>>>>> <hash>` LINES (not a naive substring
+  search, which false-positives hard on markdown `===` headers in AI-generated text — verified
+  by hand on real matches before trusting the count) found **78 files, 288 marker lines**, every
+  one timestamped 2026-07-27, i.e. pre-dating fire 41's G-R workflow push-safety rollout —
+  historical damage the preventive fix correctly stops from recurring but that nothing had ever
+  cleaned up, and nothing was watching for going forward either. Built
+  `git_safe.broken_jsonl_markers()` (detection) + `repair_conflict_markers()` (strip ONLY the
+  bare marker lines; every real JSON-line record on both sides is kept — append-only law
+  respected), wired the detector into `commit()`'s pre-flight guard so this can never be
+  silently committed again, added `python -m src.git_safe repair-conflicts` as a CLI entrypoint,
+  and added guardrail **G-S** (mirrors G-R's "structural prevention, not a one-off patch"
+  pattern) for ongoing cockpit visibility. **Verified, not assumed:** for 5 sample files
+  (`syscalls.jsonl` 3257 real lines, `episodes.jsonl` 24614, `creators-w1.jsonl` 24, plus 2
+  more), counted real (`{`-prefixed) lines before and after repair — identical every time, only
+  the 288 marker lines gone; re-ran every remaining line in those files through `json.loads`
+  individually — 0 parse failures. **Made, then caught, the EXACT SAME mistake fire 45's own
+  self-criticism warned the next fire about — and this time it actually recurred:** ran
+  `python -m src.git_safe sync` with the 78 repaired files sitting UNSTAGED, and
+  `revert_ci_churn()`'s `git checkout -- data backups` silently reverted every one of them back
+  to broken (`broken_jsonl_markers()` read 78 again immediately after). Re-ran the repair a
+  second time and `git add data/ src/git_safe.py src/guardrails.py` BEFORE calling anything that
+  touches sync, this time confirmed via `git diff --cached --stat` that the repair was actually
+  staged before shipping. Committed `66ec1356`, pushed and verified (`origin == HEAD`).
+  Guardrails after: **18/19**, 0 critical (only G-O, PC off, remains — G-S itself now reads OK).
+  **Harsh self-criticism:** the duplicated-repair mistake is not a new failure mode — fire 45
+  wrote it up in detail one fire ago specifically so it wouldn't repeat, and it repeated anyway
+  because I called `sync` out of habit instead of checking `git status` first; the lesson isn't
+  learned until a fire builds a real safeguard (e.g. `sync()` itself refusing to run — or at
+  least warning loudly — when `data/` has non-trivial unstaged changes) rather than relying on
+  each fire remembering a paragraph in a log file it may not fully re-read. Flagging that as the
+  concrete next-fire candidate, same as fire 45 did for this one. Also: I did not investigate
+  WHY these 78 files corrupted in the first place beyond "timestamp precedes G-R" — plausible
+  but not proven root-cause-by-log, since the underlying CI runs that caused it are old enough
+  their logs may already be gone; if a fresh corrupted file ever appears despite G-R passing,
+  that would be the sign this explanation was wrong and something else is still live. Did not
+  touch the ~13-20 stray `kind-shannon-*` branches (still unswept, still someone else's
+  problem) or M2 (still correctly deferred). Shipped straight to `origin/main` via `git_safe`,
+  same 45+-fire convention, still unconfirmed by Eitan.
+
 - **~11:1x (fire 45, unattended, cloud session) — advanced M1's own named target
   (`deep_retrieve enrichment (stub≈0)`) plus found and fixed a second, real, currently-active
   bug along the way: a false "hollow" reading in `excava_systemcheck.py` caused by two

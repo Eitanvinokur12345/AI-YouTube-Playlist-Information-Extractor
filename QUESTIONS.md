@@ -54,6 +54,36 @@ identical mechanical edit and asked whether a future fire should just do all 9 i
 instead of another 3-file increment — no strong reason not to, just following the smaller-scope
 precedent fires 28-30 set. The generic cross-lane guardrail is still unbuilt.
 
+**UPDATE (fire 38, per commit history):** rolled the `data_guard.json`-only carve-out out to the
+remaining lanes — commit says "rollout now covers all 17 scheduled cron lanes with a real push."
+
+**UPDATE (fire 39) — found why `main` was still stuck 3 days later despite fire 38's "complete"
+rollout: the carve-out was always scoped to ONE file, and two OTHER files conflict just as often.**
+Live evidence: `origin/main` had not received a single commit since 2026-07-25T15:56 (checked via a
+fresh `git fetch`), yet `mine.yml` and `review.yml` kept reporting "success" daily through
+2026-07-27. Pulled the actual job log for `mine.yml`'s 2026-07-27T12:53 run: rebase conflicted on
+`data/brain_graph.json` **and** `data/designs.json` (not `data_guard.json` this time), aborted,
+retried as merge, conflicted on the same two files again, the existing recovery resolved
+`data_guard.json` (not actually part of this conflict) and left the other two — so
+`git commit --no-edit` failed outright and the whole run's real content (skills/tools/models from
+that pass) was discarded, same as the original fire-25/28 bug, just triggered by a different file
+pair. Fix: (1) added `data/brain_graph.json` to the same "known-stateless, auto-resolve ours"
+carve-out — it's a fully regenerated derived artifact (`src/build_graph.py` rewrites it whole from
+source-of-truth JSON every run), so picking either side is lossless. (2) `data/designs.json` is
+NOT stateless (it accumulates unique entries + Arena taste-tags from multiple lanes), so instead of
+blindly picking a side, added `src/merge_json_array_conflict.py` — reads both conflicting blobs
+straight from the git index (stage 2/3, no working-tree markers to parse) and unions the `designs`
+array by `slug`, keeping both sides' unique entries instead of dropping whichever side loses.
+Applied to all 18 workflow files that carry this recovery block. Verified two ways: (a) the merge
+tool alone against a synthetic two-branch conflict (3+3 entries with 1 shared key -> 4 unique,
+both unique entries kept); (b) the full recovery block end-to-end against a synthetic 3-file
+conflict (`data_guard.json` + `brain_graph.json` + `designs.json` all conflicting at once, matching
+the real `mine.yml` log) — commit now succeeds where it previously failed outright. All 18 patched
+YAML files re-validated with `yaml.safe_load`. The generic cross-lane "job succeeded but nothing
+landed" guardrail (flagged since fire 28) is still unbuilt and would have caught this gap 3 days
+sooner instead of needing a manual maintenance_check + job-log dig — still the deeper fix, still a
+good next-fire candidate. _No owner decision needed — straightforward bug fix, applying it now._
+
 **2026-07-26 (fire 10) — deterministic GitHub-metadata enricher BUILT, per the proposed default below.**
 `src/github_meta_enrich.py` now fills github-linked stub descriptions from the GitHub REST API's
 own `description`/`topics` (no LLM, no Ollama, no local-drain dependency) and is wired hourly into

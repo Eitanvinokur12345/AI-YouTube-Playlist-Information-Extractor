@@ -242,6 +242,9 @@ jobs:
               echo "merge also conflicted — auto-resolving known-stateless data_guard.json in our favor"
               git checkout --ours -- data/data_guard.json 2>/dev/null || true
               git add data/data_guard.json 2>/dev/null || true
+              git checkout --ours -- data/brain_graph.json 2>/dev/null || true
+              git add data/brain_graph.json 2>/dev/null || true
+              python -m src.merge_json_array_conflict data/designs.json designs slug 2>/dev/null && git add data/designs.json 2>/dev/null || true
               git commit --no-edit || echo "unresolved conflict outside data_guard.json — leaving for manual/next-run recovery"
             fi
           fi

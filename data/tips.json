@@ -96,7 +96,9 @@
       "Install community skills via `npx skills add <repo> --global` or `/plugin marketplace add <repo>` instead of manual copy when the skill supports the Skills CLI.",
       "Delegate mechanical execution work to a cheaper model (e.g. via the Codex Plugin) while keeping the expensive frontier model focused on planning and judgment calls.",
       "Package repeated prompts as reusable Skills (small focused bundles of instructions, tools, scripts, examples, and files) instead of rewriting the same prompt every time.",
-      "Combine a persistent research-memory skill with a deep-research-pipeline skill so findings both persist across sessions and get properly sourced/validated when generated."
+      "Combine a persistent research-memory skill with a deep-research-pipeline skill so findings both persist across sessions and get properly sourced/validated when generated.",
+      "Disconnect unused MCP servers mid-session — they cost context tokens just by being connected, even if you never call them.",
+      "Use Rewind to delete a wrong-turn exchange instead of arguing with the model, which only adds more context weight."
     ],
     "Claude": [
       "Add Nano Banana as a Claude skill plus a Google AI Studio API key to generate and edit images from chat with /banana.",
@@ -517,7 +519,8 @@
       "Composable skill libraries that self-improve by generating new skills from successful patterns are the foundation of scalable agentic workflows."
     ],
     "harness code": [
-      "Benchmarks like Cursor Bench, SWE-bench multilingual and Terminal Bench compare coding agents across harnesses, not just raw models."
+      "Benchmarks like Cursor Bench, SWE-bench multilingual and Terminal Bench compare coding agents across harnesses, not just raw models.",
+      "Token cost in long agent sessions compounds because every reply re-reads the full thread; manage it by trimming history (clear/compact), not by typing less."
     ],
     "productivity": [
       "Integrate AI into your daily workflow to reclaim time — your logic and expertise remain, while AI handles repetitive execution",

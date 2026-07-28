@@ -104477,6 +104477,51 @@
       ],
       "video_quality_score": 6,
       "low_quality_source": false
+    },
+    {
+      "skill_name": "Claude Context Weight Management (Clear/Compact/Rewind)",
+      "slug": "claude-context-weight-management",
+      "category": "productivity",
+      "description": "A token-cost mental model for long Claude sessions: every reply re-reads the entire thread, so cost compounds with conversation length, not per-message. Reduces cost by trimming carried history rather than typing less.",
+      "use_case": "Cutting Claude/Claude Code token spend on long sessions by actively managing conversation history instead of letting it grow unchecked.",
+      "output": "A long working session that stays cheap because unnecessary history is actively trimmed.",
+      "quality_score": 7,
+      "model_version": null,
+      "company": "Anthropic",
+      "country": "USA",
+      "open_source": false,
+      "target_tool": "claude",
+      "is_claude_skill": false,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Claude Code",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=a4zZuhvMXts",
+      "source_video_id": "a4zZuhvMXts",
+      "tips": [
+        "Use Clear to reset carried context to zero when a topic is genuinely done; use Compact to shrink history instead of clearing it when you still need some context.",
+        "Unused MCP servers still cost context tokens just by being connected, before you type a word — disconnect ones you're not using in a session.",
+        "If you've gone down a wrong turn and are now arguing with the model, use Rewind to delete that branch instead of continuing to argue (which only adds more weight)."
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "Long AI sessions get expensive because every reply re-reads the whole thread, not because any single message is expensive — the fix is carrying less history, not typing less."
+      ],
+      "relevance": "Token cost is a direct, recurring expense for anyone running long Claude Code sessions; this is a concrete, low-effort way to cut it.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "a4zZuhvMXts"
+      ],
+      "video_quality_score": 7,
+      "low_quality_source": false
     }
   ],
   "recipes_updated_at": "2026-07-25T11:04:07.208331+00:00"

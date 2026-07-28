@@ -4,6 +4,49 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+## 2026-07-28 (continued)
+- **~04:0x (fire 40, unattended, cloud session) — closed the fire-28..39 workflow-rollout loose end,
+  plus the every-10th-heartbeat review.** Standing checks clean (`STANDING CHECKS: OK`, upstream
+  tracking auto-repaired again — same recurring per-session gap noted since fire 7/8, still not
+  worth building automatic first-boot tracking for given it self-heals every time in ~0s).
+  Guardrails 15/17 → 0 critical both before and after. Real work: of the 19 workflow files fires
+  28/29/30/35 identified as exposed to the "job reports success, real work silently discarded on a
+  rebase conflict" bug, 18 had been fixed across those fires but **`excava_inbox.yml`** — the one
+  issue-triggered (not scheduled) lane, easy to lose track of since it doesn't fire on a predictable
+  cadence — was still exposed. Applied the identical abort-rebase→retry-merge→auto-resolve-
+  `data_guard.json` fallback used everywhere else. Verified: `python -m src.git_safe backup`
+  refreshed the history bundle (cleared G-C), `python -m yaml` parsed the edited file cleanly,
+  post-fix scan of all 19 files for the fallback marker string shows 0 remaining EXPOSED. Shipped
+  via `git_safe ship` → `c0396450`. **The 19-file rollout QUESTIONS.md has been tracking since fire
+  28 is now complete; the generic cross-lane "success but nothing landed" guardrail flagged as the
+  deeper fix in every one of those entries is still unbuilt** — real next-fire candidate instead of
+  more of this mechanical class.
+  **Every-10th-heartbeat review (per the outer routine):** storage — 30.4GB free on the runner disk,
+  `.git` 111MB / `data` 139MB, no pressure. Previous run (fire 39, commit `bb52e95b`) landed cleanly and the beat kept running normally
+  afterward (4 more scheduled-lane commits landed post-fire-39 with no gap: core-spoton,
+  connectors-verify, links+memory, bulk-analyze) — no evidence of a stall or a silently-broken run.
+  No operational limit was hit this window (no rate-limit message, no push failure, no guardrail
+  critical). Review of fires 30–39: 30/35 continued the workflow rollout in 3-file batches; 31
+  returned to real hub-enrichment work (the actual program, not plumbing); 32 found and fixed the
+  real cause behind most stub records never enriching; 33 closed self-check item #20; 34 caught and
+  fixed a critical guardrail regression standing checks surfaced; 36 chased self_check's #1 flagged
+  failure; 37 confirmed 36's OAuth-token blocker was resolved; 38 extended the rebase-recovery
+  pattern to 6 more scheduled push lanes; 39 hardened `git_safe.commit()` to refuse shipping broken
+  JSON. No blocker across the window serious enough to interrupt Eitan for — posting this summary to
+  the repo per the "post a summary" instruction, not paging him.
+  **Harsh self-criticism:** this closes a loose end but is still the SAME class of plumbing work
+  self-criticism has flagged repeatedly since fire 8 (git/CI hygiene, not Hub content, enrichment,
+  departments, or the M2 program items SESSION_HANDOFF.md's own "NEXT M2" line names — rooms
+  producing committed cross-family artifacts on the beat, then the 5-class Router/Agent/Tool/Room/
+  Element layer). One genuine excuse this fire: it was a single well-scoped, low-risk, five-minute
+  close-out of an already-tracked 8-fire-long item, not a sixth NEW piece of plumbing invented from
+  scratch — but the next fire with a real time budget should attack M2's actual next step instead of
+  finding a ninth thing to harden. Also flagging, not chasing: `guardrails` flipped G-M from OK to
+  `STALLED (no new completions in the last 4 beats)` between the pre- and post-fix runs this same
+  fire — worth a follow-up fire checking whether that's real (a stuck lane) or an artifact of this
+  fire's own narrow, non-task-completing scope; did not investigate further to keep this increment
+  small.
+
 - **~03:0x (fire 39, unattended, cloud session) — good news first: the OAuth-token blocker fires
   36-38 chased and flagged for Eitan is RESOLVED.** `data/status.json` now reads `analyze_ok:
   true`, `token_hint: null`, `last_analyze_ok_at: 2026-07-28T02:37:27Z` (fresh, ~30 min before

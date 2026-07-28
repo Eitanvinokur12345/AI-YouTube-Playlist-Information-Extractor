@@ -3,7 +3,7 @@ src/guardrails.py — the INFORMATION-LOSS GUARDRAILS (owner law, 2026-07-06).
 
 The project must never be "toppled" — no committed work lost, no data silently dropped,
 no push that only *looked* like it saved, no corruption shipped that breaks the dashboard.
-This module enforces 17 named guardrails, each a concrete check. It writes
+This module enforces 18 named guardrails, each a concrete check. It writes
 data/guardrails_status.json (for the cockpit) and APPENDS to data/guardrails_log.jsonl
 (never rewritten — a permanent audit trail).
 
@@ -335,9 +335,41 @@ def _load_json(p, d):
         return d
 
 
+def g_analyze_pipeline_health():
+    """2026-07-28 (fire 39): G-P/G-Q's git-log heartbeat pattern watches whether a lane's commit
+    LANDS, not whether the lane's real work succeeded — and `analyze.yml` is the one place that
+    gap is actively misleading: it commits "analyze: safety commit <ts>" on every scheduled run
+    REGARDLESS of whether the actual Claude Code analysis step succeeded (see `analyze.yml`'s
+    fallback-commit step), so a heartbeat check on that commit prefix would report "alive" straight
+    through the live OAuth-token outage fires 36/37/38 already found and notified Eitan about
+    (`data/status.json`: `analyze_ok: false` since 2026-07-27, `last_analyze_ok_at: 2026-06-14` —
+    6+ weeks stale, 1315+ videos backlogged). This is exactly the "job succeeds, real work silently
+    lost" bug class QUESTIONS.md (fires 25/28/29/30) flagged a generic cross-lane guardrail as the
+    still-unbuilt deeper fix for — this is a first, correctly-scoped instance of it for the single
+    highest-value lane (the analyze pipeline is this repo's entire purpose per CLAUDE.md), reading
+    the workflow's own self-reported `analyze_ok` flag directly instead of a git-log heartbeat that
+    the safety-commit would fool. Read-only, no GitHub Actions API / new permissions needed."""
+    st = _load_json(DATA / "status.json", {})
+    ok = st.get("analyze_ok")
+    pending = (st.get("run_report") or {}).get("pending_to_analyze")
+    if ok is None:
+        return _ok("G-R", "Analyze pipeline health", True,
+                   "status.json has no analyze_ok field yet — nothing to check.", "info")
+    if ok:
+        return _ok("G-R", "Analyze pipeline health", True,
+                   f"analyze_ok=true, pending_to_analyze={pending}.", "info")
+    return _ok("G-R", "Analyze pipeline health", False,
+               f"analyze_ok=false (since {st.get('analyze_failed_at', '?')}); last real success "
+               f"{st.get('last_analyze_ok_at', '?')}; pending_to_analyze={pending} — the CORE "
+               "video-analysis pipeline is down. A git-log heartbeat alone would miss this ("
+               "analyze.yml still lands a 'safety commit' every run even while broken). Needs a "
+               "human fix (see QUESTIONS.md / AWAY_LOG fire 37 for the OAuth-token remedy).",
+               "warn")
+
+
 CHECKS = [g_quarantine, g_msgfile, g_backup, g_mojibake, g_build_align, g_json,
           g_remote_sync, g_collisions, g_handoff, g_memory, g_auditlog, g_watchdog, g_movement,
-          g_disk, g_localfuel, g_beat_heartbeat, g_core_spoton_heartbeat]
+          g_disk, g_localfuel, g_beat_heartbeat, g_core_spoton_heartbeat, g_analyze_pipeline_health]
 
 
 def run() -> dict:

@@ -18,10 +18,10 @@ Anything in the way is moved to `_ATTIC/` (git-ignored, kept forever), never `rm
    read trailing words as pathspecs and the commit failed. **Now:** every commit goes through a UTF-8
    file (`git commit -F _ATTIC/COMMIT_MSG.txt`) via `git_safe.commit()` — the shell never touches the text.
 
-## The guardrails (17, `python -m src.guardrails`)
-_Table below covers G-A…G-L + the two newest; G-M…G-P (movement/disk/local-drain/beat-heartbeat)
-are documented in their own docstrings in `src/guardrails.py` — this table has fallen behind that
-file more than once and the code is always the source of truth for the live count._
+## The guardrails (18, `python -m src.guardrails`)
+_Table below covers G-A…G-L + the newest few; G-M…G-R (movement/disk/local-drain/beat-heartbeat/
+analyze-health) are documented in their own docstrings in `src/guardrails.py` — this table has
+fallen behind that file more than once and the code is always the source of truth for the live count._
 | ID | Name | Protects against |
 |----|------|------------------|
 | G-A | Quarantine over delete | losing uncommitted files to blind `git clean` |
@@ -37,6 +37,7 @@ file more than once and the code is always the source of truth for the live coun
 | G-K | Append-only audit log | no trail of what happened (`data/guardrails_log.jsonl`, never rewritten) |
 | G-L | Uncommitted-work watchdog | stray source files silently never committed |
 | G-Q | Core-spoton heartbeat freshness | the hourly M1.C pipeline (discovery/deep-retrieve/verify) silently stalling — cron disabled, a step now raising before Commit, or a bad rebase — with nothing watching for it (added fire 26, 2026-07-27, after fire 25 found the sibling octal-arithmetic bug) |
+| G-R | Analyze pipeline health | the "job succeeds, real work silently lost" bug class specifically for `analyze.yml`: it lands a "safety commit" every run whether or not analysis actually worked, so a git-log heartbeat alone would miss an outage — reads `status.json`'s own `analyze_ok` flag instead (added fire 39, 2026-07-28, after the OAuth-token outage fires 36/37/38 flagged stayed invisible to G-P/G-Q-style heartbeats) |
 
 ## How to use the safe git helper (always, from now on)
 ```

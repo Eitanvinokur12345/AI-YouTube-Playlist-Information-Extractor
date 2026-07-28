@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-28T19:06:52.088226+00:00",
+ "generated_at": "2026-07-28T19:07:45.544972+00:00",
  "total": 20,
- "passing": 16,
+ "passing": 18,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -21,8 +21,8 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": false,
-   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
+   "ok": true,
+   "detail": "1 bundle(s); newest within 26h.",
    "severity": "warn"
   },
   {
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": false,
-   "detail": "NOT in sync (behind/ahead: 1\t0) — a push may not have landed.",
+   "ok": true,
+   "detail": "HEAD == origin/main (work is really saved).",
    "severity": "warn"
   },
   {
@@ -78,7 +78,7 @@
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "1 guardrail runs logged (append-only, never rewritten).",
+   "detail": "2 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -99,7 +99,7 @@
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "30442 MB free on the repo drive.",
+   "detail": "30310 MB free on the repo drive.",
    "severity": "info"
   },
   {

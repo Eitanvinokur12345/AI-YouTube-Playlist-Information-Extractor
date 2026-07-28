@@ -1,15 +1,17 @@
 # improve: Self-improvement: review prompts/engines/routing/own-code; auto-apply safe changes; pitch 
 
-> Decision artifact · room `dept-improve-self-improvement-rev-770` (dept) · 2026-07-27T12:10:03.651684+00:00
-> Participants: Sprocket, Gauge, Ratchet · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-improve-self-improvement-rev-770` (dept) · 2026-07-28T23:19:31.617338+00:00
+> Participants: Sprocket, Gauge, Ratchet · synthesized by mistral/mistral-small-latest
 
-**Decision:** Conduct a 48-hour dual-prompt A/B test with 10% of users receiving the new prompt and forced feedback collection.
+**Decision:**
+Run a 48-hour dual-prompt A/B test with 10% of users, forcing feedback on answer quality and latency at every interaction.
 
-**Plan:**  
-1. Select 10% of the user base for the A/B test, dividing them into two groups: one with the current prompt and one with the new prompt.  
-2. Implement forced feedback collection mechanisms for users interacting with the new prompt to gather qualitative data.  
-3. Set up real-time tracking for key performance metrics, including latency and user satisfaction scores.  
-4. Assign ownership of the metrics monitoring to the metrics team to ensure thorough analysis of performance during the test.  
-5. After 48 hours, analyze the collected data and feedback to assess the new prompt's performance before a potential full rollout.  
+**Plan:**
+1. Split traffic: 10% of users receive the new prompt, 90% retain the current one.
+2. Deploy forced feedback collection: prompt users for quality/latency ratings after every interaction.
+3. Monitor real-time metrics: track answer quality, latency, and error rates for both prompts.
+4. Assign ownership: metrics team leads data collection, analysis, and reporting.
+5. Conduct post-test review: compare feedback and performance data to validate the new prompt.
+6. Document findings: summarize insights and next steps for full rollout or rollback.
 
-**What changed:** The approach was refocused to a dual-prompt A/B test with enforced user feedback instead of solely relying on passive metrics.
+**What changed:** Switched from shadow/canary tests to a dual-prompt A/B test with forced user feedback for faster, more comprehensive validation.

@@ -5,6 +5,49 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-28 (continued)
+- **~08:0x (fire 44, unattended, cloud session) — ran the backlog's own top-ranked item
+  (`data/excava/backlog.json` candidate #1, value 87) instead of picking a new task by hand:
+  "verify the next 200 of 6513 unverified elements."** Standing checks first: `git fetch
+  origin main` clean, local HEAD == `origin/main` (`588022f7`), no stray uncommitted files;
+  guardrails 16/18, 0 critical both before and after (only the two steady-state warns —
+  G-C stale-backup, self-heals on ship, and G-O local-drain-stale since Eitan's PC/Ollama is
+  off — unchanged from fires 41-43). Ran `python -m src.verify_elements --limit 200`: cursor
+  advanced 6434→6696 (262 elements freshly re-tested, 2-source+live-link standard), rolling
+  cumulative tally now 9323/10607 checked (`pass` 3742, `thin` 2025, `unverifiable` 3294,
+  `fail` 176, `dead` 86, 324 conflicts noted) — real, verifiable enrichment work, not plumbing,
+  the first fire since 31/32 to land on the actual M1 program instead of CI/git hygiene.
+  Reverted the `data/excava/movement.json`/`data/guardrails_status.json` side-effect noise
+  from running guardrails.py twice before committing, matching the precedent fires 6/32/33/34/
+  39 already set (diff scoped to the real work: `elements_index.json`, `elements_verified.json`,
+  `verify_elements_state.json`). **Process note, said plainly:** this fire's *hosting* session
+  (a browser-driven Claude Code run, not the usual cloud sandbox the prior 43 fires ran under)
+  is bound by an explicit, non-negotiable rule to develop on a per-session branch and open a
+  draft PR rather than push straight to `origin/main` — which is what `git_safe.push()` always
+  does (`git push origin HEAD:main`, hardcoded). Running `ship`/`push` here would have violated
+  that rule, so this fire committed via `git_safe.commit()` (add + JSON-integrity gate, matching
+  every prior fire) but pushed to `claude/kind-shannon-lsu9cv` and opened a draft PR instead of
+  shipping to `main` directly — the one deliberate deviation from the 40+-fire "ship straight to
+  main, zero PRs" convention this log has flagged as "still unconfirmed by Eitan" since fire 30.
+  Whether that convention should now formally become "PR from this session type, direct-ship from
+  the cloud-sandbox type" or something else is exactly the branch-vs-main question already parked
+  in `QUESTIONS.md` — not re-litigated here, just made concrete with a real instance. **Also
+  flagging, not re-flagging alarmingly:** fire 42 already noted 2026-07-28 is the 7-day mark of
+  `away_mode.json`'s "~1 week" window; that's now a day past, still no message from Eitan, `exit_
+  condition` still unmet — continuing per the standing instruction, same call fire 42/43 made.
+  **Harsh self-criticism:** 262 re-verified elements is a real but shallow dent against a 10,607-
+  element hub (2.5%), and I did not pick the *next*-highest-value candidate after this one
+  (resolve real links for 200 unlinked elements, value 82) or attempt M2's actual next line
+  (rooms producing committed cross-family artifacts) — I took the single cheapest, most
+  mechanically-verifiable, zero-ambiguity task on the board given this is a fresh session with
+  no prior-fire memory beyond what's in this repo, not because I made an independent case it's
+  the highest-leverage thing available. I also did not inspect any of the 176 `fail` or 86 `dead`
+  entries individually to confirm the live-link tester itself isn't producing false negatives
+  (e.g. a site blocking the sandbox's User-Agent) — took the tool's own verdict at face value,
+  consistent with it being an already-proven, previously-shipped script, but did not add new
+  scrutiny beyond what running it does automatically. Left the branch-vs-main question, the
+  ~13-20 stray `kind-shannon-*` branches, and M2's engine/brains work (explicitly off-limits per
+  `away_mode.json`'s "NOT the engine/brains subsystem" rule) untouched, same as every prior fire.
+
 - **~07:0x (fire 43, unattended, cloud session) — the fire-42 fix wasn't enough: the very NEXT run
   inherited the exact same wedge by 2 minutes of bad timing, and this fire proved the real fix by
   watching a fresh cycle actually complete.** Standing checks clean (stale `origin/main` cache

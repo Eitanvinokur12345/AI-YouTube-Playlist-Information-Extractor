@@ -5,6 +5,96 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-28 (continued)
+- **~16:0x (fire 50, unattended, cloud session) — 10th-heartbeat checkpoint, PLUS a real
+  finding: this session's own manual verification runs were silently poisoning live-link
+  data with false dead/fail verdicts, caught before anything was committed, and now
+  structurally prevented.** Standing checks first: `origin/main` unchanged at `17d0bd1f`
+  (fire 48+49's own post-ship snapshot commit), HEAD in sync, only the recurring one-time
+  missing-upstream gap (auto-repaired, same as every fresh session branch since fire 7).
+  Guardrails 16/19, 0 critical — same steady-state trio as every recent fire (G-C stale-backup
+  self-heals on ship; G-M STALLED, accurate — no department completion in the last 4 beats,
+  the last few fires having been verification/plumbing work; G-O local-drain-stale, PC off,
+  not fixable from a cloud sandbox). Disk: 30,444 MB free (G-N), no cleanup needed.
+  **Every-10th-heartbeat review (fires 40–49, this being fire 50):** all 10 landed and shipped
+  cleanly, `origin==HEAD` verified after each (per each fire's own log entry) — no operational
+  limit, rate limit, or push failure hit in the window. Real content: fire 40 closed the last
+  workflow-rollout gap (`excava_inbox.yml`); 41 added guardrail G-R (workflow push-safety
+  detector) + fixed a G-M double-counting artifact; 42–43 found and fixed a genuinely-stuck
+  `excava_beat` run (a `timeout` without `-k` that let a wedged cycle block the next scheduled
+  run for over an hour — confirmed done-counter jumped 26→34 once fixed, i.e. real lost
+  throughput, not just an observability gap); 44 verified (honestly, by reading a live trace
+  end-to-end) that M2's "multi-brain rooms" are still single-model roleplay, not real
+  cross-family debate — a finding, not a fix, correctly left for Eitan's architecture
+  decision; 45 advanced M1 deep_retrieve enrichment (stubs 2060→1922) and fixed git-conflict-
+  marker corruption in `data/excava/supervisor*.json` (a deeper-directory instance of a bug
+  class fire 34 first fixed); 46 widened conflict-marker detection to the whole tree and
+  repaired 78 corrupted historical `.jsonl` logs (288 marker lines, 0 real data lost, added
+  guardrail G-S); 47 chased a branch-divergence false alarm to ground, then refreshed the news
+  digest; 48 fixed a real M1.1-blocking bug in `verify_connectors.py` (position-based batch
+  selection drifting off real gaps — connectors now genuinely 1402/1402); 49 found and fixed
+  the same ghost-inflation bug class in `verify_elements.py`'s coverage count (25 stale IDs,
+  9357→9332 honest). **No fire in 40–49 lost committed work, hit a hard operational limit, or
+  left the repo in a broken state** — the one deliberate tradeoff (fire 42 cancelling a wedged
+  run's own uncommitted cycle) was stated plainly in its own entry, not hidden.
+  **This fire's own finding, found while trying to do the natural next thing (advance fire
+  49's own named candidate — a real, network-bound `verify_elements` batch):** ran
+  `python -m src.verify_elements --limit 1200` for real. It returned in 85 seconds — and the
+  `fail` count exploded 178→1116 and `dead` 86→128 in one pass. Before trusting that as "the
+  library got worse," isolated exactly what changed: 1,696 records touched this run, 1,023 of
+  them link-based fails/deads, almost all `connector:*` entries for well-known, actively
+  maintained MCP servers (`playwright-mcp`, `firecrawl-mcp`, `chrome-mcp`, `higgsfield-mcp`,
+  `figma-ai-mcp-server-...`, ...) — implausible that all of them died in the same 85 seconds.
+  Checked this environment's own proxy status (`$HTTPS_PROXY/__agentproxy/status`): outbound
+  HTTPS here is policy-restricted to an allowlist (`anthropic.com`, package registries,
+  private ranges) and rejects everything else with a 403 — confirmed live via
+  `recentRelayFailures` entries timestamped the SAME SECOND as my batch. `verify_elements.py`'s
+  `_head()` treats any request exception (403 included) as "link dead," so this session's own
+  restricted egress — NOT the actual state of the internet — was the entire cause. Cross-
+  checked the blast radius: `.github/workflows/core_spoton.yml` and `connectors_verify.yml`
+  both run on `runs-on: ubuntu-latest` (real GitHub-hosted runners, real unrestricted egress),
+  so the SCHEDULED pipeline's own data is not implicated by this — only a manual run typed
+  into an interactive cloud dev session like this one would ever hit it. **Reverted before any
+  of it was committed:** `git checkout -- data/elements_verified.json data/elements_index.json
+  data/verify_elements_state.json data/deep_retrieve_state.json` restored the exact prior
+  committed state (verified: `summary.checked` back to the pre-run 9357/10633). Zero real data
+  lost or corrupted — it never left this session's working tree. **The actual fix, not just a
+  revert:** added `_network_open()` to both `verify_elements.py` and `verify_connectors.py` — a
+  two-anchor canary (`github.com` + `wikipedia.org`; only fails if BOTH are unreachable) run
+  before any live-link check. `verify_elements.py` now aborts its whole batch untouched (exit 0,
+  no file writes) with a loud explanatory message when egress looks restricted, instead of
+  silently mass-flagging real tools dead; `verify_connectors.py`'s narrower `_head_ok(url)`
+  fallback (used only for already-unresolvable connectors' informational alive/not-alive tag —
+  its `sandbox_run`/npm-registry/PyPI paths were never at risk, since `registry.npmjs.org` and
+  `pypi.org` are themselves on this environment's own allowlist) gets the same guard. Verified
+  live: `python -m src.verify_elements --limit 20` now prints the abort message and touches
+  zero files (confirmed via `git status`); `--skip-network-check` still runs the schema-only
+  path for text-type elements (proven with `--limit 3`, no crash); `_network_open()` unit-
+  tested directly in both modules — both correctly report `False` in this sandbox. `python3 -c
+  "ast.parse(...)"` on both touched files; guardrails 16/19, 0 critical, same steady-state as
+  before this fix. **Harsh self-criticism:** I do not know whether fires 48/49's own small live
+  batches (`--limit 3/5/7`, connectors; `--limit 5`, elements) ran under this same restricted
+  egress and could have a handful of false dead/fail entries hiding in today's otherwise-
+  celebrated "1402/1402" and "9332/10633" numbers — those runs were too small to produce an
+  obvious statistical tell the way my 1200-batch did, and I did not go back and re-examine
+  their specific verdicts against the new canary (that's a concrete, cheap next-fire candidate:
+  diff `connectors_verified.json`/`elements_verified.json` entries timestamped in fires 48/49's
+  window against a fresh, canary-gated re-check). I also did not add a canary to
+  `github_meta_enrich.py` or `deep_retrieve.py`, both of which also do direct third-party
+  network calls and could have the identical failure mode — scoped this fire to the two files
+  where I had direct, reproduced evidence, not a blanket sweep. And the underlying value-87
+  backlog item ("verify the next 200 of 6400 unverified elements") this fire set out to advance
+  is now, if anything, LESS achievable from a cloud interactive session than before — the
+  correct venue for that work is the scheduled `core_spoton.yml` run, which already covers it
+  hourly; a future fire should not try to force it manually here again now that the canary will
+  (correctly) refuse. Net effect: prevented a real, silent data-integrity regression from
+  landing, at the cost of not actually closing the M1 verification-coverage gap this fire —
+  judged that tradeoff as clearly worth it. Cleared the `data/excava/traces/*-54345.jsonl`
+  stub files this fire's own diagnostic `excava_backlog` read had generated (single "enqueued"
+  events with no real work behind them — noise from a status check, not committed as if they
+  were completed department output). Did not touch M2 or the ~13 stray `kind-shannon-*`
+  branches (still unswept, still someone else's problem). Shipped straight to `origin/main` via
+  `git_safe`, same 49-fire convention, still unconfirmed by Eitan.
+
 - **~15:1x (fire 49, unattended, cloud session) — followed up fire 48's own named next-fire
   candidate immediately (same session, same context) and found the same ghost-inflation bug
   class in `verify_elements.py`, smaller and non-blocking.** Standing checks: `git_safe sync`

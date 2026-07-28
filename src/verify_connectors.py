@@ -59,6 +59,18 @@ def _head_ok(url: str) -> bool:
         return False
 
 
+def _network_open() -> bool:
+    """Same egress canary as verify_elements.py (fire 50) — guards the one path here
+    (`_head_ok` on an arbitrary connector url/source_url) that hits a non-allowlisted
+    host directly. The npm/PyPI registry lookups and sandbox npx/pip runs are unaffected:
+    registry.npmjs.org / pypi.org / files.pythonhosted.org are on this environment's own
+    proxy allowlist, so they resolve even when general web egress does not."""
+    for anchor in ("https://github.com", "https://www.wikipedia.org"):
+        if _head_ok(anchor):
+            return True
+    return False
+
+
 def _registry_lookup(name: str) -> tuple[str, str] | None:
     """Try npm then PyPI for an exact package matching the connector's slug. Free, keyless."""
     slug = re.sub(r"[^a-z0-9\-]+", "-", name.lower().replace(" mcp", "").strip()).strip("-")
@@ -164,8 +176,11 @@ def main() -> int:
                     help="M1.1: raise the batch to this size while unchecked connectors remain")
     ap.add_argument("--timeout", type=int, default=TIMEOUT,
                     help="per-connector sandbox-run timeout in seconds (default 120)")
+    ap.add_argument("--skip-network-check", action="store_true",
+                     help="bypass the egress canary (only for offline/schema-only testing)")
     args = ap.parse_args()
     TIMEOUT = args.timeout
+    network_open = args.skip_network_check or _network_open()
 
     raw = _jload(DATA / "connectors.json", {})
     conns = raw if isinstance(raw, list) else (raw.get("connectors") or raw.get("items")
@@ -204,7 +219,9 @@ def main() -> int:
         res = resolve(c)
         if res is None:
             url = c.get("url") or c.get("source_url") or ""
-            alive = _head_ok(url) if url else False
+            # egress canary (fire 50): only trust a live "-but-url-alive"/"not-alive" tag
+            # when general web egress is actually open — see _network_open()'s docstring.
+            alive = (_head_ok(url) if url and network_open else False)
             ver[name] = {"status": "unresolvable" + ("-but-url-alive" if alive else ""),
                          "at": _now(), "note": "no runnable command found (docker-only or docs-only)"}
             unresolved += 1

@@ -49,6 +49,26 @@ def _domain(u: str) -> str:
     return m.group(1) if m else ""
 
 
+def _network_open() -> bool:
+    """Canary: is general internet egress actually open right now?
+
+    Added fire 50 (2026-07-28) after a manual run from an interactive cloud dev sandbox
+    (NOT the `core_spoton.yml` GitHub Actions runner, which has real unrestricted egress)
+    mass-flagged ~1,000 live, well-known connectors/tools as fail/dead within minutes —
+    that sandbox's outbound HTTPS goes through a policy-restricted proxy that 403s any
+    host outside a small allowlist (package registries + anthropic.com), so `_head()`
+    silently turned "blocked by this session's proxy" into "the link is dead" for every
+    third-party site. Two independent, almost-never-simultaneously-down anchors: if BOTH
+    are unreachable, egress is restricted (or a true outage), and this run must not write
+    any live-link verdicts — better to skip a batch than poison confirmed_dead/fail data.
+    """
+    for anchor in ("https://github.com", "https://www.wikipedia.org"):
+        alive, _ = _head(anchor)
+        if alive:
+            return True
+    return False
+
+
 def _head(url: str) -> tuple[bool, str]:
     """(alive, final_url). GET-fallback because plenty of real sites reject HEAD."""
     for method in ("HEAD", "GET"):
@@ -116,7 +136,17 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=300)
     ap.add_argument("--recheck-days", type=int, default=7)
+    ap.add_argument("--skip-network-check", action="store_true",
+                     help="bypass the egress canary (only for offline/schema-only testing)")
     a = ap.parse_args()
+
+    if not a.skip_network_check and not _network_open():
+        print("verify-elements: ABORTED — network canary failed (github.com and "
+              "wikipedia.org both unreachable). Outbound egress looks restricted in this "
+              "environment (e.g. an interactive sandbox's proxy allowlist) rather than the "
+              "real internet the scheduled CI runner has — skipping this batch untouched "
+              "rather than risk writing false fail/dead verdicts.")
+        return 0
 
     idx = em.build()
     store = em._load("elements_verified.json", {"verified": {}})

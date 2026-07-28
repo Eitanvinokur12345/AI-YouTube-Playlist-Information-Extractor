@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-07-28T12:23:03.055638+00:00",
+ "generated_at": "2026-07-28T17:41:30.221172+00:00",
  "total": 106,
  "counts": {
-  "wired": 87,
-  "operator": 19,
+  "wired": 88,
+  "operator": 18,
   "orphaned": 0,
   "dead": 0
  },
@@ -76,8 +76,7 @@
    "invoked_by": [],
    "documented_in": [
     "AWAY_LOG.md",
-    "data/dev_construction.json",
-    "data/excava_status.json"
+    "data/dev_construction.json"
    ],
    "imported_by": [
     "excava_agents"
@@ -934,8 +933,8 @@
    ]
   },
   "git_safe": {
-   "status": "operator",
-   "loc": 237,
+   "status": "wired",
+   "loc": 304,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
@@ -953,6 +952,7 @@
     "data/dev_construction.json"
    ],
    "imported_by": [
+    "guardrails",
     "local_worker",
     "standing_checks"
    ],
@@ -1027,7 +1027,7 @@
   },
   "guardrails": {
    "status": "wired",
-   "loc": 434,
+   "loc": 452,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
@@ -1040,7 +1040,9 @@
     "excava",
     "standing_checks"
    ],
-   "imports": []
+   "imports": [
+    "git_safe"
+   ]
   },
   "health": {
    "status": "wired",
@@ -1758,12 +1760,13 @@
   },
   "verify_connectors": {
    "status": "wired",
-   "loc": 213,
+   "loc": 259,
    "entrypoint": true,
    "invoked_by": [
     "connectors_verify.yml"
    ],
    "documented_in": [
+    "AWAY_LOG.md",
     "SESSION_HANDOFF.md",
     "data/dev_construction.json"
    ],
@@ -1772,12 +1775,13 @@
   },
   "verify_elements": {
    "status": "wired",
-   "loc": 167,
+   "loc": 207,
    "entrypoint": true,
    "invoked_by": [
     "core_spoton.yml"
    ],
    "documented_in": [
+    "AWAY_LOG.md",
     "EXCAVA_V2_STEPS.md",
     "data/dev_construction.json"
    ],

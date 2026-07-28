@@ -104947,6 +104947,54 @@
       ],
       "video_quality_score": 7,
       "low_quality_source": false
+    },
+    {
+      "skill_name": "AI-Assisted Data Science Verification (DataFrame Viewer Check)",
+      "slug": "ai-data-science-dataframe-verification",
+      "category": "code",
+      "description": "A validation step for AI-assisted data cleaning in notebooks: broken transformation code doesn't crash, it silently returns wrong numbers, so after an AI agent (e.g. Codex) runs a data-cleaning step, check the full DataFrame viewer and variable window (every column, data type, null counts, distribution) instead of just printing head() and eyeballing five rows.",
+      "use_case": "Catching silent data-corruption bugs (e.g. a numeric column that came back as a string) introduced by AI-driven data transformations before they propagate into every downstream calculation.",
+      "output": "A verified, correctly-typed dataset before it's used for further analysis.",
+      "quality_score": 7,
+      "model_version": null,
+      "company": "OpenAI",
+      "country": "USA",
+      "open_source": false,
+      "target_tool": "other",
+      "is_claude_skill": false,
+      "compatibility": [
+        {
+          "tool": "Codex",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Claude",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "ChatGPT",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=8AGyh2Tc1hQ",
+      "source_video_id": "8AGyh2Tc1hQ",
+      "tips": [
+        "Never trust head()-and-eyeball as your only check after an AI-driven data transformation — use the DataFrame/variable viewer to see every column's dtype, null count, and distribution at once.",
+        "A transformation that runs with zero errors can still silently corrupt data (e.g. numeric column returned as string); 'no errors' is not the same as 'correct'."
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "Speed up data work with AI, but always validate the result before trusting it downstream — silent type/data errors compound through every later calculation."
+      ],
+      "relevance": "AI-assisted data science is only as trustworthy as the verification step around it; this is a concrete, low-effort check that catches a common silent-failure class.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "8AGyh2Tc1hQ"
+      ],
+      "video_quality_score": 7,
+      "low_quality_source": false
     }
   ],
   "recipes_updated_at": "2026-07-25T11:04:07.208331+00:00"

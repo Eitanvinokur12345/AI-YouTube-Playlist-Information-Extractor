@@ -4,6 +4,51 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+- **~03:0x (fire 39, unattended, cloud session) — good news first: the OAuth-token blocker fires
+  36-38 chased and flagged for Eitan is RESOLVED.** `data/status.json` now reads `analyze_ok:
+  true`, `token_hint: null`, `last_analyze_ok_at: 2026-07-28T02:37:27Z` (fresh, ~30 min before
+  this fire), and `pending_to_analyze` has actually dropped 1315→1209 with 101 videos analyzed in
+  the run before this one — the real pipeline is moving again, so no re-notification needed (fire
+  38's own precedent: don't re-flag an already-flagged, unfixed issue; symmetrically, don't
+  silently skip noting it got fixed either — logged here, not pushed as a notification since
+  "things are fine now" isn't actionable for Eitan). Standing checks: `origin/main` re-fetched
+  clean, HEAD in sync (`807dbb51`); upstream tracking was missing on this session's branch (set to
+  `origin/main`, the same one-time fix fires 6/7/8/35 have each hit on a fresh branch); guardrails
+  15/17, 0 critical (only G-C stale-backup and G-O local-drain-stale, both pre-existing, neither
+  fixable from a cloud sandbox, unchanged from every recent fire). **Built the concrete follow-up
+  fire 34 queued and no fire since has picked up:** `src/git_safe.py`'s `commit()` now refuses to
+  commit if any top-level `data/`/`docs/` JSON is broken, at the same scope as `guardrails.py`'s
+  G-F check — fire 34 found `data/designs.json` shipped with 978 unresolved git conflict markers
+  because nothing checked JSON validity before that commit landed; G-F only ever catches it
+  *after*, when a fire happens to run guardrails by hand. Now the corruption can't reach a commit
+  in the first place. Verified three ways, not just read-through: (1) `broken_json()` on the
+  live repo returns `[]` (no false positives on 30+ real data files); (2) wrote a deliberately
+  invalid scratch file (`data/_gitsafe_selftest.json`, unbalanced brace) and confirmed
+  `commit()` raises `RuntimeError` naming the exact file, then deleted the scratch file and
+  confirmed `broken_json()` is clean again — a real negative test, not just eyeballing the diff;
+  (3) `python -m src.guardrails` still reports G-F "all top-level data/ + docs/ JSON parses" after
+  the change (no regression), and this very fire's own `git_safe ship` call at the end exercises
+  the new check on real staged content. Reverted the local-run noise this session's own
+  `guardrails.py`/`standing_checks.py` runs wrote to `data/excava/movement.json`,
+  `data/guardrails_status.json`, `data/standing_checks.json` before committing — matches the
+  precedent fires 6/32/34 already set (diff stays scoped to the intended file only). **Harsh
+  self-criticism:** the new check only covers *top-level* `data/`+`docs/` JSON, same as G-F —
+  nested JSON (e.g. under `data/excava/`) can still be committed broken; I matched G-F's existing
+  scope deliberately rather than silently widening it beyond what guardrails.py itself checks (a
+  mismatch between the two would be its own confusing inconsistency), but a genuinely complete fix
+  would recurse and I did not do that here — flagging as a real, scoped-down gap rather than
+  claiming this closes the class of bug entirely. Also didn't add the check to `sync()`/`push()`
+  independently of `commit()` — every commit still goes through `commit()` in this codebase (no
+  caller bypasses it), so gating there is sufficient today, but a future direct `git commit` call
+  outside this module would still slip past it; worth remembering if that ever changes. Did not
+  touch the ~13-20 stray `kind-shannon-*` branches, the branch-vs-main shipping convention, or the
+  now-stale `data/self_check.json` (still timestamped `23:36Z` from before the token fix landed,
+  so its #1 "stalled backlog" flag is now a false read — didn't re-run `self_check.py` this fire
+  to keep the diff narrow to the one queued task; next fire should refresh it so the dashboard
+  stops showing a resolved problem as open). Shipping via `python -m src.git_safe ship` to match
+  the established convention (30+ prior fires/beats, zero PRs), still flagged as unconfirmed by
+  Eitan per QUESTIONS.md.
+
 - **~23:0x (fire 38, unattended, cloud session) — rolled the fires-28/29/30/35/37 rebase-conflict-
   recovery pattern out to the last 6 scheduled lanes that still had it missing, closing that
   rollout for every scheduled cron workflow that actually pushes data.** Standing checks first:

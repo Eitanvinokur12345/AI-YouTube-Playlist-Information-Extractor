@@ -13,6 +13,10 @@ The two failures this replaces:
 Every op is subprocess with an ARGUMENT LIST (no shell = no quoting/mangling) and takes a
 `git bundle` backup of the whole history first, so nothing is ever unrecoverable.
 
+A third check added 2026-07-28 (fire 39): `commit()` refuses to commit if any top-level
+data/ or docs/ JSON file is broken (e.g. unresolved conflict markers) — the same scope as
+guardrails.py's G-F, but BEFORE the bad file ever reaches a commit, not just flagged after.
+
 CLI:
   python -m src.git_safe backup                 # snapshot history -> _ATTIC/backups/*.bundle
   python -m src.git_safe commit  -m "msg" [-a p1 p2 ...]
@@ -23,6 +27,7 @@ CLI:
 from __future__ import annotations
 
 import argparse
+import json
 import shutil
 import subprocess
 import sys
@@ -31,6 +36,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
 ATTIC = ROOT / "_ATTIC"
+DATA = ROOT / "data"
+DOCS = ROOT / "docs"
 # Canonical CI-OWNED paths — the only things safe-git ever reverts. Your source is never touched.
 CI_CHURN = ["data", "backups"]
 # 3, not 12: twelve ~120 MB full-history bundles hoarded ~1.4 GB and helped fill the disk to 100%,
@@ -101,9 +108,34 @@ def revert_ci_churn() -> None:
     _git(["checkout", "--", *CI_CHURN], check=False)
 
 
+def broken_json() -> list:
+    """Same scope as guardrails.py's G-F check, run HERE too so a broken/half-merged JSON file
+    can never be committed in the first place — not just noticed after the fact. Fire 34
+    (2026-07-27, AWAY_LOG) found data/designs.json shipped with 978 unresolved git conflict
+    markers because nothing checked JSON validity before that commit landed; G-F only catches it
+    when a fire happens to run guardrails by hand afterward. Scans top-level data/ + docs/ *.json
+    on disk (post-staging state, since json.loads reads the working tree, not the index)."""
+    bad = []
+    for d in (DATA, DOCS):
+        if not d.exists():
+            continue
+        for f in d.glob("*.json"):
+            try:
+                json.loads(f.read_text(encoding="utf-8"))
+            except Exception:
+                bad.append(str(f.relative_to(ROOT)))
+    return bad
+
+
 def commit(message: str, add=None) -> str:
     if add:
         _git(["add", *list(add)])
+    bad = broken_json()
+    if bad:
+        raise RuntimeError(
+            "refusing to commit — broken JSON on disk (would ship a corrupt data file): "
+            + ", ".join(bad[:5]) + (f" (+{len(bad) - 5} more)" if len(bad) > 5 else "")
+        )
     ATTIC.mkdir(parents=True, exist_ok=True)
     mf = ATTIC / "COMMIT_MSG.txt"
     mf.write_text(message, encoding="utf-8")         # message via UTF-8 file => never shell-mangled

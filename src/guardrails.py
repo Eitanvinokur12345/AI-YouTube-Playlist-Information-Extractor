@@ -3,7 +3,7 @@ src/guardrails.py — the INFORMATION-LOSS GUARDRAILS (owner law, 2026-07-06).
 
 The project must never be "toppled" — no committed work lost, no data silently dropped,
 no push that only *looked* like it saved, no corruption shipped that breaks the dashboard.
-This module enforces 17 named guardrails, each a concrete check. It writes
+This module enforces 18 named guardrails, each a concrete check. It writes
 data/guardrails_status.json (for the cockpit) and APPENDS to data/guardrails_log.jsonl
 (never rewritten — a permanent audit trail).
 
@@ -193,7 +193,27 @@ def g_movement():
     done = sum(u.get("done", 0) for u in usage.values())
     depts = sum(1 for u in usage.values() if u.get("done", 0) > 0)
     hist = _load_json(mv, {"history": []}).get("history", [])
-    hist.append({"at": _now(), "done": done, "depts_moving": depts})
+    # 2026-07-28 (fire 41): this used to append unconditionally, so every manual/testing
+    # invocation of `python -m src.guardrails` counted as its own "beat" toward the 4-in-a-row
+    # stall window — fire 40 ran it twice while verifying a fix and this fire ran it twice more
+    # while investigating, and together those 4 same-`done` calls (all within ~15 minutes) alone
+    # were enough to trip "STALLED (no new completions in the last 4 beats)" even though only
+    # ~70 real minutes had passed since the last genuine completion. Collapse consecutive
+    # same-`done` entries recorded within 10 minutes of each other into one (refresh the
+    # timestamp, don't grow the run) so the stall window reflects distinct time-separated
+    # observations, not how many times someone happened to run the checker back-to-back.
+    now_dt = datetime.now(timezone.utc)
+    if hist and hist[-1].get("done") == done:
+        try:
+            last_dt = datetime.fromisoformat(hist[-1]["at"])
+        except Exception:
+            last_dt = None
+        if last_dt and (now_dt - last_dt).total_seconds() < 600:
+            hist[-1] = {"at": _now(), "done": done, "depts_moving": depts}
+        else:
+            hist.append({"at": _now(), "done": done, "depts_moving": depts})
+    else:
+        hist.append({"at": _now(), "done": done, "depts_moving": depts})
     hist = hist[-30:]
     mv.parent.mkdir(parents=True, exist_ok=True)
     mv.write_text(json.dumps({"history": hist, "done": done, "depts_moving": depts},
@@ -328,6 +348,38 @@ def g_core_spoton_heartbeat():
                 if stale else "."), "warn")
 
 
+def g_push_safety_rollout():
+    """2026-07-28 (fire 41): fires 28-40 spent eight separate rounds finding workflow files that
+    commit+push their own data (`.github/workflows/*.yml`) WITHOUT the abort-rebase -> retry-as-
+    merge -> auto-resolve-`data_guard.json` fallback — the fix for "job reports success, real
+    work silently discarded on a rebase conflict." Each round was a manual `grep` across all 19+
+    files after the SAME bug turned up in one more lane (fire 40's own entry: `excava_inbox.yml`
+    was lane #19, found only because someone happened to look). That is exactly the reactive
+    pattern this guardrail closes: instead of a fire re-auditing every file by hand each time
+    someone suspects a gap (or worse, a NEW workflow ships without the pattern and nobody
+    notices until it silently drops a run), this runs the same check on every `guardrails.py`
+    invocation and fails loudly the moment any push-capable lane is missing the fallback —
+    structural prevention of the whole bug CLASS, not a 20th one-off patch."""
+    wf_dir = ROOT / ".github" / "workflows"
+    if not wf_dir.exists():
+        return _ok("G-R", "Push-safety fallback present in every shipping lane", True,
+                   "no .github/workflows directory found here.", "info")
+    shipping, exposed = [], []
+    for f in sorted(wf_dir.glob("*.yml")):
+        text = f.read_text(encoding="utf-8", errors="ignore")
+        if "git push" not in text:
+            continue                                  # this lane never ships its own commit
+        shipping.append(f.name)
+        if "auto-resolving known-stateless" not in text or "rebase --abort" not in text:
+            exposed.append(f.name)
+    ok = not exposed
+    detail = (f"all {len(shipping)} push-capable lane(s) carry the rebase->merge->auto-resolve "
+              "fallback." if ok else
+              f"EXPOSED to silent data loss on a rebase conflict — missing the fallback in: "
+              + ", ".join(exposed))
+    return _ok("G-R", "Push-safety fallback present in every shipping lane", ok, detail, "warn")
+
+
 def _load_json(p, d):
     try:
         return json.loads(p.read_text(encoding="utf-8"))
@@ -337,7 +389,7 @@ def _load_json(p, d):
 
 CHECKS = [g_quarantine, g_msgfile, g_backup, g_mojibake, g_build_align, g_json,
           g_remote_sync, g_collisions, g_handoff, g_memory, g_auditlog, g_watchdog, g_movement,
-          g_disk, g_localfuel, g_beat_heartbeat, g_core_spoton_heartbeat]
+          g_disk, g_localfuel, g_beat_heartbeat, g_core_spoton_heartbeat, g_push_safety_rollout]
 
 
 def run() -> dict:

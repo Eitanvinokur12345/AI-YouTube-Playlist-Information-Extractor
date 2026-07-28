@@ -5,6 +5,51 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-28 (continued)
+- **~05:0x (fire 41, unattended, cloud session) — built the guardrail fire 40 named as the real
+  next-fire candidate, plus fixed a false-positive it introduced along the way.** Fire 40 closed
+  the 19-file workflow rollout (every push-capable lane now has the abort-rebase->merge->auto-
+  resolve-`data_guard.json` fallback) but flagged the deeper gap still open: that whole rollout
+  was 8 rounds of a fire manually `grep`-ing every workflow file each time the same bug turned up
+  in one more lane, with nothing to catch a FUTURE lane (or an edit that strips the pattern back
+  out) automatically. Built `src/guardrails.py`'s new **G-R** — scans every `.github/workflows/
+  *.yml` file, and for each one that ships its own commit (`git push` present), fails loudly if
+  the fallback marker is missing. Verified live: G-R passes today (`all 19 push-capable lane(s)
+  carry the rebase->merge->auto-resolve fallback`), confirming fire 40's rollout really is
+  complete — and to prove the negative case works, ran it against a scratch copy of one workflow
+  with the fallback lines stripped, which correctly flipped to failing and named that file. Now
+  18 guardrails, 0 critical.
+  **Second, smaller fix in the same commit:** while verifying G-R I noticed G-M (the work-moving
+  stall detector) flip OK->STALLED between my own back-to-back test runs of `python -m
+  src.guardrails` — the exact thing fire 40's self-criticism flagged as unresolved ("worth a
+  follow-up fire checking whether that's real or an artifact"). Root cause: `g_movement()`
+  appended one `movement.json` history entry per INVOCATION of the checker, so any fire (or this
+  one) running it twice while investigating something counted as two of the "4 beats" the stall
+  window looks at — testing frequency, not real elapsed work time, was driving the alarm. Fixed
+  by collapsing consecutive same-`done` entries recorded within 10 minutes into one (refresh the
+  timestamp, don't grow the count). Verified: re-running the checker twice in a row now updates
+  the same history row instead of adding two. **Not fully resolved, and said plainly rather than
+  buried:** after the fix, G-M is STILL reporting STALLED, because — deduped down to real,
+  distinct checks — `done` genuinely has been flat at 26 since the 03:51 bulk-analyze commit,
+  roughly 70 minutes across this fire's own investigation. That is now an ACCURATE signal, not a
+  fixed one: no department-level task has completed in that window. It will very likely clear on
+  its own once the next `excava_beat`/`core_spoton` cycle lands a completion (their cadence is
+  roughly hourly), so no action taken beyond fixing the metric to tell the truth.
+  **Harsh self-criticism:** this is, again, tooling about the loop's own observability rather
+  than Hub content, enrichment, departments, or M2's actual next step (rooms producing committed
+  cross-family artifacts, the 5-class Router/Agent/Tool/Room/Element layer) — the ninth or tenth
+  fire in that same vein since fire 8, by my own count, and I chose it BECAUSE fire 40 explicitly
+  named it as the queued item rather than because I made an independent case for it being the
+  highest-leverage thing to do right now. G-R's negative-case test was against a throwaway
+  scratch copy, not a real workflow file, so it proves the detection logic works but not that a
+  genuinely broken production lane would be caught before real damage — that's inherent to a
+  guardrail whose job is exactly "catch it before it recurs," so time will be the real test. Did
+  not touch M2, the ~13 stray `kind-shannon-*` branches (still unswept, still someone else's
+  problem), or attempt the 1,209-video analyze backlog (Q1/Q45's flagged "stalled backlog" — left
+  alone deliberately: that backlog is the free `bulk_analyze` lane's job on its own schedule, not
+  something a manual pass in this session should compete with token-for-token). Shipped via
+  `git_safe ship` straight to `main`, same now-40-fire-long convention, still unconfirmed by
+  Eitan (see QUESTIONS.md) — not re-litigating it again this fire.
+
 - **~04:0x (fire 40, unattended, cloud session) — closed the fire-28..39 workflow-rollout loose end,
   plus the every-10th-heartbeat review.** Standing checks clean (`STANDING CHECKS: OK`, upstream
   tracking auto-repaired again — same recurring per-session gap noted since fire 7/8, still not

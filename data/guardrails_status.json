@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-28T04:02:24.435357+00:00",
- "total": 17,
- "passing": 16,
+ "generated_at": "2026-07-28T05:02:12.969557+00:00",
+ "total": 18,
+ "passing": 15,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -21,8 +21,8 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": true,
-   "detail": "3 bundle(s); newest within 26h.",
+   "ok": false,
+   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
    "severity": "warn"
   },
   {
@@ -91,22 +91,22 @@
   {
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
-   "ok": true,
-   "detail": "26 tasks done, 10 departments moving",
+   "ok": false,
+   "detail": "26 tasks done, 10 departments moving — STALLED (no new completions in the last 4 beats)",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "30224 MB free on the repo drive.",
+   "detail": "30450 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 46.0h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 47.0h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
@@ -120,7 +120,14 @@
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "last 'core-spoton:' commit 0.6h ago.",
+   "detail": "last 'core-spoton:' commit 1.6h ago.",
+   "severity": "warn"
+  },
+  {
+   "id": "G-R",
+   "name": "Push-safety fallback present in every shipping lane",
+   "ok": true,
+   "detail": "all 19 push-capable lane(s) carry the rebase->merge->auto-resolve fallback.",
    "severity": "warn"
   }
  ]

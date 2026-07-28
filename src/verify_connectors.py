@@ -152,6 +152,7 @@ def sandbox_run(kind: str, val: str) -> dict:
 
 
 def main() -> int:
+    global TIMEOUT
     import sys
     try:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -161,7 +162,10 @@ def main() -> int:
     ap.add_argument("--limit", type=int, default=30)
     ap.add_argument("--catchup", type=int, default=0,
                     help="M1.1: raise the batch to this size while unchecked connectors remain")
+    ap.add_argument("--timeout", type=int, default=TIMEOUT,
+                    help="per-connector sandbox-run timeout in seconds (default 120)")
     args = ap.parse_args()
+    TIMEOUT = args.timeout
 
     raw = _jload(DATA / "connectors.json", {})
     conns = raw if isinstance(raw, list) else (raw.get("connectors") or raw.get("items")
@@ -172,8 +176,28 @@ def main() -> int:
     if args.catchup and len(ver) < len(conns):
         args.limit = max(args.limit, args.catchup)   # M1.1: bigger batches until all 1,142 done
 
-    start = state.get("cursor", 0) % max(len(conns), 1)
-    batch = conns[start:start + args.limit]
+    # BUGFIX (fire 48, 2026-07-28): the old batch selection was purely POSITION-based
+    # (`cursor % len(conns)`), so it silently drifted whenever the hourly mining lane
+    # (which owns connectors.json) renamed/reordered/removed entries — some connectors
+    # could sit forever just past a cursor that had already swept their old slot, while
+    # `summary.checked` counted every name ever written to `ver`, including STALE ghosts
+    # for connectors no longer in connectors.json at all (found 6 such ghosts + 10 real
+    # never-verified connectors hiding behind them: 'checked 1398/1402' looked 4 away from
+    # done but was actually 10 away). M1.1's own done-criterion
+    # ("connectors_verified.json.summary.checked == total") could never be exactly true
+    # under the old scheme. Fix: always verify TRUE gaps (by name, not position) first;
+    # only fall back to position-cursor re-sweeping (the M1.C3 rolling re-check) once every
+    # current connector has at least one verdict on file.
+    by_name = {c.get("name", "?"): c for c in conns}
+    unverified_names = [n for n in by_name if n not in ver]
+    if unverified_names:
+        batch_names = unverified_names[:args.limit]
+        batch = [by_name[n] for n in batch_names]
+        start = "gap-fill"
+    else:
+        start = state.get("cursor", 0) % max(len(conns), 1)
+        batch = conns[start:start + args.limit]
+
     passed = failed = unresolved = 0
     for c in batch:
         name = c.get("name", "?")
@@ -191,20 +215,25 @@ def main() -> int:
         passed += verdict["status"] == "pass"
         failed += verdict["status"] == "fail"
 
-    state["cursor"] = start + len(batch)
+    state["cursor"] = (0 if start == "gap-fill" else start + len(batch))
     state["total"] = len(conns)
     state["updated_at"] = _now()
     STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
     counts = {}
     for v in ver.values():
         counts[v["status"]] = counts.get(v["status"], 0) + 1
-    store["summary"] = {"checked": len(ver), "total": len(conns), "by_status": counts,
+    # Honest coverage: only count verdicts for connectors that still exist in
+    # connectors.json today — stale ghosts (renamed/removed upstream) no longer inflate
+    # `checked`. They stay in `ver` untouched (quarantine-never-delete; harmless cache).
+    live_checked = len(set(by_name.keys()) & set(ver.keys()))
+    store["summary"] = {"checked": live_checked, "total": len(conns), "by_status": counts,
+                        "stale_ghost_entries": len(ver) - live_checked,
                         "updated_at": _now(),
                         "policy": "owner 2026-07-03: sandbox test-run EVERYTHING; tab shows verified-only (D5)"}
     OUT.write_text(json.dumps(store, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"connectors verify: batch {start}..{start + len(batch)} of {len(conns)} — "
+    print(f"connectors verify: batch ({start}) of {len(conns)} — "
           f"{passed} pass, {failed} fail, {unresolved} unresolvable; "
-          f"checked so far {len(ver)}/{len(conns)}")
+          f"checked so far {live_checked}/{len(conns)} (+{len(ver) - live_checked} stale ghosts)")
     return 0
 
 

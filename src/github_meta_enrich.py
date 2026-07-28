@@ -44,6 +44,33 @@ def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def _network_open() -> bool:
+    """Canary: is general internet egress actually open right now?
+
+    Ported (away fire 51, 2026-07-28) from the identical guard fire 50 added to
+    verify_elements.py/verify_connectors.py after an interactive cloud sandbox's
+    policy-restricted proxy (403s any host outside a small allowlist) silently poisoned
+    live-link verdicts. This module has a related but distinct failure mode: a proxy 403
+    from api.github.com is caught by fetch_repo_meta()'s `except HTTPError as e: if e.code
+    == 403: return {"_rate_limited": True}` — written to genuinely mean "GitHub really rate-
+    limited us," but a sandbox proxy 403 looks identical over the wire. main() treats that
+    signal as a hard stop-the-whole-batch condition and prints a misleading "STOPPED
+    (rate-limited)" — misdiagnosing a sandbox-only restriction as real GitHub throttling,
+    and burning the first item's 3-day attempt cooldown for nothing. Same two-anchor canary,
+    same abort-before-any-write behavior.
+    """
+    for anchor in ("https://github.com", "https://www.wikipedia.org"):
+        try:
+            req = urllib.request.Request(anchor, headers={"User-Agent": "excava-github-meta-enrich"},
+                                          method="HEAD")
+            with urllib.request.urlopen(req, timeout=12) as r:
+                if r.status < 400:
+                    return True
+        except Exception:
+            continue
+    return False
+
+
 def _repo_slug(el: dict) -> tuple[str, str] | None:
     """The repo's owner/name, from links.github OR (fire 31 fix) a github.com URL parked in
     links.website instead — the same fallback deep_retrieve.readme_excerpt already uses. Several
@@ -139,7 +166,17 @@ def main() -> int:
     ap.add_argument("--limit", type=int, default=60)
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--deadline", type=float, default=float(os.environ.get("GITHUB_META_ENRICH_DEADLINE", "300")))
+    ap.add_argument("--skip-network-check", action="store_true",
+                     help="bypass the egress canary (only for offline/schema-only testing)")
     a = ap.parse_args()
+
+    if not a.skip_network_check and not _network_open():
+        print("github-meta-enrich: ABORTED — network canary failed (github.com and "
+              "wikipedia.org both unreachable). Outbound egress looks restricted in this "
+              "environment (e.g. an interactive sandbox's proxy allowlist) rather than the "
+              "real internet the scheduled CI runner has — skipping this batch untouched "
+              "rather than risk a false 'rate-limited' diagnosis and a wasted attempt cooldown.")
+        return 0
 
     idx = em.build()
     todo = [e for e in idx["elements"] if e.get("stub") and _repo_slug(e)]

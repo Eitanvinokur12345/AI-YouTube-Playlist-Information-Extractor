@@ -1,16 +1,16 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-682` (dept) · 2026-07-17T10:16:50.424467+00:00
-> Participants: Reel · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-682` (dept) · 2026-07-28T17:55:46.245064+00:00
+> Participants: Reel, Echo · synthesized by mistral/mistral-small-latest
 
-**Decision:**  
-Run the kimtaeyoon83/mcp-server-youtube-transcript tool on the first pending video.  
+**Decision:**
 
-**Plan:**  
-1. Locate the first pending video within the system.  
-2. Execute the kimtaeyoon83/mcp-server-youtube-transcript tool on the identified video.  
-3. Ensure the tool is set to retrieve a full transcript with timestamps.  
-4. Save the output as a clean, timestamped transcript file.  
-5. Review the transcript for accuracy and completeness.  
+**Plan:**
+1. Query `kimtaeyoon83/mcp-server-youtube-transcript` via residential IP to fetch all pending video IDs requiring full transcripts.
+2. For each pending video ID, request real full transcripts/captions from the YouTube transcript server.
+3. Validate transcripts for completeness and accuracy before marking as processed.
+4. Store retrieved transcripts in a structured format (e.g., JSON/CSV) with video ID references.
+5. Log errors or missing transcripts for retry or manual review.
+6. Update the pending video list to reflect completed transcript retrievals.
 
-**What changed:** Focus is on retrieving the transcript efficiently with proper timestamps.
+**What changed:** Resolved to execute the transcript retrieval plan using the specified tool and residential IP.

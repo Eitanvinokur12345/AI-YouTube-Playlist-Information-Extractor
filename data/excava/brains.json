@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-28T18:44:38.209953+00:00",
+ "generated_at": "2026-07-28T20:34:40.682244+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -80,9 +80,9 @@
   {
    "id": "A",
    "lead": {
-    "engine": "mistral",
-    "model": "mistral-small-latest",
-    "lineage": "mistral",
+    "engine": "groq",
+    "model": "llama-3.3-70b-versatile",
+    "lineage": "llama",
     "tier": "fast"
    },
    "support": {
@@ -95,40 +95,25 @@
   {
    "id": "B",
    "lead": {
-    "engine": "groq",
-    "model": "llama-3.3-70b-versatile",
-    "lineage": "llama",
+    "engine": "mistral",
+    "model": "mistral-small-latest",
+    "lineage": "mistral",
     "tier": "fast"
    },
    "support": {
-    "engine": "gh-models",
-    "model": "openai/gpt-4o-mini",
-    "lineage": "gpt",
+    "engine": "nvidia",
+    "model": "meta/llama-3.3-70b-instruct",
+    "lineage": "llama",
     "tier": "grounded"
    }
   },
   {
    "id": "C",
    "lead": {
-    "engine": "deepseek",
-    "model": "deepseek/deepseek-chat-v3-0324:free",
-    "lineage": "deepseek",
-    "tier": "reasoning"
-   },
-   "support": {
-    "engine": "gemini",
-    "model": "gemini-2.0-flash",
-    "lineage": "gemini",
+    "engine": "gh-models",
+    "model": "openai/gpt-4o-mini",
+    "lineage": "gpt",
     "tier": "grounded"
-   }
-  },
-  {
-   "id": "D",
-   "lead": {
-    "engine": "kimi",
-    "model": "moonshotai/kimi-k2:free",
-    "lineage": "kimi",
-    "tier": "reasoning"
    },
    "support": {
     "engine": "sambanova",
@@ -136,18 +121,33 @@
     "lineage": "llama",
     "tier": "fast"
    }
+  },
+  {
+   "id": "D",
+   "lead": {
+    "engine": "gemini",
+    "model": "gemini-2.0-flash",
+    "lineage": "gemini",
+    "tier": "grounded"
+   },
+   "support": {
+    "engine": "cerebras",
+    "model": "llama3.1-8b",
+    "lineage": "llama",
+    "tier": "fast"
+   }
   }
  ],
  "debate": [
   {
-   "engine": "mistral",
-   "lineage": "mistral",
-   "model": "mistral-small-latest"
-  },
-  {
    "engine": "groq",
    "lineage": "llama",
    "model": "llama-3.3-70b-versatile"
+  },
+  {
+   "engine": "mistral",
+   "lineage": "mistral",
+   "model": "mistral-small-latest"
   }
  ],
  "debate_lineages": [

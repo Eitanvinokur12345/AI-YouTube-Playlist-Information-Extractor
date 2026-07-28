@@ -5,6 +5,84 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-28 (continued)
+- **~15:1x (fire 49, unattended, cloud session) — followed up fire 48's own named next-fire
+  candidate immediately (same session, same context) and found the same ghost-inflation bug
+  class in `verify_elements.py`, smaller and non-blocking.** Standing checks: `git_safe sync`
+  clean, guardrails 18/19 (G-C freshly self-healed from fire 48's ship), 0 critical. Audited
+  `elements_verified.json` the same way: `summary.checked=9357` vs a live diff of
+  `verified{}` keys against the current `elements_index` — found **25 stale-ghost IDs**
+  (elements merged/deduped/pruned out of the index since they were last verified), so real
+  live coverage was **9332/10633**, not 9357. **Confirmed this is NOT the same
+  completion-blocking bug as the connectors lane** before touching anything: this file's own
+  `fresh()` gap-check already re-includes any never-verified element on every pass regardless
+  of cursor position (elements are keyed by stable `id`, and unverified ones always fail the
+  freshness test), so the rolling sweep genuinely converges to 100% over its documented ~5–6
+  day cadence — this was a pure honesty/reporting fix, not a get-unstuck fix. Applied the same
+  pattern as fire 48: `summary.checked` is now `len(live_ids ∩ verified_ids)`,
+  `stale_ghost_entries` reported separately, ghost rows left untouched in the file
+  (quarantine-never-delete). **Verified live:** ran `--limit 5` for real (network HEAD checks
+  included) — `summary.checked` corrected 9357→**9332**, `stale_ghost_entries: 25`; both
+  `elements_verified.json` and `verify_elements_state.json` still parse; `python -m
+  src.guardrails` → **18/19**, 0 critical. Shipped `99606f8c`, verified `origin==HEAD`.
+  **Harsh self-criticism:** this fire's actual DELTA is small — 25 records' worth of number
+  correctness, not a new capability Eitan can see or use, and I explicitly chose it because it
+  was cheap/safe/already-in-context rather than because it was the highest-value thing on the
+  backlog (the backlog's own top candidate, "verify the next 200 of 6410 unverified elements,"
+  value 87, is bigger and more load-bearing but needs real network-bound sandbox time I didn't
+  budget for this fire). I did not run a full-size `verify_elements` batch (only 5, to keep the
+  session bounded) so I have not personally confirmed the lane converges at scale — I'm trusting
+  the code-reading, not an end-to-end timed proof the way fire 46 insisted on for its own fix.
+  I DID go back and grep the rest of `src/*.py` for the same `"checked": len(persistent_dict)`
+  idiom before writing this off (`grep -rln '"checked":' src/*.py`) — only `verify_connectors.py`,
+  `verify_elements.py` (both now fixed) and `excava_supervisor.py` use the string `"checked"`
+  at all, and that third one counts items reviewed *this run* (a fresh local variable, not an
+  accumulating dict), so it isn't the same bug. That's real, if shallow, coverage — a
+  string-grep sweep, not a semantic one, so a differently-named accumulator (`seen{}`,
+  `done{}`, `resolved{}`) with the identical ghost-inflation shape could still exist
+  elsewhere and this check would miss it entirely.
+
+- **~15:0x (fire 48, unattended, cloud session) — found and fixed the real reason M1.1
+  ("connectors_verified.json.summary.checked == total") could never actually land: the
+  batch selector was position-based, not name-based.** Standing checks first: `git_safe sync`
+  clean (0 quarantined), guardrails 17/19 at start, 0 critical (same steady state — G-C
+  self-heals on ship, G-O PC-off/unfixable from a cloud sandbox). Picked the connectors lane
+  off the backlog since `connectors_verified.json` summary read "checked 1398/1402" — 4 away
+  from M1.1's own done-criterion — but a by-name diff against `data/connectors.json` found
+  **10** connector names with zero verdict on file, not 4, plus **6 stale ghost entries** in
+  `verified{}` for connectors the hourly mining lane had since renamed/removed (1398 - 6 + 10
+  = 1402, i.e. the summary's "checked" count was inflated by dead names and could never
+  reach a true 1:1 with `total`). Root cause: `src/verify_connectors.py`'s `main()` picked
+  its batch via `cursor % len(conns)` — pure LIST POSITION — so every time the mining lane
+  (which owns `connectors.json`, 6-hourly) renamed or reordered an entry, the cursor's meaning
+  silently drifted; a connector could sit forever just past a slot the cursor had already
+  swept under an old name. **Fixed:** batch selection now always fills true by-NAME gaps
+  first (`[c for c in conns if c["name"] not in ver]`), only falling back to the old
+  position-cursor sweep (which still matters — it's the M1.C3 *rolling re-check*) once every
+  current connector has ≥1 verdict; `summary.checked` is now computed as live coverage only
+  (`len(current names ∩ verified names)`), with stale ghosts reported separately
+  (`stale_ghost_entries`) instead of silently inflating the count — they're left in the file
+  untouched (quarantine-never-delete; they're harmless cache, not deleted). Also added
+  `--timeout` so a manual verification run can bound the per-connector sandbox wait instead
+  of always eating the full 120s. **Verified live, not just by reading the diff:** ran the
+  gap-fill batches for real (`--limit 3 --timeout 15` then `--limit 7 --timeout 15`) —
+  `checked` climbed 1392(true)→1395→**1402/1402**, `stale_ghost_entries: 6` tracked
+  separately; confirmed both `connectors_verified.json` and `connectors_verify_state.json`
+  still parse; re-ran `python -m src.guardrails` → **18/19**, 0 critical. Shipped `de455552`,
+  verified `origin==HEAD`. **Harsh self-criticism:** hit and fixed my own bug mid-fire — the
+  first version had `ap.add_argument("--timeout", default=TIMEOUT)` referencing the module
+  global before its `global TIMEOUT` declaration, a real `SyntaxError` that would have shipped
+  broken had I not test-run the CLI before committing (moved the `global` to the top of
+  `main()`) — a reminder that I should smoke-test new CLI flags even on "small" changes.
+  I did NOT clean up the 6 stale ghost entries themselves (left them in `verified{}` on
+  purpose, per quarantine-never-delete's spirit — deleting cache rows for a genuinely
+  obsolete name feels safe but I chose not to make that judgment call unilaterally); a future
+  fire could prune them if Eitan confirms that's fine. I also didn't investigate WHY the
+  mining lane renames/removes connectors in the first place (is it fixing bad extractions, or
+  losing real ones?) — flagging that as worth a look, not something this fire had budget to
+  chase. Named next-fire candidate: the same by-name-vs-position drift class may exist in
+  `verify_elements.py`'s own 88%-checked (9357/10633) sweep — worth auditing with the same
+  method before assuming its cursor is any more trustworthy than this one was.
+
 - **~14:0x (fire 47, unattended, cloud session) — verified the loop is actually landing on
   `main` (it is; a false alarm from a stale local cache), then shipped the news dept's
   backlog item: `python -m src.news` (web-news RSS refresh).** Standing checks first: local

@@ -112,14 +112,17 @@ def broken_json() -> list:
     """Same scope as guardrails.py's G-F check, run HERE too so a broken/half-merged JSON file
     can never be committed in the first place — not just noticed after the fact. Fire 34
     (2026-07-27, AWAY_LOG) found data/designs.json shipped with 978 unresolved git conflict
-    markers because nothing checked JSON validity before that commit landed; G-F only catches it
-    when a fire happens to run guardrails by hand afterward. Scans top-level data/ + docs/ *.json
-    on disk (post-staging state, since json.loads reads the working tree, not the index)."""
+    markers because nothing checked JSON validity before that commit landed; G-F only caught it
+    when a fire happened to run guardrails by hand afterward. Fire 45 (2026-07-28) found the same
+    bug class one directory deeper — data/excava/supervisor.json + supervisor_longterm.jsonl —
+    which this top-level-only scan (and G-F's) missed for ~13 hours. Widened to recurse the whole
+    data/ + docs/ tree (rglob, not glob) so no nesting depth is a blind spot. Scans on-disk state
+    (post-staging, since json.loads reads the working tree, not the index)."""
     bad = []
     for d in (DATA, DOCS):
         if not d.exists():
             continue
-        for f in d.glob("*.json"):
+        for f in d.rglob("*.json"):
             try:
                 json.loads(f.read_text(encoding="utf-8"))
             except Exception:

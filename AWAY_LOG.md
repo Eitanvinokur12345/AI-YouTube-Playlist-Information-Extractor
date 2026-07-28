@@ -5,6 +5,61 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-28 (continued)
+- **(fire 46, unattended, cloud session, PR-based branch — see note below) — closed the exact
+  gap fire 45 flagged as its own next-fire candidate: widened `broken_json()`'s scan from
+  top-level-only to the whole tree.** Standing checks: `git fetch origin main` clean, this
+  session's branch (`claude/kind-shannon-qoos8v`) already matched `origin/main` at `e3379097`
+  (fire-45's own follow-up commit, `mine-feeds`), nothing to rebase. Read fire 45's own words:
+  "did NOT extend `broken_json()`'s scan to non-top-level `data/excava/*.json` (the actual
+  structural gap that let this slip through in the first place) — flagging it as the concrete
+  next-fire candidate." Took it. `src/git_safe.py`'s `broken_json()` (the pre-commit gate) and
+  `src/guardrails.py`'s `g_json()`/G-F (the read-side check) both used `d.glob("*.json")` —
+  top-level `data/`+`docs/` only — which is exactly how `data/designs.json` (fire 34) and
+  `data/excava/supervisor.json`/`supervisor_longterm.jsonl` (fire 45) both slipped past
+  undetected: the first lives at top level and got caught eventually by G-F; the second is one
+  directory deeper and wasn't caught by either check for ~13 hours. Changed both from
+  `glob("*.json")` to `rglob("*.json")` so no nesting depth is a blind spot; updated their
+  docstrings/messages to say so instead of "top-level." **Verified three ways, not just
+  read-through:** (1) positive — `broken_json()` on the live repo (3,012 JSON files across
+  `data/`+`docs/`, not the 96 top-level ones the old code saw) returns `[]` in 1.3-2.6s, no
+  false positives, and the cost is acceptable to pay on every commit vs. the alternative (a
+  corrupt file reaching `main` a third time); (2) negative — wrote a deliberately broken JSON
+  file under a scratch `data/excava/_selftest_nested/` directory (a real nested path, not a
+  top-level one) and confirmed `broken_json()` correctly flagged it, then deleted the scratch
+  file and confirmed the scan is clean again; (3) `g_json()` (G-F) standalone returns
+  `{ok: True, detail: "all data/ + docs/ JSON parses (recursive)."}` after the edit — no
+  regression, same pass/fail semantics, just wider coverage. `git status --short` after the
+  edits shows exactly the two intended source files, no incidental local-run noise to revert
+  (unlike several prior fires that had to `git checkout --` a stray `movement.json`/
+  `guardrails_status.json` diff — this fire's own read-only verification calls didn't touch
+  any data files).
+  **Process note, said plainly:** this fire's own operating harness requires developing on the
+  designated branch `claude/kind-shannon-qoos8v` and opening a pull request rather than
+  `git_safe.push()`'s established `HEAD:main` direct-push convention every fire since the start
+  of this log has used. That is a genuine, deliberate deviation from 45 fires of precedent —
+  not an oversight — because the harness-level instruction ("never push to a different branch
+  without explicit permission," "always open a PR") sits above this repo's own
+  self-authorized direct-to-main convention, and that convention itself has been flagged
+  "still unconfirmed by Eitan" in nearly every one of those 45 entries. Shipping through a PR
+  this one time costs a review step but not correctness; it does NOT retroactively question
+  the prior 45 direct pushes, and does not change `git_safe.py` itself (still pushes `HEAD:main`
+  for any session that calls it normally) — only how *this* session lands its own commit.
+  **Harsh self-criticism:** this is, once again, guardrail/tooling hygiene rather than Hub
+  content, enrichment, department throughput, or M2's actual next step (rooms producing
+  committed cross-family artifacts, the 5-class Router/Agent/Tool/Room/Element layer) — the
+  same class of fire self-criticism has flagged as overrepresented since fire 8, and I picked
+  it BECAUSE it was already explicitly queued and cheap-to-verify, not because I made an
+  independent case for it being the single highest-leverage thing available right now. The fix
+  only covers `.json` files, not the `.jsonl` logs (`supervisor_longterm.jsonl` itself) that
+  fire 45 also had to hand-repair — a conflict-marker corruption in a `.jsonl` append-log would
+  still slip past both checks today; widening to `.jsonl` is a reasonable next candidate but is
+  a different validation shape (line-delimited, not one whole-file `json.loads`) and was out of
+  scope for this specific, already-queued fix. Did not touch the ~13-20 stray
+  `kind-shannon-*` branches (still unswept, still someone else's problem, though this fire adds
+  one more to that pile by design given the branch/PR requirement above), M2, or the
+  fresh-fusable `deep_retrieve` pool fire 45 already found nearly drained (144 left) — left for
+  whichever fire next has real transcript/link inventory to enrich against.
+
 - **~11:1x (fire 45, unattended, cloud session) — advanced M1's own named target
   (`deep_retrieve enrichment (stub≈0)`) plus found and fixed a second, real, currently-active
   bug along the way: a false "hollow" reading in `excava_systemcheck.py` caused by two

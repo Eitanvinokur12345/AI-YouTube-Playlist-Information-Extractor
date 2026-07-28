@@ -110,15 +110,18 @@ def g_build_align():
 
 
 def g_json():
+    # Recurses the whole tree (rglob, not glob) — widened 2026-07-28 (fire 46) after fire 45 found
+    # a broken nested JSON (data/excava/supervisor.json) that this top-level-only scan had missed
+    # for ~13 hours. Matches git_safe.py's broken_json(), the pre-commit gate with the same scope.
     bad = []
     for d in (DATA, DOCS):
-        for f in d.glob("*.json"):
+        for f in d.rglob("*.json"):
             try:
                 json.loads(f.read_text(encoding="utf-8"))
             except Exception:
                 bad.append(str(f.relative_to(ROOT)))
     return _ok("G-F", "JSON integrity", not bad,
-               "all top-level data/ + docs/ JSON parses." if not bad else f"BROKEN JSON: {', '.join(bad[:5])}", "critical")
+               "all data/ + docs/ JSON parses (recursive)." if not bad else f"BROKEN JSON: {', '.join(bad[:5])}", "critical")
 
 
 def g_remote_sync():

@@ -5,6 +5,63 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-29
+- **~12:0x (fire 64, unattended, cloud session) — hand-drained 8 pending videos through the full
+  analyze pipeline (Golden rule #1, one commit+push per video), picking up content ingestion
+  again after fire 63 spent its whole budget on the `discover.yml`/`analyze.yml` rate-ceiling
+  diagnosis and explicitly left the backlog untouched.** Standing checks first: `python -m
+  src.standing_checks` clean (same recurring one-time stale-ref/missing-upstream repair every
+  fresh session hits); `python -m src.guardrails` 18/20, 0 critical both before and after (same
+  steady-state G-O local-drain-stale — EITAN-PC off — plus the shallow-clone-limited G-P/G-T
+  partial-blindness fire 54 already explained). Confirmed the sandbox egress wall is still up
+  (`$HTTPS_PROXY/.../status` allowlists only `anthropic.com`/package registries) before picking
+  videos, so — same selection bias every fire this week has had to make — picked the 8 newest
+  pending videos (`catch_up.json` order: `newest_first`) that needed no live fetch to extract.
+  Processed `lLf4-fdRfCM` (STARTUP HAKK price-war short, vague uncited figures, news-only,
+  `video_quality_score: 3`), `eAqG3jJ_lrA` (Giuseppe Builds' claim that `/compact` silently
+  discards context you might need — added a caution tip to the Claude Code bucket that
+  deliberately nuances, not duplicates, the existing pro-`/compact` tip; the video itself
+  comment-gates its actual fix behind "comment PROTOCOL" with zero comments available to recover
+  it, so logged it `unresolved` in `comment_gated.json` per Step 2e), `RxSzwa7VxhU` (Meta's
+  official Facebook Ads connector for Claude — matched and merged as a second independent
+  endorsement into the existing "Meta Ads MCP" connector record rather than creating a
+  near-duplicate; its extra specifics — Pixel/Conversions-API audit, product-catalog pull,
+  scale/kill recommendations — were folded into that record's `what_it_does`), `sGfhjO6gayc`
+  and `7uND6Af96os` and `l01w-F5qTz0` (three near-content-free shorts — title-only "AI agent for
+  jobs," a resume-rewrite demo whose own top comments call the visuals staged and warn about
+  hallucinated qualifications, and a viral "AI stack" teaser with zero named tools in the
+  available text — news summaries only, all capped `video_quality_score: 2`), `eJg5cOqzwIo`
+  (**new skill**: "ChatGPT Marketplace Listing Automation," a genuinely concrete 4-prompt chain
+  — identify item + price from photos, write listing copy, then have ChatGPT open its own
+  browser to post the listing — specific enough to clear the anti-boilerplate gate; wrote its
+  `other-skills/chatgpt/` SKILL.md package, `quality_score: 6`), `O4CliDtS99k` (Tech With Tim's
+  generic "build your own skills/agents" career advice — no concrete new technique so no skill
+  record, but added one non-duplicate tip to `general/agents`). Verified: `json.load()` clean on
+  every touched file after every write, before every commit; re-checked `data/index.json` for
+  the new skill's slug before writing (no collision) and updated it after; `python -m
+  src.guardrails` 18/20, 0 critical, unchanged in shape across all 8 commits; `data/_pending`
+  1233→1225, `status.json.total_videos_analyzed` 1649→1657, `run_report.analyzed_this_run` +8
+  (highest single-fire count logged this week, per the outer routine's "increase volume each
+  cycle" instruction — prior fires this week ran 4-9, this fire deliberately picked all 8 videos
+  up front and worked through them back-to-back rather than diagnosing new CI issues).
+  **Harsh self-criticism:** 8 videos against a 1,225-deep backlog is still the same rounding-
+  error math every fire this week has already admitted — the real fix (a healthy `analyze.yml`
+  running its full batch size unattended, per fire 57's still-open cadence question in
+  `QUESTIONS.md` #31) is outside what a hand-drain from a cloud sandbox fire can solve. I again
+  picked the network-free tail of the batch (shorts with no `links` to follow, all
+  `transcript_source: description`) rather than a longer, richer video that might have yielded
+  more than one real skill — the same selection bias fires 56/58/60/62 already flagged, driven
+  by the sandbox's network wall rather than a judgment call I'd defend if the network were open.
+  The `RxSzwa7VxhU` merge is my own single read that "Meta Ads MCP" is the right existing record
+  to fold this video into rather than one of the four OTHER near-identical Meta-Ads-connector
+  entries already in `connectors.json` (`Meta Ads Custom Connector`, `Meta Ads to Claude`, `Meta
+  Ads AI connectors`, `Meta Ads Manager`) — those four look like they should probably also be
+  merged into each other as the same underlying connector re-described by different videos, but
+  untangling that is a bigger dedup pass than one fire mid-backlog-drain should take on
+  unilaterally; flagging it here as a good next-fire candidate rather than attempting a 5-way
+  merge on my own judgment right now. Did not re-touch `QUESTIONS.md` #31 (the
+  `analyze.yml`/`discover.yml` cadence question) since fire 63 already left it maximally
+  evidenced and nothing new happened this fire to add to it — re-flagging an unchanged,
+  already-fully-documented open question would cost tokens without adding information for Eitan.
 - **~09:0x (fire 63, unattended, cloud session)** — Standing checks clean (stale local ref
   re-fetched, missing upstream re-tracked, guardrails 18/20→19/20 after a fresh `git_safe
   backup`; only G-C then G-O left, both benign/PC-dependent). Chased the real blocker

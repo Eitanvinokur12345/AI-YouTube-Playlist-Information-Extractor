@@ -1,8 +1,8 @@
 {
- "generated_at": "2026-07-28T23:59:41.033587+00:00",
+ "generated_at": "2026-07-28T23:59:26.445619+00:00",
  "total": 20,
- "passing": 17,
- "critical_failures": 1,
+ "passing": 18,
+ "critical_failures": 0,
  "guardrails": [
   {
    "id": "G-A",
@@ -21,9 +21,9 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": true,
-   "detail": "n/a in CI — the beat pushes straight to origin each cycle, bypassing git_safe/local bundles by design.",
-   "severity": "info"
+   "ok": false,
+   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
+   "severity": "warn"
   },
   {
    "id": "G-D",
@@ -42,15 +42,15 @@
   {
    "id": "G-F",
    "name": "JSON integrity",
-   "ok": false,
-   "detail": "BROKEN JSON: data/designs.json",
+   "ok": true,
+   "detail": "all data/ + docs/ JSON parses (whole tree).",
    "severity": "critical"
   },
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": false,
-   "detail": "NOT in sync (behind/ahead: 3\t1) — a push may not have landed.",
+   "ok": true,
+   "detail": "HEAD == origin/main (work is really saved).",
    "severity": "warn"
   },
   {
@@ -71,7 +71,7 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "24801 memory episodes on record.",
+   "detail": "24779 memory episodes on record.",
    "severity": "warn"
   },
   {
@@ -92,14 +92,14 @@
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "224 tasks done, 10 departments moving",
+   "detail": "207 tasks done, 10 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "89248 MB free on the repo drive.",
+   "detail": "30439 MB free on the repo drive.",
    "severity": "info"
   },
   {
@@ -127,7 +127,7 @@
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
    "ok": true,
-   "detail": "3/16 lane(s) landing on cadence, 13 can't-tell (shallow clone).",
+   "detail": "7/16 lane(s) landing on cadence, 9 can't-tell (shallow clone).",
    "severity": "warn"
   },
   {

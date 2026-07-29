@@ -189,6 +189,15 @@ then the existing verified-rank/name tiebreak) — the item v127 queued as NEXT.
 self-criticism in AWAY_LOG.md (fire 24 entry) — that file is now the per-fire log; this §0d section
 just carries the live-build pointer forward for G-I.
 
+**v132 (away fire 70, unattended, cloud session, 2026-07-29 — live build v132, 10th-heartbeat
+cycle):** the pitch modal (`openPitch()` in docs/dashboard.js) now renders an optional
+`conflict_note` field as an extra checker bubble when a pitch record carries one, and
+`data/excava/pitches.json`'s `pitch-37587` (adopt Bright Data MCP) got the first one — it flags
+that this pitch's own "full proxy and scraping stack" wording likely names the same
+card-required resource QUESTIONS.md item #12 already declined, so Eitan sees the conflict before
+deciding instead of a bare pitch. Full detail + the 10th-heartbeat audit in AWAY_LOG.md (fire 70
+entry) — this §0d section just carries the live-build pointer forward for G-I.
+
 **Fire 25 (2026-07-27, backend-only, no dashboard change):** fixed a live twice-daily data-loss bug
 in `core_spoton.yml` (bash octal-arithmetic on `date -u +%H` at 08/09 UTC) + hardened the Commit
 step. **Fire 26 (2026-07-27, backend-only):** closed half the observability gap fire 25 flagged —

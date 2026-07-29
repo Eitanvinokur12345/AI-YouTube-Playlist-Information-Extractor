@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v131";
+const APP_BUILD = "v132";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -2896,7 +2896,8 @@ function openPitch(id) {
     <div class="chat">
       ${bubble("improve", "Ratchet", "self-improve lead", `I want to ${p.what}.`)}
       ${bubble("improve", "Ratchet", "reasoning", p.why || "It clears a recurring problem.")}
-      ${bubble("security", "Bastion", "checker", "Reviewed — it's reversible and scoped. Your call, boss.")}
+      ${p.conflict_note ? bubble("security", "Bastion", "checker — conflict flag", p.conflict_note) : ""}
+      ${bubble("security", "Bastion", "checker", p.conflict_note ? "Everything else checks out — just confirm the flag above before you decide." : "Reviewed — it's reversible and scoped. Your call, boss.")}
     </div>
     <div class="pitch-actions">
       <a class="ok" target="_blank" href="${_exIssue("EXCAVA: approve " + p.id, "Approving pitch: " + p.what)}">✓ Approve</a>

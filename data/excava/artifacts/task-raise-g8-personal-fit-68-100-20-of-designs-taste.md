@@ -1,11 +1,19 @@
 # Raise G8 Personal fit (68/100): 20% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond
 
-> visual · task `raise-g8-personal-fit-68-58691` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
+> visual · task `raise-g8-personal-fit-68-59103` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
-**Approach:** Elevate G8 Personal fit through targeted design refinement and taste-tagged curation.
-1. **Analyze existing designs**: Utilize Adobe Creative Cloud (specifically, Photoshop and Illustrator) to review and evaluate the 17 small-sized designs, identifying areas for improvement to increase the taste-tagged ratio to at least 20%.
-2. **Implement design enhancements**: Employ Figma for collaborative design iteration, focusing on typography, color palette, and composition to elevate each design's aesthetic value, ensuring that at least 20% of the designs are taste-tagged.
-3. **Integrate NOSG wiring and Arena learning**: Leverage Python with libraries such as TensorFlow and scikit-learn to integrate the NOSG wiring with live Arena learning, enabling the system to learn from user interactions and adapt the design curation process to refine the G8 Personal fit.
-4. **Monitor progress and adjust**: Use GitHub to track changes and collaborate on the design refinement process, maintaining a changelog to document improvements and adjust the approach as necessary to achieve the desired G8 Personal fit of 68.
-5. **Validate outcomes**: Apply Google Analytics to assess user engagement and preference, ensuring that the design enhancements and curation strategy effectively increase the G8 Personal fit value.
-**Needs:** Adobe Creative Cloud, Figma, Python, TensorFlow, scikit-learn, GitHub, Google Analytics, access to design files and user interaction data.
+```markdown
+**Approach:** Taste-tag 20% of designs via Arena live feedback, then wire NOSG to propagate signals beyond current scope.
+
+**Steps:**
+1. **Tag 20% of designs** – Run `scripts/taste_tag.py --split 0.2 --arena-live` to generate taste-tagged subset (output: `data/taste_tags.jsonl`).
+2. **Arena learning loop** – Deploy `arena/learn.py --input data/taste_tags.jsonl --epochs 10` to train taste model (logs: `logs/arena_YYYYMMDD.log`).
+3. **NOSG wiring** – Update `config/nosg.yaml` with new taste model path, then run `nosg/wire.sh --model-path models/arena_v1.pt` to propagate signals (output: `nosg/signals.json`).
+
+**Needs:**
+- `scripts/taste_tag.py` (existing, but requires `--arena-live` flag)
+- `arena/learn.py` (existing, needs `--input` and `--epochs` args)
+- `nosg/wire.sh` (existing, needs `--model-path` arg)
+- `data/taste_tags.jsonl` (will be created in Step 1)
+- `models/arena_v1.pt` (output of Step 2)
+```

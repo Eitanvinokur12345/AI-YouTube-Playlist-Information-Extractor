@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-29T16:38:51.418363+00:00",
+ "generated_at": "2026-07-29T16:45:56.647156+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -39,7 +39,7 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 194,
+   "turns_7d": 195,
    "rooms_7d": 100,
    "engines_used": [
     "gh-models",
@@ -48,7 +48,7 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Implement a lightweight triage system alongside the rotating \"blocker owner.\" Each owner will log blockers"
+   "last_position": "**Decision:** Establish a shared accountability framework where each team member is required to report on their unresolv"
   },
   {
    "id": "watch-w1",
@@ -72,7 +72,7 @@
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 124,
+   "turns_7d": 125,
    "rooms_7d": 32,
    "engines_used": [
     "gh-models",
@@ -81,7 +81,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "**Risk:** The lightweight triage system may still allow for blurry ownership, as the 48-hour SLA could lead to delays or"
+   "last_position": "**Risk:** A shared accountability framework in stand-ups risks turning into a blame game—teams will report blockers but "
   },
   {
    "id": "creators-lead",
@@ -215,17 +215,32 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 85,
-   "rooms_7d": 41,
+   "turns_7d": 86,
+   "rooms_7d": 42,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Implement a blind rollout to 5% of users who opt into the new feature. This approach minimizes bias by ensuring only int",
+   "last_position": "We should implement A/B testing for the new feature with 5% of users. This decision allows us to gather data on user int",
    "proposed": 1,
    "shipped": 1
+  },
+  {
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
+   "role": "checker",
+   "turns_7d": 85,
+   "rooms_7d": 42,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "A/B testing with only 5% of users risks missing critical insights because it doesn’t capture the full range of user inte"
   },
   {
    "id": "memory-w1",
@@ -254,21 +269,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Wire compiles the latest AI headlines from Reuters, BBC, and White House press releases into a two-source-verifi"
-  },
-  {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 84,
-   "rooms_7d": 41,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "A blind rollout to users who opt-in risks self-selection bias, meaning the engaged users might not represent the entire "
   },
   {
    "id": "links-w1",
@@ -304,30 +304,30 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 74,
-   "rooms_7d": 37,
+   "turns_7d": 75,
+   "rooms_7d": 38,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "We should adopt **Mistral 7B** as EXCAVA's reasoning engine. It strikes a balance between effective reasoning power and "
+   "last_position": "Adopt **Claude Mythos 5** as EXCAVA's reasoning engine. It provides advanced capabilities for natural language understan"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 74,
-   "rooms_7d": 37,
+   "turns_7d": 75,
+   "rooms_7d": 38,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Mistral 7B’s \"balance\" is a myth—its reasoning is too shallow to move EXCAVA forward. The real risk is locking in a mode"
+   "last_position": "Integrating Claude Mythos 5 poses significant latency risks, which could degrade user experience and hinder real-time pr"
   },
   {
    "id": "analysis-lead",
@@ -454,6 +454,23 @@
    "last_position": "ACTION: At 11:56:00, Iris directs Arcads AI Video to generate a one-page analysis of the AI marketing demo, highlighting"
   },
   {
+   "id": "accessibility-lead",
+   "name": "Access",
+   "dept": "accessibility",
+   "role": "lead",
+   "turns_7d": 44,
+   "rooms_7d": 42,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Ship a **user-customizable focus indicator** that includes both a **subtle high-contrast focus ring** and an *",
+   "proposed": 2
+  },
+  {
    "id": "memory-lead",
    "name": "Root",
    "dept": "memory",
@@ -467,23 +484,6 @@
    ],
    "positions_held": 27,
    "last_position": "ACTION: Graft embeds the goal, system constraints, and known context into the Cross-AI Unified Memory graph, producing a"
-  },
-  {
-   "id": "accessibility-lead",
-   "name": "Access",
-   "dept": "accessibility",
-   "role": "lead",
-   "turns_7d": 43,
-   "rooms_7d": 41,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Ship a **subtle high-contrast focus indicator** with a **toggleable option** for users to select a stronger co",
-   "proposed": 2
   },
   {
    "id": "improve-lead",
@@ -500,7 +500,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Run a hybrid 5% pilot with a 3% visible A/B test and a 2% blind rollout to minimize selection bias while obtai",
    "proposed": 10,
-   "shipped": 8
+   "shipped": 9
   },
   {
    "id": "power-lead",

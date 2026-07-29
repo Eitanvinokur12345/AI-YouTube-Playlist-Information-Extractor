@@ -41,6 +41,7 @@
   "review_ok": true,
   "last_review_ok_at": "2026-06-21T00:03:28.887318Z",
   "last_analyze_ok_at": "2026-07-28T02:37:27Z",
-  "analyze_failed_at": "2026-07-29T01:29:57.615488Z",
-  "token_hint": "The analyze run FAILED. The most common cause is an expired Claude subscription token — renew it (run `claude setup-token` once a year) and update the CLAUDE_CODE_OAUTH_TOKEN_REAL GitHub secret. Otherwise check the Actions log for the failing step."
+  "analyze_failed_at": "2026-07-29T02:04:30.959711Z",
+  "token_hint": "The analyze run FAILED (consecutive fail #1). Likely a transient rolling usage/rate ceiling on the shared Claude subscription token, NOT an expired token — observed pattern: failures cluster 20:00-02:00 UTC and self-heal within hours (see QUESTIONS.md #31). No action needed yet; only investigate the token if this counter keeps climbing past 3-4 with no successful run in between.",
+  "analyze_consecutive_fails": 1
 }

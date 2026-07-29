@@ -5,6 +5,110 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-29
+- **~23:0x (fire 70, unattended, cloud session, 10th-heartbeat checkpoint) — wired one small
+  real M3.11-steering increment (pitch modal learns to flag a conflicting pitch), then ran the
+  10th-heartbeat audit over fires 61-69.** Standing checks first: `python -m
+  src.standing_checks` found the local `origin/main` cache stale (routine) and no upstream
+  tracking on this session's branch — both self-healed, same as every fresh session this week.
+  `python -m src.guardrails` 18/20, 0 critical before (same steady-state G-C/G-O pair);
+  `python -m src.excava_systemcheck` 10/11, all critical OK (only the known, deliberately-left
+  news/trend_watch intent-drift, fire 23's call, unchanged).
+  **This fire's scope explicitly excluded `data/_pending`/`skills.json`/`tools.json`/etc.**
+  (a separate concern this run), which ruled out the video-drain pattern fires 60-69 leaned on
+  — spent real search time confirming there was no other easy YouTube-pipeline-adjacent
+  shortcut before picking a genuinely EXCAVA-only target. Checked the M1 stocktake fire 65 left
+  standing (still healthy, lanes still grinding — `deep_retrieve_state.json`/
+  `github_meta_enrich_state.json` both show fresh `updated_at` timestamps from today), checked
+  M2 (still zero `Router`/`Agent`/`Tool`/`Room` scaffolding — still correctly gated behind a
+  pitch fire 65 declined to start unilaterally), and read `data/excava/pitches.json`: 3 of its
+  4 pitches have sat "pending" since 2026-07-10 (19 days), reachable from the dashboard's
+  pitch modal (`openPitch()` in `docs/dashboard.js`, wired via the bell/banner/walk-up-monster
+  steering system). One of them, `pitch-37587` ("adopt Bright Data MCP, free capacity"), reads
+  as a live, evidenced conflict: its own `why` names "Bright Data's full proxy and scraping
+  stack — Web Unlocker," and `QUESTIONS.md` item #12 already declined exactly that resource
+  (its free tier needs a card on file, which breaks the standing free-only-forever rule) —
+  Eitan would currently see this pitch with zero indication that a near-identical resource was
+  already declined by name.
+  **Shipped:** `openPitch()` now renders an optional `conflict_note` field as an extra checker
+  bubble when a pitch carries one, and `pitch-37587` got the first one (cross-referencing
+  QUESTIONS.md #12, explicitly NOT auto-declining — that's still Eitan's P5-gated call, this
+  only makes it an informed one). `APP_BUILD`/`SHELL_CACHE` bumped v131→v132;
+  `SESSION_HANDOFF.md`'s §0d live-build pointer updated to match (keeps G-I green). Verified:
+  `python3 -c "json.load(...)"` on the edited `pitches.json`, `node --check docs/dashboard.js`,
+  and a standalone Node simulation of `openPitch()`'s template literal against the real pitch
+  records — confirmed the conflict bubble renders with the right text for `pitch-37587` and the
+  plain fallback bubble is byte-identical to before for the other 3 pitches (no regression).
+  **A genuine mid-fire mistake, caught and fixed before it shipped:** the first attempt at this
+  edit was silently discarded by a bare `python -m src.git_safe sync` call — `sync()` runs
+  `revert_ci_churn()` first, which does `git checkout -- data backups` to auto-resolve routine
+  CI regeneration noise, and since my edit to `data/excava/pitches.json` was still *unstaged*
+  at that point, `git_safe` correctly (by its own logic) treated it as exactly that kind of
+  noise and reverted it — the harness's own system-reminder diff caught the silent revert
+  immediately, since it flagged the file had changed back under me. Re-applied the edit and
+  staged it (`git add`) immediately, then shipped via `git_safe ship -a <files> -m ...` in one
+  call so `commit()` locks the change into the index before `push()`'s internal `sync()` can
+  ever see it as unstaged. **This is a real, previously-undocumented footgun in `git_safe.py`
+  worth a permanent note**, not just a one-fire mistake: `CI_CHURN = ["data", "backups"]` is
+  the ENTIRE `data/` tree, so ANY manual edit under `data/` (not just the mined-content files)
+  is vulnerable to being silently dropped by a `sync()` call if it isn't staged first — the
+  fix is mechanical (always `git add` before any `sync`/`ship` touches a `data/*` edit) but
+  nothing in `GUARDRAILS.md`/`PROTOCOLS.md` currently says so explicitly; flagging this in
+  `QUESTIONS.md` is the right home for a permanent fix (e.g. `revert_ci_churn()` skipping any
+  path with staged changes) but is a `git_safe.py` code change on shared machinery, so left as
+  a flagged note rather than a same-fire self-edit of the safety script itself. Re-ran
+  `python -m src.guardrails` after shipping: **19/20, 0 critical** (G-C/G-E/G-G/G-I all green
+  from this fire's own commit) and `origin/main` confirmed == `HEAD` (`219e8e95`).
+  **10th-heartbeat audit (fires 61-69, per the outer routine's every-10th-fire review):**
+  Storage: `.git` 173M, `_ATTIC` 135M, 30GB free / 21% used on the sandbox disk — no concern.
+  Fire 69 confirmed shipped: both its claimed commits (`25e0b767`, `a460b168`) are present in
+  `git log`, and `origin/main`/`HEAD` matched cleanly at the start of this fire (before any new
+  work) once the routine stale-cache re-fetch ran, so nothing from fire 69 was lost or
+  unpushed. No operational limit tripped: `data/excava_config.json.mode` reads `"run"` (not
+  `safe`/`kill`), `python -m src.guardrails` never showed a CRITICAL failure across fires 61-69
+  per their own logged numbers, and this fire's own guardrail run confirms the same 0-critical
+  baseline live. The one standing, evidenced-but-unconfirmed constraint is still
+  `QUESTIONS.md` #31: `CLAUDE_CODE_OAUTH_TOKEN_REAL`'s likely rolling usage ceiling (fire
+  55→57→63's escalating diagnosis) — not new this fire, not re-escalated a fifth time since
+  no new evidence appeared, but still the single most-blocking real constraint on the record.
+  **Synthesis of fires 61-69:** every one of the ten landed at least one real, verified,
+  shipped commit — no silent gaps, no fabricated entries. Fires 61-64 and 66-69 hand-drained
+  a combined ~47 videos off `data/_pending` (60 skipped the drain for its own diagnosis work);
+  fire 65 ran the first consolidated M1 stocktake against the END PLAN's own §6 deadline
+  (concluded M1 functionally healthy/self-sustaining, M2 correctly un-started pending a pitch);
+  fire 68's own commits left 2 guardrail-CRITICAL breakages (a merge-conflict-mangled
+  `supervisor.json` + 48 stray conflict-marker lines across 16 `.jsonl` logs) that fire 69 spent
+  its entire budget repairing rather than doing new content work. **Recurring pattern worth
+  flagging plainly:** the video-drain fires have now said, independently, four separate times
+  (58/59/60, then again 64/66/67/68) that hand-draining ~6-12 videos per fire against a
+  1,200+-deep backlog is a rounding error, and that the real fix (a healthy `analyze.yml`
+  running its full batch size unattended, currently constrained by the same token-ceiling issue
+  as #31) is outside what any single cloud-sandbox fire can act on beyond flagging it — this
+  fire's own scope exclusion of the YouTube pipeline is a further, structural sign that this
+  repo now runs two genuinely separate concerns (EXCAVA vs. the analyze pipeline) that would
+  benefit from being reasoned about on separate tracks rather than one shared away-fire budget.
+  **No blocker and nothing outside routine needs Eitan's urgent attention this checkpoint** —
+  the token-ceiling question (#31) is the only standing item that needs his actual decision,
+  and it is unchanged since fire 63, already flagged at maximum evidence.
+  **Harsh self-criticism:** the shipped increment (a conflict-note bubble on one pitch) is
+  small — smaller in visible impact than most of fires 61-69's video-drain hauls, and it took a
+  disproportionate share of this fire's time to find, precisely because the explicit
+  YouTube-pipeline exclusion this fire operates under removes almost every "real content"
+  avenue that made fires 60-69 productive; a fair reading is that this fire spent more effort
+  searching for a legitimately-scoped task than executing one, which is its own kind of
+  inefficiency even though the eventual increment is real, tested, and genuinely useful (Eitan
+  will not blind-approve a resource already declined once). The `git_safe sync()`
+  unstaged-data-revert footgun is a genuinely useful catch, but discovering it cost real time
+  and very nearly caused a second silent no-op fire (if the harness's own diff hadn't
+  surfaced it, this fire could easily have "shipped" nothing while believing it had) — that
+  near-miss is worth Eitan knowing about explicitly, not just buried in a commit message. Did
+  not touch `data/excava/pitches.json`'s other 2 stale pending pitches (`pitch-73976`,
+  `pitch-53860`) beyond reading them — they don't have the same kind of hard evidenced conflict
+  pitch-37587 has, so adding speculative notes to them would have been manufactured busywork,
+  not a real finding; left them exactly as-is. Did not touch the ~13 stray `kind-shannon-*`
+  branches, the direct-to-main-vs-branch/PR convention (still followed per the repo's own
+  established `git_safe ship` convention, still unconfirmed by Eitan, not re-litigated), or
+  QUESTIONS.md #31 (unchanged, correctly not re-raised without new evidence).
+
 - **~22:0x (fire 69, unattended, cloud session) — standing-checks repair only, no new
   content this cycle.** Picked up where fire 68 left off per the END PLAN's "just this once,
   without regard to the loop" instruction: `python -m src.guardrails` showed 2 CRITICAL

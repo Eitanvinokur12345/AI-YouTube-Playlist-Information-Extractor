@@ -5,6 +5,66 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-29
+- **~09:0x (fire 62, unattended, cloud session) — hand-drained 5 more pending videos off the
+  `data/_pending/` backlog (CLAUDE.md's own analyze pipeline, one commit+push per video, Golden
+  rule #1), picking the `catch_up.json` newest_first tail exactly like fires 55/56/58/61.**
+  Standing checks first: `python -m src.standing_checks` clean (stale local ref auto-refetched,
+  missing upstream auto-repaired — the recurring one-time gap every fresh session branch hits);
+  `python -m src.guardrails` 18/20, 0 critical before, 19/20 after (G-C self-healed once this
+  fire's own `git_safe ship` calls refreshed the history backup; the one remaining flag is the
+  same steady-state G-O local-drain-stale — EITAN-PC off, unfixable from a cloud sandbox).
+  Confirmed the egress wall fires 48-58 already documented is still up (`$HTTPS_PROXY/.../status`
+  allowlists only `anthropic.com`/package registries), so — same selection bias every fire this
+  week has had to make and flagged — picked videos whose `transcript_source` needed no live
+  fetch (`transcript` or `description` fallback, no `links` to follow) rather than risk a dead
+  WebFetch call. Processed newest→oldest: `1rW4rQeKwgI` (disputed, unverified "Hugging Face
+  compromised" claim — its `weekly_news.json` summary and quality flags were already filled by
+  a concurrent lane before this fire touched it; nothing left to extract, just moved to
+  `processed/`); `jPOUCp8XVgE` (Claude Code usage-limit gripe short — **new tool
+  `OpenMonoAgent.ai`, mined from the video's own comments per Step 2d**: a viewer asks for a way
+  to build a custom single-purpose model, and the channel's own account replies by name-dropping
+  it — real creator-reply evidence, not a random comment, but still a single self-sourced plug
+  with no independent corroboration anywhere else in the library, so it's tagged
+  `discovered_via: video_comment` with an explicit `data_quality_note` saying so and capped at
+  `quality_score: 3` to match the video's own weak `video_quality_score`; also added this video's
+  endorsement to the existing `claude-code` tool since it substantively discusses Claude Code by
+  name); `MVsrPSoo7nc` ("scene engineering" AI-video framing — genuinely interesting positioning
+  but zero named tool and zero concrete steps, and a commenter's direct ask for the tool name got
+  no real answer, so the anti-boilerplate gate correctly extracted nothing beyond a news
+  summary); `kfE0kLPwFaM` (generic "stay curious" career-habit short, mentions "AI tool" only in
+  passing — news summary only, `video_quality_score: 2`); `vTbFASfPSW4` (Claude vs. Codex
+  comparison short — endorsement added to both the existing `claude-code` and `codex` tool
+  records since it substantively names and compares both, no new tool). Deliberately extracted
+  **no skill** from any of the 5 — all are sub-30s hype/news shorts with no concretely-taught,
+  repeatable technique. **Noticed but did not act on:** this channel ("STARTUP HAKK") has several
+  more videos in the pending backlog with the same shape — a short news-recap clip whose comments
+  carry a creator reply plugging OpenMonoAgent.ai — worth a second set of eyes on whether that's a
+  genuine tool worth trusting further or a recurring self-promotional pattern; flagging here
+  rather than either over-trusting or silently dropping the one instance this fire found.
+  Verified: `json.load()` clean on every touched file (`tools.json`, `weekly_news.json`,
+  `status.json`) after every write, before every commit; re-sorted `tools.json` by
+  mentions-desc/quality-desc/name per Step 3b after each tool edit; `python -m src.guardrails`
+  19/20, 0 critical, unchanged in shape after all 5 commits; `data/_pending` 1188→1183,
+  `status.json.total_videos_analyzed` +5, `total_tools` 2980→2981 (+1 real, the two endorsement
+  adds didn't grow the count). **Harsh self-criticism:** 5 videos against a 1,183-deep backlog is
+  still the same rounding-error math fires 56/58/61 already admitted — this fire doesn't move
+  that needle either, and the underlying fix (a healthy `analyze.yml` running its full batch size
+  unattended) is still outside what a hand-drain from a cloud sandbox fire can solve, same
+  conclusion as every prior fire this week. The `OpenMonoAgent.ai` tool is genuinely thin
+  evidence — one creator's own comment reply on one of their own low-quality videos is barely
+  above a plain ad, and I chose to record it (hedged, capped, tagged) rather than drop it
+  entirely; a stricter reading of Step 2d might say a same-channel reply doesn't meet the "high-
+  liked, or a creator/author reply, or matches the transcript" bar as cleanly as an independent
+  viewer's corroboration would — flagging that judgment call explicitly rather than presenting it
+  as settled. Did not open a `QUESTIONS.md` item about the STARTUP HAKK pattern noticed above —
+  one instance isn't yet enough evidence to escalate, but the next fire that hits another
+  OpenMonoAgent.ai comment-plug from the same channel should treat that as the second data point
+  and raise it. Did not touch the top two backlog-ranked items (`verify_elements`/`resolve_links`,
+  both network-bound and blocked by this sandbox's egress, per every fire since 48) or the
+  tips.json overflow debt fire 59 left half-done (`ChatGPT` 44, `code` 30, `automation` 23,
+  `productivity` 23 buckets still untouched) — picked backlog ingestion over both on purpose,
+  consistent with fire 61's read that M1's ingestion window is the standing priority while it's
+  still open.
 - **~06:0x (fire 61, unattended, cloud session)** — hand-drained 4 pending videos off the
   watch/transcripts backlog gap (top `queued_now` item, value 80): `46fI3TSx3hE` (OpenClaw VPS
   install — endorsement added to the existing OpenClaw tool record; also flagged a likely

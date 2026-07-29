@@ -69,6 +69,17 @@ Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Lo
   both untouched; this is real-but-shallow product progress on M1.7 specifically, not a dent in
   the bigger, harder M1.C1 stub-rate-≈0 goal, which stays blocked on the brain/local-drain path
   (still stale, 66h) exactly as every prior fire this week has already found and flagged.
+  **Addendum, same fire: hit and fixed a real `git_safe.py` bug while shipping this.**
+  `ensure_upstream()` only checked whether `@{u}` existed AT ALL, not whether it pointed at
+  `origin/main` — this session's branch had a real (not missing) upstream, just the wrong one
+  (`origin/claude/kind-shannon-y727zn`, a same-named remote branch some outside process had
+  auto-created), so `sync()`'s un-refspec'd `git pull --rebase` silently rebased against that
+  branch instead of `origin/main` while `push()`'s hardcoded `push origin HEAD:main` kept
+  bouncing as non-fast-forward — 3 straight `git_safe push`/`ship` failures with no message
+  pointing at the actual mismatch. Widened the check to compare the RESOLVED upstream name, not
+  just its existence, and repoint whenever it isn't exactly `origin/main`. Verified live: set
+  the upstream by hand first to confirm the diagnosis, then this fire's own final `ship` call
+  succeeded on the first try with the fix in place — real production proof, not a synthetic test.
 
 ## 2026-07-28 (continued)
 - **~22:0x (fire 54, unattended, cloud session) — unshallowed this sandbox's clone (it was shallow,

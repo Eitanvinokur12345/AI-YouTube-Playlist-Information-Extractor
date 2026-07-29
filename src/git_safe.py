@@ -207,10 +207,22 @@ def ensure_upstream() -> bool:
     `git pull --rebase` (used below) fail outright — fires 6 and 7 both had to notice this by
     hand and fix it one-off (2026-07-26, AWAY_LOG). Fixing it here, at the top of sync(), means
     every ship/push call self-heals instead of relying on a fire to spot the symptom.
-    Returns True if a tracking branch was just set (so callers can note it happened)."""
+
+    Fire 55 (2026-07-29) widened this: the old check only asked "does @{u} exist at all?" —
+    but this session's branch had a real, valid upstream that was simply the WRONG one
+    (`origin/claude/kind-shannon-*`, a same-named remote branch some outside process — not
+    git_safe — had auto-created/tracked, most likely the harness's own visibility push,
+    observed live this fire). Because `sync()`'s `git pull --rebase` has no explicit refspec,
+    it silently rebased against that unrelated branch instead of `origin/main`, so `sync()`
+    reported success while `push()`'s HARDCODED `push origin HEAD:main` kept getting rejected
+    as non-fast-forward — a self-reinforcing loop with no error message pointing at the real
+    cause. Now checks the RESOLVED upstream ref name, not just its existence, and repoints to
+    origin/main whenever it isn't already exactly that — idempotent, safe to call every time.
+    Returns True if a tracking branch was (re)set (so callers can note it happened)."""
     r = subprocess.run(["git", "rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{u}"],
                         cwd=str(ROOT), text=True, capture_output=True)
-    if r.returncode == 0:
+    current = r.stdout.strip() if r.returncode == 0 else ""
+    if current == "origin/main":
         return False
     branch = _git(["rev-parse", "--abbrev-ref", "HEAD"])
     _git(["branch", "--set-upstream-to=origin/main", branch], check=False)

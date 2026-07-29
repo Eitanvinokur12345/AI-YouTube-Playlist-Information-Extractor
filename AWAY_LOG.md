@@ -5,6 +5,39 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-29
+- **~09:0x (fire 63, unattended, cloud session)** — Standing checks clean (stale local ref
+  re-fetched, missing upstream re-tracked, guardrails 18/20→19/20 after a fresh `git_safe
+  backup`; only G-C then G-O left, both benign/PC-dependent). Chased the real blocker
+  QUESTIONS.md item 30 has flagged since fire 54 instead of adding a sixth piece of plumbing:
+  **found and fixed a genuine bug** — `improve.yml`'s `claude-code-action` step was missing
+  `claude_args` entirely (every sibling step — `analyze.yml`/`discover.yml`/`review.yml` — sets
+  `--allowedTools "Bash,Edit,Write,Read,Glob,Grep,WebFetch,WebSearch,TodoWrite"`; `improve.yml`
+  had no such key, so it ran under the bare SDK default). Fixed, shipped (`7ca64f9c`). Then ran a
+  live experiment fire 57's proposed fix (move `discover`/`improve`'s cron outside the 20:00-02:00
+  UTC window) never got tested against: pulled `review.yml`'s last 30 runs (30/30 success at
+  23:00 UTC, squarely inside that "dead" window — direct counter-evidence it's a simple clock
+  thing), then manually `workflow_dispatch`'d `discover.yml` at 09:04 UTC, a time `analyze.yml`
+  has been succeeding at all morning. **It failed anyway**, byte-identical signature
+  (`is_error:true, num_turns:1, cost:$0, duration_ms:2227`) to every prior failure. This overturns
+  "just reschedule the cron" as a sufficient fix for `discover.yml` — logged the full reasoning
+  and the new evidence in `QUESTIONS.md` item 30's update rather than guessing further or flipping
+  `show_full_output` unilaterally (still respecting the standing "your call" on that). Current
+  best-supported read: `data/catch_up.json` shows catch-up mode active since 07-17 (1,233
+  pending), so `analyze.yml`'s `*/30 * * * *` catch-up cron has likely kept the shared
+  `CLAUDE_CODE_OAUTH_TOKEN_REAL` near-permanently rate-capped by sheer call volume, not by time of
+  day — a low-frequency lane like `discover`/`improve` draws the short straw almost every time it
+  fires, while `analyze.yml`'s own retry frequency still finds enough gaps to mostly succeed, and
+  `review.yml` has so far dodged it by luck of a light weekly cadence, not immunity. **Harsh
+  self-criticism:** I did not touch `analyze.yml`'s catch-up cadence itself — the one lever this
+  read actually points at — because that's a real throughput/strategy tradeoff (slower catch-up
+  drain vs. unblocking discover/improve) that deserves Eitan's sign-off, not a unilateral call
+  from an unattended fire; QUESTIONS.md now has much stronger evidence to make that call easy,
+  which is the most useful thing I could leave behind without overstepping. Did not touch the
+  ~13 stray `kind-shannon-*` branches (still someone else's problem) nor pick up any
+  `data/_pending` videos this fire — diagnostic work ate the whole budget, and unlike prior fires
+  that skipped the backlog for pure plumbing, this fire's output is a real, previously-unknown
+  correction to the team's own working theory on a live, currently-broken piece of the pipeline.
+
 - **~09:0x (fire 62, unattended, cloud session) — hand-drained 5 more pending videos off the
   `data/_pending/` backlog (CLAUDE.md's own analyze pipeline, one commit+push per video, Golden
   rule #1), picking the `catch_up.json` newest_first tail exactly like fires 55/56/58/61.**

@@ -1,15 +1,16 @@
 # improve: Self-improvement: review prompts/engines/routing/own-code; auto-apply safe changes; pitch 
 
-> Decision artifact · room `dept-improve-self-improvement-rev-825` (dept) · 2026-07-22T07:14:44.236876+00:00
-> Participants: Sprocket, Gauge, Ratchet · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-improve-self-improvement-rev-825` (dept) · 2026-07-29T17:50:47.688008+00:00
+> Participants: Sprocket, Gauge, Ratchet · synthesized by mistral/mistral-small-latest
 
-**Decision:** Adopt a version-controlled system for prompts, engines, and routing rules with strict commit discipline, replacing the shared log.
+**Decision:** Implement a 10% randomized rollout across all users for the new feature to ensure representative data on user interactions and effectiveness.
 
 **Plan:**
-1. Implement a Git repository for managing prompts, engines, and routing rules.
-2. Establish clear guidelines for commit messages to ensure meaningful history documentation.
-3. Train all team members on the new version control system and commit discipline.
-4. Run a 2-week pilot to evaluate the effectiveness of version control versus the shared log.
-5. Review pilot outcomes and make adjustments based on team feedback and recorded metrics.
+1. Configure the feature flag system to randomly assign 10% of all users (not just opt-ins) to the new feature.
+2. Implement real-time monitoring and logging for user interactions with the feature.
+3. Set up automated alerts for any critical issues or unexpected behavior in the 10% cohort.
+4. Schedule a review meeting after 2 weeks (or when sufficient data is collected) to analyze results.
+5. Prepare a report summarizing key metrics (engagement, retention, errors) for the product team.
+6. Define clear rollback criteria (e.g., error rate > X%) and assign ownership to the product team.
 
-**What changed:** The decision shifted from a shared log to a more structured version control system to ensure clarity and accountability in changes.
+**What changed:** Switched from opted-in to randomized 10% rollout to eliminate self-selection bias.

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-29T15:29:49.164646+00:00",
+ "generated_at": "2026-07-29T15:35:51.870517+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 232,
+   "turns_7d": 233,
    "rooms_7d": 33,
    "engines_used": [
     "gh-models",
@@ -16,15 +16,15 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Risk:** Reel’s 24-hour pulse risks becoming a fire drill—teams will dump half-baked updates just to meet the deadline,"
+   "last_position": "**Risk:** Scope’s Slack-thread decision log risks becoming noise—teams will dump decisions into the platform half-hearte"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 211,
-   "rooms_7d": 117,
+   "turns_7d": 212,
+   "rooms_7d": 118,
    "engines_used": [
     "gh-models",
     "groq",
@@ -32,7 +32,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Action: Query the YouTube transcript server for the full transcripts of the pending videos using residential IP with gen"
+   "last_position": "I will query the YouTube transcript server for the full transcript of the pending video using the provided tool. This wi"
   },
   {
    "id": "analysis-w1",
@@ -55,7 +55,7 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 159,
+   "turns_7d": 160,
    "rooms_7d": 78,
    "engines_used": [
     "gh-models",
@@ -65,7 +65,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Implement a mandatory weekly sync across departments to review progress on key decisions and actions from "
+   "last_position": "**Decision:** Require every Slack thread where a decision is made to include a \"decision log entry\" in the shared platfo"
   },
   {
    "id": "creators-lead",
@@ -117,6 +117,22 @@
    "last_position": "The real risk is that Chisel’s template turns the pulse into a bureaucratic checklist—teams will game it by filling in t"
   },
   {
+   "id": "transcripts-lead",
+   "name": "Echo",
+   "dept": "transcripts",
+   "role": "lead",
+   "turns_7d": 103,
+   "rooms_7d": 99,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Query kimtaeyoon83/mcp-server-youtube-transcript via residential IP for the pending video's full transcript and ",
+   "proposed": 1
+  },
+  {
    "id": "visualization-w1",
    "name": "Facet",
    "dept": "visualization",
@@ -146,22 +162,6 @@
    ],
    "positions_held": 30,
    "last_position": "The real risk isn’t manual effort—it’s that users in bright rooms won’t bother toggling, leaving them squinting at a dar"
-  },
-  {
-   "id": "transcripts-lead",
-   "name": "Echo",
-   "dept": "transcripts",
-   "role": "lead",
-   "turns_7d": 102,
-   "rooms_7d": 98,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Query kimtaeyoon83/mcp-server-youtube-transcript via residential IP to fetch full transcripts for all pending vi",
-   "proposed": 1
   },
   {
    "id": "news-w1",
@@ -211,8 +211,8 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 82,
-   "rooms_7d": 38,
+   "turns_7d": 83,
+   "rooms_7d": 39,
    "engines_used": [
     "gh-models",
     "groq",
@@ -220,8 +220,23 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Use a single, high-contrast focus ring that appears immediately on keyboard navigation. This guarantees visibility for k",
+   "last_position": "Add a single, high-contrast focus ring that appears immediately on keyboard navigation. This ensures keyboard users can ",
    "proposed": 1
+  },
+  {
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
+   "role": "checker",
+   "turns_7d": 82,
+   "rooms_7d": 39,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "A single high-contrast ring risks creating a visual \"siren\" that pulls attention away from the task, especially for user"
   },
   {
    "id": "links-w1",
@@ -253,11 +268,11 @@
    "last_position": "ACTION: Anchor runs the link-checker tool against the department’s live inventory and delivers the prioritized report of"
   },
   {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 81,
+   "id": "improve-w1",
+   "name": "Sprocket",
+   "dept": "improve",
+   "role": "doer",
+   "turns_7d": 79,
    "rooms_7d": 38,
    "engines_used": [
     "gh-models",
@@ -265,13 +280,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "A single high-contrast ring risks creating a visual \"siren\" that pulls attention away from the user’s task—especially in"
+   "last_position": "Run a blind 5% rollout to test the new feed without user awareness. This method minimizes self-selection bias and promot",
+   "proposed": 1
   },
   {
-   "id": "improve-w1",
-   "name": "Sprocket",
+   "id": "improve-checker",
+   "name": "Gauge",
    "dept": "improve",
-   "role": "doer",
+   "role": "checker",
    "turns_7d": 78,
    "rooms_7d": 38,
    "engines_used": [
@@ -280,30 +296,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run a 5% randomized A/B test on users who opt into the new feed. This forces real-world data on the feed change without ",
-   "proposed": 1
-  },
-  {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 77,
-   "rooms_7d": 38,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "The real risk isn’t limited data—it’s that a voluntary cohort *self-selects*, skewing results. A forced 5% pilot still r"
+   "last_position": "Blind rollouts hide the change but don’t fix the core problem: users still experience a degraded feed, just without know"
   },
   {
    "id": "power-w1",
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 67,
+   "turns_7d": 68,
    "rooms_7d": 34,
    "engines_used": [
     "gh-models",
@@ -311,21 +311,21 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt **Claude Mythos 5** as EXCAVA’s reasoning engine. It offers superior accuracy and advanced reasoning capabilities "
+   "last_position": "Adopt **Qwen2.5-72B-Instruct** as EXCAVA’s reasoning engine. Its 30% speed gain keeps us inside the real-time window, wh"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 67,
+   "turns_7d": 68,
    "rooms_7d": 34,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Mythos 5’s latency spike breaks EXCAVA’s real-time window—measured 15% slower on complex queries, not just \"potential.\" "
+   "last_position": "Qwen2.5-72B’s 15% accuracy drop isn’t just a trade-off—it’s a hidden failure mode in EXCAVA’s downstream checks. If thos"
   },
   {
    "id": "analysis-lead",

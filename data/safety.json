@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-07-29T17:50:22.840393+00:00",
+  "generated_at": "2026-07-29T19:54:02.352562+00:00",
   "policy": "activator gate: safe = auto-activate, caution = warn, risky = block until confirmed",
   "summary": {
     "safe": 147,
-    "caution": 1239,
-    "risky": 47
+    "caution": 1238,
+    "risky": 48
   },
   "connectors": {
     "perplexity-mcp": {
@@ -9137,8 +9137,9 @@
     },
     "codex-plugin-cc": {
       "name": "codex-plugin-cc",
-      "rating": "caution",
+      "rating": "risky",
       "reasons": [
+        "requests broad system/shell/file access",
         "third-party (not an official vendor connector)"
       ]
     },
@@ -11521,6 +11522,13 @@
     },
     "image-generation-from-text": {
       "name": "Image generation from text",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "codex-plugin-bounded-debate-review": {
+      "name": "Codex Plugin Bounded-Debate Review for Claude Code",
       "rating": "caution",
       "reasons": [
         "the technique runs system/shell/file operations — review what it executes"

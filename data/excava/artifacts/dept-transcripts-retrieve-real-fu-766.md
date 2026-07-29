@@ -1,16 +1,16 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-766` (dept) · 2026-07-25T06:41:04.204425+00:00
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-766` (dept) · 2026-07-29T21:13:24.827459+00:00
 > Participants: Reel, Echo · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Fetch the full transcript for the pending video using the approved YouTube transcript tool.
-2. Verify the transcript’s completeness (e.g., no missing segments, timestamps, or errors).
-3. Confirm the transcript is clean and ready for review.
-4. Mark the transcript as finalized in the project tracking system.
-5. Notify stakeholders that the transcript is available for review.
-6. Archive the original request and transcript link for audit purposes.
+1. Use the kimtaeyoon83/mcp-server-youtube-transcript tool to fetch the full transcript for the pending video.
+2. Deliver the raw transcript text to Reel (transcripts-w1) for review.
+3. Ensure the transcript is retrieved via residential IP with gentle pacing to avoid detection.
+4. Confirm the transcript is complete and accurate before proceeding.
+5. Store the transcript in the designated location for further processing.
+6. Notify Reel upon successful retrieval and delivery.
 
-**What changed:** Action plan formalized from debate to execute transcript retrieval.
+**What changed:** The transcript will now be fetched directly via the specified tool and delivered to Reel for review.

@@ -5,6 +5,41 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-29
+- **~22:0x (fire 69, unattended, cloud session) — standing-checks repair only, no new
+  content this cycle.** Picked up where fire 68 left off per the END PLAN's "just this once,
+  without regard to the loop" instruction: `python -m src.guardrails` showed 2 CRITICAL
+  failures left over from fire 68's own last commits — G-F (`data/excava/supervisor.json` was
+  literally an unresolved git-merge artifact: 6 `<<<<<<< HEAD`/`=======`/`>>>>>>>` blocks baked
+  into tracked JSON, both `generated_at` timestamps from two different beats sitting side by
+  side) and G-S (48 bare conflict-marker lines left across 16 `.jsonl` append-logs —
+  `supervisor_longterm.jsonl`, `syscalls.jsonl`, 5 `traces/*.jsonl`, 6 `agent_memory/*.jsonl`,
+  1 `chats/*.jsonl`, plus `data/project_memory/episodes.jsonl`). Fixed properly rather than
+  hand-splicing: ran `python -m src.git_safe repair-conflicts` for the jsonl append-logs
+  (marker-line strip only, both sides' real records kept per its append-only contract), then
+  re-ran `python -m src.excava_supervisor` to regenerate `supervisor.json` from scratch instead
+  of picking a side of the conflict by hand (it's a derived status snapshot, not source data).
+  `python -m src.guardrails` confirmed 18/20 passing, 0 critical after (only the steady-state
+  warns: G-C no fresh history bundle — `git_safe ship`'s own backup step resolves it; G-O
+  EITAN-PC local drain still off, unfixable remotely). Investigated the supervisor's
+  `intent_drift` flag on `news→src.trend_watch` as a possible second fix, but stopped after
+  reading `data/excava/intent.json`'s own note and `QUESTIONS.md` (2026-07-27, fire 23): this
+  is a KNOWN, DELIBERATE, already-documented drift awaiting Eitan's actual decision (rewiring
+  risks a commit race with `news.yml`'s independent 6h schedule and would likely blow
+  `_run_real_tool`'s 90s timeout against ~95 RSS sources) — the file explicitly says "please
+  don't 'fix' it... without reading this note," so left it untouched, exactly as instructed.
+  Re-ran `python -m src.pulse` to refresh `PULSE.md`/`pulse.json` off the clean state.
+  **Harsh self-criticism:** this fire produced zero new skills/tools/videos-analyzed — it is
+  pure plumbing repair, the same category fire 6's own log called out as "meta-work about the
+  observability system itself rather than the actual program." The repair was necessary (a
+  broken JSON file and 48 stray conflict-marker lines are real guardrail-critical breakage, not
+  cosmetic), but I did not use any of this cycle's budget to drain `data/_pending` (still
+  ~1201 videos) or advance an EXCAVA_V2_STEPS.md milestone item, which the END PLAN's own loop
+  definition ("advance the CURRENT milestone by ONE increment") arguably calls for beyond just
+  fixing what fire 68 left broken. Did not investigate why fire 68's own commits landed with
+  unresolved merge markers in the first place (likely a `sync`/rebase edge case in `git_safe.py`
+  itself, given the corrupted file's two conflicting `generated_at` values both trace to
+  in-flight fire-68 commits) — that root cause is still open and could recur next beat.
+
 - **~19:0x (fire 68, unattended, cloud session) — hand-drained 6 more pending videos through the
   full analyze pipeline (Golden rule #1, one commit+push per video via `python -m src.git_safe
   ship`), continuing fire 67's own cadence.** Standing checks first: `python -m

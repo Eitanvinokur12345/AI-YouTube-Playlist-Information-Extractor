@@ -5,6 +5,55 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-29
+- **~07:0x (fire 62, unattended, cloud session)** — shipped a small, safe Tips-tab consolidation
+  that a prior fire (~fire 56) explicitly flagged and never got to: `data/tips.json`'s biggest
+  buckets had grown well past CLAUDE.md Step 6's own "~8-12 tips per tool/topic, merge near-
+  duplicates" rule (`ChatGPT` 44, `Claude` 53, `agents` 51 before this fire) with real restated
+  duplicates inside them, not just volume. Standing checks first: `python -m src.standing_checks`
+  — `origin/main` in sync, upstream tracking was missing on this session's branch (auto-fixed),
+  guardrails 17/20 (0 critical; only the same steady-state trio every recent fire has flagged:
+  G-C history-bundle freshness which `git_safe`'s own backup step heals, G-O local-drain-stale
+  from EITAN-PC/Ollama being off, G-P beat-heartbeat 6.9h — noted, not chased, since diagnosing
+  the beat lane wasn't this fire's scope). **Scoped this deliberately narrow rather than doing
+  the full volume cut Step 6 asks for**: cutting ChatGPT's 44 tips down to a hard 8-12 would mean
+  discarding dozens of genuinely distinct, correctly-attributed tips with no video-by-video
+  priority signal to judge by — that is a real editorial judgment call I don't think an
+  unattended fire should make unilaterally on Eitan's accumulated extraction work (Golden Rule
+  "preserve existing data" cuts directly against a blind top-N truncation). Instead did a
+  strict DEDUP pass: found and merged only genuine near-duplicates (the same technique/prefix
+  restated in different words), verified by re-reading each cluster by hand before merging, never
+  a volume-based cut. Concretely: in `by_tool.ChatGPT`, merged the TLDR/TL;DR pair, the
+  ELI10/ELI5/ELI-age/EL10 four-way cluster, the Red Team pair, the /human pair, the Truth-mode
+  pair, and the Socratic/SOCRATES pair down to their single clearest wording each (kept the
+  version that names the actual usable syntax); in `by_tool.Claude`, merged two lines describing
+  the same council→synthesis-agent pattern into one; in `general.agents`, merged two adjacent
+  lines both describing adversarial multi-agent verification into one. Net: ChatGPT 44→37,
+  Claude 53→52, agents 51→50 — real reduction, zero content lost (each merge is provably the same
+  claim restated, not two different claims). **Verified, not assumed:** wrote a one-off Python
+  check confirming `data/tips.json` still parses, every bucket's tips are still case-insensitive-
+  unique (0 exact-duplicate buckets found post-edit), and re-ran `python -m src.guardrails`:
+  still 17/20, 0 critical, same steady-state trio as before the edit — no regression. **A real,
+  explicit judgment call this fire made on its own: it opened a draft PR from this session's
+  assigned branch instead of pushing straight to `main` via `git_safe ship`.** The repo's own
+  established convention (`GUARDRAILS.md`, 30+ prior fires, zero PRs) is direct-to-main, and a
+  much earlier fire explicitly chose that path over a generic per-session-branch default — but
+  that choice was flagged as needing Eitan's confirmation and `QUESTIONS.md` shows no resolution
+  since. This fire's own harness instructions were unambiguous and current ("never push to a
+  different branch without explicit permission", "always open a PR"), so for a real (if small)
+  content edit I followed those instead of the older unconfirmed precedent — a draft PR is also
+  strictly safer here (reviewable before it touches `main`, doesn't add another silent orphaned
+  branch to the ~13-14 already flagged as unswept in `QUESTIONS.md`). Flagging this explicitly so
+  Eitan can settle it either way on return; if direct-to-main is still wanted for cloud fires,
+  say so and future fires can go back to `git_safe ship`. **Harsh self-criticism:** this is a
+  genuinely small, low-risk, mostly-cosmetic increment — real product movement (M1-M5 milestones,
+  the 1,188-deep `data/_pending` backlog outside this fire's scope, the still-stale G-P beat
+  heartbeat) is untouched, and I explicitly declined the harder, higher-value version of the same
+  task (the actual volume cut to 8-12) rather than attempting it, so the underlying "Tips tab
+  isn't skimmable yet" problem is only partially solved — the buckets are still well above the
+  target count, just now duplicate-free. I also did not touch `Claude Code`'s 85-tip bucket
+  (the single largest) at all this fire — a full pass over every oversized bucket, not just the
+  three I covered, is real work still sitting there for the next fire with a bigger budget.
+
 - **~06:0x (fire 61, unattended, cloud session)** — hand-drained 4 pending videos off the
   watch/transcripts backlog gap (top `queued_now` item, value 80): `46fI3TSx3hE` (OpenClaw VPS
   install — endorsement added to the existing OpenClaw tool record; also flagged a likely

@@ -1,12 +1,12 @@
 {
- "generated_at": "2026-07-29T15:55:23.976366+00:00",
- "total": 10919,
+ "generated_at": "2026-07-29T17:23:57.260685+00:00",
+ "total": 10926,
  "counts": {
-  "skill": 3258,
-  "tool": 2986,
+  "skill": 3262,
+  "tool": 2988,
   "prompt": 666,
   "command": 813,
-  "connector": 1432,
+  "connector": 1433,
   "design": 1091,
   "format": 98,
   "model": 560,
@@ -16,7 +16,7 @@
  "by_status": {
   "verified": 2388,
   "niche": 1788,
-  "unverified": 6657,
+  "unverified": 6664,
   "dead": 86
  },
  "note": "READ-ONLY derivative. Sources of truth = the per-type files; write via element_model.set_field only.",
@@ -112864,6 +112864,102 @@
    "related": []
   },
   {
+   "id": "skill:claude-code-wrap-it-up-protocol",
+   "type": "skill",
+   "name": "Claude Code Wrap-It-Up Protocol",
+   "what": "A named session-end routine for Claude Code: saying a short trigger phrase updates CLAUDE.md, syncs every touched project, and logs billable time before the context is cleared.",
+   "category": "productivity",
+   "source_videos": [
+    "uop2iPerLsQ"
+   ],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 95,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:cinema-dna-codex-skill",
+   "type": "skill",
+   "name": "Cinema DNA (Codex Skill)",
+   "what": "A Codex skill that directs image generation like a cinematographer: explicit camera position, subject eyelines, and light-source consistency, producing connected multi-shot 21:9 sequences instead of one generic frame.",
+   "category": "image creation",
+   "source_videos": [
+    "mKazoZ0CA0M"
+   ],
+   "links": {},
+   "install": "",
+   "quality_score": 6,
+   "trust": 95,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:cruise-flight-price-finder",
+   "type": "skill",
+   "name": "Cruise & Flight Price Finder",
+   "what": "A Claude Code skill that pulls live cruise pricing via Apify and cross-checks it against a Google Flights scraper, returning the cheapest combined cruise-and-flight option for given dates.",
+   "category": "automation",
+   "source_videos": [
+    "frZ6QZ1FM6I"
+   ],
+   "links": {},
+   "install": "",
+   "quality_score": 6,
+   "trust": 95,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:outlier-multiple-content-research",
+   "type": "skill",
+   "name": "Outlier-Multiple Content Research",
+   "what": "A content-research formula that flags a post as a real idea signal when its views are 3x+ the median of that same creator's last 20-30 posts, applied across Instagram, TikTok, YouTube and X.",
+   "category": "marketing",
+   "source_videos": [
+    "Z9e0rqW3iUs"
+   ],
+   "links": {},
+   "install": "",
+   "quality_score": 7,
+   "trust": 95,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
    "id": "tool:claude",
    "type": "tool",
    "name": "Claude",
@@ -116012,6 +116108,42 @@
    ]
   },
   {
+   "id": "tool:apify",
+   "type": "tool",
+   "name": "Apify",
+   "what": "A web scraping and automation platform with a single API key that can scrape any URL — including YouTube, LinkedIn, and X posts — enabling AI agents to automatically extract content, comments, and descriptions from any web page.",
+   "category": "integration",
+   "source_videos": [
+    "n6HEw2kEdBE",
+    "frZ6QZ1FM6I"
+   ],
+   "links": {
+    "website": "https://apify.com"
+   },
+   "install": "",
+   "quality_score": 7,
+   "trust": 95,
+   "created_by": "",
+   "verified": {
+    "status": "verified",
+    "method": "2-source+live",
+    "sources": 2,
+    "at": "2026-07-23T12:45:31.969398+00:00"
+   },
+   "stub": false,
+   "enriched": true,
+   "related": [
+    "skill:video-to-agent-skill-apify",
+    "skill:paid-smwx-apis-stableenrich",
+    "skill:web-scraping-ai-connectors",
+    "tool:gemini-ai-mcp-server-bhansalisoft",
+    "tool:apify-mcp",
+    "prompt:local-business-lead-enrichment-pipeline",
+    "connector:gemini-ai-mcp-server-bhansalisoft",
+    "connector:apify"
+   ]
+  },
+  {
    "id": "tool:expo",
    "type": "tool",
    "name": "Expo",
@@ -116699,6 +116831,47 @@
     "skill:automated-productivity-app-interaction",
     "skill:productivity",
     "tool:openai"
+   ]
+  },
+  {
+   "id": "tool:omniroute",
+   "type": "tool",
+   "name": "OmniRoute",
+   "what": "OmniRoute is a free AI gateway tool that aggregates free tiers from over 43 provider pools of 516 models into one dashboard system. It calculates the actual available free tokens live and provides these figures without rounding up best-case estimates, offering real-time updates every two weeks. OmniRoute simplifies the process for developers by automatically selecting the most appropriate backend service or using the `auto` fallback endpoint, ensuring a seamless experience regardless of which free tier services end-users choose A separate video source corroborates the core claim independently:",
+   "category": "code",
+   "source_videos": [
+    "TQBmO4cC4yA",
+    "Ug5bFdBiqgY"
+   ],
+   "links": {
+    "website": "https://omniroute.online/",
+    "github": "https://github.com/diegosouzapw/OmniRoute"
+   },
+   "install": "",
+   "quality_score": 6,
+   "trust": 95,
+   "created_by": "",
+   "enriched": true,
+   "enrichment": {
+    "sources": [
+     "github-readme",
+     "homepage-meta"
+    ],
+    "n_sources": 2,
+    "method": "llm-fused:hermes",
+    "at": "2026-07-24T15:01:36.848354+00:00"
+   },
+   "verified": {
+    "status": "verified",
+    "method": "2-source+live",
+    "sources": 3,
+    "at": "2026-07-27T00:09:10.888552+00:00"
+   },
+   "stub": false,
+   "related": [
+    "skill:direct-checkout-link-generation",
+    "tool:portkey-gateway",
+    "tool:openapi-mcp-gateway"
    ]
   },
   {
@@ -118924,39 +119097,28 @@
    ]
   },
   {
-   "id": "tool:apify",
+   "id": "tool:alphaearth",
    "type": "tool",
-   "name": "Apify",
-   "what": "A web scraping and automation platform with a single API key that can scrape any URL — including YouTube, LinkedIn, and X posts — enabling AI agents to automatically extract content, comments, and descriptions from any web page.",
-   "category": "integration",
+   "name": "AlphaEarth",
+   "what": "An AI Earth-observation platform from Google DeepMind that compresses publicly available map/satellite data into 10x10m analysis squares, functioning as an open data platform for climate, weather, agriculture and environmental monitoring at very high spatial precision.",
+   "category": "research",
    "source_videos": [
-    "n6HEw2kEdBE"
+    "4mnumLur3VU"
    ],
-   "links": {
-    "website": "https://apify.com"
-   },
+   "links": {},
    "install": "",
    "quality_score": 7,
    "trust": 95,
    "created_by": "",
    "verified": {
-    "status": "verified",
-    "method": "2-source+live",
-    "sources": 2,
-    "at": "2026-07-23T12:45:31.969398+00:00"
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
    },
    "stub": false,
-   "enriched": true,
-   "related": [
-    "skill:video-to-agent-skill-apify",
-    "skill:paid-smwx-apis-stableenrich",
-    "skill:web-scraping-ai-connectors",
-    "tool:gemini-ai-mcp-server-bhansalisoft",
-    "tool:apify-mcp",
-    "prompt:local-business-lead-enrichment-pipeline",
-    "connector:gemini-ai-mcp-server-bhansalisoft",
-    "connector:apify"
-   ]
+   "enriched": false,
+   "related": []
   },
   {
    "id": "tool:app-store-connect-mcp",
@@ -120648,6 +120810,30 @@
    ]
   },
   {
+   "id": "tool:chatgpt-voice-gpt-live",
+   "type": "tool",
+   "name": "ChatGPT Voice (GPT Live)",
+   "what": "A voice mode for the ChatGPT desktop app built on \"GPT Live\" voice models, letting ChatGPT listen and speak simultaneously so users can control their computer hands-free — opening apps, clicking buttons, and running multi-step workflows with spoken, interruptible commands.",
+   "category": "automation",
+   "source_videos": [
+    "x8DWwDpetsY"
+   ],
+   "links": {},
+   "install": "",
+   "quality_score": 6,
+   "trust": 95,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
    "id": "tool:codex-chatgpt-desktop",
    "type": "tool",
    "name": "Codex (ChatGPT desktop app)",
@@ -121731,46 +121917,6 @@
     "skill:ai-agency-growth",
     "skill:claude-marketing-team-automation",
     "skill:paid-ads-team-management"
-   ]
-  },
-  {
-   "id": "tool:omniroute",
-   "type": "tool",
-   "name": "OmniRoute",
-   "what": "OmniRoute is a free AI gateway tool that aggregates free tiers from over 43 provider pools of 516 models into one dashboard system. It calculates the actual available free tokens live and provides these figures without rounding up best-case estimates, offering real-time updates every two weeks. OmniRoute simplifies the process for developers by automatically selecting the most appropriate backend service or using the `auto` fallback endpoint, ensuring a seamless experience regardless of which free tier services end-users choose A separate video source corroborates the core claim independently:",
-   "category": "code",
-   "source_videos": [
-    "TQBmO4cC4yA"
-   ],
-   "links": {
-    "website": "https://omniroute.online/",
-    "github": "https://github.com/diegosouzapw/OmniRoute"
-   },
-   "install": "",
-   "quality_score": 6,
-   "trust": 95,
-   "created_by": "",
-   "enriched": true,
-   "enrichment": {
-    "sources": [
-     "github-readme",
-     "homepage-meta"
-    ],
-    "n_sources": 2,
-    "method": "llm-fused:hermes",
-    "at": "2026-07-24T15:01:36.848354+00:00"
-   },
-   "verified": {
-    "status": "verified",
-    "method": "2-source+live",
-    "sources": 3,
-    "at": "2026-07-27T00:09:10.888552+00:00"
-   },
-   "stub": false,
-   "related": [
-    "skill:direct-checkout-link-generation",
-    "tool:portkey-gateway",
-    "tool:openapi-mcp-gateway"
    ]
   },
   {
@@ -138702,6 +138848,30 @@
     "skill:long-term-ai-strategy",
     "skill:intelligent-laziness"
    ]
+  },
+  {
+   "id": "tool:kimi-k3-max",
+   "type": "tool",
+   "name": "Kimi K3 Max",
+   "what": "A version of Kimi K3 capable of agent swarm functionality, used for complex multi-agent tasks.",
+   "category": "agents",
+   "source_videos": [],
+   "links": {
+    "website": "Kimi.ai"
+   },
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
   },
   {
    "id": "tool:kling-2-5",
@@ -156693,6 +156863,30 @@
    "related": []
   },
   {
+   "id": "tool:claude-sonnet-5-high",
+   "type": "tool",
+   "name": "Claude Sonnet 5 (High)",
+   "what": "A large language model, listed in the Frontend Code Arena benchmark.",
+   "category": "agents",
+   "source_videos": [],
+   "links": {
+    "website": "https://www.anthropic.com/"
+   },
+   "install": "",
+   "quality_score": 3,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": true,
+   "enriched": false,
+   "related": []
+  },
+  {
    "id": "tool:claude-for-math-365-install-plugin",
    "type": "tool",
    "name": "Claude for math 365 install plugin",
@@ -162015,6 +162209,30 @@
     "model:grok-imagine-image",
     "model:grok-imagine"
    ]
+  },
+  {
+   "id": "tool:groq-4-5",
+   "type": "tool",
+   "name": "Groq-4.5",
+   "what": "A large language model, listed in the Frontend Code Arena benchmark.",
+   "category": "agents",
+   "source_videos": [],
+   "links": {
+    "website": "https://www.groq.com/"
+   },
+   "install": "",
+   "quality_score": 3,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": true,
+   "enriched": false,
+   "related": []
   },
   {
    "id": "tool:gummysearch",
@@ -168030,6 +168248,28 @@
    ]
   },
   {
+   "id": "tool:owen-3-7-max",
+   "type": "tool",
+   "name": "Owen-3.7 Max",
+   "what": "A large language model, listed in the Frontend Code Arena benchmark.",
+   "category": "agents",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 3,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": true,
+   "enriched": false,
+   "related": []
+  },
+  {
    "id": "tool:pagerly",
    "type": "tool",
    "name": "Pagerly",
@@ -171633,6 +171873,28 @@
     "skill:theme-factory",
     "skill:competition-alternatives"
    ]
+  },
+  {
+   "id": "tool:seed-2-1-pro",
+   "type": "tool",
+   "name": "Seed-2.1 Pro",
+   "what": "A large language model, listed in the Frontend Code Arena benchmark.",
+   "category": "agents",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 3,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": true,
+   "enriched": false,
+   "related": []
   },
   {
    "id": "tool:seedance-1-0",
@@ -208930,122 +209192,6 @@
     "skill:overhead-shot-prompting",
     "skill:spatial-blocking-video-control"
    ]
-  },
-  {
-   "id": "tool:kimi-k3-max",
-   "type": "tool",
-   "name": "Kimi K3 Max",
-   "what": "A version of Kimi K3 capable of agent swarm functionality, used for complex multi-agent tasks.",
-   "category": "agents",
-   "source_videos": [],
-   "links": {
-    "website": "Kimi.ai"
-   },
-   "install": "",
-   "quality_score": 5,
-   "trust": 75,
-   "created_by": "",
-   "verified": {
-    "status": "unverified",
-    "method": "",
-    "sources": 0,
-    "at": ""
-   },
-   "stub": false,
-   "enriched": false,
-   "related": []
-  },
-  {
-   "id": "tool:groq-4-5",
-   "type": "tool",
-   "name": "Groq-4.5",
-   "what": "A large language model, listed in the Frontend Code Arena benchmark.",
-   "category": "agents",
-   "source_videos": [],
-   "links": {
-    "website": "https://www.groq.com/"
-   },
-   "install": "",
-   "quality_score": 3,
-   "trust": 75,
-   "created_by": "",
-   "verified": {
-    "status": "unverified",
-    "method": "",
-    "sources": 0,
-    "at": ""
-   },
-   "stub": true,
-   "enriched": false,
-   "related": []
-  },
-  {
-   "id": "tool:seed-2-1-pro",
-   "type": "tool",
-   "name": "Seed-2.1 Pro",
-   "what": "A large language model, listed in the Frontend Code Arena benchmark.",
-   "category": "agents",
-   "source_videos": [],
-   "links": {},
-   "install": "",
-   "quality_score": 3,
-   "trust": 75,
-   "created_by": "",
-   "verified": {
-    "status": "unverified",
-    "method": "",
-    "sources": 0,
-    "at": ""
-   },
-   "stub": true,
-   "enriched": false,
-   "related": []
-  },
-  {
-   "id": "tool:claude-sonnet-5-high",
-   "type": "tool",
-   "name": "Claude Sonnet 5 (High)",
-   "what": "A large language model, listed in the Frontend Code Arena benchmark.",
-   "category": "agents",
-   "source_videos": [],
-   "links": {
-    "website": "https://www.anthropic.com/"
-   },
-   "install": "",
-   "quality_score": 3,
-   "trust": 75,
-   "created_by": "",
-   "verified": {
-    "status": "unverified",
-    "method": "",
-    "sources": 0,
-    "at": ""
-   },
-   "stub": true,
-   "enriched": false,
-   "related": []
-  },
-  {
-   "id": "tool:owen-3-7-max",
-   "type": "tool",
-   "name": "Owen-3.7 Max",
-   "what": "A large language model, listed in the Frontend Code Arena benchmark.",
-   "category": "agents",
-   "source_videos": [],
-   "links": {},
-   "install": "",
-   "quality_score": 3,
-   "trust": 75,
-   "created_by": "",
-   "verified": {
-    "status": "unverified",
-    "method": "",
-    "sources": 0,
-    "at": ""
-   },
-   "stub": true,
-   "enriched": false,
-   "related": []
   },
   {
    "id": "prompt:master-assistant-system-prompt",
@@ -301873,6 +302019,33 @@
     "method": "sandbox",
     "sources": 1,
     "at": "2026-07-29T14:29:42.236388+00:00"
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "connector:omniroute",
+   "type": "connector",
+   "name": "OmniRoute",
+   "what": "An open-source AI gateway that plugs Claude Code into 200+ AI providers (~90 free), auto-switching to the next best free-tier model when Claude's own limit is hit, and compressing prompts to cut token usage.",
+   "category": "integration",
+   "source_videos": [
+    "Ug5bFdBiqgY"
+   ],
+   "links": {
+    "website": "https://omniroute.online/",
+    "source_url": "https://www.youtube.com/watch?v=Ug5bFdBiqgY"
+   },
+   "install": "https://github.com/diegosouzapw/OmniRoute",
+   "quality_score": 6,
+   "trust": 95,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
    },
    "stub": false,
    "enriched": false,

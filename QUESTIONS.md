@@ -304,4 +304,34 @@ Anthropic-side plan/limits from this sandbox to guess responsibly; this is the s
 urgent open item in this file right now since it's blocking real M1 content ingestion, not just
 housekeeping._
 
+> **Fire 57 update — the pattern is now clear, and it's transient, not sustained.** Pulled
+> `analyze.yml`'s last 30 scheduled runs via `mcp__github__actions_list`: **10 failures / 30
+> runs (2026-07-27 → 2026-07-29T01:29Z), and every single failure falls between 20:00 and
+> 02:00 UTC** — 20:02, 20:05, 22:00, 22:50, 23:54, 01:28, 02:00 (07-27→07-28 night), then
+> 22:50, 23:50, 01:28 again the next night. Every one of those nightly windows is bracketed by
+> successful runs earlier and later the same day (e.g. 07-28 succeeded at 21:54, 21:57 — right
+> before failing again at 22:50). A hard-expired/revoked token fails 100% of attempts, not a
+> clustered ~1-in-3 that self-heals by morning every single day — this rules out "renew the
+> token" as the actual fix and confirms the rolling usage/rate-ceiling theory fire 55 proposed
+> but couldn't confirm. **Applied a safe, code-only, non-brain fix** (no schedule/cadence
+> change, since that still needs your call per fire 55's ask): `analyze.yml`'s health-recording
+> step now tracks `analyze_consecutive_fails` in `data/status.json` and only escalates
+> `token_hint` to "check the token" after 3+ failures IN A ROW with no success in between —
+> below that it correctly reports "likely transient nightly ceiling, no action needed" instead
+> of crying wolf on every isolated blip (which is what was happening before: every one of
+> those 10 failures individually told you to go renew a token that was never actually
+> expired). Verified: extracted and `compile()`-checked both embedded Python heredocs in the
+> edited step (syntax OK), and hand-simulated the fail/fail/fail/success/fail sequence against
+> the exact logic — counter climbs 1→2→3 with the message correctly flipping to "sustained" at
+> 3, then resets to 0 and clears the hint on the first success, then restarts at 1 on the next
+> failure. Could not live-fire the actual GitHub Actions step from this sandbox (it only runs
+> on the real schedule), so this is verified by direct logic simulation, not an end-to-end
+> Actions run — watch `data/status.json.analyze_consecutive_fails` over the next few nightly
+> windows to confirm it behaves the same way in production. **Your original ask still stands
+> and is still the real fix**: if `CLAUDE_CODE_OAUTH_TOKEN_REAL` is on a plan with a 5-hour or
+> daily rolling cap, spacing out `analyze.yml`'s catch-up cron (and/or the other lanes sharing
+> the same token) away from the 20:00-02:00 UTC window would cut these failures close to zero
+> instead of just correctly-labeling them. I did not touch the cron cadence itself this fire —
+> still your call, still no default proposed._
+
 30. **`discover.yml` and `improve.yml` have been intermittently failing at the SDK level, not visible from the job status alone.** Every `discover.yml` run since 2026-07-14 (7 in a row as of 07-28) reports `conclusion: failure`, and `improve.yml`'s Saturday 07-25 mandatory pass failed the same way. In every case the Claude Code Action's own result JSON shows `is_error: true`, `num_turns: 1`, `total_cost_usd: 0`, `duration_ms` ~1.9-2.2s — it fails almost immediately, before doing any billable work, so nothing gets written and the safety-commit step correctly finds "nothing to commit" (that part isn't a bug). Ruled out a local-repo cause: no changes to `discover.yml`/`DISCOVER.md`/`config.json` around 07-13→07-14 when the failures started. The actual error text is hidden (`show_full_output` isn't set on either workflow, and the action deliberately redacts stdout "for security"), so I can't see WHY it's erroring from here — could be a transient API/quota issue on the free-pool token, a claude-code-action version regression, or something in the DISCOVER.md/IMPROVE.md prompt tripping a guardrail. _Ask: OK to set `show_full_output: true` on just these two lanes for one diagnostic cycle (their logs are already on a private-by-default Actions tab, but the output could contain repo content) so a future fire can see the real error and fix it, or would you rather I leave it flagged here for you to check first?_ Default if unanswered: leave `show_full_output` off (favor not exposing more in logs) and keep flagging until an unrelated fire happens to get visibility another way (e.g. `workflow_dispatch` with `-a`/manual log pull already used this fire).

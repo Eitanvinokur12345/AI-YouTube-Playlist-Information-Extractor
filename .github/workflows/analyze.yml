@@ -154,15 +154,43 @@ jobs:
           if outcome == "failure":
               st["analyze_ok"] = False
               st["analyze_failed_at"] = now
-              st["token_hint"] = (
-                  "The analyze run FAILED. The most common cause is an expired Claude "
-                  "subscription token — renew it (run `claude setup-token` once a year) and "
-                  "update the CLAUDE_CODE_OAUTH_TOKEN_REAL GitHub secret. Otherwise check the "
-                  "Actions log for the failing step."
-              )
+              # Away fire 57: consecutive-failure counter. Job-log evidence (10 failures /
+              # 30 runs over 2026-07-27/28, ALL clustered 20:00-02:00 UTC, every single one
+              # bracketed by successful runs earlier/later the same day) rules out a flat
+              # expired/revoked token — that fails 100% of attempts, not 1-in-3 clustered by
+              # hour. The signature (is_error:true, num_turns:1, total_cost_usd:0, ~2s
+              # duration — SDK dies before any model turn) matches a rolling usage/rate
+              # ceiling shared across every workflow on CLAUDE_CODE_OAUTH_TOKEN_REAL that
+              # self-heals once the window rolls forward. The old message told Eitan to renew
+              # the token on the FIRST failure, which is the wrong action for this pattern and
+              # wastes his time — only escalate to "check the token" once failures are
+              # sustained (no success in between), not on an isolated blip.
+              prev_fails = st.get("analyze_consecutive_fails", 0)
+              # A success since the last failure resets the streak even if this step's own
+              # state read is stale, because last_analyze_ok_at is only updated on success.
+              st["analyze_consecutive_fails"] = prev_fails + 1
+              fails = st["analyze_consecutive_fails"]
+              if fails <= 2:
+                  st["token_hint"] = (
+                      f"The analyze run FAILED (consecutive fail #{fails}). Likely a "
+                      "transient rolling usage/rate ceiling on the shared Claude subscription "
+                      "token, NOT an expired token — observed pattern: failures cluster "
+                      "20:00-02:00 UTC and self-heal within hours (see QUESTIONS.md #31). No "
+                      "action needed yet; only investigate the token if this counter keeps "
+                      "climbing past 3-4 with no successful run in between."
+                  )
+              else:
+                  st["token_hint"] = (
+                      f"The analyze run FAILED {fails} times in a row with no success in "
+                      "between — this has gone past the usual transient-ceiling pattern. "
+                      "Check whether the Claude subscription token expired (run `claude "
+                      "setup-token` and update the CLAUDE_CODE_OAUTH_TOKEN_REAL GitHub secret) "
+                      "or check the Actions log for the failing step."
+                  )
           elif outcome in ("success", ""):
               st["analyze_ok"] = True
               st["token_hint"] = ""
+              st["analyze_consecutive_fails"] = 0
               if outcome == "success":
                   st["last_analyze_ok_at"] = now
           # 'skipped' (night-gate / empty-backlog no-op) and 'cancelled' leave the previous

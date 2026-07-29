@@ -5,6 +5,45 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-29
+- **~01:5x (fire 57, unattended, cloud session, scheduled "Away" firing) — turned fire 55's
+  urgent-but-unconfirmed `analyze.yml` finding into a confirmed diagnosis and shipped a safe
+  fix, instead of re-flagging it a third time.** Standing checks first: `python -m
+  src.standing_checks` — stale local `origin/main` ref (re-fetched, HEAD matched, nothing
+  lost), missing upstream tracking (auto-fixed), guardrails 18/20, 0 critical. Pulled
+  `analyze.yml`'s last 30 scheduled runs via `mcp__github__actions_list`: 10 failures / 30 runs
+  over 2026-07-27→29, and **every single failure falls in the 20:00–02:00 UTC window**, each one
+  bracketed by successful runs earlier and later the same day. That rules out a flat
+  expired/revoked token (which fails 100% of attempts, not a nightly-clustered ~1-in-3 that
+  self-heals by morning) and confirms fire 55's rolling usage/rate-ceiling theory — the first
+  time this recurring finding has moved from "suspected" to "evidenced" in three fires of being
+  flagged. **Shipped the safe half of the fix** (the cadence change itself is still Eitan's call
+  per fire 55's open ask, so left untouched): `analyze.yml`'s health-recording step now tracks
+  `analyze_consecutive_fails` in `data/status.json` and only escalates `token_hint` to "check the
+  token" after 3+ failures in a row with no success in between — below that it correctly reports
+  "likely transient nightly ceiling, no action needed" instead of telling Eitan to renew a token
+  that was never actually expired on every single isolated blip (which is what the old
+  unconditional message did on all 10 of those failures). Verified: both embedded Python
+  heredocs in the edited step `compile()`-clean; hand-simulated the fail/fail/fail/success/fail
+  sequence against the exact logic and confirmed the counter climbs 1→2→3 with the message
+  flipping to "sustained" exactly at 3, then resets to 0 on the first success and restarts at 1
+  on the next failure; `python -m src.guardrails` 18/20, 0 critical (same G-C/G-O steady-state
+  pair as every other fire this week, unrelated to this change). Documented the fuller finding +
+  its remaining open half (the cadence question) in `QUESTIONS.md` #31. **Harsh
+  self-criticism:** this is still a diagnostic/message-quality fix, not the actual throughput
+  fix — the 10 failed runs this week each burned a scheduled slot doing nothing for the
+  1,205-deep pending backlog, and only spacing the cron cadence away from the 20:00-02:00 UTC
+  window (still gated on Eitan confirming the token's actual plan/cap) would recover that
+  wasted capacity; I chose the smaller, unilaterally-safe half on purpose rather than guess at a
+  schedule change with no confirmation, but that means the real backlog-clearing win is still
+  parked. I also could not live-fire the actual Actions step from this sandbox (cron-only
+  trigger) to prove the fix end-to-end — verified by direct logic simulation instead; the next
+  fire that reads `data/status.json` after a nightly window should confirm
+  `analyze_consecutive_fails` behaved as simulated before trusting this closed. Did not touch
+  the 1,205-deep `data/_pending/` backlog itself this fire (no time budget left after the
+  diagnosis + fix + verification) — a future fire with more budget should either hand-drain a
+  batch like fire 56 did, or revisit whether the cadence question can be resolved without
+  Eitan (e.g. inferring the plan tier from Anthropic's public docs) instead of leaving it
+  parked a fourth time.
 - **~01:0x (fire 56, unattended, cloud session, scheduled "Away" firing) — hand-processed 4 pending
   videos end-to-end (`4TH4mSwk_g4`, `BpzblqOspxA`, `PldMWCa2MLc`, `GSHsvVnqpj4`) per `CLAUDE.md`'s
   analyze pipeline, one commit+push per video (Golden rule #1).** Chose this over the top-ranked

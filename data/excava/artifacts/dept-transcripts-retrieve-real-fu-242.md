@@ -1,14 +1,16 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-242` (dept) · 2026-07-10T03:11:12.972610+00:00
-> Participants: Reel, Scriv, Echo · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-242` (dept) · 2026-07-29T20:52:44.876280+00:00
+> Participants: Reel, Echo · synthesized by mistral/mistral-small-latest
 
-**Decision:** Fetch real transcripts via `yt-dlp --write-auto-sub --sub-lang en` only for videos with `transcript_status: "verified"`.
+**Decision:**
 
 **Plan:**
-1. Pull the pending video list from `pending_videos.json` and filter for entries with `transcript_status: "verified"`.
-2. Queue a batch of 20 videos that qualify for fetching verified transcripts.
-3. Use `yt-dlp --write-auto-sub --sub-lang en --skip-download` specifically on these videos to retrieve subtitles.
-4. Log the results in a JSON format including `video_id`, `transcript_path`, and `source_type: "youtube_verified"`.
+1. Fetch full transcript for pending video using kimtaeyoon83/mcp-server-youtube-transcript.
+2. Output raw transcript text as-is (no preprocessing).
+3. Store transcript in a dedicated file (e.g., `transcript_[video_id].txt`).
+4. Verify transcript completeness against video duration.
+5. Flag any gaps/missing segments for manual review.
+6. Archive original transcript in a version-controlled directory.
 
-**What changed:** The approach now relies solely on videos with verified transcripts to ensure accuracy, addressing concerns about the reliability of auto-generated captions.
+**What changed:** Transcript retrieval is now automated via MCP server.

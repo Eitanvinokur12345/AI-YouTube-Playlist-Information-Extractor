@@ -5,6 +5,41 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-29
+- **~15:0x (fire 66, unattended, cloud session)** — Picked up exactly where fire 65's stocktake
+  left off: it named M1.C1 (`deep_retrieve` stub-draining) as the correct next lever and
+  deliberately did NOT start M2's 5-class rewrite (needs a pitch, Eitan's call, per P5) — this
+  fire did the former, still left the latter alone. Ran `python -m src.deep_retrieve --limit 200`
+  (keyless mode: no LLM engine key is present in this sandbox, so it fell back to the
+  README/homepage-meta fusion path the module's own docstring documents as always making
+  progress even without an engine). Result: fresh-fusable pool was only 3, but 80 elements got
+  enriched anyway (74 descriptions upgraded, the rest fresh retries after cooldowns expired) —
+  the script's own count reports **1,987 stubs remaining**, essentially flat against fire 65's
+  1,981 (this pool is genuinely thin, not stalled — matches fire 2's finding that the easy
+  keyless wins were already drained weeks ago; real progress here now needs either an LLM
+  engine key or new transcript/GitHub sources, not more keyless passes). Re-ran `python -m
+  src.inventory` (106 modules, still 0 dead/0 orphaned — M1's
+  module-health claim holds a second time), `guardrails` (17/20, 0 critical, same steady-state
+  G-C/G-O/G-G flags), and `pulse`/`standing_checks` to refresh the cockpit. **Deliberate,
+  flagged process deviation this fire**: the plan's own text says "ship ONLY via `python -m
+  src.git_safe ship`" (which hardcodes push-to-`main`, the convention 65 prior fires have
+  followed) — but *this* session's outer harness gives an explicit, more specific instruction to
+  develop and push on `claude/kind-shannon-cybzc9` and open a PR instead of pushing straight to
+  `main`. Followed the harness instruction (branch + PR), not the in-repo convention, since a
+  system-level branch-safety rule outranks a repo-internal convention — this is why `standing_
+  checks`/G-G report "HEAD and origin/main disagree" this fire: expected and by design, not a
+  real sync problem. Eitan should decide whether cloud-hosted fires should PERMANENTLY use the
+  branch+PR path from now on (safer, matches this platform's default) or go back to direct-to-
+  main (matches 65 fires of precedent, no PR review step) — flagging in QUESTIONS.md rather than
+  unilaterally locking in either. **Harsh self-criticism:** this fire moved the needle by exactly
+  6 stubs net new information (74 upgraded, but many were already non-stub, cooldown-only
+  retries) — the real M1.C1 blocker is the same one QUESTIONS.md #31 already names for the
+  *analyze* pipeline and applies here too: no LLM engine key means enrichment quality is capped
+  at whatever a README/meta tag already says, which is often nothing. Did not touch M2, did not
+  touch the ~20+ stray `kind-shannon-*` branches (now confirmably more like 20, not the
+  previously-flagged 13 — worse than last counted, still nobody's job this fire), and did not
+  attempt to source or wire an LLM engine key (out of scope for a single autonomous rep, and a
+  credentials decision that is explicitly Eitan's per the plan's own token-law).
+
 - **~13:0x (fire 65, unattended, cloud session)** — Standing checks: `git fetch origin main`
   clean, HEAD==origin/main, `python -m src.guardrails` 18/20, 0 critical (same steady-state G-C/
   G-O info flags: history-bundle freshness self-heals on ship, EITAN-PC local drain ~79h stale).

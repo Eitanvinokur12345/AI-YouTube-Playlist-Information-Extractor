@@ -1,16 +1,17 @@
 # improve: Self-improvement: review prompts/engines/routing/own-code; auto-apply safe changes; pitch 
 
-> Decision artifact · room `dept-improve-self-improvement-rev-448` (dept) · 2026-07-12T04:09:22.790040+00:00
-> Participants: Sprocket · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-improve-self-improvement-rev-448` (dept) · 2026-07-29T20:37:42.864352+00:00
+> Participants: Sprocket, Gauge, Ratchet · synthesized by mistral/mistral-small-latest
 
-**Decision:** Build a lightweight prompt health dashboard to monitor prompt performance in real-time.
+**Decision:**
+Run a 2-week A/B test to validate the "prompt health score" metric.
 
-**Plan:**  
-1. Define key metrics to be monitored (error rates, latency, user drop-off points).  
-2. Develop a prototype of the dashboard with visualization of the defined metrics.  
-3. Implement anomaly detection algorithms to flag unusual patterns in prompt performance.  
-4. Integrate the dashboard with existing routing and prompt engines for real-time data collection.  
-5. Conduct user testing to refine the dashboard based on feedback.  
-6. Set up regular reviews to assess the effectiveness of changes and updates to prompts.
+**Plan:**
+1. Build the "prompt health score" metric (clarity, conciseness, task alignment) for all active prompts.
+2. Implement weekly auto-flagging for the bottom 10% of prompts.
+3. Run a 2-week A/B test comparing flagged vs. non-flagged prompts on task outcomes.
+4. If no measurable impact, drop the metric; if positive, adopt it weekly.
+5. Gauge owns validation; Sprocket owns metric build and maintenance.
 
-**What changed:** The proposal transformed into a comprehensive plan focusing on actionable development steps for the dashboard.
+**What changed:**
+Added outcome-based validation to the prompt health score metric.

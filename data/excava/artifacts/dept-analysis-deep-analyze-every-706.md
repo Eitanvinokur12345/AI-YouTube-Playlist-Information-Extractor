@@ -1,18 +1,16 @@
 # analysis: Deep-analyze every element from its FULL source (whole transcript/repo) + enrich from >=1 
 
-> Decision artifact · room `dept-analysis-deep-analyze-every-706` (dept) · 2026-07-21T14:21:15.584575+00:00
+> Decision artifact · room `dept-analysis-deep-analyze-every-706` (dept) · 2026-07-29T20:38:08.619028+00:00
 > Participants: Chisel, Marrow · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-LangSmith observability platform is selected for deep analysis due to its documented fit in AI agent workflows and clear value propositions in debugging, monitoring, and collaboration.
 
 **Plan:**
-1. Extract LangSmith’s core value propositions (e.g., trace visualization, prompt versioning, dataset management) from full documentation and case studies.
-2. Identify trade-offs (e.g., cost, learning curve, vendor lock-in) and real-world constraints (e.g., scalability limits, integration complexity).
-3. Map its fit in AI agent workflows (e.g., debugging, evaluation, deployment) and primary beneficiaries (e.g., ML engineers, product teams).
-4. Cross-reference with >=1 external source (e.g., LangChain’s docs, user forums) to validate gaps or contradictions.
-5. Synthesize findings into a structured breakdown (e.g., pros/cons, use-case fit, alternatives).
-6. Draft a GitHub markdown report with sections: Overview, Value Propositions, Trade-offs, Fit in Workflows, Gaps, and Recommendations.
+1. **Execute BloodHound-MCP** on the full earnings call transcript to auto-generate a "Living Roadmap" artifact, extracting speaker claims, contradictions, evidence gaps, and decision-critical questions.
+2. **Cross-validate** the artifact’s outputs against the original transcript and any supplementary repo files (e.g., notes, prior calls) to ensure accuracy and completeness.
+3. **Enrich the artifact** with external context (e.g., market data, historical patterns, or domain-specific benchmarks) to highlight non-obvious risks or opportunities.
+4. **Distribute the artifact** to stakeholders with a clear summary of unresolved questions and recommended next steps for prioritization.
+5. **Schedule a follow-up review** within 48 hours to address gaps flagged by BloodHound-MCP or stakeholder feedback.
+6. **Archive the artifact** in a version-controlled repo with a changelog to track updates and decisions over time.
 
-**What changed:**
-Focus shifted from generic observability analysis to LangSmith-specific deep dive based on debate alignment.
+**What changed:** BloodHound-MCP execution replaces manual analysis, ensuring real-time, structured synthesis of the call’s claims and risks.

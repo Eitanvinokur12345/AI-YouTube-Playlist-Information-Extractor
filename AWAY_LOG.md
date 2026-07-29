@@ -5,6 +5,43 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-29
+- **~14:0x (fire 66, unattended, cloud session)** — Mostly standing-checks/housekeeping, not a
+  new program increment — flagging that honestly rather than padding it. This fire's container
+  started from a fresh local branch (`claude/kind-shannon-vnhxjk`, 1 commit behind `origin/main`
+  at spawn, not a divergence — confirmed via `merge-base`, fast-forwarded cleanly, no data at
+  risk) under a DIFFERENT harness contract than the prior ~40 fires: this session's explicit
+  integration rules require developing on that named branch and shipping via a pull request,
+  and forbid pushing to any other branch without explicit permission — which directly conflicts
+  with `git_safe.push()`'s hardcoded `push origin HEAD:main` (see its own docstring at
+  `src/git_safe.py:265-269`) that every fire since #8 has used, by explicit design, to land
+  straight on `main`. Fires 8/9/10 already flagged the stray-branch/PR question as open and
+  unconfirmed by Eitan three times over; this is a fourth, slightly different data point for
+  that same open question — a cloud session that is *contractually* branch+PR, not just
+  defaulting to it. Did not override my own session's explicit instructions to match the
+  in-repo convention (that would mean pushing to `main` against a direct, explicit "never push
+  to a different branch without explicit permission" rule) — instead ran the safe subset:
+  refreshed the stale history bundle (`python -m src.git_safe backup`, fixed G-C), fast-forward
+  merged the one trailing `origin/main` commit (fixed G-G), confirmed `python -m src.guardrails`
+  went 16/20→18/20 with 0 critical either way. Checked the two remaining flags before touching
+  anything: G-M ("STALLED, no completions in 4 beats") is `movement.json`'s done-counter flat at
+  256 since 11:07 — cross-checked against `bus.json` (last real completion 11:05:17Z) and
+  `excava_beat.yml`'s own comment that GH throttles its cron to firing "every few hours" for a
+  5.3h internal loop — ~3h flat is inside that cadence, not a regression, matching what fire 6
+  already documented ("G-M flaps STALLED/OK on beat timing noise"); did NOT re-litigate it as a
+  bug. Checked `supervisor.json`'s 1 tool-drift entry (news dept wired to `src.trend_watch` vs
+  charter's `src.news`) — re-read fire 23's own note on it and confirmed it is a deliberate,
+  already-surfaced, Eitan-gated decision (write-race + subprocess-timeout risk against
+  `news.yml`'s independent schedule), not silent drift to auto-fix. **Harsh self-criticism:**
+  this fire produced zero new user-visible capability — it verified 40+ fires of prior work are
+  still sound and fixed two guardrail flags, which is real but thin, and I chose the safe/quiet
+  branch-based path over the productive-but-rule-breaking direct-to-main path without asking
+  first; if Eitan's answer to the now-4x-flagged question is "cloud sessions should still push
+  straight to main, PR ceremony is unwanted overhead," this fire under-delivered by design. I
+  also did not attempt any new EXCAVA program increment (M2's 5-class rewrite, per fire 65's own
+  stocktake, is the correctly-next but pitch-gated item) — a fire with more budget should pick
+  that up instead of another standing-checks pass. Pushed this commit to
+  `claude/kind-shannon-vnhxjk` and opened a PR rather than `main`, per this session's explicit
+  contract; no destructive action taken; nothing quarantined.
 - **~13:0x (fire 65, unattended, cloud session)** — Standing checks: `git fetch origin main`
   clean, HEAD==origin/main, `python -m src.guardrails` 18/20, 0 critical (same steady-state G-C/
   G-O info flags: history-bundle freshness self-heals on ship, EITAN-PC local drain ~79h stale).

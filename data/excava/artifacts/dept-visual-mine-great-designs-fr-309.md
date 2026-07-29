@@ -1,16 +1,16 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-309` (dept) · 2026-07-12T22:55:04.005066+00:00
+> Decision artifact · room `dept-visual-mine-great-designs-fr-309` (dept) · 2026-07-29T20:59:43.005946+00:00
 > Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Worker-6206 captures a screenshot of the Beverage Cans site’s bright pink accent on interactive elements.
-2. Worker-6206 uploads the screenshot to the hub as taste material.
-3. Easel reviews the uploaded screenshot for placement and saturation insights.
-4. Easel compares the bright pink accent with the muted coral accent’s current design.
-5. Easel refines the muted coral accent’s usage based on the reference.
-6. Easel documents the final muted coral accent adjustments in the hub.
+1. Use Playwright MCP server to capture high-quality screenshots of target websites (e.g., Clash of Clans).
+2. Store screenshots in a designated `/hub` directory with clear filenames (e.g., `clash_of_clans_homepage.png`).
+3. Extract design patterns (colors, typography, layouts) from screenshots using a tool like ColorThief or manual annotation.
+4. Curate taste material (e.g., UI components, animations) into a `/taste` subdirectory.
+5. Document findings in a `README.md` with tags (e.g., `#hero-section`, `#color-palette`).
+6. Sync the `/hub` folder to the central design repository for team access.
 
-**What changed:** Bright pink accent screenshot added to hub for muted coral accent refinement.
+**What changed:** Automated screenshot capture and structured design asset organization.

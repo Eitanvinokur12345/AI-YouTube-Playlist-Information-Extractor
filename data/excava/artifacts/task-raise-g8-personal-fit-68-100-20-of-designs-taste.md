@@ -1,10 +1,42 @@
 # Raise G8 Personal fit (68/100): 20% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond
 
-> visual · task `raise-g8-personal-fit-68-41600` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
+> visual · task `raise-g8-personal-fit-68-41967` · **EXECUTION PLAN — NOT yet executed** · by gh-models/openai/gpt-4o-mini
 
-**Approach:** Incrementally refine G8 Personal fit by enriching taste-tagged designs and integrating Arena learning.
-1. **Update Design Dataset**: Utilize `labelimg` tool to annotate 10 additional designs, focusing on diverse styles to enhance taste-tag coverage, aiming for 30% coverage.
-2. **Arena Learning Integration**: Run `arena_learning_script.py` with `--live` flag to stream live learning data, incorporating `nosg_wired` module for real-time feedback, and adjust parameters as needed to optimize performance.
-3. **Refine Taste Model**: Employ `taste_beyond.py` script to expand the taste model, leveraging `--size 17` and `--value 32` as input parameters, to generate refined predictions and improve overall G8 Personal fit.
-4. **Risk Assessment**: Use `risk_assessment_tool` to evaluate potential risks associated with each design update, ensuring a risk score below 10, and adjust the design refinement process accordingly.
-**Needs:** `labelimg` tool, `arena_learning_script.py`, `nosg_wired` module, `taste_beyond.py` script, `risk_assessment_tool`, access to design dataset, and a machine with sufficient computational resources.
+```markdown
+# EXECUTION PLAN
+
+**Approach:** Enhance G8 Personal fit to 80 by increasing taste-tagged designs through targeted implementation of Arena learning and NOSG wiring.
+
+## Steps:
+1. **Analyze Current Tagging**:
+   - Review existing designs to identify gaps in taste-tagging.
+   - Command: `git checkout main && git pull origin main`
+   - Tool: Design repository
+
+2. **Implement Arena Learning**:
+   - Enable real-time learning adjustments based on user interactions.
+   - Command: Integrate Arena API using: `npm install arena-learning-sdk`
+   - Tool: Arena Learning SDK
+
+3. **Enhance NOSG Wiring**:
+   - Connect additional data sources to NOSG for enriched tagging.
+   - Command: Set up configurations in: `config/nosg-settings.js`
+   - Tool: NOSG SDK
+
+4. **Develop Test Cases**:
+   - Create scenarios to test tagging effectiveness with new configurations.
+   - Command: `touch test/tagging.test.js && nano test/tagging.test.js`
+   - Tool: Testing framework (e.g., Jest)
+
+5. **Deploy Changes**:
+   - Push changes to the production environment and monitor performance.
+   - Command: `git add . && git commit -m "Enhance G8 Personal fit" && git push origin main`
+   - Tool: CI/CD pipeline 
+
+## Needs:
+- Access to design repository
+- Arena Learning SDK
+- NOSG SDK
+- Testing framework setup
+- CI/CD pipeline configured
+```

@@ -9,6 +9,26 @@ You're away ~1 week; the offline loop is running (non-brain fronts, hourly) and 
 
 ### Away-week questions
 
+**2026-07-29 (fire 67) — 11 open PRs, 0 merged since 2026-07-25: which branch (if any) becomes `main`, and how do you want the rest handled?**
+Quantified the branch/PR pile-up fire 8 (PR #18) and fire 55 (PR #29) already flagged: **11 open,
+unmerged PRs** right now (#18, #23, #24, #25, #29, #30, #31, #32, #33, #34, #35 — fires 8 through
+66), each its own `claude/kind-shannon-*` branch. `origin/main` hasn't moved since
+`2026-07-25T15:56Z` (commit `1f9ed759`) — **4 days of real work** (skill/tool drains, guardrail
+fixes, connector verification, news refreshes) is scattered across these branches and none of it
+has reached `main` or whatever renders the live dashboard. Root cause: `git_safe.py`'s
+`push()`/`ship()` push to *whatever branch is currently checked out*, written assuming direct
+pushes to `main`; this cloud harness instead gives every session a fresh throwaway branch, so
+each session's work piles up on its own branch instead of landing. The PRs almost certainly
+contain diverging, overlapping snapshots of `data/*.json` (each branched from the same stale
+base independently) — not a clean fast-forward chain.
+_Ask: (a) do you want me/a future fire to attempt reconciling these into `main` (oldest-first,
+re-running the analyze pipeline's own dedup logic to merge the JSON tabs), or would you rather
+review/close them yourself and start clean; (b) should the harness switch to always opening a
+PR **and merging its own PR automatically** once CI/guardrails pass, so this doesn't recur; (c)
+is there a reason `main` should stay untouched (e.g. it's a curated/approved snapshot and the
+branches are the actual working area)? No default assumed — this is exactly the "your call, not
+an unattended fire's call" case per §7._
+
 **2026-07-29 (fire 65) — M1's own deadline is today (§9 timeline); M2's core deliverable has zero scaffolding — should a fire start it, or is this an explicit pitch-gate?**
 Ran the first consolidated M1 stocktake against the END PLAN's own checklist (§6) — full detail
 in `AWAY_LOG.md` fire 65. Short version: M1 is functionally healthy (0 dead/orphaned modules,

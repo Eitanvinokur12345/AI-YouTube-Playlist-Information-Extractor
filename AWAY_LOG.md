@@ -5,6 +5,30 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-29
+- **~16:0x (fire 67, unattended, cloud session)** — Ran standing checks and, instead of adding a
+  twelfth piece of new plumbing or draining more of `data/_pending/`, quantified the **branch/PR
+  pile-up** that fire 8 (PR #18, 2026-07-26) first flagged and fire 55 (PR #29) re-flagged, and
+  which has kept getting worse instead of resolved: **11 open PRs right now**
+  (#18, #23, #24, #25, #29, #30, #31, #32, #33, #34, #35 — fires 8 through 66), each on its own
+  `claude/kind-shannon-*` branch, **zero merged since 2026-07-25**. `origin/main` is stuck at
+  commit `1f9ed759` ("analyze: safety commit 2026-07-25T15:56Z") — **4 days stale** — while this
+  session's own branch alone carries 50 unpushed-to-main commits of real work (beats, bulk-analyze,
+  connectors-verify, news, core-spoton) that `git_safe.py` believed it was shipping to `main`
+  because `push()`/`ship()` target *whatever branch is currently checked out*, not `main`
+  explicitly. Every cloud session gets its own fresh `claude/kind-shannon-<random>` branch (this
+  harness's convention, not `git_safe.py`'s design assumption), so each session's real work — data
+  drains, guardrail fixes, skill/tool extraction — lands on a branch nobody then merges, and the
+  next session starts from the same stale `main` and repeats the pattern on yet another branch.
+  PR #18's own description named this exact conflict and explicitly left the resolution to Eitan
+  3 days ago; no session since has acted on it, they've each just added another PR to the pile.
+  **This is now a decision for Eitan, not another fire**: the 11 open PRs almost certainly
+  contain overlapping-but-diverging snapshots of `data/*.json` (each built from the same stale
+  base independently) — merging them safely needs a human choosing an order (or one canonical
+  branch to keep and the rest to close) rather than an unattended session guessing. Logged in
+  `QUESTIONS.md`. **Harsh self-criticism:** this is the third fire in the log to notice a version
+  of this problem (8, 55, 67) without fixing it — because fixing it (merging or discarding real
+  work) is outside what an unattended fire should decide unilaterally. Flagging with hard numbers
+  is the correct ceiling for this fire, not a substitute for someone finally doing the merge.
 - **~13:0x (fire 65, unattended, cloud session)** — Standing checks: `git fetch origin main`
   clean, HEAD==origin/main, `python -m src.guardrails` 18/20, 0 critical (same steady-state G-C/
   G-O info flags: history-bundle freshness self-heals on ship, EITAN-PC local drain ~79h stale).

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-29T14:47:34.856164+00:00",
+ "generated_at": "2026-07-29T14:58:19.062746+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -23,8 +23,8 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 203,
-   "rooms_7d": 110,
+   "turns_7d": 204,
+   "rooms_7d": 111,
    "engines_used": [
     "gh-models",
     "groq",
@@ -32,7 +32,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will query the YouTube transcript server for the pending videos to retrieve the full transcripts. This action will pro"
+   "last_position": "I will query the YouTube transcript server to retrieve the full transcripts for the pending videos. This action will pro"
   },
   {
    "id": "analysis-w1",
@@ -152,15 +152,15 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 96,
-   "rooms_7d": 92,
+   "turns_7d": 98,
+   "rooms_7d": 94,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Query kimtaeyoon83/mcp-server-youtube-transcript via residential IP to fetch full transcripts for all pending vi",
+   "last_position": "DECISION: Require every cross-department Slack thread where a decision is made to include a pinned reply with the decisi",
    "proposed": 1
   },
   {
@@ -240,8 +240,8 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 78,
-   "rooms_7d": 36,
+   "turns_7d": 79,
+   "rooms_7d": 37,
    "engines_used": [
     "gh-models",
     "groq",
@@ -249,7 +249,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Add a single, high-contrast focus ring that appears instantly on keyboard navigation and stays visible for 5 seconds of ",
+   "last_position": "Add a single, high-contrast focus ring that appears immediately on keyboard navigation. This ensures every interactive e",
    "proposed": 1
   },
   {
@@ -257,7 +257,22 @@
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 77,
+   "turns_7d": 78,
+   "rooms_7d": 37,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The single high-contrast ring still forces sighted keyboard users to parse a moving target—especially when tabbing rapid"
+  },
+  {
+   "id": "improve-w1",
+   "name": "Sprocket",
+   "dept": "improve",
+   "role": "doer",
+   "turns_7d": 75,
    "rooms_7d": 36,
    "engines_used": [
     "gh-models",
@@ -265,13 +280,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 5-second delay still risks missing the user’s next tab—especially on slow machines where the ring may fade mid-navig"
+   "last_position": "Run the A/B test on a voluntary cohort where users opt into the feed changes. This approach mitigates the risk of skewin",
+   "proposed": 1
   },
   {
-   "id": "improve-w1",
-   "name": "Sprocket",
+   "id": "improve-checker",
+   "name": "Gauge",
    "dept": "improve",
-   "role": "doer",
+   "role": "checker",
    "turns_7d": 74,
    "rooms_7d": 36,
    "engines_used": [
@@ -280,23 +296,36 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "We should run the 72-hour dual-prompt A/B test with 15% of users, forcing feed, because it allows us to collect data fro",
-   "proposed": 1
+   "last_position": "The real risk isn’t limited data—it’s that a voluntary cohort *self-selects* for users already predisposed to the change"
   },
   {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 73,
-   "rooms_7d": 36,
+   "id": "power-w1",
+   "name": "Gearbox",
+   "dept": "power",
+   "role": "doer",
+   "turns_7d": 64,
+   "rooms_7d": 32,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk isn’t 15% churn—it’s that forcing the feed confounds the prompt’s intent, skewing results toward users who"
+   "last_position": "Adopt **Claude Mythos 5** as EXCAVA’s reasoning engine. Its 20% accuracy edge in long-context synthesis delivers the rel"
+  },
+  {
+   "id": "power-checker",
+   "name": "Torque",
+   "dept": "power",
+   "role": "checker",
+   "turns_7d": 64,
+   "rooms_7d": 32,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Mythos 5’s latency hit risks breaking EXCAVA’s real-time power loop—its 15% slowdown compounds in live systems, and we’v"
   },
   {
    "id": "analysis-lead",
@@ -327,35 +356,6 @@
    ],
    "positions_held": 30,
    "last_position": "I will browse Reddit’s r/MachineLearning and r/AI for the last 7 days and extract the top 10 posts with the highest enga"
-  },
-  {
-   "id": "power-w1",
-   "name": "Gearbox",
-   "dept": "power",
-   "role": "doer",
-   "turns_7d": 63,
-   "rooms_7d": 32,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Adopt **Qwen2.5-72B-Instruct** as EXCAVA’s primary reasoning engine. It’s the fastest 70B-class model with near-frontier"
-  },
-  {
-   "id": "power-checker",
-   "name": "Torque",
-   "dept": "power",
-   "role": "checker",
-   "turns_7d": 63,
-   "rooms_7d": 32,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Qwen2.5-72B-Instruct’s speed gain isn’t free—its 30% latency cut masks a 15% drop in complex synthesis tasks, which EXCA"
   },
   {
    "id": "visual-lead",

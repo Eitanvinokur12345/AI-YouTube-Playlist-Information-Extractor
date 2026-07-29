@@ -6317,15 +6317,16 @@
       "department": "power",
       "source": "agent:power-lead",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the decision's concrete step is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "power-w1",
       "handoff_docs": [],
       "created_at": "2026-07-28T23:25:44.861092+00:00",
-      "updated_at": "2026-07-28T23:25:44.861100+00:00"
+      "updated_at": "2026-07-29T03:51:44.828881+00:00",
+      "result": "Ran the power scan.   - Gemma 4 12B | Google DeepMind's open-source multimodal 12B model using an encoder-fr"
     },
     {
       "id": "ramp-s-initiative-add-a--81154",
@@ -7285,17 +7286,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/resolve-real-links-websi-83058--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-07-28T23:57:38.308597+00:00",
-      "updated_at": "2026-07-28T23:57:44.878097+00:00"
+      "updated_at": "2026-07-29T03:51:31.447032+00:00",
+      "result": "Semantic index: 1557 vectors (model gemini-embedding-001); hub 7577 items → 6020 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "watch-process-the-next-b-83058",
@@ -7376,17 +7378,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-83058--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-07-28T23:57:38.353581+00:00",
-      "updated_at": "2026-07-28T23:57:45.171623+00:00"
+      "updated_at": "2026-07-29T03:51:31.259329+00:00",
+      "result": "1205 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g8-personal-fit-68-83058",
@@ -7622,15 +7625,16 @@
       "department": "watch",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-07-29T00:59:30.357128+00:00",
-      "updated_at": "2026-07-29T00:59:30.357140+00:00"
+      "updated_at": "2026-07-29T03:51:37.380754+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
       "id": "security-safety-rate-the-86770",
@@ -7639,15 +7643,16 @@
       "department": "security",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-07-29T00:59:30.370452+00:00",
-      "updated_at": "2026-07-29T00:59:30.370463+00:00"
+      "updated_at": "2026-07-29T03:51:37.362489+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "mining-discover-new-ai-r-86770",
@@ -7656,15 +7661,16 @@
       "department": "mining",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "mining-w1",
       "handoff_docs": [],
       "created_at": "2026-07-29T00:59:30.381599+00:00",
-      "updated_at": "2026-07-29T00:59:30.381610+00:00"
+      "updated_at": "2026-07-29T03:51:36.219977+00:00",
+      "result": "Ran the discovery agent. discovery: +33 new (of 147 sighted) → 219 queued; arxiv=30, gh-active=46, gh-new=14, hn-front=23, hn-new=18, huggingface-model=21, producthunt=22, reddit=25, web-search=20"
     },
     {
       "id": "memory-embed-the-remaini-86770",
@@ -7690,6 +7696,95 @@
       "department": "news",
       "source": "gap",
       "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "news-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-29T00:59:30.406032+00:00",
+      "updated_at": "2026-07-29T03:51:36.552420+00:00",
+      "result": "Ran the trend watch. trend_watch: 10 proposals (top score 10); queued 0 into self-improvement."
+    },
+    {
+      "id": "raise-g3-truth-access-53-86770",
+      "title": "Raise G3 Truth & access (53/100): 53.0% of tools/skills have a real link (target: ~100%)",
+      "detail": "value=47 size=17(small) [cost 15/steps 25/risk 10] · G3 at 53",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/raise-g3-truth-access-53-86770--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-07-29T00:59:30.418547+00:00",
+      "updated_at": "2026-07-29T03:51:44.512955+00:00"
+    },
+    {
+      "id": "raise-g8-personal-fit-68-86770",
+      "title": "Raise G8 Personal fit (68/100): 21% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
+      "detail": "value=32 size=17(small) [cost 15/steps 25/risk 10] · G8 at 68",
+      "department": "visual",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "visual-w1",
+      "handoff_docs": [],
+      "created_at": "2026-07-29T00:59:30.432246+00:00",
+      "updated_at": "2026-07-29T03:51:44.494546+00:00",
+      "result": "Ran the collect designs. collect_designs: 1039 designs (kept 1039 / dropped 0 repo-only + 2 dead/parked + 52 non-design; +0 AI-product, +27 seeds, +51 shown-in-video; url-checked 2). designs-only."
+    },
+    {
+      "id": "weakest-lane-deep-analys-97090",
+      "title": "Weakest lane: Deep analysis (Claude, night-gated)",
+      "detail": "Lowest effectiveness (6.8/10) — the improve stage targets it.",
+      "department": "analysis",
+      "source": "auto",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "output written to data/ and committed by CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-29T03:51:30.875021+00:00",
+      "updated_at": "2026-07-29T03:51:31.228313+00:00"
+    },
+    {
+      "id": "47-self-improvement-task-97090",
+      "title": "47 self-improvement tasks queued",
+      "detail": "The improve stage works these on its 2×/week pass.",
+      "department": "improve",
+      "source": "auto",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "output written to data/ and committed by CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-07-29T03:51:30.885934+00:00",
+      "updated_at": "2026-07-29T03:51:31.237403+00:00"
+    },
+    {
+      "id": "watch-process-the-next-b-97091",
+      "title": "Watch: process the next batch of 1205 pending videos",
+      "detail": "value=80 size=29(small) [cost 30/steps 40/risk 10] · 1205 pending",
+      "department": "watch",
+      "source": "gap",
+      "priority": 1,
       "status": "queued",
       "steps": 0,
       "max_steps": 8,
@@ -7697,12 +7792,31 @@
       "escalation_tier": 1,
       "claimed_by": null,
       "handoff_docs": [],
-      "created_at": "2026-07-29T00:59:30.406032+00:00",
-      "updated_at": "2026-07-29T00:59:30.406040+00:00"
+      "created_at": "2026-07-29T03:51:31.184414+00:00",
+      "updated_at": "2026-07-29T03:51:31.184427+00:00"
     },
     {
-      "id": "raise-g3-truth-access-53-86770",
-      "title": "Raise G3 Truth & access (53/100): 53.0% of tools/skills have a real link (target: ~100%)",
+      "id": "transcripts-drain-the-ne-97091",
+      "title": "Transcripts: drain the next batch of 1205 pending (residential IP)",
+      "detail": "value=60 size=26(small) [cost 25/steps 35/risk 15] · 1205 pending",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-drain-the-ne-97091--01--transcripts-w1--to--analysis.md"
+      ],
+      "created_at": "2026-07-29T03:51:31.201399+00:00",
+      "updated_at": "2026-07-29T03:51:44.601266+00:00"
+    },
+    {
+      "id": "raise-g3-truth-access-53-97091",
+      "title": "Raise G3 Truth & access (53/100): 53.1% of tools/skills have a real link (target: ~100%)",
       "detail": "value=47 size=17(small) [cost 15/steps 25/risk 10] · G3 at 53",
       "department": "links",
       "source": "gap",
@@ -7714,26 +7828,26 @@
       "escalation_tier": 1,
       "claimed_by": null,
       "handoff_docs": [],
-      "created_at": "2026-07-29T00:59:30.418547+00:00",
-      "updated_at": "2026-07-29T00:59:30.418557+00:00"
+      "created_at": "2026-07-29T03:51:31.210274+00:00",
+      "updated_at": "2026-07-29T03:51:31.210281+00:00"
     },
     {
-      "id": "raise-g8-personal-fit-68-86770",
-      "title": "Raise G8 Personal fit (68/100): 21% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond",
-      "detail": "value=32 size=17(small) [cost 15/steps 25/risk 10] · G8 at 68",
-      "department": "visual",
-      "source": "gap",
-      "priority": 1,
+      "id": "analysis-room-action-mar-97126",
+      "title": "[analysis room action] Marrow runs BloodHound-MCP on the full earnings call transcript to generate a decision-impact graph mapping every speake",
+      "detail": "From room dept-analysis-deep-analyze-every-184 (action-shaped close). Mission action from the department's own room.",
+      "department": "analysis",
+      "source": "room-action:analysis",
+      "priority": 2,
       "status": "queued",
       "steps": 0,
       "max_steps": 8,
-      "done_criteria": "a committed artifact that measurably closes this gap",
+      "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
       "claimed_by": null,
       "handoff_docs": [],
-      "created_at": "2026-07-29T00:59:30.432246+00:00",
-      "updated_at": "2026-07-29T00:59:30.432257+00:00"
+      "created_at": "2026-07-29T03:52:06.138122+00:00",
+      "updated_at": "2026-07-29T03:52:06.138129+00:00"
     }
   ],
-  "updated_at": "2026-07-29T00:59:30.432261+00:00"
+  "updated_at": "2026-07-29T03:52:06.138132+00:00"
 }

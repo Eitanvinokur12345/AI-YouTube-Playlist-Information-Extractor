@@ -109607,6 +109607,64 @@
           "title": "I Stopped Guessing What To Post And Did This Instead"
         }
       ]
+    },
+    {
+      "skill_name": "Codex Plugin Bounded-Debate Review for Claude Code",
+      "slug": "codex-plugin-bounded-debate-review",
+      "category": "code",
+      "description": "A code-review technique using OpenAI's official Codex plugin for Claude Code: after Claude Code writes or plans code, hand it to Codex for a read-only or adversarial review, or run a bounded, time-boxed debate where Claude and Codex critique each other's answer before you pick a final one.",
+      "use_case": "Getting a genuine second opinion (not just a re-prompt of the same model) on a plan or diff before shipping, using two different model families in one terminal session.",
+      "output": "A reviewed/critiqued diff or plan, with disagreements between the two models surfaced explicitly rather than hidden.",
+      "quality_score": 7,
+      "model_version": null,
+      "company": "OpenAI",
+      "country": "USA",
+      "open_source": false,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude Code",
+          "up_to_version": "any"
+        },
+        {
+          "tool": "Codex",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": true,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=D3kmstnDVY0",
+      "source_video_id": "D3kmstnDVY0",
+      "tips": [
+        "Use the plan/build handoff: let one model plan and the other build, instead of using a single model for both.",
+        "Run the adversarial-review slash command before shipping for a second opinion that actively looks for problems, not just a rubber stamp.",
+        "The bounded debate mode time-boxes disagreement between Claude and Codex so you get a clear verdict instead of an open-ended back-and-forth."
+      ],
+      "slash_commands": [
+        {
+          "command": "/codex-review",
+          "description": "Read-only code review of the current diff/plan via Codex, run from inside Claude Code.",
+          "tool": "Claude Code",
+          "source_video": "D3kmstnDVY0"
+        },
+        {
+          "command": "/codex-adversarial",
+          "description": "Adversarial review pass where Codex actively looks for flaws in the current diff/plan.",
+          "tool": "Claude Code",
+          "source_video": "D3kmstnDVY0"
+        }
+      ],
+      "general_tips": [
+        "Running two paid models together (Claude + Codex) does not reduce total token/dollar spend \u2014 budget for both."
+      ],
+      "relevance": "Gives Claude Code users a real cross-model second opinion instead of relying on one model to review its own work.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "D3kmstnDVY0"
+      ],
+      "video_quality_score": 7,
+      "low_quality_source": false
     }
   ],
   "recipes_updated_at": "2026-07-29T11:54:18.452072+00:00"

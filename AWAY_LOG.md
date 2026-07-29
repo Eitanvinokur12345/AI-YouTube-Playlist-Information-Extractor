@@ -5,6 +5,53 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-29
+- **~06:1x (fire 62, unattended, cloud session)** — continued fire 61's watch/transcripts
+  hand-drain: 8 pending videos (`data/_pending` sorted `publishedAt` desc, per `catch_up.json`'s
+  `newest_first` catch-up order), all clustered 2026-07-22T11:2x-13:1x — a full CLAUDE.md pass
+  each (relevance gate, Step 2b quality score, extraction, news summary, move to `processed/`,
+  one commit+push each). Results: 2 videos skipped as not AI-relevant (a generic "stay curious"
+  career short, a generic learn-by-building short — both only mention AI in passing); 4 low-
+  quality rumor/concept shorts with no extractable tool/skill, weekly-news summaries filled and
+  hedged where the claim was single-source/disputed (Claude-vs-Codex usage-limit rumor, Claude
+  Code rate-limit rumor, a vague "scene engineering" concept piece with no named tool); 1 stub
+  tool enriched (`gpt-5-6`, empty description and `quality_score: 1` before this fire) with a
+  clearly-hedged single-source claim (GPT-5.6 Pro solving a 35-year path-optimization problem —
+  "should be treated as unverified," matching the hedging convention fire 58 set for the earlier
+  unverified-hack claim), then mirrored into `models.json` via `python -m src.build_models`; 1
+  genuinely new, well-specified **skill** — `claude-code-loop-control-levels` (Anthropic's own
+  4-level Claude Code loop control taxonomy: manual turn-based → goal-based+evaluator → scheduled
+  → fully autonomous — checked against `data/index.json` first, confirmed distinct from the
+  existing `claude-code-automation-loop-essentials` skill, which covers a different 5-component
+  architecture, not this control-level taxonomy) with a `skills/claude-code-loop-control-levels/
+  SKILL.md` package; 1 new tab-candidate anecdote (`ai-certifications-training`, seeded by an
+  Anthropic Academy free-certificate video — a genuine new theme, no prior candidate existed) plus
+  a matching Claude tip (Anthropic Academy's 3 free courses) added to `tips.json` after a dedup
+  check against the existing Claude bucket. Then updated `status.json.run_report`
+  (`analyzed_this_run` +8, `skipped_not_relevant` +2, `pending_to_analyze` 1187→1179,
+  `tab_candidates_open` recount), `total_videos_analyzed` +8 (1644→1652). Verified:
+  `json.load()` clean on every touched file after every write; `python -m
+  src.excava_systemcheck` 10/11 working, 0 critical (same pre-existing news/trend_watch
+  intent-drift fire 23 already flagged as a deliberate non-fix); `python -m src.guardrails`
+  17/20, 0 critical — same steady-state G-C/G-O pair as every recent fire, **plus a new G-G
+  "not in sync (behind/ahead: 0 9)"** that is expected, not a regression: this session's harness
+  mandates developing on `claude/kind-shannon-mtjvaw` and opening a PR rather than `git_safe
+  ship`'s `origin HEAD:main`, so the branch is legitimately 9 commits ahead of what G-G compares
+  against (`main`) — flagged here rather than silently ignored, and a draft PR was opened for the
+  branch immediately after this log entry so the work is visible and mergeable, not stranded.
+  **Harsh self-criticism:** 8 videos against a ~1,179-deep backlog is still the same rounding-
+  error math fires 56/58/60 already admitted — this fire didn't change that reality, it just kept
+  the well-trodden, low-risk pattern going rather than attempting fire 61's "M2 now in scope"
+  suggestion, which this fire judged too large and too risky to attempt safely inside one
+  unattended turn without deeper study of the 8 `src/excava_*.py` modules first; that's a
+  deliberate scope-narrowing choice, not an oversight, but it does mean M2 is still untouched
+  fire-over-fire. The `gpt-5-6` enrichment rests on one 40-second, single-source, unverifiable
+  video — hedged in both the tool description and the news summary, but still thinner evidence
+  than a real second-source check would give, exactly the same caveat fire 58 raised for its own
+  enrichment that fire. Did not attempt `resolve_links.py` or any network-dependent step (no new
+  evidence this fire on whether the sandbox's egress wall has changed since fire 58 confirmed it
+  blocked). Left QUESTIONS.md items #30/#31 (the `discover.yml`/`improve.yml`/`analyze.yml`
+  SDK-level failure pattern) untouched — still open, still Eitan's call, no new evidence to add
+  this fire.
 - **~06:0x (fire 61, unattended, cloud session)** — hand-drained 4 pending videos off the
   watch/transcripts backlog gap (top `queued_now` item, value 80): `46fI3TSx3hE` (OpenClaw VPS
   install — endorsement added to the existing OpenClaw tool record; also flagged a likely

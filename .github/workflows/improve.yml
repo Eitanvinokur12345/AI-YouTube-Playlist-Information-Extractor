@@ -97,6 +97,7 @@ jobs:
           # Uses your Claude Pro/Max subscription token (NO separate Anthropic API
           # billing). Same yearly token as the analyze stage.
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN_REAL }}
+          claude_args: '--allowedTools "Bash,Edit,Write,Read,Glob,Grep,WebFetch,WebSearch,TodoWrite"'
           prompt: |
             Run the self-improvement stage of the YouTube Skills Tracker.
             Follow IMPROVE.md exactly — it is the authoritative spec, governed by the

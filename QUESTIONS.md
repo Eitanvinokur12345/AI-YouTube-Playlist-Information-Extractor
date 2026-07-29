@@ -9,6 +9,19 @@ You're away ~1 week; the offline loop is running (non-brain fronts, hourly) and 
 
 ### Away-week questions
 
+**2026-07-29 (fire 61) — possible name collision on the `openclaw` tools.json record.**
+Several existing endorsing videos describe OpenClaw as a B2B lead-gen agent (satellite-imagery
+property scraping, direct-mail automation) — that's the description currently on file. A newly
+hand-drained video (`46fI3TSx3hE`, "Install OpenClaw on a VPS with one command") describes a
+self-hosted AI-agent gateway with a one-line VPS installer and Discord bot integration, which
+matches the OSS `openclaw` project this repo's own EXCAVA architecture docs already reference as
+a channels/shell tool (§2 of `EXCAVA_END_PLAN.md`). These read like two different products
+sharing a name, not one product two ways. _Default: left the existing description untouched,
+added a `data_quality_note` on the record instead of overwriting — insufficient evidence from a
+43s/131-char source to safely rewrite a record with 8 mentions._ Proposed resolution once you're
+back: split into `openclaw` (real OSS agent gateway) and `openclaw-leadgen` (the B2B sales tool),
+re-sorting each endorsing video's id to the record it actually matches.
+
 **2026-07-28 (fire 52) — new guardrail G-T found a real, previously-unknown commit-loss gap:
 the `data_guard.json`-only auto-resolve fallback (fires 25/28-41) doesn't cover other shared
 mechanical files, and `bulk_analyze.yml`'s 17:56-18:00 UTC run today lost its entire commit to

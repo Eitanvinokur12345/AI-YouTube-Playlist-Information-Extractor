@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-29T16:08:15.798828+00:00",
+ "generated_at": "2026-07-29T16:14:22.391417+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 236,
+   "turns_7d": 237,
    "rooms_7d": 33,
    "engines_used": [
     "gh-models",
@@ -16,15 +16,15 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Risk:** Reel’s shared online platform risks becoming just another place for teams to list blockers without actual foll"
+   "last_position": "**Risk:** The rotating \"blocker owner\" system risks placing too much responsibility on a single individual, which may le"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 219,
-   "rooms_7d": 123,
+   "turns_7d": 220,
+   "rooms_7d": 124,
    "engines_used": [
     "gh-models",
     "groq",
@@ -32,7 +32,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will query the YouTube transcript server for the full transcripts of the pending videos, using the kimtaeyoon83/mcp-se"
+   "last_position": "I will query the YouTube transcript server for the full transcripts of pending videos. This action will produce complete"
   },
   {
    "id": "analysis-w1",
@@ -55,7 +55,7 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 161,
+   "turns_7d": 162,
    "rooms_7d": 78,
    "engines_used": [
     "gh-models",
@@ -65,7 +65,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Implement a mandatory monthly review of the decision log entries across departments, requiring each team t"
+   "last_position": "**Decision:** Implement a rotating \"blocker owner\" system where one person from each department is responsible for track"
   },
   {
    "id": "analysis-checker",
@@ -121,15 +121,15 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 108,
-   "rooms_7d": 104,
+   "turns_7d": 109,
+   "rooms_7d": 105,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Query kimtaeyoon83/mcp-server-youtube-transcript via residential IP for full transcripts of pending videos; outp",
+   "last_position": "ACTION: Query kimtaeyoon83/mcp-server-youtube-transcript via residential IP to fetch full transcripts for pending videos",
    "proposed": 1
   },
   {
@@ -183,8 +183,8 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 86,
-   "rooms_7d": 40,
+   "turns_7d": 87,
+   "rooms_7d": 41,
    "engines_used": [
     "gh-models",
     "groq",
@@ -192,7 +192,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "We should use a subtle focus ring that respects motion preferences, as it balances the need for visibility with the pote",
+   "last_position": "Add a high-contrast focus ring that appears immediately on keyboard navigation. This enhances visibility for users who r",
    "proposed": 1
   },
   {
@@ -200,15 +200,15 @@
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 85,
-   "rooms_7d": 40,
+   "turns_7d": 86,
+   "rooms_7d": 41,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The subtle focus ring still risks being insufficient for users with low vision, as it may not provide enough visual dist"
+   "last_position": "A high-contrast focus ring can create a visual \"siren\" effect, drawing too much attention and potentially distracting us"
   },
   {
    "id": "memory-w1",
@@ -243,6 +243,23 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
+   "turns_7d": 83,
+   "rooms_7d": 40,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Implement a blind rollout of the new feed to 5% of users who opt into \"new features.\" This approach minimizes confusion ",
+   "proposed": 1,
+   "shipped": 1
+  },
+  {
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
+   "role": "checker",
    "turns_7d": 82,
    "rooms_7d": 40,
    "engines_used": [
@@ -251,9 +268,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run a visible A/B test with 5% of all users, randomized by the system, not self-selected. This exposes the new feed to r",
-   "proposed": 1,
-   "shipped": 1
+   "last_position": "A blind rollout to users who opt into \"new features\" still risks self-selection bias; only users interested in new featu"
   },
   {
    "id": "links-w1",
@@ -285,26 +300,11 @@
    "last_position": "ACTION: Anchor runs the link-checker tool against the department’s live inventory and delivers the prioritized report of"
   },
   {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 81,
-   "rooms_7d": 40,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Visible A/B tests expose the change to all users in the cohort, not just the 5%—meaning 95% see it without knowing it’s "
-  },
-  {
    "id": "power-w1",
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 71,
+   "turns_7d": 72,
    "rooms_7d": 36,
    "engines_used": [
     "gh-models",
@@ -312,14 +312,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt **Claude Mythos 5** as EXCAVA’s reasoning engine because it provides the sharpest analytical capabilities availabl"
+   "last_position": "Adopt **Qwen2.5-72B-Instruct** as EXCAVA’s reasoning engine. It delivers a 30% speed gain over Mythos 5 while maintainin"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 71,
+   "turns_7d": 72,
    "rooms_7d": 36,
    "engines_used": [
     "gh-models",
@@ -327,7 +327,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopting **Claude Mythos 5** introduces a significant risk due to its latency spike, which makes it 15% slower than nece"
+   "last_position": "Choosing **Qwen 2.5-72B-Instruct** sacrifices analytical depth, which could lead to suboptimal decisions in complex scen"
   },
   {
    "id": "analysis-lead",
@@ -516,7 +516,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Adopt **Claude Mythos 5** with a 500ms latency buffer for batch processing—EXCAVA’s output must hit 99.5% of M",
    "proposed": 9,
-   "shipped": 7
+   "shipped": 8
   },
   {
    "id": "mining-lead",

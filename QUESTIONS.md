@@ -9,6 +9,23 @@ You're away ~1 week; the offline loop is running (non-brain fronts, hourly) and 
 
 ### Away-week questions
 
+**2026-07-29 (fire 65) — M1's own deadline is today (§9 timeline); M2's core deliverable has zero scaffolding — should a fire start it, or is this an explicit pitch-gate?**
+Ran the first consolidated M1 stocktake against the END PLAN's own checklist (§6) — full detail
+in `AWAY_LOG.md` fire 65. Short version: M1 is functionally healthy (0 dead/orphaned modules,
+per-card actions wired, RELATE exists, memory unified as a federated read, stub-enrichment lanes
+wired into `core_spoton.yml` and running unattended) but stubs aren't literally at 0 (1,981 of
+10,880 elements, grinding down slowly but for real). Separately, checked M2's first bullet — the
+97→5-class collapse onto `Router`/`Agent`/`Tool`/`Room`/`Element` (§2, §6) — and found **zero**
+scaffolding: no such classes exist anywhere in `src/`. Per the plan's own P5 (3 pitch-gates for
+overhauls) and §7 (architecture is your call), I did not start this unilaterally in an unattended
+fire — a rewrite this size deserves a real pitch, not a partial stub built to have a diff.
+_Ask: should the next fire with a real multi-session time budget start the 5-class scaffolding
+as M2's genuine first increment (e.g. one class at a time, starting with `Element`/`Tool` since
+those map cleanly onto the existing `element_model.py`/hub), or do you want to review/adjust the
+architecture (§2) before any code gets written against it? Default if unanswered: treat this as
+correctly gated — no fire should start the rewrite until this question is answered, since P5
+exists precisely to stop an overhaul from being silently half-built._
+
 **2026-07-29 (fire 61) — possible name collision on the `openclaw` tools.json record.**
 Several existing endorsing videos describe OpenClaw as a B2B lead-gen agent (satellite-imagery
 property scraping, direct-mail automation) — that's the description currently on file. A newly

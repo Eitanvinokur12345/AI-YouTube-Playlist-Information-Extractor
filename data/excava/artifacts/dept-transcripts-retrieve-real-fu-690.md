@@ -1,15 +1,17 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-690` (dept) · 2026-07-08T14:57:50.924309+00:00
-> Participants: Reel, Scriv, Echo · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-690` (dept) · 2026-07-29T00:05:30.575601+00:00
+> Participants: Reel · synthesized by mistral/mistral-small-latest
 
-**Decision:** Validate pending videos via manifest-backed checksums, not just mtime or symlink checks.
+**Decision:**
+Query the YouTube transcript server (`kimtaeyoon83/mcp-server-youtube-transcript`) for pending video IDs using residential IP and gentle pacing.
 
 **Plan:**
-1. Run `find /pending_videos -type f -name "*.mp4" -mtime -7` to gather potential real MP4 files modified in the last 7 days.
-2. Identify symlinks with `find /pending_videos -type l -name "*.mp4"` to exclude from the final results.
-3. Retrieve the source manifest containing expected SHA256 checksums for all pending videos.
-4. Compare the identified MP4 files' SHA256 checksums against the source manifest to ensure content integrity.
-5. Compile a final list with counts of valid MP4s and highlight any mismatches found.
+1. Authenticate with the YouTube transcript server using residential IP credentials.
+2. Fetch pending video IDs from the target repository or database.
+3. Execute the transcript query with gentle pacing (e.g., rate limits, delays) to avoid detection.
+4. Validate retrieved transcripts for completeness and accuracy.
+5. Store transcripts in the designated output format (e.g., JSON, SRT).
+6. Log errors or missing transcripts for retry or manual review.
 
-**What changed:** The validation process now emphasizes checksum verification against the source manifest for accuracy and integrity.
+**What changed:** Resolved to use the specified server with residential IP and pacing for reliable transcript retrieval.

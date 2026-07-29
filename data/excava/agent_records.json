@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-28T23:59:38.803696+00:00",
+ "generated_at": "2026-07-29T00:05:37.349592+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,11 +8,10 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 264,
-   "rooms_7d": 34,
+   "turns_7d": 227,
+   "rooms_7d": 32,
    "engines_used": [
     "gh-models",
-    "glm",
     "groq",
     "mistral"
    ],
@@ -24,8 +23,8 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 217,
-   "rooms_7d": 107,
+   "turns_7d": 198,
+   "rooms_7d": 106,
    "engines_used": [
     "gh-models",
     "groq",
@@ -33,15 +32,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Require every Slack thread where a decision is made to include a pinned message with the decision, the one"
+   "last_position": "Action: Query the YouTube transcript server (`kimtaeyoon83/mcp-server-youtube-transcript`) for the pending video IDs usi"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 209,
-   "rooms_7d": 102,
+   "turns_7d": 185,
+   "rooms_7d": 96,
    "engines_used": [
     "gh-models",
     "groq",
@@ -49,18 +48,17 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "I will run BloodHound-MCP against the full earnings call transcript to map every entity and relationship mentioned in th"
+   "last_position": "**Decision:** Require every Slack thread where a decision is made to include a pinned message with the decision, the one"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 192,
-   "rooms_7d": 97,
+   "turns_7d": 157,
+   "rooms_7d": 77,
    "engines_used": [
     "gh-models",
-    "glm",
     "groq",
     "mistral",
     "nvidia",
@@ -68,23 +66,6 @@
    ],
    "positions_held": 30,
    "last_position": "**Decision:** Make the *Slack bot* auto-pull decisions into a dedicated `#decision-log` channel, but require the decisio"
-  },
-  {
-   "id": "analysis-checker",
-   "name": "Sift",
-   "dept": "analysis",
-   "role": "checker",
-   "turns_7d": 137,
-   "rooms_7d": 33,
-   "engines_used": [
-    "gh-models",
-    "glm",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "The real risk is that auto-generating a \"decisions made\" slide from Slack threads will miss the *why* and *trade-offs*—t"
   },
   {
    "id": "creators-lead",
@@ -120,6 +101,22 @@
    "last_position": "I will draft the UGC Factory npm package as a new module, producing a ready-to-use package labeled \"Created by EXCAVA.\" "
   },
   {
+   "id": "analysis-checker",
+   "name": "Sift",
+   "dept": "analysis",
+   "role": "checker",
+   "turns_7d": 118,
+   "rooms_7d": 31,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "Scriv: The real risk is that tying the Decision Log to exec syncs turns it into a performative checkbox—teams dump stale"
+  },
+  {
    "id": "visualization-w1",
    "name": "Facet",
    "dept": "visualization",
@@ -151,59 +148,12 @@
    "last_position": "The real risk isn’t manual effort—it’s that users in bright rooms won’t bother toggling, leaving them squinting at a dar"
   },
   {
-   "id": "news-w1",
-   "name": "Scoop",
-   "dept": "news",
-   "role": "doer",
-   "turns_7d": 102,
-   "rooms_7d": 93,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll fetch the latest AI headlines from Reuters, BBC, and the White House press releases. The output will be a concise d"
-  },
-  {
-   "id": "power-w1",
-   "name": "Gearbox",
-   "dept": "power",
-   "role": "doer",
-   "turns_7d": 99,
-   "rooms_7d": 49,
-   "engines_used": [
-    "gh-models",
-    "glm",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Adopt **Claude Mythos 5** as EXCAVA’s reasoning engine. Its 20% accuracy edge over Qwen2.5-72B on 50K-token reasoning ta"
-  },
-  {
-   "id": "power-checker",
-   "name": "Torque",
-   "dept": "power",
-   "role": "checker",
-   "turns_7d": 99,
-   "rooms_7d": 49,
-   "engines_used": [
-    "gh-models",
-    "glm",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Mythos 5’s 20% latency spike isn’t just a trade-off—it’s a live grenade in EXCAVA’s interactive pipeline. If a single us"
-  },
-  {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 97,
-   "rooms_7d": 93,
+   "turns_7d": 95,
+   "rooms_7d": 91,
    "engines_used": [
     "gh-models",
     "groq",
@@ -214,34 +164,47 @@
    "proposed": 1
   },
   {
-   "id": "news-lead",
-   "name": "Wire",
+   "id": "news-w1",
+   "name": "Scoop",
    "dept": "news",
-   "role": "lead",
+   "role": "doer",
    "turns_7d": 93,
-   "rooms_7d": 86,
+   "rooms_7d": 85,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Wire compiles the latest AI headlines from Reuters, BBC, and White House press releases into a two-source-verifi"
+   "last_position": "I’ll fetch the latest AI headlines from Reuters, BBC, and the White House press releases. The output will be a concise d"
   },
   {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 85,
-   "rooms_7d": 79,
+   "turns_7d": 84,
+   "rooms_7d": 78,
    "engines_used": [
     "gh-models",
-    "groq",
     "mistral"
    ],
    "positions_held": 30,
    "last_position": "Action: I will run the memory linking command to connect every existing memory tangle into a single brain graph. This wi"
+  },
+  {
+   "id": "news-lead",
+   "name": "Wire",
+   "dept": "news",
+   "role": "lead",
+   "turns_7d": 84,
+   "rooms_7d": 78,
+   "engines_used": [
+    "gh-models",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Wire compiles the latest AI headlines from Reuters, BBC, and White House press releases into a two-source-verifi"
   },
   {
    "id": "links-w1",
@@ -310,14 +273,14 @@
    "dept": "improve",
    "role": "doer",
    "turns_7d": 72,
-   "rooms_7d": 34,
+   "rooms_7d": 35,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run the A/B test on the voluntary cohort—users who already opt into experimental features—without forcing the feed. This",
+   "last_position": "Run the 72-hour dual-prompt A/B test with 15% of users, forcing feed. This tests whether the new prompt routing improves",
    "proposed": 1
   },
   {
@@ -326,22 +289,22 @@
    "dept": "improve",
    "role": "checker",
    "turns_7d": 71,
-   "rooms_7d": 34,
+   "rooms_7d": 35,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk isn’t lost statistical power—it’s that the voluntary cohort *self-selects for engagement*, skewing results"
+   "last_position": "The real risk isn’t 15% churn—it’s that forcing the feed *confounds the prompt’s signal* by mixing routing changes with "
   },
   {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 69,
-   "rooms_7d": 65,
+   "turns_7d": 63,
+   "rooms_7d": 60,
    "engines_used": [
     "gh-models",
     "groq",
@@ -351,36 +314,19 @@
    "last_position": "I will browse Reddit’s r/MachineLearning and r/AI for the last 7 days and extract the top 10 posts with the highest enga"
   },
   {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 67,
-   "rooms_7d": 64,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: At 11:56:00, Iris directs Arcads AI Video to generate a one-page analysis of the AI marketing demo, highlighting"
-  },
-  {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
    "role": "lead",
-   "turns_7d": 65,
-   "rooms_7d": 62,
+   "turns_7d": 60,
+   "rooms_7d": 58,
    "engines_used": [
     "gh-models",
-    "glm",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a structured graph of executives, pr"
+   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a structured entity-relationship gra"
   },
   {
    "id": "visual-lead",
@@ -396,6 +342,35 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Chroma captures a high-quality screenshot of the Playwright MCP server interface for the hub."
+  },
+  {
+   "id": "power-w1",
+   "name": "Gearbox",
+   "dept": "power",
+   "role": "doer",
+   "turns_7d": 60,
+   "rooms_7d": 30,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Adopt **Claude Mythos 5** as EXCAVA’s reasoning engine. Its 20% accuracy edge over Qwen2.5-72B on 50K-token reasoning ta"
+  },
+  {
+   "id": "power-checker",
+   "name": "Torque",
+   "dept": "power",
+   "role": "checker",
+   "turns_7d": 60,
+   "rooms_7d": 30,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Mythos 5’s 20% latency spike isn’t just a trade-off—it’s a live grenade in EXCAVA’s interactive pipeline. If a single us"
   },
   {
    "id": "visual-w1",
@@ -448,41 +423,40 @@
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 50,
-   "rooms_7d": 49,
+   "turns_7d": 51,
+   "rooms_7d": 50,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Ship EXCAVA with a persistent dark theme by default, paired with a one-click toggle in the top-right corner—no",
+   "last_position": "DECISION: Ship EXCAVA with a persistent dark theme by default, paired with a subtle, non-intrusive banner that *suggests",
    "proposed": 2
   },
   {
-   "id": "power-lead",
-   "name": "Dynamo",
-   "dept": "power",
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
    "role": "lead",
    "turns_7d": 49,
-   "rooms_7d": 49,
+   "rooms_7d": 46,
    "engines_used": [
     "gh-models",
     "groq",
-    "mistral"
+    "mistral",
+    "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Run a live 10-task blind A/B bench between Mythos 5 (full context) and Qwen2.5-72B-Instruct (context trimmed t",
-   "proposed": 7,
-   "shipped": 6
+   "last_position": "ACTION: At 11:56:00, Iris directs Arcads AI Video to generate a one-page analysis of the AI marketing demo, highlighting"
   },
   {
    "id": "memory-lead",
    "name": "Root",
    "dept": "memory",
    "role": "lead",
-   "turns_7d": 44,
-   "rooms_7d": 41,
+   "turns_7d": 43,
+   "rooms_7d": 40,
    "engines_used": [
     "gh-models",
     "groq",
@@ -496,8 +470,8 @@
    "name": "Access",
    "dept": "accessibility",
    "role": "lead",
-   "turns_7d": 36,
-   "rooms_7d": 34,
+   "turns_7d": 37,
+   "rooms_7d": 35,
    "engines_used": [
     "gh-models",
     "groq",
@@ -505,7 +479,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Ship a **high-contrast focus ring with a 125ms delay**, toggleable via keyboard shortcut, validated with Playw",
+   "last_position": "DECISION: Ship a **high-contrast focus ring with a 125ms delay**, visible until next tab then fading after 1s of inactiv",
    "proposed": 2
   },
   {
@@ -525,12 +499,28 @@
    "shipped": 4
   },
   {
+   "id": "power-lead",
+   "name": "Dynamo",
+   "dept": "power",
+   "role": "lead",
+   "turns_7d": 30,
+   "rooms_7d": 30,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Run a live 10-task blind A/B bench between Qwen2.5-72B-Instruct and Mythos 5 on 50K-token reasoning tasks with",
+   "proposed": 7,
+   "shipped": 6
+  },
+  {
    "id": "mining-lead",
    "name": "Boulder",
    "dept": "mining",
    "role": "lead",
-   "turns_7d": 23,
-   "rooms_7d": 22,
+   "turns_7d": 17,
+   "rooms_7d": 16,
    "engines_used": [
     "gh-models",
     "groq",

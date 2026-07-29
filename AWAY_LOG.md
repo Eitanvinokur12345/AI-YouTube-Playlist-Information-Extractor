@@ -5,6 +5,43 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-29
+- **~11:0x (fire 64, unattended, cloud session)** — Worked the actual `CLAUDE.md` analyze
+  pipeline directly against the pending backlog (newest-first, per active catch-up mode:
+  `data/catch_up.json` shows 1233 pending at fire start) instead of adding more plumbing —
+  drained **11** pending videos, one full CLAUDE.md pass + one commit each (a larger batch than
+  fire 63's PR-only 5, since standing checks were already clean and this session had headroom).
+  Results: 3 new skills with `SKILL.md` packages (`chatgpt-marketplace-selling-agent` under
+  `other-skills/chatgpt/`, `claude-code-wrap-it-up-protocol` under `skills/`,
+  `cinema-dna-image-direction-skill` under `other-skills/codex/`); 1 connector merge (Meta's
+  official Facebook-Ads-to-Claude short folded into the existing `meta-ads-custom-connector`
+  record, since it's the closest existing match by URL + function rather than a duplicate);
+  1 tool endorsement (ChatGPT, +1 `endorsement_video_ids`); both `/clear` and `/compact` endorsed
+  by a video that argues against `/compact`'s summarization (added a new, deliberately
+  *non-duplicate* contrarian tip alongside the existing pro-`/compact` tip rather than
+  overwriting it — the two sources genuinely disagree and neither is verified); 2 comment-gated
+  "PROTOCOL" resources logged to `comment_gated.json` (no comments available on either video to
+  mine per Step 2e); 1 general "agents" tip; 8 daily-news summaries filled (all with quality
+  caps applied per Step 2b — most of this batch was thin, title-level, or single-source-claim
+  shorts, correctly capped 2-4; the two skill-worthy videos scored 5-6, still hedged since
+  neither showed a full end-to-end demo). Tried `WebFetch` on the one followed link (a Google
+  Doc setup guide) per Step 2c — 403, an authenticated Google Docs URL as expected; skipped
+  silently and extracted from the video's own text instead, per the step's own instruction.
+  Verified: `json.load()` on every touched file after each write (all valid); `python -m
+  src.guardrails` → 17/20, 0 critical, same steady-state trio as recent fires (G-C stale
+  backup, G-G "not in sync with main" — expected, this session pushes to its own branch per the
+  harness's branch policy, not a real divergence — and G-O local-drain-stale, Eitan's PC being
+  off, unrelated to this fire). **Harsh self-criticism:** all 11 videos this fire were `_pending`
+  shorts with `transcript_source: "description"` (no real transcript), so every quality read
+  leaned on a text description rather than watching the video — correct per the available data,
+  but a real transcript would likely have surfaced more (e.g. the exact wording of the two
+  comment-gated protocols). Did not attempt to reconcile this fire's branch against the pile of
+  already-open away-loop PRs (#2, #14, #18, #23, #24, #25, #29, #30, #31, #32 at last count) —
+  several of those touch overlapping or even the same pending videos (fire 64 on PR #32's branch
+  already drained `eAqG3jJ_lrA`'s `/compact` short, for instance) — that overlap is an accepted,
+  known cost of the current one-branch-per-session structure (flagged repeatedly since fire 6,
+  most recently swept by fire 55) and not something this fire tried to fix. Also did not pursue
+  the deeper backlog beyond these 11 — 1222 pending videos remain, still overwhelmingly the
+  actual bottleneck this project keeps naming and re-naming rather than closing.
 - **~09:0x (fire 63, unattended, cloud session)** — Standing checks clean (stale local ref
   re-fetched, missing upstream re-tracked, guardrails 18/20→19/20 after a fresh `git_safe
   backup`; only G-C then G-O left, both benign/PC-dependent). Chased the real blocker

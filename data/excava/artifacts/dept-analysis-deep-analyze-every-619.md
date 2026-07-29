@@ -1,15 +1,16 @@
 # analysis: Deep-analyze every element from its FULL source (whole transcript/repo) + enrich from >=1 
 
-> Decision artifact · room `dept-analysis-deep-analyze-every-619` (dept) · 2026-07-28T12:49:59.711124+00:00
-> Participants: Chisel · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-analysis-deep-analyze-every-619` (dept) · 2026-07-29T20:44:41.748704+00:00
+> Participants: Chisel · synthesized by mistral/mistral-small-latest
 
-**Decision:** Implement BloodHound-MCP to analyze the earnings call transcript for enhanced financial insights and risk management.
+**Decision:**
 
 **Plan:**
-1. Run BloodHound-MCP on the full earnings call transcript to identify all entities and relationships.
-2. Map out the financial narrative to create a structured threat graph.
-3. Analyze the graph for hidden connections between executives and financial terms.
-4. Highlight any anomalies or risk signals identified during the analysis.
-5. Present findings in a comprehensive report to stakeholders for decision-making.
+1. **Execute BloodHound-MCP** on the full earnings call transcript to generate a structured threat graph mapping entities, relationships, and anomalies in the financial narrative.
+2. **Cross-reference** the BloodHound output with the original transcript to validate and enrich identified connections (executives, financial terms, risk signals).
+3. **Generate a prioritized risk report** from the threat graph, highlighting anomalies and potential hidden narratives for further investigation.
+4. **Integrate external data** (e.g., SEC filings, market trends) to contextualize the graph’s findings and reduce false positives.
+5. **Document** the methodology, assumptions, and limitations of the analysis for reproducibility.
+6. **Flag critical anomalies** (e.g., conflicting executive statements, unusual financial term clusters) for immediate escalation.
 
-**What changed:** Focus shifted towards utilizing advanced analytical tools for deeper financial insights.
+**What changed:** BloodHound-MCP analysis is now the primary method for extracting structured financial narrative risks from the transcript.

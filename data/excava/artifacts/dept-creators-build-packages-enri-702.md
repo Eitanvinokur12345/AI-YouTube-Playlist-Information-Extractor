@@ -1,17 +1,16 @@
 # creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Created by EXCAVA' + tes
 
-> Decision artifact · room `dept-creators-build-packages-enri-702` (dept) · 2026-07-22T23:32:00.206050+00:00
+> Decision artifact · room `dept-creators-build-packages-enri-702` (dept) · 2026-07-29T20:44:48.963199+00:00
 > Participants: Forge, Nova · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Approve the "UGC Factory" npm package for the creators tab.
 
 **Plan:**
-1. Forge drafts the "UGC Factory" npm package in the creators tab.
-2. Label the package "Created by EXCAVA."
-3. Nova tests the package for functionality, output quality, and UGC generation readiness.
-4. Address any issues identified during testing.
-5. Finalize and publish the package if tests pass.
-6. Add the package to the creators tab for public use.
+1. Forge drafts and publishes the UGC Factory npm package as a new module.
+2. Package includes clear documentation and examples labeled "Created by EXCAVA".
+3. Nova verifies the package meets department standards.
+4. Forge tags the release with "Created by EXCAVA" metadata.
+5. Team reviews and approves the package for distribution.
+6. Package is published to npm with the "Created by EXCAVA" label.
 
-**What changed:** Package testing requirement added before final approval.
+**What changed:** UGC Factory npm package published with "Created by EXCAVA" label.

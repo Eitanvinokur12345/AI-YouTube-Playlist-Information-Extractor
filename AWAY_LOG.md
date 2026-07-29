@@ -5,6 +5,38 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-29
+- **~04:3x (fire 59, unattended, cloud session) — landed the `tips.json` overflow debt fire 56 and
+  fire 58 both flagged as a real, un-actioned quality gap: Step 6's own rule is "~8-12 tips per
+  tool/topic, quality over volume, must stay skimmable," but 4 buckets had grown to 30-103 entries
+  with real, verifiable near-duplicates inside them.** Deliberately chose DEDUP-ONLY merging over
+  aggressive pruning to the literal "8-12" target: `tips.json` has no `deleted_*`-style backup file
+  (unlike `skills.json`'s `deleted_skills.json`), so cutting a genuinely distinct-but-narrow tip
+  down to hit a headline count would be irreversible information loss on my own unilateral
+  judgment — merging only real near-duplicates (same mechanic/finding stated twice with different
+  wording) is objectively safe and still real progress. Read all 4 worst buckets in full by hand
+  (no LLM/network call needed — I read and clustered them myself), found genuine duplicate
+  clusters (same free-backend-routing tip stated 5 ways, the same Graphify finding stated 4 ways,
+  `/compact` stated 3 ways, "Opus plans/Sonnet codes" stated 3 ways, OODA/L99/Ultra-think mode
+  prefixes each stated twice, etc.), and merged each cluster into ONE clearer tip that keeps every
+  distinct fact from its originals. Results: **Claude Code 103→82** (12 merge groups, 33
+  originals→12 merged), **Claude 61→53** (8 groups), **general/agents 55→51** (4 groups),
+  **general/prompt engineering 37→30** (5 groups) — 40 fewer entries total, zero unique information
+  discarded beyond literal restatement. Verified: `json.load()` clean on `data/tips.json` after
+  every write; a case-insensitive exact-duplicate scan on all 4 touched buckets returned 0 dups
+  (down from clusters that were near- but not exactly-identical, which is why the earlier
+  case-insensitive-only dedup check Step 6 already runs on NEW tips never caught these — they were
+  always slightly reworded); `python -m src.guardrails` 18/20, 0 critical, unchanged.
+  **Harsh self-criticism:** this does NOT hit Step 6's literal 8-12-per-bucket target — Claude Code
+  is still 82, nowhere near 12 — and I did not propose a plan to close that gap because doing so
+  responsibly means discarding real, distinct, useful tips with no undo mechanism, which is a
+  bigger call than an unattended fire should make alone; flagging this explicitly rather than
+  either (a) silently declaring the debt "resolved" at 82/103 or (b) unilaterally hacking the count
+  down. Also left 4 more overflowing buckets completely untouched this fire (ChatGPT 44, code 30,
+  automation 23, productivity 23) — picked the two worst tool-buckets and two worst topic-buckets
+  by size and stopped there for one fire's budget; whoever does the next pass should keep going
+  down the same size-sorted list. And this is again content-quality work, not new content — after
+  fire 58's real ingestion, this fire moved zero videos out of the 1,200-deep pending backlog,
+  which stays the far bigger, harder gap.
 - **~04:0x (fire 58, unattended, cloud session) — hand-drained 5 pending videos through the full
   analyze pipeline, choosing content ingestion over another round of diagnosis after fires 55-57
   spent three straight fires on git/CI plumbing, per the outer loop's "prefer a real product-

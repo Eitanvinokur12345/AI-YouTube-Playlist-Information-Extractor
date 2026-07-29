@@ -4,6 +4,72 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+## 2026-07-29
+- **~00:0x (fire 55, unattended, cloud session) — shipped a real M1.7 product increment
+  (RELATE coverage 86.5%→~98.9%), and found a serious escalation of fire 54's discover/improve
+  bug: `analyze.yml` itself — the core M1 ingestion lane, currently sitting on 1,209 pending
+  videos in active catch-up mode — has now started failing with the IDENTICAL SDK-level
+  signature (`is_error:true, num_turns:1, total_cost_usd:0, duration_ms~1.8-2.2s`) on its last
+  2 scheduled runs tonight (22:50, 23:50 UTC).** Standing checks first: `python -m
+  src.standing_checks` — stale local `origin/main` ref (re-fetched, HEAD matched, nothing lost),
+  missing upstream tracking (auto-fixed), guardrails 18/20 (0 critical; only the steady-state
+  G-C/G-O pair). Pulled real job logs via `mcp__github__get_job_logs` (not just run status) for
+  both lanes: (1) confirmed fire 54's discover.yml finding verbatim — same failure signature,
+  same immediate ~2s SDK death before any model turn; (2) went further and checked improve.yml's
+  full run history — it's NOT broken on every run as I first assumed, only on the two most recent
+  *Saturday* weekly-deep-pass runs (07-18, 07-25) while every daily first-week-intensive run
+  (18/20 checked) succeeds; (3) checked analyze.yml's own recent history and found it has now
+  ALSO started failing tonight, on catch-up-sprint runs, with the same exact signature — this is
+  new, was not in fire 54's finding, and is actively blocking real content ingestion (1,209
+  videos stuck in `data/_pending/`, `data/catch_up.json` confirms `active:true`). The pattern
+  across all three lanes (occasional-frequency discover, weekly-only improve, and now
+  high-frequency analyze during a catch-up burst) points at a usage/rate ceiling on the shared
+  `CLAUDE_CODE_OAUTH_TOKEN_REAL` subscription token rather than a code bug or an expired token —
+  it correlates with call VOLUME (discover/improve are low-frequency-but-still-fail; analyze only
+  started failing once catch-up mode pushed it to fire the claude-code-action step every ~30min)
+  more than with any specific workflow's code. Did NOT flip `show_full_output` (per fire 54's own
+  documented default-if-unanswered) and did not need to — the GitHub Actions job-logs API alone
+  was enough to corroborate and extend the finding without exposing more. Logged this escalation
+  as a new, distinctly-numbered entry in QUESTIONS.md (item 31) rather than editing fire 54's
+  item 30, since it's new evidence, not a re-ask of the same question.
+  **Then shipped the actual increment (M1.7 RELATE):** `src/relate.py`'s score>=2 cutoff meant
+  any element with ONLY a same-category match (score==1) — overwhelmingly the ~1,900
+  zero-provenance stub elements (empty `source_videos`, empty `what`, so no video/word evidence
+  at all) — got a permanently empty `related[]`, even though a same-category neighbor is real,
+  useful evidence toward M1.7's own "each detail shows 3-8 real related elements" done-criterion.
+  Added a same-file backfill (score>=1, still from the identical already-computed score dict,
+  nothing invented) that only fires when an element has fewer than 3 strong (score>=2) matches,
+  topping it up to 3 from real category-adjacency evidence. Elements with genuine shared-video or
+  shared-word evidence are completely untouched (pure floor-raise, no ceiling change). Verified
+  via CLI, not eyeballed: re-ran `python -m src.relate` — elements with >=1 related jumped
+  9,261→10,590 (86.5%→~98.9%), >=3 related also rose sharply; spot-checked 3 previously-empty
+  stubs (`skill:ai-red-teaming`, `skill:log-pca`, `skill:visualskill`) by hand and confirmed each
+  now carries 3 real same-category IDs, not placeholders; only 123 elements remain empty (mostly
+  `command`/`prompt`-type records with no `category` field at all, a smaller, different gap).
+  Rebuilt the downstream index with `python -m src.element_model` (10,717 elements, stubs 1,951)
+  so the change is live in `elements_index.json`, not just staged in `elements_related.json` —
+  this is what the dashboard detail view and brain graph actually read. `python3 -c "json.load"`
+  confirmed both touched data files parse. Re-ran `python -m src.guardrails`: 17/20, 0 critical
+  (G-C/G-O steady-state as above; G-G flagged "3 behind/1 ahead" from my own uncommitted local
+  changes plus other lanes moving in parallel — expected pre-ship, resolves on `git_safe ship`'s
+  own post-push ==HEAD check). **Harsh self-criticism:** I spent a genuinely large fraction of
+  this fire's budget on GitHub Actions log archaeology rather than building — defensible because
+  what I found (analyze.yml itself now failing, mid-catch-up, on 1,209 real pending videos) is
+  materially more urgent than anything in QUESTIONS.md right now and fire 54 explicitly could not
+  see it, but I did NOT attempt any actual fix or mitigation for it (e.g., I did not touch
+  `analyze.yml`'s misleading `token_hint` text, which currently tells whoever reads
+  `data/status.json` to "renew the token" — plausibly the wrong diagnosis if this is a rate
+  ceiling that self-heals, not an expiry) — that's a real gap between "found it" and "did
+  something about it," left entirely for the owner/next fire because I judged a shared-token rate
+  limit is an account-level condition outside what an unattended fire should unilaterally
+  reinterpret or route around. The RELATE fix itself is intentionally narrow (a floor-raise on an
+  existing, already-correct algorithm, not a rewrite) — good for an unattended fire's risk
+  budget, but it means the 123 still-empty elements and the ~1,900 stubs' actual CONTENT gap
+  (they still have no `what`, no source video — RELATE gives them neighbors, not substance) are
+  both untouched; this is real-but-shallow product progress on M1.7 specifically, not a dent in
+  the bigger, harder M1.C1 stub-rate-≈0 goal, which stays blocked on the brain/local-drain path
+  (still stale, 66h) exactly as every prior fire this week has already found and flagged.
+
 ## 2026-07-28 (continued)
 - **~22:0x (fire 54, unattended, cloud session) — unshallowed this sandbox's clone (it was shallow,
   which G-T could only report as "9/16 can't-tell"), and the extra history immediately turned that

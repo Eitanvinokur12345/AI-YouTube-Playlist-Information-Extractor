@@ -273,4 +273,35 @@ The 6 goals miss two things we now actually build for:
 25. **Daemon interpretation check:** I read your D2 note as "every part of the project reports through the OS bus (all 16 lanes now emit events), residents/cockpit react to real machine-wide events, and EXCAVA is the single connective layer — not a cosmetic overlay." First step shipped (lane events). If you meant something MORE (e.g. an actual resident process on a host), say so — the free-only + PC-off rules currently make the cron heartbeat the only clean daemon body. _Default: my reading._
 
 ## I. Fire 54 finding — undiagnosed claude-code-action failures on discover/improve
+31. **Fire 55 escalation of item 30: `analyze.yml` — the CORE M1 ingestion lane — has now
+started failing with the identical SDK-level signature, and it's actively blocking real work
+(1,209 videos stuck in `data/_pending/`, catch-up mode active).** Pulled real job logs (not just
+run status) via `mcp__github__get_job_logs`. Three data points, all with the same
+`is_error:true, num_turns:1, total_cost_usd:0, duration_ms~1.8-2.2s` signature (SDK dies before
+any model turn, so it can't be a normal content/tool error): (a) `discover.yml` — every run
+since 07-14, exactly as fire 54 found, corroborated verbatim; (b) `improve.yml` — narrower than
+fire 54 first read it: checked its full run history and only the two most recent **Saturday**
+weekly-deep-pass runs (07-18, 07-25) fail — every one of the 18 daily first-week-intensive runs
+in between succeeds; (c) NEW — `analyze.yml` itself failed its last 2 scheduled runs tonight
+(22:50 and 23:50 UTC), both catch-up-sprint runs (the `*/30 * * * *` cron, which only does real
+work when `data/catch_up.json.active` is true — it is, with 1,209 pending videos). The pattern
+across all three (a rarely-run lane fails consistently, a weekly-heavy run fails, and a
+high-frequency lane starts failing only once catch-up mode raised its call rate) points at a
+**usage/rate ceiling on the shared `CLAUDE_CODE_OAUTH_TOKEN_REAL` subscription token**, not a
+code bug in any of the 3 workflow files (they're structurally near-identical to `review.yml`,
+which is NOT failing) and not a literally-expired token (an expiry wouldn't explain the
+Saturday-only / volume-correlated pattern). **Did not act on this beyond documenting it** — I
+did not touch `show_full_output` (fire 54's own default-if-unanswered still stands and I found
+enough via the Actions job-logs API without it) and did not edit `analyze.yml`'s `token_hint`
+text (currently tells whoever reads `data/status.json` to "renew the token via `claude
+setup-token`" on any failure — plausibly the WRONG diagnosis if this is a self-healing rate
+ceiling, but rewriting a diagnostic message on a live, currently-failing core lane felt like a
+unilateral call worth your sign-off, not a same-fire fix). _Ask: is `CLAUDE_CODE_OAUTH_TOKEN_REAL`
+on a Pro/Max plan with a weekly or 5-hour rolling usage cap? If so, the fix is likely
+throttling/backing off `analyze.yml`'s catch-up sprint cadence (currently every 30 min) rather
+than anything code-side. No default proposed — I don't have enough visibility into the actual
+Anthropic-side plan/limits from this sandbox to guess responsibly; this is the single most
+urgent open item in this file right now since it's blocking real M1 content ingestion, not just
+housekeeping._
+
 30. **`discover.yml` and `improve.yml` have been intermittently failing at the SDK level, not visible from the job status alone.** Every `discover.yml` run since 2026-07-14 (7 in a row as of 07-28) reports `conclusion: failure`, and `improve.yml`'s Saturday 07-25 mandatory pass failed the same way. In every case the Claude Code Action's own result JSON shows `is_error: true`, `num_turns: 1`, `total_cost_usd: 0`, `duration_ms` ~1.9-2.2s — it fails almost immediately, before doing any billable work, so nothing gets written and the safety-commit step correctly finds "nothing to commit" (that part isn't a bug). Ruled out a local-repo cause: no changes to `discover.yml`/`DISCOVER.md`/`config.json` around 07-13→07-14 when the failures started. The actual error text is hidden (`show_full_output` isn't set on either workflow, and the action deliberately redacts stdout "for security"), so I can't see WHY it's erroring from here — could be a transient API/quota issue on the free-pool token, a claude-code-action version regression, or something in the DISCOVER.md/IMPROVE.md prompt tripping a guardrail. _Ask: OK to set `show_full_output: true` on just these two lanes for one diagnostic cycle (their logs are already on a private-by-default Actions tab, but the output could contain repo content) so a future fire can see the real error and fix it, or would you rather I leave it flagged here for you to check first?_ Default if unanswered: leave `show_full_output` off (favor not exposing more in logs) and keep flagging until an unrelated fire happens to get visibility another way (e.g. `workflow_dispatch` with `-a`/manual log pull already used this fire).

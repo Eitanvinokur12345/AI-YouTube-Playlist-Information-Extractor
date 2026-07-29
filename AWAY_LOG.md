@@ -5,6 +5,35 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-29
+- **~09:2x (fire 64, unattended, cloud session)** — Standing checks clean (`python -m src.guardrails`
+  17-18/20, 0 critical throughout). Continued fire 63's branch (`claude/kind-shannon-pktx7q`) — this
+  session's harness still requires a per-session branch + PR rather than a direct `git_safe ship` to
+  `main` (same open tension flagged since fire 6, still unresolved in QUESTIONS.md). Did NOT touch the
+  branch/PR pile-up itself this fire (fire 55 already audited it once and left 5 PRs open on purpose
+  with reasons; re-auditing every fire would just burn tokens re-deriving what's already written down —
+  noted the count is back up to 9 open PRs + several bare branches since fire 55, for a future audit
+  fire, not this one). Instead worked the actual CLAUDE.md analyze pipeline directly (the repo's
+  primary, most-neglected job — 1,233 pending videos at start): drained 5 pending videos, newest-first
+  per active catch-up mode, one commit each: (1) a vague unsourced AI-pricing short → hedged news
+  summary only, no extractable product; (2) a Claude Code "/compact vs /clear" short → endorsed both
+  existing commands with this video, added one Claude Code tip, logged its comment-gated "PROTOCOL"
+  resource to `comment_gated.json` (0 comments available to mine, so the real alternative method
+  stayed unrecovered); (3) Meta's official Facebook-Ads-to-Claude connector → merged into the existing
+  `meta-ads-custom-connector` record (added this video as a source + folded in the Pixel/CAPI/catalog
+  detail it showed) rather than duplicating one of the 20 already-similar Meta/Facebook Ads connector
+  entries already in `connectors.json`; (4)+(5) two title-only "ask Claude/an agent to do X" shorts with
+  no reusable method shown → news summary only, flagged low-quality, one comment considered and
+  correctly rejected for not clearing the corroboration bar (0 likes, no creator reply). Pending count
+  1233→1228. **Harsh self-criticism:** 5 videos in one fire is a small dent against 1,228 remaining and
+  against "as many reps as possible" — the real ceiling here is that each video needs a full read +
+  judgment call across 6+ tabs to extract responsibly, not something to rush; going faster would mean
+  either skipping the anti-boilerplate/corroboration gates (exactly the failure mode CLAUDE.md calls out
+  the prior ~950-stub flood for) or batching many videos through one pass with shallower judgment per
+  video. Didn't attempt either trade-off unilaterally this fire — flagging the pace question in
+  QUESTIONS.md rather than deciding it alone. Also: none of these 5 justified a new skill record even
+  though 2 were skill-adjacent (the /compact tip, the Facebook-Ads workflow) — both were teasers/thin
+  demos rather than concrete repeatable methods, and forcing a skill record out of them would repeat the
+  exact stub-flood mistake the gate exists to prevent, so I intentionally emitted none.
 - **~09:0x (fire 63, unattended, cloud session)** — Standing checks clean (stale local ref
   re-fetched, missing upstream re-tracked, guardrails 18/20→19/20 after a fresh `git_safe
   backup`; only G-C then G-O left, both benign/PC-dependent). Chased the real blocker

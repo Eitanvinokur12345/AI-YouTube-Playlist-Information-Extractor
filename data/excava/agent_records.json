@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-29T16:02:05.641381+00:00",
+ "generated_at": "2026-07-29T16:08:15.798828+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -23,8 +23,8 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 218,
-   "rooms_7d": 122,
+   "turns_7d": 219,
+   "rooms_7d": 123,
    "engines_used": [
     "gh-models",
     "groq",
@@ -32,14 +32,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Implement a shared online platform where teams can document and track cross-departmental blockers in real-"
+   "last_position": "I will query the YouTube transcript server for the full transcripts of the pending videos, using the kimtaeyoon83/mcp-se"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 192,
+   "turns_7d": 193,
    "rooms_7d": 100,
    "engines_used": [
     "gh-models",
@@ -48,7 +48,7 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Require every cross-department project to start with a one-page \"decision log\" that lists the single most "
+   "last_position": "**Decision:** Establish bi-weekly cross-departmental stand-up meetings where teams share their most significant blockers"
   },
   {
    "id": "watch-w1",
@@ -72,7 +72,7 @@
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 122,
+   "turns_7d": 123,
    "rooms_7d": 32,
    "engines_used": [
     "gh-models",
@@ -81,7 +81,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "**Risk:** Chisel’s one-page \"decision log\" risks becoming a static artifact—teams will game it by filling in the blanks "
+   "last_position": "**Risk:** Chisel’s bi-weekly stand-ups risk becoming a talking shop—teams show up to vent, not to commit to action. The "
   },
   {
    "id": "creators-lead",
@@ -121,15 +121,15 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 107,
-   "rooms_7d": 103,
+   "turns_7d": 108,
+   "rooms_7d": 104,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Query kimtaeyoon83/mcp-server-youtube-transcript via residential IP for full transcripts of pending videos, prod",
+   "last_position": "ACTION: Query kimtaeyoon83/mcp-server-youtube-transcript via residential IP for full transcripts of pending videos; outp",
    "proposed": 1
   },
   {
@@ -239,6 +239,23 @@
    "last_position": "ACTION: Wire compiles the latest AI headlines from Reuters, BBC, and White House press releases into a two-source-verifi"
   },
   {
+   "id": "improve-w1",
+   "name": "Sprocket",
+   "dept": "improve",
+   "role": "doer",
+   "turns_7d": 82,
+   "rooms_7d": 40,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run a visible A/B test with 5% of all users, randomized by the system, not self-selected. This exposes the new feed to r",
+   "proposed": 1,
+   "shipped": 1
+  },
+  {
    "id": "links-w1",
    "name": "Anchor",
    "dept": "links",
@@ -268,66 +285,49 @@
    "last_position": "ACTION: Anchor runs the link-checker tool against the department’s live inventory and delivers the prioritized report of"
   },
   {
-   "id": "improve-w1",
-   "name": "Sprocket",
-   "dept": "improve",
-   "role": "doer",
-   "turns_7d": 81,
-   "rooms_7d": 39,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run a visible A/B test with 5% of all users, randomized by the system, not self-selected. This gives us a clean sample t",
-   "proposed": 1,
-   "shipped": 1
-  },
-  {
    "id": "improve-checker",
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 80,
-   "rooms_7d": 39,
+   "turns_7d": 81,
+   "rooms_7d": 40,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The visible A/B test still risks users altering their behavior because they know they're part of an experiment, even if "
+   "last_position": "Visible A/B tests expose the change to all users in the cohort, not just the 5%—meaning 95% see it without knowing it’s "
   },
   {
    "id": "power-w1",
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 70,
-   "rooms_7d": 35,
+   "turns_7d": 71,
+   "rooms_7d": 36,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt **Qwen2.5-72B-Instruct** as EXCAVA's reasoning engine, its 30% speed gain ensures we stay within the real-time win"
+   "last_position": "Adopt **Claude Mythos 5** as EXCAVA’s reasoning engine because it provides the sharpest analytical capabilities availabl"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 70,
-   "rooms_7d": 35,
+   "turns_7d": 71,
+   "rooms_7d": 36,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Prioritizing speed with **Qwen2.5-72B-Instruct** may compromise the reasoning quality too severely, leading to suboptima"
+   "last_position": "Adopting **Claude Mythos 5** introduces a significant risk due to its latency spike, which makes it 15% slower than nece"
   },
   {
    "id": "analysis-lead",
@@ -472,8 +472,8 @@
    "name": "Access",
    "dept": "accessibility",
    "role": "lead",
-   "turns_7d": 41,
-   "rooms_7d": 39,
+   "turns_7d": 42,
+   "rooms_7d": 40,
    "engines_used": [
     "gh-models",
     "groq",
@@ -481,7 +481,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Ship a **high-contrast focus ring (immediate, static)** + **subtle reduced-motion variant** (toggle via user m",
+   "last_position": "DECISION: Ship a **user-customizable focus indicator** (high-contrast ring + subtle outline + reduced-motion option) wit",
    "proposed": 2
   },
   {
@@ -499,7 +499,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Run a hybrid 5% pilot with 3% visible A/B test and 2% blind rollout for one week to measure both biased and un",
    "proposed": 8,
-   "shipped": 6
+   "shipped": 7
   },
   {
    "id": "power-lead",

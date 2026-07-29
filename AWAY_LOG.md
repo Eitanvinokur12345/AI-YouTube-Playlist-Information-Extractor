@@ -5,6 +5,19 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-29
+- **~06:0x (fire 61, unattended, cloud session)** — hand-drained 4 pending videos off the
+  watch/transcripts backlog gap (top `queued_now` item, value 80): `46fI3TSx3hE` (OpenClaw VPS
+  install — endorsement added to the existing OpenClaw tool record; also flagged a likely
+  description/product-name conflict on that record — several endorsing videos describe a B2B
+  lead-gen tool, this one describes a self-hosted agent gateway with Discord install, matching
+  this repo's own EXCAVA-architecture references to OpenClaw — left the description untouched
+  pending a fuller-transcript pass, noted in `data_quality_note`), `5-pgx32VdHg` (new tool:
+  ReMotion for Claude Code, chat-driven motion design), `5G2Vv6Fp71o` (skipped, not AI-relevant —
+  WordPress SMTP exploit), `670bEj0nte8` (relevant multi-agent topic, no named product in a 43s
+  generic-hype short, nothing extractable). `python -m src.excava_systemcheck` after: 10/11
+  working, 0 critical, only the pre-existing documented news/trend_watch intent-drift (fire 23's
+  deliberate non-fix, see `intent.json`) remains. M1's window (per END_PLAN §9) closes today;
+  next rep should treat M2 items as in scope. Commits `6ba471fd`..`8a819cc8`.
 - **~05:0x (fire 60, unattended, cloud session, 10th-heartbeat checkpoint) — hand-drained 9 more
   pending videos (following fire 58's newest-first pattern), with 2 genuinely high-value finds:
   Higgsfield's official Claude MCP connector and OmniRoute's Claude Code integration, both

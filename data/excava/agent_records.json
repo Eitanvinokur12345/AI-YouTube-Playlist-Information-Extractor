@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-29T15:55:54.580802+00:00",
+ "generated_at": "2026-07-29T16:02:05.641381+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 235,
+   "turns_7d": 236,
    "rooms_7d": 33,
    "engines_used": [
     "gh-models",
@@ -16,15 +16,15 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Risk:** Scope’s monthly review risks becoming a perfunctory checkbox—teams will cherry-pick trivial wins or vague less"
+   "last_position": "**Risk:** Reel’s shared online platform risks becoming just another place for teams to list blockers without actual foll"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 216,
-   "rooms_7d": 121,
+   "turns_7d": 218,
+   "rooms_7d": 122,
    "engines_used": [
     "gh-models",
     "groq",
@@ -32,7 +32,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will query the YouTube transcript server for the full transcripts of the pending videos. This will produce real, accur"
+   "last_position": "**Decision:** Implement a shared online platform where teams can document and track cross-departmental blockers in real-"
   },
   {
    "id": "analysis-w1",
@@ -121,15 +121,15 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 106,
-   "rooms_7d": 102,
+   "turns_7d": 107,
+   "rooms_7d": 103,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Query kimtaeyoon83/mcp-server-youtube-transcript via residential IP for pending video IDs, verify full transcrip",
+   "last_position": "ACTION: Query kimtaeyoon83/mcp-server-youtube-transcript via residential IP for full transcripts of pending videos, prod",
    "proposed": 1
   },
   {
@@ -183,7 +183,7 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 85,
+   "turns_7d": 86,
    "rooms_7d": 40,
    "engines_used": [
     "gh-models",
@@ -192,8 +192,23 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Add a single, high-contrast focus ring that appears immediately on keyboard navigation. This improves visibility for use",
+   "last_position": "We should use a subtle focus ring that respects motion preferences, as it balances the need for visibility with the pote",
    "proposed": 1
+  },
+  {
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
+   "role": "checker",
+   "turns_7d": 85,
+   "rooms_7d": 40,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The subtle focus ring still risks being insufficient for users with low vision, as it may not provide enough visual dist"
   },
   {
    "id": "memory-w1",
@@ -222,21 +237,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Wire compiles the latest AI headlines from Reuters, BBC, and White House press releases into a two-source-verifi"
-  },
-  {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 84,
-   "rooms_7d": 40,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "A single high-contrast ring risks creating a visual \"siren\" that pulls attention away from the task, harming users with "
   },
   {
    "id": "links-w1",
@@ -489,31 +489,32 @@
    "name": "Ratchet",
    "dept": "improve",
    "role": "lead",
-   "turns_7d": 39,
-   "rooms_7d": 38,
-   "engines_used": [
-    "gh-models",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Run a forced 5% pilot for 72 hours, then switch to a blind 5% rollout for one week—measure churn, engagement, ",
-   "proposed": 7,
-   "shipped": 5
-  },
-  {
-   "id": "power-lead",
-   "name": "Dynamo",
-   "dept": "power",
-   "role": "lead",
-   "turns_7d": 34,
-   "rooms_7d": 34,
+   "turns_7d": 40,
+   "rooms_7d": 39,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Run a live 1k-query benchmark test between Qwen2.5-72B-Instruct and Mythos 5, measuring both speed and accurac",
+   "last_position": "DECISION: Run a hybrid 5% pilot with 3% visible A/B test and 2% blind rollout for one week to measure both biased and un",
+   "proposed": 8,
+   "shipped": 6
+  },
+  {
+   "id": "power-lead",
+   "name": "Dynamo",
+   "dept": "power",
+   "role": "lead",
+   "turns_7d": 35,
+   "rooms_7d": 35,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Adopt **Claude Mythos 5** with a 500ms latency buffer for batch processing—EXCAVA’s output must hit 99.5% of M",
    "proposed": 9,
    "shipped": 7
   },

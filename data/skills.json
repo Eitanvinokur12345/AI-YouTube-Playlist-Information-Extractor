@@ -109825,6 +109825,47 @@
       ],
       "video_quality_score": 4,
       "low_quality_source": false
+    },
+    {
+      "slug": "claude-video-flipbook-analysis",
+      "skill_name": "Claude Video Flipbook Analysis (yt-dlp + FFmpeg frame extraction)",
+      "category": "video creation",
+      "description": "Claude has no native video/animation input (Anthropic's docs only list image formats), so on a video task it only ever sees the transcript and misses cuts, on-screen text, b-roll, and pacing. This workflow downloads the video with yt-dlp, slices it into one still frame per second with FFmpeg, and feeds the frame folder to Claude so it can 'read' the video like a flipbook of images.",
+      "use_case": "Reverse-engineer why a viral video worked by having Claude analyze its actual visual structure (cuts, hook, on-screen text, pacing) frame-by-frame instead of only the transcript.",
+      "output": "A shot list with cut counts, a decoded first-3-seconds hook breakdown, and every on-screen text line with timestamps, handoff-ready for a video editor.",
+      "quality_score": 6,
+      "model_version": null,
+      "company": null,
+      "country": null,
+      "open_source": true,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": false,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=ABAuLH5sKvo",
+      "source_video_id": "ABAuLH5sKvo",
+      "tips": [
+        "Download with yt-dlp, then extract one frame per second with FFmpeg so Claude can 'watch' the video as an image sequence.",
+        "Prompt Claude to count the cuts and specifically decode the first 3 seconds — that's usually most of why a short actually hooked viewers.",
+        "Everything runs locally (no API cost per frame, nothing uploaded), so it's cheap to run on many competitor videos."
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "When a task needs Claude to 'see' a video, convert it to a still-frame sequence first — Claude only receives images/transcript natively, never motion."
+      ],
+      "relevance": "Gives Claude a real workaround for its lack of video input, useful for any creator or marketer trying to reverse-engineer competitor content.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "ABAuLH5sKvo"
+      ],
+      "video_quality_score": 6,
+      "low_quality_source": false
     }
   ],
   "recipes_updated_at": "2026-07-29T11:54:18.452072+00:00"

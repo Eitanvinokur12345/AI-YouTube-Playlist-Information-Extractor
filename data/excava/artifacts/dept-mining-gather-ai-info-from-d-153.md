@@ -1,16 +1,15 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-153` (dept) · 2026-07-14T21:33:28.048083+00:00
-> Participants: Pick, Boulder · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-153` (dept) · 2026-07-30T18:00:02.070396+00:00
+> Participants: Pick · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Query GitHub API for AI repositories with commits in the last 30 days, sorted by stars.
-2. Scrape Hacker News "Show HN" posts from the last 30 days with "AI" in the title/description.
-3. Parse Product Hunt’s API for AI tools launched in the last 30 days, prioritizing upvotes/comments.
-4. Extract AI-related submissions from Reddit’s r/MachineLearning, r/artificial, and r/learnmachinelearning (last 30 days).
-5. Monitor Telegram AI channels (e.g., AI News, ML Papers) for recent bot/tool announcements.
-6. Compile results into a markdown table with columns: *Project*, *Source*, *Description*, *Engagement Metric*, *Link*.
+1. Browse r/MachineLearning and r/AI for the last 7 days.
+2. Filter posts by upvotes to identify the top 20.
+3. Extract posts mentioning new AI tools, datasets, or research papers.
+4. Compile direct links and summaries for each post.
+5. Output results in GitHub markdown format.
 
-**What changed:** Focus shifted from "diverse sources" to prioritizing recency and engagement metrics for actionable mining.
+**What changed:** Focus narrowed to high-engagement Reddit posts for AI developments.

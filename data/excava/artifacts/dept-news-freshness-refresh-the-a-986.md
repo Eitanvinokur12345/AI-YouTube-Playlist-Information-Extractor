@@ -1,13 +1,16 @@
 # news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
 
-> Decision artifact · room `dept-news-freshness-refresh-the-a-986` (dept) · 2026-07-14T02:58:39.295963+00:00
-> Participants: Scoop, Wire · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-news-freshness-refresh-the-a-986` (dept) · 2026-07-30T18:00:09.742399+00:00
+> Participants: Scoop, Wire · synthesized by mistral/mistral-small-latest
 
-**Decision:** Compile a fresh AI news digest using updates from reliable sources.  
-**Plan:**  
-1. Query Reuters for the latest AI news.  
-2. Query BBC for the latest AI news.  
-3. Query the White House AI Fact Sheet for updates.  
-4. Compile a dated list of key AI developments.  
-5. Include direct links for verification for each entry in the digest.  
-**What changed:** The action to compile the news digest was formalized with specific steps.
+**Decision:**
+
+**Plan:**
+1. Query Reuters, BBC, and the White House press feeds for the latest AI headlines.
+2. Extract the top three newest developments from each source.
+3. Compile the results into a concise AI-headlines digest.
+4. Publish the digest as the freshest AI-news update.
+5. Ensure the digest includes official, company, and national AI developments.
+6. Format the output in GitHub markdown for clarity.
+
+**What changed:** Fresh AI-news digest published from the newest official/company/national sources.

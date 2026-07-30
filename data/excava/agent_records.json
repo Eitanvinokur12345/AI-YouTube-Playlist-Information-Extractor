@@ -1,15 +1,31 @@
 {
- "generated_at": "2026-07-29T23:36:41.560263+00:00",
+ "generated_at": "2026-07-30T03:46:08.408083+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
+  {
+   "id": "transcripts-w1",
+   "name": "Reel",
+   "dept": "transcripts",
+   "role": "doer",
+   "turns_7d": 218,
+   "rooms_7d": 129,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "Action: Fetch the full transcript for the pending video using the YouTube transcript tool with residential IP and gentle"
+  },
   {
    "id": "transcripts-checker",
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 254,
-   "rooms_7d": 36,
+   "turns_7d": 216,
+   "rooms_7d": 32,
    "engines_used": [
     "gh-models",
     "groq",
@@ -19,28 +35,12 @@
    "last_position": "**Risk:** A 5-minute delay in review still lets AI errors propagate—analysts will cite misattributed quotes before corre"
   },
   {
-   "id": "transcripts-w1",
-   "name": "Reel",
-   "dept": "transcripts",
-   "role": "doer",
-   "turns_7d": 245,
-   "rooms_7d": 139,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 29,
-   "last_position": "**Decision:** Use a *hybrid \"Speaker Attribution Map\"*—AI tags speakers in real time with timestamped confidence scores,"
-  },
-  {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 210,
-   "rooms_7d": 110,
+   "turns_7d": 192,
+   "rooms_7d": 107,
    "engines_used": [
     "gh-models",
     "groq",
@@ -48,15 +48,15 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "I will run BloodHound-MCP on the full earnings call transcript to generate a structured analysis of key financial, opera"
+   "last_position": "**Decision:** Enforce a *strict human-only \"Speaker Attribution Map\"* live doc during earnings calls, updated in real ti"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 179,
-   "rooms_7d": 89,
+   "turns_7d": 162,
+   "rooms_7d": 86,
    "engines_used": [
     "gh-models",
     "groq",
@@ -65,64 +65,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 12:32:00, Scope triggers the Arcads AI Video skill pack to process the video’s audio-visual layers and output"
-  },
-  {
-   "id": "creators-lead",
-   "name": "Nova",
-   "dept": "creators",
-   "role": "lead",
-   "turns_7d": 132,
-   "rooms_7d": 125,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Publish the UGC Factory npm package as a ready-to-use module labeled \"Created by EXCAVA\" with documentation and "
-  },
-  {
-   "id": "creators-w1",
-   "name": "Forge",
-   "dept": "creators",
-   "role": "doer",
-   "turns_7d": 132,
-   "rooms_7d": 125,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "nvidia",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "I will draft the UGC Factory npm package as a new module, producing a ready-to-use package labeled \"Created by EXCAVA.\" "
-  },
-  {
-   "id": "analysis-checker",
-   "name": "Sift",
-   "dept": "analysis",
-   "role": "checker",
-   "turns_7d": 129,
-   "rooms_7d": 33,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "**Risk:** A live \"Speaker Attribution Map\" assumes a Transcripts moderator can perfectly parse overlapping voices, inter"
+   "last_position": "Scope triggers the Arcads AI Video skill pack at 12:32:00 to analyze the video’s audio-visual layers for marketing insig"
   },
   {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 123,
-   "rooms_7d": 117,
+   "turns_7d": 111,
+   "rooms_7d": 106,
    "engines_used": [
     "gh-models",
     "groq",
@@ -132,11 +83,27 @@
    "last_position": "ACTION: Fetch full transcript for pending video via kimtaeyoon83/mcp-server-youtube-transcript, output the raw transcrip"
   },
   {
+   "id": "analysis-checker",
+   "name": "Sift",
+   "dept": "analysis",
+   "role": "checker",
+   "turns_7d": 110,
+   "rooms_7d": 29,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "**Risk:** A strict human-only live doc still fails when the Transcripts specialist misses an interruption or mishears a "
+  },
+  {
    "id": "visualization-w1",
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 111,
+   "turns_7d": 110,
    "rooms_7d": 55,
    "engines_used": [
     "gh-models",
@@ -152,7 +119,7 @@
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 111,
+   "turns_7d": 110,
    "rooms_7d": 55,
    "engines_used": [
     "gh-models",
@@ -167,23 +134,23 @@
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 103,
-   "rooms_7d": 95,
+   "turns_7d": 104,
+   "rooms_7d": 96,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll fetch the latest AI headlines from Reuters, BBC, and the White House press feed. The digest will list the top 5 new"
+   "last_position": "I’ll query Reuters, BBC, and the White House press feeds for the latest AI headlines. This will produce a fresh, plain-l"
   },
   {
    "id": "accessibility-w1",
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 102,
-   "rooms_7d": 48,
+   "turns_7d": 101,
+   "rooms_7d": 47,
    "engines_used": [
     "gh-models",
     "groq",
@@ -191,184 +158,202 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Adopt a **2px solid focus ring, inset 1px from the element**, with a **4.5:1 contrast ratio** against the background."
-  },
-  {
-   "id": "improve-w1",
-   "name": "Sprocket",
-   "dept": "improve",
-   "role": "doer",
-   "turns_7d": 100,
-   "rooms_7d": 49,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 28,
-   "last_position": "Adopt the 7-day decay metric for top 20% prompts by usage. This keeps the system responsive by pruning stale high-usage "
+   "last_position": "Adopt a **3px solid focus ring, outset 1px**, with a **4.5:1 contrast ratio** against the background. This meets WCAG 2."
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 100,
-   "rooms_7d": 48,
+   "turns_7d": 99,
+   "rooms_7d": 47,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "A 2px inset ring risks being missed on high-DPI or low-contrast screens—WCAG 2.2 AA requires 3:1 minimum for focus indic"
-  },
-  {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 99,
-   "rooms_7d": 49,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 28,
-   "last_position": "The 7-day decay metric risks overcorrecting—fresh regressions aren’t the only waste; silent failures in prompts still sl"
+   "last_position": "A 2px inset ring fails on high-DPI screens where pixels blur and contrast drops—WCAG 2.2 AA demands 3:1 minimum, not 4.5"
   },
   {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 96,
-   "rooms_7d": 88,
+   "turns_7d": 97,
+   "rooms_7d": 89,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: I will run the memory linking command to connect every existing memo in the database, producing a unified brain "
+   "last_position": "Action: I will run the memory linking command to connect every existing memo in the Hindsight database, producing a full"
   },
   {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
    "role": "lead",
-   "turns_7d": 94,
-   "rooms_7d": 88,
+   "turns_7d": 95,
+   "rooms_7d": 89,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Wire publishes the AI-headlines digest with the top three newest developments from Reuters, BBC, and the White H"
+   "last_position": "ACTION: Wire publishes the AI-headlines digest with top three newest developments from Reuters, BBC, and White House pre"
   },
   {
    "id": "links-w1",
    "name": "Anchor",
    "dept": "links",
    "role": "doer",
-   "turns_7d": 93,
-   "rooms_7d": 88,
+   "turns_7d": 94,
+   "rooms_7d": 89,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll run the link-checker tool against the department’s live inventory to identify all broken or outdated links. This wi"
+   "last_position": "I’ll run the link-checker tool against the department’s live inventory to identify broken or outdated links. This will p"
   },
   {
    "id": "links-lead-x",
    "name": "LinLea",
    "dept": "links",
    "role": "lead",
-   "turns_7d": 93,
-   "rooms_7d": 88,
+   "turns_7d": 94,
+   "rooms_7d": 89,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Anchor delivers the prioritized report of broken/outdated links with remediation recommendations to the links de"
+   "last_position": "ACTION: Anchor delivers the prioritized report of broken/outdated links with severity levels to the team for review."
+  },
+  {
+   "id": "creators-lead",
+   "name": "Nova",
+   "dept": "creators",
+   "role": "lead",
+   "turns_7d": 93,
+   "rooms_7d": 89,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Forge publishes the UGC Factory npm package as a ready-to-use module labeled \"Created by EXCAVA\" with test cases"
+  },
+  {
+   "id": "creators-w1",
+   "name": "Forge",
+   "dept": "creators",
+   "role": "doer",
+   "turns_7d": 93,
+   "rooms_7d": 89,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "nvidia",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "I will draft the UGC Factory npm package as a new module, producing a ready-to-use open-source skill for Claude Code. Th"
   },
   {
    "id": "power-w1",
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 89,
-   "rooms_7d": 46,
+   "turns_7d": 87,
+   "rooms_7d": 44,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
-   "positions_held": 28,
-   "last_position": "Add Grok 3 Fast to EXCAVA’s toolkit as the default high-speed reasoning model. It’s Anthropic’s fastest model with stron"
+   "positions_held": 29,
+   "last_position": "Add Llama 3.3 70B to EXCAVA’s toolkit as the default high-precision reasoning model. It’s the strongest open model with "
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 89,
-   "rooms_7d": 46,
+   "turns_7d": 87,
+   "rooms_7d": 44,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
-   "positions_held": 28,
-   "last_position": "Grok 3 Fast’s 30% latency cut hides a real risk: EXCAVA’s core tasks aren’t real-time—they’re precision-critical. A 0.5%"
+   "positions_held": 29,
+   "last_position": "Grok 3 Fast’s latency cut isn’t the risk—it’s the *hidden accuracy decay* on precision-critical tasks that compounds int"
+  },
+  {
+   "id": "improve-w1",
+   "name": "Sprocket",
+   "dept": "improve",
+   "role": "doer",
+   "turns_7d": 84,
+   "rooms_7d": 42,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 29,
+   "last_position": "Adopt the rolling 30-day usage-weighted decay metric. It catches silent failures better than a fixed 7-day window while "
+  },
+  {
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
+   "role": "checker",
+   "turns_7d": 83,
+   "rooms_7d": 42,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 29,
+   "last_position": "The rolling 30-day usage-weighted decay still misses silent failures in low-usage prompts—weighting by usage just hides "
   },
   {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
    "role": "lead",
-   "turns_7d": 73,
-   "rooms_7d": 70,
+   "turns_7d": 74,
+   "rooms_7d": 71,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a structured analysis artifact (sent"
+   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a structured analysis of key themes,"
   },
   {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 73,
-   "rooms_7d": 70,
+   "turns_7d": 74,
+   "rooms_7d": 71,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Browse Reddit’s r/MachineLearning and r/AI for the last 7 days and extract posts with 100+ upvotes or 50+ commen"
-  },
-  {
-   "id": "visual-lead",
-   "name": "Chroma",
-   "dept": "visual",
-   "role": "lead",
-   "turns_7d": 71,
-   "rooms_7d": 65,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Chroma captures a high-quality screenshot of the Playwright MCP server interface from the web and uploads it to "
+   "last_position": "Action: Browse Reddit’s r/MachineLearning and r/AI for the last 7 days and extract posts with at least 50 upvotes or 10 "
   },
   {
    "id": "security-lead",
@@ -384,7 +369,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Bastion verifies Warden’s LLM Guard scan report in /var/log/llm_guard/w1_s and confirms no leaks/injections/unre"
+   "last_position": "ACTION: Bastion verifies Warden’s LLM Guard scan report in /var/log/llm_guard/w1_scan for leaks, injections, or unreal e"
   },
   {
    "id": "security-w1",
@@ -399,15 +384,30 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will run the LLM Guard scanner on this conversation’s input and output now. It will produce a security report flagging"
+   "last_position": "I will run the LLM Guard scanner on this conversation’s input and output now. This will produce a security report confir"
+  },
+  {
+   "id": "visual-lead",
+   "name": "Chroma",
+   "dept": "visual",
+   "role": "lead",
+   "turns_7d": 64,
+   "rooms_7d": 58,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Chroma captures a high-quality screenshot of the Playwright MCP server interface from the web, saving it to the "
   },
   {
    "id": "visual-w1",
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 70,
-   "rooms_7d": 65,
+   "turns_7d": 63,
+   "rooms_7d": 58,
    "engines_used": [
     "gh-models",
     "groq",
@@ -421,8 +421,8 @@
    "name": "Iris",
    "dept": "watch",
    "role": "lead",
-   "turns_7d": 59,
-   "rooms_7d": 56,
+   "turns_7d": 60,
+   "rooms_7d": 57,
    "engines_used": [
     "gh-models",
     "groq",
@@ -430,22 +430,22 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 12:31:00, Iris assigns the Arcads AI Video skill pack to generate the \"Speaker Attribution Map\" from the vide"
+   "last_position": "ACTION: At 12:32:00, Iris triggers the Arcads AI Video skill pack to analyze the video’s audio-visual layers for marketi"
   },
   {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 54,
-   "rooms_7d": 53,
+   "turns_7d": 55,
+   "rooms_7d": 54,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Ship EXCAVA with system preference as the default theme, paired with a persistent, dismissible banner that let",
+   "last_position": "DECISION: Ship EXCAVA with a one-time theme picker at first launch, defaulting to system preference but allowing overrid",
    "proposed": 2
   },
   {
@@ -463,23 +463,6 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Ship a **3px solid focus ring (4.5:1 contrast)**, inset 1px, tested on 4K/150% zoom with keyboard/screen reade",
-   "proposed": 2,
-   "shipped": 1
-  },
-  {
-   "id": "improve-lead",
-   "name": "Ratchet",
-   "dept": "improve",
-   "role": "lead",
-   "turns_7d": 48,
-   "rooms_7d": 46,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Adopt a hybrid metric—7-day decay for new failures *and* rolling 30-day window for persistent ones—weighted by",
    "proposed": 2,
    "shipped": 1
   },
@@ -503,8 +486,8 @@
    "name": "Dynamo",
    "dept": "power",
    "role": "lead",
-   "turns_7d": 43,
-   "rooms_7d": 43,
+   "turns_7d": 41,
+   "rooms_7d": 41,
    "engines_used": [
     "gh-models",
     "groq",
@@ -514,6 +497,23 @@
    "last_position": "DECISION: Run a 24-hour blind A/B bake-off comparing Llama 3.3 70B vs. Mistral Large 2 on 1,000 live EXCAVA precision ta",
    "proposed": 4,
    "shipped": 3
+  },
+  {
+   "id": "improve-lead",
+   "name": "Ratchet",
+   "dept": "improve",
+   "role": "lead",
+   "turns_7d": 39,
+   "rooms_7d": 39,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Adopt a hybrid metric—7-day decay for new failures *and* rolling 30-day window for persistent ones—weighted by",
+   "proposed": 2,
+   "shipped": 1
   },
   {
    "id": "mining-lead",

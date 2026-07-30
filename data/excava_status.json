@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-29T23:33:14.071078+00:00",
+  "generated_at": "2026-07-30T03:43:08.705906+00:00",
   "name": "EXCAVA",
   "phase": "OS spine (Phase 0): bus + departments + hand-offs live; creators (OS-2) gated",
   "gate": {
@@ -14,7 +14,7 @@
     "outward_needs": "data_guard ok + security clean + G3>=70 + owner approval"
   },
   "memory": {
-    "vectors": 1576,
+    "vectors": 1581,
     "model": "gemini-embedding-001",
     "wired": true
   },
@@ -22,7 +22,7 @@
     "missing": [
       "github_token"
     ],
-    "checked_at": "2026-07-29T23:14:08.606066+00:00",
+    "checked_at": "2026-07-30T03:27:51.721870+00:00",
     "can_do": {
       "resolve-links": true,
       "analyze-videos": true,
@@ -79,32 +79,41 @@
       }
     ]
   },
-  "holding": [],
+  "holding": [
+    {
+      "priority": "'tools' dropped 1 records",
+      "why_held": "no department specialization matched"
+    },
+    {
+      "priority": "'commands' dropped 1 records",
+      "why_held": "no department specialization matched"
+    }
+  ],
   "os": {
-    "beats": 10,
+    "beats": 11,
     "mode": "run",
     "bus": {
-      "open": 97,
-      "total": 212,
+      "open": 110,
+      "total": 233,
       "per_department": {
         "memory": {
-          "queued": 12,
+          "queued": 14,
           "working": 0,
-          "done": 14,
+          "done": 15,
           "held": 0,
           "failed": 0
         },
         "visual": {
-          "queued": 9,
+          "queued": 10,
           "working": 0,
-          "done": 14,
+          "done": 15,
           "held": 0,
           "failed": 0
         },
         "analysis": {
-          "queued": 18,
+          "queued": 20,
           "working": 0,
-          "done": 14,
+          "done": 15,
           "held": 0,
           "failed": 0
         },
@@ -116,30 +125,30 @@
           "failed": 0
         },
         "watch": {
-          "queued": 9,
+          "queued": 10,
           "working": 0,
-          "done": 13,
+          "done": 14,
           "held": 0,
           "failed": 0
         },
         "security": {
-          "queued": 10,
+          "queued": 11,
           "working": 0,
-          "done": 14,
+          "done": 15,
           "held": 0,
           "failed": 0
         },
         "mining": {
-          "queued": 10,
+          "queued": 11,
           "working": 0,
-          "done": 14,
+          "done": 15,
           "held": 0,
           "failed": 0
         },
         "news": {
-          "queued": 9,
+          "queued": 10,
           "working": 0,
-          "done": 14,
+          "done": 15,
           "held": 0,
           "failed": 0
         },
@@ -153,7 +162,7 @@
         "power": {
           "queued": 3,
           "working": 0,
-          "done": 10,
+          "done": 11,
           "held": 0,
           "failed": 0
         },
@@ -172,103 +181,112 @@
           "failed": 0
         },
         "links": {
-          "queued": 7,
+          "queued": 8,
           "working": 0,
           "done": 0,
           "held": 0,
           "failed": 0
         },
         "transcripts": {
-          "queued": 4,
+          "queued": 5,
+          "working": 0,
+          "done": 0,
+          "held": 0,
+          "failed": 0
+        },
+        "(unrouted)": {
+          "queued": 2,
           "working": 0,
           "done": 0,
           "held": 0,
           "failed": 0
         }
       },
-      "last_handoff": "data/excava/handoffs/transcripts-drain-the-ne-67994--01--transcripts-w1--to--analysis.md"
+      "last_handoff": "data/excava/handoffs/raise-g3-truth-access-53-82989--01--links-w1--to--memory.md"
     },
     "beat_log": [
       "backlog: 9 real-gap task(s) queued; plan {'analysis': '3 small task(s) run in', 'memory': '3 small task(s) run in', 'security': '3 small task(s) run in', 'visual': '3 small task(s) run in'}",
-      "analysis-w1: verify-the-next-200-of-5-62156 DONE",
-      "memory-w1: memory-embed-the-remaini-61574 DONE",
-      "mining-w1: mining-discover-new-ai-r-67994 DONE",
-      "security-w1: security-safety-rate-the-67994 DONE",
-      "visual-w1: raise-g8-personal-fit-68-67994 DONE",
-      "watch-w1: watch-process-the-next-b-67994 DONE",
-      "news-w1: news-refresh-the-ai-news-67994 DONE",
-      "links-w1: resolve-real-links-websi-67994 -> memory (data/excava/handoffs/resolve-real-links-websi-67994--01--links-w1--to--memory.md)",
-      "transcripts-w1: transcripts-drain-the-ne-67994 -> analysis (data/excava/handoffs/transcripts-drain-the-ne-67994--01--transcripts-w1--to--analysis.md)",
-      "power-w1: dynamo-s-initiative-run--59958 DONE",
-      "dept-visualization-own-excava-s-o-842: Facet spoke (mistral, 1070ms) t3",
-      "dept-visualization-own-excava-s-o-842: Pane spoke (mistral, 1433ms) t4",
-      "dept-watch-analyze-video-audio-vi-110: Scope spoke (mistral, 1062ms) t1",
-      "dept-watch-analyze-video-audio-vi-110: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-watch-analyze-video-audio-vi-110.md', 'at': '2026-07-29T23:33:45.204165+00:00', 'title': 'watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.', 'by': 'Iris'}",
-      "dept-watch-analyze-video-audio-vi-110: REROUTED to IMPROVE → rerouted-watch-improve-a-68025",
-      "dept-analysis-deep-analyze-every-118: Chisel spoke (mistral, 763ms) t1",
-      "dept-analysis-deep-analyze-every-118: Marrow spoke (mistral, 8695ms) t2",
-      "dept-analysis-deep-analyze-every-118: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-analysis-deep-analyze-every-118.md', 'at': '2026-07-29T23:34:13.598698+00:00', 'title': 'analysis: Deep-analyze every element from its FULL source (whole transcript/repo', 'by': 'Marrow'}",
-      "dept-analysis-deep-analyze-every-118: ACTION queued → analysis-room-action-mar-68053",
-      "dept-creators-build-packages-enri-813: Forge spoke (mistral, 842ms) t1",
-      "dept-creators-build-packages-enri-813: Nova spoke (mistral, 628ms) t2",
-      "dept-creators-build-packages-enri-813: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-creators-build-packages-enri-813.md', 'at': '2026-07-29T23:34:20.217438+00:00', 'title': \"creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Crea\", 'by': 'Nova'}",
-      "dept-creators-build-packages-enri-813: REROUTED to POWER → rerouted-creators-power--68060",
-      "dept-links-advance-the-links-depa-990: Anchor spoke (mistral, 852ms) t1",
-      "dept-links-advance-the-links-depa-990: LinLea spoke (mistral, 607ms) t2",
-      "dept-links-advance-the-links-depa-990: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-links-advance-the-links-depa-990.md', 'at': '2026-07-29T23:34:27.554951+00:00', 'title': \"links: advance the links department's mission\", 'by': 'LinLea'}",
-      "dept-links-advance-the-links-depa-990: ACTION queued → links-room-action-anchor-68067",
-      "dept-memory-recall-by-meaning-rel-341: Graft spoke (mistral, 835ms) t1",
-      "dept-memory-recall-by-meaning-rel-341: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-memory-recall-by-meaning-rel-341.md', 'at': '2026-07-29T23:34:32.499793+00:00', 'title': 'memory: Recall by meaning, relate elements, build the brain graph, embed unembed', 'by': 'Root'}",
-      "dept-memory-recall-by-meaning-rel-341: ACTION queued → memory-room-action-i-wil-68072",
-      "dept-mining-gather-ai-info-from-d-617: Pick spoke (mistral, 1004ms) t1",
-      "dept-mining-gather-ai-info-from-d-617: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-mining-gather-ai-info-from-d-617.md', 'at': '2026-07-29T23:34:37.738265+00:00', 'title': 'mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Teleg', 'by': 'Boulder'}",
-      "dept-mining-gather-ai-info-from-d-617: ACTION queued → mining-room-action-brows-68077",
-      "dept-news-freshness-refresh-the-a-347: Scoop spoke (mistral, 790ms) t1",
-      "dept-news-freshness-refresh-the-a-347: Wire spoke (mistral, 713ms) t2",
-      "dept-news-freshness-refresh-the-a-347: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-news-freshness-refresh-the-a-347.md', 'at': '2026-07-29T23:34:45.535746+00:00', 'title': 'news: Freshness: refresh the AI-news digest from the newest official/company/nat', 'by': 'Wire'}",
-      "dept-news-freshness-refresh-the-a-347: ACTION queued → news-room-action-wire-pu-68085",
-      "dept-accessibility-make-excava-us-659: Ramp spoke (mistral, 2777ms) t1",
-      "dept-accessibility-make-excava-us-659: Reader spoke (mistral, 1328ms) t2",
-      "dept-improve-self-improvement-rev-968: Sprocket spoke (mistral, 1014ms) t1",
-      "dept-improve-self-improvement-rev-968: Gauge spoke (mistral, 1164ms) t2",
-      "dept-security-paranoid-guard-scan-958: Warden spoke (mistral, 863ms) t1",
-      "dept-security-paranoid-guard-scan-958: Bastion spoke (mistral, 684ms) t2",
-      "dept-security-paranoid-guard-scan-958: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-security-paranoid-guard-scan-958.md', 'at': '2026-07-29T23:35:08.853319+00:00', 'title': 'security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (no', 'by': 'Bastion'}",
-      "dept-security-paranoid-guard-scan-958: ACTION queued → security-room-action-bas-68108",
-      "dept-power-raise-excava-s-capabil-508: Gearbox spoke (mistral, 1108ms) t1",
-      "dept-power-raise-excava-s-capabil-508: Torque spoke (mistral, 1400ms) t2",
-      "dept-transcripts-retrieve-real-fu-645: Reel spoke (mistral, 787ms) t1",
-      "dept-transcripts-retrieve-real-fu-645: Echo spoke (mistral, 676ms) t2",
-      "dept-transcripts-retrieve-real-fu-645: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-transcripts-retrieve-real-fu-645.md', 'at': '2026-07-29T23:35:23.307112+00:00', 'title': 'transcripts: Retrieve REAL full transcripts/captions for pending videos (residen', 'by': 'Echo'}",
-      "dept-transcripts-retrieve-real-fu-645: ACTION queued → transcripts-room-action--68123",
-      "dept-visual-mine-great-designs-fr-637: Easel spoke (mistral, 577ms) t1",
-      "dept-visual-mine-great-designs-fr-637: Chroma spoke (mistral, 778ms) t2",
-      "dept-visual-mine-great-designs-fr-637: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-visual-mine-great-designs-fr-637.md', 'at': '2026-07-29T23:35:30.672779+00:00', 'title': 'visual: MINE great designs FROM THE WEB into the hub — screenshots, taste materi', 'by': 'Chroma'}",
-      "dept-visual-mine-great-designs-fr-637: action already on the bus (deduped)",
-      "group-open-floor-any-agent-from-an-969: Reel spoke (mistral, 1322ms) t19",
-      "group-open-floor-any-agent-from-an-969: Scriv spoke (mistral, 1550ms) t20",
-      "experiment engine-benchmark: 2/12 healthy; ranking groq, mistral, kimi, deepseek",
+      "analysis-w1: verify-the-next-200-of-6-67994 DONE",
+      "memory-w1: raise-g3-truth-access-53-62156 DONE",
+      "mining-w1: mining-discover-new-ai-r-82989 DONE",
+      "security-w1: security-safety-rate-the-82989 DONE",
+      "news-w1: news-refresh-the-ai-news-82989 DONE",
+      "visual-w1: raise-g8-personal-fit-68-82989 DONE",
+      "watch-w1: watch-process-the-next-b-82989 DONE",
+      "links-w1: raise-g3-truth-access-53-82989 -> memory (data/excava/handoffs/raise-g3-truth-access-53-82989--01--links-w1--to--memory.md)",
+      "transcripts-w1: transcripts-drain-the-ne-82989 -> analysis (data/excava/handoffs/transcripts-drain-the-ne-82989--01--transcripts-w1--to--analysis.md)",
+      "power-w1: rerouted-creators-power--60558 DONE",
+      "dept-visualization-own-excava-s-o-842: Lumen spoke (mistral, 1074ms) t5",
+      "dept-visualization-own-excava-s-o-842: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-visualization-own-excava-s-o-842.md', 'at': '2026-07-30T03:43:31.089807+00:00', 'title': \"visualization: Own EXCAVA'S OWN interface — visibility, liveliness, clarity, enj\", 'by': 'Lumen'}",
+      "dept-visualization-own-excava-s-o-842: initiative capped for Lumen (2 open)",
+      "dept-accessibility-make-excava-us-659: Ramp spoke (mistral, 1131ms) t3",
+      "dept-accessibility-make-excava-us-659: Reader spoke (mistral, 907ms) t4",
+      "dept-improve-self-improvement-rev-968: Sprocket spoke (mistral, 914ms) t3",
+      "dept-improve-self-improvement-rev-968: Gauge spoke (mistral, 1232ms) t4",
+      "dept-power-raise-excava-s-capabil-508: Gearbox spoke (mistral, 1289ms) t3",
+      "dept-power-raise-excava-s-capabil-508: Torque spoke (mistral, 1481ms) t4",
+      "dept-analysis-deep-analyze-every-900: Chisel spoke (mistral, 737ms) t1",
+      "dept-analysis-deep-analyze-every-900: Marrow spoke (mistral, 742ms) t2",
+      "dept-analysis-deep-analyze-every-900: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-analysis-deep-analyze-every-900.md', 'at': '2026-07-30T03:43:59.564345+00:00', 'title': 'analysis: Deep-analyze every element from its FULL source (whole transcript/repo', 'by': 'Marrow'}",
+      "dept-analysis-deep-analyze-every-900: ACTION queued → analysis-room-action-mar-83039",
+      "dept-creators-build-packages-enri-926: Forge spoke (mistral, 791ms) t1",
+      "dept-creators-build-packages-enri-926: Nova spoke (mistral, 571ms) t2",
+      "dept-creators-build-packages-enri-926: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-creators-build-packages-enri-926.md', 'at': '2026-07-30T03:44:07.266448+00:00', 'title': \"creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Crea\", 'by': 'Nova'}",
+      "dept-creators-build-packages-enri-926: REROUTED to POWER → rerouted-creators-power--83047",
+      "dept-links-advance-the-links-depa-451: Anchor spoke (mistral, 680ms) t1",
+      "dept-links-advance-the-links-depa-451: LinLea spoke (mistral, 593ms) t2",
+      "dept-links-advance-the-links-depa-451: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-links-advance-the-links-depa-451.md', 'at': '2026-07-30T03:44:14.633989+00:00', 'title': \"links: advance the links department's mission\", 'by': 'LinLea'}",
+      "dept-links-advance-the-links-depa-451: ACTION queued → links-room-action-anchor-83054",
+      "dept-memory-recall-by-meaning-rel-662: Graft spoke (mistral, 731ms) t1",
+      "dept-memory-recall-by-meaning-rel-662: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-memory-recall-by-meaning-rel-662.md', 'at': '2026-07-30T03:44:19.364849+00:00', 'title': 'memory: Recall by meaning, relate elements, build the brain graph, embed unembed', 'by': 'Root'}",
+      "dept-memory-recall-by-meaning-rel-662: ACTION queued → memory-room-action-i-wil-83059",
+      "dept-mining-gather-ai-info-from-d-160: Pick spoke (mistral, 932ms) t1",
+      "dept-mining-gather-ai-info-from-d-160: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-mining-gather-ai-info-from-d-160.md', 'at': '2026-07-30T03:44:24.049873+00:00', 'title': 'mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Teleg', 'by': 'Boulder'}",
+      "dept-mining-gather-ai-info-from-d-160: ACTION queued → mining-room-action-brows-83064",
+      "dept-news-freshness-refresh-the-a-837: Scoop spoke (mistral, 714ms) t1",
+      "dept-news-freshness-refresh-the-a-837: Wire spoke (mistral, 567ms) t2",
+      "dept-news-freshness-refresh-the-a-837: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-news-freshness-refresh-the-a-837.md', 'at': '2026-07-30T03:44:31.270650+00:00', 'title': 'news: Freshness: refresh the AI-news digest from the newest official/company/nat', 'by': 'Wire'}",
+      "dept-news-freshness-refresh-the-a-837: ACTION queued → news-room-action-wire-pu-83071",
+      "dept-security-paranoid-guard-scan-328: Warden spoke (mistral, 741ms) t1",
+      "dept-security-paranoid-guard-scan-328: Bastion spoke (mistral, 747ms) t2",
+      "dept-security-paranoid-guard-scan-328: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-security-paranoid-guard-scan-328.md', 'at': '2026-07-30T03:44:38.805464+00:00', 'title': 'security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (no', 'by': 'Bastion'}",
+      "dept-security-paranoid-guard-scan-328: ACTION queued → security-room-action-bas-83078",
+      "dept-transcripts-retrieve-real-fu-524: Reel spoke (mistral, 645ms) t1",
+      "dept-transcripts-retrieve-real-fu-524: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-transcripts-retrieve-real-fu-524.md', 'at': '2026-07-30T03:44:42.787266+00:00', 'title': 'transcripts: Retrieve REAL full transcripts/captions for pending videos (residen', 'by': 'Echo'}",
+      "dept-transcripts-retrieve-real-fu-524: ACTION queued → transcripts-room-action--83082",
+      "dept-visual-mine-great-designs-fr-206: Easel spoke (mistral, 602ms) t1",
+      "dept-visual-mine-great-designs-fr-206: Chroma spoke (mistral, 596ms) t2",
+      "dept-visual-mine-great-designs-fr-206: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-visual-mine-great-designs-fr-206.md', 'at': '2026-07-30T03:44:51.257270+00:00', 'title': 'visual: MINE great designs FROM THE WEB into the hub — screenshots, taste materi', 'by': 'Chroma'}",
+      "dept-visual-mine-great-designs-fr-206: ACTION queued → visual-room-action-chrom-83091",
+      "dept-watch-analyze-video-audio-vi-553: Scope spoke (mistral, 820ms) t1",
+      "dept-watch-analyze-video-audio-vi-553: Iris spoke (mistral, 888ms) t2",
+      "dept-watch-analyze-video-audio-vi-553: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-watch-analyze-video-audio-vi-553.md', 'at': '2026-07-30T03:44:59.017000+00:00', 'title': 'watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.', 'by': 'Iris'}",
+      "dept-watch-analyze-video-audio-vi-553: ACTION queued → watch-room-action-at-12--83099",
+      "group-open-floor-any-agent-from-an-969: Chisel spoke (mistral, 1161ms) t21",
+      "group-open-floor-any-agent-from-an-969: Sift spoke (mistral, 1422ms) t22",
+      "experiment engine-benchmark: 1/12 healthy; ranking mistral, groq, kimi, deepseek",
       "experiment golden-task-regression: 100% (6/6 tasks pass)",
       "agent-issue: DRAFT filed for owner approval (25 dead links cited)",
       "agent-issue: not approved — nothing posted",
+      "experiment huge-task-split: 'Close the link gap: 6524 of 10944 elements have no' → 6 checkpoints (0 queued)",
       "TUTORIAL MISSING for dashboard v132 — Phase 6 law: every major change ships a walkthrough (data/tutorials.json)",
-      "memory master: +69 episodes"
+      "memory master: +55 episodes"
     ],
     "departments": [],
     "usage": {
       "links": {
-        "ticks": 10,
+        "ticks": 11,
         "done": 0,
-        "handoffs": 10,
+        "handoffs": 11,
         "fails": 0,
-        "last": "2026-07-29T23:36:42.038204+00:00"
+        "last": "2026-07-30T03:46:08.935203+00:00"
       },
       "analysis": {
-        "ticks": 10,
-        "done": 10,
+        "ticks": 11,
+        "done": 11,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-29T23:36:42.038186+00:00"
+        "last": "2026-07-30T03:46:08.935184+00:00"
       },
       "improve": {
         "ticks": 2,
@@ -278,11 +296,11 @@
         "last": "2026-07-29T20:32:05.559454+00:00"
       },
       "visual": {
-        "ticks": 10,
-        "done": 10,
+        "ticks": 11,
+        "done": 11,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-29T23:36:42.038196+00:00"
+        "last": "2026-07-30T03:46:08.935197+00:00"
       },
       "creators": {
         "ticks": 3,
@@ -292,60 +310,60 @@
         "last": "2026-07-29T20:39:17.286000+00:00"
       },
       "memory": {
-        "ticks": 10,
-        "done": 10,
+        "ticks": 11,
+        "done": 11,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-29T23:36:42.038190+00:00"
+        "last": "2026-07-30T03:46:08.935188+00:00"
       },
       "mining": {
-        "ticks": 10,
-        "done": 10,
+        "ticks": 11,
+        "done": 11,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-29T23:36:42.038192+00:00"
+        "last": "2026-07-30T03:46:08.935190+00:00"
       },
       "news": {
-        "ticks": 10,
-        "done": 10,
+        "ticks": 11,
+        "done": 11,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-29T23:36:42.038200+00:00"
+        "last": "2026-07-30T03:46:08.935195+00:00"
       },
       "security": {
+        "ticks": 11,
+        "done": 11,
+        "handoffs": 0,
+        "fails": 0,
+        "last": "2026-07-30T03:46:08.935192+00:00"
+      },
+      "transcripts": {
+        "ticks": 9,
+        "done": 0,
+        "handoffs": 9,
+        "fails": 0,
+        "last": "2026-07-30T03:46:08.935205+00:00"
+      },
+      "watch": {
         "ticks": 10,
         "done": 10,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-29T23:36:42.038194+00:00"
+        "last": "2026-07-30T03:46:08.935199+00:00"
       },
-      "transcripts": {
-        "ticks": 8,
-        "done": 0,
-        "handoffs": 8,
-        "fails": 0,
-        "last": "2026-07-29T23:36:42.038206+00:00"
-      },
-      "watch": {
+      "power": {
         "ticks": 9,
         "done": 9,
         "handoffs": 0,
         "fails": 0,
-        "last": "2026-07-29T23:36:42.038198+00:00"
-      },
-      "power": {
-        "ticks": 8,
-        "done": 8,
-        "handoffs": 0,
-        "fails": 0,
-        "last": "2026-07-29T23:36:42.038208+00:00"
+        "last": "2026-07-30T03:46:08.935207+00:00"
       }
     },
     "audit": {
       "ok": true,
       "problems": []
     },
-    "approvals_pending": 3,
+    "approvals_pending": 5,
     "backpressure": {
       "links": {
         "streak": 0,
@@ -604,226 +622,210 @@
     ],
     "recent_events": [
       {
-        "task": "dept-watch-analyze-video-audio-vi-110",
-        "at": "2026-07-29T23:33:45.204351+00:00",
-        "kind": "room_closed",
-        "artifact": {
-          "kind": "decision",
-          "ref": "data/excava/artifacts/dept-watch-analyze-video-audio-vi-110.md",
-          "at": "2026-07-29T23:33:45.204165+00:00",
-          "title": "watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.",
-          "by": "Iris"
-        },
-        "turns": 1
-      },
-      {
-        "task": "rerouted-watch-improve-a-68025",
-        "at": "2026-07-29T23:33:45.209453+00:00",
+        "task": "links-room-action-anchor-83054",
+        "at": "2026-07-30T03:44:14.639529+00:00",
         "kind": "enqueued",
-        "title": "[rerouted watch→improve] At 12:32:00, Scope triggers the Arcads AI Video skill pack to process the video’s audio-visual layers and output the \"Sp",
-        "source": "room-action:watch",
-        "priority": 2,
-        "department": "improve"
-      },
-      {
-        "task": "dept-analysis-deep-analyze-every-118",
-        "at": "2026-07-29T23:34:13.598882+00:00",
-        "kind": "room_closed",
-        "artifact": {
-          "kind": "decision",
-          "ref": "data/excava/artifacts/dept-analysis-deep-analyze-every-118.md",
-          "at": "2026-07-29T23:34:13.598698+00:00",
-          "title": "analysis: Deep-analyze every element from its FULL source (whole transcript/repo",
-          "by": "Marrow"
-        },
-        "turns": 2
-      },
-      {
-        "task": "analysis-room-action-mar-68053",
-        "at": "2026-07-29T23:34:13.603961+00:00",
-        "kind": "enqueued",
-        "title": "[analysis room action] Marrow runs BloodHound-MCP on the full earnings call transcript to generate a structured analysis artifact (sentiment, r",
-        "source": "room-action:analysis",
-        "priority": 2,
-        "department": "analysis"
-      },
-      {
-        "task": "dept-creators-build-packages-enri-813",
-        "at": "2026-07-29T23:34:20.217613+00:00",
-        "kind": "room_closed",
-        "artifact": {
-          "kind": "decision",
-          "ref": "data/excava/artifacts/dept-creators-build-packages-enri-813.md",
-          "at": "2026-07-29T23:34:20.217438+00:00",
-          "title": "creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Crea",
-          "by": "Nova"
-        },
-        "turns": 2
-      },
-      {
-        "task": "rerouted-creators-power--68060",
-        "at": "2026-07-29T23:34:20.222707+00:00",
-        "kind": "enqueued",
-        "title": "[rerouted creators→power] Publish the UGC Factory npm package as a ready-to-use module labeled \"Created by EXCAVA\" with documentation and examples",
-        "source": "room-action:creators",
-        "priority": 2,
-        "department": "power"
-      },
-      {
-        "task": "dept-links-advance-the-links-depa-990",
-        "at": "2026-07-29T23:34:27.555164+00:00",
-        "kind": "room_closed",
-        "artifact": {
-          "kind": "decision",
-          "ref": "data/excava/artifacts/dept-links-advance-the-links-depa-990.md",
-          "at": "2026-07-29T23:34:27.554951+00:00",
-          "title": "links: advance the links department's mission",
-          "by": "LinLea"
-        },
-        "turns": 2
-      },
-      {
-        "task": "links-room-action-anchor-68067",
-        "at": "2026-07-29T23:34:27.560215+00:00",
-        "kind": "enqueued",
-        "title": "[links room action] Anchor delivers the prioritized report of broken/outdated links with remediation recommendations to the links department",
+        "title": "[links room action] Anchor delivers the prioritized report of broken/outdated links with severity levels to the team for review.",
         "source": "room-action:links",
         "priority": 2,
         "department": "links"
       },
       {
-        "task": "dept-memory-recall-by-meaning-rel-341",
-        "at": "2026-07-29T23:34:32.499967+00:00",
+        "task": "dept-memory-recall-by-meaning-rel-662",
+        "at": "2026-07-30T03:44:19.365018+00:00",
         "kind": "room_closed",
         "artifact": {
           "kind": "decision",
-          "ref": "data/excava/artifacts/dept-memory-recall-by-meaning-rel-341.md",
-          "at": "2026-07-29T23:34:32.499793+00:00",
+          "ref": "data/excava/artifacts/dept-memory-recall-by-meaning-rel-662.md",
+          "at": "2026-07-30T03:44:19.364849+00:00",
           "title": "memory: Recall by meaning, relate elements, build the brain graph, embed unembed",
           "by": "Root"
         },
         "turns": 1
       },
       {
-        "task": "memory-room-action-i-wil-68072",
-        "at": "2026-07-29T23:34:32.505068+00:00",
+        "task": "memory-room-action-i-wil-83059",
+        "at": "2026-07-30T03:44:19.370408+00:00",
         "kind": "enqueued",
-        "title": "[memory room action] I will run the memory linking command to connect every existing memo in the database, producing a unified brain graph wh",
+        "title": "[memory room action] I will run the memory linking command to connect every existing memo in the Hindsight database, producing a fully interl",
         "source": "room-action:memory",
         "priority": 2,
         "department": "memory"
       },
       {
-        "task": "dept-mining-gather-ai-info-from-d-617",
-        "at": "2026-07-29T23:34:37.738441+00:00",
+        "task": "dept-mining-gather-ai-info-from-d-160",
+        "at": "2026-07-30T03:44:24.050045+00:00",
         "kind": "room_closed",
         "artifact": {
           "kind": "decision",
-          "ref": "data/excava/artifacts/dept-mining-gather-ai-info-from-d-617.md",
-          "at": "2026-07-29T23:34:37.738265+00:00",
+          "ref": "data/excava/artifacts/dept-mining-gather-ai-info-from-d-160.md",
+          "at": "2026-07-30T03:44:24.049873+00:00",
           "title": "mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Teleg",
           "by": "Boulder"
         },
         "turns": 1
       },
       {
-        "task": "mining-room-action-brows-68077",
-        "at": "2026-07-29T23:34:37.743570+00:00",
+        "task": "mining-room-action-brows-83064",
+        "at": "2026-07-30T03:44:24.055517+00:00",
         "kind": "enqueued",
-        "title": "[mining room action] Browse Reddit’s r/MachineLearning and r/AI for the last 7 days and extract posts with 100+ upvotes or 50+ comments, focu",
+        "title": "[mining room action] Browse Reddit’s r/MachineLearning and r/AI for the last 7 days and extract posts with at least 50 upvotes or 10 comments",
         "source": "room-action:mining",
         "priority": 2,
         "department": "mining"
       },
       {
-        "task": "dept-news-freshness-refresh-the-a-347",
-        "at": "2026-07-29T23:34:45.535926+00:00",
+        "task": "dept-news-freshness-refresh-the-a-837",
+        "at": "2026-07-30T03:44:31.270844+00:00",
         "kind": "room_closed",
         "artifact": {
           "kind": "decision",
-          "ref": "data/excava/artifacts/dept-news-freshness-refresh-the-a-347.md",
-          "at": "2026-07-29T23:34:45.535746+00:00",
+          "ref": "data/excava/artifacts/dept-news-freshness-refresh-the-a-837.md",
+          "at": "2026-07-30T03:44:31.270650+00:00",
           "title": "news: Freshness: refresh the AI-news digest from the newest official/company/nat",
           "by": "Wire"
         },
         "turns": 2
       },
       {
-        "task": "news-room-action-wire-pu-68085",
-        "at": "2026-07-29T23:34:45.541187+00:00",
+        "task": "news-room-action-wire-pu-83071",
+        "at": "2026-07-30T03:44:31.276254+00:00",
         "kind": "enqueued",
-        "title": "[news room action] Wire publishes the AI-headlines digest with the top three newest developments from Reuters, BBC, and the White House pre",
+        "title": "[news room action] Wire publishes the AI-headlines digest with top three newest developments from Reuters, BBC, and White House press feeds",
         "source": "room-action:news",
         "priority": 2,
         "department": "news"
       },
       {
-        "task": "dept-security-paranoid-guard-scan-958",
-        "at": "2026-07-29T23:35:08.853491+00:00",
+        "task": "dept-security-paranoid-guard-scan-328",
+        "at": "2026-07-30T03:44:38.805632+00:00",
         "kind": "room_closed",
         "artifact": {
           "kind": "decision",
-          "ref": "data/excava/artifacts/dept-security-paranoid-guard-scan-958.md",
-          "at": "2026-07-29T23:35:08.853319+00:00",
+          "ref": "data/excava/artifacts/dept-security-paranoid-guard-scan-328.md",
+          "at": "2026-07-30T03:44:38.805464+00:00",
           "title": "security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (no",
           "by": "Bastion"
         },
         "turns": 2
       },
       {
-        "task": "security-room-action-bas-68108",
-        "at": "2026-07-29T23:35:08.858633+00:00",
+        "task": "security-room-action-bas-83078",
+        "at": "2026-07-30T03:44:38.811151+00:00",
         "kind": "enqueued",
-        "title": "[security room action] Bastion verifies Warden’s LLM Guard scan report in /var/log/llm_guard/w1_s and confirms no leaks/injections/unreal eleme",
+        "title": "[security room action] Bastion verifies Warden’s LLM Guard scan report in /var/log/llm_guard/w1_scan for leaks, injections, or unreal elements ",
         "source": "room-action:security",
         "priority": 2,
         "department": "security"
       },
       {
-        "task": "dept-transcripts-retrieve-real-fu-645",
-        "at": "2026-07-29T23:35:23.307294+00:00",
+        "task": "dept-transcripts-retrieve-real-fu-524",
+        "at": "2026-07-30T03:44:42.787433+00:00",
         "kind": "room_closed",
         "artifact": {
           "kind": "decision",
-          "ref": "data/excava/artifacts/dept-transcripts-retrieve-real-fu-645.md",
-          "at": "2026-07-29T23:35:23.307112+00:00",
+          "ref": "data/excava/artifacts/dept-transcripts-retrieve-real-fu-524.md",
+          "at": "2026-07-30T03:44:42.787266+00:00",
           "title": "transcripts: Retrieve REAL full transcripts/captions for pending videos (residen",
           "by": "Echo"
         },
-        "turns": 2
+        "turns": 1
       },
       {
-        "task": "transcripts-room-action--68123",
-        "at": "2026-07-29T23:35:23.312413+00:00",
+        "task": "transcripts-room-action--83082",
+        "at": "2026-07-30T03:44:42.792890+00:00",
         "kind": "enqueued",
-        "title": "[transcripts room action] Fetch full transcript for pending video via kimtaeyoon83/mcp-server-youtube-transcript, output the raw transcript text t",
+        "title": "[transcripts room action] Fetch the full transcript for the pending video using the YouTube transcript tool with residential IP and gentle pacing.",
         "source": "room-action:transcripts",
         "priority": 2,
         "department": "transcripts"
       },
       {
-        "task": "dept-visual-mine-great-designs-fr-637",
-        "at": "2026-07-29T23:35:30.672951+00:00",
+        "task": "dept-visual-mine-great-designs-fr-206",
+        "at": "2026-07-30T03:44:51.257439+00:00",
         "kind": "room_closed",
         "artifact": {
           "kind": "decision",
-          "ref": "data/excava/artifacts/dept-visual-mine-great-designs-fr-637.md",
-          "at": "2026-07-29T23:35:30.672779+00:00",
+          "ref": "data/excava/artifacts/dept-visual-mine-great-designs-fr-206.md",
+          "at": "2026-07-30T03:44:51.257270+00:00",
           "title": "visual: MINE great designs FROM THE WEB into the hub — screenshots, taste materi",
           "by": "Chroma"
         },
         "turns": 2
       },
       {
+        "task": "visual-room-action-chrom-83091",
+        "at": "2026-07-30T03:44:51.262948+00:00",
+        "kind": "enqueued",
+        "title": "[visual room action] Chroma captures a high-quality screenshot of the Playwright MCP server interface from the web, saving it to the hub as a",
+        "source": "room-action:visual",
+        "priority": 2,
+        "department": "visual"
+      },
+      {
+        "task": "dept-watch-analyze-video-audio-vi-553",
+        "at": "2026-07-30T03:44:59.017166+00:00",
+        "kind": "room_closed",
+        "artifact": {
+          "kind": "decision",
+          "ref": "data/excava/artifacts/dept-watch-analyze-video-audio-vi-553.md",
+          "at": "2026-07-30T03:44:59.017000+00:00",
+          "title": "watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.",
+          "by": "Iris"
+        },
+        "turns": 2
+      },
+      {
+        "task": "watch-room-action-at-12--83099",
+        "at": "2026-07-30T03:44:59.022628+00:00",
+        "kind": "enqueued",
+        "title": "[watch room action] At 12:32:00, Iris triggers the Arcads AI Video skill pack to analyze the video’s audio-visual layers for marketing insig",
+        "source": "room-action:watch",
+        "priority": 2,
+        "department": "watch"
+      },
+      {
         "task": "os-lanes",
-        "at": "2026-07-29T23:36:41.602200+00:00",
+        "at": "2026-07-30T03:46:08.572996+00:00",
+        "kind": "lane_ran",
+        "lane": "Gemini watch (audio+visual)",
+        "status": "live",
+        "what": "Watches videos directly — clears the backlog free"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-30T03:46:08.573784+00:00",
+        "kind": "lane_ran",
+        "lane": "Free analysis pool",
+        "status": "live",
+        "what": "Turns transcripts into skills/tools/connectors (free engines)"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-30T03:46:08.574486+00:00",
         "kind": "lane_ran",
         "lane": "Deep analysis (night-gated)",
         "status": "live",
         "what": "Claude re-analysis + safety pass"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-30T03:46:08.575207+00:00",
+        "kind": "lane_ran",
+        "lane": "AI news refresh",
+        "status": "live",
+        "what": "Refreshes official-site AI news"
+      },
+      {
+        "task": "os-lanes",
+        "at": "2026-07-30T03:46:08.575960+00:00",
+        "kind": "lane_ran",
+        "lane": "Self-improvement review",
+        "status": "live",
+        "what": "Weekly usability/quality/bug review"
       }
     ],
-    "memory_episodes": 69,
+    "memory_episodes": 55,
     "directions": [
       {
         "id": "dir-1",
@@ -905,7 +907,7 @@
     }
   ],
   "stack_review": {
-    "candidates_available": 1868,
+    "candidates_available": 1875,
     "note": "EXCAVA reviews its stack each cycle: integrate the best free per-process tool, combine overlaps, offload weak ones. Top open process gaps: "
   }
 }

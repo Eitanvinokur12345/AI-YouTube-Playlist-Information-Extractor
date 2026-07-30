@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-07-30T10:43:38.580499+00:00",
- "total": 107,
+ "generated_at": "2026-07-30T14:47:54.735196+00:00",
+ "total": 108,
  "counts": {
   "wired": 89,
-  "operator": 18,
+  "operator": 19,
   "orphaned": 0,
   "dead": 0
  },
@@ -139,7 +139,7 @@
   },
   "analyze_batch": {
    "status": "operator",
-   "loc": 792,
+   "loc": 796,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
@@ -149,7 +149,9 @@
     "data/improvement_suggestions.json",
     "data/review_findings.json"
    ],
-   "imported_by": [],
+   "imported_by": [
+    "backfill_skill_md"
+   ],
    "imports": []
   },
   "audit_decisions": {
@@ -165,6 +167,20 @@
    ],
    "imported_by": [],
    "imports": []
+  },
+  "backfill_skill_md": {
+   "status": "operator",
+   "loc": 114,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "AWAY_LOG.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": [
+    "analyze_batch"
+   ]
   },
   "backfill_transcripts": {
    "status": "operator",
@@ -1043,7 +1059,7 @@
   },
   "guardrails": {
    "status": "wired",
-   "loc": 525,
+   "loc": 531,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
@@ -1602,7 +1618,7 @@
   },
   "self_check": {
    "status": "wired",
-   "loc": 191,
+   "loc": 211,
    "entrypoint": true,
    "invoked_by": [
     "bulk_analyze.yml"

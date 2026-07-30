@@ -1,18 +1,11 @@
 # Keep the Designs tab pure: designs only, live previews, taste-ranked
 
-> visual · task `keep-the-designs-tab-pur-56548` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> visual · task `keep-the-designs-tab-pur-34851` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
 
-**Approach:**
-Enforce a strict separation between design artifacts and live previews, ensuring only curated designs populate the Designs tab.
-
-**Steps:**
-1. **Audit & Archive:** Run `find ./designs -type f ! -name "*.design.*" -exec mv {} ./archive/ \; 2>/dev/null || true` to relocate non-design files from the Designs tab directory.
-2. **Enforce Naming:** Rename all remaining files to `*.design.{ext}` (e.g., `homepage.design.fig`) via `for f in ./designs/*; do mv "$f" "${f%.*}.design.${f##*.}"; done`.
-3. **Validate Previews:** Add a CI check (`scripts/validate-designs.sh`) to reject PRs with unapproved previews (e.g., `if grep -q "preview" ./designs/*.design.*; then exit 1; fi`).
-4. **Tooling:** Use `chroma-design-lint` (local npm package) to auto-flag non-design files in PRs.
-5. **Deploy:** Update `designs/.gitignore` to exclude `*.preview.*` files.
-
-**Needs:**
-- Write access to the repo’s `designs/` directory.
-- Node.js (for `chroma-design-lint`).
-- CI runner with `bash`/`find`/`grep` support.
+**Approach:** Enforce design standards through manual curation and automation
+1. **Review existing designs**: Use `git ls-files` to list all files in the Designs tab and manually review each design for relevance and aesthetic quality
+2. **Implement a taste-ranking system**: Create a new file `designs.md` and use GitHub Markdown to organize designs into tiered lists, with top-tier designs displayed prominently
+3. **Automate live preview generation**: Utilize `github actions` and `ffmpeg` to generate live previews for each design, with a new workflow file `.github/workflows/previews.yml` to automate the process
+4. **Enforce design tab purity**: Set up a `git hook` to prevent non-design files from being committed to the Designs tab, using `pre-commit` to run a script that checks file types and contents
+5. **Monitor and maintain**: Regularly review the Designs tab using `git status` and `git log` to ensure that only high-quality designs are added and that the taste-ranking system remains effective
+**Needs:** `git`, `github actions`, `ffmpeg`, `pre-commit`, `github markdown`, write access to the Designs tab repository

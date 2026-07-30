@@ -43,6 +43,36 @@ Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Lo
   quietly doing a partial, inconsistent version of it. No blocker for Eitan; nothing new needs
   urgent attention beyond the standing open questions already on file (pitch-37587's Bright Data
   conflict note fire 70 added, still awaiting his P5-gated call).
+  **Second batch, same fire** (the outer schedule asked for more volume this cycle than fire 71's
+  single batch): 6 more, oldest-first, one commit each. `TrmjsMufjv0` (NVIDIA's free
+  OpenAI-compatible API, 80+ models) and `fe8X0IQL5HY` (a quantified Ponytail claim: 464→101
+  lines on a vague dashboard task) merged cleanly as endorsements into already-catalogued
+  records (`nvidia-nim`, `ponytail`/`ponytail-minimal-code-skill`, the latter's figure added to
+  `popularity_signals`). `U4dsOiRt5Qk` (Shopify's Spring-2026 "Campaign Autopilot" AI marketing
+  console) replaced the existing `shopify` tool's boilerplate description — literally the
+  anti-boilerplate-gate's own example text — with this video's specific detail; bumped its
+  `quality_score` 3→5 to match. `VkMzG3SHU_4` and `bnMvBQNX-tY` had no verifiable specifics
+  (pure comment-bait; an unnamed, unlinked hobby project) — no extraction. **`YjSDiH55W6M`
+  surfaced a real data-quality issue rather than a clean merge**: its tags are specific and
+  consistent (`OpenClaw`, `OpenClaw Docker`, `gateway token`, `pairing request`, self-hosted
+  Docker+Ollama setup), but the two existing `tools.json` records already named `openclaw` /
+  `openclaw-gateway` describe unrelated products (a B2B lead-gen platform scraping satellite
+  imagery; a "persistent memory plugin") — both `discovered_via: "mine_feeds (gemini-video)"`,
+  so likely a prior news-mining pass either hit a genuine name collision across unrelated
+  products or mis-extracted one of them. Rather than guess a merge that could corrupt either
+  record, or invent a third same-named tool record on tag-only evidence (no real transcript),
+  I added only the concrete tip (copy the gateway token before it scrolls away) to
+  `tips.json`'s `by_tool.OpenClaw` and left the tool catalog untouched — flagging it here as a
+  cleanup candidate for a fire with room to actually resolve which "OpenClaw" is which.
+  `data/_pending`: 1191 → 1185. `status.json.run_report` updated again
+  (`analyzed_this_run` 40→46, `total_videos_analyzed` +6). Re-ran `guardrails` — still 19/20,
+  0 critical. **Harsh self-criticism (batch 2):** the Shopify/NVIDIA/Ponytail merges are solid,
+  correctly-verified work, but the OpenClaw finding is the more important output of this half of
+  the fire and I only spent enough budget to flag it, not resolve it — a future fire (or Eitan)
+  still has to actually pull up both source videos and decide whether these are truly two
+  different "OpenClaw"s or a mis-catalogued duplicate; I did not attempt that here because
+  neither pending video's own content was enough to settle it confidently, and guessing wrong in
+  a catalog of ~3,000 tools is a worse outcome than leaving a flagged gap.
 
 - **~00:1x (fire 71, unattended, cloud session)** — Read fire 70's own log first, per this
   fire's instruction to account for the prior session before continuing: fire 70 explicitly

@@ -1,10 +1,11 @@
 # Raise G8 Personal fit (68/100): 20% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond
 
-> visual · task `raise-g8-personal-fit-68-54050` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
+> visual · task `raise-g8-personal-fit-68-54632` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
 
-**Approach:** Refine G8 Personal fit by enhancing design taste-tagging and integrating NOSG wiring for improved Arena learning.
-1. **Audit and refine taste-tagging**: Utilize `grep` and `sed` commands to review and update the existing 20% taste-tagged designs, ensuring consistency and accuracy in the tagging process.
-2. **Implement NOSG wiring**: Run `nosg-wire` command with the `--next` flag to integrate taste beyond the current limitations, and verify the wiring using `nosg-diag` tool.
-3. **Optimize design files**: Use `ffmpeg` to resize and compress design files, reducing the average file size from 17 to a target of 10, and update the `design_config.json` file to reflect the new size and cost calculations.
-4. **Arena learning integration**: Execute `arena-learn` command with the `--live` flag to enable live learning and monitor the performance using `arena-metrics` tool.
-**Needs:** `grep`, `sed`, `nosg-wire`, `nosg-diag`, `ffmpeg`, `design_config.json` file, `arena-learn` and `arena-metrics` tools, access to design files and NOSG wiring documentation.
+**Approach:** Enhance G8 Personal fit by increasing taste-tagged designs and leveraging Arena learning live with NOSG wired.
+1. **Review and curate designs**: Use `Adobe Illustrator` to review the 17 existing designs, and apply taste tags to at least 20% of them, ensuring each tagged design meets the high aesthetic standards.
+2. **Implement Arena learning live**: Utilize `Python` with `scikit-learn` library to integrate Arena learning live, enabling the system to learn from interactions and improve the taste-tagging process.
+3. **Integrate NOSG wired**: Leverage `Node.js` and `npm` to wire NOSG, allowing for seamless communication between the design curation and Arena learning live components.
+4. **Monitor and adjust**: Use `GitHub Desktop` to track changes and `Google Analytics` to monitor the performance of the enhanced G8 Personal fit, making adjustments as necessary to maintain a high level of quality.
+5. **Refine and expand**: Employ `Figma` to refine the design curation process and expand the reach of the taste-tagged designs, ensuring a cohesive and aesthetically pleasing experience.
+**Needs:** Adobe Illustrator, Python, scikit-learn, Node.js, npm, GitHub Desktop, Google Analytics, Figma, access to the G8 design files and Arena learning live platform.

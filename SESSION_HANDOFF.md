@@ -258,7 +258,12 @@ Ruflo naming collisions resolved via WebFetch/WebSearch against the real repos) 
 increment (fire 74: built the missing WRITE side of dynamic tab promotion, `src/dynamic_tabs.py`,
 wired into `excava_selfimprove`). Fire 76 added a new `claude-science` tool record, logged a
 comment-gated prompt, filed a robotics/hardware tab-candidate, and filled 5 empty News-tab
-summaries. Full detail + harsh self-criticism in each fire's own AWAY_LOG.md entry.)**
+summaries. Fire 77 wired `regression`/`dropped` into the `improve` department's specialization so
+the two stuck `'tools'/'commands' dropped 1 records` holding-list entries route instead of holding
+forever. Fire 78 (backend-only, still v132): ran `git_safe backup` (G-C was stale) and closed the
+"TUTORIAL MISSING for dashboard v132" nag that had been open since fire 70 (2026-07-29) by adding
+the missing per-build `data/tutorials.json` entry — guardrails now 19/20, only PC-dependent G-O
+open. Full detail + harsh self-criticism in each fire's own AWAY_LOG.md entry.)**
 
 **(prior, v120) M2 UNDERWAY.** Sessions 8-10: 4 brain families in the engine CATALOG (GLM/DeepSeek/Kimi via
 OpenRouter free + local Qwen/Llama); OpenRouter key VERIFIED (Eitan's secret OPENROUTER_API_KEY_REAL,

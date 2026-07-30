@@ -1,15 +1,18 @@
 # power: Raise EXCAVA's capability by even 0.5%: find new tools, best/newest models, combine elemen
 
-> Decision artifact · room `dept-power-raise-excava-s-capabil-534` (dept) · 2026-07-15T10:44:35.006305+00:00
-> Participants: Gearbox, Torque, Dynamo · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-power-raise-excava-s-capabil-534` (dept) · 2026-07-30T21:13:02.422261+00:00
+> Participants: Gearbox, Torque, Dynamo · synthesized by mistral/mistral-small-latest
 
-**Decision:** Run a head-to-head A/B test between Llama 3.4 70B on Cerebras CS-3 and rented NVIDIA H100s.
+**Decision:**
+Run a 1,000-task live pilot comparing Claude 3.7 Sonnet vs. Mythos 5 on EXCAVA’s primary metric—own the test, results, and cost/benefit analysis by Friday.
 
 **Plan:**
-1. Design the A/B test framework, ensuring clear criteria for measuring capability gain and latency impact.
-2. Implement the Llama 3.4 70B model on both the Cerebras CS-3 and rented NVIDIA H100s.
-3. Deploy a controlled environment for the A/B test, monitoring performance across both setups in real time.
-4. Collect and analyze data from the test to determine the effective capability increase and any latency differences.
-5. Prepare a report summarizing findings and recommending the more effective deployment strategy.
+1. **Design the pilot:** Define EXCAVA’s primary metric, ensure blind evaluation, and set a 1,000-task sample size.
+2. **Deploy models:** Integrate Claude 3.7 Sonnet and Mythos 5 into EXCAVA’s task pipeline.
+3. **Execute live tests:** Run the pilot on production traffic, logging latency, cost, and performance.
+4. **Analyze results:** Compare models on the primary metric, cost per task, and margin impact.
+5. **Deliver report:** Compile findings into a cost/benefit analysis with go/no-go recommendation.
+6. **Document:** Push raw data, scripts, and analysis to a private GitHub repo for auditability.
 
-**What changed:** A decision was made to empirically test both options rather than choose one based solely on theoretical advantages.
+**What changed:**
+Replaced open-ended debate with a controlled, data-driven pilot to resolve model superiority and cost trade-offs.

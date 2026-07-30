@@ -111,10 +111,25 @@ def main() -> int:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     except Exception:
         pass
-    hits = find(args.query, max(args.top, 4))
-    if not hits:
-        print(f'activate: no hub match for "{args.query}". Try a different name.'); return 1
-    plans = [plan(it, typ) for _, typ, it, _ in hits[: args.top]]
+    # M2 class overhaul: prefer the Element class (status-aware — it excludes dead elements and
+    # ranks usable ones first, which this module's own find() cannot see). Falls back to the
+    # legacy per-file path whenever the index is absent (offline outside the repo) or matches
+    # nothing, so behaviour is never worse than before the migration.
+    plans, names = [], []
+    try:
+        from src import excava_core
+
+        els = excava_core.find(args.query, limit=max(args.top, 4))
+        plans = [el.activation() for el in els[: args.top]]
+        names = [(el.name, el.type) for el in els[args.top:]]
+    except Exception:
+        plans = []
+    if not plans:
+        hits = find(args.query, max(args.top, 4))
+        if not hits:
+            print(f'activate: no hub match for "{args.query}". Try a different name.'); return 1
+        plans = [plan(it, typ) for _, typ, it, _ in hits[: args.top]]
+        names = [(n, t) for _, t, _, n in hits[args.top:]]
     if args.json:
         print(json.dumps(plans, ensure_ascii=False, indent=2)); return 0
     for p in plans:
@@ -124,8 +139,8 @@ def main() -> int:
         links = " ".join(x for x in [p["homepage"], p["github"]] if x)
         if links:
             print("  links:", links)
-    if len(hits) > args.top:
-        print("\nother matches:", ", ".join(f"{n} ({t})" for _, t, _, n in hits[args.top:]))
+    if names:
+        print("\nother matches:", ", ".join(f"{n} ({t})" for n, t in names))
     return 0
 
 

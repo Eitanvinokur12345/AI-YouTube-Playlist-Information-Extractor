@@ -4,6 +4,60 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+## 2026-07-30 — AWAY MODE ENDED (Eitan back) · M2 class overhaul begins
+
+- **~17:0x (fire 82, INTERACTIVE — away mode OFF)** — Eitan returned and set the loop to a fixed
+  hourly interval (:07). Away mode closed out in `data/excava/away_mode.json` after 81 unattended
+  fires (2026-07-21 -> 2026-07-30). **Corrected a real plan error before doing any work:** Eitan
+  challenged the premise that M2 "starts today" (END PLAN §9 timeline), and he was right. Audited
+  M2.0-M2.8 against evidence: PROTOCOLS self-audit wired in `excava.py`, engine layer live,
+  leases+budgets live, a 46-agent named roster with personas, **26 days of real room transcripts
+  (from 2026-07-05)**, **2,305 committed artifacts**, 75 self-improvements + 4 pitches. M2 is
+  ~8/9 BUILT and running — it is late in M2, not starting. The one genuinely unbuilt M2 item is
+  the **97->5-class collapse**, which is a REFACTOR of working machinery, not new capability;
+  fire 65's "M2's core deliverable has zero scaffolding" framing was misleading and is corrected
+  here. Eitan's verdict on the P5 gate: **start it, one class at a time, old module still working
+  behind it.**
+- **Increment: CLASS 1 of 5 — Element/Package** (`src/excava_core.py`, +`src/excava_core_test.py`).
+  Rationale: 14 separate modules (`relate`, `deep_retrieve`, `verify_elements`, `power_scan`,
+  `excava_creators`, `discover_promote`, `build_hub_api`, `github_meta_enrich`, `excava_backlog`,
+  `excava_proof`, `excava_selfimprove`, `excava_experiments`, `element_model`, `docs/dashboard.js`)
+  each re-open `elements_index.json` and re-decide what "usable"/"stub"/"a way in" mean — that
+  duplication IS the fragmentation §2/§6 targets. Element is the narrowest, most-depended-on shape,
+  so it goes first and the other four (Tool/Room/Agent/Router) will hold Elements. Built as a typed
+  ACCESSOR over `element_model` (which stays sole index-builder and sole write path via `set_field`)
+  — explicitly not a rewrite. stdlib-only, no new dependency (P1); local-index-then-public-hub
+  fallback preserves offline/online parity (P7).
+- **WIRED (not orphaned):** `src/activate.py` migrated onto it — the user-facing activator is now
+  status-aware for the first time (excludes `dead`, ranks usable first), with the legacy per-file
+  path kept as a fallback so behaviour is never worse offline.
+- **VISIBLE (Eitan can do something new):** `python -m src.excava_core stats | find <q> [--usable]
+  | show <id> | package <name> --add <id>` — a typed, one-command way to query all 11,224 elements
+  and assemble a persisted PACKAGE (law P8) from the terminal. Verified live: built
+  `research-agent-stack` = exa-mcp + github-mcp + n8n.
+- **Found a real data bug on first run:** `element_model._slug()` truncates at 60 chars, so 4 long
+  `command` names collide and **6 records are UNREACHABLE by id** (`npx skills add ...` x2,
+  `cd /Users/liamjohnston/... ` x4, `curl ... ruflo ...` x2, `/codex:review` vs `/codex-review`).
+  Surfaced via `duplicates()` + a warning in `stats` rather than silently swallowed. NOT fixed here
+  on purpose: changing the slug re-keys elements hub-wide and invalidates `element_overrides.json`
+  / `elements_related.json` keys — a separate, independently-verified increment.
+- **Verified:** `python -m src.excava_core_test` 19/19 pass (incl. status-law P3 assertions: niche
+  IS usable, unverified never is, dead never returned; Package disk round-trip on a temp store).
+  All 6 sampled index consumers still import clean; `element_model` rebuild unchanged (11,230);
+  guardrails clean except pre-existing G-O (local drain stale — Eitan's PC has been off 107h).
+- **Harsh criticism.** (1) The 5-class collapse is now 1/5 done and the remaining four are the hard
+  ones — Element was chosen partly BECAUSE it was the safest, so this increment proves the pattern,
+  not the architecture. Router is where LangGraph actually gets decided, and **neither langgraph nor
+  crewai is installed** (`requirements.txt` has 4 deps); §2 says "on LangGraph/CrewAI" but nothing
+  has validated that a heavy orchestration dep is even wanted on a GitHub-Actions runtime. That
+  decision is deferred, not solved. (2) Migrating ONE of 14 consumers is a token gesture toward
+  "nothing orphaned" — 13 still hand-roll their access, so the fragmentation is 1/14 reduced, and
+  a half-migrated system is briefly WORSE than a consistently-bad one. (3) The class surfaced junk
+  descriptions in `connector` records (raw README badge markdown in `what`) which `is_usable()`
+  happily calls usable — correct by its own definition, but it means "3,953 usable" overstates what
+  Eitan can actually read. (4) Search still scores on name-overlap only; `find("github mcp")` ranks
+  an unverified record above a verified one because text match outweighs status by design.
+
 ## 2026-07-30
 - **~15:5x (fire 81, unattended, cloud, scheduled-task invocation)** — Followed up on fire 80's
   open thread (analyze.yml's failure streak) with one correction and one sharper data point,

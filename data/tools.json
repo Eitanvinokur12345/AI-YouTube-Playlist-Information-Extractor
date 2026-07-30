@@ -9077,10 +9077,10 @@
       "name": "OpenClaw",
       "slug": "openclaw",
       "category": "agents",
-      "company": "apex.host",
-      "country": "USA",
-      "open_source": false,
-      "description": "AI agent platform for automated B2B lead generation: scrapes satellite imagery to identify target properties, pulls homeowner data from public records, executes multi-channel outreach (direct mail, follow-up automation), and manages the entire sales pipeline on autopilot.",
+      "company": "OpenClaw Foundation",
+      "country": null,
+      "open_source": true,
+      "description": "Open-source, self-hosted personal AI agent gateway (OpenClaw Foundation) that runs one agent across 25+ messaging channels (WhatsApp, Telegram, Discord, Slack, iMessage, and more) from a single control plane, with voice wake, a live agent-driven canvas UI, and multi-agent routing across workspaces. Installed with a one-line script (curl | bash) or Docker on a VPS/local box; commonly run against Ollama for zero-API-cost local inference. The satellite-imagery B2B lead-gen workflow this record previously described as OpenClaw's own definition is actually one example business built ON TOP of OpenClaw (see the 'OpenClaw Satellite-Based B2B Lead Generation' skill) — corrected 2026-07-30.",
       "quality_score": 6,
       "model_version": null,
       "target_tool": "other",
@@ -9173,7 +9173,9 @@
         }
       ],
       "link_tries": 6,
-      "data_quality_note": "2026-07-29 (hand-drain rep): this video (46fI3TSx3hE) describes OpenClaw as a self-hostable AI-agent gateway installed on a VPS via one command with Discord bot integration (matches the OSS 'openclaw' project referenced elsewhere in this repo's own EXCAVA architecture docs as a channels/shell tool). That does not match this record's current description (B2B lead-gen via satellite imagery), which several OTHER source videos in endorsement_video_ids also back. Two distinct products may share the 'OpenClaw' name, or one earlier extraction hallucinated the lead-gen framing. Left the description untouched (insufficient evidence to safely overwrite with only a 43s/131-char source) — flagging for a future pass with fuller transcripts."
+      "data_quality_note": "2026-07-30 (fire 74, resolved): confirmed via WebFetch of github.com/openclaw/openclaw and WebSearch that OpenClaw is a real, single, open-source self-hosted personal-AI-agent gateway (OpenClaw Foundation, openclaw.ai). The prior description here (satellite-imagery B2B lead-gen) was a mis-extraction: it took the SPECIFIC WORKFLOW shown in source video -cBwLx7Mcbk ('Somebody just unleashed their open claw AI agent on a pool business...') and wrote it as if that workflow WERE the product, instead of describing the general-purpose gateway and noting the lead-gen system as one example use case. Verified against 46fI3TSx3hE ('Install OpenClaw on a VPS with one command') whose tags (VPS install, Discord bot setup, gateway status, self-hosted AI) match the real product exactly. Description, company (was wrongly 'apex.host' — that is a REAL but SEPARATE company selling managed OpenClaw hosting, confirmed via WebSearch of admin.apex.host/app.apex.host — not the maker of OpenClaw itself), open_source, and homepage/github corrected. The near-duplicate record 'openclaw-bot' (same homepage/github, same source video, same wrong description) was merged into this record rather than left as a second slug for the same product. Superseded the 2026-07-29 partial note left by an earlier hand-drain rep, which flagged but did not resolve this. Fires 72/73 also flagged this collision without resolving it.",
+      "homepage": "https://openclaw.ai",
+      "github": "https://github.com/openclaw/openclaw"
     },
     {
       "name": "NotebookLM",
@@ -34966,28 +34968,6 @@
       ]
     },
     {
-      "name": "OpenClaw bot",
-      "slug": "openclaw-bot",
-      "category": "agents",
-      "description": "An AI agent designed to automate the entire sales and marketing process for high-ticket niches, from lead generation (satellite imagery analysis, data extraction) to personalized marketing material creation (AI rendering, video generation, postcard printing) and retargeting.",
-      "quality_score": 5,
-      "homepage": "https://openclaw.ai",
-      "github": "https://github.com/openclaw/openclaw",
-      "source_type": "web_news",
-      "source_url": "https://www.youtube.com/watch?v=-cBwLx7Mcbk",
-      "discovered_via": "mine_feeds (visual-seen)",
-      "added_at": "2026-07-04T05:59:36.511339+00:00",
-      "deploy_url": "https://vercel.com/new/clone?repository-url=https://github.com/openclaw/openclaw",
-      "links_verified_at": "2026-07-04T07:23:29.966290+00:00",
-      "source_videos": [
-        {
-          "id": "-cBwLx7Mcbk",
-          "url": "https://www.youtube.com/watch?v=-cBwLx7Mcbk",
-          "title": "Openclaw Just Made Someone Rich"
-        }
-      ]
-    },
-    {
       "name": "Opus 4.0",
       "slug": "opus-4-0",
       "category": "agents",
@@ -41695,13 +41675,13 @@
       ]
     },
     {
-      "name": "OpenClaw Gateway",
-      "slug": "openclaw-gateway",
-      "category": "integration",
-      "company": "OpenClaw",
-      "open_source": false,
-      "description": "A persistent memory plugin that integrates with OpenClaw gateways to provide memory for AI agents.",
-      "quality_score": 4,
+      "name": "Claude Code One-Command Persistent Memory Setup",
+      "slug": "claude-code-persistent-memory-oneline",
+      "category": "productivity",
+      "company": null,
+      "open_source": null,
+      "description": "A creator-shared, one-command setup that gives Claude Code persistent memory across sessions — eliminating context-limit errors and cutting tokens wasted re-explaining the project to the agent. The full setup guide is shared as a linked Google Doc rather than named in the video itself, so the underlying tool/product is NOT confirmed from this source (see data_quality_note).",
+      "quality_score": 3,
       "model_version": "",
       "release_status": "released",
       "homepage": "",
@@ -41717,7 +41697,10 @@
           "url": "https://www.youtube.com/watch?v=Nj-j3eL7e2w",
           "title": "Persistent memory just saved Claude Code"
         }
-      ]
+      ],
+      "video_quality_score": 3,
+      "low_quality_source": true,
+      "data_quality_note": "2026-07-30 (fire 74, resolved): this record was previously named 'OpenClaw Gateway' and described as 'a persistent memory plugin that integrates with OpenClaw gateways' — but its only source video, Nj-j3eL7e2w ('Persistent memory just saved Claude Code'), never mentions OpenClaw anywhere in its title, description, transcript, or 15 tags; it is entirely about Claude Code. That is a fabricated brand attribution from a low-quality mine_feeds (gemini-video) pass, not a real second 'OpenClaw' product — renamed and re-slugged to drop the false OpenClaw association. Note for a future fire with capacity to verify further: WebSearch independently surfaced a real, well-known product, 'claude-mem' (github.com/thedotmack/claude-mem, ~46k GitHub stars) that matches this description almost exactly (one-command persistent memory for Claude Code) AND ships an official 'OpenClaw integration' plugin — plausibly what an earlier extraction pass half-remembered or conflated. This record deliberately does NOT assert it IS claude-mem, since this specific video's own content never names any product — that would trade one unverified brand attribution for another. If a future video explicitly names claude-mem doing this exact workflow, merge this record into a proper 'claude-mem' tool entry instead of guessing now."
     },
     {
       "name": "OpenCode AI",

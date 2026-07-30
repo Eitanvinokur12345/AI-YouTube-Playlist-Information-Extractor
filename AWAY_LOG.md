@@ -5,6 +5,108 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-30
+- **~05:1x (fire 75, unattended, cloud session).** **Git-policy deviation flagged explicitly (per
+  this fire's own brief, which overrides the repo's default convention):** this session's harness
+  requires landing all work on `claude/kind-shannon-bjeg3u` only, never `origin main` directly —
+  unlike fires 1-74, which used `src.git_safe ship`/`push` (hardcoded to `origin main`). Never
+  called `git_safe ship`/`push` this fire; used plain `git add`/`commit`/`push origin
+  claude/kind-shannon-bjeg3u` throughout. `python -m src.standing_checks` had self-healed upstream
+  tracking back to `origin/main` on its very first run (its own hardcoded behavior) — caught it
+  immediately via `git branch -vv` and re-pointed with `git branch --set-upstream-to=
+  origin/claude/kind-shannon-bjeg3u claude/kind-shannon-bjeg3u` before doing anything else. One
+  side-effect worth naming: `src/guardrails.py`'s G-G ("Remote sync verified") and a few other
+  checks are hardcoded to compare `HEAD` against `origin/main`, not the working branch — so G-G
+  reads "NOT in sync" this fire (and will keep doing so on this branch) even though every commit
+  really did land on `origin/claude/kind-shannon-bjeg3u` (verified below); this is an expected,
+  known false-positive from the branch policy, not a real desync, and not something I patched
+  (patching guardrails.py's target branch is a bigger, cross-cutting change outside this fire's
+  scope and not obviously what future fires — which mostly DO push to main — would want).
+  Standing checks: `python -m src.standing_checks` — clean otherwise (self-healed the usual
+  stale-cache pair). `python -m src.guardrails` 17/20 → 18/20 by the end (0 critical throughout;
+  G-C flipped green after running `python -m src.git_safe backup`, a local-only bundle command,
+  not the banned `ship`/`push`); G-G stayed red for the reason above, G-O stayed red
+  (EITAN-PC local drain stale 95h, not mine to fix).
+  **Video drain: 15 videos, newest-first (catch-up mode active, confirmed from both
+  `data/catch_up.json` and `config.json`'s `catch_up` block — `order: newest_first`), one commit
+  each.** Batch skewed heavily toward AI-industry Shorts (STARTUP HAKK / Evgenii Arsentev / Matty
+  AI Models & Monetization style channels) with thin, description-only transcripts — mostly news
+  fill rather than new skills, which is an honest reflection of what was actually in the batch, not
+  under-effort: `fD2uqo6naYA` (AI coding-cost/revenue stat, news only), `KcbTGgRfzQo` (vague
+  "3 methods" prompt-hack claim that never names the 3 methods — anti-boilerplate gate, no skill),
+  `RMq3VP-zqt8` (Opus 5 vs Fable 5 claims — **found and merged a real duplicate**: `opus-5` and
+  `claude-opus-5` were the same Anthropic model split across two slugs by separate mining passes;
+  merged into one record with unioned sources), `CUkqjlIRjKc` (Nick Saraev frontier-stagnation
+  teaser, comment-gated with 0 comments to mine — logged to `data/comment_gated.json` per Step 2e
+  since the link genuinely isn't recoverable), `1E98J1BBWYs` (AI-mindset book promo, no tool),
+  `C68pV8nExyI` (AI-protein-design reverses-aging claim, 393k views — filled news + added a second
+  anecdote to the existing `ai-healthcare` tab candidate, now at 2 occurrences), `BYf1sRNxqt4`
+  (Cloudflare's Sept-15 default AI-bot-block policy — real, specific, credible; enriched the
+  existing thin `cloudflare` tool record with the actual policy detail), `UGbvSHp0wSo` (Fable 5
+  use-case roundup — **found and merged a bigger duplicate cluster**: `claude-fable` (15 mentions),
+  `fable-5` (6 mentions), and `claude-fable-5` (1 mention) were all the same Anthropic Claude Fable
+  5 model under three slugs from three different mining passes; merged into `claude-fable` with
+  unioned endorsements/sources, mentions 15→19; left the differently-scoped `fable-5j` and the
+  clearly-unrelated `fable` (a domain-for-sale page) alone since evidence doesn't support folding
+  them in), `egkntVmRkro` (a real, specific Claude-usage-limit-to-ChatGPT/Gemini context-transfer
+  browser extension — but genuinely never named anywhere in the source, so no tool record was
+  possible; news only, explicitly noting why), `EdMkn1aNK2o` (Dan Martell hook clip, 48.5k views,
+  zero recoverable content behind the hook — one comment mentioned OpenRouter but had 0 likes and
+  wasn't a creator reply, so it didn't clear Step 2d's evidence bar), `DAruHr-AdwU` (general
+  build-don't-just-watch career advice, not AI-specific enough for tips.json), `d3pvzvkqEGo`
+  (Anthropic Academy's 3 free certificate courses — enriched the existing thin `anthropic-academy`
+  record; the linked Google Doc guide 403'd on WebFetch, skipped per Step 2c), `68TY4Fhrf2Y`
+  (**the one genuine new skill this fire**: Anthropic's own official "four levels of Claude Code
+  loop control" framework — manual/goal-based/time-based/fully-autonomous — concrete and specific
+  enough to clear the anti-boilerplate gate; shipped as `claude-code-loop-four-levels`,
+  quality 7, with a real `SKILL.md` package under `skills/`), `wPwUA4fOLFc` (GPT-5.6 Pro
+  35-year-old math-problem claim, uncited — enriched the previously-empty `gpt-5-6` tool
+  description), `6d_JlgfDUw4` (Claude Fable Jacobian-Conjecture counterexample claim — same
+  uncited-claim pattern as the GPT-5.6 one, added as an endorsement on the now-merged
+  `claude-fable`). `data/_pending`: 1174 → 1159. `status.json.run_report` updated after every
+  video (`analyzed_this_run` +15, `total_videos_analyzed` +15 → 1721, `total_tools` 2988→2985 net
+  of the 3 merges, `tab_candidates_open` 24→25). Also did the **Step 3b-required re-sort of
+  `data/tools.json`** by mentions/quality/name after the merges disturbed sort order (checked
+  first: 8 order violations out of 2,985 records; re-sorted; asserted the record *set* — every
+  slug+name pair — was unchanged before writing; 0 violations after) as its own separate commit,
+  same pattern fire 73 used for the same instruction.
+  **M1-M3 increment: none shipped this fire, by deliberate choice, not by skipping the hunt.**
+  Read `EXCAVA_V2_STEPS.md` in full plus `data/excava/pitches.json` (3 of 4 still pending Eitan's
+  call, unchanged since 07-10 — correctly untouched) and `data/tab_candidates.json`'s current
+  recurrence counts (max is now 3, `ai-security-vulnerabilities`; still well under fire 74's
+  dynamic-tabs promotion threshold of 5, so that machinery correctly still does nothing — did not
+  re-verify it beyond confirming this, to avoid duplicating fire 74's own synthetic-test work).
+  Found no test file convention in this repo (`find . -iname "test_*.py"` returns nothing) so
+  didn't invent a new one just to have something to ship. The two tool-record merges above
+  (Opus 5, Claude Fable 5) are real, verified data-quality fixes in the same spirit as fires
+  72/74's OpenClaw/Ruflo collision work, but they're Step 3b pipeline hygiene, not a new
+  program-level capability — flagging that distinction honestly rather than counting them as
+  this fire's "M1-M3 increment" to pad the report.
+  Verified everything: every touched JSON file re-parsed clean at the end (`data/**/*.json`, 0
+  bad files); the tools.json resort asserted record-set equality before writing, not just "it
+  ran"; `git log origin/claude/kind-shannon-bjeg3u..HEAD` is empty after the final push (confirmed
+  below); `git status` clean. Re-ran `python -m src.pulse` and `python -m src.guardrails` at the
+  end — 18/20, 0 critical, `PULSE.md` refreshed, telemetry commit `4ab5032d`.
+  **Harsh self-criticism:** 15 videos is a slightly larger batch than recent fires but is still a
+  rounding error against ~1,159 remaining, exactly as every prior fire has already said — I'm not
+  claiming otherwise. This particular batch was unusually thin (mostly Shorts from AI-news-farm
+  channels with description-only "transcripts" and zero real footage), which is part of why only 1
+  of 15 videos yielded a genuinely new skill — that's an honest reflection of the batch, but it
+  also means I leaned on "enrich an existing thin tool record" and "fill a news summary" far more
+  than on net-new extraction, and a reviewer skimming the tools.json diffs might reasonably ask
+  whether some of those single-source, uncited claims (the GPT-5.6 math-problem and Claude Fable
+  Jacobian-Conjecture claims especially) belong in a *quality*-scored catalog at all rather than
+  just the news feed — I kept them in tools.json as low-scored (4-5), heavily-hedged endorsements
+  rather than omitting them, which is defensible but not obviously the only right call. The two
+  merges are real but were found opportunistically while processing videos that happened to touch
+  those slugs, not from a systematic sweep for other collisions — there are almost certainly more
+  Fable/Opus/GPT-5.6-tier naming collisions still sitting in the ~2,985-tool catalog (the
+  `fable-5j` record I deliberately left alone is one candidate I flagged but did not resolve).
+  Declining to force an M1-M3 increment is the choice the brief explicitly permits, but three of
+  the last four fires (72, 73, 75) have now made that same choice for the same reason (video-drain
+  ate the available time/attention) — a future fire that budgets time for the M-plan hunt *first*,
+  before video-drain, might find more than the ones reaching for it as leftover effort. No
+  blocker for Eitan; nothing here needs urgent attention beyond the already-standing open items.
+
 - **~03:1x (fire 74, unattended, cloud session)** — Followed this fire's own explicit brief instead
   of the video-drain default fires 71-73 each fell back to and each self-criticized: resolved both
   twice-flagged naming collisions with real research, then spent real effort hunting an M1-M3

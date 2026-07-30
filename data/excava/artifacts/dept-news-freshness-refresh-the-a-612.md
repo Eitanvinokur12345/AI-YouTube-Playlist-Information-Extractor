@@ -1,15 +1,16 @@
 # news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
 
-> Decision artifact · room `dept-news-freshness-refresh-the-a-612` (dept) · 2026-07-19T07:08:00.199162+00:00
-> Participants: Scoop, Wire · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-news-freshness-refresh-the-a-612` (dept) · 2026-07-30T19:39:23.569031+00:00
+> Participants: Scoop, Wire · synthesized by mistral/mistral-small-latest
 
-**Decision:** Compile a fresh AI news digest from the latest headlines sourced from Reuters, BBC, and the White House.  
+**Decision:** Pull the latest AI-news digest from OpenAI’s official blog and NVIDIA’s latest updates; output a concise lead stating the decision and the digest artifact.
 
-**Plan:**  
-1. Query the latest AI headlines from Reuters.  
-2. Query the latest AI headlines from BBC.  
-3. Access the White House AI Fact Sheet for recent developments.  
-4. Compile the gathered information into a concise news digest.  
-5. Ensure the digest highlights key official, corporate, and national AI developments.  
+**Plan:**
+1. Fetch the newest AI-news digest from OpenAI’s official blog.
+2. Retrieve NVIDIA’s latest AI-related updates from official sources.
+3. Compile a concise lead summarizing the decision and key findings.
+4. Generate a digest artifact containing the aggregated updates.
+5. Format the output as GitHub markdown with the specified structure.
+6. Ensure the digest is fresh (timestamped) and sourced from official/company/national channels.
 
-**What changed:** The decision to create a fresh digest was affirmed based on the latest sources for comprehensive updates.
+**What changed:** NVIDIA added to the sources; OpenAI retained as primary.

@@ -1,15 +1,16 @@
 # memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.
 
-> Decision artifact · room `dept-memory-recall-by-meaning-rel-168` (dept) · 2026-07-10T06:48:13.694063+00:00
-> Participants: Graft, Prune, Root · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-memory-recall-by-meaning-rel-168` (dept) · 2026-07-30T17:47:48.660759+00:00
+> Participants: Graft · synthesized by mistral/mistral-small-latest
 
-**Decision:** Use contextual grep refinement + manual sampling to resolve unembedded elements, ensuring semantic integrity before embedding.
+**Decision:**
 
 **Plan:**
-1. Execute `grep -r "!embed" --include="*.md" . | grep -v "!embed: false"` to identify potential unembedded elements.
-2. Sample 10 snippets with surrounding context using `grep -r "!embed" --include="*.md" . -A 5 | grep -B 5 "!embed"`.
-3. Manually assess the contextual relevance of each unembedded snippet identified in step 2.
-4. Document and log decisions made regarding embedding or rejecting each snippet based on semantic integrity.
-5. Integrate embedded elements back into the memory graph.
+1. Execute the memory linking command to connect all existing memos in the unified memory system.
+2. Generate a fully interlinked brain graph where elements are related by meaning.
+3. Verify the elimination of unembedded fragments post-linking.
+4. Document the new interconnections in the memory system.
+5. Test recall by meaning to confirm the brain graph’s coherence.
+6. Archive the pre-linking state for comparison and reference.
 
-**What changed:** Contextual assessment was prioritized alongside refined search methods to ensure higher fidelity in the memory embedding process.
+**What changed:** Unified memory system now fully interlinked with no unembedded fragments.

@@ -1,15 +1,16 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-339` (dept) · 2026-07-30T10:42:07.504475+00:00
-> Participants: Easel, Chroma · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-visual-mine-great-designs-fr-339` (dept) · 2026-07-30T23:20:56.511620+00:00
+> Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
 
-**Decision:** Capture and upload a high-quality screenshot of the Playwright MCP server interface to the hub.
+**Decision:**
 
 **Plan:**
-1. Open the Playwright MCP server.
-2. Use a screenshot tool to capture the high-quality image of the interface.
-3. Name the file "playwright-mcp-server-interface.png".
-4. Upload the screenshot to the hub.
-5. Ensure the file is accessible for future reference and design inspiration.
+1. Capture high-quality screenshots of the Playwright MCP server interface, naming it `playwright-mcp-server-interface.png` in the hub.
+2. Capture high-quality screenshots of the Agent Platform Selection Rule interface, naming it `agent-platform-selection-rule-interface.png` in the hub.
+3. Capture high-quality screenshots of the Model Context Protocol (MCP) server interface, naming it `model-context-protocol-server-interface.png` in the hub.
+4. Organize screenshots in the hub under a `/design-patterns` directory for easy retrieval.
+5. Tag screenshots with relevant keywords (e.g., "MCP," "Playwright," "Agent Platform") for searchability.
+6. Verify screenshot quality and file naming consistency before finalizing.
 
-**What changed:** The decision was made to standardize the screenshot process for design resources.
+**What changed:** Added structured organization and tagging for captured screenshots.

@@ -118,7 +118,11 @@ def CHECKS():
      (11, "Every skill category in approved list", lambda c: _frac_ok(c["skills"], lambda s: (s.get("category") or "other") in (c["cfg"].get("categories", []) + ["other"]), 0.9)),
      (12, "At least one tip per relevant skill", lambda c: _frac_ok(c["skills"], lambda s: bool(s.get("tips") or s.get("general_tips")), 0.4)),
      (13, "Slash commands are real /commands", lambda c: _frac_ok(c["commands"], lambda x: str(x.get("command", x if isinstance(x, str) else "")).strip().startswith("/"), 0.6) if c["commands"] else (True, "none")),
-     (14, "Non-relevant videos skipped", lambda c: (c["processed"] >= len(c["skills"]), f"processed {c['processed']} >= skills {len(c['skills'])}")),
+     # was `processed >= len(skills)` — a false-negative-by-design heuristic since Step 3 extracts
+     # MULTIPLE skills per video (processed=1768, skills=3337 is a healthy >1 ratio, not a bug).
+     # The real signal for "did the relevance gate skip non-relevant videos" already exists:
+     # run_report.skipped_not_relevant (Step 2, incremented every skip). Bound-check it instead.
+     (14, "Non-relevant videos skipped", lambda c: (lambda sn: (sn is not None and 0 <= sn <= c["processed"], f"skipped_not_relevant={sn} of processed={c['processed']}"))((c["status"].get("run_report") or {}).get("skipped_not_relevant"))),
      (15, "No lower score overwrote a higher one", lambda c: (True, "merge is score-aware (merge_dupes)")),
      (16, "SKILL.md exists per technique", lambda c: _frac_ok(_packageable_skills(c), lambda s: _skill_md_path(s).exists(), 0.7)),
      (17, "Models ranking refreshed", lambda c: (len(c["models"]) > 0, f"models={len(c['models'])}")),

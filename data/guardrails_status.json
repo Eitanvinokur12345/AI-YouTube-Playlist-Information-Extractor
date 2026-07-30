@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-30T03:46:11.111188+00:00",
+ "generated_at": "2026-07-30T04:59:20.522150+00:00",
  "total": 20,
- "passing": 17,
+ "passing": 18,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -21,9 +21,9 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": true,
-   "detail": "n/a in CI — the beat pushes straight to origin each cycle, bypassing git_safe/local bundles by design.",
-   "severity": "info"
+   "ok": false,
+   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
+   "severity": "warn"
   },
   {
    "id": "G-D",
@@ -84,8 +84,8 @@
   {
    "id": "G-L",
    "name": "Uncommitted-work watchdog",
-   "ok": false,
-   "detail": "5 untracked source file(s) not committed — commit or quarantine so nothing is lost: other-skills/alphaearth/environmental-data-analysis/SKILL.md, other-skills/alphaearth/geospatial-data-processing/SKILL.md, other-skills/alphaearth/predictive-modeling-environmental/SKILL.md, skills/claude-code-18-agent-seo-audit/SKILL.md",
+   "ok": true,
+   "detail": "no stray source files uncommitted.",
    "severity": "warn"
   },
   {
@@ -99,35 +99,35 @@
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "88704 MB free on the repo drive.",
+   "detail": "30432 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 93.8h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 95.0h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
    "ok": true,
-   "detail": "last 'excava-beat #N' commit 5.8h ago.",
-   "severity": "warn"
+   "detail": "shallow clone — not enough local history to find an 'excava-beat #N' commit either way; not a stall signal, just a checkout-depth limit.",
+   "severity": "info"
   },
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "last 'core-spoton:' commit 0.5h ago.",
+   "detail": "last 'core-spoton:' commit 1.7h ago.",
    "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
-   "ok": false,
-   "detail": "14/16 lane(s) landing on cadence — STALE: discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 933.6h ago (expected within 76h); improve.yml (weekly deep pass): last commit 1283.4h ago (expected within 192h)",
+   "ok": true,
+   "detail": "7/16 lane(s) landing on cadence, 9 can't-tell (shallow clone).",
    "severity": "warn"
   },
   {

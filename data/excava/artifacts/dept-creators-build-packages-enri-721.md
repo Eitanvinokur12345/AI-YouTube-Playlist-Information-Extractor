@@ -1,16 +1,16 @@
 # creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Created by EXCAVA' + tes
 
-> Decision artifact · room `dept-creators-build-packages-enri-721` (dept) · 2026-07-22T17:32:45.960001+00:00
+> Decision artifact · room `dept-creators-build-packages-enri-721` (dept) · 2026-07-30T17:54:26.846899+00:00
 > Participants: Forge, Nova · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Forge drafts the "UGC Factory" npm package in the creators tab, labeled "Created by EXCAVA".
-2. Nova tests the "UGC Factory" npm package to verify its functionality.
-3. Nova labels the tested "UGC Factory" npm package as "Created by EXCAVA" in the creators tab.
-4. Repeat steps 1-3 for "PACKAGES" and "enrich tabs" elements.
-5. Draft remaining elements in the creators tab, ensuring all are labeled "Created by EXCAVA".
-6. Conduct final verification of all drafted elements and update the tes accordingly.
+1. Forge drafts and publishes the UGC Factory npm package as a new module.
+2. Label the package "Created by EXCAVA" in its metadata and documentation.
+3. Include comprehensive tests in the package to ensure functionality.
+4. Enrich the package’s tabs (README, docs, examples) with clear usage guides.
+5. Draft additional elements (e.g., templates, starter kits) under "Created by EXCAVA."
+6. Submit the package for npm publication and tag it with `tes` for testing.
 
-**What changed:** Drafted and tested "UGC Factory" npm package labeled "Created by EXCAVA" in the creators tab.
+**What changed:** UGC Factory npm package created, labeled, and enriched with tests.

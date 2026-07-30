@@ -1,16 +1,16 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-296` (dept) · 2026-07-17T09:54:56.837061+00:00
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-296` (dept) · 2026-07-30T19:11:22.623654+00:00
 > Participants: Reel, Echo · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Reel runs the `kimtaeyoon83/mcp-server-youtube-transcript` tool on video ID "dQw4w9WgQq" to fetch the full transcript.
-2. Reel verifies the transcript output exists and is complete.
-3. Reel marks the task as complete if the transcript is valid.
-4. Repeat steps 1-3 for all pending videos.
-5. Lead reviews transcripts for accuracy before final approval.
-6. Store verified transcripts in the designated repository.
+1. Use the `kimtaeyoon83/mcp-server-youtube-transcript` tool to fetch the full transcript for *"How to Build a Resilient Team"*.
+2. Save the output to `transcripts-w1` for verification.
+3. Validate the transcript for completeness and accuracy (e.g., no missing segments, correct timestamps).
+4. If errors are found, re-run the tool with adjusted parameters (e.g., `gentle pacing` or `residential IP` flags).
+5. Archive the finalized transcript in the designated repository.
+6. Notify stakeholders of completion via GitHub issue or Slack.
 
-**What changed:** The tool will now be used to fetch real full transcripts for pending videos.
+**What changed:** Transcript retrieval is now explicitly assigned to the tool with output verification steps.

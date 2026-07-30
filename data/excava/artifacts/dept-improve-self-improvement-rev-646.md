@@ -1,17 +1,12 @@
 # improve: Self-improvement: review prompts/engines/routing/own-code; auto-apply safe changes; pitch 
 
-> Decision artifact · room `dept-improve-self-improvement-rev-646` (dept) · 2026-07-27T22:32:01.229970+00:00
-> Participants: Sprocket, Gauge, Ratchet · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-improve-self-improvement-rev-646` (dept) · 2026-07-30T22:25:48.041861+00:00
+> Participants: Sprocket, Gauge, Ratchet · synthesized by groq/llama-3.3-70b-versatile
 
-**Decision:**
-Fork selectively to balance control and maintenance.
-
-**Plan:**
-1. Audit the Claude Self-Improvement Skill Pack and cherry-pick only the prompt templates and routing logic we actively use.
-2. Rename the forked components to avoid upstream confusion (e.g., `claude-skill-pack-*` → `ratchet-skill-*`).
-3. Patch each cherry-picked component in-place with clear documentation of the change’s purpose and rationale.
-4. Prove the forked elements work in our workflow before considering upstream merges.
-5. Set up a lightweight process to periodically review upstream changes and selectively backport critical fixes.
-6. Deprecate unused components from the original pack to avoid dead weight.
-
-**What changed:** Selective cherry-picking of prompts/routing with explicit patch documentation.
+**Decision:** Implement a hybrid approach to auto-apply safe changes while minimizing risks.
+1. **Auto-apply formatting tweaks**: immediately apply low-risk formatting changes to improve system efficiency.
+2. **Shadow mode for dependency bumps and changes**: route dependency bumps and prompt/routing changes to a shadow mode for a week to test and validate their impact before human review.
+3. **Staged rollout with human review**: after the shadow mode testing period, route changes to human review for validation and approval before full implementation.
+4. **Documentation and monitoring**: maintain a documented safety pipeline and continuously monitor the system for any signs of silent drift or cascading context loss.
+5. **Lead delivery**: have the lead deliver the safety pipeline documentation within 48 hours.
+**What changed:** Introduction of a shadow mode and staged rollout process to mitigate risks associated with auto-applied changes.

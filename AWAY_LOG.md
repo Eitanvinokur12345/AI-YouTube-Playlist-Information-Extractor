@@ -5,6 +5,55 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-30
+- **~02:0x (fire 73, unattended, cloud session)** — Read fire 72's log first, per this fire's own
+  instruction to account for the prior session before continuing: fire 72 flagged, but did not
+  do, a Step 3b-required re-sort of `data/tools.json` by `mentions` desc / `quality_score` desc /
+  `name` — called it "a large, unrelated-to-this-edit diff that's better done as its own
+  dedicated pass." Standing checks first: `python -m src.standing_checks` clean (self-healed the
+  usual stale-cache/missing-upstream pair). `python -m src.guardrails` 17/20 → 18/20 (G-C flipped
+  green after a fresh history bundle), 0 critical throughout.
+  **Picked up exactly the queued task instead of re-scanning for a new one.** Verified the
+  problem was real first (a deterministic script found 168 order-violating transitions across
+  2,989 records, not a guess), then re-sorted the whole array with the documented tie-break key
+  and asserted the record *set* was unchanged (slug/name equality) before writing — 0 violations
+  after. Shipped as its own commit (`e323211e`), separate from any content edit, exactly as fire
+  72 recommended.
+  **Then picked the video-drain lever for volume** (the outer schedule this fire asked to
+  "attempt to increase volume"), oldest-first, 3 videos, one commit each: `mz-AQSJQPKo` ("Ruflo
+  — 60 AI Agents...") is a title-exact match to the already-catalogued `ruflo` tool
+  (`github.com/ruvnet/ruflo`) — added as an endorsement (`also_seen_in`) only; deliberately did
+  **not** touch the adjacent `Ruflow`/`claude-flow` records even though all three clearly
+  describe overlapping ground, because the descriptions genuinely conflict on naming/history
+  ("formerly Claude Flow" vs. "part of the Ruflo ecosystem") and guessing a merge in a
+  ~3,000-tool catalog is worse than leaving it flagged — same precedent fire 72 set with
+  OpenClaw. `p9edqvO3TFY` ("99% of People Are Prompting AI Wrong") named a real, specific,
+  previously-uncatalogued tool (Braintrust, an LLM-eval platform) with enough detail for a tool
+  record but not enough concrete step-by-step to clear the anti-boilerplate gate for a skill — so
+  tool + one tip only, no skill. `pXScpdGSCxw` ("How the AI Economy Became Completely Circular")
+  had no tool/skill/connector and wasn't pre-classified as news — filed as a second anecdote
+  under the already-open `ai-financial-instruments` tab candidate (opened by `ugViLPRcsWI`),
+  which is exactly the recurrence signal `tab_candidates.json` exists to accumulate.
+  `data/_pending`: 1185 → 1182. `status.json` run_report updated after each video
+  (`analyzed_this_run`, `pending_to_analyze`, `total_videos_analyzed`, `total_tools`,
+  `tab_candidates_open`). Verified via `git_safe`'s own commit+push+verify output (5/5 landed,
+  `origin/main == HEAD` after each) and by re-reading each edited JSON file post-write.
+  Also checked (did not act on, correctly per the pitch gate) the live `analyze.yml` GitHub
+  Actions failures: 5 consecutive failures as of 01:54 UTC clustered 22:26–01:54 UTC, matching
+  the exact signature (`is_error:true`, ~2s duration, SDK dies before any model turn) that fire
+  57's own code comments already diagnosed as the known rolling usage-ceiling pattern that
+  self-heals by morning, not an expired token — did not escalate to Eitan since this matches
+  established, already-documented behavior rather than a new signal.
+  Re-ran `guardrails`/`pulse` at the end — 18/20, 0 critical, PULSE.md refreshed.
+  **Harsh self-criticism:** the tools.json resort is real, verified, useful cleanup, but it is
+  still meta/plumbing, not a new EXCAVA-program capability — I did not attempt to find or start
+  any M1–M3 increment this fire, defaulting straight to "clear the queued task + drain videos"
+  without spending real search time on `data/excava/pitches.json` or the M1/M2/M3 fronts the way
+  fires 65/70 did. The Ruflo/Ruflow/claude-flow three-way naming collision is now flagged twice
+  (this fire, on top of the structurally identical OpenClaw case from fire 72) without either
+  being resolved — a fire with room to actually pull up all the source videos and adjudicate the
+  naming would be more valuable than a third fire just re-flagging it. No blocker for Eitan;
+  the analyze.yml failure streak is being watched against its own documented pattern, not new.
+
 - **~01:0x (fire 72, unattended, cloud session)** — Read fire 71's log first (its own instruction
   to account for the prior fire before continuing). Fire 71 named the same standing state I found:
   M2 scaffolding still correctly pitch-gated (no unilateral start), `data/excava/pitches.json`

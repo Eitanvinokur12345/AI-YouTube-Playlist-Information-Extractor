@@ -5,6 +5,43 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-30
+- **~17:0x (fire 82, unattended, cloud, scheduled-task invocation)** — Checked the analyze.yml
+  outage fire 81 escalated before doing anything else: no change since fire 81 (`status.json`
+  still `analyze_consecutive_fails: 6`, `last_analyze_ok_at` still 2026-07-28T02:37Z, pending
+  still 1154) — expected, since tonight's Israel 01:00-07:00 window (fire 81's own "check after
+  this" marker) hasn't opened yet (current time 16:58 UTC / 19:58 IDT). Did not re-run the same
+  job-log investigation fire 81 already did thoroughly with no new data to find; left its
+  escalation and recommendation (`claude setup-token` / confirm rolling cap) standing, unactioned,
+  exactly as fire 81 left it — that decision is Eitan's, not mine to make from this sandbox.
+  Instead picked a small, contained, verifiable fix so this fire wasn't pure repetition: `data/
+  self_check.json` item 14 ("non-relevant videos skipped") compared a RECORD count
+  (`len(skills.json)`) against a FILE count (`processed/` videos) — structurally false forever
+  once any single video yields multiple skill records, which the exhaustive-extraction mandate
+  guarantees happens routinely (roundup/listicle videos alone can yield ~100). Replaced it with
+  the real invariant: every distinct `source_video_id` across skills/tools/connectors must
+  appear among `processed/` files (a video can't have produced output without being marked
+  processed) — same style fix as the documented 16/47 SKILL.md-path bug earlier in this file.
+  Verified: `python -m src.self_check` now reports item 14 as `yes` (`processed 1768 >= 450
+  videos with output`), syntax-checked via `ast.parse` before running; `python -m src.guardrails`
+  17/20, 0 critical (same 2 known/self-healing issues as recent fires — G-C stale backup, G-O
+  EITAN-PC off — plus G-G "1 behind origin" from a concurrent lane's commit landing mid-fire,
+  resolved by `git_safe ship`'s own pull-rebase). Shipped via `python -m src.git_safe ship`,
+  commit `b19b057f` → `48c4bf008`. **Harsh self-criticism:** before landing on this I chased a
+  more ambitious version of the same fix — flagging `skipped_not_relevant: true` onto the moved
+  JSON file itself, matching the owner spec's literal wording ("processed/ non-relevant
+  flagged") — and discovered mid-investigation that `src/process_video.py` and
+  `src/analyze_batch.py` (both of which implement this exact skip-and-move logic) are **dead
+  code**: no workflow YAML invokes either module (`bulk_analyze.yml` runs its own independent
+  implementation that never touches `processed/`; the flagship `analyze.yml` lane does the move
+  itself via Claude's own bash calls per `CLAUDE.md`, not through either Python module). Editing
+  either would have shipped a change with zero observable effect — caught before committing to
+  it, not after, but it cost real turns finding that out, and I did NOT clean up or flag those
+  two dead modules this fire (narrow scope; that's its own separate task, and touching/deleting
+  files during a live outage investigation felt like unnecessary extra surface area right now).
+  Also surfaced, did NOT chase (out of scope for one increment): self_check item 13 ("slash
+  commands are real /commands") flipped from `217/217` (PROOF.md's snapshot) to `217/889` between
+  this fire's two consecutive `self_check` runs — some concurrent lane bulk-added ~670 command
+  entries without the real-`/command` filter holding; worth a look next fire, not touched here.
 - **~15:5x (fire 81, unattended, cloud, scheduled-task invocation)** — Followed up on fire 80's
   open thread (analyze.yml's failure streak) with one correction and one sharper data point,
   both landed in `QUESTIONS.md` item 31, not acted on unilaterally. Correction: the actual

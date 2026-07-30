@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v132";
+const APP_BUILD = "v133";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -161,7 +161,8 @@ function elBadge(e) {
     unverified: ["u", "unverified"], dead: ["d", "✗ dead"] };
   const [cls, label] = map[s] || map.unverified;
   const src = (e.verified || {}).sources || 0;
-  return `<span class="el-badge ${cls}" title="${esc((e.verified || {}).method || "")}${src ? " · " + src + " sources" : ""}${e.trust ? " · trust " + e.trust : ""}">${label}</span>`;
+  const ready = elReady(e) ? ` <span class="el-badge r" title="${esc(elReadyHint(e))}">▶ ready</span>` : "";
+  return `<span class="el-badge ${cls}" title="${esc((e.verified || {}).method || "")}${src ? " · " + src + " sources" : ""}${e.trust ? " · trust " + e.trust : ""}">${label}</span>${ready}`;
 }
 // M1.4 — the per-card ACTION ROW: Activate / Open(<10s) / Use / Video / Bundle / Source
 function elementActions(e, always) {
@@ -256,6 +257,22 @@ function elReady(e) {
   const t = (e && e.type) || "", L = (e && e.links) || {};
   if (t === "prompt" || t === "command") return !!(((e.body || "").trim()) || ((e.name || "").trim()));
   return !!(L.github || L.website || L.source_url || (e && (e.install || e.install_or_source)));
+}
+// v133 (away fire 77): PER-TYPE readiness hint text for the "▶ ready" badge — what "ready" concretely
+// MEANS differs by element type (a prompt is ready because it has paste-text; a connector because it
+// has an MCP config target; everything else because it has a real link/install anchor). elReady() only
+// answers yes/no; this answers "ready to do WHAT" so the badge title is specific, not generic (item
+// 21/v127-NEXT: "per-type readiness hints on cards").
+function elReadyHint(e) {
+  const t = (e && e.type) || "";
+  if (t === "prompt") return "Ready — Activate copies the verbatim prompt text.";
+  if (t === "command") return "Ready — Activate copies the command name to paste.";
+  if (t === "connector") return "Ready — Activate copies a paste-ready MCP server config.";
+  const L = (e && e.links) || {};
+  if (L.github) return "Ready — has a real GitHub repo to open and install from.";
+  if (L.website || L.source_url) return "Ready — has a real link to open.";
+  if (e && (e.install || e.install_or_source)) return "Ready — has an install/source anchor.";
+  return "Ready to use now.";
 }
 /*<</ACTIVATION>>*/
 function elActivate(id, btn) {

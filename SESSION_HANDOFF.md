@@ -252,6 +252,13 @@ fire's own AWAY_LOG.md entry.)**
 `gemini_video.yml` (2×/day), `visual.yml` (2×/day) — 10/19 workflow files now carry the fix, 9
 daily-or-less lanes remain. Re-verified via a fresh bare-remote repro. Full detail in AWAY_LOG.md
 fire 35 entry; running tally in QUESTIONS.md's fire-28 entry.
+**(Fires 71-76, backend-only, no dashboard/build change — still v132): mostly video-drain fires
+(catch-up mode, newest-first) plus two real catalog fixes (opus-5/claude-opus-5 dedup, OpenClaw/
+Ruflo naming collisions resolved via WebFetch/WebSearch against the real repos) and one real M1-M3
+increment (fire 74: built the missing WRITE side of dynamic tab promotion, `src/dynamic_tabs.py`,
+wired into `excava_selfimprove`). Fire 76 added a new `claude-science` tool record, logged a
+comment-gated prompt, filed a robotics/hardware tab-candidate, and filled 5 empty News-tab
+summaries. Full detail + harsh self-criticism in each fire's own AWAY_LOG.md entry.)**
 
 **(prior, v120) M2 UNDERWAY.** Sessions 8-10: 4 brain families in the engine CATALOG (GLM/DeepSeek/Kimi via
 OpenRouter free + local Qwen/Llama); OpenRouter key VERIFIED (Eitan's secret OPENROUTER_API_KEY_REAL,

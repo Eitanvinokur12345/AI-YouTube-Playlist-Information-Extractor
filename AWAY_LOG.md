@@ -5,6 +5,55 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-30
+- **~07:1x (fire 76, unattended, cloud session)** — Read fire 75's log first, per this fire's own
+  instruction. Standing checks: `python -m src.standing_checks` clean (self-healed the usual
+  stale-cache/missing-upstream pair — local `origin/main` was one commit behind the real fetch,
+  nothing lost). `python -m src.guardrails` 18/20 → 19/20 by the end (G-C flipped green from
+  `git_safe`'s own backup-before-push step), 0 critical throughout — the sole remaining flag is
+  the PC-dependent G-O (local drain stale, Eitan's PC/Ollama off), same as every fire since 23,
+  correctly left alone.
+  **Video-drain, newest-first per the active `catch_up.json` (agrees with `config.json`), 5
+  videos, 1 commit** (deliberately smaller/tighter batch than fire 75's 15, per fire 75's own
+  self-criticism that it skipped hunting anything beyond drain-depth — this fire took the
+  opposite trade, fewer videos but each one read and routed carefully): **added a genuinely new
+  tool record, `claude-science`** (Anthropic's newly-launched public-beta research-automation
+  desktop app — 60+ scientific-database integration, parallel specialist agents, UCSF
+  genomic-analysis time -90%, a 100-page Allen Institute review draft — quality 8, not
+  low-quality-capped); bumped `landingsite-ai`'s endorsement count (5→6 mentions) from a second
+  video and correctly did NOT re-extract its already-catalogued description; **logged a genuine
+  comment-gate** to `data/comment_gated.json` (`nwvnUGn-AaI`'s "comment 'Website' for the prompt"
+  — the visible top_comments are only viewers echoing the keyword back, no creator reply reveals
+  the actual prompt, so per Step 2e it's parked for Eitan rather than guessed); filed the Morfo
+  AI-reforestation-drone story as a second `ai-robotics-hardware` tab-candidate anecdote (real,
+  specific AI application — soil/terrain analysis picking from 300+ native species — but a
+  hardware/B2B case study, not a practitioner-usable tool or a technique, so correctly routed
+  to tab-candidates rather than force-fit into `tools.json`); skipped `jyZucHLWulI` ("Free Public
+  APIs") at the Step 2 relevance gate — generic developer-resource content with zero AI-specific
+  substance beyond its own title, not a false-negative on an AI tool; `yXYPugNxZfM` ("vibe code
+  changed me") had only hashtags, no verifiable claim, so no skill/tool was forced from it either.
+  All 5 already had a `weekly_news.json` entry from the fetch stage with an empty `summary` —
+  filled every one (Step 7), each carrying its correct `video_quality_score`/`low_quality_source`
+  (3/true, 7/false, 3/true, 2/true, 8/false respectively) rather than leaving the News tab with
+  blank text. `data/_pending` 1159 → 1154. `status.json.run_report` updated once
+  (`analyzed_this_run` +4, `skipped_not_relevant` +1, `total_videos_analyzed` +5, `total_tools`
+  2989→2990, `tab_candidates_open` 26→27). Verified every touched JSON re-parses clean before the
+  commit; `git_safe ship`'s own commit+push+verify output confirmed `origin/main == HEAD` after
+  the single commit (`7bacc9d8`). Re-ran `guardrails`/`pulse` at the end — 19/20, 0 critical,
+  PULSE.md refreshed.
+  **Harsh self-criticism:** did not spend any budget hunting a non-video-drain M1-M3 EXCAVA
+  program increment this fire — fire 74 did that, fire 75 explicitly flagged skipping it, and
+  this fire repeats that same gap a second time in a row now; the video batch is real but tiny
+  (5 videos against a ~1,154-deep backlog, same rounding-error caveat every fire since 58 has
+  logged) and the "5 careful videos vs. 15 fast ones" trade-off I made is a judgment call, not a
+  proven-better strategy — a future fire should go back to hunting an EXCAVA-program increment
+  instead of a third straight drain-only fire. The Morfo tab-candidate call is defensible but
+  not certain: CLAUDE.md's own tools.json guidance ("if it has a brand name and you could go use
+  it, it belongs here") could support cataloguing Morfo itself as a tool/company rather than a
+  tab-candidate anecdote — I judged it's not something this audience (AI practitioners building
+  with tools) can actually go use, closer to a B2B case study than a usable product, but that
+  line is a judgment call worth Eitan overriding if he disagrees. No blocker for Eitan; nothing
+  here needs his attention beyond the standing open pitches/questions already on file.
+
 - **~05:5x-06:0x (fire 75, unattended, cloud session)** — Read fire 74's log first, per this
   fire's own instruction. Standing checks: `python -m src.standing_checks` clean (self-healed
   the usual stale-cache/missing-upstream pair). `python -m src.guardrails` 18/20 → 19/20 by the

@@ -1,16 +1,15 @@
 # memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.
 
-> Decision artifact · room `dept-memory-recall-by-meaning-rel-234` (dept) · 2026-07-27T19:27:37.690462+00:00
+> Decision artifact · room `dept-memory-recall-by-meaning-rel-234` (dept) · 2026-07-30T19:46:30.335272+00:00
 > Participants: Graft · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Execute the memory linking command to connect all existing memories via semantic cross-referencing.
-2. Validate the unified brain graph by testing retrieval of related memories through multiple entry points.
-3. Identify and embed any unlinked or unembedded memory fragments during the linking process.
-4. Prune redundant or weakly connected links to optimize graph coherence.
-5. Generate a summary report of the new memory relationships and graph structure.
-6. Schedule periodic re-linking to maintain semantic connectivity.
+1. Execute the memory linking command to interlink all existing memos in the unified memory system.
+2. Verify the connections by testing recall of related elements to ensure meaning-based links are functional.
+3. Identify and embed any unembedded elements during the linking process.
+4. Generate a brain graph visualization of the interconnected memory structure.
+5. Document the new interconnections for future reference and retrieval optimization.
 
-**What changed:** Unified brain graph with semantic cross-references replacing keyword-based links.
+**What changed:** Unified memory graph fully interlinked by meaning.

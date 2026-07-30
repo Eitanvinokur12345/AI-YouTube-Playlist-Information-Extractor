@@ -6906,7 +6906,7 @@
       "output": "Automated pipeline of qualified, high-intent leads for $500K-$1.2M properties with outreach sequences and deal tracking.",
       "quality_score": 5,
       "model_version": null,
-      "company": "apex.host",
+      "company": null,
       "country": null,
       "open_source": false,
       "target_tool": "other",
@@ -6953,7 +6953,9 @@
         "needs_key": false,
         "in_project": true
       },
-      "link_tries": 6
+      "link_tries": 6,
+      "notes": null,
+      "data_quality_note": "2026-07-30 (fire 74): 'company: apex.host' removed — apex.host is a real but SEPARATE company selling managed OpenClaw hosting (confirmed via WebSearch), not the maker of this workflow or of OpenClaw itself, and the source transcript (-cBwLx7Mcbk) never mentions apex.host at all. See the corrected 'openclaw' tool record for the full identity resolution."
     },
     {
       "skill_name": "ChatGPT Prompt Modifier Codes",
@@ -23448,10 +23450,10 @@
       "slug": "claude-code-18-agent-seo-audit",
       "skill_name": "18-Agent Claude Code SEO Audit Workflow",
       "category": "agents",
-      "description": "A multi-agent system of 18 specialized Claude Code agents that collectively run technical SEO, local SEO, backlink, and AI-search (GEO) audits on a website and output prioritized, actionable fixes.",
+      "description": "A multi-agent Claude Code plugin (25 sub-skills, 18 specialist agents run in parallel) that audits technical SEO, content quality (E-E-A-T), Schema markup, AI-search (GEO) readiness, and local SEO via `/seo audit <url>`, producing a prioritized, actionable fix list plus markdown/JSON/PDF reports.",
       "use_case": "Running a full-stack SEO audit covering technical issues, local search, backlinks, and GEO entirely within Claude Code.",
       "output": "Audit findings per SEO domain plus exact fixes for each identified issue.",
-      "quality_score": 3,
+      "quality_score": 6,
       "model_version": null,
       "company": null,
       "country": null,
@@ -23480,15 +23482,21 @@
         "5,295 views and 420 likes"
       ],
       "endorsement_video_ids": [
-        "GrRgeJUf4xo"
+        "GrRgeJUf4xo",
+        "qRC3-R3jkMQ"
       ],
       "video_quality_score": 3,
-      "low_quality_source": true,
+      "low_quality_source": false,
       "source_videos": [
         {
           "id": "GrRgeJUf4xo",
           "url": "https://www.youtube.com/watch?v=GrRgeJUf4xo",
           "title": "Claude's hidden ranking trick"
+        },
+        {
+          "id": "qRC3-R3jkMQ",
+          "url": "https://www.youtube.com/watch?v=qRC3-R3jkMQ",
+          "title": "This free GitHub repo replaced my SEO agency"
         }
       ],
       "setup": {
@@ -23498,7 +23506,9 @@
         "needs_key": false,
         "in_project": true
       },
-      "link_tries": 6
+      "link_tries": 6,
+      "github": "https://github.com/AgricIDaniel/claude-seo",
+      "data_quality_note": "2026-07-30 (fire 74): confirms the underlying tool ('claude-seo') is real and live (github username corrected there from a dead 'AgriscDaniel' to the real 'AgricIDaniel') — quality_score raised on that independently-verified evidence."
     },
     {
       "slug": "claude-multi-agent-council",
@@ -25675,7 +25685,8 @@
         "Nearly 38,000 GitHub stars"
       ],
       "endorsement_video_ids": [
-        "tp6q62mN-zw"
+        "tp6q62mN-zw",
+        "D9roB1GejA4"
       ],
       "video_quality_score": 5,
       "low_quality_source": false,
@@ -25687,6 +25698,11 @@
           "id": "tp6q62mN-zw",
           "url": "https://www.youtube.com/watch?v=tp6q62mN-zw",
           "title": "The Laziest Developer Trick That Saves Thousands"
+        },
+        {
+          "id": "D9roB1GejA4",
+          "url": "https://www.youtube.com/watch?v=D9roB1GejA4",
+          "title": "Anyone can build this Claude skill in 5 minutes  #ponytail  #claudecode"
         }
       ],
       "setup": {
@@ -109928,7 +109944,7 @@
       "source_url": "https://www.youtube.com/watch?v=5y8u0QkJPWs",
       "discovered_via": "mine_feeds (gemini-video)",
       "added_at": "2026-07-29T23:50:46.045806+00:00",
-      "link_tries": 1,
+      "link_tries": 2,
       "source_videos": [
         {
           "id": "5y8u0QkJPWs",
@@ -109936,6 +109952,65 @@
           "title": "AI Agents Wrote 55,000 Lines and Built a Real FPS Game"
         }
       ]
+    },
+    {
+      "skill_name": "yt-dlp + FFmpeg Video Flipbook Analysis for Claude",
+      "slug": "yt-dlp-ffmpeg-claude-video-flipbook",
+      "category": "video creation",
+      "description": "Since Claude has no direct video input (only image formats; animations unsupported), this workflow downloads a YouTube video locally with yt-dlp, slices it into one still frame per second with FFmpeg, and hands Claude the resulting folder of frames to read like a flipbook — recovering the cuts, on-screen text, b-roll, and pacing a transcript-only read would miss entirely.",
+      "use_case": "Reverse-engineering why a viral video worked, by giving Claude an image-based read of its edit structure instead of just its transcript.",
+      "output": "A shot list (cut count, first-3-seconds breakdown, every on-screen line with timestamps) an editor can work from.",
+      "quality_score": 6,
+      "model_version": null,
+      "company": null,
+      "country": null,
+      "open_source": true,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": false,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=ABAuLH5sKvo",
+      "source_video_id": "ABAuLH5sKvo",
+      "tips": [
+        "yt-dlp downloads the source video locally; FFmpeg slices it to 1 frame/sec so Claude can 'watch' it as a still-image sequence.",
+        "Both tools run locally with no API cost and nothing uploaded — the frames never leave your machine.",
+        "Ask Claude to count cuts, decode the first 3 seconds, and extract every on-screen line with timestamps to build an editor-ready shot list."
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "When an AI tool's docs only list image formats as supported input, a frame-per-second extraction is a reliable workaround for giving it 'video' understanding."
+      ],
+      "relevance": "Video is the dominant AI-generated/AI-analyzed content format, but most LLMs (including Claude) can't natively watch one — this is a concrete, free, local workaround worth knowing.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "ABAuLH5sKvo"
+      ],
+      "video_quality_score": 5,
+      "low_quality_source": false,
+      "source_videos": [
+        {
+          "id": "ABAuLH5sKvo",
+          "url": "https://www.youtube.com/watch?v=ABAuLH5sKvo",
+          "title": "Claude Can't Actually Watch Your Videos Until You Do This"
+        }
+      ],
+      "setup": {
+        "kind": "claude skill",
+        "command": "activator: set me up with \"yt-dlp + FFmpeg Video Flipbook Analysis for Claude\"",
+        "target": "claude",
+        "needs_key": false,
+        "in_project": true
+      },
+      "github": "https://github.com/yt-dlp/yt-dlp",
+      "deploy_url": "https://vercel.com/new/clone?repository-url=https://github.com/yt-dlp/yt-dlp",
+      "homepage": "https://github.com/yt-dlp/yt-dlp",
+      "links_verified_at": "2026-07-30T03:27:52.345706+00:00"
     }
   ],
   "recipes_updated_at": "2026-07-29T11:54:18.452072+00:00"

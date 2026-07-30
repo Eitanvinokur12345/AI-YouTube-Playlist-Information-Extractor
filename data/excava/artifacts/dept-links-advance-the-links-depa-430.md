@@ -1,16 +1,16 @@
 # links: advance the links department's mission
 
-> Decision artifact · room `dept-links-advance-the-links-depa-430` (dept) · 2026-07-30T21:46:45.486890+00:00
+> Decision artifact · room `dept-links-advance-the-links-depa-430` (dept) · 2026-07-30T23:58:05.004065+00:00
 > Participants: Anchor, LinLea · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Anchor runs a live audit on the Mission Control Dashboard’s link inventory to identify broken, outdated, or low-value links.
-2. Anchor generates a prioritized list of flagged links with reasons for each (e.g., broken, outdated, low engagement).
-3. Anchor submits the verified list of high-impact links to LinLea for review.
-4. LinLea replaces broken links with updated, high-value alternatives on the Mission Control Dashboard.
-5. Anchor verifies the replacements and confirms the dashboard’s link integrity post-update.
-6. Both parties document the changes in the department’s change log.
+1. Anchor conducts a live audit of the Mission Control Dashboard’s link inventory, flagging broken, outdated, or low-value links in real time.
+2. Anchor generates a prioritized report with reasons for each flagged link (e.g., 404 errors, outdated content, low engagement).
+3. Anchor submits the verified list of high-impact links to replace broken ones on the Mission Control Dashboard.
+4. LinLea reviews and approves the finalized list of replacements.
+5. Anchor publishes the dead-link-free Mission Control Dashboard with verified high-impact links.
+6. Anchor documents the changes in a changelog entry for transparency.
 
-**What changed:** Broken or low-value links on the Mission Control Dashboard were identified, prioritized, and replaced with verified alternatives.
+**What changed:** Mission Control Dashboard now contains only verified, high-impact links with no broken or outdated entries.

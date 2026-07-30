@@ -33,12 +33,19 @@ Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Lo
   still plumbing, not product. Deliberately left `data/excava/pending_questions.json` (7 batched
   questions since 07-13) and `pitches.json` (3 pending) untouched and did not surface them to
   Eitan proactively — `away_mode.json` explicitly says never interrupt for batched items, only
-  present them on his return. Also did not resolve the `main`-vs-branch divergence fire 76 already
-  flagged as a judgment call needing Eitan's confirmation — it's now 5 days / 50 commits, worth
-  him checking sooner rather than later. This fire's harness defaults to opening a PR for any
-  branch it pushes to with none open (there was none) — did so as a draft against `main` so
-  Eitan has one link to the branch's current diff without disrupting the zero-PR direct-push
-  convention the other 77 fires established; it is not meant to be merged as one unit.
+  present them on his return. **Correction made mid-fire:** this entry originally reported
+  `origin/main` frozen 5 days / 50 commits behind this session's local branch and planned to open
+  a draft PR to bridge them. `git_safe.push()`'s own verification (`push origin HEAD:main` with NO
+  `--force`, then asserting `HEAD == origin/main`) succeeded cleanly, which is only possible if
+  the real `origin/main` already matched this branch's tip by push time — so that "divergence"
+  was this fire's own stale local fetch/cache, not a real fork; `main` and the working branch were
+  already the same history. No PR was opened (none applies — the commit landed straight on `main`,
+  verified). Confirmed after the fact via `git merge-base --is-ancestor` that the OLD cached
+  `main` tip is a real ancestor of the new one, i.e. nothing was overwritten or lost, just a
+  stale read on this fire's part. Flagging the false alarm itself: this fire's own tooling (`git
+  fetch`) gave a misleading stale snapshot mid-session — worth the next fire treating an early
+  divergence reading as unconfirmed until re-checked right before acting on it, not taken at
+  face value.
 - **~09:0x (fire 77, unattended, cloud session)** — Read fire 76's log first, per its own
   instruction, plus fires 74/75's self-criticism (both flagged "go back to hunting an EXCAVA
   program increment instead of a third straight drain-only fire") — this fire took that

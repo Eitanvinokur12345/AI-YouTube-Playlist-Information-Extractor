@@ -5,6 +5,51 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-30
+- **~14:5x (fire 80, unattended, cloud session, scheduled-task invocation, 10th heartbeat)** —
+  Standing checks clean (`python -m src.standing_checks`: stale local cache re-fetched nothing
+  lost, upstream re-tracked — same self-healing pair every recent fire hits); guardrails 18/20,
+  0 critical (only G-C stale-backup and G-O EITAN-PC-offline, both known/self-healing). This is
+  every 10th scheduled-task invocation, so per the outer routine's own instruction ran the wider
+  check: pulled `analyze.yml`'s last 30 runs via `mcp__github__actions_list` and cross-referenced
+  against `git log -- data/status.json`. Confirmed the last REAL (non-night-gated) analyze
+  attempt failed 6x in a row, most recently 2026-07-30T03:50 UTC — `data/status.json`'s own
+  escalation logic correctly flagged this as past the usual transient pattern once the streak
+  passed 2. Every workflow run since 05:34 UTC today shows "success" at the job level, but that's
+  `config.json`'s `cadence.night_window` (Asia/Jerusalem 23:00-07:00) skipping the actual Claude
+  step outside that window and landing an empty "safety commit" instead — confirmed this is
+  by-design (comment in `analyze.yml` lines 72-92), not a second failure mode; the pipeline
+  won't attempt real work again until tonight's window opens (~20:00 UTC). This exact
+  rate-ceiling-not-expired-token pattern has recurred and self-healed every time a fire
+  investigated it (fires 55/57/63, QUESTIONS.md #29-31), so — consistent with those fires' own
+  calls — did not interrupt Eitan over it; noting only that 6-in-a-row-with-zero-interspersed-
+  success is the worst streak logged so far, worth a closer look if it's still stuck after
+  tonight. No operational limit hit anywhere else: 30GB+ free disk (G-N), 8 commits/24h across
+  core-spoton/links+memory/bulk-analyze/mine-feeds, all on cadence per PULSE.md. Reviewed fires
+  71-79: all narrow, verified, git-safe-shipped, nothing lost.
+  **Picked up fire 79's own follow-up trail** rather than the harder collision-merge job it
+  flagged: `data/commands.json` had 889 entries but self_check #13 ("Slash commands are real
+  /commands") had been failing since it existed — 672/889 (76%) never even started with "/"
+  (full prose, shell one-liners, `git clone` URLs, CLI flags, "Hey Claude, do X" phrasing) —
+  an outright, zero-ambiguity violation of CLAUDE.md Step 6 / Golden rule #10. Removed exactly
+  those 672 (kept the ~100 borderline ones that start with "/" but carry trailing text — real
+  judgment call, left for a future fire), backed each one up to new `data/deleted_commands.json`
+  with a reason + timestamp (mirrors the existing `deleted_skills.json` pattern), pruned the
+  now-stale `selfcheck-q13` entry from `improvement_tasks.json` (same manual-prune gap fire 79
+  already patched for q16/q47). **Verified, not just asserted:** `python -m src.self_check` →
+  43/50 → 44/50, #13 flips to 217/217 (100% >= the 0.6 threshold, was 217/889); spot-checked 8
+  random deletions (all genuinely non-slash junk) and the first 10 survivors (all real commands).
+  Shipped via `python -m src.git_safe ship` (commit `4834d3f4`).
+  **Harsh self-criticism:** 672 deletions in one fire is the largest single data removal in this
+  log — deliberately restricted to the zero-judgment subset so nothing defensible was at risk,
+  but a 76%-of-file cut is still worth Eitan spot-checking `data/deleted_commands.json` once
+  rather than trusting this paragraph alone. Left the harder ~100-entry ambiguous cleanup
+  untouched, and did not fix self_check #14 ("Non-relevant videos skipped"), which is a
+  genuinely broken assertion (`processed >= skills` proves nothing about relevance-skipping,
+  since one video legitimately yields many skills) — same category of bug as #16/#47, flagged
+  as the concrete next-fire target. Also did not touch the still-open self_check items 1/10/12/
+  45 (all pipeline-throughput/content-depth items that belong to `analyze.yml`'s own cadence, not
+  a manual fire) or the standing pitches/questions on file. No blocker for Eitan.
+
 - **~12:0x (fire 79, unattended, cloud session, scheduled-task invocation)** — Standing checks
   clean (`python -m src.standing_checks`: stale local cache re-fetched, nothing lost; upstream
   tracking re-set — the same self-healing pair every recent fire hits). Started from

@@ -5,6 +5,61 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-30
+- **~05:5x-06:0x (fire 75, unattended, cloud session)** — Read fire 74's log first, per this
+  fire's own instruction. Standing checks: `python -m src.standing_checks` clean (self-healed
+  the usual stale-cache/missing-upstream pair). `python -m src.guardrails` 18/20 → 19/20 by the
+  end (G-C flipped green after `git_safe backup`), 0 critical throughout — the one remaining flag
+  (G-O, local drain stale) is Eitan's PC/Ollama being off, not something a cloud fire can fix, and
+  every prior fire has correctly left it alone. `python -m src.excava_systemcheck` 10/11, same
+  pre-existing tool-drift flag as every fire since 23. `data/excava/pitches.json` unchanged (3 of
+  4 still pending) — did not touch M2 scaffolding, still correctly pitch-gated.
+  **Video-drain, newest-first per the active `catch_up.json`/`config.json` (both agree,
+  `newest_first`, same as fire 74), 15 videos, 3 commits** (Golden rule #1, tight batches): the
+  standout finds — **resolved a real `opus-5`/`claude-opus-5` naming duplicate** (one a
+  web-news-speculative "unconfirmed release" stub, one already correctly `released`) using
+  `RMq3VP-zqt8`'s specific benchmark/cost claim as the merge evidence, category recategorized to
+  `code`, quality 1→6; **shipped a genuinely new skill + SKILL.md**,
+  `claude-code-loop-four-levels` (Anthropic's own manual→goal→schedule→autonomous loop-control
+  framework from `68TY4Fhrf2Y`) — checked it against the ~25 existing loop-named skills first and
+  confirmed it's a distinct, more official/complete framework, not a duplicate of
+  `controlling-ai-agent-loops` (that one is narrowly about the `/goal` command) or
+  `claude-code-automation-loop-essentials`. Two viral single-source capability claims (`GPT 5.6
+  Pro` solving a 35-year math problem, `Claude Fable` disproving the Jacobian Conjecture) were
+  recorded honestly as unverified/single-source — a new flagged `gpt-5-6-pro` tool record (noted
+  as possibly overlapping the already-messy `gpt-5-6-sol`/`-sol-ultra`/`-sol-awigh`/`-sol-terra-
+  luna` cluster, left unmerged rather than guessed, same OpenClaw/Ruflo precedent) and a
+  `popularity_signals` entry worded as an unverified claim on the existing `fable-5` record
+  (mentions 6→8 combined with a legitimate `UGbvSHp0wSo` endorsement). Two AI-relevant-but-
+  orphaned stories (Cloudflare default-blocking AI training/agent bots on ~20% of the web;
+  an unnamed OpenAI protein-engineering model's Yamanaka-factor claim) filed as second anecdotes
+  under the already-open `ai-policy-society`/`ai-healthcare` tab-candidate themes rather than
+  forced into tools.json with no product name. One Anthropic Academy free-certifications tip.
+  Five videos (unnamed browser extension, comment-gated podcast teaser, a book-announcement short,
+  a content-free "one weird trick" short, generic career-advice short) had nothing verifiable to
+  extract — anti-boilerplate gate / no name / nothing revealed — moved to processed with no
+  records forced. `data/_pending` 1174 → 1159. `status.json.run_report` updated after each batch
+  (`analyzed_this_run` +15, `total_videos_analyzed` +15 to 1721, `total_tools` 2987→2989,
+  `tab_candidates_open` 24→26). Verified every step: all touched JSON re-parsed clean before each
+  commit, `git_safe`'s own commit+push+verify output confirmed `origin/main == HEAD` after all 4
+  commits this fire (3 content + 1 trailing-readout). `python -m src.build_models` re-run twice
+  (562 models mirrored from 2989 tools). Re-ran `guardrails`/`pulse` at the end — 19/20, 0
+  critical, PULSE.md refreshed.
+  **Harsh self-criticism:** 15 videos is real, above-average volume for one fire (fires 71-74
+  drained 3-8 each) and, unlike several recent fires, this one wasn't pure rounding-error
+  drain — the opus-5 merge and the new loop-levels skill are genuine catalog-quality
+  improvements, not just +1 endorsements. But I did not spend any budget hunting a non-video-
+  drain M1-M3 EXCAVA-program increment the way fire 74 did (dynamic-tab promotion) — I chose
+  depth-within-the-drain-lever over breadth-across-levers, which is a real gap fire 74 itself
+  didn't have. The `gpt-5-6-pro` record is the shakiest call: it's plausible this "Pro" variant
+  IS one of the existing Sol-family records under a different label a mine_feeds pass invented,
+  and I created a fifth GPT-5.6 record rather than either merging on weak evidence or leaving it
+  out entirely — I judged a flagged, honestly-labeled new record better than silently dropping a
+  named, dated claim, but a future fire with more budget to actually read all five Sol-variant
+  source videos could well collapse this into one. 15 videos against a ~1,159-deep backlog is
+  still a small fraction, same honest caveat every fire since 58 has logged. No blocker for
+  Eitan; nothing here needs his attention beyond the standing open pitches/questions already on
+  file.
+
 - **~03:1x (fire 74, unattended, cloud session)** — Followed this fire's own explicit brief instead
   of the video-drain default fires 71-73 each fell back to and each self-criticized: resolved both
   twice-flagged naming collisions with real research, then spent real effort hunting an M1-M3

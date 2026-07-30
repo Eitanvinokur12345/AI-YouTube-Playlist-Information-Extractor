@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-30T21:35:20.895325+00:00",
+ "generated_at": "2026-07-30T21:42:07.743342+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,8 +8,8 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 268,
-   "rooms_7d": 164,
+   "turns_7d": 270,
+   "rooms_7d": 165,
    "engines_used": [
     "gh-models",
     "groq",
@@ -17,14 +17,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Fetch the full transcript for the video titled \"Orchestrated AI\" using the YouTube transcript tool. This will produce th"
+   "last_position": "**Decision:** Require *one* reviewer to flag high-risk items within 2 hours; if none flags, escalate to Product *and* lo"
   },
   {
    "id": "transcripts-checker",
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 242,
+   "turns_7d": 243,
    "rooms_7d": 35,
    "engines_used": [
     "gh-models",
@@ -32,15 +32,15 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Scriv: Escalating *all* unflagged high-risk items to Product after 2 hours overloads them—Product’s bottleneck worsens, "
+   "last_position": "Scriv: One reviewer can’t be trusted to triage high-risk items—bias, oversight, or collusion will slip failures through."
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 241,
-   "rooms_7d": 138,
+   "turns_7d": 242,
+   "rooms_7d": 139,
    "engines_used": [
     "gh-models",
     "groq",
@@ -48,15 +48,15 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "I will run BloodHound-MCP against the full earnings call transcript to map every actor, action, and risk relationship. T"
+   "last_position": "I will run BloodHound-MCP against the full earnings call transcript to map entity relationships and identify potential r"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 205,
-   "rooms_7d": 119,
+   "turns_7d": 206,
+   "rooms_7d": 120,
    "engines_used": [
     "gh-models",
     "groq",
@@ -65,22 +65,53 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Adopt Scriv’s escalation default—auto-approve low-risk items immediately, but escalate any unflagged high-"
+   "last_position": "Run Arcads AI Video’s \"AI Marketing\" skill on the latest Arcads AI Video at 11:4. It will generate a structured marketin"
   },
   {
    "id": "news-w1",
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 140,
-   "rooms_7d": 129,
+   "turns_7d": 141,
+   "rooms_7d": 130,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Query Reuters, BBC, and the White House press releases for the latest AI-related news. This will produce a fresh"
+   "last_position": "Action: Query Reuters, BBC, and the White House press releases for the latest AI-related developments. This will produce"
+  },
+  {
+   "id": "visualization-w1",
+   "name": "Facet",
+   "dept": "visualization",
+   "role": "doer",
+   "turns_7d": 137,
+   "rooms_7d": 68,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "Add a single, prominent button labeled “Live Refresh” that toggles continuous playback of the visualization. This keeps "
+  },
+  {
+   "id": "visualization-checker",
+   "name": "Pane",
+   "dept": "visualization",
+   "role": "checker",
+   "turns_7d": 137,
+   "rooms_7d": 68,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Pane: A single toggle hides the live state—users won’t know if it’s on or off until they trigger a change. Default to pa"
   },
   {
    "id": "transcripts-lead",
@@ -96,37 +127,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Fetch full transcript for *\"How to Build a Resilient Team\"* via kimtaeyoon83/mcp-server-youtube-transcript; outp"
-  },
-  {
-   "id": "visualization-w1",
-   "name": "Facet",
-   "dept": "visualization",
-   "role": "doer",
-   "turns_7d": 136,
-   "rooms_7d": 67,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "Default “Live Refresh” to ON, with a single prominent “Pause” button. This makes the interface feel alive by default—use"
-  },
-  {
-   "id": "visualization-checker",
-   "name": "Pane",
-   "dept": "visualization",
-   "role": "checker",
-   "turns_7d": 136,
-   "rooms_7d": 67,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Pane: Defaulting to live risks overwhelming users with constant motion—especially in long sessions—where a paused state "
   },
   {
    "id": "memory-w1",
@@ -147,38 +147,38 @@
    "name": "Anchor",
    "dept": "links",
    "role": "doer",
-   "turns_7d": 130,
-   "rooms_7d": 118,
+   "turns_7d": 131,
+   "rooms_7d": 119,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll run a live audit on the Mission Control Dashboard’s link inventory to flag broken or outdated links. This will prod"
+   "last_position": "I’ll run a live audit on the Mission Control Dashboard’s link inventory to identify broken, outdated, or low-value links"
   },
   {
    "id": "links-lead-x",
    "name": "LinLea",
    "dept": "links",
    "role": "lead",
-   "turns_7d": 130,
-   "rooms_7d": 118,
+   "turns_7d": 131,
+   "rooms_7d": 119,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Anchor submits the verified list of high-impact links replacing broken ones in the Mission Control Dashboard."
+   "last_position": "ACTION: Anchor submits the verified list of high-impact links replacing broken/outdated ones to the Mission Control Dash"
   },
   {
    "id": "creators-lead",
    "name": "Nova",
    "dept": "creators",
    "role": "lead",
-   "turns_7d": 129,
-   "rooms_7d": 121,
+   "turns_7d": 130,
+   "rooms_7d": 122,
    "engines_used": [
     "gh-models",
     "groq",
@@ -186,15 +186,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Forge publishes the \"UGC Factory\" npm package labeled \"Created by EXCAVA\" with a ready-to-install module, basic "
+   "last_position": "ACTION: Forge publishes the \"UGC Factory\" npm package labeled \"Created by EXCAVA\" with a minimal viable skill generator,"
   },
   {
    "id": "creators-w1",
    "name": "Forge",
    "dept": "creators",
    "role": "doer",
-   "turns_7d": 129,
-   "rooms_7d": 121,
+   "turns_7d": 130,
+   "rooms_7d": 122,
    "engines_used": [
     "gh-models",
     "groq",
@@ -203,7 +203,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will draft the first \"UGC Factory\" npm package labeled \"Created by EXCAVA,\" producing a ready-to-install module that g"
+   "last_position": "I will draft the first \"UGC Factory\" npm package labeled \"Created by EXCAVA,\" producing a minimal viable skill generator"
   },
   {
    "id": "news-lead",
@@ -271,82 +271,82 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 112,
-   "rooms_7d": 57,
+   "turns_7d": 113,
+   "rooms_7d": 58,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt Llama 4 Maverick as EXCAVA’s core engine. Its 128K context and 16K output tokens handle long documents without chu"
+   "last_position": "Adopt Anthropic’s latest Claude 3.7 Sonnet as EXCAVA’s core reasoning engine. It delivers the sharpest reasoning-to-cost"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 112,
-   "rooms_7d": 57,
+   "turns_7d": 113,
+   "rooms_7d": 58,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Torque: The real risk isn’t just Maverick’s weaker reasoning—it’s the 1.8x spike in error rate on multi-step tasks when "
+   "last_position": "Vendor lock-in isn’t the real risk—it’s the 1.8x margin erosion when Anthropic’s pricing spikes again. A better alternat"
   },
   {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 110,
-   "rooms_7d": 106,
+   "turns_7d": 111,
+   "rooms_7d": 107,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll run a targeted sweep across GitHub, Hacker News, Product Hunt, Reddit, and Telegram for AI tools released in the la"
+   "last_position": "I’ll run a broad sweep across GitHub, Hacker News, Product Hunt, Reddit, and Telegram for AI-related posts from the last"
   },
   {
    "id": "improve-w1",
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 109,
-   "rooms_7d": 54,
+   "turns_7d": 110,
+   "rooms_7d": 55,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "We should run a full-suite test after the formatting-only bot, but before auto-applying patch-level dependency updates. "
+   "last_position": "Run PR-Agent on every pull request before human review. It catches style, docs, and simple logic errors early, freeing h"
   },
   {
    "id": "improve-checker",
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 108,
-   "rooms_7d": 54,
+   "turns_7d": 109,
+   "rooms_7d": 55,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The full-suite test after formatting but before auto-applying patches still misses the blast radius: dependencies can pa"
+   "last_position": "PR-Agent’s 30-60s delay isn’t the real cost—it’s the false positives drowning design reviews in noise. A better alternat"
   },
   {
    "id": "security-lead",
    "name": "Bastion",
    "dept": "security",
    "role": "lead",
-   "turns_7d": 107,
+   "turns_7d": 108,
    "rooms_7d": 102,
    "engines_used": [
     "gh-models",
@@ -355,14 +355,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Warden runs LLM Guard scanner on this conversation payload; output logged to /var/log/llm_guard/w1_scan_20241017"
+   "last_position": "ACTION: Warden runs LLM Guard real-time scan on this conversation payload; output: \"CLEAR\"."
   },
   {
    "id": "security-w1",
    "name": "Warden",
    "dept": "security",
    "role": "doer",
-   "turns_7d": 107,
+   "turns_7d": 108,
    "rooms_7d": 102,
    "engines_used": [
     "gh-models",
@@ -370,60 +370,60 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will run LLM Guard’s real-time input/output scanner on this conversation to detect leaks, injection attempts, or fake "
+   "last_position": "I will run LLM Guard’s real-time input/output scanner on this conversation to check for leaks, injections, or fake eleme"
   },
   {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
    "role": "lead",
-   "turns_7d": 105,
-   "rooms_7d": 96,
+   "turns_7d": 106,
+   "rooms_7d": 97,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract and map actor-action-risk relationshi"
+   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract entity relationships, risks, and visu"
   },
   {
    "id": "visual-lead",
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 100,
-   "rooms_7d": 92,
+   "turns_7d": 101,
+   "rooms_7d": 93,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Mine top-tier Awwwards and Dribbble screenshots into the hub as taste material for visual design patterns."
+   "last_position": "ACTION: Mine top-tier Awwwards and Dribbble screenshots into the hub as taste material with clear visual patterns for th"
   },
   {
    "id": "visual-w1",
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 99,
-   "rooms_7d": 92,
+   "turns_7d": 100,
+   "rooms_7d": 93,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Open the Playwright MCP server and capture high-quality screenshots of three.js examples on the official website. This w"
+   "last_position": "Open the Playwright MCP server and capture high-quality screenshots of three well-designed web pages from the current to"
   },
   {
    "id": "watch-lead",
    "name": "Iris",
    "dept": "watch",
    "role": "lead",
-   "turns_7d": 91,
-   "rooms_7d": 87,
+   "turns_7d": 92,
+   "rooms_7d": 88,
    "engines_used": [
     "gh-models",
     "groq",
@@ -431,7 +431,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 2026-07-28T23:08:15.678901+00:00, Iris directs Arcads AI Video to run the \"AI Marketing\" skill on the latest "
+   "last_position": "ACTION: At 2026-07-28T23:10:12.345678+00:00, Iris triggers Arcads AI Video’s \"AI Marketing\" skill on the latest Arcads A"
   },
   {
    "id": "visualization-lead",
@@ -520,15 +520,15 @@
    "name": "Boulder",
    "dept": "mining",
    "role": "lead",
-   "turns_7d": 37,
-   "rooms_7d": 36,
+   "turns_7d": 38,
+   "rooms_7d": 37,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Sweep Product Hunt for AI products launched in the last 7 days, output a filtered list of 5–10 high-signal items"
+   "last_position": "ACTION: Sweep Product Hunt for AI products launched in the last 7 days, output top 20 with titles, launch dates, and upv"
   },
   {
    "id": "links-checker",

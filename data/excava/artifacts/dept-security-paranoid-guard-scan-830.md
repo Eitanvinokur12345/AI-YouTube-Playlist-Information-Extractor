@@ -1,16 +1,16 @@
 # security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (not fake/dead); DETECT
 
-> Decision artifact · room `dept-security-paranoid-guard-scan-830` (dept) · 2026-07-30T20:06:29.311744+00:00
+> Decision artifact · room `dept-security-paranoid-guard-scan-830` (dept) · 2026-07-30T21:41:33.646587+00:00
 > Participants: Warden, Bastion · synthesized by mistral/mistral-small-latest
 
-**Decision:** Warden's proposal to run LLM Guard in real-time scan mode is approved.
+**Decision:**
+CLEAR
 
 **Plan:**
-1. Warden executes LLM Guard in real-time scan mode against the current input/output stream.
-2. LLM Guard returns a verdict: "CLEAR" or "BLOCKED with details."
-3. If "CLEAR," proceed with normal operations.
-4. If "BLOCKED," analyze details and take corrective action (e.g., sanitize input, terminate session).
-5. Log all scan results for audit purposes.
-6. Repeat scans for every new input/output interaction.
+1. Run LLM Guard in real-time scan mode against the current input/output stream to detect leaks, injections, or fake elements.
+2. Produce a security verdict of "CLEAR" or "BLOCKED with details."
+3. Verify all elements in the conversation are real and not fake/dead.
+4. Confirm the integrity of the payload before proceeding.
+5. Close the room if no threats are detected.
 
-**What changed:** Real-time security scanning is now enforced.
+**What changed:** Room closed after security scan returned "CLEAR".

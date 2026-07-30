@@ -1,16 +1,12 @@
 # memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.
 
-> Decision artifact · room `dept-memory-recall-by-meaning-rel-810` (dept) · 2026-07-30T20:08:44.828713+00:00
-> Participants: Graft · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-memory-recall-by-meaning-rel-810` (dept) · 2026-07-30T23:31:21.325568+00:00
+> Participants: Graft · synthesized by nvidia/meta/llama-3.3-70b-instruct
 
-**Decision:**
-
-**Plan:**
-1. Run the memory linking command to connect all existing memos in the unified memory system.
-2. Generate a fully linked brain graph where related elements are directly connected by meaning.
-3. Verify the integrity of the connections by testing recall across multiple memos.
-4. Embed any unembedded elements into the graph for completeness.
-5. Document the new structure for future reference.
-6. Close the room upon confirmation of a stable, fully linked system.
-
-**What changed:** Unified memory system fully linked into a brain graph.
+**Decision:** Run the memory linking command to connect existing memos and build a fully linked brain graph.
+1. **Initialize** the unified memory system to ensure all existing memos are accessible and ready for linking.
+2. **Execute** the memory linking command to connect related elements by meaning, creating a brain graph.
+3. **Verify** the resulting brain graph for completeness and accuracy, checking for any unembedded elements.
+4. **Refine** the brain graph as needed, embedding any unembedded elements and reinforcing connections between related elements.
+5. **Test** recall by meaning to ensure the brain graph functions as intended, facilitating effective memory retrieval.
+**What changed:** The unified memory system now has a fully linked brain graph with related elements directly connected by meaning.

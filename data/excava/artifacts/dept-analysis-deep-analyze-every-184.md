@@ -1,17 +1,17 @@
 # analysis: Deep-analyze every element from its FULL source (whole transcript/repo) + enrich from >=1 
 
-> Decision artifact · room `dept-analysis-deep-analyze-every-184` (dept) · 2026-07-29T03:52:06.134172+00:00
+> Decision artifact · room `dept-analysis-deep-analyze-every-184` (dept) · 2026-07-30T20:00:57.910687+00:00
 > Participants: Chisel, Marrow · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Formalize a structured, evidence-backed synthesis of the earnings call transcript to resolve unresolved tensions and align on next steps.
+Close the room with BloodHound-MCP’s decision-impact graph as the final artifact.
 
 **Plan:**
-1. **Run BloodHound-MCP** on the full earnings call transcript to extract speaker intents, influence metrics, and unresolved tensions into a decision-impact graph.
-2. **Generate a structured artifact** (GitHub markdown) listing every decision point, proponents, blockers, and required follow-ups from the graph.
-3. **Cross-reference** the artifact with the repo’s existing documentation to validate gaps or conflicts in the decision points.
-4. **Prioritize decision points** by impact score (from BloodHound-MCP) and urgency, flagging high-risk unresolved tensions for immediate review.
-5. **Assign ownership** for each decision point to a proponent or stakeholder identified in the graph, with clear deadlines for follow-ups.
-6. **Publish the artifact** as the single source of truth for the decision, replacing ad-hoc notes or partial analyses.
+1. Run BloodHound-MCP on the full earnings call transcript to extract all speaker intents, influence, and unresolved tensions.
+2. Generate a structured decision-impact graph listing every decision point, proponents, blockers, and required follow-ups.
+3. Validate the graph for completeness by cross-referencing all speaker contributions.
+4. Enrich the graph with >=1 external source (e.g., market sentiment data or prior earnings call trends).
+5. Finalize the artifact in GitHub markdown format.
+6. Archive the room with the decision-impact graph as the authoritative synthesis.
 
-**What changed:** The debate’s output is now a formalized, actionable plan with assigned ownership and validation steps.
+**What changed:** Room closed with BloodHound-MCP’s structured artifact as the definitive output.

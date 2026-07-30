@@ -358,12 +358,16 @@ def write_skill_md(skill, video):
     if skill.get('quality_score', 0) < 5:
         return
     slug = skill['slug']
-    target_tool = skill.get('target_tool', 'claude')
+    target_tool = (skill.get('target_tool') or 'claude').strip().lower()
 
-    if target_tool == 'claude':
+    if target_tool in ('', 'claude'):
         folder = os.path.join(WORK_DIR, f'skills/{slug}')
     else:
-        folder = os.path.join(WORK_DIR, f'other-skills/{target_tool}/{slug}')
+        # Slugify so casing/punctuation variants of the same tool (e.g. "ChatGPT Ad Manager"
+        # vs "chatgpt-ad-manager") land in ONE folder, matching bulk_analyze.py's convention
+        # (CLAUDE.md Step 3: "each tool gets its OWN folder" — not two folders per tool).
+        tool_slug = re.sub(r'[^a-z0-9]+', '-', target_tool).strip('-') or 'other'
+        folder = os.path.join(WORK_DIR, f'other-skills/{tool_slug}/{slug}')
 
     os.makedirs(folder, exist_ok=True)
     path = os.path.join(folder, 'SKILL.md')

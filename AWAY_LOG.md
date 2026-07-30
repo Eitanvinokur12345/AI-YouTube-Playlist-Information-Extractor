@@ -5,6 +5,60 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-30
+- **~12:0x (fire 79, unattended, cloud session, scheduled-task invocation)** — Standing checks
+  clean (`python -m src.standing_checks`: stale local cache re-fetched, nothing lost; upstream
+  tracking re-set — the same self-healing pair every recent fire hits). Started from
+  `self_check.json` (score 41/50, 9 open `improvement_tasks.json` items) rather than the END
+  PLAN text itself — with ~20 scheduled lanes already executing that plan continuously (per fire
+  78's count), a fresh fire re-reading the same 2,700-word plan and re-deriving a milestone step
+  duplicates live automation; picking the next queued, already-diagnosed gap is higher-leverage.
+  **Set out to backfill missing SKILL.md packages (checks #16/#47, stuck open since ~fire 23:
+  761-773/3265 reported).** Built `src/backfill_skill_md.py` reusing `analyze_batch.write_skill_md()`
+  verbatim (Ponytail — no new writer logic) plus a video-metadata lookup across
+  daily/weekly/monthly news + `data/processed/` for skills whose `source_video_id` predates that
+  field. First run "wrote" 473 files — but diffing new vs. pre-existing `other-skills/` folders
+  before committing caught that 149 of them were **duplicates of an already-existing tool folder
+  under different casing/punctuation** (`imagefree.net` vs. the real `imagefree-net`,
+  `ChatGPT Ad Manager` vs. `chatgpt-ad-manager`, etc.) — `analyze_batch.py`'s `write_skill_md()`
+  builds the folder path from raw `target_tool` with zero normalization, while its sibling
+  `src/bulk_analyze.py` already slugifies it correctly. Deleted all 183 of this run's draft
+  folders (my own uncommitted output from seconds earlier, nothing of Eitan's — not a
+  GUARDRAILS.md quarantine case) and fixed the actual bug instead of the symptom: `write_skill_md()`
+  now lowercases + slugifies `target_tool` the same way `bulk_analyze.py` does, so casing/
+  punctuation variants of one tool land in ONE folder going forward (both writers now agree).
+  Re-ran the backfill against the fixed path resolver: **0 candidates** — turned out virtually
+  every quality>=5 skill already HAD a package, just under the correctly-normalized folder name;
+  the original "473 missing" count was almost entirely a false-positive artifact of the same
+  un-normalized-path bug. Traced *that* back one level further: `src/self_check.py`'s checks
+  #16/#47 only ever tested `skills/<slug>/SKILL.md` — the flat Claude-only path — so every
+  non-Claude skill (the majority; only 771/3337 have `target_tool: claude`) read as "missing" no
+  matter what, and the checks also scored against ALL skills instead of just the quality>=5 ones
+  CLAUDE.md's Step 3 says should get a package at all (the other ~60% correctly have none by
+  design). Fixed both: added `_skill_md_path()`/`_packageable_skills()` helpers mirroring the
+  now-fixed writer's own path logic and the quality>=5 gate, rewired checks 16 and 47 onto them.
+  **Verified, not just asserted:** `python -m src.self_check` → 16 and 47 both flip to
+  `yes, 1371/1371` (was `no, 773/3265` and `no, 761/3265`), score 41/50 → 43/50; spot-checked 12
+  random quality>=5 skills' resolved paths for real name-matching content (not a coincidental
+  folder collision) — all 12 confirmed; every touched JSON re-parses (`self_check.json`,
+  `improvement_tasks.json` — also manually dropped the now-resolved `selfcheck-q16`/`q47` entries
+  from it, since `self_check.py` only appends new open items and doesn't prune closed ones, a
+  smaller pre-existing gap I patched by hand rather than left stale). `guardrails` 16/20 (was
+  18/20 — G-C/G-Q flipped on backup/heartbeat timing, both self-heal via `git_safe`'s own
+  backup-before-push step), 0 critical throughout.
+  **Harsh self-criticism:** shipped ZERO new SKILL.md files this fire despite that being the
+  original goal — the real deliverable turned out to be two small, verified bug fixes instead,
+  which is a better outcome than 473 half-duplicate files would have been, but it means I nearly
+  shipped a data-quality regression (149 duplicate tool folders) before catching it with a
+  same-fire diff review; a less careful fire would have committed that. Did NOT clean up the
+  ~147 *pre-existing* normalized-name collision groups already sitting in `other-skills/` from
+  before this fix (confirmed via a name-collision scan, not touched — merging them means picking
+  a canonical folder per group and deciding whether divergent content should merge, a bigger,
+  judgment-heavier job than one fire's scope) — flagging it as the concrete next-fire follow-up,
+  the same way fire 77 left its own narrower fix's larger structural gap flagged rather than
+  scope-creeping into it. Also did not touch the still-open self-check items (1, 10, 12, 13, 14,
+  42, 45 — mostly pipeline-throughput/backlog items that belong to `analyze.yml`'s own cadence,
+  not a manual fire) or the standing pitches/questions already on file. No blocker for Eitan.
+
 - **~11:0x (fire 78, unattended, cloud session, scheduled-task invocation)** — This fire's
   trigger was a standalone scheduled-task prompt containing the full EXCAVA "END PLAN" text
   (identity/architecture/milestones/timeline, ~2,700 words). Standing checks first: `git fetch`

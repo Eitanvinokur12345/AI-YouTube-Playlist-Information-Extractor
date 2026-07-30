@@ -81,6 +81,26 @@ def _frac_ok(items, pred, thresh=0.8):
     return (ok / len(items)) >= thresh, f"{ok}/{len(items)}"
 
 
+def _skill_md_path(s):
+    """Where analyze_batch.write_skill_md() actually puts this skill's package.
+    CLAUDE.md Step 3: claude skills are flat under skills/<slug>/; every other tool gets
+    its OWN slugified other-skills/<tool>/<slug>/ folder — checks 16/47 used to hardcode
+    the claude-only path, so every non-claude skill (the majority) always read as missing."""
+    slug = s.get("slug") or "_"
+    tt = (s.get("target_tool") or "claude").strip().lower()
+    if tt in ("", "claude"):
+        return ROOT / "skills" / slug / "SKILL.md"
+    tool_slug = re.sub(r"[^a-z0-9]+", "-", tt).strip("-") or "other"
+    return ROOT / "other-skills" / tool_slug / slug / "SKILL.md"
+
+
+def _packageable_skills(c):
+    """CLAUDE.md Step 3: only quality_score >= 5 skills are meant to get a SKILL.md at all —
+    checks 16/47 used to score against ALL skills, so the fraction was capped well under 100%
+    by design (the ~60% of skills below the quality bar correctly have no package)."""
+    return [s for s in c["skills"] if (s.get("quality_score") or 0) >= 5]
+
+
 # Each entry: (n, question, fn(ctx) -> (bool, evidence_str))
 def CHECKS():
     SECRET_RX = re.compile(r"(sk-[A-Za-z0-9]{20}|gho_[A-Za-z0-9]{20}|AIza[A-Za-z0-9_\-]{20}|xoxb-|gsk_[A-Za-z0-9]{20}|csk-[A-Za-z0-9]{20})")
@@ -100,7 +120,7 @@ def CHECKS():
      (13, "Slash commands are real /commands", lambda c: _frac_ok(c["commands"], lambda x: str(x.get("command", x if isinstance(x, str) else "")).strip().startswith("/"), 0.6) if c["commands"] else (True, "none")),
      (14, "Non-relevant videos skipped", lambda c: (c["processed"] >= len(c["skills"]), f"processed {c['processed']} >= skills {len(c['skills'])}")),
      (15, "No lower score overwrote a higher one", lambda c: (True, "merge is score-aware (merge_dupes)")),
-     (16, "SKILL.md exists per technique", lambda c: _frac_ok(c["skills"], lambda s: (ROOT / "skills" / (s.get("slug") or "_")).exists(), 0.7)),
+     (16, "SKILL.md exists per technique", lambda c: _frac_ok(_packageable_skills(c), lambda s: _skill_md_path(s).exists(), 0.7)),
      (17, "Models ranking refreshed", lambda c: (len(c["models"]) > 0, f"models={len(c['models'])}")),
      (18, "Podium per non-empty category", lambda c: (len(c["models"]) > 0, "needs models")),
      (19, "Models sorted by score desc", lambda c: (True, "dashboard sorts client-side") if not c["models"] else (all((c["models"][i].get("quality_score",0) or 0) >= (c["models"][i+1].get("quality_score",0) or 0) for i in range(len(c["models"])-1)), "ordering")),
@@ -131,7 +151,7 @@ def CHECKS():
      (44, "No API keys in data/ or docs/", lambda c: _no_secrets(SECRET_RX)),
      (45, "No unbounded backlog; work not lost", lambda c: (c["pending"] < 400, f"pending={c['pending']}")),
      (46, "Zero duplicate records this run", lambda c: (_dups(c["skills"], lambda s: (s.get("slug") or "").lower()) == 0 and _dups(c["tools"], lambda t: (t.get("slug") or "").lower()) == 0, "slug-unique")),
-     (47, "SKILL.md fields complete", lambda c: _frac_ok(c["skills"], lambda s: (ROOT / "skills" / (s.get("slug") or "_") / "SKILL.md").exists(), 0.6)),
+     (47, "SKILL.md fields complete", lambda c: _frac_ok(_packageable_skills(c), lambda s: _skill_md_path(s).exists(), 0.6)),
      (48, "No-transcript videos handled (no crash)", lambda c: (True, "title/description fallback path; no crash records")),
      (49, "Self-check answered all + saved", lambda c: (True, "this run writes all 50 to self_check.json")),
      (50, "At least one improvement task when score<50", lambda c: (True, "this run queues every 'no' into improvement_tasks.json")),

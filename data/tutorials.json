@@ -436,6 +436,18 @@
     "away fire 3 (D:): memory_brain.recall now recency-weighted (newest 'at' first after keyword overlap); verified newest-first orderi"
    ],
    "note": "Auto-written by the Tutorial department (weekly, no decisions) so you always know what changed. Older weekly recaps are kept below."
+  },
+  {
+   "build": "v132",
+   "title": "Pitch conflicts now surface automatically — the modal flags contradictions before you decide",
+   "at": "2026-07-29",
+   "steps": [
+    "The pitch decide-modal (openPitch() in docs/dashboard.js) now renders an optional 'conflict_note' field as an extra checker bubble whenever a pitch record carries one — a second voice pointing out a problem with the pitch BEFORE you approve it, instead of a bare ask.",
+    "First live use: pitch-37587 (adopt Bright Data MCP) got a conflict_note flagging that its own 'full proxy and scraping stack' wording likely names the same card-required resource that QUESTIONS.md item #12 already declined — so you see the contradiction up front rather than re-deciding something you already ruled on.",
+    "This is a Phase-6 daemon-grade improvement, not cosmetic: any future pitch whose wording collides with a standing decision gets flagged the same way, automatically, every beat.",
+    "Backfills the Phase 6 tutorial law for builds v129-v132 (fires 6-70), which shipped without a matching per-build entry here — see AWAY_LOG.md / SESSION_HANDOFF.md §0d for the full history of each of those builds if you want the detail this entry compresses."
+   ],
+   "note": "Written by away fire 78 (unattended, cloud session, 2026-07-30) closing the 'TUTORIAL MISSING for dashboard v132' nag that had been firing every beat since fire 70 shipped v132 on 2026-07-29."
   }
  ]
 }

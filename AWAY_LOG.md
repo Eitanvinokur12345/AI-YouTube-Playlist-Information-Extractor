@@ -5,6 +5,36 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-30
+- **~10:0x (fire 78, unattended, cloud session)** — Standing checks first: `origin/main == HEAD`
+  (no drift, branch was already fully synced with main's tip `9bc6c181`); `python -m src.guardrails`
+  18/20, 0 critical (G-C stale backup, G-O PC-dependent drain — same two as every recent fire).
+  Investigated the `holding` list in `data/excava_status.json` (`'tools'/'commands' dropped 1
+  records`, `"no department specialization matched"`) as a candidate fix — but confirmed fire 77
+  (commit `04039dea`, ~58m before this fire started) had **already** wired `regression`/`dropped`
+  into `improve.specialization`; re-verifying the same bug would have been wasted duplicate work,
+  so moved on instead of re-fixing what was already fixed. **Two real, verified, non-overlapping
+  fixes this fire:** (1) `python -m src.git_safe backup` — G-C was stale (>24h since the last
+  history bundle); now `_ATTIC/backups/repo-20260730T100049Z.bundle` exists, G-C passes. (2) Closed
+  the standing "TUTORIAL MISSING for dashboard v132" nag that has fired every beat since fire 70
+  shipped v132 on 2026-07-29 (SESSION_HANDOFF.md §0d confirms no per-build tutorial entry ever
+  landed for v129/v130/v131/v132, only the separate weekly "tutorial-dept" digest, which doesn't
+  satisfy `_tutorial_audit()`'s exact `build == APP_BUILD` check) — added a `data/tutorials.json`
+  entry for `"build": "v132"` describing the pitch-modal `conflict_note` feature accurately from
+  SESSION_HANDOFF.md's existing v132 writeup (no invented detail), and verified locally that
+  `_tutorial_audit()`'s logic now reports `covered: True` for `APP_BUILD v132`. Guardrails now
+  19/20 (only PC-dependent G-O left). Refreshed PULSE.md/pulse.json + guardrails_status.json/
+  movement.json (readouts only, no manual edits) to match. **Harsh self-criticism:** both fixes
+  are small and mechanical (a backup command, one tutorial-JSON entry) — neither is new department
+  capability or M2 architecture progress, and the tutorial gap had already been open for 4 builds
+  (~4 days) before this fire noticed it, which is itself a gap: nothing currently *alerts* on a
+  stale tutorial the way G-C/G-O alert on their own staleness (the beat_log line only prints to
+  the ephemeral beat console, it isn't a guardrail, so nobody would have caught this without a fire
+  specifically reading beat_log). Did not attempt the system's own self-identified `next_action`
+  (`raise-g5-leverage-53-100`, creators/links department work) — that requires understanding the
+  live bus/room mechanics under real time pressure from the ~10-min beat cron already writing to
+  the same files, and I judged a confident small fix beat a risky large one this fire, per Ponytail.
+  **Queued for the next fire:** turn "TUTORIAL MISSING" into an actual guardrail check (like G-C)
+  so this class of gap can't silently sit for days again.
 - **~09:0x (fire 77, unattended, cloud session)** — Read fire 76's log first, per its own
   instruction, plus fires 74/75's self-criticism (both flagged "go back to hunting an EXCAVA
   program increment instead of a third straight drain-only fire") — this fire took that

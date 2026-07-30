@@ -1,25 +1,11 @@
 # Raise G8 Personal fit (68/100): 20% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond
 
-> visual · task `raise-g8-personal-fit-68-43771` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> visual · task `raise-g8-personal-fit-68-48502` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
 
-```markdown
-**Approach:**
-Leverage taste-tagged designs in existing repos, run Arena learning live on NOSG-wired data, and expand taste beyond current scope.
-
-**Steps:**
-1. **Audit taste-tagged designs:**
-   - Run `find . -type f -name "*.png" -o -name "*.jpg" | grep -E "taste|tag" > taste_files.txt` to list candidates.
-   - Manually verify 20% of files meet framing standards (e.g., `feh --auto-zoom taste_files.txt`).
-   - Commit valid files to `designs/taste-tagged/` with `git mv` and update references.
-
-2. **Set up Arena learning live:**
-   - Install `arena-learning` via `pip install arena-learning` (or use Docker image `ghcr.io/arena-learning/arena:latest`).
-   - Run `arena-learn --dataset nosg-wired --model resnet50 --epochs 10 --output models/nosg_taste_v1` with GPU flag if available.
-
-3. **Expand taste beyond current scope:**
-   - Scrape 50 high-res design images from `designspiration.net` (or `pinterest.com`) using `scrapy crawl taste_spider -o taste_new.json`.
-   - Filter via `jq 'select(.score > 0.8)' taste_new.json > taste_filtered.json` and deduplicate with `fdupes -r taste_filtered.json`.
-   - Add top 10% to `designs/taste-tagged/` with manual curation.
-
-**Needs:**
-- **Tools:** `feh`, `git`, `arena-learning`, `scrapy`, `
+**Approach:** Enhance G8 Personal fit by incrementally refining design taste-tagging and leveraging Arena learning capabilities.
+1. **Taste-tagging Expansion**: Utilize `grep` and `sed` commands to systematically review and annotate 30% more design files in the existing directory, ensuring consistent tagging to reach 50% coverage.
+2. **Arena Learning Integration**: Employ `curl` to fetch and `jq` to parse Arena learning APIs, integrating live updates into the local design database to facilitate informed decision-making.
+3. **NOSG Wiring and Risk Mitigation**: Execute `git diff` and `git status` to monitor changes, then use `python` with `numpy` and `pandas` to analyze potential design risks, ensuring the implementation stays within the 10% risk threshold.
+4. **Visualization and Review**: Leverage `matplotlib` and `seaborn` to visualize design taste-tag distributions and Arena learning impacts, guiding the refinement process to optimize G8 Personal fit.
+5. **Validation and Iteration**: Apply `bash` scripts to automate the validation of design files against the enhanced taste-tags and Arena learning outputs, iteratively refining the approach as needed to achieve the desired fit improvement.
+**Needs:** Linux terminal, `grep`, `sed`, `curl`, `jq`, `python`, `numpy`, `pandas`, `matplotlib`, `seaborn`, `git`, design files directory access.

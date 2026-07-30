@@ -260,6 +260,20 @@ wired into `excava_selfimprove`). Fire 76 added a new `claude-science` tool reco
 comment-gated prompt, filed a robotics/hardware tab-candidate, and filled 5 empty News-tab
 summaries. Full detail + harsh self-criticism in each fire's own AWAY_LOG.md entry.)**
 
+**v133 (away fire 77, unattended, cloud session, 2026-07-30 — live build v133):** shipped the
+"per-type readiness hints on cards" item v127 left as NEXT (open since 2026-07-25, three fires
+in a row skipped it for video-drain). `elBadge()` in `docs/dashboard.js` now appends a small
+"▶ ready" badge next to the verified/niche/unverified/dead badge whenever `elReady(e)` is true —
+shown consistently everywhere `elBadge()` already renders (per-type list-tab cards via
+`decorateCards`, the element detail hero, its Related row, and every Hub card). The badge's
+title is a genuinely per-type hint from the new `elReadyHint(e)` (prompt → "copies the verbatim
+prompt text", command → "copies the command name to paste", connector → "copies a paste-ready
+MCP server config", everything else → which real link/install anchor it has), not one generic
+sentence reused for every element type. `.el-badge.r` CSS added to `docs/index.html` reusing the
+existing gold "ready to use" palette. `APP_BUILD`/`SHELL_CACHE` bumped v132→v133 together (G-E
+stays green). Full detail + harsh self-criticism in AWAY_LOG.md (fire 77 entry) — this §0d
+section just carries the live-build pointer forward for G-I.
+
 **(prior, v120) M2 UNDERWAY.** Sessions 8-10: 4 brain families in the engine CATALOG (GLM/DeepSeek/Kimi via
 OpenRouter free + local Qwen/Llama); OpenRouter key VERIFIED (Eitan's secret OPENROUTER_API_KEY_REAL,
 workflows repointed, selftest 11/11, glm/deepseek/kimi all PASS); `engines.debate_engines(n)` dedups

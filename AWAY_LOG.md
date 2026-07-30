@@ -5,6 +5,70 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-30
+- **~08:0x (fire 77, unattended, cloud session)** — Read fires 74-76's logs first, per this fire's
+  own instruction. Fire 76's own self-criticism explicitly asked for a non-video-drain M1/M2/M3
+  program increment next (three straight prior fires had all skipped straight to drain), and this
+  fire's own brief said the same — so no video-drain batch this time. Standing checks:
+  `python -m src.standing_checks` clean (self-healed the usual stale-cache/missing-upstream pair
+  again — always benign, nothing lost). `python -m src.guardrails` 18/20, 0 critical, both flags
+  the same known-expected pair every fire since 23/58 has correctly left alone (`G-C` no fresh
+  history bundle, `G-O` Eitan's PC/Ollama off). `python -m src.excava_systemcheck` 10/11, 1
+  pre-existing tool-drift (fire 23's deliberate, documented non-fix — untouched).
+  **Hunted a real M1/M3 increment instead of drain.** Checked `data/excava/backlog.json`'s
+  `queued_now` (all normal drain-cadence gap items — video processing, verification, embedding —
+  not fire-sized standalone increments) and `data/excava/pitches.json` (all 3-4 entries still
+  `status: "pending"`, none owner-approved, correctly left untouched per this fire's own brief).
+  Found the real target in `SESSION_HANDOFF.md` §0d's own v127 entry: **"NEXT (non-brain):
+  per-type readiness hints on cards"** — flagged open on 2026-07-25 and skipped by every fire
+  since (fires 125-132 all did other things; nothing ever built this specific item). Confirmed via
+  `grep` that no such per-card readiness hint existed anywhere in `docs/dashboard.js` — only the
+  Hub's aggregate "▶ ready to use (N)" filter chip and a same-priority default sort (v131) existed;
+  individual cards carried no visible readiness signal at all, and where one existed it would have
+  been one generic label, not the "per-type" hint the note specifically asked for.
+  **Shipped it for real.** `elBadge()` (`docs/dashboard.js`) now appends a small `▶ ready` badge
+  next to the existing verified/niche/unverified/dead badge whenever `elReady(e)` is true — since
+  `elBadge()` is the single shared badge renderer, this one change surfaces consistently on every
+  per-type list-tab card (`decorateCards`: skills/tools/models/prompts/connectors/designs/
+  comingsoon), the element detail hero, its Related row, and every Hub card, with zero new
+  call-sites to wire. Added `elReadyHint(e)` as the badge's `title` — genuinely per-type text
+  (prompt → "copies the verbatim prompt text", command → "copies the command name to paste",
+  connector → "copies a paste-ready MCP server config", tool/skill/model/design → names which real
+  link/install anchor it actually has: GitHub repo, website, or install string) rather than one
+  boilerplate sentence reused for every element — the literal ask in the v127 note. Added
+  `.el-badge.r` CSS to `docs/index.html`, reusing the existing gold "ready to use" palette
+  (`--gold-soft`/`--gold-ink`/`--gold-line`) so it reads as part of the same design language as the
+  Hub's existing ready-to-use chip rather than a new ad-hoc color. Bumped `APP_BUILD`/`SHELL_CACHE`
+  v132→v133 together (kept `G-E` green) and updated `SESSION_HANDOFF.md` §0d with a v133 entry
+  (keeps `G-I` green).
+  **Verified via CLI only, no browser (away rule):** `node --check` clean on both touched JS files.
+  Wrote a standalone Node `vm`-sandbox script (`scratchpad/verify_readiness_badge.mjs` — a minimal
+  `document`/`navigator`/`window` DOM stub, not a real browser) that loads the real
+  `docs/dashboard.js` verbatim and calls `elReady`/`elReadyHint`/`elBadge` directly against 10
+  synthetic elements spanning every type and edge case (empty body, no links at all, install-only,
+  a record with no `verified`/`links` object whatsoever). All 10 cases passed: the badge appears
+  if-and-only-if `elReady()` is true, never throws on sparse/legacy records missing fields, and the
+  4 checked per-type hint strings are confirmed pairwise-distinct (not one template). Re-ran
+  `python -m src.guardrails` after: 18/20, 0 critical, `G-E`/`G-I` both flipped/stayed green as
+  expected, `G-F` (whole-tree JSON integrity) still clean.
+  **Harsh self-criticism:** this is real, wired, verified UI product work — not a video-drain batch,
+  not meta-machinery, and it closes a specific, named, 5-fires-old open item — but it is still a
+  small/cosmetic increment (one badge, one hint function, one CSS rule), not a structural M1/M2/M3
+  milestone step; a future fire could reasonably judge that "hunt an increment" should mean
+  something with more architectural weight (e.g. the generic "job succeeded but no commit landed"
+  guardrail QUESTIONS.md's fire-28 entry flagged as a still-open follow-up, or actually diagnosing
+  why 8/16 lanes in `G-T` read "can't-tell" instead of on-cadence) rather than a Hub polish item —
+  I judged a small-but-genuinely-closed item safer to verify correctly in one sitting than a
+  bigger, riskier guardrail change to a live CI pipeline, but that trade-off is arguable. I did not
+  verify in an actual browser (against the away-mode rule, so correct not to), which means the
+  visual layout/spacing of the new badge next to the existing verified badge on a real rendered
+  card is unconfirmed — the sandbox test proves the *logic* (right badge, right hint, no crashes)
+  but not pixel-level appearance; a low but nonzero risk the badge wraps awkwardly on narrow cards
+  until Eitan or a browser-capable fire actually looks at it. `data/excava/backlog.json` and
+  `pitches.json` were read but not acted on beyond confirming nothing there was fire-sized/
+  approved — did not do a fresh gap-hunt across `EXCAVA_END_PLAN.md`'s full milestone list, so
+  there may be a bigger non-brain gap this fire didn't surface. No blocker for Eitan; nothing here
+  needs his attention beyond the standing open pitches/questions already on file.
+
 - **~07:1x (fire 76, unattended, cloud session)** — Read fire 75's log first, per this fire's own
   instruction. Standing checks: `python -m src.standing_checks` clean (self-healed the usual
   stale-cache/missing-upstream pair — local `origin/main` was one commit behind the real fetch,

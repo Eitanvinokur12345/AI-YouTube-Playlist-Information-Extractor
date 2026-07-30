@@ -5,6 +5,48 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-30
+- **~09:0x (fire 77, unattended, cloud session)** — Read fire 76's log first, per its own
+  instruction, plus fires 74/75's self-criticism (both flagged "go back to hunting an EXCAVA
+  program increment instead of a third straight drain-only fire") — this fire took that
+  explicitly, not another video batch. Standing checks: `origin/main == HEAD` before starting
+  (no drift); `python -m src.guardrails` 18/20, 0 critical (only the pre-existing PC-dependent
+  G-O and self-healing G-C, same as every recent fire).
+  **Real, verified fix (M1-adjacent, small/mechanical, matches the pattern fire 6 used for the
+  `links` department):** `excava_status.json`'s `holding` list had two regression alerts stuck
+  forever — `'tools' dropped 1 records` and `'commands' dropped 1 records` — both rejected by
+  `pick_department()` with `"no department specialization matched"`. Traced the source:
+  `src/backup_system.py`'s own comment says these are meant to be "queue[d] for self-improvement"
+  (the `improve` department), but `data/excava/agents.json`'s `improve.specialization` list
+  (`improve, self-improvement, optimize, stack, scout, refactor`) contains none of the words that
+  actually appear in the generated alert text (`"[regression] '<type>' dropped <n> records
+  (<was>-><now>)"`) — a pure keyword-coverage gap, not a routing-logic bug. Added `regression` and
+  `dropped` to that specialization list (2-line diff). Verified three ways before shipping:
+  (1) unit-level — called `excava_agents.pick_department()` directly on both held alert strings,
+  confirmed `-> improve, "best specialization match (2 hits)"` (previously `None`); (2) confirmed
+  `improve` has real tier-1 scoped workers (Sprocket/Gauge/Overhaul) and no capability gate, so
+  G-7 doesn't re-block it; (3) system-level — ran the real `python -m src.excava` beat and
+  confirmed `excava_status.json.holding` went from 2 entries to `[]`, and the trace log shows the
+  regression task actually entered the `improve` department this cycle (logged honestly as
+  `noop — tool ran but ACCOMPLISHED NOTHING this cycle`, since Phase-0 `improve` workers are
+  still assessors, not executors — that's an existing, separate, already-tracked gap, not
+  something this fix was meant to close). Also ran `python -m src.backup_system` (0 new
+  regressions vs. today's already-taken snapshot) and re-ran `guardrails`/`pulse` clean after.
+  All touched JSON re-verified to parse. `data/designs.json` shed 22 stale entries (1141→1119) as
+  a side effect of running the real beat (its normal dead-link pruning pass, same mechanism
+  `collect_designs.py` documents) — not something this fire's fix caused, flagged here only for
+  visibility since a design-count drop is exactly the class of thing G-regression-detection now
+  exists to catch.
+  **Harsh self-criticism:** this is a small, single-keyword-list fix — real and verified, but it
+  unblocks routing for exactly 2 currently-stuck tasks, not a structural improvement to how many
+  future regressions get caught (the underlying `improve` department is still assessor-only, so
+  "unblocked" today means "correctly logged as a noop" rather than "actually fixed"; building a
+  real fix-executor for data-count regressions — e.g., restoring from the last good backup per
+  `backup_system.py`'s own `restore_hint` — is the next, bigger step and is NOT done here). Did
+  not touch the still-open, larger items already on file (M2 5-class rewrite — correctly pitch-
+  gated per fire 65; the 9 remaining push-safety-rollout workflow files; the ~13-20 stray
+  `kind-shannon-*` branches). No blocker for Eitan; nothing here needs his attention beyond the
+  standing open questions already on file.
+
 - **~07:1x (fire 76, unattended, cloud session)** — Read fire 75's log first, per this fire's own
   instruction. Standing checks: `python -m src.standing_checks` clean (self-healed the usual
   stale-cache/missing-upstream pair — local `origin/main` was one commit behind the real fetch,

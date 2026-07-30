@@ -149,6 +149,24 @@ def run() -> list[str]:
     # TIER 2.5: staff any department missing a lead/doer/checker (owner-granted agent autonomy)
     out.extend(_staff_thin_departments())
 
+    # SAFE #3: promote any tab_candidates.json theme that has crossed the evidence bar into a
+    # real, announced dashboard tab (data/extra_tabs.json) — the WRITE side of CLAUDE.md Step 8b /
+    # docs/REFERENCE_SPEC.md Q37-Q39, wired 2026-07-30 (fire 74). Deterministic, no LLM, safe to
+    # run every beat: see src/dynamic_tabs.py for the promotion rule + dismissal-permanence guard.
+    try:
+        from src.dynamic_tabs import promote as _promote_dynamic_tabs
+        dt_result = _promote_dynamic_tabs(dry_run=False)
+        made = dt_result.get("themes_promoted_this_run") or []
+        for m in made:
+            _log("safe-dynamic-tab", f"promoted tab '{m['title']}' ({m['id']})",
+                 f"{m['evidence_videos']} distinct videos raised this theme, crossing "
+                 "self_improvement.dynamic_tabs.min_evidence_videos", True)
+            out.append(f"self-improve: auto-created dashboard tab '{m['title']}' "
+                       f"({m['evidence_videos']} source videos, safe, applied)")
+            improved = True
+    except Exception as e:
+        out.append(f"self-improve: dynamic-tab promotion skipped ({type(e).__name__})")
+
     # PITCHES: big changes that need Eitan — grounded in REAL telemetry, deduped, routed to the
     # SAME in-app decide flow (each pitch cites the number that triggered it, so it's never invented).
     pitched = _load(EXDIR / "pitches.json", {"pitches": []})

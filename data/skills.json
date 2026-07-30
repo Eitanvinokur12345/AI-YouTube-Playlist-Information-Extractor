@@ -109947,6 +109947,61 @@
           "title": "AI Agents Wrote 55,000 Lines and Built a Real FPS Game"
         }
       ]
+    },
+    {
+      "skill_name": "yt-dlp + FFmpeg Video Flipbook Analysis for Claude",
+      "slug": "yt-dlp-ffmpeg-claude-video-flipbook",
+      "category": "video creation",
+      "description": "Since Claude has no direct video input (only image formats; animations unsupported), this workflow downloads a YouTube video locally with yt-dlp, slices it into one still frame per second with FFmpeg, and hands Claude the resulting folder of frames to read like a flipbook — recovering the cuts, on-screen text, b-roll, and pacing a transcript-only read would miss entirely.",
+      "use_case": "Reverse-engineering why a viral video worked, by giving Claude an image-based read of its edit structure instead of just its transcript.",
+      "output": "A shot list (cut count, first-3-seconds breakdown, every on-screen line with timestamps) an editor can work from.",
+      "quality_score": 6,
+      "model_version": null,
+      "company": null,
+      "country": null,
+      "open_source": true,
+      "target_tool": "claude",
+      "is_claude_skill": true,
+      "compatibility": [
+        {
+          "tool": "Claude",
+          "up_to_version": "any"
+        }
+      ],
+      "multi_tool": false,
+      "source_type": "youtube",
+      "source_url": "https://www.youtube.com/watch?v=ABAuLH5sKvo",
+      "source_video_id": "ABAuLH5sKvo",
+      "tips": [
+        "yt-dlp downloads the source video locally; FFmpeg slices it to 1 frame/sec so Claude can 'watch' it as a still-image sequence.",
+        "Both tools run locally with no API cost and nothing uploaded — the frames never leave your machine.",
+        "Ask Claude to count cuts, decode the first 3 seconds, and extract every on-screen line with timestamps to build an editor-ready shot list."
+      ],
+      "slash_commands": [],
+      "general_tips": [
+        "When an AI tool's docs only list image formats as supported input, a frame-per-second extraction is a reliable workaround for giving it 'video' understanding."
+      ],
+      "relevance": "Video is the dominant AI-generated/AI-analyzed content format, but most LLMs (including Claude) can't natively watch one — this is a concrete, free, local workaround worth knowing.",
+      "popularity_signals": [],
+      "endorsement_video_ids": [
+        "ABAuLH5sKvo"
+      ],
+      "video_quality_score": 5,
+      "low_quality_source": false,
+      "source_videos": [
+        {
+          "id": "ABAuLH5sKvo",
+          "url": "https://www.youtube.com/watch?v=ABAuLH5sKvo",
+          "title": "Claude Can't Actually Watch Your Videos Until You Do This"
+        }
+      ],
+      "setup": {
+        "kind": "claude skill",
+        "command": "activator: set me up with \"yt-dlp + FFmpeg Video Flipbook Analysis for Claude\"",
+        "target": "claude",
+        "needs_key": false,
+        "in_project": true
+      }
     }
   ],
   "recipes_updated_at": "2026-07-29T11:54:18.452072+00:00"

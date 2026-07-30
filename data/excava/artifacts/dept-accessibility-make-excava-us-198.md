@@ -1,13 +1,18 @@
 # accessibility: Make EXCAVA usable by EVERYONE — contrast, mobile/touch, reduced-motion, keyboard nav, scr
 
-> Decision artifact · room `dept-accessibility-make-excava-us-198` (dept) · 2026-07-20T20:10:52.554925+00:00
-> Participants: Ramp, Reader, Access · synthesized by groq/llama-3.3-70b-versatile
+> Decision artifact · room `dept-accessibility-make-excava-us-198` (dept) · 2026-07-30T20:50:44.305331+00:00
+> Participants: Ramp, Reader, Access · synthesized by mistral/mistral-small-latest
 
-**Decision:** Implement a focus-triggered skip link to improve accessibility for keyboard users.
+**Decision:**
+Ship a 3px outset focus ring with 4.5:1 contrast, 2px spacing, colored #007AFF, tested via Playwright MCP on light/dark modes and dynamic backgrounds.
+
 **Plan:**
-1. Add a focus-triggered skip link at the top of every page, visible only to keyboard users.
-2. Style the skip link with high contrast and a full-width design to ensure visibility.
-3. Animate the skip link on focus with a 2px bright outline and 100ms fade-in to provide a strong visual cue.
-4. Ensure the skip link blends into the page when not focused to avoid visual noise for sighted mouse users.
-5. Test the implementation to verify that the skip link is accessible and effective for keyboard users.
-**What changed:** The skip link is now focus-triggered, providing a balance between visibility for keyboard users and minimal visual noise for mouse users.
+1. Implement a 3px solid focus ring with 2px outer spacing, colored #007AFF.
+2. Ensure 4.5:1 contrast ratio against both light and dark backgrounds.
+3. Add Playwright MCP tests to verify focus ring visibility in light/dark modes.
+4. Test focus ring visibility on dynamic backgrounds (e.g., gradients, images).
+5. Document focus ring behavior in design system guidelines.
+6. Conduct user testing with keyboard-navigating participants for validation.
+
+**What changed:**
+Replaced static 2px ring with dynamic 3px ring (#007AFF, 4.5:1 contrast, 2px spacing) and added Playwright MCP testing for all modes.

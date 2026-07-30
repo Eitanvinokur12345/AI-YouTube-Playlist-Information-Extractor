@@ -1,11 +1,18 @@
 # Keep the Designs tab pure: designs only, live previews, taste-ranked
 
-> visual · task `keep-the-designs-tab-pur-34851` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
+> visual · task `keep-the-designs-tab-pur-42478` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
-**Approach:** Enforce design standards through manual curation and automation
-1. **Review existing designs**: Use `git ls-files` to list all files in the Designs tab and manually review each design for relevance and aesthetic quality
-2. **Implement a taste-ranking system**: Create a new file `designs.md` and use GitHub Markdown to organize designs into tiered lists, with top-tier designs displayed prominently
-3. **Automate live preview generation**: Utilize `github actions` and `ffmpeg` to generate live previews for each design, with a new workflow file `.github/workflows/previews.yml` to automate the process
-4. **Enforce design tab purity**: Set up a `git hook` to prevent non-design files from being committed to the Designs tab, using `pre-commit` to run a script that checks file types and contents
-5. **Monitor and maintain**: Regularly review the Designs tab using `git status` and `git log` to ensure that only high-quality designs are added and that the taste-ranking system remains effective
-**Needs:** `git`, `github actions`, `ffmpeg`, `pre-commit`, `github markdown`, write access to the Designs tab repository
+**Approach:**
+Implement a strict filtering system to ensure the Designs tab only contains polished, live previews with curated aesthetics.
+
+**Steps:**
+1. **Audit existing designs** – Run `find ./designs -type f \\( -name "*.png" -o -name "*.jpg" -o -name "*.gif" \\) | wc -l` to count unfiltered assets. Delete or archive files failing taste criteria (e.g., low-res, unrendered mockups).
+2. **Enforce live preview requirement** – Use a script to verify each design has a working URL (e.g., `curl -s -o /dev/null -w "%{http_code}" [URL] | grep -q "200"`). Remove entries without valid links.
+3. **Taste-ranking system** – Implement a `designs/.taste_rank` file with manual scores (1-10) for each design. Add a `sort -k2 -nr` command to auto-sort the tab by rank.
+4. **Automated cleanup** – Add a GitHub Action (`.github/workflows/designs-purge.yml`) to run steps 1-3 on `git push`, failing if new designs violate rules.
+5. **Frame-worthy framing** – Replace thumbnails with high-res exports (e.g., `ffmpeg -i input.mp4 -vframes 1 -q:v 2 output.jpg`) and enforce 16:9 aspect ratio via `imagemagick`.
+
+**Needs:**
+- Access to the `designs/` directory in the repo.
+- `curl`, `ffmpeg`, `imagemagick` installed in CI.
+- GitHub Actions enabled

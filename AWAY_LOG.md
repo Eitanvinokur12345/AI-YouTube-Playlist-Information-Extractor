@@ -5,6 +5,27 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-30
+- **~15:5x (fire 81, unattended, cloud, scheduled-task invocation)** — Followed up on fire 80's
+  open thread (analyze.yml's failure streak) with one correction and one sharper data point,
+  both landed in `QUESTIONS.md` item 31, not acted on unilaterally. Correction: the actual
+  `config.json` night-gate is `01:00–07:00 Asia/Jerusalem`, narrower than the 23:00-07:00 UTC
+  fallback fire 57/80 used — the two overlap but aren't the same window. Sharper data point:
+  pulled full job logs (`mcp__github__get_job_logs`, not just run status) for all 5 real
+  (non-gated) `analyze.yml` attempts inside last night's actual window (22:26, 23:28 UTC 07-29,
+  00:53, 01:53, 03:49 UTC 07-30) — every single one failed, byte-identical SDK-death signature
+  confirmed from the raw log (`is_error:true, num_turns:1, total_cost_usd:0, ~2.3s, dies before
+  any model turn`). That's 0-for-5, not "clustered ~1-in-3 that self-heals" (fire 57's read) —
+  the flagship ingestion lane has now gone ~61h (2026-07-28T02:37 → now) without one real
+  success. **Did not notify Eitan or touch cadence/`show_full_output`**: fire 80 already decided
+  to wait for tonight's window (the next 01:00-07:00 Israel pass, not yet reached as of this
+  fire) before escalating, and that plan still stands — paging him now would jump ahead of a
+  wait-and-see call this same system already made deliberately, on a pattern it has treated as
+  self-healing noise 3 times before. Left the sharpened evidence + a concrete recommendation
+  (`claude setup-token` as the cheapest expiry-vs-quota test) in QUESTIONS.md for whichever fire
+  checks after tonight's window to act on if the outage is still unresolved. Verified: guardrails
+  18/20 (0 critical, same 2 known/self-healing as fire 80: G-C stale-backup, G-O EITAN-PC-off);
+  self_check 43/50, no regression from this fire's edit (docs-only, no code/data touched besides
+  the QUESTIONS.md append).
 - **~14:5x (fire 80, unattended, cloud session, scheduled-task invocation, 10th heartbeat)** —
   Standing checks clean (`python -m src.standing_checks`: stale local cache re-fetched nothing
   lost, upstream re-tracked — same self-healing pair every recent fire hits); guardrails 18/20,

@@ -5,6 +5,132 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-30
+- **~03:1x (fire 74, unattended, cloud session)** — Followed this fire's own explicit brief instead
+  of the video-drain default fires 71-73 each fell back to and each self-criticized: resolved both
+  twice-flagged naming collisions with real research, then spent real effort hunting an M1-M3
+  increment instead of skipping straight to volume. Standing checks first: `python -m
+  src.standing_checks` — clean, self-healed the usual stale-cache/missing-upstream pair.
+  `python -m src.guardrails` 17/20 → 18/20 by the end (G-C/G-Q flipped green from fresh commits
+  landing during the fire), 0 critical throughout. `python -m src.excava_systemcheck` 9-10/11
+  (G-M/`movement rising` genuinely stalled at `done=82` across 4+ beats, `intent aligned` 1
+  pre-existing tool-drift — both unchanged/untouched, not this fire's to fix per the brains-vs-
+  non-brain split).
+  **1. OpenClaw collision (resolved, high confidence).** Read all 3 `tools.json` records
+  (`openclaw`, `openclaw-bot`, `openclaw-gateway`) plus the `openclaw-lead-generation` and
+  `installing-openclaw` skills. WebFetch(`github.com/openclaw/openclaw`) + WebSearch confirmed
+  OpenClaw is one real, single, open-source self-hosted personal-AI-agent gateway (OpenClaw
+  Foundation, 25+ channels, Docker/Ollama). Pulled the actual source-video transcripts fire
+  72/73 never had budget to read: `-cBwLx7Mcbk`'s transcript literally says "unleashed their
+  open claw AI agent on a pool business" — the prior "openclaw" description (satellite-imagery
+  B2B lead-gen) was a mis-extraction that wrote a downstream WORKFLOW built on OpenClaw as if it
+  were OpenClaw's own definition. Fixed the description/company/open_source/homepage/github,
+  merged the near-duplicate `openclaw-bot` (same homepage/github/source-video, same wrong
+  description) into it, and fixed the `openclaw-lead-generation` skill's wrongly-inherited
+  `company: apex.host` (apex.host turned out to be REAL — a separate company selling managed
+  OpenClaw hosting, confirmed via WebSearch — just not the maker, so still wrong as the field's
+  value). `openclaw-gateway`'s source video (`Nj-j3eL7e2w`, read in full — title, description,
+  transcript, all 15 tags) never mentions OpenClaw ANYWHERE — a flat hallucination from a
+  `mine_feeds (gemini-video)` pass — so renamed/re-slugged it away from the false branding to
+  `claude-code-persistent-memory-oneline`, with a hedged note that WebSearch independently
+  surfaced a plausible real match (`claude-mem`, ~46k GitHub stars, ships an official OpenClaw
+  integration) without asserting that identity onto a video that never named it. Shipped
+  `8aee1a13`.
+  **2. Ruflo/Ruflow/claude-flow collision (resolved, high confidence — a clean merge, not a
+  disambiguation).** WebFetch(`github.com/ruvnet/ruflo`) + WebSearch nailed the ground truth:
+  `ruvnet/claude-flow` (released ~May 2025) was renamed `ruvnet/ruflo` in Jan/Feb 2026 for
+  trademark reasons, keeping the `claude-flow` CLI/npm name for backward compat. Read all 3
+  source-video transcripts: `claude-flow` and `ruflo`'s tools.json records already shared the
+  EXACT SAME `source_video_id` (`KeeOBXqZAyQ`) — one mine_feeds pass had split one video into
+  two tool records. `-YiJVhW6WAk`'s own description literally reads "Ruflow (formerly Claude
+  Flow) connects multiple agents..." and its sibling video `akg9L65DnaA` links straight to
+  `github.com/ruvnet/ruflo` in the description AND a creator reply — "Ruflow" is just a spelling
+  variant, not a fork. Merged all three into one `ruflo` record with a corrected, evidence-based
+  description and unioned endorsements (2→7 source videos). Shipped `2c1bdb7c`.
+  **3. M1-M3 increment: built the missing WRITE side of dynamic tab promotion (shipped, real,
+  verified).** Read `systemcheck.json`, `state.json`, `movement.json`, `EXCAVA_V2_STEPS.md` end
+  to end hunting for something non-brain, undone, and actually visible — ruled out `watch`
+  department (correctly BLOCKED on an owner Gemini key, not mine to touch), ruled out
+  `github_meta_enrich` (already running automatically every beat, not a new capability), read
+  the stale 2026-07-12 `rehab_plan.json` and decided it was too broad/stale for a scoped
+  increment. Found the real gap: CLAUDE.md Step 8b and `docs/REFERENCE_SPEC.md` Q37-Q39 describe
+  a promotion contract — a `tab_candidates.json` theme recurring across enough distinct videos
+  should get promoted into a real, announced dashboard tab in `extra_tabs.json` — whose READ side
+  was fully built (`dashboard.js`'s `injectDynamicTabs`/`renderDynamicTab`/`tabIsNew`,
+  `mcp_server`'s `list_dynamic_tabs`/`dismiss_dynamic_tab`) but had NO write side ever:
+  `extra_tabs.json` sat at `{"tabs": []}` regardless of recurrence. Built `src/dynamic_tabs.py` —
+  deterministic, no LLM, no network: groups candidates by theme, counts DISTINCT `video_id`
+  evidence (same video repeating a theme must not double-count), promotes any theme crossing
+  `config.json`'s `self_improvement.dynamic_tabs.min_evidence_videos` (5), respects
+  `max_total_active`/`reserved_tab_ids`, and — the part most likely to be gotten wrong — treats
+  dismissal as PERMANENT (a theme dismissed via `dismiss_dynamic_tab` is never recreated even if
+  new evidence for it arrives). Wired into `excava_selfimprove.run()` so it actually fires every
+  self-improvement beat, not just on manual invocation. **Verified properly, not just "ran
+  without error":** built a synthetic scenario in a temp dir with monkeypatched paths and
+  asserted, in code: the distinct-video dedup collapses a duplicate video_id correctly (4
+  candidate rows → 3 evidence videos), the promotion fires exactly at the threshold, a second
+  run doesn't duplicate the tab (idempotency), and a dismissed tab is never recreated even when
+  fresh evidence for that theme is added afterward — all assertions passed. Then ran it against
+  the REAL `data/tab_candidates.json` (19 themes, current max recurrence 3 < threshold 5) —
+  correctly promotes NOTHING yet, which is the honest, unforced answer, not a demo I gamed to
+  show output. `excava_systemcheck`'s "movement rising" check ticked 9/11 → 10/11 as a
+  side-effect of a clean self-improve pass. Shipped `f81c34a0`.
+  **4. Video-drain (secondary, as instructed).** `data/catch_up.json` (`active: true, order:
+  newest_first`) and `config.json`'s `catch_up` block agree with each other and are internally
+  consistent right now — worth flagging that fires 71-73 used `oldest_first` "citing CLAUDE.md's
+  own default" while catch_up has been active since 07-17, which per CLAUDE.md Step 1's own text
+  ("During catch-up mode... newest published first") was arguably not what the currently-active
+  config called for; this fire followed `newest_first` as both files (and CLAUDE.md's own
+  catch-up rule) actually specify. Processed 8 videos, newest-first, full pipeline, one commit
+  per video or tight batch (Golden rule #1): `qRC3-R3jkMQ` ("free GitHub repo replaced my SEO
+  agency") turned out to be another mention of the already-catalogued `claude-seo` tool/skill —
+  but WebFetch on the comment-linked repo caught a real, separate data-quality bug: the existing
+  record's GitHub username was `AgriscDaniel` (confirmed 404) instead of the real, live
+  `AgricIDaniel` (12.8k stars, v2.2.4, actively maintained) — fixed across `tools.json`,
+  `skills.json`, and two `commands.json` entries (one of which, `git clone --depth 1 ...`, was
+  never a valid slash command per Golden rule #10 and got removed; `seo audit` became the real
+  `/seo audit`). `ABAuLH5sKvo` ("Claude Can't Actually Watch Your Videos") yielded a genuinely
+  new skill + SKILL.md package (`yt-dlp-ffmpeg-claude-video-flipbook`, quality 6 — a concrete
+  yt-dlp+FFmpeg frame-extraction workaround for Claude's lack of video input) plus a new `yt-dlp`
+  tool record and an endorsement on the existing `ffmpeg` tool; its Google-Doc setup-guide link
+  403'd on WebFetch, skipped per Step 2c since the video's own transcript already had enough
+  specifics. The remaining 6 (`Ic8cUeKptWs`, `JJxe1uWmoIA`, `kKtsLYbXdMk`, `BBHEEUW9Et0`,
+  `IprN2Hr2d6o`, `eOj5z-U_N0M`) were thin title-only or ad-copy shorts with no verifiable
+  tool/technique — filled news summaries + quality scores for all, deliberately did NOT force
+  the four generic STARTUP HAKK business-claim shorts into a `tab_candidates.json` entry (already
+  covered by the News tab; Step 8b is for genuine no-home orphans), and skipped `eOj5z-U_N0M` at
+  the Step 2 relevance gate (a general app-design "taste" short with no AI content in its own
+  title/description). `data/_pending` 1182 → 1174. `status.json.run_report` updated after every
+  video (`analyzed_this_run` +8, `skipped_not_relevant` +1, `total_videos_analyzed` +8,
+  `total_tools` 2987→2990, `tab_candidates_open` unchanged at 24). Shipped `7f16cdf8`,
+  `ea9dd748`, `035eff01`.
+  Verified everything: every touched JSON file re-parsed clean before each commit; the synthetic
+  `dynamic_tabs.py` test asserted 5 distinct properties, not just "no exception"; `git_safe`'s
+  own commit+push+verify output confirmed `origin/main == HEAD` after all 8 commits this fire.
+  Re-ran `python -m src.guardrails`/`python -m src.pulse` at the end — 18/20, 0 critical, PULSE.md
+  refreshed, trailing-readout commit `953928bd`.
+  **Harsh self-criticism:** the two naming-collision resolutions are the strongest work this fire
+  did — genuinely evidence-based (real WebFetch/WebSearch against the actual repos, real
+  source-video transcripts read in full, not guessed) — but they took long enough that the M1-M3
+  hunt got compressed into finding and shipping ONE increment rather than the "spend real effort"
+  the brief asked for meaning multiple candidates seriously evaluated; I looked hard at `watch`,
+  `github_meta_enrich`, and the rehab plan before landing on dynamic-tabs, but that's still three
+  candidates in one fire, not the exhaustive sweep a truly thorough hunt would be. The
+  dynamic-tabs promotion is real and tested, but it is currently a no-op against live data (0/19
+  themes cross the threshold) — genuinely honest, not a shortcut, but it means Eitan won't SEE
+  any visible new tab appear until candidates actually accumulate past 5 distinct videos on one
+  theme, so "visible" here means "the machinery now exists and is wired," not "something new is
+  on the dashboard today." The `openclaw-gateway`→`claude-code-persistent-memory-oneline` rename
+  is the one call in this fire I'm least certain about: I'm confident the OLD "OpenClaw" branding
+  was wrong (zero evidence in its own source), but I can't independently confirm the record is
+  claude-mem either — I chose the more conservative of two guesses (strip the wrong brand rather
+  than assert a plausible-but-unconfirmed one), which I believe is correct per this fire's own
+  "do NOT guess-merge" instruction, but a future fire with a working Google-Docs fetch path (mine
+  403'd twice, on both `ABAuLH5sKvo`'s and this record's linked docs) could settle it for real.
+  8 videos drained is still a rounding error against a ~1,174-deep backlog, exactly as fires
+  58-73 have said repeatedly — I did not pretend otherwise by inflating the batch size just to
+  post a bigger number. No blocker for Eitan; `G-M`/movement-stalled and `G-O`/local-drain-stale
+  are unchanged, already-documented, brains-adjacent conditions this fire correctly left alone.
+
 - **~02:0x (fire 73, unattended, cloud session)** — Read fire 72's log first, per this fire's own
   instruction to account for the prior session before continuing: fire 72 flagged, but did not
   do, a Step 3b-required re-sort of `data/tools.json` by `mentions` desc / `quality_score` desc /

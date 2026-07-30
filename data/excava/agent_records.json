@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-30T21:00:26.974360+00:00",
+ "generated_at": "2026-07-30T21:07:26.339415+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,8 +8,8 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 262,
-   "rooms_7d": 160,
+   "turns_7d": 263,
+   "rooms_7d": 161,
    "engines_used": [
     "gh-models",
     "groq",
@@ -17,7 +17,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Adopt Scriv’s single shared log with auto-approval after 2 hours unless any reviewer flags a risk—no dual-"
+   "last_position": "Action: Fetch the full transcript for the video titled \"Orchestrated AI\" using the YouTube transcript tool."
   },
   {
    "id": "transcripts-checker",
@@ -39,8 +39,8 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 234,
-   "rooms_7d": 133,
+   "turns_7d": 236,
+   "rooms_7d": 134,
    "engines_used": [
     "gh-models",
     "groq",
@@ -48,15 +48,15 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Action: Run BloodHound-MCP against the full earnings call transcript to map every exec mention, sentiment shift, and unr"
+   "last_position": "**Decision:** Enforce a *rotating* reviewer role (assigned weekly by Product) to audit the log daily, auto-approving low"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 198,
-   "rooms_7d": 114,
+   "turns_7d": 199,
+   "rooms_7d": 115,
    "engines_used": [
     "gh-models",
     "groq",
@@ -65,7 +65,22 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Run Arcads AI Video’s \"AI Marketing\" skill on the latest Arcads AI Video at 11:4. This will generate a structured market"
+   "last_position": "Run Arcads AI Video’s \"AI Marketing\" skill on the latest Arcads AI Video. The output will be a curated marketing asset h"
+  },
+  {
+   "id": "news-w1",
+   "name": "Scoop",
+   "dept": "news",
+   "role": "doer",
+   "turns_7d": 136,
+   "rooms_7d": 126,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll fetch the latest AI headlines from Reuters, BBC, and the White House press feed. The digest will list the newest AI"
   },
   {
    "id": "transcripts-lead",
@@ -83,26 +98,11 @@
    "last_position": "ACTION: Fetch full transcript for *\"How to Build a Resilient Team\"* via kimtaeyoon83/mcp-server-youtube-transcript, outp"
   },
   {
-   "id": "news-w1",
-   "name": "Scoop",
-   "dept": "news",
-   "role": "doer",
-   "turns_7d": 135,
-   "rooms_7d": 126,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll pull the latest AI-news digest from the newest official/company/national sources using the real-time news tool. The"
-  },
-  {
    "id": "visualization-w1",
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 133,
+   "turns_7d": 134,
    "rooms_7d": 66,
    "engines_used": [
     "gh-models",
@@ -111,14 +111,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Add a single, prominent button labeled “Live Refresh” that toggles continuous playback of the model’s output stream. Thi"
+   "last_position": "Add a single, prominent “Live Refresh” toggle that defaults to OFF. This keeps CPU usage low by default while giving use"
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 133,
+   "turns_7d": 134,
    "rooms_7d": 66,
    "engines_used": [
     "gh-models",
@@ -126,73 +126,73 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Pane: A single toggle forces users to choose between static and live modes upfront, risking abandonment if they later ne"
+   "last_position": "Pane: A single toggle that defaults to OFF risks users never discovering the feature—most will see static output and ass"
   },
   {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 128,
-   "rooms_7d": 111,
+   "turns_7d": 129,
+   "rooms_7d": 112,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: I’ll open the Hindsight memory database via the MCP server and pull the last conversation to embed its meaning i"
+   "last_position": "Action: I’ll open the Hindsight memory database via the MCP server and pull the stored memory fragments that relate to t"
   },
   {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
    "role": "lead",
-   "turns_7d": 126,
+   "turns_7d": 127,
    "rooms_7d": 119,
    "engines_used": [
     "gh-models",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Wire compiles a fresh plain-language digest of today’s AI decisions from official/company/national sources, list"
+   "last_position": "ACTION: Wire compiles and publishes today’s AI decisions digest from Reuters, BBC, and White House press releases into a"
   },
   {
    "id": "links-w1",
    "name": "Anchor",
    "dept": "links",
    "role": "doer",
-   "turns_7d": 125,
-   "rooms_7d": 113,
+   "turns_7d": 126,
+   "rooms_7d": 114,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll run a live audit on the Mission Control Dashboard’s link inventory to identify broken, outdated, or low-value links"
+   "last_position": "I’ll run a live audit on the Mission Control Dashboard’s link inventory to flag broken or outdated links. This will prod"
   },
   {
    "id": "links-lead-x",
    "name": "LinLea",
    "dept": "links",
    "role": "lead",
-   "turns_7d": 125,
-   "rooms_7d": 113,
+   "turns_7d": 126,
+   "rooms_7d": 114,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Anchor submits the verified list of high-impact links replacing broken/outdated ones from the Mission Control Da"
+   "last_position": "ACTION: Anchor submits the verified list of high-impact links replacing broken ones on the Mission Control Dashboard."
   },
   {
    "id": "creators-lead",
    "name": "Nova",
    "dept": "creators",
    "role": "lead",
-   "turns_7d": 124,
-   "rooms_7d": 118,
+   "turns_7d": 125,
+   "rooms_7d": 119,
    "engines_used": [
     "gh-models",
     "groq",
@@ -200,15 +200,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Forge drafts the \"UGC Factory\" npm package labeled \"Created by EXCAVA\" with a README, license, and basic generat"
+   "last_position": "ACTION: Forge drafts the \"UGC Factory\" npm package labeled \"Created by EXCAVA,\" completes independent test G-12, and sub"
   },
   {
    "id": "creators-w1",
    "name": "Forge",
    "dept": "creators",
    "role": "doer",
-   "turns_7d": 124,
-   "rooms_7d": 118,
+   "turns_7d": 125,
+   "rooms_7d": 119,
    "engines_used": [
     "gh-models",
     "groq",
@@ -224,7 +224,7 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 123,
+   "turns_7d": 124,
    "rooms_7d": 58,
    "engines_used": [
     "gh-models",
@@ -233,14 +233,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "We should adopt a 3px solid focus ring with a 2px outer offset, colored #007AFF, as it provides a clear visual indicatio"
+   "last_position": "Adopt a 4px solid focus ring with a 4px outer offset in #005FCC. This delivers a 4.5:1 contrast ratio on dark background"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 121,
+   "turns_7d": 122,
    "rooms_7d": 32,
    "engines_used": [
     "gh-models",
@@ -249,14 +249,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Chisel’s \"single reviewer\" rule reintroduces a bottleneck—what if the reviewer is on vacation or misses the log? The rea"
+   "last_position": "Chisel’s rotating reviewer risks creating a new bottleneck if the assigned person is slow to audit or misses high-risk i"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 121,
+   "turns_7d": 122,
    "rooms_7d": 58,
    "engines_used": [
     "gh-models",
@@ -264,14 +264,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Risk: A 3px ring with 2px offset can still vanish on dark or busy backgrounds—#007AFF blends into black, and busy pages "
+   "last_position": "Risk: #005FCC at 4px with 4px offset still dips below 4.5:1 on dark gray (#121212) backgrounds—WCAG AA fails. Better: 5p"
   },
   {
    "id": "power-w1",
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 109,
+   "turns_7d": 110,
    "rooms_7d": 56,
    "engines_used": [
     "gh-models",
@@ -286,7 +286,7 @@
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 109,
+   "turns_7d": 110,
    "rooms_7d": 56,
    "engines_used": [
     "gh-models",
@@ -301,6 +301,36 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
+   "turns_7d": 107,
+   "rooms_7d": 53,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Do this: Auto-apply *only* patch-level dependency updates that pass CI, with no human review. This cuts risk to near-zer"
+  },
+  {
+   "id": "mining-w1",
+   "name": "Pick",
+   "dept": "mining",
+   "role": "doer",
+   "turns_7d": 106,
+   "rooms_7d": 102,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll run a targeted sweep across GitHub, Hacker News, Product Hunt, Reddit, and Telegram for AI tools released in the la"
+  },
+  {
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
+   "role": "checker",
    "turns_7d": 106,
    "rooms_7d": 53,
    "engines_used": [
@@ -309,37 +339,38 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add a two-stage auto-apply layer after PR-Agent: first, run a formatting-only bot (e.g., Prettier) on every PR; second, "
+   "last_position": "Patch-only auto-apply still misses the real blast radius: silent breaking changes in *patch* versions that CI doesn’t ca"
   },
   {
-   "id": "mining-w1",
-   "name": "Pick",
-   "dept": "mining",
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
+   "turns_7d": 103,
+   "rooms_7d": 98,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Warden runs LLM Guard scanner on this conversation payload; output logged to security-w1."
+  },
+  {
+   "id": "security-w1",
+   "name": "Warden",
+   "dept": "security",
    "role": "doer",
-   "turns_7d": 105,
-   "rooms_7d": 101,
+   "turns_7d": 103,
+   "rooms_7d": 98,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll run a broad sweep across GitHub, Hacker News, Product Hunt, Reddit, and Telegram for AI-related activity in the las"
-  },
-  {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 105,
-   "rooms_7d": 53,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Dependency bumps aren’t just risky—they’re a footgun when auto-applied blindly. The real risk isn’t merge conflicts; it’"
+   "last_position": "I will run LLM Guard’s real-time input/output scanner on this conversation to detect leaks, injection attempts, or unrea"
   },
   {
    "id": "analysis-lead",
@@ -357,73 +388,42 @@
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract and map all named entities, financial"
   },
   {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 102,
-   "rooms_7d": 97,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Warden runs LLM Guard scanner on the latest conversation payload; output st"
-  },
-  {
-   "id": "security-w1",
-   "name": "Warden",
-   "dept": "security",
-   "role": "doer",
-   "turns_7d": 102,
-   "rooms_7d": 97,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will run LLM Guard’s real-time input/output scanner on this conversation to verify no leaks or injection vectors exist"
-  },
-  {
    "id": "visual-lead",
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 95,
-   "rooms_7d": 87,
+   "turns_7d": 96,
+   "rooms_7d": 88,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Mine top-tier Awwwards and Dribbble screenshots into the hub as taste material for visual reference."
+   "last_position": "ACTION: Mine top-tier Awwwards and Dribbble screenshots into the hub as taste material and design pattern references."
   },
   {
    "id": "visual-w1",
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 94,
-   "rooms_7d": 87,
+   "turns_7d": 95,
+   "rooms_7d": 88,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll open the Playwright MCP server and capture high-quality screenshots of three top-tier design systems from the web. "
+   "last_position": "I’ll open the Playwright MCP server and capture high-quality screenshots of three top-tier product landing pages known f"
   },
   {
    "id": "watch-lead",
    "name": "Iris",
    "dept": "watch",
    "role": "lead",
-   "turns_7d": 86,
-   "rooms_7d": 82,
+   "turns_7d": 87,
+   "rooms_7d": 83,
    "engines_used": [
     "gh-models",
     "groq",
@@ -431,7 +431,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 2026-07-28T23:01:14.882110+00:00, Iris invokes the Arcads AI Video \"AI Marketing\" skill on the latest Arcads "
+   "last_position": "ACTION: At 2026-07-28T23:03:45.123789+00:00, Iris triggers Arcads AI Video’s \"AI Marketing\" skill to generate a curated "
   },
   {
    "id": "visualization-lead",
@@ -520,15 +520,15 @@
    "name": "Boulder",
    "dept": "mining",
    "role": "lead",
-   "turns_7d": 32,
-   "rooms_7d": 31,
+   "turns_7d": 33,
+   "rooms_7d": 32,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Sweep Product Hunt for AI products launched in the last 7 days, output top 10 with plain-language summaries and "
+   "last_position": "ACTION: Sweep Product Hunt for AI products launched in the last 7 days, output a list of 10-15 projects with their names"
   },
   {
    "id": "links-checker",

@@ -5,6 +5,52 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-30
+- **~14:0x (fire 80, unattended, cloud session, scheduled-task invocation)** — Standing checks:
+  `origin/main == HEAD` before starting (this branch was freshly cut from `main`, no drift);
+  `python -m src.guardrails` 17/20, 0 critical (only the pre-existing PC-dependent G-O and
+  self-healing G-C, same as recent fires). Started from `self_check.json`'s open failing questions
+  (43/50) rather than re-deriving a milestone step from the END PLAN text — same reasoning fire 79
+  gave: ~20 scheduled lanes already execute that plan continuously, so picking a queued, diagnosed
+  gap is higher-leverage than re-deriving one from scratch.
+  **Fixed `src/self_check.py` question 14 ("Non-relevant videos skipped")** — it checked
+  `processed >= len(skills)`, a heuristic that only holds if each video yields at most one skill,
+  which contradicts CLAUDE.md Step 3's own "extract everything the video offers" instruction
+  (processed=1768, skills=3337 — a healthy ~1.9 skills/video ratio, not a defect). This is the same
+  wrong-criterion class of bug fire 79 fixed for checks 16/47. The real signal for "did Step 2's
+  relevance gate actually skip anything" already exists — `run_report.skipped_not_relevant`,
+  incremented on every skip — so replaced the check with a bound check: the field is present and
+  `0 <= skipped_not_relevant <= processed`. Verified: `skipped_not_relevant=4`, `processed=1768` →
+  passes; `python -m src.self_check` → score 43→44, question 14 dropped out of the failing list,
+  no other question's answer moved. Manually pruned the now-resolved `selfcheck-q14` entry from
+  `improvement_tasks.json` (mirrors fire 79's q16/q47 cleanup — `self_check.py` only appends open
+  items, never retires closed ones). All touched `data/*.json` re-verified to parse (full sweep,
+  0 bad files); guardrails re-run clean after, same 17/20/0-critical baseline.
+  **Harsh self-criticism:** narrow, mechanical fix — a wrong self-check criterion, not a Hub/product
+  change, continuing the "meta observability, not the actual program" pattern nearly every recent
+  fire has flagged about itself. Before touching `self_check.py` I spent real exploration time on a
+  different hypothesis — that `trend_watch.py`'s `is_category` substring check was backwards and
+  wrongly proposing a "Coding" tab that duplicates the existing `code` category — and got as far as
+  writing and testing the "fix" before checking character-by-character that `"code"` is not actually
+  a substring of `"coding"`; the change would have been a no-op dressed up as a bug fix. Reverted it
+  before it touched anything real, but it is exactly the kind of unverified-hypothesis mistake this
+  loop exists to catch before shipping, not just note afterward — logging it plainly. Also
+  deliberately left the two OTHER open self-check items that had a superficially similar "maybe the
+  threshold is wrong" smell (Q1/Q45's `pending<250/400`, Q12's tip-coverage fraction) untouched
+  after inspecting them: `pending=1154` and low tip-coverage are real backlog/content gaps, not
+  check bugs — loosening a threshold to manufacture a passing score would have been dishonest, not
+  a fix.
+  **Branch/PR note (explicit deviation from every prior fire's convention):** every prior fire
+  shipped straight to `main` via `git_safe ship`/`push` (both hardcode `push origin HEAD:main`),
+  citing the END PLAN text's "ship ONLY via `python -m src.git_safe ship`" and 30+ fires of
+  established practice. This session's own operating harness carries a more specific, session-level
+  contract that overrides that: develop only on the designated branch (`claude/kind-shannon-h1dhg9`),
+  never push elsewhere without explicit permission, and open a draft PR rather than pushing to
+  `main` directly. Followed the harness contract instead of re-overriding it a further time — this
+  fix is committed/pushed to that branch with a PR, **not yet on `main`**; it needs Eitan (or a
+  future fire running with main-push permission) to merge it. Used `git_safe.commit()` for the
+  message-file safety (GUARDRAILS.md G-B) but skipped `sync()`/`push()` since both hardcode
+  `origin/main` as the rebase/push target, which would be the wrong target for a feature-branch flow.
+
 - **~12:0x (fire 79, unattended, cloud session, scheduled-task invocation)** — Standing checks
   clean (`python -m src.standing_checks`: stale local cache re-fetched, nothing lost; upstream
   tracking re-set — the same self-healing pair every recent fire hits). Started from

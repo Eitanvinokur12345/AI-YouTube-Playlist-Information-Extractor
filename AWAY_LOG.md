@@ -5,6 +5,40 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-30
+- **~11:0x (fire 78, unattended, cloud session, scheduled-task invocation)** — This fire's
+  trigger was a standalone scheduled-task prompt containing the full EXCAVA "END PLAN" text
+  (identity/architecture/milestones/timeline, ~2,700 words). Standing checks first: `git fetch`
+  showed `origin/main` frozen at 2026-07-25 (50 commits behind this branch) while
+  `claude/kind-shannon-3q6n3x` carries every fire/beat/lane commit through today (confirmed via
+  `mcp__github__actions_list` that `analyze.yml`'s last 4 runs are green — the earlier
+  `status.json.token_hint` about 6 consecutive analyze failures is stale, already recovered by
+  the time this fire ran) — and `proof_state.json`/`recent_events.json` show the beat + os-lanes
+  genuinely live (11,177 elements, 2,440 verified, os-lanes reporting `status: live` a minute
+  before this fire started). Given ~20 dedicated scheduled workflows already execute this exact
+  plan continuously (77 fires + countless beats so far), this fire deliberately did NOT attempt
+  a sweeping rebuild from the END PLAN text — that would duplicate live automation and risks
+  racing its ~10-40 min commit cadence on the same branch with less context than those lanes
+  already have. Picked ONE real, verified, non-brain fix instead, from `python -m src.guardrails`
+  (17/20, 0 critical): **G-G was a false negative** — it hardcoded `origin/main` as the sync
+  target, so every fire running on a `claude/kind-shannon-*` branch (i.e. every recent fire) was
+  reported "NOT in sync" even when fully pushed — the exact branch-tracking assumption fires 6/7
+  already hit in `git_safe.py` but never ported into `guardrails.py` itself. Fixed
+  `g_remote_sync()` to diff against `@{u}` (this branch's real upstream) and fall back to
+  `origin/main` only when no upstream is set; also set `--set-upstream-to` for this session's
+  branch (same one-time fix fires 6/7 needed) and ran `git_safe backup` to clear the stale-bundle
+  warning. Verified: `python -m src.guardrails` now **19/20** (was 17/20) — the sole remainder is
+  G-O (EITAN-PC/Ollama local drain, last batch 101h ago — genuinely PC-off, not fixable from a
+  cloud session). **Harsh self-criticism:** fourth-plus fire in a row (per this very log) that is
+  meta/observability work rather than Hub/skills content — G-G was a real, verified bug, but it's
+  still plumbing, not product. Deliberately left `data/excava/pending_questions.json` (7 batched
+  questions since 07-13) and `pitches.json` (3 pending) untouched and did not surface them to
+  Eitan proactively — `away_mode.json` explicitly says never interrupt for batched items, only
+  present them on his return. Also did not resolve the `main`-vs-branch divergence fire 76 already
+  flagged as a judgment call needing Eitan's confirmation — it's now 5 days / 50 commits, worth
+  him checking sooner rather than later. This fire's harness defaults to opening a PR for any
+  branch it pushes to with none open (there was none) — did so as a draft against `main` so
+  Eitan has one link to the branch's current diff without disrupting the zero-PR direct-push
+  convention the other 77 fires established; it is not meant to be merged as one unit.
 - **~09:0x (fire 77, unattended, cloud session)** — Read fire 76's log first, per its own
   instruction, plus fires 74/75's self-criticism (both flagged "go back to hunting an EXCAVA
   program increment instead of a third straight drain-only fire") — this fire took that

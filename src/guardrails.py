@@ -122,12 +122,18 @@ def g_json():
 
 
 def g_remote_sync():
-    head, origin = _git(["rev-parse", "HEAD"]), _git(["rev-parse", "origin/main"])
-    counts = _git(["rev-list", "--left-right", "--count", "origin/main...HEAD"])
-    synced = head and origin and head == origin
+    # Compare against THIS branch's own upstream when one is configured (every away-fire
+    # session runs on its own throwaway claude/kind-shannon-* branch, not main directly —
+    # fires 6/7 hit this same assumption elsewhere in git_safe.py). Fall back to origin/main
+    # only when no upstream is set, so the check still means something on a fresh checkout.
+    upstream = _git(["rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{u}"])
+    ref = upstream if upstream and "fatal" not in upstream else "origin/main"
+    head, remote = _git(["rev-parse", "HEAD"]), _git(["rev-parse", ref])
+    counts = _git(["rev-list", "--left-right", "--count", f"{ref}...HEAD"])
+    synced = head and remote and head == remote
     return _ok("G-G", "Remote sync verified", synced,
-               "HEAD == origin/main (work is really saved)." if synced else
-               f"NOT in sync (behind/ahead: {counts or '?'}) — a push may not have landed.", "warn")
+               f"HEAD == {ref} (work is really saved)." if synced else
+               f"NOT in sync vs {ref} (behind/ahead: {counts or '?'}) — a push may not have landed.", "warn")
 
 
 def g_collisions():

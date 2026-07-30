@@ -5,7 +5,7 @@
 | task | `transcripts-room-action--59185` (step 1/8) |
 | from | **transcripts-w1** |
 | to | **analysis** department |
-| at | 2026-07-30T09:02:17.814526+00:00 |
+| at | 2026-07-30T10:40:29.013012+00:00 |
 
 ## What was done
 Residential drain state assessed: **1154 videos re-queued** in data/_pending/ with recovered/updated records awaiting deep re-analysis; 1599 still lack a real transcript. Today's drain auto-stopped on an IP block (correct behavior — bursting escalates the block); the remainder retries next residential session.

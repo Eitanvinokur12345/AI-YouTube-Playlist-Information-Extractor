@@ -5,6 +5,72 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-07-30
+- **~13:0x-13:2x (fire 80, unattended, cloud session, scheduled-task invocation, 10th-heartbeat
+  checkpoint)** — Standing checks clean (stale local `origin/main` cache re-fetched, nothing
+  lost; upstream re-tracked — the routine pair every fresh session hits). Instead of another
+  piece of plumbing, picked up real analyze-pipeline reps against the actual backlog self_check
+  flags as stalled (#1, `pending=1154`): fully processed 3 videos oldest-first per CLAUDE.md
+  (`qcmSxb__Mj8` "Claude skills drive faster AI workflows", `tSeFFy5x2-A` "2 Claude Prompts
+  Every Beginner Needs to Know", `wMZuMt-mh7c` "Black Hole Warp: 4K vs 1080p"). Concretely:
+  endorsed 3 existing records instead of duplicating (`taste-claude-skill`,
+  `korey-hains-marketing-skill-pack`, `viral-content-discovery`), added one genuinely distinct
+  new skill (`academic-peer-review-citation-check`, with SKILL.md — passes the anti-boilerplate
+  gate, a real technique not a bare product name), recovered `tSeFFy5x2-A`'s actual "2 prompts"
+  content from a detailed, creator-acknowledged top comment (video's own transcript was a 53s
+  description-only fallback) into `prompts.json` + one new `tips.json` entry not already covered
+  by the existing ~31-tip prompt-engineering list, and fixed a boilerplate tool description
+  (`seedance-2-0` said only "An AI tool mentioned as part of the Higgsfield ecosystem") with the
+  actual 4K-vs-1080p claims plus correct company/country/category — capped low-quality per
+  Step 2b (video_quality_score 4). `wMZuMt-mh7c`'s description link 403'd against this sandbox's
+  proxy; skipped silently per Step 2c, never blocked the video. `total_videos_analyzed`
+  1726→1729, `pending_to_analyze` 1154→1151, `total_tools` 2990→3019 (net of concurrent CI
+  lanes also landing in this window, not just my 3 videos).
+  **A real mistake caught mid-fire:** my first 3 analyze commits `git add`ed the new
+  `data/processed/*.json` files but never staged the corresponding `data/_pending/*.json`
+  deletions — the `mv` happened on disk but `git status` still showed them as unstaged deletes
+  afterward, which would have left those 3 videos eligible for re-analysis by the next lane.
+  Caught it before shipping (a routine `git status` check ahead of the rebase) and landed a
+  follow-up commit staging the 3 deletions properly — flagging it here since it's an easy trap
+  for any future fire doing manual `mv`-based processed-moves instead of `git mv`.
+  **A genuinely new, unresolved conflict surfaced this fire, not just re-flagged:** this cloud
+  session's harness explicitly restricts it to developing on and pushing only to its assigned
+  branch (`claude/kind-shannon-vtng4c`) and forbids pushing to a different branch (i.e. `main`)
+  without explicit permission — but `src/git_safe.py push()`/`ship()` hardcode `git push origin
+  HEAD:main`, which is the pattern GUARDRAILS.md documents and 79+ prior fires have used
+  directly. Rather than override the harness's explicit branch restriction (previous fires only
+  ever *flagged* this as "unconfirmed by Eitan"; this is the first fire actually blocked from
+  following it), this fire committed locally, rebased cleanly onto `origin/main` (only
+  `data/catch_up.json`/`data/data_guard.json` moved there, zero overlap with anything touched
+  here), pushed the branch, and will open/keep a draft PR instead of shipping straight to main.
+  Eitan should treat this as the concrete decision point the last several fires' flagged-but-
+  unconfirmed note was building toward: either confirm cloud fires should keep pushing straight
+  to `main` (and grant that permission explicitly wherever it's configured for cloud sessions),
+  or accept PR-per-cloud-fire as the new normal going forward.
+  **10th-heartbeat audit (fires 71-80):** storage fine (30 GB free of 252 GB, 20% used, no
+  cleanup needed). Fire 79 completed successfully (its own commits are in the log, PULSE.md
+  reflected them, nothing rolled back). No operational limits were hit in this window — no
+  rate limit, no push rejection (beyond the routine rebase-not-conflict above), no guardrail
+  critical failures at any point (`python -m src.guardrails` sat at 16-19/20 throughout, 0
+  critical every run; the recurring non-critical misses are G-C stale-backup-bundle,
+  self-healing on ship, and G-O the PC-side local-drain lane being stale — a known,
+  cloud-session-can't-fix limitation, not new). Reviewing fires 71-79's actual output: standing-
+  checks/core-spoton/discovery/deep-retrieve/verify lanes ran on their normal cadence
+  (`f3b7e844`, `138a34af`, `26d4045a`), fire 79 fixed a real `target_tool` folder-normalization
+  bug plus 2 self_check false-denominators (score 41→43), and fire 78 fixed a guardrail
+  false-negative — i.e. the last 10 fires were split between routine automated-lane commits and
+  fires actively fixing real bugs in the loop's own tooling, with this fire being the first in a
+  while to spend its own budget on the actual video-analysis backlog instead. Posting this
+  summary to the repo now per the outer routine's every-10th-heartbeat instruction; nothing here
+  rises to a blocker serious enough to interrupt Eitan for, except the branch-vs-main question
+  above, which is a decision, not an emergency.
+  **Harsh self-criticism:** 3 videos is a small dent in a 1151-deep queue — at this rate the
+  backlog does not meaningfully drain from manual cloud-session passes alone; the real fix is
+  making sure the "bulk-analyze lane (hourly, free pool)" PROOF.md already credits as "live"
+  actually keeps pace, which this fire did not go verify end-to-end. Also did not resolve the
+  branch-vs-main question, only made the cost of leaving it unresolved concrete (a PR instead of
+  a direct landing) — that is a deliberate, not lazy, choice given the explicit restriction, but
+  it does mean this fire's work sits one PR-merge away from `main` instead of already on it.
+
 - **~12:0x (fire 79, unattended, cloud session, scheduled-task invocation)** — Standing checks
   clean (`python -m src.standing_checks`: stale local cache re-fetched, nothing lost; upstream
   tracking re-set — the same self-healing pair every recent fire hits). Started from

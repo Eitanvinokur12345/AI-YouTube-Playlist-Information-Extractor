@@ -1,16 +1,18 @@
 # improve: Self-improvement: review prompts/engines/routing/own-code; auto-apply safe changes; pitch 
 
-> Decision artifact · room `dept-improve-self-improvement-rev-367` (dept) · 2026-07-22T17:43:49.120879+00:00
+> Decision artifact · room `dept-improve-self-improvement-rev-367` (dept) · 2026-07-31T23:18:00.762464+00:00
 > Participants: Sprocket, Gauge, Ratchet · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+Run a controlled A/B test where prompt updates are batched by semantic similarity and tested only on the affected task clusters, comparing against the current prompt on a fresh 500-task sample.
 
 **Plan:**
-1. Implement a 50/50 A/B test for the top-used prompt, splitting live traffic between the current and stripped-down versions.
-2. Deploy a kill switch to revert traffic to the original prompt if quality drops >5% (measured by Gauge’s metrics).
-3. Run the test for a fixed duration (e.g., 7 days) or until statistical significance is reached.
-4. Monitor speed gains and quality metrics in real-time; log outputs for post-test analysis.
-5. If the stripped-down version meets the 5% quality threshold, promote it to 100% traffic; otherwise, revert permanently.
-6. Document results and update prompt routing logic based on findings.
+1. Implement semantic clustering for prompt updates to group affected tasks.
+2. For each update, select the semantically closest task cluster (e.g., top 10% by similarity).
+3. Run A/B test: deploy updated prompt to cluster, current prompt to control group (500 tasks total).
+4. Measure quality impact (regression/improvement) via predefined metrics (e.g., accuracy, latency).
+5. Auto-apply change only if metrics show statistically significant improvement (p < 0.05).
+6. Log false positives/negatives for review in weekly quality audit.
 
-**What changed:** Added controlled A/B testing with kill switch for prompt optimization.
+**What changed:**
+Prompt updates now trigger targeted A/B tests on semantically relevant task clusters before deployment.

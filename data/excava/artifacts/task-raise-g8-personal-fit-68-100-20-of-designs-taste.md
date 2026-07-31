@@ -1,19 +1,9 @@
 # Raise G8 Personal fit (68/100): 20% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond
 
-> visual · task `raise-g8-personal-fit-68-9709` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> visual · task `raise-g8-personal-fit-68-21727` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
 
-```markdown
-**Approach:** Curate 20% of taste-tagged designs via Arena live learning + NOSG integration.
-
-**Steps:**
-1. **Tag 20% of designs** – Run `python scripts/tag_taste.py --sample 0.2 --output taste_tags.json` (uses `designs/` folder).
-2. **Arena live learning** – Deploy `arena_learning.py` with `taste_tags.json` as input (`python arena_learning.py --tags taste_tags.json --output arena_model.pkl`).
-3. **NOSG wiring** – Update `config/nosg_config.yaml` with `arena_model.pkl` path and trigger `nosg_sync.sh` to validate integration.
-
-**Needs:**
-- `designs/` folder (design files).
-- `scripts/tag_taste.py` (taste-tagging script).
-- `arena_learning.py` (live learning model).
-- `config/nosg_config.yaml` (NOSG config).
-- `nosg_sync.sh` (sync script).
-```
+**Approach:** Enhance G8 Personal fit by refining design taste-tags and leveraging Arena learning live with NOSG wired.
+1. **Run `g8_taste_tag_refiner.py`**: Utilize Python script to process and enrich existing design taste-tags, targeting 50% coverage.
+2. **Integrate `arena_learning_live` API**: Incorporate live learning functionality into the G8 Personal fit framework, focusing on real-time feedback and adaptive design recommendations.
+3. **Update `nosg_wired_config.json`**: Modify NOSG wired configuration to accommodate expanded design taste-tags and Arena learning live integration, ensuring seamless data exchange and analysis.
+**Needs:** Python 3.9, `g8_taste_tag_refiner.py`, `arena_learning_live` API access, `nosg_wired_config.json`, GitHub access for version control and collaboration.

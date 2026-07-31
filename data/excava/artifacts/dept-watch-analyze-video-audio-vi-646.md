@@ -1,18 +1,16 @@
 # watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.
 
-> Decision artifact · room `dept-watch-analyze-video-audio-vi-646` (dept) · 2026-07-21T14:54:08.300413+00:00
+> Decision artifact · room `dept-watch-analyze-video-audio-vi-646` (dept) · 2026-07-31T17:07:42.784187+00:00
 > Participants: Scope, Iris · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Execute structured marketing insights extraction from the video using Arcads AI Video at 11:24:00.
 
 **Plan:**
-1. Run Arcads AI Video skill on the marketing video to analyze both audio and visual content.
-2. Extract high-value insights including key messaging, emotional triggers, and visual storytelling elements.
-3. Generate a structured analysis artifact (e.g., JSON/Markdown) with timestamped annotations.
-4. Deliver the artifact immediately to the lead for review and action.
-5. Ensure the output is GitHub-ready (formatted in markdown) with no preamble.
-6. Confirm completion and file placement in the designated repository.
+1. Run Arcads AI Video’s "AI Marketing" skill pack on target video *t* to generate a minimum-viable teaser.
+2. Apply a rotating reviewer pool to assess clarity and refine the teaser output.
+3. Analyze both AUDIO and VISUAL content beyond the transcript for deeper insights.
+4. Validate teaser performance against the original video’s key messages.
+5. Iterate on the teaser based on reviewer feedback to optimize engagement.
+6. Document the final teaser and insights for deployment.
 
-**What changed:**
-Finalized execution of Arcads AI Video analysis at the scheduled time.
+**What changed:** Arcads AI Video’s "AI Marketing" skill pack is now actively processing the target video for teaser generation.

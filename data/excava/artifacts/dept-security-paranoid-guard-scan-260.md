@@ -1,16 +1,16 @@
 # security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (not fake/dead); DETECT
 
-> Decision artifact · room `dept-security-paranoid-guard-scan-260` (dept) · 2026-07-10T01:30:17.680729+00:00
-> Participants: Warden, Audit, Bastion · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-security-paranoid-guard-scan-260` (dept) · 2026-07-31T19:58:51.445855+00:00
+> Participants: Warden, Bastion · synthesized by mistral/mistral-small-latest
 
-**Decision:** The artifact must include a verifiable baseline of critical binaries and processes from an external trusted source to ensure integrity.
+**Decision:**
 
 **Plan:**
-1. Establish a verifiable baseline of critical binaries using an external trusted source, such as a vendor repository or offline ISO.
-2. Pull cryptographic hashes of critical binaries and compare them to the established baseline using `sha256sum`.
-3. Validate the integrity of auditing tools (`rkhunter`, `chkrootkit`) by retrieving their binary hashes from an external trusted source.
-4. Conduct a full filesystem audit with `rkhunter` and `chkrootkit` using the validated versions of the tools.
-5. Cross-check running processes against an external known-good baseline to ensure accuracy and integrity.
-6. Utilize alternative monitoring tools or methodologies to validate system integrity beyond relying solely on local tools.
+1. Run the LLM Guard scanner on the current input/output stream to detect leaks or injection attempts.
+2. Generate a security-w1 report flagging any anomalies detected by the scanner.
+3. Verify all elements in the stream are real (not fake/dead) by cross-referencing with trusted sources.
+4. If anomalies are found, quarantine the affected input/output and flag for manual review.
+5. Log the scan results and verification steps for audit purposes.
+6. Proceed only if the security-w1 report is clean and all elements are verified.
 
-**What changed:** Emphasis was placed on obtaining external verification for both binaries and auditing tools to prevent reliance on potentially compromised local tools.
+**What changed:** Security-w1 scan and verification added to the workflow.

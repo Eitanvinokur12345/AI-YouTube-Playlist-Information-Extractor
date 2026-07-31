@@ -1,15 +1,16 @@
 # security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (not fake/dead); DETECT
 
-> Decision artifact · room `dept-security-paranoid-guard-scan-814` (dept) · 2026-07-15T10:08:13.844757+00:00
-> Participants: Warden, Bastion · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-security-paranoid-guard-scan-814` (dept) · 2026-07-31T18:16:50.585254+00:00
+> Participants: Warden, Bastion · synthesized by mistral/mistral-small-latest
 
-**Decision:** Initiate LLM Guard scanner for security verification.
+**Decision:**
 
 **Plan:**
-1. Warden activates the LLM Guard scanner on the input stream.
-2. Warden activates the LLM Guard scanner on the output stream.
-3. Generate a real-time security report post-scanning.
-4. Review the report for potential leaks or injections.
-5. Confirm the integrity of all detected elements in the report.
+1. Run LLM Guard on the latest input/output stream to scan for leaks or injection attempts.
+2. Generate a real-time security report flagging any anomalies or unauthorized data.
+3. Verify all elements in the stream are real (not fake/dead) by cross-referencing with trusted sources.
+4. Detect and flag any unauthorized or suspicious modifications to the stream.
+5. Store the security report for auditing and further analysis.
+6. Notify relevant parties if critical anomalies are detected.
 
-**What changed:** The decision emphasizes immediate action through the Warden's scanning process.
+**What changed:** LLM Guard scan and verification added to ensure real-time security enforcement.

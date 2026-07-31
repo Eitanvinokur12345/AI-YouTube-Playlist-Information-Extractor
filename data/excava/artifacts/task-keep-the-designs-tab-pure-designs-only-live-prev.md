@@ -1,11 +1,13 @@
 # Keep the Designs tab pure: designs only, live previews, taste-ranked
 
-> visual · task `keep-the-designs-tab-pur-9708` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
+> visual · task `keep-the-designs-tab-pur-21727` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
 
-**Approach:** Refine the Designs tab through a meticulous curation process
-1. **Filter and categorize designs**: Utilize `git` to clone the Designs tab repository, then use `python` with `pandas` to categorize and filter designs based on predefined aesthetic criteria, storing the results in a local CSV file.
-2. **Implement taste-ranking algorithm**: Leverage `numpy` and `scipy` to develop a ranking algorithm that assesses design elements such as color palette, typography, and composition, applying this algorithm to the filtered designs and updating the CSV file with the corresponding rankings.
-3. **Automate live preview generation**: Employ `ffmpeg` and `imagemagick` to create live previews for each design, ensuring consistency in formatting and quality, then store these previews in a designated directory.
-4. **Integrate rankings and previews into the Designs tab**: Use `javascript` and `css` to create an interactive interface that displays the ranked designs along with their live previews, ensuring a seamless user experience.
-5. **Schedule regular curation and updates**: Set up a `cron job` to periodically re-run the curation process, ensuring the Designs tab remains up-to-date and aligned with the highest aesthetic standards.
-**Needs:** `git`, `python`, `pandas`, `numpy`, `scipy`, `ffmpeg`, `imagemagick`, `javascript`, `css`, `cron`, access to the Designs tab repository and a local development environment.
+**Approach:** Ensure the Designs tab showcases only high-quality, curated designs by implementing a strict curation process.
+**Steps:**
+1. Create a new GitHub project board to track design submissions and curation progress using `github.com` and manage access through GitHub teams.
+2. Utilize GitHub Issues to create a design submission template with required fields (e.g., design description, live preview link) and assign a label for "design-submission" to filter and prioritize reviews.
+3. Establish a taste-ranking system using GitHub Project board columns (e.g., "approved", "rejected", "needs-revision") to organize and prioritize designs based on aesthetics and quality, with regular reviews and updates using `git` commands to reflect changes.
+**Needs:**
+* GitHub account with repository access and permissions to create project boards and issues
+* `git` command-line tool for version control and collaboration
+* Live preview links or tools (e.g., CodeSandbox, CodePen) for design submissions

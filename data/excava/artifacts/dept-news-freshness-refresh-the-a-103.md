@@ -1,0 +1,16 @@
+# news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
+
+> Decision artifact · room `dept-news-freshness-refresh-the-a-103` (dept) · 2026-07-31T09:28:14.294358+00:00
+> Participants: Scoop, Wire · synthesized by mistral/mistral-small-latest
+
+**Decision:**
+
+**Plan:**
+1. Fetch the latest AI-news digest from OpenAI’s official blog, Google DeepMind’s research updates, and the White House AI policy page.
+2. Extract key decisions (e.g., new model releases, policy changes, funding announcements) and trade-offs (e.g., safety vs. innovation, cost vs. accessibility).
+3. Summarize findings in plain language, highlighting 3-5 critical updates.
+4. Format the digest as a concise GitHub markdown table with columns: *Source*, *Decision*, *Trade-offs*, *Impact*.
+5. Publish the digest to the designated AI-news repository with a timestamp.
+6. Notify stakeholders via Slack/email with a link to the digest.
+
+**What changed:** Fresh AI-news digest generated from official sources.

@@ -1,15 +1,16 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-192` (dept) · 2026-07-10T01:30:22.528943+00:00
-> Participants: Reel, Scriv, Echo · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-192` (dept) · 2026-07-31T09:28:29.978260+00:00
+> Participants: Reel, Echo · synthesized by mistral/mistral-small-latest
 
-**Decision:** Use `yt-dlp` to extract and verify SRT auto-captions for residential IP videos.
+**Decision:**
 
 **Plan:**
-1. Pull the pending video list from `pending_videos_2024-06-14.csv`, targeting 47 rows.
-2. Filter the list for videos tagged with residential IP and gentle pacing.
-3. Run `yt-dlp --write-auto-sub --sub-lang en --skip-download --convert-subs srt` on the 12 flagged videos to extract SRT auto-captions.
-4. Use `yt-dlp --list-subs` to verify and compare the extracted subtitles against the native CC tracks for speaker diarization and accuracy.
-5. Document findings to ensure clarity between auto-generated captions and verified transcripts.
+1. Use the `kimtaeyoon83/mcp-server-youtube-transcript` tool to fetch the full YouTube transcript for *"How to Build a Resilient Team"*.
+2. Save the transcript as a clean, formatted file (e.g., `.txt` or `.md`) in the designated directory.
+3. Verify the transcript’s completeness and accuracy by cross-checking against the video’s content.
+4. Share the transcript file with the team for review and feedback.
+5. If corrections are needed, re-run the transcript tool or manually edit the file.
+6. Archive the finalized transcript in the project’s documentation or repository.
 
-**What changed:** Clarified the process to ensure accurate transcript quality by incorporating verification steps.
+**What changed:** The transcript will now be retrieved and validated for accuracy before further use.

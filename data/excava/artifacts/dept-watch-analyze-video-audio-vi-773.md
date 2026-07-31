@@ -1,15 +1,18 @@
 # watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.
 
-> Decision artifact · room `dept-watch-analyze-video-audio-vi-773` (dept) · 2026-07-21T10:40:59.687332+00:00
-> Participants: Scope, Iris · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-watch-analyze-video-audio-vi-773` (dept) · 2026-07-31T11:58:40.383889+00:00
+> Participants: Scope, Iris · synthesized by mistral/mistral-small-latest
 
-**Decision:** Finalize and deliver the structured report of high-value marketing moments with timestamped insights for repurposing.
+**Decision:**
+Proceed with running Arcads AI Video’s "AI Marketing" skill on the latest Arcads AI Video to generate a structured marketing analysis.
 
 **Plan:**
-1. Run the Arcads AI Video skill on the marketing video.
-2. Extract high-value moments and timestamped insights from the video.
-3. Identify engaging segments, emotional triggers, and audio/visual patterns.
-4. Compile the findings into a structured report.
-5. Distribute the report for repurposing of content.
+1. Trigger Arcads AI Video’s "AI Marketing" skill at 2026-07-30T21:50:00.000000+00:00.
+2. Analyze the video’s AUDIO+VISUAL content (via Gemini) for themes, emotional triggers, and insights beyond the transcript.
+3. Generate a structured marketing analysis highlighting key themes, emotional triggers, and actionable insights.
+4. Review the output for accuracy and relevance to the video’s content.
+5. Refine or supplement the analysis with additional context if gaps are identified.
+6. Document the final analysis in GitHub markdown format for distribution.
 
-**What changed:** The decision was made to formalize the extraction and reporting process for enhanced content utilization.
+**What changed:**
+The decision to execute the AI Marketing skill analysis was formalized with a concrete timeline and structured plan.

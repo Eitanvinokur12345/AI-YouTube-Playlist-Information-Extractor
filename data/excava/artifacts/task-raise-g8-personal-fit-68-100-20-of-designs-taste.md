@@ -1,20 +1,10 @@
 # Raise G8 Personal fit (68/100): 20% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond
 
-> visual · task `raise-g8-personal-fit-68-73415` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> visual · task `raise-g8-personal-fit-68-73826` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
 
-```markdown
-**Approach:** Taste-tag 20% of designs via Arena learning, wire NOSG, then expand taste beyond.
-
-**Steps:**
-1. **Tag 20% of designs** – Run `scripts/taste_tag.py --sample 20` (uses `designs/` dir and `taste_tags.csv`).
-2. **Arena learning** – Deploy `arena/learn.py` with `--live` flag (requires `arena/models/` and live API keys).
-3. **Wire NOSG** – Update `config/nosg.json` with new taste vectors (needs `nosg/` repo access).
-4. **Expand taste** – Run `scripts/expand_taste.py --beyond` (uses `taste_tags.csv` and `designs/`).
-
-**Needs:**
-- `designs/` directory (17 small designs)
-- `taste_tags.csv` (existing or empty)
-- `arena/models/` (pre-trained)
-- Live API keys (Arena learning)
-- `nosg/` repo access (write to `config/nosg.json`)
-```
+**Approach:** Incrementally refine G8 Personal fit through targeted design interventions and arena learning
+1. **Annotate designs**: Use `labelimg` tool to manually tag 20% of designs with relevant taste attributes, storing them in a `designs.csv` file
+2. **Train arena learning model**: Utilize `Python` with `scikit-learn` library to develop a live learning model, incorporating `NOSG` wired data, and integrate with ` designs.csv` for enhanced predictions
+3. **Refine and validate**: Leverage `Matplotlib` and `Seaborn` for data visualization to identify areas of improvement, iterating on the design refinement process, and validate results using `G8` evaluation metrics
+4. **Optimize with risk assessment**: Apply `risk` assessment using `pandas` to analyze the impact of design decisions on the overall `G8` score, aiming to minimize `risk` while maximizing `value`
+**Needs:** `labelimg` tool, `Python` environment with `scikit-learn`, `Matplotlib`, `Seaborn`, `pandas`, and `NOSG` wired data access

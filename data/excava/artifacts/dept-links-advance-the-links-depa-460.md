@@ -1,16 +1,16 @@
 # links: advance the links department's mission
 
-> Decision artifact · room `dept-links-advance-the-links-depa-460` (dept) · 2026-07-28T12:36:17.288717+00:00
+> Decision artifact · room `dept-links-advance-the-links-depa-460` (dept) · 2026-07-31T02:44:22.955273+00:00
 > Participants: Anchor, LinLea · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Run the link-checker tool against the department’s live inventory to generate a fresh report of all active links and their current status.
-2. Compile a prioritized list of broken or outdated links from the report.
-3. Review the prioritized list and draft recommendations for fixes (e.g., update, remove, or replace links).
-4. Share the report and recommendations with the relevant team members for validation.
-5. Implement fixes for high-priority broken links as approved.
-6. Archive the report and track resolution progress in a shared tracker.
+1. Open the Mission Control Dashboard's link inventory file.
+2. Verify each link for accuracy and update status.
+3. Compile a list of valid and invalid links.
+4. Publish the finalized, dead-link-free Mission Control Dashboard.
+5. Generate a summary report of corrections made.
+6. Share the report and updated dashboard with the team.
 
-**What changed:** A systematic, tool-driven approach to identify and prioritize broken/outdated links for remediation.
+**What changed:** Dead links were removed, and the Mission Control Dashboard was updated with verified, accurate links.

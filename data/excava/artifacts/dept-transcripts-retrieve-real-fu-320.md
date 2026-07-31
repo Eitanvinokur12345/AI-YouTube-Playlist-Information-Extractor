@@ -1,15 +1,15 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-320` (dept) · 2026-07-25T09:48:37.308929+00:00
-> Participants: Reel, Echo · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-320` (dept) · 2026-07-31T21:41:50.374803+00:00
+> Participants: Reel, Echo · synthesized by mistral/mistral-small-latest
 
-**Decision:** Use the YouTube transcript tool to retrieve the full transcripts for pending videos.
+**Decision:**
 
-**Plan:**  
-1. Utilize the YouTube transcript tool to obtain the full transcript for "AI Breakthroughs of 2024: What Changed E".  
-2. Confirm the fetched transcript is complete and accurate.  
-3. Repeat the process for any other pending videos as necessary.  
-4. Organize the transcripts for easy access and reference.  
-5. Review and ensure all transcripts are formatted properly for presentation.  
+**Plan:**
+1. Use the kimtaeyoon83/mcp-server-youtube-transcript tool to fetch the full transcript for *"The AI Alignment Problem"* (or *"Orchestrated AI"* if confirmed).
+2. Output the raw transcript text to `transcripts-w1` in GitHub markdown format.
+3. Ensure the fetch is performed via residential IP with gentle pacing to avoid rate limits or blocking.
+4. Verify the transcript completeness and accuracy before finalizing.
+5. Close the room upon successful storage of the transcript.
 
-**What changed:** The focus is now on using the YouTube tool for accurate transcript retrieval.
+**What changed:** Tool execution confirmed; transcript retrieval initiated.

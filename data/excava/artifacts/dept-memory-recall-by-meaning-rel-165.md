@@ -1,13 +1,18 @@
 # memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.
 
-> Decision artifact · room `dept-memory-recall-by-meaning-rel-165` (dept) · 2026-07-31T06:07:25.477157+00:00
-> Participants: Graft, Root · synthesized by nvidia/meta/llama-3.3-70b-instruct
+> Decision artifact · room `dept-memory-recall-by-meaning-rel-165` (dept) · 2026-07-31T20:53:18.244076+00:00
+> Participants: Graft, Root · synthesized by mistral/mistral-small-latest
 
-**Decision:** Embed unembedded elements into the memory database to enhance future recall.
+**Decision:**
+Consolidate the conversation’s unembedded elements into a memory artifact for future recall and relational embedding.
+
 **Plan:**
-1. Identify and collect all unembedded elements from the current conversation.
-2. Organize the collected elements into a structured format for embedding.
-3. Embed the organized elements into the Hindsight memory database.
-4. Link the embedded elements to the goal, rules, and context for comprehensive recall.
-5. Verify the integrity and accessibility of the consolidated memory artifact.
-**What changed:** The memory database now contains a consolidated artifact linking the goal, rules, and context for enhanced future recall.
+1. Extract the goal (**memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements**) and embed it as a primary node.
+2. Link the rules (**Graft embeds unembedded elements into the Hindsight memory database**) as a dependency of the goal.
+3. Embed the context (**producing a consolidated memory artifact linking the goal, rules, and context**) as a subgraph under the rules.
+4. Tag the decision (**"Consolidate the conversation’s unembedded elements into a memory artifact"**) as a leaf node under the context.
+5. Mark the output format (**GitHub markdown, one-line Decision, numbered Plan, What changed**) as a procedural constraint.
+6. Ensure the artifact is searchable by indexing the goal, rules, context, and decision tags.
+
+**What changed:**
+Unembedded elements from the debate were embedded into the Hindsight memory database as a consolidated, searchable artifact.

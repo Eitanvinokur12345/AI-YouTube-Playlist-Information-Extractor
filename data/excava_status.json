@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-07-31T08:15:39.195739+00:00",
+  "generated_at": "2026-07-31T08:25:25.646854+00:00",
   "name": "EXCAVA",
   "phase": "OS spine (Phase 0): bus + departments + hand-offs live; creators (OS-2) gated",
   "gate": {
     "checks": {
-      "data_guard_ok": true,
+      "data_guard_ok": false,
       "security_clean": true,
       "truth_access_G3": 52,
       "G3_ready_for_outward": false
     },
-    "internal_allowed": true,
+    "internal_allowed": false,
     "outward_allowed": false,
     "outward_needs": "data_guard ok + security clean + G3>=70 + owner approval"
   },
@@ -81,7 +81,7 @@
   },
   "holding": [],
   "os": {
-    "beats": 2,
+    "beats": 3,
     "mode": "run",
     "bus": {
       "open": 25,
@@ -189,46 +189,26 @@
       "last_handoff": "data/excava/handoffs/resolve-real-links-websi-85180--01--links-w1--to--memory.md"
     },
     "beat_log": [
-      "backlog: 9 real-gap task(s) queued; plan {'memory': '3 small task(s) run in', 'analysis': '3 small task(s) run in', 'links': '3 small task(s) run in', 'mining': '3 small task(s) run in'}",
-      "analysis-w1: verify-the-next-200-of-5-85180 DONE",
-      "memory-w1: raise-g3-truth-access-52-83429 DONE",
-      "links-w1: resolve-real-links-websi-85180 -> memory (data/excava/handoffs/resolve-real-links-websi-85180--01--links-w1--to--memory.md)",
-      "mining-w1: mining-discover-new-ai-r-85739 DONE",
-      "news-w1: news-refresh-the-ai-news-85739 DONE",
-      "security-w1: security-safety-rate-the-85739 DONE",
-      "visual-w1: raise-g8-personal-fit-68-85739 DONE",
-      "watch-w1: watch-process-the-next-b-85739 DONE",
-      "creators-w1: raise-g5-leverage-52-100-85739 DONE",
-      "improve-w1: ratchet-s-initiative-aut-84715 DONE",
-      "dept-transcripts-retrieve-real-fu-192: Reel spoke (mistral, 817ms) t1",
-      "dept-transcripts-retrieve-real-fu-192: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-transcripts-retrieve-real-fu-192.md', 'at': '2026-07-31T08:16:21.265634+00:00', 'title': 'transcripts: Retrieve REAL full transcripts/captions for pending videos (residen', 'by': 'Echo'}",
-      "dept-transcripts-retrieve-real-fu-192: ACTION queued → transcripts-room-action--85781",
-      "dept-visual-mine-great-designs-fr-536: no engine here (cerebras:bad-model-404: {\"message\":\"Model does not) — resumes in CI",
-      "dept-analysis-deep-analyze-every-975: Chisel spoke (nvidia, 33268ms) t1",
-      "dept-analysis-deep-analyze-every-975: Marrow spoke (mistral, 808ms) t2",
-      "dept-analysis-deep-analyze-every-975: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-analysis-deep-analyze-every-975.md', 'at': '2026-07-31T08:17:47.685281+00:00', 'title': 'analysis: Deep-analyze every element from its FULL source (whole transcript/repo', 'by': 'Marrow'}",
-      "dept-analysis-deep-analyze-every-975: ACTION queued → analysis-room-action-mar-85867",
-      "dept-creators-build-packages-enri-614: Forge spoke (mistral, 1103ms) t1",
-      "dept-creators-build-packages-enri-614: Nova spoke (mistral, 607ms) t2",
-      "dept-creators-build-packages-enri-614: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-creators-build-packages-enri-614.md', 'at': '2026-07-31T08:18:40.870845+00:00', 'title': \"creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Crea\", 'by': 'Nova'}",
-      "dept-creators-build-packages-enri-614: REROUTED to POWER → rerouted-creators-power--85920",
-      "dept-watch-analyze-video-audio-vi-173: Scope spoke (mistral, 931ms) t1",
-      "dept-watch-analyze-video-audio-vi-173: Iris spoke (mistral, 867ms) t2",
-      "dept-watch-analyze-video-audio-vi-173: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-watch-analyze-video-audio-vi-173.md', 'at': '2026-07-31T08:19:36.547579+00:00', 'title': 'watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.', 'by': 'Iris'}",
-      "dept-watch-analyze-video-audio-vi-173: ACTION queued → watch-room-action-at-20--85976",
-      "dept-accessibility-make-excava-us-794: Ramp spoke (mistral, 1310ms) t1",
-      "dept-accessibility-make-excava-us-794: Reader spoke (mistral, 1516ms) t2",
-      "dept-improve-self-improvement-rev-778: Sprocket spoke (mistral, 1185ms) t1",
-      "dept-improve-self-improvement-rev-778: Gauge spoke (mistral, 1313ms) t2",
-      "rooms: 7 advanced, 8 deferred to next beat (room-advance budget 240s hit — likely engine outage/quota)",
-      "experiment engine-benchmark: 3/12 healthy; ranking groq, mistral, nvidia, kimi",
-      "experiment golden-task-regression: 100% (6/6 tasks pass)",
-      "agent-issue: DRAFT filed for owner approval (25 dead links cited)",
-      "agent-issue: not approved — nothing posted",
+      "HOLD ALL — verification gate failing (fix data_guard/security first)",
       "TUTORIAL MISSING for dashboard v132 — Phase 6 law: every major change ships a walkthrough (data/tutorials.json)",
-      "memory master: +11 episodes"
+      "memory master: +4 episodes"
     ],
-    "departments": [],
+    "departments": [
+      "accessibility",
+      "analysis",
+      "creators",
+      "improve",
+      "links",
+      "memory",
+      "mining",
+      "news",
+      "power",
+      "security",
+      "transcripts",
+      "visual",
+      "visualization",
+      "watch"
+    ],
     "usage": {
       "analysis": {
         "ticks": 2,
@@ -743,27 +723,8 @@
         "department": "watch"
       }
     ],
-    "memory_episodes": 11,
-    "directions": [
-      {
-        "id": "dir-1",
-        "text": "Free-only forever; quality over quantity; every step deepens EXCAVA's integration (daemon-grade, not cosmetic); I don't babysit — park questions, proceed on defaults.",
-        "at": "2026-07-03T00:00:00+00:00",
-        "via": "standing rules (SESSION_HANDOFF §4)",
-        "status": "active",
-        "excava_reading": "Baseline law, seeded at Phase-6 birth: applies to every department and every phase; the guardrails file is its enforcement arm.",
-        "acknowledged_at": "2026-07-03T00:00:00+00:00"
-      },
-      {
-        "id": "dir-2",
-        "text": "Creations enter the project autonomously when labeled 'Created by EXCAVA', with an independent test before first use; creators may build MCP servers, connectors, tools; multi-element bundles are called PACKAGES.",
-        "at": "2026-07-03T00:00:00+00:00",
-        "via": "P3 checkpoint answer",
-        "status": "active",
-        "excava_reading": "Creators department staffed under guardrail G-12; the label and test_before_run are mechanical, not optional.",
-        "acknowledged_at": "2026-07-03T00:00:00+00:00"
-      }
-    ],
+    "memory_episodes": 4,
+    "directions": [],
     "tutorials": {
       "current_build": "v132",
       "covered": false,

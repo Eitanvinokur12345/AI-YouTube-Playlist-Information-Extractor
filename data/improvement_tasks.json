@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-31T11:01:26.230031+00:00",
+  "updated_at": "2026-07-31T11:09:07.242666+00:00",
   "tasks": [
     {
       "trend_key": "tab:coding",
@@ -162,6 +162,138 @@
       "fix": "Advance goal G9: beats 5; 0 hand-off docs; 0 tasks done; 14 departments; audit ok (next: more departments executing, not just assessing) — CAPPED 50: 10617 real turns but 0 artifacts — deliberates, doesn't execute.",
       "status": "open",
       "created_at": "2026-07-31T09:59:58.485396+00:00"
+    },
+    {
+      "maint_key": "brain:Empty-body items render as blank 'white'",
+      "kind": "maintenance",
+      "question": "[maintenance/brain] Empty-body items render as blank 'white' nodes in the brain graph (187)",
+      "fix": "Skip empty-body items from the brain (or backfill a one-line description) so they stop appearing as contentless dots.",
+      "status": "open",
+      "created_at": "2026-07-31T11:08:33.235801+00:00"
+    },
+    {
+      "maint_key": "brain:Title collisions: distinct items share o",
+      "kind": "maintenance",
+      "question": "[maintenance/brain] Title collisions: distinct items share one note name and overwrite each other (10)",
+      "fix": "De-duplicate or suffix colliding titles so each item is its own note.",
+      "status": "open",
+      "created_at": "2026-07-31T11:08:33.235801+00:00"
+    },
+    {
+      "maint_key": "pipeline:Pipeline lanes overdue — retrieval/analy",
+      "kind": "maintenance",
+      "question": "[maintenance/pipeline] Pipeline lanes overdue — retrieval/analysis may have stalled (2)",
+      "fix": "Check the workflow logs for these lanes; re-dispatch if blocked.",
+      "status": "open",
+      "created_at": "2026-07-31T11:08:33.235801+00:00"
+    },
+    {
+      "scout_key": "scout:Retrieval: web search/scrape",
+      "kind": "scout",
+      "goal": "G1",
+      "question": "[pipeline] evaluate 'Slack' to improve: Retrieval: web search/scrape",
+      "fix": "129 candidates found for 'Retrieval: web search/scrape'. Pick the best free one and wire it in as a sub-job.",
+      "status": "open",
+      "created_at": "2026-07-31T11:08:34.075079+00:00"
+    },
+    {
+      "scout_key": "scout:Retrieval: transcripts/audio",
+      "kind": "scout",
+      "goal": "G1",
+      "question": "[pipeline] evaluate 'Gemini 3.1 Ultra' to improve: Retrieval: transcripts/audio",
+      "fix": "83 candidates found for 'Retrieval: transcripts/audio'. Pick the best free one and wire it in as a sub-job.",
+      "status": "open",
+      "created_at": "2026-07-31T11:08:34.075079+00:00"
+    },
+    {
+      "scout_key": "scout:Retrieval: browser automation",
+      "kind": "scout",
+      "goal": "G1",
+      "question": "[pipeline] evaluate 'Playwright MCP' to improve: Retrieval: browser automation",
+      "fix": "76 candidates found for 'Retrieval: browser automation'. Pick the best free one and wire it in as a sub-job.",
+      "status": "open",
+      "created_at": "2026-07-31T11:08:34.075079+00:00"
+    },
+    {
+      "scout_key": "scout:Analysis: structured extraction",
+      "kind": "scout",
+      "goal": "G1",
+      "question": "[pipeline] evaluate 'Bright Data MCP' to improve: Analysis: structured extraction",
+      "fix": "133 candidates found for 'Analysis: structured extraction'. Pick the best free one and wire it in as a sub-job.",
+      "status": "open",
+      "created_at": "2026-07-31T11:08:34.075079+00:00"
+    },
+    {
+      "scout_key": "scout:Activator: embeddings/RAG/search",
+      "kind": "scout",
+      "goal": "G2",
+      "question": "[pipeline] evaluate 'AnythingLLM' to improve: Activator: embeddings/RAG/search",
+      "fix": "108 candidates found for 'Activator: embeddings/RAG/search'. Pick the best free one and wire it in as a sub-job.",
+      "status": "open",
+      "created_at": "2026-07-31T11:08:34.075079+00:00"
+    },
+    {
+      "scout_key": "scout:Dedup/entity resolution",
+      "kind": "scout",
+      "goal": "G2",
+      "question": "[pipeline] evaluate 'everyrow' to improve: Dedup/entity resolution",
+      "fix": "13 candidates found for 'Dedup/entity resolution'. Pick the best free one and wire it in as a sub-job.",
+      "status": "open",
+      "created_at": "2026-07-31T11:08:34.075079+00:00"
+    },
+    {
+      "scout_key": "scout:Validation / QA / guardrails",
+      "kind": "scout",
+      "goal": "G3",
+      "question": "[pipeline] evaluate 'Portkey Gateway' to improve: Validation / QA / guardrails",
+      "fix": "72 candidates found for 'Validation / QA / guardrails'. Pick the best free one and wire it in as a sub-job.",
+      "status": "open",
+      "created_at": "2026-07-31T11:08:34.075079+00:00"
+    },
+    {
+      "scout_key": "scout:Agents / orchestration (the OS)",
+      "kind": "scout",
+      "goal": "G6",
+      "question": "[pipeline] evaluate 'OpenAI Codex' to improve: Agents / orchestration (the OS)",
+      "fix": "794 candidates found for 'Agents / orchestration (the OS)'. Pick the best free one and wire it in as a sub-job.",
+      "status": "open",
+      "created_at": "2026-07-31T11:08:34.075079+00:00"
+    },
+    {
+      "scout_key": "scout:Storage: vector / graph DB",
+      "kind": "scout",
+      "goal": "G6",
+      "question": "[pipeline] evaluate 'LangChain' to improve: Storage: vector / graph DB",
+      "fix": "44 candidates found for 'Storage: vector / graph DB'. Pick the best free one and wire it in as a sub-job.",
+      "status": "open",
+      "created_at": "2026-07-31T11:08:34.075079+00:00"
+    },
+    {
+      "scout_key": "scout:Observability / eval",
+      "kind": "scout",
+      "goal": "G2",
+      "question": "[pipeline] evaluate 'Cursor' to improve: Observability / eval",
+      "fix": "226 candidates found for 'Observability / eval'. Pick the best free one and wire it in as a sub-job.",
+      "status": "open",
+      "created_at": "2026-07-31T11:08:34.075079+00:00"
+    },
+    {
+      "scout_key": "scout:Token / cost optimization",
+      "kind": "scout",
+      "goal": "G4",
+      "question": "[pipeline] evaluate 'Claude Opus 4.6' to improve: Token / cost optimization",
+      "fix": "209 candidates found for 'Token / cost optimization'. Pick the best free one and wire it in as a sub-job.",
+      "status": "open",
+      "created_at": "2026-07-31T11:08:34.075079+00:00"
+    },
+    {
+      "scout_key": "scout:Brain / graph visualization",
+      "kind": "scout",
+      "goal": "G6",
+      "question": "[pipeline] evaluate 'Obsidian' to improve: Brain / graph visualization",
+      "fix": "39 candidates found for 'Brain / graph visualization'. Pick the best free one and wire it in as a sub-job.",
+      "status": "open",
+      "created_at": "2026-07-31T11:08:34.075079+00:00"
     }
   ]
 }

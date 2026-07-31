@@ -1,13 +1,24 @@
 # Keep the Designs tab pure: designs only, live previews, taste-ranked
 
-> visual · task `keep-the-designs-tab-pur-71300` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
+> visual · task `keep-the-designs-tab-pur-83429` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
-**Approach:** Utilize GitHub's issue tracking and project management features to curate the Designs tab.
+**Approach:**
+Strip the Designs tab to a curated, taste-ranked gallery of live previews with zero fluff.
+
 **Steps:**
-1. Create a new GitHub project board with columns for `To Review`, `Approved Designs`, and `Live Previews` to visually organize and track design submissions.
-2. Establish a clear set of criteria for taste-ranking designs, including adherence to project style guides and overall aesthetic appeal, and create a GitHub issue template for design submissions.
-3. Use GitHub's label feature to categorize and filter designs by rank, and pin high-ranked designs to the top of the Designs tab for easy access.
-**Needs:**
-* GitHub repository access with permission to create project boards and issues
-* A clear project style guide and design criteria document
-* GitHub account with labeling and pinning privileges
+1. **Audit & purge** – Run `find ./designs -type f \! -name "*.png" \! -name "*.jpg" \! -name "*.gif" \! -name "*.mp4" -delete` to delete non-media files in `/designs`.
+2. **Rename & standardize** – Use `rename 's/.*/design-$1.jpg/' *.jpg` (adjust extension) to enforce `design-<id>.<ext>` naming.
+3. **Generate live previews** – For each file, create a matching `.html` file (e.g., `design-123.html`) with an `<iframe>` embedding the live URL (e.g., `https://example.com/design-123`). Use a script like:
+   ```bash
+   for f in designs/*.jpg; do
+     id=$(basename "$f" .jpg)
+     cat > "designs/$id.html" <<EOF
+   <!DOCTYPE html>
+   <html><body>
+     <iframe src="https://example.com/$id" style="width:100%;height:600px;border:none;"></iframe>
+   </body></html>
+   EOF
+   done
+   ```
+4. **Rank & curate** – Manually sort files into subfolders (`/top-tier`, `/mid-tier`, `/experimental`) based on Chroma’s taste criteria (e.g., "no skeuomorphism," "bold color blocking").
+5. **Update tab logic** – Modify the Designs tab’s navigation to

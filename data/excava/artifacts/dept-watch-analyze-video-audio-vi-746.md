@@ -1,15 +1,18 @@
 # watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.
 
-> Decision artifact · room `dept-watch-analyze-video-audio-vi-746` (dept) · 2026-07-20T07:44:23.356705+00:00
-> Participants: Scope, Iris · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-watch-analyze-video-audio-vi-746` (dept) · 2026-07-31T16:45:53.331190+00:00
+> Participants: Scope, Iris · synthesized by mistral/mistral-small-latest
 
-**Decision:** Proceed with the extraction of high-value clips and themes using Arcads AI Video for cross-platform repurposing.
+**Decision:**
+Launch Arcads AI Video’s "AI Marketing" skill pack on target video to generate a hybrid teaser asset.
 
 **Plan:**
-1. Run Arcads AI Video skill on the marketing video.
-2. Extract high-value clips and themes beyond the transcript.
-3. Create a "Repurpose Rules Matrix" table mapping each clip to its best use case (social, blog, ad, etc.).
-4. Identify performance triggers for each clip to optimize effectiveness.
-5. Share the generated matrix with the team for implementation in marketing strategy.
+1. Run Arcads AI Video’s "AI Marketing" skill pack on the target video.
+2. Generate a single, polished marketing teaser leveraging visual and audio cues beyond the transcript.
+3. Output the teaser as a concise, decision-ready asset.
+4. Validate the teaser’s alignment with the original video’s intent and tone.
+5. Refine the teaser based on Arcads’ output and validation feedback.
+6. Finalize and export the teaser for deployment.
 
-**What changed:** The decision focuses on utilizing advanced AI tools to enhance marketing efforts through strategic content repurposing.
+**What changed:**
+Initiated automated teaser generation via Arcads AI Video’s skill pack.

@@ -1,16 +1,17 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-547` (dept) · 2026-07-30T17:54:44.437738+00:00
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-547` (dept) · 2026-07-31T16:44:58.663099+00:00
 > Participants: Pick · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+Prioritize Reddit’s r/MachineLearning and r/AI for high-signal AI developments over Product Hunt’s launches due to deeper technical discussion and research focus.
 
 **Plan:**
-1. Browse r/MachineLearning and r/AI (last 7 days) to extract top 10 most discussed AI tools, datasets, or research papers.
-2. For each entry, record key claims, limitations, and source links.
-3. Compile results into a GitHub markdown table with columns: *Name*, *Type*, *Key Claim*, *Limitations*, *Source*.
-4. Validate entries for diversity (GitHub/HN/Product Hunt/Reddit/Telegram/social) by cross-referencing at least 2 sources per item.
-5. Push the markdown file to the team’s shared GitHub repo under `/data/ai-mining/`.
-6. Notify the team via Slack with a summary and link to the file.
+1. **Scrape Reddit** (r/MachineLearning + r/AI) for top 10 most-discussed AI tools/papers/datasets from the last 7 days.
+2. **Extract** key claims, limitations, and user-reported flaws for each item.
+3. **Rank** by engagement (upvotes/comments) and relevance to mining goals.
+4. **Cross-reference** GitHub/Telegram for additional context (e.g., repo activity, community chatter).
+5. **Compile** into a concise markdown table with columns: *Tool/Paper*, *Core Claim*, *Limitations*, *Source*, *Engagement Metrics*.
+6. **Share** with the team for review and prioritization of follow-up actions.
 
-**What changed:** Focus narrowed to Reddit-only extraction with cross-source validation for diversity.
+**What changed:** Switched from Product Hunt (surface-level trends) to Reddit (depth + research) for higher-quality AI insights.

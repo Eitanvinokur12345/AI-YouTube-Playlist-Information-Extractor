@@ -1,13 +1,16 @@
 # news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
 
-> Decision artifact · room `dept-news-freshness-refresh-the-a-750` (dept) · 2026-07-27T07:01:59.349546+00:00
-> Participants: Scoop · synthesized by groq/llama-3.3-70b-versatile
+> Decision artifact · room `dept-news-freshness-refresh-the-a-750` (dept) · 2026-07-31T16:45:05.936185+00:00
+> Participants: Scoop, Wire · synthesized by mistral/mistral-small-latest
 
-**Decision:** Implement a news refresh process to gather the latest AI headlines from reputable sources.
+**Decision:**
+
 **Plan:**
-1. Query Reuters feed for the newest AI-related articles and press releases.
-2. Retrieve the latest AI news stories from the BBC website and news archives.
-3. Collect official AI announcements and updates from the White House press feed.
-4. Compile the gathered information into a concise AI-news digest.
-5. Review and summarize the digest to ensure accuracy and relevance.
-**What changed:** The AI-news digest will now be updated regularly with fresh information from official and reputable sources.
+1. Fetch the latest AI news digest from OpenAI’s official blog.
+2. Fetch the latest AI news digest from NVIDIA’s official announcements.
+3. Curate the top three newest developments from both sources.
+4. Compile a list with direct links to the primary sources.
+5. Publish the AI-headlines digest with the curated list.
+6. Include the top three newest developments from OpenAI and NVIDIA.
+
+**What changed:** Wire now publishes the AI-headlines digest with top three newest developments from OpenAI’s blog and NVIDIA’s announcements, including direct links.

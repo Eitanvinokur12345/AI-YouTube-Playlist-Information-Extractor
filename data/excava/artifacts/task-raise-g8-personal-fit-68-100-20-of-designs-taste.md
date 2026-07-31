@@ -1,20 +1,10 @@
 # Raise G8 Personal fit (68/100): 20% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond
 
-> visual · task `raise-g8-personal-fit-68-72570` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> visual · task `raise-g8-personal-fit-68-72993` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
 
-```markdown
-**Approach:** Curate 20% of taste-tagged designs via Arena learning + NOSG wiring to push G8 Personal fit from 68 → 85/100.
-
-**Steps:**
-1. **Tag extraction:** Run `scripts/taste_tag_extractor.py` on `designs/` → output `taste_tags.jsonl` (filter: `taste_score >= 0.7`).
-2. **Arena learning:** Deploy `arena_learning.py` with `taste_tags.jsonl` as seed → generate `arena_learning_output.json` (params: `--epochs 10 --batch 32`).
-3. **NOSG wiring:** Patch `nosg_config.yaml` with `arena_learning_output.json` → validate via `nosg_validate.py --config nosg_config.yaml`.
-4. **Fit update:** Trigger `g8_personal_fit_update.sh` with `nosg_config.yaml` → verify via `g8_status.py` (target: `fit >= 85`).
-
-**Needs:**
-- `designs/` (local dir, 17 files)
-- `scripts/taste_tag_extractor.py` (existing)
-- `arena_learning.py` (existing, GPU access)
-- `nosg_config.yaml` (existing)
-- `g8_personal_fit_update.sh` (existing)
-```
+**Approach:** Incrementally refine G8 Personal fit through targeted design iterations and taste-tagging.
+1. **Analyze existing designs**: Run `grep -r "taste-tag" ./designs` to identify currently taste-tagged designs and assess their impact on G8 Personal fit.
+2. **Implement Arena learning live**: Utilize `arena-learning-toolkit` to integrate live learning capabilities into the design process, focusing on taste-tagging and personal fit refinement.
+3. **Integrate NOSG wired**: Leverage `nosg-wired-sdk` to establish a wired connection for next-stage taste development, ensuring seamless data exchange and iteration.
+4. **Refine designs and re-assess**: Apply `design-refinement-scripts` to iterate on designs, re-running `grep` analysis and `arena-learning-toolkit` to measure improvements in G8 Personal fit.
+**Needs:** `arena-learning-toolkit`, `nosg-wired-sdk`, `design-refinement-scripts`, `grep`, access to design files and taste-tagging data.

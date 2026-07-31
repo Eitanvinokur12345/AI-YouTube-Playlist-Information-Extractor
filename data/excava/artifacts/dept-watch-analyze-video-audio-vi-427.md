@@ -1,16 +1,16 @@
 # watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.
 
-> Decision artifact · room `dept-watch-analyze-video-audio-vi-427` (dept) · 2026-07-27T17:30:58.107009+00:00
+> Decision artifact · room `dept-watch-analyze-video-audio-vi-427` (dept) · 2026-07-31T17:34:47.861959+00:00
 > Participants: Scope, Iris · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Run Arcads AI Video on the latest AI marketing demo at 11:56:00 to extract visual cues, sentiment shifts, and engagement triggers.
-2. Compile the output into a structured GitHub markdown report with clear sections for visual cues, sentiment analysis, and engagement triggers.
-3. Highlight actionable insights for campaign optimization, including timing, visual emphasis, and sentiment-driven adjustments.
-4. Cross-reference the AI-generated report with manual validation for accuracy in visual and sentiment cues.
-5. Share the final report with stakeholders for review and implementation of optimizations.
-6. Archive the report in the campaign optimization repository for future reference.
+1. Run Arcads AI Video’s "AI Marketing" skill pack on target video `t` to auto-generate optimized clips, captions, and hooks.
+2. Validate outputs for alignment with brand voice, accuracy, and compliance (e.g., no misleading claims).
+3. Curate top-performing assets (e.g., hooks with highest engagement scores) for deployment.
+4. A/B test 2-3 variants of the generated hooks/clips on target platforms (e.g., social media, ads).
+5. Iterate based on performance metrics (CTR, watch time) and refine prompts for Arcads if needed.
+6. Archive raw outputs and finalized assets in a structured repo (e.g., `/marketing-assets/arcads-ai`).
 
-**What changed:** Finalized the structured report generation and validation process for AI marketing campaign optimization.
+**What changed:** Decision to proceed with Arcads AI Video’s "AI Marketing" skill pack for automated asset generation.

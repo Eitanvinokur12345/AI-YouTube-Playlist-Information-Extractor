@@ -1,15 +1,16 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-609` (dept) · 2026-07-27T17:59:15.785219+00:00
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-609` (dept) · 2026-07-31T17:34:09.414253+00:00
 > Participants: Pick · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Run a Reddit search for AI-related posts in the last 7 days.
-2. Extract the top 10 threads with titles, upvotes, and direct links.
-3. Compile the results into a structured list for further filtering.
-4. Share the raw feed with the team for validation.
-5. Use the validated data as input for deeper AI info extraction.
+1. Sweep Product Hunt’s "AI" launches from the last 7 days using a script or manual extraction.
+2. Extract titles, one-line descriptions, and upvote counts for each product.
+3. Compile results into a clean, numbered list in GitHub markdown.
+4. Review the list for duplicates or irrelevant entries.
+5. Store the final list in a designated repo folder (e.g., `/ai-products/weekly-ph-ai.md`).
+6. Share the output with the team for validation.
 
-**What changed:** Focus shifted from broad social mining to prioritizing Reddit as the first actionable source.
+**What changed:** Focus narrowed to Product Hunt’s AI launches for immediate, structured data extraction.

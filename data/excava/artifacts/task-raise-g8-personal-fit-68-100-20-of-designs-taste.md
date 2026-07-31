@@ -1,20 +1,17 @@
 # Raise G8 Personal fit (68/100): 20% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond
 
-> visual · task `raise-g8-personal-fit-68-71300` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> visual · task `raise-g8-personal-fit-68-72150` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
 ```markdown
-**Approach:** Curate 20% of designs with explicit taste tags, then wire NOSG for live Arena learning.
+**Approach:** Taste-tag 20% of designs via Arena live + NOSG wiring; refine G8 fit iteratively.
 
 **Steps:**
-1. **Tag 20% of designs** – Run `scripts/taste_tag.py --threshold 0.8 --output data/taste_tags.json` on `designs/` (filter first 20% by `design_id`).
-2. **Generate receipts** – Use `scripts/receipt_frame.py --input data/taste_tags.json --output frames/receipt_*.png` to frame-tagged designs.
-3. **NOSG wiring** – Update `config/nosg.json` with `arena_learning: true` and `taste_module: taste_tags.json`.
-4. **Live Arena sync** – Deploy via `make deploy-now` and monitor `logs/arena_learning.log` for taste drift.
+1. **Tag 20% of designs** – Use `scripts/taste_tag.py` to sample 20% of designs from `data/designs/` (seed=42) and append tags to `data/taste_tags.jsonl` with fields: `design_id`, `tag`, `confidence`, `timestamp`.
+2. **Arena live learning** – Deploy `arena/serve.py` (FastAPI) with `data/taste_tags.jsonl` as seed data; log interactions to `arena/logs/interactions.jsonl` (fields: `user_id`, `design_id`, `vote`, `timestamp`).
+3. **NOSG wiring** – Update `config/nosg.yaml` with new taste tags; run `scripts/nosg_sync.py` to regenerate `data/nosg_graph.gexf` and validate with `scripts/validate_nosg.py` (checks for cycles/isolated nodes).
+4. **G8 fit adjustment** – Recompute G8 metrics via `scripts/g8_metrics.py` using updated `data/taste_tags.jsonl` and `arena/logs/interactions.jsonl`; log results to `metrics/g8_fit.json` (fields: `personal_fit`, `tagged_pct`, `nosg_edges`).
 
 **Needs:**
-- `designs/` directory (17 small designs)
-- `scripts/taste_tag.py` (existing taste classifier)
-- `scripts/receipt_frame.py` (frame generator)
-- `config/nosg.json` (write access)
-- `make deploy-now` (CI hook)
-```
+- `data/designs/` (17 designs, JSONL format: `{id, features, image_url}`)
+- `scripts/taste_tag.py` (existing, but must support `--sample_pct=20`)
+- `arena/serve.py

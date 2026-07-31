@@ -1,26 +1,19 @@
 # Raise G8 Personal fit (68/100): 20% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond
 
-> visual · task `raise-g8-personal-fit-68-34565` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> visual · task `raise-g8-personal-fit-68-35419` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
 ```markdown
-**Approach:** Taste-tag 20% of designs via automated tagging pipeline + manual curation; feed tagged data into Arena learning loop; wire NOSG for live taste inference.
+**Approach:** Taste-tag 20% of designs via Arena learning pipeline, wire NOSG, then extend taste beyond.
 
 **Steps:**
-1. **Tag 20% of designs**
-   - Run `scripts/tag_designs.py --sample 0.2 --output taste_tags.jsonl` (uses `designs/` dir as input).
-   - Manually curate `taste_tags.jsonl` with `scripts/curate_tags.py --input taste_tags.jsonl --output curated_tags.jsonl`.
-
-2. **Arena learning loop**
-   - Train taste model: `python train_arena.py --data curated_tags.jsonl --epochs 10 --output models/taste_v1.ckpt`.
-   - Evaluate: `python evaluate_arena.py --model models/taste_v1.ckpt --output arena_metrics.json`.
-
-3. **NOSG wiring**
-   - Deploy taste model to NOSG: `nosg deploy --model models/taste_v1.ckpt --endpoint /taste/v1`.
-   - Test live inference: `curl -X POST /taste/v1 -d '{"design_id": "123"}'`.
+1. **Tag 20% of designs** – Run `python scripts/taste_tag.py --split 0.2 --output data/tagged_designs.json` (uses `data/designs/` input).
+2. **Arena learning live** – Deploy `arena/serve.py` with `torchrun --nproc_per_node=4 arena/train.py --data data/tagged_designs.json --epochs 10`.
+3. **NOSG wiring** – Edit `config/nosg.json` to enable `taste_module: true`, then restart `nosg/daemon.py` with `systemctl --user restart nosg`.
+4. **Taste beyond** – Add `scripts/extend_taste.py` to poll `data/new_designs/` hourly and tag via `arena/predict.py`.
 
 **Needs:**
-- `designs/` dir (input designs, 17 files).
-- `scripts/tag_designs.py`, `scripts/curate_tags.py` (existing).
-- `train_arena.py`, `evaluate_arena.py` (existing).
-- NOSG CLI (`nosg deploy`).
+- `data/designs/` (17 small files, raw designs).
+- `arena/` repo (PyTorch training pipeline).
+- `nosg/daemon.py` (systemd service, config in `config/nosg.json`).
+- GPU node (4x A100, CUDA 12.1).
 ```

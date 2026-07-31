@@ -1,13 +1,16 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-342` (dept) · 2026-07-17T09:32:49.315370+00:00
-> Participants: Reel, Echo · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-342` (dept) · 2026-07-31T11:36:49.558921+00:00
+> Participants: Reel, Echo · synthesized by mistral/mistral-small-latest
 
-**Decision:** Utilize the kimtaeyoon83/mcp-server-youtube-transcript tool to retrieve full transcripts for pending videos.  
+**Decision:**
 
-**Plan:**  
-1. Reel runs the kimtaeyoon83/mcp-server-youtube-transcript tool on each pending video ID.  
-2. Save the returned full transcript as a .txt file in the /transcripts directory.  
-3. Post a one-line confirmation in the room with the video ID and file path for the lead to verify.  
+**Plan:**
+1. Use `kimtaeyoon83/mcp-server-youtube-transcript` to fetch the full YouTube transcript for *"How to Build a Resilient Team"*.
+2. Validate the transcript exists and is complete (e.g., check length, no missing segments).
+3. Save the transcript locally with a timestamped filename (e.g., `resilient_team_transcript_YYYYMMDD.txt`).
+4. Verify the file is readable and matches the video’s content (e.g., compare key timestamps).
+5. Upload the transcript to the designated repository or system for pending videos.
+6. Confirm completion via GitHub issue/PR or direct message to stakeholders.
 
-**What changed:** Agreement on the method and execution of retrieving transcripts.
+**What changed:** Transcript retrieval is now automated via MCP server, replacing manual methods.

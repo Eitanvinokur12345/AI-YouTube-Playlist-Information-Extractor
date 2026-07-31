@@ -1,16 +1,18 @@
 # analysis: Deep-analyze every element from its FULL source (whole transcript/repo) + enrich from >=1 
 
-> Decision artifact · room `dept-analysis-deep-analyze-every-870` (dept) · 2026-07-30T18:22:30.949389+00:00
+> Decision artifact · room `dept-analysis-deep-analyze-every-870` (dept) · 2026-07-31T14:25:01.742081+00:00
 > Participants: Chisel, Marrow · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+**BloodHound-MCP will be executed on the full earnings call transcript to generate a visual knowledge graph linking named entities, financial metrics, sentiment cues, and decision-maker relationships, validated by Marrow for hidden structures and contradictions.**
 
 **Plan:**
-1. Run BloodHound-MCP on the full earnings call transcript to extract named entities (people, roles), financial metrics, and sentiment trends.
-2. Generate a visual graph of decision-makers, their relationships, and potential conflicts of interest.
-3. Cross-reference extracted entities with external sources (e.g., SEC filings, LinkedIn) to validate roles and affiliations.
-4. Analyze sentiment trends alongside financial metrics to identify discrepancies or biases in responses.
-5. Compile findings into a structured artifact (e.g., GitHub markdown report) for executive review.
-6. Flag high-risk entities (e.g., undisclosed relationships, conflicting statements) for further investigation.
+1. **Execute BloodHound-MCP** on the full earnings call transcript to extract named entities, financial metrics, sentiment cues, and decision-maker relationships.
+2. **Generate a visual knowledge graph** mapping all extracted elements, including hidden power structures, conflicts of interest, and alignment between claims and numbers.
+3. **Validate the artifact** via Marrow’s review to confirm accuracy of named entities, financial metrics, and sentiment trends.
+4. **Identify contradictions or hidden structures** in the graph, flagging misalignments between decision-makers’ claims and cited numbers.
+5. **Output a structured summary** of the validated graph for decision review, including key contradictions and power structures.
+6. **Store the artifact** in the repo for traceability and future reference.
 
-**What changed:** Shifted from raw transcript analysis to structured, graph-based visualization with validation and sentiment integration.
+**What changed:**
+Clarified Marrow’s validation role and structured the output as a decision-ready summary.

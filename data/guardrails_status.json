@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-31T15:01:35.823736+00:00",
+ "generated_at": "2026-07-31T15:56:54.811556+00:00",
  "total": 20,
- "passing": 16,
+ "passing": 17,
  "critical_failures": 2,
  "guardrails": [
   {
@@ -43,7 +43,7 @@
    "id": "G-F",
    "name": "JSON integrity",
    "ok": false,
-   "detail": "BROKEN JSON: data/excava/power_scan.json, data/excava/supervisor.json",
+   "detail": "BROKEN JSON: data/excava/supervisor.json",
    "severity": "critical"
   },
   {
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "87388 memory episodes on record.",
+   "detail": "87480 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "0 guardrail runs logged (append-only, never rewritten).",
+   "detail": "2 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -92,21 +92,21 @@
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "8 tasks done, 8 departments moving",
+   "detail": "58 tasks done, 10 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "88866 MB free on the repo drive.",
+   "detail": "88895 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 129.0h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 129.9h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
@@ -120,14 +120,14 @@
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "last 'core-spoton:' commit 0.5h ago.",
+   "detail": "last 'core-spoton:' commit 1.5h ago.",
    "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
-   "ok": false,
-   "detail": "13/16 lane(s) landing on cadence — STALE: discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 968.9h ago (expected within 76h); gemini_video.yml (3x/day): last commit 26.5h ago (expected within 14h); improve.yml (weekly deep pass): last commit 1318.7h ago (expected within 192h)",
+   "ok": true,
+   "detail": "5/16 lane(s) landing on cadence, 11 can't-tell (shallow clone).",
    "severity": "warn"
   },
   {
@@ -141,7 +141,7 @@
    "id": "G-S",
    "name": "No conflict markers in .jsonl logs",
    "ok": false,
-   "detail": "759 marker line(s) across 171 file(s) — run `python -m src.git_safe repair-conflicts`: data/excava/supervisor_longterm.jsonl, data/excava/syscalls.jsonl, data/excava/agent_memory/visual-w1.jsonl, data/excava/agent_memory/creators-w1.jsonl, data/excava/agent_memory/power-w1.jsonl",
+   "detail": "682 marker line(s) across 170 file(s) — run `python -m src.git_safe repair-conflicts`: data/excava/supervisor_longterm.jsonl, data/excava/syscalls.jsonl, data/excava/agent_memory/visual-w1.jsonl, data/excava/agent_memory/creators-w1.jsonl, data/excava/agent_memory/power-w1.jsonl",
    "severity": "critical"
   }
  ]

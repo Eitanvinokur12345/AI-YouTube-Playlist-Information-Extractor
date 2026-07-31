@@ -1,10 +1,20 @@
 # Raise G8 Personal fit (68/100): 20% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond
 
-> visual · task `raise-g8-personal-fit-68-72993` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
+> visual · task `raise-g8-personal-fit-68-73415` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
-**Approach:** Incrementally refine G8 Personal fit through targeted design iterations and taste-tagging.
-1. **Analyze existing designs**: Run `grep -r "taste-tag" ./designs` to identify currently taste-tagged designs and assess their impact on G8 Personal fit.
-2. **Implement Arena learning live**: Utilize `arena-learning-toolkit` to integrate live learning capabilities into the design process, focusing on taste-tagging and personal fit refinement.
-3. **Integrate NOSG wired**: Leverage `nosg-wired-sdk` to establish a wired connection for next-stage taste development, ensuring seamless data exchange and iteration.
-4. **Refine designs and re-assess**: Apply `design-refinement-scripts` to iterate on designs, re-running `grep` analysis and `arena-learning-toolkit` to measure improvements in G8 Personal fit.
-**Needs:** `arena-learning-toolkit`, `nosg-wired-sdk`, `design-refinement-scripts`, `grep`, access to design files and taste-tagging data.
+```markdown
+**Approach:** Taste-tag 20% of designs via Arena learning, wire NOSG, then expand taste beyond.
+
+**Steps:**
+1. **Tag 20% of designs** – Run `scripts/taste_tag.py --sample 20` (uses `designs/` dir and `taste_tags.csv`).
+2. **Arena learning** – Deploy `arena/learn.py` with `--live` flag (requires `arena/models/` and live API keys).
+3. **Wire NOSG** – Update `config/nosg.json` with new taste vectors (needs `nosg/` repo access).
+4. **Expand taste** – Run `scripts/expand_taste.py --beyond` (uses `taste_tags.csv` and `designs/`).
+
+**Needs:**
+- `designs/` directory (17 small designs)
+- `taste_tags.csv` (existing or empty)
+- `arena/models/` (pre-trained)
+- Live API keys (Arena learning)
+- `nosg/` repo access (write to `config/nosg.json`)
+```

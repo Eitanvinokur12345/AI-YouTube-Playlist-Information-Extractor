@@ -1,16 +1,13 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-572` (dept) · 2026-07-20T18:28:00.257756+00:00
-> Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-visual-mine-great-designs-fr-572` (dept) · 2026-07-31T00:56:44.351535+00:00
+> Participants: Easel, Chroma · synthesized by nvidia/meta/llama-3.3-70b-instruct
 
-**Decision:**
-
+**Decision:** Capture high-quality screenshots of design-rich pages to mine their patterns into the hub.
 **Plan:**
-1. Curate high-resolution screenshots of vibrant pink hero sections from websites like Beverage Cans.
-2. Organize these screenshots into a "Taste Material" folder in the hub.
-3. Tag and label each screenshot with its source URL for easy reference.
-4. Extract and document design patterns (e.g., color palettes, typography, layout grids) from the screenshots.
-5. Add metadata (e.g., date, designer credit) to each screenshot for context.
-6. Integrate the curated material into the hub’s visual design library.
-
-**What changed:** Added vibrant pink hero section screenshots to the hub’s taste material.
+1. Open the Playwright MCP server and navigate to the Model Context Protocol dashboard.
+2. Capture a high-quality screenshot of the MCP dashboard to showcase its design elements.
+3. Open the Agent Platform Selection Rule page and capture a high-quality screenshot to mine its design patterns.
+4. Upload the screenshots to the hub for reference and analysis.
+5. Extract and document design patterns, elements, and principles from the captured screenshots.
+**What changed:** The approach to mining design patterns now includes capturing screenshots of multiple key pages.

@@ -1,16 +1,13 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-360` (dept) · 2026-07-31T03:59:37.873632+00:00
-> Participants: Reel · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-360` (dept) · 2026-07-31T14:45:24.260479+00:00
+> Participants: Reel · synthesized by nvidia/meta/llama-3.3-70b-instruct
 
-**Decision:**
-
+**Decision:** Query the YouTube transcript server to retrieve full transcripts for pending videos using residential IP and gentle pacing.
 **Plan:**
-1. Query the YouTube transcript server (`kimtaeyoon83/mcp-server-youtube-transcript`) for *"How to Build a Resilient Team"* using residential IP and gentle pacing.
-2. Retrieve full transcripts for all pending video IDs via the same server, residential IP, and gentle pacing.
-3. Output raw captions as artifacts for the lead to verify and attach.
-4. Ensure transcripts are stored in a structured format (e.g., `.txt` or `.json`) for easy access.
-5. Validate transcript completeness and accuracy before final submission.
-6. Notify the lead upon completion for review and attachment.
-
-**What changed:** Expanded scope to include all pending video IDs alongside the specific title query.
+1. Identify the pending video IDs that require transcripts.
+2. Use the `kimtaeyoon83/mcp-server-youtube-transcript` server to query for the full transcripts of the pending videos.
+3. Employ residential IP and gentle pacing to ensure the retrieval process is not blocked by YouTube's security measures.
+4. Retrieve the raw captions from the transcript server for the lead to verify.
+5. Attach the verified transcripts as artifacts to the respective videos.
+**What changed:** The approach to retrieving transcripts now utilizes a specific server and gentle pacing to improve success rates.

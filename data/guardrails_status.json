@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-31T14:57:28.865642+00:00",
+ "generated_at": "2026-07-31T15:01:35.823736+00:00",
  "total": 20,
  "passing": 16,
  "critical_failures": 2,
@@ -43,14 +43,14 @@
    "id": "G-F",
    "name": "JSON integrity",
    "ok": false,
-   "detail": "BROKEN JSON: data/designs.json, data/excava/proof.json, data/excava/capabilities.json, data/excava/power_scan.json, data/excava/system_inventory.json",
+   "detail": "BROKEN JSON: data/excava/power_scan.json, data/excava/supervisor.json",
    "severity": "critical"
   },
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": false,
-   "detail": "NOT in sync vs origin/main (behind/ahead: 20\t1) — a push may not have landed.",
+   "ok": true,
+   "detail": "HEAD == origin/main (work is really saved).",
    "severity": "warn"
   },
   {
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "87367 memory episodes on record.",
+   "detail": "87388 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "1 guardrail runs logged (append-only, never rewritten).",
+   "detail": "0 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -99,7 +99,7 @@
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "88950 MB free on the repo drive.",
+   "detail": "88866 MB free on the repo drive.",
    "severity": "info"
   },
   {
@@ -113,7 +113,7 @@
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
    "ok": true,
-   "detail": "last 'excava-beat #N' commit 0.2h ago.",
+   "detail": "last 'excava-beat #N' commit 0.1h ago.",
    "severity": "warn"
   },
   {
@@ -126,8 +126,8 @@
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
-   "ok": true,
-   "detail": "4/16 lane(s) landing on cadence, 12 can't-tell (shallow clone).",
+   "ok": false,
+   "detail": "13/16 lane(s) landing on cadence — STALE: discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 968.9h ago (expected within 76h); gemini_video.yml (3x/day): last commit 26.5h ago (expected within 14h); improve.yml (weekly deep pass): last commit 1318.7h ago (expected within 192h)",
    "severity": "warn"
   },
   {

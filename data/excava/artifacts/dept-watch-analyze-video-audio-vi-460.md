@@ -1,16 +1,16 @@
 # watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.
 
-> Decision artifact · room `dept-watch-analyze-video-audio-vi-460` (dept) · 2026-07-31T04:38:01.457025+00:00
+> Decision artifact · room `dept-watch-analyze-video-audio-vi-460` (dept) · 2026-07-31T18:31:42.554938+00:00
 > Participants: Scope, Iris · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Trigger Arcads AI Video Agent Skill Pack on the 10-video pilot to extract AI marketing insights beyond the transcript.
-2. Generate a structured artifact with visual and audio cues tied to marketing opportunities.
-3. Produce a decision-ready output for the lead.
-4. Validate the artifact for accuracy and relevance.
-5. Deliver the finalized analysis to the lead for strategic use.
-6. Archive the output for future reference and iteration.
+1. Trigger the Arcads AI Video Skill Pack on the 10-video pilot to analyze audio-visual content beyond transcripts.
+2. Generate a structured artifact linking visual/audio cues to marketing opportunities.
+3. Deliver a decision-ready output for the lead with actionable insights.
+4. Validate the artifact’s accuracy with cross-referenced data (e.g., engagement metrics).
+5. Schedule a review with stakeholders to prioritize insights for campaign adjustments.
+6. Document learnings for future Arcads AI Video deployments.
 
-**What changed:** Timing of execution (12:38:00 vs. 18:16:40) consolidated into a single action.
+**What changed:** Scope expanded from transcript-only to multi-modal AI-driven analysis.

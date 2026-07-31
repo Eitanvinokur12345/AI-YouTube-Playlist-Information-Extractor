@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-31T04:16:52.720985+00:00",
+ "generated_at": "2026-07-31T05:13:18.136826+00:00",
  "total": 20,
- "passing": 16,
+ "passing": 17,
  "critical_failures": 2,
  "guardrails": [
   {
@@ -43,14 +43,14 @@
    "id": "G-F",
    "name": "JSON integrity",
    "ok": false,
-   "detail": "BROKEN JSON: data/designs.json, data/excava/pulse.json",
+   "detail": "BROKEN JSON: data/designs.json",
    "severity": "critical"
   },
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": false,
-   "detail": "NOT in sync vs origin/main (behind/ahead: 22\t1) — a push may not have landed.",
+   "ok": true,
+   "detail": "HEAD == origin/main (work is really saved).",
    "severity": "warn"
   },
   {
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "62351 memory episodes on record.",
+   "detail": "62461 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "1 guardrail runs logged (append-only, never rewritten).",
+   "detail": "2 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -92,36 +92,36 @@
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "8 tasks done, 8 departments moving",
+   "detail": "74 tasks done, 11 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "89196 MB free on the repo drive.",
+   "detail": "89193 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 118.3h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 119.2h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
    "ok": true,
-   "detail": "last 'excava-beat #N' commit 0.2h ago.",
+   "detail": "last 'excava-beat #N' commit 0.1h ago.",
    "severity": "warn"
   },
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "shallow clone — not enough local history to find a 'core-spoton:' commit either way; not a stall signal, just a checkout-depth limit.",
-   "severity": "info"
+   "detail": "last 'core-spoton:' commit 0.7h ago.",
+   "severity": "warn"
   },
   {
    "id": "G-T",
@@ -141,7 +141,7 @@
    "id": "G-S",
    "name": "No conflict markers in .jsonl logs",
    "ok": false,
-   "detail": "464 marker line(s) across 97 file(s) — run `python -m src.git_safe repair-conflicts`: data/excava/syscalls.jsonl, data/excava/agent_memory/visual-w1.jsonl, data/excava/agent_memory/creators-w1.jsonl, data/excava/agent_memory/power-w1.jsonl, data/excava/agent_memory/links-lead-x.jsonl",
+   "detail": "381 marker line(s) across 96 file(s) — run `python -m src.git_safe repair-conflicts`: data/excava/syscalls.jsonl, data/excava/agent_memory/visual-w1.jsonl, data/excava/agent_memory/creators-w1.jsonl, data/excava/agent_memory/power-w1.jsonl, data/excava/agent_memory/links-lead-x.jsonl",
    "severity": "critical"
   }
  ]

@@ -1,16 +1,16 @@
 # links: advance the links department's mission
 
-> Decision artifact · room `dept-links-advance-the-links-depa-295` (dept) · 2026-07-31T12:12:18.950340+00:00
+> Decision artifact · room `dept-links-advance-the-links-depa-295` (dept) · 2026-07-31T16:31:08.173463+00:00
 > Participants: Anchor, LinLea · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Anchor runs a live audit of the department’s link inventory using the link-checking tool.
-2. Anchor generates a real-time report of broken, redirected, or outdated links.
-3. Anchor compiles a prioritized list of fixes with direct evidence for each issue.
-4. Anchor publishes the prioritized link audit report by EOD today.
-5. Team reviews the report and assigns fixes based on priority.
-6. Track progress and update the report weekly until all critical links are resolved.
+1. Anchor runs the link-checker tool against the department’s live inventory to generate a real-time report of broken, redirected, or outdated links.
+2. Anchor compiles the results into a prioritized list of fixes with direct evidence for each issue.
+3. Anchor publishes the prioritized link audit report with status and severity breakdown by EOD today.
+4. LinLea reviews the report for accuracy and completeness.
+5. Anchor addresses top-priority fixes first, documenting resolutions in the report.
+6. Anchor updates the report with resolved links and shares final status with the team.
 
-**What changed:** A prioritized link audit report will be published by EOD today.
+**What changed:** Added severity breakdown and resolution tracking to the audit report.

@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-31T20:25:34.734428+00:00",
+ "generated_at": "2026-07-31T21:23:16.494693+00:00",
  "total": 20,
- "passing": 16,
+ "passing": 17,
  "critical_failures": 2,
  "guardrails": [
   {
@@ -43,14 +43,14 @@
    "id": "G-F",
    "name": "JSON integrity",
    "ok": false,
-   "detail": "BROKEN JSON: data/designs.json, data/excava/proof.json, data/excava/capabilities.json, data/excava/power_scan.json, data/excava/system_inventory.json",
+   "detail": "BROKEN JSON: data/excava/supervisor.json",
    "severity": "critical"
   },
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": false,
-   "detail": "NOT in sync vs origin/main (behind/ahead: 2\t2) — a push may not have landed.",
+   "ok": true,
+   "detail": "HEAD == origin/main (work is really saved).",
    "severity": "warn"
   },
   {
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "114007 memory episodes on record.",
+   "detail": "114098 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "2 guardrail runs logged (append-only, never rewritten).",
+   "detail": "3 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -92,35 +92,35 @@
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "8 tasks done, 8 departments moving",
+   "detail": "76 tasks done, 10 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "88907 MB free on the repo drive.",
+   "detail": "88920 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 134.4h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 135.4h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
    "ok": true,
-   "detail": "last 'excava-beat #N' commit 0.4h ago.",
+   "detail": "last 'excava-beat #N' commit 0.1h ago.",
    "severity": "warn"
   },
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "last 'core-spoton:' commit 1.7h ago.",
+   "detail": "last 'core-spoton:' commit 2.7h ago.",
    "severity": "warn"
   },
   {
@@ -141,7 +141,7 @@
    "id": "G-S",
    "name": "No conflict markers in .jsonl logs",
    "ok": false,
-   "detail": "885 marker line(s) across 193 file(s) — run `python -m src.git_safe repair-conflicts`: data/excava/supervisor_longterm.jsonl, data/excava/syscalls.jsonl, data/excava/agent_memory/visual-w1.jsonl, data/excava/agent_memory/creators-w1.jsonl, data/excava/agent_memory/power-w1.jsonl",
+   "detail": "834 marker line(s) across 193 file(s) — run `python -m src.git_safe repair-conflicts`: data/excava/supervisor_longterm.jsonl, data/excava/syscalls.jsonl, data/excava/agent_memory/visual-w1.jsonl, data/excava/agent_memory/creators-w1.jsonl, data/excava/agent_memory/power-w1.jsonl",
    "severity": "critical"
   }
  ]

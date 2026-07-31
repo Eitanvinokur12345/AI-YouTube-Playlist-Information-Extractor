@@ -1,16 +1,16 @@
 # news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
 
-> Decision artifact · room `dept-news-freshness-refresh-the-a-146` (dept) · 2026-07-27T06:09:33.529249+00:00
-> Participants: Scoop, Wire · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-news-freshness-refresh-the-a-146` (dept) · 2026-07-31T21:21:38.346431+00:00
+> Participants: Scoop · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Query Reuters, BBC, and the White House press feeds for the latest AI headlines and summaries.
-2. Extract verified AI-related updates with timestamps and sources.
-3. Compile results into a digest titled "Latest AI Developments (Verified)".
-4. Format as a GitHub markdown table with columns: **Headline**, **Source**, **Timestamp**, **Summary**.
-5. Include a disclaimer: "Sources verified as of [current date/time]."
-6. Publish to the designated AI-news digest repository.
+1. Fetch the latest AI-news digest from [OpenAI’s official blog](https://openai.com/blog/) using `curl` or a web scraping tool.
+2. Fetch the latest AI updates from [Google’s AI newsroom](https://ai.googleblog.com/) via `curl` or API.
+3. Parse and extract key headlines, dates, and summaries from both sources.
+4. Compile the extracted data into a structured GitHub markdown digest.
+5. Push the updated digest to the designated repository.
+6. Verify the digest’s freshness and accuracy against source timestamps.
 
-**What changed:** Fresh AI headlines from Reuters, BBC, and the White House compiled into a verified digest.
+**What changed:** Digest refreshed with real-time AI developments from OpenAI and Google.

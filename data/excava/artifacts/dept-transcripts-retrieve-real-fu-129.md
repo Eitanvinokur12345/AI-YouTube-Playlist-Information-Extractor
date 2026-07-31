@@ -1,14 +1,16 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-129` (dept) · 2026-07-31T20:08:48.078759+00:00
-> Participants: Reel · synthesized by groq/llama-3.3-70b-versatile
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-129` (dept) · 2026-07-31T21:21:50.513844+00:00
+> Participants: Reel · synthesized by mistral/mistral-small-latest
 
-**Decision:** Retrieve full transcripts for pending videos using the YouTube transcript tool.
+**Decision:**
+
 **Plan:**
-1. Identify pending videos requiring transcripts, such as "Orchestrated AI".
-2. Utilize the YouTube transcript tool to fetch full transcripts for each video.
-3. Verify the completeness and accuracy of the retrieved transcripts.
-4. Store the transcripts in a designated repository for future reference.
-5. Implement a gentle pacing mechanism to avoid overloading the system with transcript requests.
-6. Monitor the transcript retrieval process for residential IP compatibility issues.
-**What changed:** The approach to retrieving transcripts shifted to leveraging the YouTube transcript tool for efficiency and accuracy.
+1. Use the YouTube transcript tool to fetch the full transcript for the video titled "Orchestrated AI."
+2. Use the kimtaeyoon83/mcp-server-youtube-transcript tool via residential IP to fetch the full transcript for the video titled "The AI Alignment Problem."
+3. Verify both transcripts for completeness and accuracy.
+4. Save the transcripts in the designated repository with clear filenames.
+5. Mark the pending videos as processed in the tracking system.
+6. Notify the team of transcript availability for review.
+
+**What changed:** Two transcripts were successfully retrieved using the specified tools.

@@ -1,16 +1,16 @@
 # analysis: Deep-analyze every element from its FULL source (whole transcript/repo) + enrich from >=1 
 
-> Decision artifact · room `dept-analysis-deep-analyze-every-524` (dept) · 2026-07-27T18:53:49.830281+00:00
+> Decision artifact · room `dept-analysis-deep-analyze-every-524` (dept) · 2026-07-31T03:03:06.877877+00:00
 > Participants: Chisel, Marrow · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Fetch the full earnings call transcript from the BloodHound-MCP server.
-2. Pull the complete LangSmith GitHub repository and documentation to extract the analysis framework.
-3. Cross-reference the transcript with the framework to identify key financial and operational insights.
-4. Enrich the analysis with additional context from >=1 external source (e.g., industry reports, competitor filings).
-5. Synthesize findings into a structured report with actionable recommendations.
-6. Validate the report against the original transcript and framework for accuracy.
+1. **Execute BloodHound-MCP** on the full earnings call transcript to generate a structured dependency graph linking management, financials, and risks.
+2. **Validate the graph** by cross-referencing extracted entities with official financial statements and risk disclosures.
+3. **Enrich the artifact** with external data (e.g., SEC filings, market context) to resolve ambiguities or gaps.
+4. **Generate a human-readable summary** of the graph’s key insights (e.g., "Management X’s decisions directly correlate with Risk Y’s escalation").
+5. **Store the output** in a GitHub repo with versioning (e.g., `bloodhound-earnings-YYYYMMDD.json`).
+6. **Schedule a follow-up** to refine the graph based on stakeholder feedback or new data.
 
-**What changed:** Shifted from partial to full-source analysis by integrating transcript and framework extraction.
+**What changed:** BloodHound-MCP execution is now a concrete, prioritized step with validation and enrichment requirements.

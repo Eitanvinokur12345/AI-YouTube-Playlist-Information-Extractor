@@ -1,38 +1,33 @@
 {
- "generated_at": "2026-07-31T04:09:54.024253+00:00",
- "commit": "c8b460fe",
- "real_pct": 89,
+ "generated_at": "2026-07-31T04:16:53.242871+00:00",
+ "commit": "62b010af",
+ "real_pct": 75,
  "counts": {
-  "real": 31,
-  "noop": 4,
+  "real": 6,
+  "noop": 1,
   "failed": 0,
-  "planned": 0,
-  "blocked": 5
+  "planned": 1,
+  "blocked": 0
  },
  "trend": [
-  50,
   115,
   9,
   0,
   8,
-  24
+  24,
+  8
  ],
- "delta": {},
+ "delta": {
+  "designs": -1145
+ },
  "totals": {
   "elements": 11230,
   "verified": 2470,
   "with_link": 4472,
-  "designs": 1145,
+  "designs": 0,
   "creations": 15
  },
  "departments": [
-  {
-   "dept": "accessibility",
-   "verdict": "?",
-   "output": "Ran the accessibility scan. accessibility_scan: 0 issue(s) — clean",
-   "evidence": "",
-   "evidence_url": ""
-  },
   {
    "dept": "analysis",
    "verdict": "real",
@@ -49,7 +44,7 @@
   },
   {
    "dept": "improve",
-   "verdict": "?",
+   "verdict": "noop",
    "output": "Ran the self check. self-check: 43/50 (mechanical) | 0 new tasks | failing Qs: [1, 10, 11, 12, 13, 42, 45]",
    "evidence": "data/self_check.json",
    "evidence_url": "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/self_check.json"
@@ -64,7 +59,7 @@
   {
    "dept": "mining",
    "verdict": "real",
-   "output": "Ran the discovery agent. discovery: +30 new (of 146 sighted) → 202 queued; arxiv=30, gh-active=44, gh-new=9, hn-front=20, hn-new=14, huggingface-model",
+   "output": "Ran the discovery agent. discovery: +128 new (of 130 sighted) → 128 queued; arxiv=15, gh-active=20, gh-new=9, hn-front=20, hn-new=14, huggingface-mode",
    "evidence": "data/connectors.json",
    "evidence_url": "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/connectors.json"
   },
@@ -76,13 +71,6 @@
    "evidence_url": "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/weekly_web_news.json"
   },
   {
-   "dept": "power",
-   "verdict": "real",
-   "output": "Ran the power scan.   - Gemma 4 12B | Google DeepMind's open-source multimodal 12B model using an encoder-fr",
-   "evidence": "",
-   "evidence_url": ""
-  },
-  {
    "dept": "security",
    "verdict": "real",
    "output": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged.",
@@ -91,17 +79,10 @@
   },
   {
    "dept": "visual",
-   "verdict": "real",
-   "output": "Ran the collect designs. collect_designs: 1145 designs (kept 1145 / dropped 0 repo-only + 2 dead/parked + 52 non-design; +0 AI-product, +27 seeds, +51",
+   "verdict": "planned",
+   "output": "EXECUTION PLAN written (NOT executed) → data/excava/artifacts/task-keep-the-designs-tab-pure-designs-only-live-prev.md; real execution still needs a w",
    "evidence": "data/designs.json",
    "evidence_url": "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/designs.json"
-  },
-  {
-   "dept": "watch",
-   "verdict": "blocked",
-   "output": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner.",
-   "evidence": "data/_pending",
-   "evidence_url": "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/tree/main/data/_pending"
   }
  ],
  "gh": "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor"

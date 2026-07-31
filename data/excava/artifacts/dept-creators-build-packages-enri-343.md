@@ -1,16 +1,16 @@
 # creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Created by EXCAVA' + tes
 
-> Decision artifact · room `dept-creators-build-packages-enri-343` (dept) · 2026-07-31T04:57:41.993126+00:00
+> Decision artifact · room `dept-creators-build-packages-enri-343` (dept) · 2026-07-31T20:38:43.077025+00:00
 > Participants: Forge, Nova · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Forge drafts the "Quick Reply" UGC package for the Skill Creator.
-2. Label the artifact as "Quick Reply | Created by EXCAVA."
-3. Enrich the package with customizable reply templates for Claude interactions.
-4. Test the package for functionality and usability in real interactions.
-5. Draft additional elements as needed to support the package.
-6. Ensure all outputs are labeled "Created by EXCAVA."
+1. Forge drafts the "Quick Reply" UGC package for Skill Creator, labels it "Quick Reply | Created by EXCAVA," and tests it for instant, customizable reply templates in Claude interactions.
+2. Forge drafts the "Auto-Summarize" UGC package for Skill Creator, labels it "Auto-Summarize | Created by EXCAVA," and tests it for one-click, customizable summaries of long Claude interactions.
+3. Ensure all packages include clear documentation for creators on usage and customization.
+4. Validate both packages in a staging environment with sample interactions.
+5. Deploy tested packages to production with EXCAVA branding.
+6. Monitor initial usage and gather creator feedback for iterative improvements.
 
-**What changed:** "Quick Reply" UGC package drafted and labeled.
+**What changed:** Two new UGC packages ("Quick Reply" and "Auto-Summarize") were created and labeled under EXCAVA.

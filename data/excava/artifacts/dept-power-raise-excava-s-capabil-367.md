@@ -1,18 +1,16 @@
 # power: Raise EXCAVA's capability by even 0.5%: find new tools, best/newest models, combine elemen
 
-> Decision artifact · room `dept-power-raise-excava-s-capabil-367` (dept) · 2026-07-15T21:01:57.117399+00:00
+> Decision artifact · room `dept-power-raise-excava-s-capabil-367` (dept) · 2026-07-31T20:38:20.381009+00:00
 > Participants: Gearbox, Torque, Dynamo · synthesized by mistral/mistral-small-latest
 
-**Decision:**
-Run Llama 4 Scout 17B on 100 live EXCAVA prompts (10K+ tokens) first—if it beats current models by even 0.5% on core metrics, switch all 5K+ token prompts to Scout 17B; Torque owns the test and owns the call.
+**Decision:** Integrate **Claude Mythos 5** into EXCAVA’s pipeline via a stratified 10% slice A/B test, switching only if quality lift ≥0.5%.
 
 **Plan:**
-1. Torque selects 100 live EXCAVA prompts (10K+ tokens each) from production logs.
-2. Torque runs these prompts through Llama 4 Scout 17B and current baseline models in parallel.
-3. Torque measures core metrics (raw reasoning depth) and logs failures/edge cases.
-4. If Scout 17B exceeds baseline by ≥0.5%, Gearbox initiates phased rollout to all 5K+ token prompts.
-5. Gearbox monitors prompt collapse rates and reports weekly to Torque for 30 days post-switch.
-6. If Scout 17B fails to meet ≥0.5% threshold, Torque re-evaluates with Maverick 12B on a smaller subset.
+1. **Slice Selection:** Stratify 10% of EXCAVA’s data across all task types (randomized, no overlap).
+2. **A/B Test:** Run parallel pipelines—Fable 5 (control) vs. Mythos 5 (experimental)—logging identical inputs/outputs.
+3. **Metrics:** Track quality lift (primary: task accuracy/precision; secondary: latency/cost).
+4. **Threshold:** If lift ≥0.5%, proceed to full integration; else, discard Mythos 5.
+5. **Artifact:** Public GitHub repo with raw data, code, and results (Torque owns maintenance).
+6. **Rollback:** Fable 5 remains default; Mythos 5 only adopted post-validation.
 
-**What changed:**
-Scout 17B replaces Maverick 12B as the default test candidate for 5K+ token prompts pending live validation.
+**What changed:** Stratified 10% slice replaces blind 2% test; public artifact enforced.

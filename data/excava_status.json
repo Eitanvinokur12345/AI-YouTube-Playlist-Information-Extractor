@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-07-31T14:55:08.668071+00:00",
+  "generated_at": "2026-07-31T15:01:32.833983+00:00",
   "name": "EXCAVA",
   "phase": "OS spine (Phase 0): bus + departments + hand-offs live; creators (OS-2) gated",
   "gate": {
     "checks": {
-      "data_guard_ok": true,
+      "data_guard_ok": false,
       "security_clean": true,
       "truth_access_G3": 52,
       "G3_ready_for_outward": false
     },
-    "internal_allowed": true,
+    "internal_allowed": false,
     "outward_allowed": false,
     "outward_needs": "data_guard ok + security clean + G3>=70 + owner approval"
   },
@@ -81,7 +81,7 @@
   },
   "holding": [],
   "os": {
-    "beats": 1,
+    "beats": 2,
     "mode": "run",
     "bus": {
       "open": 14,
@@ -161,56 +161,26 @@
       "last_handoff": "data/excava/handoffs/transcripts-drain-the-ne-9709--01--transcripts-w1--to--analysis.md"
     },
     "beat_log": [
-      "backlog: 11 real-gap task(s) queued; plan {'core': '3 small task(s) run in', 'analysis': '1 small task(s) run in', 'links': '2 small task(s) run in', 'watch': '1 small task(s) run in'}",
-      "links-w1: push-link-coverage-towar-9708 -> memory (data/excava/handoffs/push-link-coverage-towar-9708--01--links-w1--to--memory.md)",
-      "analysis-w1: only-734-1768-videos-ana-9708 DONE",
-      "mining-w1: lane-external-mining-is--9708 DONE",
-      "visual-w1: keep-the-designs-tab-pur-9708 DONE",
-      "watch-w1: lane-gemini-watch-audio--9708 DONE",
-      "creators-w1: raise-g5-leverage-52-100-9709 DONE",
-      "memory-w1: push-link-coverage-towar-9708 DONE",
-      "news-w1: news-refresh-the-ai-news-9709 DONE",
-      "security-w1: security-safety-rate-the-9709 DONE",
-      "transcripts-w1: transcripts-drain-the-ne-9709 -> analysis (data/excava/handoffs/transcripts-drain-the-ne-9709--01--transcripts-w1--to--analysis.md)",
-      "dept-accessibility-make-excava-us-396: no engine here (cerebras:bad-model-404: {\"message\":\"Model does not) — resumes in CI",
-      "dept-analysis-deep-analyze-every-646: Chisel spoke (mistral, 1057ms) t1",
-      "dept-analysis-deep-analyze-every-646: Marrow spoke (mistral, 717ms) t2",
-      "dept-analysis-deep-analyze-every-646: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-analysis-deep-analyze-every-646.md', 'at': '2026-07-31T14:55:24.528483+00:00', 'title': 'analysis: Deep-analyze every element from its FULL source (whole transcript/repo', 'by': 'Marrow'}",
-      "dept-analysis-deep-analyze-every-646: ACTION queued → analysis-room-action-chi-9724",
-      "dept-creators-build-packages-enri-256: Forge spoke (mistral, 1086ms) t1",
-      "dept-creators-build-packages-enri-256: Nova spoke (mistral, 758ms) t2",
-      "dept-creators-build-packages-enri-256: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-creators-build-packages-enri-256.md', 'at': '2026-07-31T14:55:32.023955+00:00', 'title': \"creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Crea\", 'by': 'Nova'}",
-      "dept-creators-build-packages-enri-256: REROUTED to POWER → rerouted-creators-power--9732",
-      "dept-improve-self-improvement-rev-164: no engine here (cerebras:bad-model-404: {\"message\":\"Model does not) — resumes in CI",
-      "dept-links-advance-the-links-depa-857: Anchor spoke (mistral, 850ms) t1",
-      "dept-links-advance-the-links-depa-857: no engine here (cerebras:bad-model-404: {\"message\":\"Model does not) — resumes in CI",
-      "dept-memory-recall-by-meaning-rel-346: no engine here (cerebras:bad-model-404: {\"message\":\"Model does not) — resumes in CI",
-      "dept-mining-gather-ai-info-from-d-701: Pick spoke (mistral, 1205ms) t1",
-      "dept-mining-gather-ai-info-from-d-701: no engine here (cerebras:bad-model-404: {\"message\":\"Model does not) — resumes in CI",
-      "dept-news-freshness-refresh-the-a-888: no engine here (cerebras:bad-model-404: {\"message\":\"Model does not) — resumes in CI",
-      "dept-power-raise-excava-s-capabil-462: Gearbox spoke (mistral, 1420ms) t1",
-      "dept-power-raise-excava-s-capabil-462: no engine here (cerebras:bad-model-404: {\"message\":\"Model does not) — resumes in CI",
-      "dept-security-paranoid-guard-scan-603: Warden spoke (mistral, 847ms) t1",
-      "dept-security-paranoid-guard-scan-603: Bastion spoke (mistral, 638ms) t2",
-      "dept-security-paranoid-guard-scan-603: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-security-paranoid-guard-scan-603.md', 'at': '2026-07-31T14:55:57.727834+00:00', 'title': 'security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (no', 'by': 'Bastion'}",
-      "dept-security-paranoid-guard-scan-603: ACTION queued → security-room-action-war-9757",
-      "dept-transcripts-retrieve-real-fu-492: no engine here (cerebras:bad-model-404: {\"message\":\"Model does not) — resumes in CI",
-      "dept-visual-mine-great-designs-fr-827: Easel spoke (mistral, 962ms) t1",
-      "dept-visual-mine-great-designs-fr-827: no engine here (cerebras:bad-model-404: {\"message\":\"Model does not) — resumes in CI",
-      "dept-visualization-own-excava-s-o-142: Facet spoke (mistral, 1109ms) t1",
-      "dept-visualization-own-excava-s-o-142: Pane spoke (mistral, 1373ms) t2",
-      "dept-watch-analyze-video-audio-vi-633: Scope spoke (mistral, 1092ms) t1",
-      "dept-watch-analyze-video-audio-vi-633: Iris spoke (mistral, 763ms) t2",
-      "dept-watch-analyze-video-audio-vi-633: CLOSED with artifact {'kind': 'decision', 'ref': 'data/excava/artifacts/dept-watch-analyze-video-audio-vi-633.md', 'at': '2026-07-31T14:56:17.030851+00:00', 'title': 'watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.', 'by': 'Iris'}",
-      "dept-watch-analyze-video-audio-vi-633: ACTION queued → watch-room-action-run-ar-9777",
-      "group-open-floor-any-agent-from-an-499: Reel spoke (mistral, 1346ms) t1",
-      "group-open-floor-any-agent-from-an-499: no engine here (cerebras:bad-model-404: {\"message\":\"Model does not) — resumes in CI",
-      "experiment engine-benchmark: 2/12 healthy; ranking groq, mistral, deepseek, kimi",
-      "experiment golden-task-regression: 100% (6/6 tasks pass)",
+      "HOLD ALL — verification gate failing (fix data_guard/security first)",
       "TUTORIAL MISSING for dashboard v132 — Phase 6 law: every major change ships a walkthrough (data/tutorials.json)",
-      "memory master: +8306 episodes"
+      "memory master: +21 episodes"
     ],
-    "departments": [],
+    "departments": [
+      "accessibility",
+      "analysis",
+      "creators",
+      "improve",
+      "links",
+      "memory",
+      "mining",
+      "news",
+      "power",
+      "security",
+      "transcripts",
+      "visual",
+      "visualization",
+      "watch"
+    ],
     "usage": {
       "links": {
         "ticks": 1,
@@ -647,27 +617,8 @@
         "department": "watch"
       }
     ],
-    "memory_episodes": 8306,
-    "directions": [
-      {
-        "id": "dir-1",
-        "text": "Free-only forever; quality over quantity; every step deepens EXCAVA's integration (daemon-grade, not cosmetic); I don't babysit — park questions, proceed on defaults.",
-        "at": "2026-07-03T00:00:00+00:00",
-        "via": "standing rules (SESSION_HANDOFF §4)",
-        "status": "active",
-        "excava_reading": "Baseline law, seeded at Phase-6 birth: applies to every department and every phase; the guardrails file is its enforcement arm.",
-        "acknowledged_at": "2026-07-03T00:00:00+00:00"
-      },
-      {
-        "id": "dir-2",
-        "text": "Creations enter the project autonomously when labeled 'Created by EXCAVA', with an independent test before first use; creators may build MCP servers, connectors, tools; multi-element bundles are called PACKAGES.",
-        "at": "2026-07-03T00:00:00+00:00",
-        "via": "P3 checkpoint answer",
-        "status": "active",
-        "excava_reading": "Creators department staffed under guardrail G-12; the label and test_before_run are mechanical, not optional.",
-        "acknowledged_at": "2026-07-03T00:00:00+00:00"
-      }
-    ],
+    "memory_episodes": 21,
+    "directions": [],
     "tutorials": {
       "current_build": "v132",
       "covered": false,

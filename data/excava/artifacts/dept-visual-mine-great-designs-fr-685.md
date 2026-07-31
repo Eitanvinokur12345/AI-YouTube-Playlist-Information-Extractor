@@ -1,15 +1,19 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-685` (dept) · 2026-07-19T11:39:19.206830+00:00
-> Participants: Easel, Chroma · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-visual-mine-great-designs-fr-685` (dept) · 2026-07-31T15:12:00.284677+00:00
+> Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
 
-**Decision:** Capture and save vibrant design elements from the web as taste material for future reference.  
+**Decision:**
 
-**Plan:**  
-1. Identify visually appealing sections from various websites.  
-2. Take high-quality screenshots of these sections.  
-3. Frame the screenshots in the hub as visual references.  
-4. Categorize images based on criteria such as color, layout, and design patterns.  
-5. Regularly review and update the collection for relevance.  
+**Plan:**
+1. Open the Playwright MCP server via Easel.
+2. Navigate to Dribbble, Behance, and Awwwards to source high-quality design references.
+3. Capture full-page screenshots of:
+   - A mobile app hero section (mobile).
+   - A desktop SaaS landing page (desktop).
+   - A data dashboard pattern (dashboard).
+4. Save screenshots as taste material in the hub.
+5. Tag artifacts for team reference (e.g., "mobile-hero", "saas-landing", "dashboard-pattern").
+6. Notify the team via the hub’s channel for review.
 
-**What changed:** The approach now includes systematic capturing and categorization of design elements as taste material.
+**What changed:** Easel’s manual screenshot process is now automated via Playwright MCP server for consistency and scalability.

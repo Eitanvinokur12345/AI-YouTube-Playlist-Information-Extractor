@@ -1,15 +1,16 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-713` (dept) · 2026-07-16T18:27:40.708640+00:00
+> Decision artifact · room `dept-visual-mine-great-designs-fr-713` (dept) · 2026-07-31T04:08:29.408362+00:00
 > Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Capture the vibrant pink header from the Beverage Cans website as a screenshot.
-2. Upload the screenshot to the hub as taste material for the Motion Graphics Pipeline.
-3. Tag the screenshot with relevant keywords (e.g., "color palette," "header design," "vibrant").
-4. Share the uploaded asset in the Motion Graphics Pipeline channel for team review.
-5. Archive the screenshot in the design pattern library for future reference.
+1. Open the Playwright MCP server to enable high-quality screenshot capture.
+2. Capture screenshots of key web-based design references (e.g., MoMA homepage) and save them as taste material artifacts in the hub.
+3. Capture screenshots of relevant design pattern diagrams (e.g., Agent Platform Selection Rule) and save them as additional taste material artifacts.
+4. Organize captured screenshots into a structured visual reference library within the hub.
+5. Tag artifacts with metadata (e.g., source URL, date captured) for easy retrieval.
+6. Share the curated collection with the team for collaborative design inspiration.
 
-**What changed:** A new taste material (screenshot) was added to the hub for the Motion Graphics Pipeline.
+**What changed:** Added structured organization and tagging to the screenshot capture process.

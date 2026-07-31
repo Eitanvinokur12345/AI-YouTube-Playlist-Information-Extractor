@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-30T23:59:41.526257+00:00",
+ "generated_at": "2026-07-31T04:09:53.480946+00:00",
  "total": 20,
- "passing": 17,
+ "passing": 16,
  "critical_failures": 1,
  "guardrails": [
   {
@@ -50,14 +50,14 @@
    "id": "G-G",
    "name": "Remote sync verified",
    "ok": false,
-   "detail": "NOT in sync vs origin/main (behind/ahead: 1\t0) — a push may not have landed.",
+   "detail": "NOT in sync vs origin/main (behind/ahead: 22\t0) — a push may not have landed.",
    "severity": "warn"
   },
   {
    "id": "G-H",
    "name": "No rebase-blocking collisions",
-   "ok": true,
-   "detail": "no untracked file collides with incoming commits.",
+   "ok": false,
+   "detail": "8 untracked file(s) would block a rebase — safe-git will quarantine them.",
    "severity": "warn"
   },
   {
@@ -71,7 +71,7 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "54353 memory episodes on record.",
+   "detail": "54443 memory episodes on record.",
    "severity": "warn"
   },
   {
@@ -92,21 +92,21 @@
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "8 tasks done, 8 departments moving",
+   "detail": "24 tasks done, 9 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "89008 MB free on the repo drive.",
+   "detail": "89224 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 114.0h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 118.2h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
@@ -127,7 +127,7 @@
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
    "ok": true,
-   "detail": "2/16 lane(s) landing on cadence, 14 can't-tell (shallow clone).",
+   "detail": "4/16 lane(s) landing on cadence, 12 can't-tell (shallow clone).",
    "severity": "warn"
   },
   {
@@ -141,7 +141,7 @@
    "id": "G-S",
    "name": "No conflict markers in .jsonl logs",
    "ok": false,
-   "detail": "320 marker line(s) across 80 file(s) — run `python -m src.git_safe repair-conflicts`: data/excava/syscalls.jsonl, data/excava/agent_memory/visual-w1.jsonl, data/excava/agent_memory/creators-w1.jsonl, data/excava/agent_memory/power-w1.jsonl, data/excava/agent_memory/links-lead-x.jsonl",
+   "detail": "295 marker line(s) across 80 file(s) — run `python -m src.git_safe repair-conflicts`: data/excava/syscalls.jsonl, data/excava/agent_memory/visual-w1.jsonl, data/excava/agent_memory/creators-w1.jsonl, data/excava/agent_memory/power-w1.jsonl, data/excava/agent_memory/links-lead-x.jsonl",
    "severity": "critical"
   }
  ]

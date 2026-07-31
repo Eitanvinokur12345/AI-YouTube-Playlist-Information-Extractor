@@ -1,17 +1,20 @@
 # Raise G8 Personal fit (68/100): 20% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond
 
-> visual · task `raise-g8-personal-fit-68-72150` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> visual · task `raise-g8-personal-fit-68-72570` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
 ```markdown
-**Approach:** Taste-tag 20% of designs via Arena live + NOSG wiring; refine G8 fit iteratively.
+**Approach:** Curate 20% of taste-tagged designs via Arena learning + NOSG wiring to push G8 Personal fit from 68 → 85/100.
 
 **Steps:**
-1. **Tag 20% of designs** – Use `scripts/taste_tag.py` to sample 20% of designs from `data/designs/` (seed=42) and append tags to `data/taste_tags.jsonl` with fields: `design_id`, `tag`, `confidence`, `timestamp`.
-2. **Arena live learning** – Deploy `arena/serve.py` (FastAPI) with `data/taste_tags.jsonl` as seed data; log interactions to `arena/logs/interactions.jsonl` (fields: `user_id`, `design_id`, `vote`, `timestamp`).
-3. **NOSG wiring** – Update `config/nosg.yaml` with new taste tags; run `scripts/nosg_sync.py` to regenerate `data/nosg_graph.gexf` and validate with `scripts/validate_nosg.py` (checks for cycles/isolated nodes).
-4. **G8 fit adjustment** – Recompute G8 metrics via `scripts/g8_metrics.py` using updated `data/taste_tags.jsonl` and `arena/logs/interactions.jsonl`; log results to `metrics/g8_fit.json` (fields: `personal_fit`, `tagged_pct`, `nosg_edges`).
+1. **Tag extraction:** Run `scripts/taste_tag_extractor.py` on `designs/` → output `taste_tags.jsonl` (filter: `taste_score >= 0.7`).
+2. **Arena learning:** Deploy `arena_learning.py` with `taste_tags.jsonl` as seed → generate `arena_learning_output.json` (params: `--epochs 10 --batch 32`).
+3. **NOSG wiring:** Patch `nosg_config.yaml` with `arena_learning_output.json` → validate via `nosg_validate.py --config nosg_config.yaml`.
+4. **Fit update:** Trigger `g8_personal_fit_update.sh` with `nosg_config.yaml` → verify via `g8_status.py` (target: `fit >= 85`).
 
 **Needs:**
-- `data/designs/` (17 designs, JSONL format: `{id, features, image_url}`)
-- `scripts/taste_tag.py` (existing, but must support `--sample_pct=20`)
-- `arena/serve.py
+- `designs/` (local dir, 17 files)
+- `scripts/taste_tag_extractor.py` (existing)
+- `arena_learning.py` (existing, GPU access)
+- `nosg_config.yaml` (existing)
+- `g8_personal_fit_update.sh` (existing)
+```

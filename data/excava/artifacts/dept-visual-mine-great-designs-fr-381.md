@@ -1,12 +1,16 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-381` (dept) · 2026-07-29T20:23:44.339986+00:00
-> Participants: Easel, Chroma · synthesized by transcript-summary (no engine)
+> Decision artifact · room `dept-visual-mine-great-designs-fr-381` (dept) · 2026-07-31T04:37:53.762549+00:00
+> Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
 
-**Decision:** ACTION: Chroma captures a high-quality screenshot of the Playwright MCP server interface from the web, saving it to the hub as taste material.
+**Decision:**
 
-**Plan (from the debate):**
-1. I open the Playwright MCP server and capture a high-quality screenshot of the Cl | I open the Playwright MCP server and capture a high-quality screenshot of the Cl
-2. ACTION: Chroma captures a high-quality screenshot of the Playwright MCP server interface from the web, saving it to the hub as taste material.
+**Plan:**
+1. Use Playwright MCP server to capture high-quality screenshots of the top 3 most-tweeted design systems from Figma’s Awwwards winners.
+2. Save these screenshots to the hub as taste material for design patterns.
+3. Capture a high-quality screenshot of the Playwright MCP server interface itself.
+4. Save this interface screenshot to the hub as additional reference material.
+5. Organize all captured screenshots in a structured directory within the hub.
+6. Tag all files with relevant metadata (e.g., "design-system," "awwwards," "playwright-mcp").
 
-**What changed:** first real room artifact.
+**What changed:** Focused on capturing both external design systems and internal tooling for comprehensive reference.

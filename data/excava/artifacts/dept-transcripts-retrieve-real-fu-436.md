@@ -1,16 +1,16 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-436` (dept) · 2026-07-14T21:33:49.585842+00:00
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-436` (dept) · 2026-07-31T04:37:46.377402+00:00
 > Participants: Reel, Echo · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Use the `kimtaeyoon83/mcp-server-youtube-transcript` tool to query transcripts for all pending videos.
-2. Apply residential IP routing for the requests.
-3. Set gentle pacing (e.g., rate limits) to avoid detection or throttling.
-4. Extract and store the full transcripts/captions in a structured format (e.g., JSON or text files).
-5. Verify the completeness and accuracy of the retrieved transcripts.
-6. Log the results (success/failure) for each video for tracking.
+1. Use the kimtaeyoon83/mcp-server-youtube-transcript MCP server to fetch the full YouTube transcript for the video titled "pen".
+2. Save the complete captions file locally for review.
+3. Validate the transcript for completeness and accuracy.
+4. If needed, re-run the fetch with adjusted parameters (e.g., language, pacing) for gentler retrieval.
+5. Store the final transcript in the designated repository under `/transcripts/pending/`.
+6. Notify the team via Slack/email upon successful retrieval.
 
-**What changed:** Resolved to execute the transcript retrieval with residential IP and gentle pacing via the specified tool.
+**What changed:** Transcript retrieval is now actionable via MCP server.

@@ -1,16 +1,16 @@
 # memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.
 
-> Decision artifact · room `dept-memory-recall-by-meaning-rel-728` (dept) · 2026-07-31T11:50:42.521696+00:00
+> Decision artifact · room `dept-memory-recall-by-meaning-rel-728` (dept) · 2026-07-31T22:29:52.305377+00:00
 > Participants: Graft · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Execute the memory-linking command to embed unembedded elements from the "f" file into the unified memory graph.
-2. Generate a consolidated memory artifact with all elements properly linked by meaning.
-3. Verify the integrity of the memory graph to ensure all elements are correctly embedded.
-4. Store the finalized memory artifact in the designated repository.
-5. Update the brain graph to reflect the new embedded relationships.
-6. Document the changes for future reference and traceability.
+1. Query the Hindsight memory database via the MCP server to pull all unembedded elements.
+2. Run the memory-linking command to embed the unembedded elements from the "f" file into the unified memory graph.
+3. Consolidate the output into a unified memory artifact with all elements properly linked by meaning.
+4. Verify the integrity of the newly embedded elements in the memory graph.
+5. Update the memory database to reflect the newly linked elements.
+6. Archive or discard the "f" file after successful embedding.
 
-**What changed:** Unembedded elements from the "f" file are now embedded and linked in the unified memory graph.
+**What changed:** Unembedded elements from the "f" file were embedded into the unified memory graph.

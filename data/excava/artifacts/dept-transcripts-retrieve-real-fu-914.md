@@ -1,16 +1,16 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-914` (dept) · 2026-07-20T18:31:22.498158+00:00
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-914` (dept) · 2026-07-31T11:22:30.433374+00:00
 > Participants: Reel, Echo · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Reel executes the YouTube transcript tool on every video marked "pending."
-2. Reel retrieves the full, real transcripts/captions for each video.
-3. Reel delivers the complete captions to the lead.
-4. Lead reviews transcripts for accuracy and completeness.
-5. Transcripts are stored in the designated repository with version control.
-6. Notify team upon completion of transcript retrieval for all pending videos.
+1. Use the `kimtaeyoon83/mcp-server-youtube-transcript` tool to fetch the full YouTube transcript for *"How to Build a Resilient Team"*.
+2. Verify the transcript artifact exists and is complete before proceeding.
+3. Store the transcript in a designated location (e.g., GitHub repo, local directory).
+4. Confirm the transcript is ready for review (e.g., check file integrity, format).
+5. Notify stakeholders (if applicable) that the transcript is available.
+6. Close the room upon completion.
 
-**What changed:** Transcripts for pending videos will now be fetched and delivered in full via Reel’s execution of the YouTube transcript tool.
+**What changed:** Transcript retrieval is now actionable via the specified tool.

@@ -1,12 +1,16 @@
 # memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.
 
-> Decision artifact · room `dept-memory-recall-by-meaning-rel-615` (dept) · 2026-07-11T21:24:35.473115+00:00
-> Participants: Graft, Prune, Root · synthesized by groq/llama-3.3-70b-versatile
+> Decision artifact · room `dept-memory-recall-by-meaning-rel-615` (dept) · 2026-07-31T20:08:24.337602+00:00
+> Participants: Graft · synthesized by mistral/mistral-small-latest
 
-**Decision:** Create a hybrid approach that balances breadth and depth to achieve the goal of recalling by meaning and building the brain graph.
-1. **Identify key categories**: Group related concepts to establish a broad mental framework.
-2. **Drill down into nuances**: Focus on individual relationships and patterns within each category to capture depth.
-3. **Refine the framework**: Continuously iterate between breadth and depth to ensure a comprehensive and nuanced mental graph.
-4. **Embed unembedded elements**: Use the hybrid framework to incorporate elements that were previously unconnected or unclear.
-5. **Review and adjust**: Periodically assess the mental framework for structural gaps and areas for further refinement.
-**What changed:** The approach shifted from a sole focus on either breadth or depth to a balanced hybrid strategy.
+**Decision:**
+
+**Plan:**
+1. Query the Hindsight memory database via the MCP server for all stored conversations containing "conve."
+2. Extract and compile raw conversation fragments tied to "conve" into a structured list.
+3. Analyze fragments for contextual meaning, relationships, and unembedded elements.
+4. Relate extracted insights to existing memory graphs for integration.
+5. Embed newly uncovered knowledge into the brain graph for recall optimization.
+6. Validate completeness by cross-referencing with prior memory structures.
+
+**What changed:** Memory recall now prioritizes "conve"-related context via direct database query and structured analysis.

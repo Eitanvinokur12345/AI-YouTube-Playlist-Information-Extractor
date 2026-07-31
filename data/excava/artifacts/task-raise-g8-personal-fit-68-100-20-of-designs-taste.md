@@ -1,10 +1,28 @@
 # Raise G8 Personal fit (68/100): 20% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond
 
-> visual · task `raise-g8-personal-fit-68-23016` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
+> visual · task `raise-g8-personal-fit-68-28437` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
-**Approach:** Enhance G8 Personal fit by augmenting design taste-tagging and leveraging Arena learning.
-1. **Taste-tagging Expansion**: Utilize `labelimg` tool to annotate 40 more designs, targeting a 60% increase in taste-tagged designs, and store them in a designated `/designs` directory.
-2. **Arena Learning Integration**: Run `arena-learning-cli` command with `--live` flag to stream live updates from the Arena and integrate with the existing G8 framework using `g8-cli` tool.
-3. **NOSG Wiring**: Employ `nosg-wire` command to establish a connection between NOSG and G8, enabling seamless data exchange and facilitating further taste development.
-4. **Risk Assessment and Mitigation**: Use `risk-assessor` tool to evaluate potential risks associated with the planned actions and implement mitigating measures as needed, ensuring the G8 framework remains stable.
-**Needs:** `labelimg` tool, `arena-learning-cli`, `g8-cli`, `nosg-wire`, `risk-assessor`, access to `/designs` directory, G8 framework credentials.
+```markdown
+**Approach:**
+Target 20% of designs with taste tags by leveraging Arena’s live learning loop and NOSG’s taste signals, then refine fit via curated screenshots.
+
+**Steps:**
+1. **Tag 20% of designs**
+   - Run `python scripts/taste_tag.py --target 20 --input designs/*.png --output tagged/` (uses `taste_model_v3.2` from `models/`).
+   - Verify with `./tools/verify_tags.sh tagged/` (checks 20%+ coverage).
+
+2. **Arena live learning**
+   - Deploy `arena/serve.py --model taste_model_v3.2 --live` (binds to `localhost:8000`).
+   - Stream user feedback via `arena/collect_feedback.py --endpoint http://localhost:8000/feedback`.
+
+3. **NOSG taste integration**
+   - Patch `nosg/config.yaml` to include `taste_signals: true` (requires `nosg@1.4.2`).
+   - Trigger sync with `nosg sync --taste` (pulls signals from `taste_db/`).
+
+4. **Curate screenshots**
+   - Generate frames with `ffmpeg -i tagged/*.png -vf fps=1/5 screenshot_%04d.jpg`.
+   - Select top 10% via `python scripts/rank_screenshots.py --input screenshot_*.jpg --output framed/` (uses `taste_model_v3.2`).
+
+**Needs:**
+- `taste_model_v3.2` (model weights in `models/taste_model_v3.2/`).
+- `designs/` directory with 1

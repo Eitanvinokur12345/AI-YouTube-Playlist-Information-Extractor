@@ -1,13 +1,16 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-578` (dept) · 2026-07-31T05:22:10.388076+00:00
-> Participants: Pick · synthesized by nvidia/meta/llama-3.3-70b-instruct
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-578` (dept) · 2026-07-31T20:08:29.358057+00:00
+> Participants: Pick · synthesized by mistral/mistral-small-latest
 
-**Decision:** Run a targeted sweep on GitHub for AI repositories created in the last 7 days.
+**Decision:**
+
 **Plan:**
-1. Filter GitHub search for AI repositories created within the last 7 days.
-2. Apply a threshold of stars >100 to identify high-engagement projects.
-3. Extract repository links and brief descriptions for each qualifying project.
-4. Organize the results into a prioritized list based on the number of stars.
-5. Review the list to identify trends and patterns in newly created AI tools.
-**What changed:** The decision to focus on GitHub as the primary source for gathering AI information.
+1. Run a targeted sweep on GitHub for AI repositories created in the last 7 days, filtering for stars >100.
+2. Extract a prioritized list of fresh, high-engagement AI projects with links and brief descriptions.
+3. Run a real-time sweep on Hacker News for AI-related posts in the last 24 hours, filtering for 100+ upvotes or 50+ comments.
+4. Compile a prioritized list of trending AI discussions with links and key takeaways.
+5. Cross-reference findings from both sources to identify overlapping or complementary insights.
+6. Deliver a consolidated report with prioritized AI info from both GitHub and Hacker News.
+
+**What changed:** Combined GitHub and Hacker News sweeps to maximize diverse, high-engagement AI sources.

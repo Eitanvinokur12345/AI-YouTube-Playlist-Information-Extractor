@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-31T05:52:57.184526+00:00",
+ "generated_at": "2026-07-31T05:58:06.415117+00:00",
  "total": 20,
- "passing": 18,
+ "passing": 17,
  "critical_failures": 1,
  "guardrails": [
   {
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": true,
-   "detail": "HEAD == origin/main (work is really saved).",
+   "ok": false,
+   "detail": "NOT in sync vs origin/main (behind/ahead: 1\t0) — a push may not have landed.",
    "severity": "warn"
   },
   {
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "62488 memory episodes on record.",
+   "detail": "62489 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "6 guardrail runs logged (append-only, never rewritten).",
+   "detail": "7 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -99,14 +99,14 @@
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "89180 MB free on the repo drive.",
+   "detail": "89176 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 119.9h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 120.0h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
@@ -127,7 +127,7 @@
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
    "ok": true,
-   "detail": "4/16 lane(s) landing on cadence, 12 can't-tell (shallow clone).",
+   "detail": "5/16 lane(s) landing on cadence, 11 can't-tell (shallow clone).",
    "severity": "warn"
   },
   {

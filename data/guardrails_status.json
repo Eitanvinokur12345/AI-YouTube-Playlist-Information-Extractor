@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-31T11:14:39.779820+00:00",
+ "generated_at": "2026-07-31T12:13:52.616443+00:00",
  "total": 20,
- "passing": 16,
+ "passing": 17,
  "critical_failures": 2,
  "guardrails": [
   {
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "78763 memory episodes on record.",
+   "detail": "78868 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "0 guardrail runs logged (append-only, never rewritten).",
+   "detail": "8 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -92,21 +92,21 @@
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "52 tasks done, 10 departments moving",
+   "detail": "68 tasks done, 11 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "88858 MB free on the repo drive.",
+   "detail": "88943 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 125.2h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 126.2h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
@@ -120,14 +120,14 @@
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "last 'core-spoton:' commit 3.1h ago.",
+   "detail": "last 'core-spoton:' commit 0.7h ago.",
    "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
-   "ok": false,
-   "detail": "13/16 lane(s) landing on cadence — STALE: discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 965.1h ago (expected within 76h); gemini_video.yml (3x/day): last commit 22.8h ago (expected within 14h); improve.yml (weekly deep pass): last commit 1314.9h ago (expected within 192h)",
+   "ok": true,
+   "detail": "9/16 lane(s) landing on cadence, 7 can't-tell (shallow clone).",
    "severity": "warn"
   },
   {
@@ -141,7 +141,7 @@
    "id": "G-S",
    "name": "No conflict markers in .jsonl logs",
    "ok": false,
-   "detail": "578 marker line(s) across 138 file(s) — run `python -m src.git_safe repair-conflicts`: data/excava/supervisor_longterm.jsonl, data/excava/syscalls.jsonl, data/excava/agent_memory/visual-w1.jsonl, data/excava/agent_memory/creators-w1.jsonl, data/excava/agent_memory/power-w1.jsonl",
+   "detail": "605 marker line(s) across 150 file(s) — run `python -m src.git_safe repair-conflicts`: data/excava/supervisor_longterm.jsonl, data/excava/syscalls.jsonl, data/excava/agent_memory/visual-w1.jsonl, data/excava/agent_memory/creators-w1.jsonl, data/excava/agent_memory/power-w1.jsonl",
    "severity": "critical"
   }
  ]

@@ -1,15 +1,16 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-624` (dept) · 2026-07-29T11:05:53.463892+00:00
-> Participants: Reel · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-624` (dept) · 2026-07-31T12:12:53.485794+00:00
+> Participants: Reel · synthesized by mistral/mistral-small-latest
 
-**Decision:** Retrieve the full transcripts for pending videos using the designated server and method.
+**Decision:**
 
-**Plan:**  
-1. Identify all pending video IDs that require transcripts.  
-2. Use residential IP to query the YouTube transcript server (`kimtaeyoon83/mcp-server-youtube-transcript`).  
-3. Implement gentle pacing in the query requests to avoid server overload.  
-4. Collect and compile the retrieved transcripts into a structured format.  
-5. Ensure that all retrieved transcripts are reviewed for accuracy and completeness.  
+**Plan:**
+1. Query the YouTube transcript server (`kimtaeyoon83/mcp-server-youtube-transcript`) for *"How to Build a Resilient Team"* using residential IP and gentle pacing.
+2. Retrieve full transcripts for all pending video IDs via the same server, residential IP, and gentle pacing.
+3. Validate transcript completeness and accuracy for each video.
+4. Export verified transcripts as caption files for review.
+5. Archive raw transcripts in a structured directory (e.g., `/transcripts/pending/`).
+6. Log execution details (timestamps, video IDs, pacing settings) for reproducibility.
 
-**What changed:** The method of retrieval using residential IP and gentle pacing was confirmed as the preferred approach.
+**What changed:** Resolved to standardize the transcript retrieval process for all pending videos using the specified server and pacing constraints.

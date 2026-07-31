@@ -1,20 +1,16 @@
 # Raise G8 Personal fit (68/100): 20% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond
 
-> visual · task `raise-g8-personal-fit-68-84598` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> visual · task `raise-g8-personal-fit-68-85180` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
 ```markdown
-**Approach:** Tag 20% of designs with taste labels, wire NOSG for live Arena learning, and extend taste beyond current scope.
+**Approach:** Incrementally tag taste-relevant designs in the existing repo while wiring NOSG for live Arena learning, using only current tooling.
 
 **Steps:**
-1. **Tagging:** Run `./scripts/tag_taste.py --threshold 0.2 --output data/taste_tags.json` to label 20% of designs in `designs/` (filter by `./scripts/filter_designs.py --size 17 --value 32`).
-2. **Arena Learning:** Deploy `./services/arena_learning.yml` with `kubectl apply -f services/arena_learning.yml` (requires `kubectl` + `arena-learning:0.3.1` image).
-3. **NOSG Wiring:** Update `config/nosg.json` with `{"taste_enabled": true, "arena_endpoint": "http://arena-learning:8080"}` and restart `nosg-service` (`systemctl restart nosg`).
-4. **Taste Extension:** Add `taste_dimensions` to `schemas/design.json` (fields: `aesthetic`, `craftsmanship`, `innovation`) and regenerate docs (`./scripts/generate_docs.sh`).
+1. **Audit & Tag:** Run `find designs/ -type f -name "*.png" -o -name "*.jpg" | wc -l` to count un-tagged designs. Then batch-tag 20% (rounded up) with `label-studio start --config taste_tagging_config.json` (existing config) and export tags to `taste_tags.json`.
+2. **Arena Live Prep:** Clone `arena-learning` repo (current main branch), update `config/nosg.yaml` to point to `taste_tags.json` and `designs/` path. Run `docker compose -f docker-compose.arena.yml up --build` to spin up live instance.
+3. **NOSG Wiring:** Patch `nosg/src/ingest.rs` to read `taste_tags.json` and stream tagged designs to Arena via `POST /api/v1/designs` (existing endpoint). Verify with `curl -X POST http://localhost:8000/api/v1/designs/health`.
+4. **Taste Beyond Hook:** Add `taste_beyond.py` (new file) to `nosg/scripts/` that pulls `taste_tags.json` and generates `taste_beyond_report.md` (metrics + examples) nightly via GitHub Actions (existing workflow `.github/workflows/nosg.yml`).
 
 **Needs:**
-- `designs/` (17 small designs, value 32)
-- `./scripts/tag_taste.py` (Python 3.10+, `taste-model:v1.2`)
-- `arena-learning:0.3.1` (container image)
-- `kubectl` + Kubernetes cluster (minikube for local)
-- `nosg-service` (systemd service, config in `/etc/nosg/`)
-```
+- `designs/` directory with un-tagged PNG/JPG files (current repo).
+- `label-studio` CLI (v1.8.0) and `taste_tag

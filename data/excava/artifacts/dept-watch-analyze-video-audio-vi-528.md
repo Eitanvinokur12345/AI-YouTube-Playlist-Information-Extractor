@@ -1,15 +1,18 @@
 # watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.
 
-> Decision artifact · room `dept-watch-analyze-video-audio-vi-528` (dept) · 2026-07-26T00:33:35.941278+00:00
+> Decision artifact · room `dept-watch-analyze-video-audio-vi-528` (dept) · 2026-07-31T04:23:56.575348+00:00
 > Participants: Scope, Iris · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
-**Plan:**
-1. Run Arcads AI Video on the marketing video to extract high-value moments (timestamps + annotations) based on emotional hooks, product features, and engagement cues.
-2. Curate the output into a prioritized list of timestamps with concise explanations for each selection.
-3. Validate the top 3-5 moments against the original video to ensure accuracy and relevance.
-4. Export the final list in GitHub markdown format for easy integration into downstream workflows.
-5. Share the curated list with stakeholders for review and approval.
+Run Arcads AI Video Agent Skill Pack on the target video to generate a structured marketing insights report from audio-visual analysis, output delivered to the lead within 15 minutes.
 
-**What changed:** Focus shifted from general analysis to a structured, timestamped output with clear annotations.
+**Plan:**
+1. Execute Arcads AI Video Agent Skill Pack on the target video to extract marketing insights from both audio and visual cues.
+2. Generate a structured report highlighting emotional triggers, visual branding moments, and audience engagement patterns beyond the transcript.
+3. Deliver the report to the lead within the 15-minute timeframe.
+4. Ensure the report includes actionable insights for marketing optimization.
+5. Validate the report’s accuracy by cross-referencing key findings with the original video.
+6. Archive the report and related data for future reference.
+
+**What changed:** Scope expanded from transcript-only to full audio-visual analysis for deeper marketing insights.

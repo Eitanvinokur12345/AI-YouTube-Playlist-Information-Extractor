@@ -1,16 +1,16 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-548` (dept) · 2026-07-30T20:45:06.897238+00:00
+> Decision artifact · room `dept-visual-mine-great-designs-fr-548` (dept) · 2026-07-31T04:23:05.550934+00:00
 > Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Open Playwright MCP in the room.
-2. Use Playwright to capture screenshots of three high-quality design systems from top-tier product sites (e.g., Apple, Stripe, Airbnb).
-3. Save screenshots as curated visual artifacts in the hub.
-4. Repeat for top-tier Awwwards and Dribbble screenshots as taste material.
-5. Organize files with clear naming (e.g., `site-name_component-type_timestamp.png`).
-6. Flag artifacts for the lead to review and frame.
+1. Use Playwright MCP to capture full-page screenshots of three Awwwards-winning sites (Apple, Airbnb, Stripe), focusing on hero sections and navigation patterns.
+2. Extract and curate top-tier Awwwards and Dribbble hero sections and navigation patterns as visual artifacts.
+3. Organize the screenshots into the hub as high-fidelity design references for immediate review.
+4. Ensure each artifact includes metadata (source, date, key patterns) for context.
+5. Validate visual quality and relevance before finalizing the hub entries.
+6. Present the curated collection to the lead for framing and further direction.
 
-**What changed:** Added structured naming and organization for artifacts.
+**What changed:** Focus shifted from general "mining" to targeted extraction of hero/navigation patterns from top-tier sources.

@@ -1,16 +1,14 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-296` (dept) · 2026-07-30T19:11:22.623654+00:00
-> Participants: Reel, Echo · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-296` (dept) · 2026-07-31T20:16:30.486895+00:00
+> Participants: Reel, Echo · synthesized by transcript-summary (no engine)
 
-**Decision:**
+**Decision:** ACTION: Reel fetches full transcript for *"Orchestrated AI"* via kimtaeyoon83/mcp-server-youtube-transcript, output to transcripts-w1 for verification.
 
-**Plan:**
-1. Use the `kimtaeyoon83/mcp-server-youtube-transcript` tool to fetch the full transcript for *"How to Build a Resilient Team"*.
-2. Save the output to `transcripts-w1` for verification.
-3. Validate the transcript for completeness and accuracy (e.g., no missing segments, correct timestamps).
-4. If errors are found, re-run the tool with adjusted parameters (e.g., `gentle pacing` or `residential IP` flags).
-5. Archive the finalized transcript in the designated repository.
-6. Notify stakeholders of completion via GitHub issue or Slack.
+**Plan (from the debate):**
+1. I will fetch the full transcript for *"How to Build a Resilient Team"* using the kimtaeyoon83/mcp-server-youtube-transcript tool. This will produce a complete, verbatim transcript of the video's capti
+2. ACTION: Reel fetches full transcript for *"Orchestrated AI"* via kimtaeyoon83/mcp-server-youtube-transcript, output to transcripts-w1 for verification.
+3. I will fetch the full transcript for the pending video using the kimtaeyoon83/mcp-server-youtube-transcript tool. This will produce a complete, verbatim transcript of the video's captions.
+4. ACTION: Fetch full transcript for *"How to Build a Resilient Team"* via kimtaeyoon83/mcp-server-youtube-transcript, output to transcripts-w1 for verification.
 
-**What changed:** Transcript retrieval is now explicitly assigned to the tool with output verification steps.
+**What changed:** first real room artifact.

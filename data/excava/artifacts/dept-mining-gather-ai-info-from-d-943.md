@@ -1,16 +1,15 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-943` (dept) · 2026-07-28T22:58:05.797207+00:00
-> Participants: Pick · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-943` (dept) · 2026-07-31T16:24:04.404999+00:00
+> Participants: Pick, Boulder · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Browse r/MachineLearning and r/AI to extract the top 10 trending AI topics by upvotes and comments in the last 7 days.
-2. Compile a ranked list of current AI trends with brief summaries and source links.
-3. Cross-reference with HN, Product Hunt, and Reddit for additional context.
-4. Validate findings with Telegram/social channels for real-time relevance.
-5. Synthesize insights into a GitHub markdown report.
-6. Publish the finalized list with summaries and links.
+1. Sweep Reddit’s AI-related subreddits (r/MachineLearning, r/artificial, r/singularity, r/StableDiffusion, r/LocalLLaMA) for the last 7 days and extract 60 high-signal items with titles, engagement metrics, and key takeaways.
+2. Sweep Product Hunt’s AI-related launches from the last 7 days and extract the top 10 most promising ones by upvotes and engagement, including launch date, upvotes, and a short description.
+3. Combine both datasets into a unified ranked list prioritizing Reddit’s high-signal items (60) and supplementing with Product Hunt’s top 10.
+4. Clean and deduplicate entries, then format into a structured GitHub markdown table with columns: Source, Title, Engagement, Key Takeaways, and Launch Date.
+5. Validate top 20 entries for accuracy and relevance, then export as a final ranked list.
 
-**What changed:** Focus shifted from GitHub/HN/Product Hunt/Reddit/Telegram to prioritizing Reddit first, then cross-referencing other sources.
+**What changed:** Combined Reddit’s high-signal breadth with Product Hunt’s trending focus to maximize diversity and quality.

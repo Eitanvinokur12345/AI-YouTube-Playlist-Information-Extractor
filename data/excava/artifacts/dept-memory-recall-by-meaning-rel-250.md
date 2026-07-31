@@ -1,15 +1,16 @@
 # memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.
 
-> Decision artifact · room `dept-memory-recall-by-meaning-rel-250` (dept) · 2026-07-12T03:31:37.330879+00:00
-> Participants: Graft, Prune, Root · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-memory-recall-by-meaning-rel-250` (dept) · 2026-07-31T21:36:32.612385+00:00
+> Participants: Graft · synthesized by mistral/mistral-small-latest
 
-**Decision:** We will first gather raw associations in a free-form brainstorming session, then immediately filter them into meaningful clusters—ownership: Graft leads brainstorming, Prune leads filtering, both co-own the artifact.
+**Decision:**
 
 **Plan:**
-1. Schedule a brainstorming session to gather raw, unfiltered associations from the team.
-2. Use a collaborative tool to capture all ideas in real-time during the session.
-3. After the brainstorming, Prune will lead a filtering session to identify and group related concepts into meaningful clusters.
-4. Graft and Prune will collaboratively finalize the meaningful clusters and document the findings.
-5. Review the structure periodically to allow for adjustments as new insights emerge.
+1. Query the Hindsight memory database via the MCP server for all unembedded memory elements.
+2. Identify and list unembedded elements requiring recall-by-meaning processing.
+3. Process each unembedded element through the recall-by-meaning pipeline.
+4. Embed successfully processed elements back into the memory graph.
+5. Validate embeddings by cross-referencing with existing memory structures.
+6. Log completion and update the memory database status.
 
-**What changed:** We combined both Graft's and Prune's approaches to ensure creativity while maintaining clarity in the process.
+**What changed:** Unembedded memory elements were identified and prioritized for recall-by-meaning processing.

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-31T21:30:20.166403+00:00",
+ "generated_at": "2026-07-31T21:37:17.038919+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,8 +8,8 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 389,
-   "rooms_7d": 239,
+   "turns_7d": 391,
+   "rooms_7d": 240,
    "engines_used": [
     "gh-models",
     "groq",
@@ -17,30 +17,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Action: Fetch the full transcript for the video titled \"The AI Alignment Problem\" using the YouTube transcript tool. Thi"
+   "last_position": "Run both transcripts through the neutral pipeline first. This avoids embedding any product-demo cadence into the leaders"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 348,
-   "rooms_7d": 209,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "nvidia"
-   ],
-   "positions_held": 30,
-   "last_position": "I will run BloodHound-MCP against the full earnings call transcript to map every key entity and relationship. This will "
-  },
-  {
-   "id": "watch-w1",
-   "name": "Scope",
-   "dept": "watch",
-   "role": "doer",
-   "turns_7d": 324,
+   "turns_7d": 349,
    "rooms_7d": 210,
    "engines_used": [
     "gh-models",
@@ -49,14 +33,30 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Run both transcripts through the kimtaeyoon pipeline first, then let the transcripts team spend 30 minutes per transcrip"
+   "last_position": "I will run BloodHound-MCP against the full earnings call transcript to map entities, relationships, and potential securi"
+  },
+  {
+   "id": "watch-w1",
+   "name": "Scope",
+   "dept": "watch",
+   "role": "doer",
+   "turns_7d": 325,
+   "rooms_7d": 211,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "nvidia"
+   ],
+   "positions_held": 30,
+   "last_position": "Run the Arcads AI Video Agent Skill Pack on the marketing video to extract structured insights beyond the transcript. Th"
   },
   {
    "id": "transcripts-checker",
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 284,
+   "turns_7d": 285,
    "rooms_7d": 43,
    "engines_used": [
     "gh-models",
@@ -65,45 +65,45 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The real risk is that surgically stripping product-demo assumptions from kimtaeyoon’s output won’t fix the deeper cadenc"
+   "last_position": "The neutral pipeline risks wasting 30 minutes per transcript rebuilding speaker turns and timestamps from scratch—kimtae"
   },
   {
    "id": "news-w1",
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 245,
-   "rooms_7d": 201,
+   "turns_7d": 246,
+   "rooms_7d": 202,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll pull the latest AI-news digest from OpenAI’s official blog and Google DeepMind’s research updates page right now. T"
+   "last_position": "Action: Pull the latest AI-news digest from OpenAI’s official blog and Google DeepMind’s research updates. This will pro"
   },
   {
    "id": "links-lead-x",
    "name": "LinLea",
    "dept": "links",
    "role": "lead",
-   "turns_7d": 230,
-   "rooms_7d": 198,
+   "turns_7d": 231,
+   "rooms_7d": 199,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Anchor publishes the prioritized real-time link audit report by EOD."
+   "last_position": "ACTION: Anchor publishes the prioritized real-time link audit report by EOD today."
   },
   {
    "id": "creators-w1",
    "name": "Forge",
    "dept": "creators",
    "role": "doer",
-   "turns_7d": 229,
-   "rooms_7d": 197,
+   "turns_7d": 230,
+   "rooms_7d": 198,
    "engines_used": [
     "gh-models",
     "groq",
@@ -111,22 +111,22 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Forge drafts the \"Auto-Summarize\" skill package for the Skill Creator, producing a ready-to-use Claude Code skil"
+   "last_position": "ACTION: Forge drafts the \"Auto-Summarize\" skill package for the Skill Creator, producing a ready-to-use skill that gener"
   },
   {
    "id": "links-w1",
    "name": "Anchor",
    "dept": "links",
    "role": "doer",
-   "turns_7d": 229,
-   "rooms_7d": 198,
+   "turns_7d": 230,
+   "rooms_7d": 199,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll run the link-checker tool against the department’s live inventory to generate a fresh report of all active links. T"
+   "last_position": "I’ll run the link-checker tool against the department’s live inventory to generate a fresh report of broken links. This "
   },
   {
    "id": "creators-lead",
@@ -149,15 +149,15 @@
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 221,
-   "rooms_7d": 184,
+   "turns_7d": 222,
+   "rooms_7d": 185,
    "engines_used": [
     "gh-models",
     "mistral",
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Action: Query the Hindsight memory database via the MCP server for all unembedded elements to identify what needs embedd"
+   "last_position": "Action: Query the Hindsight memory database via the MCP server for all unembedded memory elements to identify what needs"
   },
   {
    "id": "news-lead",
@@ -179,22 +179,22 @@
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 215,
-   "rooms_7d": 184,
+   "turns_7d": 216,
+   "rooms_7d": 185,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll run a focused sweep on Hacker News for AI stories posted in the last 7 days, filtering for discussions with at leas"
+   "last_position": "Action: Run a real-time sweep on Hacker News for AI stories posted in the last 7 days. This will produce a curated list "
   },
   {
    "id": "visualization-w1",
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 213,
+   "turns_7d": 214,
    "rooms_7d": 99,
    "engines_used": [
     "gh-models",
@@ -202,14 +202,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Use Playwright MCP to drive EXCAVA live in a single browser engine—Chrome. This keeps the screen action fast, consistent"
+   "last_position": "Use Playwright MCP to drive EXCAVA live in Chrome only. This ensures fast, reliable automation with no browser inconsist"
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 213,
+   "turns_7d": 214,
    "rooms_7d": 99,
    "engines_used": [
     "gh-models",
@@ -217,15 +217,15 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Pane: Playwright MCP forcing Chrome-only locks us into one engine’s quirks and blind spots—real risk is silent failures "
+   "last_position": "Pane: Chrome-only automation hides the fact that EXCAVA’s interface may break in Firefox or Safari—users won’t care abou"
   },
   {
    "id": "security-lead",
    "name": "Bastion",
    "dept": "security",
    "role": "lead",
-   "turns_7d": 210,
-   "rooms_7d": 187,
+   "turns_7d": 211,
+   "rooms_7d": 188,
    "engines_used": [
     "gh-models",
     "groq",
@@ -233,15 +233,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Bastion runs LLM Guard scan on full input/output stream of this room; report generated by Bastion with pass/fail"
+   "last_position": "ACTION: Bastion runs LLM Guard scan on full input/output stream of this room; report confirms no leaks or injection; Bas"
   },
   {
    "id": "security-w1",
    "name": "Warden",
    "dept": "security",
    "role": "doer",
-   "turns_7d": 209,
-   "rooms_7d": 187,
+   "turns_7d": 210,
+   "rooms_7d": 188,
    "engines_used": [
     "gh-models",
     "groq",
@@ -249,14 +249,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will run LLM Guard against this conversation’s input and output to scan for leaks or injection attempts. The scan will"
+   "last_position": "I will run LLM Guard against this conversation’s input and output to scan for leaks or injection attempts. This will pro"
   },
   {
    "id": "accessibility-w1",
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 205,
+   "turns_7d": 206,
    "rooms_7d": 98,
    "engines_used": [
     "gh-models",
@@ -264,37 +264,37 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add a 4px solid focus ring in #005fcc to every interactive element. This ensures keyboard users see where they are, meet"
+   "last_position": "Add a two-layer focus ring: 4px #005fcc outer ring with a 2px white inner ring. This keeps the ring visible on both ligh"
   },
   {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 202,
-   "rooms_7d": 179,
+   "turns_7d": 203,
+   "rooms_7d": 180,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Reel fetches full transcript for *\"Orchestrated AI\"* via kimtaeyoon83/mcp-server-youtube-transcript and confirms"
+   "last_position": "ACTION: Reel fetches full transcript for *\"Orchestrated AI\"* via kimtaeyoon83/mcp-server-youtube-transcript."
   },
   {
    "id": "improve-w1",
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 199,
-   "rooms_7d": 93,
+   "turns_7d": 200,
+   "rooms_7d": 94,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DO: Auto-apply formatting-only patches to *all* prompt files, but gate them behind a pre-commit hook that runs a dry-run",
+   "last_position": "Do: Auto-apply formatting-only patches to *all* prompt files, but gate them behind a manual review step for the first 30",
    "proposed": 1
   },
   {
@@ -302,7 +302,7 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 199,
+   "turns_7d": 200,
    "rooms_7d": 97,
    "engines_used": [
     "gh-models",
@@ -310,14 +310,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run a blind A/B test of **Claude Mythos 5** vs **Fable 5** on a 2% slice of EXCAVA’s pipeline. Mythos 5’s documented 0.5"
+   "last_position": "Run a blind A/B test of **Claude Mythos 5** vs **Fable 5** on a 10% slice of EXCAVA’s pipeline. Mythos 5’s documented re"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 199,
+   "turns_7d": 200,
    "rooms_7d": 97,
    "engines_used": [
     "gh-models",
@@ -325,29 +325,29 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Risk: Mythos 5’s edge is unproven in EXCAVA’s pipeline—Fable 5 already runs stable on full data, so a 2% slice may not r"
+   "last_position": "Risk: A 10% slice still risks skewing EXCAVA’s distribution—Mythos 5’s edge may vanish on edge cases outside the slice. "
   },
   {
    "id": "improve-checker",
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 197,
-   "rooms_7d": 93,
+   "turns_7d": 198,
+   "rooms_7d": 94,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk isn’t a dry-run formatter missing a semantic whitespace change—it’s that pre-commit hooks add friction to "
+   "last_position": "The real risk isn’t bad formatting—it’s that a misapplied patch could silently corrupt a prompt’s semantic meaning, turn"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 197,
+   "turns_7d": 198,
    "rooms_7d": 96,
    "engines_used": [
     "gh-models",
@@ -355,29 +355,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "A 4px solid ring in #005fcc fails on patterned or dark backgrounds—it creates a muddy halo that blends with texture, bre"
+   "last_position": "The two-layer ring risks a muddy halo on patterned or dark backgrounds—#005fcc’s blue blends with texture, and the white"
   },
   {
    "id": "visual-lead",
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 196,
-   "rooms_7d": 167,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Easel opens Playwright MCP, navigates to Behance’s \"Popular\" page, and captures a full-page screenshot of the hi"
-  },
-  {
-   "id": "visual-w1",
-   "name": "Easel",
-   "dept": "visual",
-   "role": "doer",
-   "turns_7d": 196,
+   "turns_7d": 197,
    "rooms_7d": 168,
    "engines_used": [
     "gh-models",
@@ -385,15 +370,30 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Open the Playwright MCP server and capture a full-page screenshot of the Apple homepage. This will produce a high-qualit"
+   "last_position": "ACTION: Easel opens Playwright MCP, navigates to Behance’s \"Popular\" page, and captures a full-page screenshot of the to"
+  },
+  {
+   "id": "visual-w1",
+   "name": "Easel",
+   "dept": "visual",
+   "role": "doer",
+   "turns_7d": 197,
+   "rooms_7d": 169,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I will open the Playwright MCP server and capture a full-page screenshot of the Apple Watch product page. This will prod"
   },
   {
    "id": "watch-lead",
    "name": "Iris",
    "dept": "watch",
    "role": "lead",
-   "turns_7d": 191,
-   "rooms_7d": 173,
+   "turns_7d": 192,
+   "rooms_7d": 174,
    "engines_used": [
     "gh-models",
     "groq",
@@ -401,22 +401,22 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Run Arcads AI Video Agent Skill Pack on the marketing video to generate a structured report on audience engageme"
+   "last_position": "ACTION: Run Arcads AI Video Agent Skill Pack on the marketing video to generate structured insights on visual/audio cues"
   },
   {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
    "role": "lead",
-   "turns_7d": 189,
-   "rooms_7d": 161,
+   "turns_7d": 190,
+   "rooms_7d": 162,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a structured entity-relationship gra"
+   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a structured graph of entities, rela"
   },
   {
    "id": "analysis-checker",

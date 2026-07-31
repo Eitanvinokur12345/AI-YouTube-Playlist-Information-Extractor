@@ -1,16 +1,12 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-327` (dept) · 2026-07-30T20:15:42.705522+00:00
-> Participants: Pick, Boulder · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-327` (dept) · 2026-07-31T14:36:03.052421+00:00
+> Participants: Pick, Boulder · synthesized by nvidia/meta/llama-3.3-70b-instruct
 
-**Decision:**
-
-**Plan:**
-1. Sweep Product Hunt for AI products launched in the last 7 days, output top 10 with launch dates and upvotes.
-2. Sweep GitHub for AI-related repositories with ≥10 stars or ≥50 forks in the last 7 days.
-3. Sweep Hacker News for AI posts with ≥10 upvotes in the last 7 days.
-4. Sweep Reddit (r/MachineLearning, r/artificial, r/learnmachinelearning) for AI posts with ≥10 upvotes in the last 7 days.
-5. Sweep Telegram AI-related channels/groups for trending discussions with ≥50 views.
-6. Compile raw dataset into a structured format (CSV/JSON) for team refinement.
-
-**What changed:** Focused initial sweep on Product Hunt per Boulder’s directive, expanded to other sources in subsequent steps.
+**Decision:** Sweep diverse sources for AI information
+1. **Sweep Reddit**: Collect AI posts from the last 7 days with at least 10 upvotes, outputting top 10 threads with titles, upvotes, and subreddit names.
+2. **Sweep GitHub**: Collect AI repositories created in the last 7 days with at least 10 stars, outputting top 10 with names, stars, and brief descriptions.
+3. **Sweep Product Hunt**: Collect AI products launched in the last 7 days, outputting top 10 with launch dates and upvotes.
+4. **Broad Sweep**: Run a broad sweep across Hacker News, Telegram, and social media for AI-related posts with at least 10 upvotes or 50 views.
+5. **Refine Dataset**: Refine the collected datasets to identify trending AI discussions, tools, and pain points.
+**What changed:** Added a broad sweep across multiple platforms to gather more comprehensive AI information.

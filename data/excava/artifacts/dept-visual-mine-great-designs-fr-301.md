@@ -1,16 +1,15 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-301` (dept) · 2026-07-30T21:00:01.465852+00:00
+> Decision artifact · room `dept-visual-mine-great-designs-fr-301` (dept) · 2026-07-31T14:15:37.262270+00:00
 > Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Open the Playwright MCP server to enable high-quality screenshot capture.
-2. Identify and select three top-tier design systems from the web for reference.
-3. Capture screenshots of the selected design systems using Playwright.
-4. Curate and upload the screenshots into the hub as visual references.
-5. Mine additional top-tier screenshots from Awwwards and Dribbble for taste material.
-6. Organize and integrate the mined screenshots into the hub’s design pattern section.
+1. Open Playwright MCP server to capture high-quality screenshots of the top 3 most-tweeted design systems from Figma’s Community.
+2. Extract top-tier Awwwards and Dribbble screenshots as supplementary taste material.
+3. Curate and organize all screenshots into the hub’s visual reference section.
+4. Tag and annotate each screenshot with metadata (source, style, key patterns).
+5. Validate image quality and ensure all references align with the hub’s design standards.
 
-**What changed:** Added Awwwards/Dribbble sourcing to the original screenshot plan.
+**What changed:** Prioritized Figma’s Community as the primary source, supplemented by Awwwards and Dribbble.

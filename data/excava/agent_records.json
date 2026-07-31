@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-31T14:49:54.850649+00:00",
+ "generated_at": "2026-07-31T14:57:25.488831+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,8 +8,8 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 320,
-   "rooms_7d": 198,
+   "turns_7d": 326,
+   "rooms_7d": 203,
    "engines_used": [
     "gh-models",
     "groq",
@@ -17,15 +17,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will query the YouTube transcript server (`kimtaeyoon83/mcp-server-youtube-transcript`) for the pending video’s full t"
+   "last_position": "Implement a shared \"Decision Log\" artifact where every department records their key choices and the reasons behind them."
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 298,
-   "rooms_7d": 177,
+   "turns_7d": 305,
+   "rooms_7d": 181,
    "engines_used": [
     "gh-models",
     "groq",
@@ -33,14 +33,30 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "I will run BloodHound-MCP on the full earnings call transcript to extract every entity, relationship, and anomaly flagge"
+   "last_position": "I will ingest the full earnings call transcript into BloodHound-MCP to map every named entity, relationship, and financi"
+  },
+  {
+   "id": "watch-w1",
+   "name": "Scope",
+   "dept": "watch",
+   "role": "doer",
+   "turns_7d": 261,
+   "rooms_7d": 161,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "nvidia"
+   ],
+   "positions_held": 30,
+   "last_position": "I'll run Arcads AI Video's \"AI Marketing\" skill pack on the target video to extract high-value marketing insights beyond"
   },
   {
    "id": "transcripts-checker",
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 254,
+   "turns_7d": 255,
    "rooms_7d": 40,
    "engines_used": [
     "gh-models",
@@ -48,47 +64,31 @@
     "mistral",
     "sambanova"
    ],
-   "positions_held": 30,
-   "last_position": "The 30-second pause won’t stop gaming—teams will just pad their estimates or split work into smaller chunks to hit the p"
-  },
-  {
-   "id": "watch-w1",
-   "name": "Scope",
-   "dept": "watch",
-   "role": "doer",
-   "turns_7d": 253,
-   "rooms_7d": 157,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "nvidia"
-   ],
-   "positions_held": 30,
-   "last_position": "Adopt the **mandatory 30-second pause before closure**, with the system auto-logging the delay and flagging teams that c"
+   "positions_held": 34,
+   "last_position": ""
   },
   {
    "id": "news-w1",
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 190,
-   "rooms_7d": 165,
+   "turns_7d": 197,
+   "rooms_7d": 168,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
-   "positions_held": 30,
-   "last_position": "I’ll fetch the latest AI news from OpenAI’s official blog and NVIDIA’s newsroom. This will produce a fresh, real-time di"
+   "positions_held": 43,
+   "last_position": ""
   },
   {
    "id": "creators-lead",
    "name": "Nova",
    "dept": "creators",
    "role": "lead",
-   "turns_7d": 184,
-   "rooms_7d": 162,
+   "turns_7d": 191,
+   "rooms_7d": 167,
    "engines_used": [
     "gh-models",
     "groq",
@@ -96,15 +96,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Forge publishes the \"Skill Creator for Claude\" npm package labeled \"Created by EXCAVA\" with a README, installati"
+   "last_position": "ACTION: Forge builds and tests the \"UGC Factory Skill Pack\" package for Claude Code, labels it \"Created by EXCAVA,\" and "
   },
   {
    "id": "creators-w1",
    "name": "Forge",
    "dept": "creators",
    "role": "doer",
-   "turns_7d": 184,
-   "rooms_7d": 162,
+   "turns_7d": 191,
+   "rooms_7d": 167,
    "engines_used": [
     "gh-models",
     "groq",
@@ -112,7 +112,37 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "I will draft the \"Skill Creator for Claude\" npm package as a free, real tool that lets users build or tweak any Claude s"
+   "last_position": "I’ll draft a new \"UGC Factory Skill Pack\" package for Claude Code that generates user-generated content modules—labeled "
+  },
+  {
+   "id": "memory-w1",
+   "name": "Graft",
+   "dept": "memory",
+   "role": "doer",
+   "turns_7d": 184,
+   "rooms_7d": 156,
+   "engines_used": [
+    "gh-models",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 41,
+   "last_position": ""
+  },
+  {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 183,
+   "rooms_7d": 160,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll run a live audit of the department’s link inventory using the link-checker to identify all broken or outdated links"
   },
   {
    "id": "links-lead-x",
@@ -130,70 +160,70 @@
    "last_position": "ACTION: Anchor publishes the prioritized link audit report by EOD today."
   },
   {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 182,
-   "rooms_7d": 159,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll run a live audit of the department’s link inventory using the link-checking tool to generate a real-time report of "
-  },
-  {
-   "id": "memory-w1",
-   "name": "Graft",
-   "dept": "memory",
-   "role": "doer",
-   "turns_7d": 179,
-   "rooms_7d": 153,
-   "engines_used": [
-    "gh-models",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "Action: I will run the memory-linking command to embed the unembedded elements from the conversation so far into the uni"
-  },
-  {
    "id": "visualization-w1",
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 172,
-   "rooms_7d": 79,
+   "turns_7d": 179,
+   "rooms_7d": 82,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt a **system-wide dark theme by default** with a **persistent, non-modal light mode toggle** in the top-right."
+   "last_position": "Adopt a dark theme for Excava’s interface. It reduces eye strain in low-light coding sessions and matches the aesthetic "
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 172,
-   "rooms_7d": 79,
+   "turns_7d": 179,
+   "rooms_7d": 82,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Pane: Defaulting to dark mode ignores users who work in bright environments or need high contrast for visibility—glare-s"
+   "last_position": "Dark themes don’t solve the core problem: visibility in *bright* rooms. The real risk is users squinting at code in sunl"
   },
   {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
    "role": "lead",
+   "turns_7d": 176,
+   "rooms_7d": 154,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 43,
+   "last_position": ""
+  },
+  {
+   "id": "accessibility-w1",
+   "name": "Ramp",
+   "dept": "accessibility",
+   "role": "doer",
+   "turns_7d": 170,
+   "rooms_7d": 81,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 40,
+   "last_position": ""
+  },
+  {
+   "id": "mining-w1",
+   "name": "Pick",
+   "dept": "mining",
+   "role": "doer",
    "turns_7d": 169,
    "rooms_7d": 151,
    "engines_used": [
@@ -202,23 +232,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Wire compiles the latest AI-news digest from OpenAI’s official blog and NVIDIA’s newsroom, then publishes it sum"
-  },
-  {
-   "id": "accessibility-w1",
-   "name": "Ramp",
-   "dept": "accessibility",
-   "role": "doer",
-   "turns_7d": 166,
-   "rooms_7d": 79,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Use a **2-pixel solid focus ring in #FFFFFF at 100% opacity with a 1-pixel outer glow at 15% opacity** on all ",
-   "proposed": 1
+   "last_position": "I’ll run a broad sweep across GitHub, Hacker News, Product Hunt, Reddit, and Telegram for AI-related posts from the last"
   },
   {
    "id": "transcripts-lead",
@@ -236,26 +250,26 @@
    "last_position": "ACTION: Echo fetches the full YouTube transcript for *\"How to Build a Resilient\"* via kimtaeyoon83/mcp-server-youtube-tr"
   },
   {
-   "id": "mining-w1",
-   "name": "Pick",
-   "dept": "mining",
+   "id": "improve-w1",
+   "name": "Sprocket",
+   "dept": "improve",
    "role": "doer",
-   "turns_7d": 161,
-   "rooms_7d": 147,
+   "turns_7d": 164,
+   "rooms_7d": 77,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
-   "positions_held": 30,
-   "last_position": "I’ll run a live sweep across GitHub, Hacker News, Product Hunt, Reddit, and Telegram for AI-related posts from the last "
+   "positions_held": 42,
+   "last_position": ""
   },
   {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 161,
+   "id": "power-w1",
+   "name": "Gearbox",
+   "dept": "power",
+   "role": "doer",
+   "turns_7d": 164,
    "rooms_7d": 79,
    "engines_used": [
     "gh-models",
@@ -263,90 +277,75 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "A 4-pixel ring risks crowding small interactive elements—like buttons in tight toolbars—making them harder to tap on mob"
-  },
-  {
-   "id": "improve-w1",
-   "name": "Sprocket",
-   "dept": "improve",
-   "role": "doer",
-   "turns_7d": 158,
-   "rooms_7d": 75,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Do it: Auto-apply whitespace-only patches to third-party dependencies using Pret. It’s the fastest way to fix formatting"
+   "last_position": "Add Elements to Video as a skill to EXCAVA’s toolkit. This lets us insert new visual elements into existing footage with"
   },
   {
    "id": "improve-checker",
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 157,
-   "rooms_7d": 75,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Auto-applying whitespace patches risks breaking tooling that depends on exact formatting—like Pret’s own dry-run misread"
-  },
-  {
-   "id": "power-w1",
-   "name": "Gearbox",
-   "dept": "power",
-   "role": "doer",
-   "turns_7d": 157,
+   "turns_7d": 163,
    "rooms_7d": 77,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
-   "positions_held": 30,
-   "last_position": "Switch EXCAVA to the distilled 32B variant fine-tuned on EXCAVA’s exact task data. The 32B model delivers sub-30ms laten"
+   "positions_held": 42,
+   "last_position": ""
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 157,
-   "rooms_7d": 77,
+   "turns_7d": 163,
+   "rooms_7d": 78,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 42,
+   "last_position": ""
+  },
+  {
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
+   "role": "checker",
+   "turns_7d": 163,
+   "rooms_7d": 80,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk isn’t just latency—it’s benchmark drift. A 32B distilled model’s 0.5% gain could vanish under live task va"
+   "last_position": "A 44×44 px touch target with 4 px padding still risks crowding labels in dense UIs—especially when multiple buttons sit "
   },
   {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
    "role": "lead",
-   "turns_7d": 155,
-   "rooms_7d": 133,
+   "turns_7d": 162,
+   "rooms_7d": 137,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Marrow reviews the BloodHound-MCP-generated knowledge graph artifact to validate the extracted entities, relatio"
+   "last_position": "ACTION: Chisel ingests the full earnings call transcript into BloodHound-MCP to map named entities, relationships, and f"
   },
   {
    "id": "security-lead",
    "name": "Bastion",
    "dept": "security",
    "role": "lead",
-   "turns_7d": 155,
-   "rooms_7d": 142,
+   "turns_7d": 161,
+   "rooms_7d": 147,
    "engines_used": [
     "gh-models",
     "groq",
@@ -354,15 +353,15 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Warden runs LLM Guard scanner on the current input/output pipeline; report generated with scan results."
+   "last_position": "ACTION: Warden runs LLM Guard’s input/output scanner on the active conversation, producing a report flagging any suspici"
   },
   {
    "id": "security-w1",
    "name": "Warden",
    "dept": "security",
    "role": "doer",
-   "turns_7d": 154,
-   "rooms_7d": 142,
+   "turns_7d": 160,
+   "rooms_7d": 147,
    "engines_used": [
     "gh-models",
     "groq",
@@ -370,45 +369,45 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will run LLM Guard on the current input/output pipeline to scan for leaks or injection. This will produce a security r"
+   "last_position": "I’ll run LLM Guard’s input/output scanner on the active conversation to check for data leaks or injection attempts. The "
   },
   {
    "id": "visual-lead",
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 146,
-   "rooms_7d": 126,
+   "turns_7d": 150,
+   "rooms_7d": 128,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
-   "positions_held": 30,
-   "last_position": "ACTION: Chroma screenshots the top 3 most-tweeted design systems from Behance’s \"Popular\" feed and drops them into the h"
+   "positions_held": 40,
+   "last_position": ""
   },
   {
    "id": "visual-w1",
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 145,
-   "rooms_7d": 126,
+   "turns_7d": 150,
+   "rooms_7d": 129,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Open Playwright MCP and screenshot the top 3 most-tweeted design systems. This produces three high-quality design system"
+   "last_position": "I’ll open the Playwright MCP server and take a screenshot of the top three live design systems from major tech companies"
   },
   {
    "id": "watch-lead",
    "name": "Iris",
    "dept": "watch",
    "role": "lead",
-   "turns_7d": 136,
-   "rooms_7d": 123,
+   "turns_7d": 143,
+   "rooms_7d": 127,
    "engines_used": [
     "gh-models",
     "groq",
@@ -416,7 +415,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 2026-07-30T21:53:00.000000+00:00, Iris triggers Arcads AI Video’s \"AI Marketing\" skill to generate a structur"
+   "last_position": "ACTION: Run Arcads AI Video's \"AI Marketing\" skill pack on the target video to generate a structured report with emotion"
   },
   {
    "id": "analysis-checker",
@@ -439,24 +438,38 @@
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 83,
-   "rooms_7d": 75,
+   "turns_7d": 86,
+   "rooms_7d": 78,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Default to **system-aware theme** (auto-switching between light/dark based on ambient light) with a **persiste",
-   "proposed": 2
+   "last_position": "DECISION: Default to **system-aware theme** (auto-switching between light/dark) with a persistent, non-modal toggle for "
   },
   {
-   "id": "accessibility-lead",
-   "name": "Access",
-   "dept": "accessibility",
+   "id": "mining-lead",
+   "name": "Boulder",
+   "dept": "mining",
    "role": "lead",
-   "turns_7d": 76,
-   "rooms_7d": 72,
+   "turns_7d": 77,
+   "rooms_7d": 67,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 41,
+   "last_position": ""
+  },
+  {
+   "id": "power-lead",
+   "name": "Dynamo",
+   "dept": "power",
+   "role": "lead",
+   "turns_7d": 77,
+   "rooms_7d": 71,
    "engines_used": [
     "gh-models",
     "groq",
@@ -464,17 +477,31 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Adopt a 2-pixel solid focus ring with WCAG 2.1 AA contrast (no glow) to balance clarity, space efficiency, and",
-   "proposed": 3,
-   "shipped": 2
+   "last_position": "DECISION: Switch EXCAVA to the distilled 32B model only after Torque’s 2,000-task adversarial benchmark confirms a ≥0.5%"
+  },
+  {
+   "id": "accessibility-lead",
+   "name": "Access",
+   "dept": "accessibility",
+   "role": "lead",
+   "turns_7d": 77,
+   "rooms_7d": 73,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Set 48×48 px minimum touch targets with 2 px padding to balance WCAG compliance, density, and readability. Own"
   },
   {
    "id": "memory-lead",
    "name": "Root",
    "dept": "memory",
    "role": "lead",
-   "turns_7d": 74,
-   "rooms_7d": 65,
+   "turns_7d": 76,
+   "rooms_7d": 66,
    "engines_used": [
     "gh-models",
     "groq",
@@ -485,11 +512,11 @@
    "last_position": "ACTION: Root runs the memory-linking command to embed the unembedded elements from this conversation into the unified me"
   },
   {
-   "id": "power-lead",
-   "name": "Dynamo",
-   "dept": "power",
+   "id": "improve-lead",
+   "name": "Ratchet",
+   "dept": "improve",
    "role": "lead",
-   "turns_7d": 74,
+   "turns_7d": 75,
    "rooms_7d": 70,
    "engines_used": [
     "gh-models",
@@ -498,42 +525,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Run a 500-sample blind A/B test on EXCAVA comparing current model vs. Claude 3.7 Sonnet with frozen prompts an",
-   "proposed": 3,
-   "shipped": 2
-  },
-  {
-   "id": "mining-lead",
-   "name": "Boulder",
-   "dept": "mining",
-   "role": "lead",
-   "turns_7d": 72,
-   "rooms_7d": 64,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Boulder sweeps Product Hunt’s AI launches from the last 7 days, curates titles, links, and one-line relevance su"
-  },
-  {
-   "id": "improve-lead",
-   "name": "Ratchet",
-   "dept": "improve",
-   "role": "lead",
-   "turns_7d": 72,
-   "rooms_7d": 67,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Reject auto-applying whitespace patches to third-party dependencies; enforce whitespace rules in CI via a read",
-   "proposed": 3,
-   "shipped": 1
+   "last_position": "DECISION: Reject auto-applying whitespace patches to third-party dependencies; run Pret only for manual review."
   },
   {
    "id": "links-checker",

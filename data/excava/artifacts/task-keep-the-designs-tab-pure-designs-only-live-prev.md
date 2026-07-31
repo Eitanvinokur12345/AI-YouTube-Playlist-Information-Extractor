@@ -1,24 +1,11 @@
 # Keep the Designs tab pure: designs only, live previews, taste-ranked
 
-> visual · task `keep-the-designs-tab-pur-83429` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> visual · task `keep-the-designs-tab-pur-9708` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
 
-**Approach:**
-Strip the Designs tab to a curated, taste-ranked gallery of live previews with zero fluff.
-
-**Steps:**
-1. **Audit & purge** – Run `find ./designs -type f \! -name "*.png" \! -name "*.jpg" \! -name "*.gif" \! -name "*.mp4" -delete` to delete non-media files in `/designs`.
-2. **Rename & standardize** – Use `rename 's/.*/design-$1.jpg/' *.jpg` (adjust extension) to enforce `design-<id>.<ext>` naming.
-3. **Generate live previews** – For each file, create a matching `.html` file (e.g., `design-123.html`) with an `<iframe>` embedding the live URL (e.g., `https://example.com/design-123`). Use a script like:
-   ```bash
-   for f in designs/*.jpg; do
-     id=$(basename "$f" .jpg)
-     cat > "designs/$id.html" <<EOF
-   <!DOCTYPE html>
-   <html><body>
-     <iframe src="https://example.com/$id" style="width:100%;height:600px;border:none;"></iframe>
-   </body></html>
-   EOF
-   done
-   ```
-4. **Rank & curate** – Manually sort files into subfolders (`/top-tier`, `/mid-tier`, `/experimental`) based on Chroma’s taste criteria (e.g., "no skeuomorphism," "bold color blocking").
-5. **Update tab logic** – Modify the Designs tab’s navigation to
+**Approach:** Refine the Designs tab through a meticulous curation process
+1. **Filter and categorize designs**: Utilize `git` to clone the Designs tab repository, then use `python` with `pandas` to categorize and filter designs based on predefined aesthetic criteria, storing the results in a local CSV file.
+2. **Implement taste-ranking algorithm**: Leverage `numpy` and `scipy` to develop a ranking algorithm that assesses design elements such as color palette, typography, and composition, applying this algorithm to the filtered designs and updating the CSV file with the corresponding rankings.
+3. **Automate live preview generation**: Employ `ffmpeg` and `imagemagick` to create live previews for each design, ensuring consistency in formatting and quality, then store these previews in a designated directory.
+4. **Integrate rankings and previews into the Designs tab**: Use `javascript` and `css` to create an interactive interface that displays the ranked designs along with their live previews, ensuring a seamless user experience.
+5. **Schedule regular curation and updates**: Set up a `cron job` to periodically re-run the curation process, ensuring the Designs tab remains up-to-date and aligned with the highest aesthetic standards.
+**Needs:** `git`, `python`, `pandas`, `numpy`, `scipy`, `ffmpeg`, `imagemagick`, `javascript`, `css`, `cron`, access to the Designs tab repository and a local development environment.

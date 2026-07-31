@@ -1,10 +1,10 @@
 # Raise G8 Personal fit (68/100): 20% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond
 
-> visual · task `raise-g8-personal-fit-68-23016` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
+> visual · task `raise-g8-personal-fit-68-23440` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
 
-**Approach:** Enhance G8 Personal fit by augmenting design taste-tagging and leveraging Arena learning.
-1. **Taste-tagging Expansion**: Utilize `labelimg` tool to annotate 40 more designs, targeting a 60% increase in taste-tagged designs, and store them in a designated `/designs` directory.
-2. **Arena Learning Integration**: Run `arena-learning-cli` command with `--live` flag to stream live updates from the Arena and integrate with the existing G8 framework using `g8-cli` tool.
-3. **NOSG Wiring**: Employ `nosg-wire` command to establish a connection between NOSG and G8, enabling seamless data exchange and facilitating further taste development.
-4. **Risk Assessment and Mitigation**: Use `risk-assessor` tool to evaluate potential risks associated with the planned actions and implement mitigating measures as needed, ensuring the G8 framework remains stable.
-**Needs:** `labelimg` tool, `arena-learning-cli`, `g8-cli`, `nosg-wire`, `risk-assessor`, access to `/designs` directory, G8 framework credentials.
+**Approach:** Enhance G8 Personal fit through targeted design refinement and taste-tagging.
+1. **Taste-tag design files**: Utilize Adobe Creative Cloud (specifically Photoshop and Illustrator) to manually review and tag 20% of designs with relevant taste keywords, focusing on a small set of high-impact designs (size=17).
+2. **Arena learning integration**: Leverage Arena's live learning APIs to connect NOSG wiring and facilitate real-time feedback on design taste, ensuring seamless integration with existing workflows.
+3. **Iterate and refine**: Employ Sketch and Figma for rapid prototyping, iterating on designs based on feedback from Arena learning and NOSG insights, aiming to raise G8 Personal fit score.
+4. **Risk assessment and cost optimization**: Use Microsoft Excel or Google Sheets to track costs (15/steps) and risks (10), ensuring the execution plan stays within budget and mitigates potential risks.
+**Needs:** Adobe Creative Cloud, Arena learning API access, Sketch, Figma, Microsoft Excel or Google Sheets, NOSG wiring documentation.

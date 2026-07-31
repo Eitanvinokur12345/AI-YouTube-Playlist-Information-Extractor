@@ -1,19 +1,9 @@
 # Raise G8 Personal fit (68/100): 20% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond
 
-> visual · task `raise-g8-personal-fit-68-74665` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> visual · task `raise-g8-personal-fit-68-75108` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
 
-```markdown
-**Approach:** Leverage Arena learning pipeline to taste-tag 20% of designs, then wire NOSG for taste-based routing.
-
-**Steps:**
-1. **Tag 20% of designs** – Run `python scripts/taste_tag.py --percent 20 --input designs/*.png --output tagged/` to generate taste-tagged subset.
-2. **Arena learning sync** – Execute `arena sync --mode taste --source tagged/` to ingest tagged data into Arena’s live learning loop.
-3. **NOSG taste wiring** – Update `config/nosg/taste_router.yaml` with new taste model weights from Arena, then restart NOSG service via `systemctl restart nosg`.
-
-**Needs:**
-- `designs/*.png` (raw design files)
-- `scripts/taste_tag.py` (existing taste-tagging script)
-- Arena CLI (`arena sync`) with write access to taste model
-- `config/nosg/taste_router.yaml` (configurable taste routing file)
-- NOSG service with systemd control (`systemctl`)
-```
+**Approach:** Enhance G8 Personal fit by refining taste-tagged designs and integrating Arena learning live with NOSG wired.
+1. **Review and refine taste-tagged designs**: Utilize a design review tool like Figma or Sketch to examine the 20% of designs that are currently taste-tagged, identifying patterns and areas for improvement.
+2. **Integrate Arena learning live**: Leverage a machine learning platform like TensorFlow or PyTorch to integrate Arena learning live, enabling real-time learning and adaptation for improved design recommendations.
+3. **Implement NOSG wired for taste beyond**: Use a neural network framework like Keras or OpenCV to implement NOSG wired, allowing the system to learn and adapt to new design tastes and preferences.
+**Needs:** Figma or Sketch for design review, TensorFlow or PyTorch for machine learning, Keras or OpenCV for neural network implementation, access to design data and computational resources.

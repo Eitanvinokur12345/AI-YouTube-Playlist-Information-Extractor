@@ -1,16 +1,16 @@
 # analysis: Deep-analyze every element from its FULL source (whole transcript/repo) + enrich from >=1 
 
-> Decision artifact · room `dept-analysis-deep-analyze-every-962` (dept) · 2026-07-27T18:12:50.772370+00:00
+> Decision artifact · room `dept-analysis-deep-analyze-every-962` (dept) · 2026-07-31T05:19:58.470463+00:00
 > Participants: Chisel, Marrow · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Pull the full earnings call transcript from the BloodHound-MCP server (as proposed by Chisel) to obtain the verbatim record.
-2. Cross-verify the transcript against the LangSmith GitHub repository (as proposed by Marrow) to ensure completeness and accuracy.
-3. Enrich the analysis by incorporating additional context from >=1 external source (e.g., financial filings, analyst reports, or industry benchmarks).
-4. Perform a deep analysis of every spoken element in the transcript, including tone, key themes, and financial indicators.
-5. Synthesize findings into a structured report with actionable insights.
-6. Validate conclusions against the full source material to ensure fidelity.
+1. **Execute BloodHound-MCP** on the full earnings call transcript to generate a structured graph mapping conversation threads, decision points, direct quotes, and timestamps.
+2. **Cross-reference timestamps** with the full transcript to validate accuracy and enrich context for each node in the graph.
+3. **Extract key decision points** from the graph, labeling them with speaker attribution, intent, and outcome (if discernible).
+4. **Enrich the analysis** with >=1 external source (e.g., market reactions, analyst notes, or historical context) to validate or challenge the transcript’s claims.
+5. **Generate a summary report** in GitHub markdown, highlighting contradictions, unresolved threads, and actionable insights from the graph.
+6. **Tag stakeholders** (e.g., executives, analysts) in the report for follow-up on ambiguous or critical decision points.
 
-**What changed:** Prioritized cross-verification of the transcript from both the BloodHound-MCP server and LangSmith GitHub repository to ensure data integrity before analysis.
+**What changed:** BloodHound-MCP execution replaces manual analysis, ensuring structured, timestamped, and cross-referenced insights from the full transcript.

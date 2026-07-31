@@ -1,15 +1,16 @@
 # security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (not fake/dead); DETECT
 
-> Decision artifact · room `dept-security-paranoid-guard-scan-364` (dept) · 2026-07-10T03:44:12.715843+00:00
-> Participants: Warden, Audit, Bastion · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-security-paranoid-guard-scan-364` (dept) · 2026-07-31T18:38:15.688966+00:00
+> Participants: Warden, Bastion · synthesized by mistral/mistral-small-latest
 
-**Decision:** Implement a dual-layer security approach that combines real-time monitoring with proactive code validation.
+**Decision:**
 
-**Plan:**  
-1. Utilize a comprehensive static analysis tool to scan for known bad patterns and vulnerabilities, including complex obfuscations.  
-2. Integrate a real-time filesystem monitoring tool to catch symlink swaps and potential injection attempts actively.  
-3. Ensure the static analysis tool includes checks for nested evals and other advanced injection vectors.  
-4. Establish a secure logging mechanism for all monitoring events to audit potential security breaches continuously.  
-5. Develop a routine to regularly update and refine the scanning and monitoring approaches based on newly discovered vulnerabilities.
+**Plan:**
+1. Run the LLM Guard scanner on the current input/output stream to detect injection or leakage risks.
+2. Generate a real-time report flagging suspicious patterns or anomalies to `security-w1`.
+3. Verify all elements in the stream are real (not fake/dead) via cross-referencing with trusted sources.
+4. Isolate and quarantine any flagged inputs/outputs for further forensic analysis.
+5. Log all scanner actions and results for audit trails.
+6. Notify the security team (`security-w1`) of any critical findings for immediate remediation.
 
-**What changed:** A proactive focus on comprehensive static analysis to complement reactive monitoring.
+**What changed:** Scanner integration and verification steps added to enforce real-time security monitoring.

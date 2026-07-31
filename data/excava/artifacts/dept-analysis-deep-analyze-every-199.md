@@ -1,17 +1,13 @@
 # analysis: Deep-analyze every element from its FULL source (whole transcript/repo) + enrich from >=1 
 
-> Decision artifact · room `dept-analysis-deep-analyze-every-199` (dept) · 2026-07-27T22:11:42.086241+00:00
-> Participants: Chisel, Marrow · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-analysis-deep-analyze-every-199` (dept) · 2026-07-31T00:35:51.631400+00:00
+> Participants: Chisel, Marrow · synthesized by nvidia/meta/llama-3.3-70b-instruct
 
-**Decision:**
-Proceed with structured threat modeling of the full BloodHound-MCP server transcript for the earnings call to identify and mitigate data exposure risks.
-
+**Decision:** Run BloodHound-MCP on the full earnings call transcript to generate a structured graph of the AI reviewer agent's performance signals.
 **Plan:**
-1. Extract the full transcript (content + metadata) from the BloodHound-MCP server logs.
-2. Run BloodHound-MCP’s threat analysis pipeline to map risk phrases, topics, and speaker cues.
-3. Cross-reference findings with external threat intelligence (e.g., CVE databases, OSINT) to enrich context.
-4. Generate a prioritized threat model (CVSS-scored) with remediation steps for exposed data.
-5. Validate results by re-analyzing a redacted transcript to confirm risk reduction.
-6. Document all steps in a GitHub repo with timestamps and tooling versions.
-
-**What changed:** Shifted from debate to execution with a concrete, multi-step threat modeling workflow.
+1. Extract every entity, relationship, and sentiment signal tied to the AI reviewer agent's performance from the full earnings call transcript using BloodHound-MCP.
+2. Generate a structured graph of how the agent's outputs align with or deviate from the call's financial and operational mentions.
+3. Deliver the artifact to the lead for further analysis and decision-making.
+4. Identify key areas where the AI reviewer agent's performance deviates from expected financial and operational outcomes.
+5. Analyze the structured graph to determine the impact of the AI reviewer agent's performance on the company's financial and operational metrics.
+**What changed:** The approach to analyzing the AI reviewer agent's performance now utilizes BloodHound-MCP to generate a structured graph of performance signals.

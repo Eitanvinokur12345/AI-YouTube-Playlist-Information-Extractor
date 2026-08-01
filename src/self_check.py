@@ -201,23 +201,38 @@ def main() -> int:
                "improvements_logged": 50 - score, "results": results},
               open(DATA / "self_check.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 
-    # queue every 'no' into improvement_tasks.json (don't duplicate existing open ones)
+    # queue every 'no' into improvement_tasks.json (don't duplicate existing open ones), and
+    # close any previously-open selfcheck-qN task whose question now passes — otherwise a fixed
+    # item sits "open" forever since nothing else ever revisits it.
     tasks_doc = _load("improvement_tasks.json", {}) or {}
     tasks = tasks_doc.get("tasks", []) if isinstance(tasks_doc, dict) else []
-    open_ids = {t.get("id") for t in tasks}
-    added = 0
+    by_id = {t.get("id"): t for t in tasks}
+    passing_ns = {r["n"] for r in results if r["answer"] == "yes"}
+    added = closed = 0
+    for t in tasks:
+        if t.get("status") == "open" and t.get("kind") == "engine_followup" and t.get("n") in passing_ns:
+            t["status"] = "resolved"
+            t["resolved_at"] = now
+            closed += 1
     for r in results:
+        tid = f"selfcheck-q{r['n']}"
         if r["answer"] == "no":
-            tid = f"selfcheck-q{r['n']}"
-            if tid not in open_ids:
-                tasks.append({"id": tid, "n": r["n"], "question": r["question"], "fix": r["evidence"],
-                              "kind": "engine_followup", "status": "open", "created_at": now})
+            existing = by_id.get(tid)
+            if existing is None:
+                new_task = {"id": tid, "n": r["n"], "question": r["question"], "fix": r["evidence"],
+                            "kind": "engine_followup", "status": "open", "created_at": now}
+                tasks.append(new_task)
+                by_id[tid] = new_task
                 added += 1
+            elif existing.get("status") == "resolved":
+                existing["status"] = "open"
+                existing["fix"] = r["evidence"]
+                existing["reopened_at"] = now
     json.dump({"updated_at": now, "tasks": tasks},
               open(DATA / "improvement_tasks.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 
     fails = [r["n"] for r in results if r["answer"] == "no"]
-    print(f"self-check: {score}/50 (mechanical) | {added} new tasks | failing Qs: {fails}")
+    print(f"self-check: {score}/50 (mechanical) | {added} new tasks | {closed} resolved | failing Qs: {fails}")
     return 0
 
 

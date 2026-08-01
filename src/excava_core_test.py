@@ -148,6 +148,34 @@ def main() -> int:
     check("an open room is never counted as exhausted",
           not any(r.is_exhausted() for r in rooms if r.is_open()))
 
+    # (c4) Agent class — CLASS 4 of 5. The law-P4 test for a roster is not "does the name
+    # exist" but "has this agent done anything and can it reach a real tool".
+    agents = core.Agent.all()
+    check("Agent reads the roster", len(agents) > 40, f"only {len(agents)}")
+    check("Agent.get resolves by name AND by id",
+          core.Agent.get(agents[0].name) is not None and core.Agent.get(agents[0].id) is not None)
+    check("every agent is scoped to modules that EXIST on disk",
+          all(not a.missing_tools() for a in agents),
+          f"broken: {[(a.name, a.missing_tools()) for a in agents if a.missing_tools()][:3]}")
+    check("can_act() requires real scoped tools",
+          all(a.can_act() == (bool(a.scoped_tools) and not a.missing_tools()) for a in agents))
+    check("every department has a lead",
+          all(any(a.is_lead() for a in core.Agent.all(department=d))
+              for d in {x.department for x in agents} - {"core"}),
+          "a department has no lead")
+    spoken = [a for a in agents if a.has_spoken()]
+    check("most of the roster has actually spoken (not just named)",
+          len(spoken) > len(agents) * 0.6, f"only {len(spoken)}/{len(agents)}")
+    authors = [a for a in agents if a.artifacts_authored()]
+    check("some agents authored a REAL artifact", bool(authors),
+          "no agent is on record as synthesizing a verified artifact")
+    check("artifacts_authored only counts REAL artifacts",
+          all(r.artifact_is_real() for a in authors[:10] for r in a.artifacts_authored()))
+    rst = core.Agent.roster()
+    check("roster census is self-consistent",
+          rst["total"] == len(agents) and rst["have_spoken"] + len(rst["silent"]) == rst["total"],
+          str(rst)[:120])
+
     # (d) Package round-trip — must not touch the real store
     real = core.PACKAGES
     with tempfile.TemporaryDirectory() as td:

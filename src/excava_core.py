@@ -506,6 +506,138 @@ class Room:
         return Room(excava_chat.open_room(kind, goal, dept, done_criteria, max_turns))
 
 
+class Agent:
+    """M2 class overhaul, CLASS 4 of 5 — one named worker: {name, role, engine, tools} (§2).
+
+    WRAPS `data/excava/agents.json` (46 agents, 15 departments) and the dispatch already in
+    `excava_agents.py`. The roster is real and healthy — every agent has scoped tools and every
+    scoped module exists on disk (checked 2026-08-01) — so this class is not here to find rot in
+    it. It is here to answer the question nothing could answer before: **has this agent actually
+    DONE anything, or is it a name in a file?**
+
+    That is the same law-P4 test the earlier classes apply — `Element.is_usable()`,
+    `Tool.is_runnable()`, `Room.artifact_is_real()`. For an agent it is `has_spoken()`: a persona
+    that has never opened its mouth in any room is decoration, however good its description is.
+    Answering it requires the Room class, which is exactly the cross-class integration the
+    collapse is for ("nothing orphaned").
+    """
+
+    __slots__ = ("_d",)
+
+    def __init__(self, d: dict):
+        self._d = d or {}
+
+    # --- identity (§2's {name, role, engine, tools}) ----------------------
+    @property
+    def id(self) -> str:
+        return self._d.get("id", "")
+
+    @property
+    def name(self) -> str:
+        return self._d.get("name", "")
+
+    @property
+    def role(self) -> str:
+        """lead | doer | checker | improver — the diversity axis stacked on model family (§2)."""
+        return self._d.get("role", "")
+
+    @property
+    def department(self) -> str:
+        return self._d.get("department", "")
+
+    @property
+    def tier(self) -> int:
+        return int(self._d.get("tier", 0) or 0)
+
+    @property
+    def persona(self) -> str:
+        return self._d.get("persona", "")
+
+    @property
+    def engine_pref(self) -> str:
+        return self._d.get("engine_pref", "")
+
+    @property
+    def scoped_tools(self) -> list:
+        return self._d.get("scoped_tools", []) or []
+
+    def is_lead(self) -> bool:
+        return self.role == "lead"
+
+    # --- can it work? (deterministic, offline) ---------------------------
+    def missing_tools(self) -> list:
+        """Scoped modules that do not exist on disk — an agent scoped to nothing cannot act."""
+        return [t for t in self.scoped_tools
+                if not (ROOT / (t.replace(".", "/") + ".py")).exists()]
+
+    def can_act(self) -> bool:
+        return bool(self.scoped_tools) and not self.missing_tools()
+
+    def tools(self) -> list:
+        """Its scoped modules as Tool-ish descriptors. Distinct from the hub's Tool class: these
+        are THIS repo's own modules, not mined OSS — kept separate on purpose so 'the agent's
+        tools' is never confused with 'a wrapped OSS repo'."""
+        return [{"module": t, "exists": (ROOT / (t.replace(".", "/") + ".py")).exists()}
+                for t in self.scoped_tools]
+
+    # --- has it actually done anything? (law P4) -------------------------
+    def rooms(self) -> list:
+        """Rooms this agent has actually spoken in."""
+        return [r for r in Room.all() if self.name in r.speakers()]
+
+    def has_spoken(self) -> bool:
+        return bool(self.rooms())
+
+    def artifacts_authored(self) -> list:
+        """Artifacts this agent synthesized — the strongest evidence it did real work."""
+        return [r for r in Room.all() if r.artifact_by == self.name and r.artifact_is_real()]
+
+    def to_dict(self) -> dict:
+        return dict(self._d)
+
+    def __repr__(self) -> str:
+        return f"<Agent {self.name} {self.role}@{self.department} spoken={self.has_spoken()}>"
+
+    # --- collection ------------------------------------------------------
+    @staticmethod
+    def all(department: str | None = None, role: str | None = None) -> list:
+        try:
+            raw = json.loads((EXC / "agents.json").read_text(encoding="utf-8"))
+        except Exception:
+            return []
+        items = raw if isinstance(raw, list) else raw.get("agents", [])
+        out = []
+        for a in items:
+            if not isinstance(a, dict):
+                continue
+            if department and a.get("department") != department:
+                continue
+            if role and a.get("role") != role:
+                continue
+            out.append(Agent(a))
+        return out
+
+    @staticmethod
+    def get(name_or_id: str):
+        for a in Agent.all():
+            if a.id == name_or_id or a.name.lower() == str(name_or_id).lower():
+                return a
+        return None
+
+    @staticmethod
+    def roster() -> dict:
+        """The honest census: who exists, who can act, who has actually worked."""
+        ags = Agent.all()
+        silent = [a for a in ags if not a.has_spoken()]
+        return {"total": len(ags),
+                "departments": len({a.department for a in ags}),
+                "can_act": sum(1 for a in ags if a.can_act()),
+                "have_spoken": len(ags) - len(silent),
+                "silent": [a.name for a in silent],
+                "by_role": {r: sum(1 for a in ags if a.role == r)
+                            for r in sorted({a.role for a in ags if a.role})}}
+
+
 class Package:
     """A named bundle of Elements — the plan's 'Element/Package' pair (§2, law P8).
 
@@ -707,6 +839,12 @@ def main() -> int:
     ts.add_argument("--kind", choices=["mcp", "npm", "pip", "docker", "repo", "hosted", "unknown"])
     ts.add_argument("--runnable", action="store_true")
     ts.add_argument("--limit", type=int, default=20)
+    ag = sub.add_parser("agents", help="the roster: who exists, who can act, who has WORKED")
+    ag.add_argument("--department")
+    ag.add_argument("--role", choices=["lead", "doer", "checker", "improver"])
+    ag.add_argument("--silent", action="store_true", help="only those who never spoke")
+    a1 = sub.add_parser("agent", help="ONE agent: tools, rooms, artifacts")
+    a1.add_argument("who")
     rs = sub.add_parser("rooms", help="the conversations and what they PRODUCED")
     rs.add_argument("--kind")
     rs.add_argument("--status")
@@ -780,6 +918,41 @@ def main() -> int:
             print("  unknown ids (not added):", ", ".join(unknown))
         if pkg.missing():
             print("  MISSING (no longer in hub):", ", ".join(pkg.missing()))
+        return 0
+
+    if a.cmd == "agents":
+        r = Agent.roster()
+        print(f"roster: {r['total']} agents · {r['departments']} departments · "
+              f"{r['can_act']} can act · {r['have_spoken']} have actually spoken")
+        print("  by role:", ", ".join(f"{k}={v}" for k, v in r["by_role"].items()))
+        if r["silent"]:
+            print(f"  SILENT ({len(r['silent'])}) — named but never spoke: {', '.join(r['silent'])}")
+        rows = Agent.all(department=a.department, role=a.role)
+        if a.silent:
+            rows = [x for x in rows if not x.has_spoken()]
+        print(f"\nshowing {len(rows)}:")
+        for x in rows:
+            mark = "WORKED" if x.artifacts_authored() else ("spoke" if x.has_spoken() else "SILENT")
+            print(f"  [{mark:>6}] {x.name:<12} {x.role:<9} {x.department:<14} {len(x.rooms())} room(s)")
+        return 0
+
+    if a.cmd == "agent":
+        x = Agent.get(a.who)
+        if not x:
+            print(f"no agent {a.who}")
+            return 1
+        print(f"{x.name}  ({x.role} · {x.department} · tier {x.tier})")
+        print(f"  persona: {x.persona[:140]}")
+        print(f"  engine pref: {x.engine_pref or '(default)'}")
+        print(f"  tools: {', '.join(t['module'] for t in x.tools()) or '(none)'}"
+              + (f"  MISSING: {x.missing_tools()}" if x.missing_tools() else ""))
+        rooms_in = x.rooms()
+        arts = x.artifacts_authored()
+        print(f"  spoke in {len(rooms_in)} room(s); authored {len(arts)} real artifact(s)")
+        for r in arts[:5]:
+            print(f"    - {r.artifact_path}")
+        if not rooms_in:
+            print("  NEVER SPOKEN — named in the roster but has not appeared in any room.")
         return 0
 
     if a.cmd == "rooms":

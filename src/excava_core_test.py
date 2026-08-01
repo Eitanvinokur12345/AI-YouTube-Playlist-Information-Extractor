@@ -122,6 +122,32 @@ def main() -> int:
               kt.kind == "mcp" and kt.is_runnable() and "npx" in kt.command,
               f"kind={kt.kind} cmd={kt.command!r}")
 
+    # (c3) Room class — CLASS 3 of 5. The point of a room is the ARTIFACT, so the assertions
+    # are about whether what it claims to have produced actually exists and is readable.
+    rooms = core.Room.all()
+    check("Room reads the live rooms store", len(rooms) > 0, "no rooms found")
+    check("Room.get round-trips an id",
+          rooms and core.Room.get(rooms[0].id) is not None and core.Room.get(rooms[0].id).id == rooms[0].id)
+    claimed = [r for r in rooms if r.has_artifact()]
+    check("some rooms claim an artifact", bool(claimed))
+    # The bug this guards: `artifact` is a DICT {kind,ref,at,title,by}; stringifying it whole
+    # made every path unresolvable and reported 0 real artifacts out of 46. Never again.
+    check("artifact_path resolves the dict's ref, not the dict",
+          all("/" in r.artifact_path and not r.artifact_path.startswith("{") for r in claimed[:50]),
+          f"sample path: {claimed[0].artifact_path[:60] if claimed else 'n/a'}")
+    unreal = [r for r in claimed if not r.artifact_is_real()]
+    check("every claimed artifact is REAL (exists, non-empty, no conflict markers)",
+          not unreal, f"{len(unreal)} unreal: {[r.id for r in unreal[:3]]}")
+    check("artifact carries provenance (which agent synthesized it)",
+          all(r.artifact_by for r in claimed[:30]), "an artifact had no `by`")
+    talked = [r for r in rooms if r.transcript()]
+    check("rooms have real transcripts", bool(talked))
+    check("transcripts name more than one speaker (it is a DEBATE, not a monologue)",
+          any(len(r.speakers()) > 1 for r in talked[:20]),
+          "no room had 2+ distinct speakers")
+    check("an open room is never counted as exhausted",
+          not any(r.is_exhausted() for r in rooms if r.is_open()))
+
     # (d) Package round-trip — must not touch the real store
     real = core.PACKAGES
     with tempfile.TemporaryDirectory() as td:

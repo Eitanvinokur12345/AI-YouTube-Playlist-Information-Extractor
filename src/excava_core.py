@@ -39,7 +39,8 @@ from pathlib import Path
 ROOT = Path(__file__).parent.parent
 DATA = ROOT / "data"
 INDEX = DATA / "elements_index.json"
-PACKAGES = DATA / "excava" / "packages.json"
+EXC = DATA / "excava"
+PACKAGES = EXC / "packages.json"
 REMOTE = "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/data"
 
 # Status law (P3, mirrored from element_model): a low rating is NEVER a reason to discard.
@@ -333,6 +334,178 @@ class Tool:
         return out
 
 
+class Room:
+    """M2 class overhaul, CLASS 3 of 5 — ONE conversation between agents that ends in an artifact.
+
+    WRAPS, DOES NOT REPLACE, `src/excava_chat.py`. That module already runs real multi-turn
+    debate on real engines and has 52 rooms and 2,305 committed artifacts behind it — rewriting
+    it would destroy working machinery to satisfy a diagram. What it lacks is a TYPE: rooms are
+    passed around as bare dicts, so every caller re-reads rooms.json and re-derives "is this
+    room finished?", "where is its transcript?", "did it actually produce anything?" by hand.
+    That is the same fragmentation Element and Tool already fixed for the hub.
+
+    The read side is deterministic and offline — status, transcript, artifact. Only `advance()`
+    spends engine calls, and it delegates to excava_chat.advance() rather than reimplementing a
+    turn loop.
+    """
+
+    __slots__ = ("_d",)
+
+    def __init__(self, d: dict):
+        self._d = d or {}
+
+    # --- identity -------------------------------------------------------
+    @property
+    def id(self) -> str:
+        return self._d.get("id", "")
+
+    @property
+    def kind(self) -> str:
+        """dept | cross | group | war — war rooms are the showpiece (M2.5)."""
+        return self._d.get("kind", "")
+
+    @property
+    def goal(self) -> str:
+        return self._d.get("goal", "")
+
+    @property
+    def dept(self) -> str:
+        return self._d.get("dept", "")
+
+    @property
+    def done_criteria(self) -> str:
+        return self._d.get("done_criteria", "")
+
+    # --- progress -------------------------------------------------------
+    @property
+    def status(self) -> str:
+        return self._d.get("status", "")
+
+    @property
+    def turns(self) -> int:
+        return int(self._d.get("turns", 0) or 0)
+
+    @property
+    def max_turns(self) -> int:
+        return int(self._d.get("max_turns", 0) or 0)
+
+    def is_open(self) -> bool:
+        return self.status == "open"
+
+    def is_exhausted(self) -> bool:
+        """Hit its turn ceiling without converging — a room that stopped, not one that finished."""
+        return not self.is_open() and self.turns >= self.max_turns > 0 and not self.has_artifact()
+
+    # --- what it actually produced (law P4: real, not display) -----------
+    def has_artifact(self) -> bool:
+        return bool(self._d.get("artifact"))
+
+    @property
+    def artifact_path(self) -> str:
+        """excava_chat stores the artifact as {kind, ref, at, title, by} — the path is `ref`.
+        A bare string is accepted too, so an older/simpler record still resolves."""
+        a = self._d.get("artifact")
+        if isinstance(a, dict):
+            return str(a.get("ref") or "")
+        return str(a or "")
+
+    @property
+    def artifact_title(self) -> str:
+        a = self._d.get("artifact")
+        return str(a.get("title", "")) if isinstance(a, dict) else ""
+
+    @property
+    def artifact_by(self) -> str:
+        """Which agent synthesized it — provenance (law P9)."""
+        a = self._d.get("artifact")
+        return str(a.get("by", "")) if isinstance(a, dict) else ""
+
+    def artifact_text(self) -> str:
+        """The committed decision document, or '' — the ONE thing that proves the room worked."""
+        if not self.has_artifact():
+            return ""
+        p = ROOT / self.artifact_path
+        try:
+            return p.read_text(encoding="utf-8")
+        except Exception:
+            return ""
+
+    def artifact_is_real(self) -> bool:
+        """An artifact that is missing, empty, or still carrying conflict markers is NOT real.
+
+        This exists because 47 committed artifacts were found corrupted with git conflict
+        markers on 2026-08-01 while every count still reported them as produced.
+        """
+        t = self.artifact_text()
+        return bool(t.strip()) and not any(
+            l.startswith(("<<<<<<<", "=======", ">>>>>>>")) for l in t.splitlines())
+
+    def transcript(self, limit: int = 0) -> list:
+        """What the agents actually SAID, newest day first (feature-inventory item 40)."""
+        out = []
+        for day in sorted((EXC / "chats").glob("*"), reverse=True):
+            f = day / f"{self.id}.jsonl"
+            if not f.exists():
+                continue
+            for line in f.read_text(encoding="utf-8", errors="replace").splitlines():
+                try:
+                    out.append(json.loads(line))
+                except Exception:
+                    pass
+        return out[-limit:] if limit else out
+
+    def speakers(self) -> list:
+        seen = []
+        for m in self.transcript():
+            n = m.get("name")
+            if n and n != "room" and n not in seen:
+                seen.append(n)
+        return seen
+
+    # --- the one action that costs engine calls --------------------------
+    def advance(self, turns: int = 2) -> list:
+        """Run real turns. Delegates to excava_chat.advance (Ponytail — proven path)."""
+        from src import excava_chat
+        return excava_chat.advance(self.id, turns=turns)
+
+    def to_dict(self) -> dict:
+        return dict(self._d)
+
+    def __repr__(self) -> str:
+        return f"<Room {self.id} {self.status} {self.turns}/{self.max_turns} artifact={self.has_artifact()}>"
+
+    # --- collection ------------------------------------------------------
+    @staticmethod
+    def all(kind: str | None = None, status: str | None = None) -> list:
+        try:
+            d = json.loads((EXC / "rooms.json").read_text(encoding="utf-8"))
+        except Exception:
+            return []
+        out = []
+        for r in d.get("rooms", []):
+            if not isinstance(r, dict):
+                continue
+            if kind and r.get("kind") != kind:
+                continue
+            if status and r.get("status") != status:
+                continue
+            out.append(Room(r))
+        return out
+
+    @staticmethod
+    def get(room_id: str):
+        for r in Room.all():
+            if r.id == room_id:
+                return r
+        return None
+
+    @staticmethod
+    def open(kind: str, goal: str, dept: str = "", done_criteria: str = "",
+             max_turns: int = 10) -> "Room":
+        from src import excava_chat
+        return Room(excava_chat.open_room(kind, goal, dept, done_criteria, max_turns))
+
+
 class Package:
     """A named bundle of Elements — the plan's 'Element/Package' pair (§2, law P8).
 
@@ -534,6 +707,13 @@ def main() -> int:
     ts.add_argument("--kind", choices=["mcp", "npm", "pip", "docker", "repo", "hosted", "unknown"])
     ts.add_argument("--runnable", action="store_true")
     ts.add_argument("--limit", type=int, default=20)
+    rs = sub.add_parser("rooms", help="the conversations and what they PRODUCED")
+    rs.add_argument("--kind")
+    rs.add_argument("--status")
+    rs.add_argument("--limit", type=int, default=15)
+    r1 = sub.add_parser("room", help="ONE conversation: who spoke, what was decided")
+    r1.add_argument("room_id")
+    r1.add_argument("--transcript", action="store_true", help="print what the agents said")
     t1 = sub.add_parser("tool", help="how to run ONE element")
     t1.add_argument("eid")
     t1.add_argument("--online", action="store_true", help="ask npm/PyPI when no command is embedded")
@@ -600,6 +780,39 @@ def main() -> int:
             print("  unknown ids (not added):", ", ".join(unknown))
         if pkg.missing():
             print("  MISSING (no longer in hub):", ", ".join(pkg.missing()))
+        return 0
+
+    if a.cmd == "rooms":
+        rooms = Room.all(kind=a.kind, status=a.status)
+        allr = Room.all()
+        claimed = [r for r in allr if r.has_artifact()]
+        real = [r for r in claimed if r.artifact_is_real()]
+        print(f"rooms: {len(allr)} · {sum(1 for r in allr if r.is_open())} open · "
+              f"{len(claimed)} produced an artifact · {len(real)} of those verify as REAL")
+        print(f"\nshowing {min(len(rooms), a.limit)} of {len(rooms)}:")
+        for r in rooms[:a.limit]:
+            mark = "ART" if r.artifact_is_real() else ("???" if r.has_artifact() else "   ")
+            print(f"  [{mark}] {r.id:<44} {r.status:<5} {r.turns}/{r.max_turns} turns  {r.goal[:38]}")
+        return 0
+
+    if a.cmd == "room":
+        r = Room.get(a.room_id)
+        if not r:
+            print(f"no room {a.room_id}")
+            return 1
+        print(f"{r.id}  ({r.kind} · {r.status} · {r.turns}/{r.max_turns} turns)")
+        print(f"  goal: {r.goal}")
+        print(f"  done when: {r.done_criteria}")
+        print(f"  spoke: {', '.join(r.speakers()) or '(nobody yet)'}")
+        if r.has_artifact():
+            ok = "REAL" if r.artifact_is_real() else "MISSING/CORRUPT"
+            print(f"  artifact [{ok}] by {r.artifact_by}: {r.artifact_path}")
+        else:
+            print("  artifact: none yet")
+        if a.transcript:
+            print("\n  --- transcript ---")
+            for m in r.transcript():
+                print(f"  {m.get('name', '?'):>10}: {str(m.get('text', ''))[:100]}")
         return 0
 
     if a.cmd == "tools":

@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import time
 from pathlib import Path
 
@@ -28,6 +29,7 @@ ROOT = Path(__file__).parent.parent
 DATA = ROOT / "data"
 CONFIG = ROOT / "config.json"
 STATE = DATA / "mined_state.json"
+COMMAND_TOKEN_RX = re.compile(r"^/[a-zA-Z0-9][a-zA-Z0-9-]*$")
 FEEDS = ["weekly_web_news.json", "daily_web_news.json", "monthly_web_news.json"]
 
 
@@ -88,6 +90,15 @@ def merge(store: dict, key: str, namefield: str, items: list, url: str, src: str
         if key == "skills" and is_boilerplate_skill(it, tool_names):
             boilerplate_skipped += 1
             continue  # bare product-name stub, zero technique evidence -> belongs in tools.json
+        if key == "commands":
+            # CLAUDE.md Step 6: real /slash-commands only, never a CLI command/path/prose sentence
+            # that merely happens to be shown on screen. Normalize "/improve quick" -> "/improve"
+            # (the trailing text is an example argument, not part of the invocable command).
+            token = name.split(None, 1)[0] if name.startswith("/") else ""
+            if not COMMAND_TOKEN_RX.match(token):
+                continue
+            name = token
+            it = {**it, namefield: token}
         k = norm(name)
         if k in by:
             seen = by[k].setdefault("also_seen_in", [])

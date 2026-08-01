@@ -49,10 +49,18 @@
       "status": "pending",
       "detail": "Remove 'anthropic' and 'openai' tool entries from data/tools.json — these are company names mistakenly catalogued as tools. Merge their endorsement_video_ids into the 'claude' and 'chatgpt' tool entries respectively, then recompute mentions.",
       "proposed_change": {
-        "files": ["data/tools.json"],
+        "files": [
+          "data/tools.json"
+        ],
         "action": "delete_slugs",
-        "slugs": ["anthropic", "openai"],
-        "merge_endorsements_into": {"anthropic": "claude", "openai": "chatgpt"}
+        "slugs": [
+          "anthropic",
+          "openai"
+        ],
+        "merge_endorsements_into": {
+          "anthropic": "claude",
+          "openai": "chatgpt"
+        }
       },
       "source": "review",
       "review_finding_id": "54deb8c37c",
@@ -109,7 +117,10 @@
       "status": "pending",
       "detail": "Add encoding='utf-8' to ALL open() calls in src/analyze_batch.py (lines 152, 160, 402, 725-726, 747-748) AND src/process_video.py (lines 19, 24). Hebrew transcripts and Unicode tool names will cause UnicodeError on non-UTF-8 locales. Three files affected.",
       "proposed_change": {
-        "files": ["src/analyze_batch.py", "src/process_video.py"],
+        "files": [
+          "src/analyze_batch.py",
+          "src/process_video.py"
+        ],
         "action": "add_encoding_utf8",
         "description": "Add encoding='utf-8' to every open() call. In analyze_batch.py: load_json (line 152), save_json (line 160), write_skill_md (line 402), main() pending reads (lines 725-726, 747-748). In process_video.py: load_json (line 19), save_json (line 24). Consider consolidating into a shared src/utils.py to prevent future divergence."
       },
@@ -123,7 +134,10 @@
       "status": "pending",
       "detail": "Investigate and fix 100% transcript fallback: last fetch had no_transcript=78, new_found=78. Every new video fell through to description/title. Likely cause: youtube-transcript-api version incompatibility or YouTube API change. Add a health-check flag in status.json and a dashboard banner when no_transcript/new_found > 0.5.",
       "proposed_change": {
-        "files": ["src/fetch.py", "docs/dashboard.js"],
+        "files": [
+          "src/fetch.py",
+          "docs/dashboard.js"
+        ],
         "action": "add_transcript_health_check",
         "description": "In fetch.py: after the main loop, if no_transcript_count / max(len(new_videos), 1) > 0.5, set status['transcript_health'] = 'degraded' and status['transcript_fallback_rate'] = rate. In dashboard.js: in renderAlert(), check for status.transcript_health === 'degraded' and show an amber banner 'Transcript fetching is degraded — content quality reduced'."
       },
@@ -300,6 +314,19 @@
       "source": "review",
       "review_finding_id": "d4f2e1a8b5",
       "severity": "high"
+    },
+    {
+      "id": "d8e41e8edb",
+      "type": "dead_feed_tool_stubs",
+      "status": "pending",
+      "detail": "187 tools in data/tools.json have a permanently empty description field. All 187 share the same fingerprint: source_type=\"web_news\", quality_score=1, discovered_via a mine_feeds entry (dev.to/arXiv/Reddit/HN/etc.) between 2026-06-24 and 2026-07-01, never enriched since. build_graph.py and build_brain.py already skip empty-body records so they no longer render as blank/white nodes in the brain graph, but the underlying stub records themselves are still live in the Tools tab with zero real content beyond a name + homepage/source_url — dragging down G1 (Omniscience) and G3 (Truth & access) and adding noise other passes (dedup, cross-tab-consistency) have to skip past. This does not fit an existing safe_auto bucket: fill_missing_summaries is scoped to news entries only (IMPROVE.md Step 2), and P3 (\"never bury/prune for being low-rated\") plus the anti-boilerplate gate (never invent a generic \"is an AI tool by X, enhances productivity\" description) both argue against auto-fixing this unilaterally — hence a suggestion rather than an auto-apply.",
+      "proposed_change": {
+        "file": "data/tools.json",
+        "action": "review_dead_feed_tool_stubs",
+        "description": "Two options, either one closes the flag; pick whichever Eitan prefers, or a mix: (A) Backfill an honest, non-fabricated one-liner per stub from fields already on the record (e.g. \"Surfaced in <discovered_via> (<added_at date>); not independently verified — see <homepage or source_url>.\") — keeps the entry, gives the graph real content, never invents capabilities. (B) Move all 187 to a new data/dead_tools.json quarantine file (quarantine-never-delete, same pattern as deleted_skills.json) with reason=\"empty stub from feed mining, never enriched\" — removes noise from the live catalog and its 3044-count, fully reversible if a real description later surfaces from the link resolver. Full list of the 187 slugs is reproducible via: python3 -c \"import json;t=json.load(open('data/tools.json'))['tools'];print([x['slug'] for x in t if x.get('source_type')=='web_news' and not x.get('description','').strip()])\""
+      },
+      "source": "away-fire-93",
+      "severity": "med"
     }
   ]
 }

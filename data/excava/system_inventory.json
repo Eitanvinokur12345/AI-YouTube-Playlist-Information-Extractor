@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-08-01T19:49:13.642487+00:00",
- "total": 108,
+ "generated_at": "2026-08-01T21:30:06.375958+00:00",
+ "total": 112,
  "counts": {
-  "wired": 89,
-  "operator": 19,
+  "wired": 91,
+  "operator": 21,
   "orphaned": 0,
   "dead": 0
  },
@@ -84,15 +84,21 @@
    "imports": []
   },
   "activate": {
-   "status": "operator",
-   "loc": 134,
+   "status": "wired",
+   "loc": 149,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
+    "AWAY_LOG.md",
     "data/dev_construction.json"
    ],
-   "imported_by": [],
-   "imports": []
+   "imported_by": [
+    "excava_core",
+    "excava_core_test"
+   ],
+   "imports": [
+    "excava_core"
+   ]
   },
   "add_to_playlist": {
    "status": "wired",
@@ -271,7 +277,7 @@
   },
   "build_hub_api": {
    "status": "wired",
-   "loc": 98,
+   "loc": 117,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
@@ -280,9 +286,12 @@
     "data/tutorials.json"
    ],
    "imported_by": [
-    "excava"
+    "excava",
+    "excava_core_test"
    ],
-   "imports": []
+   "imports": [
+    "excava_core"
+   ]
   },
   "build_hub_index": {
    "status": "wired",
@@ -386,6 +395,18 @@
     "resolve_links",
     "visual_extract"
    ],
+   "imports": []
+  },
+  "clean_commands": {
+   "status": "operator",
+   "loc": 110,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "AWAY_LOG.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
    "imports": []
   },
   "collect_designs": {
@@ -572,6 +593,7 @@
    ],
    "imported_by": [
     "deep_retrieve",
+    "excava_core",
     "github_meta_enrich",
     "local_worker",
     "prewarm",
@@ -649,6 +671,8 @@
     "agent_issue",
     "excava",
     "excava_chat",
+    "excava_core",
+    "excava_core_test",
     "excava_supervisor",
     "excava_systemcheck",
     "guardrail_test"
@@ -669,7 +693,7 @@
   },
   "excava_backlog": {
    "status": "wired",
-   "loc": 174,
+   "loc": 203,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
@@ -723,7 +747,7 @@
   },
   "excava_chat": {
    "status": "wired",
-   "loc": 569,
+   "loc": 594,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
@@ -734,6 +758,8 @@
    ],
    "imported_by": [
     "excava",
+    "excava_core",
+    "excava_core_test",
     "excava_selfimprove",
     "excava_systemcheck",
     "guardrail_test"
@@ -745,6 +771,49 @@
     "excava_engines",
     "excava_leases",
     "excava_selfimprove"
+   ]
+  },
+  "excava_core": {
+   "status": "wired",
+   "loc": 1170,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "AWAY_LOG.md",
+    "PULSE.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "activate",
+    "build_hub_api",
+    "excava_core_test"
+   ],
+   "imports": [
+    "activate",
+    "element_model",
+    "excava_agents",
+    "excava_chat",
+    "excava_engines",
+    "verify_connectors"
+   ]
+  },
+  "excava_core_test": {
+   "status": "operator",
+   "loc": 286,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "AWAY_LOG.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": [
+    "activate",
+    "build_hub_api",
+    "excava_agents",
+    "excava_chat",
+    "excava_core",
+    "excava_engines"
    ]
   },
   "excava_creators": {
@@ -782,6 +851,8 @@
     "deep_retrieve",
     "excava_agents",
     "excava_chat",
+    "excava_core",
+    "excava_core_test",
     "excava_experiments",
     "excava_systemcheck",
     "horse",
@@ -933,7 +1004,7 @@
     "fetch.yml"
    ],
    "documented_in": [
-    "CLAUDE.md",
+    "ANALYZE_SPEC.md",
     "README.md",
     "brain/Architecture.md",
     "brain/Cadence.md",
@@ -950,7 +1021,7 @@
   },
   "gemini_video_analyze": {
    "status": "wired",
-   "loc": 214,
+   "loc": 215,
    "entrypoint": true,
    "invoked_by": [
     "gemini_video.yml"
@@ -967,11 +1038,13 @@
   },
   "git_safe": {
    "status": "wired",
-   "loc": 316,
+   "loc": 441,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
     "AWAY_LOG.md",
+    "AWAY_MODE.md",
+    "CLAUDE.md",
     "EXCAVA_END_PLAN.md",
     "EXCAVA_EXECUTION_PROMPT.md",
     "EXCAVA_MASTER_PROMPT.md",
@@ -1000,6 +1073,7 @@
    ],
    "documented_in": [
     "AWAY_LOG.md",
+    "AWAY_MODE.md",
     "QUESTIONS.md",
     "data/dev_construction.json"
    ],
@@ -1060,7 +1134,7 @@
   },
   "guardrails": {
    "status": "wired",
-   "loc": 531,
+   "loc": 540,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
@@ -1194,6 +1268,21 @@
     "project_memory"
    ]
   },
+  "loop_contract": {
+   "status": "operator",
+   "loc": 226,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "AWAY_MODE.md",
+    "CLAUDE.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "standing_checks"
+   ],
+   "imports": []
+  },
   "maintenance_check": {
    "status": "wired",
    "loc": 149,
@@ -1276,7 +1365,7 @@
   },
   "mine_feeds": {
    "status": "wired",
-   "loc": 178,
+   "loc": 189,
    "entrypoint": true,
    "invoked_by": [
     "mine.yml"
@@ -1321,8 +1410,8 @@
     "news.yml"
    ],
    "documented_in": [
+    "ANALYZE_SPEC.md",
     "AWAY_LOG.md",
-    "CLAUDE.md",
     "IMPROVE.md",
     "PIPELINE.md",
     "QUESTIONS.md",
@@ -1460,6 +1549,7 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
+    "AWAY_MODE.md",
     "EXCAVA_PROGRAM.md",
     "PORTABLE_HARNESS.md",
     "PROJECT_MEMORY.md",
@@ -1481,6 +1571,7 @@
    ],
    "documented_in": [
     "AWAY_LOG.md",
+    "AWAY_MODE.md",
     "PULSE.md",
     "SESSION_HANDOFF.md",
     "data/dev_construction.json",
@@ -1613,6 +1704,7 @@
     "bulk_analyze.yml"
    ],
    "documented_in": [
+    "AWAY_LOG.md",
     "data/dev_construction.json"
    ],
    "imported_by": [
@@ -1622,7 +1714,7 @@
   },
   "self_check": {
    "status": "wired",
-   "loc": 226,
+   "loc": 241,
    "entrypoint": true,
    "invoked_by": [
     "bulk_analyze.yml"
@@ -1654,17 +1746,20 @@
   },
   "standing_checks": {
    "status": "operator",
-   "loc": 117,
+   "loc": 146,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
     "AWAY_LOG.md",
+    "AWAY_MODE.md",
+    "CLAUDE.md",
     "data/dev_construction.json"
    ],
    "imported_by": [],
    "imports": [
     "git_safe",
-    "guardrails"
+    "guardrails",
+    "loop_contract"
    ]
   },
   "suggest_channels": {
@@ -1806,7 +1901,9 @@
     "SESSION_HANDOFF.md",
     "data/dev_construction.json"
    ],
-   "imported_by": [],
+   "imported_by": [
+    "excava_core"
+   ],
    "imports": []
   },
   "verify_elements": {

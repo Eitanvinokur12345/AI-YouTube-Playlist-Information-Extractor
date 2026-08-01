@@ -4,6 +4,17 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+**2026-08-01 (fire 91) — same "Unverified" commit badge issue recurred a sixth time; same decision stands.**
+Stop hook flagged fire 91's 2 commits (`3cefebf92`, `373ac1908`) as Unverified. Identical to fires
+11/34/84/86/89: `author`/`committer` on both is already `Claude <noreply@anthropic.com>` (matches
+git config exactly — the hook's suggested `git config` step would be a no-op), an SSH `gpgsig` is
+already present on both, and `git_safe` already verified `origin == HEAD` after pushing. The badge
+is cosmetic — no signing key for this identity is registered with GitHub in this environment, so
+amending would produce an equally-unverifiable signature, not fix the root cause — and this branch
+has CI/other sessions committing concurrently, so a history rewrite is real risk for zero gain.
+Declined to amend/rebase + force-push a sixth time. Still Eitan's call whether to register a real
+signing key or route commits through the GitHub API; not re-litigating again absent that answer.
+
 ## 2026-08-01
 - **~15:0x (fire 91, unattended, cloud, scheduled-task invocation)** — Standing checks: this
   session's branch (`claude/kind-shannon-pet3a2`) had 0 unique commits vs `origin/main` (a

@@ -33,9 +33,16 @@ def _load(p, default):
         return default
 
 
+def _slug(s: str) -> str:
+    import re
+    return "pkg-" + re.sub(r"[^a-z0-9]+", "-", str(s).lower()).strip("-")[:40]
+
+
 def _url(e: dict) -> str:
+    """Kept for the compact shape, but the precedence now MATCHES Element.best_link
+    (github first) instead of the website-first order this module used alone."""
     l = e.get("links") or {}
-    return l.get("website") or l.get("github") or l.get("open_code") or l.get("source_url") or ""
+    return l.get("github") or l.get("website") or l.get("source_url") or l.get("open_code") or ""
 
 
 def _compact(e: dict) -> dict:
@@ -45,25 +52,37 @@ def _compact(e: dict) -> dict:
 
 
 def build() -> dict:
+    """Migrated onto the Element/Package classes (fire 95) — the 2nd of 14 index consumers.
+
+    This fixed a REAL orphan, not just style: packages lived in TWO stores
+    (`data/packages.json`, curated by earlier phases, and `data/excava/packages.json`, written
+    by the Package class) and this module only ever read the first. Anything assembled through
+    the class was therefore invisible to the public hub API — the exact "nothing orphaned"
+    failure the collapse exists to end. `Package.all()` now reads both, so one accessor sees
+    every package and this module cannot drift from it again.
+
+    Also drops two hand-rolled definitions in favour of the shared ones: "is this real enough to
+    publish" is now `Element.is_usable()` (which additionally requires a real way IN, so a
+    verified element with no link/install/body is correctly no longer published as usable), and
+    the link is `Element.best_link`.
+    """
+    from src import excava_core as core
+
     idx = _load(DATA / "elements_index.json", [])
     els = idx if isinstance(idx, list) else idx.get("elements", [])
-    by_id = {e.get("id"): e for e in els if e.get("id")}
-    pkgs_raw = _load(DATA / "packages.json", {}).get("packages", [])
+    by_id = core.load()
 
-    # real/verified elements only — the hub is a database of things that actually work
-    real = [e for e in els if (e.get("verified") or {}).get("status") in ("verified", "niche")
-            and not e.get("stub")]
-    elements = [_compact(e) for e in real]
+    elements = [_compact(e.to_dict()) for e in by_id.values() if e.is_usable()]
 
     packages = []
-    for p in pkgs_raw:
+    for p in core.Package.all():
         resolved = []
-        for ref in (p.get("elements") or []):
-            eid = ref if isinstance(ref, str) else (ref.get("id") or ref.get("name") or "")
+        for eid in p.element_ids:
             e = by_id.get(eid)
-            resolved.append(_compact(e) if e else {"id": eid, "type": "?", "name": eid,
-                                                    "what": "", "install": "", "url": "", "verified": "unknown"})
-        packages.append({"id": p.get("id"), "name": p.get("name"), "what": p.get("what", ""),
+            resolved.append(_compact(e.to_dict()) if e else
+                            {"id": eid, "type": "?", "name": eid, "what": "",
+                             "install": "", "url": "", "verified": "unknown"})
+        packages.append({"id": _slug(p.name), "name": p.name, "what": p.note,
                          "elements": resolved})
 
     api = {

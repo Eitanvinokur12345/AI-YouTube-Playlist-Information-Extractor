@@ -207,6 +207,13 @@ REGENERATED = ("PULSE.md", "data/elements_index.json", "data/excava/pulse.json",
                "data/standing_checks.json")
 APPEND_ONLY = ("data/project_memory/episodes.jsonl",)
 ACCUMULATING = ("data/project_memory/graph.json",)
+# Room outputs. Fire 93 hit two of these as UNKNOWN and the resolver correctly stopped rather
+# than guessing. Inspected by hand: the branch copy was fire 89's marker-REPAIR (which keeps both
+# conflicting sides, so the header appears twice), while main's copy was a clean regeneration
+# dated the same day — the room had simply re-run and rewritten it. Artifacts are room OUTPUT,
+# and main is the loop that actually runs rooms, so theirs is authoritative. This is a prefix
+# rule, not a filename list, because artifacts are created continuously.
+REGENERATED_PREFIXES = ("data/excava/artifacts/", "data/excava/handoffs/")
 
 
 def _show(rev: str, path: str) -> str:
@@ -230,7 +237,7 @@ def resolve_merge_conflicts(theirs_rev: str = "origin/main") -> dict:
                                 cwd=str(ROOT), text=True, capture_output=True).stdout.split()
     for p in conflicted:
         f = ROOT / p
-        if p in REGENERATED:
+        if p in REGENERATED or p.startswith(REGENERATED_PREFIXES):
             f.write_text(_show(theirs_rev, p), encoding="utf-8")
             out[p] = "theirs (regenerated from source)"
         elif p in APPEND_ONLY:

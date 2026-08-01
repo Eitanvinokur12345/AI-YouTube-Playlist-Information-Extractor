@@ -176,6 +176,33 @@ def main() -> int:
           rst["total"] == len(agents) and rst["have_spoken"] + len(rst["silent"]) == rst["total"],
           str(rst)[:120])
 
+    # (c5) The speaker rotation Room depends on. Fire 93 found the checker structurally excluded
+    # from short rooms (70 of 83 rooms ran with NO challenge turn) and the improver excluded from
+    # every room. A doer proposing + a lead agreeing with nobody challenging IS the correlated-
+    # error failure §2 bans, so these assertions guard the debate itself, not just its plumbing.
+    from src import excava_chat
+
+    def _cast(nd=1, nc=1, ni=0, nl=1):
+        return ([{"role": "doer", "name": f"D{i}"} for i in range(nd)]
+                + [{"role": "checker", "name": f"C{i}"} for i in range(nc)]
+                + [{"role": "improver", "name": f"I{i}"} for i in range(ni)]
+                + [{"role": "lead", "name": f"L{i}"} for i in range(nl)])
+
+    def _seq(mt, **kw):
+        c = _cast(**kw)
+        return [excava_chat._speaker({"turns": t, "max_turns": mt}, c)["name"] for t in range(mt)]
+
+    for mt in (3, 4, 6):
+        s = _seq(mt)
+        check(f"a checker CHALLENGES in a {mt}-turn room", "C0" in s, f"order was {s}")
+        check(f"the lead converges LAST in a {mt}-turn room", s[-1].startswith("L"), f"order was {s}")
+        check(f"the doer OPENS the {mt}-turn room", s[0].startswith("D"), f"order was {s}")
+    check("an improver gets a turn once the room can afford one",
+          "I0" in _seq(4, ni=1) and "I0" in _seq(6, ni=1),
+          f"4-turn: {_seq(4, ni=1)}")
+    check("challenge outranks refinement when turns are scarce",
+          "C0" in _seq(3, ni=1), f"3-turn: {_seq(3, ni=1)}")
+
     # (d) Package round-trip — must not touch the real store
     real = core.PACKAGES
     with tempfile.TemporaryDirectory() as td:

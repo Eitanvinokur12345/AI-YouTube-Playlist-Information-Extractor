@@ -116,19 +116,44 @@ def _cast(room: dict, reg: dict) -> list[dict]:
 
 
 def _speaker(room: dict, cast: list[dict]) -> dict:
-    """Debate order: doer opens, checker challenges, doer answers, lead converges at the end."""
+    """Debate order: doer opens, checker challenges, improver refines, lead converges at the end.
+
+    FIRE 93 BUG FIX — the checker was structurally excluded from short rooms, and the improver
+    from ALL rooms. Measured before the fix: of 83 rooms with a transcript, the 70 that run at
+    max_turns=3 had a checker speak in only 3 of them, while all 12 max_turns=6 rooms did.
+    Cause: the lead-converge window was a flat `t >= max_turns - 2`, so a 3-turn room produced
+    [doer, lead, lead] — one proposal, then immediate agreement, with no challenge turn at all.
+    A doer proposing and a lead agreeing with no checker IS the correlated-error failure §2
+    exists to prevent, and it was happening in 85% of rooms.
+
+    Two changes, both minimal:
+      1. The converge window is now 1 turn on short rooms and 2 only when the room is long
+         enough to afford it (>= 5 turns), so a challenge always precedes convergence.
+      2. `improver` joins the rotation. All three improvers (Refine, Remix, Overhaul) had never
+         spoken in any room because the rotation was built from doers and checkers only — a
+         named role in the roster that no code path could ever select.
+    """
     t = room["turns"]
+    max_turns = int(room.get("max_turns") or 0)
     doers = [a for a in cast if a.get("role") == "doer"]
     checkers = [a for a in cast if a.get("role") == "checker"]
+    improvers = [a for a in cast if a.get("role") == "improver"]
     leads = [a for a in cast if a.get("role") == "lead"]
-    if t >= room["max_turns"] - 2 and leads:
+
+    # Reserve the tail for the lead — but never so much that the debate never happens.
+    converge = 2 if max_turns >= 5 else 1
+    if leads and max_turns and t >= max_turns - converge:
         return leads[t % len(leads)]
+
     order = []
-    for i in range(max(len(doers), 1)):
+    rounds = max(len(doers), len(checkers), len(improvers), 1)
+    for i in range(rounds):
         if doers:
             order.append(doers[i % len(doers)])
         if checkers:
             order.append(checkers[i % len(checkers)])
+        if improvers:
+            order.append(improvers[i % len(improvers)])
     return order[t % len(order)] if order else cast[t % len(cast)]
 
 

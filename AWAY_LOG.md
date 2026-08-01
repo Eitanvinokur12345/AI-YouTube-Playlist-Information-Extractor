@@ -5,7 +5,295 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-01
-- **~11:0x (fire 89, unattended, cloud, scheduled-task invocation)** — Standing checks
+- **~19:0x (fire 93, unattended, cloud, scheduled-task invocation)** — Read fire 92's log first.
+  Standing checks clean (`python -m src.standing_checks`): only the routine missing-upstream-
+  tracking self-heal on this fresh session branch. Guardrails 18/20, 0 critical before this
+  fire's change (same two standing flags as every recent fire: G-C history-bundle staleness,
+  G-O local drain stale — EITAN-PC off).
+  **Investigated the flagship `analyze.yml` outage in depth** (fire 83 escalated it via push
+  notification; fires 84/85/86/89/90/91/92 all re-checked and declined to re-notify since
+  nothing was qualitatively new). Pulled the actual GitHub Actions job logs directly via the
+  `github` MCP tool for the last ~30 runs and the raw `claude-execution-output.json` for one of
+  the 5 real (non-night-gated-skip) failures (run `30679570989`, 2026-08-01T02:15 UTC): confirmed
+  the exact signature already described in the workflow's own comments —
+  `{"type":"result","subtype":"success","is_error":true,"duration_ms":1937,"num_turns":1,
+  "total_cost_usd":0}` — the SDK dies before any real model turn, ~2s in. This is now **16
+  consecutive zero-progress failures with zero successes since 2026-07-28** (4+ days), well past
+  the workflow's own coded "3-4 with no success -> check the token" escalation threshold that
+  triggered fire 83's original notification. **Did NOT send a second push notification** — this
+  is the same already-escalated, human-only-actionable issue (only Eitan can run
+  `claude setup-token` and rotate `CLAUDE_CODE_OAUTH_TOKEN_REAL`; no fire can do this), and
+  fires 84-92 already made the considered call that "more elapsed time on the same known issue"
+  isn't new information worth re-pinging him over — respecting that precedent rather than
+  re-litigating it. Also checked whether `bulk_analyze`'s free-tier lane could pick up slack by
+  relaxing `require_transcript: true` (1623 of 1794 pending videos lack a real transcript, so the
+  free lane already skips most of the backlog) — deliberately did NOT make that change: the code
+  comment ("prefer ones with a REAL transcript — that's the whole point") and CLAUDE.md's Step 2b
+  are explicit that title/description-only extraction is low-confidence, and relaxing the gate
+  risks reintroducing exactly the ~950-stub flood P14/the anti-boilerplate gate exist to prevent.
+  The actual bottleneck (transcript coverage) is already served by its own `transcribe.yml` lane
+  on its own cadence — not something this fire should short-circuit.
+  **This fire's increment:** picked up fire 92's own flagged follow-up ("a future fire with more
+  budget should audit all 8 [remaining hand-typed 'planned' capability rows], not just trust the
+  hand-typed table again") rather than doing a second night-window-diagnosis-only fire with no
+  code change. Audited `power-meter`, `dept-focus`, `horse`, and `activator` against real
+  evidence: `power-meter`'s only backing file (`power_scan.json`) holds an opportunity list, not
+  the % score its own name promises — left `planned`. `dept-focus`'s closest real mechanism
+  (`excava_backlog.py`'s value-ranked per-department task picks) doesn't match the specific
+  "rotating focus" framing closely enough to claim honestly — left `planned`. `horse.py` is real,
+  complete code, but `data/horse_runs.json` shows `"runs": []` — zero actual executions on
+  record — correctly stays `planned`. `activator` (`skills/excavatortron-activator/`) had
+  substantial real files (SKILL.md, find.py, activate.py, a public hub API) that the CAT table's
+  own evidence string still called "partial" — ran `find.py` directly (offline, against local
+  hub data, read-only, no side effects) with a real query and got 15 genuine matches back, so
+  wired this as a live self-test inside `_computed()` in `src/build_capabilities.py` (subprocess,
+  15s timeout, fails safely back to `planned` if the script or hub data ever breaks) rather than
+  hand-flipping the static status — same "stays honest either direction" contract fire 92 used
+  for war-room/group-chat/daily-selfimprove. Result: `live` 23->24, `planned` 8->7 (37 unchanged).
+  **Verified:** `python -m py_compile src/build_capabilities.py` clean; `python -m
+  src.build_capabilities` regenerated with the new counts and printed the real match evidence
+  string (`"find.py self-test: 15 real hub match(es) returned..."`); `python -m src.guardrails`
+  17/20 before commit (G-G newly flagged only because `origin/main` had advanced by 1 commit from
+  a concurrent lane in the meantime — not a regression from this change) with 0 critical either
+  way; `git diff --stat` confirmed only `src/build_capabilities.py` + the expected regenerated
+  `data/excava/capabilities.json` and trailing status files changed. Logged the WHY via
+  `project_memory` before committing, per the project's own contract.
+  **Harsh self-criticism:** this is a narrow, single-row fix — I deliberately did not force a
+  claim on `power-meter`/`dept-focus`/`horse` even though `power-meter` and `dept-focus` have
+  *some* loosely-related evidence, because that evidence doesn't cleanly match what the row's own
+  name and description promise, and overclaiming in the honest direction is just as much a P4
+  violation as overclaiming in the dishonest direction — but this is a judgment call about
+  "close enough," not a mechanical test, so a future fire (or Eitan) could reasonably disagree
+  on where that line sits. This is also, once again, meta/self-audit work on EXCAVA's own
+  honesty layer rather than the bigger structural M2 step (5-class scaffolding) fire 65 already
+  flagged as explicitly pitch-gated pending Eitan's answer, or a genuinely new department
+  capability — I spent real fire budget on the `analyze.yml` investigation (which produced a
+  confirmed diagnosis but deliberately zero notification and zero code change, per the
+  don't-re-litigate-a-settled-call reasoning above) before landing on this smaller, safer
+  increment, which is a defensible sequencing but means less net forward motion this fire than a
+  fire that skipped the (now redundant) diagnosis pass entirely. **No blocker for Eitan** beyond
+  the standing, already-known `analyze.yml` token item (unchanged, not re-escalating).
+
+- **~17:0x (fire 92, unattended, cloud, scheduled-task invocation)** — Read fire 91's log first
+  per this fire's own instruction; skipped the 10th-heartbeat review (that ran at fire 90, next
+  due at fire 100). Standing checks clean (`python -m src.standing_checks`): only the routine
+  missing-upstream-tracking self-heal on this fresh session branch, 0/0 ahead-behind
+  `origin/main`. Guardrails 18/20, 0 critical — same two standing non-critical flags as every
+  recent fire (G-C history-bundle staleness, G-O local drain stale since EITAN-PC is off).
+  **This fire's increment: made `data/excava/capabilities.json` self-verifying for 3 more rows**
+  (P4 "real-not-display" — but in the UNDER-claiming direction this time, which is the safe one
+  to fix unilaterally). `src/build_capabilities.py`'s catalog is a hand-typed table from the
+  2026-07-06 audit; only `room-decision` had ever been upgraded to a real evidence check
+  (`_computed()`). Found 3 rows still hand-tagged `"planned"` despite strong, dated, on-disk
+  proof they've been genuinely live for days: `war-room` (84 `war-*.jsonl` chat logs across
+  history, real multi-turn debates, e.g. `war-deliver-keep-the-designs-tab-619.jsonl` — 9 turns,
+  real engine calls like `groq/llama-3.3-70b-versatile`), `group-chat` (67 `group-*.jsonl` logs,
+  latest today with 12 turns), and `daily-selfimprove` (`improvements.jsonl` — 77 entries since
+  2026-07-24, both `safe-*`/`add-agent` auto-fixes AND `pitch` entries present, latest today).
+  Extended `_computed()` to check these 3 against real files every run (7-day recency window for
+  the room logs — `>1` line required, i.e. more than just the "room opened" system line; 3-day
+  recency + both safe-fix and pitch kinds present for self-improve) and write a concrete evidence
+  string instead of the static `"§N spec"` placeholder — so this is a **permanent self-check**,
+  not a one-time relabel: if the evidence goes stale (e.g. war-rooms stop firing for a week) it
+  will correctly flip back to `"planned"` on its own, same honesty either direction. Result:
+  `live` 20→23, `planned` 11→8 (37 total unchanged) — visible immediately on the dashboard's
+  🧩 Capabilities card (EXCAVA tab), including on hover (the `evidence` field is the tooltip).
+  Left the other 8 still-planned rows alone (`console-inapp`, `power-meter`, `horse`,
+  `activator`, etc.) — spot-checked `console-inapp` and confirmed it's genuinely still gated on
+  an owner backend decision already documented in the UI's own subtext, not stale.
+  **Verified:** `python -m py_compile src/build_capabilities.py` clean; `python -m
+  src.build_capabilities` regenerates with the expected new counts; `python -m src.guardrails`
+  still 18/20, 0 critical (no regression); `node --check docs/dashboard.js` clean; served
+  `docs/` + `data/` over a local `python -m http.server`, confirmed both files return 200 and
+  the JSON the dashboard fetches (`../data/excava/capabilities.json` relative to
+  `docs/index.html`) carries the new counts; then ran a Node simulation of the dashboard's exact
+  `cap-grid` sort/render logic (copied verbatim from `docs/dashboard.js`'s `renderExcava()`)
+  against the real regenerated JSON — produced the 3 expected `✓ live` rows with correct,
+  human-readable evidence tooltips, no runtime errors. No Playwright/browser binary available in
+  this sandbox, so this is a faithful logic+data simulation of the render path, not a literal
+  pixel screenshot — the same caveat several recent fires have logged for their own offline
+  verifications. Logged the WHY via `project_memory` before committing, per the project's own
+  contract. Did NOT touch `data/skills.json`/`data/tools.json`/`data/_pending`/etc. (verified via
+  `git status`/`git diff --stat` before shipping — only `src/build_capabilities.py` +
+  trailing status refreshes in `data/excava/*` and `data/{accessibility,visualization,
+  guardrails_status,standing_checks}.json`, all EXCAVA's own).
+  **Harsh self-criticism:** this is a real, verified, dashboard-visible fix, but it is a
+  narrow one — 3 rows out of 37, and I deliberately did NOT do the same audit on the other 8
+  still-`planned` rows beyond one spot-check, so some of those may ALSO be stale (understating
+  or, worse, now overstating reality) and I don't actually know either way; a future fire with
+  more budget should audit all 8, not just trust the hand-typed table again. The 7-day/3-day
+  recency windows are my own judgment calls, not derived from any spec — reasonable, but
+  arbitrary, and could flip a row live/planned right at the boundary in a way Eitan might not
+  agree matches "capability", not "activity in the last N days". I also did not update the
+  static `CAT` table's own evidence placeholder text for the 3 rows (still reads `"§N spec"`
+  etc.) since it's now dead code (overridden by `_computed()`), which is a small piece of debt
+  I left rather than clean up under time pressure — a future fire could delete the now-unused
+  placeholder strings for clarity. Like fires 88-91 before it, this is still meta/self-audit
+  work on EXCAVA's own honesty-reporting layer rather than a new end-user-facing capability
+  (Hub content growth, a new department ability, a new tab) — I picked it specifically because
+  the last several fires' own self-criticism kept flagging "should hunt an EXCAVA-program
+  increment" and this is a genuine, safely-verifiable, non-content-grinding one that also
+  directly serves the self-improvement pillar (END_PLAN §4) by making the system's self-report
+  more truthful — but it is not a bigger structural step (e.g. the still-unbuilt "meta-brain /
+  cross-dept learning" named in END_PLAN §4 and STEPS breadth-item B3) that a fire with a larger
+  time budget should tackle instead of another audit pass.
+  **Is the criticism itself harsh, or performative?** Genuinely mixed: the "narrow scope" and
+  "didn't audit the other 8" points are real, checkable gaps (I can name exactly what's
+  unverified) — that's substantive. But I did not, for instance, seriously entertain reverting
+  the change and doing something bigger instead; I picked a safe, bounded, low-risk task and
+  I'm now grading it as "safe and bounded" rather than asking whether safe-and-bounded was
+  itself the right trade-off for fire 92 specifically, given the repeated "still meta, not
+  product" pattern across fires 88-91. That's a fair question I'm flagging rather than
+  resolving — an honest "I optimized for zero-risk-verified over ambitious" admission, not
+  hidden behind the evidence-quality praise above.
+  **No blocker for Eitan.** This is routine progress, not something needing his attention —
+  the standing `analyze.yml` outage note from fires 83-91 is unchanged (still not re-escalating
+  without new information, per that thread's own established precedent) and no new guardrail
+  regression appeared.
+
+**2026-08-01 (fire 93) — same "Unverified" commit badge issue recurred a seventh time; same decision stands.**
+Stop hook flagged fire 93's 2 commits (`95704168a`, `59bd6b3d3`) plus one that isn't even mine
+(`ed36d2212`, `skills-tracker-bot <actions@users.noreply.github.com>` — the `analyze.yml` safety-
+commit step's own identity). Checked fresh rather than assuming: `git config user.name`/`user.email`
+already read `Claude <noreply@anthropic.com>` (the hook's suggested fix would be a no-op), both of
+my commits already carry a `gpgsig`, and rewriting a concurrent automated lane's commit
+(`ed36d2212`) is out of scope regardless. Declined to amend/rebase a seventh time for the same
+reasons fires 11/34/84/86/89/91 already established.
+
+**2026-08-01 (fire 91) — same "Unverified" commit badge issue recurred a sixth time; same decision stands.**
+Stop hook flagged fire 91's 2 commits (`3cefebf92`, `373ac1908`) as Unverified. Identical to fires
+11/34/84/86/89: `author`/`committer` on both is already `Claude <noreply@anthropic.com>` (matches
+git config exactly — the hook's suggested `git config` step would be a no-op), an SSH `gpgsig` is
+already present on both, and `git_safe` already verified `origin == HEAD` after pushing. The badge
+is cosmetic — no signing key for this identity is registered with GitHub in this environment, so
+amending would produce an equally-unverifiable signature, not fix the root cause — and this branch
+has CI/other sessions committing concurrently, so a history rewrite is real risk for zero gain.
+Declined to amend/rebase + force-push a sixth time. Still Eitan's call whether to register a real
+signing key or route commits through the GitHub API; not re-litigating again absent that answer.
+
+## 2026-08-01
+- **~15:0x (fire 91, unattended, cloud, scheduled-task invocation)** — Standing checks: this
+  session's branch (`claude/kind-shannon-pet3a2`) had 0 unique commits vs `origin/main` (a
+  stale checkout, not diverged work) — reset it to `origin/main` before starting, same
+  fix as the recurring upstream-tracking gap prior fires flagged. Guardrails 18/20, 0 critical
+  — same two standing non-critical flags as every recent fire (G-C history-bundle staleness,
+  G-O local drain stale — EITAN-PC off). `analyze.yml` (the flagship Claude-driven ingestion
+  lane) is still down: `analyze_consecutive_fails` unchanged at 16, `last_analyze_ok_at` still
+  stuck at 2026-07-28T02:37:27Z — identical to what fire 83 already push-notified and fires
+  84-90 already declined to re-escalate absent new information; nothing changed here, so no
+  new notification. All 10 departments moving (movement.json), backlog actively draining via
+  the other automated lanes (bulk-analyze, links+memory, core-spoton, connectors-verify all
+  landed commits in the last hour) — per fire 90's own recommendation ("weigh a product-facing
+  increment... unless a fresh guardrail regression forces otherwise"), did NOT duplicate that
+  content-grinding work.
+  **This fire's increment:** `python -m src.self_check` was failing Q11 ("every skill category
+  in the approved list", needs ≥90%) at 89.8% — 347 of 3,414 `data/skills.json` records
+  carried a category outside `config.json`'s approved list (`data`151/`security`96/`voice`71/
+  `robotics`18/`3d`11 — five ad-hoc categories that crept in over many analyze runs, never in
+  the schema). Sampled each bucket before deciding how to fix it: they weren't a coherent
+  missing taxonomy needing a new category (e.g. the `security` bucket held a Claude Code
+  workflow, a ChatGPT prompt-modifier list, and a multi-agent-debate technique — nothing
+  actually security-related), so extending `config.json`'s categories would have papered over
+  mis-tagging, not fixed it. Instead wrote a keyword-heuristic reclassifier
+  (skill_name+description+use_case → best-fit approved category, `other` as the deterministic
+  fallback) and ran it once over just those 347 out-of-taxonomy records — 3,067 already-valid
+  records untouched. Result: 161→other, 50→agents, 38→automation, 32→research, 24→code,
+  11→marketing, 7→image creation, 7→music, 5→productivity, 4→design, 3→integration,
+  2→social, 2→video creation, 1→writing. Checked `data/stars.json` first (absent — no frozen
+  records to protect). Verified: `git diff data/skills.json` shows every changed line is a
+  `"category"` field and nothing else (no other content touched); `json.load` parses clean;
+  `self_check` now 44/50 with Q11 no longer in the failing list (Q1/Q10/Q12/Q13/Q42/Q45 remain
+  — Q1/Q42/Q45 are the same known `analyze.yml`-outage backlog signal above, not a new problem;
+  Q10/Q12/Q13 need real content generation per-skill, out of scope for a non-brain away fire);
+  `python -m src.guardrails` still 18/20, 0 critical, no regression. Logged the WHY via
+  `project_memory` before committing, per the project's own contract.
+  **Harsh self-criticism:** a keyword-regex classifier is a blunt instrument — I did not
+  hand-verify all 347 reassignments, only sampled a few per source bucket before writing the
+  rules and then trusted the aggregate distribution looked sane; some fraction of the 161 that
+  fell through to `other` almost certainly had a better real fit the regex missed (e.g. the
+  digital-twin/LiDAR/robotics examples arguably belong in a dedicated category more than
+  `research`, but no approved category fits them better today). This is a data-quality nudge,
+  not a rebuild of the categorization pipeline itself — the real fix is CLAUDE.md Step 3's own
+  generation prompt staying inside the approved list on the next pass, which this fire doesn't
+  touch. Also, like fire 90 flagged, this is still not the Hub/self-improve/departments product
+  increment the milestone plan (M1-M2) actually calls for — picked the safest available bounded
+  fix over a riskier product change given no deep familiarity built up this fire and several
+  concurrent automated lanes actively committing to the same branch.
+
+- **~11:5x (fire 90, unattended, cloud, scheduled-task invocation, 10th heartbeat)** — Standing checks: clean
+  (`git fetch origin main` + `git rev-list --left-right --count origin/main...HEAD` → 0/0, this
+  session's branch already equals `origin/main`; only the routine stale-local-`main`-ref noise,
+  not a real divergence). Guardrails 18/20, 0 critical — same two standing non-critical flags as
+  every fire this week (G-C history-bundle staleness, G-O local drain stale because EITAN-PC is
+  off). Did the exact increment fire 89 flagged as deferred: added a real UNION merge for the
+  `.jsonl` append-logs in `.github/workflows/excava_beat.yml`'s conflict-resolution fallback,
+  matched by extension (not a fixed path list, so it also covers any new per-agent log under
+  `chats/`, `traces/`, `agent_memory/`, `artifacts/`, `handoffs/` without another edit later).
+  On an unresolved `.jsonl` conflict it now reads both sides straight from the merge's index
+  stages (`git show :2:<f>` / `:3:<f>` — works even though the worktree copy already has literal
+  conflict markers baked in), concatenates ours-then-theirs, and collapses only byte-identical
+  lines (`awk '!seen[$0]++'`) — append-only logs are line-independent records, so the union is
+  always safe: worst case it adds a harmless exact-duplicate line, and it can never discard a
+  real entry either lane wrote (unlike "ours", which was the thing fire 89 explicitly declined
+  to do here for exactly this data-loss reason). The known-stateless JSON files stay on the
+  existing `checkout --ours` path (fire 88/89) since those are wholesale-rewritten, not
+  appended-to — this only adds the append-log case, it doesn't touch that list. Verified two
+  ways before shipping: (1) `python -c "import yaml; yaml.safe_load(...)"` parses the edited
+  workflow clean; (2) built an isolated throwaway git repo, diverged a `log.jsonl` on two
+  branches with different appended lines, forced a real merge conflict, ran the exact
+  shell logic standalone — both distinct lines survived, 0 conflict-marker bytes remained, and
+  `git commit` on the result succeeded (the abort-fallback path was never reached). Re-ran
+  `python -m src.guardrails` after editing: still 18/20, 0 critical, no regression (G-R still
+  confirms this lane carries the rebase→merge→auto-resolve fallback; G-S still finds 0 bare
+  conflict-marker lines in any `.jsonl` anywhere in the repo right now). **Harsh
+  self-criticism:** this was verified against a synthetic two-line conflict in an isolated repo,
+  not against a real GitHub Actions run with this codebase's actual concurrent-lane conflict
+  shape — the offline simulation proves the shell logic is correct, not that it behaves
+  identically under the real runner's timing/quoting/locale, so the honest status is "should
+  work, unverified in production" until an actual beat run hits a `.jsonl` conflict and this
+  code path fires for real (watch for it, don't assume). It also only closes the append-log
+  half of fire 88's original ask — a non-`.jsonl` conflict outside the known-stateless list
+  (e.g. a `decision.md` artifact, or two lanes racing on the *same* new file path with unrelated
+  content) still falls through to the plain abort, same as before; that residual case is
+  narrower and lower-frequency than the jsonl case but still open. And three fires in a row now
+  (88 diagnose, 89 partial fix, 90 this fix) have gone into this one guardrail thread — real,
+  owner-law-grounded work (GUARDRAILS.md: "must never lose information"), but the same
+  "meta-machinery vs. product" tension flagged around v125-127 applies here too; the next fire
+  should weigh a product-facing increment (Hub/self-improve/departments) unless a fresh
+  guardrail regression forces otherwise.
+  **10th-heartbeat check (per the outer routine's own instruction):** (1) *Storage* — 30 GB free
+  of 252 GB on the repo drive (21% used), `.git` 224 MB / `data` 240 MB, no growth concern.
+  (2) *Previous run (fire 89) completed successfully* — commit `29d9fde7` pushed and verified
+  (`origin == HEAD`), guardrails clean afterward (18/20, 0 critical); confirmed again just now
+  that this fire's own fetch shows 0/0 ahead-behind against `origin/main` before starting.
+  (3) *No operational limits exceeded* — 0 critical guardrail failures across every fire in the
+  window (81-90); the only standing `!!` flags are the same two known/self-healing ones every
+  recent fire has carried (G-C stale history-bundle, G-O EITAN-PC drain offline ~150h — someone
+  else's machine, not this session's to fix). (4) *Review of fires 81-90*: 83 found and repaired
+  a real 2-guardrail-CRITICAL corruption (conflict markers spliced into `supervisor.json` + 219
+  `.jsonl` logs) using existing tooling (`git_safe repair-conflicts`); 88-90 chased and closed
+  out the related-but-distinct excava-beat merge-conflict-corruption bug in 3 stages (diagnose →
+  partial fix → full fix, this fire); 80/82 fixed two self_check assertion bugs (#13 slash-
+  command purity, #14 relevance-skip invariant) with the same before/after verification pattern;
+  81/82/85/86 tracked, and 83 escalated via push notification, the flagship `analyze.yml` outage
+  (see below); 84/85 used the one still-working lever (manual `data/_pending` drain) to keep the
+  actual product moving while that lane was down; 86/89 declined to re-litigate the recurring
+  "Unverified commit badge" question a fourth/fifth time absent Eitan's answer. All ten fires
+  verified their own change (guardrails and/or a targeted script run) before shipping, and all
+  shipped via `git_safe`/`git_safe ship` — nothing landed unverified. **The one real standing
+  concern:** `analyze.yml` (the flagship, Claude-driven ingestion lane `CLAUDE.md` governs) is
+  still down — `analyze_consecutive_fails` now **16** (was 14 at fire 83's escalation),
+  `last_analyze_ok_at` still stuck at `2026-07-28T02:37:27Z`, so ~**98h** with zero real
+  successes, spanning several more Israel night-windows since. This is unchanged IN KIND from
+  what fire 83 already pushed-notified Eitan about (`claude setup-token` / confirm the rolling
+  cap so catch-up cadence can be throttled — both still his call, still unanswered) — per
+  fires 84-89's own consistent, repeatedly-reaffirmed judgment, re-notifying again with no new
+  information would be noise, not signal, so this fire is following that same precedent rather
+  than re-litigating it a sixth time. Separately, the lower-tier free-pool lanes
+  (`bulk-analyze`, `mine-feeds`, `links+memory`) that do NOT depend on the Claude subscription
+  token are still running and landing real commits hourly (confirmed: 5 in the last ~2.5h) — the
+  outage is scoped to the one flagship lane, not the whole pipeline. No blocker for Eitan beyond
+  that already-surfaced, already-actionable item.
   (`python -m src.standing_checks`): clean — stale local cache of `origin/main` and missing
   upstream tracking on this session's branch, both routine and both self-healed by the tool.
   Guardrails 18/20, 0 critical (only the two standing non-critical flags: G-C stale history

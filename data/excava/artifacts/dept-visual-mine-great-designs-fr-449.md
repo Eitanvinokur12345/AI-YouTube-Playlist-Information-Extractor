@@ -1,17 +1,16 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-449` (dept) · 2026-07-31T12:13:02.225202+00:00
+> Decision artifact · room `dept-visual-mine-great-designs-fr-449` (dept) · 2026-08-01T14:09:55.240389+00:00
 > Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Use both Playwright MCP and Behance trending screenshots to maximize visual diversity in the hub’s library.
 
 **Plan:**
-1. **Playwright MCP:** Screenshot top 3 most-tweeted design systems (Figma, Material Design, Carbon) via Playwright.
-2. **Behance Trending:** Screenshot top 3 most-tweeted design systems from Behance’s trending page.
-3. **Curate:** Filter screenshots for high-quality, reusable components (e.g., buttons, cards, navigation).
-4. **Organize:** Save screenshots in a `/visual-library` folder with clear filenames (e.g., `figma-buttons.png`).
-5. **Document:** Add a `README.md` in `/visual-library` listing sources and component types.
-6. **Sync:** Push to GitHub and notify the team via Slack/email.
+1. Use Playwright MCP to screenshot the top 3 most-tweeted design systems from Ant Design, Bootstrap, and Primer (core components).
+2. Use Playwright MCP to screenshot the top 3 most-tweeted design systems from Figma, Material Design, and Carbon Design System (core components).
+3. Synthesize all screenshots into a curated visual library for the hub.
+4. Organize screenshots by design system and component type (e.g., buttons, cards, navigation).
+5. Add metadata tags (e.g., "trending," "tweeted," "core") for searchability.
+6. Upload to the hub’s visual library with attribution links.
 
-**What changed:** Combined both sources (Playwright + Behance) for broader visual input.
+**What changed:** Combined both Easel and Chroma’s approaches to maximize coverage across platforms and tools.

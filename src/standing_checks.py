@@ -35,15 +35,25 @@ def check_remote() -> dict:
     """Snapshot the cached origin/main ref, force a real fetch, snapshot again. A mismatch
     before/after is the exact "is a day of work actually at risk?" question fire 8 spent time
     ruling out by hand — this answers it in one call instead of a manual rev-parse + fetch +
-    rev-parse + eyeball-the-diff each time."""
-    before = _git(["rev-parse", "origin/main"])
-    fetch = subprocess.run(["git", "fetch", "origin", "main", "--quiet"], cwd=str(ROOT),
+    rev-parse + eyeball-the-diff each time.
+
+    Fire 83: compares against THIS BRANCH's own upstream, not a hardcoded origin/main. Cloud
+    fires ship to a branch + draft PR, so measuring a branch against main reported "disagree"
+    forever — a permanent false alarm that makes the whole check worthless.
+    """
+    branch = _git(["rev-parse", "--abbrev-ref", "HEAD"]) or "main"
+    up = _git(["rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{u}"]) or "origin/main"
+    track = up.split("/", 1)[1] if "/" in up else "main"
+    before = _git(["rev-parse", up])
+    fetch = subprocess.run(["git", "fetch", "origin", track, "--quiet"], cwd=str(ROOT),
                             text=True, capture_output=True)
-    after = _git(["rev-parse", "origin/main"])
+    after = _git(["rev-parse", up])
     head = _git(["rev-parse", "HEAD"])
     return {
         "fetch_ok": fetch.returncode == 0,
         "fetch_error": (fetch.stderr or fetch.stdout).strip() if fetch.returncode != 0 else None,
+        "branch": branch,
+        "tracking": up,
         "cached_ref_was_stale": bool(before) and before != after,
         "origin_main_before_fetch": before[:9],
         "origin_main_after_fetch": after[:9],
@@ -103,13 +113,13 @@ def main() -> int:
         print(f"  !! local cache of origin/main was stale ({rem['origin_main_before_fetch']} -> "
               f"{rem['origin_main_after_fetch']}) — re-fetched, HEAD matches, nothing lost.")
     elif not rem["in_sync"]:
-        print(f"  XX origin/main ({rem['origin_main_after_fetch']}) and HEAD ({rem['head']}) "
+        print(f"  XX {rem['tracking']} ({rem['origin_main_after_fetch']}) and HEAD ({rem['head']}) "
               f"disagree — investigate before pushing anything.")
     else:
-        print(f"  OK origin/main unchanged at {rem['origin_main_after_fetch']}, HEAD in sync.")
+        print(f"  OK {rem['tracking']} unchanged at {rem['origin_main_after_fetch']}, HEAD in sync.")
 
     if r["upstream"]["upstream_was_missing"]:
-        print("  !! upstream tracking was missing on this branch — set to origin/main.")
+        print("  !! upstream tracking was missing/wrong on this branch — repointed to origin/main.")
     else:
         print("  OK upstream tracking already set.")
 

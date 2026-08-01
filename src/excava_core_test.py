@@ -93,6 +93,35 @@ def main() -> int:
     legacy = activate.find("n8n", 3)
     check("legacy activate.find still intact (fallback path)", len(legacy) > 0, "legacy path broke")
 
+    # (c2) Tool class — CLASS 2 of 5. Detection must be deterministic and HONEST: a tool we
+    # cannot actually run must never claim it is runnable (law P4, real-not-display).
+    tools = core.Tool.all()
+    check("Tool wraps the tool-capable elements", len(tools) > 1000, f"only {len(tools)}")
+    check("Tool detection is offline/deterministic",
+          all(t.kind in ("mcp", "npm", "pip", "docker", "repo", "hosted", "unknown") for t in tools[:500]))
+    check("runnable ALWAYS implies a concrete command",
+          all(bool(t.command) for t in tools if t.is_runnable()),
+          "a tool claimed runnable with no command")
+    check("repo/hosted/unknown are never claimed runnable",
+          not any(t.is_runnable() for t in tools if t.kind in ("repo", "hosted", "unknown")),
+          "a non-executable kind claimed runnable")
+    mcps = [t for t in tools if t.kind == "mcp"]
+    check("MCP tools exist and yield a config", bool(mcps) and mcps[0].mcp_config() is not None)
+    check("mcp_config is well-formed",
+          all(isinstance((t.mcp_config() or {}).get("mcpServers"), dict) for t in mcps[:200]))
+    nonmcp = [t for t in tools if t.kind in ("repo", "hosted")]
+    check("non-MCP tools return no MCP config",
+          all(t.mcp_config() is None for t in nonmcp[:200]))
+    check("invocation() states what is missing when not runnable",
+          all(t.invocation()["needs"] for t in nonmcp[:100] if not t.is_runnable()),
+          "a non-runnable tool gave no reason")
+    known = core.get("connector:github-mcp-server")
+    if known:
+        kt = core.Tool(known)
+        check("a known MCP server parses to a real npx command",
+              kt.kind == "mcp" and kt.is_runnable() and "npx" in kt.command,
+              f"kind={kt.kind} cmd={kt.command!r}")
+
     # (d) Package round-trip — must not touch the real store
     real = core.PACKAGES
     with tempfile.TemporaryDirectory() as td:

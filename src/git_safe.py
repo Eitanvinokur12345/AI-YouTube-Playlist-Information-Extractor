@@ -218,13 +218,23 @@ def ensure_upstream() -> bool:
     as non-fast-forward — a self-reinforcing loop with no error message pointing at the real
     cause. Now checks the RESOLVED upstream ref name, not just its existence, and repoints to
     origin/main whenever it isn't already exactly that — idempotent, safe to call every time.
-    Returns True if a tracking branch was (re)set (so callers can note it happened)."""
+    Returns True if a tracking branch was (re)set (so callers can note it happened).
+
+    Fire 83 (2026-07-30) narrowed it again: hardcoding origin/main broke the BRANCH workflow.
+    Cloud sessions now ship to their own branch + draft PR, so a branch deliberately pushed with
+    `push -u origin <branch>` has a legitimate upstream of `origin/<same-name>` — and repointing
+    it at origin/main every call clobbered that tracking and made standing_checks report a
+    permanent false "HEAD and origin/main disagree". A permanently-red check is worse than no
+    check: it trains the reader to ignore it. The same-NAME test still catches fire 55's real
+    pathology (upstream pointing at an unrelated branch whose name does NOT match the local one).
+    """
     r = subprocess.run(["git", "rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{u}"],
                         cwd=str(ROOT), text=True, capture_output=True)
     current = r.stdout.strip() if r.returncode == 0 else ""
-    if current == "origin/main":
-        return False
     branch = _git(["rev-parse", "--abbrev-ref", "HEAD"])
+    # Legitimate: tracking main, or tracking the remote branch of the SAME name (branch workflow).
+    if current == "origin/main" or (branch and current == f"origin/{branch}"):
+        return False
     _git(["branch", "--set-upstream-to=origin/main", branch], check=False)
     return True
 

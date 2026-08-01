@@ -187,6 +187,152 @@ class Element:
         return f"<Element {self.id} [{self.status}]{' stub' if self.is_stub else ''}>"
 
 
+class Tool:
+    """M2 class overhaul, CLASS 2 of 5 — wraps ONE OSS repo or MCP server as something CALLABLE.
+
+    This is the class behind the END PLAN's highest-leverage lever (§8: "repos-as-running-tools").
+    An Element says a tool EXISTS; a Tool says HOW TO RUN IT. The hub holds 1,463 connectors and
+    thousands of repo-backed tools whose install line is buried in prose — until something parses
+    that into a command, they are links, not tools (feature-inventory item 16: "OSS usable, not
+    links").
+
+    DETERMINISTIC BY DEFAULT (law: deterministic-first). Detection parses the install text with no
+    network and no LLM, so an agent can ask "can I run this?" thousands of times for free. The
+    registry lookup in `verify_connectors.resolve()` — which DOES hit npm/PyPI — is reused only
+    when `resolve_online=True` is passed explicitly, so a network call is never a hidden cost.
+    """
+
+    # Ordered: the first pattern that matches decides the kind. Mirrors verify_connectors'
+    # embedded-command regex (same proven expression) rather than inventing a second dialect.
+    _CMD = re.compile(
+        r"\b(npx\s+-?y?\s*[@\w\-/.]+"
+        r"|npm\s+i(?:nstall)?\s+(?:-g\s+)?[@\w\-/.]+"
+        r"|pip3?\s+install\s+[\w\-\[\]=.]+"
+        r"|uvx\s+[\w\-]+"
+        r"|uv\s+tool\s+run\s+[\w\-]+"
+        r"|docker\s+run\s+[^\n]+)", re.I)
+
+    __slots__ = ("element", "_kind", "_cmd")
+
+    def __init__(self, element: "Element"):
+        self.element = element
+        self._kind, self._cmd = self._detect()
+
+    # --- detection ------------------------------------------------------
+    def _text(self) -> str:
+        e = self.element
+        return " ".join(str(x) for x in (e.install, e.what, e.body, e.links.get("source_url", "")))
+
+    def _detect(self) -> tuple[str, str]:
+        m = self._CMD.search(self._text())
+        if m:
+            cmd = " ".join(m.group(1).split())
+            low = cmd.lower()
+            kind = ("docker" if low.startswith("docker") else
+                    "npm" if low.startswith(("npx", "npm")) else
+                    "pip" if low.startswith("pip") else "pip")
+            # An npx/uvx command on a connector is how an MCP server is launched.
+            if self.element.type == "connector" or "-mcp" in low or "mcp-server" in low:
+                kind = "mcp"
+            return kind, cmd
+        if self.element.type == "connector":
+            return "mcp", ""            # a connector with no parsed command is still an MCP target
+        if self.element.github:
+            return "repo", ""           # clonable, but the run method is unknown until read
+        if self.element.website:
+            return "hosted", ""         # a signed-in product; nothing to install
+        return "unknown", ""
+
+    @property
+    def kind(self) -> str:
+        """mcp | npm | pip | docker | repo | hosted | unknown."""
+        return self._kind
+
+    @property
+    def command(self) -> str:
+        """The exact install/run line, verbatim from the source when one was stated."""
+        return self._cmd
+
+    @property
+    def name(self) -> str:
+        return self.element.name
+
+    @property
+    def id(self) -> str:
+        return self.element.id
+
+    def is_runnable(self) -> bool:
+        """True when we hold a concrete command. `repo`/`hosted`/`unknown` are NOT runnable —
+        saying otherwise would be exactly the display-over-reality failure law P4 forbids."""
+        return bool(self._cmd) and self._kind in ("mcp", "npm", "pip", "docker")
+
+    def resolve_online(self) -> bool:
+        """Last resort: ask npm/PyPI whether a package matching this name exists.
+
+        Reuses `verify_connectors.resolve()` (Ponytail — it is already proven and keyless)
+        instead of a second registry client. Network call, so it is never implicit.
+        """
+        if self.is_runnable():
+            return True
+        try:
+            from src import verify_connectors
+            got = verify_connectors.resolve({"name": self.name, "install_or_source": self.element.install})
+        except Exception:
+            return False
+        if not got:
+            return False
+        k, val = got
+        self._cmd = val if k == "cmd" else (f"npx -y {val}" if k == "npx" else f"pip install {val}")
+        self._kind = "mcp" if self.element.type == "connector" else ("npm" if k == "npx" else "pip")
+        return True
+
+    # --- calling it -----------------------------------------------------
+    def mcp_config(self) -> dict | None:
+        """Paste-ready `mcpServers` entry, or None when this is not an MCP server."""
+        if self.kind != "mcp":
+            return None
+        parts = self._cmd.split() if self._cmd else []
+        if parts and parts[0].lower() in ("npx", "uvx", "uv", "docker", "python"):
+            command, args = parts[0], parts[1:]
+        else:
+            command, args = "npx", ["-y", "<package — see the repo README>"]
+        slug = self.id.partition(":")[2] or _norm(self.name).replace(" ", "-")
+        return {"mcpServers": {slug: {"command": command, "args": args}}}
+
+    def invocation(self) -> dict:
+        """How an agent would actually call this tool — the adapter spec the Router will read."""
+        return {"id": self.id, "name": self.name, "kind": self.kind,
+                "runnable": self.is_runnable(), "command": self._cmd or None,
+                "mcp_config": self.mcp_config(),
+                "open": self.element.best_link or None,
+                "verified": self.element.status,
+                "needs": ("a README read to find its run method" if self.kind == "repo" else
+                          "sign-in at its website" if self.kind == "hosted" else
+                          "a docker daemon" if self.kind == "docker" else None)}
+
+    def __repr__(self) -> str:
+        return f"<Tool {self.id} kind={self.kind} runnable={self.is_runnable()}>"
+
+    # --- collection helpers ---------------------------------------------
+    @staticmethod
+    def wrap(element: "Element") -> "Tool":
+        return Tool(element)
+
+    @staticmethod
+    def all(kind: str | None = None, runnable_only: bool = False) -> list:
+        out = []
+        for el in load().values():
+            if el.type not in ("tool", "connector", "skill", "model"):
+                continue
+            t = Tool(el)
+            if kind and t.kind != kind:
+                continue
+            if runnable_only and not t.is_runnable():
+                continue
+            out.append(t)
+        return out
+
+
 class Package:
     """A named bundle of Elements — the plan's 'Element/Package' pair (§2, law P8).
 
@@ -384,6 +530,14 @@ def main() -> int:
     p.add_argument("name")
     p.add_argument("--add", action="append", default=[])
     p.add_argument("--note", default="")
+    ts = sub.add_parser("tools", help="what in the hub can actually be RUN")
+    ts.add_argument("--kind", choices=["mcp", "npm", "pip", "docker", "repo", "hosted", "unknown"])
+    ts.add_argument("--runnable", action="store_true")
+    ts.add_argument("--limit", type=int, default=20)
+    t1 = sub.add_parser("tool", help="how to run ONE element")
+    t1.add_argument("eid")
+    t1.add_argument("--online", action="store_true", help="ask npm/PyPI when no command is embedded")
+    t1.add_argument("--json", action="store_true")
     a = ap.parse_args()
 
     if a.cmd == "stats":
@@ -446,6 +600,46 @@ def main() -> int:
             print("  unknown ids (not added):", ", ".join(unknown))
         if pkg.missing():
             print("  MISSING (no longer in hub):", ", ".join(pkg.missing()))
+        return 0
+
+    if a.cmd == "tools":
+        ts = Tool.all(kind=a.kind, runnable_only=a.runnable)
+        counts: dict = {}
+        for t in Tool.all():
+            counts[t.kind] = counts.get(t.kind, 0) + 1
+        total_run = sum(1 for t in Tool.all() if t.is_runnable())
+        print(f"tool-capable elements: {sum(counts.values())} · RUNNABLE (a real command on file): {total_run}")
+        print("  by kind:", ", ".join(f"{k}={v}" for k, v in sorted(counts.items(), key=lambda kv: -kv[1])))
+        print(f"\nshowing {min(len(ts), a.limit)} of {len(ts)}:")
+        for t in ts[:a.limit]:
+            print(f"  [{'RUN' if t.is_runnable() else '   '}] {t.id:<44} {t.kind:<7} {(t.command or t.element.best_link)[:52]}")
+        return 0
+
+    if a.cmd == "tool":
+        el = get(a.eid)
+        if not el:
+            print(f"no element {a.eid}")
+            return 1
+        t = Tool(el)
+        if a.online and not t.is_runnable():
+            print("(asking npm/PyPI…)")
+            t.resolve_online()
+        inv = t.invocation()
+        if a.json:
+            print(json.dumps(inv, ensure_ascii=False, indent=2))
+            return 0
+        print(f"{t.name}  ({t.kind}{' · RUNNABLE' if t.is_runnable() else ' · not runnable yet'})")
+        if inv["command"]:
+            print(f"  run:  {inv['command']}")
+        if inv["mcp_config"]:
+            print("  MCP config (paste into claude_desktop_config.json):")
+            print("    " + json.dumps(inv["mcp_config"], ensure_ascii=False))
+        if inv["open"]:
+            print(f"  open: {inv['open']}")
+        if inv["needs"]:
+            print(f"  needs: {inv['needs']}")
+        if not t.is_runnable() and not a.online:
+            print("  tip: re-run with --online to ask npm/PyPI for a matching package.")
         return 0
     return 1
 

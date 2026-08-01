@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-08-01T07:42:19.573601+00:00",
+ "generated_at": "2026-08-01T07:48:47.411287+00:00",
  "total": 20,
- "passing": 14,
+ "passing": 16,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": false,
-   "detail": "NOT in sync vs origin/main (behind/ahead: 384\t2) — a push may not have landed.",
+   "ok": true,
+   "detail": "HEAD == origin/claude/excava-end-plan-s1mt4l (work is really saved).",
    "severity": "warn"
   },
   {
@@ -71,21 +71,21 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "32319 memory episodes on record.",
+   "detail": "32320 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "1 guardrail runs logged (append-only, never rewritten).",
+   "detail": "3 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
    "id": "G-L",
    "name": "Uncommitted-work watchdog",
-   "ok": false,
-   "detail": "1 untracked source file(s) not committed — commit or quarantine so nothing is lost: src/loop_contract.py",
+   "ok": true,
+   "detail": "no stray source files uncommitted.",
    "severity": "warn"
   },
   {
@@ -99,35 +99,35 @@
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "30370 MB free on the repo drive.",
+   "detail": "30368 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 145.7h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 145.8h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
    "ok": true,
-   "detail": "last 'excava-beat #N' commit 5.7h ago.",
+   "detail": "last 'excava-beat #N' commit 5.8h ago.",
    "severity": "warn"
   },
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "last 'core-spoton:' commit 0.1h ago.",
+   "detail": "last 'core-spoton:' commit 0.2h ago.",
    "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
    "ok": false,
-   "detail": "12/16 lane(s) landing on cadence, 3 can't-tell (shallow clone) — STALE: mine.yml (daily): last commit 43.9h ago (expected within 30h)",
+   "detail": "12/16 lane(s) landing on cadence, 3 can't-tell (shallow clone) — STALE: mine.yml (daily): last commit 44.0h ago (expected within 30h)",
    "severity": "warn"
   },
   {

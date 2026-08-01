@@ -466,7 +466,9 @@
       "The ReAct loop (Reason → Act → Observe) is the core of all AI agents — debug by identifying which step is failing: stuck looping = reasoning step, wrong actions = act step, ignoring results = observe step.",
       "Add observability and audit logs to agents before treating them as autonomous employees — review a sample weekly; agents that are watched improve, unmonitored agents fail silently.",
       "Build your own small skills/agents with AI coding tools (Cursor, Claude Code) even outside of work tasks — it teaches you how these systems actually behave, which compounds into being faster and better at building bigger ones.",
-      "Keep the mental model simple: an AI agent is just an LLM using tools in a loop until the task is done — don't over-mystify it."
+      "Keep the mental model simple: an AI agent is just an LLM using tools in a loop until the task is done — don't over-mystify it.",
+      "Treat prompt-based guardrails as a hint, not a hard wall: LLMs see dev instructions and user input as undifferentiated text and infer role/authority from writing style alone, so a crafted prompt can talk the model out of its own rules (ICML 2026 finding).",
+      "Enforce critical/high-risk actions with checks outside the model (permissions, allowlists, human approval) rather than relying solely on system-prompt instructions to prevent them."
     ],
     "code": [
       "The harness (Cursor, Claude Code, Codex) matters as much as the model - a cheaper model in a better harness can win.",

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-01T02:00:16.405626+00:00",
+ "generated_at": "2026-08-01T02:08:43.542713+00:00",
  "total": 20,
  "passing": 19,
  "critical_failures": 0,
@@ -22,8 +22,8 @@
    "id": "G-C",
    "name": "History backup fresh",
    "ok": true,
-   "detail": "n/a in CI — the beat pushes straight to origin each cycle, bypassing git_safe/local bundles by design.",
-   "severity": "info"
+   "detail": "3 bundle(s); newest within 26h.",
+   "severity": "warn"
   },
   {
    "id": "G-D",
@@ -78,7 +78,7 @@
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "6 guardrail runs logged (append-only, never rewritten).",
+   "detail": "1 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -99,14 +99,14 @@
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "89163 MB free on the repo drive.",
+   "detail": "29747 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 140.0h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 140.1h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
@@ -120,14 +120,14 @@
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "shallow clone — not enough local history to find a 'core-spoton:' commit either way; not a stall signal, just a checkout-depth limit.",
-   "severity": "info"
+   "detail": "last 'core-spoton:' commit 2.0h ago.",
+   "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
    "ok": true,
-   "detail": "1/16 lane(s) landing on cadence, 15 can't-tell (shallow clone).",
+   "detail": "4/16 lane(s) landing on cadence, 12 can't-tell (shallow clone).",
    "severity": "warn"
   },
   {

@@ -4,6 +4,38 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+## 2026-08-01
+- **~02:00 (fire 84, unattended, cloud, scheduled-task invocation)** — Standing checks: 18/20
+  guardrails, 0 critical (G-C history-bundle staleness, G-O local-drain staleness — both known/
+  expected, PC off). Ran `git_safe backup` to clear G-C → 19/20 after. **Deliberately did NOT
+  touch the flagship analyze.yml outage** (61+h down per fire 81's standing, still-unanswered
+  ask — token refresh / cadence throttling is explicitly Eitan's call, not mine) or the links
+  lane (`next_action`: 3002 tools/skills lack a real link) — that lane needs LLM-pool API keys
+  this cloud session doesn't have, AND is already climbing on its own (52.9%→60.2% real-link
+  coverage in the ~1h between the last status snapshot and this fire, so a CI lane is actively
+  grinding it down). Instead did the one thing uniquely available to *this* session — no engine
+  keys needed, pure Claude reasoning + repo access — that self-criticism in fires 55/57/63/81 has
+  been begging for: **manually drained `data/_pending`**, the exact ingestion work analyze.yml
+  has been failing to do. Processed 11 videos oldest-of-the-newest (catch_up.json is `active:
+  true`, order `newest_first`) fully through the Step 1–10 pipeline, one full commit+push each
+  (Golden rule #1): 9 analyzed (Unlimited-OCR merged with richer data, Monid captured +
+  comment-gated per Step 2e, Claude Live Artifacts, Opus-5 enriched with new ARC-AGI-3/OSWorld
+  benchmark specifics + `build_models` regenerated, FlashKDA, ChatGPT Sites, Walden Robotics, and
+  2 pure-noise Shorts correctly yielding nothing), 2 skipped not-relevant (a non-AI ASP.NET Core
+  repo-share, a non-AI logistics-telemetry repo). `data/_pending` 1235→1224. **Harsh
+  self-criticism:** 11 of 1224 is a rounding error against the backlog — this fire proved the
+  manual path *works* (real, verified, non-generic extractions; anti-boilerplate gate held; no
+  skill fabricated from a bare tool mention) but is far too slow per-fire to be the actual fix;
+  the real fix is still Eitan's call (refresh the Claude token / throttle catch-up cadence) and I
+  have no way to distinguish those root causes from inside this sandbox, same limitation fires
+  55/57/63/81 already hit. Also did NOT write any SKILL.md packages this fire (none of the 9
+  extracted items cleared the technique bar — they were all tools/models, not demonstrated
+  workflows), so no `skills/` or `other-skills/` folders changed. Left `models.json` freshly
+  regenerated (569 entries) and `goals_status.json`/`PULSE.md` re-run for an honest read at fire
+  end. Recommend (unchanged from fire 81): run `claude setup-token` once, or confirm the plan's
+  rolling cap so catch-up cadence can be throttled — until one of those happens, expect this
+  backlog to keep growing faster than any unattended fire can hand-drain it.
+
 ## 2026-07-31
 - **~23:5x (fire 83, unattended, cloud, scheduled-task invocation)** — Standing checks
   (`python -m src.standing_checks`) surfaced 2 CRITICAL guardrail failures that fire 82 didn't

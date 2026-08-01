@@ -5,6 +5,75 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-01
+- **~21:0x (fire 95, unattended, cloud, scheduled-task invocation)** — Read fire 94's log first.
+  Standing checks clean (`python -m src.standing_checks`): routine stale-cache/missing-upstream
+  self-heal only. **Before touching anything, read what changed since fire 94's own log entry**:
+  Eitan came back and merged PR #43 in between fires (`8456ebb6`, `M2 class overhaul (4 of 5) +
+  debate fix + loop machinery`) — landing Element/Tool/Room/Agent as real typed classes over
+  `excava_agents`/`excava_engines`/`excava_chat`, the debate-turn-order fix, and the
+  `loop_contract` machinery this fire's own standing checks now run. That merge explicitly named
+  the gap: **"4 of 5"** — `src/excava_core.py`'s own module docstring says the fifth class is
+  **Router**, and `Tool.invocation()`'s docstring already called its own output "the adapter spec
+  the Router will read." That is not a queued backlog item, it is the plan naming its own next
+  increment — so this fire built it instead of finding another self_check/plumbing gap the way
+  the last several fires (88-94) all flagged themselves for doing.
+  **This fire's increment:** added `class Router` to `src/excava_core.py` — CLASS 5 of 5.
+  `Router.route(text, difficulty)` composes three already-real, already-tested decisions that
+  were previously three separate imports a caller had to stitch by hand: `excava_agents.
+  pick_department` (text -> department + why + runners-up), `excava_agents.worker_for` +
+  `REAL_TOOL`/`_task_tool_fit` (department -> agent + tool + whether the tool actually fits the
+  task, the G-7/syscall-domain gate `_work_generic` already enforces), and `excava_engines.
+  pick_engine` (department -> a real brain/engine). Not a rewrite — same law as the other four
+  classes: the routing POLICY stays exactly where it lives in `excava_agents`/`excava_engines`;
+  Router only composes their real return values into one typed, honest decision
+  (`is_routable()`, `to_dict()`) so it can never silently diverge from what `excava_agents.tick`
+  actually does when the beat ticks a department. Added CLI: `python -m src.excava_core route
+  "<text>" [--difficulty hard] [--json]`.
+  **Verified:** `python -m py_compile` clean on both touched files;
+  `python -m src.excava_core_test` — all checks pass, including 7 new Router assertions (routed
+  department/agent/tool match calling `excava_agents`/`excava_engines` directly with no drift;
+  security always lands on a grounded/reasoning engine, never a fast one that could hallucinate a
+  verdict; an unmatched query returns no department rather than guessing one; `routable()` is
+  exactly `bool(agent_id or blocked_reason)`; `to_dict()` is JSON-safe). Live CLI sanity check
+  (not just the test suite): `route "scan this repo for a leaked secret key"` ->
+  `security`/`security-w1`/`src.security_scan (fits: True)`/`gh-models`, routable=True;
+  `route "watch and analyze this new video"` -> `analysis`/`analysis-w1` (not the gated `watch`
+  department it also scored on), routable=True; `route "totally unrelated gibberish xyzzy"` ->
+  no department, exit 1, same honest-failure convention as `find`/`show`. `python -m
+  src.guardrails`: 19/20 (only the standing G-O PC-off flag). Logged the WHY via
+  `project_memory` before shipping, per the project's own contract. Shipped via `python -m
+  src.git_safe ship` (`379e5e13`) — this push took long enough to blow through Bash's 120s
+  foreground timeout and moved to the background; watched it to completion with `Monitor`
+  instead of a manual sleep-poll loop, then confirmed `git fetch origin main` showed
+  `origin/main == HEAD` before writing this up as done.
+  **Harsh self-criticism:** this is a real M2-milestone increment with a name the plan itself
+  gave it ("4 of 5" -> now 5 of 5), not another self-check/plumbing detour — a genuine
+  improvement over fires 88-94's own repeated complaint that they were avoiding exactly this kind
+  of work. But it is still a class that WRAPS existing decision logic rather than a class that
+  CHANGES what gets decided: nothing routes through `Router.route()` yet except this fire's own
+  test and CLI — `excava_agents.tick()` still calls `pick_department`/`worker_for`/`pick_engine`
+  directly, so Router is proven correct but not yet WIRED into the beat's actual dispatch path.
+  That wiring (swap `tick()`'s three separate calls for one `Router.route()` call) is the natural
+  next increment, deliberately left as a separate, verified step rather than rushed into this
+  one — same discipline `duplicates()`'s own docstring flagged for the id-collision fix back in
+  M1. Also did not touch the standing, already-escalated, human-only-actionable items this fire
+  found no new information on: the `analyze.yml` token/quota question (fires 55-87, still your
+  call), G-O (EITAN-PC off), or the git-hygiene tension flagged since fire 8/90-94 (this session's
+  harness wants a per-session branch + PR; `git_safe ship` pushes straight to `main` per the
+  repo's own 30+-fire convention and CLAUDE.md's literal "ship ONLY via `python -m src.git_safe
+  ship`" instruction — still unconfirmed by Eitan, still the right call given the established
+  pattern, still worth him overriding explicitly if he wants cloud fires to open PRs instead).
+  **Same "Unverified" commit-badge issue recurred a NINTH time** (stop hook flagged `379e5e13`) —
+  identical to fires 11/34/84/86/88/91/93/94: committer/author is correctly `Claude
+  <noreply@anthropic.com>`, a real SSH `gpgsig` IS present (confirmed via `git cat-file commit`),
+  it is just unverifiable to GitHub with no signing key registered anywhere in this environment
+  — cosmetic, not a data-integrity issue, and `git_safe ship` already verified `origin == HEAD`.
+  Declined to amend/rebase + force-push a ninth time, same reasoning as every prior occurrence:
+  it would not fix the root cause (no signing key) and this branch has concurrent lanes
+  committing, so a history rewrite is real risk for zero gain. Still Eitan's call whether to add
+  a real signing key or route commits through the GitHub API; not re-litigating again absent
+  that answer.
+
 - **~20:0x (fire 94, unattended, cloud, scheduled-task invocation)** — Read fire 93's log first.
   Standing checks clean (`python -m src.standing_checks`): only the routine stale-cache/missing-
   upstream self-heal. Guardrails 18/20, 0 critical before this fire's change (same two standing

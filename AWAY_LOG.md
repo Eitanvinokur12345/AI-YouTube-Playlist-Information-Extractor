@@ -5,6 +5,54 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-01
+- **~15:0x (fire 91, unattended, cloud, scheduled-task invocation)** — Standing checks: this
+  session's branch (`claude/kind-shannon-pet3a2`) had 0 unique commits vs `origin/main` (a
+  stale checkout, not diverged work) — reset it to `origin/main` before starting, same
+  fix as the recurring upstream-tracking gap prior fires flagged. Guardrails 18/20, 0 critical
+  — same two standing non-critical flags as every recent fire (G-C history-bundle staleness,
+  G-O local drain stale — EITAN-PC off). `analyze.yml` (the flagship Claude-driven ingestion
+  lane) is still down: `analyze_consecutive_fails` unchanged at 16, `last_analyze_ok_at` still
+  stuck at 2026-07-28T02:37:27Z — identical to what fire 83 already push-notified and fires
+  84-90 already declined to re-escalate absent new information; nothing changed here, so no
+  new notification. All 10 departments moving (movement.json), backlog actively draining via
+  the other automated lanes (bulk-analyze, links+memory, core-spoton, connectors-verify all
+  landed commits in the last hour) — per fire 90's own recommendation ("weigh a product-facing
+  increment... unless a fresh guardrail regression forces otherwise"), did NOT duplicate that
+  content-grinding work.
+  **This fire's increment:** `python -m src.self_check` was failing Q11 ("every skill category
+  in the approved list", needs ≥90%) at 89.8% — 347 of 3,414 `data/skills.json` records
+  carried a category outside `config.json`'s approved list (`data`151/`security`96/`voice`71/
+  `robotics`18/`3d`11 — five ad-hoc categories that crept in over many analyze runs, never in
+  the schema). Sampled each bucket before deciding how to fix it: they weren't a coherent
+  missing taxonomy needing a new category (e.g. the `security` bucket held a Claude Code
+  workflow, a ChatGPT prompt-modifier list, and a multi-agent-debate technique — nothing
+  actually security-related), so extending `config.json`'s categories would have papered over
+  mis-tagging, not fixed it. Instead wrote a keyword-heuristic reclassifier
+  (skill_name+description+use_case → best-fit approved category, `other` as the deterministic
+  fallback) and ran it once over just those 347 out-of-taxonomy records — 3,067 already-valid
+  records untouched. Result: 161→other, 50→agents, 38→automation, 32→research, 24→code,
+  11→marketing, 7→image creation, 7→music, 5→productivity, 4→design, 3→integration,
+  2→social, 2→video creation, 1→writing. Checked `data/stars.json` first (absent — no frozen
+  records to protect). Verified: `git diff data/skills.json` shows every changed line is a
+  `"category"` field and nothing else (no other content touched); `json.load` parses clean;
+  `self_check` now 44/50 with Q11 no longer in the failing list (Q1/Q10/Q12/Q13/Q42/Q45 remain
+  — Q1/Q42/Q45 are the same known `analyze.yml`-outage backlog signal above, not a new problem;
+  Q10/Q12/Q13 need real content generation per-skill, out of scope for a non-brain away fire);
+  `python -m src.guardrails` still 18/20, 0 critical, no regression. Logged the WHY via
+  `project_memory` before committing, per the project's own contract.
+  **Harsh self-criticism:** a keyword-regex classifier is a blunt instrument — I did not
+  hand-verify all 347 reassignments, only sampled a few per source bucket before writing the
+  rules and then trusted the aggregate distribution looked sane; some fraction of the 161 that
+  fell through to `other` almost certainly had a better real fit the regex missed (e.g. the
+  digital-twin/LiDAR/robotics examples arguably belong in a dedicated category more than
+  `research`, but no approved category fits them better today). This is a data-quality nudge,
+  not a rebuild of the categorization pipeline itself — the real fix is CLAUDE.md Step 3's own
+  generation prompt staying inside the approved list on the next pass, which this fire doesn't
+  touch. Also, like fire 90 flagged, this is still not the Hub/self-improve/departments product
+  increment the milestone plan (M1-M2) actually calls for — picked the safest available bounded
+  fix over a riskier product change given no deep familiarity built up this fire and several
+  concurrent automated lanes actively committing to the same branch.
+
 - **~11:5x (fire 90, unattended, cloud, scheduled-task invocation, 10th heartbeat)** — Standing checks: clean
   (`git fetch origin main` + `git rev-list --left-right --count origin/main...HEAD` → 0/0, this
   session's branch already equals `origin/main`; only the routine stale-local-`main`-ref noise,

@@ -5,6 +5,54 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-01
+- **~07:0x (fire 88, unattended, cloud, scheduled-task invocation)** — Standing checks
+  (`python -m src.standing_checks`): clean (stale local cache + missing upstream tracking,
+  both routine, both self-healed). Guardrails 17/20, 0 critical, but **G-M ("work is moving")
+  read STALLED** — `data/excava/movement.json`'s `done` counter had sat at 18 across four
+  consecutive beats (04:06→06:58Z, ~3h). Chased it to ground instead of dismissing it as
+  another expected-flaky guardrail. Found the excava-beat workflow's currently-running job
+  (run `30684607193`) queued behind the PRIOR run (`30677675426`, 01:26Z→06:44Z, its full
+  5h18m budget) — and that prior run's logs (pulled via `mcp__github__get_job_logs`) show the
+  real bug: it landed exactly ONE beat commit on `origin/main` (`#7`, 02:00Z) in its entire
+  5.3h life. Root cause in `.github/workflows/excava_beat.yml`'s per-cycle git-sync fallback
+  (added fire 29): when `git pull --rebase` AND the merge fallback both conflict on a file
+  outside the small stateless-whitelist, the script logged "leaving for manual/next-cycle
+  recovery" and moved on — but never actually aborted the merge, so `MERGE_HEAD` and literal
+  `<<<<<<<`/`=======`/`>>>>>>>` conflict-marker text stayed on disk in the conflicted files
+  (confirmed live: `data/excava/state.json`, `rooms.json`, `bus.json`, `pulse.json`,
+  `backlog.json`, `syscalls.jsonl`, every `chats/`/`traces/`/`agent_memory/` file, etc. — the
+  beat's own full working set). The FOLLOWING cycle's `git add data` then staged those raw
+  markers as the "resolved" content and `git commit` happily baked them into history —
+  corrupting the beat's own JSON state every cycle from then on, which crashed
+  `python -m src.excava` on its own unparseable state (`Traceback` in the logs, confirmed
+  matching cycles 34/35 onward) for the rest of the run: real work done, zero; nothing ever
+  synced (push then always failed too, on the now-diverged/garbage history — so `origin/main`
+  itself stayed clean, which is why `python -m src.guardrails` on a fresh checkout never
+  caught this; the damage was entirely local to each ephemeral runner and thrown away when the
+  job ended). **Fix:** when the merge still can't complete after the whitelist resolve, run
+  `git merge --abort` (restores the tree to this cycle's own clean local commit — no markers,
+  still valid JSON) instead of leaving it half-resolved. **Verified, not assumed:** built a
+  real bare-origin scratch repo reproducing the exact scenario (a "beat" clone with its own
+  local commit racing a concurrent "other-lane" push to the same file) — ran the OLD script
+  first and reproduced the identical failure end-to-end (conflict → unresolved → next cycle's
+  `git add`+`commit` bakes in `<<<<<<<` markers → `json.load` raises the same
+  `JSONDecodeError` the live Tracebacks show); then ran the FIXED block on the same conflict
+  and confirmed the working tree ends clean, `git status --porcelain` empty, `state.json`
+  still `{"beats": 99, "from": "beat-cycle"}` (valid JSON), and the local beat commit intact.
+  `python -m src.guardrails` and YAML-parsed the edited workflow file clean after the edit.
+  **Harsh self-criticism:** this is the fix, not the cure — the underlying sync design still
+  can't actually converge two lanes racing on the same append/scratch files (`state.json`,
+  `bus.json`, `rooms.json`, the `chats/`/`traces/`/`agent_memory/` trees), so a beat job that
+  hits its first conflict will likely keep failing to push for the rest of its 5.3h life,
+  same as before this fix — the difference is it now keeps doing REAL local work every cycle
+  instead of crashing on its own corruption, and never poisons `origin/main`. A more complete
+  fix would widen the stateless-whitelist to the beat's own full scratch/log surface (or
+  switch those files to append-safe/union merge drivers) so pushes actually start succeeding
+  again after a collision — left as the natural next-fire follow-up, now that the acute
+  crash-and-corrupt failure mode is closed. Could not live-fire the actual GitHub Actions
+  workflow from this sandbox to confirm in production; the scratch-repo reproduction is a
+  faithful extraction of the exact same shell block, not a simulation of it.
+
 - **~06:0x (fire 87, unattended, cloud, scheduled-task invocation)** — Standing checks
   (`git status`/`git log` read-only, `python -m src.guardrails`): 18/20, 0 critical (the
   standing G-C stale-backup / G-O EITAN-PC-off pair, both self-healing/expected). Followed up on

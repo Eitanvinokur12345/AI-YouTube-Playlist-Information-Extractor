@@ -5,6 +5,39 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-01
+- **~11:0x (fire 89, unattended, cloud, scheduled-task invocation)** — Standing checks
+  (`python -m src.standing_checks`): clean — stale local cache of `origin/main` and missing
+  upstream tracking on this session's branch, both routine and both self-healed by the tool.
+  Guardrails 18/20, 0 critical (only the two standing non-critical flags: G-C stale history
+  backup, G-O local drain stale because EITAN-PC is off — same pattern as every prior fire this
+  week). `data/excava/regression.json` and `engine_health.json` were both ~40 min old (last
+  regenerated 10:21Z, checked 11:01Z) — current enough, skipped re-running the engine canary
+  per the plan's own instruction. Did the ONE increment fire 88 explicitly flagged: widened
+  `.github/workflows/excava_beat.yml`'s stateless-conflict "ours" whitelist from 7 files to 14,
+  adding `data/excava/{state,bus,rooms,leases,pulse,recent_events,backlog}.json`. Verified each
+  is wholesale read-then-`json.dumps()`-rewritten every beat cycle (checked `excava_chat.py`'s
+  `state.json` read/write and the parallel load pattern the other six share) — same "fully
+  regenerated, nothing lost by taking ours" property as the 7 files already whitelisted, so
+  adding them is the conservative half of fire 88's ask. Deliberately did **not** widen onto
+  the `.jsonl` append-logs (`history.jsonl`, `improvements.jsonl`, `syscalls.jsonl`,
+  `staleness_events.jsonl`, `supervisor_longterm.jsonl`) or the `chats/`, `traces/`,
+  `agent_memory/`, `artifacts/`, `handoffs/` trees — those genuinely accumulate rows per
+  cycle/agent that a blind "ours" could silently drop; left them out of the whitelist with an
+  inline comment explaining why, rather than invent a union-merge mechanism under time
+  pressure (exactly the guardrail fire 88's own plan text set). Verified via CLI/data only:
+  `python -c "import yaml; yaml.safe_load(...)"` parses clean; `python -m src.guardrails` still
+  18/20, 0 critical, no regression from the edit (G-R still confirms this lane carries the
+  rebase→merge→auto-resolve fallback). **Harsh self-criticism:** this is a real but narrow
+  widening — it only helps a beat cycle whose conflict is confined to those 7 newly-added JSON
+  files; the much more likely real-world collision surface (the `.jsonl` logs and the
+  per-task/per-agent trees, which are what actually accumulate the bulk of a beat's output) is
+  still left to degrade to "abort the merge, this cycle's work stays local/unsynced" exactly as
+  before — I did not solve the harder problem, only correctly declined to solve it unsafely.
+  I also did not independently re-derive whether "wholesale rewritten" truly holds for every
+  code path that touches these 7 files (I checked `excava_chat.py` and the file-list greps, not
+  every writer in the codebase) — a future fire should treat this as a reasonable, evidence-based
+  inference, not an exhaustively proven guarantee, if a new corruption pattern ever shows up on
+  one of these specific files.
 - **~07:0x (fire 88, unattended, cloud, scheduled-task invocation)** — Standing checks
   (`python -m src.standing_checks`): clean (stale local cache + missing upstream tracking,
   both routine, both self-healed). Guardrails 17/20, 0 critical, but **G-M ("work is moving")

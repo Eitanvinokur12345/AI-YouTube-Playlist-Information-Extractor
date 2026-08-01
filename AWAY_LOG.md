@@ -4,6 +4,84 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+## 2026-08-01
+- **~17:0x (fire 92, unattended, cloud, scheduled-task invocation)** — Read fire 91's log first
+  per this fire's own instruction; skipped the 10th-heartbeat review (that ran at fire 90, next
+  due at fire 100). Standing checks clean (`python -m src.standing_checks`): only the routine
+  missing-upstream-tracking self-heal on this fresh session branch, 0/0 ahead-behind
+  `origin/main`. Guardrails 18/20, 0 critical — same two standing non-critical flags as every
+  recent fire (G-C history-bundle staleness, G-O local drain stale since EITAN-PC is off).
+  **This fire's increment: made `data/excava/capabilities.json` self-verifying for 3 more rows**
+  (P4 "real-not-display" — but in the UNDER-claiming direction this time, which is the safe one
+  to fix unilaterally). `src/build_capabilities.py`'s catalog is a hand-typed table from the
+  2026-07-06 audit; only `room-decision` had ever been upgraded to a real evidence check
+  (`_computed()`). Found 3 rows still hand-tagged `"planned"` despite strong, dated, on-disk
+  proof they've been genuinely live for days: `war-room` (84 `war-*.jsonl` chat logs across
+  history, real multi-turn debates, e.g. `war-deliver-keep-the-designs-tab-619.jsonl` — 9 turns,
+  real engine calls like `groq/llama-3.3-70b-versatile`), `group-chat` (67 `group-*.jsonl` logs,
+  latest today with 12 turns), and `daily-selfimprove` (`improvements.jsonl` — 77 entries since
+  2026-07-24, both `safe-*`/`add-agent` auto-fixes AND `pitch` entries present, latest today).
+  Extended `_computed()` to check these 3 against real files every run (7-day recency window for
+  the room logs — `>1` line required, i.e. more than just the "room opened" system line; 3-day
+  recency + both safe-fix and pitch kinds present for self-improve) and write a concrete evidence
+  string instead of the static `"§N spec"` placeholder — so this is a **permanent self-check**,
+  not a one-time relabel: if the evidence goes stale (e.g. war-rooms stop firing for a week) it
+  will correctly flip back to `"planned"` on its own, same honesty either direction. Result:
+  `live` 20→23, `planned` 11→8 (37 total unchanged) — visible immediately on the dashboard's
+  🧩 Capabilities card (EXCAVA tab), including on hover (the `evidence` field is the tooltip).
+  Left the other 8 still-planned rows alone (`console-inapp`, `power-meter`, `horse`,
+  `activator`, etc.) — spot-checked `console-inapp` and confirmed it's genuinely still gated on
+  an owner backend decision already documented in the UI's own subtext, not stale.
+  **Verified:** `python -m py_compile src/build_capabilities.py` clean; `python -m
+  src.build_capabilities` regenerates with the expected new counts; `python -m src.guardrails`
+  still 18/20, 0 critical (no regression); `node --check docs/dashboard.js` clean; served
+  `docs/` + `data/` over a local `python -m http.server`, confirmed both files return 200 and
+  the JSON the dashboard fetches (`../data/excava/capabilities.json` relative to
+  `docs/index.html`) carries the new counts; then ran a Node simulation of the dashboard's exact
+  `cap-grid` sort/render logic (copied verbatim from `docs/dashboard.js`'s `renderExcava()`)
+  against the real regenerated JSON — produced the 3 expected `✓ live` rows with correct,
+  human-readable evidence tooltips, no runtime errors. No Playwright/browser binary available in
+  this sandbox, so this is a faithful logic+data simulation of the render path, not a literal
+  pixel screenshot — the same caveat several recent fires have logged for their own offline
+  verifications. Logged the WHY via `project_memory` before committing, per the project's own
+  contract. Did NOT touch `data/skills.json`/`data/tools.json`/`data/_pending`/etc. (verified via
+  `git status`/`git diff --stat` before shipping — only `src/build_capabilities.py` +
+  trailing status refreshes in `data/excava/*` and `data/{accessibility,visualization,
+  guardrails_status,standing_checks}.json`, all EXCAVA's own).
+  **Harsh self-criticism:** this is a real, verified, dashboard-visible fix, but it is a
+  narrow one — 3 rows out of 37, and I deliberately did NOT do the same audit on the other 8
+  still-`planned` rows beyond one spot-check, so some of those may ALSO be stale (understating
+  or, worse, now overstating reality) and I don't actually know either way; a future fire with
+  more budget should audit all 8, not just trust the hand-typed table again. The 7-day/3-day
+  recency windows are my own judgment calls, not derived from any spec — reasonable, but
+  arbitrary, and could flip a row live/planned right at the boundary in a way Eitan might not
+  agree matches "capability", not "activity in the last N days". I also did not update the
+  static `CAT` table's own evidence placeholder text for the 3 rows (still reads `"§N spec"`
+  etc.) since it's now dead code (overridden by `_computed()`), which is a small piece of debt
+  I left rather than clean up under time pressure — a future fire could delete the now-unused
+  placeholder strings for clarity. Like fires 88-91 before it, this is still meta/self-audit
+  work on EXCAVA's own honesty-reporting layer rather than a new end-user-facing capability
+  (Hub content growth, a new department ability, a new tab) — I picked it specifically because
+  the last several fires' own self-criticism kept flagging "should hunt an EXCAVA-program
+  increment" and this is a genuine, safely-verifiable, non-content-grinding one that also
+  directly serves the self-improvement pillar (END_PLAN §4) by making the system's self-report
+  more truthful — but it is not a bigger structural step (e.g. the still-unbuilt "meta-brain /
+  cross-dept learning" named in END_PLAN §4 and STEPS breadth-item B3) that a fire with a larger
+  time budget should tackle instead of another audit pass.
+  **Is the criticism itself harsh, or performative?** Genuinely mixed: the "narrow scope" and
+  "didn't audit the other 8" points are real, checkable gaps (I can name exactly what's
+  unverified) — that's substantive. But I did not, for instance, seriously entertain reverting
+  the change and doing something bigger instead; I picked a safe, bounded, low-risk task and
+  I'm now grading it as "safe and bounded" rather than asking whether safe-and-bounded was
+  itself the right trade-off for fire 92 specifically, given the repeated "still meta, not
+  product" pattern across fires 88-91. That's a fair question I'm flagging rather than
+  resolving — an honest "I optimized for zero-risk-verified over ambitious" admission, not
+  hidden behind the evidence-quality praise above.
+  **No blocker for Eitan.** This is routine progress, not something needing his attention —
+  the standing `analyze.yml` outage note from fires 83-91 is unchanged (still not re-escalating
+  without new information, per that thread's own established precedent) and no new guardrail
+  regression appeared.
+
 **2026-08-01 (fire 91) — same "Unverified" commit badge issue recurred a sixth time; same decision stands.**
 Stop hook flagged fire 91's 2 commits (`3cefebf92`, `373ac1908`) as Unverified. Identical to fires
 11/34/84/86/89: `author`/`committer` on both is already `Claude <noreply@anthropic.com>` (matches

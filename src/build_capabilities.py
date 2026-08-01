@@ -9,7 +9,7 @@ lie about itself. Run: python -m src.build_capabilities
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
@@ -62,12 +62,66 @@ CAT = [
 ]
 
 
-def _computed(cid: str, status: str) -> str:
-    """A few statuses are checked against real evidence so the catalog can't overstate itself."""
+def _recent_room_turns(prefix: str, days: int = 7) -> tuple[int, str]:
+    """Count real (>1 line, i.e. more than just the 'room opened' system line) chat logs whose
+    filename starts with `prefix` and whose DAY-folder falls in the last `days` days. Returns
+    (count, latest_filename) — evidence a war-room/group-chat actually ran recently, not once
+    long ago and never since."""
+    chats = DATA / "excava" / "chats"
+    if not chats.exists():
+        return 0, ""
+    cutoff = datetime.now(timezone.utc) - timedelta(days=days)
+    n, latest, latest_day = 0, "", ""
+    for day_dir in sorted(chats.iterdir()):
+        try:
+            day = datetime.strptime(day_dir.name, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+        except Exception:
+            continue
+        if day < cutoff:
+            continue
+        for f in sorted(day_dir.glob(f"{prefix}*.jsonl")):
+            try:
+                lines = [ln for ln in f.read_text(encoding="utf-8").splitlines() if ln.strip()]
+            except Exception:
+                continue
+            if len(lines) > 1:            # more than just the system "room opened" line
+                n += 1
+                latest, latest_day = f.name, day_dir.name
+    return n, f"{latest} ({latest_day})" if latest else ""
+
+
+def _computed(cid: str, status: str, evidence: str) -> tuple[str, str]:
+    """A few statuses are checked against REAL evidence (files on disk) so the hand-typed
+    table above can't overstate — or, just as importantly, UNDERSTATE — the truth. Returns
+    (status, evidence); evidence is replaced with the concrete proof when computed."""
     if cid == "room-decision":
         arts = list((DATA / "excava" / "artifacts").glob("*.md")) if (DATA / "excava" / "artifacts").exists() else []
-        return "live" if arts else "planned"
-    return status
+        return ("live" if arts else "planned"), evidence
+    if cid in ("war-room", "group-chat"):
+        prefix = "war-" if cid == "war-room" else "group-"
+        n, latest = _recent_room_turns(prefix)
+        if n:
+            return "live", f"{n} real multi-turn {cid.replace('-', ' ')} log(s) in the last 7d, latest {latest}"
+        return "planned", evidence
+    if cid == "daily-selfimprove":
+        log = DATA / "excava" / "improvements.jsonl"
+        if log.exists():
+            lines = [ln for ln in log.read_text(encoding="utf-8").splitlines() if ln.strip()]
+            recent = lines[-25:]
+            try:
+                recs = [json.loads(ln) for ln in recent]
+                last_at = datetime.fromisoformat(recs[-1]["at"]) if recs else None
+                kinds = {r.get("kind", "") for r in recs}
+                has_safe = any(k.startswith("safe-") or k == "add-agent" for k in kinds)
+                has_pitch = "pitch" in kinds
+                fresh = last_at and (datetime.now(timezone.utc) - last_at) < timedelta(days=3)
+                if fresh and has_safe and has_pitch:
+                    return "live", (f"improvements.jsonl: {len(lines)} logged events, last "
+                                     f"{recs[-1]['at'][:10]} — both safe auto-fixes and pitches present")
+            except Exception:
+                pass
+        return "planned", evidence
+    return status, evidence
 
 
 def main() -> int:
@@ -76,8 +130,11 @@ def main() -> int:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     except Exception:
         pass
-    caps = [{"id": c[0], "name": c[1], "what": c[2], "department": c[3],
-             "status": _computed(c[0], c[4]), "evidence": c[5]} for c in CAT]
+    caps = []
+    for c in CAT:
+        st, ev = _computed(c[0], c[4], c[5])
+        caps.append({"id": c[0], "name": c[1], "what": c[2], "department": c[3],
+                      "status": st, "evidence": ev})
     from collections import Counter
     by = Counter(c["status"] for c in caps)
     doc = {"generated_at": datetime.now(timezone.utc).isoformat(),

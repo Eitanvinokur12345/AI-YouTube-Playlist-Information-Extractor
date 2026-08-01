@@ -93,6 +93,23 @@ because the beat only had exhausted Gemini). Fixed + PROVEN end-to-end:
   the acted-on object) · THEN 7 Visualization+Power depts + 2 pitch conditions + pitch-monster (§J/§K/§M
   of EXCAVA_V2_ADDITIONS.md) · 8 M5 + breadth. Rule: "done" = a real artifact shown, never a rendered card.
 
+## 0d-2. LIVE BUILD v133 (2026-08-01) — the Rooms tab now shows whether the DEBATE happened
+
+M2 is COMPLETE (all 9 items verified against evidence; the 5-class collapse Element/Tool/Room/
+Agent/Router is done and live on main). This build is the first VISIBLE product change of the
+session: every room card in the 🗣 Rooms tab now carries a debate badge.
+
+- **green `⚖️ challenged: doer → checker → lead`** — a checker or improver pushed back before the
+  lead converged. A real debate.
+- **red `⚠️ NO challenge`** — only the doer and lead spoke. The doer proposed, the lead agreed,
+  nobody argued. That is the correlated-error shape §2 bans.
+
+Right now 76 of 92 rooms show RED. That is historical: `excava_chat._speaker` gave the lead a
+flat 2-turn converge window, so a 3-turn room ran [doer, lead, lead] and the checker never got a
+turn at all; improvers were excluded from every room regardless of length. Both fixed 2026-08-01
+and now live on main. As rooms re-run, red badges should turn green — that is the visible
+success metric for the fix, readable without opening a terminal.
+
 ## 0d. THE END PLAN LOOP (2026-07-25, Opus fire — live build v128; AWAY-WEEK, continue HERE)
 **⭐ REPO NOW ON D:\AI-YouTube-Skills** (migrated 2026-07-23 off the chronically-full C:; D: has 458 GB
 free). Fresh clone from GitHub, allowlist recreated, drain re-pointed to D:, `git_safe sync` verified

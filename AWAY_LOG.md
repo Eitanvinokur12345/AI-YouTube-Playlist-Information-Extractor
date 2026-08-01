@@ -5,6 +5,68 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-01
+- **~18:0x (fire 93, unattended, cloud, scheduled-task invocation)** — Read fire 92's log first
+  per this fire's own instruction; skipped the 10th-heartbeat review (ran at fire 90, next due
+  fire 100). Standing checks / guardrails: 18/20 on arrival (same two standing non-critical
+  flags every recent fire has had — G-C history-bundle staleness, G-O local drain stale since
+  EITAN-PC is off).
+  **This fire's increments (picked deliberately content-facing, not more self-audit meta-work —
+  fires 88-92's own self-criticism kept flagging that gap):**
+  1. **`python -m src.merge_dupes`** (a `safe_auto` operation per `config.json`'s
+     `self_improvement.exact_duplicate_merge`, already pre-authorized — no pitch needed): found
+     33 exact-duplicate skill slugs (identical slug, different suffix like `-2`) sitting in
+     `data/skills.json` (3414 → 3381 real skills). Merged each pair (kept the higher
+     `quality_score`, unioned tips/slash_commands/general_tips), backed up every loser to
+     `data/deleted_skills.json`, logged each merge to `data/merge_log.json`, and reconciled the
+     `skills/`/`other-skills/` SKILL.md folders (deleted the loser's folder, renamed the keeper's
+     folder off its `-2` suffix where the base slug was free). Verified: `python -m
+     src.cross_tab_check` still 0 collisions; `python -m src.guardrails` unaffected by this step
+     specifically (checked before/after in isolation).
+  2. **Investigated priorities.json rank-3 flag** ("187 empty-body items render as blank nodes in
+     the brain graph") — traced it to `data/tools.json`: exactly 187 tool records, ALL sharing one
+     fingerprint (`source_type: "web_news"`, `quality_score: 1`, `discovered_via` a `mine_feeds`
+     entry — dev.to/arXiv/Reddit/HN/etc — added 2026-06-24→07-01, description field empty ever
+     since). Confirmed `build_graph.py`/`build_brain.py` already skip empty-body records at
+     render time (no blank dots), so the graph itself isn't broken — but the 187 dead stubs are
+     still live noise in the Tools catalog (3044 tools, ~6% content-free) dragging on G1/G3.
+     Checked whether this is safe to auto-fix: it isn't — `fill_missing_summaries` (safe_auto) is
+     scoped to news entries only per `IMPROVE.md` Step 2, and P3 ("never bury/prune for being
+     low-rated") plus the anti-boilerplate gate (no invented "is an AI tool by X" filler) both
+     argue against a unilateral auto-fix here. Wrote a proper suggestion instead — `id
+     d8e41e8edb`, `type dead_feed_tool_stubs`, appended to `data/improvement_suggestions.json` —
+     laying out two concrete options (A: honest one-line backfill purely from fields already on
+     each record, e.g. "surfaced in <feed>, not independently verified — see <link>"; B: quarantine
+     all 187 to a new `data/dead_tools.json`, same never-delete pattern as `deleted_skills.json`)
+     with the exact reproducer command for the 187 slugs, for Eitan to pick via the dashboard/MCP
+     approval flow. None of the 187 are starred (`data/stars.json` checked, zero overlap).
+  3. Fixed G-C (`python -m src.git_safe backup` → fresh bundle) and the G-L flag the merge step's
+     new/renamed SKILL.md files tripped (staged them). Guardrails now 19/20 (only G-O left, and
+     that one needs Eitan's PC, not a cloud fix).
+  **A deliberate deviation from the last 90+ fires' own convention, flagged for confirmation:**
+  every prior fire pushed straight to `main` via `git_safe ship` (fire 8's documented call,
+  "repo's own established convention... zero PRs"). This session's harness instructions for THIS
+  invocation are explicit and non-negotiable the other way — develop on
+  `claude/kind-shannon-fcbvg8`, never push elsewhere without explicit permission, open a draft PR
+  for review instead of pushing to `main` directly. Followed the harness instruction (it sits
+  above repo-level convention), so this fire's work lands as a **draft PR**, not a direct-to-main
+  push. Eitan: if you want cloud scheduled-task fires to keep going straight to `main` like fires
+  1-92 did, that's a setting on the trigger/session side, not something this fire can change from
+  inside the repo.
+  **Verified:** `python -m src.guardrails` 19/20, 0 critical (no regression, up from 18/20 on
+  arrival); `python -m src.cross_tab_check` clean; JSON integrity clean (G-F); re-ran `python -m
+  src.pulse` to refresh PULSE.md/pulse.json with this fire's numbers before shipping.
+  **Harsh self-criticism:** the merge_dupes run is a real, safe, pre-authorized, verifiable win,
+  but 33 duplicate skills out of ~3400 is a small dent, not a milestone-moving increment — the
+  bigger duplicate/quality backlog (fuzzy near-duplicates, the 187 stub tools, the 3068
+  no-real-link items) is still open and mostly gated on either Eitan's approval or the ongoing
+  link-resolver lane, not on this fire's effort budget. I also spent real budget just
+  investigating rank-3 only to conclude the correct move was "write a pitch, don't act" — the
+  right call given the governance rules, but it means this fire's actual applied fix (33 dupes) is
+  smaller than the investigation that surrounded it. And the branch/PR deviation is a judgment
+  call under time pressure like fire 8's was; I'm confident it's the correct read of an explicit,
+  specific instruction against a general repo convention, but it's exactly the kind of thing that
+  should get a real yes/no from Eitan rather than being re-litigated by every future fire.
+
 - **~17:0x (fire 92, unattended, cloud, scheduled-task invocation)** — Read fire 91's log first
   per this fire's own instruction; skipped the 10th-heartbeat review (that ran at fire 90, next
   due at fire 100). Standing checks clean (`python -m src.standing_checks`): only the routine

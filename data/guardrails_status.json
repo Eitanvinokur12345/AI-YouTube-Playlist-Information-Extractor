@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-01T00:02:36.083479+00:00",
+ "generated_at": "2026-08-01T01:26:38.742321+00:00",
  "total": 20,
  "passing": 19,
  "critical_failures": 0,
@@ -22,8 +22,8 @@
    "id": "G-C",
    "name": "History backup fresh",
    "ok": true,
-   "detail": "2 bundle(s); newest within 26h.",
-   "severity": "warn"
+   "detail": "n/a in CI — the beat pushes straight to origin each cycle, bypassing git_safe/local bundles by design.",
+   "severity": "info"
   },
   {
    "id": "G-D",
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "123078 memory episodes on record.",
+   "detail": "123098 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "3 guardrail runs logged (append-only, never rewritten).",
+   "detail": "0 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -99,36 +99,36 @@
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "30097 MB free on the repo drive.",
+   "detail": "89182 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 138.0h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 139.4h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
    "ok": true,
-   "detail": "last 'excava-beat #N' commit 0.2h ago.",
-   "severity": "warn"
+   "detail": "shallow clone — not enough local history to find an 'excava-beat #N' commit either way; not a stall signal, just a checkout-depth limit.",
+   "severity": "info"
   },
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "last 'core-spoton:' commit 1.8h ago.",
-   "severity": "warn"
+   "detail": "shallow clone — not enough local history to find a 'core-spoton:' commit either way; not a stall signal, just a checkout-depth limit.",
+   "severity": "info"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
    "ok": true,
-   "detail": "6/16 lane(s) landing on cadence, 10 can't-tell (shallow clone).",
-   "severity": "warn"
+   "detail": "shallow clone — not enough local history to check any of 16 lanes; not a stall signal, just a checkout-depth limit.",
+   "severity": "info"
   },
   {
    "id": "G-R",

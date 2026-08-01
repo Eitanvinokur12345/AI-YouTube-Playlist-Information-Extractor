@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v132";
+const APP_BUILD = "v133";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -3428,10 +3428,23 @@ async function renderRooms(selId) {
       this room produced a <b>${esc(sel.artifact.kind || sel.artifact_kind || "artifact")}</b>:
       ${esc(String(sel.artifact.ref || sel.artifact.id || ""))}
       · <a href="#" data-open-results>see it in 📦 Results</a></div></div>` : "";
+  // DID THE DEBATE ACTUALLY HAPPEN? (added 2026-08-01 after finding that 70 of 83 rooms ran
+  // with NO challenge turn: the lead's converge window ate the whole room, so the doer proposed
+  // and the lead agreed with nobody pushing back — the correlated-error failure the plan bans.
+  // Fixed in excava_chat._speaker; this is the READ side, so a rubber-stamp room is visible.)
+  const spokeRoles = new Set(msgs.filter(m => m.agent && m.agent !== "system")
+    .map(m => (agents[m.agent] || {}).role).filter(Boolean));
+  const challenged = spokeRoles.has("checker") || spokeRoles.has("improver");
+  const debateBadge = msgs.some(m => m.agent && m.agent !== "system")
+    ? (challenged
+        ? `<span class="pill" style="background:#1d3b23;color:#8fe0a4" title="A checker or improver pushed back before the lead converged — this was a real debate.">⚖️ challenged: ${[...spokeRoles].join(" → ")}</span>`
+        : `<span class="pill" style="background:#3b1d1d;color:#e08f8f" title="No checker or improver spoke: the doer proposed and the lead agreed. Correlated-error risk — the plan bans this shape.">⚠️ NO challenge (${[...spokeRoles].join(" → ") || "?"})</span>`)
+    : "";
   const inner = `
     <div class="room-meta"><span class="pill">${esc(sel.kind)}</span>
       <span>goal: <b>${esc(sel.goal)}</b></span><span>turns ${sel.turns}/${sel.max_turns}</span>
       <span>${sel.status === "done" ? "✅ closed" : "🟢 live"}</span>
+      ${debateBadge}
       ${sel.last_turn_ms ? `<span>last turn ${sel.last_turn_ms}ms</span>` : ""}
       ${sel.artifact ? `<span>📦 artifact: <b>${esc(sel.artifact.kind)}</b> → ${esc(String(sel.artifact.ref || sel.artifact.id || ""))}</span>` : ""}</div>
     <div class="chat">${bubbles}${artInline}</div>`;

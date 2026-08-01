@@ -5,6 +5,39 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-01
+- **~02:40 (fire 85, unattended, cloud, scheduled-task invocation)** — Standing checks
+  (`python -m src.standing_checks`): stale local cache re-fetched (nothing lost), upstream
+  tracking self-healed to `origin/main` again (same recurring per-session gap fires 6/55/84
+  already flagged — still unfixed at the root, still just noticed-and-patched each time).
+  Guardrails 18/20, 0 critical (same 2 known/self-healing: G-C stale backup, G-O EITAN-PC-off
+  ~141h). Checked the flagship `analyze.yml` outage fire 83 already escalated + notified
+  Eitan about: unchanged in kind, worse in degree (`analyze_consecutive_fails` 14→16,
+  `last_analyze_ok_at` still stuck at 2026-07-28T02:37Z, now ~96h down) — did **not** send a
+  second notification, since nothing new is known beyond what fire 83 already surfaced and the
+  standing recommendation (`claude setup-token` / throttle catch-up cadence) is still Eitan's
+  unanswered call, not mine to repeat. Continued fire 84's manual `data/_pending` drain — the
+  one lever this Claude-only cloud session has that doesn't depend on the broken lane — 3 more
+  videos oldest-of-the-newest (catch-up mode, `newest_first`): **M6FzIqoQYFA** ("ChatGPT split
+  3 ways", a 31s ad-style Short, video_quality_score 4/10 — low quality, capped) yielded 3 new
+  `tools.json`/`models.json` entries for OpenAI's GPT-5.6 split (Sol/Terra/Luna) plus a ChatGPT
+  tip on when to use each; **Q2BF4QS-hQQ** ("Creating a podcast with AI") was AI-relevant but
+  content-free promotional fluff (video_quality_score 2/10, no tool named, nothing extractable)
+  — processed with zero new records, correctly not forced into a tab; **fsOqjZIiJVA** (sponsored
+  Codex-in-ChatGPT-desktop Apple Watch build, video_quality_score 6/10) merged into the existing
+  `codex-chatgpt-desktop` tool record (endorsement + mentions bumped) and added one genuine new
+  skill, `chatgpt-codex-goal-long-running-task-build` (using Codex's "goal" feature for a single
+  long-running autonomous build instead of turn-by-turn chat), with its `other-skills/chatgpt/`
+  SKILL.md package. `data/_pending` 1224→1221. Verified: whole-tree `json.loads` sweep 0 broken;
+  `python -m src.guardrails` 18/20 (unchanged); shipped via `git_safe commit`+`push`, commit
+  `ba72371e`. **Harsh self-criticism:** caught and fixed my own mistake mid-fire rather than
+  after — `data/models.json`'s real live shape is a flat `models` list regenerated from
+  `tools.json` by `src/build_models.py` (`{updated_at, models, note}`), NOT the per-category
+  `{podium, full_ranking}` shape CLAUDE.md Step 4 describes; my first pass wrote a stray
+  wrong-shaped `productivity` key that would have silently diverged from what the dashboard
+  actually reads, caught by inspecting the live file before shipping rather than trusting the
+  spec verbatim, and rewritten to match reality. Also, same as fire 84: 3 of 1221 is a rounding
+  error against the backlog, not a fix — this remains a stopgap, not the actual answer, and the
+  actual answer is still sitting unactioned in QUESTIONS.md item 31, Eitan's call.
 - **~02:00 (fire 84, unattended, cloud, scheduled-task invocation)** — Standing checks: 18/20
   guardrails, 0 critical (G-C history-bundle staleness, G-O local-drain staleness — both known/
   expected, PC off). Ran `git_safe backup` to clear G-C → 19/20 after. **Deliberately did NOT

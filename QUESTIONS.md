@@ -418,6 +418,15 @@ this fire — needs care to confirm which of those files are safely regenerable-
 "ours" vs. which accumulate irreplaceable history, so it's the natural next increment rather
 than something to rush.
 
+**2026-08-01 (fire 88) — same "Unverified" badge issue recurred a fifth time; same decision stands.**
+Stop hook flagged this fire's 2 commits (`b012c5aaa`, `85c32d4dc`) as Unverified, same as
+fires 11/34/84/86. Declined to amend/rebase + force-push again, same reasoning: no signing key
+registered anywhere in this environment so amending wouldn't even fix the root cause, this
+branch has CI/other sessions committing to it concurrently so rewriting history is real risk
+for zero gain, and `git_safe ship` already verified `origin == HEAD` after each commit —
+cosmetic, not a data-integrity issue. Not re-litigating a fifth time absent Eitan's answer on
+a real signing key / routing commits through the GitHub API.
+
 **2026-08-01 (fire 86) — same "Unverified" badge issue recurred a fourth time; same decision stands.**
 Stop hook flagged this fire's 3 commits (`44609bbd3`, `52ca15d02`, `53f19aec9`) as Unverified.
 Identical situation to fires 11/34/84: committer is deliberately `skills-tracker-bot

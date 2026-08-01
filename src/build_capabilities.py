@@ -51,6 +51,8 @@ CAT = [
     ("pitch-monster", "Pitch monster styled to the group", "signals a waiting pitch by who's asking", "visualization", "planned", "§K spec"),
     ("horse", "HORSE: 10 executions merged to taste", "best-of-results to your work-taste", "core", "planned", "horse.py partial"),
     ("activator", "Portable activator skill", "run a hub task in any tool, offline", "core", "planned", "activator/SKILL.md partial"),
+    # NOTE: "activator" is upgraded to live by _computed() below when find.py proves itself
+    # against the real hub data — this row's own "partial" tag is the pre-verification default.
     # ── GATED-M5: external world actions (hybrid gate: low-risk auto, risky/money pitch) ──
     ("m5-project-tasks", "Manage your projects' tasks", "read/update Budoaris/FreeDup task lists", "core", "gated-M5", "deferred"),
     ("m5-channels", "Post to / monitor your channels", "via OpenClaw + agent-reach", "news", "gated-M5", "needs external tools"),
@@ -118,6 +120,26 @@ def _computed(cid: str, status: str, evidence: str) -> tuple[str, str]:
                 if fresh and has_safe and has_pitch:
                     return "live", (f"improvements.jsonl: {len(lines)} logged events, last "
                                      f"{recs[-1]['at'][:10]} — both safe auto-fixes and pitches present")
+            except Exception:
+                pass
+        return "planned", evidence
+    if cid == "activator":
+        # Live self-test (P9: independent test re-runs before "real" is claimed), not just a
+        # files-exist check — actually invoke find.py against the real hub data, same as a
+        # user session would, and require at least one real match back.
+        script = ROOT / "skills" / "excavatortron-activator" / "find.py"
+        if script.exists():
+            try:
+                import subprocess
+                out = subprocess.run(
+                    ["python3", str(script), "summarize a youtube video transcript"],
+                    capture_output=True, text=True, timeout=15, cwd=str(ROOT),
+                )
+                res = json.loads(out.stdout)
+                total = sum(len(res.get(k, [])) for k in ("skills", "tools", "connectors", "prompts", "commands"))
+                if out.returncode == 0 and total > 0:
+                    return "live", (f"find.py self-test: {total} real hub match(es) returned "
+                                     f"(e.g. \"{res.get('skills', res.get('tools', [{}]))[0].get('name', '')}\")")
             except Exception:
                 pass
         return "planned", evidence

@@ -5,6 +5,75 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-01
+- **~19:0x (fire 93, unattended, cloud, scheduled-task invocation)** — Read fire 92's log first.
+  Standing checks clean (`python -m src.standing_checks`): only the routine missing-upstream-
+  tracking self-heal on this fresh session branch. Guardrails 18/20, 0 critical before this
+  fire's change (same two standing flags as every recent fire: G-C history-bundle staleness,
+  G-O local drain stale — EITAN-PC off).
+  **Investigated the flagship `analyze.yml` outage in depth** (fire 83 escalated it via push
+  notification; fires 84/85/86/89/90/91/92 all re-checked and declined to re-notify since
+  nothing was qualitatively new). Pulled the actual GitHub Actions job logs directly via the
+  `github` MCP tool for the last ~30 runs and the raw `claude-execution-output.json` for one of
+  the 5 real (non-night-gated-skip) failures (run `30679570989`, 2026-08-01T02:15 UTC): confirmed
+  the exact signature already described in the workflow's own comments —
+  `{"type":"result","subtype":"success","is_error":true,"duration_ms":1937,"num_turns":1,
+  "total_cost_usd":0}` — the SDK dies before any real model turn, ~2s in. This is now **16
+  consecutive zero-progress failures with zero successes since 2026-07-28** (4+ days), well past
+  the workflow's own coded "3-4 with no success -> check the token" escalation threshold that
+  triggered fire 83's original notification. **Did NOT send a second push notification** — this
+  is the same already-escalated, human-only-actionable issue (only Eitan can run
+  `claude setup-token` and rotate `CLAUDE_CODE_OAUTH_TOKEN_REAL`; no fire can do this), and
+  fires 84-92 already made the considered call that "more elapsed time on the same known issue"
+  isn't new information worth re-pinging him over — respecting that precedent rather than
+  re-litigating it. Also checked whether `bulk_analyze`'s free-tier lane could pick up slack by
+  relaxing `require_transcript: true` (1623 of 1794 pending videos lack a real transcript, so the
+  free lane already skips most of the backlog) — deliberately did NOT make that change: the code
+  comment ("prefer ones with a REAL transcript — that's the whole point") and CLAUDE.md's Step 2b
+  are explicit that title/description-only extraction is low-confidence, and relaxing the gate
+  risks reintroducing exactly the ~950-stub flood P14/the anti-boilerplate gate exist to prevent.
+  The actual bottleneck (transcript coverage) is already served by its own `transcribe.yml` lane
+  on its own cadence — not something this fire should short-circuit.
+  **This fire's increment:** picked up fire 92's own flagged follow-up ("a future fire with more
+  budget should audit all 8 [remaining hand-typed 'planned' capability rows], not just trust the
+  hand-typed table again") rather than doing a second night-window-diagnosis-only fire with no
+  code change. Audited `power-meter`, `dept-focus`, `horse`, and `activator` against real
+  evidence: `power-meter`'s only backing file (`power_scan.json`) holds an opportunity list, not
+  the % score its own name promises — left `planned`. `dept-focus`'s closest real mechanism
+  (`excava_backlog.py`'s value-ranked per-department task picks) doesn't match the specific
+  "rotating focus" framing closely enough to claim honestly — left `planned`. `horse.py` is real,
+  complete code, but `data/horse_runs.json` shows `"runs": []` — zero actual executions on
+  record — correctly stays `planned`. `activator` (`skills/excavatortron-activator/`) had
+  substantial real files (SKILL.md, find.py, activate.py, a public hub API) that the CAT table's
+  own evidence string still called "partial" — ran `find.py` directly (offline, against local
+  hub data, read-only, no side effects) with a real query and got 15 genuine matches back, so
+  wired this as a live self-test inside `_computed()` in `src/build_capabilities.py` (subprocess,
+  15s timeout, fails safely back to `planned` if the script or hub data ever breaks) rather than
+  hand-flipping the static status — same "stays honest either direction" contract fire 92 used
+  for war-room/group-chat/daily-selfimprove. Result: `live` 23->24, `planned` 8->7 (37 unchanged).
+  **Verified:** `python -m py_compile src/build_capabilities.py` clean; `python -m
+  src.build_capabilities` regenerated with the new counts and printed the real match evidence
+  string (`"find.py self-test: 15 real hub match(es) returned..."`); `python -m src.guardrails`
+  17/20 before commit (G-G newly flagged only because `origin/main` had advanced by 1 commit from
+  a concurrent lane in the meantime — not a regression from this change) with 0 critical either
+  way; `git diff --stat` confirmed only `src/build_capabilities.py` + the expected regenerated
+  `data/excava/capabilities.json` and trailing status files changed. Logged the WHY via
+  `project_memory` before committing, per the project's own contract.
+  **Harsh self-criticism:** this is a narrow, single-row fix — I deliberately did not force a
+  claim on `power-meter`/`dept-focus`/`horse` even though `power-meter` and `dept-focus` have
+  *some* loosely-related evidence, because that evidence doesn't cleanly match what the row's own
+  name and description promise, and overclaiming in the honest direction is just as much a P4
+  violation as overclaiming in the dishonest direction — but this is a judgment call about
+  "close enough," not a mechanical test, so a future fire (or Eitan) could reasonably disagree
+  on where that line sits. This is also, once again, meta/self-audit work on EXCAVA's own
+  honesty layer rather than the bigger structural M2 step (5-class scaffolding) fire 65 already
+  flagged as explicitly pitch-gated pending Eitan's answer, or a genuinely new department
+  capability — I spent real fire budget on the `analyze.yml` investigation (which produced a
+  confirmed diagnosis but deliberately zero notification and zero code change, per the
+  don't-re-litigate-a-settled-call reasoning above) before landing on this smaller, safer
+  increment, which is a defensible sequencing but means less net forward motion this fire than a
+  fire that skipped the (now redundant) diagnosis pass entirely. **No blocker for Eitan** beyond
+  the standing, already-known `analyze.yml` token item (unchanged, not re-escalating).
+
 - **~17:0x (fire 92, unattended, cloud, scheduled-task invocation)** — Read fire 91's log first
   per this fire's own instruction; skipped the 10th-heartbeat review (that ran at fire 90, next
   due at fire 100). Standing checks clean (`python -m src.standing_checks`): only the routine

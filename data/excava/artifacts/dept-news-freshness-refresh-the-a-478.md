@@ -1,17 +1,16 @@
 # news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
 
-> Decision artifact · room `dept-news-freshness-refresh-the-a-478` (dept) · 2026-07-29T20:59:20.406117+00:00
+> Decision artifact · room `dept-news-freshness-refresh-the-a-478` (dept) · 2026-07-31T04:09:23.537737+00:00
 > Participants: Scoop, Wire · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Wire publishes the latest AI headlines digest from Reuters, BBC, and the White House press feed.
 
 **Plan:**
-1. Fetch the newest AI-related headlines from Reuters, BBC, and the White House press feed.
-2. Extract key decisions, trade-offs, and developments from each source.
-3. Summarize findings in plain language, highlighting policy shifts, corporate moves, or national initiatives.
-4. Compile into a clean, structured digest with source attribution.
-5. Publish the digest on the designated platform.
-6. Archive the previous digest for reference.
+1. Fetch the latest AI-news digest from OpenAI’s official blog and Microsoft’s AI announcements page.
+2. Pull the latest AI headlines from Reuters, BBC, and the White House press feed.
+3. Summarize key decisions and trade-offs from the aggregated sources in plain language.
+4. Publish the digest as a clean, structured GitHub markdown file.
+5. Refresh the AI-news digest with the newest official/company/national sources.
+6. Close the room upon completion.
 
-**What changed:** Fresh AI-news digest published from the latest official/company/national sources.
+**What changed:** Aggregated and published the latest AI developments from OpenAI, Microsoft, Reuters, BBC, and the White House.

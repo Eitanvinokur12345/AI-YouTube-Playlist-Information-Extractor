@@ -1,16 +1,16 @@
 # links: advance the links department's mission
 
-> Decision artifact · room `dept-links-advance-the-links-depa-552` (dept) · 2026-07-27T04:57:18.689220+00:00
+> Decision artifact · room `dept-links-advance-the-links-depa-552` (dept) · 2026-07-30T17:32:15.901122+00:00
 > Participants: Anchor, LinLea · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Run a full audit of the department’s link inventory using the link-checker tool.
-2. Generate a complete report of all active, broken, and redirecting links.
-3. Remove all dead links from the inventory.
-4. Deliver the cleaned link inventory report to the team.
-5. Update the department’s link management system with the revised inventory.
-6. Schedule quarterly audits to maintain link integrity.
+1. Run the link-checker tool against the department’s live inventory to generate a raw report of broken/outdated links.
+2. Prioritize the report by severity (e.g., 404 errors, redirects, outdated content) and location.
+3. Deliver the prioritized report to the team with clear action items (e.g., "Fix 15 high-severity links by EOD").
+4. Assign owners for each broken link category (e.g., content team for outdated links, dev team for redirects).
+5. Schedule a follow-up review in 48 hours to track progress on fixes.
+6. Document recurring issues in a shared tracker for long-term resolution.
 
-**What changed:** Dead links were removed and a cleaned link inventory report was delivered.
+**What changed:** Broken links will now be systematically identified, prioritized, and assigned for immediate remediation.

@@ -1,16 +1,18 @@
 # analysis: Deep-analyze every element from its FULL source (whole transcript/repo) + enrich from >=1 
 
-> Decision artifact · room `dept-analysis-deep-analyze-every-490` (dept) · 2026-07-21T14:47:33.617812+00:00
+> Decision artifact · room `dept-analysis-deep-analyze-every-490` (dept) · 2026-07-31T21:21:09.928446+00:00
 > Participants: Chisel, Marrow · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+Marrow synthesizes the debate into a structured execution plan for deep analysis of the earnings call transcript using BloodHound-MCP.
 
 **Plan:**
-1. Fetch LangSmith’s full documentation from its public GitHub repository to extract core observability, tracing, and evaluation features.
-2. Manually review LangSmith’s documentation and public case studies to identify key decision points and trade-offs in its design and implementation.
-3. Produce a structured breakdown of how LangSmith captures, visualizes, and analyzes LLM interactions in production.
-4. Enrich the analysis with at least one additional authoritative source (e.g., LangSmith’s blog, academic papers, or third-party evaluations).
-5. Synthesize findings into a detailed analysis report for Marrow’s review.
-6. Finalize the report with actionable insights and recommendations.
+1. **Run BloodHound-MCP** on the full earnings call transcript to generate a dependency graph of all entities (e.g., stakeholders, financial terms, risks) and their relationships.
+2. **Cross-reference the graph** with the full transcript text to extract explicit decisions, trade-offs, and contradictions, flagging inconsistencies or unresolved tensions.
+3. **Enrich the analysis** with >=1 external source (e.g., market data, regulatory filings, or industry benchmarks) to contextualize findings and validate key claims.
+4. **Generate a dependency graph report** highlighting hidden themes, decision points, and contradictions for final review.
+5. **Compile a summary document** with prioritized insights, including contradictions, unresolved questions, and actionable recommendations for stakeholders.
+6. **Validate critical findings** with a secondary tool or manual review to ensure accuracy and completeness of the dependency graph.
 
-**What changed:** Decision formalized into a structured plan with clear execution steps.
+**What changed:**
+BloodHound-MCP is now explicitly tasked with generating a dependency graph *and* cross-referencing it with the transcript to extract decisions/trade-offs, ensuring a deeper, structured analysis.

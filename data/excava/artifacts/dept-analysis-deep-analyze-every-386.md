@@ -1,16 +1,16 @@
 # analysis: Deep-analyze every element from its FULL source (whole transcript/repo) + enrich from >=1 
 
-> Decision artifact · room `dept-analysis-deep-analyze-every-386` (dept) · 2026-07-10T02:15:35.720570+00:00
-> Participants: Chisel, Sift, Marrow · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-analysis-deep-analyze-every-386` (dept) · 2026-07-30T20:51:05.604732+00:00
+> Participants: Chisel · synthesized by mistral/mistral-small-latest
 
-**Decision:** Prioritize current, stakeholder-authored analysis artifacts by parsing full transcripts/repos for actionable, non-legacy content with explicit decision traces.
+**Decision:**
 
-**Plan:**  
-1. Identify all relevant analysis files in `./analysis/` by listing paths and timestamps.  
-2. Evaluate files based on authorship, recency, and relevance to the current decision-making context.  
-3. Extract key excerpts from selected files that contain explicit decision markers.  
-4. Filter out any legacy or duplicate files to ensure content is actionable.  
-5. Summarize findings in a report, highlighting significant insights and decision traces.  
-6. Present the analysis in a structured format suitable for stakeholder review.
+**Plan:**
+1. Parse the full earnings call transcript into a structured JSON dataset with speaker labels, timestamps, and functional area tags.
+2. Run BloodHound-MCP to generate a cross-functional tie graph, prioritizing the mandatory reviewer’s enforced connections across all functional areas.
+3. Extract the reviewer’s decision anchor by identifying the highest-weighted node in the graph (e.g., frequency, authority, or consensus ties).
+4. Cross-validate the anchor against the transcript’s metadata (e.g., speaker hierarchy, document revisions) to confirm its mandatory status.
+5. Enrich the graph with external sources (e.g., corporate governance docs, prior meeting minutes) to validate the reviewer’s scope.
+6. Output the final decision anchor in a GitHub markdown report with embedded graph visualizations and source citations.
 
-**What changed:** Focus shifted from quantity of files to the relevance and currency of content in the decision-making process.
+**What changed:** The reviewer’s decision anchor is now empirically mapped and validated via BloodHound-MCP’s cross-functional tie analysis.

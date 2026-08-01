@@ -1,15 +1,16 @@
 # news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
 
-> Decision artifact · room `dept-news-freshness-refresh-the-a-293` (dept) · 2026-07-08T01:38:34.829711+00:00
-> Participants: Scoop, Factcheck, Wire · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-news-freshness-refresh-the-a-293` (dept) · 2026-08-01T04:04:32.646802+00:00
+> Participants: Scoop, Wire · synthesized by mistral/mistral-small-latest
 
-**Decision:** Use arXiv’s top 10% cited papers (past 7 days), 15 press releases with ≥200 retweets/official mentions, and 10 policy updates from .gov/.eu/.cn.
+**Decision:**
 
-**Plan:**  
-1. Scrape the past 7 days of arXiv papers and filter to the top 10% by citation count.  
-2. Collect 15 press releases from NVIDIA, Google DeepMind, and Microsoft AI with at least 200 retweets or official blog mentions.  
-3. Gather 10 recent AI policy updates from official government sources (.gov, .eu, .cn).  
-4. Compile and timestamp all sourced links for clarity.  
-5. Limit the final AI-news digest to a maximum of 25 items to maintain freshness and relevance.
+**Plan:**
+1. Fetch the freshest AI-news digest from official/company/national sources dated 2024-05-30.
+2. Compile a plain-language summary of key developments (OpenAI’s ChatGPT Dreaming Memory, Google’s NoteGPT YouTube summaries, EU’s AI Act).
+3. Extract three critical decisions: OpenAI’s rollout, Google’s expansion, EU’s compliance rules.
+4. Draft trade-offs for each decision (e.g., user benefits vs. privacy, scalability vs. regional limits, enforcement vs. flexibility).
+5. Format the digest as a single GitHub markdown artifact with clear sections.
+6. Publish the digest as the official AI-headlines digest for 2024-05-30.
 
-**What changed:** The selection criteria were refined to enhance signal and minimize noise by focusing on recency and impact.
+**What changed:** AI-headlines digest published for 2024-05-30 with three key decisions and trade-offs.

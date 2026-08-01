@@ -190,6 +190,20 @@ signing key added to this environment's git config, or switching these commits t
 (which auto-signs as "GitHub verified") instead of local `git push`. Neither is a fire-sized decision to make
 unilaterally.
 
+**2026-08-01 (fire 84) — same "Unverified" badge issue recurred a third time; same decision stands.**
+Stop hook flagged all 12 of this fire's commits (the pending-video drain) plus one pre-existing
+`excava-beat #7` commit as "Unverified." Identical situation to fires 11/34: committer email is
+already `noreply@anthropic.com`, the SSH signature IS present on every commit (confirmed via
+`git cat-file commit` — a `gpgsig` block exists), it's just unverifiable locally (`gpg.ssh.
+allowedSignersFile` isn't configured) and there's still no real signing key registered anywhere
+that would make GitHub itself show "Verified." `origin/main` already equals HEAD (`git_safe push`
+verified it after every commit this fire), so nothing is at risk — rewriting 12 already-shared
+commits via rebase+force-push on a branch the CI beat is actively committing to (an `excava-beat`
+commit landed mid-fire, right before this chain) would only add real risk for a cosmetic badge.
+Declined again, not re-litigating further; the actual fix (a real GPG/SSH signing key in this
+environment's git config, or routing commits through the GitHub API instead of local `git push`)
+is still unbuilt and still Eitan's call, three fires running now.
+
 **2026-07-27 (fire 34) — same "Unverified" badge issue as fire 11 recurred; same decision stands, no new action taken.**
 This fire's stop hook flagged commit `b75ae37d` (the designs.json conflict-marker fix) as
 "Unverified" for the identical reason fire 11 already investigated and decided: the SSH
@@ -251,6 +265,15 @@ completions were misjudged as theatre. Fixed with a targeted carve-out (mirrors 
 with 0 unit-test regressions across 8 cases (genuine no-ops/blocked/planned/security-zero all still
 classify correctly). _Default: keep as documented above; only the news-dept wiring question needs
 your actual decision._
+
+**2026-08-01 — re-checked, nothing changed.** `data/excava/supervisor.json`'s self-audit is still
+(correctly) flagging the `news` intent_drift this fire 23 entry describes. Re-verified both risks
+that stopped the rewire still hold: `.github/workflows/news.yml` still runs `src.news` on its own
+independent 6h schedule against `data/daily_web_news.json`/`data/web_news_store.json`, and
+`_run_real_tool`'s subprocess timeout in `src/excava_agents.py` is still hardcoded at 90s against
+`src.news`'s ~95 sequential RSS fetches. Made no code change — this is expected, not a regression;
+logged a short pointer in `data/excava/improvements.jsonl` (`kind: "investigate-no-op"`,
+2026-08-01) so a future pass doesn't reinvestigate from zero. Still your call.
 
 ---
 
@@ -371,3 +394,48 @@ housekeeping._
 > 2. **`discover.yml`'s failure does NOT reproduce only in the 20:00–02:00 UTC window fire 57 identified for `analyze.yml`.** Pulled `review.yml`'s last 30 runs: it fires at 23:00 UTC (squarely inside that same window) and is **30/30 success** — direct counter-evidence that the window alone explains anything for a low-frequency lane. Then ran the actual experiment: manually `workflow_dispatch`'d `discover.yml` right now at **09:04 UTC** — a time `analyze.yml` has been succeeding at consistently all morning (08:23, 07:31, 05:41 all green). It **failed anyway**, with the byte-identical signature (`is_error:true, num_turns:1, total_cost_usd:0, duration_ms:2227`). That rules out "just reschedule it to daytime" as a sufficient fix — the cause travels with the workflow/token, not the clock. Given `data/catch_up.json` shows catch-up mode active since 07-17 (1,233 pending, `analyze.yml`'s `*/30 * * * *` catch-up cron hammering the same shared `CLAUDE_CODE_OAUTH_TOKEN_REAL` continuously since), my best-supported read now is a **sustained/rolling usage cap kept almost permanently exhausted by the catch-up sprint's own call volume**, not a fixed nightly clock window — a low-frequency lane like `discover`/`improve` gets unlucky almost every time it fires because the token rarely has headroom at all right now, while `analyze.yml`'s sheer retry frequency (every 30 min) still finds enough gaps to mostly succeed, and `review.yml`'s 1-2x/week cadence has so far dodged it by luck of the draw, not immunity. **Did not act on the cadence itself** (still your call, per fire 55/57's own standing ask — now with much stronger evidence backing it): the concrete lever, if this read is right, is throttling `analyze.yml`'s catch-up-sprint cadence (currently every 30 min, only active because `catch_up.json.active:true`) rather than moving `discover`/`improve`'s cron times, which this fire's live test just showed wouldn't help. Left `show_full_output` off, per the standing default — didn't need it this time; the workflow_dispatch experiment got a clean, reproducible answer without it.
 
 > **Fire 81 escalation — the theory just failed its own prediction: last night's window was 0-for-5, not "clustered ~1-in-3."** Re-pulled `analyze.yml`'s job history + full logs (`mcp__github__actions_list` + `mcp__github__get_job_logs`) for the night_window actually configured in `config.json` (`cadence.night_window`: 01:00–07:00 **Israel** time, not the 20:00–02:00 UTC fallback fire 57 used — that was the code's default, not the live config; the two happen to mostly overlap but aren't identical). Every real (non-gated) `analyze.yml` attempt in last night's window — 22:26, 23:28 UTC 07-29 and 00:53, 01:53, 03:49 UTC 07-30 (= 01:26, 02:28, 03:53, 04:53, 06:49 Israel, all inside the 01:00–07:00 gate) — **failed**, all five, byte-identical signature (`is_error:true, num_turns:1, total_cost_usd:0, duration_ms~2.2-2.3s`, confirmed via job 90774468587's full log, not just run status). Zero successes that night, where fire 57's whole "transient, self-heals by morning" read rested on every prior bad night being bracketed by successes. `data/status.json` now shows `analyze_consecutive_fails: 6` (own worst streak on record) and `last_analyze_ok_at: 2026-07-28T02:37:27Z` — **the CORE ingestion lane has not completed one real analyze run in ~61 hours**, and every run since (9 in a row through 15:28 UTC today) is a day-gate skip, not a success, so the backlog cannot move again until the next 01:00 Israel window opens AND actually succeeds. `data/_pending` sits at 1154 (flat/slow-declining only from `bulk_analyze.yml`'s separate free-pool lane, not this one). **Did not act** — same reasons fire 55/57/63 gave: I can't distinguish "quota genuinely exhausted" from "token needs `claude setup-token`" from inside this sandbox, and flipping cadence or `show_full_output` is explicitly your call per the standing, still-unanswered ask in this item. Flagging because the "no action needed, it self-heals" default that's been governing `token_hint` since fire 57 no longer matches the evidence — this is now a sustained outage of the flagship lane, not noise. **Recommend**: run `claude setup-token` once to rule out expiry (cheapest test — if it flips to 100% failure elsewhere too, expiry was never it; if tonight's window succeeds after refresh, it was), or confirm the plan's rolling cap so the catch-up cadence can be throttled instead.
+
+> **Fire 86 update — outage is NOT sustained right now; the theory holds, and a possible counter-bug flagged.** Pulled `analyze.yml`'s last 30 runs fresh: a clean ~16h green streak all day 07-31 (05:24→21:34 UTC, every run succeeding), then 5 straight failures clustered again in the 22:00 UTC (07-31) → 02:13 UTC (08-01) window — the same nightly-ceiling shape fires 57/63/81 already diagnosed, self-healing again by morning. So the "sustained outage" read from fire 81's worst night was itself a bad night, not a new steady state — consistent with a rolling/nightly quota ceiling, not an expired token (still your call to test via `claude setup-token` or throttle the catch-up cron, per the standing ask above — nothing new to act on unilaterally). Separately: `data/status.json.analyze_consecutive_fails` currently reads 16 despite the clear intervening green streak — either it isn't resetting on daytime successes, or it's counting something other than literal back-to-back scheduled-run failures. Did not chase this further this fire (small, not urgent); worth a future fire actually reading how that counter is incremented before trusting it as a live health signal.
+
+> **Fire 87 — read the counter, it was NOT malfunctioning; fire 86's "16h green streak" was itself the misread.** Pulled the same 30 `analyze.yml` runs plus every step's own conclusion (not just the workflow-run-level one `mcp__github__actions_list` shows). Fire 86's "green streak" is job-level `conclusion: success` — but the night-gate (`cadence.night_window`, 01:00–07:00 Israel) makes `has_work=false` for almost every daytime run, so the "Analyze pending videos" step is `skipped`, not `success`, and a skip deliberately does NOT touch `analyze_consecutive_fails` (fire 36's own fix, on purpose — a skip must never look like a reset). So the daytime streak fire 86 read as 16h of resets was actually 16h of the counter correctly sitting untouched; the 16 is a real count of consecutive NIGHT-WINDOW zero-progress attempts across the last few bad nights, exactly as designed. Confirmed directly on the last real failure (run `30679570989`, 02:13:30 UTC today): job step list shows "Analyze pending videos" ran 02:14:46→02:15:06 (20s) and failed — no video work happened, matching the known zero-turn signature, so `status.json` was already accurate; nothing to correct there.
+> That said, the investigation surfaced a REAL gap the counter should still be hardened against: CLAUDE.md Step 10 commits+pushes after every video, so a batch run that errors out partway through (not the instant zero-turn failure, but a later-turn error/limit after several videos already landed) would currently still get the same "renew your token" escalation as a genuine zero-progress streak — a false alarm waiting to happen, just one that hadn't happened yet in the sampled history. Fixed in `.github/workflows/analyze.yml`: a new `Snapshot pre-analyze HEAD` step records the SHA before the Claude step runs; `Record analyze health` now diffs `pre_sha..HEAD` for `analyze: ` commits and splits the streak into `analyze_consecutive_zero_progress_fails` (the real token/quota signal, escalates to "check the token" past 2) vs `analyze_consecutive_partial_fails` (real work landed, just didn't finish — never escalates to a token message). `analyze_consecutive_fails`/`analyze_ok`/`token_hint` are kept as aliases of whichever counter is currently live, so `self_check.py`'s Q42 and the dashboard's existing red-banner wiring (`docs/dashboard.js` reading `status.analyze_ok`/`token_hint`) need no changes. Verified end-to-end offline (can't live-fire GitHub Actions from here): both embedded Python heredocs `compile()`-clean; a real git repo in the scratchpad with actual `analyze:`-prefixed commits confirmed via the real `git log <sha>..HEAD` subprocess call — a failure with 2 real video commits produces the partial-progress message and counter, a failure with zero commits produces the zero-progress message and counter (escalating correctly at attempt #3), and a success resets both counters plus `last_analyze_ok_at`. `python -m src.guardrails`: 18/20, 0 critical (G-C/G-O are the standing non-critical cloud-session flags, both pre-existing and unrelated to this change). **Harsh self-criticism:** this fixes a latent bug, not an active one — I went looking for "why is the dashboard lying to Eitan right now" and the honest answer is it isn't; the value here is prophylactic (the next multi-video-then-error run won't falsely cry token-expired) and the fix is unverified against a real GitHub Actions runner, only against a faithful offline simulation of the exact subprocess/logic path, so it should still be watched via `data/status.json.analyze_consecutive_partial_fails` the next time a real partial failure occurs. Also note it does NOT address fire 81/86's actual standing ask (throttle the catch-up cron off the night window, or confirm the plan's rolling cap) — that's still explicitly your call, still unactioned, still the real fix for the underlying nightly failures themselves.
+
+**2026-08-01 (fire 88) — excava-beat sync: widen the stateless-conflict whitelist (next-fire follow-up).**
+Fixed the acute bug (unresolved merges baking `<<<<<<<` conflict markers into the beat's own
+JSON state, crashing every following cycle for the rest of a ~5.3h run — see AWAY_LOG.md fire
+88 for the full repro). The fix aborts cleanly instead of corrupting, but a beat job that hits
+its first sync conflict will still likely fail to push for the rest of its life, same as
+before — it just no longer wastes that time crashing. Real fix: widen
+`.github/workflows/excava_beat.yml`'s `git checkout --ours` whitelist (currently 7 files:
+`data_guard.json`, `health.json`, `effectiveness.json`, `hub.json`, `self_check.json`,
+`safety.json`, `guardrails_status.json`) to cover the beat's own full scratch/log surface that
+showed up conflicting in the live logs — `data/excava/{state,bus,rooms,leases,pulse,
+recent_events,backlog}.json`, `syscalls.jsonl`, and the `chats/`, `traces/`, `agent_memory/`,
+`artifacts/`, `handoffs/` trees — OR switch the `.jsonl` append-logs specifically to a real
+union/append merge (blind "ours" would silently drop the other lane's real entries for those,
+unlike the fully-regenerated-each-cycle JSON readouts where "ours" loses nothing). Not done
+this fire — needs care to confirm which of those files are safely regenerable-from-scratch
+"ours" vs. which accumulate irreplaceable history, so it's the natural next increment rather
+than something to rush.
+
+**2026-08-01 (fire 88) — same "Unverified" badge issue recurred a fifth time; same decision stands.**
+Stop hook flagged this fire's 2 commits (`b012c5aaa`, `85c32d4dc`) as Unverified, same as
+fires 11/34/84/86. Declined to amend/rebase + force-push again, same reasoning: no signing key
+registered anywhere in this environment so amending wouldn't even fix the root cause, this
+branch has CI/other sessions committing to it concurrently so rewriting history is real risk
+for zero gain, and `git_safe ship` already verified `origin == HEAD` after each commit —
+cosmetic, not a data-integrity issue. Not re-litigating a fifth time absent Eitan's answer on
+a real signing key / routing commits through the GitHub API.
+
+**2026-08-01 (fire 86) — same "Unverified" badge issue recurred a fourth time; same decision stands.**
+Stop hook flagged this fire's 3 commits (`44609bbd3`, `52ca15d02`, `53f19aec9`) as Unverified.
+Identical situation to fires 11/34/84: committer is deliberately `skills-tracker-bot
+<actions@users.noreply.github.com>` per `CLAUDE.md` Step 10's own instruction for the analyze
+pipeline, an SSH `gpgsig` block IS present on the tip commit (confirmed via `git cat-file
+commit`), it's just unverifiable to GitHub with no signing key registered anywhere in this
+environment — cosmetic, not a data-integrity issue. `git_safe ship` already verified
+`origin == HEAD` after each commit. Declined to amend/rebase + force-push a fourth time, same
+reasoning as before: it wouldn't even fix the root cause (no signing key), and this branch has
+CI/other sessions committing to it concurrently, so a history rewrite is real risk for zero
+gain. Still Eitan's call whether to add a real signing key or route commits through the GitHub
+API; not re-litigating again absent that answer.

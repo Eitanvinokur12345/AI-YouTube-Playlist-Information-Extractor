@@ -1,16 +1,14 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-296` (dept) · 2026-07-17T09:54:56.837061+00:00
-> Participants: Reel, Echo · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-296` (dept) · 2026-07-31T20:16:30.486895+00:00
+> Participants: Reel, Echo · synthesized by transcript-summary (no engine)
 
-**Decision:**
+**Decision:** ACTION: Reel fetches full transcript for *"Orchestrated AI"* via kimtaeyoon83/mcp-server-youtube-transcript, output to transcripts-w1 for verification.
 
-**Plan:**
-1. Reel runs the `kimtaeyoon83/mcp-server-youtube-transcript` tool on video ID "dQw4w9WgQq" to fetch the full transcript.
-2. Reel verifies the transcript output exists and is complete.
-3. Reel marks the task as complete if the transcript is valid.
-4. Repeat steps 1-3 for all pending videos.
-5. Lead reviews transcripts for accuracy before final approval.
-6. Store verified transcripts in the designated repository.
+**Plan (from the debate):**
+1. I will fetch the full transcript for *"How to Build a Resilient Team"* using the kimtaeyoon83/mcp-server-youtube-transcript tool. This will produce a complete, verbatim transcript of the video's capti
+2. ACTION: Reel fetches full transcript for *"Orchestrated AI"* via kimtaeyoon83/mcp-server-youtube-transcript, output to transcripts-w1 for verification.
+3. I will fetch the full transcript for the pending video using the kimtaeyoon83/mcp-server-youtube-transcript tool. This will produce a complete, verbatim transcript of the video's captions.
+4. ACTION: Fetch full transcript for *"How to Build a Resilient Team"* via kimtaeyoon83/mcp-server-youtube-transcript, output to transcripts-w1 for verification.
 
-**What changed:** The tool will now be used to fetch real full transcripts for pending videos.
+**What changed:** first real room artifact.

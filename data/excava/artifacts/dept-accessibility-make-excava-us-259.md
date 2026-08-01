@@ -1,15 +1,13 @@
 # accessibility: Make EXCAVA usable by EVERYONE — contrast, mobile/touch, reduced-motion, keyboard nav, scr
 
-> Decision artifact · room `dept-accessibility-make-excava-us-259` (dept) · 2026-07-27T17:36:20.991425+00:00
-> Participants: Ramp, Reader, Access · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-accessibility-make-excava-us-259` (dept) · 2026-07-30T22:05:47.608467+00:00
+> Participants: Ramp, Reader, Access · synthesized by nvidia/meta/llama-3.3-70b-instruct
 
-**Decision:** Use one high-contrast "Skip to main content" link at page top for all pages.
-
+**Decision:** Ship a 4px solid focus ring with a 2px outer offset, colored #005FCC, delivering 4.5:1 contrast against all backgrounds.
 **Plan:**
-1. Add a high-contrast "Skip to main content" link at the very top of every page in the EXCAVA template.
-2. Ensure the skip link is keyboard-navigable and screen-reader-friendly.
-3. Test the skip link with screen readers to confirm it bypasses navigation and jumps to the main content.
-4. Document the skip link’s behavior in the EXCAVA accessibility guidelines.
-5. Assign Ramp as the owner for maintaining the skip link functionality in the template.
-
-**What changed:** Added a single high-contrast "Skip to main content" link at the top of every page.
+1. Implement a 4px solid focus ring with a 2px outer offset on every interactive element.
+2. Ensure the focus ring color #005FCC provides a 4.5:1 contrast ratio against all backgrounds.
+3. Verify the focus ring's visibility on various backgrounds, including dark, patterned, and image-heavy screens.
+4. Test the focus ring on mobile devices with keyboard-only navigation to ensure visibility despite screen glare.
+5. Review and refine the focus ring design to balance visibility and subtlety.
+**What changed:** The focus ring width was increased from 3px to 4px to guarantee visibility on dark, patterned, or glare-prone mobile screens.

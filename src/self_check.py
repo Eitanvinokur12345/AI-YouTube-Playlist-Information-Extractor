@@ -101,6 +101,21 @@ def _packageable_skills(c):
     return [s for s in c["skills"] if (s.get("quality_score") or 0) >= 5]
 
 
+def _videos_with_output(c):
+    """Distinct source_video_ids that produced at least one skill/tool/connector record.
+    Check 14 used to compare this record COUNT against the processed FILE count — a video
+    routinely yields many records (roundup videos alone can yield ~100), so that inequality
+    was structurally false forever, not a real regression signal. The actual invariant is
+    per-video: no video can appear as a source unless it was also moved to processed/."""
+    ids = set()
+    for coll in (c["skills"], c["tools"], c["connectors"]):
+        for x in coll:
+            vid = x.get("source_video_id")
+            if vid:
+                ids.add(vid)
+    return ids
+
+
 # Each entry: (n, question, fn(ctx) -> (bool, evidence_str))
 def CHECKS():
     SECRET_RX = re.compile(r"(sk-[A-Za-z0-9]{20}|gho_[A-Za-z0-9]{20}|AIza[A-Za-z0-9_\-]{20}|xoxb-|gsk_[A-Za-z0-9]{20}|csk-[A-Za-z0-9]{20})")
@@ -118,7 +133,7 @@ def CHECKS():
      (11, "Every skill category in approved list", lambda c: _frac_ok(c["skills"], lambda s: (s.get("category") or "other") in (c["cfg"].get("categories", []) + ["other"]), 0.9)),
      (12, "At least one tip per relevant skill", lambda c: _frac_ok(c["skills"], lambda s: bool(s.get("tips") or s.get("general_tips")), 0.4)),
      (13, "Slash commands are real /commands", lambda c: _frac_ok(c["commands"], lambda x: str(x.get("command", x if isinstance(x, str) else "")).strip().startswith("/"), 0.6) if c["commands"] else (True, "none")),
-     (14, "Non-relevant videos skipped", lambda c: (c["processed"] >= len(c["skills"]), f"processed {c['processed']} >= skills {len(c['skills'])}")),
+     (14, "Non-relevant videos skipped", lambda c: (lambda v: (c["processed"] >= len(v), f"processed {c['processed']} >= {len(v)} videos with output"))(_videos_with_output(c))),
      (15, "No lower score overwrote a higher one", lambda c: (True, "merge is score-aware (merge_dupes)")),
      (16, "SKILL.md exists per technique", lambda c: _frac_ok(_packageable_skills(c), lambda s: _skill_md_path(s).exists(), 0.7)),
      (17, "Models ranking refreshed", lambda c: (len(c["models"]) > 0, f"models={len(c['models'])}")),

@@ -1,15 +1,15 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-713` (dept) · 2026-07-16T18:27:40.708640+00:00
-> Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-visual-mine-great-designs-fr-713` (dept) · 2026-07-31T07:21:31.609631+00:00
+> Participants: Easel, Chroma · synthesized by transcript-summary (no engine)
 
-**Decision:**
+**Decision:** ACTION: Chroma screenshots the top 3 most-tweeted design systems from Dribbble and adds them to the hub as taste material.
 
-**Plan:**
-1. Capture the vibrant pink header from the Beverage Cans website as a screenshot.
-2. Upload the screenshot to the hub as taste material for the Motion Graphics Pipeline.
-3. Tag the screenshot with relevant keywords (e.g., "color palette," "header design," "vibrant").
-4. Share the uploaded asset in the Motion Graphics Pipeline channel for team review.
-5. Archive the screenshot in the design pattern library for future reference.
+**Plan (from the debate):**
+1. ACTION: Chroma captures a high-quality screenshot of the Agent Platform Selection Rule decision diagram from the MCP server and saves it as a taste material artifact in the hub.
+2. I will open the Playwright MCP server and capture a high-quality screenshot of the Model Context Protocol server dashboard to add to our visual design collection in the hub. This screenshot will serve
+3. ACTION: Chroma captures a high-quality screenshot of the Model Context Protocol server dashboard from the Playwright MCP server and adds it to the hub as a design pattern reference.
+4. I open Playwright MCP and screenshot the top 3 most-tweeted design systems from the web. This produces three high-quality visual references for our hub’s taste material collection.
+5. ACTION: Chroma screenshots the top 3 most-tweeted design systems from Dribbble and adds them to the hub as taste material.
 
-**What changed:** A new taste material (screenshot) was added to the hub for the Motion Graphics Pipeline.
+**What changed:** first real room artifact.

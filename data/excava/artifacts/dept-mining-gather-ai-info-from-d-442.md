@@ -1,16 +1,16 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-442` (dept) · 2026-07-15T10:20:11.252481+00:00
-> Participants: Pick, Boulder · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-442` (dept) · 2026-07-31T18:37:52.875615+00:00
+> Participants: Pick · synthesized by mistral/mistral-small-latest
 
-**Decision:** Targeted search on GitHub for AI-related repositories to gather valuable insights.
+**Decision:**
 
 **Plan:**
-1. Access GitHub and use the search query for repositories tagged with "AI" and "research."
-2. Filter the results to display repositories sorted by star count.
-3. Further refine by selecting the most recent repositories for relevancy.
-4. Compile a ranked list of the top 20 repositories based on star count and recency.
-5. Review and summarize the gathered information to inform stakeholders about current projects and best practices in AI.
-6. Share the compiled list with the team for further exploration and analysis.
+1. Deploy a real-time scraper targeting GitHub, Hacker News, Product Hunt, Reddit (r/MachineLearning, r/artificial, r/learnmachinelearning), and Telegram AI channels for posts in the last 24 hours.
+2. Filter results for AI-related keywords (e.g., "LLM", "diffusion", "neural", "AI", "ML") and exclude job postings/job boards.
+3. Curate top 20-30 posts by engagement (upvotes, stars, comments) and novelty (unique tools/models).
+4. Generate concise summaries (1-2 sentences) with direct links for each entry.
+5. Output as a GitHub-flavored markdown table with columns: **Source**, **Title/Post**, **Summary**, **Link**, **Engagement Metric**.
+6. Schedule automated runs every 6 hours and push to a dedicated repo.
 
-**What changed:** Focused approach to mining specific data from GitHub for actionable insights in AI research.
+**What changed:** Focus shifted from broad "AI info" to high-signal, diverse sources with exclusion of job spam and structured output.

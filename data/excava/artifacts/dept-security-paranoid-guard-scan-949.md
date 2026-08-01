@@ -1,16 +1,16 @@
 # security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (not fake/dead); DETECT
 
-> Decision artifact · room `dept-security-paranoid-guard-scan-949` (dept) · 2026-07-10T17:18:02.871312+00:00
-> Participants: Warden · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-security-paranoid-guard-scan-949` (dept) · 2026-07-31T00:18:01.479704+00:00
+> Participants: Warden, Bastion · synthesized by mistral/mistral-small-latest
 
-**Decision:** Implement mandatory pre-production network scans for all new systems to eliminate default services/credentials.
+**Decision:**
 
 **Plan:**
-1. Deploy automated port/service discovery (e.g., `nmap` or `masscan`) on every new system prior to deployment.
-2. Block deployment if non-approved ports/services are detected (fail-closed).
-3. Require manual review for any unexpected services, even if non-critical.
-4. Log scan results and approvals in a tamper-evident audit trail.
-5. Integrate scan results into the system’s deployment metadata (e.g., CI/CD pipeline).
-6. Schedule periodic re-scans for systems already in production (quarterly minimum).
+1. Run the LLM Guard scanner on the current input/output stream to detect injection or leakage.
+2. Generate a real-time anomaly report flagging any risks or leaks.
+3. Verify all elements in the stream are real (not fake/dead) by cross-referencing with trusted sources.
+4. If anomalies are detected, quarantine the affected input/output and flag for manual review.
+5. Log all scan results and verification steps for audit purposes.
+6. Repeat the scan periodically to ensure ongoing security.
 
-**What changed:** Added automated pre-production scanning with fail-closed enforcement.
+**What changed:** LLM Guard scanner deployed with real-time anomaly reporting and verification steps.

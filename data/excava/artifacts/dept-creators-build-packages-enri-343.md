@@ -1,18 +1,16 @@
 # creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Created by EXCAVA' + tes
 
-> Decision artifact · room `dept-creators-build-packages-enri-343` (dept) · 2026-07-28T12:28:48.652541+00:00
+> Decision artifact · room `dept-creators-build-packages-enri-343` (dept) · 2026-07-31T20:38:43.077025+00:00
 > Participants: Forge, Nova · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Nova approves the creation of the "UGC Factory" package as an open-source npm skill for Claude Code.
 
 **Plan:**
-1. Forge drafts the "UGC Factory" package as an npm module under the "Created by EXCAVA" label.
-2. Include a ready-to-use set of tools for generating open-source Claude Code skills.
-3. Embed a test suite within the package for validation.
-4. Submit the draft for lead review.
-5. Enrich the relevant tabs in the project documentation to reflect the new package.
-6. Draft supporting elements (e.g., README, usage examples) under the "Created by EXCAVA" label.
+1. Forge drafts the "Quick Reply" UGC package for Skill Creator, labels it "Quick Reply | Created by EXCAVA," and tests it for instant, customizable reply templates in Claude interactions.
+2. Forge drafts the "Auto-Summarize" UGC package for Skill Creator, labels it "Auto-Summarize | Created by EXCAVA," and tests it for one-click, customizable summaries of long Claude interactions.
+3. Ensure all packages include clear documentation for creators on usage and customization.
+4. Validate both packages in a staging environment with sample interactions.
+5. Deploy tested packages to production with EXCAVA branding.
+6. Monitor initial usage and gather creator feedback for iterative improvements.
 
-**What changed:**
-The "UGC Factory" package is now officially drafted as an open-source npm skill for Claude Code.
+**What changed:** Two new UGC packages ("Quick Reply" and "Auto-Summarize") were created and labeled under EXCAVA.

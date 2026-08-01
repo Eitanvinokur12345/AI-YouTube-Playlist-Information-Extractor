@@ -1,16 +1,16 @@
 # watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.
 
-> Decision artifact · room `dept-watch-analyze-video-audio-vi-103` (dept) · 2026-07-12T11:39:32.303039+00:00
-> Participants: Scope, Frame, Iris · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-watch-analyze-video-audio-vi-103` (dept) · 2026-07-31T23:05:34.848809+00:00
+> Participants: Scope, Iris · synthesized by mistral/mistral-small-latest
 
-**Decision:** Run parallel audio-visual analysis to generate a prioritized list of key moments with timestamps.
+**Decision:**
 
 **Plan:**
-1. Run audio analysis to extract tone, pauses, and background noise (e.g., door slams, urgency).
-2. Run visual scene analysis to identify gestures, object interactions, and background changes (e.g., documents, third parties).
-3. Merge results to flag high-value segments where audio and visual cues align or resolve ambiguity.
-4. Generate a prioritized list of key moments with timestamps for deeper review.
-5. Assign ownership to `watch-w1` for execution and validation.
-6. Document assumptions (e.g., critical context in audio vs. visuals) for future iterations.
+1. Run Arcads AI Video on the AI marketing video to generate a structured analysis report of key themes, emotional triggers, and visual storytelling techniques.
+2. Extract a concise GitHub markdown repo of marketing insights and visual cues from the Arcads AI Video output.
+3. Run Arcads AI Video Agent Skill Pack on the same video to identify actionable skill-based takeaways.
+4. Cross-reference the two outputs to highlight overlaps and gaps in insights.
+5. Compile the finalized insights into a single GitHub markdown file with clear sections for themes, triggers, visual techniques, and skill-based takeaways.
+6. Publish the GitHub markdown file to the designated repository.
 
-**What changed:** Adopted parallel processing to avoid missing nonverbal or tonal cues, replacing sequential audio-then-visual or visual-then-audio approaches.
+**What changed:** Arcads AI Video and Arcads AI Video Agent Skill Pack outputs are now synthesized into a single, actionable GitHub markdown report.

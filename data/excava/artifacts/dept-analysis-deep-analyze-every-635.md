@@ -1,18 +1,18 @@
 # analysis: Deep-analyze every element from its FULL source (whole transcript/repo) + enrich from >=1 
 
-> Decision artifact · room `dept-analysis-deep-analyze-every-635` (dept) · 2026-07-21T14:29:21.569666+00:00
+> Decision artifact · room `dept-analysis-deep-analyze-every-635` (dept) · 2026-07-31T23:46:13.401310+00:00
 > Participants: Chisel, Marrow · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Adopt LangSmith as the primary observability and evaluation framework for the AI earnings reviewer agent, contingent on resolving integration trade-offs identified in the documentation.
+Marrow will execute BloodHound-MCP on the full earnings call transcript to generate a structured graph of stakeholder relationships, sentiment signals, and tonal shifts for the lead’s review.
 
 **Plan:**
-1. **Full Documentation Audit:** Manually review LangSmith’s docs (tracing, evaluation, SDKs) and public case studies to extract agent-specific metrics (e.g., hallucination rates, latency in call summarization).
-2. **Lifecycle Mapping:** Align LangSmith’s tracing (e.g., run-level spans for earnings call segments) and evaluation (e.g., custom metrics for financial accuracy) with the agent’s workflow (transcription → analysis → report generation).
-3. **Gap Analysis:** Identify missing features (e.g., real-time agent feedback loops) and document workarounds (e.g., custom evaluators via LangSmith’s Python SDK).
-4. **Integration Trade-off Matrix:** Compare LangSmith’s cost (per-run pricing) vs. self-hosted alternatives (e.g., Arize) for scalability during earnings season peaks.
-5. **Pilot Validation:** Deploy a minimal agent instance with LangSmith for 1 quarterly earnings cycle, measuring trace completeness and evaluation drift.
-6. **Stakeholder Sync:** Present findings to finance/ops teams, finalizing adoption if ROI (e.g., reduced manual review hours) meets threshold.
+1. **Data Ingestion:** Run BloodHound-MCP on the complete earnings call transcript to extract raw text, timestamps, and speaker segments.
+2. **Graph Construction:** Map all stakeholder relationships (e.g., executives, analysts, investors) and their interactions (e.g., questions, responses, interruptions) into a structured graph.
+3. **Sentiment/Tonal Analysis:** Enrich the graph with sentiment scores (positive/negative/neutral) and tonal shifts (e.g., aggressive, cautious, optimistic) per stakeholder and segment.
+4. **Validation:** Cross-check a 10% random sample of the graph against manual annotations for accuracy (e.g., mislabeled relationships or sentiment misclassifications).
+5. **Lead Delivery:** Package the final graph (nodes: stakeholders, edges: interactions; attributes: sentiment/tonal scores) into a GitHub-hosted markdown report with a summary of key insights.
+6. **Iteration Trigger:** Flag any unresolved ambiguities (e.g., sarcasm, jargon) for follow-up with the lead or additional context sourcing.
 
 **What changed:**
-LangSmith’s documentation review replaced the initial placeholder analysis, enabling a decision grounded in concrete tracing/evaluation capabilities.
+BloodHound-MCP execution is now explicitly tied to a structured graph output with validation and delivery steps, ensuring actionable insights for the lead.

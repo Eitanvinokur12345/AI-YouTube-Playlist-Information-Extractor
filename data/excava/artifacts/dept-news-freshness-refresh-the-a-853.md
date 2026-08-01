@@ -1,12 +1,16 @@
 # news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
 
-> Decision artifact · room `dept-news-freshness-refresh-the-a-853` (dept) · 2026-07-11T17:31:38.819028+00:00
-> Participants: Scoop, Factcheck, Wire · synthesized by groq/llama-3.3-70b-versatile
+> Decision artifact · room `dept-news-freshness-refresh-the-a-853` (dept) · 2026-07-31T17:27:20.628799+00:00
+> Participants: Scoop, Wire · synthesized by mistral/mistral-small-latest
 
-**Decision:** Implement a two-tier daily sweep to ensure freshness and authority in the AI-news digest
-1. Set up a daily sweep of official company announcements and government press releases to capture crucial information straight from the source.
-2. Integrate content from reputable tech publications on a daily basis to provide context and analysis.
-3. Establish a system for the News Team to review and curate the daily sweep of sources to ensure relevance and quality.
-4. Develop a process to prioritize and highlight significant announcements and releases.
-5. Define key metrics to measure the success and impact of the two-tier sweep approach.
-**What changed:** The approach now combines official sources with reputable tech publications for a comprehensive AI-news digest.
+**Decision:**
+
+**Plan:**
+1. Fetch the top three newest AI developments from OpenAI’s official blog.
+2. Fetch the top three newest AI developments from NVIDIA’s newsroom.
+3. Fetch the top three newest AI developments from Microsoft’s AI updates page.
+4. Curate and merge the results into a single, deduplicated list of the newest AI headlines.
+5. Publish the AI-headlines digest with the top three most recent developments across all sources.
+6. Include timestamps and direct links for each headline in the digest.
+
+**What changed:** Expanded sources to OpenAI, NVIDIA, and Microsoft for a broader, fresher AI-news digest.

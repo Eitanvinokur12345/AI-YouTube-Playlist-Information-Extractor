@@ -1,15 +1,15 @@
 # improve: Self-improvement: review prompts/engines/routing/own-code; auto-apply safe changes; pitch 
 
-> Decision artifact · room `dept-improve-self-improvement-rev-533` (dept) · 2026-07-11T06:38:59.826514+00:00
-> Participants: Sprocket · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-improve-self-improvement-rev-533` (dept) · 2026-07-31T11:35:39.744515+00:00
+> Participants: Sprocket, Gauge, Ratchet · synthesized by mistral/mistral-small-latest
 
-**Decision:** We will auto-apply only the safest class of changes to our prompts, engines, routing, and own code.
+**Decision:** Reject auto-applying whitespace patches to third-party dependencies.
 
-**Plan:**  
-1. Implement a review system to categorize changes as 'safe' (additive) or 'structural' (logic changes, refactors).  
-2. Develop an auto-application tool for identified safe changes, ensuring they are additive only.  
-3. Establish a human review process for all structural edits, creating a feedback loop for future improvements.  
-4. Create documentation guidelines for logging the nature of changes made and ensuring clarity in communication.  
-5. Regularly evaluate the effectiveness of this approach and adjust the categorization criteria based on outcomes.
+**Plan:**
+1. Add a CI check (e.g., `prettier --check`) to flag formatting drift in third-party dependencies.
+2. Document the policy: auto-formatting only applies to our own codebase; third-party code must pass checks.
+3. Fork critical dependencies once, apply formatting fixes, and pin the fork in the lockfile.
+4. Update `CONTRIBUTING.md` to require CI checks for PRs touching third-party code.
+5. Add a `format-third-party` script (optional) to assist manual fixes when drift is detected.
 
-**What changed:** The focus is now on limiting auto-application to only additive changes for safety.
+**What changed:** Added CI-driven formatting checks for third-party dependencies.

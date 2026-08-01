@@ -1,16 +1,16 @@
 # memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.
 
-> Decision artifact · room `dept-memory-recall-by-meaning-rel-703` (dept) · 2026-07-10T20:03:40.829624+00:00
-> Participants: Graft · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-memory-recall-by-meaning-rel-703` (dept) · 2026-07-31T16:44:53.105491+00:00
+> Participants: Graft, Root · synthesized by mistral/mistral-small-latest
 
-**Decision:** Build a single, living “memory map” document to link every key idea to its meaning, neighbors, and concrete recall triggers.
+**Decision:**
 
 **Plan:**
-1. Create a GitHub repository with a structured `MEMORY_MAP.md` file.
-2. Define a template for each entry: `[Key Idea] - Meaning: [X] | Neighbors: [Y,Z] | Recall: [A,B]`.
-3. Seed the map with 10 high-priority ideas from the debate (e.g., "recall by meaning," "brain graph").
-4. Add bidirectional links between related entries (e.g., "memory map" ↔ "recall by meaning").
-5. Open a PR workflow for community contributions (edits/additions).
-6. Schedule biweekly reviews to prune duplicates and refine connections.
+1. Embed unembedded elements from this conversation into the Hindsight memory database via Graft.
+2. Query the Hindsight memory database via the MCP server for all stored memory elements related to the goal: "Recall by meaning, relate elements, build the brain graph, embed unembedded elements."
+3. Link the current session’s decisions to the existing memory graph for future retrieval.
+4. Synthesize the debate into a structured recallable record.
+5. Ensure the memory database reflects the latest decisions and embeddings.
+6. Verify the integrity of the embedded elements and their connections to the existing graph.
 
-**What changed:** Introduced a collaborative, evolving memory map to replace isolated recall.
+**What changed:** Unembedded elements from this conversation were embedded into the Hindsight memory database and linked to the existing memory graph.

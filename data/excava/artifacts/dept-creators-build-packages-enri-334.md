@@ -1,18 +1,17 @@
 # creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Created by EXCAVA' + tes
 
-> Decision artifact · room `dept-creators-build-packages-enri-334` (dept) · 2026-07-28T23:05:57.389563+00:00
+> Decision artifact · room `dept-creators-build-packages-enri-334` (dept) · 2026-07-31T04:22:21.008812+00:00
 > Participants: Forge, Nova · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Forge will publish the UGC Factory npm package as a ready-to-use module labeled "Created by EXCAVA" with tests included.
+Nova approves the creation of the "UGC Factory" package for creators.
 
 **Plan:**
-1. Forge drafts the UGC Factory npm package with full functionality for creators to generate custom Claude skills without coding.
-2. Forge labels the package and all related elements with "Created by EXCAVA".
-3. Forge includes comprehensive tests in the package to ensure reliability.
-4. Forge publishes the package to npm with the "Created by EXCAVA" label.
-5. Nova verifies the package meets the goal requirements before finalizing.
-6. Team documents the package’s usage in the relevant tabs for creators.
+1. Forge drafts the "UGC Factory" package.
+2. Package includes open-source Claude Code skill generation.
+3. Every artifact is labeled "Created by EXCAVA".
+4. Forge tests the package for functionality.
+5. Nova reviews and approves the final output.
+6. Package is published to GitHub.
 
-**What changed:**
-The UGC Factory npm package is now a ready-to-use module labeled "Created by EXCAVA" with tests, enabling creators to build custom Claude skills without coding from scratch.
+**What changed:** Added testing and review steps to ensure quality.

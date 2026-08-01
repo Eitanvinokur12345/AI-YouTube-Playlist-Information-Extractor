@@ -1,18 +1,18 @@
 # power: Raise EXCAVA's capability by even 0.5%: find new tools, best/newest models, combine elemen
 
-> Decision artifact · room `dept-power-raise-excava-s-capabil-764` (dept) · 2026-07-27T19:40:17.477905+00:00
+> Decision artifact · room `dept-power-raise-excava-s-capabil-764` (dept) · 2026-07-31T05:11:29.810147+00:00
 > Participants: Gearbox, Torque, Dynamo · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Adopt Qwen3-235B-A22B-Instruct as EXCAVA’s primary inference engine after validation.
+Run a 48-hour live A/B benchmark comparing Anthropic Claude 3.7 Sonnet vs. current EXCAVA engine on the worst 100 cases, measuring error rate and latency—Torque owns execution and must deliver a signed report by EOD tomorrow proving ≥0.5% error reduction or reject the swap.
 
 **Plan:**
-1. Deploy Qwen3-235B-A22B-Instruct and Llama-3.1-70B-Instruct on EXCAVA’s 8xA100 node.
-2. Run a 48-hour blind A/B stress test with worst-case prompt length (4096 tokens).
-3. Measure throughput delta ≥0.5% (tokens/sec) and latency spikes under load.
-4. Log VRAM usage, routing overhead, and memory-bound attention scaling.
-5. Compare results against Llama-3.1-70B’s flat 70B performance.
-6. Finalize engine selection based on empirical data.
+1. Freeze EXCAVA’s current engine as the control.
+2. Deploy Anthropic Claude 3.7 Sonnet as the variant in a 50/50 split.
+3. Lock prompt templates and seed randomness for fair comparison.
+4. Measure error rate and latency on the worst 100 cases.
+5. Torque signs and submits a report by EOD tomorrow with ≥0.5% error reduction or rejection.
+6. Dynamo reviews report and executes model swap if criteria are met.
 
 **What changed:**
-Primary inference engine selection deferred to empirical validation.
+Added latency as a strict constraint in the benchmark.

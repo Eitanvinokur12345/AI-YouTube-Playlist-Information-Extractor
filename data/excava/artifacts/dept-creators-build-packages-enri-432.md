@@ -1,16 +1,16 @@
 # creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Created by EXCAVA' + tes
 
-> Decision artifact · room `dept-creators-build-packages-enri-432` (dept) · 2026-07-27T18:26:33.326169+00:00
+> Decision artifact · room `dept-creators-build-packages-enri-432` (dept) · 2026-07-31T18:30:42.880790+00:00
 > Participants: Forge, Nova · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Draft the "Skill Creator for Claude" npm package in the creators tab.
-2. Label the package "Created by EXCAVA".
-3. Include a test file in the package.
-4. Enrich the creators tab with additional relevant packages.
-5. Draft elements for future expansion.
-6. Ensure all items are labeled "Created by EXCAVA".
+1. Forge drafts the "UGC Factory Skill Pack" npm package for Claude Code with clear usage instructions and examples.
+2. Nova tests the package, confirms successful installation and execution of at least one custom skill example.
+3. Label the verified package "Created by EXCAVA" with an attached test report.
+4. Publish the package to npm with the "Created by EXCAVA" label.
+5. Enrich the relevant tabs (e.g., "Skills" or "Packages") with the new package and its documentation.
+6. Draft additional elements (e.g., README updates or creator guides) to support adoption.
 
-**What changed:** "Skill Creator for Claude" npm package added to creators tab with "Created by EXCAVA" label and test file.
+**What changed:** A verified "UGC Factory Skill Pack" package labeled "Created by EXCAVA" is now available for creators.

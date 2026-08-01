@@ -1,16 +1,15 @@
 # news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
 
-> Decision artifact · room `dept-news-freshness-refresh-the-a-932` (dept) · 2026-07-27T05:09:43.450387+00:00
+> Decision artifact · room `dept-news-freshness-refresh-the-a-932` (dept) · 2026-07-31T17:54:49.840246+00:00
 > Participants: Scoop, Wire · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Fetch verified AI headlines from Reuters, BBC, and the White House press releases.
-2. Filter for the newest developments (prioritize last 7 days).
-3. Compile a digest with dates, sources, and key decisions.
-4. Format as a GitHub markdown table with columns: Date, Source, Headline, Key Decision.
-5. Include a "Freshness Check" note (e.g., "Last updated: [current date]").
-6. Post the digest to the designated AI-news digest repository.
+1. Fetch the latest AI announcements from OpenAI’s official blog and NVIDIA’s newsroom.
+2. Extract the top three newest developments from each source.
+3. Curate a concise digest of the most relevant AI headlines.
+4. Format the output as a GitHub markdown list with clear decisions on relevance.
+5. Publish the digest under Wire’s authority.
 
-**What changed:** Automated, verified AI-news digest with freshness prioritization.
+**What changed:** AI-headlines digest published with top three newest OpenAI/NVIDIA developments.

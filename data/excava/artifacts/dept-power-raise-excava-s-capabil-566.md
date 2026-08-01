@@ -1,18 +1,13 @@
 # power: Raise EXCAVA's capability by even 0.5%: find new tools, best/newest models, combine elemen
 
-> Decision artifact · room `dept-power-raise-excava-s-capabil-566` (dept) · 2026-07-21T03:57:56.099120+00:00
-> Participants: Dynamo, Gearbox, Torque · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-power-raise-excava-s-capabil-566` (dept) · 2026-07-31T12:22:13.479566+00:00
+> Participants: Gearbox, Torque, Dynamo · synthesized by nvidia/meta/llama-3.3-70b-instruct
 
-**Decision:**
-Run a blind 32K vs. 128K head-to-head on EXCAVA’s longest power tasks with both Mistral Large 3 and Qwen2.5-72B, using Torque’s test design and data, Gearbox’s model runs and cost tracking.
-
+**Decision:** Run a 500-sample blind A/B test on EXCAVA comparing current model vs. Claude 3.7 Sonnet with frozen prompts and strict accuracy metric; if gain ≥0.4%, switch permanently.
 **Plan:**
-1. **Blind evaluation:** Run 32K vs. 128K tests on EXCAVA’s longest power tasks with both models, using identical prompts and Torque’s evaluation metric.
-2. **Cost tracking:** Gearbox to log model run costs and compare Qwen2.5-72B vs. Mistral Large 3 pricing.
-3. **Performance validation:** Torque to verify long-context behavior (no collapse) and measure capability bumps (0.5%+ threshold).
-4. **Production readiness:** Gearbox to assess usability (speed, stability) for EXCAVA’s deployment constraints.
-5. **Final selection:** Choose model based on validated performance, cost, and production viability.
-6. **Documentation:** Publish results (GitHub) with raw data, prompts, and evaluation metrics.
-
-**What changed:**
-Blind head-to-head test replaces vendor claims with empirical validation.
+1. Prepare a 500-sample frozen prompt set from current EXCAVA task chains.
+2. Configure Claude 3.7 Sonnet for integration with EXCAVA, ensuring compatibility and minimal disruption.
+3. Execute a blind A/B test, splitting the 500 samples between the current model and Claude 3.7 Sonnet.
+4. Evaluate test results using a strict accuracy metric to determine the gain from switching to Claude 3.7 Sonnet.
+5. If the gain is ≥0.4%, permanently switch EXCAVA to utilize Claude 3.7 Sonnet.
+**What changed:** The approach to upgrading EXCAVA's capability, now incorporating a rigorous testing process before committing to a new model.

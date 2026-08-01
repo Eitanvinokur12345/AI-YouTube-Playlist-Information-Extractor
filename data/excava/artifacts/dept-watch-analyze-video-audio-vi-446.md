@@ -1,18 +1,15 @@
 # watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.
 
-> Decision artifact · room `dept-watch-analyze-video-audio-vi-446` (dept) · 2026-07-13T15:26:39.732734+00:00
+> Decision artifact · room `dept-watch-analyze-video-audio-vi-446` (dept) · 2026-07-31T17:21:19.735587+00:00
 > Participants: Scope, Iris · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Proceed with multimodal analysis of the video using Gemini 3.1 Ultra to extract non-verbal cues, pauses, and visual emphasis for structured reporting.
 
 **Plan:**
-1. Feed the video into Gemini 3.1 Ultra’s multimodal pipeline for audio sentiment and visual analysis.
-2. Extract non-verbal cues (tone shifts, hesitations) and visual emphasis (gestures, facial expressions).
-3. Generate a structured report highlighting decision-relevant signals (e.g., inconsistencies, emphasis).
-4. Deliver the report to the lead for review and action.
-5. Validate key findings with a secondary review (optional).
-6. Archive raw analysis and final report for documentation.
+1. Launch Arcads AI Video’s "AI Marketing" skill pack on target video *t* to generate a structured analysis of marketing elements (visual storytelling, brand messaging, audience engagement cues).
+2. Extract key insights from the Arcads analysis, focusing on emotional triggers, visual composition, and narrative flow.
+3. Cross-reference Arcads’ output with manual review of video AUDIO+VISUAL to validate claims (e.g., tone consistency, brand alignment).
+4. Compile findings into a concise report highlighting discrepancies between Arcads’ analysis and manual observations.
+5. Deliver final report to stakeholders with actionable recommendations (e.g., optimize visuals for engagement, refine messaging for clarity).
 
-**What changed:**
-Initiated parallel multimodal analysis to capture beyond-transcript signals for informed decision-making.
+**What changed:** Arcads AI Video’s structured analysis replaces manual deep-dive, prioritizing scalability over granular human review.

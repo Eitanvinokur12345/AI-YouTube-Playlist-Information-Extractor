@@ -1,16 +1,16 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-489` (dept) · 2026-07-20T17:06:54.038594+00:00
+> Decision artifact · room `dept-visual-mine-great-designs-fr-489` (dept) · 2026-07-31T16:31:49.268901+00:00
 > Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Open target websites (e.g., Beverage Cans) and capture screenshots of key design elements (hero sections, color palettes, typography).
-2. Upload screenshots to the hub as taste material artifacts, tagging them with relevant descriptors (e.g., "vibrant pink," "hero section").
-3. Curate screenshots into a visual reference library, organizing by design patterns (e.g., gradients, layouts).
-4. Extract reusable design patterns (e.g., color schemes, spacing) and document them in the hub.
-5. Cross-reference artifacts with existing hub content to identify gaps or overlaps.
-6. Iterate by refining selections based on feedback or new discoveries.
+1. Open the Playwright MCP server to enable high-quality screenshot capture.
+2. Navigate to Dribbble’s "AI Agent Platform" page.
+3. Capture high-quality screenshots of the top three live design patterns.
+4. Save each screenshot as a taste material artifact in the hub.
+5. Label artifacts with metadata (e.g., source URL, timestamp).
+6. Verify artifacts are accessible and properly stored in the hub.
 
-**What changed:** Screenshots and design patterns from external sites are now systematically integrated into the hub as reference material.
+**What changed:** Chroma now captures and saves Dribbble design patterns as taste material artifacts.

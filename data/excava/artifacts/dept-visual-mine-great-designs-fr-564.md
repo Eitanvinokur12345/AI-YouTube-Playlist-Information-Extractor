@@ -1,16 +1,17 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-564` (dept) · 2026-07-20T20:11:19.436270+00:00
+> Decision artifact · room `dept-visual-mine-great-designs-fr-564` (dept) · 2026-07-31T10:44:26.413345+00:00
 > Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+Chroma will curate the best visual references from both Dribbble and Figma for the hub’s taste material.
 
 **Plan:**
-1. Capture high-quality screenshots of visually striking web designs (e.g., vibrant hero sections, unique layouts) from curated sources.
-2. Upload screenshots as taste material artifacts to the hub with clear titles/descriptions for lead review.
-3. Organize artifacts by design patterns (e.g., color schemes, typography, UI components) for easy navigation.
-4. Tag artifacts with relevant keywords (e.g., "minimalist," "bold colors") to streamline discovery.
-5. Maintain a running log of sources/links for each artifact to credit inspiration.
-6. Schedule periodic reviews to curate and archive outdated or low-value materials.
+1. Open Playwright MCP and screenshot the top 3 most-tweeted design systems from Figma.
+2. Open Playwright MCP and screenshot the top 3 most-tweeted design systems from Material Design.
+3. Open Playwright MCP and screenshot the top 3 most-tweeted design systems from Carbon Design System.
+4. Open Playwright MCP and screenshot the top 3 most-tweeted design systems from Dribbble.
+5. Curate the best 3 visual references from all sources into the hub.
+6. Add screenshots and design patterns to the hub’s taste material.
 
-**What changed:** Screenshots now systematically feed into the hub as reusable design references.
+**What changed:** Expanded sources to include Dribbble alongside Figma, Material Design, and Carbon Design System.

@@ -4,6 +4,252 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+## 2026-08-01
+- **~07:0x (fire 88, unattended, cloud, scheduled-task invocation)** — Standing checks
+  (`python -m src.standing_checks`): clean (stale local cache + missing upstream tracking,
+  both routine, both self-healed). Guardrails 17/20, 0 critical, but **G-M ("work is moving")
+  read STALLED** — `data/excava/movement.json`'s `done` counter had sat at 18 across four
+  consecutive beats (04:06→06:58Z, ~3h). Chased it to ground instead of dismissing it as
+  another expected-flaky guardrail. Found the excava-beat workflow's currently-running job
+  (run `30684607193`) queued behind the PRIOR run (`30677675426`, 01:26Z→06:44Z, its full
+  5h18m budget) — and that prior run's logs (pulled via `mcp__github__get_job_logs`) show the
+  real bug: it landed exactly ONE beat commit on `origin/main` (`#7`, 02:00Z) in its entire
+  5.3h life. Root cause in `.github/workflows/excava_beat.yml`'s per-cycle git-sync fallback
+  (added fire 29): when `git pull --rebase` AND the merge fallback both conflict on a file
+  outside the small stateless-whitelist, the script logged "leaving for manual/next-cycle
+  recovery" and moved on — but never actually aborted the merge, so `MERGE_HEAD` and literal
+  `<<<<<<<`/`=======`/`>>>>>>>` conflict-marker text stayed on disk in the conflicted files
+  (confirmed live: `data/excava/state.json`, `rooms.json`, `bus.json`, `pulse.json`,
+  `backlog.json`, `syscalls.jsonl`, every `chats/`/`traces/`/`agent_memory/` file, etc. — the
+  beat's own full working set). The FOLLOWING cycle's `git add data` then staged those raw
+  markers as the "resolved" content and `git commit` happily baked them into history —
+  corrupting the beat's own JSON state every cycle from then on, which crashed
+  `python -m src.excava` on its own unparseable state (`Traceback` in the logs, confirmed
+  matching cycles 34/35 onward) for the rest of the run: real work done, zero; nothing ever
+  synced (push then always failed too, on the now-diverged/garbage history — so `origin/main`
+  itself stayed clean, which is why `python -m src.guardrails` on a fresh checkout never
+  caught this; the damage was entirely local to each ephemeral runner and thrown away when the
+  job ended). **Fix:** when the merge still can't complete after the whitelist resolve, run
+  `git merge --abort` (restores the tree to this cycle's own clean local commit — no markers,
+  still valid JSON) instead of leaving it half-resolved. **Verified, not assumed:** built a
+  real bare-origin scratch repo reproducing the exact scenario (a "beat" clone with its own
+  local commit racing a concurrent "other-lane" push to the same file) — ran the OLD script
+  first and reproduced the identical failure end-to-end (conflict → unresolved → next cycle's
+  `git add`+`commit` bakes in `<<<<<<<` markers → `json.load` raises the same
+  `JSONDecodeError` the live Tracebacks show); then ran the FIXED block on the same conflict
+  and confirmed the working tree ends clean, `git status --porcelain` empty, `state.json`
+  still `{"beats": 99, "from": "beat-cycle"}` (valid JSON), and the local beat commit intact.
+  `python -m src.guardrails` and YAML-parsed the edited workflow file clean after the edit.
+  **Harsh self-criticism:** this is the fix, not the cure — the underlying sync design still
+  can't actually converge two lanes racing on the same append/scratch files (`state.json`,
+  `bus.json`, `rooms.json`, the `chats/`/`traces/`/`agent_memory/` trees), so a beat job that
+  hits its first conflict will likely keep failing to push for the rest of its 5.3h life,
+  same as before this fix — the difference is it now keeps doing REAL local work every cycle
+  instead of crashing on its own corruption, and never poisons `origin/main`. A more complete
+  fix would widen the stateless-whitelist to the beat's own full scratch/log surface (or
+  switch those files to append-safe/union merge drivers) so pushes actually start succeeding
+  again after a collision — left as the natural next-fire follow-up, now that the acute
+  crash-and-corrupt failure mode is closed. Could not live-fire the actual GitHub Actions
+  workflow from this sandbox to confirm in production; the scratch-repo reproduction is a
+  faithful extraction of the exact same shell block, not a simulation of it.
+
+- **~06:0x (fire 87, unattended, cloud, scheduled-task invocation)** — Standing checks
+  (`git status`/`git log` read-only, `python -m src.guardrails`): 18/20, 0 critical (the
+  standing G-C stale-backup / G-O EITAN-PC-off pair, both self-healing/expected). Followed up on
+  the exact loose thread fire 86 left in QUESTIONS.md: "read how `analyze_consecutive_fails`
+  increments before trusting it as a health signal." Did that read, via `mcp__github__actions_list`
+  (job-level step conclusions, not just run-level) + a direct check of run `30679570989`'s own
+  step timeline. Verdict: the counter was NOT malfunctioning. Fire 86's "16h green streak, every
+  run succeeding" was a workflow-run-level read; the night-gate (`cadence.night_window`,
+  01:00–07:00 Israel) makes the "Analyze pending videos" step itself `skipped` for almost every
+  daytime run, and a skip deliberately never touches the counter (fire 36's own fix) — so the
+  16 is a real, correctly-accumulated count of consecutive NIGHT-WINDOW zero-progress attempts,
+  not a stuck/broken tally. `data/status.json` was already accurate; nothing to correct there.
+  That investigation did surface one real, still-latent gap: CLAUDE.md's per-video commit
+  design means a batch run CAN error out after successfully committing several videos, and the
+  old logic would have thrown the exact same "renew your token" escalation at that as at a
+  genuine zero-turn quota failure — hadn't happened yet in the sampled history, but was one bad
+  night away from a false alarm. Hardened `.github/workflows/analyze.yml`: a new
+  `Snapshot pre-analyze HEAD` step + a `pre_sha..HEAD` commit diff in `Record analyze health`
+  now splits the streak into `analyze_consecutive_zero_progress_fails` (the real token/quota
+  signal, escalates past 2) vs. `analyze_consecutive_partial_fails` (real per-video progress
+  landed, never escalates to a token message) — `analyze_consecutive_fails`/`analyze_ok`/
+  `token_hint` stay as the live alias of whichever counter applies, so `self_check.py` Q42 and
+  the existing `docs/dashboard.js` red-banner wiring need no changes. Verified offline (can't
+  live-fire Actions from this sandbox): both embedded Python heredocs `compile()`-clean, full
+  YAML parses; built a real scratch git repo with actual `analyze:`-prefixed commits and ran the
+  extracted health-step script against it directly (not simulated by hand) for five scenarios —
+  a failure with 2 real commits → partial-progress message + counter; a failure with 0 commits →
+  zero-progress message + counter, escalating correctly to the token-check message on the 3rd
+  consecutive occurrence; a success → both counters and `last_analyze_ok_at` reset. Logged the
+  full finding to QUESTIONS.md (appended under the fire-86 item, did not rewrite prior fires'
+  entries). `python -m src.guardrails` 18/20 unchanged after the edit. **Harsh self-criticism:**
+  this fixes a latent bug, not a live one — I went in looking for "is the dashboard lying to
+  Eitan right now" and the honest finding is it isn't; the fix is prophylactic and its actual
+  branch (a run that fails AFTER committing real progress) has not yet been observed in the wild,
+  so it's verified by faithful offline simulation of the real subprocess/logic path, not by a
+  live GitHub Actions run — worth checking `data/status.json.analyze_consecutive_partial_fails`
+  the first time a real partial failure occurs, to confirm production behavior matches the
+  scratch-repo test. This also does NOT touch fire 81/86's actual standing ask (throttle the
+  catch-up cron off the night window, or confirm the token's rolling cap) — still explicitly
+  Eitan's call, still unactioned, still the real fix for the underlying nightly failures
+  themselves; I made the failure signal more trustworthy, not the failures less frequent.
+
+- **~05:0x (fire 86, unattended, cloud, scheduled-task invocation)** — Standing checks
+  (`python -m src.standing_checks`): clean this time — origin/main unchanged, upstream already
+  tracking, guardrails 19/20, 0 critical. Re-checked the flagship `analyze.yml` outage fires
+  81/83/85 already escalated: pulled the last 30 scheduled runs directly — it is NOT a sustained
+  outage right now, contrary to what `data/status.json.analyze_consecutive_fails` (16) implies.
+  Real pattern: a long green streak all day 07-31 (05:24→21:34, ~16h, every run succeeding),
+  then 5 straight failures clustered again in the 22:00–02:13 UTC window (07-31 22:50 through
+  08-01 02:13) — same nightly-ceiling shape fire 57/63/81 already diagnosed and already asked
+  Eitan to decide on (`claude setup-token` vs. throttling the catch-up cron). Nothing new enough
+  to re-notify; the `analyze_consecutive_fails` counter looking stuck at 16 while real runs
+  swing between green and red looks like it may be counting something other than literal
+  back-to-back failures (or not resetting on the daytime successes) — flagged as a possible
+  small bug in QUESTIONS.md rather than chased further this fire (see below). Continued the
+  manual `data/_pending` drain with this session's own tools instead of waiting on the broken
+  lane (catch-up mode active, `newest_first`, 1211→1209 pending): **ACwHpJZOZB4** ("I Gave
+  Claude One File And It Became My Brand Team") merged into the existing
+  `brand-voice-file-claude-code` skill (score 3→5, now clears the SKILL.md-package bar — wrote
+  `skills/brand-voice-file-claude-code/SKILL.md` for the first time) and added a new tool,
+  `anthropic-marketing-plugin` (Anthropic's official Claude Code marketing plugin, named in the
+  video); the video's Google-Doc template link 403'd (auth-walled, skipped silently per Step 2c
+  point 2 — genuinely couldn't reach it, not a shortcut). **iWNhdiswXuA** ("Ask ChatGPT What It
+  Knows About You") was a 40-second promo Short with nothing concrete beyond one usable prompt
+  idea — added a single ChatGPT tip, no skill/tool record (a stub would have violated the
+  anti-boilerplate gate). Both committed+pushed individually via `git_safe ship`, verified
+  `origin==HEAD` after each. `python -m src.pulse` re-run to refresh PULSE.md/pulse.json.
+  **Harsh self-criticism:** two videos is a trivial dent in a 1,209-deep backlog and does
+  nothing about the actual blocker (the flagship ingestion lane's nightly failures) — this fire
+  chose the safe, bounded, clearly-in-scope action (manual analyze, exactly what CLAUDE.md
+  specifies) over spending its budget re-diagnosing `analyze.yml` a fifth time with no new lever
+  to pull; that's a defensible trade given the diagnosis is already Eitan's open call, not a
+  missing insight, but it means this fire is one more small drop against a backlog that mostly
+  needs the core lane fixed, not more manual drips. Did not touch the ~13 stray
+  `kind-shannon-*` branches (still nobody's), and did not verify the `analyze_consecutive_fails`
+  counter theory beyond a passing note in QUESTIONS.md — a future fire with more budget should
+  actually read `src/status.py`/wherever that counter increments to confirm whether it's a real
+  bug or working as intended before trusting it as a health signal again.
+
+- **~02:40 (fire 85, unattended, cloud, scheduled-task invocation)** — Standing checks
+  (`python -m src.standing_checks`): stale local cache re-fetched (nothing lost), upstream
+  tracking self-healed to `origin/main` again (same recurring per-session gap fires 6/55/84
+  already flagged — still unfixed at the root, still just noticed-and-patched each time).
+  Guardrails 18/20, 0 critical (same 2 known/self-healing: G-C stale backup, G-O EITAN-PC-off
+  ~141h). Checked the flagship `analyze.yml` outage fire 83 already escalated + notified
+  Eitan about: unchanged in kind, worse in degree (`analyze_consecutive_fails` 14→16,
+  `last_analyze_ok_at` still stuck at 2026-07-28T02:37Z, now ~96h down) — did **not** send a
+  second notification, since nothing new is known beyond what fire 83 already surfaced and the
+  standing recommendation (`claude setup-token` / throttle catch-up cadence) is still Eitan's
+  unanswered call, not mine to repeat. Continued fire 84's manual `data/_pending` drain — the
+  one lever this Claude-only cloud session has that doesn't depend on the broken lane — 3 more
+  videos oldest-of-the-newest (catch-up mode, `newest_first`): **M6FzIqoQYFA** ("ChatGPT split
+  3 ways", a 31s ad-style Short, video_quality_score 4/10 — low quality, capped) yielded 3 new
+  `tools.json`/`models.json` entries for OpenAI's GPT-5.6 split (Sol/Terra/Luna) plus a ChatGPT
+  tip on when to use each; **Q2BF4QS-hQQ** ("Creating a podcast with AI") was AI-relevant but
+  content-free promotional fluff (video_quality_score 2/10, no tool named, nothing extractable)
+  — processed with zero new records, correctly not forced into a tab; **fsOqjZIiJVA** (sponsored
+  Codex-in-ChatGPT-desktop Apple Watch build, video_quality_score 6/10) merged into the existing
+  `codex-chatgpt-desktop` tool record (endorsement + mentions bumped) and added one genuine new
+  skill, `chatgpt-codex-goal-long-running-task-build` (using Codex's "goal" feature for a single
+  long-running autonomous build instead of turn-by-turn chat), with its `other-skills/chatgpt/`
+  SKILL.md package. `data/_pending` 1224→1221. Verified: whole-tree `json.loads` sweep 0 broken;
+  `python -m src.guardrails` 18/20 (unchanged); shipped via `git_safe commit`+`push`, commit
+  `ba72371e`. **Harsh self-criticism:** caught and fixed my own mistake mid-fire rather than
+  after — `data/models.json`'s real live shape is a flat `models` list regenerated from
+  `tools.json` by `src/build_models.py` (`{updated_at, models, note}`), NOT the per-category
+  `{podium, full_ranking}` shape CLAUDE.md Step 4 describes; my first pass wrote a stray
+  wrong-shaped `productivity` key that would have silently diverged from what the dashboard
+  actually reads, caught by inspecting the live file before shipping rather than trusting the
+  spec verbatim, and rewritten to match reality. Also, same as fire 84: 3 of 1221 is a rounding
+  error against the backlog, not a fix — this remains a stopgap, not the actual answer, and the
+  actual answer is still sitting unactioned in QUESTIONS.md item 31, Eitan's call.
+- **~02:00 (fire 84, unattended, cloud, scheduled-task invocation)** — Standing checks: 18/20
+  guardrails, 0 critical (G-C history-bundle staleness, G-O local-drain staleness — both known/
+  expected, PC off). Ran `git_safe backup` to clear G-C → 19/20 after. **Deliberately did NOT
+  touch the flagship analyze.yml outage** (61+h down per fire 81's standing, still-unanswered
+  ask — token refresh / cadence throttling is explicitly Eitan's call, not mine) or the links
+  lane (`next_action`: 3002 tools/skills lack a real link) — that lane needs LLM-pool API keys
+  this cloud session doesn't have, AND is already climbing on its own (52.9%→60.2% real-link
+  coverage in the ~1h between the last status snapshot and this fire, so a CI lane is actively
+  grinding it down). Instead did the one thing uniquely available to *this* session — no engine
+  keys needed, pure Claude reasoning + repo access — that self-criticism in fires 55/57/63/81 has
+  been begging for: **manually drained `data/_pending`**, the exact ingestion work analyze.yml
+  has been failing to do. Processed 11 videos oldest-of-the-newest (catch_up.json is `active:
+  true`, order `newest_first`) fully through the Step 1–10 pipeline, one full commit+push each
+  (Golden rule #1): 9 analyzed (Unlimited-OCR merged with richer data, Monid captured +
+  comment-gated per Step 2e, Claude Live Artifacts, Opus-5 enriched with new ARC-AGI-3/OSWorld
+  benchmark specifics + `build_models` regenerated, FlashKDA, ChatGPT Sites, Walden Robotics, and
+  2 pure-noise Shorts correctly yielding nothing), 2 skipped not-relevant (a non-AI ASP.NET Core
+  repo-share, a non-AI logistics-telemetry repo). `data/_pending` 1235→1224. **Harsh
+  self-criticism:** 11 of 1224 is a rounding error against the backlog — this fire proved the
+  manual path *works* (real, verified, non-generic extractions; anti-boilerplate gate held; no
+  skill fabricated from a bare tool mention) but is far too slow per-fire to be the actual fix;
+  the real fix is still Eitan's call (refresh the Claude token / throttle catch-up cadence) and I
+  have no way to distinguish those root causes from inside this sandbox, same limitation fires
+  55/57/63/81 already hit. Also did NOT write any SKILL.md packages this fire (none of the 9
+  extracted items cleared the technique bar — they were all tools/models, not demonstrated
+  workflows), so no `skills/` or `other-skills/` folders changed. Left `models.json` freshly
+  regenerated (569 entries) and `goals_status.json`/`PULSE.md` re-run for an honest read at fire
+  end. Recommend (unchanged from fire 81): run `claude setup-token` once, or confirm the plan's
+  rolling cap so catch-up cadence can be throttled — until one of those happens, expect this
+  backlog to keep growing faster than any unattended fire can hand-drain it.
+
+## 2026-07-31
+- **~23:5x (fire 83, unattended, cloud, scheduled-task invocation)** — Standing checks
+  (`python -m src.standing_checks`) surfaced 2 CRITICAL guardrail failures that fire 82 didn't
+  have: **G-F** (`data/excava/supervisor.json` was invalid JSON — literal unresolved git
+  conflict markers, `<<<<<<< HEAD` / `=======` / `>>>>>>> 92c2ce98…`, spliced into it by a
+  same-window rebase collision between two concurrent lanes) and **G-S** (907 bare conflict-
+  marker lines across 219 `.jsonl` append-logs — `agent_memory/*.jsonl`, `chats/2026-07-31/
+  *.jsonl`, `data/project_memory/episodes.jsonl` (132 of the 907 alone), `supervisor_longterm.jsonl`).
+  This is the exact fire-45/46 bug class `git_safe.py`'s own docstring names (a rebase drops raw
+  marker lines into data files when two lanes commit in the same window) recurring at new call
+  sites — the existing tooling to fix it already existed and just hadn't been run. Fixed with
+  the tools already built for this: `python -m src.git_safe repair-conflicts` (strips bare
+  marker lines from all 219 `.jsonl` files, keeping every real record on both sides — append-
+  only, no picking a winner) then regenerated `supervisor.json` fresh via `python -m
+  src.excava_supervisor` rather than hand-splicing its two conflicting snapshots (it's a
+  regenerated status report, not authored data, so a clean regeneration is more correct than a
+  manual merge). Verified: whole-tree `json.loads` sweep over every `data/`+`docs/` `*.json` →
+  0 broken; `python -m src.guardrails` → **18/20, 0 critical** (was 16/20, 2 critical); the 2
+  remaining `!!` flags are the same pre-existing, non-critical, self-healing ones every recent
+  fire has carried (G-C stale backup — `ship`'s own backup step fixes it; G-O EITAN-PC drain
+  stale — PC's been off ~138h, someone else's machine). Shipped via `python -m src.git_safe
+  ship`. **Harsh self-criticism:** this is real-corruption cleanup, not the actual M1-M5 program
+  (Hub content, enrichment, departments) — but unlike the "fifth fire in a row of meta-plumbing"
+  self-criticism earlier fires logged, this one had a concrete, currently-broken, guardrail-
+  verified defect to point at (2 CRITICAL failures, not a hunch), so it was the right thing to
+  spend this fire on rather than manufacturing a plumbing task. Did not investigate WHY this
+  particular pair of files collided this time (which two lanes, what window) — the repair is
+  general and already applied, and chasing the specific collision would only matter if the
+  underlying push-safety fallback (G-R, already 19/19 lanes per the last check) were itself
+  missing somewhere, which it isn't. **Escalating a separate, pre-existing item found while
+  reading status for this fire, not caused by it:** `analyze.yml` (the actual product's core
+  ingestion lane per `CLAUDE.md`) has now gone from `analyze_consecutive_fails: 6` (fire 81/82)
+  to **14**, and `last_analyze_ok_at` is still stuck at `2026-07-28T02:37:27Z` — roughly **93.5
+  hours** with zero successful runs, spanning multiple full Israel 01:00–07:00 night windows that
+  fires 81/82 explicitly said they'd wait for before escalating. Those windows have now passed
+  repeatedly with no recovery, so per fire 81's own stated escalation condition this is past the
+  point of "wait and see." QUESTIONS.md item 31 already has the full evidence trail and a
+  concrete, cheap next step (`claude setup-token`, or confirm the plan's rolling cap so the
+  catch-up cadence can be throttled) — sending a push notification about it this fire since it's
+  now a multi-day outage of the flagship lane that only Eitan can act on, not something a sandbox
+  session can fix or safely decide for him (cadence changes are explicitly his call, per fires
+  55/57/63/81's standing, still-unanswered ask). **One more surfaced-not-chased item:**
+  `python -m src.pulse` (run to refresh PULSE.md after the guardrail fix) flagged cumulative
+  completions FELL — impossible for a monotonic counter. Traced it: merge commit `3879090a`
+  ("excava-beat #31", `dfbc17db` + `9091ab6b`) landed `data/excava/state.json` with its entire
+  `usage` key gone (not emptied — absent), which is the done-counter's only source per fire 6's
+  earlier fix. This matches the already-documented, still-open bug class in QUESTIONS.md (item
+  ~28ish, "job succeeds, real work silently lost" — `git pull --rebase --autostash` resolving a
+  concurrent `data/` conflict by taking one side wholesale) — `excava_beat.yml` is explicitly
+  named there as one of the ~15 still-exposed lanes. Not re-diagnosed or fixed from scratch here
+  (would mean editing a live beat workflow mid-fire, outside this fire's scope of data-integrity
+  cleanup) — flagging as fresh, concrete evidence that the existing "roll the fix out, one lane
+  at a time" backlog item is still live and now has a second confirmed victim.
+
 ## 2026-07-30 — AWAY MODE ENDED (Eitan back) · M2 class overhaul begins
 
 - **~17:0x (fire 82, INTERACTIVE — away mode OFF)** — Eitan returned and set the loop to a fixed
@@ -59,6 +305,43 @@ Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Lo
   an unverified record above a verified one because text match outweighs status by design.
 
 ## 2026-07-30
+- **~17:0x (fire 82, unattended, cloud, scheduled-task invocation)** — Checked the analyze.yml
+  outage fire 81 escalated before doing anything else: no change since fire 81 (`status.json`
+  still `analyze_consecutive_fails: 6`, `last_analyze_ok_at` still 2026-07-28T02:37Z, pending
+  still 1154) — expected, since tonight's Israel 01:00-07:00 window (fire 81's own "check after
+  this" marker) hasn't opened yet (current time 16:58 UTC / 19:58 IDT). Did not re-run the same
+  job-log investigation fire 81 already did thoroughly with no new data to find; left its
+  escalation and recommendation (`claude setup-token` / confirm rolling cap) standing, unactioned,
+  exactly as fire 81 left it — that decision is Eitan's, not mine to make from this sandbox.
+  Instead picked a small, contained, verifiable fix so this fire wasn't pure repetition: `data/
+  self_check.json` item 14 ("non-relevant videos skipped") compared a RECORD count
+  (`len(skills.json)`) against a FILE count (`processed/` videos) — structurally false forever
+  once any single video yields multiple skill records, which the exhaustive-extraction mandate
+  guarantees happens routinely (roundup/listicle videos alone can yield ~100). Replaced it with
+  the real invariant: every distinct `source_video_id` across skills/tools/connectors must
+  appear among `processed/` files (a video can't have produced output without being marked
+  processed) — same style fix as the documented 16/47 SKILL.md-path bug earlier in this file.
+  Verified: `python -m src.self_check` now reports item 14 as `yes` (`processed 1768 >= 450
+  videos with output`), syntax-checked via `ast.parse` before running; `python -m src.guardrails`
+  17/20, 0 critical (same 2 known/self-healing issues as recent fires — G-C stale backup, G-O
+  EITAN-PC off — plus G-G "1 behind origin" from a concurrent lane's commit landing mid-fire,
+  resolved by `git_safe ship`'s own pull-rebase). Shipped via `python -m src.git_safe ship`,
+  commit `b19b057f` → `48c4bf008`. **Harsh self-criticism:** before landing on this I chased a
+  more ambitious version of the same fix — flagging `skipped_not_relevant: true` onto the moved
+  JSON file itself, matching the owner spec's literal wording ("processed/ non-relevant
+  flagged") — and discovered mid-investigation that `src/process_video.py` and
+  `src/analyze_batch.py` (both of which implement this exact skip-and-move logic) are **dead
+  code**: no workflow YAML invokes either module (`bulk_analyze.yml` runs its own independent
+  implementation that never touches `processed/`; the flagship `analyze.yml` lane does the move
+  itself via Claude's own bash calls per `CLAUDE.md`, not through either Python module). Editing
+  either would have shipped a change with zero observable effect — caught before committing to
+  it, not after, but it cost real turns finding that out, and I did NOT clean up or flag those
+  two dead modules this fire (narrow scope; that's its own separate task, and touching/deleting
+  files during a live outage investigation felt like unnecessary extra surface area right now).
+  Also surfaced, did NOT chase (out of scope for one increment): self_check item 13 ("slash
+  commands are real /commands") flipped from `217/217` (PROOF.md's snapshot) to `217/889` between
+  this fire's two consecutive `self_check` runs — some concurrent lane bulk-added ~670 command
+  entries without the real-`/command` filter holding; worth a look next fire, not touched here.
 - **~15:5x (fire 81, unattended, cloud, scheduled-task invocation)** — Followed up on fire 80's
   open thread (analyze.yml's failure streak) with one correction and one sharper data point,
   both landed in `QUESTIONS.md` item 31, not acted on unilaterally. Correction: the actual

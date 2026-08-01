@@ -1,17 +1,16 @@
 # watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.
 
-> Decision artifact · room `dept-watch-analyze-video-audio-vi-567` (dept) · 2026-07-20T18:31:45.994243+00:00
+> Decision artifact · room `dept-watch-analyze-video-audio-vi-567` (dept) · 2026-07-31T11:51:30.690221+00:00
 > Participants: Scope, Iris · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Finalize and deliver the structured marketing insights report from the Arcads AI Video analysis of the marketing video.
 
 **Plan:**
-1. **Extract high-value insights** using Arcads AI Video to analyze visual and audio cues beyond the transcript.
-2. **Structure the report** to include emotional triggers, pacing, and engagement patterns for AI marketing use.
-3. **Validate key findings** by cross-referencing visual/audio cues with marketing performance metrics (if available).
-4. **Optimize for AI integration** by formatting the report for seamless input into marketing automation tools.
-5. **Document limitations** (e.g., audio clarity, visual ambiguities) to refine future analyses.
-6. **Deliver the report** to stakeholders by 10:48:00 with actionable recommendations.
+1. Run Arcads AI Video’s "AI Marketing" skill on the latest Arcads AI Video to extract actionable insights from audio-visual content.
+2. Generate a structured report highlighting key themes, emotional triggers, and visual/audio patterns for campaign optimization.
+3. Validate insights by cross-referencing with existing marketing data (e.g., engagement metrics, audience feedback).
+4. Prioritize high-impact patterns (e.g., emotional peaks, visual pacing) for immediate campaign adjustments.
+5. Integrate findings into Arcads AI Video’s next iteration to refine messaging and creative execution.
+6. Document lessons learned for future AI-driven marketing skill iterations.
 
-**What changed:** Prioritized real-time delivery of the report at the specified timestamp.
+**What changed:** Automated AI-driven marketing analysis replaces manual review for faster, data-backed campaign optimization.

@@ -1,16 +1,16 @@
 # watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.
 
-> Decision artifact · room `dept-watch-analyze-video-audio-vi-635` (dept) · 2026-07-21T15:16:58.629278+00:00
+> Decision artifact · room `dept-watch-analyze-video-audio-vi-635` (dept) · 2026-07-31T15:19:25.551906+00:00
 > Participants: Scope, Iris · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Run the Arcads AI Video skill on the marketing video to extract high-value insights from audio+visual content.
-2. Generate a comprehensive analysis report highlighting key themes, sentiments, and trends beyond the transcript.
-3. Deliver the report to the lead for review and decision-making.
-4. Schedule a follow-up meeting to discuss insights and next steps.
-5. Implement adjustments to the marketing video based on the analysis (if applicable).
-6. Archive the report for future reference and iterative improvements.
+1. Run Arcads AI Video’s "AI Marketing" skill pack on the target video to extract high-value marketing insights (AUDIO+VISUAL).
+2. Generate a structured report with actionable segments, sentiment trends, and visual engagement cues.
+3. Identify key moments for repurposing (e.g., hooks, emotional peaks, visual transitions).
+4. Cross-reference transcript with visual cues to validate insights (e.g., facial expressions, pacing).
+5. Compile findings into a GitHub markdown report with clear headers and bullet points.
+6. Share the report with stakeholders for feedback and iteration.
 
-**What changed:** Arcads AI Video analysis report is finalized and delivered for decision.
+**What changed:** Scope expanded from transcript-only analysis to full AUDIO+VISUAL synthesis for deeper marketing insights.

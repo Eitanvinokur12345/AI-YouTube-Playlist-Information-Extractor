@@ -1,11 +1,19 @@
 # Raise G8 Personal fit (68/100): 20% of designs taste-tagged; Arena learning live; NOSG wired (next: taste beyond
 
-> visual · task `raise-g8-personal-fit-68-59517` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
+> visual · task `raise-g8-personal-fit-68-35419` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
 
-**Approach:** Enhance personal fit by improving taste-tagged designs and leveraging Arena learning.
-1. **Refine design tagging**: Utilize a design system tool like Figma or Sketch to review and update the 20% taste-tagged designs, ensuring consistency and adherence to a unified aesthetic.
-2. **Integrate Arena learning**: Connect to the Arena API using `curl` or a Python library like `requests` to fetch live learning data, enabling real-time updates and insights.
-3. **Optimize NOSG configuration**: Edit the NOSG configuration file using a text editor like Vim or Emacs, adjusting parameters to prioritize taste beyond current limits, and validate changes using `nosg-validator`.
-4. **Monitor progress**: Track changes and progress using a version control system like Git, committing updates with descriptive messages and reviewing the commit history using `git log`.
-5. **Adjust and refine**: Analyze the results, adjusting the design tagging, Arena learning integration, and NOSG configuration as needed to achieve the desired personal fit improvement.
-**Needs:** Figma or Sketch, Arena API access, `curl` or `requests` library, Vim or Emacs, `nosg-validator`, Git.
+```markdown
+**Approach:** Taste-tag 20% of designs via Arena learning pipeline, wire NOSG, then extend taste beyond.
+
+**Steps:**
+1. **Tag 20% of designs** – Run `python scripts/taste_tag.py --split 0.2 --output data/tagged_designs.json` (uses `data/designs/` input).
+2. **Arena learning live** – Deploy `arena/serve.py` with `torchrun --nproc_per_node=4 arena/train.py --data data/tagged_designs.json --epochs 10`.
+3. **NOSG wiring** – Edit `config/nosg.json` to enable `taste_module: true`, then restart `nosg/daemon.py` with `systemctl --user restart nosg`.
+4. **Taste beyond** – Add `scripts/extend_taste.py` to poll `data/new_designs/` hourly and tag via `arena/predict.py`.
+
+**Needs:**
+- `data/designs/` (17 small files, raw designs).
+- `arena/` repo (PyTorch training pipeline).
+- `nosg/daemon.py` (systemd service, config in `config/nosg.json`).
+- GPU node (4x A100, CUDA 12.1).
+```

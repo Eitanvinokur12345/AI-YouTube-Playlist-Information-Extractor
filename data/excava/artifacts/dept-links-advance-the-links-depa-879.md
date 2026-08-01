@@ -1,16 +1,16 @@
 # links: advance the links department's mission
 
-> Decision artifact · room `dept-links-advance-the-links-depa-879` (dept) · 2026-07-29T21:12:54.281018+00:00
+> Decision artifact · room `dept-links-advance-the-links-depa-879` (dept) · 2026-07-31T15:25:45.016969+00:00
 > Participants: Anchor, LinLea · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Anchor runs the link-checker tool against the live inventory to generate a real-time report of broken/outdated links.
-2. Anchor categorizes and prioritizes the report by status (broken/outdated) and severity (high/medium/low).
-3. Anchor shares the prioritized report with the team for review within 24 hours.
-4. Team assigns owners to address each problematic link based on severity.
-5. Owners update or remove links within 48 hours of assignment.
-6. Anchor verifies fixes and closes the report, logging changes in the department’s tracking system.
+1. Anchor runs the link-checker tool against the department’s live inventory to identify broken or outdated links.
+2. Anchor compiles a prioritized report of broken/outdated links with status and severity.
+3. Anchor publishes the report to the team for review by EOD today.
+4. Team reviews the report and flags any discrepancies or urgent fixes.
+5. Anchor schedules follow-up actions based on the report’s findings.
+6. Department leadership approves the finalized link corrections.
 
-**What changed:** Broken/outdated links will now be systematically identified, prioritized, and resolved with clear ownership and deadlines.
+**What changed:** Report delivery and review timeline formalized.

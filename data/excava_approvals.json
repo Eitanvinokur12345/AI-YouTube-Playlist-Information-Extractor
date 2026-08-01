@@ -1,15 +1,8 @@
 {
-  "generated_at": "2026-07-30T14:44:46.474914+00:00",
+  "generated_at": "2026-08-01T04:03:10.819171+00:00",
   "mode": "run",
   "note": "Decide in the app: each pending item shows what it does in plain language with Approve / Decline buttons and a review box. Your decision is saved in the app instantly and dispatched to the cloud beat, which applies granted ids and drops declined ids on the next cycle.",
   "pending": [
-    {
-      "id": "hold-empty-body-items-render-as-blank-whi-3b1c",
-      "title": "Empty-body items render as blank 'white' nodes in the brain graph (187)",
-      "category": "missing-resource",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts",
-      "what": "A department wants to do this but the tool it needs isn't available yet (for example, fetching transcripts). Approve to let EXCAVA route it to another department or flag it for an unblock; decline to shelve it."
-    },
     {
       "id": "pitch-73976",
       "title": "dedicate a build lane to G3 - Truth & access",
@@ -77,6 +70,32 @@
         {
           "id": "tool:bright-data-mcp",
           "name": "Bright Data MCP"
+        }
+      ]
+    },
+    {
+      "id": "pitch-4088",
+      "title": "dedicate a build lane to G4 - Autonomy",
+      "category": "pitch",
+      "why": "G4 sits at 50/100 (5 lanes self-running — CAPPED 50: 10617 real turns but 0 artifacts — deliberates, doesn't execute); a focused lane would move the goal instead of leaving it at-risk",
+      "what": "Approve to spin up a lane that pushes G4 'Autonomy' toward its target.",
+      "since": "2026-07-31T10:08:13.733284+00:00",
+      "requested_by": "Improve department (North-Star goal tracker, data/goals_status.json)",
+      "need": "Of your 9 North-Star goals, G4 'Autonomy' is the weakest at 50/100 — concretely: 5 lanes self-running — CAPPED 50: 10617 real turns but 0 artifacts — deliberates, doesn't execute.",
+      "importance": "High — G4 is the LOWEST-scoring goal; every beat without a dedicated lane leaves the weakest link weakest.",
+      "missing": "A recurring CI lane whose only job is closing this goal's gap (like the analysis and links lanes that already exist for other goals).",
+      "hub_candidates": [
+        {
+          "id": "tool:itential-flowai",
+          "name": "Itential FlowAI"
+        },
+        {
+          "id": "skill:ai-agent-training",
+          "name": "AI Agent Training"
+        },
+        {
+          "id": "skill:ai-skill-bundling",
+          "name": "AI Skill Bundling"
         }
       ]
     }

@@ -1,18 +1,15 @@
 # visualization: Own EXCAVA'S OWN interface — visibility, liveliness, clarity, enjoyment, speed of OUR scre
 
-> Decision artifact · room `dept-visualization-own-excava-s-o-200` (dept) · 2026-07-27T05:46:14.414539+00:00
+> Decision artifact · room `dept-visualization-own-excava-s-o-200` (dept) · 2026-07-31T04:36:24.792435+00:00
 > Participants: Facet, Pane, Lumen · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Default to system theme on first load, with a one-time prompt offering permanent override in settings.
-
 **Plan:**
-1. Set dark theme as default high-contrast option for new users.
-2. Detect system preference on first load and apply it automatically.
-3. Display a one-time modal: *"Use system theme? [Keep] or [Set dark mode permanently]."*
-4. Store user override in local storage/settings for future sessions.
-5. Allow manual toggling in settings at any time.
-6. A/B test system-default vs. dark-default with 50/50 split for 2 weeks.
+1. Implement a one-time first-launch theme picker offering dark, light, or system preference.
+2. Default to a light theme with a single saturated accent color (e.g., cobalt blue) for graphs and interactive controls.
+3. Conduct a 5-person usability sprint testing comprehension in 30 seconds; if <70%, default to clean light theme.
+4. Ensure high-contrast ratios (WCAG 2.1 AA) for all text and key elements in both themes.
+5. Validate screencast visibility on YouTube by testing dark/light themes in bright environments.
+6. Document theme selection logic and accessibility standards in the design system.
 
-**What changed:**
-Default theme now respects system preference with a one-time override prompt.
+**What changed:** Added theme picker and defaulted to light theme with saturated accent to balance readability, liveliness, and accessibility.

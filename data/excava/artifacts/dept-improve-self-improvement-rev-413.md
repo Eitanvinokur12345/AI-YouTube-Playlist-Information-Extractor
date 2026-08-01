@@ -1,16 +1,18 @@
 # improve: Self-improvement: review prompts/engines/routing/own-code; auto-apply safe changes; pitch 
 
-> Decision artifact · room `dept-improve-self-improvement-rev-413` (dept) · 2026-07-27T21:48:54.937439+00:00
+> Decision artifact · room `dept-improve-self-improvement-rev-413` (dept) · 2026-07-30T20:50:49.615330+00:00
 > Participants: Sprocket, Gauge, Ratchet · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+Auto-apply formatting tweaks immediately; route dependency bumps to human review—formatting is zero-risk, deps carry hidden breakage.
 
 **Plan:**
-1. Deploy the forked **Claude Self-Improvement Skill Pack** in shadow mode for 2 weeks on a non-critical self-improvement task.
-2. Log speed and output quality metrics daily, comparing against the current baseline.
-3. If the 5% efficiency gain is confirmed with no quality degradation, proceed to full adoption.
-4. Update all self-improvement task routing to default to the forked Skill Pack.
-5. Archive the original Skill Pack as a fallback option.
-6. Document the change in the project’s self-improvement guidelines.
+1. Implement PR-Agent with formatting auto-apply layer (post-PR-Agent, pre-human review).
+2. Exclude dependency bumps from auto-apply; flag them for human review.
+3. Add a `safe-formatting` label to PRs where formatting changes are applied.
+4. Require explicit human approval for dependency bumps (e.g., `needs-dep-review` label).
+5. Log auto-applied formatting changes in PR comments for transparency.
+6. Monitor build failures from dependency bumps to refine the process.
 
-**What changed:** Forked Skill Pack adopted as default after verified 5% efficiency gain.
+**What changed:**
+PR-Agent + formatting auto-apply layer live; dependency bumps gated behind human review.

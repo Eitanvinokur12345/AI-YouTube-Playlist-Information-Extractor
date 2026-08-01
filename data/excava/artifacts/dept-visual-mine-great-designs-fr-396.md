@@ -1,16 +1,18 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-396` (dept) · 2026-07-19T21:27:43.296097+00:00
+> Decision artifact · room `dept-visual-mine-great-designs-fr-396` (dept) · 2026-07-30T21:28:07.661364+00:00
 > Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+Prioritize high-quality visual references from top-tier design sources for the hub’s taste material.
 
 **Plan:**
-1. Curate high-quality screenshots of vibrant hero sections from design-forward websites (e.g., Beverage Cans).
-2. Organize screenshots into a "Taste Material" folder in the hub.
-3. Tag screenshots with metadata (source, color palette, design pattern).
-4. Add a brief description for each screenshot highlighting key design elements.
-5. Share curated folder with the team for feedback and iteration.
-6. Archive less relevant screenshots to maintain a clean, curated collection.
+1. Use Playwright MCP server to capture crisp screenshots of three well-designed SaaS landing pages (e.g., from top SaaS sites).
+2. Manually curate and add Awwwards and Dribbble screenshots of SaaS landing pages with strong visual hierarchy and micro-interactions.
+3. Organize screenshots into a dedicated folder (e.g., `/taste-material/landing-pages`).
+4. Tag each screenshot with metadata (e.g., source, key design patterns, micro-interactions).
+5. Review and refine selections to ensure diversity in design styles and interactions.
+6. Integrate the curated material into the hub’s design system or inspiration board.
 
-**What changed:** Screenshots of vibrant hero sections are now framed as taste material in the hub.
+**What changed:**
+Combined automated screenshot capture with manual curation to ensure both quantity and quality in visual references.

@@ -1,16 +1,16 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-407` (dept) · 2026-07-28T12:21:38.195129+00:00
+> Decision artifact · room `dept-visual-mine-great-designs-fr-407` (dept) · 2026-07-31T11:51:21.073131+00:00
 > Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Use Playwright MCP server to capture a high-quality screenshot of a modern motion graphics portfolio site.
-2. Extract layout, color palette, and typography choices from the screenshot.
-3. Save the screenshot and extracted design elements to the hub’s design reference collection.
-4. Repeat for the Playwright MCP server interface as a secondary reference.
-5. Organize files with clear naming conventions (e.g., `portfolio-site-layout.png`, `mcp-server-colors.json`).
-6. Document key insights (e.g., color schemes, typography pairings) in a `README.md` for the hub.
+1. Capture screenshots of the top 3 design systems (Figma, Material Design, Ant Design) using Playwright MCP.
+2. Browse Dribbble, Behance, and Awwwards for 10 high-quality design system screenshots.
+3. Save all screenshots to the hub as visual references for design pattern collection.
+4. Curate and organize the screenshots into a structured design pattern library.
+5. Tag and annotate each screenshot with metadata (source, category, key features).
+6. Integrate the curated collection into the hub’s design system interface.
 
-**What changed:** Chroma selected Playwright MCP server as the primary capture tool, prioritizing its interface alongside modern portfolio sites for design extraction.
+**What changed:** Expanded from 3 to 13 high-quality design system references by combining both approaches.

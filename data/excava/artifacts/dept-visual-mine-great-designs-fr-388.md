@@ -1,15 +1,17 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-388` (dept) · 2026-07-19T04:06:01.850466+00:00
+> Decision artifact · room `dept-visual-mine-great-designs-fr-388` (dept) · 2026-07-31T18:17:06.171888+00:00
 > Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+Chroma will capture and upload a screenshot of Apple’s Human Interface Guidelines as taste material.
 
 **Plan:**
-1. Curate screenshots of vibrant hero sections from high-quality design websites (e.g., Beverage Cans) as taste material.
-2. Organize artifacts into a dedicated "Visual Inspiration" section in the hub.
-3. Tag each screenshot with metadata (e.g., color palette, layout type) for easy retrieval.
-4. Review and refine selections weekly to maintain freshness.
-5. Share curated artifacts with the team for feedback and iteration.
+1. Open the Playwright MCP server.
+2. Navigate to https://developer.apple.com/design/human-interface-guidelines.
+3. Capture a full-page screenshot of the page.
+4. Upload the screenshot to the hub as taste material.
+5. Label the artifact with metadata (e.g., "Apple HIG – Typography, Spacing, Color Hierarchy").
+6. Verify the image is accessible and properly formatted in the hub.
 
-**What changed:** Added structured curation process for visual inspiration.
+**What changed:** Prioritized Apple’s HIG over Tailwind for refined design reference.

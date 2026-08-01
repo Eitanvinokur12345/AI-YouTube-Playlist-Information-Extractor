@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-07-30T14:44:12.358442+00:00",
+  "generated_at": "2026-08-01T07:36:30.167274+00:00",
   "health_score": 42,
   "grade": "D",
-  "issue_count": 6,
+  "issue_count": 7,
   "issues": [
     {
       "severity": "high",
@@ -33,17 +33,27 @@
       ]
     },
     {
+      "severity": "high",
+      "area": "pipeline",
+      "issue": "Pipeline lanes overdue — retrieval/analysis may have stalled",
+      "count": 1,
+      "fix": "Check the workflow logs for these lanes; re-dispatch if blocked.",
+      "sample": [
+        "External mining"
+      ]
+    },
+    {
       "severity": "medium",
       "area": "brain",
       "issue": "Oversized category hubs become hairballs in the graph view",
-      "count": 6205,
+      "count": 6296,
       "fix": "Sub-bucket big categories (cap members per hub, add sub-hubs) so the graph stays readable.",
       "sample": [
-        "productivity (599)",
-        "code (793)",
-        "automation (456)",
-        "integration (174)",
-        "research (559)"
+        "productivity (608)",
+        "code (813)",
+        "automation (459)",
+        "integration (178)",
+        "video creation (320)"
       ]
     },
     {
@@ -64,7 +74,7 @@
       "severity": "low",
       "area": "data",
       "issue": "Connectors with no URL/source can't be installed or verified",
-      "count": 359,
+      "count": 380,
       "fix": "Resolve each connector's repo/package URL (or drop it).",
       "sample": [
         "Alexa + Claude Integration",

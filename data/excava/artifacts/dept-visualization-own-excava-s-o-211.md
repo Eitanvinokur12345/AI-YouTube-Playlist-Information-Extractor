@@ -1,13 +1,12 @@
 # visualization: Own EXCAVA'S OWN interface — visibility, liveliness, clarity, enjoyment, speed of OUR scre
 
-> Decision artifact · room `dept-visualization-own-excava-s-o-211` (dept) · 2026-07-28T03:49:11.118820+00:00
-> Participants: Lumen, Facet, Pane · synthesized by groq/llama-3.3-70b-versatile
+> Decision artifact · room `dept-visualization-own-excava-s-o-211` (dept) · 2026-07-31T15:54:16.414071+00:00
+> Participants: Facet, Pane, Lumen · synthesized by groq/llama-3.3-70b-versatile
 
-**Decision:** Default to dark theme in EXCAVA with auto-switch to light mode during screencast recording.
-**Plan:**
-1. Implement a dark theme with high-contrast interactive charts for EXCAVA's interface to maximize visibility and liveliness.
-2. Develop a feature to detect when a screencast recording is initiated and auto-switch to light mode.
-3. Ensure the auto-switch feature is seamless and does not require manual toggling.
-4. Conduct analysis to monitor user engagement and screencast quality with the new interface.
-5. Review and optimize the interface for both desktop and mobile devices, considering battery drain and user preferences.
-**What changed:** Removed the need for a manual toggle, streamlining the user experience and reducing potential UI complexity.
+**Decision:** Default to a system-aware theme with ambient-light-adaptive contrast/brightness to ensure a glare-resistant interface that auto-adjusts for readability in any lighting.
+1. **Implement system-aware theme**: Develop an auto-switching theme that defaults to light in bright environments and dark in low-light conditions.
+2. **Integrate ambient light sensor**: Utilize the device's ambient light sensor to trigger adaptive contrast and brightness adjustments.
+3. **Conduct glare testing**: Perform a controlled glare test to measure readability scores and validate the effectiveness of the system-aware theme.
+4. **Implement automatic high-contrast mode**: Trigger high-contrast mode automatically based on ambient light sensor data to ensure text remains crisp and readable.
+5. **Add system toggle for user preference**: Provide a system toggle for users to switch between light and dark themes manually if needed.
+**What changed:** The interface will now auto-adjust for readability in any lighting condition without relying on manual toggles.

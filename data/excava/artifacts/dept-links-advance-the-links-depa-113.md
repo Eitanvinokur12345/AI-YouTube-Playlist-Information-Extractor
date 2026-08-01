@@ -1,15 +1,16 @@
 # links: advance the links department's mission
 
-> Decision artifact · room `dept-links-advance-the-links-depa-113` (dept) · 2026-07-26T15:41:17.717780+00:00
+> Decision artifact · room `dept-links-advance-the-links-depa-113` (dept) · 2026-07-31T21:43:22.873632+00:00
 > Participants: Anchor, LinLea · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Audit the department’s current link inventory to identify broken/outdated links.
-2. Generate a cleaned report removing dead links and prioritizing updates.
-3. Finalize the report for the links department’s use.
-4. Distribute the report to relevant stakeholders for action.
-5. Schedule follow-ups to ensure updates are implemented.
+1. Anchor runs the link-checker tool against the department’s live inventory to generate a fresh report of all active links.
+2. Anchor prioritizes the report by urgency/impact for the team to review.
+3. Anchor publishes the prioritized real-time link audit report by EOD today.
+4. The team reviews the report and assigns action items for broken/outdated links.
+5. Follow-up actions (fixes, removals, or updates) are tracked in the department’s issue tracker.
+6. A summary of resolved links is shared in the next team sync.
 
-**What changed:** Dead links removed, prioritized updates finalized.
+**What changed:** A structured, time-bound process for auditing and prioritizing active links was formalized.

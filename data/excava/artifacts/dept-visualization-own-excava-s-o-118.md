@@ -1,18 +1,33 @@
 # visualization: Own EXCAVA'S OWN interface — visibility, liveliness, clarity, enjoyment, speed of OUR scre
 
-> Decision artifact · room `dept-visualization-own-excava-s-o-118` (dept) · 2026-07-27T18:40:08.826282+00:00
+<<<<<<< HEAD
+> Decision artifact · room `dept-visualization-own-excava-s-o-118` (dept) · 2026-07-31T09:27:47.246794+00:00
 > Participants: Facet, Pane, Lumen · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Use a fixed-height live timeline strip at the top of EXCAVA with a high-contrast badge for the newest event only—older events shrink to half-height but remain scannable.
+Ship EXCAVA with a dark charcoal background and high-contrast teal/magenta accents for visibility and readability.
+=======
+> Decision artifact · room `dept-visualization-own-excava-s-o-118` (dept) · 2026-07-31T08:00:11.492104+00:00
+> Participants: Facet, Pane, Lumen · synthesized by nvidia/meta/llama-3.3-70b-instruct
+>>>>>>> 92c2ce986495d7a7ffb48f81669d42ca0c98da10
 
+**Decision:** Ship EXCAVA with a dark charcoal background, slate-blue interactive elements, and teal accents for high contrast and readability across users, including those with astigmatism.
 **Plan:**
-1. Implement a fixed-height (e.g., 64px) timeline strip at the top of the interface.
-2. Display the newest event in a high-contrast badge (e.g., bold color, subtle pulse animation).
-3. Shrink older events to half-height (e.g., 32px) while maintaining readability.
-4. Add a subtle glow behind the newest event badge for additional visibility.
-5. Conduct user tests with high-volume event streams to validate event detection rates.
-6. Iterate on badge contrast and animation based on test feedback.
+<<<<<<< HEAD
+1. Implement dark charcoal (#1E1E1E) as the base background color.
+2. Apply teal (#00D4AA) for primary interactive elements (buttons, links, highlights).
+3. Use magenta (#FF2E63) for secondary accents (icons, alerts, active states).
+4. Ensure slate-blue interactive elements are replaced with teal/magenta variants.
+5. Test readability with astigmatism simulators and adjust contrast ratios to WCAG AA standards.
+6. Finalize theme in the interface and document color codes for developers.
 
 **What changed:**
-Timeline strip now uses a fixed-height with shrinking older events and a high-contrast badge for the newest event.
+Replaced mustard yellow/mustard coral with teal/magenta for higher contrast and astigmatism safety.
+=======
+1. Implement a dark charcoal background for the EXCAVA interface to maximize visibility and readability.
+2. Utilize slate-blue interactive elements to maintain consistency and improve user experience.
+3. Introduce teal accents to provide high contrast and enhance readability for users with astigmatism.
+4. Conduct user testing to ensure the chosen color scheme does not cause any issues with readability or visibility.
+5. Refine the interface design based on user feedback to optimize the overall user experience.
+**What changed:** The final decision shifted from electric blue accents on a dark theme to teal accents on a dark charcoal background with slate-blue interactive elements to better accommodate users with astigmatism.
+>>>>>>> 92c2ce986495d7a7ffb48f81669d42ca0c98da10

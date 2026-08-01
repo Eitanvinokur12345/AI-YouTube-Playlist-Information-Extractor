@@ -1,18 +1,11 @@
 # Keep the Designs tab pure: designs only, live previews, taste-ranked
 
-> visual · task `keep-the-designs-tab-pur-56548` · **EXECUTION PLAN — NOT yet executed** · by mistral/mistral-small-latest
+> visual · task `keep-the-designs-tab-pur-41489` · **EXECUTION PLAN — NOT yet executed** · by groq/llama-3.3-70b-versatile
 
-**Approach:**
-Enforce a strict separation between design artifacts and live previews, ensuring only curated designs populate the Designs tab.
-
-**Steps:**
-1. **Audit & Archive:** Run `find ./designs -type f ! -name "*.design.*" -exec mv {} ./archive/ \; 2>/dev/null || true` to relocate non-design files from the Designs tab directory.
-2. **Enforce Naming:** Rename all remaining files to `*.design.{ext}` (e.g., `homepage.design.fig`) via `for f in ./designs/*; do mv "$f" "${f%.*}.design.${f##*.}"; done`.
-3. **Validate Previews:** Add a CI check (`scripts/validate-designs.sh`) to reject PRs with unapproved previews (e.g., `if grep -q "preview" ./designs/*.design.*; then exit 1; fi`).
-4. **Tooling:** Use `chroma-design-lint` (local npm package) to auto-flag non-design files in PRs.
-5. **Deploy:** Update `designs/.gitignore` to exclude `*.preview.*` files.
-
-**Needs:**
-- Write access to the repo’s `designs/` directory.
-- Node.js (for `chroma-design-lint`).
-- CI runner with `bash`/`find`/`grep` support.
+**Approach:** Enforce a strict curation process to maintain the Designs tab's integrity
+1. **Filter and remove non-design content**: Use `grep` to scan the Designs tab for non-design files and `rm` to delete them, ensuring only design-related files remain
+2. **Implement a live preview system**: Utilize `npm` to install a live preview package (e.g., `live-server`) and configure it to automatically update when design files change
+3. **Establish a taste-ranking system**: Create a `designs.json` file to store design metadata, including taste rankings, and use `jq` to parse and update the rankings based on feedback
+4. **Schedule regular curation sessions**: Use `cron` to schedule regular design reviews, ensuring the tab remains up-to-date and aligned with the desired aesthetic
+5. **Monitor and enforce design standards**: Set up a `git hook` to check for design file consistency and adherence to standards before allowing commits to the Designs tab
+**Needs:** `grep`, `rm`, `npm`, `live-server`, `jq`, `cron`, `git`, ` designs.json` file, access to the Designs tab repository

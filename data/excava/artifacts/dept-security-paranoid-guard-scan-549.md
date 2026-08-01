@@ -1,15 +1,16 @@
 # security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (not fake/dead); DETECT
 
-> Decision artifact · room `dept-security-paranoid-guard-scan-549` (dept) · 2026-07-10T07:42:22.523356+00:00
-> Participants: Warden, Audit, Bastion · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-security-paranoid-guard-scan-549` (dept) · 2026-07-31T12:12:48.047874+00:00
+> Participants: Warden, Bastion · synthesized by mistral/mistral-small-latest
 
-**Decision:** Perform a comprehensive filesystem scan to ensure security against injection and verify all elements are real.
+**Decision:** Approve the Warden’s LLM Guard integration for real-time pipeline scanning.
 
 **Plan:**
-1. Run `find / -type l -xtype l -o -type l -lname '/*' 2>/dev/null` to identify all broken symlinks, including both files and directories.
-2. Execute `grep -rE '(\$\{|;|&|\|\||&&|\`|\(|\)|\$\(|`|>|<|>>|\|\s*grep)' /etc/cron* /etc/crontab /var/spool/cron 2>/dev/null` to detect potential injection artifacts in cron jobs.
-3. Filter results from the `grep` command to eliminate false positives, focusing on context and legitimate shell expansions.
-4. Review specific environment variables for unusual characters or suspicious patterns related to command injection.
-5. Document findings and remediation steps for any identified vulnerabilities. 
+1. Warden deploys LLM Guard on the input/output pipeline.
+2. Warden generates and shares a security report after each scan.
+3. Bastion verifies the report confirms "No leaks or injection vectors detected."
+4. Warden repeats scans for every new input/output interaction.
+5. Bastion cross-checks report authenticity with prior scans.
+6. Warden logs all scan results for audit trails.
 
-**What changed:** The plan now includes comprehensive checks for all types of broken symlinks and a refined approach to filter out false positives in the grep command for security against injection.
+**What changed:** LLM Guard now actively monitors the pipeline in real time.

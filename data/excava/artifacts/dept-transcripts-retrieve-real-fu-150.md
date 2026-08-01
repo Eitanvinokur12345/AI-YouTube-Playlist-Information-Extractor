@@ -1,17 +1,17 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-150` (dept) · 2026-07-27T19:41:02.547370+00:00
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-150` (dept) · 2026-07-30T21:34:58.539729+00:00
 > Participants: Reel, Echo · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Proceed with querying the YouTube transcript tool for the first pending video ID to retrieve its full transcript.
+Fetch the full transcript for *"How to Build a Resilient Team"* using the YouTube transcript tool.
 
 **Plan:**
-1. Identify the first pending video ID from the target list.
-2. Execute the `kimtaeyoon83/mcp-server-youtube-transcript` tool with the selected video ID.
-3. Validate the retrieved transcript for completeness and accuracy.
-4. Store the transcript in the designated output directory.
-5. Auto-tag the transcript against predefined risk keywords.
-6. Log the action and transcript metadata for tracking.
+1. Use `kimtaeyoon83/mcp-server-youtube-transcript` to fetch the raw transcript text for *"How to Build a Resilient Team"*.
+2. Output the transcript in GitHub markdown format.
+3. Verify the transcript is complete and matches the video's content.
+4. Save the transcript as a `.md` file with the video title as the filename.
+5. Confirm the transcript is accessible and properly formatted.
 
-**What changed:** Initial decision to query the transcript tool for the first pending video ID.
+**What changed:**
+The action shifted from fetching *"Orchestrated AI"* to *"How to Build a Resilient Team"* based on Echo's directive.

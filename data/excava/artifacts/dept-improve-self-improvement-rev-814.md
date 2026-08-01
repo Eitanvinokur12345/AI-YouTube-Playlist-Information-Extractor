@@ -1,6 +1,5 @@
 # improve: Self-improvement: review prompts/engines/routing/own-code; auto-apply safe changes; pitch 
 
-<<<<<<< HEAD
 > Decision artifact · room `dept-improve-self-improvement-rev-814` (dept) · 2026-07-31T09:27:34.762505+00:00
 > Participants: Sprocket, Gauge, Ratchet · synthesized by groq/llama-3.3-70b-versatile
 
@@ -11,7 +10,6 @@
 4. **Exclude Third-party Dependencies**: Ensure that Prettier is configured to exclude third-party dependencies from auto-formatting.
 5. **Test and Verify**: Conduct thorough testing to verify that the formatting changes do not introduce logic breaks.
 **What changed:** We will now maintain clean, consistent formatting in our own codebase without manual review overhead, while avoiding potential risks associated with formatting third-party dependencies.
-=======
 > Decision artifact · room `dept-improve-self-improvement-rev-814` (dept) · 2026-07-31T07:58:35.977691+00:00
 > Participants: Sprocket, Gauge, Ratchet · synthesized by mistral/mistral-small-latest
 
@@ -28,4 +26,3 @@ Auto-apply whitespace-only patches to own generated code and third-party depende
 
 **What changed:**
 Whitespace-only auto-formatting now applies to safe targets (own code + formatted third-party deps) with CI validation.
->>>>>>> 92c2ce986495d7a7ffb48f81669d42ca0c98da10

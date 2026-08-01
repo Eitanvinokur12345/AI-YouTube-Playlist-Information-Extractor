@@ -1,16 +1,12 @@
 # security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (not fake/dead); DETECT
 
-<<<<<<< HEAD
 > Decision artifact · room `dept-security-paranoid-guard-scan-994` (dept) · 2026-07-31T23:37:46.921415+00:00
-=======
 > Decision artifact · room `dept-security-paranoid-guard-scan-994` (dept) · 2026-07-31T23:36:18.212882+00:00
->>>>>>> 9091ab6b5586fa45d55768579af1b51e1f63a302
 > Participants: Warden, Bastion · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-<<<<<<< HEAD
 1. Warden runs ToolHive to verify the LLM Guard container status.
 2. ToolHive produces a status report confirming the container’s real-time health and readiness.
 3. Confirm output: "LLM Guard container is running and healthy."
@@ -18,7 +14,6 @@
 5. If output fails, escalate to containment protocols.
 
 **What changed:** Container verification initiated via ToolHive.
-=======
 1. Warden runs ToolHive to verify LLM Guard container status.
 2. Confirm output: "LLM Guard container is running and healthy — no anomalies detected."
 3. Validate real-time state and detect any anomalies.
@@ -27,4 +22,3 @@
 6. Document findings for audit.
 
 **What changed:** Container status verified and confirmed healthy.
->>>>>>> 9091ab6b5586fa45d55768579af1b51e1f63a302

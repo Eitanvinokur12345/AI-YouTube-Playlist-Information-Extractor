@@ -150,16 +150,33 @@ def broken_jsonl_markers() -> dict:
     pre-dating fires 28-41's workflow push-safety rollout (G-R) — historical damage the
     preventive fix (correctly) stops from recurring but never cleaned up retroactively, and
     nothing was watching for it going forward either. Returns {path: [line_indices]} for any
-    file that still has bare marker lines sitting in it."""
+    file that still has bare marker lines sitting in it.
+
+    Fire 89 (2026-08-01) widened the net: the scan only ever looked at *.jsonl, so the SAME
+    corruption sitting in *.md was invisible to it — 58 such files were found on main (47 in
+    data/excava/artifacts, 11 in data/excava/handoffs). That matters more than the jsonl case:
+    artifacts ARE M2.6's deliverable ("rooms PRODUCE committed artifacts"), so a corrupted
+    artifact is a corrupted product, not just a corrupted log. Same removal contract applies —
+    both sides' content is KEPT, only the bare marker lines go (P: quarantine, never delete).
+    """
+    return broken_markers((".jsonl",))
+
+
+def broken_markers(exts: tuple = (".jsonl", ".md")) -> dict:
+    """{path: [line_indices]} for any data/docs file still carrying bare conflict-marker lines."""
     hits = {}
     for d in (DATA, DOCS):
         if not d.exists():
             continue
-        for f in d.rglob("*.jsonl"):
-            lines = f.read_text(encoding="utf-8", errors="replace").split("\n")
-            idx = [i for i, l in enumerate(lines) if _MARKER_RE.match(l.strip())]
-            if idx:
-                hits[str(f.relative_to(ROOT))] = idx
+        for ext in exts:
+            for f in d.rglob(f"*{ext}"):
+                try:
+                    lines = f.read_text(encoding="utf-8", errors="replace").split("\n")
+                except Exception:
+                    continue
+                idx = [i for i, l in enumerate(lines) if _MARKER_RE.match(l.strip())]
+                if idx:
+                    hits[str(f.relative_to(ROOT))] = idx
     return hits
 
 
@@ -169,7 +186,7 @@ def repair_conflict_markers() -> dict:
     (append-only law: this is a marker-removal, not a merge that has to pick a winner). Verifies
     line-for-line that nothing but marker lines moved before writing. Returns {path: n_removed}."""
     fixed = {}
-    for rel, idx in broken_jsonl_markers().items():
+    for rel, idx in broken_markers().items():
         f = ROOT / rel
         lines = f.read_text(encoding="utf-8", errors="replace").split("\n")
         marker_set = set(idx)

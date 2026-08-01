@@ -1,6 +1,5 @@
 # accessibility: Make EXCAVA usable by EVERYONE — contrast, mobile/touch, reduced-motion, keyboard nav, scr
 
-<<<<<<< HEAD
 > Decision artifact · room `dept-accessibility-make-excava-us-575` (dept) · 2026-07-31T21:42:44.302086+00:00
 > Participants: Ramp, Reader, Access · synthesized by mistral/mistral-small-latest
 
@@ -17,7 +16,6 @@ Use a 3px solid system accent ring (#007AFF/macOS, #0066CC/Windows) with a 2px o
 
 **What changed:**
 Adopted a hybrid focus ring (3px solid + 2px glow) with system accent colors and dynamic contrast for universal visibility.
-=======
 > Decision artifact · room `dept-accessibility-make-excava-us-575` (dept) · 2026-07-31T21:40:40.151281+00:00
 > Participants: Ramp, Reader, Access · synthesized by mistral/mistral-small-latest
 
@@ -34,4 +32,3 @@ Use a 3px solid system accent ring (#007AFF/macOS, #0066CC/Windows) with 2px out
 
 **What changed:**
 Focus ring upgraded to 3px solid system accent with 2px outer glow for cross-theme visibility.
->>>>>>> 05eb4e404a4005fd0bbf5d2e4c0ee0a4f3ffe443

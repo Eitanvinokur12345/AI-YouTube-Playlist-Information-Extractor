@@ -1,6 +1,5 @@
 # visualization: Own EXCAVA'S OWN interface — visibility, liveliness, clarity, enjoyment, speed of OUR scre
 
-<<<<<<< HEAD
 > Decision artifact · room `dept-visualization-own-excava-s-o-467` (dept) · 2026-07-31T11:14:55.646143+00:00
 > Participants: Facet, Pane, Lumen · synthesized by mistral/mistral-small-latest
 
@@ -17,7 +16,6 @@ Adopt a system-wide dark theme by default with a persistent, one-click toggle to
 
 **What changed:**
 Default dark theme with a persistent toggle replaces forced single-theme and auto-switching options.
-=======
 > Decision artifact · room `dept-visualization-own-excava-s-o-467` (dept) · 2026-07-31T11:12:46.501420+00:00
 > Participants: Facet, Pane, Lumen · synthesized by nvidia/meta/llama-3.3-70b-instruct
 
@@ -28,4 +26,3 @@ Default dark theme with a persistent toggle replaces forced single-theme and aut
 4. **Monitor user feedback and adjust**: Continuously collect user feedback and adjust the theme and toggle as needed to ensure the best possible user experience.
 5. **Ensure accessibility features are in place**: Implement features such as high contrast mode and font size adjustment to cater to users with light sensitivity and other accessibility needs.
 **What changed:** The decision to include a persistent, non-modal toggle that remembers user choice across sessions, addressing concerns around accessibility and user experience.
->>>>>>> 4fb3d4b6a4feb2fd3d82d354bb19af715714770b

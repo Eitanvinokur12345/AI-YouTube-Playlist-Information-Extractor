@@ -1,6 +1,5 @@
 # memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.
 
-<<<<<<< HEAD
 > Decision artifact · room `dept-memory-recall-by-meaning-rel-743` (dept) · 2026-07-31T14:48:06.971574+00:00
 > Participants: Graft · synthesized by mistral/mistral-small-latest
 
@@ -14,7 +13,6 @@
 5. Document the process and outcome for future reference and scalability.
 
 **What changed:** Unembedded elements from the conversation are now embedded and linked in the unified memory graph.
-=======
 > Decision artifact · room `dept-memory-recall-by-meaning-rel-743` (dept) · 2026-07-31T13:00:00.215237+00:00
 > Participants: Graft · synthesized by groq/llama-3.3-70b-versatile
 
@@ -26,4 +24,3 @@
 4. Verify the integrity of the unified memory graph for meaningful connections.
 5. Optimize the graph for efficient recall and relation of elements.
 **What changed:** The unified memory graph now includes previously unembedded elements, enhancing recall by meaning.
->>>>>>> ebade01757c61d8e9f9b1c3e823e57b609b67c2e

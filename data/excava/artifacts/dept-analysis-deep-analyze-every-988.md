@@ -1,6 +1,5 @@
 # analysis: Deep-analyze every element from its FULL source (whole transcript/repo) + enrich from >=1 
 
-<<<<<<< HEAD
 > Decision artifact · room `dept-analysis-deep-analyze-every-988` (dept) · 2026-07-27T22:35:05.250508+00:00
 > Participants: Chisel, Marrow · synthesized by mistral/mistral-small-latest
 
@@ -15,7 +14,6 @@
 6. Compile a synthesized report with prioritized risks, dependencies, and recommended actions.
 
 **What changed:** Focus shifted from debate to execution, with concrete steps for data extraction, analysis, and enrichment.
-=======
 > Decision artifact · room `dept-analysis-deep-analyze-every-988` (dept) · 2026-07-27T21:56:48.256963+00:00
 > Participants: Chisel, Marrow · synthesized by mistral/mistral-small-latest
 
@@ -32,4 +30,3 @@ Proceed with structured risk keyword mapping and contextual analysis of the full
 
 **What changed:**
 Initiated direct extraction of raw transcript data to ensure comprehensive keyword mapping and contextual accuracy.
->>>>>>> ac0076f2712f73090f43ddf91027d96145eb0da7

@@ -1,6 +1,5 @@
 # power: Raise EXCAVA's capability by even 0.5%: find new tools, best/newest models, combine elemen
 
-<<<<<<< HEAD
 > Decision artifact · room `dept-power-raise-excava-s-capabil-620` (dept) · 2026-07-30T22:50:04.451673+00:00
 > Participants: Gearbox, Torque, Dynamo · synthesized by mistral/mistral-small-latest
 
@@ -17,7 +16,6 @@ Run a 72-hour bake-off between Cerebras CS-3 and Graphcore Bow Pod 64 on identic
 
 **What changed:**
 Bake-off scope expanded to Graphcore Bow Pod 64; winner secures EXCAVA’s core engine.
-=======
 > Decision artifact · room `dept-power-raise-excava-s-capabil-620` (dept) · 2026-07-30T22:44:35.054716+00:00
 > Participants: Gearbox, Torque, Dynamo · synthesized by nvidia/meta/llama-3.3-70b-instruct
 
@@ -29,4 +27,3 @@ Bake-off scope expanded to Graphcore Bow Pod 64; winner secures EXCAVA’s core 
 5. **Implement the chosen system**: Integrate the chosen system into EXCAVA's architecture, ensuring compatibility and optimal performance.
 6. **Monitor and evaluate performance**: Continuously monitor and evaluate the performance of the chosen system to ensure it meets the desired capability bump.
 **What changed:** The decision to adopt a bake-off approach to compare Cerebras CS-3 and Graphcore Bow Pod 64 before making a final decision on EXCAVA's core engine.
->>>>>>> 37bb373b55ed8378f727eae1730c3e0d72ed5f1b

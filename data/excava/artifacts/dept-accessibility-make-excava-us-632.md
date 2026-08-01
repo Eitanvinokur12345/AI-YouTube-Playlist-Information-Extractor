@@ -1,6 +1,5 @@
 # accessibility: Make EXCAVA usable by EVERYONE — contrast, mobile/touch, reduced-motion, keyboard nav, scr
 
-<<<<<<< HEAD
 > Decision artifact · room `dept-accessibility-make-excava-us-632` (dept) · 2026-07-31T14:47:25.659989+00:00
 > Participants: Ramp, Reader, Access · synthesized by mistral/mistral-small-latest
 
@@ -17,7 +16,6 @@ Ship a **3px solid focus ring in #000000 at 90% opacity with 3px outer offset** 
 
 **What changed:**
 Added a 3px solid focus ring in #000000 at 90% opacity with 3px outer offset to all keyboard-focusable interactive elements.
-=======
 > Decision artifact · room `dept-accessibility-make-excava-us-632` (dept) · 2026-07-31T12:50:01.023258+00:00
 > Participants: Ramp, Reader, Access · synthesized by mistral/mistral-small-latest
 
@@ -32,4 +30,3 @@ Added a 3px solid focus ring in #000000 at 90% opacity with 3px outer offset to 
 6. Document the focus ring and touch target specifications in the design system.
 
 **What changed:** Added WCAG-compliant focus ring and touch targets to EXCAVA.
->>>>>>> ebade01757c61d8e9f9b1c3e823e57b609b67c2e

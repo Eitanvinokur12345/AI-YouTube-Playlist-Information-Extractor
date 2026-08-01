@@ -465,15 +465,24 @@ def g_jsonl_markers():
     one JSON object per LINE, not one document). Fire 46 found 78 such files / 288 marker lines
     (all pre-dating G-R's workflow push-safety rollout) and shipped `git_safe.repair_conflict_markers()`
     to clean them; this check is the ongoing watch so the same bug class can't silently reappear
-    and go unnoticed the way it did for ~a day before this fire found it by hand."""
-    from src.git_safe import broken_jsonl_markers
-    hits = broken_jsonl_markers()
+    and go unnoticed the way it did for ~a day before this fire found it by hand.
+
+    Fire 89 (2026-08-01) widened it from .jsonl to .md as well: 58 corrupted files were sitting
+    on main unseen (47 in data/excava/artifacts, 11 in data/excava/handoffs). An artifact is
+    M2.6's actual deliverable, so this was corruption in the PRODUCT, not just in a log — a
+    strictly worse case than the one the check was built for, and it was outside its scan."""
+    from src.git_safe import broken_markers
+    hits = broken_markers()
     ok = not hits
     n = sum(len(v) for v in hits.values())
-    detail = ("no bare conflict-marker lines in any .jsonl append-log." if ok else
-              f"{n} marker line(s) across {len(hits)} file(s) — run "
-              "`python -m src.git_safe repair-conflicts`: " + ", ".join(list(hits)[:5]))
-    return _ok("G-S", "No conflict markers in .jsonl logs", ok, detail, "critical")
+    kinds = {}
+    for p in hits:
+        kinds[p.rsplit(".", 1)[-1]] = kinds.get(p.rsplit(".", 1)[-1], 0) + 1
+    detail = ("no bare conflict-marker lines in any .jsonl append-log or .md artifact." if ok else
+              f"{n} marker line(s) across {len(hits)} file(s) "
+              f"({', '.join(f'{v} .{k}' for k, v in sorted(kinds.items()))}) — run "
+              "`python -m src.git_safe repair-conflicts`: " + ", ".join(list(hits)[:4]))
+    return _ok("G-S", "No conflict markers in append-logs or artifacts", ok, detail, "critical")
 
 
 def _load_json(p, d):

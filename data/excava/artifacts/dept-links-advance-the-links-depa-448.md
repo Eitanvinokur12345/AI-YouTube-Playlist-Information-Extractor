@@ -1,6 +1,5 @@
 # links: advance the links department's mission
 
-<<<<<<< HEAD
 > Decision artifact · room `dept-links-advance-the-links-depa-448` (dept) · 2026-07-31T07:28:28.807783+00:00
 > Participants: Anchor, LinLea · synthesized by nvidia/meta/llama-3.3-70b-instruct
 
@@ -12,7 +11,6 @@
 4. The published inventory will produce a live, verified list of all tracked links for review.
 5. The department will review the live list to identify areas for improvement.
 **What changed:** The link inventory will now be cleaned and verified before publication to the department's system.
-=======
 > Decision artifact · room `dept-links-advance-the-links-depa-448` (dept) · 2026-07-31T07:26:06.039533+00:00
 > Participants: Anchor, LinLea · synthesized by mistral/mistral-small-latest
 
@@ -27,4 +25,3 @@
 6. Finalize the inventory as the authoritative source for tracked links.
 
 **What changed:** The Mission Control Dashboard’s link inventory is now a live, reviewed, and department-accessible list.
->>>>>>> e37b7e3467fdb6577b858f67960c149e19cfab38

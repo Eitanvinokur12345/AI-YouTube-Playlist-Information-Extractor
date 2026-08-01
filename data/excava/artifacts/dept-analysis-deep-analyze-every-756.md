@@ -1,6 +1,5 @@
 # analysis: Deep-analyze every element from its FULL source (whole transcript/repo) + enrich from >=1 
 
-<<<<<<< HEAD
 > Decision artifact · room `dept-analysis-deep-analyze-every-756` (dept) · 2026-07-31T14:47:54.510806+00:00
 > Participants: Chisel, Marrow · synthesized by mistral/mistral-small-latest
 
@@ -17,7 +16,6 @@ Finalize the BloodHound-MCP analysis of the earnings call transcript to validate
 
 **What changed:**
 Marrow validated and synthesized the BloodHound-MCP output into a structured, actionable analysis.
-=======
 > Decision artifact · room `dept-analysis-deep-analyze-every-756` (dept) · 2026-07-31T12:51:45.576226+00:00
 > Participants: Chisel, Marrow · synthesized by mistral/mistral-small-latest
 
@@ -33,4 +31,3 @@ Marrow will validate and refine the BloodHound-MCP-generated knowledge graph art
 6. **Archive Artifacts:** Store the final knowledge graph, transcript snippets, and report in a secure repo branch for auditability.
 
 **What changed:** Shifted from raw extraction to validated, enriched, and actionable security risk analysis.
->>>>>>> ebade01757c61d8e9f9b1c3e823e57b609b67c2e

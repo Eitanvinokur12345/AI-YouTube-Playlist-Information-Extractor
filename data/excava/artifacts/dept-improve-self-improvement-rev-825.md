@@ -1,16 +1,16 @@
 # improve: Self-improvement: review prompts/engines/routing/own-code; auto-apply safe changes; pitch 
 
-> Decision artifact · room `dept-improve-self-improvement-rev-825` (dept) · 2026-07-29T17:50:47.688008+00:00
+> Decision artifact · room `dept-improve-self-improvement-rev-825` (dept) · 2026-08-01T19:46:40.978576+00:00
 > Participants: Sprocket, Gauge, Ratchet · synthesized by mistral/mistral-small-latest
 
-**Decision:** Implement a 10% randomized rollout across all users for the new feature to ensure representative data on user interactions and effectiveness.
+**Decision:** Auto-apply only changes that pass a pre-approved, audited test suite (no logic changes, no new dependencies, no model access tweaks) and log the rest for review.
 
 **Plan:**
-1. Configure the feature flag system to randomly assign 10% of all users (not just opt-ins) to the new feature.
-2. Implement real-time monitoring and logging for user interactions with the feature.
-3. Set up automated alerts for any critical issues or unexpected behavior in the 10% cohort.
-4. Schedule a review meeting after 2 weeks (or when sufficient data is collected) to analyze results.
-5. Prepare a report summarizing key metrics (engagement, retention, errors) for the product team.
-6. Define clear rollback criteria (e.g., error rate > X%) and assign ownership to the product team.
+1. Define a minimal, audited test suite (e.g., linting, formatting, dependency version checks) with explicit pass/fail criteria.
+2. Establish a review process for adding new "safe" change types to the auto-apply list (requires maintainer approval + test coverage).
+3. Implement logging for all auto-applied changes with diffs and test results.
+4. Route all other changes (including typo fixes beyond formatting) to manual review.
+5. Publish the policy in a `SAFE_CHANGES.md` file with examples and approval workflows.
+6. Add a pre-commit hook to enforce the policy before changes are applied.
 
-**What changed:** Switched from opted-in to randomized 10% rollout to eliminate self-selection bias.
+**What changed:** Policy now requires audited test suite validation for auto-applied changes.

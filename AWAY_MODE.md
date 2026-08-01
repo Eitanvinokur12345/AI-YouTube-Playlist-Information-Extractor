@@ -1,5 +1,12 @@
 # GO AWAY MODE — what the routine actually performs
 
+> **UPDATED 2026-07-30 (same day).** Eitan made the mode **PERMANENT** and added phone push.
+> The §7 recommendations below are no longer recommendations — three of them are BUILT:
+> `src/loop_contract.py` (contract acknowledgement, carry-over increment, meta-fire cap), wired
+> into `src/standing_checks.py`. Cadence is now **2h unattended / hourly when Eitan is present**.
+> The old exit condition is gone: the mode never ends, it only switches cadence.
+> Sections 0-6 describe the run that ENDED 2026-07-30 and are kept as the evidence base.
+
 _Report prepared 2026-07-30 for Eitan, after away mode ran 2026-07-21 → 2026-07-30 (81 fires).
 This documents the routine as it REALLY behaves, verified against the repo — not as it was
 imagined. The contract itself lives in `data/excava/away_mode.json`._
@@ -160,3 +167,41 @@ because "one small safe increment, unattended" structurally selects for plumbing
 
 _Sources: `data/excava/away_mode.json`, `AWAY_LOG.md` (304 fire references), `PULSE.md`,
 `QUESTIONS.md`, `GUARDRAILS.md`, `.github/workflows/*.yml`, `data/excava/local_worker.json`._
+
+
+---
+
+## 8. What changed on 2026-07-30 (Eitan's decision)
+
+**Always-on.** The mode no longer has an exit condition. It runs permanently and switches cadence
+based on whether Eitan is in the session — hourly when he is, every 2 hours when he is not.
+Rationale: he is rarely at the computer, so a loop that waits for him to appear wastes most of the
+day.
+
+**Phone push, tiered.** `PushNotification` reaches his phone when Remote Control is connected.
+The tiering is the important part, and it is a deliberate departure from "notify me about even the
+smallest detail":
+
+| Tier | What | Why |
+|---|---|---|
+| **Push now** | blocks the increment with no safe default · a P5 pitch-gate · anything irreversible · loop/repo at risk · an owner request blocked | genuinely worth an interruption |
+| **Batch, no push** | anything with a sensible default · style/naming/cosmetics · routine progress | recorded in `QUESTIONS.md`, visible, not interrupting |
+| **Daily digest** | one line, once a day | keeps "the smallest detail" reachable without one push per detail |
+
+Cap: 3 non-blocking pushes/day; blockers unlimited. **An owner who learns to ignore pushes is
+worse than no pushes at all** — that is the failure this tiering prevents.
+
+**Known gap:** `PushNotification` is a Claude Code *session* tool. The GitHub Actions beat cannot
+call it, so a lane failing overnight in CI still cannot reach his phone. That needs a separate
+transport (feature-inventory item 65, Telegram push) and is **unbuilt**.
+
+**The three §7 fixes, now real** (`src/loop_contract.py`):
+- `ack` — a fire records that it read the contract; `standing_checks` flags one that did not.
+- `start`/`note`/`finish` — a carry-over increment can span several fires, so real work no longer
+  has to fit inside one fire's window.
+- meta-fire cap — after 3 consecutive fires touching only the loop's own machinery, the next fire
+  must advance the product. This is the counter that the previous run lacked while diagnosing its
+  own meta-bias five times.
+
+**Retired:** the "non-brain fronts only" fence. Correct on day 1, stale by day 9, and the reason
+M2's class collapse sat unstarted. Any future fence must carry a `review_by` date.

@@ -20,7 +20,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-from src import git_safe, guardrails
+from src import git_safe, guardrails, loop_contract
 
 ROOT = Path(__file__).parent.parent
 OUT = ROOT / "data" / "standing_checks.json"
@@ -62,11 +62,16 @@ def run() -> dict:
     remote = check_remote()
     upstream = check_upstream()
     gr = guardrails.run()
+    # The GO AWAY MODE contract used to be enforced by nothing at all — every rule in it was
+    # obeyed only because a fire happened to open the file. Folding its status in here means a
+    # drifting fire is VISIBLE at the one point every fire already runs.
+    contract = loop_contract.status()
 
     needs_attention = (
         not remote["fetch_ok"]
         or not remote["in_sync"]
         or gr["critical_failures"] > 0
+        or not contract["contract_present"]
     )
     result = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
@@ -75,6 +80,7 @@ def run() -> dict:
         "upstream": upstream,
         "guardrails": {"passing": gr["passing"], "total": gr["total"],
                        "critical_failures": gr["critical_failures"]},
+        "loop_contract": contract,
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(result, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -109,6 +115,19 @@ def main() -> int:
 
     g = r["guardrails"]
     print(f"  guardrails: {g['passing']}/{g['total']} passing, {g['critical_failures']} critical failure(s)")
+
+    c = r["loop_contract"]
+    if not c["contract_present"]:
+        print("  XX GO AWAY MODE contract MISSING (data/excava/away_mode.json) — the loop has no rules.")
+    else:
+        print(f"  OK contract: {'always-on' if c['always_on'] else 'present'}"
+              f"{'' if c['acked_recently'] else ' — NOT acknowledged recently (run: python -m src.loop_contract ack)'}")
+    inc = c["open_increment"]
+    print(f"  -> carry-over: '{inc['title']}' [{inc['kind']}], {inc['fires']} fire(s) in — CONTINUE IT"
+          if inc else "  -> carry-over: none open — this fire starts one")
+    if c["must_do_product_next"]:
+        print(f"  !! {c['consecutive_meta_fires']} consecutive META fires (cap {c['meta_cap']}) — "
+              f"THIS FIRE MUST ADVANCE THE PRODUCT, not the loop's own machinery.")
     return 1 if (strict and not r["ok"]) else 0
 
 

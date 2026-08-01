@@ -51,7 +51,7 @@ CONTEXT_FILES = [
     "docs/dashboard.js",
     "src/fetch.py",
     "src/news.py",
-    "CLAUDE.md",
+    "ANALYZE_SPEC.md",   # was CLAUDE.md until 2026-07-30 (project spec split out)
     "IMPROVE.md",
     "data/index.json",
 ]

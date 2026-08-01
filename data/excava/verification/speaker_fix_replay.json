@@ -1,0 +1,26 @@
+{
+ "generated_at": "2026-08-01T20:40:21.971473+00:00",
+ "what": "Deterministic replay of the fire-93 _speaker fix against every real room's actual department cast.",
+ "why": "The fix could not be proven on a LIVE room: this cloud session has no engine keys (checked - zero GROQ/GEMINI/CEREBRAS/MISTRAL/OPENROUTER/SAMBANOVA/NVIDIA/HF vars), so no engine call is possible here. A replay against real casts is the strongest engine-free evidence available, and it is deterministic - same inputs, same answer, no model involved.",
+ "method": "For each room, take its department's real roster and its real max_turns; compute the speaker sequence under the OLD rotation and the NEW one; compare which roles get a turn.",
+ "rooms_replayed": 92,
+ "rooms_that_gain_a_checker_turn": 79,
+ "rooms_that_gain_an_improver_turn": 4,
+ "agents_that_become_reachable": [
+  "Assay",
+  "Audit",
+  "Factcheck",
+  "Frame",
+  "Overhaul",
+  "Prune",
+  "Refine",
+  "Remix",
+  "Scriv",
+  "Sift",
+  "Squint",
+  "Tether",
+  "Vet"
+ ],
+ "caveat": "This proves the ROTATION now selects a checker. It does NOT prove the checker says anything useful - challenge QUALITY is unmeasured and remains an open gap.",
+ "blocker": "The fix is on branch claude/excava-end-plan-s1mt4l and is NOT on main. The away loop that actually runs rooms runs from main, so it is still executing the old rotation. Until this merges, all 79 rooms keep converging with no challenge turn."
+}

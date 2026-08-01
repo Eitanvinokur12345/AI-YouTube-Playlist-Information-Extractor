@@ -1,18 +1,16 @@
 # memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.
 
-> Decision artifact · room `dept-memory-recall-by-meaning-rel-758` (dept) · 2026-07-27T22:51:48.737407+00:00
-> Participants: Graft, Root · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-memory-recall-by-meaning-rel-758` (dept) · 2026-08-01T04:04:19.048966+00:00
+> Participants: Graft · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Formalize the memory graph integration of the Cross-AI Unified Memory goal with Hindsight MCP.
 
 **Plan:**
-1. Create a structured recall node linking the goal ("Recall by meaning, relate elements, build the brain graph, embed unembedded elements") to the Cross-AI Unified Memory context.
-2. Embed the unembedded elements from the debate into the memory graph via the Hindsight MCP.
-3. Ensure the node connects Claude, ChatGPT, Gemini, and Copilot through the unified memory framework.
-4. Validate the recall node’s structure for bidirectional meaning-based retrieval.
-5. Test the node’s integration by querying for related elements across AIs.
-6. Document the node’s placement in the brain graph for future reference.
+1. Query the Hindsight memory database via the MCP server to retrieve all unembedded elements.
+2. Parse the retrieved list to identify memory items requiring embedding into the brain graph.
+3. Prioritize unembedded elements based on relevance, recency, or dependency for efficient processing.
+4. Embed each prioritized element into the brain graph using the appropriate memory integration method.
+5. Validate successful embedding by cross-referencing the updated brain graph with the original list.
+6. Log the completion of each embedded element for future reference and tracking.
 
-**What changed:**
-The goal and Cross-AI Unified Memory context were grafted into the memory graph as a structured recall node.
+**What changed:** Unembedded memory elements are now systematically identified and prioritized for integration into the brain graph.

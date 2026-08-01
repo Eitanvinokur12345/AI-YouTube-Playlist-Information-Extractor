@@ -1,65 +1,60 @@
 {
-  "away": true,
-  "mode": "always_on",
-  "since": "2026-07-30",
-  "owner": "Eitan",
-  "previous_run": "2026-07-21 -> 2026-07-30, 81 fires, ended when Eitan returned",
-  "owner_instruction": "Keep GO AWAY MODE on PERMANENTLY. Eitan is rarely at the computer, so the loop must never idle waiting for him to appear. Run continuously; when Eitan is genuinely needed - a verification, a decision, a blocker - PUSH TO HIS PHONE rather than parking the question in a file he may not read for days. Proceed on sensible defaults for everything that has one.",
-  "why_always_on": "The 2026-07-21 run proved the failure mode: 81 fires batched 25 questions to QUESTIONS.md and proceeded on defaults, so nothing blocked - but nothing got Eitan's input either, and the decisions piled up unreviewed. Always-on + push inverts it: the loop keeps moving AND Eitan is reachable in minutes when it actually matters.",
-
-  "notification_policy": {
-    "channel": "PushNotification tool (desktop + phone when Remote Control is connected)",
-    "principle": "A notification Eitan did not need is annoying in a way that ACCUMULATES - and an owner who learns to ignore pushes is worse than no pushes at all. Tier every interruption. 'Notify me about even the smallest detail' is honored by making the smallest details VISIBLE (QUESTIONS.md + the daily digest), not by pushing each one.",
-    "push_immediately": [
-      "A decision that BLOCKS the current increment and has no safe default.",
-      "A P5 pitch-gate reached (overhaul / new tool / deeper access) - by law these are Eitan's call.",
-      "Anything irreversible or destructive about to happen.",
-      "The loop or repo itself is at risk: a critical guardrail failure, engines all dead, push failing, work at risk of loss.",
-      "An owner-authored request (data/excava/owner_requests.json) is ready for review or is blocked."
-    ],
-    "batch_no_push": [
-      "Any question that HAS a sensible default - proceed on it and record it in QUESTIONS.md.",
-      "Style, naming, ordering, cosmetic and recoverable choices.",
-      "Progress updates, completed increments, routine green checks."
-    ],
-    "daily_digest": {
-      "when": "once per day, first fire after 08:00 local",
-      "push": "ONE line: increments shipped, defaults taken, open questions count, anything degrading.",
-      "rationale": "Keeps 'the smallest detail' reachable without one push per detail."
-    },
-    "rate_limit": {
-      "blocking_pushes": "unlimited - a real blocker is always worth the interruption",
-      "non_blocking_pushes": "max 3 per day, digest excluded",
-      "note": "If the cap is hit, park the rest in QUESTIONS.md and fold them into the next digest."
-    },
-    "limitation": "PushNotification is a Claude Code SESSION tool. The GitHub Actions beat CANNOT call it - CI has no such channel. For notifications originating in CI (a lane failing overnight), a separate transport is needed; that is feature-inventory item 65 (Telegram push) and is still unbuilt."
-  },
-
-  "cadence": {
-    "unattended": "every 2 hours",
-    "evidence": "The 2026-07-21 run was CONFIGURED hourly but DELIVERED ~2h (measured from AWAY_LOG fire timestamps: real gaps ran 0-4h, since a cron only fires when the session is idle and a working fire blocks the next). 2h makes the config honest and gives each fire a budget for a product-shaped increment instead of whatever fits in an hour.",
-    "when_eitan_is_present": "hourly - fast feedback, warm cache, he can steer",
-    "github_beat": "unchanged at */10 - it is free, independent, and GitHub throttles it to ~hourly anyway",
-    "long_absence": "Session crons auto-expire after 7 days and die silently if the app closes. For absences beyond that, run the loop from the cloud scheduled-task invocation (as fires 78-81 did), which survives both."
-  },
-
-  "rules": [
-    "Each fire: standing checks -> ONE wired+visible increment -> verify the READ side via CLI/DATA assertions (browser tools can prompt and are flaky headless while unattended) -> log WHY -> ship -> harsh criticism of both.",
-    "CARRY-OVER: a fire may CONTINUE the increment recorded in data/excava/current_increment.json instead of starting a fresh one. Finishing a real piece of work across 3 fires beats shipping 3 disconnected small ones. Always read that file first; write it before ending a fire that leaves work unfinished.",
-    "META-FIRE CAP: after 3 consecutive fires touching only the loop's own machinery (git hygiene, observability, guardrails, logging, this contract), the NEXT fire must advance the product - hub, elements, agents, generation engine, UI. The 2026-07 run diagnosed this bias five times and never broke it; the cap is what breaks it.",
-    "PERMISSIONS (confirmed 2026-07-23; the .claude/settings.json allowlist did NOT stop it): NEVER run `git` directly in a Bash command on the LOCAL PC loop. The app gates cd+git as a hook-execution risk and the unattended loop FREEZES on it. Route ALL git through PYTHON: `python -m src.git_safe sync` / `ship`. This gate does NOT apply to cloud sessions, where git runs normally.",
-    "NEVER git push --force / git clean / rm -rf. Quarantine, never delete.",
-    "Questions: proceed on a sensible default and record it in QUESTIONS.md. Push to the phone ONLY per notification_policy above. AskUserQuestion is allowed when Eitan is actually present in the session; never rely on it while unattended.",
-    "Fronts: full scope. The old 'non-brain fronts only' fence is RETIRED - it was correct on day 1 of the last run and stale by day 9, and it is what left the M2 class collapse unstarted. Scope fences now carry a review date.",
-    "The GitHub Actions beat + the local drain keep the core program running regardless of any session."
+ "away": true,
+ "mode": "always_on",
+ "since": "2026-07-30",
+ "owner": "Eitan",
+ "previous_run": "2026-07-21 -> 2026-07-30, 81 fires, ended when Eitan returned",
+ "owner_instruction": "Keep GO AWAY MODE on PERMANENTLY. Eitan is rarely at the computer, so the loop must never idle waiting for him to appear. Run continuously; when Eitan is genuinely needed - a verification, a decision, a blocker - PUSH TO HIS PHONE rather than parking the question in a file he may not read for days. Proceed on sensible defaults for everything that has one.",
+ "why_always_on": "The 2026-07-21 run proved the failure mode: 81 fires batched 25 questions to QUESTIONS.md and proceeded on defaults, so nothing blocked - but nothing got Eitan's input either, and the decisions piled up unreviewed. Always-on + push inverts it: the loop keeps moving AND Eitan is reachable in minutes when it actually matters.",
+ "notification_policy": {
+  "channel": "PushNotification tool (desktop + phone when Remote Control is connected)",
+  "principle": "A notification Eitan did not need is annoying in a way that ACCUMULATES - and an owner who learns to ignore pushes is worse than no pushes at all. Tier every interruption. 'Notify me about even the smallest detail' is honored by making the smallest details VISIBLE (QUESTIONS.md + the daily digest), not by pushing each one.",
+  "push_immediately": [
+   "A decision that BLOCKS the current increment and has no safe default.",
+   "A P5 pitch-gate reached (overhaul / new tool / deeper access) - by law these are Eitan's call.",
+   "Anything irreversible or destructive about to happen.",
+   "The loop or repo itself is at risk: a critical guardrail failure, engines all dead, push failing, work at risk of loss.",
+   "An owner-authored request (data/excava/owner_requests.json) is ready for review or is blocked."
   ],
-
-  "scope_fence": {
-    "active": false,
-    "retired_on": "2026-07-30",
-    "retired_why": "'Non-brain fronts only' blocked M2's only unbuilt item (the 97->5-class collapse). Any future fence must set review_by.",
-    "review_by": null
+  "batch_no_push": [
+   "Any question that HAS a sensible default - proceed on it and record it in QUESTIONS.md.",
+   "Style, naming, ordering, cosmetic and recoverable choices.",
+   "Progress updates, completed increments, routine green checks."
+  ],
+  "daily_digest": {
+   "when": "once per day, first fire after 08:00 local",
+   "push": "ONE line: increments shipped, defaults taken, open questions count, anything degrading.",
+   "rationale": "Keeps 'the smallest detail' reachable without one push per detail."
   },
-
-  "exit_condition": "None - this mode is now PERMANENT. It does not end when Eitan appears; it simply switches to the interactive cadence (hourly, AskUserQuestion allowed) while he is in the session, and back to the 2h unattended cadence when he is not."
+  "rate_limit": {
+   "blocking_pushes": "unlimited - a real blocker is always worth the interruption",
+   "non_blocking_pushes": "max 3 per day, digest excluded",
+   "note": "If the cap is hit, park the rest in QUESTIONS.md and fold them into the next digest."
+  },
+  "limitation": "PushNotification is a Claude Code SESSION tool. The GitHub Actions beat CANNOT call it - CI has no such channel. For notifications originating in CI (a lane failing overnight), a separate transport is needed; that is feature-inventory item 65 (Telegram push) and is still unbuilt."
+ },
+ "cadence": {
+  "unattended": "every 30 minutes (Eitan's call, 2026-08-01)",
+  "evidence": "Measured: the 2026-07-21 run was CONFIGURED hourly but DELIVERED ~2h, because a cron only fires when the session is idle and a working fire blocks the next. At 30m the schedule is effectively 'start the next fire as soon as the previous one finishes' - a missed :30 is normal, not a failure. Eitan chose this over the measured 2h; the tradeoff is smaller increments per fire, which the CARRY-OVER rule exists to offset.",
+  "when_eitan_is_present": "hourly - fast feedback, warm cache, he can steer",
+  "github_beat": "unchanged at */10 - it is free, independent, and GitHub throttles it to ~hourly anyway",
+  "long_absence": "Session crons auto-expire after 7 days and die silently if the app closes. For absences beyond that, run the loop from the cloud scheduled-task invocation (as fires 78-81 did), which survives both."
+ },
+ "rules": [
+  "Each fire: standing checks -> ONE wired+visible increment -> verify the READ side via CLI/DATA assertions (browser tools can prompt and are flaky headless while unattended) -> log WHY -> ship -> harsh criticism of both.",
+  "CARRY-OVER: a fire may CONTINUE the increment recorded in data/excava/current_increment.json instead of starting a fresh one. Finishing a real piece of work across 3 fires beats shipping 3 disconnected small ones. Always read that file first; write it before ending a fire that leaves work unfinished.",
+  "META-FIRE CAP: after 3 consecutive fires touching only the loop's own machinery (git hygiene, observability, guardrails, logging, this contract), the NEXT fire must advance the product - hub, elements, agents, generation engine, UI. The 2026-07 run diagnosed this bias five times and never broke it; the cap is what breaks it.",
+  "PERMISSIONS (confirmed 2026-07-23; the .claude/settings.json allowlist did NOT stop it): NEVER run `git` directly in a Bash command on the LOCAL PC loop. The app gates cd+git as a hook-execution risk and the unattended loop FREEZES on it. Route ALL git through PYTHON: `python -m src.git_safe sync` / `ship`. This gate does NOT apply to cloud sessions, where git runs normally.",
+  "NEVER git push --force / git clean / rm -rf. Quarantine, never delete.",
+  "Questions: proceed on a sensible default and record it in QUESTIONS.md. Push to the phone ONLY per notification_policy above. AskUserQuestion is allowed when Eitan is actually present in the session; never rely on it while unattended.",
+  "Fronts: full scope. The old 'non-brain fronts only' fence is RETIRED - it was correct on day 1 of the last run and stale by day 9, and it is what left the M2 class collapse unstarted. Scope fences now carry a review date.",
+  "The GitHub Actions beat + the local drain keep the core program running regardless of any session."
+ ],
+ "scope_fence": {
+  "active": false,
+  "retired_on": "2026-07-30",
+  "retired_why": "'Non-brain fronts only' blocked M2's only unbuilt item (the 97->5-class collapse). Any future fence must set review_by.",
+  "review_by": null
+ },
+ "exit_condition": "None - this mode is now PERMANENT. It does not end when Eitan appears; it simply switches to the interactive cadence (hourly, AskUserQuestion allowed) while he is in the session, and back to the 2h unattended cadence when he is not."
 }

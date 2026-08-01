@@ -513,10 +513,10 @@ def _beat(args) -> int:
                 ok = sum(1 for r in rep["results"] if r["status"] == "healthy")
                 beat_log.append(f"experiment engine-benchmark: {ok}/{len(rep['results'])} healthy; "
                                 f"ranking {', '.join(rep['ranking'][:4])}")
-            reg = exp.run_regression()
-            if reg:
-                beat_log.append(f"experiment golden-task-regression: {reg['score']}% "
-                                f"({reg['passed']}/{reg['total']} tasks pass)")
+            regr = exp.run_regression()
+            if regr:
+                beat_log.append(f"experiment golden-task-regression: {regr['score']}% "
+                                f"({regr['passed']}/{regr['total']} tasks pass)")
             ab = exp.run_formation_ab()
             if ab:
                 beat_log.append(f"experiment formation-ab: winner={ab.get('winner_today')} "

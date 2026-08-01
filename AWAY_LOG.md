@@ -5,6 +5,82 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-01
+- **~22:0x (fire 96, unattended, cloud, scheduled-task invocation)** — Read fire 95's log first.
+  Standing checks clean (`python -m src.standing_checks`): routine stale-cache/missing-upstream
+  self-heal only. Guardrails 18/20, 0 critical before this fire's change (same two standing
+  flags every recent fire has: G-C history-bundle staleness, G-O local drain stale — EITAN-PC off).
+  **This fire's increment, part 1:** did exactly what fire 95's own harsh self-criticism flagged
+  as the natural next step — Router (M2 class 5/5) was proven correct in `excava_core_test`/the
+  CLI but nothing in the live beat actually called it. `src/excava.py`'s `_route_all` (the beat's
+  real per-task department dispatch, called every beat from `_beat()`) now calls
+  `Router.route(text, reg=reg, can_do=can_do)` instead of `agents.pick_department(text, reg,
+  can_do)` directly, and reads `.department`/`.why`/`.runners_up` off the result — same three
+  values `pick_department` always returned, so the bus schema and every downstream reader
+  (`tick()`'s own `worker_for`, `docs/dashboard.js`) are untouched. Wiring, not a behavior change.
+  **Part 2 (found while verifying part 1, not part of the plan):** ran a real beat
+  (`python -m src.excava`, the actual hourly-cron entrypoint) to check the Router wiring against
+  live data rather than trusting the scratch `--selftest` alone — it crashed:
+  `AttributeError: 'NoneType' object has no attribute 'get'` at the final status-dict build.
+  Bisected with `git stash` (reproduced identically on the untouched pre-fire code, so this is
+  NOT something my own change caused). Root cause: `_beat()` binds the department registry to
+  `reg` at the top of the function, then ~150 lines later an unrelated block assigns
+  `reg = exp.run_regression()` (the golden-task-regression report) to the SAME name — a plain
+  variable-shadowing bug, not a code path either the Router change or any recent fire touched.
+  Whenever `run_regression()` returns a falsy value (as it does here — no engine reachable in
+  this sandbox, see below), the real department registry `reg` is silently clobbered with `None`
+  for the rest of the function, and the beat crashes before it can even write its own status
+  file. Renamed the regression-report local to `regr`; the outer `reg` (registry) is now never
+  reassigned.
+  **Verified:** `python -m py_compile` clean on `src/excava.py`; `python -m src.excava --selftest`
+  still passes (enqueue -> route -> claim -> rejected/valid hand-off -> done, full trace);
+  `python -m src.excava_core_test` all pass (18 checks incl. 7 Router assertions); a live
+  `python -m src.excava` beat that previously crashed now runs to completion — beat #16 printed
+  its full summary (backlog, routing, ticks, memory, system-map, supervisor, systemcheck, proof)
+  instead of an unhandled traceback; `python -m src.guardrails` unchanged at 18/20, 0 critical
+  (same two standing flags, no new failures). Two rounds of diagnostic/verification beat runs
+  produced real data mutations (task completions, hand-offs, trace files) — but by the time the
+  SECOND `python -m src.excava ship` (see the process note below) had rebased onto a concurrent
+  `core-spoton` commit that landed mid-fire, those mutations were relative to a HEAD that no
+  longer existed: PROOF.md/`docs/hub_api*.json` diffs still carried the OLD commit hash/stats,
+  and the orphaned trace/hand-off files referenced task IDs `bus.json` no longer had any record
+  of (their own bus-side updates did not survive the autostash+rebase, root cause not fully
+  chased down this fire). Committing stale/orphaned halves of that state would have been a
+  regression, not progress, so all of it was reverted/cleaned (`git checkout --`, `git clean -fd`
+  on exactly those paths) rather than shipped — the next real beat (this session's own or CI's)
+  regenerates it correctly. Logged the WHY via `project_memory` before shipping, per the
+  project's own contract.
+  **Process near-miss worth recording honestly:** the first `python -m src.git_safe ship -m ...`
+  call (no `-a`) committed and pushed successfully but silently shipped only HALF of part 1 —
+  because `git checkout stash@{0} -- src/excava.py`, used earlier to recover the Router edit
+  after a failed `git stash pop`, both restores AND STAGES a file, so the index already held the
+  Router-wiring diff before the `reg`-shadowing fix (edited afterward) was ever applied to it.
+  `git_safe.commit()` only runs `git add` when `-a` is passed, so it committed exactly the stale
+  staged snapshot and left the crash fix — the more valuable half of this fire's work — sitting
+  uncommitted with no error or warning. Caught only by re-diffing `src/excava.py` against the new
+  HEAD after the push instead of trusting the tool's own "pushed + verified" line, per this
+  project's own law ("verify a push actually landed"). Shipped correctly in a second commit.
+  Flagging for a future fire: `git_safe ship` without an explicit `-a` file list is a real trap
+  whenever an earlier recovery step (stash checkout, cherry-pick, etc.) leaves the index holding
+  something older than the working tree — worth either always passing `-a` explicitly or having
+  `commit()` warn when the index and working tree disagree on a file it's about to commit.
+  **Harsh self-criticism:** the Router-wiring half is exactly what fire 95 called out as
+  deliberately deferred, so this is genuine forward progress on a named M2 milestone item, not
+  another self-check/plumbing detour. But it is still a small, mechanical wiring change with no
+  new user-visible capability — Eitan cannot do anything today he couldn't do yesterday. The
+  `reg`-shadowing fix is the more consequential find of this fire (a bug that can silently break
+  the live 24/7 beat's own status reporting under exactly the condition — an unreachable engine —
+  this sandbox always hits, and probably intermittently in CI too whenever `run_regression()`
+  legitimately returns nothing), but it was luck: found only because I happened to run a live beat
+  to double-check the Router change rather than trusting the selftest alone, not because I went
+  looking for beat-level bugs. I did NOT audit the rest of `_beat()` for other reused-name
+  shadowing (the function is 400+ lines with many `try/except: skip` blocks that could be hiding
+  more of the same pattern) — that's a real, not-yet-investigated risk, not a closed one. Also did
+  not confirm whether the crash actually reaches the real GitHub Actions beat (guardrails G-P/G-Q
+  read as "landing on cadence" from commit timestamps, which only proves SOME beat completed
+  recently, not that every hourly run avoids this exact code path when `run_regression()` returns
+  falsy) — flagging that as an open question rather than claiming the production beat was
+  definitely broken.
+
 - **~21:0x (fire 95, unattended, cloud, scheduled-task invocation)** — Read fire 94's log first.
   Standing checks clean (`python -m src.standing_checks`): routine stale-cache/missing-upstream
   self-heal only. **Before touching anything, read what changed since fire 94's own log entry**:

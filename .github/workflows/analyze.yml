@@ -1,6 +1,6 @@
 name: Analyze pending
 
-# Analysis stage: Claude Code reads CLAUDE.md and processes pending videos from
+# Analysis stage: Claude Code reads ANALYZE_SPEC.md and processes pending videos from
 # data/_pending/, committing after EACH video so nothing is lost if a run is interrupted.
 #   • Normal mode   — every 3h, analyze_batch_size (50) videos per run, oldest first.
 #   • Catch-up mode — when a big batch of videos lands at once (see src/fetch.py + the
@@ -128,7 +128,7 @@ jobs:
           claude_args: '--allowedTools "Bash,Edit,Write,Read,Glob,Grep,WebFetch,WebSearch,TodoWrite"'
           prompt: |
             Run the analysis stage of the YouTube Skills Tracker.
-            Follow CLAUDE.md exactly — it is the authoritative spec.
+            Follow ANALYZE_SPEC.md exactly — it is the authoritative spec.
             Process up to ${{ steps.plan.outputs.batch }} videos from data/_pending/.
             Processing order = ${{ steps.plan.outputs.order }}: if "newest_first", sort the
             pending records by their publishedAt field and process the NEWEST first; if

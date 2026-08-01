@@ -1,0 +1,57 @@
+{
+  "note": "DURABLE owner-authored backlog. Eitan's own asks live here and are NEVER auto-generated, never pruned, and never overwritten by excava_backlog.refresh() (which regenerates data/excava/backlog.json wholesale from scan_gaps and would otherwise wipe them). refresh() MERGES these in as top-value candidates so an owner ask always outranks a machine-found gap. Only Eitan retires an item: set status to 'done' or 'dropped' with a note.",
+  "requests": [
+    {
+      "id": "OR-1",
+      "title": "Define what makes an element GOOD — per element type and per package",
+      "status": "open",
+      "requested_by": "Eitan",
+      "requested_at": "2026-07-30",
+      "stage": "later",
+      "stage_note": "Deliberately NOT now. Runs entirely IN THE APP, using the room/conversation engine, once the M2 class collapse lands (Room + Agent classes) so the debate has real surfaces to run on and produces a committed artifact per P-visible-work.",
+      "department": "improve",
+      "value": 95,
+      "size": 60,
+      "big": true,
+      "why": "Every scoring decision in the hub currently leans on a single 1-10 quality_score whose rubric is generic across all nine element types. A prompt, an MCP connector and a design are good for completely different reasons, so one rubric cannot judge them. Without per-type guidelines the trust gate, the output quality bar (END PLAN M.107) and the self-improvement dept are all grading against a vague standard.",
+      "scope": {
+        "element_types": ["skill", "tool", "prompt", "command", "connector", "design", "format", "model", "creation"],
+        "also": ["package"],
+        "deliverable": "One written guideline set per element type plus one for packages: what GOOD looks like, what MEDIOCRE looks like, what disqualifies, and the observable signals that decide it."
+      },
+      "process": {
+        "must_run_in_app": true,
+        "engine": "room/conversation engine (M2.5) — agents debate, converge, and commit an artifact (M2.6)",
+        "phases": [
+          {
+            "n": 1,
+            "name": "Independent brainstorm",
+            "rule": "Each agent drafts its own guidelines ALONE, with no visibility of the others' drafts. No cross-talk in this phase — simultaneous, not sequential, so nobody anchors on whoever spoke first.",
+            "output": "one independent draft per agent, all committed"
+          },
+          {
+            "n": 2,
+            "name": "Integration discussion",
+            "rule": "Agents discuss and merge ONLY the strongest points they genuinely agree on. Agreement must be real convergence, not averaging — a point kept by consensus is recorded with who backed it and why.",
+            "output": "one integrated guideline set per element type"
+          },
+          {
+            "n": 3,
+            "name": "Adversarial re-review FROM SCRATCH",
+            "rule": "Each agent reviews the integrated guidelines fresh, explicitly hunting for weaknesses — gaps, cases the rubric misjudges, criteria that cannot actually be observed. Reviewing from scratch is the point: do NOT let phase-2 reasoning carry over and defend itself.",
+            "output": "one weakness list per agent"
+          },
+          {
+            "n": 4,
+            "name": "Resolution discussion",
+            "rule": "Second discussion round resolving the weaknesses found in phase 3 into the final guidelines.",
+            "output": "the final committed guideline set per element type + package"
+          }
+        ],
+        "diversity_requirement": "Agents in this room MUST span different model families (END PLAN §2: same-model-with-a-prompt-twist is banned — it produces correlated errors, which would defeat the entire point of an independent-brainstorm-then-critique process)."
+      },
+      "done_criteria": "A committed artifact per element type and for packages, each carrying all four phases' output (independent drafts, integrated set, weakness lists, final set), produced by a real in-app room — readable in the app, not a document written by Claude outside it.",
+      "depends_on": ["M2 class collapse: Room + Agent classes", "M2.5 conversation engine", "M2.6 rooms produce committed artifacts"]
+    }
+  ]
+}

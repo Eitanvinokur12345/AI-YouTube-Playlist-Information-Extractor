@@ -1,6 +1,5 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-<<<<<<< HEAD
 > Decision artifact · room `dept-mining-gather-ai-info-from-d-690` (dept) · 2026-07-31T09:28:06.146851+00:00
 > Participants: Pick · synthesized by groq/llama-3.3-70b-versatile
 
@@ -12,7 +11,6 @@
 4. Organize the gathered information into categories (tools, datasets, research papers) for easier reference.
 5. Create a system for regular updates and tracking of new developments.
 **What changed:** The scope of AI information gathering has been broadened to include multiple sources beyond just Reddit.
-=======
 > Decision artifact · room `dept-mining-gather-ai-info-from-d-690` (dept) · 2026-07-31T08:08:45.837204+00:00
 > Participants: Pick · synthesized by mistral/mistral-small-latest
 
@@ -27,4 +25,3 @@
 6. Archive raw data for future reference.
 
 **What changed:** Focused on high-signal Reddit sources to prioritize trending AI discussions.
->>>>>>> 92c2ce986495d7a7ffb48f81669d42ca0c98da10

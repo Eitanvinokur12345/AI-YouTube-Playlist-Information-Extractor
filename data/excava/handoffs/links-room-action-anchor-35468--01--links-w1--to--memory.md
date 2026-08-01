@@ -5,11 +5,8 @@
 | task | `links-room-action-anchor-35468` (step 1/8) |
 | from | **links-w1** |
 | to | **memory** department |
-<<<<<<< HEAD
 | at | 2026-07-31T23:35:17.661091+00:00 |
-=======
 | at | 2026-07-31T23:33:47.416803+00:00 |
->>>>>>> 9091ab6b5586fa45d55768579af1b51e1f63a302
 
 ## What was done
 Link-coverage pass assessed: **4662/7831 linked (59.53%)**, moving +0.00%/day against the +5.0%/day target (NOT on track — resolver budget is the lever). The resolver lane (batch+parallel+fast-engine) keeps running hourly in CI.

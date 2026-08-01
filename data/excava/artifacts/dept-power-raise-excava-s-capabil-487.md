@@ -1,6 +1,5 @@
 # power: Raise EXCAVA's capability by even 0.5%: find new tools, best/newest models, combine elemen
 
-<<<<<<< HEAD
 > Decision artifact · room `dept-power-raise-excava-s-capabil-487` (dept) · 2026-07-31T09:27:41.653399+00:00
 > Participants: Gearbox, Torque, Dynamo · synthesized by groq/llama-3.3-70b-versatile
 
@@ -12,7 +11,6 @@
 4. Measure and compare solver accuracy and latency between the current model and Anthropic Claude 3.7 Sonnet.
 5. Evaluate the results and determine whether to permanently switch to Anthropic Claude 3.7 Sonnet based on the benchmark outcomes.
 **What changed:** The decision to run a controlled 48-hour live A/B benchmark to evaluate the effectiveness of Anthropic's Claude 3.7 Sonnet before making a permanent switch.
-=======
 > Decision artifact · room `dept-power-raise-excava-s-capabil-487` (dept) · 2026-07-31T07:59:54.030686+00:00
 > Participants: Gearbox, Torque, Dynamo · synthesized by mistral/mistral-small-latest
 
@@ -27,4 +25,3 @@
 6. Post-mortem within 24 hours of decision to document results and next steps.
 
 **What changed:** 7-day sprint replaced with 48-hour controlled A/B benchmark to mitigate drift risk.
->>>>>>> 92c2ce986495d7a7ffb48f81669d42ca0c98da10

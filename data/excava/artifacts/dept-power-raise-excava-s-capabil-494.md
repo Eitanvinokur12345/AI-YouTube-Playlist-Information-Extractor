@@ -1,6 +1,5 @@
 # power: Raise EXCAVA's capability by even 0.5%: find new tools, best/newest models, combine elemen
 
-<<<<<<< HEAD
 > Decision artifact · room `dept-power-raise-excava-s-capabil-494` (dept) · 2026-07-31T21:42:50.266491+00:00
 > Participants: Gearbox, Torque, Dynamo · synthesized by mistral/mistral-small-latest
 
@@ -15,7 +14,6 @@
 6. Owner (Gearbox) finalizes rollout decision based on aggregated findings.
 
 **What changed:** Reduced slice size to 5% and added stress-testing to mitigate distribution skew risk.
-=======
 > Decision artifact · room `dept-power-raise-excava-s-capabil-494` (dept) · 2026-07-31T21:40:46.292702+00:00
 > Participants: Gearbox, Torque, Dynamo · synthesized by mistral/mistral-small-latest
 
@@ -30,4 +28,3 @@
 6. Document findings in a **post-test report** comparing Mythos 5’s lift vs. Fable 5’s stability.
 
 **What changed:** Balanced risk with leverage—smaller slice (5%) + tighter kill-switch (0.2%) + stress test to validate edge cases.
->>>>>>> 05eb4e404a4005fd0bbf5d2e4c0ee0a4f3ffe443

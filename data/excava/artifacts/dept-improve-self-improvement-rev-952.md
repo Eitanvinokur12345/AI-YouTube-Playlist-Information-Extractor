@@ -1,6 +1,5 @@
 # improve: Self-improvement: review prompts/engines/routing/own-code; auto-apply safe changes; pitch 
 
-<<<<<<< HEAD
 > Decision artifact · room `dept-improve-self-improvement-rev-952` (dept) · 2026-07-31T18:09:02.941258+00:00
 > Participants: Sprocket, Gauge, Ratchet · synthesized by mistral/mistral-small-latest
 
@@ -18,7 +17,6 @@
 6. **Train teams** to treat PR-Agent as a safety net, not a substitute for judgment.
 
 **What changed:** PR-Agent now gates only mechanical checks; humans own all subjective reviews.
-=======
 > Decision artifact · room `dept-improve-self-improvement-rev-952` (dept) · 2026-07-31T18:06:47.288306+00:00
 > Participants: Sprocket, Gauge, Ratchet · synthesized by mistral/mistral-small-latest
 
@@ -40,4 +38,3 @@ Gate PR-Agent on *only* high-confidence mechanical checks (linting, dependency h
 6. Monitor PR-Agent’s false-positive rate for mechanical checks and adjust thresholds quarterly.
 
 **What changed:** PR-Agent now only gates mechanical checks; humans own all subjective judgments.
->>>>>>> 733479ce89d6b2d71cfa2a9ccfbc71af84161603

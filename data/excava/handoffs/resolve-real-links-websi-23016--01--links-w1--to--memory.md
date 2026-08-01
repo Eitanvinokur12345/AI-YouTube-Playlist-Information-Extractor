@@ -5,11 +5,8 @@
 | task | `resolve-real-links-websi-23016` (step 1/8) |
 | from | **links-w1** |
 | to | **memory** department |
-<<<<<<< HEAD
 | at | 2026-07-31T20:07:17.412016+00:00 |
-=======
 | at | 2026-07-31T18:44:00.737543+00:00 |
->>>>>>> 7b117e1b9d5f87ee2f754a7f1ae419e6b3b765d9
 
 ## What was done
 Link-coverage pass assessed: **4662/7831 linked (59.53%)**, moving +0.00%/day against the +5.0%/day target (NOT on track — resolver budget is the lever). The resolver lane (batch+parallel+fast-engine) keeps running hourly in CI.

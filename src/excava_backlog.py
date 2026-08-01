@@ -134,12 +134,41 @@ def _is_big(t: dict) -> bool:
     return "size=BIG" in d or (isinstance(t.get("size"), int) and t["size"] >= BIG_THRESHOLD)
 
 
+def owner_requests() -> list[dict]:
+    """Eitan's OWN backlog asks, from data/excava/owner_requests.json.
+
+    These are durable and owner-authored: `refresh()` regenerates backlog.json wholesale from
+    `scan_gaps()`, so anything added by hand to that file is destroyed on the next beat. Owner
+    requests therefore live in their own store and are merged in here, carrying `source:"owner"`
+    so `value_ok()` always passes them and they outrank machine-found gaps. Only Eitan retires
+    one (status -> done/dropped); nothing in the loop may prune or rescore them.
+    """
+    d = _load("excava/owner_requests.json", {})
+    out = []
+    for r in d.get("requests", []):
+        if r.get("status") not in (None, "", "open"):
+            continue
+        out.append({"title": r.get("title", "owner request"),
+                    "department": r.get("department") or "core",
+                    "source": "owner", "why": f"OWNER ASK ({r.get('id', '?')}): {r.get('why', '')}"[:300],
+                    "value": int(r.get("value", 90)),
+                    "stage": r.get("stage", ""),
+                    **size_score(int(r.get("size", 40)), 30, 5)})
+    return out
+
+
 def refresh(max_new: int = 12) -> dict:
-    """Build the value-ranked, size-judged backlog; enqueue the top above-bar items (deduped)."""
-    cands = [c for c in scan_gaps() if value_ok(c)]
-    cands.sort(key=lambda c: -c["value"])
+    """Build the value-ranked, size-judged backlog; enqueue the top above-bar items (deduped).
+
+    Owner requests are merged FIRST and never filtered — an ask Eitan wrote himself is not a
+    candidate the loop gets to judge. Ones marked `stage: "later"` stay visible in the backlog
+    but are not auto-enqueued, so they cannot be started before their dependencies land.
+    """
+    owners = owner_requests()
+    cands = owners + [c for c in scan_gaps() if value_ok(c)]
+    cands.sort(key=lambda c: (c.get("source") != "owner", -c["value"]))
     queued = []
-    for c in cands[:max_new]:
+    for c in [c for c in cands if c.get("stage") != "later"][:max_new]:
         tag = f"value={c['value']} size={c['size']}({'BIG' if c['big'] else 'small'}) " \
               f"[cost {c['cost']}/steps {c['steps']}/risk {c['risk']}] · {c['why']}"
         t = bus.enqueue(c["title"], detail=tag, department=c["department"],

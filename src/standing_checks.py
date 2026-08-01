@@ -20,7 +20,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-from src import git_safe, guardrails
+from src import git_safe, guardrails, loop_contract
 
 ROOT = Path(__file__).parent.parent
 OUT = ROOT / "data" / "standing_checks.json"
@@ -35,15 +35,25 @@ def check_remote() -> dict:
     """Snapshot the cached origin/main ref, force a real fetch, snapshot again. A mismatch
     before/after is the exact "is a day of work actually at risk?" question fire 8 spent time
     ruling out by hand — this answers it in one call instead of a manual rev-parse + fetch +
-    rev-parse + eyeball-the-diff each time."""
-    before = _git(["rev-parse", "origin/main"])
-    fetch = subprocess.run(["git", "fetch", "origin", "main", "--quiet"], cwd=str(ROOT),
+    rev-parse + eyeball-the-diff each time.
+
+    Fire 83: compares against THIS BRANCH's own upstream, not a hardcoded origin/main. Cloud
+    fires ship to a branch + draft PR, so measuring a branch against main reported "disagree"
+    forever — a permanent false alarm that makes the whole check worthless.
+    """
+    branch = _git(["rev-parse", "--abbrev-ref", "HEAD"]) or "main"
+    up = _git(["rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{u}"]) or "origin/main"
+    track = up.split("/", 1)[1] if "/" in up else "main"
+    before = _git(["rev-parse", up])
+    fetch = subprocess.run(["git", "fetch", "origin", track, "--quiet"], cwd=str(ROOT),
                             text=True, capture_output=True)
-    after = _git(["rev-parse", "origin/main"])
+    after = _git(["rev-parse", up])
     head = _git(["rev-parse", "HEAD"])
     return {
         "fetch_ok": fetch.returncode == 0,
         "fetch_error": (fetch.stderr or fetch.stdout).strip() if fetch.returncode != 0 else None,
+        "branch": branch,
+        "tracking": up,
         "cached_ref_was_stale": bool(before) and before != after,
         "origin_main_before_fetch": before[:9],
         "origin_main_after_fetch": after[:9],
@@ -62,11 +72,16 @@ def run() -> dict:
     remote = check_remote()
     upstream = check_upstream()
     gr = guardrails.run()
+    # The GO AWAY MODE contract used to be enforced by nothing at all — every rule in it was
+    # obeyed only because a fire happened to open the file. Folding its status in here means a
+    # drifting fire is VISIBLE at the one point every fire already runs.
+    contract = loop_contract.status()
 
     needs_attention = (
         not remote["fetch_ok"]
         or not remote["in_sync"]
         or gr["critical_failures"] > 0
+        or not contract["contract_present"]
     )
     result = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
@@ -75,6 +90,7 @@ def run() -> dict:
         "upstream": upstream,
         "guardrails": {"passing": gr["passing"], "total": gr["total"],
                        "critical_failures": gr["critical_failures"]},
+        "loop_contract": contract,
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(result, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -97,18 +113,31 @@ def main() -> int:
         print(f"  !! local cache of origin/main was stale ({rem['origin_main_before_fetch']} -> "
               f"{rem['origin_main_after_fetch']}) — re-fetched, HEAD matches, nothing lost.")
     elif not rem["in_sync"]:
-        print(f"  XX origin/main ({rem['origin_main_after_fetch']}) and HEAD ({rem['head']}) "
+        print(f"  XX {rem['tracking']} ({rem['origin_main_after_fetch']}) and HEAD ({rem['head']}) "
               f"disagree — investigate before pushing anything.")
     else:
-        print(f"  OK origin/main unchanged at {rem['origin_main_after_fetch']}, HEAD in sync.")
+        print(f"  OK {rem['tracking']} unchanged at {rem['origin_main_after_fetch']}, HEAD in sync.")
 
     if r["upstream"]["upstream_was_missing"]:
-        print("  !! upstream tracking was missing on this branch — set to origin/main.")
+        print("  !! upstream tracking was missing/wrong on this branch — repointed to origin/main.")
     else:
         print("  OK upstream tracking already set.")
 
     g = r["guardrails"]
     print(f"  guardrails: {g['passing']}/{g['total']} passing, {g['critical_failures']} critical failure(s)")
+
+    c = r["loop_contract"]
+    if not c["contract_present"]:
+        print("  XX GO AWAY MODE contract MISSING (data/excava/away_mode.json) — the loop has no rules.")
+    else:
+        print(f"  OK contract: {'always-on' if c['always_on'] else 'present'}"
+              f"{'' if c['acked_recently'] else ' — NOT acknowledged recently (run: python -m src.loop_contract ack)'}")
+    inc = c["open_increment"]
+    print(f"  -> carry-over: '{inc['title']}' [{inc['kind']}], {inc['fires']} fire(s) in — CONTINUE IT"
+          if inc else "  -> carry-over: none open — this fire starts one")
+    if c["must_do_product_next"]:
+        print(f"  !! {c['consecutive_meta_fires']} consecutive META fires (cap {c['meta_cap']}) — "
+              f"THIS FIRE MUST ADVANCE THE PRODUCT, not the loop's own machinery.")
     return 1 if (strict and not r["ok"]) else 0
 
 

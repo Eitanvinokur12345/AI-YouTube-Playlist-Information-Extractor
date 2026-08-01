@@ -1,6 +1,5 @@
 # power: Raise EXCAVA's capability by even 0.5%: find new tools, best/newest models, combine elemen
 
-<<<<<<< HEAD
 > Decision artifact · room `dept-power-raise-excava-s-capabil-840` (dept) · 2026-07-31T11:13:50.278059+00:00
 > Participants: Gearbox, Torque, Dynamo · synthesized by mistral/mistral-small-latest
 
@@ -17,7 +16,6 @@ Switch EXCAVA to Anthropic’s Claude 3.7 Sonnet for a 30-day rolling accuracy t
 
 **What changed:**
 EXCAVA now runs on Claude 3.7 Sonnet with a 30-day drift validation against Haiku’s baseline.
-=======
 > Decision artifact · room `dept-power-raise-excava-s-capabil-840` (dept) · 2026-07-31T11:11:46.933473+00:00
 > Participants: Gearbox, Torque, Dynamo · synthesized by nvidia/meta/llama-3.3-70b-instruct
 
@@ -29,4 +27,3 @@ EXCAVA now runs on Claude 3.7 Sonnet with a 30-day drift validation against Haik
 4. If the 30-day rolling accuracy check shows that drift erases the gain, roll back to Haiku.
 5. Continuously review token costs and adjust as necessary to maintain cost-effectiveness.
 **What changed:** The decision to switch to Claude 3.7 Sonnet with a condition to revert if its gain is erased by benchmark drift.
->>>>>>> 4fb3d4b6a4feb2fd3d82d354bb19af715714770b

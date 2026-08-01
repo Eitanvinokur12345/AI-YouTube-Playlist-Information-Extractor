@@ -1,16 +1,12 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-<<<<<<< HEAD
 > Decision artifact · room `dept-visual-mine-great-designs-fr-568` (dept) · 2026-07-27T22:34:57.262525+00:00
-=======
 > Decision artifact · room `dept-visual-mine-great-designs-fr-568` (dept) · 2026-07-27T21:56:40.521168+00:00
->>>>>>> ac0076f2712f73090f43ddf91027d96145eb0da7
 > Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-<<<<<<< HEAD
 1. Capture a high-resolution screenshot of the Beverage Cans website’s vibrant pink hero section.
 2. Add the screenshot to the hub as a design reference artifact under the "Color & Composition" category.
 3. Tag the artifact with relevant keywords (e.g., "color theory," "hero design," "vibrant palette").
@@ -19,7 +15,6 @@
 6. Notify the team via the hub’s activity feed for visibility.
 
 **What changed:** A new design reference artifact was added to the hub.
-=======
 1. Capture a screenshot of the Beverage Cans website’s navigation menu.
 2. Frame the screenshot into the visual hub with a focus on its simple and intuitive design.
 3. Label the screenshot with metadata (e.g., source, key design takeaways).
@@ -28,4 +23,3 @@
 6. Share the addition with the team for feedback.
 
 **What changed:** Added Beverage Cans navigation menu screenshot to the hub.
->>>>>>> ac0076f2712f73090f43ddf91027d96145eb0da7

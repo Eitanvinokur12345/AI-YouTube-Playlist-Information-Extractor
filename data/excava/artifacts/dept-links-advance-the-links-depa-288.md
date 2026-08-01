@@ -1,6 +1,5 @@
 # links: advance the links department's mission
 
-<<<<<<< HEAD
 > Decision artifact · room `dept-links-advance-the-links-depa-288` (dept) · 2026-07-31T09:27:54.546821+00:00
 > Participants: Anchor, LinLea · synthesized by mistral/mistral-small-latest
 
@@ -14,7 +13,6 @@
 5. Ensure all team members have access to the updated materials.
 
 **What changed:** The mission statement and link inventory will be published to the shared drive by EOD.
-=======
 > Decision artifact · room `dept-links-advance-the-links-depa-288` (dept) · 2026-07-31T08:01:17.914261+00:00
 > Participants: Anchor, LinLea · synthesized by groq/llama-3.3-70b-versatile
 
@@ -26,4 +24,3 @@
 4. Publish the Mission Control Dashboard's live link inventory to the department's shared drive.
 5. Complete the publication by End of Day (EOD) today.
 **What changed:** The link inventory will be published and reviewed to advance the links department's mission.
->>>>>>> 92c2ce986495d7a7ffb48f81669d42ca0c98da10

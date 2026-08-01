@@ -150,16 +150,33 @@ def broken_jsonl_markers() -> dict:
     pre-dating fires 28-41's workflow push-safety rollout (G-R) — historical damage the
     preventive fix (correctly) stops from recurring but never cleaned up retroactively, and
     nothing was watching for it going forward either. Returns {path: [line_indices]} for any
-    file that still has bare marker lines sitting in it."""
+    file that still has bare marker lines sitting in it.
+
+    Fire 89 (2026-08-01) widened the net: the scan only ever looked at *.jsonl, so the SAME
+    corruption sitting in *.md was invisible to it — 58 such files were found on main (47 in
+    data/excava/artifacts, 11 in data/excava/handoffs). That matters more than the jsonl case:
+    artifacts ARE M2.6's deliverable ("rooms PRODUCE committed artifacts"), so a corrupted
+    artifact is a corrupted product, not just a corrupted log. Same removal contract applies —
+    both sides' content is KEPT, only the bare marker lines go (P: quarantine, never delete).
+    """
+    return broken_markers((".jsonl",))
+
+
+def broken_markers(exts: tuple = (".jsonl", ".md")) -> dict:
+    """{path: [line_indices]} for any data/docs file still carrying bare conflict-marker lines."""
     hits = {}
     for d in (DATA, DOCS):
         if not d.exists():
             continue
-        for f in d.rglob("*.jsonl"):
-            lines = f.read_text(encoding="utf-8", errors="replace").split("\n")
-            idx = [i for i, l in enumerate(lines) if _MARKER_RE.match(l.strip())]
-            if idx:
-                hits[str(f.relative_to(ROOT))] = idx
+        for ext in exts:
+            for f in d.rglob(f"*{ext}"):
+                try:
+                    lines = f.read_text(encoding="utf-8", errors="replace").split("\n")
+                except Exception:
+                    continue
+                idx = [i for i, l in enumerate(lines) if _MARKER_RE.match(l.strip())]
+                if idx:
+                    hits[str(f.relative_to(ROOT))] = idx
     return hits
 
 
@@ -169,7 +186,7 @@ def repair_conflict_markers() -> dict:
     (append-only law: this is a marker-removal, not a merge that has to pick a winner). Verifies
     line-for-line that nothing but marker lines moved before writing. Returns {path: n_removed}."""
     fixed = {}
-    for rel, idx in broken_jsonl_markers().items():
+    for rel, idx in broken_markers().items():
         f = ROOT / rel
         lines = f.read_text(encoding="utf-8", errors="replace").split("\n")
         marker_set = set(idx)
@@ -177,6 +194,84 @@ def repair_conflict_markers() -> dict:
         f.write_text("\n".join(kept), encoding="utf-8")
         fixed[rel] = len(idx)
     return fixed
+
+
+    # ---- merge-main conflict classes -------------------------------------------------------
+# Fire 90: a SECOND away loop ships to main continuously, so a branch session must merge main
+# every fire or drift hundreds of commits. Two fires in a row hit the SAME four conflicts and
+# hand-resolved them identically — that repetition is the cost, and it is also where a mistake
+# gets made (fire 89's first attempt deduped episodes.jsonl by `id` and would have destroyed
+# 152k lines, because distinct entries share ids). Encoding the rules once removes both.
+REGENERATED = ("PULSE.md", "data/elements_index.json", "data/excava/pulse.json",
+               "data/excava/movement.json", "data/guardrails_status.json",
+               "data/standing_checks.json")
+APPEND_ONLY = ("data/project_memory/episodes.jsonl",)
+ACCUMULATING = ("data/project_memory/graph.json",)
+# Room outputs. Fire 93 hit two of these as UNKNOWN and the resolver correctly stopped rather
+# than guessing. Inspected by hand: the branch copy was fire 89's marker-REPAIR (which keeps both
+# conflicting sides, so the header appears twice), while main's copy was a clean regeneration
+# dated the same day — the room had simply re-run and rewritten it. Artifacts are room OUTPUT,
+# and main is the loop that actually runs rooms, so theirs is authoritative. This is a prefix
+# rule, not a filename list, because artifacts are created continuously.
+REGENERATED_PREFIXES = ("data/excava/artifacts/", "data/excava/handoffs/")
+
+
+def _show(rev: str, path: str) -> str:
+    r = subprocess.run(["git", "show", f"{rev}:{path}"], cwd=str(ROOT),
+                       text=True, capture_output=True)
+    return r.stdout
+
+
+def resolve_merge_conflicts(theirs_rev: str = "origin/main") -> dict:
+    """Resolve the known conflict classes a merge-main produces. Returns {path: how}.
+
+    REGENERATED  -> take theirs (rebuilt from source anyway; theirs is fresher).
+    APPEND_ONLY  -> UNION both sides, dedup on EXACT line only. NEVER key on an id field:
+                    distinct entries legitimately share ids, so id-dedup silently destroys
+                    real history (this is not hypothetical — it nearly happened on fire 89).
+    ACCUMULATING -> UNION of dict keys with theirs as base, adding only keys theirs lacks.
+    Anything else is left conflicted on purpose — an unknown class deserves a human.
+    """
+    out = {}
+    conflicted = subprocess.run(["git", "diff", "--name-only", "--diff-filter=U"],
+                                cwd=str(ROOT), text=True, capture_output=True).stdout.split()
+    for p in conflicted:
+        f = ROOT / p
+        if p in REGENERATED or p.startswith(REGENERATED_PREFIXES):
+            f.write_text(_show(theirs_rev, p), encoding="utf-8")
+            out[p] = "theirs (regenerated from source)"
+        elif p in APPEND_ONLY:
+            mine = [l for l in _show("HEAD", p).splitlines() if l.strip()]
+            theirs = [l for l in _show(theirs_rev, p).splitlines() if l.strip()]
+            seen, keep = set(), []
+            for line in theirs + mine:
+                if line in seen:
+                    continue
+                seen.add(line); keep.append(line)
+            f.write_text("\n".join(keep) + "\n", encoding="utf-8")
+            out[p] = f"union, exact-line dedup ({len(keep)} lines, all of both sides' distinct)"
+        elif p in ACCUMULATING:
+            try:
+                mine, theirs = json.loads(_show("HEAD", p)), json.loads(_show(theirs_rev, p))
+            except Exception:
+                continue
+            merged, added = {}, 0
+            for k in set(theirs) | set(mine):
+                a, b = mine.get(k), theirs.get(k)
+                if isinstance(b, dict) or isinstance(a, dict):
+                    m = dict(b or {})
+                    for kk, vv in (a or {}).items():
+                        if kk not in m:
+                            m[kk] = vv; added += 1
+                    merged[k] = m
+                else:
+                    merged[k] = b if b is not None else a
+            f.write_text(json.dumps(merged, ensure_ascii=False, indent=1), encoding="utf-8")
+            out[p] = f"union with theirs as base (+{added} keys only on this branch)"
+        else:
+            continue                                   # unknown class -> leave for a human
+        subprocess.run(["git", "add", p], cwd=str(ROOT), capture_output=True)
+    return out
 
 
 def commit(message: str, add=None) -> str:
@@ -218,13 +313,23 @@ def ensure_upstream() -> bool:
     as non-fast-forward — a self-reinforcing loop with no error message pointing at the real
     cause. Now checks the RESOLVED upstream ref name, not just its existence, and repoints to
     origin/main whenever it isn't already exactly that — idempotent, safe to call every time.
-    Returns True if a tracking branch was (re)set (so callers can note it happened)."""
+    Returns True if a tracking branch was (re)set (so callers can note it happened).
+
+    Fire 83 (2026-07-30) narrowed it again: hardcoding origin/main broke the BRANCH workflow.
+    Cloud sessions now ship to their own branch + draft PR, so a branch deliberately pushed with
+    `push -u origin <branch>` has a legitimate upstream of `origin/<same-name>` — and repointing
+    it at origin/main every call clobbered that tracking and made standing_checks report a
+    permanent false "HEAD and origin/main disagree". A permanently-red check is worse than no
+    check: it trains the reader to ignore it. The same-NAME test still catches fire 55's real
+    pathology (upstream pointing at an unrelated branch whose name does NOT match the local one).
+    """
     r = subprocess.run(["git", "rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{u}"],
                         cwd=str(ROOT), text=True, capture_output=True)
     current = r.stdout.strip() if r.returncode == 0 else ""
-    if current == "origin/main":
-        return False
     branch = _git(["rev-parse", "--abbrev-ref", "HEAD"])
+    # Legitimate: tracking main, or tracking the remote branch of the SAME name (branch workflow).
+    if current == "origin/main" or (branch and current == f"origin/{branch}"):
+        return False
     _git(["branch", "--set-upstream-to=origin/main", branch], check=False)
     return True
 
@@ -279,7 +384,8 @@ def main() -> int:
     except Exception:
         pass
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["backup", "commit", "sync", "push", "ship", "repair-conflicts"])
+    ap.add_argument("cmd", choices=["backup", "commit", "sync", "push", "ship", "repair-conflicts",
+                                    "merge-main"])
     ap.add_argument("-m", "--message", default="")
     ap.add_argument("-a", "--add", nargs="*", default=[])
     args = ap.parse_args()
@@ -294,6 +400,25 @@ def main() -> int:
             for rel, n in fixed.items():
                 print(f"  {rel}: removed {n} marker line(s)")
             print(f"repair-conflicts: cleaned {len(fixed)} file(s), {sum(fixed.values())} marker line(s) total.")
+    elif args.cmd == "merge-main":
+        # Reconcile a branch session against the main-shipping away loop. Backup FIRST — this
+        # is the one command that rewrites append-only history, so it must be recoverable.
+        backup_bundle()
+        subprocess.run(["git", "fetch", "origin", "main", "--quiet"], cwd=str(ROOT))
+        m = subprocess.run(["git", "merge", "origin/main", "--no-edit"], cwd=str(ROOT),
+                           text=True, capture_output=True)
+        if m.returncode == 0:
+            print("merge-main: clean, nothing to resolve."); return 0
+        done = resolve_merge_conflicts()
+        for p, how in done.items():
+            print(f"  {p}\n      -> {how}")
+        left = subprocess.run(["git", "diff", "--name-only", "--diff-filter=U"], cwd=str(ROOT),
+                              text=True, capture_output=True).stdout.split()
+        if left:
+            print(f"merge-main: {len(done)} resolved; {len(left)} UNKNOWN class left for a human: "
+                  + ", ".join(left[:6]))
+            return 1
+        print(f"merge-main: {len(done)} conflict(s) resolved by class; commit to finish.")
     elif args.cmd == "commit":
         if not args.message:
             print("commit needs -m"); return 1

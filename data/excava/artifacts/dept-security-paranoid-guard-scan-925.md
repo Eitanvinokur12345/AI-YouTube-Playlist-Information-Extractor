@@ -1,6 +1,5 @@
 # security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (not fake/dead); DETECT
 
-<<<<<<< HEAD
 > Decision artifact · room `dept-security-paranoid-guard-scan-925` (dept) · 2026-07-31T09:28:21.934252+00:00
 > Participants: Warden, Bastion · synthesized by mistral/mistral-small-latest
 
@@ -15,7 +14,6 @@
 6. Repeat scan for any modified or retransmitted content.
 
 **What changed:** Enforced mandatory real-time scanning for all incoming/outgoing data.
-=======
 > Decision artifact · room `dept-security-paranoid-guard-scan-925` (dept) · 2026-07-31T08:10:33.518945+00:00
 > Participants: Warden, Bastion · synthesized by nvidia/meta/llama-3.3-70b-instruct
 
@@ -26,4 +24,3 @@
 4. **Verify elements** to ensure they are real and not fake or dead.
 5. **Take corrective action** based on the review of flagged anomalies and verification of elements.
 **What changed:** The implementation of real-time scanning using LLM Guard to enhance security.
->>>>>>> 92c2ce986495d7a7ffb48f81669d42ca0c98da10

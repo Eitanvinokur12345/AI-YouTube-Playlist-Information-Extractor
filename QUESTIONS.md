@@ -252,6 +252,15 @@ with 0 unit-test regressions across 8 cases (genuine no-ops/blocked/planned/secu
 classify correctly). _Default: keep as documented above; only the news-dept wiring question needs
 your actual decision._
 
+**2026-08-01 — re-checked, nothing changed.** `data/excava/supervisor.json`'s self-audit is still
+(correctly) flagging the `news` intent_drift this fire 23 entry describes. Re-verified both risks
+that stopped the rewire still hold: `.github/workflows/news.yml` still runs `src.news` on its own
+independent 6h schedule against `data/daily_web_news.json`/`data/web_news_store.json`, and
+`_run_real_tool`'s subprocess timeout in `src/excava_agents.py` is still hardcoded at 90s against
+`src.news`'s ~95 sequential RSS fetches. Made no code change — this is expected, not a regression;
+logged a short pointer in `data/excava/improvements.jsonl` (`kind: "investigate-no-op"`,
+2026-08-01) so a future pass doesn't reinvestigate from zero. Still your call.
+
 ---
 
 ## A. The new look ("Heavy Machinery" v58)

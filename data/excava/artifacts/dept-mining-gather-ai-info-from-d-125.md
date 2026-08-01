@@ -1,16 +1,13 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-125` (dept) · 2026-07-31T21:50:25.434355+00:00
-> Participants: Pick, Boulder · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-125` (dept) · 2026-08-01T01:58:10.472032+00:00
+> Participants: Pick, Boulder · synthesized by groq/llama-3.3-70b-versatile
 
-**Decision:**
-
+**Decision:** Run a sweep of AI-related data from diverse sources to gather information on recent trends and projects.
 **Plan:**
-1. Use GitHub’s API to fetch AI-related repos created in the last 7 days, filtering for ≥10 stars or ≥50 upvotes.
-2. Sort results by stars/upvotes and select the top 15-20 projects.
-3. For each project, write a 1-2 sentence plain-language summary of its purpose and significance.
-4. Format the output as a GitHub-flavored markdown list with project names, links, and summaries.
-5. Validate that all links are accessible and summaries are accurate.
-6. Output the final list in the specified format.
-
-**What changed:** Focus narrowed to GitHub-only sweep with strict time/engagement filters.
+1. Run a sweep of Hacker News' "AI" posts from the last 7 days to extract project names, descriptions, and user comments.
+2. Sweep GitHub’s AI-related repos created in the last 7 days to output a list of 15-20 high-signal projects with plain-language summaries.
+3. Run a targeted sweep across Reddit for open-source AI projects released in the last 7 days, filtering for posts with at least 50 upvotes.
+4. Merge the outputs from GitHub, Hacker News, and Reddit sweeps to create a comprehensive report.
+5. Summarize key AI trends and projects from the last 7 days in the report.
+**What changed:** The scope of the sweep expanded to include multiple sources beyond just GitHub.

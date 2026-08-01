@@ -1,16 +1,16 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-318` (dept) · 2026-07-27T17:30:50.537027+00:00
+> Decision artifact · room `dept-visual-mine-great-designs-fr-318` (dept) · 2026-08-01T01:58:42.031613+00:00
 > Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Open the Beverage Cans website ([beveragecans.org](https://www.beveragecans.org)) and navigate to its hero section.
-2. Capture a high-quality screenshot of the vibrant pink hero section.
-3. Save the screenshot as `beverage-cans-hero-pink.png` in the `/taste-materials/` directory of the hub.
-4. Add a brief description in the hub’s `README.md` under "Taste Materials" with the filename and source URL.
-5. Tag the artifact with `#color-schemes` and `#hero-designs` in the hub’s metadata.
-6. Notify the team via Slack #design-hub channel with the new addition.
+1. Open the Playwright MCP server to capture high-quality full-page screenshots of the current hub interface.
+2. Capture a high-quality full-page screenshot of the Model Context Protocol documentation page for design reference.
+3. Curate and organize screenshots into a dedicated folder within the hub for easy access.
+4. Extract and document design patterns from the screenshots for reuse in the hub.
+5. Synthesize taste material (e.g., color palettes, typography, layouts) from the screenshots into a reference guide.
+6. Share the curated visuals and patterns with the team for feedback and iteration.
 
-**What changed:** Added a new taste material artifact (Beverage Cans pink hero screenshot) to the hub.
+**What changed:** Added structured visual design reference collection for the hub.

@@ -5,6 +5,33 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-01
+- **~04:15 (fire 86, unattended, cloud, scheduled-task invocation)** — Manual `data/_pending`
+  drain, oldest-first (normal mode, not catch-up): 10 files taken, 8 genuinely AI-relevant and
+  fully processed per CLAUDE.md (new skills incl. SKILL.md packages for the animated-website
+  workflow, ChatGPT prompt shortcodes, OpenClaw-in-Discord, and 3 Claude-skill roundup entries;
+  tool/model dedup for Motionsites AI, Whisk, GPT-5.6 Sol/Terra/Luna family, Superpowers, Taste;
+  one prompt recovered from a viewer comment per Step 2d and written to `prompts.json`), 2
+  skipped not-relevant (DB deadlocks CS content, generic career "soft skills" commentary).
+  `data/_pending` 1221→1212 (`run_report.pending_to_analyze`). Verified: all 10 per-video
+  commits + the final `status.json` update indeed reached `origin/main` (`git_safe ship`
+  reported `origin==HEAD` every time, re-checked independently afterward with
+  `git rev-parse HEAD origin/main`) — real, not just claimed. `analyze_consecutive_fails` still
+  16, `last_analyze_ok_at` still stuck at 2026-07-28T02:37Z: same still-unresolved outage fire
+  83 already escalated to Eitan; no new information to report, so no repeat notification (same
+  call fire 85 made). **Harsh self-criticism:** confirmed by direct inspection (`.git/config`,
+  `git branch -vv`) that this session's designated branch (`claude/kind-shannon-aw1n0b`, set by
+  the outer scheduler, distinct from the repo's own `git_safe.py`/CLAUDE.md convention of
+  pushing straight to `main`) tracks `origin/main`, not its own name — i.e. `git_safe ship`
+  really did land all 9 commits on `main` directly with no PR, same as effectively every prior
+  fire. That matches CLAUDE.md Step 10 and 85 fires of precedent, so the work itself is not
+  reverted or redone (would be destructive over something that's actually working as designed),
+  but it does mean this fire, like the others, produced no distinct-diff branch to open a real
+  PR from — this AWAY_LOG entry is committed on `claude/kind-shannon-aw1n0b` alone (not pushed
+  to `main`) specifically so this fire has *something* to open a PR against, which is the outer
+  scheduler's explicit ask; it is one more data point for the recurring branch/PR-pile-up
+  question already sitting open (QUESTIONS.md, PRs #29/#36) — still Eitan's call, not mine to
+  resolve unilaterally by merging or closing the ~17 stale open drafts myself.
+
 - **~02:40 (fire 85, unattended, cloud, scheduled-task invocation)** — Standing checks
   (`python -m src.standing_checks`): stale local cache re-fetched (nothing lost), upstream
   tracking self-healed to `origin/main` again (same recurring per-session gap fires 6/55/84

@@ -116,17 +116,31 @@ jobs:
                 # rooms.json/leases.json/pulse.json/recent_events.json/backlog.json — verified
                 # each is loaded then json.dumps()'d back out whole, not appended-to, so "ours"
                 # loses nothing that the next cycle doesn't immediately regenerate anyway).
-                # Deliberately NOT widened: the .jsonl append-logs (history.jsonl,
-                # improvements.jsonl, syscalls.jsonl, staleness_events.jsonl,
-                # supervisor_longterm.jsonl) and the chats/, traces/, agent_memory/,
-                # artifacts/, handoffs/ trees — those genuinely accumulate irreplaceable rows
-                # per cycle/agent, so a blind "ours" on a conflicting one would silently drop
-                # the other lane's real entries. No union-merge exists for them yet; left
-                # unresolved on purpose so an unhandled conflict there still degrades to the
-                # old "abort the merge, this cycle stays local/unsynced" behavior rather than
-                # ever losing data. See AWAY_LOG.md fire 89 for the reasoning.
                 git checkout --ours -- data/data_guard.json data/health.json data/effectiveness.json data/hub.json data/self_check.json data/safety.json data/guardrails_status.json data/excava/state.json data/excava/bus.json data/excava/rooms.json data/excava/leases.json data/excava/pulse.json data/excava/recent_events.json data/excava/backlog.json 2>/dev/null || true
                 git add data/data_guard.json data/health.json data/effectiveness.json data/hub.json data/self_check.json data/safety.json data/guardrails_status.json data/excava/state.json data/excava/bus.json data/excava/rooms.json data/excava/leases.json data/excava/pulse.json data/excava/recent_events.json data/excava/backlog.json 2>/dev/null || true
+                # 2026-08-01 (away fire 90): the piece fire 89 explicitly deferred. Any *.jsonl
+                # append-log left conflicted here (history.jsonl, improvements.jsonl,
+                # syscalls.jsonl, staleness_events.jsonl, supervisor_longterm.jsonl, or any
+                # per-agent log under chats/traces/agent_memory/artifacts/handoffs — matched by
+                # extension, not a fixed path list, so new logs are covered automatically) gets
+                # a real UNION merge instead of "ours" (which would silently drop the other
+                # lane's rows) or falling through to the abort-fallback (which would strand
+                # this cycle's own rows unpushed). `git show :2:<f>` / `:3:<f>` read the ours/
+                # theirs blob straight from the merge's index stages (works even though the
+                # worktree copy already has literal conflict markers baked in), concatenated
+                # ours-then-theirs and deduped with `awk '!seen[$0]++'` — append-only logs are
+                # line-independent records, so keeping the union of both sides (collapsing only
+                # byte-identical lines) is always safe: it can add a harmless exact-duplicate
+                # line at worst, and never discards a real entry either lane wrote. Verified
+                # offline against a simulated diverged-jsonl merge conflict (both sides' distinct
+                # lines survive, 0 conflict markers remain, the merge commits clean) before
+                # shipping this — see AWAY_LOG.md fire 90.
+                for f in $(git diff --name-only --diff-filter=U | grep '\.jsonl$' || true); do
+                  git show :2:"$f" > /tmp/_ours.jsonl 2>/dev/null || true
+                  git show :3:"$f" > /tmp/_theirs.jsonl 2>/dev/null || true
+                  cat /tmp/_ours.jsonl /tmp/_theirs.jsonl 2>/dev/null | awk '!seen[$0]++' > "$f"
+                  git add "$f"
+                done
                 if ! git commit --no-edit; then
                   echo "unresolved conflict outside the known-stateless set — aborting the merge so the working tree stays clean/parseable for the next cycle (this cycle's changes stay local-only, unsynced, same as before)"
                   git merge --abort 2>/dev/null || git reset --hard HEAD 2>/dev/null || true

@@ -5,7 +5,47 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-01
-- **~11:0x (fire 89, unattended, cloud, scheduled-task invocation)** — Standing checks
+- **~11:5x (fire 90, unattended, cloud, scheduled-task invocation)** — Standing checks: clean
+  (`git fetch origin main` + `git rev-list --left-right --count origin/main...HEAD` → 0/0, this
+  session's branch already equals `origin/main`; only the routine stale-local-`main`-ref noise,
+  not a real divergence). Guardrails 18/20, 0 critical — same two standing non-critical flags as
+  every fire this week (G-C history-bundle staleness, G-O local drain stale because EITAN-PC is
+  off). Did the exact increment fire 89 flagged as deferred: added a real UNION merge for the
+  `.jsonl` append-logs in `.github/workflows/excava_beat.yml`'s conflict-resolution fallback,
+  matched by extension (not a fixed path list, so it also covers any new per-agent log under
+  `chats/`, `traces/`, `agent_memory/`, `artifacts/`, `handoffs/` without another edit later).
+  On an unresolved `.jsonl` conflict it now reads both sides straight from the merge's index
+  stages (`git show :2:<f>` / `:3:<f>` — works even though the worktree copy already has literal
+  conflict markers baked in), concatenates ours-then-theirs, and collapses only byte-identical
+  lines (`awk '!seen[$0]++'`) — append-only logs are line-independent records, so the union is
+  always safe: worst case it adds a harmless exact-duplicate line, and it can never discard a
+  real entry either lane wrote (unlike "ours", which was the thing fire 89 explicitly declined
+  to do here for exactly this data-loss reason). The known-stateless JSON files stay on the
+  existing `checkout --ours` path (fire 88/89) since those are wholesale-rewritten, not
+  appended-to — this only adds the append-log case, it doesn't touch that list. Verified two
+  ways before shipping: (1) `python -c "import yaml; yaml.safe_load(...)"` parses the edited
+  workflow clean; (2) built an isolated throwaway git repo, diverged a `log.jsonl` on two
+  branches with different appended lines, forced a real merge conflict, ran the exact
+  shell logic standalone — both distinct lines survived, 0 conflict-marker bytes remained, and
+  `git commit` on the result succeeded (the abort-fallback path was never reached). Re-ran
+  `python -m src.guardrails` after editing: still 18/20, 0 critical, no regression (G-R still
+  confirms this lane carries the rebase→merge→auto-resolve fallback; G-S still finds 0 bare
+  conflict-marker lines in any `.jsonl` anywhere in the repo right now). **Harsh
+  self-criticism:** this was verified against a synthetic two-line conflict in an isolated repo,
+  not against a real GitHub Actions run with this codebase's actual concurrent-lane conflict
+  shape — the offline simulation proves the shell logic is correct, not that it behaves
+  identically under the real runner's timing/quoting/locale, so the honest status is "should
+  work, unverified in production" until an actual beat run hits a `.jsonl` conflict and this
+  code path fires for real (watch for it, don't assume). It also only closes the append-log
+  half of fire 88's original ask — a non-`.jsonl` conflict outside the known-stateless list
+  (e.g. a `decision.md` artifact, or two lanes racing on the *same* new file path with unrelated
+  content) still falls through to the plain abort, same as before; that residual case is
+  narrower and lower-frequency than the jsonl case but still open. And three fires in a row now
+  (88 diagnose, 89 partial fix, 90 this fix) have gone into this one guardrail thread — real,
+  owner-law-grounded work (GUARDRAILS.md: "must never lose information"), but the same
+  "meta-machinery vs. product" tension flagged around v125-127 applies here too; the next fire
+  should weigh a product-facing increment (Hub/self-improve/departments) unless a fresh
+  guardrail regression forces otherwise.
   (`python -m src.standing_checks`): clean — stale local cache of `origin/main` and missing
   upstream tracking on this session's branch, both routine and both self-healed by the tool.
   Guardrails 18/20, 0 critical (only the two standing non-critical flags: G-C stale history

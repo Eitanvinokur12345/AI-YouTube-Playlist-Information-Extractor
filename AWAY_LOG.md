@@ -5,7 +5,7 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-01
-- **~11:5x (fire 90, unattended, cloud, scheduled-task invocation)** — Standing checks: clean
+- **~11:5x (fire 90, unattended, cloud, scheduled-task invocation, 10th heartbeat)** — Standing checks: clean
   (`git fetch origin main` + `git rev-list --left-right --count origin/main...HEAD` → 0/0, this
   session's branch already equals `origin/main`; only the routine stale-local-`main`-ref noise,
   not a real divergence). Guardrails 18/20, 0 critical — same two standing non-critical flags as
@@ -46,6 +46,39 @@ Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Lo
   "meta-machinery vs. product" tension flagged around v125-127 applies here too; the next fire
   should weigh a product-facing increment (Hub/self-improve/departments) unless a fresh
   guardrail regression forces otherwise.
+  **10th-heartbeat check (per the outer routine's own instruction):** (1) *Storage* — 30 GB free
+  of 252 GB on the repo drive (21% used), `.git` 224 MB / `data` 240 MB, no growth concern.
+  (2) *Previous run (fire 89) completed successfully* — commit `29d9fde7` pushed and verified
+  (`origin == HEAD`), guardrails clean afterward (18/20, 0 critical); confirmed again just now
+  that this fire's own fetch shows 0/0 ahead-behind against `origin/main` before starting.
+  (3) *No operational limits exceeded* — 0 critical guardrail failures across every fire in the
+  window (81-90); the only standing `!!` flags are the same two known/self-healing ones every
+  recent fire has carried (G-C stale history-bundle, G-O EITAN-PC drain offline ~150h — someone
+  else's machine, not this session's to fix). (4) *Review of fires 81-90*: 83 found and repaired
+  a real 2-guardrail-CRITICAL corruption (conflict markers spliced into `supervisor.json` + 219
+  `.jsonl` logs) using existing tooling (`git_safe repair-conflicts`); 88-90 chased and closed
+  out the related-but-distinct excava-beat merge-conflict-corruption bug in 3 stages (diagnose →
+  partial fix → full fix, this fire); 80/82 fixed two self_check assertion bugs (#13 slash-
+  command purity, #14 relevance-skip invariant) with the same before/after verification pattern;
+  81/82/85/86 tracked, and 83 escalated via push notification, the flagship `analyze.yml` outage
+  (see below); 84/85 used the one still-working lever (manual `data/_pending` drain) to keep the
+  actual product moving while that lane was down; 86/89 declined to re-litigate the recurring
+  "Unverified commit badge" question a fourth/fifth time absent Eitan's answer. All ten fires
+  verified their own change (guardrails and/or a targeted script run) before shipping, and all
+  shipped via `git_safe`/`git_safe ship` — nothing landed unverified. **The one real standing
+  concern:** `analyze.yml` (the flagship, Claude-driven ingestion lane `CLAUDE.md` governs) is
+  still down — `analyze_consecutive_fails` now **16** (was 14 at fire 83's escalation),
+  `last_analyze_ok_at` still stuck at `2026-07-28T02:37:27Z`, so ~**98h** with zero real
+  successes, spanning several more Israel night-windows since. This is unchanged IN KIND from
+  what fire 83 already pushed-notified Eitan about (`claude setup-token` / confirm the rolling
+  cap so catch-up cadence can be throttled — both still his call, still unanswered) — per
+  fires 84-89's own consistent, repeatedly-reaffirmed judgment, re-notifying again with no new
+  information would be noise, not signal, so this fire is following that same precedent rather
+  than re-litigating it a sixth time. Separately, the lower-tier free-pool lanes
+  (`bulk-analyze`, `mine-feeds`, `links+memory`) that do NOT depend on the Claude subscription
+  token are still running and landing real commits hourly (confirmed: 5 in the last ~2.5h) — the
+  outage is scoped to the one flagship lane, not the whole pipeline. No blocker for Eitan beyond
+  that already-surfaced, already-actionable item.
   (`python -m src.standing_checks`): clean — stale local cache of `origin/main` and missing
   upstream tracking on this session's branch, both routine and both self-healed by the tool.
   Guardrails 18/20, 0 critical (only the two standing non-critical flags: G-C stale history

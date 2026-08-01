@@ -5,6 +5,48 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-01
+- **~06:0x (fire 87, unattended, cloud, scheduled-task invocation)** — Standing checks
+  (`git status`/`git log` read-only, `python -m src.guardrails`): 18/20, 0 critical (the
+  standing G-C stale-backup / G-O EITAN-PC-off pair, both self-healing/expected). Followed up on
+  the exact loose thread fire 86 left in QUESTIONS.md: "read how `analyze_consecutive_fails`
+  increments before trusting it as a health signal." Did that read, via `mcp__github__actions_list`
+  (job-level step conclusions, not just run-level) + a direct check of run `30679570989`'s own
+  step timeline. Verdict: the counter was NOT malfunctioning. Fire 86's "16h green streak, every
+  run succeeding" was a workflow-run-level read; the night-gate (`cadence.night_window`,
+  01:00–07:00 Israel) makes the "Analyze pending videos" step itself `skipped` for almost every
+  daytime run, and a skip deliberately never touches the counter (fire 36's own fix) — so the
+  16 is a real, correctly-accumulated count of consecutive NIGHT-WINDOW zero-progress attempts,
+  not a stuck/broken tally. `data/status.json` was already accurate; nothing to correct there.
+  That investigation did surface one real, still-latent gap: CLAUDE.md's per-video commit
+  design means a batch run CAN error out after successfully committing several videos, and the
+  old logic would have thrown the exact same "renew your token" escalation at that as at a
+  genuine zero-turn quota failure — hadn't happened yet in the sampled history, but was one bad
+  night away from a false alarm. Hardened `.github/workflows/analyze.yml`: a new
+  `Snapshot pre-analyze HEAD` step + a `pre_sha..HEAD` commit diff in `Record analyze health`
+  now splits the streak into `analyze_consecutive_zero_progress_fails` (the real token/quota
+  signal, escalates past 2) vs. `analyze_consecutive_partial_fails` (real per-video progress
+  landed, never escalates to a token message) — `analyze_consecutive_fails`/`analyze_ok`/
+  `token_hint` stay as the live alias of whichever counter applies, so `self_check.py` Q42 and
+  the existing `docs/dashboard.js` red-banner wiring need no changes. Verified offline (can't
+  live-fire Actions from this sandbox): both embedded Python heredocs `compile()`-clean, full
+  YAML parses; built a real scratch git repo with actual `analyze:`-prefixed commits and ran the
+  extracted health-step script against it directly (not simulated by hand) for five scenarios —
+  a failure with 2 real commits → partial-progress message + counter; a failure with 0 commits →
+  zero-progress message + counter, escalating correctly to the token-check message on the 3rd
+  consecutive occurrence; a success → both counters and `last_analyze_ok_at` reset. Logged the
+  full finding to QUESTIONS.md (appended under the fire-86 item, did not rewrite prior fires'
+  entries). `python -m src.guardrails` 18/20 unchanged after the edit. **Harsh self-criticism:**
+  this fixes a latent bug, not a live one — I went in looking for "is the dashboard lying to
+  Eitan right now" and the honest finding is it isn't; the fix is prophylactic and its actual
+  branch (a run that fails AFTER committing real progress) has not yet been observed in the wild,
+  so it's verified by faithful offline simulation of the real subprocess/logic path, not by a
+  live GitHub Actions run — worth checking `data/status.json.analyze_consecutive_partial_fails`
+  the first time a real partial failure occurs, to confirm production behavior matches the
+  scratch-repo test. This also does NOT touch fire 81/86's actual standing ask (throttle the
+  catch-up cron off the night window, or confirm the token's rolling cap) — still explicitly
+  Eitan's call, still unactioned, still the real fix for the underlying nightly failures
+  themselves; I made the failure signal more trustworthy, not the failures less frequent.
+
 - **~05:0x (fire 86, unattended, cloud, scheduled-task invocation)** — Standing checks
   (`python -m src.standing_checks`): clean this time — origin/main unchanged, upstream already
   tracking, guardrails 19/20, 0 critical. Re-checked the flagship `analyze.yml` outage fires

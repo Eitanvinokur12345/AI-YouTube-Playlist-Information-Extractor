@@ -99,6 +99,19 @@ jobs:
           PY
           echo "Plan written to outputs (pending / catch_up / batch / order / has_work)."
 
+      # Away fire 87: capture the HEAD before the Claude step so "Record analyze health"
+      # can tell a ZERO-progress failure (the instant is_error/num_turns:1/cost:0 signature
+      # that actually indicates a token/quota problem, per QUESTIONS.md fires 55/57/63/81)
+      # apart from a PARTIAL-progress failure (real per-video "analyze: <id>" commits landed
+      # before the step errored out or hit a limit — CLAUDE.md Step 10 deliberately commits
+      # after every video specifically so this kind of run still leaves real, valid work).
+      # Conflating the two was making the dashboard's red token-renewal banner fire on runs
+      # that had actually ingested several videos successfully.
+      - name: Snapshot pre-analyze HEAD
+        id: pre_head
+        if: steps.plan.outputs.has_work == 'true'
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
       - name: Analyze pending videos (skills, tools, models, connectors, commands)
         id: claude
         if: steps.plan.outputs.has_work == 'true'
@@ -141,9 +154,10 @@ jobs:
         env:
           OUTCOME: ${{ steps.claude.outcome }}
           HAS_WORK: ${{ steps.plan.outputs.has_work }}
+          PRE_SHA: ${{ steps.pre_head.outputs.sha }}
         run: |
           python3 - <<'PY'
-          import json, os, pathlib, datetime
+          import json, os, pathlib, datetime, subprocess
           p = pathlib.Path("data/status.json")
           try:
               st = json.loads(p.read_text(encoding="utf-8"))
@@ -151,9 +165,30 @@ jobs:
               st = {}
           outcome = os.environ.get("OUTCOME", "")   # success|failure|skipped|cancelled|""
           now = datetime.datetime.utcnow().isoformat() + "Z"
+          # Away fire 87: did this attempt land any real per-video commits before it failed?
+          # CLAUDE.md Step 10 commits+pushes after EVERY video, so a run that errors out
+          # partway through (mid-run limit, transient tool error, etc.) can still leave solid,
+          # valid progress on disk even though steps.claude.outcome reports "failure" for the
+          # step as a whole. Distinguish that from the ZERO-progress signature QUESTIONS.md
+          # fires 55/57/63/81 identified for real token/quota exhaustion (is_error:true,
+          # num_turns:1, total_cost_usd:0, ~2s duration — dies before touching a single video).
+          pre_sha = os.environ.get("PRE_SHA", "")
+          videos_committed_this_run = 0
+          if pre_sha:
+              try:
+                  out = subprocess.run(
+                      ["git", "log", f"{pre_sha}..HEAD", "--oneline"],
+                      capture_output=True, text=True, check=True,
+                  ).stdout
+                  videos_committed_this_run = sum(
+                      1 for line in out.splitlines() if " analyze: " in line
+                  )
+              except Exception:
+                  pass  # fail open: treat as zero-progress rather than crash the health step
           if outcome == "failure":
               st["analyze_ok"] = False
               st["analyze_failed_at"] = now
+              st["analyze_last_fail_videos_committed"] = videos_committed_this_run
               # Away fire 57: consecutive-failure counter. Job-log evidence (10 failures /
               # 30 runs over 2026-07-27/28, ALL clustered 20:00-02:00 UTC, every single one
               # bracketed by successful runs earlier/later the same day) rules out a flat
@@ -165,32 +200,58 @@ jobs:
               # the token on the FIRST failure, which is the wrong action for this pattern and
               # wastes his time — only escalate to "check the token" once failures are
               # sustained (no success in between), not on an isolated blip.
-              prev_fails = st.get("analyze_consecutive_fails", 0)
-              # A success since the last failure resets the streak even if this step's own
-              # state read is stale, because last_analyze_ok_at is only updated on success.
-              st["analyze_consecutive_fails"] = prev_fails + 1
-              fails = st["analyze_consecutive_fails"]
-              if fails <= 2:
+              #
+              # Away fire 87: a failure with real committed progress this run is evidence
+              # AGAINST a token/quota problem (an exhausted token dies before turn 1, so it
+              # cannot also commit videos) — don't let it push the same "renew your token"
+              # escalation as a genuine zero-progress streak. Track the two counters
+              # separately so a handful of partial-progress runs (real work, just didn't
+              # finish the batch) can never accumulate into a false token alarm.
+              if videos_committed_this_run > 0:
+                  st["analyze_consecutive_zero_progress_fails"] = 0
+                  prev_partial = st.get("analyze_consecutive_partial_fails", 0) + 1
+                  st["analyze_consecutive_partial_fails"] = prev_partial
+                  st["analyze_consecutive_fails"] = prev_partial  # back-compat for self_check.py Q42
                   st["token_hint"] = (
-                      f"The analyze run FAILED (consecutive fail #{fails}). Likely a "
-                      "transient rolling usage/rate ceiling on the shared Claude subscription "
-                      "token, NOT an expired token — observed pattern: failures cluster "
-                      "20:00-02:00 UTC and self-heal within hours (see QUESTIONS.md #31). No "
-                      "action needed yet; only investigate the token if this counter keeps "
-                      "climbing past 3-4 with no successful run in between."
+                      f"The analyze run ended in failure but committed {videos_committed_this_run} "
+                      f"video(s) first (partial-progress fail #{prev_partial}) — this is NOT the "
+                      "zero-turn token/quota signature (see QUESTIONS.md #31); it errored or hit a "
+                      "limit partway through a real batch. No token action needed; check the "
+                      "Actions log if this streak keeps climbing without any full-success run."
                   )
               else:
-                  st["token_hint"] = (
-                      f"The analyze run FAILED {fails} times in a row with no success in "
-                      "between — this has gone past the usual transient-ceiling pattern. "
-                      "Check whether the Claude subscription token expired (run `claude "
-                      "setup-token` and update the CLAUDE_CODE_OAUTH_TOKEN_REAL GitHub secret) "
-                      "or check the Actions log for the failing step."
-                  )
+                  st["analyze_consecutive_partial_fails"] = 0
+                  prev_fails = st.get("analyze_consecutive_zero_progress_fails", 0)
+                  # A success since the last failure resets the streak even if this step's own
+                  # state read is stale, because last_analyze_ok_at is only updated on success.
+                  st["analyze_consecutive_zero_progress_fails"] = prev_fails + 1
+                  fails = st["analyze_consecutive_zero_progress_fails"]
+                  st["analyze_consecutive_fails"] = fails  # back-compat for self_check.py Q42
+                  if fails <= 2:
+                      st["token_hint"] = (
+                          f"The analyze run FAILED with zero videos committed (consecutive "
+                          f"zero-progress fail #{fails}). Likely a transient rolling usage/rate "
+                          "ceiling on the shared Claude subscription token, NOT an expired token "
+                          "— observed pattern: failures cluster 20:00-02:00 UTC and self-heal "
+                          "within hours (see QUESTIONS.md #31). No action needed yet; only "
+                          "investigate the token if this counter keeps climbing past 3-4 with no "
+                          "successful (or partial-progress) run in between."
+                      )
+                  else:
+                      st["token_hint"] = (
+                          f"The analyze run FAILED {fails} times in a row with ZERO videos "
+                          "committed each time and no success in between — this has gone past "
+                          "the usual transient-ceiling pattern. Check whether the Claude "
+                          "subscription token expired (run `claude setup-token` and update the "
+                          "CLAUDE_CODE_OAUTH_TOKEN_REAL GitHub secret) or check the Actions log "
+                          "for the failing step."
+                      )
           elif outcome in ("success", ""):
               st["analyze_ok"] = True
               st["token_hint"] = ""
               st["analyze_consecutive_fails"] = 0
+              st["analyze_consecutive_zero_progress_fails"] = 0
+              st["analyze_consecutive_partial_fails"] = 0
               if outcome == "success":
                   st["last_analyze_ok_at"] = now
           # 'skipped' (night-gate / empty-backlog no-op) and 'cancelled' leave the previous

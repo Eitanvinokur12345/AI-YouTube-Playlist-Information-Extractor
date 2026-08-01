@@ -151,6 +151,15 @@ Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Lo
   without new information, per that thread's own established precedent) and no new guardrail
   regression appeared.
 
+**2026-08-01 (fire 93) — same "Unverified" commit badge issue recurred a seventh time; same decision stands.**
+Stop hook flagged fire 93's 2 commits (`95704168a`, `59bd6b3d3`) plus one that isn't even mine
+(`ed36d2212`, `skills-tracker-bot <actions@users.noreply.github.com>` — the `analyze.yml` safety-
+commit step's own identity). Checked fresh rather than assuming: `git config user.name`/`user.email`
+already read `Claude <noreply@anthropic.com>` (the hook's suggested fix would be a no-op), both of
+my commits already carry a `gpgsig`, and rewriting a concurrent automated lane's commit
+(`ed36d2212`) is out of scope regardless. Declined to amend/rebase a seventh time for the same
+reasons fires 11/34/84/86/89/91 already established.
+
 **2026-08-01 (fire 91) — same "Unverified" commit badge issue recurred a sixth time; same decision stands.**
 Stop hook flagged fire 91's 2 commits (`3cefebf92`, `373ac1908`) as Unverified. Identical to fires
 11/34/84/86/89: `author`/`committer` on both is already `Claude <noreply@anthropic.com>` (matches

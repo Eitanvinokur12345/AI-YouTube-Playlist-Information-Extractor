@@ -638,6 +638,88 @@ class Agent:
                             for r in sorted({a.role for a in ags if a.role})}}
 
 
+class Router:
+    """M2 class overhaul, CLASS 5 of 5 — routes ANY task to a department, an agent, a tool, and
+    a brain/engine, in one call, and says WHY (the trace law every other class already follows).
+
+    THE PROBLEM THIS FIXES. The routing decision is currently split across three modules a
+    caller has to know about and stitch together by hand: `excava_agents.pick_department`
+    (text -> department), `excava_agents.worker_for` + `REAL_TOOL`/`_task_tool_fit` (department
+    -> agent + tool, gated by G-7 and the syscall domain check), and `excava_engines.pick_engine`
+    (department -> brain). `Tool.invocation()` above already called its own output "the adapter
+    spec the Router will read" — this is that Router.
+
+    WHAT THIS IS NOT. Not a rewrite: the actual policy (keyword scoring, gating, engine tiering)
+    stays exactly where it lives in `excava_agents`/`excava_engines`. Router only composes their
+    real return values into one typed decision, so nothing here can silently diverge from what
+    the bus/beat actually does when it ticks a department (`excava_agents.tick`) — same law as
+    Tool wrapping `verify_connectors`, Room wrapping `excava_chat`, Agent wrapping the registry.
+    """
+
+    __slots__ = ("text", "department", "why", "runners_up", "agent_id", "tool", "tool_fits",
+                 "blocked_reason", "engine")
+
+    def __init__(self, text: str, department: str | None, why: str, runners_up: list,
+                 agent_id: str | None, tool: str, tool_fits: bool | None,
+                 blocked_reason: str | None, engine: dict | None):
+        self.text = text
+        self.department = department
+        self.why = why
+        self.runners_up = runners_up
+        self.agent_id = agent_id
+        self.tool = tool
+        self.tool_fits = tool_fits
+        self.blocked_reason = blocked_reason
+        self.engine = engine
+
+    @property
+    def engine_name(self) -> str:
+        return (self.engine or {}).get("name", "")
+
+    @property
+    def engine_lineage(self) -> str:
+        from src import excava_engines as engines
+        return engines.LINEAGE.get(self.engine_name, self.engine_name)
+
+    def is_routable(self) -> bool:
+        """False means: no department matched, or the one that did has no scoped worker (G-7)
+        and no owner-flagged blocker either — a dead end the caller must not paper over."""
+        return bool(self.department and (self.agent_id or self.blocked_reason))
+
+    def to_dict(self) -> dict:
+        return {"text": self.text, "department": self.department, "why": self.why,
+                "runners_up": self.runners_up, "agent": self.agent_id,
+                "tool": self.tool or None, "tool_fits": self.tool_fits,
+                "blocked_reason": self.blocked_reason,
+                "engine": self.engine_name or None, "engine_lineage": self.engine_lineage or None,
+                "engine_status": (self.engine or {}).get("status", "") or None,
+                "routable": self.is_routable()}
+
+    def __repr__(self) -> str:
+        return (f"<Router '{self.text[:30]}' -> {self.department or '(none)'} "
+                f"via {self.engine_name or '(no engine)'} routable={self.is_routable()}>")
+
+    # --- the routing decision --------------------------------------------
+    @staticmethod
+    def route(text: str, difficulty: str = "normal", reg: dict | None = None,
+              can_do: dict | None = None) -> "Router":
+        """text -> the full decision an agent needs to actually act. `reg`/`can_do` may be
+        passed in by a caller that already loaded them (e.g. the beat, mid-tick) to avoid a
+        second disk read; both default to a fresh load, same as `excava_agents.tick` does."""
+        from src import excava_agents as agents
+        from src import excava_engines as engines
+        reg = agents.load_registry() if reg is None else reg
+        dept, why, runners_up = agents.pick_department(text, reg, can_do or {})
+        worker = agents.worker_for(reg, dept) if dept else None
+        tool = agents.REAL_TOOL.get(dept, "") if dept else ""
+        tool_fits = (agents._task_tool_fit({"title": text, "detail": ""}, tool)
+                     if tool else None)
+        blocked_reason = agents.BLOCKED.get(dept) if dept else None
+        engine = engines.pick_engine(dept or "", difficulty)
+        return Router(text, dept, why, runners_up, worker.get("id") if worker else None,
+                      tool, tool_fits, blocked_reason, engine)
+
+
 class Package:
     """A named bundle of Elements — the plan's 'Element/Package' pair (§2, law P8).
 
@@ -856,6 +938,10 @@ def main() -> int:
     t1.add_argument("eid")
     t1.add_argument("--online", action="store_true", help="ask npm/PyPI when no command is embedded")
     t1.add_argument("--json", action="store_true")
+    rt = sub.add_parser("route", help="where would this task go: department, agent, tool, engine")
+    rt.add_argument("text")
+    rt.add_argument("--difficulty", choices=["normal", "hard", "grounded"], default="normal")
+    rt.add_argument("--json", action="store_true")
     a = ap.parse_args()
 
     if a.cmd == "stats":
@@ -1026,6 +1112,28 @@ def main() -> int:
             print(f"  needs: {inv['needs']}")
         if not t.is_runnable() and not a.online:
             print("  tip: re-run with --online to ask npm/PyPI for a matching package.")
+        return 0
+
+    if a.cmd == "route":
+        r = Router.route(a.text, difficulty=a.difficulty)
+        if a.json:
+            print(json.dumps(r.to_dict(), ensure_ascii=False, indent=2))
+            return 0
+        print(f"'{a.text}'")
+        if not r.department:
+            print(f"  no department matched: {r.why}")
+            return 1
+        print(f"  department: {r.department}  ({r.why})")
+        if r.runners_up:
+            print(f"  runners-up: {', '.join(r.runners_up)}")
+        print(f"  agent: {r.agent_id or '(none — G-7: no scoped worker)'}")
+        if r.blocked_reason:
+            print(f"  BLOCKED: {r.blocked_reason}")
+        if r.tool:
+            print(f"  tool: {r.tool}  (fits: {r.tool_fits})")
+        print(f"  engine: {r.engine_name or '(none available)'}"
+              + (f"  [{r.engine_lineage}]" if r.engine_name else ""))
+        print(f"  routable: {r.is_routable()}")
         return 0
     return 1
 

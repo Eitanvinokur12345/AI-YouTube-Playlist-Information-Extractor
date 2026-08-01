@@ -203,6 +203,38 @@ def main() -> int:
     check("challenge outranks refinement when turns are scarce",
           "C0" in _seq(3, ni=1), f"3-turn: {_seq(3, ni=1)}")
 
+    # (c6) Router class — CLASS 5 of 5. It composes real functions from excava_agents/
+    # excava_engines; the assertions are that composition never drifts from what those modules
+    # would say standalone, and that a routed task actually reaches a WORKER the bus can tick.
+    from src import excava_agents as agents
+    from src import excava_engines as engines
+
+    reg = agents.load_registry()
+    r_sec = core.Router.route("scan this repo for a leaked secret key")
+    check("Router finds the department a direct keyword call would find",
+          r_sec.department == agents.pick_department(
+              "scan this repo for a leaked secret key", reg, {})[0],
+          f"router={r_sec.department}")
+    check("a routed department's agent matches worker_for exactly",
+          r_sec.agent_id == ((agents.worker_for(reg, r_sec.department) or {}).get("id")
+                              if r_sec.department else None))
+    check("a routed tool matches REAL_TOOL exactly",
+          r_sec.tool == (agents.REAL_TOOL.get(r_sec.department, "") if r_sec.department else ""))
+    check("security always routes to a grounded/reasoning engine (never hallucinate a verdict)",
+          r_sec.engine is None or engines.pick_engine("security")["tier"] in ("grounded", "reasoning"),
+          str(r_sec.engine))
+    r_none = core.Router.route("completely unmatched gibberish xyzzy plugh")
+    check("no keyword match means no department, not a guessed one",
+          r_none.department is None and not r_none.is_routable(), str(r_none.to_dict()))
+    r_blocked = core.Router.route("watch and analyze this new video")
+    if r_blocked.department in agents.BLOCKED:
+        check("a BLOCKED department reports its owner-facing reason, not a silent dead end",
+              bool(r_blocked.blocked_reason), str(r_blocked.to_dict()))
+    check("to_dict is JSON-safe", json.dumps(r_sec.to_dict()) and True)
+    check("routable requires either a real worker or an honest blocked reason",
+          all(rt.is_routable() == bool(rt.agent_id or rt.blocked_reason)
+              for rt in (r_sec, r_none, r_blocked)))
+
     # (d) Package round-trip — must not touch the real store
     real = core.PACKAGES
     with tempfile.TemporaryDirectory() as td:

@@ -190,6 +190,20 @@ signing key added to this environment's git config, or switching these commits t
 (which auto-signs as "GitHub verified") instead of local `git push`. Neither is a fire-sized decision to make
 unilaterally.
 
+**2026-08-01 (fire 84) — same "Unverified" badge issue recurred a third time; same decision stands.**
+Stop hook flagged all 12 of this fire's commits (the pending-video drain) plus one pre-existing
+`excava-beat #7` commit as "Unverified." Identical situation to fires 11/34: committer email is
+already `noreply@anthropic.com`, the SSH signature IS present on every commit (confirmed via
+`git cat-file commit` — a `gpgsig` block exists), it's just unverifiable locally (`gpg.ssh.
+allowedSignersFile` isn't configured) and there's still no real signing key registered anywhere
+that would make GitHub itself show "Verified." `origin/main` already equals HEAD (`git_safe push`
+verified it after every commit this fire), so nothing is at risk — rewriting 12 already-shared
+commits via rebase+force-push on a branch the CI beat is actively committing to (an `excava-beat`
+commit landed mid-fire, right before this chain) would only add real risk for a cosmetic badge.
+Declined again, not re-litigating further; the actual fix (a real GPG/SSH signing key in this
+environment's git config, or routing commits through the GitHub API instead of local `git push`)
+is still unbuilt and still Eitan's call, three fires running now.
+
 **2026-07-27 (fire 34) — same "Unverified" badge issue as fire 11 recurred; same decision stands, no new action taken.**
 This fire's stop hook flagged commit `b75ae37d` (the designs.json conflict-marker fix) as
 "Unverified" for the identical reason fire 11 already investigated and decided: the SSH

@@ -37,6 +37,7 @@ from pathlib import Path
 
 from src import excava_agents as agents
 from src import excava_bus as bus
+from src.excava_core import Router
 from src.build_memory import embed as _embed, search as _search
 
 ROOT = Path(__file__).parent.parent
@@ -151,12 +152,17 @@ def _sync_to_bus(inbox_tasks: list, prios: list, outward_ok: bool, g3, holding: 
 
 
 def _route_all(reg: dict, can_do: dict, holding: list) -> int:
+    """Router (M2 class 5/5) is now the beat's first live caller — previously only its own
+    test/CLI exercised it (fire 95). Same department/why/runners-up `pick_department` always
+    gave; the bus schema and everyone downstream of it (tick's own worker_for, docs/dashboard.js)
+    are untouched, so this is wiring, not a behavior change."""
     routed = 0
     for t in bus.read_bus()["tasks"]:
         if t["status"] != "queued" or t.get("department"):
             continue
         text = f"{t['title']} {t.get('detail', '')}"
-        dept, why, over = agents.pick_department(text, reg, can_do)
+        r = Router.route(text, reg=reg, can_do=can_do)
+        dept, why, over = r.department, r.why, r.runners_up
         if dept is None:
             holding.append({"priority": t["title"], "why_held": why})
             bus.event(t["id"], "unroutable", {"why": why})

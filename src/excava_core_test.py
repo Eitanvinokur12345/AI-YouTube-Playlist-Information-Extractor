@@ -257,6 +257,26 @@ def main() -> int:
             core.PACKAGES = real
     check("real package store untouched", core.PACKAGES == real)
 
+    # (e) The two-store orphan (fire 95): packages lived in data/packages.json AND
+    # data/excava/packages.json, and build_hub_api only read the first — so anything the class
+    # created was invisible to the PUBLIC hub API. Package.all() must see both, and the
+    # published API must agree with it, or the orphan silently returns.
+    legacy_n = len(core.Package._read(core.Package.LEGACY))
+    class_n = len(core.Package._read(core.PACKAGES))
+    all_pkgs = core.Package.all()
+    check("Package.all() reads BOTH stores",
+          len(all_pkgs) >= max(legacy_n, class_n) and legacy_n and class_n,
+          f"legacy={legacy_n} class={class_n} all={len(all_pkgs)}")
+    check("Package.all() dedups by name", len({p.name for p in all_pkgs}) == len(all_pkgs))
+    from src import build_hub_api
+    api = build_hub_api.build()
+    check("the public hub API publishes every package the class can see",
+          {p["name"] for p in api["packages"]} == {p.name for p in all_pkgs},
+          f"api={len(api['packages'])} vs class={len(all_pkgs)}")
+    check("the public hub API publishes exactly the USABLE elements",
+          api["counts"]["elements"] == sum(1 for e in core.load().values() if e.is_usable()),
+          f"api={api['counts']['elements']}")
+
     print(f"\n{len(FAILS)} failure(s)" if FAILS else "\nall checks passed")
     return 1 if FAILS else 0
 

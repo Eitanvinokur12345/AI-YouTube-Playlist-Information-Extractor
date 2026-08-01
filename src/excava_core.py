@@ -752,6 +752,20 @@ class Package:
         return {"name": self.name, "elements": self.element_ids, "note": self.note}
 
     # --- persistence ----------------------------------------------------
+    # Fire 95 found a REAL orphan: two package stores existed and the public hub API
+    # (build_hub_api.py) only read the legacy one, so any package assembled through this class
+    # was invisible outside the repo. Rather than move files (quarantine-never-delete), Package
+    # now READS BOTH and is the single accessor; writes go to the class store. LEGACY is the
+    # curated/pinned set built by earlier phases; PACKAGES is what this class creates.
+    LEGACY = DATA / "packages.json"
+
+    @staticmethod
+    def _read(p: Path) -> list:
+        try:
+            return json.loads(p.read_text(encoding="utf-8")).get("packages", []) or []
+        except Exception:
+            return []
+
     @staticmethod
     def _store() -> dict:
         try:
@@ -760,16 +774,29 @@ class Package:
             return {"packages": []}
 
     @classmethod
+    def _from_raw(cls, p: dict) -> "Package":
+        pkg = cls(p.get("name", p.get("id", "?")), p.get("elements", []),
+                  p.get("note") or p.get("what", ""))
+        return pkg
+
+    @classmethod
     def load(cls, name: str):
-        for p in cls._store().get("packages", []):
-            if p.get("name") == name:
-                return cls(p["name"], p.get("elements", []), p.get("note", ""))
+        for p in cls._read(PACKAGES) + cls._read(cls.LEGACY):
+            if p.get("name") == name or p.get("id") == name:
+                return cls._from_raw(p)
         return None
 
     @classmethod
     def all(cls) -> list:
-        return [cls(p["name"], p.get("elements", []), p.get("note", ""))
-                for p in cls._store().get("packages", [])]
+        """Every package from BOTH stores, class-created first, deduped by name."""
+        out, seen = [], set()
+        for p in cls._read(PACKAGES) + cls._read(cls.LEGACY):
+            key = p.get("name") or p.get("id")
+            if not key or key in seen:
+                continue
+            seen.add(key)
+            out.append(cls._from_raw(p))
+        return out
 
     def save(self) -> None:
         store = self._store()

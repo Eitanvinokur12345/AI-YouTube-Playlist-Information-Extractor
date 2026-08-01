@@ -1,8 +1,8 @@
 {
- "generated_at": "2026-07-31T23:20:15.986388+00:00",
+ "generated_at": "2026-07-31T23:59:07.227127+00:00",
  "total": 20,
- "passing": 16,
- "critical_failures": 2,
+ "passing": 18,
+ "critical_failures": 0,
  "guardrails": [
   {
    "id": "G-A",
@@ -21,9 +21,9 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": true,
-   "detail": "n/a in CI — the beat pushes straight to origin each cycle, bypassing git_safe/local bundles by design.",
-   "severity": "info"
+   "ok": false,
+   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
+   "severity": "warn"
   },
   {
    "id": "G-D",
@@ -42,15 +42,15 @@
   {
    "id": "G-F",
    "name": "JSON integrity",
-   "ok": false,
-   "detail": "BROKEN JSON: data/excava/supervisor.json",
+   "ok": true,
+   "detail": "all data/ + docs/ JSON parses (whole tree).",
    "severity": "critical"
   },
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": false,
-   "detail": "NOT in sync vs origin/main (behind/ahead: 1\t0) — a push may not have landed.",
+   "ok": true,
+   "detail": "HEAD == origin/main (work is really saved).",
    "severity": "warn"
   },
   {
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "123187 memory episodes on record.",
+   "detail": "123078 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "7 guardrail runs logged (append-only, never rewritten).",
+   "detail": "2 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -92,42 +92,42 @@
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "104 tasks done, 10 departments moving",
+   "detail": "0 tasks done, 0 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "88844 MB free on the repo drive.",
+   "detail": "30340 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 137.3h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 138.0h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
    "ok": true,
-   "detail": "last 'excava-beat #N' commit 0.1h ago.",
+   "detail": "last 'excava-beat #N' commit 0.2h ago.",
    "severity": "warn"
   },
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "last 'core-spoton:' commit 1.1h ago.",
+   "detail": "last 'core-spoton:' commit 1.8h ago.",
    "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
    "ok": true,
-   "detail": "5/16 lane(s) landing on cadence, 11 can't-tell (shallow clone).",
+   "detail": "6/16 lane(s) landing on cadence, 10 can't-tell (shallow clone).",
    "severity": "warn"
   },
   {
@@ -140,8 +140,8 @@
   {
    "id": "G-S",
    "name": "No conflict markers in .jsonl logs",
-   "ok": false,
-   "detail": "842 marker line(s) across 205 file(s) — run `python -m src.git_safe repair-conflicts`: data/excava/supervisor_longterm.jsonl, data/excava/syscalls.jsonl, data/excava/agent_memory/visual-w1.jsonl, data/excava/agent_memory/creators-w1.jsonl, data/excava/agent_memory/power-w1.jsonl",
+   "ok": true,
+   "detail": "no bare conflict-marker lines in any .jsonl append-log.",
    "severity": "critical"
   }
  ]

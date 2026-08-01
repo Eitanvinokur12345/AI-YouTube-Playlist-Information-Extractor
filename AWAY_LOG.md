@@ -4,6 +4,60 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+## 2026-07-31
+- **~23:5x (fire 83, unattended, cloud, scheduled-task invocation)** — Standing checks
+  (`python -m src.standing_checks`) surfaced 2 CRITICAL guardrail failures that fire 82 didn't
+  have: **G-F** (`data/excava/supervisor.json` was invalid JSON — literal unresolved git
+  conflict markers, `<<<<<<< HEAD` / `=======` / `>>>>>>> 92c2ce98…`, spliced into it by a
+  same-window rebase collision between two concurrent lanes) and **G-S** (907 bare conflict-
+  marker lines across 219 `.jsonl` append-logs — `agent_memory/*.jsonl`, `chats/2026-07-31/
+  *.jsonl`, `data/project_memory/episodes.jsonl` (132 of the 907 alone), `supervisor_longterm.jsonl`).
+  This is the exact fire-45/46 bug class `git_safe.py`'s own docstring names (a rebase drops raw
+  marker lines into data files when two lanes commit in the same window) recurring at new call
+  sites — the existing tooling to fix it already existed and just hadn't been run. Fixed with
+  the tools already built for this: `python -m src.git_safe repair-conflicts` (strips bare
+  marker lines from all 219 `.jsonl` files, keeping every real record on both sides — append-
+  only, no picking a winner) then regenerated `supervisor.json` fresh via `python -m
+  src.excava_supervisor` rather than hand-splicing its two conflicting snapshots (it's a
+  regenerated status report, not authored data, so a clean regeneration is more correct than a
+  manual merge). Verified: whole-tree `json.loads` sweep over every `data/`+`docs/` `*.json` →
+  0 broken; `python -m src.guardrails` → **18/20, 0 critical** (was 16/20, 2 critical); the 2
+  remaining `!!` flags are the same pre-existing, non-critical, self-healing ones every recent
+  fire has carried (G-C stale backup — `ship`'s own backup step fixes it; G-O EITAN-PC drain
+  stale — PC's been off ~138h, someone else's machine). Shipped via `python -m src.git_safe
+  ship`. **Harsh self-criticism:** this is real-corruption cleanup, not the actual M1-M5 program
+  (Hub content, enrichment, departments) — but unlike the "fifth fire in a row of meta-plumbing"
+  self-criticism earlier fires logged, this one had a concrete, currently-broken, guardrail-
+  verified defect to point at (2 CRITICAL failures, not a hunch), so it was the right thing to
+  spend this fire on rather than manufacturing a plumbing task. Did not investigate WHY this
+  particular pair of files collided this time (which two lanes, what window) — the repair is
+  general and already applied, and chasing the specific collision would only matter if the
+  underlying push-safety fallback (G-R, already 19/19 lanes per the last check) were itself
+  missing somewhere, which it isn't. **Escalating a separate, pre-existing item found while
+  reading status for this fire, not caused by it:** `analyze.yml` (the actual product's core
+  ingestion lane per `CLAUDE.md`) has now gone from `analyze_consecutive_fails: 6` (fire 81/82)
+  to **14**, and `last_analyze_ok_at` is still stuck at `2026-07-28T02:37:27Z` — roughly **93.5
+  hours** with zero successful runs, spanning multiple full Israel 01:00–07:00 night windows that
+  fires 81/82 explicitly said they'd wait for before escalating. Those windows have now passed
+  repeatedly with no recovery, so per fire 81's own stated escalation condition this is past the
+  point of "wait and see." QUESTIONS.md item 31 already has the full evidence trail and a
+  concrete, cheap next step (`claude setup-token`, or confirm the plan's rolling cap so the
+  catch-up cadence can be throttled) — sending a push notification about it this fire since it's
+  now a multi-day outage of the flagship lane that only Eitan can act on, not something a sandbox
+  session can fix or safely decide for him (cadence changes are explicitly his call, per fires
+  55/57/63/81's standing, still-unanswered ask). **One more surfaced-not-chased item:**
+  `python -m src.pulse` (run to refresh PULSE.md after the guardrail fix) flagged cumulative
+  completions FELL — impossible for a monotonic counter. Traced it: merge commit `3879090a`
+  ("excava-beat #31", `dfbc17db` + `9091ab6b`) landed `data/excava/state.json` with its entire
+  `usage` key gone (not emptied — absent), which is the done-counter's only source per fire 6's
+  earlier fix. This matches the already-documented, still-open bug class in QUESTIONS.md (item
+  ~28ish, "job succeeds, real work silently lost" — `git pull --rebase --autostash` resolving a
+  concurrent `data/` conflict by taking one side wholesale) — `excava_beat.yml` is explicitly
+  named there as one of the ~15 still-exposed lanes. Not re-diagnosed or fixed from scratch here
+  (would mean editing a live beat workflow mid-fire, outside this fire's scope of data-integrity
+  cleanup) — flagging as fresh, concrete evidence that the existing "roll the fix out, one lane
+  at a time" backlog item is still live and now has a second confirmed victim.
+
 ## 2026-07-30
 - **~17:0x (fire 82, unattended, cloud, scheduled-task invocation)** — Checked the analyze.yml
   outage fire 81 escalated before doing anything else: no change since fire 81 (`status.json`

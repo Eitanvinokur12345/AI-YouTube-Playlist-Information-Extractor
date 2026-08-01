@@ -1,5 +1,4 @@
 {"at": "2026-07-31T20:05", "room": "dept-improve-self-improvement-rev-", "said": "Run PR-Agent *after* human review, not before. It catches obvious linting and test failures, but those are easy to fix—design flaws are what sink projects. The "}
->>>>>>> e8042b170d14b87da7b23dcac5740663ae19f716
 {"at": "2026-07-31T20:23", "room": "dept-improve-self-improvement-rev-", "said": "Do it: Build a self-review loop where each prompt engine auto-runs a quality check on its own outputs before routing to the next stage. This cuts downstream fix"}
 {"at": "2026-07-31T20:31", "room": "dept-improve-self-improvement-rev-", "said": "Do it: Add a pre-deployment test that runs the quality check against a fixed set of known-bad outputs. This catches silent degradation before it spreads, which "}
 {"at": "2026-07-31T20:45", "room": "dept-improve-self-improvement-rev-", "said": "Do it: Add a pre-deployment test that runs the quality check against a fixed prompt set before any engine deploys. This catches regressions early and forces us "}
@@ -8,11 +7,8 @@
 {"at": "2026-07-31T21:14", "room": "dept-improve-self-improvement-rev-", "said": "DO: Auto-apply formatting-only patches to our own prompt files."}
 {"at": "2026-07-31T21:20", "room": "dept-improve-self-improvement-rev-", "said": "DO: Auto-apply formatting-only patches to *all* prompt files, but gate them behind a pre-commit hook that runs a dry-run formatter first. This keeps speed high "}
 {"at": "2026-07-31T21:36", "room": "dept-improve-self-improvement-rev-", "said": "Do: Auto-apply formatting-only patches to *all* prompt files, but gate them behind a manual review step for the first 30 days."}
-<<<<<<< HEAD
 {"at": "2026-07-31T21:42", "room": "dept-improve-self-improvement-rev-", "said": "Do: Run the formatter in a dry-run mode first, then auto-apply only if a semantic diff confirms no meaning changed. This catches hidden corruption risks while k"}
-=======
 {"at": "2026-07-31T21:40", "room": "dept-improve-self-improvement-rev-", "said": "Do: Run a dry-run formatter on a staging copy of every prompt file first, then auto-apply only if a semantic diff confirms no meaning change. This catches forma"}
->>>>>>> 05eb4e404a4005fd0bbf5d2e4c0ee0a4f3ffe443
 {"at": "2026-07-31T21:49", "room": "dept-improve-self-improvement-rev-", "said": "Do it: Build a self-review loop where every prompt update triggers an automated check against the last 100 tasks. The engine runs the new prompt on the same bat"}
 {"at": "2026-07-31T21:56", "room": "dept-improve-self-improvement-rev-", "said": "Do this: Run the new prompt against a fresh, diverse batch of 500 tasks each time, not the recycled 100. This catches edge cases the old batch never saw, making"}
 {"at": "2026-07-31T22:21", "room": "dept-improve-self-improvement-rev-", "said": "Do it: Build a self-review loop where every prompt update triggers an automated review of the last 500 tasks. This keeps the system self-correcting without manu"}
@@ -22,9 +18,6 @@
 {"at": "2026-07-31T23:04", "room": "dept-improve-self-improvement-rev-", "said": "Do it: Build a self-review loop where every prompt update triggers an automated review of the same task batch that triggered the update. This keeps quality high"}
 {"at": "2026-07-31T23:11", "room": "dept-improve-self-improvement-rev-", "said": "Do it: Run the new prompt against a fresh, diverse batch of 500 tasks *before* deploying it. This catches regressions early and proves the change actually impro"}
 {"at": "2026-07-31T23:27", "room": "dept-improve-self-improvement-rev-", "said": "Build a self-review loop where every prompt update triggers an automated review of the same task set we used to validate the last version. This keeps quality hi"}
-<<<<<<< HEAD
 {"at": "2026-07-31T23:35", "room": "dept-improve-self-improvement-rev-", "said": "DO: Run the new prompt against a fresh, diverse batch of 500 tasks *before* deploying any change. The trade-off is slower iteration speed, but it catches silent"}
-=======
 {"at": "2026-07-31T23:33", "room": "dept-improve-self-improvement-rev-", "said": "Do it: Run the new prompt against a fresh, diverse batch of 500 tasks *before* deploying any change. The trade-off is slower iteration speed, but it catches sil"}
->>>>>>> 9091ab6b5586fa45d55768579af1b51e1f63a302
 {"at": "2026-07-31T23:47", "room": "dept-improve-self-improvement-rev-", "said": "Do it: Build a self-review loop that runs after every prompt batch, flagging only high-impact changes to the lead. This keeps the system honest without drowning"}

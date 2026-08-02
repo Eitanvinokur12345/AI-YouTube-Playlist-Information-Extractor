@@ -36,6 +36,7 @@ from pathlib import Path
 ROOT = Path(__file__).parent.parent
 EXC = ROOT / "data" / "excava"
 CONTRACT = EXC / "away_mode.json"
+GATES = EXC / "gates.json"
 INCREMENT = EXC / "current_increment.json"
 LOOP_STATE = EXC / "loop_state.json"
 
@@ -67,6 +68,57 @@ def contract() -> dict:
 
 def state() -> dict:
     return _load(LOOP_STATE, {"acks": [], "recent_kinds": [], "fires": 0})
+
+
+def gates() -> list:
+    """Every P5 pitch-gate. A gate with verdict None is OPEN and BLOCKS the work it names.
+
+    Eitan's decision 2026-08-02: gates bind BOTH loops — this session and the away loop that
+    ships to main. Until now a gate was prose in EXCAVA_END_PLAN.md that a session had to
+    notice and choose to honour, which is precisely how the Router gate was built straight
+    through on 2026-08-01. Prose cannot bind a process that never reads it; a file both loops
+    already check at the top of every fire can.
+    """
+    return _load(GATES, {}).get("gates", [])
+
+
+def open_gates() -> list:
+    return [g for g in gates() if not g.get("verdict")]
+
+
+def gate_blocks(text: str) -> list:
+    """Open gates whose `blocks` description overlaps what a fire is about to do.
+
+    Deliberately a coarse keyword overlap, not a clever matcher: a gate that fails OPEN (warns
+    on something harmless) costs a sentence, while one that fails CLOSED lets an overhaul
+    through — the exact failure this exists to stop.
+    """
+    words = set(_norm_words(text))
+    hits = []
+    for g in open_gates():
+        target = _norm_words(f"{g.get('blocks','')} {g.get('question','')}")
+        if words & set(target):
+            hits.append(g)
+    return hits
+
+
+def _norm_words(s: str) -> list:
+    import re as _re
+    stop = {"the", "a", "an", "or", "and", "to", "of", "on", "in", "is", "it", "any", "for",
+            "with", "that", "this", "not", "no", "be", "are", "as", "at", "by", "from"}
+    return [w for w in _re.findall(r"[a-z0-9]+", str(s).lower()) if len(w) > 2 and w not in stop]
+
+
+def set_gate(gid: str, verdict: str, note: str = "") -> bool:
+    d = _load(GATES, {"gates": []})
+    for g in d.get("gates", []):
+        if g.get("id") == gid:
+            g["verdict"] = verdict
+            g["note"] = note or g.get("note", "")
+            g["decided_at"] = _now()[:10]
+            _save(GATES, d)
+            return True
+    return False
 
 
 def meta_cap() -> int:
@@ -178,6 +230,7 @@ def status() -> dict:
         "consecutive_meta_fires": consecutive_meta(),
         "meta_cap": meta_cap(),
         "must_do_product_next": must_do_product(),
+        "open_gates": [{"id": g.get("id"), "blocks": g.get("blocks", "")} for g in open_gates()],
     }
 
 
@@ -189,6 +242,11 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="GO AWAY MODE contract enforcement")
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("status")
+    g_ = sub.add_parser("gate", help="decide a P5 pitch-gate (Eitan only)")
+    g_.add_argument("gate_id"); g_.add_argument("--verdict", required=True,
+                                                choices=["go", "no", "changed"])
+    g_.add_argument("--note", default="")
+    sub.add_parser("gates", help="list every P5 gate and whether it is open")
     a_ = sub.add_parser("ack"); a_.add_argument("--fire", default="?")
     s_ = sub.add_parser("start"); s_.add_argument("title")
     s_.add_argument("--kind", default="product", choices=list(KINDS))
@@ -204,9 +262,29 @@ def main() -> int:
         inc = st["open_increment"]
         print(f"open increment: {inc['title']} ({inc['kind']}, {inc['fires']} fire(s))" if inc
               else "open increment: none — next fire starts one")
+        if st["open_gates"]:
+            print(f"!! {len(st['open_gates'])} OPEN P5 GATE(S) — binding on BOTH loops, only Eitan decides:")
+            for g in st["open_gates"]:
+                print(f"     {g['id']}: {g['blocks'][:76]}")
         print(f"consecutive meta fires: {st['consecutive_meta_fires']}/{st['meta_cap']}"
               + ("  ->  NEXT FIRE MUST ADVANCE THE PRODUCT" if st["must_do_product_next"] else ""))
         return 0
+    if a.cmd == "gates":
+        gs = gates()
+        if not gs:
+            print("no gates on file"); return 0
+        for g in gs:
+            v = g.get("verdict")
+            print(f"  [{'OPEN — BLOCKING' if not v else v.upper():>15}] {g.get('id')}")
+            print(f"        blocks: {g.get('blocks','')[:88]}")
+        n = len(open_gates())
+        print(f"\n{n} gate(s) OPEN — these bind BOTH loops; only Eitan decides them."
+              if n else "\nno open gates — nothing is blocked.")
+        return 0
+    if a.cmd == "gate":
+        ok = set_gate(a.gate_id, a.verdict, a.note)
+        print(f"gate {a.gate_id} -> {a.verdict}" if ok else f"no gate {a.gate_id}")
+        return 0 if ok else 1
     if a.cmd == "ack":
         ack(a.fire); print(f"contract acknowledged (fire {a.fire})"); return 0
     if a.cmd == "start":

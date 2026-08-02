@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-08-02T07:10:39.201313+00:00",
+ "generated_at": "2026-08-02T07:12:40.141057+00:00",
  "total": 20,
- "passing": 16,
+ "passing": 19,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -21,8 +21,8 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": false,
-   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
+   "ok": true,
+   "detail": "1 bundle(s); newest within 26h.",
    "severity": "warn"
   },
   {
@@ -71,35 +71,35 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "11999 memory episodes on record.",
+   "detail": "12025 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "3 guardrail runs logged (append-only, never rewritten).",
+   "detail": "4 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
    "id": "G-L",
    "name": "Uncommitted-work watchdog",
-   "ok": false,
-   "detail": "2 untracked source file(s) not committed — commit or quarantine so nothing is lost: src/git_merge_resolve.py, src/git_merge_resolve_test.py",
+   "ok": true,
+   "detail": "no stray source files uncommitted.",
    "severity": "warn"
   },
   {
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "99 tasks done, 11 departments moving",
+   "detail": "108 tasks done, 11 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "29991 MB free on the repo drive.",
+   "detail": "29585 MB free on the repo drive.",
    "severity": "info"
   },
   {
@@ -126,8 +126,8 @@
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
-   "ok": false,
-   "detail": "6/16 lane(s) landing on cadence, 9 can't-tell (shallow clone) — STALE: bulk_analyze.yml (every 2h): last commit 7.6h ago (expected within 6h)",
+   "ok": true,
+   "detail": "7/16 lane(s) landing on cadence, 9 can't-tell (shallow clone).",
    "severity": "warn"
   },
   {

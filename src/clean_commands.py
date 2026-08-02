@@ -28,6 +28,7 @@ from __future__ import annotations
 
 import json
 import re
+import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -35,6 +36,7 @@ ROOT = Path(__file__).parent.parent
 DATA = ROOT / "data"
 COMMANDS_PATH = DATA / "commands.json"
 QUARANTINE_PATH = DATA / "commands_quarantine.json"
+SNAPSHOT_PATH = ROOT / "backups" / "snapshot" / "commands.json"
 
 TOKEN_RX = re.compile(r"^/[a-zA-Z0-9][a-zA-Z0-9-]*$")
 
@@ -99,9 +101,19 @@ def main() -> int:
     json.dump(doc, open(COMMANDS_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
     json.dump(quarantine_doc, open(QUARANTINE_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 
+    # data_guard.py restores commands.json from backups/snapshot/commands.json whenever the live
+    # file drops below 55% of that snapshot's count — a guard against ACCIDENTAL data loss. This
+    # cleanup is a deliberate, audited shrink (bad records move to commands_quarantine.json, they
+    # are not lost), so re-baseline the snapshot down here too; otherwise the very next data_guard
+    # run treats this fix as a collapse and silently restores the pre-cleanup junk (confirmed: it
+    # did exactly that ~1h after away-fire 94 first ran this cleanup).
+    SNAPSHOT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(COMMANDS_PATH, SNAPSHOT_PATH)
+
     print(f"commands: {len(records)} -> {len(doc['commands'])} kept "
           f"({normalized} normalized to base token, {newly_quarantined} newly quarantined, "
-          f"{len(quarantined) - newly_quarantined} already quarantined before this run)")
+          f"{len(quarantined) - newly_quarantined} already quarantined before this run); "
+          f"data_guard snapshot re-baselined to {len(doc['commands'])} so this cleanup sticks")
     return 0
 
 

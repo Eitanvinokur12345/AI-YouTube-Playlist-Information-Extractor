@@ -6,12 +6,14 @@ Usage: python3 src/process_video.py <video_id> < analysis.json
 """
 import json
 import os
+import re
 import sys
 import glob
 import shutil
 from datetime import datetime, timezone
 
 WORK_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+COMMAND_TOKEN_RX = re.compile(r"^/[a-zA-Z0-9][a-zA-Z0-9-]*$")  # CLAUDE.md Step 6: real /slash-commands only
 
 def load_json(path, default=None):
     full = os.path.join(WORK_DIR, path)
@@ -187,6 +189,11 @@ def process_video(video_id, analysis):
     commands_data = load_json('data/commands.json', {'commands': []})
     cmds_changed = False
     for cmd in analysis.get('commands', []):
+        raw = str(cmd.get('command', '')).strip()
+        token = raw.split(None, 1)[0] if raw.startswith('/') else ''
+        if not COMMAND_TOKEN_RX.match(token):
+            continue  # not a real invocable /command (shell command, path, or prose) — drop it
+        cmd = {**cmd, 'command': token}
         existing_cmd = next((c for c in commands_data['commands'] if c['command'].lower() == cmd['command'].lower()), None)
         if existing_cmd is None:
             commands_data['commands'].append(cmd)

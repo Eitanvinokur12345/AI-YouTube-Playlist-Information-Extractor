@@ -4,7 +4,92 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
-## 2026-08-01
+## 2026-08-02
+- **~01:0x (fire 97, unattended, cloud, scheduled-task invocation, 20th consecutive cloud
+  invocation — a 10th-heartbeat by the outer scheduler's own count, not the away-mode internal
+  fire-counter's next one at fire 100)** — Read fire 96's log first. Standing checks clean
+  (`python -m src.standing_checks`): same routine stale-cache/missing-upstream self-heal every
+  recent fire hits. Guardrails 18/20, 0 critical (same two standing flags: G-C history-bundle
+  staleness, G-O local drain stale — EITAN-PC off).
+  **10th-heartbeat checklist (outer scheduler's own instruction):** disk: 30GB free / 20% used,
+  no ceiling near (G-N). Previous run (fire 96): completed successfully, shipped, verified —
+  its own log entry is honest about what it didn't chase (other `_beat()` shadowing, whether the
+  crash it fixed ever reached production). No operational limit exceeded anywhere. `analyze.yml`
+  outage fires 80/81 flagged (0-for-5/6 real-Claude-step failures in a row) has **resolved**:
+  pulled the last 15 runs live (`mcp__github__actions_list`) — 13 succeeded, the 2 failures are
+  isolated single-run Claude-step failures with the safety-commit still landing clean (confirmed
+  from job logs, not just run status) — nowhere near the 5-6-in-a-row pattern that warranted
+  escalation, so left it alone rather than re-opening a closed thread on weaker evidence.
+  Reviewed the last ten cycles (fires 87-96): all narrow, each verified before shipping, each
+  git-safe-shipped, nothing lost — real engineering in that window (excava_beat.yml's
+  conflict-marker-corruption root cause found and fixed at 88/89/90, Router — M2 class 5/5 —
+  landed at 95 and wired into the live beat at 96, plus the reg-shadowing crash fix). No
+  blocker for Eitan; nothing meeting the push-now bar in `away_mode.json`.
+  **This fire's increment:** picked up fire 96's own follow-up trail (audited the rest of
+  `_beat()` for the same reused-name-shadowing pattern as the `reg` bug it fixed — read the
+  full 390-line function, grepped every top-level-var assignment; found no other instance) and,
+  while doing that, found a much bigger live bug: `self_check` had regressed from 44/50 back to
+  44/50-with-**#13 failing again** (`commands.json` back at 914 entries, only 23.7% real
+  `/commands` — below the 60% floor fire 94 (`05dfed92`) supposedly fixed for good at "914->136,
+  root cause fixed"). Chased it with git history, not guesswork: exactly one commit touched
+  `data/commands.json` since fire 94 — `0a70daf6`, a routine "links+memory (fast lane)" bot
+  commit 65 minutes later, whose diff shows `data/commands.json` and `backups/snapshot/*.json`
+  both changing together. Root cause: `src/data_guard.py`'s anti-collapse guard restores any
+  tracked file that drops below 55% of its `backups/snapshot/` baseline — a genuinely good
+  defense against ACCIDENTAL data loss, with zero way to tell a bad write apart from fire 94's
+  *deliberate*, fully-audited prune (712 bad records moved to `commands_quarantine.json`, not
+  discarded). 914→136 is 14.9% of baseline, so the very next `data_guard` run — which fire 94's
+  own commit never touched `backups/snapshot/commands.json`, so the stale 914-entry snapshot was
+  still sitting there — saw a "collapse" and silently copied the pre-cleanup junk straight back
+  over the cleaned file. This is not a one-off: fire 80's own 672-entry purge earlier this week
+  almost certainly hit the exact same fate, since 889→217 (24.4% of baseline) is also under the
+  55% floor — the "root cause fixed" claims on both those fires were the cleanup being correct
+  but incomplete, not wrong.
+  **Fix, not a workaround:** `src/clean_commands.py` now copies its own output straight into
+  `backups/snapshot/commands.json` after every run — re-baselining data_guard's floor to the new,
+  legitimate count instead of leaving the old count as a trap for the next run. This is the
+  cleanup script's own call to make (it already carries the full quarantine audit trail proving
+  the shrink is deliberate), not a change to `data_guard.py`'s general collapse logic, which
+  stays exactly as strict for every other file and for any *future* unaudited shrink of
+  `commands.json` below this new, lower floor. Also found and closed a second gap fire 94 missed:
+  `src/process_video.py` appended the AI analysis's raw `commands` field to `commands.json` with
+  **zero validation** — unlike `mine_feeds.py`/`gemini_video_analyze.py`/`visual_extract.py`,
+  which all share `mine_feeds.merge()`'s slash-token filter that fire 94 gated. Added the same
+  `^/[a-zA-Z0-9][a-zA-Z0-9-]*$` token check + normalize-to-base-token there (mirrors
+  `clean_commands.py`'s own `TOKEN_RX`, kept identical on purpose so the two enforcement points
+  can't drift apart). Deliberately left `analyze_batch.py`'s command extraction alone — it
+  already regex-matches `/[a-z][a-z0-9_-]{1,20}\b` out of page text, so every string it produces
+  already starts with `/`; it has a precision problem (URL fragments, "and/or"), not the
+  correctness problem this fire was chasing, and fixing precision issues wasn't in scope for
+  one increment.
+  **Verified, every step:** `python -m py_compile` clean on both touched files;
+  `python -m src.clean_commands` → `914 -> 136 kept (85 normalized, 0 newly quarantined, 712
+  already quarantined before this run)` — confirms nothing new was lost, this really is the same
+  712 fire 94 already quarantined, not a fresh cut; `python -m src.data_guard` → `all files
+  healthy` (not `RESTORED`), and `data/data_guard.json`'s own commands.json entry now reads
+  `count: 136, snapshot: 136` instead of the stale `914/914` from before this fire; `python -m
+  src.self_check` → `44/50 -> 45/50`, `#13` gone from the failing list (only `#1/10/12/45`,
+  pre-existing and untouched, plus `#42` which is `status.analyze_ok is not False` reading the
+  literal, correctly-reported failure from the two recent analyze.yml misses above — a true
+  reading of current reality, not a bug, and it self-heals on the next successful run);
+  `python -m src.excava_core_test` all pass (unrelated surface, run as a blast-radius check
+  since both edited files sit on the same analyze/process pipeline); `python -m src.guardrails`
+  unchanged at 18/20, 0 critical. Logged the WHY via `project_memory log` before shipping.
+  **Harsh self-criticism:** this is the second time this exact regression has been "fixed" —
+  fire 80 and fire 94 each closed the symptom (`self_check #13` passing) without checking whether
+  their own fix would survive contact with `data_guard`'s next run, and I nearly did the same
+  thing until I asked *why* the count was back up instead of just re-running the cleanup and
+  shipping. The actual root cause was one `shutil.copy2` away the whole time; it should have
+  been part of fire 94's original commit. I did not audit `data_guard.py`'s other seven guarded
+  files (`tools.json`, `skills.json`, `models.json`, `connectors.json`, `prompts.json`,
+  `designs.json`, `formats.json`) for whether any of THEM has ever been the target of a
+  deliberate large prune that got silently reverted the same way — this fire only chased the one
+  self_check already flagged as red, not the general class of the bug. That's a real, concrete,
+  bounded follow-up for a future fire, not a closed question. Also did not touch the
+  `analyze_batch.py` precision issue flagged above, and did not investigate whether
+  `commands.json`'s current 136 "real" commands are themselves high-quality (fire 80 already
+  spot-checked 10 survivors as genuine; I did not re-verify that this fire).
+
 - **~22:0x (fire 96, unattended, cloud, scheduled-task invocation)** — Read fire 95's log first.
   Standing checks clean (`python -m src.standing_checks`): routine stale-cache/missing-upstream
   self-heal only. Guardrails 18/20, 0 critical before this fire's change (same two standing

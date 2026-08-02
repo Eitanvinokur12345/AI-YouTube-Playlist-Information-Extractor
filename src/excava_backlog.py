@@ -20,6 +20,7 @@ import json
 from pathlib import Path
 
 from src import excava_bus as bus
+from src.safety_check import _slug as _safety_slug
 
 ROOT = Path(__file__).parent.parent
 DATA = ROOT / "data"
@@ -85,10 +86,25 @@ def scan_gaps() -> list[dict]:
         out.append({"title": f"Transcripts: drain the next batch of {pending} pending (residential IP)", "department": "transcripts",
                     "source": "gap", "why": f"{pending} pending", "value": 60, **size_score(25, 35, 15)})
     con = _load("connectors.json", {})
-    ncon = len(con.get("connectors", con) if isinstance(con, dict) else con) if con else 0
+    con_list = con.get("connectors", con) if isinstance(con, dict) else (con or [])
+    ncon = len(con_list)
+    rated = _load("safety.json", {}).get("connectors", {})
+    rated = rated if isinstance(rated, dict) else {}
+    unrated = 0
+    for c in con_list:
+        key = (c.get("slug") or _safety_slug(c.get("name", ""))) if isinstance(c, dict) else None
+        if key and key not in rated:
+            unrated += 1
+    # `safety_check` rates every connector on every run (not incremental), so only surface this
+    # as a real gap when connectors.json actually has entries safety.json hasn't seen yet —
+    # otherwise it's a stale "next batch" claim for a batch that's already fully rated (found
+    # fire 118: safety.json had all 1485/1485 connectors rated, yet this always fired at
+    # value 72 regardless, because it counted total connectors instead of the unrated delta).
+    if unrated:
+        out.append({"title": f"Security: safety-rate the next batch of {unrated} newly-discovered connectors/skills",
+                    "department": "security", "source": "gap", "why": f"{unrated} of {ncon} connectors unrated",
+                    "value": 72, **size_score(25, 30, 25)})
     if ncon:
-        out.append({"title": f"Security: safety-rate the next batch of {ncon} connectors/skills", "department": "security",
-                    "source": "gap", "why": f"{ncon} connectors", "value": 72, **size_score(25, 30, 25)})
         out.append({"title": "Mining: discover new AI repos/tools + verify this cycle", "department": "mining",
                     "source": "gap", "why": "discovery cadence", "value": 68, **size_score(20, 25, 10)})
     if (DATA / "weekly_web_news.json").exists():

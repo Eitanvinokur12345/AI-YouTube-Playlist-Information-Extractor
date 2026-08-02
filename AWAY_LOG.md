@@ -5,6 +5,83 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-02
+- **~03:0x (fire 99, unattended, cloud, scheduled-task invocation)** — Read fire 98's log first.
+  Standing checks clean (`python -m src.standing_checks`); guardrails 15-17/20 across this fire
+  (0 critical throughout). Started by looking for the queued OR-1 room debate (fire 98's own
+  increment) to actually run — but this cloud sandbox has **no engine keys reachable**
+  (`OPENROUTER_API_KEY`/`GROQ_API_KEY`/etc. all unset here, confirmed via `env`) and **no general
+  outbound network** beyond the scoped GitHub MCP proxy (raw `curl` to `hn.algolia.com`,
+  `example.com`, `youtube.com` all returned `000`; `api.github.com` search returned `403` —
+  scoped-repo-only, matching fire 10's identical finding). So the real debate cannot run from
+  here, and per P4/OR-1's own `done_criteria` I did **not** fabricate its content — that stays
+  for the real GitHub Actions beat, which has the actual keys.
+  **That redirected this fire to a much bigger, real find.** `python -m src.excava_backlog`
+  showed G-M ("work is moving") STALLED at `done=90` unchanged since 2026-08-01T23:33 — 4+
+  beats with zero completions recorded, despite `git fetch origin main` showing origin very
+  much alive (a `news:` commit had landed at 02:58Z). Chased it with live GitHub data, not
+  guesswork: `mcp__github__search_commits` for `"excava-beat #"` (which bypasses this session's
+  shallow clone entirely) showed the **last real `excava-beat #N` commit to reach `main` was
+  `#7` at 2026-08-01T02:00:17Z** — over 25 hours before this fire, even though
+  `list_workflow_runs` showed the workflow triggering and "completing" (mostly
+  success/cancelled) again and again in between. Pulled the full job log for the most recent
+  completed run (30708126877, ran 17:24→22:43Z, `mcp__github__get_job_logs`) and found the
+  smoking gun directly: the run's internal loop DID produce local commits `excava-beat #1`
+  through `#41` — real work, every 10 min, all 5.3 hours — but **every single `git pull
+  --rebase` in that run failed** ("Your branch and 'origin/main' have diverged, and have 39/40/
+  41 and 6055/6056 different commits, respectively" — the classic shallow-clone-can't-compute-
+  merge-base symptom), fell back to `git pull --no-rebase`, which ALSO conflicted every time on
+  `PULSE.md` (once also `PROOF.md` + `docs/hub_api.json` + `docs/hub_api_packages.json`) —
+  none of which were on fire 89's stateless-file whitelist — so the fallback's last resort
+  ("abort the merge, leave this cycle's work local-only") fired every cycle, and `git push`
+  was rejected non-fast-forward every time (`push skipped` logged 3x in just the tail of one
+  run). **The entire 5.3-hour job's real output — 41 real beat cycles, whatever rooms/
+  self-improve work they did — never reached `main`, silently, and this has been happening
+  since before 02:00Z on 2026-08-01.** This directly explains G-M's stall and is also why OR-1's
+  debate (fire 98's increment) was never going to land even once queued: the one workflow that
+  runs it can't sync its own output.
+  **Root cause, not just the symptom:** `excava_beat.yml`'s `actions/checkout@v4` step had no
+  `fetch-depth` override (default shallow depth=1) — the ONLY lane in `.github/workflows/` that
+  runs a multi-hour internal loop accumulating dozens of local commits before syncing.
+  `bulk_analyze.yml` and `mine.yml`, the other lanes doing real repeated work per job, both
+  already use `fetch-depth: 0`; this lane was the one place that pattern was missed. A shallow
+  clone can't correctly compute a merge-base once local commits pile up against a
+  fast-moving remote, which is exactly the "diverged by 6000+" nonsense in the logs — not a
+  real divergence, a shallow-clone artifact.
+  **Fix (`.github/workflows/excava_beat.yml`):** (1) added `fetch-depth: 0` +
+  `persist-credentials: true` to the checkout step, matching `bulk_analyze.yml`/`mine.yml`
+  exactly — gives every rebase a real merge-base to compute against instead of a grafted
+  single-commit boundary. (2) Widened the stateless-file `ours` whitelist (fire 89's pattern) to
+  add `PULSE.md`, `PROOF.md`, `docs/hub_api.json`, `docs/hub_api_packages.json` — verified each
+  is `.write_text()`'d whole every run (`src/pulse.py`, `src/excava_proof.py`,
+  `src/build_hub_api.py` — grepped, none append), the same category fire 89 already established
+  for the JSON files, so losing "ours" on a rare real conflict loses nothing the next cycle
+  doesn't immediately regenerate. This closes the residual risk that even a genuine (not
+  shallow-clone-fake) PULSE.md conflict still forces the abort-and-strand fallback.
+  **Verified, not assumed:** YAML re-parses clean (`yaml.safe_load`); simulated the EXACT
+  observed failure in a throwaway repo (two clones both editing `PULSE.md`, one pushes first) —
+  before the whitelist fix this reproduces "unresolved conflict... aborting" needing a strand;
+  after it, `git commit --no-edit` succeeds cleanly and `git push` lands, with the local
+  (in-progress) cycle's `PULSE.md` version winning as intended. `excava_core_test` 65/65
+  unaffected (YAML/CI change, no Python touched). `guardrails` unchanged at 0 critical
+  throughout (G-M/G-O/G-T's existing stale flags are the very symptom this fix targets — they
+  won't clear until the NEXT `excava_beat.yml` run completes a cycle and actually pushes; that's
+  the real verification, not available from this sandbox, flagged for the next fire to confirm
+  via `search_commits` for a fresh `excava-beat #N` on `main`).
+  **Harsh self-criticism:** I could not live-trigger `excava_beat.yml` from here to prove the fix
+  end-to-end (no `workflow_dispatch` trigger tool in this session's GitHub MCP scope beyond
+  `actions_run_trigger`, and even if triggered, a fresh run wouldn't complete before this fire
+  ends) — the fix is verified by (a) an exact offline reproduction of the observed conflict and
+  (b) matching an already-proven-working pattern from two sibling lanes, not by watching main
+  receive a fresh `excava-beat #N` commit myself. That confirmation is the correct next thing
+  for whichever fire runs after the next real beat cycle. I also did not audit the OTHER 3
+  "can't-tell" shallow-clone-affected lanes G-T flagged, nor `core_spoton.yml` (also missing
+  `fetch-depth: 0`, but it's a short single-shot job with no internal loop so far less exposed —
+  flagging, not fixing, since it's out of the one-increment scope this fire already spent on the
+  confirmed-live bug). And this fix does not by itself make OR-1's debate happen — it only
+  removes the reason the beat that would run it has been unable to sync its work for over a day;
+  the actual 4-phase debate still depends on the next real beat cycle picking up the
+  already-queued task with working engine keys.
+
 - **~02:0x (fire 98, unattended, cloud, scheduled-task invocation)** — Read fire 97's log first.
   Standing checks clean (`python -m src.standing_checks`), guardrails 17/20 (0 critical; only
   G-C history-bundle staleness — fixed by this fire's own `git_safe ship` backup step — and G-O

@@ -28,6 +28,9 @@ jobs:
     timeout-minutes: 340          # ~5.5h: the job stays alive beating every 10 min (see run step)
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -116,8 +119,19 @@ jobs:
                 # rooms.json/leases.json/pulse.json/recent_events.json/backlog.json — verified
                 # each is loaded then json.dumps()'d back out whole, not appended-to, so "ours"
                 # loses nothing that the next cycle doesn't immediately regenerate anyway).
-                git checkout --ours -- data/data_guard.json data/health.json data/effectiveness.json data/hub.json data/self_check.json data/safety.json data/guardrails_status.json data/excava/state.json data/excava/bus.json data/excava/rooms.json data/excava/leases.json data/excava/pulse.json data/excava/recent_events.json data/excava/backlog.json 2>/dev/null || true
-                git add data/data_guard.json data/health.json data/effectiveness.json data/hub.json data/self_check.json data/safety.json data/guardrails_status.json data/excava/state.json data/excava/bus.json data/excava/rooms.json data/excava/leases.json data/excava/pulse.json data/excava/recent_events.json data/excava/backlog.json 2>/dev/null || true
+                # 2026-08-02 (away fire 99): live run 30708126877's own logs showed this exact
+                # fallback firing on PULSE.md, PROOF.md, docs/hub_api.json and
+                # docs/hub_api_packages.json every single cycle for 5+ hours — none of them were
+                # on the whitelist, so every conflict fell through to "abort the merge", which
+                # left local HEAD un-synced with origin and made the NEXT cycle's rebase replay
+                # an ever-growing stack of never-pushed local commits. That is the actual reason
+                # no real "excava-beat #N" commit reached main between 2026-08-01T02:00Z and this
+                # fix (confirmed via `search_commits`: #7 was the last one to land, 25+ hours of
+                # silent no-op runs after it). All four are `.write_text()`'d whole every run
+                # (src/pulse.py, src/excava_proof.py, src/build_hub_api.py — verified, none
+                # append) so they belong in the same stateless category as the JSON files above.
+                git checkout --ours -- data/data_guard.json data/health.json data/effectiveness.json data/hub.json data/self_check.json data/safety.json data/guardrails_status.json data/excava/state.json data/excava/bus.json data/excava/rooms.json data/excava/leases.json data/excava/pulse.json data/excava/recent_events.json data/excava/backlog.json PULSE.md PROOF.md docs/hub_api.json docs/hub_api_packages.json 2>/dev/null || true
+                git add data/data_guard.json data/health.json data/effectiveness.json data/hub.json data/self_check.json data/safety.json data/guardrails_status.json data/excava/state.json data/excava/bus.json data/excava/rooms.json data/excava/leases.json data/excava/pulse.json data/excava/recent_events.json data/excava/backlog.json PULSE.md PROOF.md docs/hub_api.json docs/hub_api_packages.json 2>/dev/null || true
                 # 2026-08-01 (away fire 90): the piece fire 89 explicitly deferred. Any *.jsonl
                 # append-log left conflicted here (history.jsonl, improvements.jsonl,
                 # syscalls.jsonl, staleness_events.jsonl, supervisor_longterm.jsonl, or any

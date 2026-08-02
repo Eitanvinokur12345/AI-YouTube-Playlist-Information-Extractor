@@ -1,15 +1,16 @@
 # improve: Self-improvement: review prompts/engines/routing/own-code; auto-apply safe changes; pitch 
 
-> Decision artifact · room `dept-improve-self-improvement-rev-449` (dept) · 2026-07-10T06:48:09.082314+00:00
-> Participants: Sprocket, Gauge, Ratchet · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-improve-self-improvement-rev-449` (dept) · 2026-08-02T17:49:33.281493+00:00
+> Participants: Sprocket, Gauge, Overhaul, Ratchet · synthesized by mistral/mistral-small-latest
 
-**Decision:** Run targeted static analysis to quantify real brittle-pattern risks before code tweaks.
+**Decision:**
 
 **Plan:**
-1. Execute targeted static analysis using Bandit and Pylint to identify proven taint risks in the codebase, focusing on constructs like `eval`, `os.system`, and untrusted path joins.
-2. Compile a report detailing the findings from the static analysis, highlighting identified risks and their severity.
-3. Conduct a historical incident review to gather evidence of prior vulnerabilities linked to the flagged constructs.
-4. Prioritize risks based on potential impact and exploitability, and formulate a mitigation strategy for the top identified risks.
-5. Review results and mitigation plans collaboratively in a development meeting to decide on next steps.
+1. Route all "safe" auto-apply changes to a dedicated `staging` branch instead of main.
+2. Auto-apply changes to `staging` with full static analysis + regression checks.
+3. Log all applied changes in a `staging-changes.md` file with timestamps and diffs.
+4. Block merges from `staging` to `main` for 7 days (production observation period).
+5. After 7 days, require a human lead to review `staging-changes.md` and approve the merge.
+6. If approved, fast-forward merge `staging` into `main`; otherwise, revert and log the rejection.
 
-**What changed:** The approach shifted from surface-level scanning to a comprehensive analysis of causal risks and historical evidence.
+**What changed:** Shadow mode replaces immediate auto-apply; production-proven safety replaces static-only trust.

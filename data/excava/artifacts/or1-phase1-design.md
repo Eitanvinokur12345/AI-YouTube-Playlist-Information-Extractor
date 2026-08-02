@@ -1,7 +1,47 @@
-# OR-1 phase 1 — design — BLOCKED
+# OR-1 phase 1 — independent drafts — element type: design
+> 2026-08-02T17:46:44.904389+00:00 · families used: DeepSeek V4, GLM-5.2, GPT-4o-mini, Kimi K2.7
 
-> 2026-08-02T16:57:58.068183+00:00
+## Ratchet (DeepSeek V4 · mistral/mistral-small-latest)
 
-only 1 live model family(ies) here (GPT-4o-mini) — phase 1 needs >= 2 distinct lineages so each draft reflects a genuinely different model's reasoning, not one model wearing a persona. This session only carries a GitHub-Models key (GPT-4o-mini); the GitHub Actions beat carries the full provider-key set and can run this for real.
+**GOOD** looks like a design element that directly reduces friction for the AI-tool user’s core task—whether that’s discovery, comparison, or execution—without adding cognitive load. It’s predictable (users can guess its behavior on first encounter), consistent (same pattern reused across the hub), and reversible (changes can be undone or adjusted without penalty). Good elements also expose their purpose clearly through affordances like labels, icons, or micro-copy that match the user’s mental model of the task.
 
-Live families this run: GPT-4o-mini
+**MEDIOCRE** looks like decoration masquerading as utility: a flashy animation that doesn’t clarify state, a filter that’s visually prominent but returns irrelevant results, or a tooltip that repeats what’s already visible. It’s inconsistent (same function labeled differently in two places), or it forces the user to adapt to the tool’s whims (e.g., requiring a click to reveal a critical control). Mediocre elements often prioritize aesthetics over clarity, leaving users to infer meaning through trial and error.
+
+**DISQUALIFIES** an item outright if it actively misleads (e.g., a “recommended” tag on clearly irrelevant tools), introduces irreversible actions (e.g., a one-click “delete all” without confirmation), or violates platform norms in a way that breaks workflows (e.g., hijacking keyboard shortcuts). It also disqualifies if it creates security risks (e.g., exposing API keys in plaintext) or performance drag (e.g., a live preview that freezes the UI for >2 seconds).
+
+**Observable signals** include: time-to-complete a task (measured via stopwatch or analytics), error rates (e.g., users abandoning a flow after hitting a misleading UI), and user feedback (e.g., “Why is this here?” or “I didn’t know I could do that”). Reviewers can also check consistency by auditing patterns across the hub (e.g., all buttons follow the same style and placement rules) and reversibility by testing undo/redo or version history.
+
+## Sprocket (GLM-5.2 · mistral/mistral-small-latest)
+
+**GOOD** looks like a design element that is *intentionally scoped* to solve a specific AI-tool user’s pain point—like a one-click "Explain This Model" button that adapts its output to the user’s skill level (novice vs. expert). It’s *consistently branded* (icons, colors, and microcopy reuse the same logic) and *predictably placed* (e.g., tooltips always appear top-right of inputs). It’s *tested* with at least 3 real users in the last quarter, with clear before/after metrics (e.g., "reduced setup time by 40%"). It’s *accessible* (passes WCAG 2.1 AA checks) and *localized* (supports 3+ languages with context-aware translations).
+
+**MEDIOCRE** looks like a design element that *sort of works* but feels bolted on—like a generic "Help" icon that leads to a static FAQ page, or a tooltip that repeats the label verbatim. It’s *inconsistent* (same function uses different icons in two places) and *unvalidated* (no user testing, just "looks fine to me"). It’s *cluttered* (adds 3 extra clicks to complete a task) or *overly clever* (uses niche jargon like "latent space" without explanation). It’s *fragile* (breaks if the user’s browser zoom is 125%).
+
+**DISQUALIFIES** an item outright if it *blocks core functionality*—like a required AI model selection dropdown that defaults to "None" and crashes the app. It also disqualifies if it *violates security* (e.g., exposes API keys in UI logs) or *breaks compliance* (e.g., ignores GDPR’s "right to explanation" for automated decisions). Any element that *misleads users* (e.g., a "Free" badge on a paid-only feature) or *harms accessibility* (e.g., color contrast fails WCAG) is disqualified regardless of aesthetics.
+
+**Observable signals** that decide it:
+- **Scope clarity**: Does the element have a single, documented purpose (e.g., "reduce onboarding friction")?
+- **User impact**: Are there recorded metrics (time saved, error reduction) or test notes from real users?
+-
+
+## Gauge (Kimi K2.7 · mistral/mistral-small-latest)
+
+**GOOD** looks like a design element that is *intentionally aligned* with user goals and technical constraints—it balances clarity, efficiency, and adaptability without overcomplicating the interface. It uses visual hierarchy, consistent patterns, and minimal friction to guide users toward the most common actions while remaining discoverable for edge cases. Good design anticipates confusion and preemptively addresses it (e.g., tooltips, progressive disclosure) without cluttering the primary view. It also respects cognitive load by avoiding redundant controls or ambiguous labels, ensuring that even novice users can infer function from form.
+
+**MEDIOCRE** looks like a design element that *meets basic functionality* but fails to optimize for real-world use—it’s functional but clunky, relying on brute-force solutions (e.g., excessive clicks, modal pop-ups) where a cleaner interaction would suffice. It may use inconsistent terminology, unclear affordances (e.g., buttons that look like text), or visual noise (e.g., competing colors, competing layouts) that slows users down without adding value. Mediocre design often prioritizes aesthetics over usability, leading to elements that *look* polished but feel frustrating in practice.
+
+**DISQUALIFIES** an item outright if it *actively harms usability* or violates core principles of trust and safety—such as hiding critical controls behind non-obvious gestures, using misleading visual cues (e.g., a "play" icon that deletes data), or failing to provide feedback for irreversible actions. It also disqualifies elements that introduce security risks (e.g., exposing API keys in plain text) or violate accessibility standards (e.g., insufficient color contrast, missing keyboard navigation). Any design that forces users to "learn" arbitrary rules (e.g., "hover over this invisible area") is disqualified by default.
+
+**Observable signals** that decide classification include:
+- **Task completion time** (good: <30s for common actions; mediocre: 30–90s; disqualifying: >90s or user abandonment).
+- **Error rates** (good: <5%; mediocre: 5–20%; disqualifying: >20% or critical failures).
+- **Visual consistency** (good: adheres to a shared design system; mediocre: inconsistent spacing/colors; disqualifying: conflicting styles in the same view).
+- **Documentation reliance** (good: self-explan
+
+## Overhaul (GPT-4o-mini · mistral/mistral-small-latest)
+
+**GOOD** in an AI-tool hub design means the element is *purpose-built* for the user’s workflow—clear, efficient, and frictionless. It anticipates needs (e.g., one-click access to recent tools, intuitive categorization by task type) and scales with complexity without overwhelming. Signals include consistent labeling, minimal clicks to achieve a core action, and visible feedback (e.g., loading states, success/error messages). It feels *obvious* in hindsight but required deliberate thought to execute.
+
+**MEDIOCRE** is generic or over-engineered—it serves the tool’s needs more than the user’s. It might have cluttered interfaces, vague labels ("Advanced Options"), or hidden dependencies (e.g., requiring a tutorial to use a basic feature). Signals include inconsistent terminology, redundant steps, or designs that prioritize aesthetics over functionality (e.g., animations that slow down interaction). It’s "fine" but forgettable, forcing users to adapt to the tool rather than the tool adapting to them.
+
+**DISQUALIFIES** an item outright if it’s actively harmful or broken. This includes elements that mislead (e.g., misleading tool names or descriptions), violate accessibility standards (e.g., poor color contrast, no keyboard navigation), or introduce security risks (e.g., exposing API keys in plaintext). Signals are objective failures: broken links, non-functional buttons, or compliance violations (e.g., missing alt text for images). If a reviewer can’t use it without frustration or risk, it’s disqualified.

@@ -1,7 +1,49 @@
-# OR-1 phase 1 — creation — BLOCKED
+# OR-1 phase 1 — independent drafts — element type: creation
+> 2026-08-02T17:47:59.257362+00:00 · families used: DeepSeek V4, GLM-5.2, GPT-4o-mini, Kimi K2.7
 
-> 2026-08-02T16:57:58.069126+00:00
+## Ratchet (DeepSeek V4 · mistral/mistral-small-latest)
 
-only 1 live model family(ies) here (GPT-4o-mini) — phase 1 needs >= 2 distinct lineages so each draft reflects a genuinely different model's reasoning, not one model wearing a persona. This session only carries a GitHub-Models key (GPT-4o-mini); the GitHub Actions beat carries the full provider-key set and can run this for real.
+**GOOD** looks like a creation element that solves a clear problem with minimal friction—its purpose is instantly obvious, its inputs/outputs are predictable, and it integrates smoothly into a workflow without forcing users to adapt their habits. It includes clear documentation, edge-case handling, and a way to measure its impact (e.g., time saved, error reduction). The best elements feel "invisible" in use, like a well-oiled tool that only gets noticed when it’s missing.
 
-Live families this run: GPT-4o-mini
+**MEDIOCRE** looks like a creation that *almost* works but introduces friction—its purpose is vague, its outputs require manual cleanup, or it’s brittle under real-world conditions (e.g., fails on slightly messy data). It might have bloated features that distract from core utility, or its documentation assumes too much prior knowledge. Users tolerate it but don’t trust it, treating it as a "maybe" rather than a go-to solution.
+
+**DISQUALIFIES** an item outright if it’s actively harmful (e.g., corrupts data, leaks secrets, or introduces bias without warning), if it’s a thinly veiled repackaging of existing tools without added value, or if it’s so unstable that it crashes more than it runs. Also disqualified: elements that require proprietary dependencies, violate basic usability principles (e.g., no undo), or ignore accessibility standards (e.g., no keyboard navigation).
+
+**Observable signals** include: (1) *clarity of purpose* (stated in ≤1 sentence), (2) *reproducibility* (same inputs → same outputs), (3) *dependency footprint* (no unnecessary libraries), (4) *error handling* (graceful degradation or explicit warnings), (5) *performance* (completes in ≤2x human time for its task), and (6) *user feedback* (no recurring complaints about the same issue).
+
+## Sprocket (GLM-5.2 · mistral/mistral-small-latest)
+
+**GOOD** looks like a creation element that solves a clear, specific problem with minimal friction—users can see its purpose immediately, use it intuitively, and get a tangible result without digging through documentation or trial-and-error. It’s polished, with no obvious gaps in functionality, and feels like a natural extension of the tool’s core workflow rather than an afterthought. Good elements also have measurable utility: they save time, reduce errors, or unlock capabilities users didn’t realize they needed until they tried it.
+
+**MEDIOCRE** looks like a creation that *almost* works but forces users to compensate—maybe it’s clunky to set up, requires manual tweaks, or only delivers half the promised outcome. It might be overly generic (e.g., a "template" that’s just a blank file) or so rigid it breaks in edge cases. Mediocre elements often lack polish: typos in instructions, inconsistent formatting, or features that only work under ideal conditions. They feel like placeholders, not solutions.
+
+**DISQUALIFIED** elements outright fail if they’re broken (e.g., crashes, corrupts data, or violates the tool’s own constraints), misleading (promises a feature it doesn’t deliver), or harmful (e.g., generates unsafe code, leaks data, or enables abuse). They’re also disqualified if they’re redundant (a near-identical clone of a built-in feature with no added value) or if they require proprietary dependencies that aren’t disclosed.
+
+**Observable signals** include: (1) *completeness*—all promised features work as described in the tool’s own interface; (2) *usability*—no more than 2 clicks to achieve the core action; (3) *documentation*—a concise, accurate README or inline help; (4) *performance*—no lag or errors under normal use; (5) *uniqueness*—no overlap with existing elements unless it’s a clear improvement; (6) *transparency*—no hidden requirements or side effects.
+
+## Gauge (Kimi K2.7 · mistral/mistral-small-latest)
+
+**GOOD:** A creation element in an AI-tool hub excels when it solves a specific problem with precision, efficiency, and clarity—demonstrated by measurable performance (e.g., accuracy, speed, or resource savings) and user-tested validation (e.g., feedback loops or benchmarks). It includes transparent documentation (e.g., method, limitations, and data sources) and integrates seamlessly with other tools (e.g., APIs, plugins, or standardized formats). Good elements also show adaptability (e.g., configurable parameters or modular design) and ethical safeguards (e.g., bias mitigation, privacy controls).
+
+**MEDIOCRE:** A mediocre element meets basic functionality but lacks depth—offering vague or untested claims (e.g., "improves workflow" without evidence), poor documentation (e.g., missing examples or edge cases), or rigid constraints (e.g., no customization). It may duplicate existing tools without adding unique value or rely on opaque processes (e.g., proprietary algorithms without explainability). User experience suffers from clunky interfaces or high latency, and it fails to address common failure modes (e.g., no error handling for edge inputs).
+
+**DISQUALIFIES:** An element is disqualified if it violates core requirements: harmful intent (e.g., malicious code, data exploitation), legal risks (e.g., copyright infringement, non-compliance with standards), or fundamental flaws (e.g., crashes under basic use, produces incorrect outputs with no recourse). It also fails if it’s unusable (e.g., no installation instructions, incompatible dependencies) or lacks any discernible purpose (e.g., placeholder code with no function).
+
+**OBSERVABLE SIGNALS:** Reviewers should check for (1) **performance metrics** (e.g., latency, error rates) in documented tests, (2) **user validation** (e.g., testimonials, case studies, or community feedback), (3) **transparency artifacts** (e.g., README files, changelogs, or method citations), (4) **integration compatibility** (e.g., supported APIs, SDKs, or file formats), and (5) **ethical disclosures** (e.g., bias audits, privacy policies). Code-based elements require **reproducibility** (e.g., open-source repos with clear setup steps) and **security reviews** (e.g., dependency scans
+
+## Overhaul (GPT-4o-mini · mistral/mistral-small-latest)
+
+**GOOD:** A creation in an AI-tool hub excels when it solves a real, specific problem with measurable efficiency—like cutting a tedious task from hours to minutes. It has clear documentation (code, examples, or a README) that lets users replicate results without guesswork. The tool is modular, so others can extend or adapt it without breaking changes. It includes tests or benchmarks proving its reliability under edge cases. Finally, it’s discoverable: named intuitively, tagged properly, and linked to related tools.
+
+**MEDIOCRE:** A mediocre creation is one that *almost* works but lacks polish—like a script that only handles 80% of cases or requires manual tweaks. Its documentation is sparse, assuming prior knowledge, or the examples are outdated. It might be a duplicate of existing tools with minor tweaks, offering no clear advantage. There’s no evidence of testing, so users can’t trust its stability. It’s also poorly labeled, making it hard to find or understand at a glance.
+
+**DISQUALIFIES:** An item is disqualified if it’s malicious (e.g., data exfiltration, hidden costs), plagiarized, or violates legal/ethical standards (e.g., copyrighted code without attribution). It’s also disqualified if it’s fundamentally broken—like a tool that crashes on basic inputs or requires impossible setup (e.g., proprietary dependencies). No documentation or tests, or a history of unresolved security flaws, also nix it.
+
+**OBSERVABLE SIGNALS:**
+- **Functionality:** Does it work as described in the title/readme? (Test it.)
+- **Documentation:** Is there a README with setup, usage, and examples? (Check files.)
+- **Tests/Benchmarks:** Are there unit tests, performance metrics, or validation data? (Look for test folders or logs.)
+- **Modularity:** Can you import/use parts of it independently? (Inspect imports/exports.)
+- **Duplication:** Is it a near-identical fork of another tool with no added value? (Compare to existing entries.)
+- **Labels/Tags:** Does the name/description match its purpose? (Review metadata.)
+- **Ethics/Licensing:** Does it include a license and clear usage terms? (Check LICENSE file.)

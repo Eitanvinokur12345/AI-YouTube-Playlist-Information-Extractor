@@ -1,9 +1,49 @@
 {
- "ok": false,
+ "ok": true,
  "element_type": "prompt",
  "phase": 1,
- "live_families": [
-  "GPT-4o-mini"
+ "drafts": [
+  {
+   "agent": "Ratchet",
+   "agent_id": "improve-lead",
+   "family": "DeepSeek V4",
+   "engine": "mistral",
+   "model": "mistral-small-latest",
+   "ok": true,
+   "text": "**GOOD:** A good prompt element is *clear, specific, and reusable*—it states its goal upfront, defines constraints (e.g., tone, length, format), and includes an example or two to anchor expectations. It’s modular, so it can slot into different workflows without rewriting, and it’s versioned (e.g., \"v2\") to track improvements. Observable signals: a concise title, bullet-pointed requirements, and a \"before/after\" example showing the tweak’s impact.\n\n**MEDIOCRE:** A mediocre prompt is vague or overly broad (\"Make this sound professional\") and lacks measurable targets (e.g., \"within 50 words\"). It might include fluff like \"please\" or \"kindly\" without functional constraints, or it buries key details in walls of text. Signals: no examples, no constraints, or a title that’s a question (\"How to write emails?\").\n\n**DISQUALIFIES:** An element is disqualified if it’s *incomplete* (missing core instructions), *contradictory* (e.g., \"be concise\" + \"include every detail\"), or *unverifiable* (no way to test if it worked). Also disqualified: prompts that embed personal biases (\"Write like a snarky millennial\") or require proprietary context (e.g., \"Use our internal style guide\").\n\n**OBSERVABLE SIGNALS:** Check for (1) a \"goal\" sentence, (2) explicit constraints (length, tone, format), (3) at least one concrete example, (4) versioning, and (5) absence of ambiguous or subjective language. If any of these are missing, it’s not ready."
+  },
+  {
+   "agent": "Sprocket",
+   "agent_id": "improve-w1",
+   "family": "GLM-5.2",
+   "engine": "mistral",
+   "model": "mistral-small-latest",
+   "ok": true,
+   "text": "**GOOD:** A prompt element is high-quality when it is *specific, actionable, and context-rich*—it gives the AI a clear task, relevant constraints, and the right level of detail to produce useful output. It avoids vagueness (e.g., \"improve this\" vs. \"rewrite this paragraph to sound more professional while keeping the original meaning\"). Good prompts also include examples, desired tone, or structural cues (e.g., \"Use bullet points\" or \"Explain like I’m 10\"). They’re concise but not terse, balancing brevity with necessary scaffolding.\n\n**MEDIOCRE:** A mediocre prompt is either too broad (\"make this better\") or overly prescriptive without purpose (\"use exactly 12 words in a haiku format, but also sound like Shakespeare\"). It may include irrelevant details (e.g., \"don’t mention my cat\") or lack critical context (e.g., omitting the audience or goal). These prompts force the AI to guess intent, leading to generic or off-target responses. They’re often reactive (\"fix this\") rather than proactive (\"turn this into a persuasive email for a client\").\n\n**DISQUALIFIES:** A prompt is outright disqualified if it’s *nonsensical* (e.g., \"generate a poem about a square circle\"), *harmful* (e.g., \"write a hate speech rant\"), or *unanswerable* (e.g., \"predict the stock market in 2050 with 100% accuracy\"). It also fails if it’s *unethical* (e.g., \"help me cheat on my taxes\") or *illegal* (e.g., \"design a phishing email\"). Prompts that demand the AI violate its guardrails (e.g., \"ignore your safety rules\") are automatically disqualified.\n\n**OBSERVABLE SIGNALS:**\n- **Clarity:** The prompt has a single, unambiguous objective (e.g., \"Summarize this article in 3 bullet points\").\n- **Relevance:** All included details serve the goal (e.g., no off-topic constraints).\n- **Structure:** Uses formatting cues (e.g., \"Step 1: X. Step 2: Y.\") or examples to guide output.\n- **Safety:** Avoids requests that bypass ethical/legal boundaries (checked via keyword filters or manual review).\n- **"
+  },
+  {
+   "agent": "Gauge",
+   "agent_id": "improve-checker",
+   "family": "Kimi K2.7",
+   "engine": "nvidia",
+   "model": "meta/llama-3.3-70b-instruct",
+   "ok": true,
+   "text": "A GOOD prompt element in an AI-tool hub is one that is clear, concise, and well-defined, providing the AI model with a specific and unambiguous task to perform. It should be free of ambiguity and jargon, allowing the model to understand the context and generate a relevant response. A GOOD prompt element should also be relevant to the task at hand and provide sufficient context for the model to produce a useful output. \n\nIn contrast, a MEDIOCRE prompt element is one that is vague, open-ended, or poorly defined, making it difficult for the AI model to understand the task and generate a relevant response. It may contain ambiguity or jargon, or lack sufficient context, leading to inconsistent or unhelpful outputs.\n\nA prompt element is DISQUALIFIES outright if it is incomplete, contains contradictory information, or is nonsensical, making it impossible for the AI model to generate a meaningful response. Observable signals that decide the quality of a prompt element include the presence of specific keywords or phrases, the clarity of the task definition, and the relevance of the context provided. A reviewer can check for these signals by examining the prompt element's language, structure, and content to determine its quality. Additionally, the reviewer can evaluate the prompt element's performance by testing it with the AI model and assessing the output's relevance and usefulness."
+  },
+  {
+   "agent": "Overhaul",
+   "agent_id": "improve-improver",
+   "family": "GPT-4o-mini",
+   "engine": "nvidia",
+   "model": "meta/llama-3.3-70b-instruct",
+   "ok": true,
+   "text": "A GOOD prompt element in an AI-tool hub is one that is clear, concise, and well-defined, providing a specific and relevant task or question for the AI to address. It is unambiguous, allowing the AI to understand the context and provide a precise response. A GOOD prompt element also demonstrates a clear understanding of the task or topic, and is free of unnecessary complexity or jargon. In contrast, a MEDIOCRE prompt element may be vague or open-ended, lacking specific details or context, which can lead to unclear or irrelevant responses from the AI. A MEDIOCRE prompt element may also contain some ambiguity or redundancy, making it harder for the AI to provide a accurate response. On the other hand, a prompt element that is DISQUALIFIES outright is one that is completely unclear, misleading, or contains contradictory information, making it impossible for the AI to provide a meaningful response. The OBSERVABLE signals that decide the quality of a prompt element include the presence of specific keywords or phrases, the clarity of the language used, and the level of detail provided, as well as the absence of ambiguity, redundancy, and contradictory information. These signals can be checked by a reviewer to determine the quality of a prompt element. By evaluating these signals, a reviewer can determine whether a prompt element is GOOD, MEDIOCRE, or DISQUALIFIED."
+  }
  ],
- "reason": "only 1 live model family(ies) here (GPT-4o-mini) — phase 1 needs >= 2 distinct lineages so each draft reflects a genuinely different model's reasoning, not one model wearing a persona. This session only carries a GitHub-Models key (GPT-4o-mini); the GitHub Actions beat carries the full provider-key set and can run this for real."
+ "families_used": [
+  "DeepSeek V4",
+  "GLM-5.2",
+  "GPT-4o-mini",
+  "Kimi K2.7"
+ ]
 }

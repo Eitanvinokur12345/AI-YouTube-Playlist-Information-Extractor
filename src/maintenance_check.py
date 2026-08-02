@@ -57,18 +57,45 @@ def main() -> int:
                        "fix": fix, "sample": (sample or [])[:5]})
 
     # ── Brain-breaking problems (the "white lines") ───────────────────────────────
-    # 1) Empty notes: items whose body would be blank (no description/use/what) -> blank graph dots.
-    def empty(items, fields, nk):
-        return [str(x.get(nk) or x.get("slug") or "?") for x in items
-                if not any(str(x.get(f, "")).strip() for f in fields)]
-    e_sk = empty(skills, ["description", "use_case", "tips"], "skill_name")
-    e_to = empty(tools, ["description"], "name")
-    e_co = empty(conns, ["what_it_does", "description"], "name")
-    if e_sk or e_to or e_co:
-        add("high", "brain", "Empty-body items render as blank 'white' nodes in the brain graph",
-            len(e_sk) + len(e_to) + len(e_co),
-            "Skip empty-body items from the brain (or backfill a one-line description) so they "
-            "stop appearing as contentless dots.", e_sk + e_to + e_co)
+    # 1) Empty notes: items whose body would be blank (no description/use/what) -> blank graph dots
+    #    -- UNLESS they carry a real link, in which case build_graph.py/build_brain.py already
+    #    skip them from both the in-app graph and the Obsidian vault (verified fire 117: both
+    #    builders' own `has_body()` gate does exactly this), so they never render as a blank node
+    #    anywhere. Treating those the same as a true dead-end (no body AND no link) mislabeled a
+    #    187-item mining-enrichment backlog as a "high severity, brain-breaking" defect it isn't
+    #    -- it's a real gap, just a different and lower-urgency one. Skills stay strict: a bare
+    #    product-name skill with a real link but zero captured technique is still boilerplate
+    #    (the exact anti-boilerplate pattern fire 11 fixed at the point of creation), so a link
+    #    does NOT excuse a skill the way it excuses a tool/connector stub awaiting enrichment.
+    def _has_link(x):
+        return any(str(x.get(k, "")).strip()
+                   for k in ("github", "homepage", "website", "url", "source_url"))
+
+    def split_empty(items, fields, nk, link_excuses=False):
+        blank, stub = [], []
+        for x in items:
+            if any(str(x.get(f, "")).strip() for f in fields):
+                continue
+            label = str(x.get(nk) or x.get("slug") or "?")
+            (stub if (link_excuses and _has_link(x)) else blank).append(label)
+        return blank, stub
+
+    e_sk_blank, _ = split_empty(skills, ["description", "use_case", "tips"], "skill_name")
+    e_to_blank, e_to_stub = split_empty(tools, ["description"], "name", link_excuses=True)
+    e_co_blank, e_co_stub = split_empty(conns, ["what_it_does", "description"], "name", link_excuses=True)
+    blank = e_sk_blank + e_to_blank + e_co_blank
+    if blank:
+        add("high", "brain", "Empty-body items with no link either render as blank 'white' nodes in the brain graph",
+            len(blank),
+            "Skip empty-body, linkless items from the brain (or backfill a one-line description) "
+            "so they stop appearing as contentless dots.", blank)
+    stub = e_to_stub + e_co_stub
+    if stub:
+        add("medium", "data", "Discovered items have a real link but no description yet (already hidden "
+            "from the brain graph/vault, not a display bug -- just waiting on enrichment)",
+            len(stub),
+            "Backfill a one-line description (deep_retrieve / github_meta_enrich) so these become "
+            "real graph nodes instead of staying invisible.", stub)
 
     # 2) Title collisions: many items map to the SAME Obsidian note filename -> they overwrite each
     #    other and the hub links all point at one node (a giant white star).

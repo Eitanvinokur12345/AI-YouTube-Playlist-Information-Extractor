@@ -5,6 +5,63 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-02 (cont'd)
+- **~21:0x (fire 117, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
+  guardrails, 0 critical; local `origin/main` cache was stale + upstream tracking missing, both
+  auto-repointed by `standing_checks`, nothing lost). Confirmed OR-1 needs no action this fire
+  (fire 116 already established phase 1 succeeded via the CI beat; phases 2-4 are the beat's own
+  next-run job, not something an interactive session can push forward) and confirmed the network
+  restriction is unchanged, not a new capability: `api.github.com/rate_limit` now answers 200
+  (proxy reachable), but a real repo lookup (`/repos/Instagram/LibCST`) still 403s with "GitHub
+  access to this repository is not enabled for this session" — this session's proxy is scoped to
+  the ONE linked repo only, same wall every prior fire hit, just a different error shape.
+  Picked `maintenance_check` (grade D, 43/100) as the next real, local, keyless increment instead
+  of re-confirming that wall a second time. Its top "high severity" issue — "187 empty-body items
+  render as blank white nodes in the brain graph" — turned out to be a FALSE signal on
+  investigation: all 187 are tools (0 skills, 0 connectors), and every single one already carries
+  a real link (mostly a `source_url` from its `mine_feeds` discovery, some a `homepage`) —
+  and both `build_graph.py` and `build_brain.py` already skip prose-less items from the in-app
+  graph AND the Obsidian vault (a fix ported from `build_brain.py`, still in place, verified by
+  reading both files), so none of the 187 have EVER rendered as a blank node anywhere. The check
+  was conflating two different things: a true dead-end (no body, no link — currently 0 of them)
+  vs. a raw `mine_feeds` stub awaiting enrichment (no body, but a real link — the actual 187) —
+  and mislabeling the second as "high severity, brain-breaking" fed a genuinely wrong number into
+  `improvement_tasks.json`, which had it sitting there as a permanently-open high-sev task no
+  future fire would ever be able to close (its `maint_key` can only clear by re-matching the
+  exact issue text, and nothing was ever going to make 187 real, historical mining stubs grow
+  prose on their own). Fixed `maintenance_check.py`'s empty-body detector to split the two cases:
+  "blank" (no body AND no link) stays high-severity/brain-area exactly as before, now correctly
+  computing to 0; "stub" (no body, real link, tool/connector only) becomes a new, correctly-scoped
+  medium-severity/data-area issue describing what it actually is — an enrichment backlog, not a
+  display bug. Left skills untouched on purpose: a bare-product-name skill with a real link but
+  zero captured technique is still the exact boilerplate pattern fire 11's anti-boilerplate gate
+  exists to catch, so a link does NOT excuse a skill the way it excuses a tool/connector stub —
+  checked this holds (0 skills were affected either way, confirmed by data, not assumed). Manually
+  resolved the now-stale `brain:Empty-body items render as blank 'white'` entry in
+  `improvement_tasks.json` (status -> done, with a `resolution` field explaining why, not deleted
+  — it's loop bookkeeping, not user content, and leaving it open forever would have kept lying).
+  **Verified, not just asserted:** re-ran `maintenance_check` before/after — health score honestly
+  rose 43 -> 51 (the inflated high-sev issue is gone, replaced by an accurately-labeled medium
+  one, not hidden); `python3 -c "json.load(...)"` on both touched data files; `python -m
+  src.excava_core_test` 8/8 (unrelated, unaffected, still green — sanity check only); `python -m
+  src.guardrails` 18/20, 0 critical, same two pre-existing non-critical misses as fire 116 (G-C
+  stale history bundle, G-O local-PC drain 183h stale — both unrelated, not touched, not
+  re-litigated). **Harsh self-criticism:** this fire fixed the MEASUREMENT, not the underlying
+  187-item enrichment gap itself — those tools are still quality_score 1, still prose-less, still
+  need `deep_retrieve`/`github_meta_enrich` to actually run against them, which (per every fire
+  since ~110) needs either the CI beat's own key pool or a live provider key this interactive
+  session doesn't carry; I did not, and could not from here, make that number move. The value of
+  this fire is narrower and more indirect: the self-improvement pillar's own visible number (§4:
+  "a success-rate number that climbs") was being fed a false high-severity alarm, and a future
+  fire (or Eitan, reading `improvement_tasks.json` cold) would have reasonably prioritized a
+  187-item "brain-breaking" fire alarm that was actually already-handled plumbing, at the expense
+  of a real problem sitting lower on the list. Fixing the measurement so the next triage decision
+  is made on accurate information is a legitimate, if quieter, self-improvement win — but it is
+  still the SECOND fire in a row (after 115/116's OR-1/safety-check work) that touched
+  observability/data-quality rather than a directly user-visible capability; the actual M1-M5
+  program (Hub content depth, department execution, class overhaul) went untouched again this
+  fire, and whoever runs fire 118 with open internet/keys should attack that instead of finding a
+  third piece of measurement plumbing to polish.
+
 - **~19:0x (fire 116, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
   guardrails). **First, the actually good news**: OR-1 (value-95 owner ask, blocked in every
   interactive session since fire 98 for lack of a 2nd live model-provider key) has genuinely

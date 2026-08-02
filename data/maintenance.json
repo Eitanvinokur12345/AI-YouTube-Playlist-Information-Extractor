@@ -1,23 +1,9 @@
 {
-  "generated_at": "2026-08-02T19:48:55.358808+00:00",
-  "health_score": 43,
+  "generated_at": "2026-08-02T21:03:50.507386+00:00",
+  "health_score": 51,
   "grade": "D",
   "issue_count": 7,
   "issues": [
-    {
-      "severity": "high",
-      "area": "brain",
-      "issue": "Empty-body items render as blank 'white' nodes in the brain graph",
-      "count": 187,
-      "fix": "Skip empty-body items from the brain (or backfill a one-line description) so they stop appearing as contentless dots.",
-      "sample": [
-        "AI Finance Agent",
-        "AIRAG Jobs",
-        "AITER v3",
-        "Agent-2",
-        "Agent-3"
-      ]
-    },
     {
       "severity": "high",
       "area": "brain",
@@ -53,6 +39,20 @@
         "automation (488)",
         "integration (181)",
         "video creation (323)"
+      ]
+    },
+    {
+      "severity": "medium",
+      "area": "data",
+      "issue": "Discovered items have a real link but no description yet (already hidden from the brain graph/vault, not a display bug -- just waiting on enrichment)",
+      "count": 187,
+      "fix": "Backfill a one-line description (deep_retrieve / github_meta_enrich) so these become real graph nodes instead of staying invisible.",
+      "sample": [
+        "AI Finance Agent",
+        "AIRAG Jobs",
+        "AITER v3",
+        "Agent-2",
+        "Agent-3"
       ]
     },
     {

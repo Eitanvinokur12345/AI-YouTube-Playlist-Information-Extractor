@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-02T19:49:31.715875+00:00",
+  "updated_at": "2026-08-02T21:04:07.736954+00:00",
   "tasks": [
     {
       "trend_key": "tab:coding",
@@ -51,8 +51,10 @@
       "kind": "maintenance",
       "question": "[maintenance/brain] Empty-body items render as blank 'white' nodes in the brain graph (187)",
       "fix": "Skip empty-body items from the brain (or backfill a one-line description) so they stop appearing as contentless dots.",
-      "status": "open",
-      "created_at": "2026-07-31T23:56:00.194457+00:00"
+      "status": "done",
+      "created_at": "2026-07-31T23:56:00.194457+00:00",
+      "resolved_at": "2026-08-02T21:04:07.736906+00:00",
+      "resolution": "Mislabeled signal, not a real defect: build_graph.py/build_brain.py already skip empty-body items from both the in-app brain graph and the Obsidian vault (verified fire 117), so none of the 187 flagged tools were ever rendering as blank nodes. maintenance_check.py now only flags TRUE dead-ends (no body AND no link, currently 0) under this label; the 187 real-but-unenriched tool stubs moved to a correctly-labeled medium-severity 'awaiting enrichment' issue instead."
     },
     {
       "maint_key": "brain:Title collisions: distinct items share o",

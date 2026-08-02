@@ -5,6 +5,52 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-02 (cont'd)
+- **~19:0x (fire 116, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
+  guardrails). **First, the actually good news**: OR-1 (value-95 owner ask, blocked in every
+  interactive session since fire 98 for lack of a 2nd live model-provider key) has genuinely
+  started running for real. `data/excava/artifacts/or1-phase1-*.md` for all 10 element/package
+  types now carry real content from a live 17:36:31Z `bulk_analyze.yml` run with **4 distinct
+  model families** (DeepSeek V4, GLM-5.2, GPT-4o-mini, Kimi K2.7) — not a placeholder, not a
+  fake-diversity single model, actual independent drafts per family (read `or1-phase1-skill.md`
+  to see them). Phases 2-4's artifacts on disk are still stale BLOCKED stubs from *before*
+  phase 1 succeeded (timestamps 12:0x-13:5x, hours earlier) — `or1_run_all()` only advances each
+  type by one phase per invocation, so phase 2 for all 10 types is the next thing the *next*
+  `bulk_analyze.yml` run (~2h cadence) will attempt automatically. No action needed from this or
+  future interactive-session fires; re-diagnosing the "still blocked" symptom would just be
+  reading stale files — check `or1-phase*.json` timestamps against the last `bulk-analyze` commit
+  before assuming it's stuck.
+  Second, ran `python -m src.maintenance_check`: grade D (42/100), 7 issue types, including a
+  real one fixable without network or a model key — 10 title collisions where distinct hub items
+  (different real tools/skills) share one display name and would silently overwrite each other in
+  the Obsidian brain graph (`Impeccable` = two different skills, `Ponytail`/`Graphify` = separate
+  tool entries from different source videos, etc.). Investigating it led to running
+  `src.merge_dupes` (an existing tool, last used fire 15, docstring: "merge duplicate skill slugs
+  caused by the make_slug bug") — **honesty note: this ran as a side effect of checking its
+  `--help` output; the script has no argparse and executes unconditionally on any invocation.**
+  Verified before deciding to keep it rather than revert: the merge logic keeps the
+  higher-`quality_score` record, unions tips/commands/compatibility from both, and archives every
+  discarded record into `data/deleted_skills.json` with a reason (not a hard delete — matches the
+  quarantine-not-delete rule at the data level) — merged 34 real duplicate skill-slug pairs (e.g.
+  `impeccable-2`→`impeccable`, `ai-agent-architecture-2`→`ai-agent-architecture`). Re-ran
+  `maintenance_check` after: title collisions 10→8 (the 2 fixed were both skill-slug dupes; the
+  remaining 8 are tool/connector dupes this script doesn't touch — real residual gap, not covered
+  by this fire). `python -m src.excava_core_test`: 8/8 pass. `python -m src.guardrails`: 18/20, 0
+  critical (same 2 pre-existing non-critical misses: G-C history-bundle staleness, G-O local-PC
+  drain 181h stale — both unrelated, already flagged for a dozen-plus fires running).
+  **Harsh self-criticism:** the merge_dupes run was accidental, not a deliberate choice of
+  increment — I got lucky that it happened to be safe and correct, and should have `cat`'d the
+  script instead of invoking it once I saw it had no argparse in the CLI-tools listing. Also
+  didn't touch the 8 remaining tool/connector-level title collisions (out of scope for
+  `merge_dupes`, which only understands skill slugs) or the other 6 `maintenance_check` issue
+  types (empty-body nodes, oversized hubs, bare vendor names, unresolved connectors, unscored
+  tools) — all need either a network call or a model key this session doesn't have, so they stay
+  queued for a CI-beat run or the next interactive fire with a wider resource budget. Confirmed
+  (again) no live provider keys reachable from this session beyond `GH_TOKEN`/`GITHUB_TOKEN`, and
+  confirmed general internet egress is genuinely policy-restricted here (proxy 403s
+  `api.github.com`, `github.com`, `wikipedia.org` alike — this is the sandbox's own network
+  policy, not a bug to fix) — consistent with every prior interactive fire's finding, not
+  re-litigated further.
+
 - **~17:0x (fire 115, unattended, cloud, scheduled-task invocation)** — Standing checks OK
   (18/20 guardrails, 0 critical; local cache was stale + upstream tracking missing, both
   auto-repointed by `standing_checks`, nothing lost). Carry-over was still **OR-1 phase 1**, 6

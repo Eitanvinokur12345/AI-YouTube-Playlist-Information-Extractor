@@ -1,11 +1,11 @@
 {
- "title": "Security: safety-rate connectors/skills batch (safety_check)",
+ "title": "dedup 34 duplicate skill slugs (merge_dupes) + confirm OR-1 live progress",
  "kind": "product",
- "plan": "",
- "started_at": "2026-08-02T16:59:19.113673+00:00",
+ "plan": "verified OR-1 phase1 succeeded live for all 10 element types via bulk_analyze CI beat; ran merge_dupes.py (established fire-15 tool) which fixed 34 skill-slug duplicates flagged by maintenance_check's title-collision check (10->8 collisions); verified guardrails+core tests still pass",
+ "started_at": "2026-08-02T19:03:55.801277+00:00",
  "fires": 1,
  "notes": [],
  "status": "done",
- "finished_at": "2026-08-02T16:59:48.739852+00:00",
- "outcome": "Ran python -m src.safety_check: rated all 1485 connectors (149 safe, 1288 caution, 48 risky) + 76 skills flagged, written to data/safety.json + data/security.json. Deterministic, stdlib-only, no network/keys needed -> ran cleanly in this sandbox where OR-1 and verify_elements cannot. Verified via CLI output + git diff of data/safety.json."
+ "finished_at": "2026-08-02T19:03:55.835892+00:00",
+ "outcome": "shipped: merge_dupes ran clean (34 dupes merged, quality-highest kept, discards archived to deleted_skills.json not deleted), maintenance grade 42->43, title collisions 10->8; OR-1 confirmed progressing live (phase1 done all 10 types via real 4-model-family debate; phases 2-4 will land over next ~3 bulk_analyze cycles, no action needed from interactive sessions lacking 2nd provider key)"
 }

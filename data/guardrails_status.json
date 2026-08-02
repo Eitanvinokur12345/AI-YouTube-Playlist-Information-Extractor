@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-08-02T04:03:39.494921+00:00",
+ "generated_at": "2026-08-02T04:08:14.749300+00:00",
  "total": 20,
- "passing": 16,
+ "passing": 18,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -21,8 +21,8 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": false,
-   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
+   "ok": true,
+   "detail": "2 bundle(s); newest within 26h.",
    "severity": "warn"
   },
   {
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "11972 memory episodes on record.",
+   "detail": "11996 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "2 guardrail runs logged (append-only, never rewritten).",
+   "detail": "3 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -91,15 +91,15 @@
   {
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
-   "ok": false,
-   "detail": "90 tasks done, 11 departments moving — STALLED (no new completions in the last 4 beats)",
+   "ok": true,
+   "detail": "99 tasks done, 11 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "30374 MB free on the repo drive.",
+   "detail": "29535 MB free on the repo drive.",
    "severity": "info"
   },
   {
@@ -113,14 +113,14 @@
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
    "ok": true,
-   "detail": "shallow clone — not enough local history to find an 'excava-beat #N' commit either way; not a stall signal, just a checkout-depth limit.",
-   "severity": "info"
+   "detail": "last 'excava-beat #N' commit 0.0h ago.",
+   "severity": "warn"
   },
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "last 'core-spoton:' commit 0.3h ago.",
+   "detail": "last 'core-spoton:' commit 0.4h ago.",
    "severity": "warn"
   },
   {

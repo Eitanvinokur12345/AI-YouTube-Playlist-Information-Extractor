@@ -1,11 +1,13 @@
 {
- "title": "P5 gates bind BOTH loops (Eitan's decision)",
- "kind": "meta",
- "plan": "",
- "started_at": "2026-08-02T07:50:25.978348+00:00",
+ "title": "OR-1 phase 1: independent-brainstorm primitive (product, not meta)",
+ "kind": "product",
+ "plan": "OR-1 (owner_requests.json, value 95, top of backlog) needs a 4-phase debate where phase 1 is agents drafting COMPLETELY ALONE, no cross-talk. The existing room engine (src/excava_chat.py advance()) only does sequential shared-history debate -- it cannot express phase 1 at all. Built or1_phase1(element_type) + CLI --or1-phase1: each 'improve' agent gets an isolated engines.complete() call (no _history()), hard-gated on >=2 LIVE distinct model families (END PLAN section 2 bans same-model-with-a-persona-twist as correlated-error theater). Ran for element_type=skill: correctly BLOCKED (this cloud session only carries a GitHub-Models key -> 1 live family, GPT-4o-mini) and wrote an honest artifact (data/excava/artifacts/or1-phase1-skill.md) instead of faking a multi-agent debate with one model. CARRY-OVER for the next fire(s) with real provider-key access (the GitHub Actions beat carries the full secret set per SESSION_HANDOFF.md): run --or1-phase1 for each of the 10 element/package types, confirm >=2 families actually respond, then build phase 2 (integration discussion), phase 3 (adversarial re-review from scratch), phase 4 (resolution) on the same isolated-call pattern before wiring the final committed guideline artifact OR-1 promises.",
+ "started_at": "2026-08-02T08:01:00Z",
  "fires": 1,
- "notes": [],
- "status": "done",
- "finished_at": "2026-08-02T07:50:26.019726+00:00",
- "outcome": "gates.json + gate_blocks() + standing_checks surface + guardrail G-U"
+ "notes": [
+  "verify_elements --limit 200 (next-highest backlog item, value 87) also aborted safely on this session's proxy-restricted egress -- same known limitation as fire 50, no data written, nothing to fix.",
+  "build_memory (value 64) needs GEMINI_API_KEY, also absent here -- confirms this interactive session is genuinely keyless beyond GitHub Models, not a bug to chase."
+ ],
+ "status": "open",
+ "outcome": null
 }

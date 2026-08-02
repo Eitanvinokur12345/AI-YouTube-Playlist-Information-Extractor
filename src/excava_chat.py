@@ -517,6 +517,81 @@ def advance(room_id: str, turns: int = 2) -> list[str]:
     return log
 
 
+OR1_ELEMENT_TYPES = ("skill", "tool", "prompt", "command", "connector", "design",
+                     "format", "model", "creation", "package")
+
+
+def or1_phase1(element_type: str, min_families: int = 2, roles=("doer", "checker", "improver", "lead")) -> dict:
+    """OR-1 (data/excava/owner_requests.json) phase 1 — INDEPENDENT BRAINSTORM: each named
+    'improve' agent drafts its own GOOD/MEDIOCRE/disqualifying guideline for one element type,
+    completely alone (no shared history — nobody anchors on whoever spoke first, per OR-1's
+    own phase-1 rule). The existing room engine (advance()) only does sequential shared-history
+    debate, which cannot express phase 1's no-cross-talk requirement — this is the missing
+    primitive.
+
+    Hard-gated on model-family diversity (END PLAN section 2: 'same-model-with-a-prompt-twist
+    is banned — it produces correlated errors'). Below min_families distinct LIVE lineages,
+    this refuses to run and says why, rather than manufacturing a fake-diverse artifact — the
+    whole point of OR-1's 4-phase process is to catch what one model's blind spots miss."""
+    fams = engines.families()
+    live = [f for f in fams if f["status"] == "live"]
+    if len(live) < min_families:
+        return {"ok": False, "element_type": element_type, "phase": 1,
+                "live_families": [f["family"] for f in live],
+                "reason": (f"only {len(live)} live model family(ies) here "
+                           f"({', '.join(f['family'] for f in live) or 'none'}) — phase 1 needs "
+                           f">= {min_families} distinct lineages so each draft reflects a genuinely "
+                           "different model's reasoning, not one model wearing a persona. This "
+                           "session only carries a GitHub-Models key (GPT-4o-mini); the GitHub "
+                           "Actions beat carries the full provider-key set and can run this for real.")}
+    reg = agents.load_registry()
+    cast = [a for a in reg.get("agents", []) if a.get("department") == "improve" and a.get("role") in roles]
+    pool = {e["name"]: e for e in engines.healthy()}
+    drafts = []
+    for i, a in enumerate(cast):
+        fam = live[i % len(live)]
+        eng = pool.get(fam["engine"])
+        prompt = (
+            f"You are {a.get('name')} — {a.get('persona', '')}\n"
+            "This is an INDEPENDENT DRAFT — phase 1 of a 4-phase process. Do not imagine or "
+            "reference anyone else's answer; there isn't one yet, and seeing one would defeat "
+            "the point.\n"
+            f"TASK: define what makes a '{element_type}' element GOOD in an AI-tool hub, as "
+            "opposed to mediocre or disqualified.\n"
+            "Write: (1) what GOOD looks like, (2) what MEDIOCRE looks like, (3) what "
+            "DISQUALIFIES an item outright, (4) the OBSERVABLE signals that decide it (not "
+            "vibes — things a reviewer could actually check). Plain language, full sentences, "
+            "6-10 sentences total.")
+        r = engines.complete(prompt, engine=eng, dept="improve", difficulty="hard", max_tokens=500)
+        drafts.append({"agent": a.get("name", a.get("id")), "agent_id": a.get("id"),
+                       "family": fam["family"], "engine": r.get("engine"), "model": r.get("model"),
+                       "ok": r.get("ok"),
+                       "text": r["text"].strip() if r.get("ok") else f"[no draft: {r.get('error', '')[:100]}]"})
+        time.sleep(2)
+    ok = [d for d in drafts if d["ok"]]
+    return {"ok": len(ok) >= min_families, "element_type": element_type, "phase": 1,
+            "drafts": drafts, "families_used": sorted({d["family"] for d in ok})}
+
+
+def _write_or1_artifact(result: dict) -> str:
+    et = result["element_type"]
+    adir = DATA / "excava" / "artifacts"
+    adir.mkdir(parents=True, exist_ok=True)
+    path = adir / f"or1-phase1-{et}.md"
+    if not result["ok"]:
+        body = (f"# OR-1 phase 1 — {et} — BLOCKED\n\n"
+                f"> {_now()}\n\n{result['reason']}\n\n"
+                f"Live families this run: {', '.join(result.get('live_families') or []) or 'none'}\n")
+    else:
+        parts = [f"# OR-1 phase 1 — independent drafts — element type: {et}\n",
+                 f"> {_now()} · families used: {', '.join(result['families_used'])}\n"]
+        for d in result["drafts"]:
+            parts.append(f"\n## {d['agent']} ({d['family']} · {d['engine']}/{d['model']})\n\n{d['text']}\n")
+        body = "".join(parts)
+    path.write_text(body, encoding="utf-8")
+    return f"data/excava/artifacts/{path.name}"
+
+
 def ensure_default_rooms() -> list[str]:
     """Owner 2026-07-07: rooms are organized BY DEPARTMENT — one live room per department (all 13),
     each labelled by its department + its real focus; plus a cross-department WAR ROOM for the top
@@ -576,7 +651,15 @@ def main() -> int:
     ap.add_argument("--demo", action="store_true", help="open+advance a war room now")
     ap.add_argument("--advance", action="store_true", help="advance all open rooms")
     ap.add_argument("--turns", type=int, default=4)
+    ap.add_argument("--or1-phase1", metavar="ELEMENT_TYPE",
+                    help="OR-1 phase-1 independent brainstorm for one element type "
+                         f"({'/'.join(OR1_ELEMENT_TYPES)})")
     a = ap.parse_args()
+    if a.or1_phase1:
+        res = or1_phase1(a.or1_phase1)
+        ref = _write_or1_artifact(res)
+        print(f"OR-1 phase1 [{a.or1_phase1}]: {'ok' if res['ok'] else 'BLOCKED'} -> {ref}")
+        return 0
     if a.demo:
         ensure_default_rooms()
     state = load_rooms()

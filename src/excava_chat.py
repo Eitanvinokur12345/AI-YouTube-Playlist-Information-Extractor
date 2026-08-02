@@ -563,14 +563,16 @@ def or1_phase1(element_type: str, min_families: int = 2, roles=("doer", "checker
             "vibes — things a reviewer could actually check). Plain language, full sentences, "
             "6-10 sentences total.")
         r = engines.complete(prompt, engine=eng, dept="improve", difficulty="hard", max_tokens=500)
+        real_family = engines.family_of(r.get("engine", "")) if r.get("ok") else fam["family"]
         drafts.append({"agent": a.get("name", a.get("id")), "agent_id": a.get("id"),
-                       "family": fam["family"], "engine": r.get("engine"), "model": r.get("model"),
-                       "ok": r.get("ok"),
+                       "family": real_family, "requested_family": fam["family"],
+                       "engine": r.get("engine"), "model": r.get("model"), "ok": r.get("ok"),
                        "text": r["text"].strip() if r.get("ok") else f"[no draft: {r.get('error', '')[:100]}]"})
         time.sleep(2)
     ok = [d for d in drafts if d["ok"]]
-    return {"ok": len(ok) >= min_families, "element_type": element_type, "phase": 1,
-            "drafts": drafts, "families_used": sorted({d["family"] for d in ok})}
+    used_families = sorted({d["family"] for d in ok})
+    return {"ok": len(used_families) >= min_families, "element_type": element_type, "phase": 1,
+            "drafts": drafts, "families_used": used_families}
 
 
 def or1_phase2(element_type: str, min_families: int = 2, roles=("doer", "checker", "improver", "lead")) -> dict:
@@ -616,14 +618,16 @@ def or1_phase2(element_type: str, min_families: int = 2, roles=("doer", "checker
             "priority for reconciling them into a single guideline. Do not just pick a favorite "
             "draft — synthesize. Plain language, full sentences, 6-10 sentences total.")
         r = engines.complete(prompt, engine=eng, dept="improve", difficulty="hard", max_tokens=500)
+        real_family = engines.family_of(r.get("engine", "")) if r.get("ok") else fam["family"]
         integ.append({"agent": a.get("name", a.get("id")), "agent_id": a.get("id"),
-                      "family": fam["family"], "engine": r.get("engine"), "model": r.get("model"),
-                      "ok": r.get("ok"),
+                      "family": real_family, "requested_family": fam["family"],
+                      "engine": r.get("engine"), "model": r.get("model"), "ok": r.get("ok"),
                       "text": r["text"].strip() if r.get("ok") else f"[no draft: {r.get('error', '')[:100]}]"})
         time.sleep(2)
     ok = [d for d in integ if d["ok"]]
-    return {"ok": len(ok) >= min_families, "element_type": element_type, "phase": 2,
-            "integration_drafts": integ, "families_used": sorted({d["family"] for d in ok})}
+    used_families = sorted({d["family"] for d in ok})
+    return {"ok": len(used_families) >= min_families, "element_type": element_type, "phase": 2,
+            "integration_drafts": integ, "families_used": used_families}
 
 
 def or1_phase3(element_type: str, min_families: int = 2, roles=("doer", "checker", "improver", "lead")) -> dict:
@@ -675,14 +679,16 @@ def or1_phase3(element_type: str, min_families: int = 2, roles=("doer", "checker
             "and why, but earn that conclusion. Plain language, full sentences, 6-10 sentences "
             "total.")
         r = engines.complete(prompt, engine=eng, dept="improve", difficulty="hard", max_tokens=500)
+        real_family = engines.family_of(r.get("engine", "")) if r.get("ok") else fam["family"]
         reviews.append({"agent": a.get("name", a.get("id")), "agent_id": a.get("id"),
-                        "family": fam["family"], "engine": r.get("engine"), "model": r.get("model"),
-                        "ok": r.get("ok"),
+                        "family": real_family, "requested_family": fam["family"],
+                        "engine": r.get("engine"), "model": r.get("model"), "ok": r.get("ok"),
                         "text": r["text"].strip() if r.get("ok") else f"[no draft: {r.get('error', '')[:100]}]"})
         time.sleep(2)
     ok = [d for d in reviews if d["ok"]]
-    return {"ok": len(ok) >= min_families, "element_type": element_type, "phase": 3,
-            "adversarial_drafts": reviews, "families_used": sorted({d["family"] for d in ok})}
+    used_families = sorted({d["family"] for d in ok})
+    return {"ok": len(used_families) >= min_families, "element_type": element_type, "phase": 3,
+            "adversarial_drafts": reviews, "families_used": used_families}
 
 
 def or1_phase4(element_type: str, min_families: int = 2, roles=("doer", "checker", "improver", "lead")) -> dict:
@@ -746,14 +752,55 @@ def or1_phase4(element_type: str, min_families: int = 2, roles=("doer", "checker
             "This is the guideline the hub will actually use — write it as a finished ruling, "
             "not another draft. Plain language, full sentences.")
         r = engines.complete(prompt, engine=eng, dept="improve", difficulty="hard", max_tokens=700)
+        real_family = engines.family_of(r.get("engine", "")) if r.get("ok") else fam["family"]
         finals.append({"agent": a.get("name", a.get("id")), "agent_id": a.get("id"),
-                       "family": fam["family"], "engine": r.get("engine"), "model": r.get("model"),
-                       "ok": r.get("ok"),
+                       "family": real_family, "requested_family": fam["family"],
+                       "engine": r.get("engine"), "model": r.get("model"), "ok": r.get("ok"),
                        "text": r["text"].strip() if r.get("ok") else f"[no draft: {r.get('error', '')[:100]}]"})
         time.sleep(2)
     ok = [d for d in finals if d["ok"]]
-    return {"ok": len(ok) >= min_families, "element_type": element_type, "phase": 4,
-            "final_drafts": finals, "families_used": sorted({d["family"] for d in ok})}
+    used_families = sorted({d["family"] for d in ok})
+    return {"ok": len(used_families) >= min_families, "element_type": element_type, "phase": 4,
+            "final_drafts": finals, "families_used": used_families}
+
+
+def or1_revalidate_phase1(min_families: int = 2) -> list[dict]:
+    """One-time correction (fire 116, 2026-08-02): every phase-1 artifact already on disk was
+    written before family_of() existed, so each draft's 'family' is the REQUESTED lineage, not
+    the one that actually answered — and 6 of the 10 element types turned out to have collapsed
+    onto a single real model (mistral-small-latest) wearing four different name badges, with the
+    old 'ok' gate none the wiser because it only counted successful drafts, not distinct real
+    families. This re-derives 'family' from each draft's real engine, recomputes 'ok' from real
+    distinct families, and rewrites both the JSON and markdown artifact in place — corrects a
+    flag that was never true rather than quarantining the file, since the underlying model
+    text is still genuine, just mislabeled. Idempotent: an already-revalidated file is a no-op."""
+    adir = DATA / "excava" / "artifacts"
+    out = []
+    for et in OR1_ELEMENT_TYPES:
+        d = _load(adir / f"or1-phase1-{et}.json", None)
+        if not d or "drafts" not in d or d.get("revalidated_by"):
+            continue
+        for draft in d["drafts"]:
+            if draft.get("ok"):
+                draft.setdefault("requested_family", draft.get("family"))
+                draft["family"] = engines.family_of(draft.get("engine", ""))
+        used = sorted({dd["family"] for dd in d["drafts"] if dd.get("ok")})
+        d["ok"] = len(used) >= min_families
+        d["families_used"] = used
+        d["revalidated_by"] = "fire116-family-diversity-fix"
+        if not d["ok"]:
+            d["live_families"] = used
+            d["reason"] = (f"revalidated (fire 116): the {len(used)} REAL distinct model "
+                           f"famil{'y' if len(used) == 1 else 'ies'} that actually answered "
+                           f"({', '.join(used) or 'none'}) "
+                           f"{'falls' if len(used) == 1 else 'fall'} short of the >= {min_families} "
+                           "this gate requires — the original run's drafts had collapsed onto "
+                           "too few real engines while claiming more via mislabeled family "
+                           "tags. Needs a re-run with a wider live provider-key set, not another "
+                           "phase-1 attempt from the same pool.")
+        _write_or1_artifact(d)
+        out.append({"element_type": et, "ok": d["ok"], "families_used": used})
+    return out
 
 
 def _write_or1_artifact(result: dict) -> str:

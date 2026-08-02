@@ -264,6 +264,18 @@ def families() -> list[dict]:
     return roster
 
 
+def family_of(engine_name: str) -> str:
+    """The model-family label the engine that ACTUALLY answered belongs to — reverse of the
+    routing pick. OR-1 (src/excava_chat.py) must label each draft by whichever engine really
+    produced it, not the one requested: complete()'s healthy-pool fallthrough (and a stale
+    families()-vs-healthy() mismatch) can silently substitute a different engine, and labeling
+    the substitute with the REQUESTED family faked cross-model diversity that was never real
+    (found + fixed fire 116, 2026-08-02 — all family diversity gates were counting draft
+    *quantity*, not distinct real lineages)."""
+    lin = LINEAGE.get(engine_name, engine_name)
+    return LINEAGE_META.get(lin, (lin.title(), lin, "generalist", False))[0]
+
+
 def pick_engine(dept: str = "", difficulty: str = "normal") -> dict | None:
     """Routing policy: fast-first for the bulk; grounded/reasoning for hard; the security
     department always gets a grounded engine (its verdicts must not hallucinate)."""

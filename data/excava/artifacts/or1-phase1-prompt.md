@@ -1,7 +1,7 @@
 # OR-1 phase 1 — independent drafts — element type: prompt
-> 2026-08-02T17:43:02.181254+00:00 · families used: DeepSeek V4, GLM-5.2, GPT-4o-mini, Kimi K2.7
+> 2026-08-02T18:04:32.373764+00:00 · families used: Llama-3.3 70B, Mistral
 
-## Ratchet (DeepSeek V4 · mistral/mistral-small-latest)
+## Ratchet (Mistral · mistral/mistral-small-latest)
 
 **GOOD:** A good prompt element is *clear, specific, and reusable*—it states its goal upfront, defines constraints (e.g., tone, length, format), and includes an example or two to anchor expectations. It’s modular, so it can slot into different workflows without rewriting, and it’s versioned (e.g., "v2") to track improvements. Observable signals: a concise title, bullet-pointed requirements, and a "before/after" example showing the tweak’s impact.
 
@@ -11,7 +11,7 @@
 
 **OBSERVABLE SIGNALS:** Check for (1) a "goal" sentence, (2) explicit constraints (length, tone, format), (3) at least one concrete example, (4) versioning, and (5) absence of ambiguous or subjective language. If any of these are missing, it’s not ready.
 
-## Sprocket (GLM-5.2 · mistral/mistral-small-latest)
+## Sprocket (Mistral · mistral/mistral-small-latest)
 
 **GOOD:** A prompt element is high-quality when it is *specific, actionable, and context-rich*—it gives the AI a clear task, relevant constraints, and the right level of detail to produce useful output. It avoids vagueness (e.g., "improve this" vs. "rewrite this paragraph to sound more professional while keeping the original meaning"). Good prompts also include examples, desired tone, or structural cues (e.g., "Use bullet points" or "Explain like I’m 10"). They’re concise but not terse, balancing brevity with necessary scaffolding.
 
@@ -26,7 +26,7 @@
 - **Safety:** Avoids requests that bypass ethical/legal boundaries (checked via keyword filters or manual review).
 - **
 
-## Gauge (Kimi K2.7 · nvidia/meta/llama-3.3-70b-instruct)
+## Gauge (Llama-3.3 70B · nvidia/meta/llama-3.3-70b-instruct)
 
 A GOOD prompt element in an AI-tool hub is one that is clear, concise, and well-defined, providing the AI model with a specific and unambiguous task to perform. It should be free of ambiguity and jargon, allowing the model to understand the context and generate a relevant response. A GOOD prompt element should also be relevant to the task at hand and provide sufficient context for the model to produce a useful output. 
 
@@ -34,6 +34,6 @@ In contrast, a MEDIOCRE prompt element is one that is vague, open-ended, or poor
 
 A prompt element is DISQUALIFIES outright if it is incomplete, contains contradictory information, or is nonsensical, making it impossible for the AI model to generate a meaningful response. Observable signals that decide the quality of a prompt element include the presence of specific keywords or phrases, the clarity of the task definition, and the relevance of the context provided. A reviewer can check for these signals by examining the prompt element's language, structure, and content to determine its quality. Additionally, the reviewer can evaluate the prompt element's performance by testing it with the AI model and assessing the output's relevance and usefulness.
 
-## Overhaul (GPT-4o-mini · nvidia/meta/llama-3.3-70b-instruct)
+## Overhaul (Llama-3.3 70B · nvidia/meta/llama-3.3-70b-instruct)
 
 A GOOD prompt element in an AI-tool hub is one that is clear, concise, and well-defined, providing a specific and relevant task or question for the AI to address. It is unambiguous, allowing the AI to understand the context and provide a precise response. A GOOD prompt element also demonstrates a clear understanding of the task or topic, and is free of unnecessary complexity or jargon. In contrast, a MEDIOCRE prompt element may be vague or open-ended, lacking specific details or context, which can lead to unclear or irrelevant responses from the AI. A MEDIOCRE prompt element may also contain some ambiguity or redundancy, making it harder for the AI to provide a accurate response. On the other hand, a prompt element that is DISQUALIFIES outright is one that is completely unclear, misleading, or contains contradictory information, making it impossible for the AI to provide a meaningful response. The OBSERVABLE signals that decide the quality of a prompt element include the presence of specific keywords or phrases, the clarity of the language used, and the level of detail provided, as well as the absence of ambiguity, redundancy, and contradictory information. These signals can be checked by a reviewer to determine the quality of a prompt element. By evaluating these signals, a reviewer can determine whether a prompt element is GOOD, MEDIOCRE, or DISQUALIFIED.

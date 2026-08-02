@@ -1,24 +1,11 @@
 {
- "title": "Fix bulk_analyze.yml silently discarding runs on merge conflicts (found live, same bug class as excava_beat fires 88-101) + extract shared src.git_merge_resolve module",
+ "title": "P5 gates bind BOTH loops (Eitan's decision)",
  "kind": "meta",
  "plan": "",
- "started_at": "2026-08-02T07:11:00.065160+00:00",
- "fires": 4,
- "notes": [
-  {
-   "at": "2026-08-02T07:11:10.982896+00:00",
-   "text": "Live evidence: bulk_analyze.yml run 30731719512 (04:04-04:08Z) hit a merge conflict on ~90 files outside its narrow 7-file ours-whitelist, fell through to leave-unresolved, and silently discarded a full bulk-analyze pass -- same bug class fires 88-101 fixed for excava_beat.yml, in a sibling lane that never got the same fix. Audited all 19 push-capable lanes: only excava_beat.yml had the hardened whitelist+jsonl-union+designs-union logic; the other 18 (including bulk_analyze.yml) still carried the original narrow 7-file fallback."
-  },
-  {
-   "at": "2026-08-02T07:11:11.044754+00:00",
-   "text": "Built src/git_merge_resolve.py: one tested module (18-file ours-whitelist + real UNION merge for *.jsonl append-logs and data/designs.json) instead of re-copying inline bash per lane. Verified against REAL git conflicts (not simulated) via src/git_merge_resolve_test.py: builds a throwaway bare origin + two diverging clones, forces an actual 3-way conflict (whitelisted file + jsonl + designs.json all at once), runs the real module against it -- 7/7 checks pass (conflict detected, commit succeeds, whitelist takes ours, jsonl keeps both sides, designs union keeps all 3 records + newer updated_at, no conflict markers land in the commit). Also verified the fail-closed path: a conflict on a file outside the trust list correctly leaves it unresolved and resolve() returns False (same 'push skipped' degradation as before, never worse)."
-  },
-  {
-   "at": "2026-08-02T07:11:11.094298+00:00",
-   "text": "Wired bulk_analyze.yml's merge-conflict fallback to call 'python -m src.git_merge_resolve' in place of the inline 7-file whitelist. Verified: yaml.safe_load re-parses clean, excava_core_test 65/65 unaffected. Updated guardrails.py's G-R check (g_push_safety_rollout) to recognize the new module-call pattern as a valid fallback alongside the original inline-bash string match -- it was about to false-flag this lane as REGRESSED (missing 'auto-resolving known-stateless' verbatim) even though the new code is strictly more robust than what it replaced."
-  }
- ],
+ "started_at": "2026-08-02T07:50:25.978348+00:00",
+ "fires": 1,
+ "notes": [],
  "status": "done",
- "finished_at": "2026-08-02T07:11:16.971041+00:00",
- "outcome": "bulk_analyze.yml no longer silently discards a run when it hits a merge conflict outside a narrow 7-file whitelist -- confirmed via a real git-conflict test harness, not a hand simulation. The other 17 lanes (analyze/discover/mine/etc.) still carry only the narrow inline whitelist and share the identical exposure; not fixed this fire (scoped to the one lane with LIVE confirmed data loss) -- flagged as the next concrete follow-up: port each remaining lane's fallback to call src.git_merge_resolve the same way, retiring the duplicated inline bash entirely (including excava_beat.yml's own copy, once bulk_analyze.yml's use of the shared module is proven in production)."
+ "finished_at": "2026-08-02T07:50:26.019726+00:00",
+ "outcome": "gates.json + gate_blocks() + standing_checks surface + guardrail G-U"
 }

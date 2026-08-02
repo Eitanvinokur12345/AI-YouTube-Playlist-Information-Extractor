@@ -132,6 +132,11 @@ def main() -> int:
     else:
         print(f"  OK contract: {'always-on' if c['always_on'] else 'present'}"
               f"{'' if c['acked_recently'] else ' — NOT acknowledged recently (run: python -m src.loop_contract ack)'}")
+    if c.get("open_gates"):
+        print(f"  !! {len(c['open_gates'])} OPEN P5 GATE(S) — BINDING ON BOTH LOOPS, only Eitan decides:")
+        for g in c["open_gates"]:
+            print(f"       {g['id']}: {g['blocks'][:74]}")
+        print("       (decide: python -m src.loop_contract gate <id> --verdict go|no|changed)")
     inc = c["open_increment"]
     print(f"  -> carry-over: '{inc['title']}' [{inc['kind']}], {inc['fires']} fire(s) in — CONTINUE IT"
           if inc else "  -> carry-over: none open — this fire starts one")

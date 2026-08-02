@@ -465,6 +465,29 @@ def g_push_safety_rollout():
     return _ok("G-R", "Push-safety fallback present in every shipping lane", ok, detail, "warn")
 
 
+def g_gates():
+    """G-U (2026-08-02, Eitan's decision): P5 pitch-gates must bind BOTH loops.
+
+    A gate used to be prose in EXCAVA_END_PLAN.md that a session had to notice and choose to
+    honour — which is exactly how the Router gate got built straight through on 2026-08-01 by
+    the away loop. Prose cannot bind a process that never reads it. This asserts the gate file
+    EXISTS and is well-formed, so neither loop can be in a state where gates are unenforceable
+    without something saying so."""
+    p = DATA / "excava" / "gates.json"
+    try:
+        d = json.loads(p.read_text(encoding="utf-8"))
+        gs = d.get("gates", [])
+        openn = [g for g in gs if not g.get("verdict")]
+        ok = isinstance(gs, list) and all(g.get("id") and g.get("blocks") for g in gs)
+        detail = (f"{len(gs)} gate(s) on file, {len(openn)} OPEN and binding on both loops."
+                  if ok else "gates.json malformed — a gate without an id/blocks cannot bind anything.")
+        return _ok("G-U", "P5 gates are machine-readable", ok, detail, "critical")
+    except Exception as e:
+        return _ok("G-U", "P5 gates are machine-readable", False,
+                   f"data/excava/gates.json missing or unreadable ({e}) — gates are prose only, "
+                   "which is how the Router gate was bypassed.", "critical")
+
+
 def g_jsonl_markers():
     """2026-07-28 (fire 46): G-F only ever `json.loads`-ed whole files, so it could never see a
     conflict-marker collision in a *.jsonl append-log (traces/agent_memory/chats/episodes.jsonl —

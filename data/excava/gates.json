@@ -1,0 +1,29 @@
+{
+  "note": "MACHINE-READABLE P5 PITCH-GATES. Eitan's decision 2026-08-02: gates bind BOTH loops — this session AND the away loop that ships to main. Until now a gate was prose in EXCAVA_END_PLAN.md that a session had to notice and choose to honour, which is exactly how the Router gate got built straight through on 2026-08-01. A gate listed here with verdict:null BLOCKS the work it names. Only Eitan sets a verdict. standing_checks prints every open gate at the top of every fire, so a loop cannot claim it did not know.",
+  "law": "PROTOCOLS.md P5 — autonomy with three pitch-gates: an OVERHAUL, a NEW TOOL, or DEEPER ACCESS is Eitan's call, never the loop's.",
+  "how_to_decide": "python -m src.loop_contract gate <id> --verdict go|no|changed --note \"...\"",
+  "gates": [
+    {
+      "id": "G1-router-dependency",
+      "opened": "2026-07-30",
+      "kind": "new-dependency",
+      "blocks": "Adding langgraph or crewai (or any heavy orchestration framework) to requirements.txt.",
+      "question": "END PLAN §2 says the 5 classes sit 'on LangGraph/CrewAI'. Neither is installed; requirements.txt has 4 deps and the runtime is GitHub Actions + Eitan's PC. Adopt the framework, or build on the existing excava_bus?",
+      "claude_recommendation": "Build on the existing bus (Ponytail: reuse before building). A heavy orchestration dep on every CI run is real cost with no demonstrated need.",
+      "verdict": "resolved-by-action",
+      "note": "The away loop built Router in its fire 95 WITHOUT this gate being answered — it composed excava_agents/excava_engines and added NO dependency, which happens to match the recommendation. Outcome fine, governance not: a gate was bypassed because nothing enforced it. That bypass is why this file now exists. Recorded honestly rather than quietly closed.",
+      "decided_at": "2026-08-01"
+    },
+    {
+      "id": "G2-scope-fence",
+      "opened": "2026-08-02",
+      "kind": "scope",
+      "blocks": "Nothing currently — informational.",
+      "question": "The 'non-brain fronts only' fence was retired 2026-07-30 after it went stale and blocked M2's class collapse. Any FUTURE scope fence must carry a review_by date so it cannot go stale unnoticed.",
+      "claude_recommendation": "Keep as a standing rule, not a gate.",
+      "verdict": "go",
+      "note": "Standing rule, recorded so a future fence cannot be added without an expiry.",
+      "decided_at": "2026-08-02"
+    }
+  ]
+}

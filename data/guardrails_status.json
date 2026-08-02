@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-08-02T12:01:38.865719+00:00",
+ "generated_at": "2026-08-02T12:59:48.402750+00:00",
  "total": 20,
- "passing": 15,
+ "passing": 17,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": false,
-   "detail": "NOT in sync vs origin/main (behind/ahead: 1\t0) — a push may not have landed.",
+   "ok": true,
+   "detail": "HEAD == origin/main (work is really saved).",
    "severity": "warn"
   },
   {
@@ -84,8 +84,8 @@
   {
    "id": "G-L",
    "name": "Uncommitted-work watchdog",
-   "ok": false,
-   "detail": "1 untracked source file(s) not committed — commit or quarantine so nothing is lost: src/or1_phase_test.py",
+   "ok": true,
+   "detail": "no stray source files uncommitted.",
    "severity": "warn"
   },
   {
@@ -106,21 +106,21 @@
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 174.0h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 175.0h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
    "ok": false,
-   "detail": "last 'excava-beat #N' commit 7.9h ago — STALE: the dedicated heartbeat loop isn't landing per-cycle commits (check for a wedged/queued excava_beat.yml run).",
+   "detail": "last 'excava-beat #N' commit 8.9h ago — STALE: the dedicated heartbeat loop isn't landing per-cycle commits (check for a wedged/queued excava_beat.yml run).",
    "severity": "warn"
   },
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "last 'core-spoton:' commit 0.6h ago.",
+   "detail": "last 'core-spoton:' commit 1.6h ago.",
    "severity": "warn"
   },
   {

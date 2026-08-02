@@ -5,6 +5,33 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-02
+- **~13:0x (fire 112, unattended, cloud, scheduled-task invocation)** — Standing checks OK
+  (17/20 guardrails, 0 critical; stale local `origin/main` ref auto-re-fetched, missing upstream
+  tracking auto-repointed). Carry-over was still **OR-1 phase 1** (title unchanged since start;
+  the increment covers all 4 phases), 3 fires in — CONTINUE IT per `loop_contract`. Re-confirmed
+  this cloud session is still genuinely keyless beyond `GH_TOKEN` (no GROQ/GEMINI/MISTRAL/etc in
+  env, `families()` reports 1 live lineage) — a real multi-family sweep across the 10 element
+  types is still not runnable here. Built the next real piece the carry-over plan named:
+  **`or1_phase3()`** (adversarial re-review from scratch) in `src/excava_chat.py` + CLI
+  `--or1-phase3`, on the identical isolated-call pattern as phases 1/2: no `_history()`, hard-
+  gated on `>=2` live families, refuses to run without a successful phase-2 artifact for the same
+  element type (phase 3 has nothing to review otherwise). Extended `src/or1_phase_test.py` with
+  11 new checks (27 total, up from 16) covering the phase-2 prerequisite gate, the independent
+  family-diversity gate, the success path (one isolated call per cast member, every prompt seeded
+  with all phase-2 integration drafts), zero cross-agent leakage, and both artifact files.
+  `python -m src.or1_phase_test`: 27/27 pass. Ran `python -m src.excava_chat --or1-phase3 skill`
+  for real against this session's actual keyless engines: correctly BLOCKED on the phase-2
+  prerequisite (this session's own `or1-phase2-skill.json` is itself a blocked artifact, not
+  `ok:true`) — same honest-blocked-artifact pattern as phases 1/2, not a faked review.
+  `python -m src.excava_core_test`: still all pass (untouched). **Harsh self-criticism:** still 0
+  LIVE multi-family runs after 4 fires on this increment — machinery is now 3/4 phases built and
+  unit-tested (up from 2/4), real verifiable progress, but the actual OR-1 deliverable (a
+  committed cross-model guideline) has not moved. This is structural — needs the GH Actions
+  beat's full secret set or a keyed session — not something a 5th fire here fixes alone.
+  CARRY-OVER for next fire with real keys: run `--or1-phase1` across all 10 element/package
+  types, then `--or1-phase2`, then `--or1-phase3` on each, then build phase 4 (resolution) on
+  this same pattern before wiring the final committed guideline artifact OR-1 promises.
+
 - **~12:1x (fire 111, unattended, cloud, scheduled-task invocation)** — Standing checks OK
   (17/20 guardrails, 0 critical; stale local `origin/main` ref auto-re-fetched, missing upstream
   tracking auto-repointed). Carry-over was still **OR-1 phase 1**, 2 fires in — CONTINUE IT per

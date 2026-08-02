@@ -1,11 +1,12 @@
 """
-src/or1_phase_test.py — regression test for OR-1 phases 1 and 2 (src/excava_chat.py).
+src/or1_phase_test.py — regression test for OR-1 phases 1, 2 and 3 (src/excava_chat.py).
 
-Phase 1 (independent brainstorm) and phase 2 (integration discussion) both hard-gate on
-model-family diversity and must never fabricate a multi-agent result from one model. This
-proves that gate, the phase-1 -> phase-2 handoff, and phase 2's no-cross-talk isolation — all
-without live provider keys, by faking src.excava_engines and src.excava_agents. Free, stdlib,
-no network. Run:  python -m src.or1_phase_test
+Phase 1 (independent brainstorm), phase 2 (integration discussion) and phase 3 (adversarial
+re-review from scratch) all hard-gate on model-family diversity and must never fabricate a
+multi-agent result from one model. This proves that gate, the phase-1 -> phase-2 -> phase-3
+handoffs, and phases 2/3's no-cross-talk isolation — all without live provider keys, by faking
+src.excava_engines and src.excava_agents. Free, stdlib, no network. Run:
+python -m src.or1_phase_test
 """
 from __future__ import annotations
 
@@ -73,7 +74,7 @@ def main() -> int:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     except Exception:
         pass
-    print("OR-1 phase 1/2 (src/excava_chat.py) regression test")
+    print("OR-1 phase 1/2/3 (src/excava_chat.py) regression test")
 
     orig_data, orig_engines, orig_agents, orig_sleep = chat.DATA, chat.engines, chat.agents, chat.time.sleep
     chat.time.sleep = lambda *_a, **_k: None
@@ -144,6 +145,50 @@ def main() -> int:
 
             ref2 = chat._write_or1_artifact(r2b)
             check("phase2 markdown artifact written", (chat.DATA / ref2[len("data/"):]).exists(), ref2)
+
+            # (g) phase 3 refuses to run with no phase-2 artifact -- delete it first and confirm
+            # the gate fires (separate temp dir would also work, but this proves the ok-flag path).
+            (chat.DATA / "excava" / "artifacts" / "or1-phase2-skill.json").unlink()
+            fe5 = FakeEngines(TWO_FAMILIES, tag="gate3")
+            chat.engines = fe5
+            r3_missing = chat.or1_phase3("skill")
+            check("phase3 blocks with no phase-2 artifact", r3_missing["ok"] is False, str(r3_missing))
+            check("phase3 makes no engine calls when phase2 is missing", len(fe5.calls) == 0, str(fe5.calls))
+            chat._write_or1_artifact(r2b)   # restore for the success-path checks below
+
+            # (h) phase 3 also hard-gates on family diversity, independent of the phase-2 prereq.
+            fe6 = FakeEngines(ONE_FAMILY)
+            chat.engines = fe6
+            r3_fam = chat.or1_phase3("skill")
+            check("phase3 blocks below min_families", r3_fam["ok"] is False, str(r3_fam))
+            check("phase3 gate makes no engine calls below min_families", len(fe6.calls) == 0, str(fe6.calls))
+
+            # (i) phase 3 succeeds once phase 2's artifact exists, one isolated call per cast
+            # member, every prompt seeded with ALL phase-2 integration drafts.
+            fe7 = FakeEngines(TWO_FAMILIES, tag="p3")
+            chat.engines = fe7
+            r3 = chat.or1_phase3("skill")
+            check("phase3 succeeds once phase2 artifact exists", r3["ok"] is True, str(r3))
+            check("phase3 makes exactly one call per cast member", len(fe7.calls) == len(CAST),
+                  f"{len(fe7.calls)} calls vs {len(CAST)} cast")
+            check("phase3 families_used has >= 2 distinct families", len(r3["families_used"]) >= 2,
+                  str(r3["families_used"]))
+            seeded_all3 = all(all(d["text"] in c["prompt"] for d in r2b["integration_drafts"] if d["ok"])
+                              for c in fe7.calls)
+            check("every phase3 prompt is seeded with every phase2 integration draft", seeded_all3)
+
+            # (j) phase 3 calls are ALSO isolated from each other (a second solo pass, same as
+            # phase 2). Phase-2 markers are SUPPOSED to appear (that's the review corpus); only
+            # p3-markers from a different call would indicate real cross-agent leakage.
+            leaked3 = [c for i, c in enumerate(fe7.calls)
+                       for j, other in enumerate(fe7.calls) if i != j
+                       and f"unique-marker-p3{j + 1}" in c["prompt"]]
+            check("phase3 prompts carry no cross-agent leakage", not leaked3, str(leaked3))
+
+            ref3 = chat._write_or1_artifact(r3)
+            check("phase3 markdown artifact written", (chat.DATA / ref3[len("data/"):]).exists(), ref3)
+            check("phase3 JSON sidecar written",
+                  (chat.DATA / "excava" / "artifacts" / "or1-phase3-skill.json").exists())
     finally:
         chat.DATA, chat.engines, chat.agents, chat.time.sleep = orig_data, orig_engines, orig_agents, orig_sleep
 

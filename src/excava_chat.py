@@ -626,6 +626,65 @@ def or1_phase2(element_type: str, min_families: int = 2, roles=("doer", "checker
             "integration_drafts": integ, "families_used": sorted({d["family"] for d in ok})}
 
 
+def or1_phase3(element_type: str, min_families: int = 2, roles=("doer", "checker", "improver", "lead")) -> dict:
+    """OR-1 phase 3 — ADVERSARIAL RE-REVIEW FROM SCRATCH. Still independent, isolated calls (no
+    cross-talk between phase-3 reviewers, same reason phase 2 stays solo). Every agent's prompt
+    is seeded with phase 2's integration proposals, but the instruction flips from reconciling
+    to attacking: find what phase 2 got wrong or missed, BEFORE endorsing anything -- 'from
+    scratch' means each reviewer re-derives their own judgment of what GOOD/MEDIOCRE/DISQUALIFIED
+    looks like first, then checks the phase-2 merge order against it, rather than rubber-stamping
+    phase 2's framing. Requires phase 2 to have already produced a successful artifact for this
+    element type -- phase 3 has nothing to review otherwise, so that is a hard prerequisite, not
+    a fallback path (same shape as phase 2's phase-1 prerequisite)."""
+    p2 = _load(DATA / "excava" / "artifacts" / f"or1-phase2-{element_type}.json", None)
+    if not p2 or not p2.get("ok"):
+        return {"ok": False, "element_type": element_type, "phase": 3,
+                "reason": (f"phase 2 has no successful artifact for '{element_type}' yet "
+                           f"(or1-phase2-{element_type}.json missing or blocked) — run "
+                           "--or1-phase2 first; phase 3 adversarially reviews phase 2's "
+                           "integration proposals, it does not stand alone.")}
+    fams = engines.families()
+    live = [f for f in fams if f["status"] == "live"]
+    if len(live) < min_families:
+        return {"ok": False, "element_type": element_type, "phase": 3,
+                "live_families": [f["family"] for f in live],
+                "reason": (f"only {len(live)} live model family(ies) here — phase 3 needs "
+                           f">= {min_families} distinct lineages for the same correlated-error "
+                           "reason phases 1 and 2 do.")}
+    reg = agents.load_registry()
+    cast = [a for a in reg.get("agents", []) if a.get("department") == "improve" and a.get("role") in roles]
+    pool = {e["name"]: e for e in engines.healthy()}
+    corpus = "\n\n".join(f"--- integration proposal by {d['agent']} ({d['family']}) ---\n{d['text']}"
+                         for d in p2["integration_drafts"] if d.get("ok"))
+    reviews = []
+    for i, a in enumerate(cast):
+        fam = live[i % len(live)]
+        eng = pool.get(fam["engine"])
+        prompt = (
+            f"You are {a.get('name')} — {a.get('persona', '')}\n"
+            "This is phase 3 of a 4-phase process: ADVERSARIAL RE-REVIEW FROM SCRATCH. You are "
+            "still working ALONE — do not imagine or reference another phase-3 review, there "
+            "isn't one yet. Below are phase 2's independent integration proposals for what makes "
+            f"a '{element_type}' element GOOD:\n\n{corpus}\n\n"
+            "TASK: first, re-derive your OWN judgment of GOOD/MEDIOCRE/DISQUALIFIED from scratch "
+            "-- do not start from the proposals above. Then, playing devil's advocate against "
+            "them: (1) name what the proposals got WRONG or missed against your own judgment, "
+            "(2) name any observable signal that sounds good but cannot actually be checked by a "
+            "reviewer, (3) state whether you'd BLOCK the proposed merge order as-is or approve it "
+            "with named changes. Do not rubber-stamp -- if everything genuinely holds up, say so "
+            "and why, but earn that conclusion. Plain language, full sentences, 6-10 sentences "
+            "total.")
+        r = engines.complete(prompt, engine=eng, dept="improve", difficulty="hard", max_tokens=500)
+        reviews.append({"agent": a.get("name", a.get("id")), "agent_id": a.get("id"),
+                        "family": fam["family"], "engine": r.get("engine"), "model": r.get("model"),
+                        "ok": r.get("ok"),
+                        "text": r["text"].strip() if r.get("ok") else f"[no draft: {r.get('error', '')[:100]}]"})
+        time.sleep(2)
+    ok = [d for d in reviews if d["ok"]]
+    return {"ok": len(ok) >= min_families, "element_type": element_type, "phase": 3,
+            "adversarial_drafts": reviews, "families_used": sorted({d["family"] for d in ok})}
+
+
 def _write_or1_artifact(result: dict) -> str:
     et = result["element_type"]
     phase = result.get("phase", 1)
@@ -639,8 +698,9 @@ def _write_or1_artifact(result: dict) -> str:
                 f"> {_now()}\n\n{result['reason']}\n\n"
                 f"Live families this run: {', '.join(result.get('live_families') or []) or 'none'}\n")
     else:
-        drafts_key = "drafts" if phase == 1 else "integration_drafts"
-        label = "independent drafts" if phase == 1 else "integration discussion"
+        drafts_key = {1: "drafts", 2: "integration_drafts", 3: "adversarial_drafts"}[phase]
+        label = {1: "independent drafts", 2: "integration discussion",
+                 3: "adversarial re-review"}[phase]
         parts = [f"# OR-1 phase {phase} — {label} — element type: {et}\n",
                  f"> {_now()} · families used: {', '.join(result['families_used'])}\n"]
         for d in result[drafts_key]:
@@ -715,6 +775,9 @@ def main() -> int:
     ap.add_argument("--or1-phase2", metavar="ELEMENT_TYPE",
                     help="OR-1 phase-2 integration discussion (needs phase 1's artifact already "
                          "on disk for the same element type)")
+    ap.add_argument("--or1-phase3", metavar="ELEMENT_TYPE",
+                    help="OR-1 phase-3 adversarial re-review from scratch (needs phase 2's "
+                         "artifact already on disk for the same element type)")
     a = ap.parse_args()
     if a.or1_phase1:
         res = or1_phase1(a.or1_phase1)
@@ -725,6 +788,11 @@ def main() -> int:
         res = or1_phase2(a.or1_phase2)
         ref = _write_or1_artifact(res)
         print(f"OR-1 phase2 [{a.or1_phase2}]: {'ok' if res['ok'] else 'BLOCKED'} -> {ref}")
+        return 0
+    if a.or1_phase3:
+        res = or1_phase3(a.or1_phase3)
+        ref = _write_or1_artifact(res)
+        print(f"OR-1 phase3 [{a.or1_phase3}]: {'ok' if res['ok'] else 'BLOCKED'} -> {ref}")
         return 0
     if a.demo:
         ensure_default_rooms()

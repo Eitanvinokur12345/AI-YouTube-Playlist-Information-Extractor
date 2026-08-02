@@ -1,0 +1,49 @@
+{
+ "ok": true,
+ "element_type": "prompt",
+ "phase": 3,
+ "adversarial_drafts": [
+  {
+   "agent": "Ratchet",
+   "agent_id": "improve-lead",
+   "family": "DeepSeek V4",
+   "engine": "mistral",
+   "model": "mistral-small-latest",
+   "ok": true,
+   "text": "**My independent judgment of a GOOD prompt:**\nA GOOD prompt is a *single, unambiguous instruction* that specifies a clear task, target audience, and measurable constraints (e.g., length, tone, format) without jargon or contradictions. It includes *at least one concrete example* of desired output and avoids open-ended or subjective language. The prompt must be *testable*—a reviewer should be able to predict the AI’s response or verify it against the example. Ethical safeguards (e.g., no harmful/unethical requests) are non-negotiable. Modularity, versioning, and tone constraints are *optional enhancements*, not core requirements. Overly prescriptive rules (e.g., \"use exactly 12 words\") or vague directives (\"make this better\") disqualify a prompt.\n\n---\n\n**Devil’s advocate critique of the proposals:**\n\n1. **What the proposals got wrong/missed:**\n   - They overvalue *modularity* and *versioning* as core traits, which are tools for *iterative refinement*, not prompt quality itself. A prompt can be GOOD without being reusable or versioned—this conflates *process* with *outcome*.\n   - They treat *tone constraints* as universally necessary, but tone is often subjective (e.g., \"professional\" vs. \"casual\") and can introduce ambiguity unless anchored to concrete examples. The proposals don’t resolve this tension.\n   - They ignore *time sensitivity*: a prompt’s relevance may decay (e.g., outdated data, shifting norms), but none address how to signal or mitigate this.\n\n2. **Observable signals that sound good but can’t be checked:**\n   - \"Context-richness\" and \"actionability\" are vague—how does a reviewer *measure* if a prompt is \"rich\" enough or \"actionable\" without running it? These are subjective judgments.\n   - \"Ethical safeguards\" are mentioned, but the proposals don’t define *how* to verify compliance (e.g., is a prompt disqualified if it *might* enable harm, or only if it explicitly requests harm?).\n   - \"Unambiguous task framing\" is circular—if a prompt is ambiguous, it’s disqualified by definition, but the proposals don’t provide a *method* to detect ambiguity beyond \"it feels unclear.\"\n\n3. **Block or approve with changes?**\n   **Block as-is.** The"
+  },
+  {
+   "agent": "Sprocket",
+   "agent_id": "improve-w1",
+   "family": "GLM-5.2",
+   "engine": "mistral",
+   "model": "mistral-small-latest",
+   "ok": true,
+   "text": "**My independent judgment of a GOOD prompt:**\nA GOOD prompt is a *clear, single-purpose instruction* that specifies *what* to do (task), *why* it matters (context), and *how* to measure success (constraints), all in language a human or AI can execute without ambiguity. It avoids jargon, contradictions, or irrelevant details, and includes *one concrete example* of a desired output to anchor expectations. It’s *testable*—a reviewer can judge whether the output meets the prompt’s goals without needing to guess intent. Crucially, it’s *not* a checklist of abstract principles (e.g., \"be modular\") but a *directive* that a model can act on immediately. Ambiguity in task, audience, or tone disqualifies it; over-constraint (e.g., \"use exactly 12 words\") makes it mediocre unless the constraint is demonstrably necessary. Ethical violations (e.g., harmful requests) are disqualifying by default.\n\n---\n\n**Devil’s advocate critique of the proposals:**\n1. **What they got wrong/missed:**\n   - They overemphasize *modularity* and *versioning* as core to \"GOOD,\" but these are *tools for improvement*, not qualities of the prompt itself. A prompt can be excellent without being reusable or versioned—it just needs to work *once*.\n   - They treat *tone constraints* (e.g., \"sound professional\") as universally valid, but tone is subjective and often irrelevant to the task. A prompt demanding a \"snarky millennial tone\" is more likely to fail than succeed unless the tone is *operationally defined* (e.g., \"use contractions and em dashes\").\n   - They ignore *time sensitivity*—a prompt that’s clear today may become ambiguous tomorrow if its constraints rely on outdated examples or references.\n\n2. **Observable signals that sound good but can’t be checked:**\n   - \"Reusable structure\" and \"versioning\" are unverifiable without a prior artifact to compare against. A reviewer can’t judge if a prompt is \"modular\" in isolation—it requires knowing its history.\n   - \"Context-rich\" is a buzzword; without a concrete example of what \"rich\" looks like, it’s meaningless. \"Add more detail\" is not a measurable constraint.\n   - \"Ethical safeguards\" are disqualifying in theory, but"
+  },
+  {
+   "agent": "Gauge",
+   "agent_id": "improve-checker",
+   "family": "Kimi K2.7",
+   "engine": "nvidia",
+   "model": "meta/llama-3.3-70b-instruct",
+   "ok": true,
+   "text": "To re-derive my judgment of what makes a prompt GOOD, MEDIOCRE, or DISQUALIFIED from scratch, I consider the fundamental goal of a prompt: to elicit a clear, relevant, and useful response from an AI model. A GOOD prompt should be concise, free of ambiguity and jargon, and provide sufficient context for the model to understand the task. It should also be actionable, with a clear call to action or question, and include any necessary constraints or guidelines for the response. A MEDIOCRE prompt may lack some of these elements, while a DISQUALIFIED prompt would be unclear, misleading, or contain harmful or unethical content.\n\nUpon reviewing the proposals, I notice that they often prioritize modularity and versioning over clarity and conciseness. While these elements can be useful for tracking improvements and reuse, they can also lead to overly complex and prescriptive prompts that may stifle creativity and flexibility. Additionally, some proposals emphasize the importance of tone constraints, which can be subjective and difficult to define. The proposal by Ratchet, for example, mentions \"before/after\" examples as a key element, but this may not always be relevant or feasible. \n\nOne observable signal that sounds good but cannot actually be checked by a reviewer is the \"testability\" of a prompt, as mentioned in Gauge's proposal. While it's essential to ensure that a prompt elicits a clear and relevant response, it's challenging to define a clear metric for testability that can be universally applied. \n\nI would not block the proposed merge order entirely, but I would approve it with significant changes. Specifically, I would prioritize clarity, conciseness, and relevance over modularity and versioning, and ensure that tone constraints are optional and clearly defined. I would also emphasize the importance of avoiding harmful or unethical content and ensuring that prompts are free of ambiguity and jargon. By making these adjustments, the merged proposal can provide a more balanced and effective framework for crafting GOOD prompts."
+  },
+  {
+   "agent": "Overhaul",
+   "agent_id": "improve-improver",
+   "family": "GPT-4o-mini",
+   "engine": "nvidia",
+   "model": "meta/llama-3.3-70b-instruct",
+   "ok": true,
+   "text": "From scratch, I derive that a GOOD prompt is one that is clear, concise, and well-defined, with a specific task that can be easily understood and executed. It should have measurable constraints, be free of ambiguity and jargon, and include relevant examples or context to guide the response. A MEDIOCRE prompt may lack some of these qualities, while a DISQUALIFIED prompt would be one that is unclear, misleading, or contains harmful or unethical instructions.\n\nUpon reviewing the proposals, I notice that they often prioritize modularity and versioning, which may not always be necessary for a prompt to be effective. Additionally, some proposals miss the importance of safety and flexibility, such as the potential for overly prescriptive prompts or the lack of explicit disqualification of harmful prompts. The proposals also sometimes rely on uncheckable signals, such as \"tone\" or \"context richness,\" which can be subjective and difficult to verify.\n\nOne observable signal that sounds good but cannot actually be checked by a reviewer is the \"context richness\" of a prompt, as it can be difficult to quantify or verify. I would not block the proposed merge order entirely, but I would approve it with changes, such as adding explicit language regarding safety and flexibility, and ensuring that modularity and versioning are treated as enhancements rather than rigid requirements. Overall, the proposals provide a good foundation, but require refinement to ensure that they prioritize clarity, usability, and safety. With these changes, the merge order can provide a comprehensive and effective guideline for creating GOOD prompts."
+  }
+ ],
+ "families_used": [
+  "DeepSeek V4",
+  "GLM-5.2",
+  "GPT-4o-mini",
+  "Kimi K2.7"
+ ]
+}

@@ -1,0 +1,49 @@
+{
+ "ok": true,
+ "element_type": "format",
+ "phase": 3,
+ "adversarial_drafts": [
+  {
+   "agent": "Ratchet",
+   "agent_id": "improve-lead",
+   "family": "DeepSeek V4",
+   "engine": "mistral",
+   "model": "mistral-small-latest",
+   "ok": true,
+   "text": "I’ll re-derive my own judgment first, then critique the proposals.\n\n**My judgment of GOOD/MEDIOCRE/DISQUALIFIED for a format:**\nA format is **GOOD** if it meets these *non-negotiable* criteria:\n1. **Unambiguous semantics**: Every field, rule, and edge case is explicitly defined (no \"undefined behavior\").\n2. **Machine-readable + human-readable**: The spec is parseable (e.g., JSON Schema) *and* includes clear prose (e.g., README with examples).\n3. **Self-contained**: No hidden dependencies (e.g., external libraries, implicit context).\n4. **Validation by default**: Built-in checks (e.g., type constraints, versioning) catch errors early.\n5. **Security-conscious**: No hardcoded secrets, no silent data leaks, and clear threat models.\n\nA format is **MEDIOCRE** if it meets most but not all of the above (e.g., lacks examples or has vague error messages).\nA format is **DISQUALIFIED** if it fails any *non-negotiable* criterion (e.g., ambiguous semantics, hidden dependencies).\n\n---\n\n**Critique of the proposals:**\n\n1. **What they got wrong/missed:**\n   - None of the proposals explicitly call out **security** as a *non-negotiable* criterion—only Gauge mentions it tangentially. This is a critical oversight; a format with hardcoded secrets or silent data leaks is inherently flawed.\n   - The proposals treat \"modularity\" as a primary virtue, but modularity without *cohesion* (e.g., splitting a format into unrelated parts) can create more problems than it solves. Ratchet and Overhaul’s focus on modularity risks prioritizing structure over clarity.\n\n2. **Uncheckable signals:**\n   - Phrases like \"frictionless usability\" (Overhaul), \"user-friendly\" (Gauge), and \"discoverability\" (Sprocket) sound good but are subjective. A reviewer can’t verify \"frictionless\" without concrete metrics (e.g., time-to-adopt, error rates).\n   - \"Self-documenting\" (Sprocket) is vague—does it mean inline comments, a README, or auto-generated docs? Without a definition, it’s uncheckable.\n\n3. **Merge order approval/block:**\n   I’d **block"
+  },
+  {
+   "agent": "Sprocket",
+   "agent_id": "improve-w1",
+   "family": "GLM-5.2",
+   "engine": "mistral",
+   "model": "mistral-small-latest",
+   "ok": true,
+   "text": "**My independent judgment (from scratch):**\nA ‘format’ element is GOOD if it is *self-contained, unambiguous, versioned, and machine-readable by default* while remaining *human-discoverable and security-aware*. It must define its scope explicitly, handle edge cases in rules (not just examples), and avoid hidden dependencies or vendor-specific quirks. MEDIOCRE formats lack one of these (e.g., no versioning or poor discoverability), while DISQUALIFIED formats violate core principles (e.g., proprietary lock-in, silent failures, or no validation).\n\n**Devil’s advocate against the proposals:**\n1. **What they got wrong/missed:**\n   - Ratchet’s modularity can encourage *fragmentation* (e.g., splitting a format into 10 files) without ensuring coherence—this wasn’t flagged as a risk.\n   - Gauge’s \"no hidden prerequisites\" is vague; formats could still assume *implicit* tooling (e.g., a validator) without stating it.\n   - Overhaul’s \"frictionless\" ideal ignores that *some* friction (e.g., strict validation) is necessary to prevent misuse—this isn’t acknowledged as a trade-off.\n\n2. **Uncheckable signals:**\n   - \"User-friendly\" (Gauge/Sprocket) and \"reusable\" (Ratchet) are subjective; reviewers can’t verify these without concrete metrics (e.g., adoption rates or tooling surveys).\n   - \"Security considerations\" (Gauge) is a red flag—it’s a catch-all term with no defined scope (e.g., does it cover encryption, access control, or just input sanitization?).\n\n3. **Merge order approval:**\n   I’d **BLOCK the proposed merge orders as-is** because they prioritize *usability* (Overhaul/Gauge) over *reliability* (Sprocket/Ratchet). A better order would start with **Sprocket’s versioning/edge-case handling** as the foundation (to ensure formats don’t rot), then layer in **Ratchet’s modularity** (if it doesn’t fragment the spec), followed by **Overhaul’s validation** (to enforce rules), and finally **Gauge’s discoverability** (to make it usable). This flips the priority to *durability* first, then *practicality*."
+  },
+  {
+   "agent": "Gauge",
+   "agent_id": "improve-checker",
+   "family": "Kimi K2.7",
+   "engine": "mistral",
+   "model": "mistral-small-latest",
+   "ok": true,
+   "text": "**My independent judgment (from scratch):**\nA ‘format’ element is GOOD if it is *self-contained, unambiguous, verifiable, and frictionless*—meaning it requires no hidden context, has clear rules for parsing/validation, and can be checked by both humans and machines without surprises. MEDIOCRE formats lack one of these (e.g., vague field definitions or undocumented edge cases), while DISQUALIFIED formats actively undermine them (e.g., formats that embed secrets or rely on proprietary tooling). Security and discoverability are secondary traits, not core, because they’re hard to enforce uniformly; they matter only insofar as they don’t conflict with the primary traits.\n\n**Devil’s advocate against the proposals:**\n1. **What they got wrong/missed:**\n   - All proposals overvalue *modularity* as a primary trait. Modularity is useful only if the format remains self-contained; otherwise, it introduces hidden dependencies (e.g., a \"modular\" schema requiring external validators). The proposals treat modularity as a virtue in isolation, not as a trade-off against self-containment.\n   - *Discoverability* (Gauge/Sprocket) is treated as a core requirement, but it’s uncheckable. A format can have perfect metadata and still be undiscoverable in practice (e.g., buried in a niche repo). No proposal addresses how to *measure* discoverability beyond \"include a README.\"\n\n2. **Uncheckable signals:**\n   - \"Frictionless\" (Overhaul) and \"user-friendly\" (Gauge) sound good but are subjective. A format could pass all checks (validation, versioning, etc.) yet still feel \"frictionful\" to users due to poor tooling or unclear error messages—neither is verifiable in the format itself.\n   - \"Vendor-neutrality\" (Ratchet/Sprocket) is also uncheckable. A format can claim neutrality while subtly favoring a tool (e.g., using a schema dialect only supported by one parser). There’s no objective way to disprove this.\n\n3. **Merge order:**\n   I’d **BLOCK the proposed orders as-is** because they all prioritize *automation* (Overhaul/Ratchet) over *self-containment*—the most critical trait. The correct order should start with **self-contained rules** (no hidden dependencies), then layer in validation"
+  },
+  {
+   "agent": "Overhaul",
+   "agent_id": "improve-improver",
+   "family": "GPT-4o-mini",
+   "engine": "mistral",
+   "model": "mistral-small-latest",
+   "ok": true,
+   "text": "**My independent judgment of GOOD/MEDIOCRE/DISQUALIFIED:**\nA format is GOOD if it is *self-contained, unambiguous, machine-readable, and verifiable*—meaning it has a clear schema, explicit edge-case rules, no hidden dependencies, and built-in validation (e.g., JSON Schema with examples). MEDIOCRE formats lack one of these (e.g., no schema or poor documentation) but aren’t actively harmful. DISQUALIFIED formats are *opaque* (e.g., proprietary, undocumented, or reliant on implicit context) or *unverifiable* (e.g., no validation, silent failures).\n\n**Devil’s advocate critique of the proposals:**\n1. **What’s wrong/missed:** None of the proposals explicitly disqualify formats with *silent data loss*—e.g., a \"flexible\" schema that drops unknown fields without warning. Overhaul’s focus on validation is correct, but the others treat it as secondary to documentation or modularity, which risks automation failures.\n2. **Uncheckable signals:** Phrases like *\"human-friendly\"* (Gauge/Sprocket) or *\"frictionless\"* (Overhaul) sound good but are subjective—what’s \"friendly\" to one user is clutter to another. There’s no metric for \"friction\" in the proposals.\n3. **Merge order:** I’d BLOCK the proposed orders as-is. Overhaul’s validation-first approach is correct, but Ratchet’s modularity should come *earlier*—if a format isn’t modular, its validation is useless. Gauge’s security checks should be *earlier* too, since a format with hidden risks (e.g., hardcoded secrets) is disqualified regardless of validation. The correct order is: **Gauge (security) → Ratchet (modularity) → Overhaul (validation) → Sprocket (versioning)**. This ensures safety and reusability before enforcing consistency."
+  }
+ ],
+ "families_used": [
+  "DeepSeek V4",
+  "GLM-5.2",
+  "GPT-4o-mini",
+  "Kimi K2.7"
+ ]
+}

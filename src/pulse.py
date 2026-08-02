@@ -114,6 +114,23 @@ def _guardrails() -> dict:
             "critical": g.get("critical_failures"), "at": g.get("generated_at", "")}
 
 
+def _quality_bar() -> dict:
+    """Overall + weakest-type read of data/quality_bar.json (src/quality_bar.py) — the
+    per-type GOOD-element bar (backlog value-95 item, OR-1's deliverable). Self-improvement's
+    §4 visible number: not just 'is everything scored' but 'does it actually meet its bar'."""
+    q = _load(DATA / "quality_bar.json", {})
+    types = q.get("types") or {}
+    scored = {t: s for t, s in types.items() if s.get("rate") is not None}
+    if not scored:
+        return {"at": "", "overall": None, "weakest": []}
+    total = sum(s["total"] for s in scored.values())
+    meets = sum(s["meets_bar"] for s in scored.values())
+    weakest = sorted(scored.items(), key=lambda kv: kv[1]["rate"])[:3]
+    return {"at": q.get("generated_at", ""),
+            "overall": round(meets / total, 3) if total else None,
+            "weakest": [(t, s["rate"], s["meets_bar"], s["total"]) for t, s in weakest]}
+
+
 def _count(pattern: str, text: str) -> int:
     return len(re.findall(pattern, text, re.MULTILINE))
 
@@ -150,6 +167,7 @@ def build() -> dict:
         "drain": _drain(),
         "questions": _questions(),
         "away": _away(),
+        "quality_bar": _quality_bar(),
         "commits_24h": within24,
         "recent_commits": commits,
     }
@@ -171,6 +189,7 @@ def _arrow(delta) -> str:
 
 def _render(d: dict) -> str:
     g, mv, dr, q, aw = d["guardrails"], d["movement"], d["drain"], d["questions"], d["away"]
+    qb = d.get("quality_bar", {})
     gl = (f"{g['passing']}/{g['total']} passing, {g['critical']} critical"
           if g.get("total") else "no status")
     drain = ("never run" if not dr.get("age_h") and dr.get("age_h") != 0 else
@@ -201,6 +220,16 @@ def _render(d: dict) -> str:
         f"- **fires logged:** {aw['fires']}" + (f" · last: {aw['last']}" if aw['last'] else ""),
         f"- **questions open:** {q['open']} of {q['numbered']} numbered "
         f"· **audit decisions staged:** {q['audit_staged']}",
+        "",
+        "## Quality bar (per element type — src/quality_bar.py)",
+    ]
+    if qb.get("overall") is not None:
+        lines.append(f"- **overall:** {qb['overall'] * 100:.0f}% of scored elements meet their own type's bar")
+        lines.append("- **weakest types:** " + ", ".join(
+            f"{t} {rate * 100:.0f}% ({m}/{n})" for t, rate, m, n in qb["weakest"]))
+    else:
+        lines.append("- not yet run — `python -m src.quality_bar`")
+    lines += [
         "",
         "## Last commits",
     ]

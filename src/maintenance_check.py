@@ -5,7 +5,8 @@ A self-running integrity sweep over the whole system, so quality doesn't silentl
 library grows. It catches the failure modes that turn the Obsidian brain into "huge white lines"
 (empty notes, duplicate titles that collide, oversized category hubs that render as hairballs,
 phantom wikilinks) AND the broader data-health problems (missing fields, version-less vendor names,
-orphan connectors, stale lanes). It writes data/maintenance.json (a graded report) and queues the
+orphan connectors, stale lanes, elements that miss their own per-type quality bar — see
+src/quality_bar.py). It writes data/maintenance.json (a graded report) and queues the
 worst issues into improvement_tasks.json. Free, mechanical, no Claude tokens.
 
 Usage:  python -m src.maintenance_check
@@ -134,6 +135,20 @@ def main() -> int:
     if noq:
         add("low", "data", "Tools with no quality score can't be ranked",
             len(noq), "Score them in the next analysis pass.", noq)
+
+    # 4) Per-type quality bar (OR-1's deliverable, src/quality_bar.py) — the visible
+    #    self-improvement number (§4): what fraction of each element type actually meets its
+    #    own GOOD-element bar, not just "has any quality_score at all" (check 3, above).
+    from src.quality_bar import evaluate_all as _qb_evaluate_all
+    qb = _qb_evaluate_all()
+    weak_types = {t: s for t, s in qb["types"].items() if s["rate"] is not None and s["rate"] < 0.5}
+    if weak_types:
+        add("medium", "quality",
+            "Element types where under half of items meet their own type-specific quality bar",
+            sum(s["total"] - s["meets_bar"] for s in weak_types.values()),
+            "See data/quality_bar.json sample_failing per type; re-run deep_retrieve/enrichment "
+            "on the missed signals (link, concrete description, provenance).",
+            [f"{t} ({s['meets_bar']}/{s['total']}, {s['rate']*100:.0f}%)" for t, s in weak_types.items()])
 
     # ── Stale lanes (from pipeline_status) ────────────────────────────────────────
     ps = load("pipeline_status.json", {})

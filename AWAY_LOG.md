@@ -5,6 +5,62 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-02 (cont'd)
+- **~23:0x (fire 118, unattended, cloud, scheduled-task invocation)** — Standing checks OK
+  (18/20 guardrails, 0 critical; local cache stale + upstream missing, both auto-repointed,
+  nothing lost). Fire 117's own harsh self-criticism named the target directly: two fires in a
+  row had done measurement/plumbing work instead of the real M1-M5 program, and named the
+  #1 backlog item (`python -m src.excava_backlog`, value 95) as what fire 118 should attack —
+  **"Define what makes an element GOOD — per element type and per package."** That item IS
+  OR-1's whole purpose. Checked OR-1's actual state first rather than re-running it blind:
+  phases 1-3 (independent drafts -> integration -> adversarial review) had ALL completed for
+  real since fire 116/117, across all 10 element/package types, via the CI beat's multi-key
+  pool (`or1-phase{1,2,3}-*.json` all `ok:true`) — genuine multi-brain content already sitting
+  on disk, unused. Phase 4 (final resolution) needs >=2 live model families; this session (like
+  every interactive session so far) carries exactly 1 (`gh-models`), so calling `--or1-run-all`
+  again would just re-hit the same wall a 4th+ time. Instead of waiting on a future fire with
+  keys, did phase 4's actual job by hand: spawned an agent to read all 20 phase-2/phase-3
+  artifacts (4 integration drafts + 4 weakness lists per type, 10 types) and resolve them into
+  one final GOOD/MEDIOCRE/DISQUALIFIED guideline per type with concrete signals, real
+  disagreements between the 4 model families resolved explicitly rather than averaged away
+  (e.g. commit-activity/CI-badge counts were unanimously called gameable across all four
+  phase-3 reviews for tool/connector/package, so verifiable output beats process signals in the
+  final guideline). Shipped it as three wired, verified pieces, not just a doc: **(1)**
+  `ANALYZE_SPEC.md` gets a new "Per-type quality bar" section (10 type blocks) extending the
+  existing generic 1-10 rubric. **(2)** new `src/quality_bar.py` is the executable form —
+  mechanically checks 8 of the 10 types (skill/tool/connector/prompt/design/format/model/
+  command; `creation`/`package` documented but not scored, no flat per-item data exists for
+  either yet) against 3-4 concrete signals each, reusing `bulk_analyze._looks_boilerplate_desc`
+  instead of re-inventing boilerplate detection (Ponytail). First real run: tool 92%, model
+  94%, format/prompt 100%, connector 74%, skill 49%, command 35%, design 20% meet their own
+  type's bar. **(3)** wired into `maintenance_check.py` (new medium-severity issue when a type
+  is under 50% — 2,830 items flagged this run, health score honestly 50->35, a more accurate
+  report, not a regression) and into `pulse.py` (`PULSE.md` gets a "Quality bar" section:
+  overall % + 3 weakest types) — the actual visible success-rate number §4 of the END PLAN
+  asks for. **Verified, not just asserted:** `python -m src.excava_core_test` all pass
+  (unaffected); spot-checked several `design`/`command` sample_failing entries by hand — the
+  20%/35% numbers are real gaps (most design records genuinely lack a github/source_url AND
+  style_tags; most commands genuinely lack a `tool` field), not a scoring bug; JSON-parsed
+  every `data/**/*.json` after the change, none broken.
+  **Process deviation, deliberate:** this session's harness explicitly assigns branch
+  `claude/kind-shannon-2gt9z9` + draft PR — the exact tension fire 117 escalated to
+  `QUESTIONS.md` and chose not to resolve unilaterally a second time. Followed that same
+  restraint here: shipped to the assigned branch + opened **draft PR #60** instead of
+  `git_safe ship`-ing straight to `main` (this repo's own 100+-fire convention). Both this and
+  fire 117's underlying question are still open for Eitan in `QUESTIONS.md` — did not re-flag
+  it a third time, since fire 117 already recorded it in full.
+  **Harsh self-criticism:** this is my own read-and-resolve pass standing in for OR-1's own
+  phase 4, not phase 4 actually running with 4 live independent model calls — genuinely useful
+  (shipped, mechanically checked, real numbers today) but not the full diversity guarantee
+  OR-1's design promises; if phase 4 completes later with live keys, it should be reconciled
+  against this, not silently ignored. Only 8/10 types are mechanically scored. The "<50%"
+  maintenance threshold and "3-of-4 signals" quality_bar threshold are single-fire judgment
+  calls, not independently reviewed. And now that design's real 20% pass rate is visible, it's
+  still unfixed — the next fire with link-resolution capacity should treat it as the top
+  enrichment target this surfaced, not just a number that sits in a file. Also: because this
+  shipped to a branch instead of `main`, it is NOT yet live on `main` the way every other
+  numbered fire's work has been — it needs Eitan (or a future fire, once the process question
+  is actually resolved) to merge PR #60 before the rest of the program can build on it.
+
 - **~21:0x (fire 117, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
   guardrails, 0 critical; local `origin/main` cache was stale + upstream tracking missing, both
   auto-repointed by `standing_checks`, nothing lost). Confirmed OR-1 needs no action this fire

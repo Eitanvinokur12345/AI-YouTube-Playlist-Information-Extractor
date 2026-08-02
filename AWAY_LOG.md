@@ -5,6 +5,79 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-02
+- **~06:0x (fire 101, unattended, cloud, scheduled-task invocation)** — Read fire 100's log first.
+  Standing checks clean (`python -m src.standing_checks`); guardrails 16-17/20 throughout, 0
+  critical. Confirmed same standing constraints as fires 99-100: no engine keys reachable from
+  this sandbox (`env` re-checked, all unset), no general outbound network (`curl` to
+  `api.github.com`/`example.com` both fail/403 — only the scoped GitHub MCP proxy works), and
+  `deep_retrieve`'s fresh-fusable pool is now genuinely DRY (0, confirmed via `--dry-run`) —
+  fire 100 drained the ~99-element pool that existed at the start of this window, so that lever
+  is spent until new stubs arrive. `excava_selfimprove status` and `cross_tab_check --dry-run`
+  both clean (nothing to change).
+  **This fire's increment: verified, then fixed, a second real bug in the same failure class fire
+  99 found.** First verified fire 99's `excava_beat.yml` `fetch-depth: 0` fix actually landed:
+  `search_commits` for `"excava-beat #"` shows the first fresh beat commit after the fix
+  (`78d27465`, "excava-beat #1", 2026-08-02T04:05:30Z) DID land on `main` — the fetch-depth fix
+  works. But then a NEW problem: `search_commits` and a fresh `git fetch origin main` showed ZERO
+  further `excava-beat #N` commits between 04:05Z and this fire's check at ~06:00Z — almost 2
+  hours of a run (`30731614452`, started 04:00:50Z, confirmed still `in_progress` via
+  `mcp__github__actions_get`) that should be committing every ~5-10 min per its own loop. Other
+  lanes (`analyze:`, `visual-protocol:`, `guardrails:`) kept landing commits fine in that same
+  window, so this was specific to the beat lane, not a general sync outage.
+  **Root cause, found by reading the actual diffs, not guessing:** the beat's own `excava-beat #1`
+  commit rewrote `data/designs.json` (2454-line diff), and the `visual-protocol` lane's `36f6b1f4`
+  commit (05:46Z, mid-run) ALSO rewrote `data/designs.json` (2374-line diff) — same file, two
+  concurrent lanes, and `data/designs.json` was NOT on fire 89/99's stateless "ours" whitelist.
+  Correctly not: `python3` showed it holds ~1186 real scraped design records
+  (`{"designs": [...], "updated_at": ...}`, written by 6+ different modules including
+  `visual_extract.py`/`mine_designs.py`/`collect_designs.py`), not a wholesale-regenerable
+  readout like `state.json` — blindly taking "ours" here would silently DROP every design record
+  the other lane just scraped, the exact data-loss failure mode fire 90's jsonl union-merge was
+  built to prevent, just for a JSON list instead of a jsonl file. So every cycle since 05:46Z hit
+  this exact unlisted conflict, fell through to the "abort the merge" fallback (fire 88/89's own
+  correct-but-blunt safety net), and stranded every cycle's work unsynced — the same net effect as
+  the bug fire 99 fixed, one file further down the list.
+  **Fix (`.github/workflows/excava_beat.yml`):** gave `data/designs.json` the same treatment fire
+  90 gave `.jsonl` append-logs, adapted for its JSON-list shape: on conflict, read both sides'
+  `{"designs": [...], "updated_at": ...}` from the merge's index stages (`git show :2:`/`:3:`),
+  union the `designs` list deduped by `slug` (falling back to `source_url`/`name`), keep the newer
+  `updated_at`, write it back, `git add`. A record on only one side survives; a record both sides
+  scraped independently collapses to one copy — never a lost entry.
+  **Verified, not assumed, end-to-end:** (1) `yaml.safe_load` re-parses clean. (2) Extracted the
+  exact `run:` script YAML produces and ran `bash -n` on it — valid syntax (had to fix the
+  heredoc's indentation once: YAML block scalars require every line, including heredoc bodies, to
+  carry the block's base indentation or the scalar truncates early — first attempt broke the YAML
+  parse for exactly this reason, caught by re-running `yaml.safe_load` before treating it as done).
+  (3) Built a REAL two-clone simulation in `/tmp` (bare origin, two clones, one pushes a new
+  `designs.json` record first, the other already has a different local commit adding a different
+  record) and reproduced the identical conflict live: `git pull --rebase` fails
+  ("could not apply"), `git pull --no-rebase` also conflicts on `data/designs.json`. (4) Extracted
+  the shipped resolution block verbatim from the parsed YAML (not retyped) and ran it against the
+  live conflict: `git commit --no-edit` succeeded (exit 0), the resulting file is valid JSON
+  containing BOTH lanes' new records (`beat-new-design` AND `visual-new-design`, 5 total, none
+  lost) plus all 3 pre-existing ones, `updated_at` correctly picked the later of the two
+  timestamps, and `git push` landed cleanly on the simulated remote. Cleaned up the `/tmp`
+  simulation afterward. `excava_core_test` 65/65 (YAML-only change, no Python touched).
+  `guardrails` 16/20, 0 critical, unchanged.
+  **Harsh self-criticism:** exactly the same limitation fire 99 was honest about — I cannot
+  live-trigger `excava_beat.yml` from this sandbox (no `workflow_dispatch`-then-wait path that
+  fits inside one fire) or watch the actually-running 04:00Z job pick up this fix (it's already
+  mid-run on the OLD workflow file; GitHub reads workflow definitions at trigger time, so this fix
+  only takes effect on the NEXT scheduled run, not the one in flight). The verification here is
+  strictly offline: a faithful reproduction of the exact observed conflict plus the exact shipped
+  code, not a live confirmation against the real beat job. That confirmation — watching
+  `excava-beat #N` commits resume landing continuously past the run this fire's fix ships into —
+  is the concrete next check for whichever fire runs after that. I also did not audit whether
+  OTHER JSON-list-shaped files share this same collision risk (only fixed the one directly
+  evidenced by this fire's own diffs, per the same narrow-scope discipline as fires 90/99) — if a
+  future fire finds another file repeatedly landing in the "abort the merge" fallback, check
+  whether it's a real growing dataset like `designs.json` (needs a union-merge) before either
+  whitelisting it as "ours" (would silently drop data if it's not actually regenerable) or writing
+  it off as unfixable.
+  No push notification: this is a real, verified bug fix, but the same class the owner already has
+  visibility into via fires 88-90/99, this is routine continuing progress on it, not a new blocker
+  or a P5 gate — folds into the existing thread rather than a fresh interrupt.
+
 - **~04:0x (fire 100, unattended, cloud, scheduled-task invocation, 10th heartbeat)** — Read fire
   99's log first. Standing checks clean (`python -m src.standing_checks`); guardrails 16/20, 0
   critical, same as fire 99 — no regression. Checked whether fire 99's `excava_beat.yml` fix

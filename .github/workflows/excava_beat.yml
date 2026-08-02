@@ -155,6 +155,61 @@ jobs:
                   cat /tmp/_ours.jsonl /tmp/_theirs.jsonl 2>/dev/null | awk '!seen[$0]++' > "$f"
                   git add "$f"
                 done
+                # 2026-08-02 (away fire 101): live evidence this fire (run 30731614452, started
+                # 04:00Z) — only ONE "excava-beat #N" commit reached main in the ~2h after fire 99's
+                # fetch-depth fix (#1 at 04:05Z), even though the run keeps going and prior runs
+                # committed every ~5-10 min. `git log` showed the visual-protocol lane (visual.yml)
+                # committed data/designs.json at 05:46Z with a 2374-line diff, and the beat's own
+                # #1 commit had ALSO rewritten data/designs.json (2454-line diff) — the same file,
+                # two lanes, neither on the "ours" whitelist above (correctly: designs.json is a
+                # real, growing dataset of ~1186 scraped design records, not a regenerate-from-
+                # nothing readout, so blindly taking "ours" would silently drop every design the
+                # other lane just added — the exact data-loss fire 90's jsonl union-merge was built
+                # to avoid, just for a JSON list instead of a jsonl file). Give it the same
+                # union-merge treatment fire 90 gave jsonl append-logs: read both sides'
+                # {"designs": [...], "updated_at": ...} from the merge's index stages, union the
+                # `designs` list deduped by `slug` (falling back to `source_url`/`name` for any
+                # record missing one), keep the newer `updated_at`. A record present on only one
+                # side survives; a record both sides scraped independently collapses to one copy
+                # (harmless — never a lost entry, at worst a redundant one this dedup already
+                # prevents). Scoped to this one confirmed-colliding file, not a general JSON-list
+                # merge, per the same narrow-fix discipline as fire 90/99.
+                if git diff --name-only --diff-filter=U | grep -qx 'data/designs.json'; then
+                  git show :2:data/designs.json > /tmp/_ours_designs.json 2>/dev/null || echo '{"designs": [], "updated_at": ""}' > /tmp/_ours_designs.json
+                  git show :3:data/designs.json > /tmp/_theirs_designs.json 2>/dev/null || echo '{"designs": [], "updated_at": ""}' > /tmp/_theirs_designs.json
+                  python3 - <<'PYEOF'
+          import json
+
+          def load(path):
+              try:
+                  with open(path, encoding="utf-8") as f:
+                      return json.load(f)
+              except Exception:
+                  return {"designs": [], "updated_at": ""}
+
+          ours = load("/tmp/_ours_designs.json")
+          theirs = load("/tmp/_theirs_designs.json")
+
+          seen = set()
+          merged = []
+          for side in (ours.get("designs") or [], theirs.get("designs") or []):
+              for d in side:
+                  key = d.get("slug") or d.get("source_url") or d.get("name")
+                  if key is not None:
+                      if key in seen:
+                          continue
+                      seen.add(key)
+                  merged.append(d)
+
+          out = {
+              "designs": merged,
+              "updated_at": max(ours.get("updated_at") or "", theirs.get("updated_at") or ""),
+          }
+          with open("data/designs.json", "w", encoding="utf-8") as f:
+              json.dump(out, f, ensure_ascii=False, indent=1)
+          PYEOF
+                  git add data/designs.json
+                fi
                 if ! git commit --no-edit; then
                   echo "unresolved conflict outside the known-stateless set — aborting the merge so the working tree stays clean/parseable for the next cycle (this cycle's changes stay local-only, unsynced, same as before)"
                   git merge --abort 2>/dev/null || git reset --hard HEAD 2>/dev/null || true

@@ -3,6 +3,12 @@ name: CORE SPOT-ON (discovery + deep-retrieve + verify)
 # EXCAVA v2 M1.C: the owner's #1 priority — deepest, freshest, most accurate core.
 #   - discovery agent (M1.C2): HOURLY sweep of GitHub-new/active, HN, Product Hunt + tier-1
 #     social -> the gated intake queue. Same-day freshness.
+#   - discover-promote (M1.C2, deterministic): HOURLY, right after discovery — turns the raw
+#     intake queue into owner-visible discovered_elements.json (Sources tab). Already runs via
+#     src/excava.py's beat (called from bulk_analyze.yml, ~every 2-3h); added here too so this
+#     hourly, currently-healthy lane gives it a second, more frequent path that doesn't depend
+#     on the separate excava_beat.yml lane, which guardrails' G-P has flagged as intermittently
+#     stale (away fire 110, 2026-08-02).
 #   - deep-retrieve (M1.C1): every 2h, a batch of thin elements gets rebuilt from FULL
 #     sources (real transcripts + README + homepage) and LLM-fused on the free pool.
 #   - github-meta-enrich (M1.C1, deterministic, non-brain): HOURLY, the GitHub REST API's own
@@ -39,6 +45,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: python -m src.discovery_agent --limit-per-source 20
+
+      - name: Discover-promote (hourly, after discovery)
+        if: ${{ !cancelled() }}
+        run: python -m src.discover_promote
 
       - name: Deep retrieve (every 2nd hour)
         if: ${{ !cancelled() }}

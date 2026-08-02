@@ -5,6 +5,52 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-02
+- **~11:0x (fire 110, unattended, cloud, scheduled-task invocation)** — Standing checks: OK,
+  17/20 guardrails, 0 critical; 5 consecutive META fires (cap 3) — this fire required to
+  advance the product, not the loop's own machinery. Open carry-over was still **OR-1**.
+  Re-checked OR-1 phase 1 and the next-highest item (`verify_elements`, value 88) rather than
+  re-deriving from scratch: both are **still correctly blocked**, same root cause as fire 104 —
+  this session carries only a GitHub-Models token (1 live model lineage, `gpt`; no GROQ/
+  SAMBANOVA/MISTRAL/GEMINI/OPENROUTER keys, no local Ollama) so OR-1's >=2-live-family gate
+  rightly refuses, and confirmed via the sandbox proxy's own `/__agentproxy/status` that
+  `verify_elements`'s network canary is hitting a genuine policy 403 on the wikipedia.org
+  CONNECT, not a bug. Re-diagnosing either further would be waste — flagging that clearly so
+  the next fire doesn't repeat this.
+  Security (value 72, safety-rate connectors) was already fully current — the automated beat
+  had refreshed all 1485/1485 forty minutes earlier. Next real actionable item: **mining**
+  (value 68). Confirmed `api.github.com` (unlike raw `github.com`/`raw.githubusercontent.com`/
+  `huggingface.co`) IS reachable from this session, ran `discovery_agent` for real (342 items
+  sighted across 8 sources) and manually ran `discover_promote` too (120 fresh discoveries
+  staged: arxiv 15, huggingface-model 23, gh-active 35, gh-new 14, producthunt 33).
+  **Self-correction, same fire**: I initially wrote (and briefly shipped a workflow edit
+  claiming) that `discover_promote` — the step turning the intake queue into the owner-visible
+  `data/discovered_elements.json` (Sources tab) — was "never wired into CI, only runnable by
+  hand." **That was wrong, caught before finalizing.** It only looked orphaned because I grepped
+  the workflow YAML files for the literal string `discover_promote` and found no hit. It's
+  actually called transitively: `src/excava.py`'s beat function invokes
+  `discover_promote.promote()`, and `bulk_analyze.yml` runs `python -m src.excava` every ~2-3h
+  (confirmed via `git log --follow -- data/discovered_elements.json`: real updates at 04:05Z,
+  07:10Z, 10:20Z today) — independent of the separate `excava_beat.yml` lane, which guardrails'
+  G-P correctly flags as stale (6.9h since its last commit; a real, already-known, different
+  issue, not something this fire fixed). Kept the `core_spoton.yml` edit anyway, but for the
+  honest reason: `core_spoton.yml` runs hourly and was NOT stale (G-Q, 1.7h), so adding
+  `discover_promote` there gives the Sources-tab data a second, more-reliable hourly path that
+  doesn't depend on the currently-wedged `excava_beat.yml` lane recovering — a real freshness
+  improvement (~3h -> ~1h cadence with redundancy), just a smaller one than first claimed.
+  Verified the edited workflow YAML still parses clean; guardrails re-ran 17/20, 0 critical
+  (same non-critical G-C/G-O/G-P as before — nothing newly broken).
+  **Harsh self-criticism**: (1) this is a small freshness/redundancy tweak, not a milestone
+  move — OR-1 (value 95, the actual top-priority increment) is unchanged and still blocked, and
+  will stay blocked in every cloud/scheduled session until Eitan either adds a second live
+  provider key here or accepts that OR-1 phase 1 only ever runs for real on the GitHub Actions
+  beat. I did not attempt to work around that gate (e.g. treating one model as two "personas")
+  — that would be exactly the correlated-error theater the END PLAN bans. (2) I almost shipped
+  a materially false claim ("never wired into CI") because I checked one workflow file
+  superficially instead of tracing the actual call graph — caught it only by cross-checking
+  `git log --follow` against my own claim before committing. A cheaper, more reliable check next
+  time: `git log --follow -- <output-file>` to see who ACTUALLY writes a data file, before
+  concluding a step is orphaned from a grep of workflow YAML alone. Recorded on the open
+  `current_increment.json` as a note (not a `finish`) since OR-1 itself is still open.
 - **~08:0x (fire 104, unattended, cloud, scheduled-task invocation)** — Note first: fire 103
   ("P5 gates bind BOTH loops", commits `6d451e9a`/`10d04bd2`) never got an AWAY_LOG entry — an
   oversight of that fire, flagging it rather than silently letting the gap stand.

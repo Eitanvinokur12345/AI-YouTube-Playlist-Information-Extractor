@@ -3,10 +3,14 @@
  "kind": "product",
  "plan": "OR-1 (owner_requests.json, value 95, top of backlog) needs a 4-phase debate where phase 1 is agents drafting COMPLETELY ALONE, no cross-talk. The existing room engine (src/excava_chat.py advance()) only does sequential shared-history debate -- it cannot express phase 1 at all. Built or1_phase1(element_type) + CLI --or1-phase1: each 'improve' agent gets an isolated engines.complete() call (no _history()), hard-gated on >=2 LIVE distinct model families (END PLAN section 2 bans same-model-with-a-persona-twist as correlated-error theater). Ran for element_type=skill: correctly BLOCKED (this cloud session only carries a GitHub-Models key -> 1 live family, GPT-4o-mini) and wrote an honest artifact (data/excava/artifacts/or1-phase1-skill.md) instead of faking a multi-agent debate with one model. CARRY-OVER for the next fire(s) with real provider-key access (the GitHub Actions beat carries the full secret set per SESSION_HANDOFF.md): run --or1-phase1 for each of the 10 element/package types, confirm >=2 families actually respond, then build phase 2 (integration discussion), phase 3 (adversarial re-review from scratch), phase 4 (resolution) on the same isolated-call pattern before wiring the final committed guideline artifact OR-1 promises.",
  "started_at": "2026-08-02T08:01:00Z",
- "fires": 1,
+ "fires": 2,
  "notes": [
   "verify_elements --limit 200 (next-highest backlog item, value 87) also aborted safely on this session's proxy-restricted egress -- same known limitation as fire 50, no data written, nothing to fix.",
-  "build_memory (value 64) needs GEMINI_API_KEY, also absent here -- confirms this interactive session is genuinely keyless beyond GitHub Models, not a bug to chase."
+  "build_memory (value 64) needs GEMINI_API_KEY, also absent here -- confirms this interactive session is genuinely keyless beyond GitHub Models, not a bug to chase.",
+  {
+   "at": "2026-08-02T11:07:03.724739+00:00",
+   "text": "SELF-CORRECTION on this fire's own previous note: the claim that discover_promote was 'never wired into any CI workflow, only runnable by hand' was WRONG -- caught before finalizing, not after. src/excava.py's beat() calls discover_promote.promote() directly, and bulk_analyze.yml runs 'python -m src.excava' every ~2-3h, which is what actually produced the 04:05Z/07:10Z/10:20Z updates to data/discovered_elements.json today (confirmed via git log --follow on that file). The only real, separate, already-known issue is guardrails G-P: the DEDICATED excava_beat.yml lane (every 10min) is stale (6.9h since last commit) -- not something this fire fixed. Kept the core_spoton.yml addition of a discover_promote step anyway, on the correct narrower justification: core_spoton.yml runs hourly and is currently healthy (G-Q, 1.7h), so it gives the Sources-tab output a second, more reliable path independent of the wedged excava_beat lane -- a real but smaller freshness win (~3h -> ~1h with redundancy) than first claimed. Lesson for next fire: verify a step is actually orphaned via 'git log --follow -- <output-file>' (who really writes it), not just grep of workflow YAML for the function name."
+  }
  ],
  "status": "open",
  "outcome": null

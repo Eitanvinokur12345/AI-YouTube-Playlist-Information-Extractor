@@ -1,7 +1,7 @@
 # OR-1 phase 1 — independent drafts — element type: model
-> 2026-08-02T17:47:33.686585+00:00 · families used: DeepSeek V4, GLM-5.2, GPT-4o-mini, Kimi K2.7
+> 2026-08-02T18:04:32.375963+00:00 · families used: Llama-3.3 70B, Mistral
 
-## Ratchet (DeepSeek V4 · mistral/mistral-small-latest)
+## Ratchet (Mistral · mistral/mistral-small-latest)
 
 **GOOD:** A model in an AI-tool hub excels when it delivers consistent, measurable performance on clearly defined tasks, with transparent documentation of its training data, limitations, and evaluation metrics. It includes versioning, supports reproducibility (e.g., fixed random seeds, dependency locks), and provides interpretable outputs or explanations where applicable. The model’s API or interface is intuitive, with minimal latency and reliable uptime, and it includes safeguards against misuse (e.g., input validation, rate limiting). Community feedback and third-party audits are encouraged, and the model’s strengths/weaknesses are explicitly benchmarked against alternatives.
 
@@ -18,11 +18,11 @@
 - **Maintenance:** Recent commits, issue responses, or release notes indicating active upkeep.
 - **Interface:** Clear
 
-## Sprocket (GLM-5.2 · groq/llama-3.3-70b-versatile)
+## Sprocket (Llama-3.3 70B · groq/llama-3.3-70b-versatile)
 
 A GOOD model element in an AI-tool hub is one that is well-documented, regularly updated, and provides accurate and relevant results. It is also scalable, efficient, and integrates seamlessly with other components. In contrast, a MEDIOCRE model element may be outdated, poorly maintained, or provide inconsistent results, but still functions to some extent. A model element is DISQUALIFIED if it is obsolete, contains critical errors, or poses a security risk. Observable signals that decide the quality of a model element include its version history, user reviews, and performance metrics. A reviewer can check for these signals by examining the model's documentation, testing its functionality, and analyzing its output. Additionally, a GOOD model element will have clear and concise instructions for use, whereas a DISQUALIFIED one may lack documentation or have unclear usage guidelines. Overall, a model element's quality can be evaluated by assessing its reliability, usability, and maintainability.
 
-## Gauge (Kimi K2.7 · mistral/mistral-small-latest)
+## Gauge (Mistral · mistral/mistral-small-latest)
 
 **GOOD** looks like a model that is *reproducible*: its training data, hyperparameters, and evaluation metrics are documented in a machine-readable format (e.g., JSON/YAML with checksums) and can be independently validated by a reviewer. It includes clear versioning (e.g., semantic tags) and a changelog that tracks changes to inputs, outputs, or performance. The model’s intended use case is explicitly scoped (e.g., "text classification for medical records") and aligned with its documented limitations (e.g., "fails on sarcasm in short texts"). Performance is reported with standardized metrics (e.g., F1-score, BLEU) on held-out, representative datasets, not cherry-picked examples. Dependencies (e.g., Python 3.10, PyTorch 2.0) are pinned to exact versions to avoid "works on my machine" issues.
 
@@ -32,7 +32,7 @@ A GOOD model element in an AI-tool hub is one that is well-documented, regularly
 
 **Observable signals** that decide this include: (1) presence of a `README.md` with sections for data, model, and evaluation; (2) a `requirements.txt` or `environment.yml` with pinned
 
-## Overhaul (GPT-4o-mini · mistral/mistral-small-latest)
+## Overhaul (Mistral · mistral/mistral-small-latest)
 
 **GOOD** looks like a model that solves a clear, specific problem with measurable impact—like cutting inference time by 30% or improving accuracy by 5% on a benchmark. It has clean, well-documented code with tests, a license that allows reuse, and metadata (e.g., dataset sources, training time, hardware) so others can reproduce it. The model’s purpose is obvious, its inputs/outputs are standardized, and it includes a simple example or demo to prove it works. It’s actively maintained or at least archived with a changelog.
 

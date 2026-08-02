@@ -1,19 +1,19 @@
 # OR-1 phase 1 — independent drafts — element type: skill
-> 2026-08-02T17:36:31.521261+00:00 · families used: DeepSeek V4, GLM-5.2, GPT-4o-mini, Kimi K2.7
+> 2026-08-02T18:04:32.372897+00:00 · families used: Llama-3.3 70B, Mistral
 
-## Ratchet (DeepSeek V4 · nvidia/meta/llama-3.3-70b-instruct)
+## Ratchet (Llama-3.3 70B · nvidia/meta/llama-3.3-70b-instruct)
 
 A GOOD skill element in an AI-tool hub is one that is well-defined, concise, and provides clear value to the user. It has a specific and relevant purpose, and its functionality is intuitive and easy to understand. The skill element is also well-integrated with other tools and services, allowing for seamless interactions and workflows. In contrast, a MEDIOCRE skill element may be vague or overly broad in its purpose, or its functionality may be cumbersome or difficult to use. It may also lack proper documentation or support, leading to confusion and frustration for the user. A skill element is DISQUALIFIED if it is malicious, insecure, or infringes on intellectual property rights, or if it is simply a duplicate of an existing skill element with no added value. To determine the quality of a skill element, reviewers can check for observable signals such as clear and concise documentation, positive user reviews and ratings, and evidence of regular updates and maintenance. Additionally, reviewers can test the skill element's functionality and integration with other tools to ensure it works as intended. By evaluating these signals, reviewers can make an informed decision about the quality of a skill element.
 
-## Sprocket (GLM-5.2 · nvidia/meta/llama-3.3-70b-instruct)
+## Sprocket (Llama-3.3 70B · nvidia/meta/llama-3.3-70b-instruct)
 
 A GOOD skill element in an AI-tool hub is one that is well-defined, with clear and concise instructions on how to use it, and provides a specific, tangible benefit to the user. It is also regularly updated and maintained to ensure it remains relevant and effective. A GOOD skill element is also highly customizable, allowing users to tailor it to their specific needs and workflows. In contrast, a MEDIOCRE skill element may be poorly documented, with unclear or confusing instructions, and may not provide significant value to the user. It may also be outdated or incompatible with other tools and systems. A skill element can be DISQUALIFIED outright if it is malicious, infringes on intellectual property rights, or compromises user data or security. Observable signals that decide the quality of a skill element include the presence of clear documentation, user reviews and ratings, and evidence of regular updates and maintenance. Reviewers can check for these signals by examining the skill element's description, user feedback, and version history. By evaluating these signals, reviewers can determine whether a skill element is GOOD, MEDIOCRE, or DISQUALIFIED.
 
-## Gauge (Kimi K2.7 · nvidia/meta/llama-3.3-70b-instruct)
+## Gauge (Llama-3.3 70B · nvidia/meta/llama-3.3-70b-instruct)
 
 A GOOD skill element in an AI-tool hub is one that is well-defined, accurately described, and effectively implemented, providing a clear and tangible benefit to the user. It should have a specific and relevant purpose, with a well-designed interface that is easy to use and understand. The skill should also be robust, reliable, and efficient, with minimal errors or bugs. In contrast, a MEDIOCRE skill element is one that is vague, poorly described, or inadequately implemented, providing limited or unclear benefits to the user. It may have a poorly designed interface, be prone to errors, or have significant room for improvement. A skill element can be DISQUALIFIED outright if it is malicious, deceptive, or harmful, or if it violates user privacy or security. The OBSERVABLE signals that decide the quality of a skill element include its documentation, user reviews, and performance metrics, such as accuracy, response time, and error rates. A reviewer can check these signals to evaluate the skill element's effectiveness and reliability. By examining these concrete factors, a reviewer can make an informed decision about the quality of a skill element.
 
-## Overhaul (GPT-4o-mini · mistral/mistral-small-latest)
+## Overhaul (Mistral · mistral/mistral-small-latest)
 
 **GOOD:** A skill element excels when it is *actionable*—users can immediately apply it to a real task without extra setup, like a one-click prompt template for summarizing research papers. It should also be *measurable*, with clear inputs, outputs, and success criteria (e.g., "reduces response time by 30%"). Good skills are *modular*, meaning they work independently or combine seamlessly with others, and they include *contextual cues* (e.g., "Use this for cold emails, not technical docs"). They’re also *transparent*—users can inspect or tweak the underlying logic (e.g., adjustable parameters) rather than treating it as a black box.
 

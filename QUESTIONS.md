@@ -439,3 +439,25 @@ reasoning as before: it wouldn't even fix the root cause (no signing key), and t
 CI/other sessions committing to it concurrently, so a history rewrite is real risk for zero
 gain. Still Eitan's call whether to add a real signing key or route commits through the GitHub
 API; not re-litigating again absent that answer.
+
+**2026-08-02 (fire 116) — OR-1's "all 10 types succeeded" milestone (fire 115) was partly fake; found + fixed the labeling bug, but the real key coverage question needs your (or a keyed session's) visibility, not another guess.**
+Full repro in `AWAY_LOG.md` fire 116. Short version: `or1_phase1`-`4` were recording each draft's
+REQUESTED model family even when `engines.complete()` silently substituted a different engine
+(a `families()`-vs-`healthy()` pool mismatch), and the phase gate only ever checked
+successful-draft COUNT, never distinct real families — so it could never catch this. Checked the
+real on-disk artifacts the beat produced since fire 115: 6 of 10 element types had all "4 agents"
+actually answered by the SAME single model (`mistral-small-latest`), just wearing 4 different
+family badges. Fixed the labeling + the gate (now requires real distinct families, not a
+success count) and revalidated all 10 committed artifacts in place: 5 stayed `ok:true` with
+honest labels, 5 correctly flipped to `ok:false`. Separate from the code fix: even the 5 that DID
+show 2 real distinct families never once showed the CORE roster (GLM-5.2 / DeepSeek V4 / Kimi
+K2.7) — every real draft used Llama-3.3-family (groq/cerebras/sambanova/nvidia) or Mistral, the
+non-core fallback lineages. Those 3 core families all route through OpenRouter
+(`OPENROUTER_API_KEY`) per `src/excava_engines.py`'s CATALOG. _Ask: does `bulk_analyze.yml` (or
+whichever workflow actually ran this) carry `OPENROUTER_API_KEY` as a live secret right now? If
+yes, something else is wrong (routing/rotation) and it's worth a fire with real CI log access
+diagnosing why OpenRouter never won a single draft across 10 types x 4 agents = 40 calls. If no,
+that's the actual blocker on OR-1 ever reaching its intended core-brain diversity, and adding
+that one secret to the workflow's key set is the fix. Default if unanswered: next fire with
+visibility into the beat's actual secret set (or a session Eitan is present in) checks which of
+the two it is, rather than another fire inferring it from artifacts a second time._

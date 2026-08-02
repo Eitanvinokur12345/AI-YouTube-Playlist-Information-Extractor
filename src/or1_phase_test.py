@@ -43,6 +43,7 @@ ONE_FAMILY = [
 ]
 HEALTHY_ENGINES = [{"name": "glm", "model": "glm-5.2"}, {"name": "deepseek", "model": "deepseek-v4"},
                    {"name": "gh-models", "model": "gpt-4o-mini"}]
+FAMILY_BY_ENGINE = {"glm": "GLM", "deepseek": "DeepSeek", "gh-models": "GPT", "fake": "FakeFallback"}
 
 
 class FakeAgents:
@@ -62,6 +63,9 @@ class FakeEngines:
 
     def healthy(self):
         return HEALTHY_ENGINES
+
+    def family_of(self, engine_name):
+        return FAMILY_BY_ENGINE.get(engine_name, engine_name or "unknown")
 
     def complete(self, prompt, engine=None, dept="", difficulty="normal", max_tokens=700):
         self.calls.append({"prompt": prompt, "engine": engine})
@@ -122,6 +126,31 @@ def main() -> int:
                       for j, other in enumerate(fe3.calls) if i != j
                       and f"unique-marker-p1{j + 1}" in c["prompt"]]
             check("phase1 prompts carry no cross-agent leakage", not leaked, str(leaked))
+
+            # (d2) REGRESSION (fire 116): a draft must be labeled by the engine that ACTUALLY
+            # answered, not the one requested. Before the fix, "family" was always set to the
+            # requested fam["family"] even when pool.get(fam["engine"]) missed (a families()-vs-
+            # healthy() mismatch — a lineage can report "live" via available() while the health
+            # canary's narrower healthy() pool doesn't carry that exact engine) and complete()
+            # silently substituted a different engine. That faked cross-model diversity: 3 agents
+            # requesting 3 different families could all silently collapse onto ONE real engine
+            # while the artifact still claimed 3 distinct families succeeded. Simulate the exact
+            # mismatch: both "live" families point at engine names absent from the healthy pool,
+            # so every call falls through to complete()'s own fallback (the fake "fake" engine).
+            ALL_MISSING = [
+                {"family": "GLM", "status": "live", "engine": "glm-missing-A", "core": True},
+                {"family": "DeepSeek", "status": "live", "engine": "glm-missing-B", "core": True},
+            ]
+            fe_fallback = FakeEngines(ALL_MISSING, tag="fallback")
+            chat.engines = fe_fallback
+            r_fb = chat.or1_phase1("connector")
+            check("phase1 labels drafts by the engine that ACTUALLY answered, not requested",
+                  all(d["family"] == "FakeFallback" for d in r_fb["drafts"]), str(r_fb["drafts"]))
+            check("phase1 keeps the originally-requested family for transparency",
+                  {d["requested_family"] for d in r_fb["drafts"]} == {"GLM", "DeepSeek"},
+                  str(r_fb["drafts"]))
+            check("phase1 gate catches collapsed REAL diversity even though every draft 'succeeded'",
+                  r_fb["ok"] is False, str(r_fb))
 
             # (e) phase 2 succeeds once phase 1's artifact exists, and every phase-2 prompt is
             # seeded with ALL phase-1 drafts (the actual integration input), independent of order.

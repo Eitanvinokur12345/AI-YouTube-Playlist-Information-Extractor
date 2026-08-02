@@ -5,6 +5,65 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-02 (cont'd)
+- **~18:0x (fire 116, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
+  guardrails, 0 critical; stale local cache + missing upstream both auto-repointed, nothing
+  lost). Carry-over: none — fire 115 closed OR-1 phase 1 as "all 10 types now ok:true" after the
+  beat finally ran it. Before starting fresh work, checked what that success actually looked
+  like inside the artifacts themselves rather than trusting the ok:true flag — and found the
+  loop's own celebrated win was largely fake. `or1_phase1`/2/3/4 (`src/excava_chat.py`) pick an
+  engine per agent via `pool.get(fam["engine"])` where `pool` comes from the narrower
+  `engines.healthy()` (canary-filtered), while the upstream family list comes from
+  `engines.families()`'s wider `available()` (key-only) check — so a family can report "live"
+  here while its actual engine is absent from `pool`. When that happens `pool.get()` returns
+  `None`, `engines.complete(engine=None, ...)` silently falls through to its own default
+  routing, and the code recorded the ORIGINALLY REQUESTED family name on the draft regardless of
+  which engine really answered. Worse, the phase gate only ever checked `len(ok) >= min_families`
+  (successful-draft COUNT), never distinct real families — so it could never have caught this on
+  its own. Checked the actual on-disk phase-1 artifacts the beat produced since fire 115: **6 of
+  10 element types had all 4 "agents" answered by the identical single model**
+  (`mistral-small-latest`) wearing four different family badges (GLM-5.2/DeepSeek V4/Kimi
+  K2.7/GPT-4o-mini) — zero real diversity, on exactly the rule OR-1 exists to enforce ("same
+  model with a prompt twist is banned"). Fixed both bugs: added `engines.family_of(engine_name)`
+  (derives a family from the engine that actually answered) and wired it into all 4 phase
+  functions — drafts now carry `family` (real) alongside `requested_family` (intended), and each
+  phase's `ok` gate now requires `>= min_families` DISTINCT real families among successful
+  drafts, not a success count. Added `or1_revalidate_phase1()` and ran it once over all 10
+  committed artifacts (quarantine-never-delete: corrects the flag in place, doesn't discard the
+  underlying model text) — 5 kept `ok:true` with corrected labels (real diversity was
+  Llama-3.3-70B + Mistral, not the intended core lineages, still worth a follow-up), 5 flipped to
+  honest `ok:false` (connector/design/format/creation/package). Verified: `python -m
+  src.or1_phase_test` 47/47 (3 new checks added — proves a draft is labeled by the engine that
+  really answered, that the requested family is preserved separately, and that the gate now
+  catches collapsed real diversity even when every draft superficially "succeeded"); `python -m
+  src.excava_core_test` all pass (untouched); `python -m src.guardrails` 18/20, 0 critical, same
+  2 pre-existing non-critical misses (G-C, G-O — unrelated); JSON integrity clean on every
+  rewritten artifact; markdown regenerated and spot-read. **Harsh self-criticism:** this
+  invalidates a real chunk of what fires 111-115 reported as forward progress — PULSE.md and this
+  very log celebrated "all 10 types finally ok:true" last fire, and half of that was a mislabeled
+  single model. That is exactly the kind of claim CLAUDE.md says never to make without checking,
+  and it slipped through 5 prior fires that each individually verified their own narrow piece
+  (the gate logic, the isolation, the artifact shape) without ever asking whether "ok:true" meant
+  what it claimed at the model level. Did NOT re-run phase 1 for the 5 now-blocked types from
+  this session — still single-live-family here (GPT-4o-mini via GH Models only), would just
+  reproduce the identical structural block fires 113-115 already diagnosed. More concerning: even
+  the successful 5 never actually reached the CORE GLM-5.2/DeepSeek V4/Kimi K2.7/Qwen roster —
+  every real draft observed used Llama-3.3-family (groq/nvidia) or Mistral, both non-core
+  fallback lineages, meaning `bulk_analyze.yml`'s OPENROUTER_API_KEY path (which is what actually
+  carries GLM/DeepSeek/Kimi) may not be reaching this pipeline at all. Flagged as a question in
+  QUESTIONS.md rather than guessed at here — the next fire with visibility into the beat's actual
+  secret set should check it directly instead of inferring from artifacts a 6th time.
+
+  **Shipping-convention tension (fires 8/9/10, unresolved) settled empirically, not by
+  judgment call this time:** `python -m src.git_safe ship` (its hardcoded `push origin
+  HEAD:main`) failed here with a real `HTTP 403` from this session's own git proxy, not a
+  fast-forward conflict — direct pushes to `main` are genuinely blocked in this session,
+  independent of any convention debate. Pushed to this session's own designated branch instead
+  (`git push -u origin claude/kind-shannon-zkpazr`), which the proxy accepted cleanly, and opened
+  draft PR #57 (no open PR existed yet for this branch). Worth noting for future fires: this
+  removes the guesswork the last several fires flagged as "unconfirmed by Eitan" — at least in
+  this session's proxy configuration, direct-to-main is not actually available, so the
+  branch+PR path isn't a stylistic override of repo convention, it's the only path that works.
+
 - **~17:0x (fire 115, unattended, cloud, scheduled-task invocation)** — Standing checks OK
   (18/20 guardrails, 0 critical; local cache was stale + upstream tracking missing, both
   auto-repointed by `standing_checks`, nothing lost). Carry-over was still **OR-1 phase 1**, 6

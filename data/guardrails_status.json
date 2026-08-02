@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-08-02T08:01:54.453306+00:00",
+ "generated_at": "2026-08-02T10:20:06.489426+00:00",
  "total": 20,
- "passing": 18,
+ "passing": 16,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -21,9 +21,9 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": false,
-   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
-   "severity": "warn"
+   "ok": true,
+   "detail": "n/a in CI — the beat pushes straight to origin each cycle, bypassing git_safe/local bundles by design.",
+   "severity": "info"
   },
   {
    "id": "G-D",
@@ -71,63 +71,63 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "12026 memory episodes on record.",
+   "detail": "12054 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "1 guardrail runs logged (append-only, never rewritten).",
+   "detail": "0 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
    "id": "G-L",
    "name": "Uncommitted-work watchdog",
-   "ok": true,
-   "detail": "no stray source files uncommitted.",
+   "ok": false,
+   "detail": "19 untracked source file(s) not committed — commit or quarantine so nothing is lost: other-skills/any-ai-model/cost-per-task-analysis/SKILL.md, other-skills/any-llm/prompt-engineering-uncertainty/SKILL.md, other-skills/chatgpt/3d-model-creation-from-image/SKILL.md, other-skills/chatgpt/game-building/SKILL.md",
    "severity": "warn"
   },
   {
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "108 tasks done, 11 departments moving",
+   "detail": "117 tasks done, 11 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "30392 MB free on the repo drive.",
+   "detail": "88849 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 170.0h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 172.3h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
-   "ok": true,
-   "detail": "last 'excava-beat #N' commit 3.9h ago.",
+   "ok": false,
+   "detail": "last 'excava-beat #N' commit 6.2h ago — STALE: the dedicated heartbeat loop isn't landing per-cycle commits (check for a wedged/queued excava_beat.yml run).",
    "severity": "warn"
   },
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "last 'core-spoton:' commit 1.3h ago.",
+   "detail": "last 'core-spoton:' commit 1.0h ago.",
    "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
-   "ok": true,
-   "detail": "7/16 lane(s) landing on cadence, 9 can't-tell (shallow clone).",
+   "ok": false,
+   "detail": "14/16 lane(s) landing on cadence — STALE: discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 1012.2h ago (expected within 76h); improve.yml (weekly deep pass): last commit 1362.0h ago (expected within 192h)",
    "severity": "warn"
   },
   {

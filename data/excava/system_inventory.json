@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-08-02T07:10:48.536137+00:00",
- "total": 112,
+ "generated_at": "2026-08-02T10:20:07.118210+00:00",
+ "total": 114,
  "counts": {
-  "wired": 91,
-  "operator": 21,
+  "wired": 92,
+  "operator": 22,
   "orphaned": 0,
   "dead": 0
  },
@@ -33,6 +33,7 @@
   "export_graphml",
   "fetch",
   "gemini_video_analyze",
+  "git_merge_resolve",
   "github_meta_enrich",
   "goals_check",
   "health",
@@ -750,10 +751,11 @@
   },
   "excava_chat": {
    "status": "wired",
-   "loc": 594,
+   "loc": 677,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
+    "AWAY_LOG.md",
     "EXCAVA_V2_PLAN.md",
     "EXCAVA_V2_STEPS.md",
     "data/dev_construction.json",
@@ -1043,6 +1045,36 @@
     "mine_feeds"
    ]
   },
+  "git_merge_resolve": {
+   "status": "wired",
+   "loc": 188,
+   "entrypoint": true,
+   "invoked_by": [
+    "bulk_analyze.yml"
+   ],
+   "documented_in": [
+    "AWAY_LOG.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "git_merge_resolve_test"
+   ],
+   "imports": []
+  },
+  "git_merge_resolve_test": {
+   "status": "operator",
+   "loc": 133,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "AWAY_LOG.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": [
+    "git_merge_resolve"
+   ]
+  },
   "git_safe": {
    "status": "wired",
    "loc": 441,
@@ -1141,7 +1173,7 @@
   },
   "guardrails": {
    "status": "wired",
-   "loc": 540,
+   "loc": 569,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
@@ -1277,7 +1309,7 @@
   },
   "loop_contract": {
    "status": "operator",
-   "loc": 226,
+   "loc": 304,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
@@ -1753,7 +1785,7 @@
   },
   "standing_checks": {
    "status": "operator",
-   "loc": 146,
+   "loc": 151,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [

@@ -248,6 +248,33 @@ def main() -> int:
             check("phase4 markdown artifact written", (chat.DATA / ref4[len("data/"):]).exists(), ref4)
             check("phase4 JSON sidecar written",
                   (chat.DATA / "excava" / "artifacts" / "or1-phase4-skill.json").exists())
+
+            # (p) or1_next_phase / or1_run_all — the sweep driver a scheduled/CI invocation
+            # calls instead of one CLI flag per type per phase. "skill" just finished phase 4
+            # successfully above, so the sweep must SKIP it (nothing left to advance) while a
+            # fresh type with no artifacts on disk gets phase 1 attempted.
+            check("or1_next_phase is None once phase4 succeeded", chat.or1_next_phase("skill") is None)
+            check("or1_next_phase is 1 for a type with no artifacts", chat.or1_next_phase("tool") == 1)
+
+            fe12 = FakeEngines(TWO_FAMILIES, tag="sweep")
+            chat.engines = fe12
+            sweep = chat.or1_run_all(("skill", "tool"))
+            by_type = {r["element_type"]: r for r in sweep}
+            check("run_all skips a fully-resolved type", by_type["skill"].get("skipped") is True, str(by_type["skill"]))
+            check("run_all only calls the engine for the fresh type (skipped type costs zero calls)",
+                  len(fe12.calls) == len(CAST), f"{len(fe12.calls)} calls vs {len(CAST)} cast")
+            check("run_all advances phase 1 for a fresh type", by_type["tool"]["phase"] == 1 and by_type["tool"]["ok"] is True,
+                  str(by_type["tool"]))
+            check("run_all's phase-1 advance wrote tool's artifact",
+                  (chat.DATA / "excava" / "artifacts" / "or1-phase1-tool.json").exists())
+
+            # (q) run_all never crashes when every type is below the family gate — every entry
+            # comes back BLOCKED, not an exception, matching this keyless cloud session's reality.
+            fe13 = FakeEngines(ONE_FAMILY)
+            chat.engines = fe13
+            sweep_blocked = chat.or1_run_all(("prompt", "command"))
+            check("run_all blocks gracefully below min_families",
+                  all(r["ok"] is False for r in sweep_blocked), str(sweep_blocked))
     finally:
         chat.DATA, chat.engines, chat.agents, chat.time.sleep = orig_data, orig_engines, orig_agents, orig_sleep
 

@@ -80,6 +80,37 @@ jobs:
           python -m src.resolve_links --limit 300 --sleep 0.8 || true
           python -m src.build_memory --limit 250 --sleep 0.4 || true
 
+      - name: OR-1 guideline pipeline — sweep all element/package types one phase each (free engine pool)
+        # Wires the OR-1 4-phase debate (src/excava_chat.py or1_phase1..4, built over away fires
+        # 108-112) into an actual scheduled run. The cloud/session away-mode loop carries only
+        # GH_TOKEN and can never clear the >=2-live-family gate, so 5 fires in a row built and
+        # unit-tested the pipeline (38 checks, src/or1_phase_test.py) without ever executing it —
+        # each one assumed "the beat carries the full secret set" would pick it up, but nothing
+        # actually called excava_chat.py from any workflow. This step is that missing call: this
+        # job already has the full multi-provider pool above, so it's the one place >=2 live
+        # families are actually possible. --or1-run-all advances each of the 10 types by exactly
+        # one phase (1->2->3->4) per run and skips types already fully resolved, so it's safe and
+        # cheap to run on this 2h cadence indefinitely — no separate workflow needed.
+        if: always()
+        env:
+          EXTERNAL_REVIEW_API_KEY: ${{ secrets.EXTERNAL_REVIEW_API_KEY }}
+          GH_MODELS_TOKEN: ${{ secrets.GH_MODELS_TOKEN }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY_REAL }}
+          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          SAMBANOVA_API_KEY: ${{ secrets.SAMBANOVA_API_KEY }}
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY_2: ${{ secrets.GEMINI_API_KEY_2 }}
+          GEMINI_API_KEY_3: ${{ secrets.GEMINI_API_KEY_3 }}
+          GEMINI_API_KEY_4: ${{ secrets.GEMINI_API_KEY_4 }}
+          GEMINI_API_KEY_5: ${{ secrets.GEMINI_API_KEY_5 }}
+          GEMINI_API_KEY_6: ${{ secrets.GEMINI_API_KEY_6 }}
+          GROQ_API_KEY_2: ${{ secrets.GROQ_API_KEY_2 }}
+          CEREBRAS_API_KEY_2: ${{ secrets.CEREBRAS_API_KEY_2 }}
+        run: python -m src.excava_chat --or1-run-all || true
+
       - name: Single-tab guarantee + rebuild knowledge graph + mirror models (free, mechanical)
         if: always()
         run: |

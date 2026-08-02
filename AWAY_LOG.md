@@ -4,6 +4,33 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+## 2026-08-02 (cont'd)
+- **~16:0x (fire 114, unattended, cloud, scheduled-task invocation)** — Standing checks OK
+  (guardrails clean, non-critical G-O/G-P/G-T staleness unrelated to this change). Carry-over
+  was still **OR-1 phase 1** (title unchanged; increment covers all 4 phases), 5 fires in.
+  Before attempting a 6th blocked CLI call, checked WHY the "next fire with real keys" carry-over
+  plan never fired despite 5 fires assuming the GitHub Actions beat's full secret set would pick
+  it up: grepped every `.github/workflows/*.yml` for `or1_phase`/`excava_chat` — zero hits. The
+  pipeline was fully built and unit-tested but never called from ANY scheduled workflow, keyed or
+  not — that was the real blocker, not missing keys. Fixed it directly (no new secret needed, no
+  decision needed from Eitan): added `or1_next_phase()` + `or1_run_all()` to `src/excava_chat.py`
+  (sweeps all 10 element/package types, advances each by exactly one phase, skips types already
+  fully resolved) plus a `--or1-run-all` CLI flag, and wired a new step into
+  `.github/workflows/bulk_analyze.yml` (2h cadence, already carries the full multi-provider pool
+  — Gemini×6/Groq×2/Cerebras×2/Mistral/OpenRouter/NVIDIA/SambaNova) calling it. Extended
+  `src/or1_phase_test.py` with 6 new checks (44 total, up from 38). `python -m
+  src.or1_phase_test`: 44/44 pass. `python -m src.excava_core_test`: 28/28 pass (untouched). Ran
+  `--or1-run-all` for real against this session's own keyless engines: all 10 types correctly
+  BLOCKED at phase 1, zero crashes — and for the first time all 10 (not just `skill`) have an
+  honest blocked artifact on record. **Harsh self-criticism:** still 0 LIVE multi-family runs —
+  the actual OR-1 deliverable has not been produced by any fire yet. But the block's nature
+  changed from "waiting on a decision only Eitan can make" to "waiting on the next already-
+  scheduled `bulk_analyze.yml` run" — genuinely better, no push notification sent since nothing
+  needs Eitan's attention right now. CARRY-OVER: watch `data/excava/artifacts/or1-phase*.json`
+  after the next few `bulk_analyze` runs for the first `ok:true` artifacts; if OR-1 is STILL
+  all-blocked after that, the beat's own pool isn't clearing the family gate either, which would
+  be a real, non-structural problem worth surfacing directly.
+
 ## 2026-08-02
 - **~13:5x (fire 113, unattended, cloud, scheduled-task invocation)** — Standing checks OK
   (17/20 guardrails, 0 critical; stale local `origin/main` ref auto-re-fetched, missing upstream

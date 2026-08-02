@@ -781,6 +781,40 @@ def _write_or1_artifact(result: dict) -> str:
     return f"data/excava/artifacts/{path.name}"
 
 
+_OR1_PHASE_FN = {1: or1_phase1, 2: or1_phase2, 3: or1_phase3, 4: or1_phase4}
+
+
+def or1_next_phase(element_type: str) -> int | None:
+    """Which OR-1 phase to attempt next for one element type: the first phase in 1..4 that
+    has no successful (ok:true) artifact on disk yet. None once all 4 are done."""
+    adir = DATA / "excava" / "artifacts"
+    for phase in (1, 2, 3, 4):
+        art = _load(adir / f"or1-phase{phase}-{element_type}.json", None)
+        if not (art and art.get("ok")):
+            return phase
+    return None
+
+
+def or1_run_all(element_types=OR1_ELEMENT_TYPES) -> list[dict]:
+    """Drive the OR-1 pipeline across every element/package type in one process: for each
+    type, run whichever phase is next (skipping types already fully resolved), write its
+    artifact, and stop advancing that type the moment a phase comes back blocked (a later
+    phase would just fail its prerequisite gate anyway). This is the runner the carry-over
+    plan named 'only execution' — the phase functions themselves are unchanged; this just
+    calls them in order so a single scheduled invocation can sweep all 10 types instead of
+    needing one CLI call per type per phase."""
+    results = []
+    for et in element_types:
+        phase = or1_next_phase(et)
+        if phase is None:
+            results.append({"ok": True, "element_type": et, "phase": "done", "skipped": True})
+            continue
+        res = _OR1_PHASE_FN[phase](et)
+        _write_or1_artifact(res)
+        results.append(res)
+    return results
+
+
 def ensure_default_rooms() -> list[str]:
     """Owner 2026-07-07: rooms are organized BY DEPARTMENT — one live room per department (all 13),
     each labelled by its department + its real focus; plus a cross-department WAR ROOM for the top
@@ -852,7 +886,20 @@ def main() -> int:
     ap.add_argument("--or1-phase4", metavar="ELEMENT_TYPE",
                     help="OR-1 phase-4 resolution discussion — FINAL guideline (needs phase 2 "
                          "and phase 3 artifacts already on disk for the same element type)")
+    ap.add_argument("--or1-run-all", action="store_true",
+                    help="sweep all 10 OR-1 element/package types, advancing each one phase "
+                         "(1->2->3->4) per invocation — the real driver for scheduled/CI runs")
     a = ap.parse_args()
+    if a.or1_run_all:
+        results = or1_run_all()
+        for r in results:
+            tag = "skip(done)" if r.get("skipped") else ("ok" if r["ok"] else "BLOCKED")
+            print(f"OR-1 [{r['element_type']}] phase {r['phase']}: {tag}")
+        done = sum(1 for r in results if r.get("skipped"))
+        ok = sum(1 for r in results if r["ok"] and not r.get("skipped"))
+        blocked = sum(1 for r in results if not r["ok"])
+        print(f"OR-1 run-all: {done} fully done, {ok} phase(s) advanced, {blocked} blocked")
+        return 0
     if a.or1_phase1:
         res = or1_phase1(a.or1_phase1)
         ref = _write_or1_artifact(res)

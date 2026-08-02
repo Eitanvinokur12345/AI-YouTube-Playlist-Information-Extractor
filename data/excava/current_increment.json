@@ -1,20 +1,16 @@
 {
- "title": "Fix excava_beat.yml silently failing to sync for 25+ hours (shallow-clone rebase divergence + missing stateless-file whitelist entries)",
- "kind": "infra",
- "plan": "",
- "started_at": "2026-08-02T03:05:00.000000+00:00",
- "fires": 1,
+ "title": "branch_sweep: audit 57 stray claude/kind-shannon-* branches for safe deletion",
+ "kind": "meta",
+ "plan": "deterministic git audit; report only, no deletion (quarantine-never-delete)",
+ "started_at": "2026-08-02T05:09:54.847511+00:00",
+ "fires": 2,
  "notes": [
   {
-   "at": "2026-08-02T03:20:00.000000+00:00",
-   "text": "Confirmed via mcp__github__search_commits that the last real 'excava-beat #N' commit to land on main was #7 at 2026-08-01T02:00:17Z. Pulled full job logs for run 30708126877 (17:24-22:43Z) and found 41 local beat-cycle commits, none of which ever pushed -- every git pull --rebase failed with a bogus 'diverged by 6000+ commits' (shallow-clone merge-base artifact), fell back to merge, which conflicted on PULSE.md/PROOF.md/docs/hub_api*.json (none on the stateless whitelist), aborted, and push was rejected non-fast-forward every cycle."
-  },
-  {
-   "at": "2026-08-02T03:25:00.000000+00:00",
-   "text": "Fixed .github/workflows/excava_beat.yml: added fetch-depth:0 + persist-credentials:true to checkout (matches bulk_analyze.yml/mine.yml, the only other multi-commit-per-job lanes) and widened the ours-whitelist to PULSE.md/PROOF.md/docs/hub_api.json/docs/hub_api_packages.json (verified all four are .write_text()'d whole every run, never appended). Verified the whitelist fix offline by reproducing the exact two-sided PULSE.md conflict in a throwaway repo: before the fix it required the abort fallback; after it, the merge commits clean and push succeeds. YAML re-parses clean. excava_core_test 65/65 unaffected. guardrails unchanged, 0 critical."
+   "at": "2026-08-02T05:09:54.891117+00:00",
+   "text": "built src/branch_sweep.py; ran it; wrote data/excava/branch_sweep.json — 3 of 57 branches provably safe (0 unique commits), rest classified REVIEW with unique-commit counts"
   }
  ],
  "status": "done",
- "finished_at": "2026-08-02T03:30:00.000000+00:00",
- "outcome": "Root-caused and fixed a real, live, 25+-hour-old silent production failure: excava_beat.yml (the core department/room orchestrator) has been running its full 5.3h loop every trigger but NEVER successfully syncing any of it to main since 2026-08-01T02:00Z, because a shallow checkout + no fetch-depth override meant every rebase in the long-running loop miscomputed its merge-base once local commits piled up, and the merge fallback then choked on 4 regenerated files (PULSE.md/PROOF.md/hub_api*.json) that were never added to fire 89's stateless whitelist -- so the fallback aborted and the push was rejected, every single cycle, discarding all real work silently ('push skipped' swallowed the failure). This explains G-M's done-counter stall AND is why fire 98's queued OR-1 debate would never have landed even once picked up. Not fully closed: cannot trigger/watch a live excava_beat.yml run complete from this sandbox to see a fresh 'excava-beat #N' commit actually reach main -- that confirmation is the concrete next-fire task (search_commits for a post-fix beat commit)."
+ "finished_at": "2026-08-02T05:09:54.932564+00:00",
+ "outcome": "shipped: tool + report; queued the 3 safe-delete branches as a batched QUESTIONS.md item rather than deleting them myself"
 }

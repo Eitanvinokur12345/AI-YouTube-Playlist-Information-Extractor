@@ -5,6 +5,46 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-02
+- **~05:0x (fire 101, unattended, cloud, scheduled-task invocation)** — Read fire 100's log first.
+  Standing checks clean (`python -m src.standing_checks`); guardrails 18/20, 0 critical. Re-verified
+  fire 100's environmental finding independently before trusting it: no engine keys
+  (`OPENROUTER_API_KEY`/`GROQ_API_KEY`/`CEREBRAS_API_KEY` all unset) and a direct `curl` to
+  `api.github.com`/`github.com` both got blocked (403/400) — confirms OR-1 (value 95, top of
+  backlog) still can't run for real here, same for `resolve_links` (value 82, needs live HTTP).
+  Picked the ONE increment: `git fetch origin` (worked fine over the repo-scoped proxy, ~57 new
+  remote branches pulled — direct network is blocked, GitHub-scoped access is not) then built
+  `src/branch_sweep.py`, closing a gap flagged unbuilt by fires 6/7/8/9/10 across two weeks
+  ("~13 stray branches... someone else's problem," now grown to 57). It audits every stray origin
+  branch's unique-commit count vs `origin/main` (`git rev-list --left-right --count`) and proves
+  which are safe to delete rather than guessing. Verified via CLI, not asserted: ran it live,
+  wrote `data/excava/branch_sweep.json`, then hand-checked its output against two direct git
+  commands — `git merge-base` confirmed `False` on the one branch it reported
+  `shares_merge_base_with_main: False` (`kind-shannon-00pnba`, matching fire 7's earlier finding
+  that history was rewritten at some point) and a second spot-check on a `True` case matched too.
+  Result: 3 of 57 branches (`excava-end-plan-s1mt4l`, `kind-shannon-8ljfn3`, `kind-shannon-zqdqz8`)
+  have exactly 0 commits unreachable from main — mathematically safe to delete, no judgment call.
+  Did NOT delete them: branch deletion is a shared-GitHub-state action this routine has never
+  taken across 100+ prior fires, so queued it as a proposed verdict in `QUESTIONS.md` instead of
+  acting unilaterally (quarantine-never-delete is explicit about file/branch *content*; deleting a
+  branch that is *content-empty relative to main* is a different, narrower claim than that rule
+  covers, but still felt like the kind of first-of-its-kind action worth one explicit ask rather
+  than a silent default). The other 54 branches are NOT provably safe — most share no merge-base
+  with main at all (unique-commit counts in the 4,600-6,000 range are whole alternate histories,
+  not a few diffs); 3 are small enough (1, 2, 39 unique commits) to be worth a real content review
+  by a future fire, named in the QUESTIONS.md entry. `python -m src.loop_contract`: ack'd fire
+  101, opened+closed this as a `meta` increment (honest self-classification — this is loop/repo
+  hygiene, not the product) — consecutive meta fires now 2/3, so **the next fire is required to
+  advance the product**, not more plumbing, and should read this line before picking its own
+  increment. **Harsh self-criticism:** this is genuinely useful (a repeatedly-flagged gap now has
+  a real, reusable, honest tool instead of another "someone else's problem" note) but it is STILL
+  meta, not product — Hub content, enrichment, OR-1, M1-M5 milestones are all untouched again, and
+  I chose it partly *because* it was achievable inside this sandbox's real constraints (no engine
+  keys, no general network) rather than fighting those constraints. The 3-safe-delete number is
+  modest against 57 total; most of the debt this was meant to address (54 branches, mostly
+  unreviewable at this history-rewrite boundary) is still open. Also a genuine judgment call, not
+  a slam-dunk: queuing the 3-branch deletion rather than just doing it is arguably over-caution
+  given the proof is airtight — flagged honestly in QUESTIONS.md rather than picking either
+  extreme silently.
 - **~04:0x (fire 100, unattended, cloud, scheduled-task invocation, 10th heartbeat)** — Read fire
   99's log first. Standing checks clean (`python -m src.standing_checks`); guardrails 16/20, 0
   critical, same as fire 99 — no regression. Checked whether fire 99's `excava_beat.yml` fix

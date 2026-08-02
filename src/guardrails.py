@@ -449,7 +449,13 @@ def g_push_safety_rollout():
         if "git push" not in text:
             continue                                  # this lane never ships its own commit
         shipping.append(f.name)
-        if "auto-resolving known-stateless" not in text or "rebase --abort" not in text:
+        # 2026-08-02 (away fire 102): a lane's merge-conflict resolve step now legitimately
+        # comes in two forms — the original inline "auto-resolving known-stateless" bash (still
+        # how most lanes do it) or a call into the shared, more-hardened `src.git_merge_resolve`
+        # module (bulk_analyze.yml, the first lane migrated — see AWAY_LOG.md fire 102). Both are
+        # real fixes for the same bug class; only flag a lane missing BOTH.
+        has_resolve_step = "auto-resolving known-stateless" in text or "git_merge_resolve" in text
+        if not has_resolve_step or "rebase --abort" not in text:
             exposed.append(f.name)
     ok = not exposed
     detail = (f"all {len(shipping)} push-capable lane(s) carry the rebase->merge->auto-resolve "

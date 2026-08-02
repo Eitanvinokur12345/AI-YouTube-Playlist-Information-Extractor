@@ -182,17 +182,24 @@ jobs:
           # excava_beat/core_spoton/links/fire 29 — every 2h, one of the busiest lanes, so a
           # plain `|| true` on a rebase conflict silently discards a full run's real work
           # (HEAD left detached, `git push` then fails and is swallowed). Abort a failed rebase
-          # and retry as a merge; if that also conflicts, auto-resolve only the known-stateless
-          # data/data_guard.json in our favor. Any other conflict is left unresolved on purpose
-          # (degrades to today's push-skipped, never worse).
+          # and retry as a merge.
+          #
+          # 2026-08-02 (away fire 102): the original narrow "auto-resolve only 7 files" fallback
+          # below was proven live to silently discard a full bulk-analyze run (job 30731719512,
+          # 04:04-04:08Z: conflicted on ~90 files outside the whitelist -- data/excava/traces/...,
+          # data/excava_approvals.json, etc -- fell through to "leave unresolved", step still
+          # exited 0 so nothing downstream noticed). Replaced with `src.git_merge_resolve`, the
+          # same hardened resolve logic `excava_beat.yml` proved over fires 88-101 (18-file
+          # ours-whitelist + real UNION merge for *.jsonl append-logs and data/designs.json,
+          # instead of "ours" which would drop the other lane's real rows/records) -- now shared
+          # in one tested module instead of re-copied per lane. Still degrades no worse than
+          # before on a genuinely unresolvable conflict (exits 1, "push skipped").
           if ! git pull --rebase --autostash origin main; then
             echo "rebase failed — aborting and retrying as a merge"
             git rebase --abort 2>/dev/null || true
             if ! git pull --no-rebase --no-edit origin main; then
-              echo "merge also conflicted — auto-resolving known-stateless files in our favor (data_guard.json + fully-regenerated readouts)"
-              git checkout --ours -- data/data_guard.json data/health.json data/effectiveness.json data/hub.json data/self_check.json data/safety.json data/guardrails_status.json 2>/dev/null || true
-              git add data/data_guard.json data/health.json data/effectiveness.json data/hub.json data/self_check.json data/safety.json data/guardrails_status.json 2>/dev/null || true
-              git commit --no-edit || echo "unresolved conflict outside the known-stateless set — leaving for manual/next-run recovery"
+              echo "merge also conflicted — resolving via src.git_merge_resolve (shared whitelist + jsonl/designs union)"
+              python -m src.git_merge_resolve || echo "unresolved conflict outside the maintained trust list — leaving for manual/next-run recovery"
             fi
           fi
           git push || echo "push skipped"

@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-08-02T07:10:47.885369+00:00",
+ "generated_at": "2026-08-02T07:10:39.201313+00:00",
  "total": 20,
- "passing": 17,
+ "passing": 16,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -21,9 +21,9 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": true,
-   "detail": "n/a in CI — the beat pushes straight to origin each cycle, bypassing git_safe/local bundles by design.",
-   "severity": "info"
+   "ok": false,
+   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
+   "severity": "warn"
   },
   {
    "id": "G-D",
@@ -71,35 +71,35 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "12025 memory episodes on record.",
+   "detail": "11999 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "0 guardrail runs logged (append-only, never rewritten).",
+   "detail": "3 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
    "id": "G-L",
    "name": "Uncommitted-work watchdog",
    "ok": false,
-   "detail": "6 untracked source file(s) not committed — commit or quarantine so nothing is lost: other-skills/gpt/contextual-memory-personalization/SKILL.md, other-skills/gpt/natural-language-understanding-generation/SKILL.md, other-skills/gpt/object-recognition/SKILL.md, other-skills/zapier-automationbench/business-process-automation/SKILL.md",
+   "detail": "2 untracked source file(s) not committed — commit or quarantine so nothing is lost: src/git_merge_resolve.py, src/git_merge_resolve_test.py",
    "severity": "warn"
   },
   {
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "108 tasks done, 11 departments moving",
+   "detail": "99 tasks done, 11 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "88644 MB free on the repo drive.",
+   "detail": "29991 MB free on the repo drive.",
    "severity": "info"
   },
   {
@@ -127,7 +127,7 @@
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
    "ok": false,
-   "detail": "13/16 lane(s) landing on cadence — STALE: bulk_analyze.yml (every 2h): last commit 7.6h ago (expected within 6h); discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 1009.0h ago (expected within 76h); improve.yml (weekly deep pass): last commit 1358.8h ago (expected within 192h)",
+   "detail": "6/16 lane(s) landing on cadence, 9 can't-tell (shallow clone) — STALE: bulk_analyze.yml (every 2h): last commit 7.6h ago (expected within 6h)",
    "severity": "warn"
   },
   {

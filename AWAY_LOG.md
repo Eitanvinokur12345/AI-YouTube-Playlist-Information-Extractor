@@ -5,6 +5,74 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-02
+- **~07:0x (fire 102, unattended, cloud, scheduled-task invocation)** — Read fire 101's log
+  first. Standing checks: origin/main had moved 2 commits ahead of this branch (PR #52, dashboard
+  v134) — `python -m src.standing_checks` correctly flagged it as "investigate before pushing,"
+  ruled out data loss (fast-forward only, no divergent history), synced clean. Guardrails 16/20
+  throughout, 0 critical.
+  **First checked fire 101's own open item**: whether `excava-beat #N` commits resumed landing
+  after its `designs.json` union-merge fix. Still inconclusive — the run that was already
+  in-flight when the fix landed (started 04:00Z, still executing the pre-fix workflow definition
+  per GitHub's trigger-time semantics) hadn't finished, and the first run that WOULD exercise the
+  fix (triggered 06:43Z) was still queued behind it. Nothing actionable there yet; left for the
+  next fire to re-check.
+  **This fire's real increment: the same bug class fire 101 fixed for `excava_beat.yml` was
+  found LIVE in a second, sibling lane.** Investigated `bulk_analyze.yml` (the free-pool
+  analyze lane, every 2h) after guardrails flagged it 7.4h+ stale (G-T). Job logs for run
+  `30731719512` (04:04-04:08Z) showed the real cause: a merge conflict on ~90 files
+  (`data/excava/traces/...`, `data/excava_approvals.json`, etc.) outside its narrow 7-file
+  `--ours` whitelist, falling through to "leave unresolved" — the "Commit results" step still
+  exited 0, so nothing downstream noticed a full bulk-analyze pass got silently discarded.
+  Audited all 19 push-capable workflow lanes for the same gap: only `excava_beat.yml` (the lane
+  fires 88-101 spent five rounds hardening) had the widened whitelist + jsonl-union +
+  designs.json-union logic; the other 18, including `bulk_analyze.yml`, still ran the original
+  narrow fallback from fire 30.
+  **Fix, scoped to the one lane with confirmed live data loss**: extracted the resolve logic into
+  a new shared module, `src/git_merge_resolve.py` (18-file ours-whitelist + real UNION merge for
+  `*.jsonl` append-logs and `data/designs.json`, ported from `excava_beat.yml`'s own
+  fire-89/90/101-hardened inline copy), and wired `bulk_analyze.yml`'s merge-conflict fallback to
+  call `python -m src.git_merge_resolve` instead of re-copying ~10 lines of narrow inline bash.
+  One tested implementation instead of a 19th place the same bug can quietly reappear.
+  **Verified against a REAL git conflict, not a hand simulation**: `src/git_merge_resolve_test.py`
+  builds a throwaway bare origin + two diverging clones in a temp dir, forces an actual 3-way
+  conflict (a whitelisted file + a `.jsonl` log + `data/designs.json`, all at once, both sides
+  adding independent rows/records), and runs the real module functions against the real
+  conflicted worktree — 7/7 checks pass: conflict detected on all three, the merge commits
+  cleanly, the whitelist takes "ours," the jsonl keeps both sides' new lines, `designs.json`'s
+  union keeps all 3 records (base + both new) with the newer `updated_at`, and no literal
+  conflict-marker text lands in the commit. Separately verified the fail-closed path: a conflict
+  on a file outside the trust list is correctly left unresolved and `resolve()` returns `False`
+  — same "push skipped" degradation as before this fire, never worse. Also: `yaml.safe_load`
+  re-parses `bulk_analyze.yml` clean; `excava_core_test` 65/65 unaffected (no engine code
+  touched, only a CI-glue module + one workflow file).
+  **Had to update the guardrail watching this itself**: `guardrails.py`'s G-R
+  (`g_push_safety_rollout`) matched the literal string `"auto-resolving known-stateless"` to
+  confirm a lane has the fallback — my edit removed that exact string from `bulk_analyze.yml`,
+  which would have made G-R falsely report the lane as REGRESSED to unprotected. Widened G-R to
+  accept either the original inline-bash marker string or the new `git_merge_resolve` module-call
+  marker as valid — both are real fixes for the same bug class; only flag a lane with neither.
+  Confirmed via `python -m src.guardrails`: 16/20, 0 critical, G-R back to "all 19 lane(s)"
+  passing.
+  **Harsh self-criticism:** did NOT port the other 17 exposed lanes (`analyze.yml`,
+  `discover.yml`, `mine.yml`, `review.yml`, and the rest) onto the shared module this fire —
+  `bulk_analyze.yml` was the one with concrete, live evidence of actual discarded work; the
+  other 17 share the identical narrow-whitelist exposure but I have no evidence any of them have
+  actually hit it yet, and porting 17 workflow files' YAML in one fire without individually
+  verifying each is exactly the kind of unreviewed-batch risk this project's own discipline
+  argues against (see fire 90/99/101's "narrow scope, one confirmed bug" pattern). Concrete
+  next-fire task: port each remaining lane one at a time (cheap now that the tested module
+  exists — it's a one-line swap of the merge-fallback block, same pattern just applied here), and
+  once `bulk_analyze.yml`'s use of the shared module is proven in a live production run,
+  consider migrating `excava_beat.yml`'s own inline copy onto it too so there is exactly ONE
+  implementation instead of two duplicated-but-equivalent ones. Also did not (could not, from
+  this sandbox) live-trigger `bulk_analyze.yml` to watch a real conflict resolve in production —
+  same standing limitation as fires 99-101's own verification approach; the next `bulk-analyze
+  (free pool): ` commit landing after a would-be conflict is the concrete confirmation to watch
+  for.
+  No push notification: a real, verified infra fix protecting the pipeline from silent data
+  loss, same class the owner already has visibility into via fires 88-101/QUESTIONS.md, not a
+  new blocker requiring attention right now.
+
 - **~06:0x (fire 101, unattended, cloud, scheduled-task invocation)** — Read fire 100's log first.
   Standing checks clean (`python -m src.standing_checks`); guardrails 16-17/20 throughout, 0
   critical. Confirmed same standing constraints as fires 99-100: no engine keys reachable from

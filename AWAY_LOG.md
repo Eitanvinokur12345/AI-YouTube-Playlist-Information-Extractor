@@ -5,6 +5,41 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-02
+- **~13:5x (fire 113, unattended, cloud, scheduled-task invocation)** — Standing checks OK
+  (17/20 guardrails, 0 critical; stale local `origin/main` ref auto-re-fetched, missing upstream
+  tracking auto-repointed). Carry-over was still **OR-1 phase 1** (title unchanged since start;
+  the increment covers all 4 phases), 4 fires in — CONTINUE IT per `loop_contract`. Re-confirmed
+  this cloud session is still genuinely keyless beyond `GH_TOKEN` (`families()` reports 1 live
+  lineage) — a real multi-family sweep is still not runnable here. Built the last piece the
+  carry-over plan named: **`or1_phase4()`** (resolution discussion, the FINAL phase) in
+  `src/excava_chat.py` + CLI `--or1-phase4`, completing all 4 phases OR-1's spec calls for. Same
+  isolated-call pattern as phases 2/3, but with a DOUBLE prerequisite (phase 2's integrated set
+  AND phase 3's weakness lists must both already exist for the element type — phase 4 resolves
+  phase 3's criticisms against phase 2's actual guideline text, not phase 3's output alone).
+  Each agent's prompt is seeded with both corpora and must rule KEPT/FIXED/REJECTED on every
+  weakness before writing the final GOOD/MEDIOCRE/DISQUALIFIED guideline as a finished ruling —
+  this is the artifact `done_criteria` calls "the final committed guideline set." Extended
+  `src/or1_phase_test.py` with 19 new checks (38 total, up from 27): both missing-prerequisite
+  gates (zero engine calls each), the family-diversity gate, the success path (one isolated
+  call per cast member, every prompt seeded with every phase-2 draft and every phase-3 weakness
+  list), zero cross-agent leakage, and both artifact files. `python -m src.or1_phase_test`:
+  38/38 pass. Ran `python -m src.excava_chat --or1-phase4 skill` for real against this session's
+  actual keyless engines: correctly BLOCKED on the phase-3-artifact prerequisite (this session's
+  own `or1-phase3-skill.json` is itself a blocked artifact, not `ok:true`) — same
+  honest-blocked-artifact pattern as phases 1–3, not a faked resolution. `python -m
+  src.excava_core_test`: 28/28 pass (untouched). **Harsh self-criticism:** the pipeline is now
+  fully built and unit-tested end to end (all 4 phases, 38 checks), but the actual OR-1
+  deliverable — a live cross-model guideline for even one element type — has still NOT been
+  produced after 5 fires on this increment, because this cloud session has never carried >=2
+  live provider-model families. That is defensible once (the primitive genuinely didn't exist:
+  `advance()`'s shared-history debate cannot express phase 1's no-cross-talk rule), but the
+  pipeline itself needs zero further engineering now — only execution. CARRY-OVER for the next
+  fire with real keys (the GitHub Actions beat carries the full secret set per
+  SESSION_HANDOFF.md): run `--or1-phase1` for each of the 10 element/package types, then
+  phases 2→3→4 per type in order. If a keyed fire ALSO can't execute this, that stops being
+  structural and becomes worth flagging to Eitan directly (e.g. request a provider key be added
+  to the cloud secret set) rather than another silent carry-over.
+
 - **~13:0x (fire 112, unattended, cloud, scheduled-task invocation)** — Standing checks OK
   (17/20 guardrails, 0 critical; stale local `origin/main` ref auto-re-fetched, missing upstream
   tracking auto-repointed). Carry-over was still **OR-1 phase 1** (title unchanged since start;

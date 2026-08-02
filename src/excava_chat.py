@@ -685,6 +685,77 @@ def or1_phase3(element_type: str, min_families: int = 2, roles=("doer", "checker
             "adversarial_drafts": reviews, "families_used": sorted({d["family"] for d in ok})}
 
 
+def or1_phase4(element_type: str, min_families: int = 2, roles=("doer", "checker", "improver", "lead")) -> dict:
+    """OR-1 phase 4 — RESOLUTION DISCUSSION, the final phase. Spec (owner_requests.json OR-1):
+    'Second discussion round resolving the weaknesses found in phase 3 into the final
+    guidelines.' Same isolated-call shape as phases 2/3 (a second SOLO pass, not a live debate —
+    letting phase-4 responses see each other would just move phase 1's anchoring problem to the
+    last mile). Every agent's prompt is seeded with BOTH phase 2's integrated set and phase 3's
+    weakness lists, and the task is to actually resolve each named weakness — keep the point,
+    fix it, or explain why the guideline stands despite it — into one final GOOD/MEDIOCRE/
+    DISQUALIFIED guideline. Requires phase 3 to have already produced a successful artifact for
+    this element type; phase 4 has nothing to resolve otherwise, so that is a hard prerequisite,
+    not a fallback path (same shape as phase 2's and phase 3's prerequisites). This is also the
+    phase whose output is done_criteria's 'final committed guideline set' — the artifact this
+    writes IS the deliverable OR-1 promises, once it runs for real with live provider keys."""
+    p2 = _load(DATA / "excava" / "artifacts" / f"or1-phase2-{element_type}.json", None)
+    p3 = _load(DATA / "excava" / "artifacts" / f"or1-phase3-{element_type}.json", None)
+    if not p3 or not p3.get("ok"):
+        return {"ok": False, "element_type": element_type, "phase": 4,
+                "reason": (f"phase 3 has no successful artifact for '{element_type}' yet "
+                           f"(or1-phase3-{element_type}.json missing or blocked) — run "
+                           "--or1-phase3 first; phase 4 resolves phase 3's weaknesses into the "
+                           "final guideline, it does not stand alone.")}
+    if not p2 or not p2.get("ok"):
+        return {"ok": False, "element_type": element_type, "phase": 4,
+                "reason": (f"phase 2 has no successful artifact for '{element_type}' yet "
+                           f"(or1-phase2-{element_type}.json missing or blocked) — phase 4 needs "
+                           "the integrated set phase 3 reviewed, not just phase 3's own output.")}
+    fams = engines.families()
+    live = [f for f in fams if f["status"] == "live"]
+    if len(live) < min_families:
+        return {"ok": False, "element_type": element_type, "phase": 4,
+                "live_families": [f["family"] for f in live],
+                "reason": (f"only {len(live)} live model family(ies) here — phase 4 needs "
+                           f">= {min_families} distinct lineages for the same correlated-error "
+                           "reason phases 1-3 do.")}
+    reg = agents.load_registry()
+    cast = [a for a in reg.get("agents", []) if a.get("department") == "improve" and a.get("role") in roles]
+    pool = {e["name"]: e for e in engines.healthy()}
+    integ_corpus = "\n\n".join(f"--- integration proposal by {d['agent']} ({d['family']}) ---\n{d['text']}"
+                               for d in p2["integration_drafts"] if d.get("ok"))
+    weak_corpus = "\n\n".join(f"--- weakness list by {d['agent']} ({d['family']}) ---\n{d['text']}"
+                              for d in p3["adversarial_drafts"] if d.get("ok"))
+    finals = []
+    for i, a in enumerate(cast):
+        fam = live[i % len(live)]
+        eng = pool.get(fam["engine"])
+        prompt = (
+            f"You are {a.get('name')} — {a.get('persona', '')}\n"
+            "This is phase 4 of a 4-phase process: RESOLUTION DISCUSSION, the FINAL phase. You "
+            "are still working ALONE — do not imagine or reference another phase-4 response, "
+            f"there isn't one yet. Below is phase 2's integrated guideline set for what makes a "
+            f"'{element_type}' element GOOD:\n\n{integ_corpus}\n\n"
+            f"Below are phase 3's independent weakness lists against that integrated set:\n\n"
+            f"{weak_corpus}\n\n"
+            "TASK: resolve the weaknesses into the FINAL guideline. For each distinct weakness "
+            "raised (merge duplicates raised by more than one reviewer), state whether you KEPT "
+            "the original point, FIXED it, or REJECTED the criticism and why. Then write the "
+            "final guideline itself: (1) what GOOD looks like, (2) what MEDIOCRE looks like, "
+            "(3) what DISQUALIFIES an item outright, (4) the OBSERVABLE signals that decide it. "
+            "This is the guideline the hub will actually use — write it as a finished ruling, "
+            "not another draft. Plain language, full sentences.")
+        r = engines.complete(prompt, engine=eng, dept="improve", difficulty="hard", max_tokens=700)
+        finals.append({"agent": a.get("name", a.get("id")), "agent_id": a.get("id"),
+                       "family": fam["family"], "engine": r.get("engine"), "model": r.get("model"),
+                       "ok": r.get("ok"),
+                       "text": r["text"].strip() if r.get("ok") else f"[no draft: {r.get('error', '')[:100]}]"})
+        time.sleep(2)
+    ok = [d for d in finals if d["ok"]]
+    return {"ok": len(ok) >= min_families, "element_type": element_type, "phase": 4,
+            "final_drafts": finals, "families_used": sorted({d["family"] for d in ok})}
+
+
 def _write_or1_artifact(result: dict) -> str:
     et = result["element_type"]
     phase = result.get("phase", 1)
@@ -698,9 +769,9 @@ def _write_or1_artifact(result: dict) -> str:
                 f"> {_now()}\n\n{result['reason']}\n\n"
                 f"Live families this run: {', '.join(result.get('live_families') or []) or 'none'}\n")
     else:
-        drafts_key = {1: "drafts", 2: "integration_drafts", 3: "adversarial_drafts"}[phase]
+        drafts_key = {1: "drafts", 2: "integration_drafts", 3: "adversarial_drafts", 4: "final_drafts"}[phase]
         label = {1: "independent drafts", 2: "integration discussion",
-                 3: "adversarial re-review"}[phase]
+                 3: "adversarial re-review", 4: "resolution — FINAL guideline"}[phase]
         parts = [f"# OR-1 phase {phase} — {label} — element type: {et}\n",
                  f"> {_now()} · families used: {', '.join(result['families_used'])}\n"]
         for d in result[drafts_key]:
@@ -778,6 +849,9 @@ def main() -> int:
     ap.add_argument("--or1-phase3", metavar="ELEMENT_TYPE",
                     help="OR-1 phase-3 adversarial re-review from scratch (needs phase 2's "
                          "artifact already on disk for the same element type)")
+    ap.add_argument("--or1-phase4", metavar="ELEMENT_TYPE",
+                    help="OR-1 phase-4 resolution discussion — FINAL guideline (needs phase 2 "
+                         "and phase 3 artifacts already on disk for the same element type)")
     a = ap.parse_args()
     if a.or1_phase1:
         res = or1_phase1(a.or1_phase1)
@@ -793,6 +867,11 @@ def main() -> int:
         res = or1_phase3(a.or1_phase3)
         ref = _write_or1_artifact(res)
         print(f"OR-1 phase3 [{a.or1_phase3}]: {'ok' if res['ok'] else 'BLOCKED'} -> {ref}")
+        return 0
+    if a.or1_phase4:
+        res = or1_phase4(a.or1_phase4)
+        ref = _write_or1_artifact(res)
+        print(f"OR-1 phase4 [{a.or1_phase4}]: {'ok' if res['ok'] else 'BLOCKED'} -> {ref}")
         return 0
     if a.demo:
         ensure_default_rooms()

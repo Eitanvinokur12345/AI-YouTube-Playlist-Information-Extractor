@@ -53,6 +53,17 @@ Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Lo
   QUESTIONS.md rather than guessed at here — the next fire with visibility into the beat's actual
   secret set should check it directly instead of inferring from artifacts a 6th time.
 
+  **Shipping-convention tension (fires 8/9/10, unresolved) settled empirically, not by
+  judgment call this time:** `python -m src.git_safe ship` (its hardcoded `push origin
+  HEAD:main`) failed here with a real `HTTP 403` from this session's own git proxy, not a
+  fast-forward conflict — direct pushes to `main` are genuinely blocked in this session,
+  independent of any convention debate. Pushed to this session's own designated branch instead
+  (`git push -u origin claude/kind-shannon-zkpazr`), which the proxy accepted cleanly, and opened
+  draft PR #57 (no open PR existed yet for this branch). Worth noting for future fires: this
+  removes the guesswork the last several fires flagged as "unconfirmed by Eitan" — at least in
+  this session's proxy configuration, direct-to-main is not actually available, so the
+  branch+PR path isn't a stylistic override of repo convention, it's the only path that works.
+
 - **~17:0x (fire 115, unattended, cloud, scheduled-task invocation)** — Standing checks OK
   (18/20 guardrails, 0 critical; local cache was stale + upstream tracking missing, both
   auto-repointed by `standing_checks`, nothing lost). Carry-over was still **OR-1 phase 1**, 6

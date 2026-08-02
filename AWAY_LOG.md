@@ -5,6 +5,73 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-02 (cont'd)
+- **~22:0x (fire 118, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
+  guardrails, 0 critical; `origin/main` unchanged, HEAD in sync, upstream tracking already set, no
+  carry-over open). Branch/PR note first since it changes this fire's mechanics, not just its
+  writeup: **this fire's explicit outer-harness instructions required developing on
+  `claude/kind-shannon-3j2iz2`, committing there, and opening a DRAFT PR against the default
+  branch instead of running `git_safe ship` straight to `main`** — resolving fire 117's flagged
+  open question (`QUESTIONS.md`) for cloud-hosted fires going forward: this fire did NOT run
+  `git_safe ship`, it committed to the feature branch and pushed with
+  `git push -u origin claude/kind-shannon-3j2iz2`, then opened (or found) a draft PR. Whoever
+  reconciles the two conventions at the source (`AWAY_MODE.md`/`EXCAVA_END_PLAN.md`) should treat
+  fires 117 and 118 as the same answer, not a second open case.
+  Picked from `python -m src.excava_backlog`'s own output: the value-72 `security` gap
+  ("Security: safety-rate the next batch of 1485 connectors/skills") looked suspicious because
+  fire 115 already safety-rated all 1485 connectors 5 hours earlier. Read `src/safety_check.py`
+  and confirmed `main()` rates every connector in `connectors.json` unconditionally on every run
+  (no incremental/"next batch" concept at all — the whole file is rewritten each time) and
+  `data/safety.json` already carried all 1485 connectors keyed by slug (149 safe / 1288 caution /
+  48 risky, `generated_at` 21:54Z). Then read `src/excava_backlog.py`'s `scan_gaps()` and found the
+  actual bug: the security-gap generator used `len(connectors.json)` — the TOTAL connector count —
+  as if it were the count still needing rating, so it would keep re-surfacing "next batch of 1485"
+  at value 72 forever, even with 0 real unrated connectors, for as long as `connectors.json`
+  exists. Same shape of bug as fire 117's `maintenance_check` fix (a measurement conflating "total"
+  with "gap"), this time in the backlog scorer itself rather than the health-report layer — a
+  worse place for it to live, since `excava_backlog.refresh()` enqueues this straight onto the live
+  task bus every run, meaning departments could burn real cycles "safety-rating" a batch that was
+  already fully rated. Fixed `scan_gaps()` in `src/excava_backlog.py` to load `data/safety.json`,
+  compute the actual unrated set by slug (reusing `safety_check._slug` rather than reimplementing
+  it — Ponytail rule), and only emit the security gap task when that count is > 0, with the title
+  now naming the real unrated count instead of the static total. First edit accidentally moved the
+  unrelated "Mining: discover new AI repos/tools" cadence task under the same `if unrated:` gate
+  (it used to run on any `if ncon:`, i.e. every refresh) — caught this by re-running the CLI output
+  and noticing mining had silently vanished from the printed candidate list, then split it back
+  onto its own `if ncon:` check. **Verified, not just asserted:** `python -m src.excava_backlog`
+  before the fix printed the stale security line every time (value 72, "next batch of 1485");
+  after the fix it's gone (11 candidates, was 12) while mining (value 68) is still present and
+  unaffected. Wrote a throwaway monkeypatch test injecting one genuinely-new unrated connector
+  into `connectors.json` in memory and re-ran `scan_gaps()` directly — it correctly emitted
+  `"1 of 1486 connectors unrated"` at value 72, confirming the gate fires when there's a real gap,
+  not just that it stays silent when there isn't. `python -m src.excava_core_test`: all checks
+  passed (unrelated suite, unaffected — sanity check only, this repo has no dedicated
+  `excava_backlog` test file). `python -m src.guardrails`: 18/20, 0 critical, same two
+  pre-existing non-critical misses as every recent fire (G-C stale history bundle, G-O local-PC
+  drain 184h stale — both unrelated, not touched). Skipped `python -m src.pulse` — grepped
+  `src/pulse.py` first and confirmed it never reads `backlog.json` or anything this change
+  touches, so re-running it would just be motion, not a real refresh.
+  **Harsh self-criticism:** this is the THIRD fire in a row (116 safety_check itself, 117
+  maintenance_check, now 118 excava_backlog) to fix backlog/observability plumbing instead of
+  moving an M1-M5 program capability — I looked at the ranked backlog, saw every other candidate
+  gated behind network/keys (links, watch, mining's own live-discovery half, memory-embedding,
+  news), and picked the cleanest LOCAL bug I could find rather than forcing a network-gated item
+  to "half-run" and produce a fake partial result. That's a defensible call once more, but it's
+  becoming a pattern worth naming plainly to Eitan rather than re-justifying fire by fire: the
+  actual Hub-content-depth / department-execution / class-overhaul program (M1-M5) has now gone
+  three fires without a single interactive-session touch, because nearly everything left in the
+  READY backlog needs live internet or a provider key this session doesn't carry. Also: my own
+  verification runs of `python -m src.excava_backlog` (three times, while iterating on the fix and
+  catching my own mining regression) enqueued real entries onto the live task bus
+  (`data/excava/bus.json`, `recent_events.json`, per-task trace files under
+  `data/excava/traces/`) as a side effect of testing, not deliberate work — including one stale
+  pre-fix "security... 1485" enqueue that's now sitting in the bus/trace history looking like real
+  scheduled work when it was actually my own test artifact. Left it in place rather than hand-edit
+  the bus (editing another system's live queue after the fact to make my own testing look cleaner
+  felt like a worse failure mode than an honest, slightly noisy trace), but a future fire touching
+  `excava_backlog.py` should know test invocations aren't side-effect-free here and budget for
+  that noise. Fix is narrow and well-verified but small: it prevents a false ~72-value distraction
+  from ever queuing again, it does not create anything new the hub can do.
+
 - **~21:0x (fire 117, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
   guardrails, 0 critical; local `origin/main` cache was stale + upstream tracking missing, both
   auto-repointed by `standing_checks`, nothing lost). Confirmed OR-1 needs no action this fire

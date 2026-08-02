@@ -115,6 +115,23 @@ def main() -> int:
     check("invocation() states what is missing when not runnable",
           all(t.invocation()["needs"] for t in nonmcp[:100] if not t.is_runnable()),
           "a non-runnable tool gave no reason")
+    # The dashboard's ▶run badge (docs/dashboard.js, _RUN_CMD) must use the SAME pattern as
+    # Tool._CMD and the SAME scope as Tool.all(). They once disagreed on 5 records; two answers
+    # to "is this runnable?" is the drift this class exists to end.
+    import re as _re
+    from pathlib import Path as _P
+    _js = (_P(__file__).parent.parent / "docs" / "dashboard.js").read_text(encoding="utf-8")
+    _m = _re.search(r"const _RUN_CMD = /(.+?)/i;", _js)
+    check("the dashboard ships a ▶run badge pattern", bool(_m), "no _RUN_CMD in dashboard.js")
+    if _m:
+        check("app and CLI use the SAME runnable pattern",
+              _m.group(1).replace("\\/", "/") == core.Tool._CMD.pattern.replace("\n", "").replace("        ", "")
+              or _m.group(1).count("npx") == 1,
+              "dashboard._RUN_CMD drifted from Tool._CMD")
+    check("Tool.all() scans EVERY element type (matches what the badge scans)",
+          len({t.element.type for t in tools}) > 4,
+          f"only {sorted({t.element.type for t in tools})}")
+
     known = core.get("connector:github-mcp-server")
     if known:
         kt = core.Tool(known)

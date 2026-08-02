@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v134";
+const APP_BUILD = "v135";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -3478,7 +3478,19 @@ async function renderRooms(selId) {
     <div class="chat">${bubbles}${artInline}</div>`;
   // AGENT-PLATFORM LAYER 2: the visible track record — judge which agents earn trust
   const arecs = await load("excava/agent_records.json");
-  const actives = ((arecs && arecs.agents) || []).filter(a => a.turns_7d > 0).slice(0, 12);
+  const allRecs = (arecs && arecs.agents) || [];
+  const actives = allRecs.filter(a => a.turns_7d > 0).slice(0, 12);
+  // IDLE agents were being filtered out entirely (turns_7d > 0), so the roster LOOKED fully
+  // staffed while some agents had never opened their mouths. That is display-over-reality (P4)
+  // and it is what the Agent class's roster census exposed from the terminal: 46 named, 40 who
+  // have actually spoken. Showing the idle ones is the honest version — an agent nobody
+  // dispatches is a question, not a decoration.
+  const idle = allRecs.filter(a => !a.turns_7d);
+  const idleLine = idle.length ? `<p class="sub" style="margin-top:6px;color:#e0a87f">
+      😴 <b>${idle.length} of ${allRecs.length}</b> named agents did NO work this window:
+      ${idle.map(a => `<b title="${esc((a.department || "") + " · " + (a.role || ""))}">${esc(a.name)}</b>`).join(" · ")}
+      — they exist in the roster and are scoped to real tools, but nothing dispatched them.
+      Mostly checkers and improvers, which is why the conversation fix mattered.</p>` : "";
   const agentsCard = actives.length ? `
     <div class="card"><h3>👥 Agents — track record <span class="sub">— ${esc(arecs.window || "7 days")}: who actually works, on which brains, holding what positions (accountability, study §6)</span></h3>
       <table class="pv-table"><thead><tr><th>agent</th><th>dept · role</th><th>turns</th><th>rooms</th><th>brains used</th><th>latest held position</th></tr></thead>
@@ -3487,7 +3499,7 @@ async function renderRooms(selId) {
         <td>${esc(a.turns_7d)}</td><td>${esc(a.rooms_7d)}</td>
         <td>${esc((a.engines_used || []).length)} <span class="sub">(${esc((a.engines_used || []).join(", "))})</span></td>
         <td class="sub">${esc(a.last_position || "— memory starts accumulating from the next beats")}</td></tr>`).join("")}
-      </tbody></table>
+      </tbody></table>${idleLine}
       <p class="sub">${esc((arecs && arecs.note) || "")}</p></div>` : "";
   view.innerHTML = `
     <div class="card"><h3>🗣 Rooms — the OS's conversations <span class="sub">— pick a department or 🌐 GENERAL (all inter-departmental). Inside a department: Conversations, War rooms, and Group chat — each fully scrollable.</span></h3>

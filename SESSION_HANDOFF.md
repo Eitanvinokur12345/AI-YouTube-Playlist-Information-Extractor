@@ -93,6 +93,17 @@ because the beat only had exhausted Gemini). Fixed + PROVEN end-to-end:
   the acted-on object) · THEN 7 Visualization+Power depts + 2 pitch conditions + pitch-monster (§J/§K/§M
   of EXCAVA_V2_ADDITIONS.md) · 8 M5 + breadth. Rule: "done" = a real artifact shown, never a rendered card.
 
+## 0d-4. LIVE BUILD v135 (2026-08-02) — the roster stops hiding its idle agents
+
+The 👥 Agents track-record card filtered to `turns_7d > 0`, so agents who did NO work were
+removed from the view entirely and the roster LOOKED fully staffed. That is display-over-reality
+(P4). It now names them: **6 of 46** did no work this window (EXCAVA, Refine, Prune, Squint, Vet,
+Remix) — they exist, they are scoped to real tools, but nothing dispatched them. Mostly checkers
+and improvers, which is exactly why the `_speaker` conversation fix mattered.
+
+That count is also a live metric: it was 10 of 46 before the fix landed and is 6 now, because
+checkers that could never be selected are now getting turns.
+
 ## 0d-3. LIVE BUILD v134 (2026-08-02) — the hub shows what you can actually RUN
 
 Every element card and detail view now carries a green **▶ run** badge when a real command is on

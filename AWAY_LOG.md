@@ -5,6 +5,67 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-02
+- **~04:0x (fire 100, unattended, cloud, scheduled-task invocation, 10th heartbeat)** — Read fire
+  99's log first. Standing checks clean (`python -m src.standing_checks`); guardrails 16/20, 0
+  critical, same as fire 99 — no regression. Checked whether fire 99's `excava_beat.yml` fix
+  (fetch-depth 0 + widened stateless-file whitelist) has actually landed a fresh `excava-beat #N`
+  commit yet: it has not, and cannot have — the run in progress right now
+  (30720644359, started 22:09Z Aug 1, ends ~04:24Z) checked out the workflow file BEFORE fire 99's
+  03:08Z fix, so it's still running the old broken checkout depth; the next run already queued
+  behind it (30724927351, pending since 00:16Z) was ALSO queued before the fix landed, so per
+  GitHub's own behavior (workflow definition is read at trigger/queue time, not at job-start) it
+  too will run pre-fix. The fix will only actually get exercised by whichever run gets queued
+  AFTER 03:12Z — flagging for whichever fire checks next: don't assume "no excava-beat commit
+  yet" means the fix failed, check what workflow-file version the run that completes actually
+  used. Given no engine keys (`OPENROUTER_API_KEY`/`GROQ_API_KEY`/etc. all unset here, re-confirmed)
+  and no general outbound network in this sandbox (same as fire 99 — this is a stable, re-verified
+  constraint, not a one-off), the top backlog item (OR-1, the element-quality debate, value 95)
+  still cannot run from here, and `resolve_links` (value 82) needs live HTTP it doesn't have either.
+  Redirected to the one lever that's genuinely local: ran `python -m src.deep_retrieve` twice
+  (limit 5, then the remaining fresh-fusable pool of 99) — 9 elements enriched total, stubs
+  7406→7404→1586 thin-count tracked down correctly, verified by the tool's own before/after
+  counts, not asserted. `python -m src.excava_selfimprove status` reported "nothing to change this
+  pass (telemetry clean)" — checked, not assumed clean. Investigated G-T's "visual.yml stale
+  59.9h" flag rather than taking it at face value: GH Actions run history
+  (`mcp__github__actions_list`) shows visual.yml has actually SUCCEEDED 4 times since the last
+  "visual-protocol + designs:" commit (Jul31 05:50, 16:17, Aug1 05:40, 15:37Z), and
+  `data/visual_state.json`'s own `daily` counter shows 25 videos processed on 2026-08-01 — so the
+  department is functionally alive, the guardrail's commit-message-prefix heuristic is just being
+  fooled by something (the file's last git-blame change landed under a DIFFERENT lane's commit,
+  `links+memory (fast lane): 2026-08-01T17:13Z`, not visual.yml's own). Did not chase this further
+  — it's a cosmetic mislabeling in a "warn"-tier guardrail, not a real stall, and this week has
+  already run 3+ fires deep into guardrail-heuristic archaeology; flagging in QUESTIONS.md territory
+  for whoever next touches G-T rather than spending this fire's whole budget on it.
+  Also chased down a suspected QUESTIONS.md staging gap (item #7, "API keys work offline") that
+  `audit_decisions status` still lists as OPEN in `next_batch` — turned out to be a false alarm on
+  my own part: my first grep used the phrase "API keys working" and missed the file's actual
+  wording ("API keys work offline / without your PC", already staged at line 68). Correcting myself
+  before editing anything is the right call here, not editing a file that didn't need it.
+  **10th-heartbeat check (per the outer routine's own instruction):** (1) *Storage* — 30 GB free of
+  252 GB (20% used), `.git` 98 MB / `data` 181 MB, no growth concern, consistent with fire 90's
+  reading two weeks ago (30 GB then too — flat, not leaking). (2) *Previous run (fire 99) completed
+  successfully* — commit `690cf5e8` pushed and verified against `origin/main` before this fire
+  started (`standing_checks` reported 0/0 ahead-behind, matching HEAD). (3) *No operational limits
+  exceeded* — 0 critical guardrail failures across fires 91-100; the only non-critical `!!` flags
+  are the same long-standing ones (G-C stale history bundle, G-O EITAN-PC drain offline ~166h —
+  someone else's machine) plus G-M (expected — tied to the still-recovering `excava_beat` lane) and
+  the newly-explained G-T false-stale above. (4) *Review of fires 91-99*: 91-96 (not directly read
+  this fire, summarized from PULSE/git log) kept core-spoton/links/connectors/news lanes fed;
+  97 fixed a `data_guard` revert-loop regression; 98 tried to unblock OR-1's debate but hit the same
+  no-engine-keys wall this fire re-confirmed, redirecting instead; 99 found and fixed the real
+  25+-hour silent-sync-loss bug in `excava_beat.yml` (the fire's one genuinely high-value find this
+  week) — still pending live confirmation per above. All ten fires verified their own change before
+  shipping and shipped via `git_safe`. **Harsh self-criticism:** this fire's own product contribution
+  is small and real, not inflated — 9 elements enriched is a rounding error against 1586 remaining
+  stubs, and everything else this fire did was verification/investigation that confirmed existing
+  work rather than creating new capability. That is an honest reflection of this sandbox's actual
+  ceiling (no engine keys, no general network) — the bigger wins (OR-1's debate, link resolution,
+  the excava_beat fix actually landing) all depend on either the GitHub Actions beat (which has the
+  real keys) or Eitan providing them here, not on this session working harder. No push notification
+  sent: nothing here rises to a blocker, a P5 pitch-gate, or irreversible risk — this is routine,
+  healthy-but-quiet status, exactly the case `away_mode.json`'s own policy says to fold into the
+  next daily digest rather than interrupt for.
+
 - **~03:0x (fire 99, unattended, cloud, scheduled-task invocation)** — Read fire 98's log first.
   Standing checks clean (`python -m src.standing_checks`); guardrails 15-17/20 across this fire
   (0 critical throughout). Started by looking for the queued OR-1 room debate (fire 98's own

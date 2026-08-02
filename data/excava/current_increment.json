@@ -1,16 +1,16 @@
 {
- "title": "Fix data_guard reverting clean_commands.py's slash-command pruning (self_check #13 regression)",
+ "title": "Unblock OR-1 (define what GOOD means per element type) — its M2 dependency (Room+Agent classes, conversation engine, committed artifacts) is confirmed shipped",
  "kind": "product",
- "plan": "Re-run clean_commands; stop data_guard from restoring commands.json to its pre-cleanup snapshot; gate process_video.py's ungated append with the same slash-token filter.",
- "started_at": "2026-08-02T01:03:11.281940+00:00",
+ "plan": "",
+ "started_at": "2026-08-02T02:04:22.344787+00:00",
  "fires": 2,
  "notes": [
   {
-   "at": "2026-08-02T01:04:51.045163+00:00",
-   "text": "Root cause confirmed via git history (single revert commit 65min after fire 94): data_guard's 55%-floor anti-collapse restore doesn't distinguish deliberate quarantine-based pruning from accidental data loss. Fixed by re-baselining the snapshot in clean_commands.py; also gated a second ungated writer (process_video.py) that fire 94 missed."
+   "at": "2026-08-02T02:05:14.173371+00:00",
+   "text": "Verified via CLI: python -m src.excava_backlog now shows OR-1 (id define-what-makes-an-ele-36288) at rank 1 of 7 queued_now items, department=improve. guardrails 17/20 (unchanged, 0 critical) and excava_core_test all-pass confirm no regression."
   }
  ],
  "status": "done",
- "finished_at": "2026-08-02T01:04:51.085367+00:00",
- "outcome": "self_check #13 fixed (44/50 -> 45/50), data_guard reports commands.json healthy (not RESTORED) after re-running the cleanup, guardrails 18/20 unchanged, excava_core_test all pass. Root cause closed, not just the symptom."
+ "finished_at": "2026-08-02T02:05:14.225698+00:00",
+ "outcome": "OR-1 ('define what makes an element GOOD') unblocked and live-queued: flipped stage later->ready in data/excava/owner_requests.json now that all 3 depends_on items (M2 class collapse, conversation engine, committed-artifact rooms) are confirmed shipped (3607 real artifacts on disk as evidence). The next beat's improve-department room will run the real 4-phase debate in-app; this fire only removed the stale gate, it did not fabricate the guideline content itself (that must come from the real room per the owner's explicit done_criteria)."
 }

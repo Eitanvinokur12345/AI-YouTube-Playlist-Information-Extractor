@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v133";
+const APP_BUILD = "v134";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -163,6 +163,27 @@ function elBadge(e) {
   const src = (e.verified || {}).sources || 0;
   return `<span class="el-badge ${cls}" title="${esc((e.verified || {}).method || "")}${src ? " · " + src + " sources" : ""}${e.trust ? " · trust " + e.trust : ""}">${label}</span>`;
 }
+// RUNNABLE badge (2026-08-02) — the READ side of the Tool class (src/excava_core.py, class 2
+// of 5), which until now existed only in the terminal. §8 calls repos-as-running-tools the
+// highest-leverage lever and feature-item 16 is "OSS usable, NOT links": an element with a real
+// command is something you can run today; one with only a link is homework. The regex is the
+// SAME one Tool._CMD uses, deliberately — if the app and the CLI disagreed about what "runnable"
+// means, that is exactly the hand-rolled drift the class layer exists to end.
+const _RUN_CMD = /\b(npx\s+-?y?\s*[@\w\-/.]+|npm\s+i(?:nstall)?\s+(?:-g\s+)?[@\w\-/.]+|pip3?\s+install\s+[\w\-\[\]=.]+|uvx\s+[\w\-]+|uv\s+tool\s+run\s+[\w\-]+|docker\s+run\s+[^\n]+)/i;
+function elRunCommand(e) {
+  if (!e) return "";
+  const hay = [e.install, e.what, e.body, (e.links || {}).source_url].filter(Boolean).join(" ");
+  const m = _RUN_CMD.exec(hay);
+  return m ? m[1].replace(/\s+/g, " ").trim() : "";
+}
+function elRunBadge(e) {
+  const cmd = elRunCommand(e);
+  if (!cmd) return "";
+  return `<span class="el-badge v" style="background:#13301c;color:#7fe39a;cursor:pointer"
+    data-el-run="${esc(cmd)}"
+    title="RUNNABLE — a real command is on file. Click to copy:\n${esc(cmd)}">▶ run</span>`;
+}
+
 // M1.4 — the per-card ACTION ROW: Activate / Open(<10s) / Use / Video / Bundle / Source
 function elementActions(e, always) {
   const links = e.links || {};
@@ -272,7 +293,14 @@ document.addEventListener("click", (ev) => {
   const o = ev.target.closest && ev.target.closest("[data-el-open]");
   if (o) { ev.preventDefault(); elOpen(o.dataset.elOpen, o); return; }
   const a = ev.target.closest && ev.target.closest("[data-el-activate]");
-  if (a) { ev.preventDefault(); elActivate(a.dataset.elActivate, a); }
+  if (a) { ev.preventDefault(); elActivate(a.dataset.elActivate, a); return; }
+  const r = ev.target.closest && ev.target.closest("[data-el-run]");
+  if (r) {  // copy the real run command straight to the clipboard
+    ev.preventDefault();
+    try { navigator.clipboard.writeText(r.dataset.elRun); } catch (_) {}
+    const t = r.textContent; r.textContent = "✓ copied";
+    setTimeout(() => { r.textContent = t; }, 1400);
+  }
 });
 // M1.8 — decorate every list tab's cards with badges + the action row (post-render pass)
 const TAB_ELTYPE = { skills: "skill", tools: "tool", models: "model", prompts: "prompt",
@@ -295,7 +323,7 @@ async function decorateCards(tab) {
       e = cands.length ? ix.byKey[cands[0]] : null;
     }
     if (!e) return;
-    h3.insertAdjacentHTML("beforeend", " " + elBadge(e));
+    h3.insertAdjacentHTML("beforeend", " " + elBadge(e) + elRunBadge(e));
     card.insertAdjacentHTML("beforeend", elementActions(e));
   });
 }
@@ -312,7 +340,7 @@ async function renderElement(id) {
     <div class="card" style="border-top:3px solid var(--gold)">
       <p class="sub"><a href="#" onclick="history.back();return false">← back</a></p>
       <div class="el-detail-hero"><h3 style="font-size:22px">${esc(e.name)}</h3>
-        <span class="pill">${esc(e.type)}</span> ${elBadge(e)}
+        <span class="pill">${esc(e.type)}</span> ${elBadge(e)} ${elRunBadge(e)}
         ${e.created_by === "EXCAVA" ? '<span class="pill" style="background:var(--gold-soft)">🦾 Created by EXCAVA</span>' : ""}</div>
       <p>${esc(e.what || "(deep-retrieve will enrich this element on its next pass)")}</p>
       ${elementActions(e, true)}

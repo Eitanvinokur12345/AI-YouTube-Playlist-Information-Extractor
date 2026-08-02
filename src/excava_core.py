@@ -320,10 +320,20 @@ class Tool:
         return Tool(element)
 
     @staticmethod
-    def all(kind: str | None = None, runnable_only: bool = False) -> list:
+    def all(kind: str | None = None, runnable_only: bool = False,
+            types: tuple | None = None) -> list:
+        """Every element that could carry a run command.
+
+        Fire 97 widened the default from ("tool","connector","skill","model") to ALL types. The
+        dashboard's ▶run badge scans every element, and the two disagreed on 5 records — a
+        `design` and some `prompt`s that genuinely do carry `npx …`/`pip install …` in their
+        text. Two answers to "is this runnable?" is precisely the hand-rolled drift this class
+        exists to end, so the narrower filter loses: is_runnable() is a claim about whether a
+        real command is on file, not about whether the element is tool-SHAPED.
+        """
         out = []
         for el in load().values():
-            if el.type not in ("tool", "connector", "skill", "model"):
+            if types and el.type not in types:
                 continue
             t = Tool(el)
             if kind and t.kind != kind:

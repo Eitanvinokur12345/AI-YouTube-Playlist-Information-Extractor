@@ -93,6 +93,25 @@ because the beat only had exhausted Gemini). Fixed + PROVEN end-to-end:
   the acted-on object) · THEN 7 Visualization+Power depts + 2 pitch conditions + pitch-monster (§J/§K/§M
   of EXCAVA_V2_ADDITIONS.md) · 8 M5 + breadth. Rule: "done" = a real artifact shown, never a rendered card.
 
+## 0d-3. LIVE BUILD v134 (2026-08-02) — the hub shows what you can actually RUN
+
+Every element card and detail view now carries a green **▶ run** badge when a real command is on
+file (`npx …`, `pip install …`, `docker run …`). Click it and the command is on your clipboard.
+An element WITHOUT the badge is a link you still have to read; one WITH it is something you can
+paste into a terminal today. That distinction is feature-item 16 ("OSS usable, NOT links") and
+§8's highest-leverage lever, and it was previously visible only from `python -m src.excava_core
+tools --runnable`.
+
+Honest number: **59 of ~10,600 elements** carry a real command. That is the true state of the
+hub, not a rendering problem — most connectors have no install field at all, or only prose. The
+path to raising it exists and is proven (`Tool.resolve_online()` turned 5 of 6 sampled link-only
+connectors into registry-verified `npx` commands) but is network-bound, so it belongs in a CI
+lane rather than a session fire.
+
+The badge and `Tool.is_runnable()` are now asserted to agree exactly (59 = 59). They disagreed on
+5 records when first written — `Tool.all()` skipped `design`/`prompt` types that genuinely do
+carry commands — and the narrower filter lost.
+
 ## 0d-2. LIVE BUILD v133 (2026-08-01) — the Rooms tab now shows whether the DEBATE happened
 
 M2 is COMPLETE (all 9 items verified against evidence; the 5-class collapse Element/Tool/Room/

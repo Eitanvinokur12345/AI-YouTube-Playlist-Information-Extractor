@@ -357,6 +357,138 @@ For each genuine **technique** build a skill record:
 - **3–4** — experimental, weak demo, or limited applicability.
 - **1–2** — barely relevant, hype with little substance.
 
+### Per-type quality bar (OR-1's deliverable — backlog value-95 item)
+The 1–10 rubric above is generic (applies uniformly to any element). OR-1 (`owner_requests.json`)
+asked a 4-model-family debate "what makes a `<type>` element GOOD in this hub, specifically?" for
+each of the 9 element types + packages. Phases 1–3 (independent drafts → integration → adversarial
+review) completed for real via the CI beat's multi-key pool — see
+`data/excava/artifacts/or1-phase{1,2,3}-<type>.md`. Phase 4 (final resolution) needs 2+ live model
+families and stayed blocked in every interactive session; the guideline below is that resolution
+done by hand from the same phase 2/3 inputs so the deliverable ships now rather than waiting on a
+key this session doesn't carry. **`src/quality_bar.py` is the executable form of this** — it checks
+8 of the 10 types (all but `creation`/`package`, which have no flat per-item data yet) against the
+"observable signals" below and writes `data/quality_bar.json` (surfaced in `PULSE.md` and as a
+`maintenance_check` issue when a type falls under 50%). If OR-1's own phase 4 completes later with
+live keys, reconcile the two — phase 4 is the multi-brain-verified version, this is the shipped-now
+one.
+
+#### Skill
+- **GOOD:** clear, specific value in an immediately usable way, with tunable parameters that
+  don't block first use, clean integration with other hub elements, and low error rate on edge
+  cases. Logic is transparent, with a quick-start plus deeper reference for edge cases.
+- **MEDIOCRE:** functions but needs significant manual setup, thin/stale docs, or hasn't been
+  updated despite drift in its dependencies.
+- **DISQUALIFIED:** malicious, insecure, or IP-infringing; core function broken or unpredictable;
+  relies on undisclosed hidden dependencies.
+- **Observable signals:** working install/source URL · description is concrete and specific, not
+  generic marketing copy · has ≥1 concrete tip/step, not just promotional text · category/tags
+  populated and accurate · version or last-updated info present · `quality_score` above threshold.
+
+#### Tool
+- **GOOD:** solves one clearly stated problem with minimal setup friction (fast install, working
+  demo/example), performs reliably, and is transparently maintained (versioning, changelog).
+  Security- and privacy-conscious by design.
+- **MEDIOCRE:** functional but clunky (multi-step setup), thin documentation, or stale (12+
+  months no update) without being abandoned.
+- **DISQUALIFIED:** privacy/security violations or malicious behavior; no working demo;
+  fundamentally unclear what problem it solves.
+- **Observable signals:** `source_url`/`github`/`homepage` reachable · non-trivial install
+  instructions present · license field present · description names a specific problem, not
+  vague claims · version/last-updated metadata present · no red-flag terms (hidden tracking,
+  telemetry) in the description. *(Commit-activity counts were flagged as gameable by every
+  reviewer — safety/security disqualifiers outrank them.)*
+
+#### Prompt
+- **GOOD:** a single, unambiguous task with stated audience/context and measurable constraints
+  (length, tone, format), including at least one concrete example of desired output.
+- **MEDIOCRE:** workable but vague on constraints, no example, or generic phrasing ("make this
+  better").
+- **DISQUALIFIED:** ambiguous/self-contradictory instructions, harmful/unethical requests, or
+  purely open-ended directives with no checkable target.
+- **Observable signals:** `purpose`/`use_case` states a specific, actionable task · includes an
+  example input/output where relevant · states a length/format/tone constraint · no harmful
+  content · not a template phrase like "improve this text".
+
+#### Command
+- **GOOD:** unambiguous, explicit inputs and outputs, measurable success criteria, and safety
+  guardrails (confirmation/dry-run) for any destructive action. Discoverable via clear
+  naming/docs.
+- **MEDIOCRE:** works but has unclear edge-case behavior, weak error handling, or a fuzzy
+  definition of success.
+- **DISQUALIFIED:** performs destructive/irreversible actions without confirmation; goal is
+  subjective/untestable; execution is broken.
+- **Observable signals:** documented input parameters · documented output/success format ·
+  description avoids subjective/unverifiable goals · confirmation/safety step noted where
+  destructive · `tool`/category populated · provenance (source video) present.
+
+#### Connector
+- **GOOD:** meets an explicit technical spec (documented API/auth contract), handles edge cases
+  (retries, rate limits, graceful failure), integrates with standard auth/UI patterns.
+- **MEDIOCRE:** technically functional but poor error feedback, incomplete docs, or unaddressed
+  edge cases.
+- **DISQUALIFIED:** hardcoded secrets/credential leaks, no versioning, silent failures that
+  break downstream workflows.
+- **Observable signals:** working `install_or_source`/`url` · no secrets visible in
+  config/examples · description names the specific system(s) it connects · `quality_score`
+  above threshold · provenance (`source`/`source_url`) present.
+
+#### Design
+- **GOOD:** measurably reduces friction for a specific, identifiable pain point; actions are
+  reversible/predictable; visible feedback states; meets basic accessibility standards.
+- **MEDIOCRE:** solves a minor/unclear problem with marginal gains, or leans on visual polish
+  without functional justification.
+- **DISQUALIFIED:** introduces more friction than it removes, ignores accessibility, or is a
+  generic template with no identifiable problem solved.
+- **Observable signals:** real preview/screenshot asset or a reachable `github`/`source_url` ·
+  link verified reachable (`url_status == "ok"`) · concrete `look`/description (not generic) ·
+  `style_tags` populated.
+
+#### Format
+- **GOOD:** self-contained (no hidden external dependencies), unambiguous semantics, a
+  machine-readable shape plus human-readable docs/examples, versioned.
+- **MEDIOCRE:** mostly complete but missing worked examples, vague error messages, or no
+  versioning.
+- **DISQUALIFIED:** undefined/ambiguous behavior, hidden dependencies or proprietary lock-in,
+  silent data loss, hardcoded secrets in examples.
+- **Observable signals:** concrete description · a `rebuild_hint` with real, usable steps ·
+  `source_url` present · `kind` populated.
+
+#### Model
+- **GOOD:** solves a specific, measurably-better-than-alternatives problem (stated benchmark or
+  comparison), reasonably reproducible (versioned reference), documents limitations/safety
+  risks explicitly.
+- **MEDIOCRE:** functions with some documentation but lacks benchmarks, or makes vague impact
+  claims without a baseline.
+- **DISQUALIFIED:** harmful/undisclosed-bias outputs, no documented limitations, no versioning,
+  unclear licensing.
+- **Observable signals:** concrete description naming the specific problem solved · a
+  benchmark/quality score present · `source_url`/model card present · `company` populated.
+  *(Strict reproducibility — pinned deps/checksums — was relaxed to "a versioned reference is
+  documented"; reviewers called checksum requirements impractical for most hub records.)*
+
+#### Creation
+- **GOOD:** purpose statable in one clear sentence with no prior knowledge required; works with
+  minimal (not necessarily zero) setup friction; has a demonstrated result — example output,
+  benchmark, or stated metric — not just marketing claims.
+- **MEDIOCRE:** clear purpose but no demonstrated result, or needs manual tweaking to work.
+- **DISQUALIFIED:** purpose unclear without prior context; no working example; proprietary
+  dependency with no license; unaddressed ethical risk where the creation's function makes that
+  relevant.
+- **Observable signals:** one-sentence purpose · example output or preview asset · reachable
+  source/install path · license present · concrete tips/steps beyond promotional copy. *(Not
+  yet mechanically scored — no `data/creations.json` exists.)*
+
+#### Package
+- **GOOD:** solves one specific, clearly stated problem with a verifiable output (working demo
+  or input/output example, not just a claim); low-friction setup (quick install, pinned
+  dependencies); health metadata (license, version) actually tied to the package.
+- **MEDIOCRE:** meets most criteria but missing a demo/benchmark, or thin/outdated docs.
+- **DISQUALIFIED:** broken install, missing license, no verifiable output behind vague claims,
+  undisclosed data collection/telemetry.
+- **Observable signals:** installable `install_or_source` · one specific stated deliverable ·
+  example input/output or demo link · license present · version/lockfile info present. *(Not
+  yet mechanically scored — packages are `SKILL.md` folders, not a flat JSON list.)*
+
 ### Compare-and-keep-best (dedup by slug)
 **Token-saver — check the compact index first.** `data/skills.json` grows large, so don't
 re-read the whole file for every skill. If **`data/index.json`** exists (a compact

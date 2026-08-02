@@ -439,3 +439,24 @@ reasoning as before: it wouldn't even fix the root cause (no signing key), and t
 CI/other sessions committing to it concurrently, so a history rewrite is real risk for zero
 gain. Still Eitan's call whether to add a real signing key or route commits through the GitHub
 API; not re-litigating again absent that answer.
+
+**2026-08-02 (fire 101) — 3 of the 57 stray `claude/kind-shannon-*`/`claude/excava-end-plan-*`
+branches are provably safe to delete now; the other 54 are not, without more work.**
+Built `src/branch_sweep.py` (queued/flagged by at least 5 prior fires — 6, 7, 8, 9, 10 — as
+"someone else's problem," never built). It audits every stray origin branch against
+`origin/main` via `git rev-list --left-right --count` and flags a branch SAFE-DELETE only when
+its count of commits NOT reachable from main is exactly 0 — a mathematical guarantee, not a
+guess. Result (`data/excava/branch_sweep.json`): **`claude/excava-end-plan-s1mt4l`,
+`claude/kind-shannon-8ljfn3`, `claude/kind-shannon-zqdqz8`** all have 0 unique commits — every
+commit they carry already sits on `main`. The other 54 are NOT provably safe: most (matching
+fire 7's earlier finding on one branch) share **no merge-base with main at all** — history was
+rewritten at some point — so their "unique commit" counts (typically 4,600-6,000) reflect
+whole independent histories, not a few uncommitted diffs; a handful (`kind-shannon-fcbvg8`: 1,
+`kind-shannon-pu1veg`: 2, `kind-shannon-gmdxlm`: 39) are small enough to actually be worth a
+real content review by a future fire.
+**Proposed verdict: delete the 3 SAFE-DELETE branches** (via the GitHub API, since this
+session's local git access can't push a branch deletion through the repo-scoped proxy) — zero
+data loss, proven. **Not done this fire**: branch deletion is a shared-GitHub-state action this
+routine has never taken in 100+ prior fires, so it's queued here rather than acted on
+unilaterally. Default if unanswered: leave the 3 branches as-is (report exists either way) and
+let a future fire either get an explicit go-ahead or build the same proof again before acting.

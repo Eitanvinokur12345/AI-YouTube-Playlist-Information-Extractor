@@ -1,16 +1,18 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-217` (dept) · 2026-07-15T03:46:49.057652+00:00
-> Participants: Pick, Boulder · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-217` (dept) · 2026-08-02T07:10:06.576132+00:00
+> Participants: Pick · synthesized by mistral/mistral-small-latest
 
-**Decision:** Run a targeted search across key platforms to compile a list of AI open-source projects for 2024.
+**Decision:**
+Sweep Product Hunt’s "AI" posts from the last 7 days using their API.
 
 **Plan:**
-1. Conduct a search on GitHub for "AI open-source projects 2024" and gather relevant repositories.
-2. Explore discussions on Hacker News related to AI open-source projects to find trending topics and contributions.
-3. Check Product Hunt for newly launched AI projects that focus on open-source initiatives in 2024.
-4. Scan Reddit communities focused on AI to identify valuable open-source projects and ongoing discussions.
-5. Investigate Telegram groups dedicated to AI where projects might be shared and discussed among users.
-6. Compile data into a curated list with links and relevance scores for team evaluation.
+1. Authenticate with Product Hunt’s API using a valid developer token.
+2. Query the API for posts tagged "AI" from the last 7 days, fetching titles, descriptions, upvotes, and creator handles.
+3. Store the raw JSON response in a structured format (e.g., JSON file or database).
+4. Parse the data into a CSV/TSV for quick triage (e.g., sorting by upvotes).
+5. Flag posts with duplicate titles/descriptions to avoid redundancy.
+6. Share the processed list with the team for further analysis.
 
-**What changed:** Focus shifted to gathering diverse information across multiple platforms rather than relying on a single source.
+**What changed:**
+Prioritized Product Hunt API sweep over other sources due to its structured data and ease of integration.

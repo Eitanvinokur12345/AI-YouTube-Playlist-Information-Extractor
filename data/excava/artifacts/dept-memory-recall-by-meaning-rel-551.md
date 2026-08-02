@@ -1,15 +1,16 @@
 # memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.
 
-> Decision artifact · room `dept-memory-recall-by-meaning-rel-551` (dept) · 2026-07-12T03:38:37.570656+00:00
-> Participants: Graft · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-memory-recall-by-meaning-rel-551` (dept) · 2026-08-02T07:10:01.485846+00:00
+> Participants: Graft · synthesized by mistral/mistral-small-latest
 
-**Decision:** We will create a dynamic, shared "memory map" to link and contextualize key ideas.
+**Decision:**
 
 **Plan:**
-1. Define key ideas and their meanings collaboratively among team members.
-2. Identify and establish relationships between these key ideas within the map structure.
-3. Create a digital platform for the memory map that allows for easy updates and additions.
-4. Schedule regular review sessions to update the map based on new learnings and insights.
-5. Encourage team members to contribute to the map, fostering shared ownership and continuous growth.
+1. Query the Hindsight memory database via the MCP server to retrieve all unembedded memory fragments.
+2. Process the retrieved fragments to identify semantic relationships and contextual links.
+3. Embed the unembedded elements into the existing brain graph by mapping them to relevant nodes.
+4. Validate the embeddings by cross-referencing with related memories to ensure coherence.
+5. Update the memory graph with the newly embedded elements, reinforcing neural pathways.
+6. Archive the query results and embeddings for future recall optimization.
 
-**What changed:** A collaborative, living document approach will help integrate new information continually.
+**What changed:** Unembedded memory fragments were identified and prioritized for embedding into the brain graph.

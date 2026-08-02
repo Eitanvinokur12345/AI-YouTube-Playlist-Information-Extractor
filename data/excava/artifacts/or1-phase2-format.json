@@ -1,0 +1,49 @@
+{
+ "ok": true,
+ "element_type": "format",
+ "phase": 2,
+ "integration_drafts": [
+  {
+   "agent": "Ratchet",
+   "agent_id": "improve-lead",
+   "family": "DeepSeek V4",
+   "engine": "mistral",
+   "model": "mistral-small-latest",
+   "ok": true,
+   "text": "**KEPT FROM EACH DRAFT:**\n- **Ratchet’s draft** is kept for its sharp focus on *modularity, unambiguous naming, and vendor-neutral design*—critical for reusable formats.\n- **Sprocket’s draft** is kept for its emphasis on *self-documenting rules, versioning, and explicit edge-case handling*—key for reliability.\n- **Gauge’s draft** is kept for its *clarity of purpose, discoverability, and security considerations*—essential for user trust.\n- **Overhaul’s draft** is kept for its *predictability, validation, and machine-readability*—vital for automation and tooling.\n\n**GENUINE CONFLICTS:**\n- **Modularity vs. self-containment**: Ratchet stresses *modularity* (slotting into workflows), while Gauge prioritizes *self-contained* formats (no hidden dependencies). These can clash if modularity requires external context.\n- **Flexibility vs. rigidity**: Gauge argues for *flexibility where it matters*, while Overhaul demands *consistent, predictable rules*—risking tension if flexibility undermines predictability.\n- **Vendor neutrality vs. tool-specific adaptations**: Ratchet and Sprocket lean toward *neutrality*, but Overhaul’s \"frictionless\" ideal might implicitly favor tool-specific optimizations.\n\n**MERGE ORDER/PRIORITY:**\nStart with **Ratchet’s core principles** (modularity, clarity, neutrality) as the foundation, then layer in **Sprocket’s versioning and edge-case handling** to address reliability. Next, integrate **Gauge’s security and discoverability** to ensure safety and usability, and finally, fold in **Overhaul’s validation and machine-readability** for automation. This order balances structure with adaptability, resolving conflicts by prioritizing *reusability* first, then *reliability*, *security*, and *automation*."
+  },
+  {
+   "agent": "Sprocket",
+   "agent_id": "improve-w1",
+   "family": "GLM-5.2",
+   "engine": "mistral",
+   "model": "mistral-small-latest",
+   "ok": true,
+   "text": "**KEPT FROM EACH DRAFT:**\nRatchet’s draft is kept for its sharp focus on *modularity* and *reusability*, especially its emphasis on avoiding vendor lock-in and using schema validators. Sprocket’s draft is kept for its clear *self-documenting* principle and versioning requirements, which ensure formats stay maintainable. Gauge’s draft is kept for its *discoverability* and *scope clarity*, like explicit README-style metadata and performance notes. Overhaul’s draft is kept for its *frictionless* usability and built-in validation, ensuring formats work smoothly across tools without hidden pitfalls.\n\n**GENUINE CONFLICTS:**\nThe drafts clash most on *how strict* a format should be—Ratchet and Overhaul lean toward rigid schemas (e.g., JSON/YAML with strict rules), while Gauge and Sprocket allow more flexibility (e.g., \"flexible where it matters\"). Ratchet and Sprocket prioritize *machine-readability*, but Gauge and Overhaul stress *human-friendliness* (e.g., markdown tables vs. strict schemas). There’s also tension on *documentation depth*: Ratchet and Overhaul want machine-readable specs, while Gauge and Sprocket prefer human-readable guides with examples.\n\n**MERGE ORDER/PRIORITY:**\nStart with Overhaul’s *core usability* (frictionless, validation) as the foundation, then layer in Ratchet’s *modularity* and *reusability* to avoid lock-in. Next, add Sprocket’s *self-documenting* and versioning to ensure longevity, and finally, incorporate Gauge’s *discoverability* and *scope clarity* to make formats easy to find and evaluate. This order balances automation (Overhaul/Ratchet) with human needs (Sprocket/Gauge), resolving conflicts by prioritizing what’s most critical for practical use."
+  },
+  {
+   "agent": "Gauge",
+   "agent_id": "improve-checker",
+   "family": "Kimi K2.7",
+   "engine": "mistral",
+   "model": "mistral-small-latest",
+   "ok": true,
+   "text": "**KEPT:**\n- **Ratchet’s** emphasis on *modularity* and *clear single purpose* (e.g., standardized schemas) ensures reusability across tools.\n- **Sprocket’s** focus on *self-documenting* formats with explicit rules (e.g., versioning, field definitions) prevents ambiguity.\n- **Gauge’s** insistence on *discoverability* (tagging, metadata) and *no hidden prerequisites* makes formats user-friendly.\n- **Overhaul’s** call for *built-in validation* (e.g., type hints, error messages) catches mistakes early, reducing friction.\n\n**CONFLICTS:**\n- **Ratchet vs. Sprocket/Gauge:** Ratchet prioritizes *modularity* as the core virtue, while Sprocket and Gauge stress *self-documentation* and *discoverability*—these could clash if modularity sacrifices clarity (e.g., a \"modular\" format that’s too fragmented to document well).\n- **Overhaul vs. Gauge:** Overhaul’s *machine-readability* focus (e.g., JSON/YAML for automation) conflicts with Gauge’s *human-friendly* examples (e.g., markdown tables), risking trade-offs between tooling ease and user accessibility.\n\n**MERGE ORDER/PRIORITY:**\n1. **Start with Overhaul’s core principles** (consistency, predictability, validation) as the foundation—these address the most critical usability failures (e.g., silent data corruption).\n2. **Layer in Sprocket’s self-documenting rules** (explicit fields, versioning) to ensure formats are *usable* beyond just being parseable.\n3. **Add Gauge’s discoverability and no-hidden-prerequisites** to make formats *adoptable* without friction.\n4. **Incorporate Ratchet’s modularity** last, as a secondary trait—only if the format remains coherent when split (e.g., schemas + examples as separate but linked files). This order balances automation needs with human usability while resolving conflicts by prioritizing the most universal pain points first."
+  },
+  {
+   "agent": "Overhaul",
+   "agent_id": "improve-improver",
+   "family": "GPT-4o-mini",
+   "engine": "mistral",
+   "model": "mistral-small-latest",
+   "ok": true,
+   "text": "**KEPT from each draft:**\n- **Ratchet’s** emphasis on *modularity, clear single-purpose design, and documentation with examples/constraints* is critical for reusable formats.\n- **Sprocket’s** focus on *predictability, versioning, and vendor-neutrality* ensures formats remain reliable and adaptable over time.\n- **Gauge’s** insistence on *clarity, discoverability, and security* (e.g., no hidden side effects) prevents misuse and improves usability.\n- **Overhaul’s** prioritization of *validation, machine-readability, and frictionless cross-tool use* makes formats practical for automation and human review.\n\n**Genuine conflicts:**\n- **Scope of \"disqualification\":** Ratchet and Overhaul broadly disqualify formats lacking specs/examples, while Gauge adds *security risks* (e.g., hardcoded secrets) and Sprocket adds *proprietary lock-in*—these aren’t mutually exclusive but require explicit inclusion.\n- **Validation focus:** Overhaul and Ratchet stress *built-in validation* (e.g., schemas), while Gauge and Sprocket focus more on *documentation* and *error-handling guidance*—both are valid but need reconciliation (e.g., validation as part of documentation).\n\n**Merge order/priority:**\nStart with **Overhaul’s core principles** (consistency, predictability, validation) as the foundation, then layer in **Ratchet’s modularity and documentation**, **Sprocket’s versioning and vendor-neutrality**, and finally **Gauge’s clarity and security checks**. This order ensures the merged guideline is *practical* (Overhaul), *reusable* (Ratchet), *sustainable* (Sprocket), and *safe* (Gauge)."
+  }
+ ],
+ "families_used": [
+  "DeepSeek V4",
+  "GLM-5.2",
+  "GPT-4o-mini",
+  "Kimi K2.7"
+ ]
+}

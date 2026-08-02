@@ -1,0 +1,78 @@
+# OR-1 phase 2 — integration discussion — element type: connector
+> 2026-08-02T19:46:55.797646+00:00 · families used: DeepSeek V4, GLM-5.2, GPT-4o-mini, Kimi K2.7
+
+## Ratchet (DeepSeek V4 · mistral/mistral-small-latest)
+
+**KEPT FROM EACH DRAFT:**
+1. **Ratchet’s draft** should retain the emphasis on *modularity, interoperability, and measurable performance* (e.g., latency benchmarks, versioned endpoints) as core technical requirements for connectors.
+2. **Sprocket’s draft** should keep the focus on *practical reliability* (handling edge cases, retries, rate limits) and *user-centric signals* (uptime metrics, test coverage badges) to assess real-world usability.
+3. **Gauge’s draft** should preserve the *human-centered lens*: connectors must reduce cognitive load, provide clear feedback, and respect user agency (e.g., override options, intuitive design).
+4. **Overhaul’s draft** should contribute the *structural integration* criteria: connectors must align with the hub’s authentication, permissions, and UI patterns while being discoverable and actively maintained.
+
+**GENUINE CONFLICTS:**
+- **Security vs. Flexibility:** Ratchet and Overhaul prioritize strict security (e.g., no hardcoded secrets) and versioning, while Gauge’s "universal adapter" framing risks glossing over security trade-offs unless explicitly addressed.
+- **Documentation Scope:** Sprocket and Overhaul demand *comprehensive* docs (READMEs, changelogs, examples), but Ratchet’s focus on *API specs* (OpenAPI) and Gauge’s on *edge-case documentation* may conflict if not unified under a single standard.
+- **Maintenance Signals:** Sprocket and Overhaul use *Git activity* (commits, PRs) as a proxy for health, while Ratchet and Gauge emphasize *test coverage* and *user reviews*—these metrics don’t always correlate (e.g., a well-tested but rarely updated connector).
+
+**MERGE ORDER/PRIORITY:**
+Start with **Ratchet’s technical backbone** (modularity, APIs, performance) as the foundation, then layer in **Sprocket’s reliability and maintenance signals** (retries, uptime, activity metrics) to ground the guidelines in real-world usability. Next, integrate **Gauge’s user-centric principles** (cognitive load, feedback clarity) to ensure the connector serves humans, not just systems. Finally, fold in **Overhaul’s integration standards** (auth alignment, discoverability) to tie the connector to the hub’s broader architecture
+
+## Sprocket (GLM-5.2 · mistral/mistral-small-latest)
+
+### **What to Keep from Each Draft**
+1. **Ratchet’s draft** contributes the most *technical rigor*—its focus on modularity, versioning, performance benchmarks, and security checks (e.g., dependency scans, auth enforcement) ensures connectors are robust and scalable. These are non-negotiable for enterprise-grade integrations.
+2. **Sprocket’s draft** adds *practical usability*—it emphasizes reducing cognitive load, discoverability (e.g., searchable/categorized connectors), and observable signals like uptime metrics or test coverage badges. This bridges the gap between technical soundness and user experience.
+3. **Gauge’s draft** highlights *user-centric design*—intuitiveness, edge-case handling, and respect for user agency (e.g., letting users override defaults) make connectors feel like "just work" tools rather than fragile bridges. This is critical for adoption.
+4. **Overhaul’s draft** reinforces *reliability and integration standards*—two-way communication, adherence to hub-wide patterns (auth, UI), and active maintenance signals (recent commits, responsive support) ensure connectors don’t become technical debt.
+
+---
+
+### **Where the Drafts Genuinely Conflict**
+1. **Scope of "Good"**: Ratchet and Overhaul lean toward *technical excellence* (API specs, benchmarks, security), while Gauge and Sprocket prioritize *user experience* (intuitiveness, "just works" simplicity). The tension is between "engineering purity" and "user friction."
+2. **Documentation vs. Signals**: Ratchet and Overhaul treat documentation (OpenAPI specs, READMEs) as *table stakes*, but Gauge and Sprocket imply documentation should *also* include user-facing signals (e.g., "fails gracefully if tool Y is offline")—not just formal specs.
+3. **Maintenance vs. Abandonment**: Overhaul and Sprocket use *activity metrics* (e.g., 6-month commit history) as proxies for quality, while Ratchet and Gauge focus more on *responsiveness to issues* or *edge-case handling*. This risks conflating activity with reliability.
+
+---
+
+### **Proposed Merge Order/Priority**
+**Start with Ratchet’s core (technical foundation) → Layer in Sprocket’s usability → Add Gauge’s user-centric design → Refine with Overhaul’s integration
+
+## Gauge (Kimi K2.7 · mistral/mistral-small-latest)
+
+### **What to Keep from Each Draft**
+1. **Ratchet’s draft** should be kept for its **technical rigor**—its focus on modularity, versioning, performance benchmarks, and security checks (e.g., dependency scans, auth enforcement) provides a concrete, measurable foundation for connector quality.
+2. **Sprocket’s draft** should be kept for its **practical usability**—its emphasis on purpose-built bridges, discoverability, and reducing cognitive load (e.g., "abstracting complexity without hiding critical details") ensures connectors serve real-world workflows.
+3. **Gauge’s draft** should be kept for its **user-centric perspective**—its focus on intuitiveness, edge-case handling, and respecting user agency (e.g., "clear feedback when things go wrong") makes quality feel tangible rather than abstract.
+4. **Overhaul’s draft** should be kept for its **integration pragmatism**—its insistence on two-way communication, hub-wide consistency (e.g., auth/permissions alignment), and active maintenance ensures connectors don’t become isolated or outdated.
+
+---
+
+### **Where the Drafts Genuinely Conflict**
+1. **Scope of "Good"**: Ratchet and Overhaul frame "good" connectors in **technical/systemic terms** (API specs, benchmarks, versioning), while Gauge and Sprocket focus on **user experience** (intuitiveness, cognitive load, "just works"). These aren’t just phrasing differences—they prioritize different evaluation axes.
+2. **Documentation vs. Signals**: Ratchet and Overhaul treat documentation as a **checklist item** (e.g., OpenAPI specs, changelogs), while Gauge and Sprocket see it as **proof of usability** (e.g., "no manual needed," actionable error logs). The former treats docs as a deliverable; the latter treats them as a *signal of quality*.
+3. **Performance vs. Reliability**: Ratchet and Overhaul emphasize **measurable performance** (p99 latency, throughput), while Gauge and Sprocket prioritize **reliability in edge cases** (graceful failures, retries). The conflict isn’t about whether performance matters—it’s about *what* performance signals (e.g., benchmarks vs. uptime in real workflows).
+
+---
+
+### **Proposed Merge Order/Priority**
+Start with **Ratchet
+
+## Overhaul (GPT-4o-mini · mistral/mistral-small-latest)
+
+### **Synthesis of Drafts**
+
+**What to keep from each draft:**
+1. **Ratchet (DeepSeek V4):** Prioritize modularity, interoperability, and measurable performance (e.g., latency benchmarks). Keep the focus on API standardization (JSON Schema, OpenAPI) and security (authentication, no hardcoded secrets).
+2. **Sprocket (GLM-5.2):** Emphasize active maintenance (recent commits, issue responsiveness) and user-centric design (discoverability, cognitive load reduction). Include reliability signals like uptime metrics and test coverage badges.
+3. **Gauge (Kimi K2.7):** Highlight intuitive usability (minimal manual intervention) and user agency (clear error feedback, override options). Stress edge-case handling and transparency in decisions.
+4. **Overhaul (GPT-4o-mini):** Retain the focus on two-way communication, hub integration (auth, UI patterns), and active maintenance (6-month activity window). Include compatibility matrices and community feedback (stars, reviews).
+
+**Where the drafts genuinely conflict:**
+- **Security vs. Flexibility:** Ratchet and Overhaul stress strict security (no hardcoded secrets, OAuth) as non-negotiable, while Gauge’s "universal adapter" framing risks glossing over security trade-offs. Sprocket’s "purpose-built" approach could sidestep some security rigor if not explicitly tied to platform policies.
+- **Performance Metrics vs. Usability:** Ratchet and Sprocket prioritize measurable performance (latency, throughput), but Gauge and Overhaul focus more on "just works" reliability and user feedback. The conflict is whether objective benchmarks or subjective "frictionless" experience should drive evaluation.
+- **Documentation Depth:** Ratchet and Sprocket demand exhaustive specs (OpenAPI, changelogs), while Gauge and Overhaul lean toward "intuitive" connectors with minimal manuals. The tension is between prescriptive technical docs and user-friendly simplicity.
+
+**Proposed merge order/priority:**
+Start with **Overhaul’s structure** (GOOD/MEDIOCRE/DISQUALIFIES framework) as the backbone, then layer in:
+1. **Ratchet’s technical rigor** (API standards, security, performance metrics) as the non-negotiable core.
+2. **Sprocket’s maintenance signals** (activity,

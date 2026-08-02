@@ -5,6 +5,33 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-02
+- **~12:1x (fire 111, unattended, cloud, scheduled-task invocation)** — Standing checks OK
+  (17/20 guardrails, 0 critical; stale local `origin/main` ref auto-re-fetched, missing upstream
+  tracking auto-repointed). Carry-over was still **OR-1 phase 1**, 2 fires in — CONTINUE IT per
+  `loop_contract`. Re-confirmed this cloud session is still genuinely keyless beyond `GH_TOKEN`
+  (no GROQ/GEMINI/MISTRAL/etc in env) — a real `--or1-phase1` sweep across the 10 element types
+  is still not runnable here, same root cause as fires 104/110. Rather than re-running the
+  identical blocked call a third time, built the next real piece the carry-over plan itself
+  named: **`or1_phase2()`** (integration discussion) in `src/excava_chat.py` + CLI
+  `--or1-phase2`, on phase 1's own isolated-call pattern (no shared history, hard-gated on >=2
+  live model families, refuses without a successful phase-1 artifact for the same element type).
+  Generalized `_write_or1_artifact` to also write a JSON sidecar (phase 2 needs phase 1's raw
+  drafts back, not just prose) — non-breaking. New `src/or1_phase_test.py`: 16 stdlib-only,
+  no-network checks (mocks `excava_engines`/`excava_agents`) proving the family gate blocks
+  *before* any engine call, phase 2 refuses without phase 1's artifact, phase 1's isolated calls
+  carry zero cross-agent leakage, phase 2 prompts are correctly seeded with every phase-1 draft,
+  and phase 2's own calls are isolated from each other too. `python -m src.or1_phase_test`:
+  16/16 pass. `python -m src.excava_chat --or1-phase2 skill` against this session's real
+  (keyless) engines: correctly BLOCKED, wrote `or1-phase2-skill.{md,json}` — same
+  honest-blocked-artifact pattern as phase 1, not a faked debate. `excava_core_test`: still all
+  pass, untouched. **Harsh self-criticism:** still 0 LIVE multi-family OR-1 runs after 3 fires —
+  the actual deliverable (a real cross-model guideline) hasn't moved, only the machinery to
+  produce it has (now 2/4 phases built + unit-tested). That's real, verifiable progress, but the
+  keyless-cloud-session limitation is structural — a 4th fire here won't fix it; it needs the
+  GH Actions beat's full secret set or a session with real provider keys to actually execute.
+  CARRY-OVER continues: phase 1 across all 10 types once keys exist, then phase 2 per type, then
+  phases 3–4 on the same pattern.
+
 - **~11:0x (fire 110, unattended, cloud, scheduled-task invocation)** — Standing checks: OK,
   17/20 guardrails, 0 critical; 5 consecutive META fires (cap 3) — this fire required to
   advance the product, not the loop's own machinery. Open carry-over was still **OR-1**.

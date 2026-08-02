@@ -573,19 +573,77 @@ def or1_phase1(element_type: str, min_families: int = 2, roles=("doer", "checker
             "drafts": drafts, "families_used": sorted({d["family"] for d in ok})}
 
 
+def or1_phase2(element_type: str, min_families: int = 2, roles=("doer", "checker", "improver", "lead")) -> dict:
+    """OR-1 phase 2 — INTEGRATION DISCUSSION. Still independent calls, no cross-talk (phase 2 is a
+    second SOLO pass, not a debate -- letting phase-2 responses see each other would just move
+    phase 1's anchoring problem one step later). Every agent's prompt is seeded with ALL of phase
+    1's drafts, and the task shifts from drafting to reconciling: what to keep from each, where
+    they genuinely conflict, and one proposed merge order. Requires phase 1 to have already
+    produced a successful artifact for this element type -- phase 2 has nothing to integrate
+    otherwise, so that is a hard prerequisite, not a fallback path."""
+    p1 = _load(DATA / "excava" / "artifacts" / f"or1-phase1-{element_type}.json", None)
+    if not p1 or not p1.get("ok"):
+        return {"ok": False, "element_type": element_type, "phase": 2,
+                "reason": (f"phase 1 has no successful artifact for '{element_type}' yet "
+                           f"(or1-phase1-{element_type}.json missing or blocked) — run "
+                           "--or1-phase1 first; phase 2 integrates phase 1's drafts, it does "
+                           "not stand alone.")}
+    fams = engines.families()
+    live = [f for f in fams if f["status"] == "live"]
+    if len(live) < min_families:
+        return {"ok": False, "element_type": element_type, "phase": 2,
+                "live_families": [f["family"] for f in live],
+                "reason": (f"only {len(live)} live model family(ies) here — phase 2 needs "
+                           f">= {min_families} distinct lineages for the same correlated-error "
+                           "reason phase 1 does.")}
+    reg = agents.load_registry()
+    cast = [a for a in reg.get("agents", []) if a.get("department") == "improve" and a.get("role") in roles]
+    pool = {e["name"]: e for e in engines.healthy()}
+    corpus = "\n\n".join(f"--- draft by {d['agent']} ({d['family']}) ---\n{d['text']}"
+                         for d in p1["drafts"] if d.get("ok"))
+    integ = []
+    for i, a in enumerate(cast):
+        fam = live[i % len(live)]
+        eng = pool.get(fam["engine"])
+        prompt = (
+            f"You are {a.get('name')} — {a.get('persona', '')}\n"
+            "This is phase 2 of a 4-phase process: INTEGRATION DISCUSSION. You are still working "
+            "ALONE — do not imagine or reference another phase-2 response, there isn't one yet. "
+            f"Below are ALL of phase 1's independent drafts of what makes a '{element_type}' "
+            f"element GOOD:\n\n{corpus}\n\n"
+            "TASK: (1) name what should be KEPT from each draft, (2) name where the drafts "
+            "genuinely CONFLICT (not just phrase differently), (3) propose ONE merge order/"
+            "priority for reconciling them into a single guideline. Do not just pick a favorite "
+            "draft — synthesize. Plain language, full sentences, 6-10 sentences total.")
+        r = engines.complete(prompt, engine=eng, dept="improve", difficulty="hard", max_tokens=500)
+        integ.append({"agent": a.get("name", a.get("id")), "agent_id": a.get("id"),
+                      "family": fam["family"], "engine": r.get("engine"), "model": r.get("model"),
+                      "ok": r.get("ok"),
+                      "text": r["text"].strip() if r.get("ok") else f"[no draft: {r.get('error', '')[:100]}]"})
+        time.sleep(2)
+    ok = [d for d in integ if d["ok"]]
+    return {"ok": len(ok) >= min_families, "element_type": element_type, "phase": 2,
+            "integration_drafts": integ, "families_used": sorted({d["family"] for d in ok})}
+
+
 def _write_or1_artifact(result: dict) -> str:
     et = result["element_type"]
+    phase = result.get("phase", 1)
     adir = DATA / "excava" / "artifacts"
     adir.mkdir(parents=True, exist_ok=True)
-    path = adir / f"or1-phase1-{et}.md"
+    (adir / f"or1-phase{phase}-{et}.json").write_text(
+        json.dumps(result, ensure_ascii=False, indent=1), encoding="utf-8")
+    path = adir / f"or1-phase{phase}-{et}.md"
     if not result["ok"]:
-        body = (f"# OR-1 phase 1 — {et} — BLOCKED\n\n"
+        body = (f"# OR-1 phase {phase} — {et} — BLOCKED\n\n"
                 f"> {_now()}\n\n{result['reason']}\n\n"
                 f"Live families this run: {', '.join(result.get('live_families') or []) or 'none'}\n")
     else:
-        parts = [f"# OR-1 phase 1 — independent drafts — element type: {et}\n",
+        drafts_key = "drafts" if phase == 1 else "integration_drafts"
+        label = "independent drafts" if phase == 1 else "integration discussion"
+        parts = [f"# OR-1 phase {phase} — {label} — element type: {et}\n",
                  f"> {_now()} · families used: {', '.join(result['families_used'])}\n"]
-        for d in result["drafts"]:
+        for d in result[drafts_key]:
             parts.append(f"\n## {d['agent']} ({d['family']} · {d['engine']}/{d['model']})\n\n{d['text']}\n")
         body = "".join(parts)
     path.write_text(body, encoding="utf-8")
@@ -654,11 +712,19 @@ def main() -> int:
     ap.add_argument("--or1-phase1", metavar="ELEMENT_TYPE",
                     help="OR-1 phase-1 independent brainstorm for one element type "
                          f"({'/'.join(OR1_ELEMENT_TYPES)})")
+    ap.add_argument("--or1-phase2", metavar="ELEMENT_TYPE",
+                    help="OR-1 phase-2 integration discussion (needs phase 1's artifact already "
+                         "on disk for the same element type)")
     a = ap.parse_args()
     if a.or1_phase1:
         res = or1_phase1(a.or1_phase1)
         ref = _write_or1_artifact(res)
         print(f"OR-1 phase1 [{a.or1_phase1}]: {'ok' if res['ok'] else 'BLOCKED'} -> {ref}")
+        return 0
+    if a.or1_phase2:
+        res = or1_phase2(a.or1_phase2)
+        ref = _write_or1_artifact(res)
+        print(f"OR-1 phase2 [{a.or1_phase2}]: {'ok' if res['ok'] else 'BLOCKED'} -> {ref}")
         return 0
     if a.demo:
         ensure_default_rooms()

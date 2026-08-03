@@ -4,6 +4,56 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+## 2026-08-03
+- **~00:1x (fire 118, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
+  guardrails, 0 critical; stale `origin/main` cache + missing upstream tracking, both auto-repaired,
+  nothing lost). Attacked a REAL issue this time, not another false alarm: `maintenance_check`'s
+  "8 title collisions" (Ponytail, Graphify, Higgsfield, Headroom, each x2) turned out to be genuine
+  — `git log` + record inspection showed 3 of the 4 pairs are the SAME real tool mined independently
+  by two pipelines (`bulk_analyze` vs `mine_feeds`/`gemini-video`) that only dedupe by name against
+  their OWN in-memory snapshot of the store, not against each other's concurrent writes — a real
+  ingestion race, not a cosmetic label problem. Verified by reading full records, not just names:
+  Ponytail (both `github: DietrichGebert/ponytail`) and Graphify (both the same Claude-Code
+  codebase-knowledge-graph plugin, one record carrying `github`/`deploy_url`/`setup` the other
+  lacked) and Higgsfield (a quality-1 vague web-news mention of the same Higgsfield.ai platform) are
+  true duplicates. The 4th pair, Headroom, is NOT a duplicate — different GitHub orgs
+  (`headroomlabs-ai/headroom` vs `chopratejas/headroom`), different homepages/descriptions: two
+  distinct real tools that happen to share a generic name. Fixed accordingly rather than
+  one-size-fits-all: the 3 true dupes get a new `duplicate_of: <canonical slug>` field on the weaker
+  record (kept in `tools.json`, NOT deleted — `elements_related.json`/`brain_graph.json` and others
+  key off `tool:<slug>`, and auditing every consumer of a removed slug was out of scope for one
+  fire) plus its unique videos/links folded into the survivor (Ponytail's canonical record gained
+  `github`/`deploy_url` it was missing entirely, making it actually activatable for the first time);
+  Headroom instead got a disambiguating `name` ("Headroom (Claude Code plugin)" /
+  "Headroom (MCP/Python library)") since merging would have wrongly conflated two different
+  codebases. Wired the fix so it's not just data patched once: `maintenance_check.py`'s collision
+  detector now skips `duplicate_of` records (so this can't get re-flagged as unhandled every fire
+  the way the 187-item empty-body issue nearly did), and `build_graph.py`/`build_brain.py` now skip
+  them too, so the redundant weaker node/note stops rendering in the in-app brain graph AND the
+  Obsidian vault, not just in the maintenance report. Manually resolved the matching stale
+  `improvement_tasks.json` entry (status -> done, with a `resolution` explaining the real fix, not
+  deleted). **Verified, not asserted:** `maintenance_check` before/after — health score 50 -> 56,
+  the "Title collisions" issue type dropped from 8 to 0 and disappeared from the report entirely;
+  `python -m src.build_graph` re-ran clean (1973 nodes, 2525 links, no errors); `python3 -c
+  "json.load(...)"` on the touched `tools.json`/`improvement_tasks.json`; `python -m
+  src.excava_core_test` 71/71 (unrelated, unaffected, still green — sanity check only); `python -m
+  src.guardrails` 18/20, 0 critical, same two pre-existing non-critical misses as fires 116/117
+  (G-C stale history bundle, G-O local-PC drain 186h stale — both unrelated, not touched, not
+  re-litigated). **Harsh self-criticism:** I deliberately did NOT delete or rename any `slug`,
+  which means the fix is a mitigation (stop showing/flagging the dupe) rather than a full cleanup
+  (one canonical record per real tool) — a future fire with time to actually audit every
+  `tool:<slug>` consumer across the ~15 files that reference slugs could go further and collapse
+  these to one record each. I also did not investigate the ROOT CAUSE (the two ingestion
+  pipelines' independent, non-overlapping dedup windows) — that's still open and will keep
+  producing new near-duplicates until it's fixed at the source, not just healed after the fact;
+  flagging as the natural next-fire target alongside the other remaining HIGH-severity issue this
+  fire did NOT touch (`maintenance_check`'s "2 pipeline lanes overdue — Transcript retrieval,
+  Self-improvement review", left alone on purpose to keep this fire's scope to one verified
+  increment, not two half-checked ones). I'm also not fully certain Headroom is genuinely two
+  projects rather than one renamed/forked one — that call was made from the JSON fields alone
+  (different org, different homepage), not from reading either actual repo, since this session's
+  GitHub access is scoped to this one repo only.
+
 ## 2026-08-02 (cont'd)
 - **~21:0x (fire 117, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
   guardrails, 0 critical; local `origin/main` cache was stale + upstream tracking missing, both

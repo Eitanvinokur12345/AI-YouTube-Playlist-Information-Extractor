@@ -110,6 +110,8 @@ def main() -> None:
     for s in skills:
         by_cat[str(s.get("category") or "other").lower()].append(("skill", s))
     for t in tools:
+        if t.get("duplicate_of"):        # same real tool already folded into another record
+            continue
         by_cat[str(t.get("category") or "other").lower()].append(("tool", t))
 
     for cat, items in by_cat.items():

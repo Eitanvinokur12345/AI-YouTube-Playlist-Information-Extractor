@@ -61,8 +61,10 @@
       "kind": "maintenance",
       "question": "[maintenance/brain] Title collisions: distinct items share one note name and overwrite each other (10)",
       "fix": "De-duplicate or suffix colliding titles so each item is its own note.",
-      "status": "open",
-      "created_at": "2026-07-31T23:56:00.194457+00:00"
+      "status": "done",
+      "created_at": "2026-07-31T23:56:00.194457+00:00",
+      "resolved_at": "2026-08-03T00:15:00.000000+00:00",
+      "resolution": "Real collision, not a false alarm (unlike the empty-body task): 3 of the 4 flagged name-pairs (Ponytail, Graphify, Higgsfield) were the SAME real tool mined twice by two independent pipelines (bulk_analyze vs mine_feeds/gemini-video) that only dedupe within their own call, not against each others writes -- a real ingestion race, now flagged separately for a future fire to harden. Fixed the 3 true dupes by marking the weaker record duplicate_of the richer one (kept, not deleted -- several data files key off tool:<slug> and a full consumer audit was out of scope this fire) and folding its unique videos/links into the survivor. The 4th pair (Headroom) turned out to be TWO DIFFERENT tools from different GitHub orgs (headroomlabs-ai vs chopratejas) that just share a generic name -- disambiguated the display name instead of merging so nothing gets wrongly conflated. maintenance_check/build_graph/build_brain now skip duplicate_of records so this specific collision cannot recur; verified health score 50->56, 0 title-collisions in the fresh report, brain_graph.json regenerated clean."
     },
     {
       "maint_key": "pipeline:Pipeline lanes overdue — retrieval/analy",

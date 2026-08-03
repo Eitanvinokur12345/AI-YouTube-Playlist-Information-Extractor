@@ -98,9 +98,12 @@ def main() -> int:
             "real graph nodes instead of staying invisible.", stub)
 
     # 2) Title collisions: many items map to the SAME Obsidian note filename -> they overwrite each
-    #    other and the hub links all point at one node (a giant white star).
+    #    other and the hub links all point at one node (a giant white star). Items already marked
+    #    `duplicate_of` (fire 118: same real tool mined twice, folded together, kept for slug
+    #    stability) are a KNOWN, handled collision, not a fresh one -- don't keep re-flagging them.
     def collisions(items, nk):
-        c = Counter(_title(x.get(nk) or x.get("slug") or "") for x in items)
+        live = [x for x in items if not x.get("duplicate_of")]
+        c = Counter(_title(x.get(nk) or x.get("slug") or "") for x in live)
         return {k: n for k, n in c.items() if n > 1 and k}
     col = {}
     for items, nk in [(skills, "skill_name"), (tools, "name"), (conns, "name"), (prompts, "title")]:

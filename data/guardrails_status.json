@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-08-03T00:05:06.994649+00:00",
+ "generated_at": "2026-08-03T01:25:28.157131+00:00",
  "total": 20,
- "passing": 18,
+ "passing": 17,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -21,9 +21,9 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": false,
-   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
-   "severity": "warn"
+   "ok": true,
+   "detail": "n/a in CI — the beat pushes straight to origin each cycle, bypassing git_safe/local bundles by design.",
+   "severity": "info"
   },
   {
    "id": "G-D",
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "12168 memory episodes on record.",
+   "detail": "12191 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "2 guardrail runs logged (append-only, never rewritten).",
+   "detail": "0 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -92,42 +92,42 @@
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "171 tasks done, 11 departments moving",
+   "detail": "180 tasks done, 11 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "30382 MB free on the repo drive.",
+   "detail": "88627 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 186.1h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 187.4h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
-   "ok": true,
-   "detail": "shallow clone — not enough local history to find an 'excava-beat #N' commit either way; not a stall signal, just a checkout-depth limit.",
-   "severity": "info"
+   "ok": false,
+   "detail": "last 'excava-beat #N' commit 21.3h ago — STALE: the dedicated heartbeat loop isn't landing per-cycle commits (check for a wedged/queued excava_beat.yml run).",
+   "severity": "warn"
   },
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "last 'core-spoton:' commit 1.0h ago.",
+   "detail": "last 'core-spoton:' commit 1.3h ago.",
    "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
-   "ok": true,
-   "detail": "6/16 lane(s) landing on cadence, 10 can't-tell (shallow clone).",
+   "ok": false,
+   "detail": "13/16 lane(s) landing on cadence — STALE: discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 1027.3h ago (expected within 76h); improve.yml (weekly deep pass): last commit 1377.1h ago (expected within 192h); transcribe.yml (daily): last commit 43.1h ago (expected within 30h)",
    "severity": "warn"
   },
   {

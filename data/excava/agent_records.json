@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-03T18:00:37.644805+00:00",
+ "generated_at": "2026-08-03T18:06:46.337778+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,8 +8,8 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 390,
-   "rooms_7d": 235,
+   "turns_7d": 391,
+   "rooms_7d": 236,
    "engines_used": [
     "gh-models",
     "groq",
@@ -17,7 +17,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I’ll fetch the full YouTube transcript for the pending video using the mcp-server-youtube-transcript tool. This will pro"
+   "last_position": "Improve cross-department feedback loops by creating a shared \"Decision Log\" artifact where every team records their key "
   },
   {
    "id": "analysis-w1",
@@ -71,8 +71,8 @@
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 291,
-   "rooms_7d": 234,
+   "turns_7d": 292,
+   "rooms_7d": 235,
    "engines_used": [
     "gh-models",
     "groq",
@@ -80,7 +80,22 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
+   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded memory fragments. This will produc"
+  },
+  {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 273,
+   "rooms_7d": 233,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I will run the link-checker tool on the Mission Control Dashboard's live links. This will produce a report of all broken"
   },
   {
    "id": "links-lead-x",
@@ -98,42 +113,27 @@
    "last_position": "ACTION: Anchor publishes the verified, updated link inventory for the Mission Control Dashboard, confirming all links ar"
   },
   {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 272,
-   "rooms_7d": 232,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will run the link-checker tool on the Mission Control Dashboard's live links to identify any broken or outdated URLs. "
-  },
-  {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
    "role": "lead",
-   "turns_7d": 264,
-   "rooms_7d": 223,
+   "turns_7d": 265,
+   "rooms_7d": 224,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key decisions from OpenAI’s latest blog: (1"
+   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key AI decisions from OpenAI’s latest blog:"
   },
   {
    "id": "transcripts-checker",
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 263,
-   "rooms_7d": 33,
+   "turns_7d": 264,
+   "rooms_7d": 34,
    "engines_used": [
     "gh-models",
     "groq",
@@ -141,7 +141,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: Reel’s action is valid MISSION work—fetching real transcripts is the tool’s core function."
+   "last_position": "Risk: A \"Decision Log\" risks becoming a graveyard of stale entries unless Product ties it to a live artifact used in spr"
   },
   {
    "id": "visualization-w1",
@@ -250,6 +250,20 @@
    "last_position": "RealVisXL locks us into Anthropic’s pipeline—if they change their model or pricing, we’re stuck. Test InstantX-ComfyUI’s"
   },
   {
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
+   "turns_7d": 238,
+   "rooms_7d": 204,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output: real-time report confirming operational s"
+  },
+  {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
@@ -263,20 +277,6 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Sweep Product Hunt’s \"AI\" posts from the last 7 days using their API. This will produce a raw list of post title"
-  },
-  {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 237,
-   "rooms_7d": 204,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and healthy."
   },
   {
    "id": "security-w1",
@@ -329,8 +329,8 @@
    "name": "Iris",
    "dept": "watch",
    "role": "lead",
-   "turns_7d": 228,
-   "rooms_7d": 205,
+   "turns_7d": 229,
+   "rooms_7d": 206,
    "engines_used": [
     "gh-models",
     "groq",
@@ -338,7 +338,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Run Arcads AI Video skill on the *AI marketing* video [link] to generate a prioritized list of AI marketing cont"
+   "last_position": "ACTION: Run Arcads AI Video skill on the *AI marketing* video [link] to generate a 24-hour problem-discovery sprint repo"
   },
   {
    "id": "analysis-lead",
@@ -405,15 +405,15 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 201,
-   "rooms_7d": 174,
+   "turns_7d": 202,
+   "rooms_7d": 175,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Product runs a 24-hour sprint interviewing 8 diverse users, Science pre-defines behavioral segments (e.g., shi",
+   "last_position": "ACTION: Reel fetches the full YouTube transcript for *The Science of Sleep Optimization* using the mcp-server-youtube-tr",
    "proposed": 2
   },
   {
@@ -452,8 +452,8 @@
    "name": "Ratchet",
    "dept": "improve",
    "role": "lead",
-   "turns_7d": 114,
-   "rooms_7d": 103,
+   "turns_7d": 115,
+   "rooms_7d": 104,
    "engines_used": [
     "gh-models",
     "groq",
@@ -461,7 +461,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Run PR-Agent in shadow mode on the newest open PR with a known issue first, then expand to the oldest merged P",
+   "last_position": "DECISION: Run PR-Agent in parallel on the oldest merged PR and the newest open PR to validate routing stability and fres",
    "proposed": 5,
    "shipped": 3
   },
@@ -532,6 +532,20 @@
    "last_position": "ACTION: Root queries the Hindsight MCP server for all unembedded elements to embed in the brain graph."
   },
   {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 31,
+   "rooms_7d": 31,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action audits existing links, which is mission work our tool can do."
+  },
+  {
    "id": "security-checker",
    "name": "Audit",
    "dept": "security",
@@ -543,20 +557,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and status."
-  },
-  {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
-   "role": "checker",
-   "turns_7d": 30,
-   "rooms_7d": 30,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action audits existing links, which is mission work our tool can do."
   },
   {
    "id": "watch-checker",

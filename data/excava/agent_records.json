@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-03T18:39:20.518361+00:00",
+ "generated_at": "2026-08-03T18:45:37.032295+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 395,
+   "turns_7d": 396,
    "rooms_7d": 239,
    "engines_used": [
     "gh-models",
@@ -17,7 +17,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will fetch the full YouTube transcript for the pending video using the mcp-server-youtube-transcript tool. This will p"
+   "last_position": "Adopt the merged \"Decision Tracker\" artifact. Product owns it and enforces the rule that no sprint card moves without a "
   },
   {
    "id": "analysis-w1",
@@ -52,6 +52,22 @@
    "last_position": "Adopt the merged \"Decision Tracker\" artifact: one live document where every sprint card is a log entry with a \"Status\" f"
   },
   {
+   "id": "memory-w1",
+   "name": "Graft",
+   "dept": "memory",
+   "role": "doer",
+   "turns_7d": 298,
+   "rooms_7d": 241,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded memory elements. This will produce"
+  },
+  {
    "id": "news-w1",
    "name": "Scoop",
    "dept": "news",
@@ -67,20 +83,19 @@
    "last_position": "I’ll fetch the latest AI-news digest from OpenAI’s official blog and compile a concise, plain-language summary highlight"
   },
   {
-   "id": "memory-w1",
-   "name": "Graft",
-   "dept": "memory",
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
    "role": "doer",
-   "turns_7d": 297,
-   "rooms_7d": 240,
+   "turns_7d": 276,
+   "rooms_7d": 235,
    "engines_used": [
     "gh-models",
     "groq",
-    "mistral",
-    "sambanova"
+    "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
+   "last_position": "I’ll run the link-checker tool on the Mission Control Dashboard’s live links to identify broken or outdated URLs. The ou"
   },
   {
    "id": "links-lead-x",
@@ -98,26 +113,11 @@
    "last_position": "ACTION: Anchor publishes the verified, updated link inventory for the Mission Control Dashboard."
   },
   {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 275,
-   "rooms_7d": 235,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will run the link-checker tool on the Mission Control Dashboard’s live links. This will produce a report listing all b"
-  },
-  {
    "id": "transcripts-checker",
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 270,
+   "turns_7d": 271,
    "rooms_7d": 37,
    "engines_used": [
     "gh-models",
@@ -126,22 +126,22 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The merged \"Decision Tracker\" risks collapsing under sprint pressure—Product will burn time policing status updates inst"
+   "last_position": "Reel’s \"merged Decision Tracker\" still risks Product drowning in policing work—teams will game the system by slapping st"
   },
   {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
    "role": "lead",
-   "turns_7d": 267,
-   "rooms_7d": 226,
+   "turns_7d": 268,
+   "rooms_7d": 227,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key developments, including OpenAI's ChatGP"
+   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key decisions from OpenAI’s latest blog: (1"
   },
   {
    "id": "improve-w1",
@@ -235,6 +235,20 @@
    "last_position": "Action: Forge drafts the \"UGC Factory\" skill package for the Skill Creator, producing a labeled npm package ready for th"
   },
   {
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
+   "turns_7d": 241,
+   "rooms_7d": 207,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and healthy."
+  },
+  {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
@@ -248,20 +262,6 @@
    ],
    "positions_held": 30,
    "last_position": "RealVisXL locks us into Anthropic’s pipeline—if they change their model or pricing, we’re stuck. Test InstantX-ComfyUI’s"
-  },
-  {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 240,
-   "rooms_7d": 206,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output: container status report."
   },
   {
    "id": "security-w1",
@@ -329,8 +329,8 @@
    "name": "Iris",
    "dept": "watch",
    "role": "lead",
-   "turns_7d": 231,
-   "rooms_7d": 208,
+   "turns_7d": 232,
+   "rooms_7d": 209,
    "engines_used": [
     "gh-models",
     "groq",
@@ -338,7 +338,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Run Arcads AI Video skill on the raw unedited *AI marketing* video [link] to generate a Decision Log entry with "
+   "last_position": "ACTION: Run Arcads AI Video skill on the raw unedited *AI marketing* video to generate a structured decision log of non-"
   },
   {
    "id": "analysis-lead",
@@ -405,8 +405,8 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 204,
-   "rooms_7d": 177,
+   "turns_7d": 205,
+   "rooms_7d": 178,
    "engines_used": [
     "gh-models",
     "groq",
@@ -452,8 +452,8 @@
    "name": "Ratchet",
    "dept": "improve",
    "role": "lead",
-   "turns_7d": 116,
-   "rooms_7d": 105,
+   "turns_7d": 117,
+   "rooms_7d": 106,
    "engines_used": [
     "gh-models",
     "groq",
@@ -461,7 +461,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Run PR-Agent in shadow mode on the oldest merged PR first to catch routing/prompt drift, then expand to newest",
+   "last_position": "DECISION: Run PR-Agent in shadow mode on the newest open PR first, then the oldest merged PR if outputs look clean—this ",
    "proposed": 5,
    "shipped": 3
   },
@@ -532,6 +532,20 @@
    "last_position": "ACTION: Root queries the Hindsight MCP server for all unembedded elements to embed in the brain graph."
   },
   {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 34,
+   "rooms_7d": 34,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action audits existing links, which is mission work our tool can do."
+  },
+  {
    "id": "security-checker",
    "name": "Audit",
    "dept": "security",
@@ -543,20 +557,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s existence and health."
-  },
-  {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
-   "role": "checker",
-   "turns_7d": 33,
-   "rooms_7d": 33,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action audits existing links, which is mission work our tool can do."
   },
   {
    "id": "watch-checker",

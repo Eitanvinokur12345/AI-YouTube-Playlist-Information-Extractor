@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-03T05:57:04.693364+00:00",
+ "generated_at": "2026-08-03T06:05:15.654192+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 381,
+   "turns_7d": 382,
    "rooms_7d": 231,
    "engines_used": [
     "gh-models",
@@ -40,8 +40,8 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 339,
-   "rooms_7d": 222,
+   "turns_7d": 340,
+   "rooms_7d": 223,
    "engines_used": [
     "gh-models",
     "groq",
@@ -49,30 +49,30 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Assign **Science** to draft the one-page *Science of Sleep Optimization* playbook, with **Creative** distilling it into "
+   "last_position": "Run the Arcads AI Video skill on the *Science of Sleep Optimization* video to extract key insights beyond the transcript"
   },
   {
    "id": "news-w1",
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 288,
-   "rooms_7d": 233,
+   "turns_7d": 289,
+   "rooms_7d": 234,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll fetch the latest AI-news digest from OpenAI’s official blog and compile a concise summary highlighting key decision"
+   "last_position": "I’ll fetch the latest AI-news digest from OpenAI’s official blog and compile a concise, plain-language summary highlight"
   },
   {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 279,
-   "rooms_7d": 224,
+   "turns_7d": 280,
+   "rooms_7d": 225,
    "engines_used": [
     "gh-models",
     "groq",
@@ -81,6 +81,21 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
+  },
+  {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 266,
+   "rooms_7d": 227,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I will run the link-checker tool on the Mission Control Dashboard's live links to identify any broken or outdated links "
   },
   {
    "id": "links-lead-x",
@@ -96,21 +111,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Anchor publishes the verified, updated link inventory for the Mission Control Dashboard, including all broken/re"
-  },
-  {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 265,
-   "rooms_7d": 226,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will run the link-checker tool on the Mission Control Dashboard's live links. This will produce a report of all broken"
   },
   {
    "id": "news-lead",
@@ -162,7 +162,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 250,
+   "turns_7d": 251,
    "rooms_7d": 28,
    "engines_used": [
     "gh-models",
@@ -171,14 +171,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Science owns the draft, Creative distills it, but Product’s stress-test is too late—it lets biases bake in. Instead, Pro"
+   "last_position": "Product owning the playbook risks the AI assistant inheriting Product’s biases—not Science’s rigor. Assign **Science** t"
   },
   {
    "id": "improve-w1",
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 244,
+   "turns_7d": 245,
    "rooms_7d": 110,
    "engines_used": [
     "gh-models",
@@ -298,8 +298,8 @@
    "name": "Warden",
    "dept": "security",
    "role": "doer",
-   "turns_7d": 230,
-   "rooms_7d": 200,
+   "turns_7d": 231,
+   "rooms_7d": 201,
    "engines_used": [
     "gh-models",
     "groq",
@@ -435,16 +435,34 @@
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 120,
-   "rooms_7d": 110,
+   "turns_7d": 121,
+   "rooms_7d": 111,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Use a single hybrid view—static intensity map with *faded-in new data*—to show change without flicker or hidde",
+   "last_position": "DECISION: Use a *static intensity map with a faint delta overlay* as the primary view, paired with a toggle to switch to",
    "proposed": 2
+  },
+  {
+   "id": "power-lead",
+   "name": "Dynamo",
+   "dept": "power",
+   "role": "lead",
+   "turns_7d": 112,
+   "rooms_7d": 103,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Test Depth Anything V2’s face-aware upscaler in EXCAVA’s pipeline first—it’s open, local, and avoids Anthropic",
+   "proposed": 12,
+   "shipped": 10
   },
   {
    "id": "accessibility-lead",
@@ -461,24 +479,6 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Adopt a 3px solid #005fcc ring with a 1px white inner ring for focus indicators—test on high-contrast patterns",
-   "proposed": 11,
-   "shipped": 10
-  },
-  {
-   "id": "power-lead",
-   "name": "Dynamo",
-   "dept": "power",
-   "role": "lead",
-   "turns_7d": 111,
-   "rooms_7d": 102,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Add GFPGAN 2.0 as the face enhancer in EXCAVA’s pipeline—run a 10-second clip with faces in motion, compare sh",
    "proposed": 11,
    "shipped": 10
   },
@@ -535,26 +535,26 @@
    "name": "Audit",
    "dept": "security",
    "role": "checker",
-   "turns_7d": 23,
-   "rooms_7d": 23,
+   "turns_7d": 24,
+   "rooms_7d": 24,
    "engines_used": [
     "mistral"
    ],
-   "positions_held": 23,
-   "last_position": "Verdict: The action is mission work—ToolHive can directly verify the LLM Guard container’s health and operational state."
+   "positions_held": 24,
+   "last_position": "Verdict: The action is mission work—ToolHive can directly verify the LLM Guard container’s existence and health."
   },
   {
    "id": "links-checker",
    "name": "Tether",
    "dept": "links",
    "role": "checker",
-   "turns_7d": 23,
-   "rooms_7d": 23,
+   "turns_7d": 24,
+   "rooms_7d": 24,
    "engines_used": [
     "groq",
     "mistral"
    ],
-   "positions_held": 24,
+   "positions_held": 25,
    "last_position": "Verdict: The action audits existing links, which is mission work our tool can do."
   },
   {
@@ -562,25 +562,25 @@
    "name": "Frame",
    "dept": "watch",
    "role": "checker",
-   "turns_7d": 21,
-   "rooms_7d": 21,
+   "turns_7d": 22,
+   "rooms_7d": 22,
    "engines_used": [
     "mistral"
    ],
-   "positions_held": 23,
-   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts marketing insights from the *Scien"
+   "positions_held": 24,
+   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts insights for the *Science of Sleep"
   },
   {
    "id": "news-checker",
    "name": "Factcheck",
    "dept": "news",
    "role": "checker",
-   "turns_7d": 21,
-   "rooms_7d": 21,
+   "turns_7d": 22,
+   "rooms_7d": 22,
    "engines_used": [
     "mistral"
    ],
-   "positions_held": 21,
+   "positions_held": 22,
    "last_position": "Verdict: The action is valid MISSION work."
   },
   {
@@ -588,13 +588,13 @@
    "name": "Overhaul",
    "dept": "improve",
    "role": "improver",
-   "turns_7d": 15,
-   "rooms_7d": 15,
+   "turns_7d": 16,
+   "rooms_7d": 16,
    "engines_used": [
     "mistral"
    ],
-   "positions_held": 15,
-   "last_position": "Run PR-Agent in dry-run mode on a *merged* PR with known issues to measure real catch-rate without risking new noise. Th"
+   "positions_held": 16,
+   "last_position": "Run PR-Agent on a *merged* PR with known issues to measure real catch-rate without risking new failures. This costs one "
   },
   {
    "id": "memory-checker",

@@ -287,12 +287,12 @@
    "dept": "",
    "done_criteria": "the lead states the decision and the artifact exists",
    "max_turns": 60,
-   "turns": 48,
+   "turns": 50,
    "status": "open",
    "artifact_kind": "bus-task",
    "artifact": null,
    "created_at": "2026-07-31T23:44:56.666809+00:00",
-   "last_turn_ms": 1179
+   "last_turn_ms": 1379
   },
   {
    "id": "dept-analysis-deep-analyze-every-684",
@@ -3757,12 +3757,18 @@
    "dept": "power",
    "done_criteria": "the lead states the decision and the artifact exists",
    "max_turns": 6,
-   "turns": 4,
-   "status": "open",
+   "turns": 5,
+   "status": "done",
    "artifact_kind": "bus-task",
-   "artifact": null,
+   "artifact": {
+    "kind": "decision",
+    "ref": "data/excava/artifacts/dept-power-raise-excava-s-capabil-749.md",
+    "at": "2026-08-03T02:09:14.435927+00:00",
+    "title": "power: Raise EXCAVA's capability by even 0.5%: find new tools, best/newest model",
+    "by": "Dynamo"
+   },
    "created_at": "2026-08-03T01:56:26.459923+00:00",
-   "last_turn_ms": 1463
+   "last_turn_ms": 838
   },
   {
    "id": "dept-security-paranoid-guard-scan-267",
@@ -3811,12 +3817,18 @@
    "dept": "news",
    "done_criteria": "the lead states the decision and the artifact exists",
    "max_turns": 3,
-   "turns": 2,
-   "status": "open",
+   "turns": 3,
+   "status": "done",
    "artifact_kind": "bus-task",
-   "artifact": null,
+   "artifact": {
+    "kind": "decision",
+    "ref": "data/excava/artifacts/dept-news-freshness-refresh-the-a-237.md",
+    "at": "2026-08-03T02:09:20.070137+00:00",
+    "title": "news: Freshness: refresh the AI-news digest from the newest official/company/nat",
+    "by": "Wire"
+   },
    "created_at": "2026-08-03T02:02:49.085602+00:00",
-   "last_turn_ms": 552
+   "last_turn_ms": 2766
   },
   {
    "id": "dept-visualization-own-excava-s-o-446",
@@ -3825,12 +3837,12 @@
    "dept": "visualization",
    "done_criteria": "the lead states the decision and the artifact exists",
    "max_turns": 6,
-   "turns": 2,
+   "turns": 4,
    "status": "open",
    "artifact_kind": "bus-task",
    "artifact": null,
    "created_at": "2026-08-03T02:02:49.089518+00:00",
-   "last_turn_ms": 1125
+   "last_turn_ms": 1463
   },
   {
    "id": "dept-watch-analyze-video-audio-vi-956",
@@ -3839,12 +3851,108 @@
    "dept": "watch",
    "done_criteria": "the lead states the decision and the artifact exists",
    "max_turns": 3,
+   "turns": 3,
+   "status": "done",
+   "artifact_kind": "bus-task",
+   "artifact": {
+    "kind": "decision",
+    "ref": "data/excava/artifacts/dept-watch-analyze-video-audio-vi-956.md",
+    "at": "2026-08-03T02:09:31.431900+00:00",
+    "title": "watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.",
+    "by": "Iris"
+   },
+   "created_at": "2026-08-03T02:02:49.093479+00:00",
+   "last_turn_ms": 764
+  },
+  {
+   "id": "dept-accessibility-make-excava-us-936",
+   "kind": "dept",
+   "goal": "accessibility: Make EXCAVA usable by EVERYONE — contrast, mobile/touch, reduced-motion, keyboard nav, scr",
+   "dept": "accessibility",
+   "done_criteria": "the lead states the decision and the artifact exists",
+   "max_turns": 6,
    "turns": 2,
    "status": "open",
    "artifact_kind": "bus-task",
    "artifact": null,
-   "created_at": "2026-08-03T02:02:49.093479+00:00",
-   "last_turn_ms": 733
+   "created_at": "2026-08-03T02:09:09.040834+00:00",
+   "last_turn_ms": 1245
+  },
+  {
+   "id": "dept-analysis-deep-analyze-every-837",
+   "kind": "dept",
+   "goal": "analysis: Deep-analyze every element from its FULL source (whole transcript/repo) + enrich from >=1 ",
+   "dept": "analysis",
+   "done_criteria": "the lead states the decision and the artifact exists",
+   "max_turns": 3,
+   "turns": 2,
+   "status": "open",
+   "artifact_kind": "bus-task",
+   "artifact": null,
+   "created_at": "2026-08-03T02:09:09.044979+00:00",
+   "last_turn_ms": 803
+  },
+  {
+   "id": "dept-improve-self-improvement-rev-977",
+   "kind": "dept",
+   "goal": "improve: Self-improvement: review prompts/engines/routing/own-code; auto-apply safe changes; pitch ",
+   "dept": "improve",
+   "done_criteria": "the lead states the decision and the artifact exists",
+   "max_turns": 6,
+   "turns": 2,
+   "status": "open",
+   "artifact_kind": "bus-task",
+   "artifact": null,
+   "created_at": "2026-08-03T02:09:09.049059+00:00",
+   "last_turn_ms": 1097
+  },
+  {
+   "id": "dept-links-advance-the-links-depa-763",
+   "kind": "dept",
+   "goal": "links: advance the links department's mission",
+   "dept": "links",
+   "done_criteria": "the lead states the decision and the artifact exists",
+   "max_turns": 3,
+   "turns": 2,
+   "status": "open",
+   "artifact_kind": "bus-task",
+   "artifact": null,
+   "created_at": "2026-08-03T02:09:09.053130+00:00",
+   "last_turn_ms": 903
+  },
+  {
+   "id": "dept-memory-recall-by-meaning-rel-917",
+   "kind": "dept",
+   "goal": "memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.",
+   "dept": "memory",
+   "done_criteria": "the lead states the decision and the artifact exists",
+   "max_turns": 3,
+   "turns": 1,
+   "status": "done",
+   "artifact_kind": "bus-task",
+   "artifact": {
+    "kind": "decision",
+    "ref": "data/excava/artifacts/dept-memory-recall-by-meaning-rel-917.md",
+    "at": "2026-08-03T02:10:01.120388+00:00",
+    "title": "memory: Recall by meaning, relate elements, build the brain graph, embed unembed",
+    "by": "Root"
+   },
+   "created_at": "2026-08-03T02:09:09.057199+00:00",
+   "last_turn_ms": 658
+  },
+  {
+   "id": "dept-security-paranoid-guard-scan-728",
+   "kind": "dept",
+   "goal": "security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (not fake/dead); DETECT",
+   "dept": "security",
+   "done_criteria": "the lead states the decision and the artifact exists",
+   "max_turns": 3,
+   "turns": 2,
+   "status": "open",
+   "artifact_kind": "bus-task",
+   "artifact": null,
+   "created_at": "2026-08-03T02:09:09.061250+00:00",
+   "last_turn_ms": 520
   }
  ]
 }

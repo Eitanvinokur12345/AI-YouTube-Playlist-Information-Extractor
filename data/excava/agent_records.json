@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-03T21:44:12.032679+00:00",
+ "generated_at": "2026-08-03T22:49:31.542461+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -24,7 +24,7 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 377,
+   "turns_7d": 378,
    "rooms_7d": 224,
    "engines_used": [
     "gh-models",
@@ -33,15 +33,15 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the split artifact: keep the Board for sprint flow, and a one-page dated \"Decision Ledger\" owned by Product. Produ"
+   "last_position": "Assign a neutral Decisions Lead—no Product, no teams—to own the Decision Ledger and enforce the \"no entry without a real"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 365,
-   "rooms_7d": 238,
+   "turns_7d": 366,
+   "rooms_7d": 239,
    "engines_used": [
     "gh-models",
     "groq",
@@ -49,7 +49,7 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the split artifact: Board for sprint flow, one-page dated \"Decision Ledger\" for finalized outcomes only. Product o"
+   "last_position": "I’ll run the 24-hour problem-discovery sprint on the pending transcript using Arcads AI Video. This will produce a dated"
   },
   {
    "id": "memory-w1",
@@ -72,15 +72,30 @@
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 304,
-   "rooms_7d": 247,
+   "turns_7d": 305,
+   "rooms_7d": 248,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh AI-news digest e"
+   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh digest entry wit"
+  },
+  {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 283,
+   "rooms_7d": 238,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for the Mission Control Dashboard."
   },
   {
    "id": "links-w1",
@@ -96,21 +111,6 @@
    ],
    "positions_held": 30,
    "last_position": "I’ll run the link-checker tool on the Mission Control Dashboard’s live links to identify any broken or outdated URLs. Th"
-  },
-  {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
-   "role": "lead",
-   "turns_7d": 282,
-   "rooms_7d": 237,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for the Mission Control Dashboard, resolving broken/outdat"
   },
   {
    "id": "transcripts-checker",
@@ -148,15 +148,15 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 265,
-   "rooms_7d": 120,
+   "turns_7d": 266,
+   "rooms_7d": 121,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on the oldest merged PR first. It validates routing and prompts against real but stale chang"
+   "last_position": "Run PR-Agent in shadow mode on the oldest merged PR first. It validates routing and catches edge cases before newer PRs,"
   },
   {
    "id": "visualization-w1",
@@ -207,7 +207,7 @@
    "name": "Warden",
    "dept": "security",
    "role": "doer",
-   "turns_7d": 246,
+   "turns_7d": 247,
    "rooms_7d": 212,
    "engines_used": [
     "gh-models",
@@ -216,7 +216,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will instruct ToolHive to verify the LLM Guard container is running and healthy. This will produce a real-time status "
+   "last_position": "I will instruct ToolHive to verify the LLM Guard container is running and healthy. This will produce a status report con"
   },
   {
    "id": "power-w1",
@@ -296,6 +296,21 @@
    "last_position": "ACTION: At 10:45:00, the lead runs Arcads AI Video skill on the raw unedited video to extract non-transcript insights fr"
   },
   {
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
+   "role": "checker",
+   "turns_7d": 238,
+   "rooms_7d": 121,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Shadow mode on the oldest merged PR risks validating a stale routing path that may no longer reflect current logic—edge "
+  },
+  {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
@@ -309,21 +324,6 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Sweep Product Hunt’s \"AI\" posts from the last 7 days using their API. This will produce a raw list of post title"
-  },
-  {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 237,
-   "rooms_7d": 120,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Shadow mode risks exposing *new* edge cases that could destabilize the PR’s core logic before the author can address the"
   },
   {
    "id": "accessibility-checker",
@@ -371,6 +371,21 @@
    "last_position": "ACTION: Forge drafts the \"Auto-Summarize\" UGC package for Skill Creator, labels it \"Created by EXCAVA,\" and includes a R"
   },
   {
+   "id": "visual-w1",
+   "name": "Easel",
+   "dept": "visual",
+   "role": "doer",
+   "turns_7d": 218,
+   "rooms_7d": 185,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I open Playwright MCP and capture a high-quality full-page screenshot of the top design portfolio site from Awwwards. Th"
+  },
+  {
    "id": "visual-lead",
    "name": "Chroma",
    "dept": "visual",
@@ -384,21 +399,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Easel captures a high-quality full-page screenshot of the Model Context Protocol (MCP) server page, framed as a "
-  },
-  {
-   "id": "visual-w1",
-   "name": "Easel",
-   "dept": "visual",
-   "role": "doer",
-   "turns_7d": 217,
-   "rooms_7d": 184,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I open Playwright MCP and capture a high-quality full-page screenshot of the Mod | I open Playwright MCP and capture a h"
   },
   {
    "id": "transcripts-lead",
@@ -421,7 +421,7 @@
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 154,
+   "turns_7d": 155,
    "rooms_7d": 39,
    "engines_used": [
     "gh-models",
@@ -429,7 +429,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Product policing the Ledger *will* create a bottleneck—teams will dump half-baked calls into the Board just to link them"
+   "last_position": "A neutral Decisions Lead won’t stop the gaming—teams will still dump half-baked calls into the Board to force the Lead’s"
   },
   {
    "id": "visualization-lead",
@@ -532,6 +532,19 @@
    "last_position": "ACTION: Root queries the Hindsight MCP server for all unembedded elements to embed in the brain graph."
   },
   {
+   "id": "security-checker",
+   "name": "Audit",
+   "dept": "security",
+   "role": "checker",
+   "turns_7d": 40,
+   "rooms_7d": 40,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s real-time operational st"
+  },
+  {
    "id": "links-checker",
    "name": "Tether",
    "dept": "links",
@@ -546,38 +559,25 @@
    "last_position": "Verdict: The action audits existing links, which is mission work our tool can do."
   },
   {
-   "id": "security-checker",
-   "name": "Audit",
-   "dept": "security",
-   "role": "checker",
-   "turns_7d": 39,
-   "rooms_7d": 39,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health status and operat"
-  },
-  {
    "id": "watch-checker",
    "name": "Frame",
    "dept": "watch",
    "role": "checker",
-   "turns_7d": 37,
-   "rooms_7d": 37,
+   "turns_7d": 38,
+   "rooms_7d": 38,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts non-transcript insights from AUDIO"
+   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts actionable insights from video con"
   },
   {
    "id": "news-checker",
    "name": "Factcheck",
    "dept": "news",
    "role": "checker",
-   "turns_7d": 37,
-   "rooms_7d": 37,
+   "turns_7d": 38,
+   "rooms_7d": 38,
    "engines_used": [
     "mistral",
     "sambanova"
@@ -625,6 +625,19 @@
    "last_position": "Verdict: The action is MISSION work but the Reddit sweep lacks a clear extraction method for \"key claims\" — fix by speci"
   },
   {
+   "id": "visual-checker",
+   "name": "Squint",
+   "dept": "visual",
+   "role": "checker",
+   "turns_7d": 1,
+   "rooms_7d": 1,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 4,
+   "last_position": "Verdict: The action is mission work our tool can do."
+  },
+  {
    "id": "excava-core",
    "name": "EXCAVA",
    "dept": "core",
@@ -645,17 +658,6 @@
    "engines_used": [],
    "positions_held": 0,
    "last_position": ""
-  },
-  {
-   "id": "visual-checker",
-   "name": "Squint",
-   "dept": "visual",
-   "role": "checker",
-   "turns_7d": 0,
-   "rooms_7d": 0,
-   "engines_used": [],
-   "positions_held": 3,
-   "last_position": "The action of applying a muted coral accent to interactive elements and exporting a style guide is a suitable mission ta"
   },
   {
    "id": "creators-checker",

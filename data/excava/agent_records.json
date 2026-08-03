@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-03T19:29:43.823565+00:00",
+ "generated_at": "2026-08-03T19:35:46.219452+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -40,7 +40,7 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 361,
+   "turns_7d": 362,
    "rooms_7d": 236,
    "engines_used": [
     "gh-models",
@@ -49,15 +49,15 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "I’ll run the 24-hour problem-discovery sprint on the pending transcript using Arcads AI Video to extract non-transcript "
+   "last_position": "Adopt a single, dated \"Decision Log\" owned by a neutral Decisions Lead—not Product or Engineering. Every entry must be a"
   },
   {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 305,
-   "rooms_7d": 244,
+   "turns_7d": 306,
+   "rooms_7d": 245,
    "engines_used": [
     "gh-models",
     "groq",
@@ -83,6 +83,21 @@
    "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh AI-news digest e"
   },
   {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 280,
+   "rooms_7d": 237,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll run the link-checker tool on the Mission Control Dashboard’s live links to identify any broken or outdated URLs. Th"
+  },
+  {
    "id": "links-lead-x",
    "name": "LinLea",
    "dept": "links",
@@ -98,26 +113,11 @@
    "last_position": "ACTION: Anchor publishes the verified, updated link inventory for the Mission Control Dashboard, listing only active lin"
   },
   {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 279,
-   "rooms_7d": 237,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll run the link-checker tool on the Mission Control Dashboard’s live links to identify any broken or outdated URLs. Th"
-  },
-  {
    "id": "transcripts-checker",
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 275,
+   "turns_7d": 276,
    "rooms_7d": 37,
    "engines_used": [
     "gh-models",
@@ -126,14 +126,14 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The split artifact with Product owning the Ledger still risks Product becoming the bottleneck—teams will game the system"
+   "last_position": "The single \"Decision Log\" owned by a neutral lead risks creating a logjam—teams will stall waiting for \"approval\" instea"
   },
   {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
    "role": "lead",
-   "turns_7d": 271,
+   "turns_7d": 272,
    "rooms_7d": 230,
    "engines_used": [
     "gh-models",
@@ -141,14 +141,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key updates: OpenAI’s new memory architectu"
+   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key developments: OpenAI’s new memory archi"
   },
   {
    "id": "improve-w1",
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 262,
+   "turns_7d": 263,
    "rooms_7d": 119,
    "engines_used": [
     "gh-models",
@@ -156,7 +156,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on the newest *open* PR first. It catches fresh issues before they compound, giving us faste"
+   "last_position": "Run PR-Agent in shadow mode on the newest open PR only. Fresh PRs introduce the highest risk of new bugs, so catching is"
   },
   {
    "id": "visualization-w1",
@@ -189,6 +189,20 @@
    "last_position": "The radial graph’s pulses risk training users to ignore them—like a stock ticker they’ll tune out. A static intensity ma"
   },
   {
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
+   "turns_7d": 245,
+   "rooms_7d": 210,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and healthy "
+  },
+  {
    "id": "power-w1",
    "name": "Gearbox",
    "dept": "power",
@@ -202,20 +216,6 @@
    ],
    "positions_held": 30,
    "last_position": "Add RealVisXL’s face-preserving upscaler to EXCAVA’s pipeline now. Faces are EXCAVA’s weakest link—blur kills clarity, a"
-  },
-  {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 244,
-   "rooms_7d": 209,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output: real-time container health report (runnin"
   },
   {
    "id": "security-w1",
@@ -295,6 +295,22 @@
    "last_position": "Action: Sweep Product Hunt’s \"AI\" posts from the last 7 days using their API. This will produce a raw list of post title"
   },
   {
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 236,
+   "rooms_7d": 211,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: At 10:45:00, the lead runs Arcads AI Video skill on the raw unedited AI marketing video to generate a dated Deci"
+  },
+  {
    "id": "improve-checker",
    "name": "Gauge",
    "dept": "improve",
@@ -308,22 +324,6 @@
    ],
    "positions_held": 30,
    "last_position": "Shadow mode on the newest open PR risks exposing *new* edge cases that could destabilize the PR before it’s ready—creati"
-  },
-  {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 235,
-   "rooms_7d": 210,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Run Arcads AI Video skill on the raw unedited *AI marketing* video to generate a timestamped visual and audio cu"
   },
   {
    "id": "accessibility-checker",
@@ -532,6 +532,20 @@
    "last_position": "ACTION: Root queries the Hindsight MCP server for all unembedded elements to embed in the brain graph."
   },
   {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 38,
+   "rooms_7d": 38,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action audits existing links, which is mission work our tool can do."
+  },
+  {
    "id": "security-checker",
    "name": "Audit",
    "dept": "security",
@@ -543,20 +557,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and operational s"
-  },
-  {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
-   "role": "checker",
-   "turns_7d": 37,
-   "rooms_7d": 37,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action audits existing links, which is mission work our tool can do."
   },
   {
    "id": "watch-checker",
@@ -590,13 +590,13 @@
    "name": "Overhaul",
    "dept": "improve",
    "role": "improver",
-   "turns_7d": 24,
-   "rooms_7d": 24,
+   "turns_7d": 25,
+   "rooms_7d": 25,
    "engines_used": [
     "mistral"
    ],
-   "positions_held": 24,
-   "last_position": "Run PR-Agent in shadow mode on *both* the oldest merged PR *and* the newest open PR simultaneously—this splits the workl"
+   "positions_held": 25,
+   "last_position": "Run PR-Agent in shadow mode on *both* the oldest merged PR *and* the newest open PR simultaneously to catch systemic iss"
   },
   {
    "id": "memory-checker",

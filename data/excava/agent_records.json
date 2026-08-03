@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-03T12:01:03.758225+00:00",
+ "generated_at": "2026-08-03T15:29:04.169042+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,8 +8,8 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 383,
-   "rooms_7d": 231,
+   "turns_7d": 385,
+   "rooms_7d": 232,
    "engines_used": [
     "gh-models",
     "groq",
@@ -17,7 +17,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Assign **Product** to draft the *Science of Sleep Optimization* playbook first, then **Science** verifies claims and **C"
+   "last_position": "Assign **Product** to run a 48-hour user interview sprint on sleep optimization needs, then **Science** drafts the playb"
   },
   {
    "id": "analysis-w1",
@@ -40,8 +40,8 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 344,
-   "rooms_7d": 225,
+   "turns_7d": 345,
+   "rooms_7d": 226,
    "engines_used": [
     "gh-models",
     "groq",
@@ -49,7 +49,7 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Assign **Science** to draft the *Science of Sleep Optimization* playbook first, then **Product** writes the user-need se"
+   "last_position": "Run the Arcads AI Video skill on the *Science of Sleep Optimization* video to extract key insights, visual cues, and emo"
   },
   {
    "id": "news-w1",
@@ -71,8 +71,8 @@
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 285,
-   "rooms_7d": 229,
+   "turns_7d": 286,
+   "rooms_7d": 230,
    "engines_used": [
     "gh-models",
     "groq",
@@ -80,7 +80,22 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements."
+   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
+  },
+  {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 270,
+   "rooms_7d": 229,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for the Mission Control Dashboard, listing only live, high"
   },
   {
    "id": "links-w1",
@@ -98,34 +113,19 @@
    "last_position": "I will run the link-checker tool on the Mission Control Dashboard's live links. This will produce a report of broken or "
   },
   {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
-   "role": "lead",
-   "turns_7d": 269,
-   "rooms_7d": 229,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for the Mission Control Dashboard, listing only live, curr"
-  },
-  {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
    "role": "lead",
-   "turns_7d": 261,
-   "rooms_7d": 220,
+   "turns_7d": 262,
+   "rooms_7d": 221,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key decisions from OpenAI’s latest blog: Ch"
+   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key updates: OpenAI’s new memory architectu"
   },
   {
    "id": "visualization-w1",
@@ -143,6 +143,22 @@
    "last_position": "Choose the radial graph with scaled pulses as the primary view. It puts the most important data at the center where atte"
   },
   {
+   "id": "transcripts-checker",
+   "name": "Scriv",
+   "dept": "transcripts",
+   "role": "checker",
+   "turns_7d": 256,
+   "rooms_7d": 29,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "Reel’s sprint risks locking us into a narrow slice of user needs before we know if the problem is even real. Better: Pro"
+  },
+  {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
@@ -156,22 +172,6 @@
    ],
    "positions_held": 30,
    "last_position": "The radial graph’s pulses risk training users to ignore them—like a stock ticker they’ll tune out. A static intensity ma"
-  },
-  {
-   "id": "transcripts-checker",
-   "name": "Scriv",
-   "dept": "transcripts",
-   "role": "checker",
-   "turns_7d": 254,
-   "rooms_7d": 28,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "Science drafting first risks the claims drifting from actual user needs—Product’s parallel user-need section is the guar"
   },
   {
    "id": "improve-w1",
@@ -265,6 +265,20 @@
    "last_position": "Action: Sweep Product Hunt’s \"AI\" posts from the last 7 days using their API. This will produce a raw list of post title"
   },
   {
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
+   "turns_7d": 235,
+   "rooms_7d": 203,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and healthy."
+  },
+  {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
@@ -278,20 +292,6 @@
    ],
    "positions_held": 30,
    "last_position": "A 3px ring with two outlines risks failing on high-contrast patterns where the black outline collides with adjacent dark"
-  },
-  {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 234,
-   "rooms_7d": 202,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output: real-time health report confirming contai"
   },
   {
    "id": "security-w1",
@@ -470,8 +470,8 @@
    "name": "Ratchet",
    "dept": "improve",
    "role": "lead",
-   "turns_7d": 112,
-   "rooms_7d": 101,
+   "turns_7d": 113,
+   "rooms_7d": 102,
    "engines_used": [
     "gh-models",
     "groq",
@@ -479,7 +479,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Run PR-Agent in shadow mode on the oldest merged PR with known issues for one week to measure real catch-rate ",
+   "last_position": "DECISION: Run PR-Agent in shadow mode on open PRs with known issues for 48 hours to measure real catch-rate vs noise; if",
    "proposed": 5,
    "shipped": 3
   },
@@ -559,6 +559,19 @@
    "last_position": "Verdict: The action audits existing links, which is mission work our tool can do."
   },
   {
+   "id": "watch-checker",
+   "name": "Frame",
+   "dept": "watch",
+   "role": "checker",
+   "turns_7d": 25,
+   "rooms_7d": 25,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 27,
+   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts marketing insights from video cont"
+  },
+  {
    "id": "news-checker",
    "name": "Factcheck",
    "dept": "news",
@@ -571,19 +584,6 @@
    ],
    "positions_held": 25,
    "last_position": "Verdict: The action is valid MISSION work."
-  },
-  {
-   "id": "watch-checker",
-   "name": "Frame",
-   "dept": "watch",
-   "role": "checker",
-   "turns_7d": 24,
-   "rooms_7d": 24,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 26,
-   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts actionable marketing insights from"
   },
   {
    "id": "improve-improver",

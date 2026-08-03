@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-03T06:05:15.654192+00:00",
+ "generated_at": "2026-08-03T06:13:36.621319+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -24,7 +24,7 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 366,
+   "turns_7d": 367,
    "rooms_7d": 222,
    "engines_used": [
     "gh-models",
@@ -33,7 +33,7 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Assign **Product** to own the *Science of Sleep Optimization* playbook, with **Science** verifying claims and **Creative"
+   "last_position": "Assign **Product** to own the one-page *Science of Sleep Optimization* playbook, with **Science** verifying claims and *"
   },
   {
    "id": "watch-w1",
@@ -71,8 +71,8 @@
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 280,
-   "rooms_7d": 225,
+   "turns_7d": 281,
+   "rooms_7d": 226,
    "engines_used": [
     "gh-models",
     "groq",
@@ -81,6 +81,21 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
+  },
+  {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 267,
+   "rooms_7d": 227,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for the Mission Control Dashboard, confirming all links ar"
   },
   {
    "id": "links-w1",
@@ -98,64 +113,49 @@
    "last_position": "I will run the link-checker tool on the Mission Control Dashboard's live links to identify any broken or outdated links "
   },
   {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
-   "role": "lead",
-   "turns_7d": 266,
-   "rooms_7d": 226,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for the Mission Control Dashboard, including all broken/re"
-  },
-  {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
    "role": "lead",
-   "turns_7d": 258,
-   "rooms_7d": 217,
+   "turns_7d": 259,
+   "rooms_7d": 218,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key decisions from OpenAI’s May 28 blog pos"
+   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key developments: OpenAI’s new memory archi"
   },
   {
    "id": "visualization-w1",
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 255,
-   "rooms_7d": 118,
+   "turns_7d": 256,
+   "rooms_7d": 119,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Choose the *static intensity map as the primary view*, with a clear toggle to switch to the pulsed radial graph. The sta"
+   "last_position": "Make the radial graph with scaled pulses the primary view. It puts the most important data in the center where attention"
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 253,
-   "rooms_7d": 118,
+   "turns_7d": 254,
+   "rooms_7d": 119,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The static intensity map hides the *timing* of changes—users see *what* changed, not *when* or *how fast*. A small, pers"
+   "last_position": "The radial graph’s pulses train users to ignore them—like a stock ticker they’ll tune out. A static intensity map hides "
   },
   {
    "id": "transcripts-checker",
@@ -224,7 +224,7 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 241,
+   "turns_7d": 242,
    "rooms_7d": 115,
    "engines_used": [
     "gh-models",
@@ -232,7 +232,22 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add RealVisXL’s face-preserving upscaler to EXCAVA’s pipeline *only* on the face. Faces are the highest-value target—blu"
+   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It sharpens fine details in 3D scenes without ha"
+  },
+  {
+   "id": "power-checker",
+   "name": "Torque",
+   "dept": "power",
+   "role": "checker",
+   "turns_7d": 238,
+   "rooms_7d": 113,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Depth-aware upscaling won’t fix EXCAVA’s face fidelity drop—faces blur worse under motion because depth maps don’t prese"
   },
   {
    "id": "mining-w1",
@@ -248,21 +263,6 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Sweep Product Hunt’s \"AI\" posts from the last 7 days using their API. This will produce a raw list of post title"
-  },
-  {
-   "id": "power-checker",
-   "name": "Torque",
-   "dept": "power",
-   "role": "checker",
-   "turns_7d": 237,
-   "rooms_7d": 113,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "RealVisXL’s face tech locks us into Anthropic’s pipeline—if they change their model or API, EXCAVA’s face upscaling brea"
   },
   {
    "id": "accessibility-checker",
@@ -284,14 +284,14 @@
    "name": "Bastion",
    "dept": "security",
    "role": "lead",
-   "turns_7d": 231,
-   "rooms_7d": 200,
+   "turns_7d": 232,
+   "rooms_7d": 201,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and healthy."
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output: real-time report confirming container exi"
   },
   {
    "id": "security-w1",
@@ -344,15 +344,15 @@
    "name": "Iris",
    "dept": "watch",
    "role": "lead",
-   "turns_7d": 222,
-   "rooms_7d": 199,
+   "turns_7d": 223,
+   "rooms_7d": 200,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Run Arcads AI Video skill on the *AI marketing* video [link] to generate a one-page playbook of high-value marke"
+   "last_position": "ACTION: Assign **Science** to draft the one-page *AI marketing* plan using Arcads AI Video’s multimodal insights from th"
   },
   {
    "id": "creators-lead",
@@ -420,7 +420,7 @@
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 143,
+   "turns_7d": 144,
    "rooms_7d": 37,
    "engines_used": [
     "gh-models",
@@ -428,7 +428,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Product owning the playbook risks the AI assistant inheriting Product’s biases—not Science’s rigor.** Assign **Science"
+   "last_position": "**Risk:** Product owning the playbook embeds their assumptions into the AI’s core logic before Science even verifies the"
   },
   {
    "id": "visualization-lead",
@@ -462,7 +462,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Test Depth Anything V2’s face-aware upscaler in EXCAVA’s pipeline first—it’s open, local, and avoids Anthropic",
    "proposed": 12,
-   "shipped": 10
+   "shipped": 11
   },
   {
    "id": "accessibility-lead",
@@ -487,7 +487,7 @@
    "name": "Ratchet",
    "dept": "improve",
    "role": "lead",
-   "turns_7d": 110,
+   "turns_7d": 111,
    "rooms_7d": 100,
    "engines_used": [
     "gh-models",
@@ -496,7 +496,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Run PR-Agent on a merged PR with known issues to measure its catch-rate and identify misses, the result must d",
+   "last_position": "DECISION: Run PR-Agent on a merged PR with known issues to measure real catch-rate without risking new failures.",
    "proposed": 5,
    "shipped": 3
   },

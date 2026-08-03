@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-03T20:15:12.358540+00:00",
+ "generated_at": "2026-08-03T21:44:12.032679+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 399,
+   "turns_7d": 400,
    "rooms_7d": 239,
    "engines_used": [
     "gh-models",
@@ -17,7 +17,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the split artifact: Board for sprint flow, one-page dated \"Decision Ledger\" for finalized outcomes only. Product o"
+   "last_position": "Assign a neutral Decisions Lead—no Product, no teams—to own the Decision Ledger and enforce the \"no entry without a real"
   },
   {
    "id": "analysis-w1",
@@ -83,6 +83,21 @@
    "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh AI-news digest e"
   },
   {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 282,
+   "rooms_7d": 238,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll run the link-checker tool on the Mission Control Dashboard’s live links to identify any broken or outdated URLs. Th"
+  },
+  {
    "id": "links-lead-x",
    "name": "LinLea",
    "dept": "links",
@@ -98,26 +113,11 @@
    "last_position": "ACTION: Anchor publishes the verified, updated link inventory for the Mission Control Dashboard, resolving broken/outdat"
   },
   {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 281,
-   "rooms_7d": 237,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will run the link-checker tool on the Mission Control Dashboard’s live links to identify broken or outdated URLs. This"
-  },
-  {
    "id": "transcripts-checker",
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 278,
+   "turns_7d": 279,
    "rooms_7d": 37,
    "engines_used": [
     "gh-models",
@@ -126,22 +126,22 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Product owning the Ledger guarantees gaming—teams will dump half-baked calls into the Board just to force Product’s hand"
+   "last_position": "A neutral Decisions Lead won’t stop the gaming—teams will still dump half-baked calls into the Board to force the Lead’s"
   },
   {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
    "role": "lead",
-   "turns_7d": 273,
-   "rooms_7d": 231,
+   "turns_7d": 274,
+   "rooms_7d": 232,
    "engines_used": [
     "gh-models",
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key AI developments: OpenAI’s new memory ar"
+   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key updates: OpenAI’s new memory architectu"
   },
   {
    "id": "improve-w1",
@@ -193,14 +193,14 @@
    "name": "Bastion",
    "dept": "security",
    "role": "lead",
-   "turns_7d": 246,
-   "rooms_7d": 211,
+   "turns_7d": 247,
+   "rooms_7d": 212,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output: real-time status report confirming operat"
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and healthy "
   },
   {
    "id": "security-w1",
@@ -284,8 +284,8 @@
    "name": "Iris",
    "dept": "watch",
    "role": "lead",
-   "turns_7d": 237,
-   "rooms_7d": 212,
+   "turns_7d": 238,
+   "rooms_7d": 213,
    "engines_used": [
     "gh-models",
     "groq",
@@ -293,7 +293,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 10:45:00, the lead runs Arcads AI Video skill on the raw unedited *AI marketing* video to generate a Decision"
+   "last_position": "ACTION: At 10:45:00, the lead runs Arcads AI Video skill on the raw unedited video to extract non-transcript insights fr"
   },
   {
    "id": "mining-w1",
@@ -452,8 +452,8 @@
    "name": "Ratchet",
    "dept": "improve",
    "role": "lead",
-   "turns_7d": 120,
-   "rooms_7d": 109,
+   "turns_7d": 121,
+   "rooms_7d": 110,
    "engines_used": [
     "gh-models",
     "groq",
@@ -461,7 +461,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Run PR-Agent in shadow mode on the newest open PR first, then rotate to the oldest merged PR after two weeks t",
+   "last_position": "DECISION: Run PR-Agent in shadow mode on the oldest merged PR first to validate routing/prompts, then expand to the newe",
    "proposed": 5,
    "shipped": 3
   },
@@ -532,6 +532,20 @@
    "last_position": "ACTION: Root queries the Hindsight MCP server for all unembedded elements to embed in the brain graph."
   },
   {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 40,
+   "rooms_7d": 40,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action audits existing links, which is mission work our tool can do."
+  },
+  {
    "id": "security-checker",
    "name": "Audit",
    "dept": "security",
@@ -543,20 +557,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health status and operat"
-  },
-  {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
-   "role": "checker",
-   "turns_7d": 39,
-   "rooms_7d": 39,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action audits existing links, which is mission work our tool can do."
   },
   {
    "id": "watch-checker",

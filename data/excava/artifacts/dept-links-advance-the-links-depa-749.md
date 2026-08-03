@@ -1,16 +1,13 @@
 # links: advance the links department's mission
 
-> Decision artifact · room `dept-links-advance-the-links-depa-749` (dept) · 2026-07-30T21:58:46.812980+00:00
-> Participants: Anchor, LinLea · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-links-advance-the-links-depa-749` (dept) · 2026-08-03T02:45:42.860664+00:00
+> Participants: Anchor, Tether, LinLea · synthesized by nvidia/meta/llama-3.3-70b-instruct
 
-**Decision:**
-
+**Decision:** Advance the links department's mission by auditing and updating the link inventory.
 **Plan:**
-1. Anchor conducts an audit of the top 100 LinkedIn Jobs search result pages using the link-checking tool.
-2. Anchor compiles a prioritized list of broken or low-quality URLs identified in the audit.
-3. Anchor publishes the prioritized list in the designated repository or platform.
-4. LinLea reviews the published list for accuracy and completeness.
-5. The links department reviews the list to initiate replacements or repairs for flagged URLs.
-6. Anchor documents the audit process and outcomes for future reference.
-
-**What changed:** A prioritized list of broken/low-quality URLs from LinkedIn Jobs search results is now available for repair or replacement.
+1. Run the link-checker tool on the Mission Control Dashboard’s current links to produce a report.
+2. Verify the report to ensure accuracy of live, broken, or redirected links.
+3. Update the link inventory based on the verified report.
+4. Publish the updated link inventory for the Mission Control Dashboard.
+5. Review the updated inventory to identify areas for improvement.
+**What changed:** The link inventory is now verified and updated to reflect the current status of all links on the Mission Control Dashboard.

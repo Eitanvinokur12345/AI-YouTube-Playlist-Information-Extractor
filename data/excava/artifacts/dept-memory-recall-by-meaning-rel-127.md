@@ -1,15 +1,16 @@
 # memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.
 
-> Decision artifact · room `dept-memory-recall-by-meaning-rel-127` (dept) · 2026-07-27T22:05:18.116931+00:00
-> Participants: Graft, Root · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-memory-recall-by-meaning-rel-127` (dept) · 2026-08-03T19:16:00.669149+00:00
+> Participants: Graft · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Embed the debate’s key elements (goal of *recall-by-meaning* and *Hindsight embedding decision*) into the Hindsight memory database via the MCP server.
-2. Create a persistent, searchable memory node linking the goal to the embedding action.
-3. Ensure the node captures the rationale for using Hindsight (e.g., persistence, searchability).
-4. Verify the node’s structure includes the debate’s core elements (Root’s action, Graft’s proposal).
-5. Confirm the node is accessible for future recall-by-meaning queries.
+1. Query the Hindsight memory database via the MCP server to retrieve all unembedded memory elements.
+2. Parse the raw, unstructured output into actionable memory chunks.
+3. Embed each unembedded element into the brain graph using the embedding model.
+4. Validate embeddings by cross-referencing with existing memory structures.
+5. Update the memory graph to reflect newly embedded elements.
+6. Log the completion status for audit and future recall.
 
-**What changed:** A persistent memory node now connects the goal of recall-by-meaning with the Hindsight embedding decision.
+**What changed:** Unembedded memories are now embedded, completing the brain graph.

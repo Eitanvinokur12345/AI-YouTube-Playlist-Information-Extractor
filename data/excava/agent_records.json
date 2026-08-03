@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-03T18:19:12.537947+00:00",
+ "generated_at": "2026-08-03T18:26:30.313864+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,8 +8,8 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 392,
-   "rooms_7d": 237,
+   "turns_7d": 394,
+   "rooms_7d": 238,
    "engines_used": [
     "gh-models",
     "groq",
@@ -17,7 +17,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I’ll use the mcp-server-youtube-transcript tool to fetch the full YouTube transcript for the pending video. This will pr"
+   "last_position": "Adopt the merged \"Decision Tracker\" artifact: one live document where every sprint card is a log entry with a \"Status\" f"
   },
   {
    "id": "analysis-w1",
@@ -40,8 +40,8 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 352,
-   "rooms_7d": 232,
+   "turns_7d": 353,
+   "rooms_7d": 233,
    "engines_used": [
     "gh-models",
     "groq",
@@ -49,15 +49,15 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Do this: Adopt the hybrid model—a living Decision Log for context plus a Decision Board in the sprint tracker where ever"
+   "last_position": "I’ll run the 24-hour problem-discovery sprint on the pending transcript to extract unspoken insights from tone, pacing, "
   },
   {
    "id": "news-w1",
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 296,
-   "rooms_7d": 240,
+   "turns_7d": 297,
+   "rooms_7d": 241,
    "engines_used": [
     "gh-models",
     "groq",
@@ -71,8 +71,8 @@
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 294,
-   "rooms_7d": 237,
+   "turns_7d": 295,
+   "rooms_7d": 238,
    "engines_used": [
     "gh-models",
     "groq",
@@ -81,6 +81,21 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
+  },
+  {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 275,
+   "rooms_7d": 234,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for the Mission Control Dashboard, listing only live, non-"
   },
   {
    "id": "links-w1",
@@ -98,27 +113,12 @@
    "last_position": "I’ll run the link-checker tool on the Mission Control Dashboard’s live links to generate a fresh report of broken or red"
   },
   {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
-   "role": "lead",
-   "turns_7d": 274,
-   "rooms_7d": 233,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for the Mission Control Dashboard, listing only live, non-"
-  },
-  {
    "id": "transcripts-checker",
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 266,
-   "rooms_7d": 35,
+   "turns_7d": 268,
+   "rooms_7d": 36,
    "engines_used": [
     "gh-models",
     "groq",
@@ -126,7 +126,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Risk: A hybrid \"Decision Log + Board\" still risks becoming two places to look—teams will default to the Board for sprint"
+   "last_position": "Risk: A single \"Decision Tracker\" risks becoming a bloated sprint artifact—teams will skip status updates if the board d"
   },
   {
    "id": "news-lead",
@@ -268,8 +268,8 @@
    "name": "Warden",
    "dept": "security",
    "role": "doer",
-   "turns_7d": 238,
-   "rooms_7d": 205,
+   "turns_7d": 239,
+   "rooms_7d": 206,
    "engines_used": [
     "gh-models",
     "groq",
@@ -277,7 +277,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "I will instruct ToolHive to verify the LLM Guard container is running and healthy. This will produce a confirmation of t"
+   "last_position": "I will instruct ToolHive to verify the LLM Guard container is running and healthy. This will produce a status report con"
   },
   {
    "id": "mining-w1",
@@ -452,8 +452,8 @@
    "name": "Ratchet",
    "dept": "improve",
    "role": "lead",
-   "turns_7d": 115,
-   "rooms_7d": 104,
+   "turns_7d": 116,
+   "rooms_7d": 105,
    "engines_used": [
     "gh-models",
     "groq",
@@ -461,7 +461,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Run PR-Agent in parallel on the oldest merged PR and the newest open PR to validate routing stability and fres",
+   "last_position": "DECISION: Run PR-Agent in shadow mode on the oldest merged PR first to catch routing/prompt drift, then expand to newest",
    "proposed": 5,
    "shipped": 3
   },
@@ -532,6 +532,19 @@
    "last_position": "ACTION: Root queries the Hindsight MCP server for all unembedded elements to embed in the brain graph."
   },
   {
+   "id": "security-checker",
+   "name": "Audit",
+   "dept": "security",
+   "role": "checker",
+   "turns_7d": 32,
+   "rooms_7d": 32,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s real-time health and rea"
+  },
+  {
    "id": "links-checker",
    "name": "Tether",
    "dept": "links",
@@ -546,43 +559,30 @@
    "last_position": "Verdict: The action audits existing links, which is mission work our tool can do."
   },
   {
-   "id": "security-checker",
-   "name": "Audit",
-   "dept": "security",
-   "role": "checker",
-   "turns_7d": 31,
-   "rooms_7d": 31,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s status and health."
-  },
-  {
    "id": "watch-checker",
    "name": "Frame",
    "dept": "watch",
    "role": "checker",
-   "turns_7d": 29,
-   "rooms_7d": 29,
+   "turns_7d": 30,
+   "rooms_7d": 30,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts non-obvious insights from audio-vi"
+   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts unspoken insights from tone, pacin"
   },
   {
    "id": "news-checker",
    "name": "Factcheck",
    "dept": "news",
    "role": "checker",
-   "turns_7d": 29,
-   "rooms_7d": 29,
+   "turns_7d": 30,
+   "rooms_7d": 30,
    "engines_used": [
     "mistral",
     "sambanova"
    ],
-   "positions_held": 29,
+   "positions_held": 30,
    "last_position": "Verdict: The action is valid MISSION work."
   },
   {

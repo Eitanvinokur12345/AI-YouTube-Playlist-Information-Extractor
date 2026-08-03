@@ -4583,12 +4583,12 @@
    "dept": "",
    "done_criteria": "the lead states the decision and the artifact exists",
    "max_turns": 60,
-   "turns": 52,
+   "turns": 54,
    "status": "open",
    "artifact_kind": "bus-task",
    "artifact": null,
    "created_at": "2026-08-03T02:53:14.345287+00:00",
-   "last_turn_ms": 1493
+   "last_turn_ms": 1447
   },
   {
    "id": "dept-memory-recall-by-meaning-rel-408",
@@ -6873,12 +6873,12 @@
    "dept": "improve",
    "done_criteria": "the lead states the decision and the artifact exists",
    "max_turns": 6,
-   "turns": 2,
+   "turns": 4,
    "status": "open",
    "artifact_kind": "bus-task",
    "artifact": null,
    "created_at": "2026-08-03T17:25:32.234189+00:00",
-   "last_turn_ms": 1385
+   "last_turn_ms": 1542
   },
   {
    "id": "dept-links-advance-the-links-depa-957",
@@ -6887,12 +6887,18 @@
    "dept": "links",
    "done_criteria": "the lead states the decision and the artifact exists",
    "max_turns": 3,
-   "turns": 2,
-   "status": "open",
+   "turns": 3,
+   "status": "done",
    "artifact_kind": "bus-task",
-   "artifact": null,
+   "artifact": {
+    "kind": "decision",
+    "ref": "data/excava/artifacts/dept-links-advance-the-links-depa-957.md",
+    "at": "2026-08-03T17:33:14.114105+00:00",
+    "title": "links: advance the links department's mission",
+    "by": "LinLea"
+   },
    "created_at": "2026-08-03T17:25:32.241079+00:00",
-   "last_turn_ms": 685
+   "last_turn_ms": 656
   },
   {
    "id": "dept-memory-recall-by-meaning-rel-889",
@@ -6921,12 +6927,18 @@
    "dept": "news",
    "done_criteria": "the lead states the decision and the artifact exists",
    "max_turns": 3,
-   "turns": 2,
-   "status": "open",
+   "turns": 3,
+   "status": "done",
    "artifact_kind": "bus-task",
-   "artifact": null,
+   "artifact": {
+    "kind": "decision",
+    "ref": "data/excava/artifacts/dept-news-freshness-refresh-the-a-683.md",
+    "at": "2026-08-03T17:33:19.269949+00:00",
+    "title": "news: Freshness: refresh the AI-news digest from the newest official/company/nat",
+    "by": "Wire"
+   },
    "created_at": "2026-08-03T17:25:32.254753+00:00",
-   "last_turn_ms": 861
+   "last_turn_ms": 1270
   },
   {
    "id": "dept-security-paranoid-guard-scan-750",
@@ -6935,12 +6947,18 @@
    "dept": "security",
    "done_criteria": "the lead states the decision and the artifact exists",
    "max_turns": 3,
-   "turns": 2,
-   "status": "open",
+   "turns": 3,
+   "status": "done",
    "artifact_kind": "bus-task",
-   "artifact": null,
+   "artifact": {
+    "kind": "decision",
+    "ref": "data/excava/artifacts/dept-security-paranoid-guard-scan-750.md",
+    "at": "2026-08-03T17:33:23.835040+00:00",
+    "title": "security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (no",
+    "by": "Bastion"
+   },
    "created_at": "2026-08-03T17:25:32.261707+00:00",
-   "last_turn_ms": 725
+   "last_turn_ms": 744
   },
   {
    "id": "war-deliver-push-link-coverage-t-835",
@@ -6949,12 +6967,60 @@
    "dept": "memory",
    "done_criteria": "a concrete artifact exists and the bus task can complete",
    "max_turns": 8,
-   "turns": 2,
+   "turns": 4,
    "status": "open",
    "artifact_kind": "package",
    "artifact": null,
    "created_at": "2026-08-03T17:25:32.273396+00:00",
-   "last_turn_ms": 1453
+   "last_turn_ms": 1341
+  },
+  {
+   "id": "dept-memory-recall-by-meaning-rel-689",
+   "kind": "dept",
+   "goal": "memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.",
+   "dept": "memory",
+   "done_criteria": "the lead states the decision and the artifact exists",
+   "max_turns": 3,
+   "turns": 1,
+   "status": "done",
+   "artifact_kind": "bus-task",
+   "artifact": {
+    "kind": "decision",
+    "ref": "data/excava/artifacts/dept-memory-recall-by-meaning-rel-689.md",
+    "at": "2026-08-03T17:33:28.352299+00:00",
+    "title": "memory: Recall by meaning, relate elements, build the brain graph, embed unembed",
+    "by": "Root"
+   },
+   "created_at": "2026-08-03T17:32:55.501711+00:00",
+   "last_turn_ms": 911
+  },
+  {
+   "id": "dept-transcripts-retrieve-real-fu-520",
+   "kind": "dept",
+   "goal": "transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)",
+   "dept": "transcripts",
+   "done_criteria": "the lead states the decision and the artifact exists",
+   "max_turns": 3,
+   "turns": 2,
+   "status": "open",
+   "artifact_kind": "bus-task",
+   "artifact": null,
+   "created_at": "2026-08-03T17:32:55.508483+00:00",
+   "last_turn_ms": 1101
+  },
+  {
+   "id": "dept-watch-analyze-video-audio-vi-367",
+   "kind": "dept",
+   "goal": "watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.",
+   "dept": "watch",
+   "done_criteria": "the lead states the decision and the artifact exists",
+   "max_turns": 3,
+   "turns": 2,
+   "status": "open",
+   "artifact_kind": "bus-task",
+   "artifact": null,
+   "created_at": "2026-08-03T17:32:55.515203+00:00",
+   "last_turn_ms": 1041
   }
  ]
 }

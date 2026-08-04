@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-04T07:18:46.689935+00:00",
+ "generated_at": "2026-08-04T09:32:37.327357+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -24,7 +24,7 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 311,
+   "turns_7d": 312,
    "rooms_7d": 221,
    "engines_used": [
     "gh-models",
@@ -32,7 +32,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll run the 24-hour problem-discovery sprint on the pending transcript using the Arcads AI Video Agent Skill Pack to ex"
+   "last_position": "Assign the Decisions Lead to own the Decision Ledger and enforce a *strict 24-hour validation window* for every \"irrever"
   },
   {
    "id": "analysis-w1",
@@ -85,7 +85,7 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 239,
+   "turns_7d": 240,
    "rooms_7d": 111,
    "engines_used": [
     "gh-models",
@@ -93,7 +93,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on the newest open PR first. It spots routing flaws without touching live code, so we learn "
+   "last_position": "We should run PR-Agent in shadow mode on both the oldest merged PR and the newest open PR simultaneously, as this approa"
   },
   {
    "id": "security-lead",
@@ -126,6 +126,21 @@
    "last_position": "I will instruct ToolHive to verify the LLM Guard container is running and healthy. This will produce a status report con"
   },
   {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 232,
+   "rooms_7d": 204,
+   "engines_used": [
+    "gh-models",
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run the link-checker tool on the Mission Control Dashboard’s live links to identify broken or outdated URLs. This will p"
+  },
+  {
    "id": "links-lead-x",
    "name": "LinLea",
    "dept": "links",
@@ -141,19 +156,20 @@
    "last_position": "ACTION: Anchor publishes the verified, updated link inventory for the Mission Control Dashboard, confirming all links ar"
   },
   {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 231,
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 222,
    "rooms_7d": 203,
    "engines_used": [
     "gh-models",
     "groq",
-    "mistral"
+    "mistral",
+    "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Run the link-checker tool on the Mission Control Dashboard’s live links to identify any broken or outdated URLs. This wi"
+   "last_position": "ACTION: At 10:49:00, Iris directs the Arcads AI Video skill to process the raw unedited video and generate a prioritized"
   },
   {
    "id": "news-lead",
@@ -169,22 +185,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key announcements: OpenAI’s new memory arch"
-  },
-  {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 221,
-   "rooms_7d": 202,
-   "engines_used": [
-    "gh-models",
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: At 10:48:00, Iris triggers the Arcads AI Video skill on the raw unedited video to extract AI marketing insights "
   },
   {
    "id": "improve-checker",
@@ -522,6 +522,20 @@
    "last_position": "ACTION: Root queries the Hindsight MCP server for all unembedded elements to embed in the brain graph."
   },
   {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 44,
+   "rooms_7d": 44,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action audits existing links, which is mission work our tool can do."
+  },
+  {
    "id": "security-checker",
    "name": "Audit",
    "dept": "security",
@@ -533,20 +547,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s real-time state."
-  },
-  {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
-   "role": "checker",
-   "turns_7d": 43,
-   "rooms_7d": 43,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action audits existing links, which is mission work our tool can do."
   },
   {
    "id": "watch-checker",
@@ -580,13 +580,13 @@
    "name": "Overhaul",
    "dept": "improve",
    "role": "improver",
-   "turns_7d": 28,
-   "rooms_7d": 28,
+   "turns_7d": 29,
+   "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
-   "positions_held": 28,
-   "last_position": "Run PR-Agent in shadow mode on *both* the oldest merged PR and the newest open PR in parallel—this doubles validation co"
+   "positions_held": 29,
+   "last_position": "Run PR-Agent in shadow mode on *both* the oldest merged PR and the newest open PR simultaneously—this doubles the data p"
   },
   {
    "id": "visual-checker",

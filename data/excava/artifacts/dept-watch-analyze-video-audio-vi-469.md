@@ -1,18 +1,18 @@
 # watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.
 
-> Decision artifact · room `dept-watch-analyze-video-audio-vi-469` (dept) · 2026-07-31T17:14:40.849276+00:00
-> Participants: Scope, Iris · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-watch-analyze-video-audio-vi-469` (dept) · 2026-08-04T23:36:23.148489+00:00
+> Participants: Scope, Frame, Iris · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Execute Arcads AI Video's "AI Marketing" skill pack on target video *t* to extract actionable marketing insights.
+Iris triggers Arcads AI Video skill pack to analyze the marketing video and deliver a structured report of visual/audio engagement insights to the Marketing Team.
 
 **Plan:**
-1. Run Arcads AI Video’s "AI Marketing" skill pack on video *t* to generate a structured analysis.
-2. Extract emotional triggers (e.g., tone, pacing, facial expressions) from the AUDIO+VISUAL analysis.
-3. Identify audience hooks (e.g., engagement patterns, visual cues, narrative arcs) for repurposing.
-4. Highlight content gaps (e.g., missing CTAs, underutilized segments) for optimization.
-5. Compile findings into a GitHub markdown report with clear next steps.
-6. Share the analysis with stakeholders for validation and iteration.
+1. Run Arcads AI Video skill pack on the marketing video at 10:53:00.
+2. Extract multimodal insights (visual cues, audio shifts, sentiment, engagement triggers).
+3. Generate a structured report summarizing findings.
+4. Deliver the report to the Marketing Team.
+5. Ensure the report aligns with free-only team access constraints.
+6. Confirm analysis completion and report delivery.
 
 **What changed:**
-Arcads AI Video’s structured analysis replaces manual transcript-only review.
+Replaced "Content Strategy Lead" with "Marketing Team" to comply with team access rules.

@@ -1,15 +1,16 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-185` (dept) · 2026-07-14T22:46:11.875739+00:00
-> Participants: Reel, Echo · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-185` (dept) · 2026-08-05T23:04:12.561847+00:00
+> Participants: Reel, Scriv, Echo · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Query the `kimtaeyoon83/mcp-server-youtube-transcript` tool to retrieve full transcripts for all pending videos.
-2. Verify the completeness and accuracy of the retrieved transcripts/captions.
-3. Store the validated transcripts in the designated repository or system.
-4. Notify the lead that the transcripts are ready for review.
-5. Proceed to the next phase of processing (e.g., analysis, editing) once approved.
+1. Reel queries the `kimtaeyoon83/mcp-server-youtube-transcript` tool with the pending video IDs.
+2. Reel delivers the retrieved full, real transcripts to the `transcripts-checker` for verification.
+3. `transcripts-checker` confirms authenticity and completeness of the transcripts.
+4. If verified, transcripts are stored in the designated repository.
+5. If unverified, Reel re-queries or escalates for manual review.
+6. Progress is logged in the transcripts-checker system.
 
-**What changed:** Transcripts are now retrieved and validated for pending videos.
+**What changed:** Action assigned to Reel with tool integration and verification steps.

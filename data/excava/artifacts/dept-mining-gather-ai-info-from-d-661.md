@@ -1,18 +1,16 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-661` (dept) · 2026-07-31T16:02:56.215484+00:00
-> Participants: Pick, Boulder · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-661` (dept) · 2026-08-05T22:55:49.263463+00:00
+> Participants: Pick · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Run a multi-source sweep combining GitHub, Reddit, and Product Hunt for AI trends, prioritizing GitHub’s depth and Reddit’s community insights.
 
 **Plan:**
-1. **GitHub Sweep:** Scrape trending AI repos from the last 7 days with >50 stars, extracting claims, tech stacks, and links (target: 20-40 repos).
-2. **Reddit Sweep:** Parse AI subreddits (r/MachineLearning, r/artificial, r/learnmachinelearning) for posts in the last 7 days, extracting claims, tech stacks, and links (target: 20-40 items).
-3. **Product Hunt Sweep:** Collect AI launches from the last 7 days, extracting claims, tech stacks, and product links (target: 10-20 items).
-4. **Merge & Deduplicate:** Combine datasets, remove duplicates, and standardize fields (claims, tech stacks, links).
-5. **Filter for High-Signal:** Apply criteria (e.g., novelty, technical depth, engagement) to reduce to 30-50 items for downstream analysis.
-6. **Export:** Save as a structured markdown table for further processing.
+1. Query Product Hunt’s API for all posts tagged "AI" published in the last 30 days.
+2. Extract raw data: product names, descriptions, upvotes, and launch dates.
+3. Filter results to ensure diversity of sources (exclude duplicates or near-identical entries).
+4. Store the curated list in a structured format (e.g., JSON/CSV) for further analysis.
+5. Cross-reference with other platforms (GitHub/HN/Reddit/Telegram) to validate or supplement missing info.
+6. Output the final dataset for downstream mining tasks.
 
-**What changed:**
-Telegram sweep dropped in favor of GitHub/Reddit/Product Hunt to balance depth, community insights, and launch trends.
+**What changed:** Focused on Product Hunt API as a primary source while preserving flexibility for cross-platform validation.

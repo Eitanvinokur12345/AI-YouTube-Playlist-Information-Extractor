@@ -1,16 +1,16 @@
 # news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
 
-> Decision artifact · room `dept-news-freshness-refresh-the-a-462` (dept) · 2026-07-31T15:33:43.812674+00:00
-> Participants: Scoop, Wire · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-news-freshness-refresh-the-a-462` (dept) · 2026-08-05T02:51:32.205399+00:00
+> Participants: Scoop, Factcheck, Wire · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Fetch the latest AI-news digest from OpenAI’s official blog.
-2. Fetch the latest AI-news digest from NVIDIA’s announcements page.
-3. Curate the newest developments from both sources into a fresh, numbered list.
-4. Remove any duplicate or outdated entries.
-5. Format the curated list in GitHub markdown with clear headings and bullet points.
-6. Output the final digest as the sole content in the response.
+1. Access OpenAI’s official blog feed to extract the latest AI-related post.
+2. Verify the post’s authenticity and extract key details (e.g., memory architecture update).
+3. Cross-check two additional sources: YouTube’s NoteGPT launch and a national AI safety policy update.
+4. Compile a concise digest summarizing the three verified posts.
+5. Publish the AI-headlines digest for 2024-05-30 in GitHub markdown format.
+6. Tag the output with `#AI-news-digest` and archive the sources.
 
-**What changed:** Fresh AI-news digest compiled from OpenAI and NVIDIA’s latest official sources.
+**What changed:** Digest published with three verified AI developments.

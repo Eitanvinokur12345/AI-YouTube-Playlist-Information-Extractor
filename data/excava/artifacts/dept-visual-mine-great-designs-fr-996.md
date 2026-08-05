@@ -1,13 +1,18 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-996` (dept) · 2026-07-31T19:31:28.977209+00:00
-> Participants: Easel, Chroma · synthesized by groq/llama-3.3-70b-versatile
+> Decision artifact · room `dept-visual-mine-great-designs-fr-996` (dept) · 2026-08-05T03:03:49.400115+00:00
+> Participants: Easel, Squint, Chroma · synthesized by mistral/mistral-small-latest
 
-**Decision:** Integrate web-scraped design patterns and canonical references into the hub for comprehensive visual design inspiration.
+**Decision:**
+Capture full-page screenshots of authoritative MCP-related documentation pages to extract design patterns for the hub.
+
 **Plan:**
-1. Run a targeted scrape of Dribbble's "Mobile App UI" feed using Playwright MCP to pull high-quality mobile UI screenshots into the hub.
-2. Capture high-resolution screenshots of Apple's Human Interface Guidelines "iOS Design" page and save it to the hub as a canonical reference for iOS design patterns.
-3. Organize the scraped screenshots and canonical references into a curated visual library of contemporary mobile design patterns for immediate reference.
-4. Create a taxonomy for categorizing and tagging the design patterns to enable efficient searching and browsing.
-5. Establish a regular update schedule to ensure the hub remains current with the latest design trends and patterns.
-**What changed:** The hub now includes a diverse range of web-scraped design patterns and canonical references, providing a more comprehensive visual design inspiration resource.
+1. Easel captures a full-page screenshot of the official Model Context Protocol (MCP) website landing page.
+2. Easel captures a full-page screenshot of the official Agent Platform Selection Rule documentation page.
+3. Extract visual hierarchy, typography, and layout patterns from both screenshots.
+4. Curate screenshots and extracted patterns into a dedicated "design patterns" folder in the hub.
+5. Tag patterns by category (e.g., navigation, typography, spacing) for easy retrieval.
+6. Share curated materials with the team for feedback and refinement.
+
+**What changed:**
+Shifted from MCP landing page alone to including Agent Platform Selection Rule documentation for broader design pattern coverage.

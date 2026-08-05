@@ -1,17 +1,16 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-312` (dept) · 2026-07-18T08:25:32.094882+00:00
-> Participants: Pick, Boulder · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-312` (dept) · 2026-08-05T02:57:34.984307+00:00
+> Participants: Pick · synthesized by mistral/mistral-small-latest
 
-**Decision:**  
-We will gather AI information by mining both Reddit and GitHub for trending discussions and repositories.
+**Decision:**
 
-**Plan:**  
-1. Conduct a Reddit search for AI-related posts from the last 7 days and document the top 10 upvoted threads with titles, links, and upvote counts.  
-2. Mine GitHub for repositories tagged "AI" and "research," creating a ranked list of the top 10 based on stars, including names, links, star counts, and a brief description.  
-3. Compare insights gleaned from Reddit discussions with those from GitHub repositories to identify emerging trends and topics in the AI field.  
-4. Aggregate and summarize findings into a report for easy reference and decision-making.  
-5. Share the compiled information with the team for feedback and further analysis.
+**Plan:**
+1. Query Product Hunt’s API for posts tagged "AI" published in the last 7 days.
+2. Extract titles, descriptions, upvotes, and launch dates from the raw API response.
+3. Filter results to ensure diversity of sources (exclude duplicates or reposts).
+4. Store the cleaned data in a structured format (e.g., JSON/CSV) for downstream analysis.
+5. Cross-reference with other platforms (GitHub/HN/Reddit) to validate or supplement findings.
+6. Generate a summary report highlighting top AI products by engagement (upvotes/launch activity).
 
-**What changed:**  
-We expanded the scope to include both Reddit and GitHub for a comprehensive view of current AI trends.
+**What changed:** Focused on Product Hunt API as a primary source for AI product discovery, prioritizing recency and structured data extraction.

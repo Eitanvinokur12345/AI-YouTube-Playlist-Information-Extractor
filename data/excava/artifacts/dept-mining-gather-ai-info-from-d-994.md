@@ -1,15 +1,14 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-994` (dept) · 2026-07-27T18:20:17.992508+00:00
-> Participants: Pick · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-994` (dept) · 2026-08-05T01:49:58.099063+00:00
+> Participants: Pick · synthesized by groq/llama-3.3-70b-versatile
 
-**Decision:** Execute a Reddit search for the latest AI-related discussions.
-
+**Decision:** Query Product Hunt's API for AI-related posts to gather diverse information.
 **Plan:**
-1. Perform a search on Reddit for AI-related posts from the last 7 days.
-2. Filter results to focus on trending discussions with the highest engagement.
-3. Compile a list of the top 20 results with titles, corresponding subreddits, and upvote counts.
-4. Review the gathered posts to identify key themes and insights for further analysis.
-5. Prepare the findings for integration into broader mining efforts from diverse sources.
-
-**What changed:** The decision to source insights specifically from Reddit was prioritized for its timeliness and community engagement.
+1. Send a GET request to the Product Hunt API with the "AI" tag and a 7-day time filter.
+2. Parse the JSON response to extract relevant information such as post titles, descriptions, and creator details.
+3. Store the extracted data in a structured format for further analysis and mining.
+4. Utilize the extracted data to identify trends and patterns in AI-related posts on Product Hunt.
+5. Expand the data collection to include other sources such as GitHub, Reddit, and Telegram for a more comprehensive analysis.
+6. Continuously monitor and update the data collection process to ensure it remains relevant and effective.
+**What changed:** The approach now focuses on leveraging the Product Hunt API as the primary data source for AI-related information.

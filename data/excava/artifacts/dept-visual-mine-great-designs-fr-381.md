@@ -1,16 +1,18 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-381` (dept) · 2026-07-31T04:37:53.762549+00:00
-> Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-visual-mine-great-designs-fr-381` (dept) · 2026-08-05T02:14:12.082934+00:00
+> Participants: Easel, Squint, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+Easel captures a high-quality full-page screenshot of the Agent Platform Selection Rule page.
 
 **Plan:**
-1. Use Playwright MCP server to capture high-quality screenshots of the top 3 most-tweeted design systems from Figma’s Awwwards winners.
-2. Save these screenshots to the hub as taste material for design patterns.
-3. Capture a high-quality screenshot of the Playwright MCP server interface itself.
-4. Save this interface screenshot to the hub as additional reference material.
-5. Organize all captured screenshots in a structured directory within the hub.
-6. Tag all files with relevant metadata (e.g., "design-system," "awwwards," "playwright-mcp").
+1. Open Playwright MCP.
+2. Navigate to the Agent Platform Selection Rule page.
+3. Capture a full-page screenshot.
+4. Save the screenshot as "Agent_Platform_Selection_Rule.png" in the hub.
+5. Verify the artifact is accessible in the hub.
+6. Proceed to synthesize additional design patterns from the web.
 
-**What changed:** Focused on capturing both external design systems and internal tooling for comprehensive reference.
+**What changed:**
+Added "Agent Platform Selection Rule" page as the target for capture.

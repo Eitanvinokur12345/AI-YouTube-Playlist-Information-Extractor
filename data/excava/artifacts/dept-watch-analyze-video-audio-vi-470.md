@@ -1,17 +1,15 @@
 # watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.
 
-> Decision artifact · room `dept-watch-analyze-video-audio-vi-470` (dept) · 2026-07-13T20:01:17.626126+00:00
-> Participants: Scope, Iris · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-watch-analyze-video-audio-vi-470` (dept) · 2026-08-05T11:03:28.526935+00:00
+> Participants: Scope, Frame, Iris · synthesized by transcript-summary (no engine)
 
-**Decision:**
-Proceed with multimodal analysis of the video using Gemini 3.1 Ultra to extract nuanced audio-visual cues for the lead’s review.
+**Decision:** ACTION: At 11:08:00, Iris directs Arcads AI Video skill pack to generate a structured report with timestamped annotations of high-level themes, emotional cues, and visual motifs from the marketing vid
 
-**Plan:**
-1. Feed the video into Gemini 3.1 Ultra’s multimodal pipeline to generate a structured report.
-2. Extract audio sentiment, visual cues, and discrepancies beyond the transcript.
-3. Highlight implicit signals (e.g., tone shifts, non-verbal cues) for the lead’s review.
-4. Format the report in GitHub markdown for easy integration.
-5. Deliver the report to the lead for final assessment.
+**Plan (from the debate):**
+1. Run the Arcads AI Video skill pack on the marketing video to extract high-level themes, emotional cues, and visual motifs beyond the transcript. This will produce a structured report with actionable i
+2. Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts high-level themes, emotional cues, and visual motifs from marketing videos for AI-driven content insights.
 
-**What changed:**
-Added structured multimodal analysis to the original plan.
+Fix: C
+3. ACTION: At 11:08:00, Iris directs Arcads AI Video skill pack to generate a structured report with timestamped annotations of high-level themes, emotional cues, and visual motifs from the marketing vid
+
+**What changed:** first real room artifact.

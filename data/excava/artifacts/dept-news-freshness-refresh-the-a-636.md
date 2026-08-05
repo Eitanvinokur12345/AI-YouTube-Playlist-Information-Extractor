@@ -1,16 +1,14 @@
 # news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
 
-> Decision artifact · room `dept-news-freshness-refresh-the-a-636` (dept) · 2026-07-27T06:15:32.359367+00:00
-> Participants: Scoop, Wire · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-news-freshness-refresh-the-a-636` (dept) · 2026-08-05T11:03:17.291832+00:00
+> Participants: Scoop, Factcheck, Wire · synthesized by transcript-summary (no engine)
 
-**Decision:**
+**Decision:** ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three verified items—OpenAI’s new memory architecture for ChatGPT, Microsoft’s AI-powered Recall feature rollout, and EU’s AI Act
 
-**Plan:**
-1. Query Reuters, BBC, and the White House press feeds for the latest AI headlines.
-2. Extract verified AI-related summaries from each source.
-3. Compile the results into a digest titled "Latest AI Headlines – [Today’s Date]".
-4. Format the digest in GitHub markdown with clear section headers.
-5. Publish the digest to the designated AI-news repository or channel.
-6. Archive the raw query data for future reference.
+**Plan (from the debate):**
+1. I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh news item for the AI digest.
+2. Verdict: The action is valid MISSION work.
+Fix: Specify "AI-related" as "AI breakthroughs or policy updates."
+3. ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three verified items—OpenAI’s new memory architecture for ChatGPT, Microsoft’s AI-powered Recall feature rollout, and EU’s AI Act
 
-**What changed:** Fresh AI headlines now sourced directly from official/company/national feeds.
+**What changed:** first real room artifact.

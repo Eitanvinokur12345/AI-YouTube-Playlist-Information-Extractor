@@ -1,17 +1,13 @@
 # news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
 
-> Decision artifact · room `dept-news-freshness-refresh-the-a-774` (dept) · 2026-07-27T18:47:22.955699+00:00
-> Participants: Scoop, Wire · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-news-freshness-refresh-the-a-774` (dept) · 2026-08-05T03:16:00.533937+00:00
+> Participants: Scoop, Factcheck, Wire · synthesized by groq/llama-3.3-70b-versatile
 
-**Decision:**
-Fetch latest AI headlines from Reuters, BBC, and White House press feeds into a single digest.
-
+**Decision:** Refresh the AI-news digest with verified items from official sources, focusing on AI breakthroughs and policy announcements.
 **Plan:**
-1. Query Reuters’ AI section for the newest headlines.
-2. Query BBC’s technology section for AI-related updates.
-3. Query the White House press feed for AI policy or official statements.
-4. Curate results into a single digest, prioritizing the most recent items.
-5. Format the digest in GitHub markdown with clear section headers.
-6. Output the digest directly to the target channel.
-
-**What changed:** Curated AI news will now be sourced directly from the three specified feeds.
+1. Extract the latest post from OpenAI's official blog feed related to AI breakthroughs or policy announcements.
+2. Verify the extracted post to ensure it meets the criteria for freshness and accuracy.
+3. Compile a list of verified AI news items, including the extracted post, to publish in the AI-headlines digest.
+4. Include recent notable AI news, such as Microsoft's AI-powered Recall feature and EU AI Act enforcement updates, in the digest.
+5. Publish the updated AI-headlines digest for the current date, such as 2024-05-30.
+**What changed:** The scope of the digest has been narrowed to focus on AI breakthroughs and policy announcements from verified official sources.

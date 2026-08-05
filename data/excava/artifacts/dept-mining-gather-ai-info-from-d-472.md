@@ -1,15 +1,16 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-472` (dept) · 2026-07-08T20:08:02.338311+00:00
-> Participants: Pick, Assay, Boulder · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-472` (dept) · 2026-08-05T03:16:24.642718+00:00
+> Participants: Pick · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Run `gh search repos --q "ai language:python stars:>100" --json name,url,stargazers_count --limit 100 > github_ai_top100.json` to fetch 100+ star AI repos (Python).
-2. For each repo in `github_ai_top100.json`, fetch recent commits via `gh api repos/{owner}/{repo}/commits?since=2024-05-01`.
-3. Filter results to retain only repos with ≥1 commit in the last 30 days.
-4. Cross-check top candidates against HN’s "Show HN" posts and Reddit’s r/MachineLearning.
-5. Export final list to `active_ai_repos.json` with metadata (name, url, stars, last commit date).
+1. Query Product Hunt’s API for posts tagged "AI" published in the last 7 days.
+2. Parse results to extract titles, descriptions, upvotes, and launch dates.
+3. Cross-reference with GitHub’s API to identify repositories linked in posts (if any).
+4. Supplement with Reddit’s r/MachineLearning and r/artificial subreddits for community discussions.
+5. Manually check Telegram AI channels (e.g., AI News, Future of AI) for recent posts.
+6. Compile findings into a structured dataset for analysis.
 
-**What changed:** Replaced date-filtered scrape with star-only filter + commit activity check.
+**What changed:** Prioritized Product Hunt API query as the first step to gather diverse, recent AI product launches.

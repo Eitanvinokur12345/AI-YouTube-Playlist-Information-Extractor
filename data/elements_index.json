@@ -1,22 +1,22 @@
 {
- "generated_at": "2026-08-06T06:41:12.589213+00:00",
- "total": 11164,
+ "generated_at": "2026-08-06T09:46:12.404910+00:00",
+ "total": 11194,
  "counts": {
-  "skill": 3601,
-  "tool": 3128,
-  "prompt": 740,
+  "skill": 3616,
+  "tool": 3132,
+  "prompt": 744,
   "command": 148,
   "connector": 1509,
-  "design": 1304,
+  "design": 1310,
   "format": 119,
-  "model": 600,
+  "model": 601,
   "creation": 15
  },
- "stubs": 1688,
+ "stubs": 1684,
  "by_status": {
   "verified": 2307,
   "niche": 1814,
-  "unverified": 6930,
+  "unverified": 6960,
   "dead": 113
  },
  "note": "READ-ONLY derivative. Sources of truth = the per-type files; write via element_model.set_field only.",
@@ -125436,140 +125436,37 @@
    ]
   },
   {
-   "id": "skill:openclaw",
+   "id": "skill:bash",
    "type": "skill",
-   "name": "OpenClaw",
-   "what": "An AI agent that Paperclip can coordinate as an employee.",
-   "category": "agents",
-   "source_videos": [],
-   "links": {},
-   "install": "",
-   "quality_score": 1,
-   "trust": 75,
-   "created_by": "",
-   "verified": {
-    "status": "unverified",
-    "method": "",
-    "sources": 0,
-    "at": ""
-   },
-   "stub": true,
-   "enriched": false,
-   "related": [
-    "skill:multi-agent-ai-orchestration",
-    "skill:claude-code",
-    "skill:codex",
-    "skill:cursor",
-    "skill:cost-value-estimation",
-    "skill:claude-code-daemon-ai-employee"
-   ]
-  },
-  {
-   "id": "skill:claude-code",
-   "type": "skill",
-   "name": "Claude Code",
-   "what": "An AI agent/tool for code generation that Paperclip can coordinate.",
+   "name": "Bash",
+   "what": "An advanced Bash shell script functioning as an AI-powered terminal assistant, equipped with plugin support for all your terminal tasks and questions. Topics: ai, artificial-intelligence, bash, bash-script, chatgpt, cli.",
    "category": "code",
-   "source_videos": [],
-   "links": {},
+   "source_videos": [
+    "3pbNXOZt-UQ"
+   ],
+   "links": {
+    "github": "https://github.com/Hezkore/bash-ai"
+   },
    "install": "",
    "quality_score": 1,
-   "trust": 75,
+   "trust": 95,
    "created_by": "",
    "enriched": true,
    "enrichment": {
     "sources": [
-     "homepage-meta"
+     "github-api"
     ],
     "n_sources": 1,
-    "method": "keyless-extract",
-    "at": "2026-07-24T12:00:44.203249+00:00"
+    "method": "github-api",
+    "at": "2026-08-06T09:46:11.049492+00:00"
    },
-   "verified": {
-    "status": "unverified",
-    "method": "2-source+live",
-    "sources": 3,
-    "at": "2026-07-21T00:06:05.894056+00:00"
-   },
-   "stub": true,
-   "related": [
-    "skill:openclaw",
-    "skill:codex",
-    "skill:cursor"
-   ]
-  },
-  {
-   "id": "skill:codex",
-   "type": "skill",
-   "name": "Codex",
-   "what": "An AI agent/tool for code generation that Paperclip can coordinate.",
-   "category": "code",
-   "source_videos": [],
-   "links": {},
-   "install": "",
-   "quality_score": 1,
-   "trust": 75,
-   "created_by": "",
    "verified": {
     "status": "unverified",
     "method": "",
     "sources": 0,
     "at": ""
    },
-   "stub": true,
-   "enriched": false,
-   "related": [
-    "skill:openclaw",
-    "skill:claude-code",
-    "skill:cursor"
-   ]
-  },
-  {
-   "id": "skill:cursor",
-   "type": "skill",
-   "name": "Cursor",
-   "what": "An AI agent/tool for code editing/generation that Paperclip can coordinate.",
-   "category": "code",
-   "source_videos": [],
-   "links": {},
-   "install": "",
-   "quality_score": 1,
-   "trust": 75,
-   "created_by": "",
-   "verified": {
-    "status": "unverified",
-    "method": "",
-    "sources": 0,
-    "at": ""
-   },
-   "stub": true,
-   "enriched": false,
-   "related": [
-    "skill:openclaw",
-    "skill:claude-code",
-    "skill:codex"
-   ]
-  },
-  {
-   "id": "skill:bash",
-   "type": "skill",
-   "name": "Bash",
-   "what": "A command-line shell that Paperclip can interact with.",
-   "category": "code",
-   "source_videos": [],
-   "links": {},
-   "install": "",
-   "quality_score": 1,
-   "trust": 75,
-   "created_by": "",
-   "verified": {
-    "status": "unverified",
-    "method": "",
-    "sources": 0,
-    "at": ""
-   },
-   "stub": true,
-   "enriched": false,
+   "stub": false,
    "related": [
     "tool:bash",
     "design:terminal-code-editor-with-performance-report",
@@ -125582,11 +125479,15 @@
    "name": "HTTP",
    "what": "A protocol that Paperclip can use for web interactions.",
    "category": "integration",
-   "source_videos": [],
-   "links": {},
+   "source_videos": [
+    "3pbNXOZt-UQ"
+   ],
+   "links": {
+    "website": "https://httpd.apache.org/"
+   },
    "install": "",
    "quality_score": 1,
-   "trust": 75,
+   "trust": 95,
    "created_by": "",
    "verified": {
     "status": "unverified",
@@ -125608,11 +125509,15 @@
    "name": "Multi-Persona AI Prompting for Decision Analysis",
    "what": "The ability to formulate complex AI prompts that instruct a large language model to simulate multiple distinct expert personas, each with a unique perspective and objective, to critically evaluate a business decision, identify risks, opportunities, and second-order effects, and ultimately provide a synthesized verdict and actionable recommendations.",
    "category": "research",
-   "source_videos": [],
-   "links": {},
+   "source_videos": [
+    "3vgagGeGg1E"
+   ],
+   "links": {
+    "github": "https://github.com/alfiinyang/PersonalityAI"
+   },
    "install": "",
    "quality_score": 5,
-   "trust": 75,
+   "trust": 95,
    "created_by": "",
    "verified": {
     "status": "unverified",
@@ -125632,6 +125537,424 @@
     "skill:ooda-military-decision-framework",
     "skill:multi-agent-decision-making-council"
    ]
+  },
+  {
+   "id": "skill:ai-model-routing-fallback",
+   "type": "skill",
+   "name": "AI Model Routing and Fallback",
+   "what": "Automatically switching between different AI models or providers when usage limits are reached or for optimal performance/cost.",
+   "category": "automation",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:ai-writing",
+   "type": "skill",
+   "name": "AI Writing",
+   "what": "Utilizing AI to create detailed and engaging written content, such as blog posts.",
+   "category": "writing",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 4,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:ai-portfolio-analysis",
+   "type": "skill",
+   "name": "AI-powered portfolio analysis",
+   "what": "Utilizing AI to analyze an investment portfolio, identify risks, and provide an executive summary of its health.",
+   "category": "data",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:generate-investment-ideas",
+   "type": "skill",
+   "name": "Generating investment ideas",
+   "what": "Using AI to generate ideas for executing trades and improving portfolio returns based on current holdings and market data.",
+   "category": "research",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 4,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:ai-risk-assessment",
+   "type": "skill",
+   "name": "AI-powered risk assessment",
+   "what": "Identifying and flagging specific investment risks, diversification issues, and potential threats within a portfolio with detailed explanations.",
+   "category": "data",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:personalized-financial-advice",
+   "type": "skill",
+   "name": "Personalized financial advice",
+   "what": "Receiving tailored advice and concrete action plans from an AI assistant based on specific questions about one's investment portfolio.",
+   "category": "research",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:ai-trade-analysis",
+   "type": "skill",
+   "name": "AI-powered trade analysis",
+   "what": "Analyzing a specific stock or potential trade against an existing portfolio to determine its suitability and potential impact.",
+   "category": "data",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:ai-subscription-management",
+   "type": "skill",
+   "name": "AI Subscription Management",
+   "what": "Strategically managing AI tool subscriptions and usage limits to optimize cost and access to features, including downgrading or upgrading plans based on usage patterns.",
+   "category": "productivity",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:ai-skill-development",
+   "type": "skill",
+   "name": "AI Skill Development",
+   "what": "Developing and implementing AI-powered skills or automations, often involving coding or advanced prompt engineering with models like Codex.",
+   "category": "code",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 4,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:content-marketing-strategy",
+   "type": "skill",
+   "name": "Content Marketing Strategy",
+   "what": "Regularly publishing articles and updates to maintain an active business presence online, which signals to AI that the business is current and relevant.",
+   "category": "marketing",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:reputation-management-recency",
+   "type": "skill",
+   "name": "Reputation Management (Recency Focus)",
+   "what": "Prioritizing recent customer reviews over the sheer volume of old reviews to demonstrate current customer satisfaction and relevance to AI.",
+   "category": "marketing",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:schema-markup-implementation",
+   "type": "skill",
+   "name": "Schema Markup Implementation",
+   "what": "Adding structured data (schema) to website content to help AI understand business hours, services, and other key information clearly and efficiently.",
+   "category": "code",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:off-page-seo-trusted-platforms",
+   "type": "skill",
+   "name": "Off-Page SEO (Trusted Platforms)",
+   "what": "Listing business information and engaging on trusted external websites like local press, directories, and Reddit to build authority and trust with AI algorithms.",
+   "category": "marketing",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:nap-consistency-management",
+   "type": "skill",
+   "name": "NAP Consistency Management",
+   "what": "Ensuring that the business's Name, Address, and Phone number (NAP) are identical across all online platforms to help AI consolidate information about the business.",
+   "category": "marketing",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:concise-answer-content-creation",
+   "type": "skill",
+   "name": "Concise Answer Content Creation",
+   "what": "Crafting short, direct, one-line answers to common questions to cater to AI's preference for quick, factual information extraction.",
+   "category": "writing",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:information-consistency-hours-service-area",
+   "type": "skill",
+   "name": "Information Consistency (Hours & Service Area)",
+   "what": "Maintaining uniform business hours and service area information across all online presences to avoid contradictions and build AI trust.",
+   "category": "marketing",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:niche-content-depth",
+   "type": "skill",
+   "name": "Niche Content Depth",
+   "what": "Focusing on becoming an expert in a few core services by providing in-depth content, rather than superficial coverage of many topics.",
+   "category": "marketing",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:multi-ai-platform-optimization",
+   "type": "skill",
+   "name": "Multi-AI Platform Optimization",
+   "what": "Tailoring content and presence to specific AI platforms based on where each AI sources its information.",
+   "category": "marketing",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:model-development-loop-management",
+   "type": "skill",
+   "name": "Model Development Loop Management",
+   "what": "Managing the iterative cycle of building, training, evaluating, and refining AI models to achieve desired performance and outcomes.",
+   "category": "other",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
   },
   {
    "id": "tool:claude",
@@ -221716,34 +222039,6 @@
    ]
   },
   {
-   "id": "tool:bash",
-   "type": "tool",
-   "name": "bash",
-   "what": "The Bourne Again SHell, a Unix shell and command language.",
-   "category": "code",
-   "source_videos": [],
-   "links": {
-    "github": "https://github.com/gitGNU/gnu_bash"
-   },
-   "install": "",
-   "quality_score": 1,
-   "trust": 75,
-   "created_by": "",
-   "verified": {
-    "status": "unverified",
-    "method": "live-only",
-    "sources": 1,
-    "at": "2026-07-27T12:34:55.465223+00:00"
-   },
-   "stub": true,
-   "enriched": false,
-   "related": [
-    "skill:bash",
-    "tool:zsh",
-    "skill:dynamic-bash-generation"
-   ]
-  },
-  {
    "id": "tool:basin-hopping",
    "type": "tool",
    "name": "basin-hopping",
@@ -227099,6 +227394,116 @@
     "skill:multi-agent-town-simulation-benchmark",
     "skill:multi-agent-social-reaction-simulation"
    ]
+  },
+  {
+   "id": "tool:glm-5-3",
+   "type": "tool",
+   "name": "GLM-5.3",
+   "what": "An AI model mentioned as a potential fallback model for OmniRoute.",
+   "category": "agents",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 3,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": true,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "tool:k",
+   "type": "tool",
+   "name": "K",
+   "what": "An AI model mentioned as a potential fallback model for OmniRoute.",
+   "category": "agents",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 3,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": true,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "tool:stocklift",
+   "type": "tool",
+   "name": "StockLift: AI Invest & Trade",
+   "what": "A full AI investing platform with an AI assistant designed to help generate ideas for executing trades, analyze portfolios, and provide personalized financial advice.",
+   "category": "other",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "tool:ai-trade-checker",
+   "type": "tool",
+   "name": "AI Trade Checker",
+   "what": "A feature within StockLift that analyzes a stock you're about to invest in and provides an assessment of whether it's a good idea, considering its impact on your existing portfolio.",
+   "category": "other",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "tool:google-profile",
+   "type": "tool",
+   "name": "Google Profile",
+   "what": "A business listing service provided by Google, crucial for local SEO and a primary source of business information for AI models like Gemini.",
+   "category": "marketing",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
   },
   {
    "id": "prompt:master-assistant-system-prompt",
@@ -248857,6 +249262,98 @@
    ]
   },
   {
+   "id": "prompt:3d-scroll-driven-landing-page",
+   "type": "prompt",
+   "name": "3D Scroll-Driven Landing Page",
+   "what": "To generate HTML code for a complex, interactive landing page.",
+   "category": "code",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "body": "Build a single-file HTML, 3D scroll-driven landing page using Three.js + GSAP (ScrollTrigger) + Lottie smooth scroll, with animated shader/geometry that reacts to light, floating navbar, headline, subhead, CTA, recursive menu, cohesive dark premium color palette - all inline, no build step.",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "prompt:ai-coding-tools-blog-post",
+   "type": "prompt",
+   "name": "AI Coding Tools Blog Post",
+   "what": "To generate a detailed and engaging blog post about the benefits of AI coding tools.",
+   "category": "writing",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "body": "Write a detailed blog post about the benefits of using AI coding tools please I would really like it to be very engaging and also make sure that you cover everything Include clear code examples and best practices if at all possible maybe add some extra tips Keep it under 800 words total thanks so much i really appreciate it",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "prompt:identify-biggest-portfolio-mistake",
+   "type": "prompt",
+   "name": "Identify biggest portfolio mistake",
+   "what": "To get an AI analysis of the most significant errors or risks in an investment portfolio.",
+   "category": "financial analysis",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "body": "What is the biggest mistake I am making in my portfolio?",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "prompt:improve-portfolio-returns",
+   "type": "prompt",
+   "name": "Improve portfolio returns",
+   "what": "To receive actionable advice from AI on how to enhance investment returns.",
+   "category": "financial advice",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "body": "How do I get better returns?",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
    "id": "command:ultra-plan",
    "type": "command",
    "name": "/ultra-plan",
@@ -254347,7 +254844,7 @@
     "status": "verified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:49:11.004472+00:00"
+    "at": "2026-08-06T08:50:00.365555+00:00"
    },
    "stub": false,
    "related": [
@@ -254380,7 +254877,7 @@
     "status": "verified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:49:14.780552+00:00"
+    "at": "2026-08-06T08:50:04.017922+00:00"
    },
    "stub": false,
    "enriched": false,
@@ -254423,7 +254920,7 @@
     "status": "verified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:49:27.632641+00:00"
+    "at": "2026-08-06T08:50:16.826711+00:00"
    },
    "stub": false,
    "related": [
@@ -254463,7 +254960,7 @@
     "status": "unverified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:49:28.612531+00:00"
+    "at": "2026-08-06T08:50:17.845455+00:00"
    },
    "stub": false,
    "related": [
@@ -254491,7 +254988,7 @@
     "status": "unverified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:49:29.574195+00:00"
+    "at": "2026-08-06T08:50:18.796347+00:00"
    },
    "stub": false,
    "enriched": false,
@@ -254534,7 +255031,7 @@
     "status": "verified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:49:31.444338+00:00"
+    "at": "2026-08-06T08:50:20.596536+00:00"
    },
    "stub": false,
    "related": [
@@ -254564,7 +255061,7 @@
     "status": "verified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:49:35.147117+00:00"
+    "at": "2026-08-06T08:50:24.213216+00:00"
    },
    "stub": false,
    "enriched": false,
@@ -254604,7 +255101,7 @@
     "status": "unverified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:49:35.823128+00:00"
+    "at": "2026-08-06T08:50:24.951565+00:00"
    },
    "stub": false,
    "related": [
@@ -254647,7 +255144,7 @@
     "status": "unverified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:49:36.786760+00:00"
+    "at": "2026-08-06T08:50:25.975135+00:00"
    },
    "stub": false,
    "related": [
@@ -254690,7 +255187,7 @@
     "status": "verified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:49:40.064868+00:00"
+    "at": "2026-08-06T08:50:28.637488+00:00"
    },
    "stub": false,
    "related": [
@@ -254733,7 +255230,7 @@
     "status": "unverified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:49:40.971057+00:00"
+    "at": "2026-08-06T08:50:29.512915+00:00"
    },
    "stub": false,
    "related": [
@@ -254776,7 +255273,7 @@
     "status": "unverified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:49:44.573499+00:00"
+    "at": "2026-08-06T08:50:33.181362+00:00"
    },
    "stub": false,
    "related": [
@@ -254819,7 +255316,7 @@
     "status": "verified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:49:45.970867+00:00"
+    "at": "2026-08-06T08:50:34.811972+00:00"
    },
    "stub": false,
    "related": [
@@ -254860,7 +255357,7 @@
     "status": "unverified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:49:46.624218+00:00"
+    "at": "2026-08-06T08:50:35.938492+00:00"
    },
    "stub": false,
    "related": [
@@ -254903,7 +255400,7 @@
     "status": "unverified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:49:50.222091+00:00"
+    "at": "2026-08-06T08:50:39.408791+00:00"
    },
    "stub": false,
    "related": [
@@ -254937,7 +255434,7 @@
     "status": "unverified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:49:53.646089+00:00"
+    "at": "2026-08-06T08:50:43.056961+00:00"
    },
    "stub": false,
    "enriched": false,
@@ -254972,7 +255469,7 @@
     "status": "verified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:51:54.119086+00:00"
+    "at": "2026-08-06T08:52:43.443775+00:00"
    },
    "stub": false,
    "enriched": false,
@@ -255016,7 +255513,7 @@
     "status": "unverified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:51:58.599109+00:00"
+    "at": "2026-08-06T08:52:47.969124+00:00"
    },
    "stub": false,
    "related": [
@@ -255059,7 +255556,7 @@
     "status": "unverified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:52:00.073182+00:00"
+    "at": "2026-08-06T08:52:49.100509+00:00"
    },
    "stub": false,
    "related": [
@@ -255101,7 +255598,7 @@
     "status": "unverified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:52:04.274240+00:00"
+    "at": "2026-08-06T08:52:53.335498+00:00"
    },
    "stub": false,
    "related": [
@@ -255134,7 +255631,7 @@
     "status": "unverified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:52:04.846212+00:00"
+    "at": "2026-08-06T08:52:53.945996+00:00"
    },
    "stub": false,
    "enriched": false,
@@ -255168,7 +255665,7 @@
     "status": "unverified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:52:05.420788+00:00"
+    "at": "2026-08-06T08:52:54.492268+00:00"
    },
    "stub": false,
    "enriched": false,
@@ -255207,7 +255704,7 @@
     "status": "unverified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:52:07.927180+00:00"
+    "at": "2026-08-06T08:52:56.942697+00:00"
    },
    "stub": false,
    "related": [
@@ -255249,7 +255746,7 @@
     "status": "verified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:52:12.564177+00:00"
+    "at": "2026-08-06T08:53:01.457749+00:00"
    },
    "stub": false,
    "related": [
@@ -255291,7 +255788,7 @@
     "status": "unverified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:52:15.634780+00:00"
+    "at": "2026-08-06T08:53:04.445456+00:00"
    },
    "stub": false,
    "related": [
@@ -255323,7 +255820,7 @@
     "status": "unverified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:52:16.987920+00:00"
+    "at": "2026-08-06T08:53:05.539729+00:00"
    },
    "stub": false,
    "enriched": false,
@@ -255366,7 +255863,7 @@
     "status": "unverified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:52:17.529287+00:00"
+    "at": "2026-08-06T08:53:06.172126+00:00"
    },
    "stub": false,
    "related": [
@@ -255398,7 +255895,7 @@
     "status": "verified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:52:21.061466+00:00"
+    "at": "2026-08-06T08:53:09.829317+00:00"
    },
    "stub": false,
    "enriched": false,
@@ -255441,7 +255938,7 @@
     "status": "unverified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:52:21.954796+00:00"
+    "at": "2026-08-06T08:53:10.783234+00:00"
    },
    "stub": false,
    "related": [
@@ -255469,7 +255966,7 @@
     "status": "unverified",
     "method": "sandbox",
     "sources": 1,
-    "at": "2026-08-04T19:52:23.189964+00:00"
+    "at": "2026-08-06T08:53:12.342777+00:00"
    },
    "stub": false,
    "enriched": false,
@@ -343804,6 +344301,150 @@
    ]
   },
   {
+   "id": "design:ai-creator-landing-page",
+   "type": "design",
+   "name": "AI Creator Landing Page",
+   "what": "A modern, dark-themed landing page with a black background and white/light-colored text. Features a hero section with a 3D animated element, a 'CONTACT ME' button, and a 'SERVICES' section with numbered items. The overall vibe is sleek, professional, and tech-oriented, emphasizing 3D creation and AI.",
+   "category": "",
+   "source_videos": [],
+   "links": {
+    "source_url": "https://www.youtube.com/watch?v=Ug5bFdBiqgY"
+   },
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "design:stocklift-portfolio-dashboard",
+   "type": "design",
+   "name": "StockLift Portfolio Dashboard",
+   "what": "Dark theme with a clean, modern layout. Features large, prominent numbers for 'Portfolio Net Worth' and percentage changes. Includes distinct, colorful buttons for actions like 'Trade', 'Link Account', 'Calculate Diversification Score'. Sections for 'Executive Summary', 'Ask a Question', 'Invest with StockLift', 'Goals & Planning', 'Top Holdings', and 'Tax Optimization'. Uses a mix of bold and regular sans-serif typography. The overall vibe is professional and data-rich.",
+   "category": "",
+   "source_videos": [],
+   "links": {
+    "source_url": "https://www.youtube.com/watch?v=UlMO78Tqp8o"
+   },
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "design:stocklift-executive-summary-risks-and-threats-screen",
+   "type": "design",
+   "name": "StockLift Executive Summary / Risks And Threats Screen",
+   "what": "Dark theme with white text, presenting detailed, text-heavy analysis in a clear, numbered list format. Uses bullet points for specific details and bolding for key headings. The layout is straightforward, focusing on readability of complex financial information. The vibe is informative and analytical.",
+   "category": "",
+   "source_videos": [],
+   "links": {
+    "source_url": "https://www.youtube.com/watch?v=UlMO78Tqp8o"
+   },
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "design:stocklift-ai-trade-checker-screen",
+   "type": "design",
+   "name": "StockLift AI Trade Checker Screen",
+   "what": "Dark theme with a clean layout. Features a loading animation ('Analyzing BE against your portfolio...') followed by a detailed, numbered list for 'Investment Overview'. Includes sections for 'Company / Ticker', 'Sector / Industry', 'Business model', 'Recent performance & key metrics', 'Defensive vs. Vulnerable', and 'Follow Ups'. Uses clear headings and bullet points for easy digestion of information. The vibe is analytical and decision-support oriented.",
+   "category": "",
+   "source_videos": [],
+   "links": {
+    "source_url": "https://www.youtube.com/watch?v=UlMO78Tqp8o"
+   },
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "design:stocklift-review-order-screen",
+   "type": "design",
+   "name": "StockLift Review Order Screen",
+   "what": "Dark theme with a central 'Buy Order' card displaying the ticker, number of shares, and estimated total prominently. Below, 'Order Details' are presented in a clear list format with 'Symbol', 'Company', 'Current Price', and 'Quantity'. A large green circular button for confirmation is shown at the bottom. The design is minimalist and focused on transaction confirmation.",
+   "category": "",
+   "source_videos": [],
+   "links": {
+    "source_url": "https://www.youtube.com/watch?v=UlMO78Tqp8o"
+   },
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "design:ai-dispatch-blog-post-ui",
+   "type": "design",
+   "name": "AI Dispatch Blog Post UI",
+   "what": "A clean, simple blog post layout within a browser-like window. Features a light green header with a yellow emoji and black text. The body text is black on a white background, with clear headings and paragraphs. The design is functional and easy to read.",
+   "category": "",
+   "source_videos": [],
+   "links": {
+    "source_url": "https://www.youtube.com/watch?v=UtmUe7pLzcM"
+   },
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
    "id": "format:ai-agent-organizational-chart",
    "type": "format",
    "name": "AI Agent Organizational Chart",
@@ -353047,6 +353688,30 @@
     "skill:cfo-office-operations-scale",
     "tool:microsoft-365-mcp"
    ]
+  },
+  {
+   "id": "model:opus-4-8-extra",
+   "type": "model",
+   "name": "Opus 4.8 Extra",
+   "what": "An AI assistant or chatbot tool capable of advanced multi-persona simulation for decision-making and potentially integrating with external services like Google Drive, Calendar, and Gmail.",
+   "category": "agents",
+   "source_videos": [],
+   "links": {
+    "source_url": "https://www.youtube.com/watch?v=3vgagGeGg1E"
+   },
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
   },
   {
    "id": "model:ruflo",

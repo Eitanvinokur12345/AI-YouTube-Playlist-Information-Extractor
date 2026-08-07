@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-07T00:56:54.262772+00:00",
+ "generated_at": "2026-08-07T01:03:04.182291+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 241,
+   "turns_7d": 242,
    "rooms_7d": 172,
    "engines_used": [
     "groq",
@@ -181,14 +181,14 @@
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 167,
-   "rooms_7d": 148,
+   "turns_7d": 168,
+   "rooms_7d": 149,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will query Product Hunt's API for all posts tagged \"AI\" published in the last week to gather information on new and tr"
+   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a raw list o"
   },
   {
    "id": "transcripts-checker",
@@ -210,8 +210,8 @@
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 140,
-   "rooms_7d": 123,
+   "turns_7d": 141,
+   "rooms_7d": 124,
    "engines_used": [
     "groq",
     "mistral"
@@ -252,55 +252,69 @@
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 136,
-   "rooms_7d": 68,
+   "turns_7d": 137,
+   "rooms_7d": 69,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Choose a system-preference toggle (light/dark/auto) with adjustable saturation and font size. This keeps visibility high"
+   "last_position": "Choose a single high-contrast dark theme with adjustable saturation and font size. This maximizes visibility and livelin"
   },
   {
    "id": "power-w1",
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 136,
-   "rooms_7d": 66,
+   "turns_7d": 137,
+   "rooms_7d": 67,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add RealVisXL 4.0’s face-preserving upscaler to EXCAVA’s pipeline now. It directly solves the face fidelity drop that In"
+   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It preserves fine details like edges and texture"
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 134,
-   "rooms_7d": 67,
+   "turns_7d": 135,
+   "rooms_7d": 68,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Pane: A system toggle adds two risks: first, users who need *low* contrast still get auto-dark at night, triggering migr"
+   "last_position": "Adjustable saturation and font size don’t solve the core problem: users who need *low* contrast still get locked out by "
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 132,
-   "rooms_7d": 63,
+   "turns_7d": 133,
+   "rooms_7d": 64,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "RealVisXL 4.0’s lock-in is a real risk—Anthropic could drop support or raise costs, leaving us stranded. A better altern"
+   "last_position": "InstantX-ComfyUI’s depth-aware upscaler won’t fix EXCAVA’s face fidelity drop—it only sharpens edges, not facial feature"
+  },
+  {
+   "id": "analysis-lead",
+   "name": "Marrow",
+   "dept": "analysis",
+   "role": "lead",
+   "turns_7d": 128,
+   "rooms_7d": 116,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript, logs and flags pre-check errors from Operations"
   },
   {
    "id": "creators-w1",
@@ -315,20 +329,6 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Forge drafts the \"UGC Factory\" skill package for the Skill Creator, producing a labeled artifact named \"UGC Fact"
-  },
-  {
-   "id": "analysis-lead",
-   "name": "Marrow",
-   "dept": "analysis",
-   "role": "lead",
-   "turns_7d": 127,
-   "rooms_7d": 115,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Marrow ingests the full earnings call transcript, runs BloodHound-MCP to extract and map all named entities, rel"
   },
   {
    "id": "accessibility-w1",
@@ -363,15 +363,29 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 103,
-   "rooms_7d": 96,
+   "turns_7d": 104,
+   "rooms_7d": 97,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Reel runs the kimtaeyoon83/mcp-server-youtube-transcript tool on the pending video list, producing verified full",
+   "last_position": "ACTION: Reel runs the kimtaeyoon83/mcp-server-youtube-transcript tool on the pending video list to fetch full transcript",
    "proposed": 2
+  },
+  {
+   "id": "analysis-checker",
+   "name": "Sift",
+   "dept": "analysis",
+   "role": "checker",
+   "turns_7d": 103,
+   "rooms_7d": 41,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The real risk isn’t speed—it’s that Operations’ automated pre-check will log failures that Creative ignores, creating a "
   },
   {
    "id": "creators-lead",
@@ -386,20 +400,6 @@
    ],
    "positions_held": 25,
    "last_position": "ACTION: Forge drafts the \"Auto-Summarize\" UGC package for Skill Creator, labels it \"Created by EXCAVA,\" and includes a R"
-  },
-  {
-   "id": "analysis-checker",
-   "name": "Sift",
-   "dept": "analysis",
-   "role": "checker",
-   "turns_7d": 102,
-   "rooms_7d": 41,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: Chisel’s plan is MISSION work—BloodHound-MCP maps actors, relationships, and sentiment shifts from full transcr"
   },
   {
    "id": "improve-lead",
@@ -567,13 +567,13 @@
    "name": "Squint",
    "dept": "visual",
    "role": "checker",
-   "turns_7d": 26,
-   "rooms_7d": 26,
+   "turns_7d": 27,
+   "rooms_7d": 27,
    "engines_used": [
     "groq",
     "mistral"
    ],
-   "positions_held": 29,
+   "positions_held": 30,
    "last_position": "Verdict: The action is mission work our tool can do."
   },
   {

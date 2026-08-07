@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-07T17:27:13.597420+00:00",
+ "generated_at": "2026-08-07T19:34:33.098035+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -22,7 +22,7 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 217,
+   "turns_7d": 219,
    "rooms_7d": 138,
    "engines_used": [
     "groq",
@@ -30,7 +30,7 @@
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "I will run the full earnings call transcript through BloodHound-MCP to extract every entity, relationship, and privilege"
+   "last_position": "Adopt Reel’s standardized \"ready-for-transcription\" checklist: Creative tags videos as ready only when the checklist is "
   },
   {
    "id": "transcripts-w1",
@@ -62,6 +62,21 @@
    "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh, verified AI new"
   },
   {
+   "id": "transcripts-checker",
+   "name": "Scriv",
+   "dept": "transcripts",
+   "role": "checker",
+   "turns_7d": 180,
+   "rooms_7d": 39,
+   "engines_used": [
+    "groq",
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "The real risk is that Operations’ pre-check will log failures but Creative will ignore them, turning the system into a p"
+  },
+  {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
@@ -77,6 +92,20 @@
    "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a raw "
   },
   {
+   "id": "improve-w1",
+   "name": "Sprocket",
+   "dept": "improve",
+   "role": "doer",
+   "turns_7d": 180,
+   "rooms_7d": 88,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run PR-Agent in shadow mode on the newest merged PR first. It’s the fastest way to validate its feedback loop against re"
+  },
+  {
    "id": "security-lead",
    "name": "Bastion",
    "dept": "security",
@@ -89,35 +118,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output: real-time report confirming container sta"
-  },
-  {
-   "id": "transcripts-checker",
-   "name": "Scriv",
-   "dept": "transcripts",
-   "role": "checker",
-   "turns_7d": 179,
-   "rooms_7d": 39,
-   "engines_used": [
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "The real risk isn’t speed—it’s that Operations’ pre-check will log failures that Creative ignores, turning the log into "
-  },
-  {
-   "id": "improve-w1",
-   "name": "Sprocket",
-   "dept": "improve",
-   "role": "doer",
-   "turns_7d": 179,
-   "rooms_7d": 87,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on the newest open PR first. This catches routing or prompt regressions before they hit merg"
   },
   {
    "id": "security-w1",
@@ -210,14 +210,42 @@
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 146,
-   "rooms_7d": 129,
+   "turns_7d": 147,
+   "rooms_7d": 130,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
    "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
+  },
+  {
+   "id": "visualization-w1",
+   "name": "Facet",
+   "dept": "visualization",
+   "role": "doer",
+   "turns_7d": 146,
+   "rooms_7d": 73,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DO: Default to a dark theme but auto-switch to light mode when the system’s light mode is detected."
+  },
+  {
+   "id": "power-w1",
+   "name": "Gearbox",
+   "dept": "power",
+   "role": "doer",
+   "turns_7d": 146,
+   "rooms_7d": 71,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Add RealVisXL 5.0’s face-preserving upscaler to EXCAVA’s pipeline now. Faces in excavator footage are often the clearest"
   },
   {
    "id": "visual-lead",
@@ -234,73 +262,45 @@
    "last_position": "ACTION: Easel captures a high-quality full-page screenshot of the official Agent Platform Selection Rule page to mine it"
   },
   {
-   "id": "visualization-w1",
-   "name": "Facet",
-   "dept": "visualization",
-   "role": "doer",
-   "turns_7d": 145,
-   "rooms_7d": 73,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DO: Default to a single high-contrast dark theme with a persistent, one-click toggle to light mode."
-  },
-  {
-   "id": "power-w1",
-   "name": "Gearbox",
-   "dept": "power",
-   "role": "doer",
-   "turns_7d": 145,
-   "rooms_7d": 71,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It preserves fine details in complex scenes wher"
-  },
-  {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 143,
+   "turns_7d": 144,
    "rooms_7d": 72,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Pane: A single high-contrast dark theme still locks out users who need light mode for accessibility or context—like edit"
+   "last_position": "Pane: Auto-switching still fragments the interface—users see two modes, not one, and the transition creates jarring inco"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 141,
+   "turns_7d": 142,
    "rooms_7d": 68,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Depth-aware upscalers won’t fix EXCAVA’s face fidelity drop because the core problem is motion blur in fast excavator fo"
+   "last_position": "RealVisXL’s face upscaler won’t fix EXCAVA’s core flaw—it’s a bandage on motion blur, not the root cause. The real risk "
   },
   {
    "id": "improve-checker",
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 139,
-   "rooms_7d": 87,
+   "turns_7d": 140,
+   "rooms_7d": 88,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Shadow mode on merged PRs tests *past* work, not the *current* pipeline—it misses systemic issues in the newest open PRs"
+   "last_position": "Shadow mode on merged PRs only catches errors *after* they’re already in production—it doesn’t prevent them. A better al"
   },
   {
    "id": "analysis-lead",
@@ -321,14 +321,14 @@
    "name": "Forge",
    "dept": "creators",
    "role": "doer",
-   "turns_7d": 132,
-   "rooms_7d": 123,
+   "turns_7d": 133,
+   "rooms_7d": 124,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Forge drafts the \"UGC Factory\" skill package for the Skill Creator, producing a ready-to-use npm package labeled"
+   "last_position": "Action: Forge drafts the \"UGC Factory\" skill package for the Skill Creator, labeled \"Created by EXCAVA\" with tests."
   },
   {
    "id": "accessibility-w1",
@@ -363,28 +363,28 @@
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 113,
-   "rooms_7d": 48,
+   "turns_7d": 114,
+   "rooms_7d": 49,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk isn’t speed—it’s that Operations’ pre-check will log failures that Creative ignores, turning the system in"
+   "last_position": "Verdict: Chisel’s plan is valid MISSION work—BloodHound-MCP maps actors, relations, and privileges directly from transcr"
   },
   {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 109,
-   "rooms_7d": 102,
+   "turns_7d": 111,
+   "rooms_7d": 104,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Reel confirms with Creative the required transcript format (plain text vs. structured captions) before running t",
+   "last_position": "ACTION: Reel runs kimtaeyoon83/mcp-server-youtube-transcript on the pending video tagged “r” to fetch the real transcrip",
    "proposed": 2
   },
   {
@@ -567,8 +567,8 @@
    "name": "Squint",
    "dept": "visual",
    "role": "checker",
-   "turns_7d": 32,
-   "rooms_7d": 32,
+   "turns_7d": 33,
+   "rooms_7d": 33,
    "engines_used": [
     "groq",
     "mistral"

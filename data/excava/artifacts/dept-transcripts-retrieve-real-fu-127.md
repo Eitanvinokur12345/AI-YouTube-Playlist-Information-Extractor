@@ -1,16 +1,16 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-127` (dept) · 2026-07-31T21:29:50.379675+00:00
-> Participants: Reel · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-127` (dept) · 2026-08-07T19:32:51.790845+00:00
+> Participants: Reel, Scriv, Echo · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Use the YouTube transcript tool to fetch the full transcript for the video titled *"The AI Alignment Problem"*.
-2. Ensure the transcript is retrieved via residential IP for gentle pacing.
-3. Verify the transcript is complete and real (not AI-generated or summarized).
-4. Save the transcript as a `.txt` or `.md` file in a GitHub repository.
-5. Cross-check the transcript against the video for accuracy.
-6. If discrepancies are found, re-fetch the transcript and validate again.
+1. Reel executes `kimtaeyoon83/mcp-server-youtube-transcript` on the pending video tagged “r.”
+2. Verify the tool’s residential IP capability (e.g., via logs or tool documentation).
+3. If residential IP is confirmed, proceed with transcript/caption retrieval.
+4. If residential IP is not confirmed, switch to an alternative method (e.g., manual download or API fallback).
+5. Store the retrieved transcript/captions in the designated repository.
+6. Mark the video as processed in the tracking system.
 
-**What changed:** Decision to proceed with transcript retrieval using the YouTube tool.
+**What changed:** Tool execution is now contingent on confirming residential IP capability.

@@ -1,18 +1,16 @@
 # visualization: Own EXCAVA'S OWN interface — visibility, liveliness, clarity, enjoyment, speed of OUR scre
 
-> Decision artifact · room `dept-visualization-own-excava-s-o-936` (dept) · 2026-07-27T07:31:07.916085+00:00
+> Decision artifact · room `dept-visualization-own-excava-s-o-936` (dept) · 2026-08-07T00:56:24.255740+00:00
 > Participants: Facet, Pane, Lumen · synthesized by mistral/mistral-small-latest
 
-**Decision:**
-Default to system preference for dark mode with a manual override that resets after each session, validated by a week-long A/B test tracking toggle frequency and session abandonment.
+**Decision:** Use a single high-contrast dark theme with adjustable saturation and font size for all users—no system toggle.
 
 **Plan:**
-1. Implement system preference detection for dark/light mode as the default.
-2. Add a persistent manual toggle (UI element) that resets to system preference at the start of each new session.
-3. Log toggle frequency and session abandonment metrics for the A/B test.
-4. Split users into two cohorts: one with system-default + manual override, another with dark-default + manual override.
-5. After one week, analyze toggle frequency and session abandonment to determine the optimal default.
-6. Iterate based on data, prioritizing consistency and reducing cognitive load.
+1. Implement a single high-contrast dark theme as the default interface.
+2. Add adjustable saturation controls (0-100%) and font size (S/M/L/XL) sliders.
+3. Preload user preferences locally (browser/localStorage) to retain settings across sessions.
+4. Conduct a 2-week A/B test with 10% of users to validate accessibility and performance.
+5. Document the theme’s accessibility compliance (WCAG 2.1 AA) in the repo’s README.
+6. Sunset all light/auto-toggle features and related code branches.
 
-**What changed:**
-Default mode now respects system preference with a reset toggle, replacing a static dark-default approach.
+**What changed:** Removed system toggle, enforced dark theme, added granular user controls.

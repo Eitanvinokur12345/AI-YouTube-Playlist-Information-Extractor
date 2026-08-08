@@ -5,6 +5,52 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-08
+- **~10:0x (fire 128, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (18/20, 0 critical). Meta-fire cap was genuinely 3/3 (fires 125-127) — this fire's own
+  instructions required advancing the product, not re-running the same egress/credential
+  checks a fourth time, so spent the whole fire looking for real local work instead.
+  **Went past `excava_backlog list`'s headline and into `data/maintenance.json`'s actual issue
+  list** (regenerated fresh via `python -m src.maintenance_check`): grade D (57/100), and one
+  HIGH-severity item — "Pipeline lanes overdue" flagging `mine` (External mining) as `slow` —
+  looked new. First hypothesis (this session's shallow ~51-commit local clone is lying about
+  `mine-feeds` history) was WRONG and I verified that before writing it down: `data/
+  pipeline_status.json` was generated 4 minutes earlier by the CI beat's own full-history
+  checkout (`links+memory (fast lane)` commit), not by this sandbox, so the `slow` reading is
+  real telemetry, not a local-clone artifact. Cross-checked the actual GitHub Actions history
+  via `mcp__github__actions_list`/`get_job_logs` instead of trusting either the dashboard or my
+  own hypothesis: `mine.yml` has run and committed successfully every single day through
+  2026-08-07 (run `31170899561`, commit `a9ee30633`, +1 skill +6 tools, zero errors in the job
+  log). So the lane is NOT stalled — the monitor is wrong. Root cause: `mine.yml`'s cron is
+  once/day (`0 10 * * *`, ~24h gaps by design) but `src/pipeline_status.py`'s `LANES` table
+  declared its cadence as 12h (`live` threshold = cad*1.5 = 18h) — meaning the lane
+  self-flags "slow" for ~6h every single day even when it runs exactly on schedule, forever,
+  until fixed. Fixed: cadence 12 -> 24, matching `transcribe.yml`'s own identical
+  daily-cron -> 24h-cadence entry already in the same table. Verified against the real
+  timestamp by hand: age_h=23.4 now computes `live` (was `slow` under the old cadence).
+  Deliberately did NOT regenerate `data/pipeline_status.json` myself — this session's shallow
+  clone would compute it from only ~8h of local history and overwrite the CI beat's good data
+  with a worse one; it self-corrects on the next beat run instead. Also deliberately left
+  `gemini_video`'s cadence alone (12h declared vs an 18h real max gap between its two daily
+  cron slots) — that one sits exactly on the live/slow boundary, not provably wrong the way
+  `mine`'s was, so "fixing" it on a guess risks masking a real future stall instead of
+  correcting a false one. Verified: all 4 local test suites green (`excava_core_test`,
+  `git_merge_resolve_test`, `guardrail_test`, `or1_phase_test`); `python -m src.guardrails`
+  17/20, 0 critical (G-C/G-G cleared by this fire's own backup+sync; G-O is EITAN-PC-offline,
+  unrelated, structurally outside cloud reach). Shipped `ec887200` straight to `main` via a
+  direct `git commit -F` + `git push` (matching the repo's 100+-fire convention after
+  `git_safe push`'s own verification loop timed out against the same slow-proxy egress
+  standing_checks already has on record — confirmed the push actually landed via a fresh
+  `git fetch` + `rev-list --left-right --count`, not by trusting the command's exit code).
+  **Harsh self-criticism:** this is a one-line data fix, not a milestone deliverable — it
+  corrects a false alarm rather than growing the hub, and `data/maintenance.json`'s other
+  4 issues (188 undescribed discovered items, 404 sourceless connectors, 8 bare vendor names,
+  6417-item hairball categories) are all still open, three of them genuinely network/
+  editorial-gated and one (bare vendor names — Claude/Gemini/Grok/Llama/Sora, only 8 items)
+  left untouched this fire purely on time budget, not a real blocker — a fair pick for the
+  next fire with room. The real value here is narrow but concrete: Eitan (or the next 10
+  fires) won't spend time chasing a "mining stalled" ghost that was never real, and the
+  underlying lesson — check whether the OBSERVABILITY layer itself is lying before concluding
+  a lane is actually broken — is new; fires 121-127 never framed the question that way.
 - **~09:0x (fire 127, unattended, cloud, scheduled-task invocation, META)** — Standing checks OK
   (18/20, 0 critical; only G-C stale-backup — fixed this fire — and steady-state G-O EITAN-PC-
   offline). Did NOT trust fires 125/126's conclusions by rote: independently re-ran the actual

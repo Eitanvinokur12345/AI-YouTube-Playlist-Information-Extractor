@@ -17,7 +17,6 @@ import traceback
 from datetime import datetime, timezone
 
 WORK_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TODAY = datetime(2026, 6, 3, tzinfo=timezone.utc)
 
 
 # ── AI Tool knowledge base ─────────────────────────────────────────────────────
@@ -186,7 +185,7 @@ def is_relevant(video):
 def compute_age_months(published_at):
     try:
         pub = datetime.fromisoformat(published_at.replace('Z', '+00:00'))
-        delta = TODAY - pub
+        delta = datetime.now(timezone.utc) - pub
         return max(0, delta.days / 30.0)
     except Exception:
         return 12.0

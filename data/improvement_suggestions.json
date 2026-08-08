@@ -31,7 +31,7 @@
     {
       "id": "8140b97fbc",
       "type": "engine_fix",
-      "status": "pending",
+      "status": "applied",
       "detail": "Fix hardcoded TODAY date in src/analyze_batch.py line 20 — currently frozen at 2026-06-03, corrupting all recency penalty calculations for future videos. Replace with datetime.now(timezone.utc).",
       "proposed_change": {
         "file": "src/analyze_batch.py",
@@ -41,7 +41,9 @@
       },
       "source": "review",
       "review_finding_id": "b1c328b3e1",
-      "severity": "high"
+      "severity": "high",
+      "applied_at": "2026-08-08T21:00:00+00:00",
+      "applied_note": "fire 137: removed the module-level TODAY constant; compute_age_months() now calls datetime.now(timezone.utc) at call time. Regression test added: src/analyze_batch_test.py."
     },
     {
       "id": "b9bfdaf0ef",

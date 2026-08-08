@@ -5,6 +5,47 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-08
+- **~03:0x (fire 121, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
+  guardrails, 0 critical; stale `origin/main` cache + missing upstream tracking, both
+  auto-repaired, nothing lost). No carry-over increment open (fire 120's was `done`); consecutive
+  meta-fire count was 0/3 (120 was product), so picked meta work deliberately. Closed the audit
+  fire 120 explicitly queued ("grep `not .*\.get\(` against every numeric field once"): searched
+  all of `src/` for the falsy-zero pattern its own bugfix targeted — 2 other hits, both correct
+  (`security_scan.py`'s `injection_risk` is boolean, `discovery_agent.py`'s `stargazers_count`
+  already carries an explicit `0` default) — a real, verified negative result closing that loop,
+  not a skipped check.
+  **The more important finding this fire: re-read `data/status.json` directly instead of trusting
+  PULSE.md's "ALIVE" summary, and the standing `analyze.yml`/`review.yml` Claude-pipeline outage
+  (QUESTIONS.md item 31, open since fire 55 on 2026-07-27) has gotten materially worse, not
+  self-healed.** `analyze_consecutive_zero_progress_fails` is now **35** (was 6 at fire 81, 16 at
+  fire 86/87) with `last_analyze_ok_at` still **2026-07-28** — 11 days with zero real Claude-driven
+  analyze runs — and `review_ok` has been false since **2026-06-21**, ~7 weeks. Pulled fresh job
+  logs (not just run status) for `analyze.yml` run `31235813755` (2026-08-08T02:48Z) and
+  `review.yml` run `30724272208`: byte-identical to every prior fire's signature — SDK
+  initializes (`model: claude-sonnet-5`), then dies within ~2.3s on/before the first real turn
+  (`is_error:true, num_turns:1, total_cost_usd:0`). Confirmed WHY the dashboards still look
+  healthy despite this: `analyze.yml`'s safety-commit fallback step runs regardless of the Claude
+  step's outcome and commits housekeeping/state diffs either way (e.g. `528eb51b3`: 3 files, 6
+  line changes, no real analysis) — the actual ingestion movement PULSE.md reports is coming
+  entirely from the separate free-pool `bulk_analyze` lane, not this one. Escalated with a fresh,
+  dated update on QUESTIONS.md item 31 and sent a push notification — this has been sitting as an
+  unactioned, self-documented "your call" ask across 6+ fires for 12 days while degrading, which
+  is exactly what this routine exists to interrupt Eitan for rather than let scroll by quietly.
+  **Did not act on the token/cadence myself** — same standing reason as fires 55/57/63/81/86/87:
+  cannot distinguish an expired `CLAUDE_CODE_OAUTH_TOKEN_REAL` from a rolling usage cap from
+  inside this sandbox, and both candidate fixes (`claude setup-token` + secret rotation, or
+  throttling the catch-up cadence) require information or access only Eitan has.
+  `python -m src.guardrails`: 18/20, 0 critical, same two pre-existing unrelated misses as fire
+  120 (G-C stale history bundle, self-heals on `git_safe` push; G-O local-PC drain stale,
+  PC-dependent). **Harsh self-criticism:** I chose to re-verify and escalate an already-known
+  problem rather than build something new — the right call given it's actively worsening and
+  blocking the flagship ingestion lane, but it means M1-M5 milestone work is untouched again this
+  fire, and the underlying fix still requires Eitan, not another sandbox session. I also did not
+  attempt the `show_full_output:true` diagnostic dispatch fire 119 queued for `review.yml` — with
+  the outage this severe and this old, the actual error text likely still says "quota/auth", which
+  wouldn't change the ask; spending a public-log exposure on it now felt like the wrong tradeoff
+  versus just surfacing the numbers that already exist.
+
 - **~02:0x (fire 120, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
   guardrails, 0 critical; stale `origin/main` cache + missing upstream tracking, both
   auto-repaired by `standing_checks`, nothing lost). Current increment was already `done` (fire

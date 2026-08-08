@@ -163,6 +163,25 @@ def fusable(e: dict, egress_open: bool) -> bool:
                for v in (e.get("source_videos") or [])[:3])
 
 
+def select_batch(todo: list[dict], fusable_fn, attempts: dict, cutoff: str,
+                  start: int, limit: int) -> tuple[list[dict], list[dict]]:
+    """Choose which elements this run spends its batch on: FRESH (stub, fusable, not
+    attempted in the last 3 days) first, then FILLER (cursor walk over `todo`) to top up
+    when fresh doesn't fill the batch. Filler must be fusable too — fire 133 gated `fresh`'s
+    fusability but left filler walking the raw list unfiltered, so a restricted-egress run
+    could still burn a whole batch on doomed readme_excerpt()/homepage_meta() network calls
+    via the filler path alone. Module-level so it's directly testable without a live network
+    call or a real element index. Returns (batch, fresh) — fresh is also used for the
+    pool-size log line."""
+    fresh = [e for e in todo if e.get("stub") and fusable_fn(e) and attempts.get(e["id"], "") < cutoff]
+    batch = fresh[:limit]
+    if len(batch) < limit:
+        have = {e["id"] for e in batch}
+        filler = [e for e in todo[start:start + limit] if e["id"] not in have and fusable_fn(e)]
+        batch += filler[:limit - len(batch)]
+    return batch, fresh
+
+
 def enrich(el: dict, dry: bool = False) -> dict | None:
     """One element: gather full sources -> best new description -> write back + evidence."""
     sources = {}
@@ -237,13 +256,9 @@ def main() -> int:
     todo_ids = {e["id"] for e in todo}
     attempts = {k: v for k, v in st.get("attempts", {}).items() if k in todo_ids}
     cutoff = (datetime.now(timezone.utc) - timedelta(days=3)).isoformat()
-    fresh = [e for e in todo if e.get("stub") and _fusable(e) and attempts.get(e["id"], "") < cutoff]
-    batch = fresh[:a.limit]
     start = st.get("cursor", 0) % max(len(todo), 1)
+    batch, fresh = select_batch(todo, _fusable, attempts, cutoff, start, a.limit)
     if len(batch) < a.limit:
-        have = {e["id"] for e in batch}
-        filler = [e for e in todo[start:start + a.limit] if e["id"] not in have]
-        batch += filler[:a.limit - len(batch)]
         st["cursor"] = start + a.limit
     done = upgraded = attempted = 0
     t0 = time.time()

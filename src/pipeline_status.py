@@ -31,8 +31,10 @@ LANES = [
      ["transcribe", "backfill", "fetch:"], 24),
     ("free_pool", "Free analysis pool", "Turns transcripts into skills/tools/connectors (free engines)",
      ["bulk-analyze"], 6),
+    # mine.yml's cron is once/day (24h gaps by design) — cadence must match or this lane
+    # false-flags "slow" for ~6h every single day even when it's running exactly on schedule.
     ("mine", "External mining", "Mines 80+ web feeds for new tools/skills/MCPs",
-     ["mine-feeds", "mine ", "discover:"], 12),
+     ["mine-feeds", "mine ", "discover:"], 24),
     ("claude_analyze", "Deep analysis (night-gated)", "Claude re-analysis + safety pass",
      ["analyze:"], 24),
     ("news", "AI news refresh", "Refreshes official-site AI news",

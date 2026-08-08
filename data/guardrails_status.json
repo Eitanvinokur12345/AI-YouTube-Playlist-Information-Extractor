@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-08-08T09:14:57.136605+00:00",
+ "generated_at": "2026-08-08T10:12:58.867248+00:00",
  "total": 20,
- "passing": 17,
+ "passing": 19,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -22,8 +22,8 @@
    "id": "G-C",
    "name": "History backup fresh",
    "ok": true,
-   "detail": "n/a in CI — the beat pushes straight to origin each cycle, bypassing git_safe/local bundles by design.",
-   "severity": "info"
+   "detail": "2 bundle(s); newest within 26h.",
+   "severity": "warn"
   },
   {
    "id": "G-D",
@@ -78,7 +78,7 @@
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "0 guardrail runs logged (append-only, never rewritten).",
+   "detail": "2 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -99,22 +99,22 @@
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "88720 MB free on the repo drive.",
+   "detail": "28587 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 315.2h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 316.2h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
-   "ok": false,
-   "detail": "last 'excava-beat #N' commit 31.6h ago — STALE: the dedicated heartbeat loop isn't landing per-cycle commits (check for a wedged/queued excava_beat.yml run).",
-   "severity": "warn"
+   "ok": true,
+   "detail": "shallow clone — not enough local history to find an 'excava-beat #N' commit either way; not a stall signal, just a checkout-depth limit.",
+   "severity": "info"
   },
   {
    "id": "G-Q",
@@ -126,8 +126,8 @@
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
-   "ok": false,
-   "detail": "12/16 lane(s) landing on cadence — STALE: discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 1155.1h ago (expected within 76h); improve.yml (weekly deep pass): last commit 1504.9h ago (expected within 192h); review.yml (twice-weekly): last commit 225.3h ago (expected within 100h); transcribe.yml (daily): last commit 170.9h ago (expected within 30h)",
+   "ok": true,
+   "detail": "10/16 lane(s) landing on cadence, 6 can't-tell (shallow clone).",
    "severity": "warn"
   },
   {

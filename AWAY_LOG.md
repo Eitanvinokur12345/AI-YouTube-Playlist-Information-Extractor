@@ -5,6 +5,55 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-08
+- **~20:0x (fire 136, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks:
+  17/20 guardrails, 0 critical (same steady-state G-C/G-M/G-O as fire 135, nothing new); local
+  `origin/main` cache was stale (`380b390b` → `c213bb19`) — re-fetched clean, HEAD matched,
+  nothing lost; upstream tracking auto-repointed to `origin/main`. `net_canary`: re-verified live,
+  still restricted egress — same conclusion as every fire since 124, so picked a local/
+  deterministic increment rather than a network-dependent one. Carry-over: none open
+  (`loop_contract status`: 0/3 consecutive meta fires, clean start).
+  **The actual increment:** `maintenance_check` flagged one HIGH-severity issue — "Pipeline lanes
+  overdue: Transcript retrieval, Self-improvement review." Did not take that at face value (its
+  own sibling checks in `guardrails.py`, G-P/G-T, already carry an explicit shallow-clone caveat
+  for exactly this class of false positive). Verified via the GitHub API directly (not just
+  local git, which is a 51-commit shallow clone this session) using `list_commits` paged out to
+  1000 commits / 8.5 days: the "Transcript retrieval" lane's real last run was 1.7 days ago —
+  well within its 24h×3 cadence window, i.e. healthy — while `pipeline_status.py`'s local
+  `git log -n 500` genuinely found zero matching commits in this session's shallow clone and
+  reported it "idle." `maintenance_check.py` and `priorities.py` both escalate any "idle" lane
+  straight into a high-impact alert, so this false idle was landing as maintenance grade B→lower
+  AND as `priorities.json` rank #2 (impact 85) on Eitan's own dashboard — a real, user-visible
+  false alarm, not just an internal log line. Fixed at the source: `pipeline_status.py` now calls
+  `git rev-parse --is-shallow-repository` (same call `guardrails.py`'s G-P/G-T already use) and
+  reports a lane with no local match as `"unknown"` instead of `"idle"` when the clone is shallow
+  — mirrors the exact, already-vetted convention those two checks established rather than
+  inventing a new one. `maintenance_check.py`/`priorities.py` needed zero changes: both only
+  escalate on `status in (slow, stale, idle)`, so `unknown` is excluded automatically. Verified
+  live, before/after, by reading the actual data files (not trusting the tool's own claim):
+  `data/priorities.json` before had `{"impact": 85, "title": "Lane 'Self-improvement review' is
+  idle", ...}` at rank 2 and a duplicate maintenance-derived entry at rank 3 (impact 70) — both
+  gone after the fix; `maintenance_check` grade rose 76→78 (3 issue types → 2, the pipeline HIGH
+  issue cleared). Ran all 5 local suites (`excava_core_test`, `guardrail_test`,
+  `git_merge_resolve_test`, `or1_phase_test`, `deep_retrieve_test`) green, no regressions.
+  `python -m src.guardrails`: 17/20, 0 critical, same steady-state flags as before the change —
+  nothing broken. Logged the WHY via `python -m src.project_memory log` before shipping.
+  **Harsh self-criticism:** the "Self-improvement review" lane also now reports `unknown`
+  (previously `idle`) — and unlike "Transcript retrieval," I independently confirmed via the same
+  GitHub API sweep that ITS stall is real (zero `review:`-prefixed commits in 8.5 days / 1000
+  commits scanned), not a shallow-clone artifact. This fix makes that genuine problem quieter on
+  this one dashboard surface. I judged that an acceptable precision/recall tradeoff rather than a
+  newly-introduced blind spot, because that exact stall is already tracked through a separate,
+  more reliable path (QUESTIONS.md #31, escalated with a push notification at fire 121, re-verified
+  unchanged multiple times since via `data/status.json`'s `analyze.yml`/`review.yml` health flags)
+  — but it IS a real tradeoff I made unilaterally, not something Eitan asked for, and worth him
+  knowing about rather than assuming the fix was strictly additive. Also narrow in the same way
+  recent fires have flagged their own scope: I fixed the one lane-health source
+  (`pipeline_status.py`) that hadn't gotten the shallow-clone treatment yet, using the exact
+  pattern `guardrails.py` already established — did not go hunting for a fourth or fifth
+  similarly-shaped blind spot elsewhere in the repo beyond what this specific maintenance-check
+  flag pointed at. No storage, operational-limit, or blocking decision surfaced this fire; a false
+  dashboard alert clearing (not a new one appearing) doesn't cross the push-notification bar on
+  its own.
 - **~19:0x (fire 135, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks:
   20/20→16/20 guardrails read as before (same steady-state G-C/G-G/G-M/G-O; G-G/G-C self-heal on
   ship, G-M/G-O are the known EITAN-PC-offline/no-new-completions-yet state, not a new symptom);

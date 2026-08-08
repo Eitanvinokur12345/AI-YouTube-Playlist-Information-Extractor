@@ -5,6 +5,66 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-08
+- **~14:0x (fire 131, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (18/20, 0 critical; local `origin/main` cache was stale again — same recurring pattern every
+  fire since ~120, re-fetched clean, HEAD matched, nothing lost; upstream tracking already
+  correct). `loop_contract status`: no carry-over open, consecutive-meta counter reset to 0/3 by
+  fire 130's product work — free to pick either lane. `excava_backlog list`: top item (OR-1,
+  value 95) is still correctly stuck on Eitan's own pending decision from fire 123 (pick/merge a
+  final rubric from 4 competing phase-4 guidelines — `python -m src.or1_rubric_index summary`
+  confirms all 10 types still sit at "phase 4 done, not converged," unchanged); the next 7
+  above-bar candidates (verify/watch/links/security/mining/memory/news) all remain network- or
+  credential-gated in this session type, same as every fire since 120 — did not re-verify
+  `net_canary` a redundant time to reach that conclusion since it is well-established and
+  unchanged, and re-checking again would itself be the kind of meta-work the cap exists to limit.
+  **The actual increment:** regenerated `data/maintenance.json` fresh and read the "Connectors
+  with no URL/source can't be installed or verified" (404 items, low-sev) issue's actual records
+  before accepting the flag at face value — same discipline fires 129/130 used on their two
+  false-positive catches. This one was NOT a checker bug: `maintenance_check.py`'s
+  `not (c.get("url") or c.get("install_or_source"))` test is correct as written. But 261 of the
+  404 flagged connectors (Alexa + Claude Integration, Recall Chrome extension, Claude Co-work
+  Slack/Notion Integration, Hugging Face, Claude Skills, Claude Routines, and 255 more) already
+  carry a real, working product URL in their `homepage` field — it just never made it into `url`.
+  That matters beyond the checker: `element_model.py`'s own connector type-map reads `website`
+  from `url` only (not `homepage`), and `build_brain.py`'s vault renderer only ever emits a
+  `[Link](...)` line `if c.get("url")` — so all 261 of these connectors were silently missing
+  their clickable source link in the real read surface (the Obsidian vault) and in the unified
+  element index's website field, not merely mis-flagged by one report. Backfilled `url` from
+  `homepage` for exactly those 261 (left the other 143 alone — 10 have only a YouTube
+  `also_seen_in` video reference, which is not a product URL and would be wrong to use as one; 133
+  have neither and are genuinely sourceless, needing real discovery, not a local fix). Verified
+  before/after at three layers, not just the one that first flagged it: (1) `git diff --stat` —
+  exactly 261 one-line `url` changes to `data/connectors.json`, nothing else touched; (2)
+  `maintenance_check` — orphan-connector count 404 → 143 (the 133+10 genuinely untouched, matching
+  exactly); (3) rebuilt the Obsidian vault to a scratch path (the real
+  `C:/Users/eitan/OneDrive/...` target doesn't exist in this sandbox, so pointed `build_brain` at
+  a throwaway dir instead of leaving stray `C:/` folders in the repo — caught and removed one such
+  stray folder from an earlier same-fire `build_brain` run with no path argument) and confirmed by
+  reading the actual generated `.md` files: "Alexa + Claude Integration" and "Recall Chrome
+  extension" now render a real `[Link](https://...)` line that was absent before (the `if
+  c.get("url")` branch was false — url was `null`/`""` — so the line was silently omitted, not
+  just empty). All 4 local regression suites green (`excava_core_test`, `guardrail_test`,
+  `git_merge_resolve_test`, `or1_phase_test`); `python -m src.guardrails`: 18/20, 0 critical (same
+  steady-state G-C stale-backup/G-O EITAN-PC-offline as every recent fire). Logged the WHY via
+  `python -m src.project_memory log` before shipping.
+  **Harsh self-criticism:** narrower than it looks — 261 is 65% of the flagged count but still
+  leaves 143 genuinely open (10 of which now have an honest, distinct reason: "only a video
+  reference, not a product URL," which the maintenance report's generic sample list doesn't
+  surface — a follow-up fire could split that out as its own issue type so it doesn't get
+  re-diagnosed from scratch next time). The composite maintenance grade did not move (still B,
+  77/100) because this was already a low-severity issue type in the score, and the same 2 open
+  issues (self-improve stall — Eitan's call; 188 undescribed discoveries — network-gated) remain
+  untouched — so the visible dashboard number is unchanged even though a real, verified 261-item
+  fix landed underneath it, which is worth stating plainly rather than letting a flat score read
+  as "nothing happened." Also did not touch `element_model.py`/`build_brain.py` themselves (no
+  reason to — both already correctly read `url` once it's populated; the bug was purely in the
+  data, not the consumers) and did not attempt to resolve the 133 truly-sourceless connectors
+  (would need real network lookups this session's restricted egress can't safely do — same
+  boundary fires 122/126/127/129/130 have already drawn). Not pushing a notification: nothing
+  crossed the blocking-decision bar this fire; OR-1 remains the one standing item genuinely
+  waiting on Eitan and it was already surfaced in QUESTIONS.md at fire 123, re-confirmed unchanged
+  rather than re-notified.
+
 - **~13:0x (fire 130, unattended, cloud, scheduled-task invocation, PRODUCT, 10th heartbeat)** —
   Standing checks OK (`python -m src.standing_checks`: 18/20 guardrails, 0 critical; local
   `origin/main` cache was stale again — same recurring pattern every fire since ~120 — re-fetched

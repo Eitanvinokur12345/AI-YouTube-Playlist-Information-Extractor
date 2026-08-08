@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-08T21:04:04.237307+00:00",
+ "generated_at": "2026-08-08T23:02:35.251098+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,8 +8,8 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 136,
-   "rooms_7d": 38,
+   "turns_7d": 138,
+   "rooms_7d": 39,
    "engines_used": [
     "groq",
     "mistral",
@@ -23,14 +23,14 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 122,
-   "rooms_7d": 82,
+   "turns_7d": 123,
+   "rooms_7d": 83,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run kimtaeyoon83/mcp-server-youtube-transcript on every pending video now. It’s the fastest path to transcripts without "
+   "last_position": "Run kimtaeyoon83/mcp-server-youtube-transcript on every pending video now. This will produce full transcripts for analys"
   },
   {
    "id": "analysis-w1",
@@ -47,6 +47,20 @@
    "last_position": "Adopt the official YouTube API with a quota-backed client to pull transcripts. It’s the only way to guarantee reliabilit"
   },
   {
+   "id": "improve-w1",
+   "name": "Sprocket",
+   "dept": "improve",
+   "role": "doer",
+   "turns_7d": 92,
+   "rooms_7d": 47,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run PR-Agent in shadow mode on the newest merged PR first. It’s the fastest way to spot routinable patterns in real PRs "
+  },
+  {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
@@ -61,32 +75,18 @@
    "last_position": "The real risk isn’t just setup time—it’s that a quota-backed YouTube API client turns Operations into a bottleneck. Crea"
   },
   {
-   "id": "improve-w1",
-   "name": "Sprocket",
-   "dept": "improve",
-   "role": "doer",
-   "turns_7d": 91,
-   "rooms_7d": 46,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on the newest open PR first. This catches routing flaws and review gaps before they ship, cu"
-  },
-  {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 86,
-   "rooms_7d": 41,
+   "turns_7d": 88,
+   "rooms_7d": 42,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run kimtaeyoon83/mcp-server-youtube-transcript on every pending video immediately. This will produce real full transcrip"
+   "last_position": "Run kimtaeyoon83/mcp-server-youtube-transcript on every pending video now. It’s the fastest path to transcripts without "
   },
   {
    "id": "memory-w1",
@@ -114,6 +114,20 @@
    ],
    "positions_held": 30,
    "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh, timestamped sum"
+  },
+  {
+   "id": "news-lead",
+   "name": "Wire",
+   "dept": "news",
+   "role": "lead",
+   "turns_7d": 71,
+   "rooms_7d": 71,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three verified items from OpenAI’s official blog "
   },
   {
    "id": "security-lead",
@@ -157,20 +171,6 @@
    "last_position": "ACTION: Anchor publishes the verified, updated link inventory for the Mission Control Dashboard."
   },
   {
-   "id": "news-lead",
-   "name": "Wire",
-   "dept": "news",
-   "role": "lead",
-   "turns_7d": 70,
-   "rooms_7d": 70,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key announcements from official sources, in"
-  },
-  {
    "id": "links-w1",
    "name": "Anchor",
    "dept": "links",
@@ -204,26 +204,26 @@
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 67,
+   "turns_7d": 68,
    "rooms_7d": 34,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Choose a single dark theme with a persistent one-click toggle to light mode. High contrast colors ensure visibility and "
+   "last_position": "Adopt a system that remembers the user’s last mode per session and defaults to it, with a subtle indicator if the mode c"
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 67,
+   "turns_7d": 68,
    "rooms_7d": 34,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Pane: A persistent one-click toggle still risks users getting stuck in the wrong mode—some won’t notice the toggle, othe"
+   "last_position": "Pane: Remembering last mode doesn’t solve the core problem—users still won’t notice the toggle when they need it. Better"
   },
   {
    "id": "news-checker",
@@ -253,6 +253,19 @@
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health via its MCP serve"
   },
   {
+   "id": "watch-checker",
+   "name": "Frame",
+   "dept": "watch",
+   "role": "checker",
+   "turns_7d": 62,
+   "rooms_7d": 62,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts marketing insights from video cont"
+  },
+  {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
@@ -279,19 +292,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
-  },
-  {
-   "id": "watch-checker",
-   "name": "Frame",
-   "dept": "watch",
-   "role": "checker",
-   "turns_7d": 61,
-   "rooms_7d": 61,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts marketing insights from video cont"
   },
   {
    "id": "power-w1",
@@ -326,14 +326,28 @@
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 48,
+   "turns_7d": 49,
+   "rooms_7d": 47,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Shadow mode on merged PRs only catches errors *after* they’re already in production—too late to prevent harm. Better to "
+  },
+  {
+   "id": "visual-lead",
+   "name": "Chroma",
+   "dept": "visual",
+   "role": "lead",
+   "turns_7d": 46,
    "rooms_7d": 46,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Shadow mode on merged PRs only catches errors *after* they’re already in product—it’s a post-mortem, not prevention. A b"
+   "last_position": "ACTION: Easel captures a high-quality full-page screenshot of the official Agent Platform Selection Rule page to extract"
   },
   {
    "id": "visual-w1",
@@ -362,22 +376,8 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Start PR-Agent in shadow mode on the newest open PR to catch issues before they ship, then expand to merged PR",
-   "proposed": 4,
-   "shipped": 2
-  },
-  {
-   "id": "visual-lead",
-   "name": "Chroma",
-   "dept": "visual",
-   "role": "lead",
-   "turns_7d": 45,
-   "rooms_7d": 45,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Easel captures a high-quality full-page screenshot of the official Model Context Protocol (MCP) website to extra"
+   "proposed": 3,
+   "shipped": 1
   },
   {
    "id": "improve-improver",
@@ -394,6 +394,34 @@
    "last_position": "Run PR-Agent in shadow mode on the newest *open* PR first, then expand to merged PRs—this catches issues before they shi"
   },
   {
+   "id": "accessibility-w1",
+   "name": "Ramp",
+   "dept": "accessibility",
+   "role": "doer",
+   "turns_7d": 42,
+   "rooms_7d": 22,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Add a 4px outer ring in #005fcc with a 2px white inner ring for focus indicators. This ensures keyboard users see a clea"
+  },
+  {
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
+   "role": "checker",
+   "turns_7d": 42,
+   "rooms_7d": 22,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The 4px ring fails on high-contrast patterned backgrounds where the white inner ring disappears into the pattern. A 2px "
+  },
+  {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
@@ -406,34 +434,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a privilege graph, then flags overpr"
-  },
-  {
-   "id": "accessibility-w1",
-   "name": "Ramp",
-   "dept": "accessibility",
-   "role": "doer",
-   "turns_7d": 41,
-   "rooms_7d": 21,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Use a 2px solid #005fcc ring with a 1px white inner ring for focus indicators. This meets WCAG 2 at 3:1 contrast on patt"
-  },
-  {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 41,
-   "rooms_7d": 21,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "The 2px ring risks failing on low-contrast solid backgrounds where the 1px white inner ring reduces contrast too much. A"
   },
   {
    "id": "transcripts-lead",
@@ -491,8 +491,8 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Test ComfyUI’s FaceDetailer node with SD3.5’s face model on EXCAVA’s motion-blurred footage first—if face fide",
-   "proposed": 17,
-   "shipped": 17
+   "proposed": 16,
+   "shipped": 16
   },
   {
    "id": "creators-w1",

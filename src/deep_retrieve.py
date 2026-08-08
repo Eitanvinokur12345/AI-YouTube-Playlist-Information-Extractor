@@ -32,6 +32,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from src import element_model as em
+from src import net_canary
 
 ROOT = Path(__file__).parent.parent
 DATA = ROOT / "data"
@@ -143,6 +144,25 @@ def _llm_fuse(el: dict, sources: dict) -> tuple[str, str]:
         return "", ""
 
 
+def fusable(e: dict, egress_open: bool) -> bool:
+    """Has a source we can actually READ RIGHT NOW. A repo/site link only counts when
+    general web egress is actually open this run; a source video whose full transcript is
+    already on disk always counts (local file read, no network). Video-only stubs with no
+    local transcript are NOT fusable yet — they wait for the transcript drain, instead of
+    burning batch slots on instant no-source failures (24/24 slots wasted on 2026-07-20).
+
+    Fire 131/132 both burned ~39/40 batch slots on github/website-link-only stubs whose
+    readme_excerpt()/homepage_meta() network calls silently return "" under this session's
+    restricted egress (_get() swallows the exception) — the old version counted a link as
+    fusable regardless of whether it's actually reachable RIGHT NOW. Module-level (not a
+    main() nested function) so it's directly testable without a live network call."""
+    L = e.get("links", {})
+    if egress_open and (L.get("github") or L.get("website")):
+        return True
+    return any((DATA / "processed" / f"{v}.json").exists()
+               for v in (e.get("source_videos") or [])[:3])
+
+
 def enrich(el: dict, dry: bool = False) -> dict | None:
     """One element: gather full sources -> best new description -> write back + evidence."""
     sources = {}
@@ -199,16 +219,12 @@ def main() -> int:
 
     idx = em.build()
 
+    # One canary call up front tells us which sources are real for this run, so link-only
+    # stubs stop eating batch slots on doomed attempts when egress is closed (see fusable()).
+    egress_open = net_canary.network_open()
+
     def _fusable(e: dict) -> bool:
-        """Has a source we can actually READ RIGHT NOW: a repo/site link, or a source video
-        whose full transcript is already on disk. Video-only stubs with no local transcript
-        are NOT fusable yet — they wait for the transcript drain, instead of burning batch
-        slots on instant no-source failures (24/24 slots wasted on 2026-07-20)."""
-        L = e.get("links", {})
-        if L.get("github") or L.get("website"):
-            return True
-        return any((DATA / "processed" / f"{v}.json").exists()
-                   for v in (e.get("source_videos") or [])[:3])
+        return fusable(e, egress_open)
 
     todo = sorted((e for e in idx["elements"] if e.get("stub") or not e.get("enriched")),
                   key=lambda e: (not e.get("stub"), not _fusable(e), e["id"]))  # stubs first, fusable first
@@ -256,13 +272,14 @@ def main() -> int:
     st["todo_at_last_run"] = len(todo)
     st["updated_at"] = _now()
     STATE.write_text(json.dumps(st, ensure_ascii=False, indent=2), encoding="utf-8")
+    egress_note = "egress open" if egress_open else "egress RESTRICTED (link-only stubs excluded from fresh)"
     if not a.dry_run:
         idx2 = em.build()
         tag = f" — STOPPED at {a.deadline:.0f}s deadline after {attempted}/{len(batch)}" if stopped_early else ""
-        print(f"deep-retrieve: batch of {len(batch)} (fresh-fusable pool {len(fresh)}) from {len(todo)} thin elements; "
+        print(f"deep-retrieve: {egress_note}; batch of {len(batch)} (fresh-fusable pool {len(fresh)}) from {len(todo)} thin elements; "
               f"{done} enriched ({upgraded} descriptions upgraded); stubs now {idx2['stubs']}{tag}")
     else:
-        print(f"[dry] would process {len(batch)} of {len(todo)} (fresh-fusable pool {len(fresh)})")
+        print(f"[dry] {egress_note}; would process {len(batch)} of {len(todo)} (fresh-fusable pool {len(fresh)})")
     return 0
 
 

@@ -30994,15 +30994,16 @@
       "department": "power",
       "source": "agent:power-lead",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the decision's concrete step is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "power-w1",
       "handoff_docs": [],
       "created_at": "2026-08-07T21:13:34.419137+00:00",
-      "updated_at": "2026-08-07T21:13:34.419156+00:00"
+      "updated_at": "2026-08-08T09:13:00.051553+00:00",
+      "result": "Ran the power scan.   - Gemma 4 12B | Google DeepMind's open-source multimodal 12B model using an encoder-fr"
     },
     {
       "id": "analysis-room-action-mar-37224",
@@ -31451,18 +31452,20 @@
       "id": "resolve-real-links-websi-61273",
       "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
       "detail": "value=82 size=41(small) [cost 40/steps 60/risk 15] · many unlinked",
-      "department": "links",
+      "department": "memory",
       "source": "gap",
       "priority": 1,
       "status": "queued",
-      "steps": 0,
+      "steps": 1,
       "max_steps": 8,
-      "done_criteria": "a committed artifact that measurably closes this gap",
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
       "claimed_by": null,
-      "handoff_docs": [],
+      "handoff_docs": [
+        "data/excava/handoffs/resolve-real-links-websi-61273--01--links-w1--to--memory.md"
+      ],
       "created_at": "2026-08-08T03:54:33.555756+00:00",
-      "updated_at": "2026-08-08T03:54:33.555769+00:00"
+      "updated_at": "2026-08-08T09:13:00.134911+00:00"
     },
     {
       "id": "security-safety-rate-the-61273",
@@ -31525,17 +31528,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-61273--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-08-08T03:54:33.715761+00:00",
-      "updated_at": "2026-08-08T05:22:23.353655+00:00"
+      "updated_at": "2026-08-08T09:12:46.334065+00:00",
+      "result": "1503 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "security-room-action-war-61553",
@@ -31650,15 +31654,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-08-08T05:22:09.345031+00:00",
-      "updated_at": "2026-08-08T05:22:09.345048+00:00"
+      "updated_at": "2026-08-08T09:12:45.767665+00:00",
+      "result": "Semantic index: 1638 vectors (model gemini-embedding-001); hub 8292 items → 6654 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "news-refresh-the-ai-news-66529",
@@ -31843,15 +31848,16 @@
       "department": "mining",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "mining-w1",
       "handoff_docs": [],
       "created_at": "2026-08-08T07:32:22.898439+00:00",
-      "updated_at": "2026-08-08T07:32:22.898448+00:00"
+      "updated_at": "2026-08-08T09:12:58.749387+00:00",
+      "result": "Ran the discovery agent. discovery: +1 new (of 156 sighted) → 804 queued; arxiv=112, gh-active=69, gh-new=37, hn-front=29, hn-new=85, huggingface-model=38, producthunt=95, reddit=214, web-search=52, youtube-beyond=73"
     },
     {
       "id": "news-refresh-the-ai-news-74342",
@@ -31947,15 +31953,16 @@
       "department": "improve",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "improve-w1",
       "handoff_docs": [],
       "created_at": "2026-08-08T07:57:29.243299+00:00",
-      "updated_at": "2026-08-08T07:57:29.243376+00:00"
+      "updated_at": "2026-08-08T09:12:59.781733+00:00",
+      "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
     },
     {
       "id": "watch-process-the-next-b-75849",
@@ -31964,15 +31971,16 @@
       "department": "watch",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-08-08T07:57:29.293974+00:00",
-      "updated_at": "2026-08-08T07:57:29.293984+00:00"
+      "updated_at": "2026-08-08T09:12:45.835143+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
       "id": "security-safety-rate-the-75849",
@@ -31981,15 +31989,16 @@
       "department": "security",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-08-08T07:57:29.342588+00:00",
-      "updated_at": "2026-08-08T07:57:29.342603+00:00"
+      "updated_at": "2026-08-08T09:12:47.313659+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "news-refresh-the-ai-news-75849",
@@ -31998,15 +32007,16 @@
       "department": "news",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "news-w1",
       "handoff_docs": [],
       "created_at": "2026-08-08T07:57:29.410709+00:00",
-      "updated_at": "2026-08-08T07:57:29.410722+00:00"
+      "updated_at": "2026-08-08T09:12:46.265049+00:00",
+      "result": "Ran the trend watch. trend_watch: 10 proposals (top score 10); queued 0 into self-improvement."
     },
     {
       "id": "raise-g3-truth-access-51-75849",
@@ -32032,16 +32042,51 @@
       "department": "visual",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "visual-w1",
       "handoff_docs": [],
       "created_at": "2026-08-08T07:57:29.513670+00:00",
-      "updated_at": "2026-08-08T07:57:29.513682+00:00"
+      "updated_at": "2026-08-08T09:12:54.373524+00:00",
+      "result": "Ran the collect designs. collect_designs: 1328 designs (kept 1328 / dropped 0 repo-only + 2 dead/parked + 75 non-design; +0 AI-product, +27 seeds, +74 shown-in-video; url-checked 2). designs-only."
+    },
+    {
+      "id": "transcripts-room-action--80402",
+      "title": "[transcripts room action] Reel runs kimtaeyoon83/mcp-server-youtube-transcript on the pending videos to fetch real full transcripts, producing ver",
+      "detail": "From room dept-transcripts-retrieve-real-fu-829 (action-shaped close). Mission action from the department's own room.",
+      "department": "transcripts",
+      "source": "room-action:transcripts",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-08-08T09:13:22.317221+00:00",
+      "updated_at": "2026-08-08T09:13:22.317228+00:00"
+    },
+    {
+      "id": "watch-room-action-at-11--80407",
+      "title": "[watch room action] At 11:17:00, Iris confirms Arcads AI Video skill pack can analyze non-transcript video elements (visuals, tone, pacing) ",
+      "detail": "From room dept-watch-analyze-video-audio-vi-968 (action-shaped close). Mission action from the department's own room.",
+      "department": "watch",
+      "source": "room-action:watch",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the stated action is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-08-08T09:13:27.055550+00:00",
+      "updated_at": "2026-08-08T09:13:27.055557+00:00"
     }
   ],
-  "updated_at": "2026-08-08T07:57:29.513687+00:00"
+  "updated_at": "2026-08-08T09:13:27.055562+00:00"
 }

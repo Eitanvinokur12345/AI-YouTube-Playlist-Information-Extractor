@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-08T07:34:41.368553+00:00",
+ "generated_at": "2026-08-08T09:14:53.493119+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 129,
+   "turns_7d": 130,
    "rooms_7d": 34,
    "engines_used": [
     "groq",
@@ -16,7 +16,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Chisel’s checklist turns a quality tool into a cudgel—Creative will game it to meet the checklist without fixing the rea"
+   "last_position": "Reel’s checklist turns a quality tool into a cudgel—Creative will game it to hit deadlines, then Operations wastes time "
   },
   {
    "id": "watch-w1",
@@ -37,7 +37,7 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 96,
+   "turns_7d": 97,
    "rooms_7d": 52,
    "engines_used": [
     "groq",
@@ -45,6 +45,20 @@
    ],
    "positions_held": 30,
    "last_position": "Adopt Chisel’s two-tier system: Operations logs missing items automatically but never blocks submission, while Creative "
+  },
+  {
+   "id": "improve-w1",
+   "name": "Sprocket",
+   "dept": "improve",
+   "role": "doer",
+   "turns_7d": 89,
+   "rooms_7d": 45,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run PR-Agent in shadow mode on the newest *open* PR first. It catches routing flaws and quality issues before they compo"
   },
   {
    "id": "analysis-checker",
@@ -59,20 +73,6 @@
    ],
    "positions_held": 30,
    "last_position": "Chisel’s checklist turns Operations into a gatekeeper, not a partner—Creative will rush to meet the checklist without fi"
-  },
-  {
-   "id": "improve-w1",
-   "name": "Sprocket",
-   "dept": "improve",
-   "role": "doer",
-   "turns_7d": 88,
-   "rooms_7d": 45,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on the newest merged PR first. It’s the fastest way to catch routing errors and quality issu"
   },
   {
    "id": "transcripts-w1",
@@ -103,6 +103,32 @@
    "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a raw "
   },
   {
+   "id": "news-w1",
+   "name": "Scoop",
+   "dept": "news",
+   "role": "doer",
+   "turns_7d": 71,
+   "rooms_7d": 71,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh digest entry sum"
+  },
+  {
+   "id": "security-w1",
+   "name": "Warden",
+   "dept": "security",
+   "role": "doer",
+   "turns_7d": 71,
+   "rooms_7d": 71,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I will instruct ToolHive to verify the LLM Guard container is running and healthy. This will produce a live status repor"
+  },
+  {
    "id": "links-lead-x",
    "name": "LinLea",
    "dept": "links",
@@ -117,19 +143,6 @@
    "last_position": "ACTION: Anchor publishes the verified, updated link inventory for the Mission Control Dashboard."
   },
   {
-   "id": "news-w1",
-   "name": "Scoop",
-   "dept": "news",
-   "role": "doer",
-   "turns_7d": 70,
-   "rooms_7d": 70,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh, verified AI new"
-  },
-  {
    "id": "security-lead",
    "name": "Bastion",
    "dept": "security",
@@ -142,19 +155,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output: container status and readiness confirmati"
-  },
-  {
-   "id": "security-w1",
-   "name": "Warden",
-   "dept": "security",
-   "role": "doer",
-   "turns_7d": 70,
-   "rooms_7d": 70,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will instruct ToolHive to verify the LLM Guard container is running and healthy. This will produce a confirmation of t"
   },
   {
    "id": "links-w1",
@@ -189,15 +189,15 @@
    "name": "Iris",
    "dept": "watch",
    "role": "lead",
-   "turns_7d": 66,
-   "rooms_7d": 66,
+   "turns_7d": 67,
+   "rooms_7d": 67,
    "engines_used": [
     "groq",
     "mistral",
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 11:15:00, Iris directs Arcads AI Video skill pack to generate AI marketing insights from the multimodal analy"
+   "last_position": "ACTION: At 11:17:00, Iris confirms Arcads AI Video skill pack can analyze non-transcript video elements (visuals, tone, "
   },
   {
    "id": "visualization-w1",
@@ -226,6 +226,19 @@
    "last_position": "Pane: A permanent preference toggle still forces users to make a choice upfront—some will dismiss it, others will regret"
   },
   {
+   "id": "security-checker",
+   "name": "Audit",
+   "dept": "security",
+   "role": "checker",
+   "turns_7d": 63,
+   "rooms_7d": 63,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health via its MCP serve"
+  },
+  {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
@@ -238,19 +251,6 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a raw list of"
-  },
-  {
-   "id": "security-checker",
-   "name": "Audit",
-   "dept": "security",
-   "role": "checker",
-   "turns_7d": 62,
-   "rooms_7d": 62,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s status and readiness for"
   },
   {
    "id": "links-checker",
@@ -271,8 +271,8 @@
    "name": "Factcheck",
    "dept": "news",
    "role": "checker",
-   "turns_7d": 60,
-   "rooms_7d": 60,
+   "turns_7d": 61,
+   "rooms_7d": 61,
    "engines_used": [
     "mistral",
     "sambanova"
@@ -336,6 +336,20 @@
    "last_position": "Shadow mode on merged PRs is too late—it catches errors *after* they’re already in production, not before. A better alte"
   },
   {
+   "id": "visual-w1",
+   "name": "Easel",
+   "dept": "visual",
+   "role": "doer",
+   "turns_7d": 44,
+   "rooms_7d": 44,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) documentation page to extract its desig"
+  },
+  {
    "id": "improve-lead",
    "name": "Ratchet",
    "dept": "improve",
@@ -366,18 +380,18 @@
    "last_position": "ACTION: Easel captures a high-quality visible-viewport screenshot of the official Model Context Protocol (MCP) website t"
   },
   {
-   "id": "visual-w1",
-   "name": "Easel",
-   "dept": "visual",
-   "role": "doer",
-   "turns_7d": 43,
-   "rooms_7d": 43,
+   "id": "improve-improver",
+   "name": "Overhaul",
+   "dept": "improve",
+   "role": "improver",
+   "turns_7d": 42,
+   "rooms_7d": 42,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
+   "last_position": "Run PR-Agent in shadow mode on the newest *open* PR first, then expand to merged PRs—this catches flaws earlier while st"
   },
   {
    "id": "analysis-lead",
@@ -394,60 +408,46 @@
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a privilege graph, then flags overpr"
   },
   {
-   "id": "improve-improver",
-   "name": "Overhaul",
-   "dept": "improve",
-   "role": "improver",
-   "turns_7d": 41,
-   "rooms_7d": 41,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on the newest *open* PR first, then expand to merged PRs—this catches routing flaws before t"
-  },
-  {
    "id": "accessibility-w1",
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 38,
+   "turns_7d": 39,
    "rooms_7d": 20,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add a 4px outer ring in #005fcc with a 2px white inner ring for focus indicators. This makes the ring visible on all bac"
+   "last_position": "Use a 3px solid #005fcc ring with a 1px white inner ring (total 5px) for focus indicators. This meets WCAG 2.1 AA contra"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 38,
+   "turns_7d": 39,
    "rooms_7d": 20,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 4px ring risks failing on high-contrast patterned backgrounds where the white inner ring could vanish—like a dark pa"
+   "last_position": "A 3px solid ring with a 1px white inner ring still risks failing on high-contrast patterned backgrounds where the white "
   },
   {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 35,
-   "rooms_7d": 35,
+   "turns_7d": 36,
+   "rooms_7d": 36,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Reel runs kimtaeyoon83/mcp-server-youtube-transcript on the pending video to fetch its full transcript, producin",
+   "last_position": "ACTION: Reel runs kimtaeyoon83/mcp-server-youtube-transcript on the pending videos to fetch real full transcripts, produ",
    "proposed": 2
   },
   {
@@ -455,8 +455,8 @@
    "name": "Squint",
    "dept": "visual",
    "role": "checker",
-   "turns_7d": 35,
-   "rooms_7d": 35,
+   "turns_7d": 36,
+   "rooms_7d": 36,
    "engines_used": [
     "groq",
     "mistral"
@@ -469,14 +469,14 @@
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 31,
-   "rooms_7d": 31,
+   "turns_7d": 32,
+   "rooms_7d": 32,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Default to a single high-contrast dark theme with a persistent, one-click toggle to light mode.",
+   "last_position": "DECISION: Default to a single high-contrast dark theme with a non-intrusive, opt-in setting for light mode, to be measur",
    "proposed": 2
   },
   {
@@ -492,7 +492,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Test ComfyUI’s FaceDetailer node with SD3.5’s face model on EXCAVA’s motion-blurred footage first—if face fide",
    "proposed": 18,
-   "shipped": 17
+   "shipped": 18
   },
   {
    "id": "creators-w1",

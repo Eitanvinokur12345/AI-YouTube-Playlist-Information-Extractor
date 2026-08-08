@@ -4,6 +4,63 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+## 2026-08-08
+- **~00:1x (fire 119, addendum)** — Delivery channel note: `git_safe ship`'s push step hung past
+  the 2-minute command timeout (pushing to `main` directly on this repo's history size), so this
+  fire's commit went out via a plain `git push -u origin <session-branch>` + draft PR #61 instead
+  — matching this specific host session's own harness rule ("never push to a different branch
+  without explicit permission," draft-PR-required) over the repo's usual `git_safe ship`-to-`main`
+  convention. That tension between the two was already flagged as unresolved back in fire 8's
+  entry below (2026-07-27) and again in fire 6 (2026-07-25, see `QUESTIONS.md`, default: treat a
+  web-session PR as equivalent to a direct commit, mergeable whenever convenient) — same call,
+  same reasoning, still not something Eitan has explicitly confirmed either way. Left PR #61 as
+  **draft**, not merged, per the harness's own instruction — did not self-merge.
+- **~00:0x (fire 119, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
+  guardrails, 0 critical; stale `origin/main` cache + missing upstream tracking, both
+  auto-repaired). This is the first away-fire logged since fire 118 (2026-08-03) — a 4-5 day
+  gap in the session-level loop, though the CI beat itself never stopped (continuous
+  bulk-analyze/links/core-spoton/gemini-video/news commits the whole gap, confirmed via `git
+  log`). Acked the loop contract (was unacknowledged). `maintenance_check` showed one real HIGH
+  issue: the "Self-improvement review" lane overdue — and it's worse than overdue, it's NEVER
+  fired since 2026-06-20/21 (7 weeks): `git log --grep '^review:'` across all history returns
+  zero commits ever, `data/status.json` has `review_ok: false` stuck since then, and
+  `data/review_findings.json` is 7 weeks stale. Root-caused it by reading actual GitHub Actions
+  job logs (not just the workflow's own claimed fix): `.github/workflows/review.yml`'s "Plan
+  this run" step already carries a fire-54 comment claiming to have fixed exactly this by
+  deriving the weekly/first-week decision from `now.weekday()` instead of the cron string — but
+  that fix has ALSO been silently broken the whole time, for a different reason. Both mandatory
+  crons fire at 23:00 UTC (right at a calendar-day boundary), GitHub's own scheduler is
+  observed 0-58min late dispatching them, and checkout+setup adds more time before the Plan
+  step's Python actually calls `datetime.now()` — so by execution time the wall clock has
+  almost always already rolled into the NEXT day. Confirmed from the actual job log for the
+  2026-08-05 23:58:44 UTC run (a Wednesday, a mandatory slot): the Plan step's own env block
+  timestamps itself `2026-08-06T00:00:03Z` (Thursday) and prints `RUN: false` /
+  `OUTCOME: skipped` — the Claude review step never even started. Every mandatory run since the
+  fire-54 fix landed shows the identical pattern. Fixed for real this time by removing the
+  wall-clock dependency entirely: match `github.event.schedule` (the literal cron STRING
+  GitHub reports, stable no matter what time the step itself executes) against the two
+  `on.schedule` entries directly, instead of asking "what day is it right now." Left the
+  first-week-window `now`-based anchoring alone (a one-day boundary error there is harmless,
+  unlike the run/no-run decision). **Verified, not asserted:** re-parsed the edited YAML
+  (`yaml.safe_load` — valid), extracted and `compile()`-checked the embedded Python heredoc
+  (syntax OK), and replayed BOTH scenarios from the actual failing log's env values
+  (`SCHEDULE="0 23 * * 3,6"` -> `run=True`; `SCHEDULE="0 23 * * 0-2,4-5"` outside the first week
+  -> `run=False`) — matches intent exactly. `python -m src.guardrails` 18/20 (same two
+  pre-existing, unrelated misses as prior fires: G-C stale history bundle — addressed by running
+  `git_safe backup` before shipping — and G-O local-PC drain 306h stale, PC/Ollama offline, not
+  touched). `python -m src.excava_core_test` 71/71, unrelated but green. **Harsh
+  self-criticism:** I have NOT yet watched a real scheduled run go green end-to-end — the next
+  mandatory slot is TONIGHT (2026-08-08 23:00 UTC, Saturday is a mandatory day), and I won't be
+  here to confirm it landed a `review: findings` commit; that confirmation is next fire's first
+  job, not this one's. I also didn't audit why fire 54's own "verified" claim about this exact
+  bug went unchallenged for 7 weeks across ~15+ intervening away-fires — nobody re-checked a
+  fix against real logs after landing it, they trusted the comment. That's a process gap
+  (verify fixes against live behavior after they ship, not just at write-time) worth carrying
+  forward, not just this one bug. Didn't touch the other five `maintenance_check` issues
+  (oversized category hubs, 188 discovered-no-description items, 8 bare vendor names, 404
+  connectors with no URL, 6 unscored tools) — all medium/low severity, correctly left for a
+  fire with more budget after this one lands and is confirmed.
+
 ## 2026-08-03
 - **~00:1x (fire 118, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
   guardrails, 0 critical; stale `origin/main` cache + missing upstream tracking, both auto-repaired,

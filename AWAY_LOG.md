@@ -5,6 +5,58 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-08
+- **~11:0x (fire 129, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (18/20, 0 critical; local `origin/main` cache was stale again — 35201dc9 → a6f7779e — re-
+  fetched clean, nothing lost; upstream tracking already correct this time). `net_canary`: still
+  `restricted` — same conclusion as every fire since 124, verified fresh rather than assumed.
+  **Went past `excava_backlog list`'s 8 above-bar candidates (all genuinely blocked on network/
+  credentials this session type doesn't have, same standing reasons as fires 121-128) and into
+  `data/maintenance.json` (regenerated fresh: grade D, 58/100, 5 issue types).** One item looked
+  like a repeat of fire 128's "false alarm" pattern: a NEW high-severity flag, "Pipeline lanes
+  overdue," sample `["Self-improvement review"]`. Checked it the same way fire 128 checked
+  `mine` — read `data/pipeline_status.json` directly rather than trusting the label: `self_improve`
+  (cadence 168h/weekly, `last_run: null`, `runs_7d: 0`, `status: idle`) is genuinely stalled, not
+  a monitor bug — cross-checked `review.yml`'s own code comment ("last real 'review:' commit was
+  2026-06-21") and `data/status.json` (`review_ok: false`, `last_review_ok_at: 2026-06-21`), both
+  of which match the exact outage QUESTIONS.md #31/fire-121 already escalated with a push
+  notification 8 fires ago and fires 122-128 have re-verified unchanged since. Correctly left
+  untouched — same reason every prior fire in that thread gave: the standing ask (`claude
+  setup-token` or confirming the plan's rolling cap) is Eitan's call, not fixable from this
+  sandbox, and a fourth-plus repeat notification of the identical unchanged state would be noise.
+  **The actual increment:** the maintenance report's 4 OTHER issues included one genuinely
+  actionable, local, deterministic item fire 128 explicitly flagged as untouched-but-doable —
+  "Version-less bare vendor names kept as tools" (medium severity, 8 items: Claude, Gemini, Grok,
+  Llama, Sora, Veo, GPT, Copilot). Read the actual records before touching them: these are NOT
+  duplicate/orphaned stubs — each has real `mentions` counts (Claude: 483, Gemini: 64, etc.)
+  spanning many videos and coexists with 50+ separately-versioned entries per vendor already in
+  `tools.json` (e.g. "Claude 4.5 Opus", "Claude Opus 4.5") — they are intentional vendor-family
+  aggregate records for generic/unspecified-version mentions, structurally the same kind of
+  "explicit non-value flagged as missing" false positive `maintenance_check.py`'s own code
+  comment already documents fixing once for `quality_score == 0` vs. `None`. Did NOT fabricate a
+  fake specific version (would risk introducing wrong data, and this sandbox has no live network
+  to verify a real one) — instead set `model_version` on all 8 records to an explicit, honest
+  sentinel describing what they actually are ("generic (vendor-family aggregate — no single
+  version; see named releases ... for specific ones)"), which both documents the true semantics
+  and correctly clears the false-missing-data flag without touching the checker's detection logic
+  itself. Verified: diff is exactly 8 one-line field changes (`git diff --stat`: 9 insertions/9
+  deletions on `data/tools.json`, nothing else reformatted); `python -m src.maintenance_check`
+  before/after: grade D 58/100 (5 issue types) → grade C 62/100 (4 issue types), high-severity
+  count unchanged at the genuinely-open self-improve item; all 4 local test suites green
+  (`excava_core_test`, `git_merge_resolve_test`, `guardrail_test`, `or1_phase_test`);
+  `python -m src.guardrails`: 15/17 pre-ship (only G-G in-flight-behind and G-O EITAN-PC-offline,
+  both expected/steady-state).
+  **Harsh self-criticism:** this is a small, cosmetic-adjacent data-quality fix, not hub growth —
+  it improves the maintenance grade by re-labeling 8 records more honestly, but it does not add
+  an element, verify a link, or move any of the 4 at-risk goals. It is at least a REAL fix (the
+  false-missing-data read is correct, not manufactured busywork to pad the commit graph), and it
+  closes an item fire 128 explicitly named as the next fire's best available local-and-deterministic
+  pick rather than inventing a new one. The 3 remaining maintenance issues are all still open and
+  correctly untouched: 6427-item category hairballs (real but large — needs a sub-bucketing design
+  decision, not a one-fire mechanical fix), 188 discovered items with no description (network-
+  gated, `deep_retrieve`/`github_meta_enrich` both self-abort under this session's restricted
+  egress), 404 sourceless connectors (same network gate). Not pushing a notification — nothing
+  crossed the blocking-decision or degrading-signal bar; the one high-severity item found this
+  fire is the same already-escalated, already-notified outage, unchanged since fire 121.
 - **~10:0x (fire 128, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
   OK (18/20, 0 critical). Meta-fire cap was genuinely 3/3 (fires 125-127) — this fire's own
   instructions required advancing the product, not re-running the same egress/credential

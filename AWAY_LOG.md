@@ -5,6 +5,16 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-08
+- **~00:1x (fire 119, addendum)** — Delivery channel note: `git_safe ship`'s push step hung past
+  the 2-minute command timeout (pushing to `main` directly on this repo's history size), so this
+  fire's commit went out via a plain `git push -u origin <session-branch>` + draft PR #61 instead
+  — matching this specific host session's own harness rule ("never push to a different branch
+  without explicit permission," draft-PR-required) over the repo's usual `git_safe ship`-to-`main`
+  convention. That tension between the two was already flagged as unresolved back in fire 8's
+  entry below (2026-07-27) and again in fire 6 (2026-07-25, see `QUESTIONS.md`, default: treat a
+  web-session PR as equivalent to a direct commit, mergeable whenever convenient) — same call,
+  same reasoning, still not something Eitan has explicitly confirmed either way. Left PR #61 as
+  **draft**, not merged, per the harness's own instruction — did not self-merge.
 - **~00:0x (fire 119, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
   guardrails, 0 critical; stale `origin/main` cache + missing upstream tracking, both
   auto-repaired). This is the first away-fire logged since fire 118 (2026-08-03) — a 4-5 day

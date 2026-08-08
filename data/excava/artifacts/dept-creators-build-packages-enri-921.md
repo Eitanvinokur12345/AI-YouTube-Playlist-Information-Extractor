@@ -1,18 +1,16 @@
 # creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Created by EXCAVA' + tes
 
-> Decision artifact · room `dept-creators-build-packages-enri-921` (dept) · 2026-07-28T23:52:02.469740+00:00
-> Participants: Forge, Nova · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-creators-build-packages-enri-921` (dept) · 2026-08-08T07:33:13.413382+00:00
+> Participants: Forge · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Forge will publish the UGC Factory npm package under the "Created by EXCAVA" label.
 
 **Plan:**
-1. Forge drafts the UGC Factory npm package with templates, validation, and documentation.
-2. Forge ensures all elements are labeled "Created by EXCAVA."
-3. Forge tests the package for functionality and compliance.
-4. Forge publishes the package to npm with the EXCAVA label.
-5. Nova verifies the package meets the goal requirements.
-6. Team documents the package’s release in the project repository.
+1. Forge drafts the "UGC Factory" skill package for the Skill Creator, ensuring it includes clear usage instructions and is labeled "Created by EXCAVA."
+2. Publish the "UGC Factory" package to npm with the "Created by EXCAVA" label.
+3. Enrich the "UGC Factory" package’s README with detailed documentation and examples.
+4. Draft a new "Elements" package (e.g., "UI Components") labeled "Created by EXCAVA" with modular, reusable components.
+5. Update the "Skill Creator" tab to highlight the new "UGC Factory" package and its documentation.
+6. Test all packages for compatibility and publish updates to npm.
 
-**What changed:**
-The UGC Factory npm package is now officially published under the EXCAVA label.
+**What changed:** Added "UGC Factory" package and enriched documentation under "Created by EXCAVA."

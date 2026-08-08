@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-08-08T15:03:47.016279+00:00",
+ "generated_at": "2026-08-08T15:08:11.909737+00:00",
  "total": 20,
- "passing": 17,
+ "passing": 19,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -21,8 +21,8 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": false,
-   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
+   "ok": true,
+   "detail": "2 bundle(s); newest within 26h.",
    "severity": "warn"
   },
   {
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": false,
-   "detail": "NOT in sync vs origin/main (behind/ahead: 1\t0) — a push may not have landed.",
+   "ok": true,
+   "detail": "HEAD == origin/main (work is really saved).",
    "severity": "warn"
   },
   {
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "14173 memory episodes on record.",
+   "detail": "14189 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "1 guardrail runs logged (append-only, never rewritten).",
+   "detail": "2 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -92,14 +92,14 @@
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "1433 tasks done, 11 departments moving",
+   "detail": "1441 tasks done, 11 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "30362 MB free on the repo drive.",
+   "detail": "29756 MB free on the repo drive.",
    "severity": "info"
   },
   {

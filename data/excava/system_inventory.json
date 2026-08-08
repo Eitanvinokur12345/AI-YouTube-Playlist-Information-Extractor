@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-08-08T11:05:14.133475+00:00",
+ "generated_at": "2026-08-08T13:31:12.217570+00:00",
  "total": 117,
  "counts": {
-  "wired": 92,
-  "operator": 25,
+  "wired": 93,
+  "operator": 24,
   "orphaned": 0,
   "dead": 0
  },
@@ -216,7 +216,7 @@
    "imports": []
   },
   "build_brain": {
-   "status": "operator",
+   "status": "wired",
    "loc": 262,
    "entrypoint": false,
    "invoked_by": [],
@@ -225,7 +225,9 @@
     "data/dev_construction.json",
     "docs/BIGGER_BRAIN.md"
    ],
-   "imported_by": [],
+   "imported_by": [
+    "maintenance_check"
+   ],
    "imports": []
   },
   "build_capabilities": {
@@ -269,7 +271,9 @@
     "data/dev_construction.json",
     "docs/dashboard.js"
    ],
-   "imported_by": [],
+   "imported_by": [
+    "maintenance_check"
+   ],
    "imports": []
   },
   "build_hub_api": {
@@ -1300,7 +1304,7 @@
   },
   "maintenance_check": {
    "status": "wired",
-   "loc": 182,
+   "loc": 205,
    "entrypoint": true,
    "invoked_by": [
     "bulk_analyze.yml",
@@ -1310,7 +1314,10 @@
     "data/dev_construction.json"
    ],
    "imported_by": [],
-   "imports": []
+   "imports": [
+    "build_brain",
+    "build_graph"
+   ]
   },
   "make_monsters": {
    "status": "operator",

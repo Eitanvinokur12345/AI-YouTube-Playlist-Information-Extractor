@@ -5,6 +5,48 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-08
+- **~21:0x (fire 137, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks:
+  17/20 guardrails, 0 critical (same steady-state G-C/G-M/G-O). `net_canary`: re-verified live,
+  still restricted egress — same conclusion as every fire since 124, so picked a local/
+  deterministic increment rather than a network-dependent one. Carry-over: none open
+  (`loop_contract status`: 0/3 consecutive meta fires, clean start).
+  **The actual increment:** `data/improvement_suggestions.json` already carried a HIGH-severity
+  `engine_fix` (id `8140b97fbc`, source: review) sitting `pending` with an exact proposed fix:
+  `src/analyze_batch.py`'s module-level `TODAY = datetime(2026, 6, 3, tzinfo=timezone.utc)` was
+  frozen almost two months in the past and fed straight into `compute_age_months()`'s recency
+  penalty for every analyzed video. Any video published after 2026-06-03 produced a NEGATIVE
+  `delta`, clamped to 0 by `max(0, ...)` — scoring as brand-new regardless of true publish date —
+  while every older video's age was understated by the growing frozen-vs-real gap. Applied the
+  fix verbatim: removed the constant, `compute_age_months()` now calls
+  `datetime.now(timezone.utc)` at call time. Added `src/analyze_batch_test.py` (3/3 pass,
+  stdlib-only, no network): a video 150 days old scores ~5mo (not clamped), a just-published
+  video scores ~0mo, and two videos a known distance apart stay that distance apart (the exact
+  clamp-to-0 bug, verified live before the fix reproduced it and after the fix it didn't). Marked
+  the suggestion `"applied"` in `improvement_suggestions.json` with a note pointing at this fix,
+  so the backlog stays honest instead of re-flagging a closed bug. Ran all 6 local suites
+  (`excava_core_test`, `guardrail_test`, `git_merge_resolve_test`, `or1_phase_test`,
+  `deep_retrieve_test`, `analyze_batch_test`) green, no regressions; `python -m src.guardrails`:
+  16-17/20, 0 critical, same steady-state flags. Logged the WHY via `python -m src.project_memory
+  log` before shipping. Commit `74b00321`, pushed via `git_safe ship` and independently
+  re-verified with a fresh `git fetch origin main` after the fact: local HEAD and `origin/main`
+  both at `c345788a6`, matching (push took several minutes under this session's proxy-routed
+  restricted egress, same as fire 134 reported).
+  **Harsh self-criticism:** this fixes exactly the one bug the suggestions backlog had already
+  named and scoped — I did not sweep the codebase for other stale hardcoded-date or frozen-
+  constant bugs beyond this one flagged instance, so a similar bug could exist unflagged
+  elsewhere. More importantly: this bug has presumably been silently skewing every analyzed
+  video's quality score for as long as the constant sat unfixed in the pending queue (the
+  suggestion carries no creation timestamp, so I can't say since when), and this session has no
+  way to quantify how many already-scored videos in `data/processed/` now carry a wrong recency
+  penalty as a result — re-scoring them retroactively is a separate, larger increment
+  deliberately left for a future fire with a scoped plan for it, not attempted here. Also spent a
+  real chunk of this fire's time investigating a shallow-clone lane-status flapping artifact in
+  `pipeline_status.json`/`maintenance_check.py` (my own repeated regen calls made "Transcript
+  retrieval"/"Self-improvement review" flip between `slow`/`idle`/`unknown` across a few minutes)
+  before concluding it's a sandbox-shallow-clone-window artifact, not a production bug — fire
+  136's shallow-clone fix (idle→unknown) is working correctly; this was verification, not a new
+  fix, and is not reflected as a separate commit. No storage, operational-limit, or blocking
+  decision surfaced this fire; nothing crossed the push-notification bar on its own.
 - **~20:0x (fire 136, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks:
   17/20 guardrails, 0 critical (same steady-state G-C/G-M/G-O as fire 135, nothing new); local
   `origin/main` cache was stale (`380b390b` → `c213bb19`) — re-fetched clean, HEAD matched,

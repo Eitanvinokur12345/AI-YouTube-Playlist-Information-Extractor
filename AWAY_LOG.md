@@ -5,6 +5,37 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-08
+- **~15:0x (fire 131, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks:
+  origin/main was 1 commit ahead (`aa9f39b6`, a routine safety commit) — fast-forwarded clean, no
+  loss. `net_canary`/egress still restricted this session type (confirmed live, not assumed), so
+  `deep_retrieve` was tested small-batch first rather than trusted blind. `maintenance_check`
+  (grade B, 77/100) flagged one HIGH item — "pipeline lanes overdue: Self-improvement review" —
+  which traced straight back to the SAME root cause QUESTIONS.md #31 has tracked since fire 55 and
+  escalated with a push at fire 121 this morning: `CLAUDE_CODE_OAUTH_TOKEN_REAL` failing at the SDK
+  level on `analyze.yml`/`discover.yml`/`improve.yml`/`review.yml`. Re-checked `data/status.json`
+  fresh: still 35/35 consecutive zero-progress `analyze.yml` fails, `review_ok:false` since
+  2026-06-21 — unchanged since fire 121, not worse, not resolved. Did NOT re-push: fire 121 already
+  interrupted Eitan for this exact blocker a few hours ago and nothing new emerged to justify a
+  second ping today; a duplicate push for a still-open, already-flagged item is exactly the kind of
+  interruption the notification policy exists to prevent. Separately confirmed fire 125's
+  `review.yml` day-drift fix (capture trigger time before the slow checkout) is live in the file
+  and untested — first real exercise is tonight's mandatory Sat 23:00 UTC run; nothing to do until
+  then.
+  **The actual increment:** `deep_retrieve` (local/keyless — reads already-downloaded transcripts,
+  no network dependency, safe under the egress restriction) enriched 4 real stub skills
+  (`robotics`, `software-cloning`, `software-customization`, `sorting-through-information`) from
+  generic one-liners ("The design, construction, operation, and use of robots.") to real
+  transcript-sourced text. Verified via `git diff data/skills.json` directly, not by trusting the
+  tool's own "4 enriched" claim. **Harsh self-criticism:** the keyless-extract fallback (no LLM
+  engine key in this sandbox) just pastes a raw transcript excerpt prefixed `video <id>
+  description` rather than a clean 2-3 sentence description — strictly more accurate than the stub
+  it replaced, but ugly, and two of the four entries (`software-cloning`/`software-customization`)
+  got the byte-identical excerpt because they share a source video and the keyless path doesn't
+  differentiate between two skills pulled from one transcript. This is 4 elements out of 1,683
+  remaining stubs — real but tiny, and I spent more of this fire diagnosing an already-known,
+  already-escalated blocker than shipping new product surface. The token/quota blocker remains the
+  single highest-leverage fix available and is still 100% outside this session's reach (owner
+  action only).
 - **~13:0x (fire 130, unattended, cloud, scheduled-task invocation, PRODUCT, 10th heartbeat)** —
   Standing checks OK (`python -m src.standing_checks`: 18/20 guardrails, 0 critical; local
   `origin/main` cache was stale again — same recurring pattern every fire since ~120 — re-fetched

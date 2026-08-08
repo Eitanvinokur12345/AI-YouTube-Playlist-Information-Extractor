@@ -1,8 +1,8 @@
 {
- "generated_at": "2026-08-08T15:06:27.775423+00:00",
- "total": 117,
+ "generated_at": "2026-08-08T21:04:08.887019+00:00",
+ "total": 118,
  "counts": {
-  "wired": 93,
+  "wired": 94,
   "operator": 24,
   "orphaned": 0,
   "dead": 0
@@ -490,7 +490,7 @@
   },
   "deep_retrieve": {
    "status": "wired",
-   "loc": 271,
+   "loc": 303,
    "entrypoint": true,
    "invoked_by": [
     "core_spoton.yml"
@@ -500,12 +500,27 @@
     "data/dev_construction.json"
    ],
    "imported_by": [
+    "deep_retrieve_test",
     "github_meta_enrich",
     "local_worker"
    ],
    "imports": [
     "element_model",
-    "excava_engines"
+    "excava_engines",
+    "net_canary"
+   ]
+  },
+  "deep_retrieve_test": {
+   "status": "operator",
+   "loc": 87,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": [
+    "deep_retrieve"
    ]
   },
   "discover_promote": {
@@ -1089,7 +1104,7 @@
   },
   "github_meta_enrich": {
    "status": "wired",
-   "loc": 227,
+   "loc": 223,
    "entrypoint": true,
    "invoked_by": [
     "core_spoton.yml"
@@ -1102,7 +1117,8 @@
    "imported_by": [],
    "imports": [
     "deep_retrieve",
-    "element_model"
+    "element_model",
+    "net_canary"
    ]
   },
   "goals_check": {
@@ -1424,15 +1440,19 @@
    "imports": []
   },
   "net_canary": {
-   "status": "operator",
-   "loc": 66,
+   "status": "wired",
+   "loc": 70,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
     "data/dev_construction.json"
    ],
    "imported_by": [
-    "standing_checks"
+    "deep_retrieve",
+    "github_meta_enrich",
+    "standing_checks",
+    "verify_connectors",
+    "verify_elements"
    ],
    "imports": []
   },
@@ -1528,7 +1548,7 @@
   },
   "pipeline_status": {
    "status": "wired",
-   "loc": 165,
+   "loc": 183,
    "entrypoint": true,
    "invoked_by": [
     "bulk_analyze.yml",
@@ -1943,7 +1963,7 @@
   },
   "verify_connectors": {
    "status": "wired",
-   "loc": 259,
+   "loc": 263,
    "entrypoint": true,
    "invoked_by": [
     "connectors_verify.yml"
@@ -1955,11 +1975,13 @@
    "imported_by": [
     "excava_core"
    ],
-   "imports": []
+   "imports": [
+    "net_canary"
+   ]
   },
   "verify_elements": {
    "status": "wired",
-   "loc": 207,
+   "loc": 208,
    "entrypoint": true,
    "invoked_by": [
     "core_spoton.yml"
@@ -1970,7 +1992,8 @@
    ],
    "imported_by": [],
    "imports": [
-    "element_model"
+    "element_model",
+    "net_canary"
    ]
   },
   "visual_extract": {

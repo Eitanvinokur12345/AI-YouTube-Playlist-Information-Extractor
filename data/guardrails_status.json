@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-08-08T23:02:37.867719+00:00",
+ "generated_at": "2026-08-08T23:01:00.965502+00:00",
  "total": 20,
- "passing": 17,
+ "passing": 18,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -21,9 +21,9 @@
   {
    "id": "G-C",
    "name": "History backup fresh",
-   "ok": true,
-   "detail": "n/a in CI — the beat pushes straight to origin each cycle, bypassing git_safe/local bundles by design.",
-   "severity": "info"
+   "ok": false,
+   "detail": "no recent history bundle — run `python -m src.git_safe backup` before risky ops.",
+   "severity": "warn"
   },
   {
    "id": "G-D",
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "14220 memory episodes on record.",
+   "detail": "14195 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "0 guardrail runs logged (append-only, never rewritten).",
+   "detail": "1 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -92,14 +92,14 @@
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "1457 tasks done, 11 departments moving",
+   "detail": "1449 tasks done, 11 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "88499 MB free on the repo drive.",
+   "detail": "30375 MB free on the repo drive.",
    "severity": "info"
   },
   {
@@ -112,22 +112,22 @@
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
-   "ok": false,
-   "detail": "last 'excava-beat #N' commit 45.4h ago — STALE: the dedicated heartbeat loop isn't landing per-cycle commits (check for a wedged/queued excava_beat.yml run).",
-   "severity": "warn"
+   "ok": true,
+   "detail": "shallow clone — not enough local history to find an 'excava-beat #N' commit either way; not a stall signal, just a checkout-depth limit.",
+   "severity": "info"
   },
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "last 'core-spoton:' commit 0.4h ago.",
+   "detail": "last 'core-spoton:' commit 0.3h ago.",
    "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
-   "ok": false,
-   "detail": "12/16 lane(s) landing on cadence — STALE: discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 1168.9h ago (expected within 76h); improve.yml (weekly deep pass): last commit 1518.7h ago (expected within 192h); review.yml (twice-weekly): last commit 239.1h ago (expected within 100h); transcribe.yml (daily): last commit 184.7h ago (expected within 30h)",
+   "ok": true,
+   "detail": "6/16 lane(s) landing on cadence, 10 can't-tell (shallow clone).",
    "severity": "warn"
   },
   {

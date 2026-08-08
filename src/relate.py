@@ -17,6 +17,15 @@ now get backfilled from the SAME already-computed score dict at score>=1 (still 
 same-category evidence, never invented), up to 3 total — so a stub with nothing but a
 category now shows a few same-category neighbors instead of a bare "no related items" panel.
 Elements with real evidence (score>=2 from a shared video/word) are completely unaffected.
+
+Fire 139 (2026-08-08): 134 elements (mostly `command:*`/`connector:*`/`design:*`) still had
+a fully EMPTY related[] because the fire-55 backfill keys off `category`, and these have no
+`category` at all (empty string) — `by_cat.get("", [])` is always empty, so there was no
+same-category bucket to backfill from even though these elements are otherwise ordinary.
+The grouping key now falls back to `type:<element type>` when `category` is missing, so a
+category-less element groups with its type-peers (still real, non-invented evidence — "both
+are connectors") instead of matching nothing. Elements that already have a real `category`
+are byte-for-byte unaffected: the fallback only ever applies when `category` is falsy.
 Run: python -m src.relate
 """
 from __future__ import annotations
@@ -57,8 +66,7 @@ def main() -> int:
         for word in w:
             if len(by_word[word]) < 400:            # ignore ubiquitous words
                 by_word[word].append(i)
-        if el.get("category"):
-            by_cat[el["category"]].append(i)
+        by_cat[el.get("category") or f"type:{el['type']}"].append(i)
 
     related = {}
     for i, el in enumerate(els):
@@ -71,7 +79,8 @@ def main() -> int:
             if len(bucket) <= 60:                   # informative words only
                 for j in bucket:
                     score[j] += 1
-        for j in by_cat.get(el.get("category", ""), [])[:200]:
+        cat_key = el.get("category") or f"type:{el['type']}"
+        for j in by_cat.get(cat_key, [])[:200]:
             score[j] += 1
         score.pop(i, None)
         ranked = sorted(score.items(), key=lambda kv: -kv[1])

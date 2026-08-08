@@ -5,6 +5,42 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-08
+- **~23:0x (fire 139, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks:
+  OK, clear to work (stale local `origin/main` cache re-fetched clean, nothing lost; upstream
+  auto-repointed). `loop_contract status`: 2/3 consecutive meta fires — deliberately avoided a
+  third. Restricted egress confirmed again (same as every fire since 124), so swept local/
+  deterministic surfaces for a real, previously-missed gap rather than repeating fire 138's
+  sweep verbatim. **The actual increment:** `src/relate.py`'s same-category backfill (fire 55)
+  keyed strictly on `el['category']` — 133 of 134 zero-related elements (mostly
+  `command:*`/`connector:*`/`design:*`) had NO category at all (empty string), so
+  `by_cat.get("", [])` was always empty and the backfill had nothing to draw from; these
+  elements had a permanently empty `related[]` regardless of how many peers of the same type
+  existed. Fixed the grouping key to `category or type:<type>` when category is missing, so a
+  category-less element groups with its type-peers instead of matching nothing — real,
+  non-invented evidence ("both are connectors"), identical in kind to the existing
+  same-category signal. Elements with a real category are byte-for-byte unaffected (confirmed:
+  no existing category value collides with the `type:` prefix). Verified live, before/after:
+  elements with ≥1 related rose 11140 → 11273/11274; the one still-zero element
+  (`prompt:real-time-analytics-dashboard`) has a real category that happens to contain only
+  itself — confirmed zero before this fix too, a separate pre-existing edge case, not a
+  regression. Ran all 6 local suites (`excava_core_test`, `guardrail_test`,
+  `git_merge_resolve_test`, `or1_phase_test`, `deep_retrieve_test`, `analyze_batch_test`)
+  green, no regressions; `python -m src.guardrails`: 18/20 before shipping (19/20 after, once
+  the pre-ship `git_safe backup` refreshed G-C), 0 critical, no new failures. Logged the WHY via
+  `python -m src.project_memory log` before shipping. Commit `7d29d1f2`, pushed via
+  `git_safe ship` and independently re-verified with a fresh `git fetch origin main`: local
+  HEAD and `origin/main` both at `76ef2a45c`, matching.
+  **Harsh self-criticism:** this closes a real gap in a real M1.7 feature (every element's
+  detail view should show 3-8 related neighbors) and moves a concrete, previously-unmoved
+  number — a genuine step up from fire 138's backup-bundle-only increment. But it is still a
+  quality/completeness fix to existing plumbing, not new hub content or a new user-facing
+  capability, and the fix is narrow: I found this one gap because it was the most visible
+  zero-related() cluster, not from a systematic audit of `relate.py`'s scoring for other
+  under-covered element shapes (e.g. whether the word-overlap and video-overlap tiers have
+  their own blind spots for elements with very short/boilerplate `what` text). Also did not
+  chase the one remaining zero-related edge case — a single-category-of-one prompt — since it's
+  a different, smaller root cause than the one this fire scoped and fixed. `loop_contract`
+  logged this as a non-meta (product) fire before shipping, breaking the 2-meta-fire streak.
 - **~22:0x (fire 138, unattended, cloud, scheduled-task invocation, META)** — Standing checks: 18/20
   guardrails, 0 critical, clear to work; no carry-over increment open. `net_canary`: still restricted
   egress (repo-scoped cloud session) — same as every fire since 124. Before picking an increment,

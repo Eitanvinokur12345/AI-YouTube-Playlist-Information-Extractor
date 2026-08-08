@@ -55,18 +55,24 @@ jobs:
           schedule = os.environ.get("SCHEDULE", "")
           event = os.environ.get("EVENT", "")
           now = datetime.datetime.now(datetime.timezone.utc)
-          # away fire 54: the two `cron:` triggers below fire on EVERY day between them
-          # (Wed+Sat mandatory, the other 5 days first-week-intensive) — GitHub reports
-          # `github.event.schedule` as the literal cron string that matched, e.g.
-          # "0 23 * * 3,6", never the single-day "0 23 * * 6" this used to compare
-          # against. That made `weekly`/`daily` always False after the cron was widened
-          # to twice-weekly, so `run` fell through to the final `else: run = False` on
-          # EVERY trigger — the mandatory Wed/Sat pass silently no-op'd for 5+ weeks
-          # (last real "review:" commit was 2026-06-21, right when this cron changed).
-          # Derive the day directly from `now`'s weekday instead of string-matching the
-          # cron literal, so this can't drift out of sync with the schedule again.
-          weekly = now.weekday() in (2, 5)   # Wed, Sat — must match the cron day-list above
-          daily  = not weekly
+          # away fire 54 tried deriving the day from `now.weekday()` instead of the cron
+          # literal, but that broke the SAME way for a different reason: this job's
+          # "Plan this run" step doesn't execute until a minute or more after checkout,
+          # and both mandatory crons fire at 23:00 UTC (right at the tail of a calendar
+          # day) with GitHub's own scheduling jitter (observed 0-58min late) on top —
+          # so `now` had almost always already rolled past midnight into the NEXT day by
+          # the time this ran. `now.weekday()` was then Thu/Sun, never Wed(2)/Sat(5), so
+          # `weekly` was False on effectively every mandatory run. Confirmed from actual
+          # run logs: the 2026-08-05 23:58:44 UTC run (Wednesday) had its Plan step clock
+          # itself at 2026-08-06T00:00:03Z (Thursday) -> run=false, Claude review skipped
+          # -- and every Wed/Sat run since the fire-54 "fix" landed shows the identical
+          # pattern (no "review: findings" commit has landed since 2026-06-20, ~7 weeks).
+          # Fix for real this time: match `github.event.schedule` (the literal cron
+          # STRING that matched, stable regardless of what wall-clock time the step
+          # itself runs at) against the two `on.schedule` entries above, instead of
+          # asking "what day is it right now" at all.
+          MANDATORY_CRON = "0 23 * * 3,6"
+          FIRST_WEEK_CRON = "0 23 * * 0-2,4-5"
           # anchor the first-week window in data/ (not config) on first ever run
           p = pathlib.Path("data/review_state.json")
           try: st = json.loads(p.read_text(encoding="utf-8"))
@@ -80,9 +86,9 @@ jobs:
           mode = "first_week_intensive" if within_first_week else "weekly"
           if not enabled:
               run = False
-          elif event == "workflow_dispatch" or weekly:
+          elif event == "workflow_dispatch" or schedule == MANDATORY_CRON:
               run = True
-          elif daily:
+          elif schedule == FIRST_WEEK_CRON:
               run = within_first_week     # intensive only during week one
           else:
               run = False

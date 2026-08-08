@@ -5,6 +5,39 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-08
+- **~19:0x (fire 135, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks:
+  20/20→16/20 guardrails read as before (same steady-state G-C/G-G/G-M/G-O; G-G/G-C self-heal on
+  ship, G-M/G-O are the known EITAN-PC-offline/no-new-completions-yet state, not a new symptom);
+  `net_canary.describe()` confirmed restricted egress again, so per its own advice this fire
+  picked a local/deterministic increment instead of another `deep_retrieve --limit N` batch —
+  and to avoid a third consecutive fire on the exact same file (133 and 134 both touched
+  `deep_retrieve.py`'s selection logic), looked for a different, comparably-scoped gap instead.
+  Found one `net_canary.py` had been flagging about itself since fire 124: its own docstring and
+  `NETWORK_DEPENDENT_LANES` tuple named `verify_elements.py`/`verify_connectors.py`/
+  `github_meta_enrich.py` as three call sites that copy-pasted the two-anchor egress-canary logic
+  instead of importing the shared module once it existed — debt the module named but nothing
+  closed for 11 fires. Fixed: all three `_network_open()` functions now delegate to
+  `net_canary.network_open()` instead of carrying their own `github.com`/`www.wikipedia.org`
+  anchor loop; updated `net_canary.py`'s own docstring/comment to say the consolidation is done
+  instead of still-pending. Verified live under this session's real restricted egress (not just
+  imports): `verify_elements --limit 0` and `github_meta_enrich --dry-run --limit 0` both still
+  correctly print the identical "ABORTED — network canary failed" messages as before the change
+  (behavior preserved, not just syntax-valid); `verify_connectors --limit 0` unaffected as
+  expected (its cursor was already at 1510/1510, unrelated to this change). Ran all 5 local
+  suites (`excava_core_test`, `guardrail_test`, `git_merge_resolve_test`, `or1_phase_test`,
+  `deep_retrieve_test`) green, no regressions. `python -m src.guardrails`: 16/20, 0 critical,
+  same 4 pre-existing/expected flags as standing checks, nothing new.
+  **Harsh self-criticism:** this is real, verified-both-ways dedup (behavior confirmed identical,
+  not just "it imports") but it is still infrastructure hygiene, not a hub-content or
+  user-visible product win — G-M's "no new completions in the last 4 beats" flag is still true
+  after this fire, because a code-dedup with no data-shape change doesn't move that counter. Also
+  narrow in the same way fire 133 flagged its own fix was narrow: I did not go looking for OTHER
+  duplicated-canary-shaped debt beyond the 3 sites `net_canary.py` already named explicitly —
+  didn't do a fresh repo-wide sweep for a fourth undocumented copy, just closed the ones the
+  module was already pointing at. The `filler`-path fusability follow-up fire 134 flagged as
+  still open in `deep_retrieve.py` remains untouched this fire — a different, still-real gap,
+  deliberately left for a fire that wants to pick that thread back up. No storage, operational
+  limit, or blocking decision surfaced; nothing crossed the push-notification bar.
 - **~18:0x (fire 134, unattended, cloud, scheduled-task invocation, PRODUCT)** — Read fire 133's own
   harsh self-criticism (it fixed `fresh`'s fusability gate in `deep_retrieve.py` but explicitly flagged
   the `filler` cursor-walk fallback as still unfiltered: "a future fire under restricted egress could

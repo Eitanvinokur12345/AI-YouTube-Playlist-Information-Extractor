@@ -66,8 +66,14 @@ class FakeEngines:
     def complete(self, prompt, engine=None, dept="", difficulty="normal", max_tokens=700):
         self.calls.append({"prompt": prompt, "engine": engine})
         n = len(self.calls)
+        # Distinct model per engine, like the real pool (HEALTHY_ENGINES) — a fixed "fake-model"
+        # for every call made every family LABEL resolve to the same MODEL, which is exactly the
+        # same-model-wearing-personas case or1_phase1's models_used/label_vs_model_mismatch gate
+        # (added after this test was written) now correctly refuses. Faking distinct models here
+        # keeps this test exercising the gate's PASS path instead of tripping its refusal.
+        model = (engine or {}).get("model", f"fake-model-{self.tag}{n}")
         return {"ok": True, "text": f"draft-text-{n} unique-marker-{self.tag}{n}",
-                "engine": (engine or {}).get("name", "fake"), "model": "fake-model", "ms": 1}
+                "engine": (engine or {}).get("name", "fake"), "model": model, "ms": 1}
 
 
 def main() -> int:

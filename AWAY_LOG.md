@@ -5,6 +5,54 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-08
+- **~05:0x (fire 123, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (17/20 guardrails, 0 critical; origin/main unchanged, upstream already tracked, nothing to
+  repair this time). Consecutive meta-fire count was 2/3 after fire 122 — one more meta fire
+  would have hit the cap — so deliberately went looking for real product work instead of a
+  third round of git-hygiene, network re-checks confirmed the same proxy restriction fire 122
+  already proved (github.com 400, api.github.com 403, youtube.com unreachable — unchanged), so
+  the network-gated backlog (verify/links/mining/watch/transcripts) is still genuinely closed to
+  this session type.
+  **Found the actual opening by re-reading, not re-running, OR-1.** Fire 122 (and 98/103 before
+  it) described OR-1 (value 95, top of the backlog since fire 98) as blocked on a live multi-
+  model debate. That framing had gone stale: `python -m src.excava_chat` already ran OR-1's full
+  phase 1→4 debate for all 10 element types on 2026-08-03 — verified directly by loading all 40
+  `or1-phase{1,2,3,4}-*.json` artifact files: every one `ok:true`, 0 failed drafts, 4 real live
+  model families per type. The expensive part was DONE and nobody had surfaced it — `grep -rl
+  or1-phase4 src/` matched exactly one file before this fire (a fake-engine regression test), no
+  real code or doc pointed at the other 39 files. Built `src/or1_rubric_index.py` (deterministic,
+  no LLM, no network) to close that: `summary` lists all 10 types' debate coverage, `show <type>`
+  prints the phase-4 final guidelines side by side, `refresh` rebuilds the index from the source
+  files. Verified: `summary` correctly reports all 10 types phase-4-done/clean; `show nonsense`
+  gives a clean error naming the 10 real types instead of a traceback; `show tool --phase 9`
+  correctly rejected by argparse.
+  **Deliberately stopped short of applying anything.** Phase 4 holds 4 competing "final"
+  guidelines per type (one per model family), never converged into one canonical rubric — no
+  phase-5/synthesis pass exists. Picking, merging, or re-debating one is an editorial call that
+  changes how ~11k elements get judged; logged an honest correction + a clickable question in
+  `QUESTIONS.md` for Eitan to make that call with the real text in hand, rather than guessing at
+  it from a sandbox. `quality_score` was not touched on a single element.
+  **Bonus, found while in the code:** `src/or1_phase_test.py` was silently broken by an earlier,
+  correct anti-gaming fix (fire 104's `label_vs_model_mismatch` check in `or1_phase1`, which
+  verifies distinct *models* answered, not just distinct family *labels*) — the test's
+  `FakeEngines.complete()` hardcoded `"model": "fake-model"` for every call, so its 2 fake family
+  labels always resolved to 1 fake model and tripped the very gate it exists to test past,
+  crash-exiting with a `KeyError` after only 8 of 32 checks ran. Confirmed pre-existing (not
+  caused by this fire) via `git stash` before touching it. Fixed by giving each fake engine its
+  own model name; `python -m src.or1_phase_test` now runs and passes all 32 checks.
+  `python -m src.guardrails`: 17/20, 0 critical (G-C stale backup and G-O local-PC drain, both
+  pre-existing and unrelated; G-L cleared once this fire's own files are committed).
+  **Harsh self-criticism:** the index tool is real progress (orphaned work is now findable and
+  the false "still blocked" narrative is corrected on the record) but it is still infrastructure
+  around OR-1, not OR-1's actual output — the hub's elements are not scored any differently after
+  this fire than before it, and won't be until Eitan answers the new question. I chose not to
+  pick a rubric myself specifically because CLAUDE.md says questions like this are his, but that
+  is also the safe/easy call — a fire with more nerve might have proposed a concrete synthesis
+  for him to accept/reject rather than 4 raw transcripts to read cold; worth him telling me if
+  he'd rather I propose a merged draft next time instead of laying out the raw material. Also
+  did not attempt a phase-5 synthesis pass even as a *queued* backlog candidate (i.e. did not add
+  "run a convergence debate" to backlog.json) — deferred entirely to his answer on the question
+  above rather than half-committing to a specific next step.
 - **~04:0x (fire 122, unattended, cloud, scheduled-task invocation)** — Standing checks OK
   (started 18/20, 0 critical). No carry-over increment (fire 121's was `done`); consecutive
   meta-fire count was 1/3, still under the cap, so did another meta pass rather than force a

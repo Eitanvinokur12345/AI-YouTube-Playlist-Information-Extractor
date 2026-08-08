@@ -5,6 +5,44 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-08
+- **~17:0x (fire 133, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks OK
+  (`python -m src.standing_checks`: 18/20 guardrails, 0 critical; local origin/main cache was stale
+  again — re-fetched clean, HEAD matched, nothing lost; upstream tracking auto-repointed to
+  origin/main again). `net_canary`: re-verified live, still `open: false` — same restricted-egress
+  session as every fire since 124. Carry-over: none open (current_increment.json showed the prior
+  "false-positive hairball" fix as `done`), this fire started fresh.
+  **The actual increment:** did NOT repeat fires 131/132's `deep_retrieve --limit N` pattern a third
+  time — both of those fires' own harsh self-criticism named the same unfixed root cause (39/40,
+  then effectively all, batch slots wasted on github/website-link-only stubs whose network fetches
+  silently return `""` under restricted egress) and flagged it as "unfixed and unfixable from
+  here." That was wrong — it's fixable from here: `_fusable()` in `src/deep_retrieve.py` counted
+  any link as fusable regardless of real reachability. Fixed: one `net_canary.network_open()` call
+  up front per run gates link-based fusability; pulled the check to module level as `fusable(e,
+  egress_open)` so it's directly unit-testable without a live network call; added
+  `src/deep_retrieve_test.py` (4/4 pass, stdlib-only, no network). Confirmed the fix live under
+  this session's real restricted egress: `deep_retrieve --dry-run` now correctly reports
+  fresh-fusable pool **0** (previously miscounted **242**) — meaning the local transcript-only lane
+  is genuinely exhausted right now, not that the tool is broken; running it blind again would have
+  netted ~0 real content upgrades for real wall-clock cost, exactly as the corrected number
+  predicts. Ran all 4 local suites (`excava_core_test`, `guardrail_test`, `git_merge_resolve_test`,
+  `or1_phase_test`) green; `python -m src.guardrails`: 18/20, 0 critical (same steady-state G-C
+  stale-backup / G-O EITAN-PC-offline ~323h, unchanged); `maintenance_check`: grade B 77/100,
+  unchanged. Logged the WHY via `python -m src.project_memory log` before shipping. Commit
+  `601ba53e`, pushed and verified (`origin/main` HEAD match, confirmed with a fresh `git fetch`,
+  not just trusting the tool's own report).
+  **Harsh self-criticism:** the fix only closes the *fresh*-selection waste path; `filler` (the
+  cursor fallback once `fresh` is empty) still walks the raw sorted `todo` list with no fusability
+  filter at all, so a future fire under restricted egress could still burn wall-clock on doomed
+  `readme_excerpt`/`homepage_meta` network timeouts via that path — narrower than the original bug
+  but not zero. Left unfixed this fire to keep the increment focused and reviewable; worth a
+  follow-up if `filler`-path waste shows up in a future fire's numbers. Also: the corrected
+  fresh-fusable-pool-of-0 finding means the actual bottleneck for the local-only lane hasn't moved
+  — it still needs either open egress (a beat/PC-drain problem, not a code problem) or a bigger
+  local transcript corpus; this fire made the tool honest about that instead of fixing it, which is
+  the right scope for one increment but is not the same as fixing the underlying starvation.
+  No storage, operational-limit, or blocking decision surfaced this fire; nothing crossed the
+  push-notification bar.
+
 - **~16:0x (fire 132, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
   OK (`python -m src.standing_checks`: 18/20 guardrails, 0 critical; local `origin/main` cache was
   stale again — `ead416ab` → `97e52a57` — re-fetched clean, HEAD matched, nothing lost; upstream

@@ -5,6 +5,45 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-08
+- **~04:0x (fire 122, unattended, cloud, scheduled-task invocation)** — Standing checks OK
+  (started 18/20, 0 critical). No carry-over increment (fire 121's was `done`); consecutive
+  meta-fire count was 1/3, still under the cap, so did another meta pass rather than force a
+  product pick with no real one queued. Found and fixed two real guardrail failures instead of
+  just re-reading the dashboard: **G-C** (no history bundle newer than 26h — ran
+  `python -m src.git_safe backup`) and **G-G** (this branch was 1-2 commits behind
+  `origin/main` — concurrent CI lanes, mainly `bulk_analyze`, were landing commits every few
+  minutes while this fire ran — ran `python -m src.git_safe sync` twice, chasing a moving
+  target, until `git rev-list --left-right --count HEAD...origin/main` read `0 0`). Guardrails
+  now 19/20, the only red one (G-O, Eitan's local Ollama drain) is physically outside a cloud
+  session's reach.
+  **Spent real effort chasing three backlog items before concluding none were actually
+  runnable here, and verified each conclusion rather than assuming it:** (1) `verify_elements`
+  and `resolve_links` (queued value 90/82) both correctly self-aborted on their egress canary —
+  confirmed this wasn't a false trip by hand-testing `urllib`/`curl` against `github.com`
+  through this session's proxy: the proxy answers `400 {"message":"Request path could not be
+  canonicalized"}` for a plain page fetch, meaning it exposes a scoped GitHub API relay, not
+  general web egress, so the canary's "abort rather than risk false dead-link verdicts" is the
+  right call, not a bug to fix. (2) OR-1 (value 95, the highest-value queued item) needs a
+  >=2-live-model-family debate per its own scope note (fire 98/103) — this session is a single
+  model, so it's structurally blocked here regardless of network, exactly as fire 103 already
+  found and documented; re-confirming that was cheap and worth doing, re-attempting it was not.
+  (3) the supervisor's "news wired to `src.trend_watch` instead of `src.news`" intent-drift flag
+  looked like a fresh bug worth a quick fix — turned out to be fire 23's deliberate, still-open,
+  fully-reasoned non-fix (rewiring risks a write race with `news.yml`'s own schedule + a 90s
+  timeout against 95 RSS sources), already sitting in `QUESTIONS.md` awaiting Eitan's call, not
+  mine to silently resolve. Also re-checked the standing Claude-pipeline outage (QUESTIONS.md
+  #31) directly from `data/status.json`: unchanged at 35 consecutive zero-progress fails since
+  fire 121's escalation minutes earlier — no new push notification sent, since nothing changed
+  and one was already delivered.
+  **Harsh self-criticism:** this is now back-to-back meta fires (121 was product/outage-focused
+  narrative but zero code changed; 122 is pure git-hygiene) — 2/3 on the consecutive-meta-fire
+  contract counter, one more and the next fire is contractually forced to pick product work
+  regardless of what's queued. The backlog's actual product-value items (verify/links/mining
+  batches) are ALL network-gated in this specific proxy environment and OR-1 is model-diversity
+  gated — meaning this session type structurally cannot advance the top of the backlog no
+  matter how it's spent, which is a real constraint worth Eitan knowing about, not a excuse:
+  the fix is either running these fires from an environment with real egress (the GH Actions
+  beat already does), or re-scoping what a cloud-sandbox fire is expected to pick up next.
 - **~03:0x (fire 121, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
   guardrails, 0 critical; stale `origin/main` cache + missing upstream tracking, both
   auto-repaired, nothing lost). No carry-over increment open (fire 120's was `done`); consecutive

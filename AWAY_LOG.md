@@ -5,6 +5,72 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-08
+- **~13:0x (fire 130, unattended, cloud, scheduled-task invocation, PRODUCT, 10th heartbeat)** —
+  Standing checks OK (`python -m src.standing_checks`: 18/20 guardrails, 0 critical; local
+  `origin/main` cache was stale again — same recurring pattern every fire since ~120 — re-fetched
+  clean, HEAD matched, nothing lost; upstream tracking already correct). `net_canary`: still
+  `restricted` — same conclusion as every fire since 124, re-verified fresh rather than assumed,
+  so `excava_backlog list`'s 8 above-bar candidates (verify/watch/links/security/mining/memory/
+  news, all network- or credential-gated) are correctly untouched again this fire.
+  **Per the outer routine's "every 10th heartbeat" instruction — the wider review:**
+  storage: 30364 MB free on the repo drive (G-N), `.git` 85 MB / working tree 345 MB, 0 loose
+  objects — no storage pressure, nothing to prune. Previous run (fire 129): confirmed it actually
+  completed and shipped — `9257c9d1` (news refresh) is on `origin/main`, matches what fire 129's
+  own log entry claims, no dangling/uncommitted state found on session start. No operational limit
+  exceeded in this window: no push failures, no rate-limit errors, no guardrail critical failures
+  across fires 120-129 (steady 17-18/20, 0 critical every single fire; the only two persistent
+  non-critical flags are G-C stale-backup, which self-heals on ship, and G-O EITAN-PC-offline,
+  expected since the residential drain machine has been off ~319h). Reviewed the last ten cycles
+  (120-129): 4 were META (independently re-verifying the network/credential gate rather than
+  trusting a prior fire's conclusion by rote, per the meta-fire-cap discipline in
+  `loop_contract`), 5 were PRODUCT (2 real guardrail fixes, an audit-decision batch closed, the
+  maintenance grade lifted via honest data fixes, `deep_retrieve` drains), 1 (fire 124)
+  re-confirmed the still-open `analyze.yml`/`review.yml` self-improvement-lane outage
+  (QUESTIONS.md #31) is unchanged, not worse. That outage remains the one open high-severity item
+  and is Eitan's call (needs `claude setup-token` or a plan-cap decision from this sandbox); it was
+  already escalated with a push notification 9 fires ago and has been re-verified unchanged every
+  fire since without re-notifying — still correct not to repeat it. No blocker, storage issue, or
+  regression serious enough to interrupt Eitan for; this paragraph itself is the requested summary
+  to the repo.
+  **The actual increment:** found a SECOND instance of fire 129's exact false-positive pattern in
+  `maintenance_check.py`'s "Oversized category hubs become hairballs in the graph view" check —
+  it flagged any category with >120 raw skills+tools as a medium-severity hairball risk (6427
+  items across categories like code/861, productivity/642), the same "3 remaining maintenance
+  issues" fire 129 left untouched, but this one turned out to be a real false positive rather than
+  a genuine open item: read `src/build_graph.py` and `src/build_brain.py` (the ONLY two things
+  that actually render a category into a graph) before touching anything — `build_graph.py`'s
+  dashboard graph caps every hub at `CAP_PER_HUB=55` items UNCONDITIONALLY regardless of category
+  size, and `build_brain.py`'s Obsidian vault already splits any category over `HUB_CAP=90` into
+  alphabetical sub-hubs of `SUB_SIZE=50` (`sub_hubs()`, itself already commented "so no hub
+  radiates hundreds of edges (the hairball)") — both mitigations shipped in prior fires and were
+  never wired into the checker's detection logic, so it kept flagging data that literally cannot
+  render as a hairball anymore. Rewrote the check to compute each category's actual MITIGATED
+  rendered size (`min(n, CAP_PER_HUB)` for the dashboard graph, `n if n <= HUB_CAP else SUB_SIZE`
+  for the Obsidian vault) and only flag if that real rendered size — not the raw count — exceeds
+  an unreadable threshold; imports the live constants from both modules (falls back to the same
+  literal values if the import ever fails, so the check degrades safely rather than crashing).
+  This makes it a genuine regression guard (fires again only if someone loosens the caps
+  themselves) instead of permanent noise on properly-mitigated data. Verified: `python -m
+  src.maintenance_check` before/after — grade C 62/100 (4 issue types) → grade B 77/100 (3 issue
+  types), the 3 other genuinely-open items (self-improve stall, 188 no-description discoveries,
+  404 sourceless connectors) correctly unchanged; all 4 local test suites green
+  (`excava_core_test`, `guardrail_test`, `git_merge_resolve_test`, `or1_phase_test`); `python -m
+  src.guardrails`: 18/20, 0 critical (same steady-state G-C/G-O as every recent fire). Logged the
+  WHY via `python -m src.project_memory log` before shipping.
+  **Harsh self-criticism:** like fire 129's fix, this is a data/checker-quality correction, not
+  hub growth — it makes the maintenance grade more honest, it does not add an element, verify a
+  link, or move any at-risk goal. Unlike fire 129 I changed CHECKER CODE, not just data, which is
+  a slightly bigger blast radius: if a future fire ever raises `CAP_PER_HUB`/`HUB_CAP` well past
+  today's values without re-running this check, the new logic will correctly catch it, but I did
+  not add a dedicated regression test proving that (would need to fake the constants and assert
+  the flag fires) — the existing test suites don't cover `maintenance_check.py` at all, which is
+  itself a real gap this fire didn't fix either. Also did not touch the 3 remaining open
+  maintenance issues (self-improve stall is Eitan's call; the other two are network-gated in this
+  session type) — same honest boundary fire 129 drew. Not pushing a notification: nothing new
+  crossed the blocking-decision bar this fire — the one open high-severity item is the same
+  already-escalated, unchanged-since-fire-121 outage, and everything else (storage, guardrails,
+  prior-run success, operational limits) came back clean on the 10th-heartbeat review.
+
 - **~11:0x (fire 129, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
   OK (18/20, 0 critical; local `origin/main` cache was stale again — 35201dc9 → a6f7779e — re-
   fetched clean, nothing lost; upstream tracking already correct this time). `net_canary`: still

@@ -113,9 +113,32 @@ def main() -> int:
             sum(col.values()), "De-duplicate or suffix colliding titles so each item is its own note.",
             list(col.keys()))
 
-    # 3) Oversized hubs: a category with hundreds of members renders as an unreadable hairball.
+    # 3) Oversized hubs: a category with hundreds of RAW members would render as an unreadable
+    #    hairball -- but both real graph-view consumers already mitigate this unconditionally, so
+    #    flagging raw category size was a false positive (found fire 130, 2026-08-08):
+    #      - src/build_graph.py's dashboard graph caps every hub at CAP_PER_HUB items, regardless
+    #        of how big the category actually is.
+    #      - src/build_brain.py's Obsidian vault splits any category over HUB_CAP into alphabetical
+    #        sub-hubs of ~SUB_SIZE members each (`sub_hubs()`), so no single hub node ever radiates
+    #        more than that many edges.
+    #    So the only real signal here is a REGRESSION in those caps, not the raw category size.
+    #    Import the actual constants (no I/O at import time in either module) and recompute what
+    #    each category's rendered hub size would be under each consumer; only flag if that
+    #    mitigated size is itself unreadable.
+    try:
+        from src.build_graph import CAP_PER_HUB
+        from src.build_brain import HUB_CAP, SUB_SIZE
+    except Exception:
+        CAP_PER_HUB, HUB_CAP, SUB_SIZE = 55, 90, 50
+    UNREADABLE_HUB = 150  # a mitigated hub this big means the caps themselves were loosened too far
     cat_counts = Counter(str(x.get("category") or "other") for x in (tools + skills))
-    big = {c: n for c, n in cat_counts.items() if n > 120}
+
+    def rendered_size(n: int) -> int:
+        graph_hub = min(n, CAP_PER_HUB)
+        vault_hub = n if n <= HUB_CAP else SUB_SIZE
+        return max(graph_hub, vault_hub)
+
+    big = {c: n for c, n in cat_counts.items() if rendered_size(n) > UNREADABLE_HUB}
     if big:
         add("medium", "brain", "Oversized category hubs become hairballs in the graph view",
             sum(big.values()), "Sub-bucket big categories (cap members per hub, add sub-hubs) so the "

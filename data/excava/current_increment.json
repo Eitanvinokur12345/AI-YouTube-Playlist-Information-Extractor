@@ -1,11 +1,11 @@
 {
- "title": "OR-1: index+surface the already-finished 10-type rubric debate; fix its stale regression test",
- "kind": "product",
- "plan": "Build src/or1_rubric_index.py (deterministic, no LLM/network) to catalog+browse the 40 existing or1-phase1..4-*.json debate artifacts (all 10 element types, phases 1-4 complete since 2026-08-03, previously zero consumers = orphaned); fix src/or1_phase_test.py's stale FakeEngines double so it exercises fire 104's real label_vs_model_mismatch gate instead of crashing on it; log an honest status correction + clickable question to Eitan in QUESTIONS.md (pick/merge/re-debate the 4 competing final guidelines per type) since applying one is his editorial call, not this fire's.",
- "started_at": "2026-08-08T05:02:51.430335+00:00",
+ "title": "fire 125: exhaustive local-candidate sweep (all clean) + G-C backup refresh",
+ "kind": "meta",
+ "plan": "",
+ "started_at": "2026-08-08T07:04:34.641405+00:00",
  "fires": 1,
  "notes": [],
  "status": "done",
- "finished_at": "2026-08-08T05:02:51.469467+00:00",
- "outcome": "Shipped src/or1_rubric_index.py (summary/show/refresh CLI over the 40 real, clean or1-phase1..4 artifact files -- verified: all 10 types show phase-4-done, correct error message for an unknown type, argparse rejects an out-of-range --phase). Fixed src/or1_phase_test.py's FakeEngines.complete() to return a distinct fake model per engine (was hardcoded 'fake-model' for every call, which silently defeated fire 104's real label_vs_model_mismatch anti-gaming gate and crashed 24 of 32 checks with a KeyError) -- confirmed pre-existing via git stash, now all 32 checks pass. Logged an honest correction to fire 122's 'OR-1 blocked' framing in QUESTIONS.md plus a clickable question: Eitan needs to pick/merge/re-debate the 4 competing phase-4 guidelines per type before any of this can replace the generic quality_score -- deliberately did not guess at that himself, zero elements' scores touched. guardrails 17/20 0 critical (G-C/G-O pre-existing, unrelated, resolve on ship/PC); python -m src.or1_phase_test and python -m src.excava_core_test both clean."
+ "finished_at": "2026-08-08T07:05:35.104292+00:00",
+ "outcome": "fire 125 done: exhaustive local-candidate sweep all clean, G-C backup refreshed, guardrails 19/20, no product delta this fire (honest)"
 }

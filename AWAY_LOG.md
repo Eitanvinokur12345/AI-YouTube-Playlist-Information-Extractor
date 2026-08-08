@@ -5,6 +5,36 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-08
+- **~18:0x (fire 134, unattended, cloud, scheduled-task invocation, PRODUCT)** — Read fire 133's own
+  harsh self-criticism (it fixed `fresh`'s fusability gate in `deep_retrieve.py` but explicitly flagged
+  the `filler` cursor-walk fallback as still unfiltered: "a future fire under restricted egress could
+  still burn wall-clock on doomed `readme_excerpt`/`homepage_meta` network timeouts via that path").
+  Closed exactly that gap this fire instead of repeating a fourth `--limit N` batch run. Extracted the
+  batch-selection logic to a new module-level `select_batch(todo, fusable_fn, attempts, cutoff, start,
+  limit)` (same "pull it out of `main()` so it's directly testable" pattern fire 133 used for
+  `fusable()`), and applied the same `fusable_fn` gate to `filler`, not just `fresh`. Added 3 new
+  stdlib-only regression tests to `deep_retrieve_test.py` (7/7 total now pass): fresh empty when
+  nothing's fusable, filler does NOT fall back to non-fusable elements (the exact fire-133 gap), filler
+  still fills the batch from genuinely fusable ones. Verified live under this session's real restricted
+  egress: `deep_retrieve --dry-run` now reports **batch of 0** (previously would have fallen through to
+  an unfiltered filler window and attempted doomed network calls). Ran all 4 local suites
+  (`excava_core_test`, `guardrail_test`, `git_merge_resolve_test`, `or1_phase_test`) green; guardrails
+  18/20 → same steady-state G-M/G-O as prior fires (EITAN-PC drain offline ~324h), no new critical
+  failures. Logged the WHY via `python -m src.project_memory log` before shipping. Commit `9c0af011`,
+  pushed via `git_safe ship` — this session's real egress made the `git fetch` step slow (~3.5 min,
+  proxy-routed) rather than the near-instant pushes prior fires saw, but it completed clean and was
+  independently re-verified with a fresh `git fetch origin main` after the fact: local HEAD and
+  `origin/main` both at `a76a1f231`, matching.
+  **Harsh self-criticism:** this is a second consecutive meta-work fire on the same file/mechanism
+  (133 and 134 both touched `deep_retrieve.py`'s selection logic, neither touched actual hub content) —
+  legitimate given it closes a concretely-named, still-open bug rather than being busywork, but it means
+  two fires in a row have not moved the actual content-enrichment number (fresh-fusable pool is still
+  correctly 0 under this session's restricted egress — that bottleneck needs open egress or the PC drain
+  back online, not more code here). Also: I did not extend the same fusability discipline to whatever
+  OTHER lanes in the repo might do unconditional network fetches under restricted egress (only checked
+  `deep_retrieve.py` because that's where fire 133 pointed) — a genuinely exhaustive sweep of "does any
+  lane skip the `net_canary` gate" was out of scope for one fire and is worth flagging as a follow-up,
+  not silently assumed to be the only instance.
 - **~17:0x (fire 133, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks OK
   (`python -m src.standing_checks`: 18/20 guardrails, 0 critical; local origin/main cache was stale
   again — re-fetched clean, HEAD matched, nothing lost; upstream tracking auto-repointed to

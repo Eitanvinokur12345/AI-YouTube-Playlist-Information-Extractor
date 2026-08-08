@@ -4,6 +4,61 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+## 2026-08-08
+- **~01:0x (fire 119, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
+  guardrails, 0 critical; stale `origin/main` cache + missing upstream tracking, both auto-repaired
+  by `standing_checks`, nothing lost). No carry-over increment open (fire 118's was already `done`).
+  Gap since the last fire: this session-only away-loop had not fired since fire 118
+  (2026-08-03) — 5 days with no away-mode session running, even though the CLAUDE.md/away_mode.json
+  contract says always-on; the 24/7 GitHub-Actions beat kept going underneath regardless (bulk-analyze,
+  core-spoton, links+memory, gemini-video, analyze-safety commits all landed daily in the gap), so the
+  product itself did not stall — only the wrapper loop that does `standing_checks`→pick-an-increment→
+  `git_safe ship` did. Flagging the gap here rather than re-litigating it (a `/loop`-style scheduler
+  configuration issue, not something this fire can fix from inside the sandbox).
+  `maintenance_check` (grade D, 57/100) surfaced exactly ONE high-severity issue: "Pipeline lanes
+  overdue — Self-improvement review" (`pipeline_status.json`: `last_run: null`, `runs_7d: 0` for the
+  `review:`-prefixed lane). Chased it past the dashboard number instead of trusting it: pulled the
+  actual GitHub Actions run history for `review.yml` via the GitHub MCP tools (not visible from inside
+  the repo's own shallow clone — only 51 commits reachable locally). Found `review_findings.json` is
+  still dated `2026-06-20T23:00:00Z` despite the workflow reporting "success" on nearly every Wed/Sat
+  trigger since (self-improvement review is explicitly Eitan's #2 priority per CLAUDE.md §4 — this is
+  the exact "green dashboard hiding a real regression" pattern PULSE.md's fire 5 first called out, just
+  in a different subsystem). Root-caused it as TWO stacked bugs, not one:
+  1. **FIXED this fire.** `review.yml`'s "Plan this run" step computed `now = datetime.now(UTC)`
+     *after* the `fetch-depth: 0` checkout, which can take 1-2+ minutes. A run triggered near 23:59 UTC
+     could have `now()` land past midnight, one weekday later — `now.weekday() in (2, 5)` (Wed/Sat)
+     then silently evaluates False, `run=False`, the review step is skipped, and the job still reports
+     "success" because a skipped step doesn't fail a job. Verified against run `31058169311`
+     (triggered 2026-08-05 23:58:44 UTC, a real Wednesday): checkout alone ate ~75s; "Plan this run"
+     read `00:00:03 UTC Aug 6` = Thursday; skipped. This is the SAME class of bug fire 54 partially
+     fixed (that fire fixed comparing against the wrong cron string; this one is the timing of when
+     `now()` itself gets read) — the fix moved a `date -u +%s` capture into a new step that runs
+     BEFORE checkout, and the plan step now derives weekday from that frozen epoch instead of a fresh
+     `now()`. Verified, not asserted: extracted the plan step's embedded Python and ran it standalone
+     with `TRIGGER_EPOCH` pinned to the real 2026-08-05T23:58:44Z trigger instant — `run=true`,
+     `mode=weekly` (the old code path, re-derived by hand, gives `run=false` for the same trigger).
+     Commit carries the diff.
+  2. **Still open, NOT fixed this fire.** Even on the days the day-check correctly passes (e.g. run
+     `30724272208`, triggered 2026-08-01 23:55:57 UTC, a real Saturday), the `claude-code-action` step
+     itself fails almost instantly: `is_error:true`, `duration_ms: 2317`, `num_turns: 1`,
+     `total_cost_usd: 0` — it never got far enough to write anything. The action hides full SDK output
+     "for security", so the actual error text (token/quota/permission/something else) isn't visible
+     from the job log alone. Did not attempt a `show_full_output:true` diagnostic dispatch this fire —
+     that needs a live GitHub Actions round-trip and a security tradeoff (temporarily exposing raw SDK
+     output) that felt like a separate, deliberate decision rather than something to fold into this
+     fire's fix. Logged as the concrete next-fire target in `data/improvement_tasks.json` (the
+     `pipeline:...Self-improvement review` entry, status `partially-fixed` with the full diagnosis).
+  **Harsh self-criticism:** I fixed the mechanism that made the review LOOK like it never ran, but the
+  review still has not produced a fresh finding — bug #2 means Eitan's #2-priority self-improvement
+  lane is STILL effectively dead until the next fire (or Eitan) diagnoses the opaque `is_error`. I also
+  did not touch the 5-day away-loop gap itself (just described it) — if the scheduler invoking this
+  session is meant to fire more often than it has been, that's a scheduling-config problem outside this
+  sandbox's reach, and I'm not fully certain that's the right read; flagging rather than guessing
+  further. And per §7 this diagnosis is mine to make, but the underlying "OAuth token intermittently
+  errors instantly, cost $0, no visible reason" pattern is exactly the kind of thing that could also be
+  quietly costing Eitan's rationed Pro/Max quota elsewhere without him knowing — worth his eyes, not
+  just a queued task, next time he's actually looking at QUESTIONS.md/improvement_tasks.json.
+
 ## 2026-08-03
 - **~00:1x (fire 118, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
   guardrails, 0 critical; stale `origin/main` cache + missing upstream tracking, both auto-repaired,

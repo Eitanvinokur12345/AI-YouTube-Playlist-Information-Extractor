@@ -1,11 +1,11 @@
 {
- "title": "Fix maintenance_check's mislabeled empty-body signal (187 stub tools falsely flagged brain-breaking)",
+ "title": "Fix review.yml's midnight-crossover weekday bug silently skipping the self-improvement review lane",
  "kind": "meta",
- "plan": "split empty-body detector into true-blank vs linked-stub; fix improvement_tasks.json stale entry",
- "started_at": "2026-08-02T21:05:30.470251+00:00",
+ "plan": "capture trigger epoch before checkout; derive weekday from frozen epoch, not now() read after checkout",
+ "started_at": "2026-08-08T01:04:28.031471+00:00",
  "fires": 1,
  "notes": [],
  "status": "done",
- "finished_at": "2026-08-02T21:05:33.559688+00:00",
- "outcome": "shipped: maintenance_check.py now distinguishes true blank items (0) from linked-but-unenriched stubs (187, medium-sev, correctly labeled); health score 43->51; stale high-sev improvement_tasks.json entry resolved"
+ "finished_at": "2026-08-08T01:04:28.076521+00:00",
+ "outcome": "shipped: review.yml now stamps a pre-checkout trigger epoch and derives weekday from it, fixing the silent skip that left review_findings.json stuck at 2026-06-20 for ~9 weeks; verified by extracting+running the plan script standalone against the real 2026-08-05 23:58:44 UTC trigger (run=false under old logic, run=true under fixed logic). A second, deeper bug (opaque is_error near-instant Claude Action failure on days the day-check DOES pass) is diagnosed but not fixed -- queued in improvement_tasks.json for next fire / Eitan's attention."
 }

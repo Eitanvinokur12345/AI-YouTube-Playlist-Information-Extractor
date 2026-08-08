@@ -1,11 +1,11 @@
 {
- "title": "Fix review.yml's midnight-crossover weekday bug silently skipping the self-improvement review lane",
- "kind": "meta",
- "plan": "capture trigger epoch before checkout; derive weekday from frozen epoch, not now() read after checkout",
- "started_at": "2026-08-08T01:04:28.031471+00:00",
+ "title": "Fix maintenance_check's falsy-zero bug misclassifying deliberately-scored anti-example tools as unscored",
+ "kind": "product",
+ "plan": "quality_score 0 is a real, deliberate score (mine_feeds/gemini_video_analyze template defaults to 1; the model explicitly overrides to 0 for hype/anti-example mentions); not t.get('quality_score') treated that falsy-but-real 0 identically to a missing score -- switch the check to is None",
+ "started_at": "2026-08-08T02:02:53.616647+00:00",
  "fires": 1,
  "notes": [],
  "status": "done",
- "finished_at": "2026-08-08T01:04:28.076521+00:00",
- "outcome": "shipped: review.yml now stamps a pre-checkout trigger epoch and derives weekday from it, fixing the silent skip that left review_findings.json stuck at 2026-06-20 for ~9 weeks; verified by extracting+running the plan script standalone against the real 2026-08-05 23:58:44 UTC trigger (run=false under old logic, run=true under fixed logic). A second, deeper bug (opaque is_error near-instant Claude Action failure on days the day-check DOES pass) is diagnosed but not fixed -- queued in improvement_tasks.json for next fire / Eitan's attention."
+ "finished_at": "2026-08-08T02:02:53.653924+00:00",
+ "outcome": "shipped: src/maintenance_check.py's 'Tools with no quality score' detector no longer flags the 6 tools (Air Canada Chatbot, Builder.ai, Dragontail, Google Slides, Klarna AI assistant, NomadGo Inventory AI) that were already explicitly scored 0 by the mining pipeline as anti-examples of AI hype -- confirmed by reading data/tools.json directly (all 6 have quality_score:0, none None/missing) and by reading mine_feeds.py/gemini_video_analyze.py's own prompt template, which defaults quality_score to 1, meaning 0 only appears when the scoring model deliberately overrode it below the useful range. Verified before/after: maintenance_check health score 57->58 (issue_count 6->5, the false-positive issue type disappeared, nothing else changed). guardrails 18/20, 0 critical (same 2 pre-existing unrelated misses as fire 119). excava_core_test: all checks passed (unrelated, sanity check only)."
 }

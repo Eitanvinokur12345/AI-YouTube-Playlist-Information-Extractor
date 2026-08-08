@@ -5,6 +5,59 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-08
+- **~02:0x (fire 120, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
+  guardrails, 0 critical; stale `origin/main` cache + missing upstream tracking, both
+  auto-repaired by `standing_checks`, nothing lost). Current increment was already `done` (fire
+  119's review.yml fix), so this fire started fresh. `loop_contract status` showed 2/3 consecutive
+  meta fires (118 was product/data-dedup, 119 was meta/CI-pipeline) — one more meta would have
+  tripped the cap, so picked a PRODUCT increment on purpose rather than continuing meta work.
+  Checked the two obvious real-work lanes first and both are genuinely closed to this session, not
+  just untried: no LLM provider keys beyond this session's own model are set in the environment
+  (ruled out continuing OR-1 phase 1 — its explicit >=2-live-model-family gate can't be satisfied
+  here), and arbitrary outbound web is still walled off (`api.github.com/repos/Instagram/LibCST`
+  403s, `youtube.com` unreachable — same proxy scope every prior cloud fire hit, confirmed again
+  rather than assumed). Ran `maintenance_check` instead (local, deterministic, keyless) and found a
+  real bug in the checker itself, not just in the data: its "Tools with no quality score" detector
+  used `if not t.get("quality_score")`, which is true for BOTH a missing score and an honestly-
+  assigned score of `0` — Python falsy-zero trap. Read `data/tools.json` directly: all 6 flagged
+  tools (Air Canada Chatbot, Builder.ai, Dragontail, Google Slides, Klarna AI assistant, NomadGo
+  Inventory AI) already carry an explicit `quality_score: 0`, none `None`/missing. Confirmed intent,
+  not just guessed it: `mine_feeds.py`/`gemini_video_analyze.py`'s own prompt template defaults
+  `quality_score` to `1`, so a `0` in the data only happens when the scoring model deliberately
+  overrode the template to mark something below the useful range (these are literal anti-examples
+  from a "Why Tech CEOs Are Quietly Cancelling Their AI Plans" mining pass, e.g. Builder.ai's
+  `release_status: "collapsed"`) — a real, deliberate score, not an absence of one. Fixed
+  `src/maintenance_check.py` line 136 to `t.get("quality_score") is None`. **Verified, not
+  asserted:** `maintenance_check` before/after — health score honestly rose 57 -> 58, issue_count
+  6 -> 5, the false-positive "low | data | Tools with no quality score" issue type disappeared
+  entirely and nothing else on the report changed; `python -m src.guardrails` 18/20, 0 critical,
+  same two pre-existing unrelated misses as fire 119 (G-C stale history bundle, fixed by
+  `git_safe`'s own backup-before-push step; G-O local-PC drain 308h stale, PC-dependent, not
+  touched); `python -m src.excava_core_test` all checks passed (unrelated, unaffected — sanity
+  check only). **Harsh self-criticism:** this is a small, low-blast-radius fix (6 records, one
+  line) — I chose it specifically because it was the only thing I could FULLY verify from inside
+  this session's real constraints (no keys, no broad web), not because it's the highest-value item
+  on `backlog.json` (OR-1 at value 95 and the three network-gated department gaps at value 60-90
+  all outrank it and are still untouched). I did not check whether the same falsy-zero pattern
+  exists on any OTHER numeric field in `maintenance_check.py` (`link_tries`, category counts, etc.)
+  — scoped this fire to the one issue the report actually flagged this run rather than auditing the
+  whole file speculatively; a future fire with time budget should grep for `not .*\.get\(` against
+  every numeric field once, not fix them one report-cycle at a time.
+  **Heartbeat check-in (every-10th fire, per the outer routine's instruction):** storage: 30 GB
+  free on the repo volume (`df -h .`), repo itself is small (`.git` 85 MB, `data` 203 MB) — no
+  capacity concern. Previous run (fire 119): completed successfully per its own log entry and
+  `current_increment.json` (`status: done`), confirmed independently here via `standing_checks`
+  reporting a clean, unblocked state on this fire's start. No operational limit was hit in fires
+  111-120: guardrails held 17-19/20 with 0 critical the entire window, no push failures, no rate
+  limits surfaced in any of the ten logs. Reviewed fires 111-120: 111-115 carried one increment
+  (OR-1 phase 1 debate infrastructure) across 5 fires per the carry-over rule, correctly blocked
+  each time on the same live-multi-model-key gate this fire re-confirmed; 116-118 mined real,
+  verified bugs out of `maintenance_check`'s own findings (two false-positive detectors fixed,
+  three genuine near-duplicate hub records merged); 119 fixed a 9-week-silent CI scheduling bug in
+  `review.yml` (a second, deeper bug in that same pipeline is still open, queued in
+  `improvement_tasks.json`); 120 (this fire) fixed a third false-positive detector in the same
+  checker. No blocker serious enough to interrupt Eitan for — this summary is the repo posting,
+  per policy, not a phone push.
 - **~01:0x (fire 119, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
   guardrails, 0 critical; stale `origin/main` cache + missing upstream tracking, both auto-repaired
   by `standing_checks`, nothing lost). No carry-over increment open (fire 118's was already `done`).

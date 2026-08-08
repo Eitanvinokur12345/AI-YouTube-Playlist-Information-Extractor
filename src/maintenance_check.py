@@ -133,7 +133,10 @@ def main() -> int:
         add("low", "data", "Connectors with no URL/source can't be installed or verified",
             len(orphan_conn), "Resolve each connector's repo/package URL (or drop it).", orphan_conn)
 
-    noq = [t.get("name") for t in tools if not t.get("quality_score")]
+    # quality_score 0 is a deliberate score (mine_feeds/gemini_video_analyze template defaults to
+    # 1; an item scored 0 was explicitly marked sub-scale, e.g. a hype anti-example, not left
+    # unscored) -- `not t.get(...)` treated that falsy-but-real 0 the same as a missing score.
+    noq = [t.get("name") for t in tools if t.get("quality_score") is None]
     if noq:
         add("low", "data", "Tools with no quality score can't be ranked",
             len(noq), "Score them in the next analysis pass.", noq)

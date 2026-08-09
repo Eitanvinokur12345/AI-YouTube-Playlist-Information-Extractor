@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-09T19:15:44.740097+00:00",
+ "generated_at": "2026-08-09T21:07:05.717309+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -37,14 +37,42 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 93,
+   "turns_7d": 94,
    "rooms_7d": 47,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on the newest merged PR first. It catches routing errors before they spread, proving the fix"
+   "last_position": "Run PR-Agent in shadow mode on the newest open PR first. This catches routing errors before they spread, cutting fix cos"
+  },
+  {
+   "id": "analysis-w1",
+   "name": "Chisel",
+   "dept": "analysis",
+   "role": "doer",
+   "turns_7d": 93,
+   "rooms_7d": 46,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Adopt Luma’s built-in transcript tool for every pending video now. It’s the fastest way to guarantee transcripts without"
+  },
+  {
+   "id": "analysis-checker",
+   "name": "Sift",
+   "dept": "analysis",
+   "role": "checker",
+   "turns_7d": 93,
+   "rooms_7d": 46,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Luma’s built-in transcript tool outsources reliability to an external service—meaning we lose control when it fails, and"
   },
   {
    "id": "transcripts-w1",
@@ -59,34 +87,6 @@
    ],
    "positions_held": 30,
    "last_position": "Run kimtaeyoon83/mcp-server-youtube-transcript on every pending video now. It’s the fastest path to transcripts without "
-  },
-  {
-   "id": "analysis-w1",
-   "name": "Chisel",
-   "dept": "analysis",
-   "role": "doer",
-   "turns_7d": 92,
-   "rooms_7d": 46,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Adopt Luma’s built-in transcript tool for every pending video now. It’s the fastest way to guarantee transcripts without"
-  },
-  {
-   "id": "analysis-checker",
-   "name": "Sift",
-   "dept": "analysis",
-   "role": "checker",
-   "turns_7d": 92,
-   "rooms_7d": 46,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Luma’s built-in transcript tool outsources reliability to an external service—if it fails, we lose control and visibilit"
   },
   {
    "id": "memory-w1",
@@ -284,14 +284,14 @@
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 55,
-   "rooms_7d": 55,
+   "turns_7d": 56,
+   "rooms_7d": 56,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a raw list of"
+   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a list of AI"
   },
   {
    "id": "power-w1",
@@ -354,28 +354,28 @@
    "name": "Overhaul",
    "dept": "improve",
    "role": "improver",
-   "turns_7d": 46,
-   "rooms_7d": 46,
+   "turns_7d": 47,
+   "rooms_7d": 47,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on the newest *open* PR first, then expand to merged—this catches routing errors before they"
+   "last_position": "Run PR-Agent in shadow mode on the newest *open* PR first, then expand to merged PRs—this catches routing errors before "
   },
   {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 44,
-   "rooms_7d": 44,
+   "turns_7d": 45,
+   "rooms_7d": 45,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Reel fetches real transcripts for every pending video via kimtaeyoon83/mcp-server-youtube-transcript, producing ",
+   "last_position": "ACTION: Reel fetches real transcripts for every pending video via kimtaeyoon83/mcp-server-youtube-transcript; Scriv conf",
    "proposed": 2
   },
   {
@@ -383,28 +383,28 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 43,
+   "turns_7d": 44,
    "rooms_7d": 22,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "We should add a 4px solid #005fcc focus ring with a 2px inner #ffffff offset to interactive elements, as it provides a c"
+   "last_position": "Use a 2px solid #005fcc focus ring with a 1px inner #ffffff offset (total 3px). It keeps the ring visible enough for key"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 43,
+   "turns_7d": 44,
    "rooms_7d": 22,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 4px ring risks colliding with adjacent elements in dense UIs, making it harder to distinguish focus from content. A "
+   "last_position": "A 2px ring risks disappearing entirely on high-DPI screens where pixels blur—test it at 200% zoom on a Retina display. A"
   },
   {
    "id": "visual-lead",
@@ -453,14 +453,14 @@
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 34,
-   "rooms_7d": 34,
+   "turns_7d": 35,
+   "rooms_7d": 35,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Default to system preference at first launch, then remember the user’s choice with a persistent one-click togg",
+   "last_position": "DECISION: Default to system preference at first launch, then remember the user’s last theme choice, with a persistent on",
    "proposed": 2
   },
   {

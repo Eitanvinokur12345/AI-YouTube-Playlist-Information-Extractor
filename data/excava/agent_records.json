@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-09T05:32:42.445443+00:00",
+ "generated_at": "2026-08-09T07:38:07.443554+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 133,
+   "turns_7d": 134,
    "rooms_7d": 40,
    "engines_used": [
     "groq",
@@ -16,7 +16,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The real risk isn’t silent failures—it’s that Luma’s built-in transcript tool locks us into a black box with no visibili"
+   "last_position": "Luma’s built-in transcript tool won’t scale for bulk pulls—quotas and latency will bottleneck Creatives when they need t"
   },
   {
    "id": "watch-w1",
@@ -65,28 +65,28 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 86,
-   "rooms_7d": 43,
+   "turns_7d": 87,
+   "rooms_7d": 44,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on the newest open PR first. It catches routing flaws before they merge, letting us refine p"
+   "last_position": "Run PR-Agent in shadow mode on the newest merged PR first. It catches routing errors after they’ve already shipped, so w"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 82,
+   "turns_7d": 83,
    "rooms_7d": 40,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will run kimtaeyoon83/mcp-server-youtube-transcript on every pending video now. This will produce full transcripts/cap"
+   "last_position": "Run kimtaeyoon83/mcp-server-youtube-transcript on every pending video now. It’s the fastest path to transcripts without "
   },
   {
    "id": "memory-w1",
@@ -107,13 +107,27 @@
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 65,
-   "rooms_7d": 65,
+   "turns_7d": 66,
+   "rooms_7d": 66,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh digest entry sum"
+   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh, verified AI new"
+  },
+  {
+   "id": "news-checker",
+   "name": "Factcheck",
+   "dept": "news",
+   "role": "checker",
+   "turns_7d": 64,
+   "rooms_7d": 64,
+   "engines_used": [
+    "mistral",
+    "sambanova"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is valid MISSION work."
   },
   {
    "id": "news-lead",
@@ -130,18 +144,45 @@
    "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key updates from OpenAI’s latest AI researc"
   },
   {
-   "id": "news-checker",
-   "name": "Factcheck",
-   "dept": "news",
+   "id": "visualization-w1",
+   "name": "Facet",
+   "dept": "visualization",
+   "role": "doer",
+   "turns_7d": 63,
+   "rooms_7d": 32,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Default to the system’s light/dark preference at first launch, then remember the user’s last choice for all future sessi"
+  },
+  {
+   "id": "visualization-checker",
+   "name": "Pane",
+   "dept": "visualization",
    "role": "checker",
    "turns_7d": 63,
-   "rooms_7d": 63,
+   "rooms_7d": 32,
    "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Pane: Defaulting to system preference then remembering last choice still risks users missing critical data when they swi"
+  },
+  {
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 62,
+   "rooms_7d": 62,
+   "engines_used": [
+    "groq",
     "mistral",
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: The action is valid MISSION work."
+   "last_position": "ACTION: At 11:26:00, Iris confirms transcripts from kimtaeyoon83/mcp-server-youtube-transcript are ingested into Arcads "
   },
   {
    "id": "watch-checker",
@@ -197,32 +238,6 @@
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health via its MCP serve"
   },
   {
-   "id": "visualization-w1",
-   "name": "Facet",
-   "dept": "visualization",
-   "role": "doer",
-   "turns_7d": 62,
-   "rooms_7d": 32,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Choose a dark theme as the default with a persistent one-click toggle to light mode. This matches Manus’ competitive ana"
-  },
-  {
-   "id": "visualization-checker",
-   "name": "Pane",
-   "dept": "visualization",
-   "role": "checker",
-   "turns_7d": 62,
-   "rooms_7d": 32,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Dark theme as default still risks users missing critical data if they assume light mode is always available—persistent t"
-  },
-  {
    "id": "links-lead-x",
    "name": "LinLea",
    "dept": "links",
@@ -235,21 +250,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Anchor publishes the verified, updated link inventory for the Mission Control Dashboard."
-  },
-  {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 61,
-   "rooms_7d": 61,
-   "engines_used": [
-    "groq",
-    "mistral",
-    "sambanova"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: At 11:23:00, Iris confirms transcripts exist via kimtaeyoon83/mcp-server-youtube-transcript before Arcads AI Vid"
   },
   {
    "id": "links-w1",
@@ -340,14 +340,14 @@
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 43,
-   "rooms_7d": 43,
+   "turns_7d": 44,
+   "rooms_7d": 44,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Shadow mode on merged PRs only catches errors *after* they’re already in production—too late to prevent harm. Better to "
+   "last_position": "Shadow mode on merged PRs only catches errors *after* they’re already in product—it doesn’t prevent them. The real risk "
   },
   {
    "id": "improve-improver",
@@ -364,6 +364,49 @@
    "last_position": "Run the shadow test on the newest *open* PR first, then expand to merged PRs—this catches routing flaws earlier. Use PR-"
   },
   {
+   "id": "visual-w1",
+   "name": "Easel",
+   "dept": "visual",
+   "role": "doer",
+   "turns_7d": 40,
+   "rooms_7d": 40,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
+  },
+  {
+   "id": "visual-checker",
+   "name": "Squint",
+   "dept": "visual",
+   "role": "checker",
+   "turns_7d": 40,
+   "rooms_7d": 40,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is mission work our tool can do."
+  },
+  {
+   "id": "transcripts-lead",
+   "name": "Echo",
+   "dept": "transcripts",
+   "role": "lead",
+   "turns_7d": 39,
+   "rooms_7d": 39,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Reel runs kimtaeyoon83/mcp-server-youtube-transcript only on pending videos and confirms residential IP support ",
+   "proposed": 2
+  },
+  {
    "id": "visual-lead",
    "name": "Chroma",
    "dept": "visual",
@@ -378,75 +421,32 @@
    "last_position": "ACTION: Easel captures a high-quality full-page screenshot of the official Agent Platform Selection Rule page to extract"
   },
   {
-   "id": "visual-w1",
-   "name": "Easel",
-   "dept": "visual",
-   "role": "doer",
-   "turns_7d": 39,
-   "rooms_7d": 39,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
-  },
-  {
-   "id": "visual-checker",
-   "name": "Squint",
-   "dept": "visual",
-   "role": "checker",
-   "turns_7d": 39,
-   "rooms_7d": 39,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is mission work our tool can do."
-  },
-  {
-   "id": "transcripts-lead",
-   "name": "Echo",
-   "dept": "transcripts",
-   "role": "lead",
-   "turns_7d": 38,
-   "rooms_7d": 38,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Reel runs kimtaeyoon83/mcp-server-youtube-transcript only on pending videos with residential IP access, producin",
-   "proposed": 2
-  },
-  {
    "id": "accessibility-w1",
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 36,
-   "rooms_7d": 18,
+   "turns_7d": 37,
+   "rooms_7d": 19,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Use a 2px solid #005fcc ring with no inner ring for focus indicators. This keeps the focus ring visible on all backgroun"
+   "last_position": "Add a 2px solid #005fcc ring with no inner ring for focus indicators. This keeps the ring visible at 2px—thin enough to "
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 36,
-   "rooms_7d": 18,
+   "turns_7d": 37,
+   "rooms_7d": 19,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 4px ring risks failing on high-contrast patterned backgrounds where the white inner ring vanishes. A 2px solid #005f"
+   "last_position": "The 2px ring fails on low-contrast patterned backgrounds where the 2px gap between ring and pattern merges the ring into"
   },
   {
    "id": "analysis-lead",

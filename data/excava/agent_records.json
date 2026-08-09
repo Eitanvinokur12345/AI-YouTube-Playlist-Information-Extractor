@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-09T22:06:42.698798+00:00",
+ "generated_at": "2026-08-09T22:12:48.556589+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 149,
+   "turns_7d": 150,
    "rooms_7d": 47,
    "engines_used": [
     "groq",
@@ -16,7 +16,7 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Luma’s built-in transcript tool trades speed for hidden failure modes—it’s the sledgehammer approach that guarantees 10-"
+   "last_position": "Luma’s built-in transcript tool trades speed for hidden failure modes—it’s the same risk as kimtaeyoon83/mcp-server-yout"
   },
   {
    "id": "watch-w1",
@@ -37,6 +37,20 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
+   "turns_7d": 95,
+   "rooms_7d": 48,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run PR-Agent in shadow mode on the newest open PR first. It catches routing errors before they hit users, saving time an"
+  },
+  {
+   "id": "transcripts-w1",
+   "name": "Reel",
+   "dept": "transcripts",
+   "role": "doer",
    "turns_7d": 94,
    "rooms_7d": 47,
    "engines_used": [
@@ -44,21 +58,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on the newest open PR first. This catches routing errors before they spread, cutting fix cos"
-  },
-  {
-   "id": "transcripts-w1",
-   "name": "Reel",
-   "dept": "transcripts",
-   "role": "doer",
-   "turns_7d": 93,
-   "rooms_7d": 47,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will run kimtaeyoon83/mcp-server-youtube-transcript on every pending video now. This will produce real full transcript"
+   "last_position": "Run kimtaeyoon83/mcp-server-youtube-transcript on every pending video now. It’s the fastest path to transcripts without "
   },
   {
    "id": "analysis-w1",
@@ -89,6 +89,32 @@
    "last_position": "Luma’s built-in transcript tool outsources reliability to an external service—meaning we lose control when it fails, and"
   },
   {
+   "id": "visualization-w1",
+   "name": "Facet",
+   "dept": "visualization",
+   "role": "doer",
+   "turns_7d": 71,
+   "rooms_7d": 36,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Choose a high-contrast light theme by default with a one-click toggle to dark mode. Interactive data visualizations need"
+  },
+  {
+   "id": "visualization-checker",
+   "name": "Pane",
+   "dept": "visualization",
+   "role": "checker",
+   "turns_7d": 71,
+   "rooms_7d": 36,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Pane: A high-contrast light theme solves visibility but risks alienating users who work in bright environments or prefer"
+  },
+  {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
@@ -101,32 +127,6 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a raw "
-  },
-  {
-   "id": "visualization-w1",
-   "name": "Facet",
-   "dept": "visualization",
-   "role": "doer",
-   "turns_7d": 70,
-   "rooms_7d": 36,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Choose a dark theme by default with a one-click toggle to light mode. Dark themes reduce eye strain in low-light conditi"
-  },
-  {
-   "id": "visualization-checker",
-   "name": "Pane",
-   "dept": "visualization",
-   "role": "checker",
-   "turns_7d": 70,
-   "rooms_7d": 36,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Dark themes hide errors and muted colors—users miss critical data if they assume the interface is working. A better alte"
   },
   {
    "id": "news-w1",
@@ -284,14 +284,14 @@
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 57,
-   "rooms_7d": 57,
+   "turns_7d": 58,
+   "rooms_7d": 58,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a raw datase"
+   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a raw list of"
   },
   {
    "id": "power-w1",
@@ -340,14 +340,14 @@
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 47,
-   "rooms_7d": 47,
+   "turns_7d": 48,
+   "rooms_7d": 48,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Shadow mode on merged PRs catches errors too late—only after they’re already in production. A better alternative is runn"
+   "last_position": "Shadow mode on open PRs risks slowing down reviews by adding noise to every PR, not just the newest—authors may ignore c"
   },
   {
    "id": "improve-improver",
@@ -368,14 +368,14 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 45,
-   "rooms_7d": 45,
+   "turns_7d": 46,
+   "rooms_7d": 46,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Reel fetches real transcripts for every pending video via kimtaeyoon83/mcp-server-youtube-transcript; Scriv conf",
+   "last_position": "ACTION: Reel fetches real full transcripts for every pending video via kimtaeyoon83/mcp-server-youtube-transcript and de",
    "proposed": 2
   },
   {
@@ -383,28 +383,28 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 44,
-   "rooms_7d": 22,
+   "turns_7d": 45,
+   "rooms_7d": 23,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Use a 2px solid #005fcc focus ring with a 1px inner #ffffff offset (total 3px). It keeps the ring visible enough for key"
+   "last_position": "Add a 4px solid #005fcc focus ring with a 2px inner #ffffff offset to all interactive elements. This ensures keyboard us"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 44,
-   "rooms_7d": 22,
+   "turns_7d": 45,
+   "rooms_7d": 23,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "A 2px ring risks disappearing entirely on high-DPI screens where pixels blur—test it at 200% zoom on a Retina display. A"
+   "last_position": "The 4px ring risks colliding with adjacent elements in dense UIs, making it hard to distinguish focus. A 2px ring risks "
   },
   {
    "id": "visual-lead",
@@ -506,7 +506,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Adopt a 3px solid #005fcc focus ring with a 1px inner #ffffff offset (total 4px) for interactive elements. The",
    "proposed": 16,
-   "shipped": 14
+   "shipped": 15
   },
   {
    "id": "creators-w1",

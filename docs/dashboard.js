@@ -1152,7 +1152,7 @@ function _connCard(c, safety, vPill) {
     if (c.paid_version) metaBits.push(`<span class="metapill"><b>Paid:</b> ${esc(c.paid_version)}</span>`);
     const metaRow = metaBits.length ? `<div class="connmeta">${metaBits.join("")}</div>` : "";
     const urlLine = c.url ? `<p><a href="${esc(c.url)}" target="_blank" rel="noopener">Website / repo</a></p>` : "";
-    return `<div class="card ${isStarred(c) ? "starred" : ""}">
+    return `<div class="card conncard ${isStarred(c) ? "starred" : ""}">
     <h3>${isStarred(c) ? '<span class="star" title="Starred — frozen, never auto-changed">&#9733;</span>' : ""}<span class="score">${esc(c.quality_score ?? "?")}/10</span> ${esc(c.name)}
       <span class="pill">${esc(c.type || "")}</span>
       ${safPill}

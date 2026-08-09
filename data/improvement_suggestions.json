@@ -230,7 +230,7 @@
     {
       "id": "3c6d2e8a1f",
       "type": "ui_change",
-      "status": "pending",
+      "status": "applied",
       "detail": "Quick-read mode hides .card .sub globally, removing provider/source from Connectors cards and date/source from News cards — essential context for those tabs. Only Skills and Tools cards should have .sub hidden in Quick-read; Connectors and News should keep their metadata line.",
       "proposed_change": {
         "file": "docs/index.html",
@@ -239,7 +239,9 @@
       },
       "source": "review",
       "review_finding_id": "5e3d1b9f8c",
-      "severity": "med"
+      "severity": "med",
+      "applied_note": "Fixed: CSS rule scoped from `body.quickread .card .sub { display:none; }` to `body.quickread .card:not(.newscard):not(.conncard) .sub { display:none; }` in docs/index.html. Added the missing .conncard class to the connector card markup in docs/dashboard.js renderConnectors() (line ~1155) so the new selector actually applies to it — .newscard already existed on news cards. Verified: grep confirms no other connector-card render path exists (renderConnectors is the only one), node --check docs/dashboard.js clean, all 6 local test suites green, guardrails 17/20 0 critical (G-C/G-G/G-O pre-existing baseline, unrelated).",
+      "applied_at_fire": 146
     },
     {
       "id": "1b7a5c9e3d",

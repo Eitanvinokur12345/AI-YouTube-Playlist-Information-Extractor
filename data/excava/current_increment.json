@@ -1,11 +1,11 @@
 {
- "title": "fire 145: dead-code suggestion caught + real tool descriptions + transcript-fallback health check",
+ "title": "fix quickread .sub CSS scoping (connectors/news lose context)",
  "kind": "product",
  "plan": "",
- "started_at": "2026-08-09T05:03:00.152098+00:00",
+ "started_at": "2026-08-09T07:01:56.789853+00:00",
  "fires": 1,
  "notes": [],
  "status": "done",
- "finished_at": "2026-08-09T05:03:05.442851+00:00",
- "outcome": "closed: c9b5e2f731 marked invalid_dead_code with root-cause note (analyze_batch.py never invoked by any workflow, confirmed via analyze.yml + repo-wide grep); fixed the 3 real stale generic tool descriptions (grok/google-ai-studio/notion-ai) 0/3160 generic remaining; applied a7d3c6e041's transcript-fallback health check (fetch.py computes transcript_health/transcript_fallback_rate, dashboard.js renders an amber banner) and backfilled it against the live status.json run_report (91/91 no_transcript on the last real fetch -> transcript_health=degraded, now visible on the dashboard, not just in a log)."
+ "finished_at": "2026-08-09T07:01:56.839072+00:00",
+ "outcome": "shipped: scoped body.quickread .card .sub hiding to exclude .newscard/.conncard; added missing .conncard class to connector card render"
 }

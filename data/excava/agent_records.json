@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-09T11:35:09.203485+00:00",
+ "generated_at": "2026-08-09T13:35:20.336003+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 142,
+   "turns_7d": 143,
    "rooms_7d": 44,
    "engines_used": [
     "groq",
@@ -65,28 +65,28 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 90,
-   "rooms_7d": 45,
+   "turns_7d": 91,
+   "rooms_7d": 46,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on the newest open PR first. This catches routing errors before they merge, proving value fa"
+   "last_position": "Run PR-Agent in shadow mode on the newest merged PR first. It catches routing errors in merged code before they spread, "
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 88,
+   "turns_7d": 89,
    "rooms_7d": 44,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will run kimtaeyoon83/mcp-server-youtube-transcript on every pending video now. This will produce full transcripts/cap"
+   "last_position": "Run kimtaeyoon83/mcp-server-youtube-transcript on every pending video now. It’s the fastest path to transcripts without "
   },
   {
    "id": "memory-w1",
@@ -103,6 +103,32 @@
    "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a raw "
   },
   {
+   "id": "visualization-w1",
+   "name": "Facet",
+   "dept": "visualization",
+   "role": "doer",
+   "turns_7d": 67,
+   "rooms_7d": 34,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Choose a light theme by default with a one-click toggle to dark mode. Light themes make errors and muted colors visible,"
+  },
+  {
+   "id": "visualization-checker",
+   "name": "Pane",
+   "dept": "visualization",
+   "role": "checker",
+   "turns_7d": 67,
+   "rooms_7d": 34,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Pane: Light themes still risk users ignoring muted alerts if they’re buried in dense data—dark mode’s contrast can make "
+  },
+  {
    "id": "news-w1",
    "name": "Scoop",
    "dept": "news",
@@ -114,32 +140,6 @@
    ],
    "positions_held": 30,
    "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh, verified AI new"
-  },
-  {
-   "id": "visualization-w1",
-   "name": "Facet",
-   "dept": "visualization",
-   "role": "doer",
-   "turns_7d": 66,
-   "rooms_7d": 34,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Choose a dark theme as the default with a persistent one-click toggle to light mode. Dark themes reduce eye strain in lo"
-  },
-  {
-   "id": "visualization-checker",
-   "name": "Pane",
-   "dept": "visualization",
-   "role": "checker",
-   "turns_7d": 66,
-   "rooms_7d": 34,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Dark themes hide errors and muted colors—users miss critical data if they assume the interface behaves the same as a lig"
   },
   {
    "id": "news-lead",
@@ -340,14 +340,14 @@
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 45,
-   "rooms_7d": 45,
+   "turns_7d": 46,
+   "rooms_7d": 46,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Shadow mode on merged PRs only catches errors *after* they’re already in product—it’s a post-mortem, not prevention. Bet"
+   "last_position": "Shadow mode on merged PRs only catches errors *after* they’re already in product—it’s a cleanup tool, not a prevention t"
   },
   {
    "id": "improve-improver",
@@ -368,15 +368,43 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 42,
-   "rooms_7d": 42,
+   "turns_7d": 43,
+   "rooms_7d": 43,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Pre-filter pending videos first—skip those with existing transcripts or low engagement—then run kimtaeyoon83/m",
+   "last_position": "ACTION: Reel fetches real transcripts for every pending video via kimtaeyoon83/mcp-server-youtube-transcript, skipping t",
    "proposed": 2
+  },
+  {
+   "id": "accessibility-w1",
+   "name": "Ramp",
+   "dept": "accessibility",
+   "role": "doer",
+   "turns_7d": 41,
+   "rooms_7d": 21,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Use a 3px solid #005fcc focus ring with a 1px inner #ffffff ring (total 4px). This keeps the ring visible on all backgro"
+  },
+  {
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
+   "role": "checker",
+   "turns_7d": 41,
+   "rooms_7d": 21,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The 3px/1px ring risks blurring the focus indicator on low-DPI screens where 1px borders may not render crisply. A simpl"
   },
   {
    "id": "visual-lead",
@@ -421,34 +449,6 @@
    "last_position": "Verdict: The action is mission work our tool can do."
   },
   {
-   "id": "accessibility-w1",
-   "name": "Ramp",
-   "dept": "accessibility",
-   "role": "doer",
-   "turns_7d": 40,
-   "rooms_7d": 20,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Use a 3px solid #005fcc focus ring with a 1px inner #ffffff ring (total 4px) for keyboard navigation. This guarantees WC"
-  },
-  {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 40,
-   "rooms_7d": 20,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "The 4px ring risks feeling heavy in dense UIs where multiple elements already compete for space—especially on mobile or "
-  },
-  {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
@@ -489,8 +489,8 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Test ComfyUI’s FaceDetailer node with SD3.5’s face model on EXCAVA’s motion-blurred footage first—if face fide",
-   "proposed": 16,
-   "shipped": 16
+   "proposed": 15,
+   "shipped": 15
   },
   {
    "id": "accessibility-lead",
@@ -506,7 +506,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Adopt a 2px solid #005fcc focus ring with a 1px outer glow (#005fcc, 0.5px blur) for keyboard navigation. Resu",
    "proposed": 14,
-   "shipped": 12
+   "shipped": 13
   },
   {
    "id": "creators-w1",

@@ -34,6 +34,8 @@ CONFIG_PATH = ROOT / "config.json"
 DATA_DIR = ROOT / "data"
 PENDING_DIR = DATA_DIR / "_pending"
 SKILLS_JSON = DATA_DIR / "skills.json"
+TOOLS_JSON = DATA_DIR / "tools.json"
+CONNECTORS_JSON = DATA_DIR / "connectors.json"
 STATUS_JSON = DATA_DIR / "status.json"
 DAILY_JSON = DATA_DIR / "daily_news.json"
 WEEKLY_JSON = DATA_DIR / "weekly_news.json"
@@ -71,6 +73,22 @@ def save_json(path: Path, obj: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w", encoding="utf-8") as fh:
         json.dump(obj, fh, ensure_ascii=False, indent=2)
+
+
+def count_entries(path: Path, key: str) -> int:
+    """Ground-truth element count, read fresh from disk — no script currently
+    updates status.json's total_tools/total_connectors after analyze adds
+    elements, so those fields sit permanently stale (data/improvement_suggestions.json
+    #f3a7d9e1b6 / #9a4e7b2d8f / #d7e1f3a9b2). Recomputing here on every fetch run
+    (same pattern as total_skills below) makes them self-healing instead."""
+    if not path.exists():
+        return 0
+    try:
+        with open(path, encoding="utf-8") as fh:
+            data = json.load(fh)
+        return len(data.get(key, []))
+    except Exception:
+        return 0
 
 
 # ── YouTube API ───────────────────────────────────────────────────────────────
@@ -683,6 +701,8 @@ def main() -> None:
         "next_run": next_run_utc.isoformat(),
         "videos_seen": len(skills_data.get("videos_seen", [])),
         "total_skills": total_skills,
+        "total_tools": count_entries(TOOLS_JSON, "tools"),
+        "total_connectors": count_entries(CONNECTORS_JSON, "connectors"),
         "total_videos_analyzed": total_videos_analyzed,
         "new_videos_this_run": len(new_videos),
         "pending_count": pending_count,

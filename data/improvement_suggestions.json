@@ -14,7 +14,7 @@
    "review_finding_id": "fa52c3b7d1",
    "severity": "med",
    "applied_at": "2026-08-09T02:01:17.189345+00:00",
-   "applied_note": "fire 142: superseded by c4d8e2f1a7 (full reconcile_index() drops phantoms AND adds missing slugs in one pass) \u2014 see that entry for detail."
+   "applied_note": "fire 142: superseded by c4d8e2f1a7 (full reconcile_index() drops phantoms AND adds missing slugs in one pass) — see that entry for detail."
   },
   {
    "id": "b2c4d6e8f0",
@@ -24,7 +24,7 @@
    "proposed_change": {
     "file": "src/analyze_batch.py",
     "action": "improve_news_summary_fallback",
-    "description": "In create_news_summary(), when only the title is available, build: found = extract_tools_from_text(title + ' ' + description). tools_str = ', '.join(list(found.keys())[:3]). Return f'{title}' if no tools found, or f'{title} \u2014 covers {tools_str}.' with any available description sentences. Add a summary_quality field: 'full' (real transcript), 'description' (desc fallback), 'title_only'."
+    "description": "In create_news_summary(), when only the title is available, build: found = extract_tools_from_text(title + ' ' + description). tools_str = ', '.join(list(found.keys())[:3]). Return f'{title}' if no tools found, or f'{title} — covers {tools_str}.' with any available description sentences. Add a summary_quality field: 'full' (real transcript), 'description' (desc fallback), 'title_only'."
    },
    "source": "review",
    "review_finding_id": "2b9e4f67a3",
@@ -34,7 +34,7 @@
    "id": "8140b97fbc",
    "type": "engine_fix",
    "status": "applied",
-   "detail": "Fix hardcoded TODAY date in src/analyze_batch.py line 20 \u2014 currently frozen at 2026-06-03, corrupting all recency penalty calculations for future videos. Replace with datetime.now(timezone.utc).",
+   "detail": "Fix hardcoded TODAY date in src/analyze_batch.py line 20 — currently frozen at 2026-06-03, corrupting all recency penalty calculations for future videos. Replace with datetime.now(timezone.utc).",
    "proposed_change": {
     "file": "src/analyze_batch.py",
     "line": 20,
@@ -51,7 +51,7 @@
    "id": "b9bfdaf0ef",
    "type": "data_hygiene",
    "status": "applied",
-   "detail": "Remove 'anthropic' and 'openai' tool entries from data/tools.json \u2014 these are company names mistakenly catalogued as tools. Merge their endorsement_video_ids into the 'claude' and 'chatgpt' tool entries respectively, then recompute mentions.",
+   "detail": "Remove 'anthropic' and 'openai' tool entries from data/tools.json — these are company names mistakenly catalogued as tools. Merge their endorsement_video_ids into the 'claude' and 'chatgpt' tool entries respectively, then recompute mentions.",
    "proposed_change": {
     "files": [
      "data/tools.json"
@@ -93,7 +93,7 @@
    "id": "3693c44f40",
    "type": "ui_change",
    "status": "applied",
-   "detail": "Add item-count badges to the nav tab buttons after data loads (e.g. 'Skills (10)', 'Tools (50)', 'Connectors (7)'). Gives visitors immediate sense of catalog scale \u2014 currently tabs look empty before clicking.",
+   "detail": "Add item-count badges to the nav tab buttons after data loads (e.g. 'Skills (10)', 'Tools (50)', 'Connectors (7)'). Gives visitors immediate sense of catalog scale — currently tabs look empty before clicking.",
    "proposed_change": {
     "file": "docs/dashboard.js",
     "area": "init() async block and/or show() function",
@@ -136,7 +136,7 @@
    "review_finding_id": "f97aeed26d",
    "severity": "high",
    "applied_at": "2026-08-09T01:00:00+00:00",
-   "applied_note": "fire 141: added encoding='utf-8' to all 10 open() calls across src/analyze_batch.py (load_json, save_json, write_skill_md, main()'s pending-video reads) and src/process_video.py (load_json, save_json, write_skill_md) \u2014 every file read/write in both modules now pins UTF-8 instead of the platform locale default. Verified: ast.parse clean on both files; all 6 local suites (excava_core_test, guardrail_test, git_merge_resolve_test, or1_phase_test, deep_retrieve_test, analyze_batch_test) green, no regressions; guardrails 18/20, 0 critical, unchanged from pre-fix."
+   "applied_note": "fire 141: added encoding='utf-8' to all 10 open() calls across src/analyze_batch.py (load_json, save_json, write_skill_md, main()'s pending-video reads) and src/process_video.py (load_json, save_json, write_skill_md) — every file read/write in both modules now pins UTF-8 instead of the platform locale default. Verified: ast.parse clean on both files; all 6 local suites (excava_core_test, guardrail_test, git_merge_resolve_test, or1_phase_test, deep_retrieve_test, analyze_batch_test) green, no regressions; guardrails 18/20, 0 critical, unchanged from pre-fix."
   },
   {
    "id": "a7d3c6e041",
@@ -149,19 +149,19 @@
      "docs/dashboard.js"
     ],
     "action": "add_transcript_health_check",
-    "description": "In fetch.py: after the main loop, if no_transcript_count / max(len(new_videos), 1) > 0.5, set status['transcript_health'] = 'degraded' and status['transcript_fallback_rate'] = rate. In dashboard.js: in renderAlert(), check for status.transcript_health === 'degraded' and show an amber banner 'Transcript fetching is degraded \u2014 content quality reduced'."
+    "description": "In fetch.py: after the main loop, if no_transcript_count / max(len(new_videos), 1) > 0.5, set status['transcript_health'] = 'degraded' and status['transcript_fallback_rate'] = rate. In dashboard.js: in renderAlert(), check for status.transcript_health === 'degraded' and show an amber banner 'Transcript fetching is degraded — content quality reduced'."
    },
    "source": "review",
    "review_finding_id": "8a1b5c4d6e",
    "severity": "high",
    "applied_fire": 145,
-   "applied_note": "src/fetch.py now computes transcript_fallback_rate = no_transcript_count / len(new_videos) after the fetch loop and sets status[\"transcript_health\"] = \"degraded\" when it exceeds 0.5 on a run that found new videos. docs/dashboard.js renderAlert() shows an amber TRANSCRIPT FALLBACK banner when degraded (below the existing PIPELINE ERROR / PIPELINE STALLED banners in priority so it never masks a harder failure). Backfilled data/status.json from the already-recorded last real run_report (new_found=91, no_transcript=91) rather than waiting for the next fetch: transcript_health is currently \"degraded\" (rate 1.0) and now visible on the live dashboard. Did NOT root-cause WHY youtube-transcript-api is failing 100% of the time (the docstring in fetch.py shows a prior fire already fixed the 0.6.x/1.x classmethod-vs-instance API break, yet the fallback rate is still 100% on the most recent real run AFTER that fix \u2014 the remaining cause is most likely YouTube rate-limiting/blocking requests from GitHub Actions runner IPs, a well-known issue with this library in CI environments, but this cloud session cannot reach the real YouTube endpoints to verify that live (restricted egress, confirmed by fire 122 and this fire). The banner is the deliverable this suggestion actually asked for (visibility); the underlying transcript-fetch fix is flagged in QUESTIONS.md as a follow-up for a session with real network access (the GitHub Actions beat itself)."
+   "applied_note": "src/fetch.py now computes transcript_fallback_rate = no_transcript_count / len(new_videos) after the fetch loop and sets status[\"transcript_health\"] = \"degraded\" when it exceeds 0.5 on a run that found new videos. docs/dashboard.js renderAlert() shows an amber TRANSCRIPT FALLBACK banner when degraded (below the existing PIPELINE ERROR / PIPELINE STALLED banners in priority so it never masks a harder failure). Backfilled data/status.json from the already-recorded last real run_report (new_found=91, no_transcript=91) rather than waiting for the next fetch: transcript_health is currently \"degraded\" (rate 1.0) and now visible on the live dashboard. Did NOT root-cause WHY youtube-transcript-api is failing 100% of the time (the docstring in fetch.py shows a prior fire already fixed the 0.6.x/1.x classmethod-vs-instance API break, yet the fallback rate is still 100% on the most recent real run AFTER that fix — the remaining cause is most likely YouTube rate-limiting/blocking requests from GitHub Actions runner IPs, a well-known issue with this library in CI environments, but this cloud session cannot reach the real YouTube endpoints to verify that live (restricted egress, confirmed by fire 122 and this fire). The banner is the deliverable this suggestion actually asked for (visibility); the underlying transcript-fetch fix is flagged in QUESTIONS.md as a follow-up for a session with real network access (the GitHub Actions beat itself)."
   },
   {
    "id": "c9b5e2f731",
    "type": "engine_fix",
    "status": "invalid_dead_code",
-   "detail": "Replace describe_tool() template function in src/analyze_batch.py (lines 268-286) with real extraction from transcript. This is the root cause of all 'enhances productivity through AI-powered features and automation' generic descriptions \u2014 as long as the function exists, new tools will always get template descriptions.",
+   "detail": "Replace describe_tool() template function in src/analyze_batch.py (lines 268-286) with real extraction from transcript. This is the root cause of all 'enhances productivity through AI-powered features and automation' generic descriptions — as long as the function exists, new tools will always get template descriptions.",
    "proposed_change": {
     "file": "src/analyze_batch.py",
     "action": "replace_describe_tool",
@@ -170,7 +170,7 @@
    "source": "review",
    "review_finding_id": "e5a3f8b2c7",
    "severity": "high",
-   "resolution_note": "Verified before implementing: src/analyze_batch.py is NOT invoked by any GitHub Actions workflow (grep of every .github/workflows/*.yml for \"analyze_batch\" or '-m src.analyze_batch' finds none; .github/workflows/analyze.yml runs anthropics/claude-code-action reading ANALYZE_SPEC.md directly, which writes skills.json/tools.json itself via Edit/Write tools, never shelling out to process_video()/describe_tool()). This was already found and logged by fire 12 (2026-07-26, AWAY_LOG) as dead code; this suggestion (source: review) was generated without that context and is chasing a function nothing in production calls, so patching describe_tool() would fix zero live descriptions and prevent zero future ones. Checked whether the underlying SYMPTOM (generic \"enhances productivity through AI-powered features and automation\" descriptions) is still live: 0/3639 in skills.json, 3/3160 in tools.json (grok, google-ai-studio, notion-ai) \u2014 all 3 are old static records with no created_at/added_at, matching this exact dead code path output, not a currently-regenerating problem. Fixed the real, visible defect directly instead: replaced all 3 with real, specific descriptions (fire 145, 2026-08-09). Leaving analyze_batch.py itself untouched \u2014 editing dead code is not a real fix and would just be a second, divergent description algorithm nothing calls, matching CLAUDE.md \u00a72 (reuse before building) in reverse: do not build inside a path with zero callers.",
+   "resolution_note": "Verified before implementing: src/analyze_batch.py is NOT invoked by any GitHub Actions workflow (grep of every .github/workflows/*.yml for \"analyze_batch\" or '-m src.analyze_batch' finds none; .github/workflows/analyze.yml runs anthropics/claude-code-action reading ANALYZE_SPEC.md directly, which writes skills.json/tools.json itself via Edit/Write tools, never shelling out to process_video()/describe_tool()). This was already found and logged by fire 12 (2026-07-26, AWAY_LOG) as dead code; this suggestion (source: review) was generated without that context and is chasing a function nothing in production calls, so patching describe_tool() would fix zero live descriptions and prevent zero future ones. Checked whether the underlying SYMPTOM (generic \"enhances productivity through AI-powered features and automation\" descriptions) is still live: 0/3639 in skills.json, 3/3160 in tools.json (grok, google-ai-studio, notion-ai) — all 3 are old static records with no created_at/added_at, matching this exact dead code path output, not a currently-regenerating problem. Fixed the real, visible defect directly instead: replaced all 3 with real, specific descriptions (fire 145, 2026-08-09). Leaving analyze_batch.py itself untouched — editing dead code is not a real fix and would just be a second, divergent description algorithm nothing calls, matching CLAUDE.md §2 (reuse before building) in reverse: do not build inside a path with zero callers.",
    "resolved_fire": 145
   },
   {
@@ -204,7 +204,7 @@
   {
    "id": "f3a7d9e1b6",
    "type": "engine_fix",
-   "status": "pending",
+   "status": "applied",
    "detail": "Fix stale status.total_skills counter. status.json shows total_skills: 38 but skills.json has 69 skills. analyze_batch.py never updates this field after adding skills, and fetch.py resets it to the pre-analyze count each run.",
    "proposed_change": {
     "file": "src/analyze_batch.py",
@@ -213,27 +213,31 @@
    },
    "source": "review",
    "review_finding_id": "c9f2d8b4a1",
-   "severity": "med"
+   "severity": "med",
+   "applied_at": "2026-08-09T09:03:03.890409+00:00",
+   "applied_note": "fire 148: fetch.py had no path writing total_tools/total_connectors at all (only total_skills was ever recomputed), so those two counters sat frozen since whenever they were last set. Added count_entries(TOOLS_JSON, 'tools') / count_entries(CONNECTORS_JSON, 'connectors'), read fresh from disk on every fetch run (same pattern as total_skills), and corrected the current data/status.json values immediately (3033->3161 tools, 1414->1510 connectors) so the hub dashboard doesn't wait for the next fetch.yml run."
   },
   {
    "id": "9a4e7b2d8f",
    "type": "engine_fix",
-   "status": "pending",
+   "status": "applied",
    "detail": "Fix fetch.py resetting status.total_skills to stale pre-analyze count (line 648). Every fetch run overwrites total_skills with the count from BEFORE analyze runs, undoing the analyze stage's updates. Remove total_skills from the fetch.py status.update() block and let the analyze stage own it.",
    "proposed_change": {
     "file": "src/fetch.py",
     "action": "remove_total_skills_from_fetch_status_update",
-    "description": "In main(), remove `'total_skills': total_skills,` from the status.update() dict (around line 648). The analyze stage (process_video.py) should own this field and update it after each skill append. If fetch must still show a count, use the existing status['total_skills'] value: `status.get('total_skills', 0)` \u2014 preserving whatever analyze last wrote."
+    "description": "In main(), remove `'total_skills': total_skills,` from the status.update() dict (around line 648). The analyze stage (process_video.py) should own this field and update it after each skill append. If fetch must still show a count, use the existing status['total_skills'] value: `status.get('total_skills', 0)` — preserving whatever analyze last wrote."
    },
    "source": "review",
    "review_finding_id": "7f2e9d4c1a",
-   "severity": "med"
+   "severity": "med",
+   "applied_at": "2026-08-09T09:03:03.890409+00:00",
+   "applied_note": "fire 148: fetch.py had no path writing total_tools/total_connectors at all (only total_skills was ever recomputed), so those two counters sat frozen since whenever they were last set. Added count_entries(TOOLS_JSON, 'tools') / count_entries(CONNECTORS_JSON, 'connectors'), read fresh from disk on every fetch run (same pattern as total_skills), and corrected the current data/status.json values immediately (3033->3161 tools, 1414->1510 connectors) so the hub dashboard doesn't wait for the next fetch.yml run."
   },
   {
    "id": "3c6d2e8a1f",
    "type": "ui_change",
    "status": "applied",
-   "detail": "Quick-read mode hides .card .sub globally, removing provider/source from Connectors cards and date/source from News cards \u2014 essential context for those tabs. Only Skills and Tools cards should have .sub hidden in Quick-read; Connectors and News should keep their metadata line.",
+   "detail": "Quick-read mode hides .card .sub globally, removing provider/source from Connectors cards and date/source from News cards — essential context for those tabs. Only Skills and Tools cards should have .sub hidden in Quick-read; Connectors and News should keep their metadata line.",
    "proposed_change": {
     "file": "docs/index.html",
     "action": "scope_quickread_sub_hiding",
@@ -242,14 +246,14 @@
    "source": "review",
    "review_finding_id": "5e3d1b9f8c",
    "severity": "med",
-   "applied_note": "Fixed: CSS rule scoped from `body.quickread .card .sub { display:none; }` to `body.quickread .card:not(.newscard):not(.conncard) .sub { display:none; }` in docs/index.html. Added the missing .conncard class to the connector card markup in docs/dashboard.js renderConnectors() (line ~1155) so the new selector actually applies to it \u2014 .newscard already existed on news cards. Verified: grep confirms no other connector-card render path exists (renderConnectors is the only one), node --check docs/dashboard.js clean, all 6 local test suites green, guardrails 17/20 0 critical (G-C/G-G/G-O pre-existing baseline, unrelated).",
+   "applied_note": "Fixed: CSS rule scoped from `body.quickread .card .sub { display:none; }` to `body.quickread .card:not(.newscard):not(.conncard) .sub { display:none; }` in docs/index.html. Added the missing .conncard class to the connector card markup in docs/dashboard.js renderConnectors() (line ~1155) so the new selector actually applies to it — .newscard already existed on news cards. Verified: grep confirms no other connector-card render path exists (renderConnectors is the only one), node --check docs/dashboard.js clean, all 6 local test suites green, guardrails 17/20 0 critical (G-C/G-G/G-O pre-existing baseline, unrelated).",
    "applied_at_fire": 146
   },
   {
    "id": "1b7a5c9e3d",
    "type": "engine_fix",
    "status": "pending",
-   "detail": "Fix unclosed file handle in src/fetch.py:594. The catch_up.json is opened without a context manager: `cu_state = json.load(open(cu_path, encoding='utf-8'))`. The file descriptor is never explicitly closed \u2014 not portable to non-CPython runtimes and flagged by static analysis.",
+   "detail": "Fix unclosed file handle in src/fetch.py:594. The catch_up.json is opened without a context manager: `cu_state = json.load(open(cu_path, encoding='utf-8'))`. The file descriptor is never explicitly closed — not portable to non-CPython runtimes and flagged by static analysis.",
    "proposed_change": {
     "file": "src/fetch.py",
     "line": 594,
@@ -279,7 +283,7 @@
    "id": "c4d8e2f1a7",
    "type": "engine_fix",
    "status": "applied",
-   "detail": "Full index.json reconciliation: existing suggestion a1b3c5d7e9 only drops phantoms. NEW issue: 94 valid skills in skills.json are NOT in index.json (55% coverage). On next analyze_batch.py run these 94 slugs will be seen as 'absent' \u2192 duplicate records appended. Fix: in main() startup, after dropping phantoms, also ADD all missing valid slugs.",
+   "detail": "Full index.json reconciliation: existing suggestion a1b3c5d7e9 only drops phantoms. NEW issue: 94 valid skills in skills.json are NOT in index.json (55% coverage). On next analyze_batch.py run these 94 slugs will be seen as 'absent' → duplicate records appended. Fix: in main() startup, after dropping phantoms, also ADD all missing valid slugs.",
    "proposed_change": {
     "file": "src/analyze_batch.py",
     "action": "full_index_reconcile",
@@ -289,12 +293,12 @@
    "review_finding_id": "f1a8b3c6d9",
    "severity": "high",
    "applied_at": "2026-08-09T02:01:17.189345+00:00",
-   "applied_note": "fire 142: added reconcile_index() to src/analyze_batch.py, called at the top of main() before the pending-video loop. Drops any index.json slug with no matching skills.json entry (0 currently) and adds any skills.json slug missing from index.json (193 currently \u2014 a valid skill with no index.json entry falls through process_video()'s 'slug in index_data' dedup check on its next endorsement and gets appended as a duplicate record instead of merged). Ran once against the live data files this fire: index.json now has exactly one entry per skills.json slug (3636==3636, was 3443). Regression-tested via a standalone call to reconcile_index() before wiring; full local suite (excava_core_test, guardrail_test, git_merge_resolve_test, or1_phase_test, deep_retrieve_test, analyze_batch_test) green; guardrails 17/20, 0 critical, unchanged from pre-fix baseline."
+   "applied_note": "fire 142: added reconcile_index() to src/analyze_batch.py, called at the top of main() before the pending-video loop. Drops any index.json slug with no matching skills.json entry (0 currently) and adds any skills.json slug missing from index.json (193 currently — a valid skill with no index.json entry falls through process_video()'s 'slug in index_data' dedup check on its next endorsement and gets appended as a duplicate record instead of merged). Ran once against the live data files this fire: index.json now has exactly one entry per skills.json slug (3636==3636, was 3443). Regression-tested via a standalone call to reconcile_index() before wiring; full local suite (excava_core_test, guardrail_test, git_merge_resolve_test, or1_phase_test, deep_retrieve_test, analyze_batch_test) green; guardrails 17/20, 0 critical, unchanged from pre-fix baseline."
   },
   {
    "id": "d7e1f3a9b2",
    "type": "engine_fix",
-   "status": "pending",
+   "status": "applied",
    "detail": "Fix total_tools and total_connectors counters in status.json (also stale, like total_skills). status shows tools=290 vs actual 312, connectors=41 vs actual 48. The same fetch.py overwrite root cause applies. Extend the fix to all three counters.",
    "proposed_change": {
     "file": "src/fetch.py + src/analyze_batch.py",
@@ -303,13 +307,15 @@
    },
    "source": "review",
    "review_finding_id": "c9f2d8b4a1",
-   "severity": "med"
+   "severity": "med",
+   "applied_at": "2026-08-09T09:03:03.890409+00:00",
+   "applied_note": "fire 148: fetch.py had no path writing total_tools/total_connectors at all (only total_skills was ever recomputed), so those two counters sat frozen since whenever they were last set. Added count_entries(TOOLS_JSON, 'tools') / count_entries(CONNECTORS_JSON, 'connectors'), read fresh from disk on every fetch run (same pattern as total_skills), and corrected the current data/status.json values immediately (3033->3161 tools, 1414->1510 connectors) so the hub dashboard doesn't wait for the next fetch.yml run."
   },
   {
    "id": "e5f2c8a4b9",
    "type": "ui_change",
    "status": "pending",
-   "detail": "Professional design step: add color-coded left-border to skill and tool cards by quality score band. This costs one CSS rule per band and gives the card list immediate visual hierarchy \u2014 distinguishing a 9/10 skill from a 3/10 one at a glance, without requiring tool logos or images.",
+   "detail": "Professional design step: add color-coded left-border to skill and tool cards by quality score band. This costs one CSS rule per band and gives the card list immediate visual hierarchy — distinguishing a 9/10 skill from a 3/10 one at a glance, without requiring tool logos or images.",
    "proposed_change": {
     "file": "docs/index.html (CSS section)",
     "action": "add_score_band_borders",
@@ -333,7 +339,7 @@
    "review_finding_id": "d4f2e1a8b5",
    "severity": "high",
    "applied_at": "2026-08-09T04:06:51.231824+00:00",
-   "applied_note": "fire 144: root-caused instead of just backfilling once. All three of data/{daily,weekly,monthly}_news.json were 100% empty-summary (67/67, 226/226, 805/805 = 1098/1098 total, worse than the 59/59 the suggestion was written against) because src/fetch.py classify_news() always left summary=\"\" for the (slow, currently 44.5%-caught-up) analyze stage to fill later, and every fetch run rebuilt the window from scratch. Fixed classify_news() to fill summary immediately from the video description/title (reusing analyze_batch.create_news_summary, already-known at fetch time, no network needed) with summary_quality=\"auto\"; fixed merge_summaries() so a later real AI-written summary (summary_quality='ai', written by process_video.py once that video is actually analyzed) is never overwritten by a fresh fetch-time recompute; updated the overwrite guards in process_video.py and analyze_batch.py from 'not entry.get(\"summary\")' to 'entry.get(\"summary_quality\") != \"ai\"' so they can still upgrade an auto-filled entry once real analysis runs, instead of skipping it forever. Then ran a one-time local backfill (matching video_id against the already-fetched data/_pending or data/processed record for description text \u2014 zero network calls) to close the CURRENT gap: 1098/1098 entries filled, 0 missing local record. Verified live: all three files now 0 empty summaries; dashboard.js renderNews() reads 'e.summary || \"(summary pending)\"' \u2014 1098 cards that showed the placeholder now show real content. Did NOT implement the suggestion's literal caps (30/50/100) or its 'description[:200].split(\".\")[0]' heuristic \u2014 reused the existing, already-tested create_news_summary() (2-sentence extraction with a title fallback) instead of a second, divergent summary algorithm, and filled all empty entries since the fix is free (no API cost, pure string ops)."
+   "applied_note": "fire 144: root-caused instead of just backfilling once. All three of data/{daily,weekly,monthly}_news.json were 100% empty-summary (67/67, 226/226, 805/805 = 1098/1098 total, worse than the 59/59 the suggestion was written against) because src/fetch.py classify_news() always left summary=\"\" for the (slow, currently 44.5%-caught-up) analyze stage to fill later, and every fetch run rebuilt the window from scratch. Fixed classify_news() to fill summary immediately from the video description/title (reusing analyze_batch.create_news_summary, already-known at fetch time, no network needed) with summary_quality=\"auto\"; fixed merge_summaries() so a later real AI-written summary (summary_quality='ai', written by process_video.py once that video is actually analyzed) is never overwritten by a fresh fetch-time recompute; updated the overwrite guards in process_video.py and analyze_batch.py from 'not entry.get(\"summary\")' to 'entry.get(\"summary_quality\") != \"ai\"' so they can still upgrade an auto-filled entry once real analysis runs, instead of skipping it forever. Then ran a one-time local backfill (matching video_id against the already-fetched data/_pending or data/processed record for description text — zero network calls) to close the CURRENT gap: 1098/1098 entries filled, 0 missing local record. Verified live: all three files now 0 empty summaries; dashboard.js renderNews() reads 'e.summary || \"(summary pending)\"' — 1098 cards that showed the placeholder now show real content. Did NOT implement the suggestion's literal caps (30/50/100) or its 'description[:200].split(\".\")[0]' heuristic — reused the existing, already-tested create_news_summary() (2-sentence extraction with a title fallback) instead of a second, divergent summary algorithm, and filled all empty entries since the fix is free (no API cost, pure string ops)."
   }
  ]
 }

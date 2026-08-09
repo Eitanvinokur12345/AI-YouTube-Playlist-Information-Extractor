@@ -5,6 +5,56 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-09
+- **~09:0x (fire 148, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (`python -m src.standing_checks`: local `origin/main` cache was stale — re-fetched clean,
+  HEAD matched, nothing lost; upstream re-tracked; guardrails 18/20, 0 critical; `loop_contract
+  status` confirmed no carry-over, acked). **Checked the analyze/review outage before picking a
+  new increment, as fire 147 flagged for this review:** pulled the actual GitHub Actions job
+  logs (not just `data/status.json`'s counters) for the two most recent "Analyze pending" runs.
+  Confirmed the daytime "skipped" runs are an intentional, working night-gate (analyze only
+  fires 01:00-07:00 Israel time to protect Eitan's daytime token budget — those are NOT
+  failures, just correctly no-op'd). The real failures are the night-window runs: pulled run
+  31291396237's (2026-08-09T02:56 UTC) full job log and confirmed the exact signature already
+  diagnosed at fires 83/121 — `is_error:true, num_turns:1, total_cost_usd:0, duration_ms:2093`,
+  i.e. the Claude Code SDK dying before turn one, not a code bug in this repo. Counter is now 42
+  (was 35/39/40/41 at the last few checks), `review_ok` still false since 2026-06-21. Same
+  continuing trend, root cause independently re-confirmed, nothing qualitatively new — per the
+  fires-83/121-147 discipline this did **not** get a fresh push notification (already escalated
+  many times; Eitan is the only one who can rotate `CLAUDE_CODE_OAUTH_TOKEN_REAL`).
+  **The actual increment:** three related `data/improvement_suggestions.json` entries
+  (`f3a7d9e1b6`, `9a4e7b2d8f`, `d7e1f3a9b2`) all pointed at the same root cause — stale
+  `total_tools`/`total_connectors` counters in `data/status.json`. Investigated and found the
+  bug is worse than the suggestions described: no script currently writes those two fields at
+  all (only `total_skills` was ever recomputed, in `src/fetch.py`), so they'd been frozen since
+  whenever they were last set while the underlying `data/tools.json`/`data/connectors.json`
+  grew underneath them — live drift was 3033 vs a real 3161 tools (128 missing) and 1414 vs a
+  real 1510 connectors (96 missing). Added `count_entries()` to `src/fetch.py`, wired into the
+  same `status.update()` call that already recomputes `total_skills` fresh from disk every
+  fetch run, so both counters are now self-healing instead of permanently stale. Also corrected
+  `data/status.json`'s current values directly (3033→3161, 1414→1510) so the hub dashboard is
+  accurate now rather than waiting for the next scheduled `fetch.yml` run. Verified the counting
+  logic standalone against the real data files (this sandbox's repo-scoped session can't import
+  `src/fetch.py` directly — `pytz`/`google-api-python-client` aren't installed here and this
+  container's `cryptography` package is broken — so I re-implemented the exact same function
+  body inline and ran it against `data/tools.json`/`data/connectors.json`, confirming it
+  produces 3161/1510, matching the manual fix). Could not exercise `fetch.py`'s full run
+  end-to-end (needs `YOUTUBE_API_KEY` + live YouTube API access, out of reach from this
+  repo-scoped cloud session) — the next real `fetch.yml` run on its own schedule is what
+  actually proves the wiring; watch `data/status.json.total_tools`/`total_connectors` for
+  continued accuracy after that. `python -m src.guardrails`: 17/20, 0 critical (only the
+  pre-existing G-C/G-O info-level items, unrelated to this change; G-G briefly showed 1-behind
+  before the rebase-on-ship, expected — another lane pushed while this fire was working).
+  **Harsh self-criticism:** this is a real, verified, currently-live data-integrity bug fixed at
+  its root cause (not just papered over), and it's immediately visible on the hub dashboard — a
+  genuine step up from a pure plumbing/observability fire. But it's still small: three related
+  suggestions collapsed into one two-line fix, not a milestone-moving increment. Did not touch
+  the flagship analyze/review outage (correctly — it's not fixable from here) nor any of the
+  other 8 pending `improvement_suggestions.json` entries (real backlog, left for the next fire
+  with budget). Also did not verify `fetch.yml`'s live behavior after this change, since I have
+  no way to trigger or observe a real run from this session — flagging that as the one open
+  loop this fix leaves, same class of gap fire 10's github-meta-enrich note already established
+  as this environment's structural limit, not something to pretend away.
+
 - **~08:0x (fire 147, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
   OK (`python -m src.standing_checks`: local `origin/main` cache was stale — re-fetched clean,
   HEAD matched, nothing lost; upstream tracking was missing on this branch — auto-repointed;

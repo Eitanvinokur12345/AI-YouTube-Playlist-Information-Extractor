@@ -50,7 +50,7 @@
     {
       "id": "b9bfdaf0ef",
       "type": "data_hygiene",
-      "status": "pending",
+      "status": "applied",
       "detail": "Remove 'anthropic' and 'openai' tool entries from data/tools.json — these are company names mistakenly catalogued as tools. Merge their endorsement_video_ids into the 'claude' and 'chatgpt' tool entries respectively, then recompute mentions.",
       "proposed_change": {
         "files": [
@@ -68,7 +68,9 @@
       },
       "source": "review",
       "review_finding_id": "54deb8c37c",
-      "severity": "high"
+      "severity": "high",
+      "applied_fire": 143,
+      "applied_note": "Merged anthropic->claude (78 ids) and openai->chatgpt (47 ids) in data/tools.json (3159->3157 entries); fixed the same company-as-target_tool mixup in data/skills.json (6) and data/index.json (6). Root-caused and fixed in src/bulk_analyze.py: merge_tools() now canonicalizes a company name onto its product before creating/merging a tool entry, and merge_skills() canonicalizes target_tool the same way, so this can't recur on future videos."
     },
     {
       "id": "253d755074",

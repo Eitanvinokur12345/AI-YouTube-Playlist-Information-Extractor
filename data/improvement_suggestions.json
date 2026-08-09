@@ -314,7 +314,7 @@
     {
       "id": "b3a7d1f5e8",
       "type": "engine_fix",
-      "status": "pending",
+      "status": "applied",
       "detail": "Emergency: daily_news.json is now 100% empty summaries (59/59). The improve stage must prioritize back-filling daily news entries from description text before back-filling weekly or monthly. Add a daily-first pass in fill_missing_summaries.",
       "proposed_change": {
         "file": "src (improve stage, fill_missing_summaries module)",
@@ -323,7 +323,9 @@
       },
       "source": "review",
       "review_finding_id": "d4f2e1a8b5",
-      "severity": "high"
+      "severity": "high",
+      "applied_at": "2026-08-09T04:06:51.231824+00:00",
+      "applied_note": "fire 144: root-caused instead of just backfilling once. All three of data/{daily,weekly,monthly}_news.json were 100% empty-summary (67/67, 226/226, 805/805 = 1098/1098 total, worse than the 59/59 the suggestion was written against) because src/fetch.py classify_news() always left summary=\"\" for the (slow, currently 44.5%-caught-up) analyze stage to fill later, and every fetch run rebuilt the window from scratch. Fixed classify_news() to fill summary immediately from the video description/title (reusing analyze_batch.create_news_summary, already-known at fetch time, no network needed) with summary_quality=\"auto\"; fixed merge_summaries() so a later real AI-written summary (summary_quality='ai', written by process_video.py once that video is actually analyzed) is never overwritten by a fresh fetch-time recompute; updated the overwrite guards in process_video.py and analyze_batch.py from 'not entry.get(\"summary\")' to 'entry.get(\"summary_quality\") != \"ai\"' so they can still upgrade an auto-filled entry once real analysis runs, instead of skipping it forever. Then ran a one-time local backfill (matching video_id against the already-fetched data/_pending or data/processed record for description text — zero network calls) to close the CURRENT gap: 1098/1098 entries filled, 0 missing local record. Verified live: all three files now 0 empty summaries; dashboard.js renderNews() reads 'e.summary || \"(summary pending)\"' — 1098 cards that showed the placeholder now show real content. Did NOT implement the suggestion's literal caps (30/50/100) or its 'description[:200].split(\".\")[0]' heuristic — reused the existing, already-tested create_news_summary() (2-sentence extraction with a title fallback) instead of a second, divergent summary algorithm, and filled all empty entries since the fix is free (no API cost, pure string ops)."
     }
   ]
 }

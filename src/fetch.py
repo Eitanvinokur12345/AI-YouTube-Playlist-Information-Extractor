@@ -18,6 +18,8 @@ import pytz
 from dateutil import parser as dateutil_parser
 from googleapiclient.discovery import build
 
+from src.analyze_batch import create_news_summary
+
 # ── logging ──────────────────────────────────────────────────────────────────
 logging.basicConfig(
     level=logging.INFO,
@@ -372,7 +374,18 @@ def fetch_top_comments(youtube, video_id: str, max_comments: int) -> list[dict]:
 def classify_news(videos: list[dict], run_time_utc: datetime) -> tuple[list, list, list]:
     """
     Returns (daily, weekly, monthly) lists.
-    Each entry: video dict + summary placeholder.
+    Each entry: video dict + a summary.
+
+    The summary is filled immediately from the video's description/title (the same
+    deterministic fallback analyze_batch.py uses), not left blank — a video's
+    description/title is already known at fetch time, so there is no reason to make
+    a news card wait on the (often days-backlogged) analyze stage for a summary to
+    appear at all. `summary_quality='auto'` marks it as this cheap fallback; the
+    analyze stage (process_video.py / analyze_batch.py) still upgrades it to a real
+    AI-written summary (`summary_quality='ai'`) once that video is actually analyzed
+    — see the `!= 'ai'` overwrite guard in both of those files. Added away-fire 144
+    after `data/{daily,weekly,monthly}_news.json` were found 100% empty-summary
+    (1098/1098 entries) — see improvement suggestion b3a7d1f5e8.
     """
     run_eastern = run_time_utc.astimezone(EASTERN)
     daily, weekly, monthly = [], [], []
@@ -396,7 +409,8 @@ def classify_news(videos: list[dict], run_time_utc: datetime) -> tuple[list, lis
             "title": v["title"],
             "channel_name": v.get("channel_name", ""),
             "publishedAt": pub_str,
-            "summary": "",  # to be filled by analysis stage
+            "summary": create_news_summary(v["title"], v.get("description", ""), ""),
+            "summary_quality": "auto",
         }
 
         if age_hours <= 24:
@@ -548,17 +562,27 @@ def main() -> None:
     # ── Tab 5: news classification (ALL playlist videos, every run) ───────────
     daily, weekly, monthly = classify_news(all_videos, run_time_utc)
 
-    # preserve existing summaries if any
+    # preserve existing (possibly upgraded) summaries — classify_news() now always
+    # produces a fresh 'auto' summary on every run, so this must NOT blindly keep-if-
+    # new-is-empty anymore (new is never empty). Instead: whenever a prior run already
+    # recorded a summary for this video_id, keep THAT one (and its quality metadata)
+    # rather than the freshly recomputed one, so a real AI-written summary
+    # (summary_quality='ai', written by process_video.py/analyze_batch.py once the
+    # video is analyzed) is never overwritten by this run's cheap recompute.
     def merge_summaries(new_entries: list[dict], existing_path: Path) -> list[dict]:
         if not existing_path.exists():
             return new_entries
         try:
             with open(existing_path, encoding="utf-8") as fh:
                 old = json.load(fh)
-            old_summaries = {e["video_id"]: e.get("summary", "") for e in old.get("entries", [])}
+            old_by_id = {e["video_id"]: e for e in old.get("entries", [])}
             for e in new_entries:
-                if not e["summary"] and old_summaries.get(e["video_id"]):
-                    e["summary"] = old_summaries[e["video_id"]]
+                old_e = old_by_id.get(e["video_id"])
+                if old_e and old_e.get("summary"):
+                    e["summary"] = old_e["summary"]
+                    for k in ("summary_quality", "video_quality_score", "low_quality_source"):
+                        if k in old_e:
+                            e[k] = old_e[k]
         except Exception:
             pass
         return new_entries

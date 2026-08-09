@@ -1,11 +1,11 @@
 {
- "title": "fold company-as-tool duplicates (anthropic/openai -> claude/chatgpt)",
+ "title": "daily_news 100% empty-summary fix",
  "kind": "product",
- "plan": "",
- "started_at": "2026-08-09T03:07:59.514451+00:00",
+ "plan": "Fix 100% empty summaries across daily/weekly/monthly news (1098/1098 entries) by root-causing classify_news() to fill summaries at fetch time instead of waiting on the analyze backlog, then backfilling the current gap locally.",
+ "started_at": "2026-08-09T04:07:39.466778+00:00",
  "fires": 1,
  "notes": [],
  "status": "done",
- "finished_at": "2026-08-09T03:07:59.556504+00:00",
- "outcome": "closed: merge_tools/merge_skills now canonicalize company names onto their product; one-time data cleanup applied (tools.json 3159->3157, 12+6+6 target_tool values fixed); commit f698d75e0"
+ "finished_at": "2026-08-09T04:08:37.692477+00:00",
+ "outcome": "root-caused daily/weekly/monthly news 100% empty-summary bug (1098/1098 filled); classify_news() now self-healing"
 }

@@ -216,8 +216,13 @@ def process_video(video_id, analysis):
             entries = news_data.get('entries', [])
             changed = False
             for entry in entries:
-                if entry.get('video_id') == video_id and not entry.get('summary'):
+                # '!= ai' (not 'not entry.get("summary")'): fetch.py's classify_news()
+                # now fills every entry with a cheap 'auto' summary immediately, so
+                # this must still be able to upgrade it to the real AI-written one —
+                # not just fire once on entries that predate that fix (empty summary).
+                if entry.get('video_id') == video_id and entry.get('summary_quality') != 'ai':
                     entry['summary'] = news_summary
+                    entry['summary_quality'] = 'ai'
                     entry['video_quality_score'] = vqs
                     entry['low_quality_source'] = lqs
                     changed = True

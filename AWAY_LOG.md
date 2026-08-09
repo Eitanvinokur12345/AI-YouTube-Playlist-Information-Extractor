@@ -5,6 +5,85 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-09
+- **~04:0x (fire 144, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (per this fire's supplied context: `python -m src.standing_checks` guardrails 18/20, 0
+  critical, no carry-over increment open; `python -m src.loop_contract status` confirmed 0/3
+  consecutive meta fires). Restricted egress (repo-scoped cloud session) — `verify_elements`/
+  `verify_connectors`/`github_meta_enrich` correctly out of scope again. Read
+  `data/improvement_suggestions.json`'s pending backlog per fire 143's own flag: three
+  high-severity items open (`a7d3c6e041` transcript-fallback health check, `c9b5e2f731`
+  `describe_tool()` template replacement, `b3a7d1f5e8` daily_news empty-summary "Emergency").
+  Checked live data before picking: `data/daily_news.json` was **67/67** empty summaries — worse
+  than the 59/59 the suggestion was written against — and, not yet flagged by anyone,
+  `weekly_news.json` (**226/226**) and `monthly_news.json` (**805/805**) were ALSO 100% empty.
+  **1098/1098 news-feed cards, across all three windows, were dead** — every one rendering
+  `dashboard.js`'s `"(summary pending)"` placeholder, not a partial-coverage gap.
+  **The actual increment:** picked `b3a7d1f5e8` but root-caused it instead of doing the one-time
+  backfill the suggestion literally proposed. Traced why: `src/fetch.py`'s `classify_news()`
+  always wrote `summary: ""` and a comment "to be filled by analysis stage", trusting the
+  analyze pipeline (currently only 44.5% caught up, 799/1794 videos) to fill it in later via
+  `process_video.py`/`analyze_batch.py`'s write-back-by-`video_id` block — but the video's
+  description and title are already fully known at fetch time, so there was never a real reason
+  to wait. Fixed `classify_news()` to compute the summary immediately via
+  `analyze_batch.create_news_summary()` (already-existing, already-tested 2-sentence
+  extraction with a title fallback — reused, not reinvented) and tag it
+  `summary_quality: "auto"`. That alone would have silently regressed the two downstream
+  write-back paths, so fixed those too: (1) `fetch.py`'s own `merge_summaries()` used to keep
+  the old summary only `if not e["summary"]` — now that `classify_news()` never leaves it empty,
+  that check would never fire, so a real AI-written summary from a past `process_video.py` run
+  would get clobbered by this run's cheap recompute on every single fetch; rewrote it to always
+  prefer whatever summary+quality metadata the previous file already had once it's non-empty.
+  (2) `process_video.py`'s and `analyze_batch.py`'s overwrite guards used
+  `not entry.get('summary')` to decide whether to write a real (AI or `rate_quality`-heuristic)
+  summary in — now permanently `False` for every entry, which would have frozen every video at
+  the cheap fallback forever. Changed both to `entry.get('summary_quality') != 'ai'` so an
+  `'auto'` placeholder can still be upgraded once the video is actually analyzed, while a
+  genuine `'ai'` summary is never touched again. Then ran a one-time local backfill (matching
+  each still-empty entry's `video_id` against its already-fetched `data/_pending` or
+  `data/processed` record for description text — zero network calls, everything needed was
+  already on disk) to close the CURRENT gap immediately rather than waiting for the next fetch
+  run. **Verified before/after, live data, not just code review:** all three files
+  67/67 → 0 empty, 226/226 → 0 empty, 805/805 → 0 empty (1098 filled, 0 missing local record);
+  spot-checked 3 daily entries — real, readable, video-specific summaries, not template text;
+  confirmed `dashboard.js`'s `renderNews()` reads `e.summary || "(summary pending)"` so this is
+  a real, immediately-visible fix, not a data change nothing displays. Unit-tested the two
+  changed functions directly (stubbed `googleapiclient` to dodge this sandbox's broken
+  `cryptography`/pyo3 install, unrelated to this fix): a synthetic `classify_news()` call
+  produced non-empty summaries for both a rich-description and a no-description video; a
+  synthetic `merge_summaries()` call confirmed an existing `summary_quality: "ai"` entry
+  survives a fresh recompute untouched. All 6 local suites (`excava_core_test`,
+  `guardrail_test`, `git_merge_resolve_test`, `or1_phase_test`, `deep_retrieve_test`,
+  `analyze_batch_test`) green both before and after the live backfill; all touched JSON
+  re-parsed clean. `git add`'ed every touched `data/*.json` file (plus the standing_checks/
+  guardrails/loop_contract/project_memory telemetry this fire's own tool calls touched) before
+  any `git_safe` sync/push step, per fire 143's near-miss lesson — nothing left unstaged for
+  `revert_ci_churn()` to silently discard. Marked `b3a7d1f5e8` applied in
+  `improvement_suggestions.json` with the concrete before/after numbers. `python -m
+  src.loop_contract start/finish` recorded one closed product increment; logged the WHY via
+  `python -m src.project_memory log` before shipping.
+  **Harsh self-criticism:** this is a real, currently-broken, highly-visible feature fixed at
+  its actual root cause (not a one-time patch that reaccumulates the moment the next batch of
+  videos lands) — genuinely better than just running the suggestion's literal proposal, which
+  would have left the underlying bug (summary permanently deferred to a chronically-behind
+  pipeline stage) in place to recur. But it is still infrastructure/pipeline plumbing, not new
+  hub content, and I did NOT implement the suggestion's specific caps (30/50/100 per window) or
+  its `description[:200].split('.')[0]` heuristic — judged the existing, already-regression-
+  tested `create_news_summary()` a better reuse than a second, divergent summary algorithm, and
+  filled all 1098 rather than capping since the operation is free (pure string ops, no API
+  cost) — a legitimate call, but a deviation from the suggestion's literal spec that a stricter
+  fire might have flagged for approval first rather than deciding unilaterally. Two other
+  pending high-severity suggestions (`describe_tool()` still template-only for every new tool;
+  the 100%-transcript-fallback investigation) remain untouched — both are more invasive code
+  changes than this fire's budget covers cleanly, and `describe_tool()` in particular reads as
+  the more structurally important gap of the two (it degrades every future tool's description
+  quality, not just a display feature). Also did not go looking for the git-history audit fire
+  143 flagged (whether an earlier fire's hand-edited `data/*.json` change was silently discarded
+  by `revert_ci_churn()` without being re-verified) — still open, still a good research/audit
+  slot for a future fire instead of another local-increment pick. This sandbox's `pip`-installed
+  `cryptography`/`googleapiclient` stack is broken (pyo3/cffi ABI mismatch) independent of this
+  fix — worked around it for the unit test via a module stub rather than fixing the sandbox
+  itself (out of scope; CI's environment is unaffected, `last_fetch` in `status.json` shows the
+  real pipeline running fine as of 2026-08-07).
 - **~03:0x (fire 143, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
   OK (`python -m src.standing_checks`: stale `origin/main` cache re-fetched clean, nothing
   lost; upstream repointed to origin/main; guardrails 18/20, 0 critical). `analyze_consecutive_zero_progress_fails`:

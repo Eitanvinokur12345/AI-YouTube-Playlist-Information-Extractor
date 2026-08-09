@@ -19,7 +19,7 @@
     {
       "id": "b2c4d6e8f0",
       "type": "engine_fix",
-      "status": "pending",
+      "status": "invalid_superseded",
       "detail": "Fix create_news_summary() in analyze_batch.py to generate useful summaries even for no-transcript (title-only/description-only) videos. Current fallback '{title}. AI content video featuring tools and techniques.' is generic filler and is the direct cause of the 273-entry empty-summary backlog.",
       "proposed_change": {
         "file": "src/analyze_batch.py",
@@ -28,7 +28,9 @@
       },
       "source": "review",
       "review_finding_id": "2b9e4f67a3",
-      "severity": "med"
+      "severity": "med",
+      "resolution_note": "fire 146: create_news_summary() itself is live (imported into src/fetch.py and called from classify_news() — confirmed by import at fetch.py:21), so this isn't dead code, but the symptom it targets is already gone. fire 144 fixed the actual 1098/1098 empty-summary backlog by a different mechanism (calling create_news_summary at fetch time immediately, with merge_summaries() protecting a later real 'ai' summary from being overwritten) rather than by touching this fallback string. Verified live: only 8/1098 entries across daily+weekly+monthly news still hit the generic '{title}. AI content video featuring tools and techniques.' fallback (down from the 273 this suggestion was written against), and those 8 are genuinely description-less/title-less records with no material to extract from — not a regenerating problem. Not applying the proposed rewrite: it would be a second, divergent summary heuristic for a backlog that no longer exists.",
+      "resolved_fire": 146
     },
     {
       "id": "8140b97fbc",
@@ -75,7 +77,7 @@
     {
       "id": "253d755074",
       "type": "data_hygiene",
-      "status": "pending",
+      "status": "applied",
       "detail": "Fix tool name casing: 'Chatgpt' should be 'ChatGPT' in data/tools.json. The tool slug 'chatgpt' is correct; only the display name field needs correction.",
       "proposed_change": {
         "file": "data/tools.json",
@@ -87,7 +89,9 @@
       },
       "source": "review",
       "review_finding_id": "cdc160ca68",
-      "severity": "med"
+      "severity": "med",
+      "applied_fire": 146,
+      "applied_note": "fire 146: renamed the one 'Chatgpt' name field (slug=chatgpt) to 'ChatGPT' in data/tools.json exactly as proposed. Applied as a targeted text edit, not a full JSON re-dump, to avoid reformatting the other ~3160 records."
     },
     {
       "id": "3693c44f40",
@@ -174,7 +178,7 @@
     {
       "id": "d1e5f9a2b3",
       "type": "engine_fix",
-      "status": "pending",
+      "status": "invalid_dead_code",
       "detail": "Fix analyze_batch.py sort order: main() always processes videos newest-first (line 736), ignoring the workflow's order instruction. Normal mode should be oldest_first per CLAUDE.md and analyze.yml plan step. Add --order argument and use it.",
       "proposed_change": {
         "file": "src/analyze_batch.py",
@@ -183,12 +187,14 @@
       },
       "source": "review",
       "review_finding_id": "a7f3d2e8c9",
-      "severity": "med"
+      "severity": "med",
+      "resolution_note": "fire 146: main() in src/analyze_batch.py is not invoked by any workflow (same dead path already established by fire 12/fire 145 for describe_tool() in this same file — analyze.yml runs a claude-code-action against ANALYZE_SPEC.md directly, bulk_analyze.yml runs src/bulk_analyze.py; neither shells out to analyze_batch.main()). Confirmed bulk_analyze.py has no sort-order argument or newest/oldest-first logic to inherit this bug — grepped for 'sys.argv', 'newest_first', 'oldest_first' in bulk_analyze.py, zero matches. Patching a main() nothing calls fixes zero live runs. Not applying.",
+      "resolved_fire": 146
     },
     {
       "id": "e2f6a8b4c5",
       "type": "engine_fix",
-      "status": "pending",
+      "status": "invalid_dead_code",
       "detail": "Fix /tmp/sorted_pending.json persisting between GitHub Actions runs. The file is written once and reused, so newly added pending videos are invisible until the file is regenerated. Delete or unconditionally regenerate it at the start of every main() call.",
       "proposed_change": {
         "file": "src/analyze_batch.py",
@@ -197,12 +203,14 @@
       },
       "source": "review",
       "review_finding_id": "b8e4c1a5f7",
-      "severity": "med"
+      "severity": "med",
+      "resolution_note": "fire 146: same dead main() as d1e5f9a2b3 — src/analyze_batch.py is not invoked by any workflow. Confirmed src/bulk_analyze.py has no /tmp/sorted_pending.json reference at all (grepped, zero matches), so the live pipeline doesn't have this caching bug to begin with. Not applying.",
+      "resolved_fire": 146
     },
     {
       "id": "f3a7d9e1b6",
       "type": "engine_fix",
-      "status": "pending",
+      "status": "invalid_dead_code",
       "detail": "Fix stale status.total_skills counter. status.json shows total_skills: 38 but skills.json has 69 skills. analyze_batch.py never updates this field after adding skills, and fetch.py resets it to the pre-analyze count each run.",
       "proposed_change": {
         "file": "src/analyze_batch.py",
@@ -211,12 +219,14 @@
       },
       "source": "review",
       "review_finding_id": "c9f2d8b4a1",
-      "severity": "med"
+      "severity": "med",
+      "resolution_note": "fire 146: the proposed edit site (process_video() inside src/analyze_batch.py) is dead — not invoked by any workflow. The underlying counter-drift symptom is real but lives elsewhere and is already covered by 9a4e7b2d8f/d7e1f3a9b2's disposition: status.json's total_skills/total_tools/total_connectors are write-only fields the dashboard doesn't actually read (docs/dashboard.js renderHeader() sources 'Skills'/'Tools'/'Connectors' from health.json's live-computed library object; status.total_skills is only a never-hit fallback). Not applying this edit; see 9a4e7b2d8f for the disposition of the real, live half of this issue (src/fetch.py).",
+      "resolved_fire": 146
     },
     {
       "id": "9a4e7b2d8f",
       "type": "engine_fix",
-      "status": "pending",
+      "status": "applied",
       "detail": "Fix fetch.py resetting status.total_skills to stale pre-analyze count (line 648). Every fetch run overwrites total_skills with the count from BEFORE analyze runs, undoing the analyze stage's updates. Remove total_skills from the fetch.py status.update() block and let the analyze stage own it.",
       "proposed_change": {
         "file": "src/fetch.py",
@@ -225,7 +235,9 @@
       },
       "source": "review",
       "review_finding_id": "7f2e9d4c1a",
-      "severity": "med"
+      "severity": "med",
+      "applied_fire": 146,
+      "applied_note": "fire 146: src/fetch.py is live (unlike analyze_batch.py/process_video.py, which are dead — see f3a7d9e1b6), so this half of the bug is real: fetch.py's status.update() always overwrites total_skills with the count read at the START of its own run (src/fetch.py, total_skills = len(skills_data['skills'])), clobbering whatever src/merge_dupes.py (the one live writer that gets this field right, status['total_skills'] = len(new_skills)) wrote in between fetch runs. Removed 'total_skills': total_skills from fetch.py's status.update() dict so fetch no longer stomps a value it can't compute correctly; merge_dupes.py remains the sole owner. Confirmed no other script reads status.json's total_skills for decision logic (grepped src/*.py, docs/*.js) — the dashboard's one reference is an unreachable fallback behind health.json's live count, so this fix has zero user-visible effect today but removes a real, live data-correctness bug for whenever that fallback path ever does get hit (e.g. before health.json's first run)."
     },
     {
       "id": "3c6d2e8a1f",
@@ -244,7 +256,7 @@
     {
       "id": "1b7a5c9e3d",
       "type": "engine_fix",
-      "status": "pending",
+      "status": "applied",
       "detail": "Fix unclosed file handle in src/fetch.py:594. The catch_up.json is opened without a context manager: `cu_state = json.load(open(cu_path, encoding='utf-8'))`. The file descriptor is never explicitly closed — not portable to non-CPython runtimes and flagged by static analysis.",
       "proposed_change": {
         "file": "src/fetch.py",
@@ -254,12 +266,14 @@
       },
       "source": "review",
       "review_finding_id": "4d2c8a7f9e",
-      "severity": "low"
+      "severity": "low",
+      "applied_fire": 146,
+      "applied_note": "fire 146: applied exactly as proposed (the line had since shifted to 618, unrelated edits in between — verified py_compile passes)."
     },
     {
       "id": "8e2f4a6b1c",
       "type": "engine_fix",
-      "status": "pending",
+      "status": "invalid_dead_code",
       "detail": "Remove dead code in src/analyze_batch.py:550: `key = f\"{display_name}|\"` is assigned and never read. The models lookup immediately below uses a name-only comparison, making this line meaningless.",
       "proposed_change": {
         "file": "src/analyze_batch.py",
@@ -269,7 +283,9 @@
       },
       "source": "review",
       "review_finding_id": "6a3b5d1e9c",
-      "severity": "low"
+      "severity": "low",
+      "resolution_note": "fire 146: this line lives inside process_video() in src/analyze_batch.py, which is dead (not invoked by any workflow — same file as d1e5f9a2b3/e2f6a8b4c5/f3a7d9e1b6). Removing a meaningless line inside a function nothing calls has zero effect either way; not worth the diff. Not applying.",
+      "resolved_fire": 146
     },
     {
       "id": "c4d8e2f1a7",
@@ -290,7 +306,7 @@
     {
       "id": "d7e1f3a9b2",
       "type": "engine_fix",
-      "status": "pending",
+      "status": "invalid_superseded",
       "detail": "Fix total_tools and total_connectors counters in status.json (also stale, like total_skills). status shows tools=290 vs actual 312, connectors=41 vs actual 48. The same fetch.py overwrite root cause applies. Extend the fix to all three counters.",
       "proposed_change": {
         "file": "src/fetch.py + src/analyze_batch.py",
@@ -299,7 +315,9 @@
       },
       "source": "review",
       "review_finding_id": "c9f2d8b4a1",
-      "severity": "med"
+      "severity": "med",
+      "resolution_note": "fire 146: checked the premise directly — grepped every src/*.py for a 'total_tools'/'total_connectors' writer and found none at all, live or dead; these two status.json fields are pure leftovers from some past run, updated by nothing. The proposed fetch.py half doesn't apply (fetch.py never wrote them to begin with — only total_skills, handled separately in 9a4e7b2d8f). The proposed analyze-stage-writer half would need to land in src/bulk_analyze.py (the real live pipeline, not src/analyze_batch.py which is dead), but there are zero readers to justify it: docs/dashboard.js renderHeader() sources Tools/Connectors from health.json's live-computed library object, never from status.total_tools/total_connectors, and no other script reads either field. Adding a writer for a field nothing reads is effort with no visible payoff — declining rather than padding the codebase with dead plumbing. Revisit only if something starts reading these fields.",
+      "resolved_fire": 146
     },
     {
       "id": "e5f2c8a4b9",

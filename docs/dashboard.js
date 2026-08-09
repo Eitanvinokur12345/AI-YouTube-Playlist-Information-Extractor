@@ -1090,6 +1090,20 @@ function injectDynamicTabs() {
   });
 }
 
+// Annotate the nav tabs backed by a library dataset with a live item count, read
+// straight off the already-loaded health.json (no extra fetch) — gives visitors a sense
+// of catalog scale before they click into a tab.
+function annotateNavCounts() {
+  const lib = (state.health || {}).library || {};
+  const counts = { skills: lib.skills, tools: lib.tools, connectors: lib.connectors, prompts: lib.prompts };
+  Object.entries(counts).forEach(([tab, n]) => {
+    if (n == null) return;
+    const btn = document.querySelector(`nav button[data-tab="${tab}"]`);
+    if (!btn || btn.querySelector(".navcount")) return;
+    btn.insertAdjacentHTML("beforeend", ` <span class="navcount">(${esc(n)})</span>`);
+  });
+}
+
 // ── Tab: Connectors ──────────────────────────────────────────────────────────
 const _slugify = (s) => String(s || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 function safetyPill(rating, reasons) {
@@ -3712,6 +3726,7 @@ document.querySelectorAll("nav button").forEach(b => {
   // Only show active (not dismissed) auto-created trend tabs.
   state.dynamicTabs = (((extra && extra.tabs) || []).filter(t => (t.status || "active") === "active"));
   injectDynamicTabs();
+  annotateNavCounts();
   renderHeader(state.status);
 
   // Client-side search (A4): debounce typing, then re-render whichever tab is open.

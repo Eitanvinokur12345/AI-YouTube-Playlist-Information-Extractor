@@ -5,6 +5,76 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-09
+- **~06:1x (fire 146, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (guardrails 18/20, 0 critical; loop_contract 0/3 consecutive meta fires, no carry-over
+  open). Restricted egress confirmed again — checked the GitHub Actions history directly via the
+  GitHub MCP tools instead of trusting `priorities.json`'s local read: the most recent `review.yml`
+  run (31283973249, 2026-08-08T23:26Z) failed on a zero-cost, 1-turn, `is_error:true` Claude
+  result — the signature of a rationed-quota hit, not a code bug; `review.yml` only runs Wed/Sat
+  so no action taken, it self-heals on the next scheduled run. Also confirmed `pipeline_status.json`'s
+  "3 lanes can't-tell" and "Transcript retrieval is slow" flags were artifacts of this cloud
+  checkout's shallow clone (52 commits) and a naive 24h-cadence check against `fetch.yml`'s real
+  48h cron (`"0 6 */2 * *"`) — not real stalls. `excava_beat.yml`'s stuck-looking "in_progress"
+  run (5+ hours) is its designed behavior (`concurrency: cancel-in-progress: false`, one ~5.3h job
+  beating every 10 min internally), not a hang.
+  **The actual increment:** walked every one of the 14 `pending` entries in
+  `data/improvement_suggestions.json` (the self-improvement backlog behind priorities.json rank 7's
+  "33 queued" line) instead of taking any of them at face value — the same discipline fire 145 used
+  on `c9b5e2f731`, applied to the rest of the queue. 7 of them (`b2c4d6e8f0`, `d1e5f9a2b3`,
+  `e2f6a8b4c5`, `f3a7d9e1b6`, `8e2f4a6b1c`, `9a4e7b2d8f`, `d7e1f3a9b2`) targeted either
+  `src/analyze_batch.py` (confirmed dead code by fire 145 — not invoked by any workflow) or a
+  `status.json` field nothing reads. Verified each individually against the LIVE pipeline
+  (`src/bulk_analyze.py`, `src/fetch.py`, `docs/dashboard.js`) rather than blanket-dismissing the
+  whole batch: `b2c4d6e8f0`'s news-summary-fallback symptom was already resolved by fire 144's
+  unrelated fix (8/1098 generic summaries left, all genuinely content-less, was 273) →
+  `invalid_superseded`; `d1e5f9a2b3` (sort order), `e2f6a8b4c5` (`/tmp` cache),
+  `f3a7d9e1b6` (`total_skills` writer), `8e2f4a6b1c` (dead line) live only inside
+  `analyze_batch.py`'s unreached `main()`/`process_video()`, confirmed no equivalent in
+  `bulk_analyze.py` → `invalid_dead_code`; `d7e1f3a9b2` (`total_tools`/`total_connectors`)
+  → `invalid_superseded` after confirming nothing ever wrote those two fields and nothing reads
+  them (`docs/dashboard.js`'s `renderHeader()` sources Tools/Connectors from `health.json`'s live
+  `library` object, never `status.json`). Applied the real, live, safe ones instead of just
+  logging them: `1b7a5c9e3d` — `src/fetch.py`'s `catch_up.json` read now goes through
+  `Path.read_text()` instead of a bare unclosed `open()`; `9a4e7b2d8f` — removed
+  `total_skills` from `fetch.py`'s `status.update()` (plus the now-dead local variable computing
+  it), since it was clobbering `src/merge_dupes.py`'s correct value every fetch run;
+  `253d755074` — `data/tools.json`'s one `"Chatgpt"` display name fixed to `"ChatGPT"` via a
+  targeted text edit (confirmed no full-file reformat — the first attempt via `json.dump` at a
+  different indent width diffed all 84,925 lines; reverted and redid it as a 2-line text
+  replacement). Then shipped one visible, wired increment from the queue's surviving real items:
+  `3693c44f40` — the Skills/Tools/Connectors/Prompts nav tabs now show a live `(N)` item count,
+  read off the already-loaded `health.json` (zero extra fetches) via a new `annotateNavCounts()`
+  in `docs/dashboard.js` + a `.navcount` style in `docs/index.html`. Pending queue: 14 → 4 (the
+  4 left are real UI suggestions against live files — sort toggle, quick-read `.sub` scoping,
+  score-band card borders — next fire's candidates).
+  **Verified, not assumed:** `node --check docs/dashboard.js` and `python3 -m py_compile
+  src/fetch.py` both clean; every touched JSON re-parsed valid; ran a local static-file server
+  against `data/health.json` and confirmed the exact keys (`skills`/`tools`/`connectors`/`prompts`)
+  the new JS reads are present (3641/3161/1510/750) and match the selectors
+  (`nav button[data-tab="skills"]` etc.) that exist in `docs/index.html`; read `show()`'s
+  tab-switch code end to end to confirm nothing else overwrites those buttons' `innerHTML` and
+  would silently erase the badge; `python -m src.guardrails` 18/20, 0 critical, unchanged from the
+  pre-fire baseline.
+  **Harsh self-criticism:** the triage half is the real, durable value here — it stops the review's
+  own automated backlog from cycling the same six dead-code chases past every future fire that
+  doesn't stop to check them, which is exactly the kind of quiet compounding waste that never
+  shows up as a bug report. But it produced zero user-visible change by itself; the nav-count
+  badge is the only thing a visitor to the dashboard would actually notice this fire, and it's a
+  small one. I did not get to any of the 3 remaining real UI suggestions (sort toggle, quick-read
+  scoping, score-band borders) or verify this in an actual browser — CLAUDE.md's environment rule
+  bars browser tools in an unattended session, so "verify the read side" here means static-file
+  fetch + code trace, not a screenshot; that is a real gap between "verified" and "seen," and I
+  said so rather than claiming a visual check I didn't do. Shipped via plain `git` to this
+  session's own `claude/kind-shannon-*` branch + a draft PR, not `python -m src.git_safe
+  ship/push` — read `push()`'s source and it still unconditionally runs
+  `git push origin HEAD:main` regardless of the current branch, which would have pushed straight
+  to `main` and violated this session's explicit branch-scoping instructions. That hardcoding
+  contradicts `ensure_upstream()`'s own docstring two functions above it, which says fire 83
+  (2026-07-30) fixed this exact case for "cloud sessions ship to their own branch + draft PR" —
+  it did not; only the upstream-tracking half was fixed, `push()` itself was not. Flagging in
+  `QUESTIONS.md` rather than fixing it live in this fire, since it's a change to the shipping
+  mechanism itself and deserves its own careful pass, not a rushed edit bundled into an unrelated
+  increment.
 - **~05:0x (fire 145, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
   OK (`python -m src.standing_checks`: stale `origin/main` cache re-fetched clean, nothing lost;
   upstream repointed to origin/main; guardrails 17/20, 0 critical; loop_contract 0/3 consecutive

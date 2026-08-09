@@ -478,7 +478,6 @@ def main() -> None:
     skills_data = load_skills()
     seen_ids: set[str] = set(skills_data.get("videos_seen", []))
     already_seen_count: int = len(seen_ids)
-    total_skills: int = len(skills_data.get("skills", []))
 
     # preserve cumulative analyze-stage counter across runs
     prev_status = load_status()
@@ -615,7 +614,7 @@ def main() -> None:
     surge_threshold = int(cu_cfg.get("surge_threshold", 100))
     cu_path = DATA_DIR / "catch_up.json"
     try:
-        cu_state = json.load(open(cu_path, encoding="utf-8")) if cu_path.exists() else {}
+        cu_state = json.loads(cu_path.read_text(encoding="utf-8")) if cu_path.exists() else {}
     except Exception:
         cu_state = {}
     cu_mode = cu_state.get("mode", "auto")
@@ -682,7 +681,6 @@ def main() -> None:
         "last_fetch": run_time_utc.isoformat(),
         "next_run": next_run_utc.isoformat(),
         "videos_seen": len(skills_data.get("videos_seen", [])),
-        "total_skills": total_skills,
         "total_videos_analyzed": total_videos_analyzed,
         "new_videos_this_run": len(new_videos),
         "pending_count": pending_count,

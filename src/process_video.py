@@ -18,14 +18,14 @@ COMMAND_TOKEN_RX = re.compile(r"^/[a-zA-Z0-9][a-zA-Z0-9-]*$")  # CLAUDE.md Step 
 def load_json(path, default=None):
     full = os.path.join(WORK_DIR, path)
     if os.path.exists(full):
-        with open(full) as f:
+        with open(full, encoding='utf-8') as f:
             return json.load(f)
     return default if default is not None else {}
 
 def save_json(path, data):
     full = os.path.join(WORK_DIR, path)
     os.makedirs(os.path.dirname(full), exist_ok=True)
-    with open(full, 'w') as f:
+    with open(full, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
         f.write('\n')
 
@@ -322,7 +322,7 @@ description: "{skill.get('skill_name', slug)} — {skill.get('use_case', 'AI pro
 Extracted from: [{title}](https://www.youtube.com/watch?v={video_id})
 Channel: {channel}
 """
-    with open(skill_md_path, 'w') as f:
+    with open(skill_md_path, 'w', encoding='utf-8') as f:
         f.write(content)
 
 

@@ -108,7 +108,7 @@
     {
       "id": "f4c2b8e91a",
       "type": "engine_fix",
-      "status": "pending",
+      "status": "applied",
       "detail": "Add encoding='utf-8' to ALL open() calls in src/analyze_batch.py (lines 152, 160, 402, 725-726, 747-748) AND src/process_video.py (lines 19, 24). Hebrew transcripts and Unicode tool names will cause UnicodeError on non-UTF-8 locales. Three files affected.",
       "proposed_change": {
         "files": ["src/analyze_batch.py", "src/process_video.py"],
@@ -117,7 +117,9 @@
       },
       "source": "review",
       "review_finding_id": "f97aeed26d",
-      "severity": "high"
+      "severity": "high",
+      "applied_at": "2026-08-09T01:00:00+00:00",
+      "applied_note": "fire 141: added encoding='utf-8' to all 10 open() calls across src/analyze_batch.py (load_json, save_json, write_skill_md, main()'s pending-video reads) and src/process_video.py (load_json, save_json, write_skill_md) — every file read/write in both modules now pins UTF-8 instead of the platform locale default. Verified: ast.parse clean on both files; all 6 local suites (excava_core_test, guardrail_test, git_merge_resolve_test, or1_phase_test, deep_retrieve_test, analyze_batch_test) green, no regressions; guardrails 18/20, 0 critical, unchanged from pre-fix."
     },
     {
       "id": "a7d3c6e041",

@@ -5,6 +5,36 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-09
+- **~01:0x (fire 141, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (`python -m src.standing_checks`: stale `origin/main` cache re-fetched clean, nothing lost;
+  upstream auto-repointed; guardrails 18/20, 0 critical). `net_canary`: still restricted egress,
+  re-verified fresh — same conclusion as every fire since 124, so picked a local/deterministic
+  increment. Re-checked `analyze_consecutive_zero_progress_fails`: **40** (was 39 at fire 140,
+  35 when fire 121 first escalated it with a push notification) — same continuing trend already
+  escalated, not a qualitative change, so per the established fires-122-140 discipline this did
+  NOT get a fresh push notification; still flagged here so the next 10th-heartbeat review has an
+  accurate baseline. **The actual increment:** fire 140 swept every local surface it checked
+  (relate.py, OR-1, connector-URL matching) and found nothing safe to ship, but hadn't checked
+  `data/improvement_suggestions.json`'s own pending backlog — it holds 21 review-sourced,
+  already-scoped fix suggestions, several fully local/deterministic. Applied `f4c2b8e91a`
+  (severity: high): added `encoding='utf-8'` to all 10 `open()` calls across
+  `src/analyze_batch.py` (`load_json`, `save_json`, `write_skill_md`, `main()`'s pending-video
+  reads) and `src/process_video.py` (`load_json`, `save_json`, `write_skill_md`) — every JSON/
+  markdown read and write in the ingestion pipeline was relying on the platform locale default
+  instead of pinning UTF-8, a real `UnicodeDecodeError`/`UnicodeEncodeError` risk for Hebrew
+  transcripts and Unicode tool names on any non-UTF-8-default runner. Verified: `ast.parse`
+  clean on both files; all 6 local suites (`excava_core_test`, `guardrail_test`,
+  `git_merge_resolve_test`, `or1_phase_test`, `deep_retrieve_test`, `analyze_batch_test`) green,
+  no regressions; `python -m src.guardrails` 18/20, 0 critical, unchanged from pre-fix. Marked
+  the suggestion `"applied"` with a note in `improvement_suggestions.json` so the backlog stays
+  honest. Logged the WHY via `python -m src.project_memory log` before shipping.
+  **Harsh self-criticism:** this is a real, verified, previously-known correctness gap closed —
+  not new hub content or a new user-facing capability, and it's unverified against an actual
+  non-UTF-8-locale runner (I can't reproduce the crash live from this sandbox, only confirm the
+  fix is mechanically correct and doesn't regress). 20 other suggestions remain pending in the
+  same file, several equally local/deterministic and lower-risk than this fire had budget for
+  (dead-code removal, one-line counter fixes, a stale-cache bug in `main()`) — good candidates
+  for the next fire instead of re-sweeping already-exhausted surfaces like fire 140 had to.
 - **~00:0x (fire 140, unattended, cloud, scheduled-task invocation, META, 10th heartbeat)** —
   Standing checks OK (`python -m src.standing_checks`: local `origin/main` cache was stale again
   — same recurring cosmetic pattern every fire since ~120 — re-fetched clean, HEAD matched,

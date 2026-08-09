@@ -149,7 +149,7 @@ NON_AI_DISQUALIFIERS = [
 def load_json(path, default=None):
     full = os.path.join(WORK_DIR, path)
     if os.path.exists(full):
-        with open(full) as f:
+        with open(full, encoding='utf-8') as f:
             return json.load(f)
     return default if default is not None else {}
 
@@ -157,7 +157,7 @@ def load_json(path, default=None):
 def save_json(path, data):
     full = os.path.join(WORK_DIR, path)
     os.makedirs(os.path.dirname(full), exist_ok=True)
-    with open(full, 'w') as f:
+    with open(full, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
         f.write('\n')
 
@@ -402,7 +402,7 @@ description: "Use {skill['skill_name']} for {skill.get('category', 'AI')} tasks 
 Extracted from: [{title}](https://www.youtube.com/watch?v={video_id})
 Channel: {channel}
 """
-    with open(path, 'w') as f:
+    with open(path, 'w', encoding='utf-8') as f:
         f.write(content)
 
 
@@ -725,14 +725,14 @@ def main():
         files = glob.glob(os.path.join(WORK_DIR, 'data/_pending/*.json'))
         records = []
         for f in files:
-            with open(f) as fh:
+            with open(f, encoding='utf-8') as fh:
                 d = json.load(fh)
             records.append({'video_id': d['video_id'], 'publishedAt': d.get('publishedAt', ''), 'file_path': f})
         records.sort(key=lambda x: x['publishedAt'], reverse=True)
-        with open(sorted_path, 'w') as out:
+        with open(sorted_path, 'w', encoding='utf-8') as out:
             json.dump(records, out)
     else:
-        with open(sorted_path) as f:
+        with open(sorted_path, encoding='utf-8') as f:
             records = json.load(f)
 
     print(f"Processing up to {max_videos} videos newest_first (total: {len(records)})")
@@ -747,7 +747,7 @@ def main():
         if not os.path.exists(src_path):
             continue  # already processed
 
-        with open(src_path) as f:
+        with open(src_path, encoding='utf-8') as f:
             video = json.load(f)
 
         title = video.get('title', video_id)

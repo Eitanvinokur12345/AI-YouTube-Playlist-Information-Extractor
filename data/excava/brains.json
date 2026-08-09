@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-09T21:47:36.686621+00:00",
+ "generated_at": "2026-08-09T22:50:13.018256+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -86,10 +86,10 @@
     "tier": "fast"
    },
    "support": {
-    "engine": "kimi",
-    "model": "moonshotai/kimi-k2:free",
-    "lineage": "kimi",
-    "tier": "reasoning"
+    "engine": "glm",
+    "model": "z-ai/glm-4.5-air:free",
+    "lineage": "glm",
+    "tier": "grounded"
    }
   },
   {
@@ -101,9 +101,9 @@
     "tier": "fast"
    },
    "support": {
-    "engine": "glm",
-    "model": "z-ai/glm-4.5-air:free",
-    "lineage": "glm",
+    "engine": "gh-models",
+    "model": "openai/gpt-4o-mini",
+    "lineage": "gpt",
     "tier": "grounded"
    }
   },
@@ -116,25 +116,25 @@
     "tier": "reasoning"
    },
    "support": {
-    "engine": "gemini",
-    "model": "gemini-2.0-flash",
-    "lineage": "gemini",
-    "tier": "grounded"
+    "engine": "cerebras",
+    "model": "llama3.1-8b",
+    "lineage": "llama",
+    "tier": "fast"
    }
   },
   {
    "id": "D",
    "lead": {
-    "engine": "gh-models",
-    "model": "openai/gpt-4o-mini",
-    "lineage": "gpt",
-    "tier": "grounded"
+    "engine": "kimi",
+    "model": "moonshotai/kimi-k2:free",
+    "lineage": "kimi",
+    "tier": "reasoning"
    },
    "support": {
-    "engine": "cerebras",
-    "model": "llama3.1-8b",
-    "lineage": "llama",
-    "tier": "fast"
+    "engine": "gemini",
+    "model": "gemini-2.0-flash",
+    "lineage": "gemini",
+    "tier": "grounded"
    }
   }
  ],
@@ -155,8 +155,8 @@
   "mistral"
  ],
  "spoke_today": {
-  "mistral": 133,
-  "llama": 3
+  "mistral": 189,
+  "llama": 4
  },
  "note": "a BRAIN = a benchmark-ranked LEAD model + a distinct-lineage SUPPORT model (levels of support, real fallback); rank is EARNED by measured quality, not the plan's list. The lineage roster below shows every model that can be a lead/support; GLM/DeepSeek/Kimi need OPENROUTER_API_KEY (§12)."
 }

@@ -1,15 +1,13 @@
 # accessibility: Make EXCAVA usable by EVERYONE — contrast, mobile/touch, reduced-motion, keyboard nav, scr
 
-> Decision artifact · room `dept-accessibility-make-excava-us-486` (dept) · 2026-07-15T10:38:46.046699+00:00
-> Participants: Ramp, Reader, Access · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-accessibility-make-excava-us-486` (dept) · 2026-08-03T04:28:29.041771+00:00
+> Participants: Ramp, Reader, Access · synthesized by nvidia/meta/llama-3.3-70b-instruct
 
-**Decision:** Implement a hybrid approach with a server-side skip link and a client-side enhancement for accessibility.
-
+**Decision:** Adopt a 2px #fff inner ring with a 1px #000 outer outline for focus indicators.
 **Plan:**
-1. Develop a visible server-side skip link to be included at the top of every page.
-2. Implement a client-side enhancement to ensure the skip link appears only when keyboard focus reaches the first interactive element.
-3. Conduct a live test to measure keyboard navigation and user experience with both implementations.
-4. Gather feedback from keyboard users and accessibility testers to refine the solution further.
-5. Document the development process and ensure the accessibility team leads this implementation.
-
-**What changed:** The decision combines both server-side and client-side solutions for enhanced accessibility without URL dependence issues.
+1. Implement the new focus indicator design with a 2px #fff inner ring and a 1px #000 outer outline.
+2. Conduct thorough testing on various backgrounds, including patterned and high-contrast backgrounds.
+3. Verify that the new design meets accessibility standards for keyboard navigation and visual clarity.
+4. Collaborate with the design team to ensure the new focus indicator aligns with the overall visual design.
+5. Update the style guide with the new focus indicator design for future reference.
+**What changed:** The focus indicator design was updated to prioritize accessibility and reliability across all backgrounds.

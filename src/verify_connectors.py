@@ -30,6 +30,8 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
+from src import net_canary
+
 ROOT = Path(__file__).parent.parent
 DATA = ROOT / "data"
 OUT = DATA / "connectors_verified.json"
@@ -64,11 +66,13 @@ def _network_open() -> bool:
     (`_head_ok` on an arbitrary connector url/source_url) that hits a non-allowlisted
     host directly. The npm/PyPI registry lookups and sandbox npx/pip runs are unaffected:
     registry.npmjs.org / pypi.org / files.pythonhosted.org are on this environment's own
-    proxy allowlist, so they resolve even when general web egress does not."""
-    for anchor in ("https://github.com", "https://www.wikipedia.org"):
-        if _head_ok(anchor):
-            return True
-    return False
+    proxy allowlist, so they resolve even when general web egress does not.
+
+    Delegates to the shared `net_canary` module (fire 135, 2026-08-08) instead of its own
+    copy of the same anchor loop — closes the exact duplication `net_canary.py`'s own
+    `NETWORK_DEPENDENT_LANES` comment named as unfinished when the module was extracted.
+    """
+    return net_canary.network_open()
 
 
 def _registry_lookup(name: str) -> tuple[str, str] | None:

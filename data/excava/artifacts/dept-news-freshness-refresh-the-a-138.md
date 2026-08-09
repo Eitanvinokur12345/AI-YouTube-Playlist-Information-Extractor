@@ -1,16 +1,17 @@
 # news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
 
-> Decision artifact · room `dept-news-freshness-refresh-the-a-138` (dept) · 2026-07-26T23:31:22.848433+00:00
-> Participants: Scoop, Wire · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-news-freshness-refresh-the-a-138` (dept) · 2026-08-03T21:43:15.594233+00:00
+> Participants: Scoop, Factcheck, Wire · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+Wire publishes the AI-headlines digest for 2024-05-30.
 
 **Plan:**
-1. Fetch the latest AI headlines from Reuters, BBC, and the White House official sources.
-2. Verify timestamps and ensure sources are official/company/national.
-3. Compile headlines into a digest format with timestamps and sources.
-4. Include a brief summary of key themes (e.g., policy, breakthroughs, corporate moves).
-5. Publish the digest in GitHub markdown with clear section headers.
-6. Set up an automated refresh trigger (e.g., daily cron job) for future updates.
+1. Open OpenAI’s official blog feed and extract the latest AI-related post.
+2. Verify the post’s authenticity and timestamp.
+3. Cross-reference with Google’s AI-powered search updates and Microsoft’s AI-driven Windows 11 enhancements.
+4. Compile the three key updates into a digest.
+5. Format the digest for GitHub markdown.
+6. Publish the digest under the date 2024-05-30.
 
-**What changed:** Fresh AI news digest now sourced from Reuters, BBC, and White House, compiled with timestamps and verified sources.
+**What changed:** AI-headlines digest published for 2024-05-30.

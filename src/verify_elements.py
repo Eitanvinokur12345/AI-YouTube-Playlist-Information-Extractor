@@ -30,6 +30,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from src import element_model as em
+from src import net_canary
 
 ROOT = Path(__file__).parent.parent
 DATA = ROOT / "data"
@@ -61,12 +62,12 @@ def _network_open() -> bool:
     third-party site. Two independent, almost-never-simultaneously-down anchors: if BOTH
     are unreachable, egress is restricted (or a true outage), and this run must not write
     any live-link verdicts — better to skip a batch than poison confirmed_dead/fail data.
+
+    Delegates to the shared `net_canary` module (fire 135, 2026-08-08) — this was one of
+    three copy-pasted implementations `net_canary.py` itself named as still-duplicated debt
+    (`NETWORK_DEPENDENT_LANES`) when it was extracted from this exact function.
     """
-    for anchor in ("https://github.com", "https://www.wikipedia.org"):
-        alive, _ = _head(anchor)
-        if alive:
-            return True
-    return False
+    return net_canary.network_open()
 
 
 def _head(url: str) -> tuple[bool, str]:

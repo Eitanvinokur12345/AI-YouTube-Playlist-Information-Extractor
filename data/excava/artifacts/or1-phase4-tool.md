@@ -1,0 +1,116 @@
+# OR-1 phase 4 — resolution — FINAL guideline — element type: tool
+> 2026-08-03T08:07:40.259349+00:00 · families used: DeepSeek V4, GLM-5.2, GPT-4o-mini, Kimi K2.7
+
+## Ratchet (DeepSeek V4 · mistral/mistral-small-latest)
+
+### **RESOLUTION OF WEAKNESSES & FINAL GUIDELINE**
+
+#### **Resolved Weaknesses (per reviewer criticism)**
+
+| **Weakness** | **Resolution** | **Reasoning** |
+|--------------|---------------|---------------|
+| **1. Overemphasis on developer-centric signals (versioning, update frequency) while underweighting user harm (privacy violations, dark patterns, exploitative monetization).** | **FIXED** | Disqualifiers now explicitly include *malicious intent*, *privacy violations*, *unethical data collection*, and *deceptive monetization*. These take precedence over developer transparency. |
+| **2. "Singular purpose" is too rigid; some tools (e.g., IDEs, CLI suites) must integrate with other systems to be useful.** | **FIXED** | The guideline now allows for *modular tools* that solve multiple small problems *if* they do so with minimal friction and clear boundaries. Integration is required *only if the tool’s stated purpose demands it*. |
+| **3. "User engagement metrics" (retention, NPS) are noisy and can be gamed (e.g., corporate-mandated tools, bot-driven retention).** | **FIXED** | Engagement metrics are demoted to *supporting signals* (not disqualifiers) and must be *corroborated by independent reviews* (e.g., third-party audits, user testimonials). |
+| **4. "Responsive development" (Sprocket) is subjective—no defined SLA (e.g., "issues closed within 7 days").** | **FIXED** | Development responsiveness is now measured by *public roadmaps*, *issue tracker activity*, and *release cadence* (e.g., at least one update in the last 6 months). If no roadmap exists, the tool is MEDIOCRE. |
+| **5. "Anticipatory documentation" (Overhaul) is uncheckable—how do you verify docs preempt user questions?** | **FIXED** | Documentation must now include *a working demo*, *interactive tutorials*, or *FAQs derived from real user questions* (e.g., GitHub issues, forum threads). Static READMEs alone are MEDIOCRE. |
+| **6. "Seamless integration" (Sprocket) is circular—if a tool *is* integrated, it’s seamless by definition, but this doesn’t predict future compatibility.** | **FIXED** | Integration is now measured by *API stability*, *backward compatibility guarantees*, and *explicit support for common workflows* (e.g., VS Code extensions, GitHub Actions). Tools that break on minor updates are MEDIOCRE. |
+| **7. Merge order prioritizes developer signals over user harm (e.g., privacy violations).** | **FIXED** | The disqualifier section now comes *first*, followed by usability, reliability, and sustainability. The order is: **1) Disqualifiers, 2) Usability, 3) Reliability, 4) Sustainability, 5) Ecosystem Fit.** |
+| **8. "Intuitive interface" and "minimal friction" are subjective and uncheckable without real-world testing.** | **FIXED** |
+
+## Sprocket (GLM-5.2 · mistral/mistral-small-latest)
+
+### **RESOLUTION DISCUSSION: FINAL GUIDELINE FOR TOOL EVALUATION**
+*(Phase 4: Resolution – Sprocket’s Final Ruling)*
+
+---
+
+### **RESOLVED WEAKNESSES & ADJUSTMENTS**
+*(For each distinct criticism raised by reviewers, we state whether it was KEPT, FIXED, or REJECTED, with justification.)*
+
+| **Weakness Raised** | **Resolution** | **Reasoning** |
+|---------------------|---------------|---------------|
+| **1. Developer-centric signals over user harm (Ratchet)** | **FIXED** | Added explicit disqualifiers for *exploitative monetization* and *dark patterns* under "DISQUALIFIES." |
+| **2. "Singular purpose" is too rigid (Sprocket, Overhaul)** | **FIXED** | Replaced "singular purpose" with **"well-defined scope"**—tools may solve multiple problems if they do so *cohesively* (e.g., `tmux`, `jq`). |
+| **3. "Time to first value" is unquantified (Sprocket)** | **FIXED** | Added **"≤3 steps to functional use"** as an observable signal for "GOOD." |
+| **4. Disqualification triggers are inconsistent (Sprocket, Overhaul)** | **FIXED** | Consolidated into a single **"DISQUALIFIES"** section with clear, non-overlapping criteria. |
+| **5. "Responsive development" is subjective (Ratchet)** | **FIXED** | Defined **"responsive maintenance"** as: *Issues closed within 7 days (avg) and at least 1 update/month.* |
+| **6. "Anticipatory documentation" is uncheckable (Ratchet)** | **FIXED** | Replaced with **"self-contained demo"** (working example in ≤3 commands) as the primary doc signal. |
+| **7. "Seamless integration" is circular (Ratchet)** | **FIXED** | Defined as: *APIs with backward compatibility for ≥1 year or plugin ecosystems with ≥5 maintained integrations.* |
+| **8. User engagement metrics are noisy (Ratchet, Gauge)** | **FIXED** | Demoted to **"nice-to-have"** under "GOOD"; no longer a disqualifier. |
+| **9. "Intuitive interface" is subjective (Gauge, Overhaul)** | **FIXED** | Replaced with **"≤10 minutes to complete core task without external help"** as the usability metric. |
+| **10. Merge order prioritizes wrong signals (All reviewers)** | **FIXED** | New order: **1) Disqualifiers, 2) Usability, 3) Reliability, 4) Sustainability, 5) Ecosystem Fit.** |
+
+---
+
+### **FINAL GUIDELINE: TOOL EVALUATION FRAMEWORK**
+*(What GOOD looks like, what MEDIOCRE looks like, what DISQUALIFIES a tool, and the OBSERVABLE signals that decide it.)*
+
+---
+
+#### **1. WHAT A "GOOD" TOOL LOOKS LIKE**
+A **GOOD tool**
+
+## Gauge (Kimi K2.7 · mistral/mistral-small-latest)
+
+### **RESOLVED WEAKNESSES & FINAL GUIDELINE**
+
+#### **Resolved Weaknesses (per distinct criticism)**
+
+| **Weakness** | **Resolution** | **Reasoning** |
+|--------------|---------------|---------------|
+| **Overemphasis on "singular purpose" as non-negotiable** | **FIXED** | Modified to allow modular tools (e.g., CLI utilities) while still requiring a *primary* purpose. "Singular" is now "primary" to avoid rigidity. |
+| **Ignoring "time to first value"** | **FIXED** | Added explicit "time-to-value" thresholds (e.g., "usable within 5 minutes of install") as a measurable signal. |
+| **Disqualification triggers inconsistent (security vs. transparency)** | **FIXED** | Unified disqualifiers into a single "Trust Violations" category, covering both *malicious intent* (privacy violations) and *structural failures* (no working demo). |
+| **Uncheckable signals (e.g., "intuitive," "anticipatory docs")** | **FIXED** | Replaced subjective terms with observable proxies (e.g., "docs answer top 3 user questions within 2 minutes of searching"). |
+| **User engagement metrics are noisy/gamed** | **FIXED** | Demoted to "supporting signals" (e.g., "retention >60% after 30 days *without* incentivized usage"). |
+| **Merge order prioritizes developer signals over user harm** | **FIXED** | Reordered to **Disqualifiers → Usability → Reliability → Sustainability → Ecosystem Fit**. Security/privacy checks now come first. |
+| **Overhaul’s "singular purpose" clashes with Sprocket’s integration needs** | **FIXED** | Clarified that tools may solve multiple *small* problems if they integrate seamlessly (e.g., `tmux` + `jq`). Primary purpose must still be clear. |
+| **"Responsive development" lacks verifiable SLA** | **FIXED** | Added concrete thresholds (e.g., "maintainer responds to critical issues within 72 hours"). |
+| **Ratchet’s reliability metrics ignore what’s being measured** | **FIXED** | Specified *which* metrics matter (e.g., "error rate <1% under load," "uptime >99.9%"). |
+| **Gauge’s engagement metrics are lagging indicators** | **FIXED** | Added "leading indicators" (e.g., "onboarding completion rate >80%") alongside retention. |
+| **Overhaul’s "broken by design" too vague** | **FIXED** | Defined as "no working demo," "no clear purpose," or "actively malicious behavior." |
+| **Sprocket’s "seamless integration" is circular** | **FIXED** | Replaced with "documented API/contract" and "compatibility with 2+ major ecosystems." |
+
+---
+
+### **FINAL GUIDELINE: "GOOD TOOL" RULING**
+
+#### **1. WHAT "GOOD" LOOKS LIKE**
+A tool is **GOOD** if it meets
+
+## Overhaul (GPT-4o-mini · mistral/mistral-small-latest)
+
+### **RESOLVED WEAKNESSES & FINAL GUIDELINE**
+
+#### **Resolved Weaknesses**
+*(Each distinct criticism addressed below)*
+
+1. **"Singular purpose" is too rigid; some tools (e.g., IDEs, CLI suites) must integrate with other systems to be useful.**
+   - **FIXED.** The final guideline replaces "singular purpose" with **"clear, well-defined core function"** and explicitly allows for modularity where integration is necessary. Tools are not penalized for breadth if their *primary* function is intuitive and frictionless.
+
+2. **"User engagement metrics" (retention, NPS) are noisy or gamed; they’re lagging indicators.**
+   - **FIXED.** Engagement metrics are demoted to *secondary signals* (only relevant after disqualifiers and core usability are confirmed). They are no longer a primary qualifier.
+
+3. **"Responsive development" (e.g., "issues closed within 7 days") is subjective/unverifiable.**
+   - **FIXED.** Transparency requirements now include *public issue trackers with documented response SLAs* (e.g., "maintainers commit to triaging critical issues within 48 hours"). Vague terms like "responsive" are replaced with measurable thresholds.
+
+4. **"Anticipatory documentation" and "intuitive interface" are uncheckable marketing terms.**
+   - **FIXED.** Documentation must now include *a working demo* (e.g., interactive tutorial, sandbox environment) that proves usability. "Intuitive" is operationalized as *"a new user can complete the core task in ≤3 steps without prior knowledge."*
+
+5. **Disqualifiers (security/privacy) are buried too late in the merge order.**
+   - **FIXED.** Disqualifiers now come **first** in the evaluation order, before usability or reliability. A tool failing a disqualifier is rejected immediately, regardless of other qualities.
+
+6. **Opaque algorithms or exploitative monetization (e.g., dark patterns) are not explicitly disqualified.**
+   - **KEPT.** Added to disqualifiers as *"actively harmful behavior (e.g., deceptive UX, unauthorized data collection, exploitative monetization)."*
+
+7. **"Time to first value" is ignored; a tool with a 10-step setup but low error rates is rated the same as a 3-step setup with higher error rates.**
+   - **FIXED.** Friction is now measured as *"total steps to achieve the core task, with a hard cap of ≤5 steps for GOOD tools."* Steps beyond this automatically downgrade the tool to MEDIOCRE.
+
+8. **User harm (privacy violations, bias) is underweighted compared to developer-centric signals (versioning, updates).**
+   - **FIXED.** Harm-based disqualifiers are now **explicitly prioritized** over transparency or engagement metrics. A tool with a privacy violation is rejected even if it has perfect versioning.
+
+9. **"Industry standards" are vague; which standards apply?**
+   - **FIXED.** Standards must now reference *specific, verifiable benchmarks* (e.g., "complies with OWASP Top 10 for security" or "follows WCAG 2.1 AA for accessibility"). Generic claims are insufficient.
+
+10. **Tools that

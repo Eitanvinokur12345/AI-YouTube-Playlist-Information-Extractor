@@ -1,18 +1,16 @@
 # improve: Self-improvement: review prompts/engines/routing/own-code; auto-apply safe changes; pitch 
 
-> Decision artifact · room `dept-improve-self-improvement-rev-968` (dept) · 2026-07-30T07:16:08.704494+00:00
-> Participants: Sprocket, Gauge, Ratchet · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-improve-self-improvement-rev-968` (dept) · 2026-08-05T01:55:32.238965+00:00
+> Participants: Sprocket, Gauge, Overhaul, Ratchet · synthesized by mistral/mistral-small-latest
 
-**Decision:**
-Adopt a hybrid decay metric—7-day for top 20% prompts by usage, 90-day static for the rest—then measure silent failure rates in the long tail.
+**Decision:** Run PR-Agent in shadow mode on the newest open PR first, then expand to oldest merged PRs only if no critical issues surface.
 
 **Plan:**
-1. Implement 7-day decay for top 20% prompts by usage (prune stale high-impact prompts faster).
-2. Apply 90-day static decay for remaining 80% (preserve long-tail stability).
-3. Add silent failure rate tracking for low-usage prompts (validate long-tail health).
-4. Auto-apply safe changes (e.g., prompt updates) only if silent failure rate ≤ threshold.
-5. Route new prompts to the 90-day static decay bucket by default.
-6. Review metrics weekly; adjust decay thresholds if silent failure rate spikes.
+1. Configure PR-Agent in shadow mode for the newest open PR.
+2. Monitor tool output for critical issues (e.g., misrouting, false positives).
+3. If no critical issues arise within 48 hours, proceed to oldest merged PRs.
+4. Log and compare PR-Agent’s feedback against historical reviews for validation.
+5. Escalate to Overhaul for tool adjustments if critical issues are detected.
+6. Document findings in a shared report for team review.
 
-**What changed:**
-Hybrid decay metric replaces prior proposals, balancing freshness for high-usage prompts with stability for the long tail.
+**What changed:** Prioritized live PR validation before historical testing.

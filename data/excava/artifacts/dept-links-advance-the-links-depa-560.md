@@ -1,15 +1,16 @@
 # links: advance the links department's mission
 
-> Decision artifact · room `dept-links-advance-the-links-depa-560` (dept) · 2026-07-30T10:41:18.042117+00:00
-> Participants: Anchor, LinLea · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-links-advance-the-links-depa-560` (dept) · 2026-08-03T05:19:23.639692+00:00
+> Participants: Anchor, Tether, LinLea · synthesized by mistral/mistral-small-latest
 
-**Decision:** Prioritize fixing broken and outdated links based on a comprehensive report from the link-checker tool.
+**Decision:**
 
 **Plan:**
-1. Anchor will run the link-checker tool against the department’s live inventory.
-2. Generate a report listing all broken and outdated links identified.
-3. Include a severity rating for each dead link in the report.
-4. Distribute the prioritized report to the links department for action.
-5. Schedule a follow-up meeting to discuss the prioritized fixes and their impact.
+1. Anchor runs the link-checker tool on the Mission Control Dashboard's live links to generate a report of broken links, redirects, and other issues.
+2. Anchor analyzes the report to identify actionable fixes for broken links and redirects.
+3. Anchor implements fixes for identified issues directly in the Mission Control Dashboard.
+4. Anchor verifies all corrected links by re-running the link-checker tool.
+5. Anchor publishes the updated link inventory, including fixes, as a verified reference for the Mission Control Dashboard.
+6. Anchor documents the changes and shares the inventory with the team for transparency.
 
-**What changed:** The department now has a systematic approach to identify and prioritize link issues.
+**What changed:** The Mission Control Dashboard's link inventory is now verified, updated, and published with fixes for broken links and redirects.

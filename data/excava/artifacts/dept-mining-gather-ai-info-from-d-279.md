@@ -1,16 +1,16 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-279` (dept) · 2026-07-31T18:16:27.854947+00:00
-> Participants: Pick, Boulder · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-279` (dept) · 2026-08-04T23:36:34.579541+00:00
+> Participants: Pick · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Sweep GitHub’s AI-related repos created in the last 7 days, filtering for repos with ≥10 stars or ≥50 forks.
-2. Output a list of repo names with a one-line reason for inclusion (e.g., "High community engagement").
-3. Cross-reference top repos with Hacker News/Reddit threads to validate discussion volume.
-4. Compile a final curated list of 10-15 repos with the highest combined engagement.
-5. Schedule a weekly automated sweep to update the list.
-6. Share the list in a structured format (e.g., GitHub Gist) for Boulder’s review.
+1. Use Product Hunt’s API to fetch all "AI" posts from the last 7 days, extracting titles, descriptions, upvotes, and comments.
+2. Apply initial filtering to remove duplicates, non-English posts, and irrelevant content (e.g., job postings, non-AI tools).
+3. Store raw data in a structured format (e.g., JSON/CSV) for further analysis.
+4. Cross-reference filtered results with GitHub/HN/Reddit/Telegram to identify overlapping or complementary AI discussions.
+5. Prioritize posts with high engagement (upvotes/comments) for deeper extraction of AI-related insights.
+6. Document metadata (source, timestamp, engagement metrics) for traceability.
 
-**What changed:** Focus narrowed to GitHub-only sweep with engagement-based filtering.
+**What changed:** Focus shifted from broad social scraping to a targeted API-driven approach for Product Hunt, ensuring efficiency and scalability.

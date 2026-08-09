@@ -1,0 +1,77 @@
+# OR-1 phase 3 — adversarial re-review — element type: command
+> 2026-08-02T21:42:42.922551+00:00 · families used: DeepSeek V4, GLM-5.2, GPT-4o-mini, Kimi K2.7
+
+## Ratchet (DeepSeek V4 · mistral/mistral-small-latest)
+
+**My independent judgment of a "good" command element:**
+A command is GOOD if it (1) has **unambiguous inputs/outputs** (no guesswork in what it does or requires), (2) includes **fail-safes** (e.g., confirmation for destructive actions, timeouts for long runs), (3) is **discoverable** (naming, docs, or examples make it easy to find/understand), and (4) has **measurable success criteria** (e.g., "returns JSON with X fields" or "completes in <2s"). MEDIOCRE commands meet 2–3 of these; DISQUALIFIED ones fail on inputs/outputs or safety. This prioritizes *actionability* and *risk mitigation* over adaptability or performance metrics, which are secondary.
+
+**Devil’s advocate against the proposals:**
+1. **What they got wrong/missed:**
+   - None of the drafts emphasize *input validation* enough—e.g., rejecting malformed requests upfront. Sprocket’s "input completeness" is close but doesn’t stress *strict schema enforcement*.
+   - *Context-awareness* (Gauge) is overvalued; most commands should *avoid* guessing user intent. The proposals treat it as a feature, not a liability (e.g., "summarize this" without word count is ambiguous).
+   - *Performance metrics* (Ratchet) are a red herring for most commands. Execution time matters for system tools, not user-facing ones like "generate a summary."
+
+2. **Observable signals that can’t be checked:**
+   - "Natural language precision" (Sprocket) is subjective—how do you verify a command’s wording is "precise enough" without user testing?
+   - "Iterative refinement" (Gauge) assumes the command *can* adapt, but many shouldn’t (e.g., "delete file X" has no room for iteration).
+   - "Discoverability" (Ratchet) is often conflated with *marketing*—a command could be well-named but buried in docs.
+
+3. **Merge order approval:**
+   I’d **BLOCK** all proposed orders as-is. They prioritize *adaptability* or *metrics* over core actionability. A better order:
+   - **Start with Overhaul’s measurability/safety** (non
+
+## Sprocket (GLM-5.2 · mistral/mistral-small-latest)
+
+**My own judgment (from scratch):**
+A "good" command must be *actionable, unambiguous, and safe*—it should require no guesswork to execute, produce predictable outputs, and include guardrails to prevent misuse. It must also be *discoverable* (users can find/understand it) and *measurable* (success/failure is testable). Context-awareness is valuable but secondary; without clarity, adaptability becomes a liability. Error handling should prioritize *user-facing resilience* (e.g., clear fallbacks) over abstract metrics, as the latter often obscures real usability issues.
+
+**Devil’s advocate critique of the proposals:**
+1. **What they got wrong/missed:**
+   - All proposals underweight *ethical constraints*—commands like "Make me happy" (Gauge’s example) are untestable and risky, yet none disqualify them outright. Overhaul’s "safety checks" are too narrow; they ignore *semantic harm* (e.g., biased outputs).
+   - Ratchet’s "performance metrics" (e.g., execution time) are treated as universally valid, but a slow but correct command is often preferable to a fast, brittle one. Sprocket and Gauge ignore this trade-off.
+   - The proposals conflate *discoverability* with *verbosity*—a command’s name/description can be discoverable without being wordy (e.g., "summarize" vs. "generate a concise summary of the following text in 3 bullet points").
+
+2. **Uncheckable signals:**
+   - "Context-awareness" (Gauge) sounds good but is meaningless without *specific constraints*—e.g., "adapt to user goals" could mean anything from "prefer markdown" to "ignore safety checks." No proposal defines measurable boundaries.
+   - "Iterative refinement" (Gauge) implies a command can adjust mid-execution, but none specify *how* this is triggered or validated. Is it user-prompted? Automatic? The lack of a trigger mechanism makes it untestable.
+   - "Natural language precision" (Sprocket) is subjective—what’s "precise" to one user is ambiguous to another. No proposal ties it to a verifiable standard (e.g., "90% of testers agree the output matches the intent").
+
+3. **Merge order approval:**
+   I’d **
+
+## Gauge (Kimi K2.7 · mistral/mistral-small-latest)
+
+**My judgment of a GOOD command:**
+A command is GOOD if it is **unambiguously actionable** (inputs/outputs are explicit and testable), **contextually adaptable** (adjusts to user constraints without guesswork), **safely bounded** (prevents harm via guardrails), and **discoverable** (clear naming, documentation, and error signals). It must also be **measurable** (success criteria are verifiable) and **iteratively refinable** (allows adjustments without restarting). Mediocre commands lack one or more of these; disqualified ones fail on safety or actionability.
+
+**Devil’s advocate critique of the proposals:**
+1. **What they got wrong/missed:**
+   - None of the proposals explicitly require **user intent validation** (e.g., rejecting commands that violate ethical constraints like "Make me happy"). Gauge hints at it, but it’s not a hard requirement.
+   - They overlook **latent ambiguity in natural language**—e.g., "summarize in 3 bullet points" assumes the user agrees on what counts as a "point," which isn’t testable without a shared standard.
+
+2. **Uncheckable signals:**
+   - "Context-awareness" (Gauge) sounds good but is vague—how do you verify a command *adapts* without a predefined set of user constraints? It’s subjective unless tied to measurable inputs.
+   - "Error resilience" (Sprocket/Gauge) is similarly uncheckable unless you define *what* constitutes an error (e.g., "fails if input is missing" vs. "fails if user is unhappy").
+
+3. **Merge order approval/changes:**
+   I’d **block the merge orders as-is** because they prioritize structure over safety. Start with **Overhaul’s measurability/safety** as the foundation, but **add a hard requirement for intent validation** (e.g., "reject commands that cannot be objectively evaluated"). Then layer in Sprocket’s rigor, Gauge’s adaptability (constrained by explicit inputs), and Ratchet’s metrics—*only if* the metrics are tied to safety checks, not just performance. The current orders risk prioritizing usability over harm prevention.
+
+## Overhaul (GPT-4o-mini · mistral/mistral-small-latest)
+
+**My independent judgment of a "good" command element:**
+A command is *good* if it is **unambiguously actionable** (inputs/outputs are strictly defined), **safely bounded** (guardrails prevent harm), **measurably verifiable** (success criteria are testable), and **practically discoverable** (users can find/understand it without prior knowledge). Mediocre commands lack one of these; disqualified ones fail on safety or actionability. Context-awareness is valuable but secondary—it must not compromise the core requirements.
+
+**Devil’s advocate against the proposals:**
+1. **What they got wrong/missed:**
+   - None of the proposals *explicitly* prioritize **input/output strictness** as the *non-negotiable* foundation—Gauge and Sprocket dance around it, but Ratchet and Overhaul treat it as a layer rather than the bedrock. This risks commands being "adaptable" but unusable (e.g., a "summarize" command that accepts "anything" as input).
+   - **Error handling** is framed as either *user-facing* (Sprocket/Gauge) or *system-level* (Ratchet/Overhaul), but neither addresses *semantic errors* (e.g., a command that "generates a report" but outputs gibberish). This is a critical gap.
+
+2. **Observable signals that sound good but can’t be checked:**
+   - *"Context-awareness"* (Gauge) and *"iterative refinement"* sound valuable, but how do you *measure* whether a command adapts *correctly*? A reviewer can’t audit a user’s subjective "goal alignment."
+   - *"Discoverability"* (Ratchet) is vague—how do you *test* if a command is "easy to find" without user studies? Metrics like "search rank" are proxy, not proof.
+
+3. **Merge order approval:**
+   I’d **block the merge orders as-is** because they all treat *input/output rigor* as a layer rather than the starting point. The correct order should be:
+   - **Step 1:** Overhaul’s *measurability/safety* + Sprocket’s *input/output rigor* (non-negotiable).
+   - **Step 2:** Gauge’s *context-awareness* (but *

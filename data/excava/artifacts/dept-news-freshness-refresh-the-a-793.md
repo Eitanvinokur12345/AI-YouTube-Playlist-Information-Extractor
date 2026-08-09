@@ -1,16 +1,17 @@
 # news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
 
-> Decision artifact · room `dept-news-freshness-refresh-the-a-793` (dept) · 2026-07-31T21:29:31.099800+00:00
-> Participants: Scoop, Wire · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-news-freshness-refresh-the-a-793` (dept) · 2026-08-03T19:35:18.926811+00:00
+> Participants: Scoop, Factcheck, Wire · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+Wire publishes the AI-headlines digest for 2024-05-30.
 
 **Plan:**
-1. Fetch the latest AI announcements from OpenAI’s official blog and Microsoft’s AI updates page (or Google DeepMind’s research updates if Microsoft’s page is unavailable).
-2. Extract the top three newest developments from the fetched sources.
-3. Compile these into a raw digest with citations to the original posts/announcements.
-4. Curate the raw digest into a concise AI-headlines digest.
-5. Publish the digest as the freshest AI-news update.
-6. Archive the raw digest for future reference.
+1. Open OpenAI’s official blog feed to extract the latest AI-related post.
+2. Verify Google’s expanded AI search features from official Google sources.
+3. Confirm EU’s finalized AI Act rules from the official EU legislative portal.
+4. Compile the three key developments into a structured digest.
+5. Publish the digest under the date 2024-05-30 on GitHub.
 
-**What changed:** Expanded sources to include Google DeepMind if Microsoft’s page is inaccessible.
+**What changed:**
+Digest published with verified sources for OpenAI, Google, and EU AI Act updates.

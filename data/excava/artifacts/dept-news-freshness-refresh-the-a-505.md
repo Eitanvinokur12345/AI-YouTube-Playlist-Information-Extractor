@@ -1,16 +1,15 @@
 # news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
 
-> Decision artifact · room `dept-news-freshness-refresh-the-a-505` (dept) · 2026-07-27T19:27:48.811603+00:00
-> Participants: Scoop, Wire · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-news-freshness-refresh-the-a-505` (dept) · 2026-08-08T23:00:48.821268+00:00
+> Participants: Scoop, Factcheck, Wire · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Query Reuters, BBC, and White House press feeds for latest AI-related headlines and summaries.
-2. Extract verified, high-quality AI news from each source.
-3. Compile a concise digest with headlines, summaries, and direct citations.
-4. Format the digest in GitHub markdown with clear section headers.
-5. Include timestamps for each source to ensure freshness.
-6. Publish the digest in the designated AI-news digest repository.
+1. Access OpenAI’s official blog feed and extract the latest AI research or product update post.
+2. Retrieve Mistral AI’s latest release notes from their official sources.
+3. Fetch the EU AI Office’s new guidance on high-risk AI systems from their official publication.
+4. Compile these three verified items into a timestamped AI-headlines digest for 2024-05-30.
+5. Publish the digest in GitHub markdown format under the specified structure.
 
-**What changed:** Added structured sourcing and timestamping for verified AI news.
+**What changed:** Specified "AI-related" to "AI research or product updates" for clarity.

@@ -133,6 +133,8 @@ def main() -> None:
         member(toolhub_members, tt, f"[[{name}]]")
 
     for t in tools:
+        if t.get("duplicate_of"):        # same real tool already folded into another record
+            skipped += 1; continue
         if not has_body(t.get("description")):
             skipped += 1; continue
         name = uniq_title(t.get("name") or t.get("slug") or "tool", used)

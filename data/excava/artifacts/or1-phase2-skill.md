@@ -1,7 +1,61 @@
-# OR-1 phase 2 — skill — BLOCKED
+# OR-1 phase 2 — integration discussion — element type: skill
+> 2026-08-02T19:45:16.667916+00:00 · families used: DeepSeek V4, GLM-5.2, GPT-4o-mini, Kimi K2.7
 
-> 2026-08-02T12:01:28.992593+00:00
+## Ratchet (DeepSeek V4 · mistral/mistral-small-latest)
 
-phase 1 has no successful artifact for 'skill' yet (or1-phase1-skill.json missing or blocked) — run --or1-phase1 first; phase 2 integrates phase 1's drafts, it does not stand alone.
+**KEPT from each draft:**
+1. **Ratchet (DeepSeek V4):** The emphasis on *clear value, intuitive functionality, and seamless integration* with other tools is critical—it ensures skills aren’t isolated or confusing.
+2. **Sprocket (GLM-5.2):** *Customizability* and *regular maintenance* are non-negotiable; a skill must adapt to user needs and stay relevant over time.
+3. **Gauge (Kimi K2.7):** *Robustness and reliability* (minimal errors, efficiency) are foundational—no skill should be brittle or unpredictable.
+4. **Overhaul (GPT-4o-mini):** *Actionability* (immediate usability), *measurability* (clear success criteria), and *transparency* (auditable logic) make skills practical and trustworthy.
 
-Live families this run: none
+**Genuine conflicts:**
+- **Customizability vs. Actionability:** Sprocket prioritizes deep tailoring, while Overhaul argues for one-click usability—these can clash if a skill becomes too complex to use immediately.
+- **Modularity vs. Integration:** Overhaul’s focus on standalone functionality might conflict with Ratchet/Gauge’s insistence on seamless integration with other tools.
+- **Documentation Depth:** Ratchet/Sprocket lean toward *comprehensive* docs, while Overhaul suggests *contextual cues* (e.g., "use for X, not Y") as sufficient—this risks underspecifying edge cases.
+
+**Merge order/priority for synthesis:**
+Start with **Overhaul’s actionability and measurability** as the core (since they directly address user impact), then layer in **Ratchet’s integration** and **Gauge’s reliability** to ensure the skill works *and* fits into broader workflows. Next, fold in **Sprocket’s customizability and maintenance** to keep the skill adaptable and up-to-date. Finally, resolve conflicts by requiring *modularity within integration*—skills must work alone *and* combine smoothly, with documentation that balances brevity (Overhaul) and depth (Ratchet/Sprocket) via layered help (e.g., quick-start guides + advanced tweaks).
+
+## Sprocket (GLM-5.2 · mistral/mistral-small-latest)
+
+**What to keep from each draft:**
+1. From Ratchet: The emphasis on *clear value* and *seamless integration* with other tools, plus the explicit disqualifiers for malicious, insecure, or IP-infringing skills.
+2. From Sprocket: The focus on *tangible benefits*, *regular updates*, and *customizability* as hallmarks of a good skill.
+3. From Gauge: The demand for *robustness, reliability, and efficiency*, with measurable performance metrics (e.g., error rates).
+4. From Overhaul: The *actionable* and *measurable* criteria, modularity, transparency in logic, and the emphasis on avoiding hidden dependencies or redundant work.
+
+**Where the drafts genuinely conflict:**
+- *Customizability vs. simplicity*: Sprocket’s call for high customizability clashes with Overhaul’s preference for "one-click" actionable skills that require minimal setup.
+- *Documentation depth*: Ratchet and Gauge stress thorough documentation, while Overhaul prioritizes *contextual cues* (e.g., "use this for X, not Y") over exhaustive guides.
+- *Disqualifiers*: Ratchet and Gauge focus on security/IP violations, while Overhaul adds ethical harm (e.g., bias, hallucinations) and core functionality breaks as non-negotiable.
+
+**Merge order/priority for synthesis:**
+Start with Overhaul’s *actionable/measurable* and *modular* core, then layer in Gauge’s *reliability* and *performance metrics*, Sprocket’s *tangible benefits* and *updates*, and finally Ratchet’s *integration* and *disqualifiers*. This order prioritizes *usability* first (Overhaul), then *trustworthiness* (Gauge), *practical value* (Sprocket), and *safety* (Ratchet) as secondary but critical layers. The result balances immediate utility with long-term dependability and ethical safeguards.
+
+## Gauge (Kimi K2.7 · mistral/mistral-small-latest)
+
+**Kept from each draft:**
+Ratchet’s emphasis on *security and legal compliance* (e.g., no IP violations or malicious intent) and *seamless integration* with other tools should be retained, as these are non-negotiable for trust and usability. Sprocket’s focus on *customizability* and *regular maintenance* ensures skills stay adaptable and functional over time. Gauge’s insistence on *robustness and reliability* (e.g., minimal errors, efficiency) adds critical technical rigor. Overhaul’s *actionable, measurable, and transparent* criteria (e.g., one-click usability, clear success metrics) make skills practical and verifiable.
+
+**Genuine conflicts:**
+The drafts clash most sharply on *how much to prioritize documentation vs. implementation*. Ratchet and Sprocket treat documentation (e.g., clear instructions, version history) as a key signal, while Gauge and Overhaul focus more on *performance metrics* (e.g., error rates, response time) and *user effort* (e.g., setup steps). Overhaul also uniquely demands *transparency* (e.g., inspectable logic), which isn’t explicitly called out elsewhere. Additionally, Sprocket’s "highly customizable" ideal may conflict with Overhaul’s "modular" approach if taken too far—over-customization could undermine simplicity.
+
+**Merge order/priority:**
+Start with *Overhaul’s core principles* (actionable, measurable, transparent) as the foundation, since they directly address user value and verifiability. Layer in *Gauge’s robustness and reliability* to ensure technical quality. Add *Ratchet’s security and integration* requirements as guardrails. Finally, incorporate *Sprocket’s customizability and maintenance* to keep skills adaptable and up-to-date. This order balances immediate usability with long-term trust and flexibility.
+
+## Overhaul (GPT-4o-mini · mistral/mistral-small-latest)
+
+**What to keep from each draft:**
+- **Ratchet’s** emphasis on *integration* (seamless workflows with other tools) and *security* (malicious/infringing skills disqualified) ensures the skill element doesn’t exist in isolation.
+- **Sprocket’s** focus on *customizability* and *tangible benefits* (specific, measurable value) makes the skill adaptable and clearly useful.
+- **Gauge’s** insistence on *robustness* (reliability, minimal errors) and *performance metrics* (accuracy, response time) grounds the skill in measurable quality.
+- **Overhaul’s** *actionability* (one-click usability), *transparency* (inspectable logic), and *edge-case handling* (consistency across inputs) prioritize user efficiency and trust.
+
+**Where the drafts genuinely conflict:**
+- **Ratchet vs. Sprocket/Gauge:** Ratchet’s "well-integrated" could clash with Sprocket’s "highly customizable" if integration requires rigid dependencies (e.g., a skill that only works with a specific API). Gauge’s "robustness" also risks over-engineering for Overhaul’s "actionable" simplicity.
+- **Overhaul vs. Gauge:** Overhaul’s "modular" (independent functionality) may conflict with Gauge’s "robust" (reliance on system-wide reliability), as modular skills might lack fail-safes.
+- **Sprocket vs. Overhaul:** Sprocket’s "regular updates" could undermine Overhaul’s "immediate applicability" if updates break workflows.
+
+**Merge priority/order:**
+Start with **Overhaul’s core principles** (actionability, measurability, transparency) as the foundation, since they directly address user needs. Next, layer in **Gauge’s robustness** (error handling, performance) to ensure reliability. Then, add **Sprocket’s customizability** to make skills adaptable, but limit it to parameters users can adjust *without* breaking integration. Finally, fold in **Ratchet’s integration/security** as a gatekeeping layer—only skills that play well with others and avoid harm pass. This order balances usability, quality, and safety without forcing trade-offs.

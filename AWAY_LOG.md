@@ -4,7 +4,1540 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
+## 2026-08-09
+- **~09:0x (fire 148, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (`python -m src.standing_checks`: local `origin/main` cache was stale — re-fetched clean,
+  HEAD matched, nothing lost; upstream re-tracked; guardrails 18/20, 0 critical; `loop_contract
+  status` confirmed no carry-over, acked). **Checked the analyze/review outage before picking a
+  new increment, as fire 147 flagged for this review:** pulled the actual GitHub Actions job
+  logs (not just `data/status.json`'s counters) for the two most recent "Analyze pending" runs.
+  Confirmed the daytime "skipped" runs are an intentional, working night-gate (analyze only
+  fires 01:00-07:00 Israel time to protect Eitan's daytime token budget — those are NOT
+  failures, just correctly no-op'd). The real failures are the night-window runs: pulled run
+  31291396237's (2026-08-09T02:56 UTC) full job log and confirmed the exact signature already
+  diagnosed at fires 83/121 — `is_error:true, num_turns:1, total_cost_usd:0, duration_ms:2093`,
+  i.e. the Claude Code SDK dying before turn one, not a code bug in this repo. Counter is now 42
+  (was 35/39/40/41 at the last few checks), `review_ok` still false since 2026-06-21. Same
+  continuing trend, root cause independently re-confirmed, nothing qualitatively new — per the
+  fires-83/121-147 discipline this did **not** get a fresh push notification (already escalated
+  many times; Eitan is the only one who can rotate `CLAUDE_CODE_OAUTH_TOKEN_REAL`).
+  **The actual increment:** three related `data/improvement_suggestions.json` entries
+  (`f3a7d9e1b6`, `9a4e7b2d8f`, `d7e1f3a9b2`) all pointed at the same root cause — stale
+  `total_tools`/`total_connectors` counters in `data/status.json`. Investigated and found the
+  bug is worse than the suggestions described: no script currently writes those two fields at
+  all (only `total_skills` was ever recomputed, in `src/fetch.py`), so they'd been frozen since
+  whenever they were last set while the underlying `data/tools.json`/`data/connectors.json`
+  grew underneath them — live drift was 3033 vs a real 3161 tools (128 missing) and 1414 vs a
+  real 1510 connectors (96 missing). Added `count_entries()` to `src/fetch.py`, wired into the
+  same `status.update()` call that already recomputes `total_skills` fresh from disk every
+  fetch run, so both counters are now self-healing instead of permanently stale. Also corrected
+  `data/status.json`'s current values directly (3033→3161, 1414→1510) so the hub dashboard is
+  accurate now rather than waiting for the next scheduled `fetch.yml` run. Verified the counting
+  logic standalone against the real data files (this sandbox's repo-scoped session can't import
+  `src/fetch.py` directly — `pytz`/`google-api-python-client` aren't installed here and this
+  container's `cryptography` package is broken — so I re-implemented the exact same function
+  body inline and ran it against `data/tools.json`/`data/connectors.json`, confirming it
+  produces 3161/1510, matching the manual fix). Could not exercise `fetch.py`'s full run
+  end-to-end (needs `YOUTUBE_API_KEY` + live YouTube API access, out of reach from this
+  repo-scoped cloud session) — the next real `fetch.yml` run on its own schedule is what
+  actually proves the wiring; watch `data/status.json.total_tools`/`total_connectors` for
+  continued accuracy after that. `python -m src.guardrails`: 17/20, 0 critical (only the
+  pre-existing G-C/G-O info-level items, unrelated to this change; G-G briefly showed 1-behind
+  before the rebase-on-ship, expected — another lane pushed while this fire was working).
+  **Harsh self-criticism:** this is a real, verified, currently-live data-integrity bug fixed at
+  its root cause (not just papered over), and it's immediately visible on the hub dashboard — a
+  genuine step up from a pure plumbing/observability fire. But it's still small: three related
+  suggestions collapsed into one two-line fix, not a milestone-moving increment. Did not touch
+  the flagship analyze/review outage (correctly — it's not fixable from here) nor any of the
+  other 8 pending `improvement_suggestions.json` entries (real backlog, left for the next fire
+  with budget). Also did not verify `fetch.yml`'s live behavior after this change, since I have
+  no way to trigger or observe a real run from this session — flagging that as the one open
+  loop this fix leaves, same class of gap fire 10's github-meta-enrich note already established
+  as this environment's structural limit, not something to pretend away.
+
+- **~08:0x (fire 147, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (`python -m src.standing_checks`: local `origin/main` cache was stale — re-fetched clean,
+  HEAD matched, nothing lost; upstream tracking was missing on this branch — auto-repointed;
+  guardrails 18/20, 0 critical; `loop_contract status` confirmed 0/3 consecutive meta fires, no
+  carry-over increment open). Restricted egress (repo-scoped cloud session, re-confirmed by the
+  standing-checks output itself, not assumed) — `verify_elements`/`resolve_links`/OR-1's live
+  debate all still correctly out of reach, so stayed on local/deterministic work per fire 122's
+  standing finding. **Checked whether the analyze/review outage needed a fresh push before doing
+  anything else:** `data/status.json.analyze_consecutive_zero_progress_fails` is now **42** (was
+  35 at fire 121's original escalation, 39 at fire 140, 40 at fire 141) and `review_ok` is still
+  false since 2026-06-21 — same continuing trend, not a qualitative change, so per the
+  fires-122-146 discipline this did **not** get a fresh push notification; noting the fresh
+  number here for the next 10th-heartbeat review (fire 150).
+  **The actual increment:** picked up `3693c44f40` (severity: med, pending) from
+  `data/improvement_suggestions.json` — the Skills/Tools/Connectors nav tabs showed no size cue
+  before you clicked them, so a first-time visitor had no sense of catalog scale. Added
+  `libraryCountBadges()` to `docs/dashboard.js` (fetches the three JSON files via the existing
+  cached `load()`, fires once from the init IIFE alongside `resultsBadge()`) and a `.nav-count`
+  CSS rule to `docs/index.html`. Read the suggestion's own proposed diff before copying it: it
+  said to set `navBtn.innerHTML` directly, but `skills`/`tools`/`connectors` all carry a
+  `TAB_ACCENT` `.tab-dot` element (inserted by the sync init loop moments earlier) that
+  `resultsBadge()`'s own innerHTML-replace pattern gets away with only because `results` has NO
+  `TAB_ACCENT` entry — copying that pattern verbatim onto these three buttons would have silently
+  deleted their accent dot on every page load. Appended a `<span class="nav-count">` instead of
+  replacing `innerHTML`, and gave it `--panel2` on a `--panel` button background (checked both
+  variables in `index.html`'s CSS to confirm real contrast, not assumed). **Verified, not
+  assumed:** `node --check docs/dashboard.js` clean; grepped `data/{skills,tools,connectors}.json`
+  directly to confirm the exact key each file nests its array under (`skills`/`tools`/
+  `connectors` — matches what the new code reads); all 6 local suites green
+  (`excava_core_test`, `guardrail_test`, `git_merge_resolve_test`, `or1_phase_test`,
+  `deep_retrieve_test`, `analyze_batch_test`); confirmed `data-tab="skills|tools|connectors"`
+  exist verbatim in `index.html` so the selector can't silently miss. Marked `3693c44f40`
+  `applied` in `improvement_suggestions.json` with the concrete before/after. `python -m
+  src.loop_contract start/finish` recorded one closed product increment; WHY logged via
+  `python -m src.project_memory log` before shipping.
+  **A live near-miss caught mid-fire, the THIRD fire in a row to hit the exact fire-144/145/146
+  symptom:** `python -m src.git_safe ship` (backgrounded, 110s timeout) produced no output and
+  was killed — the commit had landed locally (`7ab0fe92`) but the push never happened, and
+  `origin/main` had moved on underneath it (a `links+memory` beat commit landed mid-flight) so
+  local HEAD and `origin/main` had genuinely diverged, confirmed via `git merge-base
+  --is-ancestor` in both directions before touching anything (neither was an ancestor of the
+  other). Completed by hand exactly like fires 144-146: `git pull --rebase --autostash --no-edit
+  origin main` (clean, no conflicts) then `git push origin HEAD:main` — both completed in under
+  10s each. Verified post-push: `git rev-parse HEAD` == `git rev-parse origin/main` (`fce6309d`),
+  `python -m src.guardrails` climbed to 19/20 (G-C/G-G both cleared by the real push landing).
+  **Harsh self-criticism:** the fix is real, small, and immediately visible on the very first page
+  load (not hidden behind a click), but it's a med-severity cosmetic item, not a functional gap —
+  11 other suggestions remain pending, and the two with the most-cited leverage in their own
+  review text (`72e04d9c61`, a Quality/Mentions/Newest sort toggle explicitly called "the
+  highest-leverage missing discoverability feature vs. Future Tools and Toolify") is a larger,
+  multi-state-variable change I did not attempt to force into one fire's budget — it's the
+  natural next candidate instead of re-sweeping this same file for a fourth fire in a row. This
+  is now THREE consecutive fires (145, 146, 147) where `git_safe ship`'s push step hung/produced
+  no output under its own timeout and had to be completed by hand.
+
+  **Second increment, same fire — actually fixed the thing the paragraph above says to defer:**
+  having just written "a dedicated fire should instrument `git_safe.push()`," did it in this fire
+  instead of deferring a fourth time. Added `timeout=` to `_git()` and to `sync()`'s raw
+  `pull --rebase --autostash` call (neither had one — any subprocess.run without `timeout=` blocks
+  forever on a real network stall, which is exactly what a `bash timeout` wrapper killing the
+  outer python process from OUTSIDE looks like from inside), converting a silent hang into a
+  clear `RuntimeError` naming which git command stalled and for how long. Also made `push()` print
+  + flush a marker before each phase (backup/sync/push/verify) and split `ship`'s CLI branch so
+  `committed <sha>` prints before `push()` runs, instead of one f-string that evaluates both calls
+  before printing either result — the exact reason fires 145-147 saw ZERO output on a hang despite
+  the commit having already landed. **Verified, not assumed, including an accidental live proof:**
+  a controlled unit test monkeypatched `subprocess.run` to raise `TimeoutExpired` and confirmed
+  both `_git()` and `sync()` convert it to the intended `RuntimeError` message; a first attempt at
+  that test (before scoping the monkeypatch to skip `ensure_upstream`/`revert_ci_churn`/
+  `quarantine_collisions`) let a REAL `git fetch origin --quiet` run against this session's actual
+  proxy and it genuinely hung the full 90s before the new timeout fired — live confirmation the
+  network flakiness is real, not hypothetical, in the exact window this fix targets. Then dogfooded
+  the patched tool on its own commit: `python -m src.git_safe ship` printed all four phase markers
+  and landed cleanly (`51e4162bf`) on the first try. All 6 local suites still green post-change.
+  **A second, smaller trap caught mid-fire while shipping THIS fix:** the earlier
+  `loop_contract start`/`project_memory log` calls for this fix wrote to
+  `data/excava/current_increment.json` and `data/project_memory/episodes.jsonl`, but the ship
+  command that committed `src/git_safe.py` only listed `-a src/git_safe.py` — so `sync()`'s own
+  `revert_ci_churn()` (which restores the WHOLE `data/` tree from the index, since CI regenerates
+  most of it) silently discarded both unstaged writes before the commit even happened, no error,
+  no warning. `loop_contract finish` then correctly reported "no open increment" because the file
+  really had reverted to fire 147's FIRST increment (the nav badges, already `done`). Re-logged the
+  WHY, hand-restored `current_increment.json`, and documented the trap directly in
+  `revert_ci_churn()`'s own docstring so the next fire that ships more than once in a session
+  doesn't lose tracking state the same silent way. **Harsh self-criticism:** the git_safe fix
+  itself is real and load-bearing (every fire ships through this exact code path), but it treats a
+  symptom (bound the hang, surface it loudly) rather than the root cause (WHY does this
+  environment's proxy occasionally stall a git fetch/push for 90+ seconds with no error) — that
+  root cause is outside what a sandboxed fire can diagnose or fix, so this is the honest ceiling
+  of what's achievable here, not a full resolution. The self-inflicted data-loss trap is a real
+  process mistake on this fire's part (should have included the tracking files in every `-a` list
+  from the start) caught and corrected only because I happened to check `current_increment.json`
+  after `finish` returned something unexpected — a less careful fire would have shipped past it
+  without noticing the WHY log silently didn't survive.
+- **~07:0x (fire 146, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (`python -m src.standing_checks`: guardrails 18/20, 0 critical, no carry-over increment open;
+  `python -m src.loop_contract status` confirmed 0/3 consecutive meta fires). Restricted egress
+  (repo-scoped cloud session) — stayed on local/deterministic work. **The actual increment:**
+  picked up `3c6d2e8a1f` (severity: med, pending) from `data/improvement_suggestions.json`:
+  Quick-read mode's CSS rule `body.quickread .card .sub { display:none; }` hid the `.sub`
+  metadata line on EVERY card, including provider/category/source on Connector cards and
+  source/date on News cards — real context those two tabs need, unlike Skills/Tools where
+  `.sub` genuinely duplicates info shown elsewhere on the card. Verified the claim against the
+  live code before touching anything: `docs/dashboard.js`'s `renderNews()` already tagged its
+  cards `.newscard` (usable as a scoping hook), but `renderConnectors()` had no distinguishing
+  class at all — the connector half of the bug had zero guard. Fixed both sides: scoped the CSS
+  selector in `docs/index.html` to `body.quickread .card:not(.newscard):not(.conncard) .sub`,
+  and added the missing `.conncard` class to the connector card markup in `renderConnectors()`
+  (confirmed by grep it's the only render path for connector cards, so no other spot needed the
+  class). Marked `3c6d2e8a1f` applied in `improvement_suggestions.json` with the concrete
+  before/after. **Verified, not assumed:** `node --check docs/dashboard.js` clean; grepped for
+  any pre-existing `.conncard` CSS that could collide (none); all 6 local suites green
+  (`excava_core_test`, `guardrail_test`, `git_merge_resolve_test`, `or1_phase_test`,
+  `deep_retrieve_test`, `analyze_batch_test`); `python -m src.guardrails` 17/20, 0 critical
+  pre-push (G-C/G-G/G-O pre-existing baseline, unrelated). `python -m src.loop_contract
+  start/finish` recorded one closed product increment; WHY logged via `python -m
+  src.project_memory log` before shipping.
+  **A live near-miss caught mid-fire, matching fire 144's exact symptom:** `python -m
+  src.git_safe ship` (run in the background per this session's 120s foreground timeout) died
+  silently with no output and exit code 1 — the commit had landed locally (`d09167db`) but the
+  push never happened, and `origin/main` had moved on underneath it (a `news:` beat commit
+  landed mid-flight) so local HEAD and `origin/main` had genuinely diverged, neither an ancestor
+  of the other. Diagnosed rather than re-run blindly: confirmed via `git merge-base
+  --is-ancestor` in both directions that neither ref contained the other before touching
+  anything. Completed by hand exactly like fire 144 did — `git pull --rebase --autostash
+  --no-edit origin main` (clean, no conflicts) then `git push origin HEAD:main` — both completed
+  in under 30s each with zero issues, so `git_safe ship`'s own hang is still unreproduced outside
+  the tool itself; flagging (again) that `git_safe push`/`sync` may have a real intermittent hang
+  this fire also didn't isolate. Verified post-push: `git rev-parse HEAD` == `git rev-parse
+  origin/main` (`aaf55bcd3`), `python -m src.guardrails` climbed to 19/20 (G-C/G-G both cleared
+  by the real push landing). Also swept the stop-hook's flagged untracked files — two
+  `gftest-s-initiative-*` trace files, byproducts of this fire's own `guardrail_test` run — and
+  committed them as their own small addendum, matching the exact pattern fires 144/145 already
+  established for the same fixture's output (initially almost left them stray under a
+  misremembered "not my file, don't touch" reading of fire 144's *different* untracked-file note,
+  caught by re-reading the actual precedent before deciding).
+  **Harsh self-criticism:** the fix itself is real, narrow, and immediately visible (a genuine
+  currently-live UI bug, not a hypothetical one — Connector and News readers were silently
+  losing source attribution in Quick-read mode) but it is a small increment against 12 other
+  pending suggestions, several med-severity (nav-tab count badges, a sort toggle for Skills/
+  Tools, quality-score card borders, a `Chatgpt`→`ChatGPT` casing fix) that would have been
+  comparably scoped choices. I explicitly did NOT chase the three status.json stale-counter
+  suggestions (`f3a7d9e1b6`/`9a4e7b2d8f`/`d7e1f3a9b2`, "fix total_tools/total_connectors
+  drift") after checking live data found the drift real (tools 3033 vs actual 3161, connectors
+  1414 vs actual 1510) — but tracing every consumer showed the dashboard's own stat row reads
+  `state.health.library` (computed live by `health.py` from the actual files on every load), never
+  `status.total_tools`/`total_connectors`, so fixing those three counters would have been
+  plumbing with no visible effect, the same "chasing a symptom nothing reads" trap fire 145 caught
+  on `c9b5e2f731`. Left them pending rather than marking them dead outright, since `ANALYZE_SPEC.md`
+  still documents the field as something the LLM-driven analyze stage is supposed to maintain —
+  a future fire with a reason to look at that spec section should make the call, not this one.
+  The git_safe hang is now the SECOND fire in a row to hit it and manually route around it without
+  fixing the tool itself — still worth a dedicated fire's attention instead of a third silent
+  workaround.
+- **~05:0x (fire 145, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (`python -m src.standing_checks`: stale `origin/main` cache re-fetched clean, nothing lost;
+  upstream repointed to origin/main; guardrails 17/20, 0 critical; loop_contract 0/3 consecutive
+  meta fires, no carry-over open). Restricted egress confirmed again (repo-scoped cloud session)
+  — stayed on local/deterministic work per fire 122's standing note.
+  **The actual increment, two parts, both from `data/improvement_suggestions.json`'s pending
+  high-severity backlog:** (1) Picked up `c9b5e2f731` ("replace `describe_tool()` template in
+  `src/analyze_batch.py`, root cause of all generic tool descriptions") — before implementing,
+  verified it against the real pipeline and found it targets DEAD CODE: grepped every
+  `.github/workflows/*.yml` for `analyze_batch` / `-m src.analyze_batch` (zero hits);
+  `analyze.yml` runs `anthropics/claude-code-action` reading `ANALYZE_SPEC.md` directly, which
+  writes `skills.json`/`tools.json` itself via Edit/Write — it never shells out to
+  `process_video()`/`describe_tool()`. This exact dead-code finding was already made by fire 12
+  (2026-07-26); the suggestion (source: automated `review`) didn't have that context. Checked
+  whether the SYMPTOM was still live rather than trusting the stale premise: 0/3639 generic
+  descriptions in `skills.json`, but 3/3160 in `tools.json` (`grok`, `google-ai-studio`,
+  `notion-ai` — old static records, no `created_at`, matching this exact dead path's output).
+  Fixed those 3 directly with real, specific descriptions instead of patching a function nothing
+  calls. Marked `c9b5e2f731` `invalid_dead_code` with the full reasoning so no future fire
+  re-attempts the same dead-code patch. (2) Applied `a7d3c6e041` (transcript-fallback health
+  check) for real: `src/fetch.py` now computes `transcript_fallback_rate` after the fetch loop
+  and sets `status["transcript_health"] = "degraded"` when it exceeds 0.5 on a run with new
+  videos; `docs/dashboard.js`'s `renderAlert()` shows an amber "TRANSCRIPT FALLBACK" banner
+  (below the existing error/stalled banners in priority, so it never masks a harder failure).
+  Backfilled `data/status.json` from the already-recorded last real run (`new_found=91`,
+  `no_transcript=91`) rather than waiting for the next fetch — **the dashboard right now
+  correctly shows `transcript_health: degraded` (rate 1.0)**, a real, currently-true, previously
+  invisible problem made visible today, not just logged for later. Did NOT root-cause WHY
+  transcripts are 100% failing (the library's 0.6.x/1.x API-shape bug is already fixed per
+  `fetch.py`'s own docstring, yet the fallback rate is still 100% after that fix on the most
+  recent real run — likely YouTube blocking the Actions runner's IP, a known issue with this
+  library in CI, but unverifiable from this session's GitHub-API-only egress) — flagged in
+  `QUESTIONS.md` for a session with real network access.
+  **Verified, not assumed:** all 3 rewritten `tools.json` descriptions confirmed non-generic
+  (0/3160 matching the banned phrase, was 3/3160); `transcript_health` logic hand-simulated
+  against 5 cases including the exact 78/78 case fire 144's news-summary fix reused as a
+  reference point, and the real 91/91 case now in `status.json`; `node --check docs/dashboard.js`
+  and `python3 -c "ast.parse(...)"` on `fetch.py` both clean; `python -m
+  src.{guardrail_test,excava_core_test,analyze_batch_test}` all green; every touched JSON
+  re-parsed valid; `python -m src.guardrails` 17/20, 0 critical (G-C/G-M/G-O all pre-existing,
+  unrelated — G-M's "stalled" reading is a real, already-known symptom of cloud fires only being
+  able to touch local/deterministic work, not something this fire's own changes caused or could
+  fix). `python -m src.loop_contract start/finish` recorded one closed product increment; WHY
+  logged via `python -m src.project_memory log` before shipping.
+  **Harsh self-criticism:** the first half of this fire is a genuine, non-trivial catch (an
+  automated suggestion chasing a function with zero live callers, which would have looked like
+  real progress in the log while fixing nothing anyone would ever see) — but it is still small
+  in absolute terms: 3 tool records out of ~11k hub elements. The second half is real and
+  currently-visible (a true, previously-hidden 100%-broken feature is now flagged on the
+  dashboard instead of silently degrading content quality run after run), but I explicitly did
+  NOT fix the actual transcript-fetch failure — only its visibility — because this session
+  cannot reach real YouTube endpoints to test a fix live, and shipping an unverified guess at
+  the root cause would violate "never claim something works without checking." That leaves the
+  actual bug (transcript fetching, currently 100% broken) still broken; the banner only ensures
+  it won't go unnoticed. Two other pending high/med-severity suggestions in
+  `improvement_suggestions.json` remain untouched this fire (deliberate scope limit, not an
+  oversight) — a future fire with a similar local-only budget should pick up the next one rather
+  than re-reading the whole backlog from scratch.
+- **~04:0x (fire 144, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (per this fire's supplied context: `python -m src.standing_checks` guardrails 18/20, 0
+  critical, no carry-over increment open; `python -m src.loop_contract status` confirmed 0/3
+  consecutive meta fires). Restricted egress (repo-scoped cloud session) — `verify_elements`/
+  `verify_connectors`/`github_meta_enrich` correctly out of scope again. Read
+  `data/improvement_suggestions.json`'s pending backlog per fire 143's own flag: three
+  high-severity items open (`a7d3c6e041` transcript-fallback health check, `c9b5e2f731`
+  `describe_tool()` template replacement, `b3a7d1f5e8` daily_news empty-summary "Emergency").
+  Checked live data before picking: `data/daily_news.json` was **67/67** empty summaries — worse
+  than the 59/59 the suggestion was written against — and, not yet flagged by anyone,
+  `weekly_news.json` (**226/226**) and `monthly_news.json` (**805/805**) were ALSO 100% empty.
+  **1098/1098 news-feed cards, across all three windows, were dead** — every one rendering
+  `dashboard.js`'s `"(summary pending)"` placeholder, not a partial-coverage gap.
+  **The actual increment:** picked `b3a7d1f5e8` but root-caused it instead of doing the one-time
+  backfill the suggestion literally proposed. Traced why: `src/fetch.py`'s `classify_news()`
+  always wrote `summary: ""` and a comment "to be filled by analysis stage", trusting the
+  analyze pipeline (currently only 44.5% caught up, 799/1794 videos) to fill it in later via
+  `process_video.py`/`analyze_batch.py`'s write-back-by-`video_id` block — but the video's
+  description and title are already fully known at fetch time, so there was never a real reason
+  to wait. Fixed `classify_news()` to compute the summary immediately via
+  `analyze_batch.create_news_summary()` (already-existing, already-tested 2-sentence
+  extraction with a title fallback — reused, not reinvented) and tag it
+  `summary_quality: "auto"`. That alone would have silently regressed the two downstream
+  write-back paths, so fixed those too: (1) `fetch.py`'s own `merge_summaries()` used to keep
+  the old summary only `if not e["summary"]` — now that `classify_news()` never leaves it empty,
+  that check would never fire, so a real AI-written summary from a past `process_video.py` run
+  would get clobbered by this run's cheap recompute on every single fetch; rewrote it to always
+  prefer whatever summary+quality metadata the previous file already had once it's non-empty.
+  (2) `process_video.py`'s and `analyze_batch.py`'s overwrite guards used
+  `not entry.get('summary')` to decide whether to write a real (AI or `rate_quality`-heuristic)
+  summary in — now permanently `False` for every entry, which would have frozen every video at
+  the cheap fallback forever. Changed both to `entry.get('summary_quality') != 'ai'` so an
+  `'auto'` placeholder can still be upgraded once the video is actually analyzed, while a
+  genuine `'ai'` summary is never touched again. Then ran a one-time local backfill (matching
+  each still-empty entry's `video_id` against its already-fetched `data/_pending` or
+  `data/processed` record for description text — zero network calls, everything needed was
+  already on disk) to close the CURRENT gap immediately rather than waiting for the next fetch
+  run. **Verified before/after, live data, not just code review:** all three files
+  67/67 → 0 empty, 226/226 → 0 empty, 805/805 → 0 empty (1098 filled, 0 missing local record);
+  spot-checked 3 daily entries — real, readable, video-specific summaries, not template text;
+  confirmed `dashboard.js`'s `renderNews()` reads `e.summary || "(summary pending)"` so this is
+  a real, immediately-visible fix, not a data change nothing displays. Unit-tested the two
+  changed functions directly (stubbed `googleapiclient` to dodge this sandbox's broken
+  `cryptography`/pyo3 install, unrelated to this fix): a synthetic `classify_news()` call
+  produced non-empty summaries for both a rich-description and a no-description video; a
+  synthetic `merge_summaries()` call confirmed an existing `summary_quality: "ai"` entry
+  survives a fresh recompute untouched. All 6 local suites (`excava_core_test`,
+  `guardrail_test`, `git_merge_resolve_test`, `or1_phase_test`, `deep_retrieve_test`,
+  `analyze_batch_test`) green both before and after the live backfill; all touched JSON
+  re-parsed clean. `git add`'ed every touched `data/*.json` file (plus the standing_checks/
+  guardrails/loop_contract/project_memory telemetry this fire's own tool calls touched) before
+  any `git_safe` sync/push step, per fire 143's near-miss lesson — nothing left unstaged for
+  `revert_ci_churn()` to silently discard. Marked `b3a7d1f5e8` applied in
+  `improvement_suggestions.json` with the concrete before/after numbers. `python -m
+  src.loop_contract start/finish` recorded one closed product increment; logged the WHY via
+  `python -m src.project_memory log` before shipping.
+  **Harsh self-criticism:** this is a real, currently-broken, highly-visible feature fixed at
+  its actual root cause (not a one-time patch that reaccumulates the moment the next batch of
+  videos lands) — genuinely better than just running the suggestion's literal proposal, which
+  would have left the underlying bug (summary permanently deferred to a chronically-behind
+  pipeline stage) in place to recur. But it is still infrastructure/pipeline plumbing, not new
+  hub content, and I did NOT implement the suggestion's specific caps (30/50/100 per window) or
+  its `description[:200].split('.')[0]` heuristic — judged the existing, already-regression-
+  tested `create_news_summary()` a better reuse than a second, divergent summary algorithm, and
+  filled all 1098 rather than capping since the operation is free (pure string ops, no API
+  cost) — a legitimate call, but a deviation from the suggestion's literal spec that a stricter
+  fire might have flagged for approval first rather than deciding unilaterally. Two other
+  pending high-severity suggestions (`describe_tool()` still template-only for every new tool;
+  the 100%-transcript-fallback investigation) remain untouched — both are more invasive code
+  changes than this fire's budget covers cleanly, and `describe_tool()` in particular reads as
+  the more structurally important gap of the two (it degrades every future tool's description
+  quality, not just a display feature). Also did not go looking for the git-history audit fire
+  143 flagged (whether an earlier fire's hand-edited `data/*.json` change was silently discarded
+  by `revert_ci_churn()` without being re-verified) — still open, still a good research/audit
+  slot for a future fire instead of another local-increment pick. This sandbox's `pip`-installed
+  `cryptography`/`googleapiclient` stack is broken (pyo3/cffi ABI mismatch) independent of this
+  fix — worked around it for the unit test via a module stub rather than fixing the sandbox
+  itself (out of scope; CI's environment is unaffected, `last_fetch` in `status.json` shows the
+  real pipeline running fine as of 2026-08-07).
+  **Post-ship addendum (same fire, orchestrating session):** the executing agent committed the
+  fix locally (`1578244`) but stalled mid-`python -m src.git_safe push` — no output for 120s+ and
+  the agent process ended before confirming landing, so the commit sat unpushed while
+  `origin/main` moved on (a 24/7-beat commit landed in between). Diagnosed by hand rather than
+  assumed: `git bundle create --all` (the first step of `push()`) was NOT the bottleneck (timed
+  separately at 1.5s / 55MB); a plain `git pull --rebase --autostash --no-edit origin main`
+  followed by `git push origin HEAD:main`, run directly, both completed in under 3s each with no
+  network issues — whatever `git_safe push` hung on didn't reproduce outside it, so this is
+  flagged rather than root-caused (worth a future fire's attention: `git_safe push`/`sync` may be
+  susceptible to hanging silently, with no partial output, under some condition this fire didn't
+  isolate). Manually completed: rebased the fix onto the fresh `origin/main`, pushed, verified
+  `origin/main == HEAD` (`0a00ca08`) via both `git rev-parse` and `python -m src.guardrails`
+  (G-G: "Remote sync verified"). Post-push guardrails: 18/20, 0 critical (G-M/G-O both
+  pre-existing, unrelated to this fix). Refreshed PULSE.md/pulse.json/movement/guardrails
+  snapshots. The 4 untracked `data/excava/traces/gftest-s-initiative-*.jsonl` files present in
+  the working tree belong to neither this fire nor fire 143 — left untouched (quarantine-never-
+  delete; not blocking anything) rather than guessed at.
+- **~03:0x (fire 143, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (`python -m src.standing_checks`: stale `origin/main` cache re-fetched clean, nothing
+  lost; upstream repointed to origin/main; guardrails 18/20, 0 critical). `analyze_consecutive_zero_progress_fails`:
+  **41**, same reading as fire 142 — no qualitative change, so per the fires-122-142 discipline
+  this did NOT get a fresh push notification (next 10th-heartbeat review is fire 150, per fire
+  142's note). **The actual increment:** picked up `b9bfdaf0ef` (severity: high, pending) from
+  `data/improvement_suggestions.json` — "OpenAI"/"Anthropic" were catalogued as separate tools
+  instead of routing to their real products. Root-caused it in `src/bulk_analyze.py`: the
+  Gemini/GLM extraction prompt asks for every tool named in a video, and the model sometimes
+  names the parent company instead of the product; `merge_tools()` had zero guard against that
+  (unlike `merge_skills()`, which already excluded company names from becoming skills), and
+  `merge_skills()` separately copied whatever raw `target_tool` string the model returned with
+  no canonicalization, so some skills pointed at `anthropic`/`openai` instead of `claude`/
+  `chatgpt`. Fixed both: a shared `_COMPANY_TOOL_ALIASES` dict now canonicalizes a company name
+  onto its product before a new tool entry is created or an existing one is merged into, and
+  `merge_skills()` applies the same canonicalization to `target_tool`. Then did the one-time
+  data cleanup the suggestion asked for: merged `anthropic`'s 78 endorsement ids into `claude`
+  (now 499, was 483) and `openai`'s 47 into `chatgpt` (now 171, was 146) in `data/tools.json`
+  (3159→3157 entries), and corrected the same `anthropic`/`openai` → `claude`/`chatgpt`
+  `target_tool` mixup found in 12 more `tools.json` records, 6 `skills.json` records, and 6
+  `index.json` records (24 total) so compatibility badges and skill folders route to the real
+  product everywhere, not just in the two merged entries.
+  **A live mistake caught mid-fire, not swept under the rug:** the first attempt at the data
+  edit was silently discarded — `python -m src.git_safe sync`, run to catch up on 1 commit
+  origin was ahead by, calls `revert_ci_churn()` (`git checkout -- data backups`) *before* the
+  pull, which reverts any *unstaged* change under `data/` on the theory that CI regenerates
+  it — exactly what happened to my hand-edited `tools.json`/`skills.json`/`index.json`,
+  reverted back to originals with zero error or warning. Caught it only by re-verifying the
+  live file afterward (`anthropic` was back in `tools.json`) rather than trusting the earlier
+  successful run. Redid the edit and got the order right the second time: edit → `git add`
+  (stages it, out of `revert_ci_churn`'s reach) → `git_safe.commit()` → `git_safe.push()` (which
+  syncs *after* the commit, so there's nothing unstaged left to lose) — landed clean, verified
+  live post-push (`anthropic`/`openai` absent from `tools.json`, `claude`/`chatgpt` mentions at
+  499/171). Worth a future fire's attention: this is a real trap for any fire that hand-edits
+  `data/*.json` and calls `sync`/`ship` mid-flight rather than committing first — not fixing
+  `git_safe.py` itself this fire (the CI-churn-revert behavior is correct and deliberate for
+  its actual purpose; the bug was in my own operation order, not the tool), just flagging the
+  ordering rule so the next fire doesn't lose real work the same way.
+  Verified before AND after the redo: `python -m src.excava_core_test` / `guardrail_test` /
+  `git_merge_resolve_test` / `or1_phase_test` / `deep_retrieve_test` / `analyze_batch_test` all
+  green; a standalone `merge_tools`/`merge_skills` simulation confirmed the fix (a fresh
+  "OpenAI"-only batch now creates its entry under the canonical name "ChatGPT", not "OpenAI");
+  all touched JSON re-parsed clean; `python -m src.guardrails` 19/20, 0 critical post-push (only
+  G-O, the standing PC-off flag) — best guardrail reading this session. Marked `b9bfdaf0ef`
+  applied in `improvement_suggestions.json` with the concrete numbers; `python -m
+  src.loop_contract start/finish` recorded one closed product increment; logged the WHY via
+  `python -m src.project_memory log` before shipping. Commit `f698d75e0`, pushed + verified
+  `origin == HEAD`.
+  **Harsh self-criticism:** the fix itself is real and closes a genuine data-quality bug at its
+  root (not just a one-time cleanup that would silently re-accumulate on the next batch) — but
+  it is a modest, narrow increment (one company-name mixup, 24 corrected values, 2 merged
+  entries) against 17 other pending suggestions, three of them also flagged high-severity
+  (`describe_tool()` still returns generic template descriptions for every new tool;
+  `daily_news.json` is 100% empty summaries per fire b3a7d1f5e8's "Emergency" tag; the 100%
+  transcript-fallback investigation from a7d3c6e041 was never done) — none of which this fire
+  touched, and the daily_news one in particular reads more urgent than what I picked. The
+  mid-fire data-loss near-miss is the more important lesson than the fix itself: this is
+  probably not the first fire to have hand-edited `data/*.json` and called `sync`/`ship`
+  without staging first — worth checking whether an EARLIER fire's data edit was lost the same
+  silent way and never caught, since nothing about `revert_ci_churn()`'s design would leave a
+  trace if the fire never re-verified. Did not go looking for that in the git history this fire
+  (out of budget) — flagging as a good candidate for the next fire with a research/audit slot
+  instead of another local-increment pick.
+- **~02:0x (fire 142, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (`python -m src.standing_checks`: stale `origin/main` cache re-fetched clean, nothing lost;
+  upstream already tracking; guardrails 17/20, 0 critical). `analyze_consecutive_zero_progress_fails`:
+  **41** (was 40 at fire 141, 39 at fire 140, 35 when fire 121 first escalated it) — same
+  continuing linear trend, no qualitative change, so per the fires-122-141 discipline this did
+  NOT get a fresh push notification; flagging the number here so it stays accurate for the next
+  10th-heartbeat review (next one is fire 150). **The actual increment:** picked up the pending
+  backlog fire 141 flagged instead of re-sweeping already-exhausted surfaces — applied
+  `c4d8e2f1a7` (severity: high) from `data/improvement_suggestions.json`, a real dedup bug: a
+  skill present in `data/skills.json` but missing its `data/index.json` entry is invisible to
+  `process_video()`'s `slug in index_data` check, so its next endorsement falls through to the
+  "new skill" branch and appends a duplicate record instead of merging into the existing one.
+  Verified the claim against LIVE data before touching anything (the suggestion's own numbers
+  were stale — written against a ~209-skill snapshot, not today's 3,636): found 0 phantom index
+  keys (a1b3c5d7e9, the narrower "drop phantoms only" suggestion, is already moot) but **193**
+  valid skill slugs genuinely missing from the index. Added `reconcile_index(index_data,
+  skills_data)` to `src/analyze_batch.py` (drops phantoms, adds missing, same field-shape as the
+  existing index-write code at lines 527/534) and wired it into `main()` right after `index_data`
+  loads, so every future analyze run self-heals instead of accumulating more gaps. Then ran it
+  once now against the real files to close the CURRENT gap immediately rather than leaving it for
+  "next time analyze runs" — `data/index.json` went from 3,443 to 3,636 entries, now exactly
+  1:1 with `skills.json`. Verified: `ast.parse` clean; a standalone call to `reconcile_index()`
+  against a copy of the live data confirmed 3,636-in/3,636-out before wiring it in; all 6 local
+  suites green (`excava_core_test`, `guardrail_test`, `git_merge_resolve_test`, `or1_phase_test`,
+  `deep_retrieve_test`, `analyze_batch_test`); `python -m src.guardrails` 17/20, 0 critical,
+  unchanged from the pre-fix baseline; re-ran the reconciliation check post-fix — 0 phantoms,
+  0 missing. Marked `c4d8e2f1a7` applied and `a1b3c5d7e9` applied-as-superseded in
+  `improvement_suggestions.json` so the backlog stays honest (18 suggestions remain pending,
+  three more flagged high-severity — a `describe_tool()` template-string root-cause fix, a
+  transcript-fallback health banner, and a `daily_news.json` empty-summary backfill — good
+  candidates for the next fire). `python -m src.loop_contract start/finish` recorded this as one
+  closed product increment (no carry-over); logged the WHY via `python -m src.project_memory log`
+  before shipping.
+  **Harsh self-criticism:** this closes a real, verified, currently-active data-integrity gap
+  (193 skills were one endorsement away from silently forking into duplicate records) — not
+  cosmetic, and immediately visible in `data/index.json`'s own entry count, not just "will help
+  next time." But it is still infrastructure/data-hygiene, not new hub content or a new
+  user-facing capability. Did check whether any of the 193 had ALREADY silently duplicated before
+  this fix landed (`collections.Counter(s['slug'] for s in skills)`, count > 1): zero — caught
+  before any real damage, not after. Left the three other pending high-severity suggestions
+  untouched — each is a more involved code change (new extraction logic, a new status field +
+  dashboard banner, a new backfill pass) than this fire's one-increment budget covers cleanly.
+- **~01:0x (fire 141, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (`python -m src.standing_checks`: stale `origin/main` cache re-fetched clean, nothing lost;
+  upstream auto-repointed; guardrails 18/20, 0 critical). `net_canary`: still restricted egress,
+  re-verified fresh — same conclusion as every fire since 124, so picked a local/deterministic
+  increment. Re-checked `analyze_consecutive_zero_progress_fails`: **40** (was 39 at fire 140,
+  35 when fire 121 first escalated it with a push notification) — same continuing trend already
+  escalated, not a qualitative change, so per the established fires-122-140 discipline this did
+  NOT get a fresh push notification; still flagged here so the next 10th-heartbeat review has an
+  accurate baseline. **The actual increment:** fire 140 swept every local surface it checked
+  (relate.py, OR-1, connector-URL matching) and found nothing safe to ship, but hadn't checked
+  `data/improvement_suggestions.json`'s own pending backlog — it holds 21 review-sourced,
+  already-scoped fix suggestions, several fully local/deterministic. Applied `f4c2b8e91a`
+  (severity: high): added `encoding='utf-8'` to all 10 `open()` calls across
+  `src/analyze_batch.py` (`load_json`, `save_json`, `write_skill_md`, `main()`'s pending-video
+  reads) and `src/process_video.py` (`load_json`, `save_json`, `write_skill_md`) — every JSON/
+  markdown read and write in the ingestion pipeline was relying on the platform locale default
+  instead of pinning UTF-8, a real `UnicodeDecodeError`/`UnicodeEncodeError` risk for Hebrew
+  transcripts and Unicode tool names on any non-UTF-8-default runner. Verified: `ast.parse`
+  clean on both files; all 6 local suites (`excava_core_test`, `guardrail_test`,
+  `git_merge_resolve_test`, `or1_phase_test`, `deep_retrieve_test`, `analyze_batch_test`) green,
+  no regressions; `python -m src.guardrails` 18/20, 0 critical, unchanged from pre-fix. Marked
+  the suggestion `"applied"` with a note in `improvement_suggestions.json` so the backlog stays
+  honest. Logged the WHY via `python -m src.project_memory log` before shipping.
+  **Harsh self-criticism:** this is a real, verified, previously-known correctness gap closed —
+  not new hub content or a new user-facing capability, and it's unverified against an actual
+  non-UTF-8-locale runner (I can't reproduce the crash live from this sandbox, only confirm the
+  fix is mechanically correct and doesn't regress). 20 other suggestions remain pending in the
+  same file, several equally local/deterministic and lower-risk than this fire had budget for
+  (dead-code removal, one-line counter fixes, a stale-cache bug in `main()`) — good candidates
+  for the next fire instead of re-sweeping already-exhausted surfaces like fire 140 had to.
+- **~00:0x (fire 140, unattended, cloud, scheduled-task invocation, META, 10th heartbeat)** —
+  Standing checks OK (`python -m src.standing_checks`: local `origin/main` cache was stale again
+  — same recurring cosmetic pattern every fire since ~120 — re-fetched clean, HEAD matched,
+  nothing lost; upstream tracking auto-repointed; `guardrails` 18/20, 0 critical). `net_canary`:
+  still `restricted` (same conclusion as every fire since 124, re-verified fresh, not assumed) —
+  `verify_elements`/`resolve_links`/`github_meta_enrich`/OR-1's live debate all correctly
+  self-abort here again.
+  **Per the outer routine's "every 10th heartbeat" instruction — the wider review:** storage:
+  30376 MB free on the repo drive (G-N), `.git` 72 MB / `data` 204 MB, 0 loose objects — no
+  pressure, nothing to prune. Previous run (fire 139): confirmed it actually completed and
+  shipped — commit `7d29d1f2` (relate.py category-less-element fix) landed on `origin/main`,
+  matches fire 139's own log entry; `501ec939e` (analyze.yml's own safety commit, unrelated to
+  this loop) is HEAD, no dangling/uncommitted state at session start. No operational limit
+  exceeded in this window: no push failures, no rate-limit errors on this loop's own shipping,
+  guardrails steady 18-19/20 with 0 critical across every one of fires 130-139 (only the two
+  standing non-critical flags: G-C stale-backup, self-heals on ship; G-O EITAN-PC-offline,
+  expected). Reviewed the last ten cycles (130-139): 9 were PRODUCT (real fixes — relate.py
+  category fallback, maintenance_check false-positive correction, and others each carrying their
+  own verified before/after), 1 (fire 138) was META (snapshot refresh only, no code change) — a
+  healthy ratio, well inside the meta-fire cap.
+  **One thing from this review that IS worth restating, not because it's new but because it grew
+  during this exact window:** `data/status.json.analyze_consecutive_zero_progress_fails` is now
+  **39** (was 35 when fire 121 escalated it with a push notification, and unchanged-therefore-
+  not-re-notified through fires 122-130+ per QUESTIONS.md's own discipline). Pulled the actual
+  failing job (`analyze.yml` run `31284885136`, 23:52Z) via the GitHub Actions API rather than
+  trusting the cached counter: `is_error:true, num_turns:1, total_cost_usd:0, duration_ms:1900`
+  — the exact zero-turn token/quota signature fires 55/57/63/81/121 already identified, dying
+  before any billable work. `last_analyze_ok_at` is still `2026-07-28T02:37:27Z` (unchanged —
+  the outage hasn't gotten a single success in 12 days, it has only accumulated more failed
+  attempts on top). This is the same root cause fire 121 already escalated and it is still
+  entirely your call (`claude setup-token` to rule out expiry, or confirm the plan's rolling cap
+  so the catch-up cadence can be throttled) — going 35->39 in ~10 fires is the same trend
+  continuing, not a qualitative change, so **not** re-sending a push notification for it this
+  fire, consistent with how fires 122-130 handled the same non-event. Flagging the fresh number
+  here so the next 10th-heartbeat fire has an accurate "how long has this actually been broken"
+  baseline instead of a stale one.
+  **The actual increment — an honest "swept, found nothing safe to ship" rather than forcing a
+  low-value change:** looked for a real, local, deterministic product increment (restricted
+  egress rules out network-shaped work) and checked three specific candidates before rejecting
+  each with a reason, so the next fire doesn't re-tread this ground: (1) `relate.py` — re-ran it
+  fresh (fires 55 and 139 already fixed the two real gaps here); current state is 11275/11277
+  elements with >=3 related and only 1 with zero (a single-category-of-one prompt, a different
+  and much smaller root cause fire 139 already flagged and correctly declined to chase) — this
+  file is genuinely saturated, not worth a third pass. (2) OR-1 (`or1_rubric_index.py`, backlog's
+  top item) — already fully built and staged by fire 123 as a clickable question waiting on your
+  read of the 4 competing per-type guidelines; still open, still correctly not something this
+  sandbox should pick a winner on. (3) `maintenance_check.json`'s "404 sourceless connectors" —
+  tried a deterministic candidate-matcher (normalize connector name, look for an exact match
+  among tools/skills that already carry a real repo URL) purely as an offline experiment: found
+  only 38/1510 (2.5%) exact-name matches, and even those are dubious on inspection (e.g.
+  `connector:quickbooks` matching `tool:quickbooks`'s SDK repo — a QuickBooks *connector*
+  integration and the QuickBooks *SDK* are not the same install target) — shipping that as even a
+  "candidate" list risks exactly the fabricated-provenance failure mode this repo's guardrails
+  and OR-1's own discipline exist to prevent, for 2.5% coverage. Declined; not shipped; not
+  logged as a candidate list anywhere Eitan or a future fire could mistake it for vetted data.
+  **Harsh self-criticism:** this fire moved nothing forward — no data changed, no code changed,
+  quality_score/verified untouched on every element, same as before this fire ran. That is a
+  materially weaker outcome than 9 of the last 10 fires, which each closed a real, verified gap.
+  The honest reason is that fires 55/121/123/129/130/139 (and many between) have already worked
+  through nearly every local/deterministic surface reachable from a restricted-egress cloud
+  session; what's left standing open is either genuinely Eitan's call (OR-1, the token/plan
+  decision) or requires live network the GitHub Actions beat has and this sandbox doesn't
+  (verify/links/mining/enrichment). Forcing a change today would have meant shipping the
+  low-confidence connector-URL guesswork above, which is a worse outcome than shipping nothing —
+  chose the latter. `loop_contract` logged this fire as `meta` (1/3 consecutive) before shipping.
+  A genuinely fresh product increment likely needs either (a) a live GitHub Actions beat run
+  (unrestricted egress) rather than another cloud scheduled-task fire, or (b) Eitan actually
+  answering one of the two open decisions above, which would itself unblock real follow-on work
+  (a chosen OR-1 rubric could be applied to quality_score across ~11k elements; a fixed token
+  could reopen the entire `analyze.yml`/`review.yml` ingestion lane).
+
+## 2026-08-08
+- **~23:0x (fire 139, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks:
+  OK, clear to work (stale local `origin/main` cache re-fetched clean, nothing lost; upstream
+  auto-repointed). `loop_contract status`: 2/3 consecutive meta fires — deliberately avoided a
+  third. Restricted egress confirmed again (same as every fire since 124), so swept local/
+  deterministic surfaces for a real, previously-missed gap rather than repeating fire 138's
+  sweep verbatim. **The actual increment:** `src/relate.py`'s same-category backfill (fire 55)
+  keyed strictly on `el['category']` — 133 of 134 zero-related elements (mostly
+  `command:*`/`connector:*`/`design:*`) had NO category at all (empty string), so
+  `by_cat.get("", [])` was always empty and the backfill had nothing to draw from; these
+  elements had a permanently empty `related[]` regardless of how many peers of the same type
+  existed. Fixed the grouping key to `category or type:<type>` when category is missing, so a
+  category-less element groups with its type-peers instead of matching nothing — real,
+  non-invented evidence ("both are connectors"), identical in kind to the existing
+  same-category signal. Elements with a real category are byte-for-byte unaffected (confirmed:
+  no existing category value collides with the `type:` prefix). Verified live, before/after:
+  elements with ≥1 related rose 11140 → 11273/11274; the one still-zero element
+  (`prompt:real-time-analytics-dashboard`) has a real category that happens to contain only
+  itself — confirmed zero before this fix too, a separate pre-existing edge case, not a
+  regression. Ran all 6 local suites (`excava_core_test`, `guardrail_test`,
+  `git_merge_resolve_test`, `or1_phase_test`, `deep_retrieve_test`, `analyze_batch_test`)
+  green, no regressions; `python -m src.guardrails`: 18/20 before shipping (19/20 after, once
+  the pre-ship `git_safe backup` refreshed G-C), 0 critical, no new failures. Logged the WHY via
+  `python -m src.project_memory log` before shipping. Commit `7d29d1f2`, pushed via
+  `git_safe ship` and independently re-verified with a fresh `git fetch origin main`: local
+  HEAD and `origin/main` both at `76ef2a45c`, matching.
+  **Harsh self-criticism:** this closes a real gap in a real M1.7 feature (every element's
+  detail view should show 3-8 related neighbors) and moves a concrete, previously-unmoved
+  number — a genuine step up from fire 138's backup-bundle-only increment. But it is still a
+  quality/completeness fix to existing plumbing, not new hub content or a new user-facing
+  capability, and the fix is narrow: I found this one gap because it was the most visible
+  zero-related() cluster, not from a systematic audit of `relate.py`'s scoring for other
+  under-covered element shapes (e.g. whether the word-overlap and video-overlap tiers have
+  their own blind spots for elements with very short/boilerplate `what` text). Also did not
+  chase the one remaining zero-related edge case — a single-category-of-one prompt — since it's
+  a different, smaller root cause than the one this fire scoped and fixed. `loop_contract`
+  logged this as a non-meta (product) fire before shipping, breaking the 2-meta-fire streak.
+- **~22:0x (fire 138, unattended, cloud, scheduled-task invocation, META)** — Standing checks: 18/20
+  guardrails, 0 critical, clear to work; no carry-over increment open. `net_canary`: still restricted
+  egress (repo-scoped cloud session) — same as every fire since 124. Before picking an increment,
+  swept every deterministic/local check for a real gap to close: `liveliness_scan` (0 issues),
+  `cross_tab_check` (0 collisions), `security_scan` (0 leaks/injection flags), `safety_check`
+  (152 safe/1310 caution/48 risky of all 1510 connectors — already full-corpus), `relate` (11140/11274
+  elements already have ≥1 related), `excava_selfimprove` (telemetry clean, nothing to change). Then
+  checked the top of `excava_backlog` by value: OR-1 (95, blocked on Eitan's rubric-convergence
+  decision, already parked in `QUESTIONS.md`), verify-next-200-unverified (90), watch-pending-videos
+  (87), resolve-links (82), security-rate-connectors (72, already fully covered by `safety_check`
+  above), mining-discover (68), memory-embed-remaining (64) — every one of the remaining live options
+  calls out to a network API (Gemini embeddings, GitHub/website resolution, npm/PyPI registries) and
+  would either self-abort per the standing-checks warning or risk a false verdict under restricted
+  egress. **The actual increment:** guardrail G-C (history-backup freshness) was failing — no bundle
+  in `_ATTIC/backups` inside its freshness window. Ran `python -m src.git_safe backup` ->
+  `_ATTIC/backups/repo-20260808T220040Z.bundle`; `python -m src.guardrails` confirms 19/20, 0
+  critical (G-C now OK). **Harsh self-criticism:** this is the smallest possible increment — a backup
+  bundle, not a product win — and it is the second fire in a row leaning toward plumbing rather than
+  Hub content/enrichment/departments (fire 137 was real product, but the surrounding pattern this
+  week is still meta-heavy per `AWAY_MODE.md` §5's known weakness). It is honest, though: every local
+  surface really is clean right now, and every higher-value item really is network-gated in this
+  session type, so manufacturing a fake "product" commit would have been worse than admitting the
+  real constraint. Logged via `loop_contract start/note/finish` (kind=meta) before shipping.
+- **~21:0x (fire 137, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks:
+  17/20 guardrails, 0 critical (same steady-state G-C/G-M/G-O). `net_canary`: re-verified live,
+  still restricted egress — same conclusion as every fire since 124, so picked a local/
+  deterministic increment rather than a network-dependent one. Carry-over: none open
+  (`loop_contract status`: 0/3 consecutive meta fires, clean start).
+  **The actual increment:** `data/improvement_suggestions.json` already carried a HIGH-severity
+  `engine_fix` (id `8140b97fbc`, source: review) sitting `pending` with an exact proposed fix:
+  `src/analyze_batch.py`'s module-level `TODAY = datetime(2026, 6, 3, tzinfo=timezone.utc)` was
+  frozen almost two months in the past and fed straight into `compute_age_months()`'s recency
+  penalty for every analyzed video. Any video published after 2026-06-03 produced a NEGATIVE
+  `delta`, clamped to 0 by `max(0, ...)` — scoring as brand-new regardless of true publish date —
+  while every older video's age was understated by the growing frozen-vs-real gap. Applied the
+  fix verbatim: removed the constant, `compute_age_months()` now calls
+  `datetime.now(timezone.utc)` at call time. Added `src/analyze_batch_test.py` (3/3 pass,
+  stdlib-only, no network): a video 150 days old scores ~5mo (not clamped), a just-published
+  video scores ~0mo, and two videos a known distance apart stay that distance apart (the exact
+  clamp-to-0 bug, verified live before the fix reproduced it and after the fix it didn't). Marked
+  the suggestion `"applied"` in `improvement_suggestions.json` with a note pointing at this fix,
+  so the backlog stays honest instead of re-flagging a closed bug. Ran all 6 local suites
+  (`excava_core_test`, `guardrail_test`, `git_merge_resolve_test`, `or1_phase_test`,
+  `deep_retrieve_test`, `analyze_batch_test`) green, no regressions; `python -m src.guardrails`:
+  16-17/20, 0 critical, same steady-state flags. Logged the WHY via `python -m src.project_memory
+  log` before shipping. Commit `74b00321`, pushed via `git_safe ship` and independently
+  re-verified with a fresh `git fetch origin main` after the fact: local HEAD and `origin/main`
+  both at `c345788a6`, matching (push took several minutes under this session's proxy-routed
+  restricted egress, same as fire 134 reported).
+  **Harsh self-criticism:** this fixes exactly the one bug the suggestions backlog had already
+  named and scoped — I did not sweep the codebase for other stale hardcoded-date or frozen-
+  constant bugs beyond this one flagged instance, so a similar bug could exist unflagged
+  elsewhere. More importantly: this bug has presumably been silently skewing every analyzed
+  video's quality score for as long as the constant sat unfixed in the pending queue (the
+  suggestion carries no creation timestamp, so I can't say since when), and this session has no
+  way to quantify how many already-scored videos in `data/processed/` now carry a wrong recency
+  penalty as a result — re-scoring them retroactively is a separate, larger increment
+  deliberately left for a future fire with a scoped plan for it, not attempted here. Also spent a
+  real chunk of this fire's time investigating a shallow-clone lane-status flapping artifact in
+  `pipeline_status.json`/`maintenance_check.py` (my own repeated regen calls made "Transcript
+  retrieval"/"Self-improvement review" flip between `slow`/`idle`/`unknown` across a few minutes)
+  before concluding it's a sandbox-shallow-clone-window artifact, not a production bug — fire
+  136's shallow-clone fix (idle→unknown) is working correctly; this was verification, not a new
+  fix, and is not reflected as a separate commit. No storage, operational-limit, or blocking
+  decision surfaced this fire; nothing crossed the push-notification bar on its own.
+- **~20:0x (fire 136, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks:
+  17/20 guardrails, 0 critical (same steady-state G-C/G-M/G-O as fire 135, nothing new); local
+  `origin/main` cache was stale (`380b390b` → `c213bb19`) — re-fetched clean, HEAD matched,
+  nothing lost; upstream tracking auto-repointed to `origin/main`. `net_canary`: re-verified live,
+  still restricted egress — same conclusion as every fire since 124, so picked a local/
+  deterministic increment rather than a network-dependent one. Carry-over: none open
+  (`loop_contract status`: 0/3 consecutive meta fires, clean start).
+  **The actual increment:** `maintenance_check` flagged one HIGH-severity issue — "Pipeline lanes
+  overdue: Transcript retrieval, Self-improvement review." Did not take that at face value (its
+  own sibling checks in `guardrails.py`, G-P/G-T, already carry an explicit shallow-clone caveat
+  for exactly this class of false positive). Verified via the GitHub API directly (not just
+  local git, which is a 51-commit shallow clone this session) using `list_commits` paged out to
+  1000 commits / 8.5 days: the "Transcript retrieval" lane's real last run was 1.7 days ago —
+  well within its 24h×3 cadence window, i.e. healthy — while `pipeline_status.py`'s local
+  `git log -n 500` genuinely found zero matching commits in this session's shallow clone and
+  reported it "idle." `maintenance_check.py` and `priorities.py` both escalate any "idle" lane
+  straight into a high-impact alert, so this false idle was landing as maintenance grade B→lower
+  AND as `priorities.json` rank #2 (impact 85) on Eitan's own dashboard — a real, user-visible
+  false alarm, not just an internal log line. Fixed at the source: `pipeline_status.py` now calls
+  `git rev-parse --is-shallow-repository` (same call `guardrails.py`'s G-P/G-T already use) and
+  reports a lane with no local match as `"unknown"` instead of `"idle"` when the clone is shallow
+  — mirrors the exact, already-vetted convention those two checks established rather than
+  inventing a new one. `maintenance_check.py`/`priorities.py` needed zero changes: both only
+  escalate on `status in (slow, stale, idle)`, so `unknown` is excluded automatically. Verified
+  live, before/after, by reading the actual data files (not trusting the tool's own claim):
+  `data/priorities.json` before had `{"impact": 85, "title": "Lane 'Self-improvement review' is
+  idle", ...}` at rank 2 and a duplicate maintenance-derived entry at rank 3 (impact 70) — both
+  gone after the fix; `maintenance_check` grade rose 76→78 (3 issue types → 2, the pipeline HIGH
+  issue cleared). Ran all 5 local suites (`excava_core_test`, `guardrail_test`,
+  `git_merge_resolve_test`, `or1_phase_test`, `deep_retrieve_test`) green, no regressions.
+  `python -m src.guardrails`: 17/20, 0 critical, same steady-state flags as before the change —
+  nothing broken. Logged the WHY via `python -m src.project_memory log` before shipping.
+  **Harsh self-criticism:** the "Self-improvement review" lane also now reports `unknown`
+  (previously `idle`) — and unlike "Transcript retrieval," I independently confirmed via the same
+  GitHub API sweep that ITS stall is real (zero `review:`-prefixed commits in 8.5 days / 1000
+  commits scanned), not a shallow-clone artifact. This fix makes that genuine problem quieter on
+  this one dashboard surface. I judged that an acceptable precision/recall tradeoff rather than a
+  newly-introduced blind spot, because that exact stall is already tracked through a separate,
+  more reliable path (QUESTIONS.md #31, escalated with a push notification at fire 121, re-verified
+  unchanged multiple times since via `data/status.json`'s `analyze.yml`/`review.yml` health flags)
+  — but it IS a real tradeoff I made unilaterally, not something Eitan asked for, and worth him
+  knowing about rather than assuming the fix was strictly additive. Also narrow in the same way
+  recent fires have flagged their own scope: I fixed the one lane-health source
+  (`pipeline_status.py`) that hadn't gotten the shallow-clone treatment yet, using the exact
+  pattern `guardrails.py` already established — did not go hunting for a fourth or fifth
+  similarly-shaped blind spot elsewhere in the repo beyond what this specific maintenance-check
+  flag pointed at. No storage, operational-limit, or blocking decision surfaced this fire; a false
+  dashboard alert clearing (not a new one appearing) doesn't cross the push-notification bar on
+  its own.
+- **~19:0x (fire 135, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks:
+  20/20→16/20 guardrails read as before (same steady-state G-C/G-G/G-M/G-O; G-G/G-C self-heal on
+  ship, G-M/G-O are the known EITAN-PC-offline/no-new-completions-yet state, not a new symptom);
+  `net_canary.describe()` confirmed restricted egress again, so per its own advice this fire
+  picked a local/deterministic increment instead of another `deep_retrieve --limit N` batch —
+  and to avoid a third consecutive fire on the exact same file (133 and 134 both touched
+  `deep_retrieve.py`'s selection logic), looked for a different, comparably-scoped gap instead.
+  Found one `net_canary.py` had been flagging about itself since fire 124: its own docstring and
+  `NETWORK_DEPENDENT_LANES` tuple named `verify_elements.py`/`verify_connectors.py`/
+  `github_meta_enrich.py` as three call sites that copy-pasted the two-anchor egress-canary logic
+  instead of importing the shared module once it existed — debt the module named but nothing
+  closed for 11 fires. Fixed: all three `_network_open()` functions now delegate to
+  `net_canary.network_open()` instead of carrying their own `github.com`/`www.wikipedia.org`
+  anchor loop; updated `net_canary.py`'s own docstring/comment to say the consolidation is done
+  instead of still-pending. Verified live under this session's real restricted egress (not just
+  imports): `verify_elements --limit 0` and `github_meta_enrich --dry-run --limit 0` both still
+  correctly print the identical "ABORTED — network canary failed" messages as before the change
+  (behavior preserved, not just syntax-valid); `verify_connectors --limit 0` unaffected as
+  expected (its cursor was already at 1510/1510, unrelated to this change). Ran all 5 local
+  suites (`excava_core_test`, `guardrail_test`, `git_merge_resolve_test`, `or1_phase_test`,
+  `deep_retrieve_test`) green, no regressions. `python -m src.guardrails`: 16/20, 0 critical,
+  same 4 pre-existing/expected flags as standing checks, nothing new.
+  **Harsh self-criticism:** this is real, verified-both-ways dedup (behavior confirmed identical,
+  not just "it imports") but it is still infrastructure hygiene, not a hub-content or
+  user-visible product win — G-M's "no new completions in the last 4 beats" flag is still true
+  after this fire, because a code-dedup with no data-shape change doesn't move that counter. Also
+  narrow in the same way fire 133 flagged its own fix was narrow: I did not go looking for OTHER
+  duplicated-canary-shaped debt beyond the 3 sites `net_canary.py` already named explicitly —
+  didn't do a fresh repo-wide sweep for a fourth undocumented copy, just closed the ones the
+  module was already pointing at. The `filler`-path fusability follow-up fire 134 flagged as
+  still open in `deep_retrieve.py` remains untouched this fire — a different, still-real gap,
+  deliberately left for a fire that wants to pick that thread back up. No storage, operational
+  limit, or blocking decision surfaced; nothing crossed the push-notification bar.
+- **~18:0x (fire 134, unattended, cloud, scheduled-task invocation, PRODUCT)** — Read fire 133's own
+  harsh self-criticism (it fixed `fresh`'s fusability gate in `deep_retrieve.py` but explicitly flagged
+  the `filler` cursor-walk fallback as still unfiltered: "a future fire under restricted egress could
+  still burn wall-clock on doomed `readme_excerpt`/`homepage_meta` network timeouts via that path").
+  Closed exactly that gap this fire instead of repeating a fourth `--limit N` batch run. Extracted the
+  batch-selection logic to a new module-level `select_batch(todo, fusable_fn, attempts, cutoff, start,
+  limit)` (same "pull it out of `main()` so it's directly testable" pattern fire 133 used for
+  `fusable()`), and applied the same `fusable_fn` gate to `filler`, not just `fresh`. Added 3 new
+  stdlib-only regression tests to `deep_retrieve_test.py` (7/7 total now pass): fresh empty when
+  nothing's fusable, filler does NOT fall back to non-fusable elements (the exact fire-133 gap), filler
+  still fills the batch from genuinely fusable ones. Verified live under this session's real restricted
+  egress: `deep_retrieve --dry-run` now reports **batch of 0** (previously would have fallen through to
+  an unfiltered filler window and attempted doomed network calls). Ran all 4 local suites
+  (`excava_core_test`, `guardrail_test`, `git_merge_resolve_test`, `or1_phase_test`) green; guardrails
+  18/20 → same steady-state G-M/G-O as prior fires (EITAN-PC drain offline ~324h), no new critical
+  failures. Logged the WHY via `python -m src.project_memory log` before shipping. Commit `9c0af011`,
+  pushed via `git_safe ship` — this session's real egress made the `git fetch` step slow (~3.5 min,
+  proxy-routed) rather than the near-instant pushes prior fires saw, but it completed clean and was
+  independently re-verified with a fresh `git fetch origin main` after the fact: local HEAD and
+  `origin/main` both at `a76a1f231`, matching.
+  **Harsh self-criticism:** this is a second consecutive meta-work fire on the same file/mechanism
+  (133 and 134 both touched `deep_retrieve.py`'s selection logic, neither touched actual hub content) —
+  legitimate given it closes a concretely-named, still-open bug rather than being busywork, but it means
+  two fires in a row have not moved the actual content-enrichment number (fresh-fusable pool is still
+  correctly 0 under this session's restricted egress — that bottleneck needs open egress or the PC drain
+  back online, not more code here). Also: I did not extend the same fusability discipline to whatever
+  OTHER lanes in the repo might do unconditional network fetches under restricted egress (only checked
+  `deep_retrieve.py` because that's where fire 133 pointed) — a genuinely exhaustive sweep of "does any
+  lane skip the `net_canary` gate" was out of scope for one fire and is worth flagging as a follow-up,
+  not silently assumed to be the only instance.
+- **~17:0x (fire 133, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks OK
+  (`python -m src.standing_checks`: 18/20 guardrails, 0 critical; local origin/main cache was stale
+  again — re-fetched clean, HEAD matched, nothing lost; upstream tracking auto-repointed to
+  origin/main again). `net_canary`: re-verified live, still `open: false` — same restricted-egress
+  session as every fire since 124. Carry-over: none open (current_increment.json showed the prior
+  "false-positive hairball" fix as `done`), this fire started fresh.
+  **The actual increment:** did NOT repeat fires 131/132's `deep_retrieve --limit N` pattern a third
+  time — both of those fires' own harsh self-criticism named the same unfixed root cause (39/40,
+  then effectively all, batch slots wasted on github/website-link-only stubs whose network fetches
+  silently return `""` under restricted egress) and flagged it as "unfixed and unfixable from
+  here." That was wrong — it's fixable from here: `_fusable()` in `src/deep_retrieve.py` counted
+  any link as fusable regardless of real reachability. Fixed: one `net_canary.network_open()` call
+  up front per run gates link-based fusability; pulled the check to module level as `fusable(e,
+  egress_open)` so it's directly unit-testable without a live network call; added
+  `src/deep_retrieve_test.py` (4/4 pass, stdlib-only, no network). Confirmed the fix live under
+  this session's real restricted egress: `deep_retrieve --dry-run` now correctly reports
+  fresh-fusable pool **0** (previously miscounted **242**) — meaning the local transcript-only lane
+  is genuinely exhausted right now, not that the tool is broken; running it blind again would have
+  netted ~0 real content upgrades for real wall-clock cost, exactly as the corrected number
+  predicts. Ran all 4 local suites (`excava_core_test`, `guardrail_test`, `git_merge_resolve_test`,
+  `or1_phase_test`) green; `python -m src.guardrails`: 18/20, 0 critical (same steady-state G-C
+  stale-backup / G-O EITAN-PC-offline ~323h, unchanged); `maintenance_check`: grade B 77/100,
+  unchanged. Logged the WHY via `python -m src.project_memory log` before shipping. Commit
+  `601ba53e`, pushed and verified (`origin/main` HEAD match, confirmed with a fresh `git fetch`,
+  not just trusting the tool's own report).
+  **Harsh self-criticism:** the fix only closes the *fresh*-selection waste path; `filler` (the
+  cursor fallback once `fresh` is empty) still walks the raw sorted `todo` list with no fusability
+  filter at all, so a future fire under restricted egress could still burn wall-clock on doomed
+  `readme_excerpt`/`homepage_meta` network timeouts via that path — narrower than the original bug
+  but not zero. Left unfixed this fire to keep the increment focused and reviewable; worth a
+  follow-up if `filler`-path waste shows up in a future fire's numbers. Also: the corrected
+  fresh-fusable-pool-of-0 finding means the actual bottleneck for the local-only lane hasn't moved
+  — it still needs either open egress (a beat/PC-drain problem, not a code problem) or a bigger
+  local transcript corpus; this fire made the tool honest about that instead of fixing it, which is
+  the right scope for one increment but is not the same as fixing the underlying starvation.
+  No storage, operational-limit, or blocking decision surfaced this fire; nothing crossed the
+  push-notification bar.
+
+- **~16:0x (fire 132, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (`python -m src.standing_checks`: 18/20 guardrails, 0 critical; local `origin/main` cache was
+  stale again — `ead416ab` → `97e52a57` — re-fetched clean, HEAD matched, nothing lost; upstream
+  tracking was missing/wrong on this session's branch, auto-repointed). Acknowledged the loop
+  contract fresh (`python -m src.loop_contract ack`) — carry-over: none open, this fire started
+  one. `net_canary`: re-verified live, still `open: false` (restricted egress, repo-scoped cloud
+  session) — same conclusion as every fire since 124.
+  **The actual increment:** `python -m src.maintenance_check` (grade B, 77/100, 3 issue types, 0
+  high-sev queued) pointed at the same 188-item "discovered items have a real link but no
+  description" backlog fire 131 also faced. Ran `deep_retrieve --limit 40`: fresh-fusable pool was
+  342, but 39/40 attempts targeted github/website-link-only stubs whose `readme_excerpt`/
+  `homepage_meta` network calls silently returned empty under this session's restricted egress
+  (`_get()` swallows the exception rather than crashing — confirmed by reading the source, not
+  guessed) — only `transcript_excerpt` (local file read, no network) can actually produce material
+  from this sandbox. Net result: exactly 1 real content upgrade, `skill:thinking`, rewritten from a
+  4-word stub to a real excerpt from its source video's transcript (verified via `git diff
+  data/skills.json` and reading the resulting record directly, not trusting the tool's own count).
+  All 4 local suites green (`excava_core_test`, `guardrail_test`, `git_merge_resolve_test`,
+  `or1_phase_test`); `python -m src.guardrails`: 18/20, 0 critical (same steady-state G-C
+  stale-backup / G-O EITAN-PC-offline ~322h). Logged the WHY via `python -m src.project_memory
+  log` before shipping. Commit `3145ec73`, pushed and verified (`origin/main` HEAD match).
+  **Harsh self-criticism:** this is the SECOND fire in a row (131, now 132) to spend a batch of 40
+  `deep_retrieve` attempts and land exactly one real enrichment — the yield is real but tiny, and
+  the actual bottleneck (39/40 stubs are link-only, and this session type structurally cannot fetch
+  a URL) is unfixed and unfixable from here; only the GitHub Actions beat's un-proxied runner can
+  drain that backlog. Checked, not assumed: `data/github_meta_enrich_state.json` was last updated
+  15:37Z (same run as the latest `core-spoton` commit, `5329af90`) with `todo_at_last_run: 19` —
+  the beat is alive and has already worked its own GitHub-fusable pool down to 19 remaining, so the
+  188-item figure in `maintenance.json` is mostly website-only stubs outside that lane's reach, not
+  a stalled beat. QUESTIONS.md #31 (self-improvement-lane
+  outage, `analyze.yml`/`review.yml` token blocker) re-checked and unchanged since fire 121 — not
+  re-pushing, already escalated, nothing new to report. No storage, operational-limit, or blocking
+  decision surfaced this fire; nothing crossed the push-notification bar.
+
+- **~15:0x (fire 131, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks:
+  origin/main was 1 commit ahead (`aa9f39b6`, a routine safety commit) — fast-forwarded clean, no
+  loss. `net_canary`/egress still restricted this session type (confirmed live, not assumed), so
+  `deep_retrieve` was tested small-batch first rather than trusted blind. `maintenance_check`
+  (grade B, 77/100) flagged one HIGH item — "pipeline lanes overdue: Self-improvement review" —
+  which traced straight back to the SAME root cause QUESTIONS.md #31 has tracked since fire 55 and
+  escalated with a push at fire 121 this morning: `CLAUDE_CODE_OAUTH_TOKEN_REAL` failing at the SDK
+  level on `analyze.yml`/`discover.yml`/`improve.yml`/`review.yml`. Re-checked `data/status.json`
+  fresh: still 35/35 consecutive zero-progress `analyze.yml` fails, `review_ok:false` since
+  2026-06-21 — unchanged since fire 121, not worse, not resolved. Did NOT re-push: fire 121 already
+  interrupted Eitan for this exact blocker a few hours ago and nothing new emerged to justify a
+  second ping today; a duplicate push for a still-open, already-flagged item is exactly the kind of
+  interruption the notification policy exists to prevent. Separately confirmed fire 125's
+  `review.yml` day-drift fix (capture trigger time before the slow checkout) is live in the file
+  and untested — first real exercise is tonight's mandatory Sat 23:00 UTC run; nothing to do until
+  then.
+  **The actual increment:** `deep_retrieve` (local/keyless — reads already-downloaded transcripts,
+  no network dependency, safe under the egress restriction) enriched 4 real stub skills
+  (`robotics`, `software-cloning`, `software-customization`, `sorting-through-information`) from
+  generic one-liners ("The design, construction, operation, and use of robots.") to real
+  transcript-sourced text. Verified via `git diff data/skills.json` directly, not by trusting the
+  tool's own "4 enriched" claim. **Harsh self-criticism:** the keyless-extract fallback (no LLM
+  engine key in this sandbox) just pastes a raw transcript excerpt prefixed `video <id>
+  description` rather than a clean 2-3 sentence description — strictly more accurate than the stub
+  it replaced, but ugly, and two of the four entries (`software-cloning`/`software-customization`)
+  got the byte-identical excerpt because they share a source video and the keyless path doesn't
+  differentiate between two skills pulled from one transcript. This is 4 elements out of 1,683
+  remaining stubs — real but tiny, and I spent more of this fire diagnosing an already-known,
+  already-escalated blocker than shipping new product surface. The token/quota blocker remains the
+  single highest-leverage fix available and is still 100% outside this session's reach (owner
+  action only).
+- **~13:0x (fire 130, unattended, cloud, scheduled-task invocation, PRODUCT, 10th heartbeat)** —
+  Standing checks OK (`python -m src.standing_checks`: 18/20 guardrails, 0 critical; local
+  `origin/main` cache was stale again — same recurring pattern every fire since ~120 — re-fetched
+  clean, HEAD matched, nothing lost; upstream tracking already correct). `net_canary`: still
+  `restricted` — same conclusion as every fire since 124, re-verified fresh rather than assumed,
+  so `excava_backlog list`'s 8 above-bar candidates (verify/watch/links/security/mining/memory/
+  news, all network- or credential-gated) are correctly untouched again this fire.
+  **Per the outer routine's "every 10th heartbeat" instruction — the wider review:**
+  storage: 30364 MB free on the repo drive (G-N), `.git` 85 MB / working tree 345 MB, 0 loose
+  objects — no storage pressure, nothing to prune. Previous run (fire 129): confirmed it actually
+  completed and shipped — `9257c9d1` (news refresh) is on `origin/main`, matches what fire 129's
+  own log entry claims, no dangling/uncommitted state found on session start. No operational limit
+  exceeded in this window: no push failures, no rate-limit errors, no guardrail critical failures
+  across fires 120-129 (steady 17-18/20, 0 critical every single fire; the only two persistent
+  non-critical flags are G-C stale-backup, which self-heals on ship, and G-O EITAN-PC-offline,
+  expected since the residential drain machine has been off ~319h). Reviewed the last ten cycles
+  (120-129): 4 were META (independently re-verifying the network/credential gate rather than
+  trusting a prior fire's conclusion by rote, per the meta-fire-cap discipline in
+  `loop_contract`), 5 were PRODUCT (2 real guardrail fixes, an audit-decision batch closed, the
+  maintenance grade lifted via honest data fixes, `deep_retrieve` drains), 1 (fire 124)
+  re-confirmed the still-open `analyze.yml`/`review.yml` self-improvement-lane outage
+  (QUESTIONS.md #31) is unchanged, not worse. That outage remains the one open high-severity item
+  and is Eitan's call (needs `claude setup-token` or a plan-cap decision from this sandbox); it was
+  already escalated with a push notification 9 fires ago and has been re-verified unchanged every
+  fire since without re-notifying — still correct not to repeat it. No blocker, storage issue, or
+  regression serious enough to interrupt Eitan for; this paragraph itself is the requested summary
+  to the repo.
+  **The actual increment:** found a SECOND instance of fire 129's exact false-positive pattern in
+  `maintenance_check.py`'s "Oversized category hubs become hairballs in the graph view" check —
+  it flagged any category with >120 raw skills+tools as a medium-severity hairball risk (6427
+  items across categories like code/861, productivity/642), the same "3 remaining maintenance
+  issues" fire 129 left untouched, but this one turned out to be a real false positive rather than
+  a genuine open item: read `src/build_graph.py` and `src/build_brain.py` (the ONLY two things
+  that actually render a category into a graph) before touching anything — `build_graph.py`'s
+  dashboard graph caps every hub at `CAP_PER_HUB=55` items UNCONDITIONALLY regardless of category
+  size, and `build_brain.py`'s Obsidian vault already splits any category over `HUB_CAP=90` into
+  alphabetical sub-hubs of `SUB_SIZE=50` (`sub_hubs()`, itself already commented "so no hub
+  radiates hundreds of edges (the hairball)") — both mitigations shipped in prior fires and were
+  never wired into the checker's detection logic, so it kept flagging data that literally cannot
+  render as a hairball anymore. Rewrote the check to compute each category's actual MITIGATED
+  rendered size (`min(n, CAP_PER_HUB)` for the dashboard graph, `n if n <= HUB_CAP else SUB_SIZE`
+  for the Obsidian vault) and only flag if that real rendered size — not the raw count — exceeds
+  an unreadable threshold; imports the live constants from both modules (falls back to the same
+  literal values if the import ever fails, so the check degrades safely rather than crashing).
+  This makes it a genuine regression guard (fires again only if someone loosens the caps
+  themselves) instead of permanent noise on properly-mitigated data. Verified: `python -m
+  src.maintenance_check` before/after — grade C 62/100 (4 issue types) → grade B 77/100 (3 issue
+  types), the 3 other genuinely-open items (self-improve stall, 188 no-description discoveries,
+  404 sourceless connectors) correctly unchanged; all 4 local test suites green
+  (`excava_core_test`, `guardrail_test`, `git_merge_resolve_test`, `or1_phase_test`); `python -m
+  src.guardrails`: 18/20, 0 critical (same steady-state G-C/G-O as every recent fire). Logged the
+  WHY via `python -m src.project_memory log` before shipping.
+  **Harsh self-criticism:** like fire 129's fix, this is a data/checker-quality correction, not
+  hub growth — it makes the maintenance grade more honest, it does not add an element, verify a
+  link, or move any at-risk goal. Unlike fire 129 I changed CHECKER CODE, not just data, which is
+  a slightly bigger blast radius: if a future fire ever raises `CAP_PER_HUB`/`HUB_CAP` well past
+  today's values without re-running this check, the new logic will correctly catch it, but I did
+  not add a dedicated regression test proving that (would need to fake the constants and assert
+  the flag fires) — the existing test suites don't cover `maintenance_check.py` at all, which is
+  itself a real gap this fire didn't fix either. Also did not touch the 3 remaining open
+  maintenance issues (self-improve stall is Eitan's call; the other two are network-gated in this
+  session type) — same honest boundary fire 129 drew. Not pushing a notification: nothing new
+  crossed the blocking-decision bar this fire — the one open high-severity item is the same
+  already-escalated, unchanged-since-fire-121 outage, and everything else (storage, guardrails,
+  prior-run success, operational limits) came back clean on the 10th-heartbeat review.
+
+- **~11:0x (fire 129, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (18/20, 0 critical; local `origin/main` cache was stale again — 35201dc9 → a6f7779e — re-
+  fetched clean, nothing lost; upstream tracking already correct this time). `net_canary`: still
+  `restricted` — same conclusion as every fire since 124, verified fresh rather than assumed.
+  **Went past `excava_backlog list`'s 8 above-bar candidates (all genuinely blocked on network/
+  credentials this session type doesn't have, same standing reasons as fires 121-128) and into
+  `data/maintenance.json` (regenerated fresh: grade D, 58/100, 5 issue types).** One item looked
+  like a repeat of fire 128's "false alarm" pattern: a NEW high-severity flag, "Pipeline lanes
+  overdue," sample `["Self-improvement review"]`. Checked it the same way fire 128 checked
+  `mine` — read `data/pipeline_status.json` directly rather than trusting the label: `self_improve`
+  (cadence 168h/weekly, `last_run: null`, `runs_7d: 0`, `status: idle`) is genuinely stalled, not
+  a monitor bug — cross-checked `review.yml`'s own code comment ("last real 'review:' commit was
+  2026-06-21") and `data/status.json` (`review_ok: false`, `last_review_ok_at: 2026-06-21`), both
+  of which match the exact outage QUESTIONS.md #31/fire-121 already escalated with a push
+  notification 8 fires ago and fires 122-128 have re-verified unchanged since. Correctly left
+  untouched — same reason every prior fire in that thread gave: the standing ask (`claude
+  setup-token` or confirming the plan's rolling cap) is Eitan's call, not fixable from this
+  sandbox, and a fourth-plus repeat notification of the identical unchanged state would be noise.
+  **The actual increment:** the maintenance report's 4 OTHER issues included one genuinely
+  actionable, local, deterministic item fire 128 explicitly flagged as untouched-but-doable —
+  "Version-less bare vendor names kept as tools" (medium severity, 8 items: Claude, Gemini, Grok,
+  Llama, Sora, Veo, GPT, Copilot). Read the actual records before touching them: these are NOT
+  duplicate/orphaned stubs — each has real `mentions` counts (Claude: 483, Gemini: 64, etc.)
+  spanning many videos and coexists with 50+ separately-versioned entries per vendor already in
+  `tools.json` (e.g. "Claude 4.5 Opus", "Claude Opus 4.5") — they are intentional vendor-family
+  aggregate records for generic/unspecified-version mentions, structurally the same kind of
+  "explicit non-value flagged as missing" false positive `maintenance_check.py`'s own code
+  comment already documents fixing once for `quality_score == 0` vs. `None`. Did NOT fabricate a
+  fake specific version (would risk introducing wrong data, and this sandbox has no live network
+  to verify a real one) — instead set `model_version` on all 8 records to an explicit, honest
+  sentinel describing what they actually are ("generic (vendor-family aggregate — no single
+  version; see named releases ... for specific ones)"), which both documents the true semantics
+  and correctly clears the false-missing-data flag without touching the checker's detection logic
+  itself. Verified: diff is exactly 8 one-line field changes (`git diff --stat`: 9 insertions/9
+  deletions on `data/tools.json`, nothing else reformatted); `python -m src.maintenance_check`
+  before/after: grade D 58/100 (5 issue types) → grade C 62/100 (4 issue types), high-severity
+  count unchanged at the genuinely-open self-improve item; all 4 local test suites green
+  (`excava_core_test`, `git_merge_resolve_test`, `guardrail_test`, `or1_phase_test`);
+  `python -m src.guardrails`: 15/17 pre-ship (only G-G in-flight-behind and G-O EITAN-PC-offline,
+  both expected/steady-state).
+  **Harsh self-criticism:** this is a small, cosmetic-adjacent data-quality fix, not hub growth —
+  it improves the maintenance grade by re-labeling 8 records more honestly, but it does not add
+  an element, verify a link, or move any of the 4 at-risk goals. It is at least a REAL fix (the
+  false-missing-data read is correct, not manufactured busywork to pad the commit graph), and it
+  closes an item fire 128 explicitly named as the next fire's best available local-and-deterministic
+  pick rather than inventing a new one. The 3 remaining maintenance issues are all still open and
+  correctly untouched: 6427-item category hairballs (real but large — needs a sub-bucketing design
+  decision, not a one-fire mechanical fix), 188 discovered items with no description (network-
+  gated, `deep_retrieve`/`github_meta_enrich` both self-abort under this session's restricted
+  egress), 404 sourceless connectors (same network gate). Not pushing a notification — nothing
+  crossed the blocking-decision or degrading-signal bar; the one high-severity item found this
+  fire is the same already-escalated, already-notified outage, unchanged since fire 121.
+- **~10:0x (fire 128, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (18/20, 0 critical). Meta-fire cap was genuinely 3/3 (fires 125-127) — this fire's own
+  instructions required advancing the product, not re-running the same egress/credential
+  checks a fourth time, so spent the whole fire looking for real local work instead.
+  **Went past `excava_backlog list`'s headline and into `data/maintenance.json`'s actual issue
+  list** (regenerated fresh via `python -m src.maintenance_check`): grade D (57/100), and one
+  HIGH-severity item — "Pipeline lanes overdue" flagging `mine` (External mining) as `slow` —
+  looked new. First hypothesis (this session's shallow ~51-commit local clone is lying about
+  `mine-feeds` history) was WRONG and I verified that before writing it down: `data/
+  pipeline_status.json` was generated 4 minutes earlier by the CI beat's own full-history
+  checkout (`links+memory (fast lane)` commit), not by this sandbox, so the `slow` reading is
+  real telemetry, not a local-clone artifact. Cross-checked the actual GitHub Actions history
+  via `mcp__github__actions_list`/`get_job_logs` instead of trusting either the dashboard or my
+  own hypothesis: `mine.yml` has run and committed successfully every single day through
+  2026-08-07 (run `31170899561`, commit `a9ee30633`, +1 skill +6 tools, zero errors in the job
+  log). So the lane is NOT stalled — the monitor is wrong. Root cause: `mine.yml`'s cron is
+  once/day (`0 10 * * *`, ~24h gaps by design) but `src/pipeline_status.py`'s `LANES` table
+  declared its cadence as 12h (`live` threshold = cad*1.5 = 18h) — meaning the lane
+  self-flags "slow" for ~6h every single day even when it runs exactly on schedule, forever,
+  until fixed. Fixed: cadence 12 -> 24, matching `transcribe.yml`'s own identical
+  daily-cron -> 24h-cadence entry already in the same table. Verified against the real
+  timestamp by hand: age_h=23.4 now computes `live` (was `slow` under the old cadence).
+  Deliberately did NOT regenerate `data/pipeline_status.json` myself — this session's shallow
+  clone would compute it from only ~8h of local history and overwrite the CI beat's good data
+  with a worse one; it self-corrects on the next beat run instead. Also deliberately left
+  `gemini_video`'s cadence alone (12h declared vs an 18h real max gap between its two daily
+  cron slots) — that one sits exactly on the live/slow boundary, not provably wrong the way
+  `mine`'s was, so "fixing" it on a guess risks masking a real future stall instead of
+  correcting a false one. Verified: all 4 local test suites green (`excava_core_test`,
+  `git_merge_resolve_test`, `guardrail_test`, `or1_phase_test`); `python -m src.guardrails`
+  17/20, 0 critical (G-C/G-G cleared by this fire's own backup+sync; G-O is EITAN-PC-offline,
+  unrelated, structurally outside cloud reach). Shipped `ec887200` straight to `main` via a
+  direct `git commit -F` + `git push` (matching the repo's 100+-fire convention after
+  `git_safe push`'s own verification loop timed out against the same slow-proxy egress
+  standing_checks already has on record — confirmed the push actually landed via a fresh
+  `git fetch` + `rev-list --left-right --count`, not by trusting the command's exit code).
+  **Harsh self-criticism:** this is a one-line data fix, not a milestone deliverable — it
+  corrects a false alarm rather than growing the hub, and `data/maintenance.json`'s other
+  4 issues (188 undescribed discovered items, 404 sourceless connectors, 8 bare vendor names,
+  6417-item hairball categories) are all still open, three of them genuinely network/
+  editorial-gated and one (bare vendor names — Claude/Gemini/Grok/Llama/Sora, only 8 items)
+  left untouched this fire purely on time budget, not a real blocker — a fair pick for the
+  next fire with room. The real value here is narrow but concrete: Eitan (or the next 10
+  fires) won't spend time chasing a "mining stalled" ghost that was never real, and the
+  underlying lesson — check whether the OBSERVABILITY layer itself is lying before concluding
+  a lane is actually broken — is new; fires 121-127 never framed the question that way.
+- **~09:0x (fire 127, unattended, cloud, scheduled-task invocation, META)** — Standing checks OK
+  (18/20, 0 critical; only G-C stale-backup — fixed this fire — and steady-state G-O EITAN-PC-
+  offline). Did NOT trust fires 125/126's conclusions by rote: independently re-ran the actual
+  checks myself this fire before writing anything down — `python -m src.net_canary` (still
+  `restricted`, same note verbatim), `env | grep -iE "gemini|openai|anthropic|api_key|groq|
+  deepseek|openrouter"` (empty — confirms `build_memory.py` etc. still have no credential to
+  run against, not assumed from a prior fire's log), `excava_selfimprove` ("nothing to change
+  this pass"), `goals_check` (79/100, same 4 at-risk goals G1/G3/G5/G8, unchanged), `excava_
+  systemcheck` (10/11, same 1 tool-drift — the already-decided, deliberately-untouched news/
+  trend_watch wiring from fire 23/QUESTIONS.md, re-read in full rather than re-litigated). All
+  identical to fire 125/126's numbers, now confirmed independently rather than inherited.
+  **The actual increment:** routine maintenance only — `python -m src.git_safe backup` (G-C was
+  stale again) + resync with `origin/main`. **Harsh self-criticism:** THIRD consecutive META
+  fire — the consecutive-meta counter is now genuinely 3/3 (not fire 124's earlier double-count
+  artifact; this one is a clean, correctly-recorded count), so `loop_contract status` now reads
+  "NEXT FIRE MUST ADVANCE THE PRODUCT." That instruction is worth flagging honestly rather than
+  silently trusting: every above-bar backlog item this session type can even attempt
+  (verify/links/mining/watch/news/memory) is closed for the same two structural reasons on
+  record for a week straight — egress-restricted proxy and missing model API keys in this
+  session's own environment, neither of which this session (or the mechanism forcing "the next
+  fire must find product work") can fix by trying harder. The meta-cap assumes forcing the next
+  attempt surfaces something a lazier fire missed; here it will just spend another fire's cycle
+  re-proving the identical blocker unless the environment itself changes (broader egress or
+  secrets added to this session, or Eitan resolving one of the QUESTIONS.md-staged decisions).
+  Logging that gap plainly instead of padding the log with a cosmetic diff to "pass" the cap.
+  Not pushing a notification: this is the same steady-state condition fires 122-126 already
+  surfaced and Eitan has not acted on yet — a fourth repeat would be noise, not new signal.
+- **~07:5x (fire 126, unattended, cloud, scheduled-task invocation, META)** — Standing checks OK
+  (18/20, 0 critical; only G-C stale-backup and G-O EITAN-PC-offline, both steady-state). Re-ran
+  the same checks fire 125 ran rather than trusting its conclusions by rote —
+  `excava_systemcheck` (10/11, same 1 tool-drift flag, unchanged), `goals_check` (79/100, same
+  4 at-risk goals G1/G3/G5/G8), `excava_selfimprove` ("nothing to change this pass"),
+  `excava_backlog list` (same 8 queued candidates, values unchanged since fire 125) — all
+  identical to fire 125's numbers one fire-window ago, confirming nothing material changed in
+  between rather than assuming it. Checked OR-1 specifically (value 95, top of backlog): its
+  decision is staged in `QUESTIONS.md` (fire 123) and still unanswered — correctly untouched,
+  not this session's call to force. **The actual increment:** routine maintenance only —
+  `python -m src.git_safe backup` (G-C was stale again) + resync with `origin/main`.
+  **Harsh self-criticism:** second consecutive META fire (2/3 toward the cap) and, honestly, a
+  near-duplicate of fire 125's own conclusion — every above-bar backlog item is still genuinely
+  closed to this session type for the same three reasons already on record (egress-restricted
+  proxy, missing model credentials, OR-1 waiting on Eitan), and I re-verified rather than
+  assumed that before writing this down. No new product delta for Eitan this fire. Did not
+  invent busywork to pad the commit graph — an honest "checked, unchanged, nothing to ship
+  beyond the safety-net backup" beats a cosmetic diff. Not pushing a notification: nothing
+  crossed the blocking-decision or degrading-signal bar in `away_mode.json`'s policy, and a
+  repeat of fire 125's already-delivered conclusion would be noise, not signal.
+- **~07:0x (fire 125, unattended, cloud, scheduled-task invocation, META)** — Standing checks OK
+  at start (18/20, 0 critical); this branch was 1 commit behind `origin/main` mid-fire (a
+  concurrent lane landed while standing checks ran) — `git pull origin main` fast-forwarded
+  clean, nothing local at risk (0 ahead).
+  **Ran every local/deterministic health check this session type can run, and logged that they
+  all came back clean rather than inventing work to look busy:** `data_guard` (all files
+  healthy), `cross_tab_check` (0 collisions), `excava_systemcheck` (10/11 systems working, all
+  critical OK — the 1 flagged item is fire 23's already-documented, deliberately-not-touched
+  news/trend_watch routing, still sitting in QUESTIONS.md awaiting Eitan, not a new finding),
+  `goals_check` (79/100 overall; the 4 at-risk goals — G1/G3/G5/G8 — are all real-link and
+  design-taste-tagging work that needs live network/vision-model access this sandbox doesn't
+  have, same conclusion fires 122-124 already reached), `excava_selfimprove` ("nothing to change
+  this pass (telemetry clean)"), and all 4 local test suites (`excava_core_test`,
+  `git_merge_resolve_test`, `guardrail_test`, `or1_phase_test`) green.
+  **Went one step further than just trusting the backlog's own labels**: read the actual code
+  behind the two highest-value LOCAL-sounding queued items before ruling them out, instead of
+  taking `excava_backlog list`'s one-line descriptions at face value. `build_memory.py` (value
+  64, "embed the remaining unembedded elements") needs a `GEMINI_API_KEY` — confirmed none is set
+  in this session's environment (`env | grep -i GEMINI` empty), so it would correctly no-op
+  regardless of network; not a bug, just genuinely blocked on a credential this sandbox doesn't
+  carry. `safety_check.py` (value 72, "safety-rate the next batch of 1510 connectors/skills") is
+  actually a full deterministic *rescan* of every connector/skill each run, not an incremental
+  batch — its own backlog description is slightly misleading (there is no "next batch" state to
+  advance); re-running it against unchanged `connectors.json`/`skills.json` would reproduce the
+  same `data/safety.json` it already wrote at 05:22Z, so skipped as a genuine no-op rather than a
+  hollow "ran a command" commit.
+  **The actual increment:** routine maintenance only — `python -m src.git_safe backup` (G-C was
+  stale) and re-synced with `origin/main`. Guardrails went from 18/20 to 19/20 (only G-O remains
+  red, Eitan's local Ollama PC drain, structurally outside any cloud session's reach).
+  **Harsh self-criticism:** this fire produced zero product delta — no element scored, no link
+  verified, no video processed, no design tagged. That is an honest outcome, not a failure to
+  try: every queued backlog candidate above the value bar is genuinely closed to this session
+  type for one of three reasons already on record (egress-restricted proxy, missing model
+  credentials, or needing >=2 live model families for OR-1), and I verified each conclusion by
+  reading the actual gating code rather than repeating the prior fires' summaries by rote. The
+  honest thing to log is "checked, clean, nothing to fix" rather than manufacturing a cosmetic
+  diff to make the commit graph look busier — CLAUDE.md is explicit that "progress" means Eitan
+  can do something new, never "a commit happened," and this fire has nothing new for him beyond
+  a slightly fresher safety-net (backup + sync). The standing structural ask from fires
+  122-124 still stands and is not this fire's to resolve: cloud scheduled-task fires cannot
+  advance verify/links/mining/watch/news/memory/OR-1 without either broader egress or API keys
+  in this environment's secrets. Did not re-notify about the `analyze.yml`/`review.yml` outage
+  (QUESTIONS.md #31) — checked `data/status.json` directly, it is unchanged since fire 121's
+  escalation, so a second push notification would be noise, not signal.
+- **~06:0x (fire 124, unattended, cloud, scheduled-task invocation, META)** — Standing checks OK
+  at start (18/20, 0 critical; local `origin/main` cache was stale, re-fetched clean). Re-verified
+  the outage QUESTIONS.md #31/fire-121-123 keeps flagging (`analyze.yml`/`review.yml`) is
+  UNCHANGED, not worse: pulled the live run list directly (`mcp__github__actions_list`) rather
+  than trusting the last-generated `data/status.json` — every real night-window attempt since
+  2026-07-28T02:37Z is still `failure` with the same zero-turn signature; the recent
+  `conclusion: success` runs are daytime night-gate skips, not real progress, exactly as fire 87
+  already explained. Nothing new to escalate; did not re-push (already pushed at fire 121, no
+  change in state).
+  **Checked every local/deterministic backlog candidate before picking an increment** — this took
+  real time and is worth logging so a future fire doesn't repeat it: `cross_tab_check`,
+  `data_guard`, `safety_check` (already fresh, ran this cycle), `goals_check`/`effectiveness`
+  (no new input data, would be a no-op commit), all 4 test suites (all green already), the 4
+  staged overhaul-decision verdicts (§A items 1-4, all need Eitan's own real-world action — VPS,
+  API signups — not something a sandbox can apply), and OR-1's phase-5 question (fire 123's, still
+  explicitly Eitan's call, `quality_score` still untouched).
+  **The actual increment:** almost tried "fixing" `github_meta_enrich.py`'s network canary to
+  test `api.github.com` directly (reasoning: it's the actual endpoint the real work calls, and a
+  root fetch to it returns 200 here, so the canary looked overly conservative) — verified with a
+  live `curl` first instead of just editing, and that would have been a REGRESSION: `curl
+  api.github.com/repos/octocat/Hello-World` returns `403 "GitHub access to this repository is not
+  enabled for this session"` in this exact sandbox — this session's GitHub access is scoped to
+  ONE repo (this one), so any per-repo API call for a mined element's actual repo would 403
+  identically to real GitHub rate-limiting, which is precisely the ambiguity the existing
+  github.com/wikipedia.org canary exists to avoid. Good thing to verify before touching working
+  code — left that file untouched.
+  Built the real, lower-risk version instead: `src/net_canary.py`, a shared version of the
+  two-anchor egress check that was independently copy-pasted into `verify_elements.py` (fire 50),
+  `verify_connectors.py` (fire 50), and `github_meta_enrich.py` (fire 51) — and wired it into
+  `src/standing_checks.py` (the one command every fire already runs first) so the next fire sees
+  `egress: open|restricted` plus which lanes will self-abort, immediately, instead of re-deriving
+  it the way fires 122/123/this-one each did by hand. Did NOT touch the 3 existing call sites
+  (leaving their working, tested code alone rather than risk an unattended refactor of 3
+  production files with no reviewer) — they still carry their own duplicate copies; a future fire
+  could consolidate them onto `net_canary.network_open()` if it wants to, not required.
+  Verified: `python -m src.net_canary` and `python -m src.standing_checks` both correctly report
+  `restricted` against a live `curl` cross-check of the same anchors; all 4 local test suites
+  still green (`excava_core_test`, `git_merge_resolve_test`, `guardrail_test`, `or1_phase_test`);
+  `python -m src.guardrails`: 16/20 pre-ship, 0 critical (G-C/G-O pre-existing/unrelated; G-G/G-L
+  are this fire's own in-flight state, expected to clear once shipped).
+  **Harsh self-criticism:** this is infrastructure about the loop's own observability, not the
+  hub/program itself — third fire in this thread (122/123/this one) to spend real effort mapping
+  what this session type CAN'T do rather than growing the hub. The fix is real (a genuine
+  duplicate got removed, a genuine blind spot got closed) but small; it does not move enrichment,
+  verification, or mining forward by even one element. Also made a bookkeeping mistake using
+  `loop_contract` itself: called `start` then `note` then `finish` all within this one fire,
+  which double-recorded this fire's "meta" kind against the consecutive-meta counter (now reads
+  2/3 instead of the accurate 1/3) — `note()` is meant for a LATER fire continuing an increment
+  a prior fire opened, not for logging progress within the same fire that both opens and closes
+  it. Left the counter as-is rather than hand-editing `loop_state.json` to correct it — the effect
+  is conservative (one fire closer to the meta cap than reality), not harmful, but the next fire
+  should know: **the cap is effectively 1 away, not 2, and the honest count of consecutive real
+  meta-fires is 2 (122, this one) with 123 in between having been product** — if state.json's
+  literal 2/3 reads as "3 in a row," that is this fire's bug, not a third meta fire.
+- **~05:0x (fire 123, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (17/20 guardrails, 0 critical; origin/main unchanged, upstream already tracked, nothing to
+  repair this time). Consecutive meta-fire count was 2/3 after fire 122 — one more meta fire
+  would have hit the cap — so deliberately went looking for real product work instead of a
+  third round of git-hygiene, network re-checks confirmed the same proxy restriction fire 122
+  already proved (github.com 400, api.github.com 403, youtube.com unreachable — unchanged), so
+  the network-gated backlog (verify/links/mining/watch/transcripts) is still genuinely closed to
+  this session type.
+  **Found the actual opening by re-reading, not re-running, OR-1.** Fire 122 (and 98/103 before
+  it) described OR-1 (value 95, top of the backlog since fire 98) as blocked on a live multi-
+  model debate. That framing had gone stale: `python -m src.excava_chat` already ran OR-1's full
+  phase 1→4 debate for all 10 element types on 2026-08-03 — verified directly by loading all 40
+  `or1-phase{1,2,3,4}-*.json` artifact files: every one `ok:true`, 0 failed drafts, 4 real live
+  model families per type. The expensive part was DONE and nobody had surfaced it — `grep -rl
+  or1-phase4 src/` matched exactly one file before this fire (a fake-engine regression test), no
+  real code or doc pointed at the other 39 files. Built `src/or1_rubric_index.py` (deterministic,
+  no LLM, no network) to close that: `summary` lists all 10 types' debate coverage, `show <type>`
+  prints the phase-4 final guidelines side by side, `refresh` rebuilds the index from the source
+  files. Verified: `summary` correctly reports all 10 types phase-4-done/clean; `show nonsense`
+  gives a clean error naming the 10 real types instead of a traceback; `show tool --phase 9`
+  correctly rejected by argparse.
+  **Deliberately stopped short of applying anything.** Phase 4 holds 4 competing "final"
+  guidelines per type (one per model family), never converged into one canonical rubric — no
+  phase-5/synthesis pass exists. Picking, merging, or re-debating one is an editorial call that
+  changes how ~11k elements get judged; logged an honest correction + a clickable question in
+  `QUESTIONS.md` for Eitan to make that call with the real text in hand, rather than guessing at
+  it from a sandbox. `quality_score` was not touched on a single element.
+  **Bonus, found while in the code:** `src/or1_phase_test.py` was silently broken by an earlier,
+  correct anti-gaming fix (fire 104's `label_vs_model_mismatch` check in `or1_phase1`, which
+  verifies distinct *models* answered, not just distinct family *labels*) — the test's
+  `FakeEngines.complete()` hardcoded `"model": "fake-model"` for every call, so its 2 fake family
+  labels always resolved to 1 fake model and tripped the very gate it exists to test past,
+  crash-exiting with a `KeyError` after only 8 of 32 checks ran. Confirmed pre-existing (not
+  caused by this fire) via `git stash` before touching it. Fixed by giving each fake engine its
+  own model name; `python -m src.or1_phase_test` now runs and passes all 32 checks.
+  `python -m src.guardrails`: 17/20, 0 critical (G-C stale backup and G-O local-PC drain, both
+  pre-existing and unrelated; G-L cleared once this fire's own files are committed).
+  **Harsh self-criticism:** the index tool is real progress (orphaned work is now findable and
+  the false "still blocked" narrative is corrected on the record) but it is still infrastructure
+  around OR-1, not OR-1's actual output — the hub's elements are not scored any differently after
+  this fire than before it, and won't be until Eitan answers the new question. I chose not to
+  pick a rubric myself specifically because CLAUDE.md says questions like this are his, but that
+  is also the safe/easy call — a fire with more nerve might have proposed a concrete synthesis
+  for him to accept/reject rather than 4 raw transcripts to read cold; worth him telling me if
+  he'd rather I propose a merged draft next time instead of laying out the raw material. Also
+  did not attempt a phase-5 synthesis pass even as a *queued* backlog candidate (i.e. did not add
+  "run a convergence debate" to backlog.json) — deferred entirely to his answer on the question
+  above rather than half-committing to a specific next step.
+- **~04:0x (fire 122, unattended, cloud, scheduled-task invocation)** — Standing checks OK
+  (started 18/20, 0 critical). No carry-over increment (fire 121's was `done`); consecutive
+  meta-fire count was 1/3, still under the cap, so did another meta pass rather than force a
+  product pick with no real one queued. Found and fixed two real guardrail failures instead of
+  just re-reading the dashboard: **G-C** (no history bundle newer than 26h — ran
+  `python -m src.git_safe backup`) and **G-G** (this branch was 1-2 commits behind
+  `origin/main` — concurrent CI lanes, mainly `bulk_analyze`, were landing commits every few
+  minutes while this fire ran — ran `python -m src.git_safe sync` twice, chasing a moving
+  target, until `git rev-list --left-right --count HEAD...origin/main` read `0 0`). Guardrails
+  now 19/20, the only red one (G-O, Eitan's local Ollama drain) is physically outside a cloud
+  session's reach.
+  **Spent real effort chasing three backlog items before concluding none were actually
+  runnable here, and verified each conclusion rather than assuming it:** (1) `verify_elements`
+  and `resolve_links` (queued value 90/82) both correctly self-aborted on their egress canary —
+  confirmed this wasn't a false trip by hand-testing `urllib`/`curl` against `github.com`
+  through this session's proxy: the proxy answers `400 {"message":"Request path could not be
+  canonicalized"}` for a plain page fetch, meaning it exposes a scoped GitHub API relay, not
+  general web egress, so the canary's "abort rather than risk false dead-link verdicts" is the
+  right call, not a bug to fix. (2) OR-1 (value 95, the highest-value queued item) needs a
+  >=2-live-model-family debate per its own scope note (fire 98/103) — this session is a single
+  model, so it's structurally blocked here regardless of network, exactly as fire 103 already
+  found and documented; re-confirming that was cheap and worth doing, re-attempting it was not.
+  (3) the supervisor's "news wired to `src.trend_watch` instead of `src.news`" intent-drift flag
+  looked like a fresh bug worth a quick fix — turned out to be fire 23's deliberate, still-open,
+  fully-reasoned non-fix (rewiring risks a write race with `news.yml`'s own schedule + a 90s
+  timeout against 95 RSS sources), already sitting in `QUESTIONS.md` awaiting Eitan's call, not
+  mine to silently resolve. Also re-checked the standing Claude-pipeline outage (QUESTIONS.md
+  #31) directly from `data/status.json`: unchanged at 35 consecutive zero-progress fails since
+  fire 121's escalation minutes earlier — no new push notification sent, since nothing changed
+  and one was already delivered.
+  **Harsh self-criticism:** this is now back-to-back meta fires (121 was product/outage-focused
+  narrative but zero code changed; 122 is pure git-hygiene) — 2/3 on the consecutive-meta-fire
+  contract counter, one more and the next fire is contractually forced to pick product work
+  regardless of what's queued. The backlog's actual product-value items (verify/links/mining
+  batches) are ALL network-gated in this specific proxy environment and OR-1 is model-diversity
+  gated — meaning this session type structurally cannot advance the top of the backlog no
+  matter how it's spent, which is a real constraint worth Eitan knowing about, not a excuse:
+  the fix is either running these fires from an environment with real egress (the GH Actions
+  beat already does), or re-scoping what a cloud-sandbox fire is expected to pick up next.
+- **~03:0x (fire 121, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
+  guardrails, 0 critical; stale `origin/main` cache + missing upstream tracking, both
+  auto-repaired, nothing lost). No carry-over increment open (fire 120's was `done`); consecutive
+  meta-fire count was 0/3 (120 was product), so picked meta work deliberately. Closed the audit
+  fire 120 explicitly queued ("grep `not .*\.get\(` against every numeric field once"): searched
+  all of `src/` for the falsy-zero pattern its own bugfix targeted — 2 other hits, both correct
+  (`security_scan.py`'s `injection_risk` is boolean, `discovery_agent.py`'s `stargazers_count`
+  already carries an explicit `0` default) — a real, verified negative result closing that loop,
+  not a skipped check.
+  **The more important finding this fire: re-read `data/status.json` directly instead of trusting
+  PULSE.md's "ALIVE" summary, and the standing `analyze.yml`/`review.yml` Claude-pipeline outage
+  (QUESTIONS.md item 31, open since fire 55 on 2026-07-27) has gotten materially worse, not
+  self-healed.** `analyze_consecutive_zero_progress_fails` is now **35** (was 6 at fire 81, 16 at
+  fire 86/87) with `last_analyze_ok_at` still **2026-07-28** — 11 days with zero real Claude-driven
+  analyze runs — and `review_ok` has been false since **2026-06-21**, ~7 weeks. Pulled fresh job
+  logs (not just run status) for `analyze.yml` run `31235813755` (2026-08-08T02:48Z) and
+  `review.yml` run `30724272208`: byte-identical to every prior fire's signature — SDK
+  initializes (`model: claude-sonnet-5`), then dies within ~2.3s on/before the first real turn
+  (`is_error:true, num_turns:1, total_cost_usd:0`). Confirmed WHY the dashboards still look
+  healthy despite this: `analyze.yml`'s safety-commit fallback step runs regardless of the Claude
+  step's outcome and commits housekeeping/state diffs either way (e.g. `528eb51b3`: 3 files, 6
+  line changes, no real analysis) — the actual ingestion movement PULSE.md reports is coming
+  entirely from the separate free-pool `bulk_analyze` lane, not this one. Escalated with a fresh,
+  dated update on QUESTIONS.md item 31 and sent a push notification — this has been sitting as an
+  unactioned, self-documented "your call" ask across 6+ fires for 12 days while degrading, which
+  is exactly what this routine exists to interrupt Eitan for rather than let scroll by quietly.
+  **Did not act on the token/cadence myself** — same standing reason as fires 55/57/63/81/86/87:
+  cannot distinguish an expired `CLAUDE_CODE_OAUTH_TOKEN_REAL` from a rolling usage cap from
+  inside this sandbox, and both candidate fixes (`claude setup-token` + secret rotation, or
+  throttling the catch-up cadence) require information or access only Eitan has.
+  `python -m src.guardrails`: 18/20, 0 critical, same two pre-existing unrelated misses as fire
+  120 (G-C stale history bundle, self-heals on `git_safe` push; G-O local-PC drain stale,
+  PC-dependent). **Harsh self-criticism:** I chose to re-verify and escalate an already-known
+  problem rather than build something new — the right call given it's actively worsening and
+  blocking the flagship ingestion lane, but it means M1-M5 milestone work is untouched again this
+  fire, and the underlying fix still requires Eitan, not another sandbox session. I also did not
+  attempt the `show_full_output:true` diagnostic dispatch fire 119 queued for `review.yml` — with
+  the outage this severe and this old, the actual error text likely still says "quota/auth", which
+  wouldn't change the ask; spending a public-log exposure on it now felt like the wrong tradeoff
+  versus just surfacing the numbers that already exist.
+
+- **~02:0x (fire 120, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
+  guardrails, 0 critical; stale `origin/main` cache + missing upstream tracking, both
+  auto-repaired by `standing_checks`, nothing lost). Current increment was already `done` (fire
+  119's review.yml fix), so this fire started fresh. `loop_contract status` showed 2/3 consecutive
+  meta fires (118 was product/data-dedup, 119 was meta/CI-pipeline) — one more meta would have
+  tripped the cap, so picked a PRODUCT increment on purpose rather than continuing meta work.
+  Checked the two obvious real-work lanes first and both are genuinely closed to this session, not
+  just untried: no LLM provider keys beyond this session's own model are set in the environment
+  (ruled out continuing OR-1 phase 1 — its explicit >=2-live-model-family gate can't be satisfied
+  here), and arbitrary outbound web is still walled off (`api.github.com/repos/Instagram/LibCST`
+  403s, `youtube.com` unreachable — same proxy scope every prior cloud fire hit, confirmed again
+  rather than assumed). Ran `maintenance_check` instead (local, deterministic, keyless) and found a
+  real bug in the checker itself, not just in the data: its "Tools with no quality score" detector
+  used `if not t.get("quality_score")`, which is true for BOTH a missing score and an honestly-
+  assigned score of `0` — Python falsy-zero trap. Read `data/tools.json` directly: all 6 flagged
+  tools (Air Canada Chatbot, Builder.ai, Dragontail, Google Slides, Klarna AI assistant, NomadGo
+  Inventory AI) already carry an explicit `quality_score: 0`, none `None`/missing. Confirmed intent,
+  not just guessed it: `mine_feeds.py`/`gemini_video_analyze.py`'s own prompt template defaults
+  `quality_score` to `1`, so a `0` in the data only happens when the scoring model deliberately
+  overrode the template to mark something below the useful range (these are literal anti-examples
+  from a "Why Tech CEOs Are Quietly Cancelling Their AI Plans" mining pass, e.g. Builder.ai's
+  `release_status: "collapsed"`) — a real, deliberate score, not an absence of one. Fixed
+  `src/maintenance_check.py` line 136 to `t.get("quality_score") is None`. **Verified, not
+  asserted:** `maintenance_check` before/after — health score honestly rose 57 -> 58, issue_count
+  6 -> 5, the false-positive "low | data | Tools with no quality score" issue type disappeared
+  entirely and nothing else on the report changed; `python -m src.guardrails` 18/20, 0 critical,
+  same two pre-existing unrelated misses as fire 119 (G-C stale history bundle, fixed by
+  `git_safe`'s own backup-before-push step; G-O local-PC drain 308h stale, PC-dependent, not
+  touched); `python -m src.excava_core_test` all checks passed (unrelated, unaffected — sanity
+  check only). **Harsh self-criticism:** this is a small, low-blast-radius fix (6 records, one
+  line) — I chose it specifically because it was the only thing I could FULLY verify from inside
+  this session's real constraints (no keys, no broad web), not because it's the highest-value item
+  on `backlog.json` (OR-1 at value 95 and the three network-gated department gaps at value 60-90
+  all outrank it and are still untouched). I did not check whether the same falsy-zero pattern
+  exists on any OTHER numeric field in `maintenance_check.py` (`link_tries`, category counts, etc.)
+  — scoped this fire to the one issue the report actually flagged this run rather than auditing the
+  whole file speculatively; a future fire with time budget should grep for `not .*\.get\(` against
+  every numeric field once, not fix them one report-cycle at a time.
+  **Heartbeat check-in (every-10th fire, per the outer routine's instruction):** storage: 30 GB
+  free on the repo volume (`df -h .`), repo itself is small (`.git` 85 MB, `data` 203 MB) — no
+  capacity concern. Previous run (fire 119): completed successfully per its own log entry and
+  `current_increment.json` (`status: done`), confirmed independently here via `standing_checks`
+  reporting a clean, unblocked state on this fire's start. No operational limit was hit in fires
+  111-120: guardrails held 17-19/20 with 0 critical the entire window, no push failures, no rate
+  limits surfaced in any of the ten logs. Reviewed fires 111-120: 111-115 carried one increment
+  (OR-1 phase 1 debate infrastructure) across 5 fires per the carry-over rule, correctly blocked
+  each time on the same live-multi-model-key gate this fire re-confirmed; 116-118 mined real,
+  verified bugs out of `maintenance_check`'s own findings (two false-positive detectors fixed,
+  three genuine near-duplicate hub records merged); 119 fixed a 9-week-silent CI scheduling bug in
+  `review.yml` (a second, deeper bug in that same pipeline is still open, queued in
+  `improvement_tasks.json`); 120 (this fire) fixed a third false-positive detector in the same
+  checker. No blocker serious enough to interrupt Eitan for — this summary is the repo posting,
+  per policy, not a phone push.
+- **~01:0x (fire 119, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
+  guardrails, 0 critical; stale `origin/main` cache + missing upstream tracking, both auto-repaired
+  by `standing_checks`, nothing lost). No carry-over increment open (fire 118's was already `done`).
+  Gap since the last fire: this session-only away-loop had not fired since fire 118
+  (2026-08-03) — 5 days with no away-mode session running, even though the CLAUDE.md/away_mode.json
+  contract says always-on; the 24/7 GitHub-Actions beat kept going underneath regardless (bulk-analyze,
+  core-spoton, links+memory, gemini-video, analyze-safety commits all landed daily in the gap), so the
+  product itself did not stall — only the wrapper loop that does `standing_checks`→pick-an-increment→
+  `git_safe ship` did. Flagging the gap here rather than re-litigating it (a `/loop`-style scheduler
+  configuration issue, not something this fire can fix from inside the sandbox).
+  `maintenance_check` (grade D, 57/100) surfaced exactly ONE high-severity issue: "Pipeline lanes
+  overdue — Self-improvement review" (`pipeline_status.json`: `last_run: null`, `runs_7d: 0` for the
+  `review:`-prefixed lane). Chased it past the dashboard number instead of trusting it: pulled the
+  actual GitHub Actions run history for `review.yml` via the GitHub MCP tools (not visible from inside
+  the repo's own shallow clone — only 51 commits reachable locally). Found `review_findings.json` is
+  still dated `2026-06-20T23:00:00Z` despite the workflow reporting "success" on nearly every Wed/Sat
+  trigger since (self-improvement review is explicitly Eitan's #2 priority per CLAUDE.md §4 — this is
+  the exact "green dashboard hiding a real regression" pattern PULSE.md's fire 5 first called out, just
+  in a different subsystem). Root-caused it as TWO stacked bugs, not one:
+  1. **FIXED this fire.** `review.yml`'s "Plan this run" step computed `now = datetime.now(UTC)`
+     *after* the `fetch-depth: 0` checkout, which can take 1-2+ minutes. A run triggered near 23:59 UTC
+     could have `now()` land past midnight, one weekday later — `now.weekday() in (2, 5)` (Wed/Sat)
+     then silently evaluates False, `run=False`, the review step is skipped, and the job still reports
+     "success" because a skipped step doesn't fail a job. Verified against run `31058169311`
+     (triggered 2026-08-05 23:58:44 UTC, a real Wednesday): checkout alone ate ~75s; "Plan this run"
+     read `00:00:03 UTC Aug 6` = Thursday; skipped. This is the SAME class of bug fire 54 partially
+     fixed (that fire fixed comparing against the wrong cron string; this one is the timing of when
+     `now()` itself gets read) — the fix moved a `date -u +%s` capture into a new step that runs
+     BEFORE checkout, and the plan step now derives weekday from that frozen epoch instead of a fresh
+     `now()`. Verified, not asserted: extracted the plan step's embedded Python and ran it standalone
+     with `TRIGGER_EPOCH` pinned to the real 2026-08-05T23:58:44Z trigger instant — `run=true`,
+     `mode=weekly` (the old code path, re-derived by hand, gives `run=false` for the same trigger).
+     Commit carries the diff.
+  2. **Still open, NOT fixed this fire.** Even on the days the day-check correctly passes (e.g. run
+     `30724272208`, triggered 2026-08-01 23:55:57 UTC, a real Saturday), the `claude-code-action` step
+     itself fails almost instantly: `is_error:true`, `duration_ms: 2317`, `num_turns: 1`,
+     `total_cost_usd: 0` — it never got far enough to write anything. The action hides full SDK output
+     "for security", so the actual error text (token/quota/permission/something else) isn't visible
+     from the job log alone. Did not attempt a `show_full_output:true` diagnostic dispatch this fire —
+     that needs a live GitHub Actions round-trip and a security tradeoff (temporarily exposing raw SDK
+     output) that felt like a separate, deliberate decision rather than something to fold into this
+     fire's fix. Logged as the concrete next-fire target in `data/improvement_tasks.json` (the
+     `pipeline:...Self-improvement review` entry, status `partially-fixed` with the full diagnosis).
+  **Harsh self-criticism:** I fixed the mechanism that made the review LOOK like it never ran, but the
+  review still has not produced a fresh finding — bug #2 means Eitan's #2-priority self-improvement
+  lane is STILL effectively dead until the next fire (or Eitan) diagnoses the opaque `is_error`. I also
+  did not touch the 5-day away-loop gap itself (just described it) — if the scheduler invoking this
+  session is meant to fire more often than it has been, that's a scheduling-config problem outside this
+  sandbox's reach, and I'm not fully certain that's the right read; flagging rather than guessing
+  further. And per §7 this diagnosis is mine to make, but the underlying "OAuth token intermittently
+  errors instantly, cost $0, no visible reason" pattern is exactly the kind of thing that could also be
+  quietly costing Eitan's rationed Pro/Max quota elsewhere without him knowing — worth his eyes, not
+  just a queued task, next time he's actually looking at QUESTIONS.md/improvement_tasks.json.
+
+## 2026-08-03
+- **~00:1x (fire 118, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
+  guardrails, 0 critical; stale `origin/main` cache + missing upstream tracking, both auto-repaired,
+  nothing lost). Attacked a REAL issue this time, not another false alarm: `maintenance_check`'s
+  "8 title collisions" (Ponytail, Graphify, Higgsfield, Headroom, each x2) turned out to be genuine
+  — `git log` + record inspection showed 3 of the 4 pairs are the SAME real tool mined independently
+  by two pipelines (`bulk_analyze` vs `mine_feeds`/`gemini-video`) that only dedupe by name against
+  their OWN in-memory snapshot of the store, not against each other's concurrent writes — a real
+  ingestion race, not a cosmetic label problem. Verified by reading full records, not just names:
+  Ponytail (both `github: DietrichGebert/ponytail`) and Graphify (both the same Claude-Code
+  codebase-knowledge-graph plugin, one record carrying `github`/`deploy_url`/`setup` the other
+  lacked) and Higgsfield (a quality-1 vague web-news mention of the same Higgsfield.ai platform) are
+  true duplicates. The 4th pair, Headroom, is NOT a duplicate — different GitHub orgs
+  (`headroomlabs-ai/headroom` vs `chopratejas/headroom`), different homepages/descriptions: two
+  distinct real tools that happen to share a generic name. Fixed accordingly rather than
+  one-size-fits-all: the 3 true dupes get a new `duplicate_of: <canonical slug>` field on the weaker
+  record (kept in `tools.json`, NOT deleted — `elements_related.json`/`brain_graph.json` and others
+  key off `tool:<slug>`, and auditing every consumer of a removed slug was out of scope for one
+  fire) plus its unique videos/links folded into the survivor (Ponytail's canonical record gained
+  `github`/`deploy_url` it was missing entirely, making it actually activatable for the first time);
+  Headroom instead got a disambiguating `name` ("Headroom (Claude Code plugin)" /
+  "Headroom (MCP/Python library)") since merging would have wrongly conflated two different
+  codebases. Wired the fix so it's not just data patched once: `maintenance_check.py`'s collision
+  detector now skips `duplicate_of` records (so this can't get re-flagged as unhandled every fire
+  the way the 187-item empty-body issue nearly did), and `build_graph.py`/`build_brain.py` now skip
+  them too, so the redundant weaker node/note stops rendering in the in-app brain graph AND the
+  Obsidian vault, not just in the maintenance report. Manually resolved the matching stale
+  `improvement_tasks.json` entry (status -> done, with a `resolution` explaining the real fix, not
+  deleted). **Verified, not asserted:** `maintenance_check` before/after — health score 50 -> 56,
+  the "Title collisions" issue type dropped from 8 to 0 and disappeared from the report entirely;
+  `python -m src.build_graph` re-ran clean (1973 nodes, 2525 links, no errors); `python3 -c
+  "json.load(...)"` on the touched `tools.json`/`improvement_tasks.json`; `python -m
+  src.excava_core_test` 71/71 (unrelated, unaffected, still green — sanity check only); `python -m
+  src.guardrails` 18/20, 0 critical, same two pre-existing non-critical misses as fires 116/117
+  (G-C stale history bundle, G-O local-PC drain 186h stale — both unrelated, not touched, not
+  re-litigated). **Harsh self-criticism:** I deliberately did NOT delete or rename any `slug`,
+  which means the fix is a mitigation (stop showing/flagging the dupe) rather than a full cleanup
+  (one canonical record per real tool) — a future fire with time to actually audit every
+  `tool:<slug>` consumer across the ~15 files that reference slugs could go further and collapse
+  these to one record each. I also did not investigate the ROOT CAUSE (the two ingestion
+  pipelines' independent, non-overlapping dedup windows) — that's still open and will keep
+  producing new near-duplicates until it's fixed at the source, not just healed after the fact;
+  flagging as the natural next-fire target alongside the other remaining HIGH-severity issue this
+  fire did NOT touch (`maintenance_check`'s "2 pipeline lanes overdue — Transcript retrieval,
+  Self-improvement review", left alone on purpose to keep this fire's scope to one verified
+  increment, not two half-checked ones). I'm also not fully certain Headroom is genuinely two
+  projects rather than one renamed/forked one — that call was made from the JSON fields alone
+  (different org, different homepage), not from reading either actual repo, since this session's
+  GitHub access is scoped to this one repo only.
+
 ## 2026-08-02 (cont'd)
+- **~21:0x (fire 117, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
+  guardrails, 0 critical; local `origin/main` cache was stale + upstream tracking missing, both
+  auto-repointed by `standing_checks`, nothing lost). Confirmed OR-1 needs no action this fire
+  (fire 116 already established phase 1 succeeded via the CI beat; phases 2-4 are the beat's own
+  next-run job, not something an interactive session can push forward) and confirmed the network
+  restriction is unchanged, not a new capability: `api.github.com/rate_limit` now answers 200
+  (proxy reachable), but a real repo lookup (`/repos/Instagram/LibCST`) still 403s with "GitHub
+  access to this repository is not enabled for this session" — this session's proxy is scoped to
+  the ONE linked repo only, same wall every prior fire hit, just a different error shape.
+  Picked `maintenance_check` (grade D, 43/100) as the next real, local, keyless increment instead
+  of re-confirming that wall a second time. Its top "high severity" issue — "187 empty-body items
+  render as blank white nodes in the brain graph" — turned out to be a FALSE signal on
+  investigation: all 187 are tools (0 skills, 0 connectors), and every single one already carries
+  a real link (mostly a `source_url` from its `mine_feeds` discovery, some a `homepage`) —
+  and both `build_graph.py` and `build_brain.py` already skip prose-less items from the in-app
+  graph AND the Obsidian vault (a fix ported from `build_brain.py`, still in place, verified by
+  reading both files), so none of the 187 have EVER rendered as a blank node anywhere. The check
+  was conflating two different things: a true dead-end (no body, no link — currently 0 of them)
+  vs. a raw `mine_feeds` stub awaiting enrichment (no body, but a real link — the actual 187) —
+  and mislabeling the second as "high severity, brain-breaking" fed a genuinely wrong number into
+  `improvement_tasks.json`, which had it sitting there as a permanently-open high-sev task no
+  future fire would ever be able to close (its `maint_key` can only clear by re-matching the
+  exact issue text, and nothing was ever going to make 187 real, historical mining stubs grow
+  prose on their own). Fixed `maintenance_check.py`'s empty-body detector to split the two cases:
+  "blank" (no body AND no link) stays high-severity/brain-area exactly as before, now correctly
+  computing to 0; "stub" (no body, real link, tool/connector only) becomes a new, correctly-scoped
+  medium-severity/data-area issue describing what it actually is — an enrichment backlog, not a
+  display bug. Left skills untouched on purpose: a bare-product-name skill with a real link but
+  zero captured technique is still the exact boilerplate pattern fire 11's anti-boilerplate gate
+  exists to catch, so a link does NOT excuse a skill the way it excuses a tool/connector stub —
+  checked this holds (0 skills were affected either way, confirmed by data, not assumed). Manually
+  resolved the now-stale `brain:Empty-body items render as blank 'white'` entry in
+  `improvement_tasks.json` (status -> done, with a `resolution` field explaining why, not deleted
+  — it's loop bookkeeping, not user content, and leaving it open forever would have kept lying).
+  **Verified, not just asserted:** re-ran `maintenance_check` before/after — health score honestly
+  rose 43 -> 51 (the inflated high-sev issue is gone, replaced by an accurately-labeled medium
+  one, not hidden); `python3 -c "json.load(...)"` on both touched data files; `python -m
+  src.excava_core_test` 8/8 (unrelated, unaffected, still green — sanity check only); `python -m
+  src.guardrails` 18/20, 0 critical, same two pre-existing non-critical misses as fire 116 (G-C
+  stale history bundle, G-O local-PC drain 183h stale — both unrelated, not touched, not
+  re-litigated). **Harsh self-criticism:** this fire fixed the MEASUREMENT, not the underlying
+  187-item enrichment gap itself — those tools are still quality_score 1, still prose-less, still
+  need `deep_retrieve`/`github_meta_enrich` to actually run against them, which (per every fire
+  since ~110) needs either the CI beat's own key pool or a live provider key this interactive
+  session doesn't carry; I did not, and could not from here, make that number move. The value of
+  this fire is narrower and more indirect: the self-improvement pillar's own visible number (§4:
+  "a success-rate number that climbs") was being fed a false high-severity alarm, and a future
+  fire (or Eitan, reading `improvement_tasks.json` cold) would have reasonably prioritized a
+  187-item "brain-breaking" fire alarm that was actually already-handled plumbing, at the expense
+  of a real problem sitting lower on the list. Fixing the measurement so the next triage decision
+  is made on accurate information is a legitimate, if quieter, self-improvement win — but it is
+  still the SECOND fire in a row (after 115/116's OR-1/safety-check work) that touched
+  observability/data-quality rather than a directly user-visible capability; the actual M1-M5
+  program (Hub content depth, department execution, class overhaul) went untouched again this
+  fire, and whoever runs fire 118 with open internet/keys should attack that instead of finding a
+  third piece of measurement plumbing to polish.
+
 - **~19:0x (fire 116, unattended, cloud, scheduled-task invocation)** — Standing checks OK (18/20
   guardrails). **First, the actually good news**: OR-1 (value-95 owner ask, blocked in every
   interactive session since fire 98 for lack of a 2nd live model-provider key) has genuinely

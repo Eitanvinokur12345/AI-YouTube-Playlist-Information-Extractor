@@ -1,16 +1,16 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-241` (dept) · 2026-07-12T02:21:08.730590+00:00
-> Participants: Pick · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-241` (dept) · 2026-08-05T02:14:21.265034+00:00
+> Participants: Pick · synthesized by mistral/mistral-small-latest
 
-**Decision:** Focus first on GitHub and Product Hunt, then expand to Reddit and Telegram.
+**Decision:**
 
 **Plan:**
-1. Identify trending AI repositories on GitHub to assess new projects.
-2. Monitor Product Hunt for daily AI product launches and user feedback.
-3. Analyze engagement metrics from GitHub and Product Hunt to prioritize projects for further exploration.
-4. After establishing a solid basis from GitHub and Product Hunt, begin curating relevant discussions and projects from Reddit.
-5. Join relevant Telegram groups to gather community insights and emerging trends in AI.
-6. Regularly review the effectiveness of the sources and adjust priorities based on data gathered.
+1. Query Product Hunt’s API for posts tagged "AI" published in the last 7 days.
+2. Extract titles, descriptions, upvotes, and launch dates from the raw list.
+3. Cross-reference results with GitHub repositories (via search API) to identify open-source AI projects.
+4. Scrape Hacker News (HN) for AI-related discussions using keywords like "AI," "machine learning," or "LLM" in the last 7 days.
+5. Collect Reddit posts from r/artificial, r/MachineLearning, and r/learnmachinelearning using Pushshift API or PRAW.
+6. Compile all data into a structured dataset (CSV/JSON) for analysis.
 
-**What changed:** The initial focus has shifted towards clearer signals from GitHub and Product Hunt before delving into the more chaotic environments of Reddit and Telegram.
+**What changed:** Focused on Product Hunt API first, then expanded to GitHub, HN, and Reddit for diverse AI sources.

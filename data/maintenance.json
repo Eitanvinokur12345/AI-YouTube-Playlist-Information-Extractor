@@ -1,36 +1,9 @@
 {
-  "generated_at": "2026-08-02T19:02:59.076939+00:00",
-  "health_score": 43,
-  "grade": "D",
-  "issue_count": 7,
+  "generated_at": "2026-08-09T17:07:12.072132+00:00",
+  "health_score": 77,
+  "grade": "B",
+  "issue_count": 3,
   "issues": [
-    {
-      "severity": "high",
-      "area": "brain",
-      "issue": "Empty-body items render as blank 'white' nodes in the brain graph",
-      "count": 187,
-      "fix": "Skip empty-body items from the brain (or backfill a one-line description) so they stop appearing as contentless dots.",
-      "sample": [
-        "AI Finance Agent",
-        "AIRAG Jobs",
-        "AITER v3",
-        "Agent-2",
-        "Agent-3"
-      ]
-    },
-    {
-      "severity": "high",
-      "area": "brain",
-      "issue": "Title collisions: distinct items share one note name and overwrite each other",
-      "count": 8,
-      "fix": "De-duplicate or suffix colliding titles so each item is its own note.",
-      "sample": [
-        "Ponytail",
-        "Graphify",
-        "Higgsfield",
-        "Headroom"
-      ]
-    },
     {
       "severity": "high",
       "area": "pipeline",
@@ -43,37 +16,23 @@
     },
     {
       "severity": "medium",
-      "area": "brain",
-      "issue": "Oversized category hubs become hairballs in the graph view",
-      "count": 6217,
-      "fix": "Sub-bucket big categories (cap members per hub, add sub-hubs) so the graph stays readable.",
-      "sample": [
-        "productivity (622)",
-        "code (837)",
-        "automation (488)",
-        "integration (181)",
-        "video creation (323)"
-      ]
-    },
-    {
-      "severity": "medium",
       "area": "data",
-      "issue": "Version-less bare vendor names kept as tools",
-      "count": 8,
-      "fix": "Re-derive an exact version for each, or fold into the proper product record.",
+      "issue": "Discovered items have a real link but no description yet (already hidden from the brain graph/vault, not a display bug -- just waiting on enrichment)",
+      "count": 187,
+      "fix": "Backfill a one-line description (deep_retrieve / github_meta_enrich) so these become real graph nodes instead of staying invisible.",
       "sample": [
-        "Claude",
-        "Gemini",
-        "Grok",
-        "Llama",
-        "Sora"
+        "AI Finance Agent",
+        "AIRAG Jobs",
+        "AITER v3",
+        "Agent-2",
+        "Agent-3"
       ]
     },
     {
       "severity": "low",
       "area": "data",
       "issue": "Connectors with no URL/source can't be installed or verified",
-      "count": 380,
+      "count": 404,
       "fix": "Resolve each connector's repo/package URL (or drop it).",
       "sample": [
         "Alexa + Claude Integration",
@@ -81,20 +40,6 @@
         "Claude Co-work Slack Integration",
         "Claude Co-work Notion Integration",
         "Canva Connector for Claude"
-      ]
-    },
-    {
-      "severity": "low",
-      "area": "data",
-      "issue": "Tools with no quality score can't be ranked",
-      "count": 6,
-      "fix": "Score them in the next analysis pass.",
-      "sample": [
-        "Air Canada Chatbot",
-        "Builder.ai",
-        "Dragontail",
-        "Google Slides",
-        "Klarna AI assistant"
       ]
     }
   ]

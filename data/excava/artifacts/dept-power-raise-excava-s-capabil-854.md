@@ -1,17 +1,16 @@
 # power: Raise EXCAVA's capability by even 0.5%: find new tools, best/newest models, combine elemen
 
-> Decision artifact · room `dept-power-raise-excava-s-capabil-854` (dept) · 2026-07-21T19:12:52.526840+00:00
+> Decision artifact · room `dept-power-raise-excava-s-capabil-854` (dept) · 2026-08-06T14:57:00.667784+00:00
 > Participants: Gearbox, Torque, Dynamo · synthesized by mistral/mistral-small-latest
 
-**Decision:**
-Adopt the best performer from a 48-hour blind A/B stress test between DeepSeek-R1-671B and Cerebras-GPT-3B, with EXCAVA’s capability gain ≥0.5% required or both rejected.
+**Decision:** Add RealVisXL 4.0’s face-preserving upscaler to EXCAVA’s pipeline now—swap the upscaler, keep the rest intact, and measure face fidelity gain.
 
 **Plan:**
-1. Torque designs the blind A/B stress test protocol (metrics, datasets, evaluation criteria) within 24 hours.
-2. Gearbox provisions identical hardware for both models (no vendor lock-in) and deploys them in parallel.
-3. Run the 48-hour test, logging raw performance, compute cost, and stability metrics.
-4. Dynamo and Torque jointly audit the results; if neither model meets ≥0.5% gain, both are rejected.
-5. If one model wins, Gearbox integrates it into EXCAVA’s pipeline with fallback to the current stack.
-6. Post-test report published in GitHub Issues with full transparency.
+1. Replace EXCAVA’s current upscaler with RealVisXL 4.0’s face-preserving upscaler in the pipeline.
+2. Validate the swap by running EXCAVA on a controlled test set (100 samples) to measure face fidelity.
+3. Compare pre- and post-swap results using Anthropic’s face fidelity metric (target: ≥0.5% improvement).
+4. If fidelity improves, merge the change into the main branch; if not, revert and log the failure.
+5. Document the new upscaler’s integration steps and dependencies in EXCAVA’s README.
+6. Monitor Anthropic’s pipeline for price/access changes and prepare a fallback plan.
 
-**What changed:** Replaced Llama-3.3-70B-Instruct with Cerebras-GPT-3B in the final test to resolve compute cost vs. capability trade-offs.
+**What changed:** RealVisXL 4.0’s face-preserving upscaler replaced the existing upscaler in EXCAVA’s pipeline.

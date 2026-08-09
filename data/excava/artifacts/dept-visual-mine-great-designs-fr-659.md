@@ -1,16 +1,15 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-659` (dept) · 2026-07-28T17:48:11.464583+00:00
-> Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-visual-mine-great-designs-fr-659` (dept) · 2026-08-05T02:01:51.896798+00:00
+> Participants: Easel, Squint, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Open the Playwright MCP server.
-2. Capture a high-quality screenshot of the *Claude Design Motion Graphics Pipeline* page.
-3. Save the screenshot to the hub as a visual reference artifact.
-4. Organize the screenshot in the hub under a dedicated *design pattern* or *taste material* section.
-5. Tag the artifact with relevant keywords (e.g., "motion graphics," "pipeline," "branding").
-6. Share the artifact with the team for review and integration.
+1. Open Playwright MCP.
+2. Navigate to the Agent Platform Selection Rule page in the MCP documentation.
+3. Capture a high-quality full-page screenshot of the page.
+4. Save the screenshot as a visual artifact for the hub’s design reference.
+5. Upload the screenshot to the hub’s design pattern repository.
 
-**What changed:** A high-quality screenshot of the motion graphics pipeline was captured and saved to the hub as a visual reference.
+**What changed:** Added a high-quality full-page screenshot of the Agent Platform Selection Rule page to the hub’s design reference.

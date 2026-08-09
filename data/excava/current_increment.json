@@ -1,11 +1,13 @@
 {
- "title": "fix the OR-1 diversity gate: count models, not labels",
+ "title": "harden git_safe against the fires-145/146/147 silent push hang",
  "kind": "product",
  "plan": "",
- "started_at": "2026-08-02T19:33:14.801011+00:00",
+ "started_at": "2026-08-09T08:20:00+00:00",
  "fires": 1,
- "notes": [],
+ "notes": [
+  "also caught+documented a revert_ci_churn() data-loss trap live, mid-fire"
+ ],
  "status": "done",
- "finished_at": "2026-08-02T19:33:14.847305+00:00",
- "outcome": "gate now counts resolved model ids; misleading artifact annotated"
+ "finished_at": "2026-08-09T08:30:00+00:00",
+ "outcome": "shipped: timeout-bounded git_safe subprocess calls (_git() + sync()'s raw pull --rebase) + progress prints through push()/ship; verified against a real live 90s network hang during testing; documented the CI_CHURN/data-loss trap this fire hit in revert_ci_churn()'s own docstring"
 }

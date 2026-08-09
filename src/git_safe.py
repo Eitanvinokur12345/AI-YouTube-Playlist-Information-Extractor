@@ -57,9 +57,25 @@ def _ts() -> str:
     return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 
 
-def _git(args, check=True) -> str:
-    """Run git with an argument LIST (never a shell string) so nothing can be re-parsed."""
-    r = subprocess.run(["git", *args], cwd=str(ROOT), text=True, capture_output=True)
+def _git(args, check=True, timeout=90) -> str:
+    """Run git with an argument LIST (never a shell string) so nothing can be re-parsed.
+
+    Fires 145-147 (2026-08-09) hit the same unexplained symptom three times in a row: `push()`'s
+    `git push` call (this environment routes it through an HTTPS proxy) would sometimes never
+    return and never error — no output, no exception, just a hang that only the CALLER's own
+    outer `timeout` wrapper could kill, discovered by luck rather than diagnosis. Every subprocess
+    call in this module went through `subprocess.run` with NO `timeout=`, so a stalled network
+    call blocked forever instead of failing loudly. A bounded timeout turns "silently wedged
+    forever" into "a clear error in under two minutes" — the caller (a fire, or a future
+    automated retry) gets something to act on instead of a dead process."""
+    try:
+        r = subprocess.run(["git", *args], cwd=str(ROOT), text=True, capture_output=True, timeout=timeout)
+    except subprocess.TimeoutExpired:
+        raise RuntimeError(
+            f"git {' '.join(args)} TIMED OUT after {timeout}s — likely a network stall (fetch/push "
+            "through the proxy) or a credential prompt, not a normal git failure. The operation's "
+            "outcome is UNKNOWN (it may have partially completed on the remote); check `git status` / "
+            "`git log` / `git fetch` by hand before retrying.")
     if check and r.returncode != 0:
         raise RuntimeError(f"git {' '.join(args)} failed:\n{(r.stderr or r.stdout).strip()}")
     return (r.stdout or "").strip()
@@ -111,7 +127,19 @@ def quarantine_collisions() -> list:
 
 def revert_ci_churn() -> None:
     """Restore CI-owned paths from the INDEX — discards unstaged CI regeneration only.
-    Anything you STAGED survives (it lives in the index). Never touches source outside CI_CHURN."""
+    Anything you STAGED survives (it lives in the index). Never touches source outside CI_CHURN.
+
+    TRAP (hit live, fire 147, 2026-08-09): CI_CHURN is the whole `data/` tree, but not everything
+    under it is disposable CI regeneration — `data/excava/current_increment.json` and
+    `data/project_memory/*` are THIS loop's own tooling state (loop_contract.start/finish,
+    project_memory.log). Calling `ship(-a <code files only>)` a second time in the same fire, after
+    an earlier `loop_contract start` / `project_memory log` wrote to those paths but did NOT
+    include them in that `-a` list, silently discards the unstaged write here with zero error —
+    the CLI reports success because the CODE commit did succeed, but the tracking state quietly
+    reverted to whatever was last committed. If a fire calls `ship` more than once, EVERY `-a`
+    list must include any `data/excava/current_increment.json` / `data/project_memory/*` writes
+    made since the previous ship, or redo those calls after the fact and fold them into the next
+    ship instead of assuming they survived."""
     _git(["checkout", "--", *CI_CHURN], check=False)
 
 
@@ -343,7 +371,16 @@ def sync() -> list:
     moved = quarantine_collisions()
     # --autostash: an unattended ship must not die because a live session left a modified
     # file behind (proven 2026-07-20: the drain's recovery ship failed on exactly that).
-    r = subprocess.run(["git", "pull", "--rebase", "--autostash", "--no-edit"], cwd=str(ROOT), text=True, capture_output=True)
+    # timeout= (fires 145-147, see _git's docstring): this call fetches from origin under the
+    # hood, so it is exactly as exposed to a silent network hang as push() was.
+    try:
+        r = subprocess.run(["git", "pull", "--rebase", "--autostash", "--no-edit"],
+                            cwd=str(ROOT), text=True, capture_output=True, timeout=90)
+    except subprocess.TimeoutExpired:
+        raise RuntimeError(
+            "git pull --rebase --autostash TIMED OUT after 90s — likely a network stall talking to "
+            "origin, not a real rebase failure. An autostash may be sitting on the stash; check "
+            "`git stash list` and `git status` by hand before retrying.")
     while r.returncode != 0 and "conflict" in (r.stdout + r.stderr).lower():
         conflicted = [f for f in _git(["diff", "--name-only", "--diff-filter=U"]).splitlines() if f]
         src = [f for f in conflicted if not f.startswith(("data/", "backups/"))]
@@ -361,9 +398,20 @@ def sync() -> list:
     return moved
 
 
-def push() -> str:
-    """The safe push: back up history, sync, push, then PROVE it landed (origin == HEAD)."""
+def push(verbose=True) -> str:
+    """The safe push: back up history, sync, push, then PROVE it landed (origin == HEAD).
+
+    verbose=True (fires 145-147): print+flush a marker BEFORE each phase, not just the final
+    result. Three fires in a row hung silently inside this function with zero output — a bash
+    `timeout` wrapper killed the process before anyone could tell whether it died in backup_bundle
+    (local, shouldn't hang), sync (fetches from origin), or the push itself. A print that lands
+    before the hang is the difference between "which of 3 steps stalled" and "no idea.\""""
+    def _say(msg):
+        if verbose:
+            print(msg, flush=True)
+    _say("git_safe.push: backing up history...")
     backup_bundle()
+    _say("git_safe.push: syncing (fetch + rebase onto origin/main)...")
     sync()
     # Explicit refspec (2026-07-26 fix): a plain `git push` relies on push.default/the local
     # branch name matching its upstream, which breaks whenever the working branch isn't
@@ -371,7 +419,9 @@ def push() -> str:
     # branch of your current branch does not match the name of your current branch." Every other
     # check in this module already hardcodes origin/main (see sync/quarantine_collisions), so
     # doing the same here is consistent, not a new assumption.
+    _say("git_safe.push: pushing to origin/main...")
     _git(["push", "origin", "HEAD:main"])
+    _say("git_safe.push: verifying origin == HEAD...")
     head, origin = _git(["rev-parse", "HEAD"]), _git(["rev-parse", "origin/main"])
     if head != origin:
         raise RuntimeError(f"push did NOT land — origin ({origin[:9]}) != HEAD ({head[:9]}). Investigate before continuing.")
@@ -427,12 +477,19 @@ def main() -> int:
         moved = sync()
         print(f"synced; quarantined {len(moved)} colliding file(s)" + (f" -> _ATTIC/quarantine" if moved else ""))
     elif args.cmd == "push":
-        print(f"pushed + verified: origin==HEAD @ {push()}")
+        h = push()
+        print(f"pushed + verified: origin==HEAD @ {h}")
     elif args.cmd == "ship":
         if not args.message:
             print("ship needs -m"); return 1
+        # split, not one f-string (fires 145-147): an f-string evaluates commit(...) AND push()
+        # before printing anything, so a hang inside push() produced a truly silent process —
+        # the commit had already landed but nothing said so. Printing commit's result first means
+        # a future hang still leaves "committed <sha>" on stdout to diagnose from.
         c = commit(args.message, args.add)
-        print(f"committed {c}; pushed + verified @ {push()}")
+        print(f"committed {c}", flush=True)
+        h = push()
+        print(f"pushed + verified @ {h}")
     return 0
 
 

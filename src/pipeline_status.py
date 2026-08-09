@@ -31,8 +31,10 @@ LANES = [
      ["transcribe", "backfill", "fetch:"], 24),
     ("free_pool", "Free analysis pool", "Turns transcripts into skills/tools/connectors (free engines)",
      ["bulk-analyze"], 6),
+    # mine.yml's cron is once/day (24h gaps by design) — cadence must match or this lane
+    # false-flags "slow" for ~6h every single day even when it's running exactly on schedule.
     ("mine", "External mining", "Mines 80+ web feeds for new tools/skills/MCPs",
-     ["mine-feeds", "mine ", "discover:"], 12),
+     ["mine-feeds", "mine ", "discover:"], 24),
     ("claude_analyze", "Deep analysis (night-gated)", "Claude re-analysis + safety pass",
      ["analyze:"], 24),
     ("news", "AI news refresh", "Refreshes official-site AI news",
@@ -50,6 +52,15 @@ def _load(p: Path, default):
         return json.load(open(p, encoding="utf-8"))
     except Exception:
         return default
+
+
+def _is_shallow() -> bool:
+    try:
+        out = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "--is-shallow-repository"],
+                             capture_output=True, text=True, timeout=10)
+        return out.stdout.strip() == "true"
+    except Exception:
+        return False
 
 
 def _git_log(n: int = 500):
@@ -100,6 +111,7 @@ def _counts():
 
 def main() -> int:
     log = _git_log()
+    shallow = _is_shallow()
     lanes = []
     for key, label, what, prefixes, cad in LANES:
         matches = [dt for dt, msg in log if any(msg.startswith(p) for p in prefixes)]
@@ -107,7 +119,13 @@ def main() -> int:
         age_h = ((NOW - last).total_seconds() / 3600) if last else None
         runs_7d = sum(1 for dt in matches if (NOW - dt).days < 7)
         if age_h is None:
-            status = "idle"
+            # A shallow clone (this sandbox, and actions/checkout@v4's own fetch-depth=1
+            # default) may not have enough local history to find ANY match even when the lane
+            # is perfectly healthy — that's a checkout-depth artifact, not evidence of a stall
+            # (mirrors guardrails.py's G-P/G-T shallow-clone caveat). Report "unknown" instead
+            # of a false "idle", since maintenance_check/priorities both escalate "idle" lanes
+            # into high-impact dashboard alerts.
+            status = "unknown" if shallow else "idle"
         elif age_h <= cad * 1.5:
             status = "live"
         elif age_h <= cad * 3:
@@ -154,7 +172,9 @@ def main() -> int:
         "history": hist,
     }, ensure_ascii=False, indent=2), encoding="utf-8")
     moved = ", ".join(f"+{v} {k}" for k, v in d24.items() if v > 0) or "no change"
-    print(f"pipeline_status: overall={overall}, {live}/{len(lanes)} lanes live; last 24h: {moved}")
+    unknown_n = sum(1 for l in lanes if l["status"] == "unknown")
+    tail = f", {unknown_n} can't-tell (shallow clone)" if unknown_n else ""
+    print(f"pipeline_status: overall={overall}, {live}/{len(lanes)} lanes live{tail}; last 24h: {moved}")
     return 0
 
 

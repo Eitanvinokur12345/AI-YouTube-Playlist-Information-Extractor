@@ -57,23 +57,53 @@ def main() -> int:
                        "fix": fix, "sample": (sample or [])[:5]})
 
     # ── Brain-breaking problems (the "white lines") ───────────────────────────────
-    # 1) Empty notes: items whose body would be blank (no description/use/what) -> blank graph dots.
-    def empty(items, fields, nk):
-        return [str(x.get(nk) or x.get("slug") or "?") for x in items
-                if not any(str(x.get(f, "")).strip() for f in fields)]
-    e_sk = empty(skills, ["description", "use_case", "tips"], "skill_name")
-    e_to = empty(tools, ["description"], "name")
-    e_co = empty(conns, ["what_it_does", "description"], "name")
-    if e_sk or e_to or e_co:
-        add("high", "brain", "Empty-body items render as blank 'white' nodes in the brain graph",
-            len(e_sk) + len(e_to) + len(e_co),
-            "Skip empty-body items from the brain (or backfill a one-line description) so they "
-            "stop appearing as contentless dots.", e_sk + e_to + e_co)
+    # 1) Empty notes: items whose body would be blank (no description/use/what) -> blank graph dots
+    #    -- UNLESS they carry a real link, in which case build_graph.py/build_brain.py already
+    #    skip them from both the in-app graph and the Obsidian vault (verified fire 117: both
+    #    builders' own `has_body()` gate does exactly this), so they never render as a blank node
+    #    anywhere. Treating those the same as a true dead-end (no body AND no link) mislabeled a
+    #    187-item mining-enrichment backlog as a "high severity, brain-breaking" defect it isn't
+    #    -- it's a real gap, just a different and lower-urgency one. Skills stay strict: a bare
+    #    product-name skill with a real link but zero captured technique is still boilerplate
+    #    (the exact anti-boilerplate pattern fire 11 fixed at the point of creation), so a link
+    #    does NOT excuse a skill the way it excuses a tool/connector stub awaiting enrichment.
+    def _has_link(x):
+        return any(str(x.get(k, "")).strip()
+                   for k in ("github", "homepage", "website", "url", "source_url"))
+
+    def split_empty(items, fields, nk, link_excuses=False):
+        blank, stub = [], []
+        for x in items:
+            if any(str(x.get(f, "")).strip() for f in fields):
+                continue
+            label = str(x.get(nk) or x.get("slug") or "?")
+            (stub if (link_excuses and _has_link(x)) else blank).append(label)
+        return blank, stub
+
+    e_sk_blank, _ = split_empty(skills, ["description", "use_case", "tips"], "skill_name")
+    e_to_blank, e_to_stub = split_empty(tools, ["description"], "name", link_excuses=True)
+    e_co_blank, e_co_stub = split_empty(conns, ["what_it_does", "description"], "name", link_excuses=True)
+    blank = e_sk_blank + e_to_blank + e_co_blank
+    if blank:
+        add("high", "brain", "Empty-body items with no link either render as blank 'white' nodes in the brain graph",
+            len(blank),
+            "Skip empty-body, linkless items from the brain (or backfill a one-line description) "
+            "so they stop appearing as contentless dots.", blank)
+    stub = e_to_stub + e_co_stub
+    if stub:
+        add("medium", "data", "Discovered items have a real link but no description yet (already hidden "
+            "from the brain graph/vault, not a display bug -- just waiting on enrichment)",
+            len(stub),
+            "Backfill a one-line description (deep_retrieve / github_meta_enrich) so these become "
+            "real graph nodes instead of staying invisible.", stub)
 
     # 2) Title collisions: many items map to the SAME Obsidian note filename -> they overwrite each
-    #    other and the hub links all point at one node (a giant white star).
+    #    other and the hub links all point at one node (a giant white star). Items already marked
+    #    `duplicate_of` (fire 118: same real tool mined twice, folded together, kept for slug
+    #    stability) are a KNOWN, handled collision, not a fresh one -- don't keep re-flagging them.
     def collisions(items, nk):
-        c = Counter(_title(x.get(nk) or x.get("slug") or "") for x in items)
+        live = [x for x in items if not x.get("duplicate_of")]
+        c = Counter(_title(x.get(nk) or x.get("slug") or "") for x in live)
         return {k: n for k, n in c.items() if n > 1 and k}
     col = {}
     for items, nk in [(skills, "skill_name"), (tools, "name"), (conns, "name"), (prompts, "title")]:
@@ -83,9 +113,32 @@ def main() -> int:
             sum(col.values()), "De-duplicate or suffix colliding titles so each item is its own note.",
             list(col.keys()))
 
-    # 3) Oversized hubs: a category with hundreds of members renders as an unreadable hairball.
+    # 3) Oversized hubs: a category with hundreds of RAW members would render as an unreadable
+    #    hairball -- but both real graph-view consumers already mitigate this unconditionally, so
+    #    flagging raw category size was a false positive (found fire 130, 2026-08-08):
+    #      - src/build_graph.py's dashboard graph caps every hub at CAP_PER_HUB items, regardless
+    #        of how big the category actually is.
+    #      - src/build_brain.py's Obsidian vault splits any category over HUB_CAP into alphabetical
+    #        sub-hubs of ~SUB_SIZE members each (`sub_hubs()`), so no single hub node ever radiates
+    #        more than that many edges.
+    #    So the only real signal here is a REGRESSION in those caps, not the raw category size.
+    #    Import the actual constants (no I/O at import time in either module) and recompute what
+    #    each category's rendered hub size would be under each consumer; only flag if that
+    #    mitigated size is itself unreadable.
+    try:
+        from src.build_graph import CAP_PER_HUB
+        from src.build_brain import HUB_CAP, SUB_SIZE
+    except Exception:
+        CAP_PER_HUB, HUB_CAP, SUB_SIZE = 55, 90, 50
+    UNREADABLE_HUB = 150  # a mitigated hub this big means the caps themselves were loosened too far
     cat_counts = Counter(str(x.get("category") or "other") for x in (tools + skills))
-    big = {c: n for c, n in cat_counts.items() if n > 120}
+
+    def rendered_size(n: int) -> int:
+        graph_hub = min(n, CAP_PER_HUB)
+        vault_hub = n if n <= HUB_CAP else SUB_SIZE
+        return max(graph_hub, vault_hub)
+
+    big = {c: n for c, n in cat_counts.items() if rendered_size(n) > UNREADABLE_HUB}
     if big:
         add("medium", "brain", "Oversized category hubs become hairballs in the graph view",
             sum(big.values()), "Sub-bucket big categories (cap members per hub, add sub-hubs) so the "
@@ -103,7 +156,10 @@ def main() -> int:
         add("low", "data", "Connectors with no URL/source can't be installed or verified",
             len(orphan_conn), "Resolve each connector's repo/package URL (or drop it).", orphan_conn)
 
-    noq = [t.get("name") for t in tools if not t.get("quality_score")]
+    # quality_score 0 is a deliberate score (mine_feeds/gemini_video_analyze template defaults to
+    # 1; an item scored 0 was explicitly marked sub-scale, e.g. a hype anti-example, not left
+    # unscored) -- `not t.get(...)` treated that falsy-but-real 0 the same as a missing score.
+    noq = [t.get("name") for t in tools if t.get("quality_score") is None]
     if noq:
         add("low", "data", "Tools with no quality score can't be ranked",
             len(noq), "Score them in the next analysis pass.", noq)

@@ -1,16 +1,18 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-309` (dept) · 2026-07-29T20:59:43.005946+00:00
-> Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-visual-mine-great-designs-fr-309` (dept) · 2026-08-07T00:56:34.679207+00:00
+> Participants: Easel, Squint, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+Easel captures a full-page screenshot of the official Agent Platform Selection Rule page for design extraction.
 
 **Plan:**
-1. Use Playwright MCP server to capture high-quality screenshots of target websites (e.g., Clash of Clans).
-2. Store screenshots in a designated `/hub` directory with clear filenames (e.g., `clash_of_clans_homepage.png`).
-3. Extract design patterns (colors, typography, layouts) from screenshots using a tool like ColorThief or manual annotation.
-4. Curate taste material (e.g., UI components, animations) into a `/taste` subdirectory.
-5. Document findings in a `README.md` with tags (e.g., `#hero-section`, `#color-palette`).
-6. Sync the `/hub` folder to the central design repository for team access.
+1. Easel captures a high-resolution full-page screenshot of the official Agent Platform Selection Rule page.
+2. Screenshot saved as a high-quality image in the hub under `/design-patterns/agent-platform-selection-rule.png`.
+3. Lead reviews the artifact and extracts design patterns (e.g., visual hierarchy, typography, spacing).
+4. Patterns documented in a markdown file (`/design-patterns/agent-platform-selection-rule-analysis.md`).
+5. Shared with the team for feedback and potential reuse in the hub.
+6. Archive original screenshot and analysis in the design system’s `/archive/` folder.
 
-**What changed:** Automated screenshot capture and structured design asset organization.
+**What changed:**
+Target page shifted from MCP website to Agent Platform Selection Rule page for focused decision-making framework extraction.

@@ -17,7 +17,6 @@ import traceback
 from datetime import datetime, timezone
 
 WORK_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TODAY = datetime(2026, 6, 3, tzinfo=timezone.utc)
 
 
 # ── AI Tool knowledge base ─────────────────────────────────────────────────────
@@ -150,7 +149,7 @@ NON_AI_DISQUALIFIERS = [
 def load_json(path, default=None):
     full = os.path.join(WORK_DIR, path)
     if os.path.exists(full):
-        with open(full) as f:
+        with open(full, encoding='utf-8') as f:
             return json.load(f)
     return default if default is not None else {}
 
@@ -158,9 +157,29 @@ def load_json(path, default=None):
 def save_json(path, data):
     full = os.path.join(WORK_DIR, path)
     os.makedirs(os.path.dirname(full), exist_ok=True)
-    with open(full, 'w') as f:
+    with open(full, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
         f.write('\n')
+
+
+def reconcile_index(index_data, skills_data):
+    """index.json must hold exactly the slugs skills.json has. A slug missing from
+    index_data (present in skills.json but not indexed) is invisible to process_video's
+    `slug in index_data` dedup check, so its next endorsement falls through to the
+    "new skill" branch and appends a duplicate record instead of merging."""
+    valid_slugs = {s['slug'] for s in skills_data['skills']}
+    for slug in set(index_data.keys()) - valid_slugs:
+        del index_data[slug]
+    by_slug = {s['slug']: s for s in skills_data['skills']}
+    for slug in valid_slugs - set(index_data.keys()):
+        skill = by_slug[slug]
+        index_data[slug] = {
+            'score': skill.get('quality_score', 0),
+            'video_quality_score': skill.get('video_quality_score'),
+            'starred': skill.get('starred', False),
+            'target_tool': skill.get('target_tool', 'claude'),
+        }
+    return index_data
 
 
 def is_relevant(video):
@@ -186,7 +205,7 @@ def is_relevant(video):
 def compute_age_months(published_at):
     try:
         pub = datetime.fromisoformat(published_at.replace('Z', '+00:00'))
-        delta = TODAY - pub
+        delta = datetime.now(timezone.utc) - pub
         return max(0, delta.days / 30.0)
     except Exception:
         return 12.0
@@ -403,7 +422,7 @@ description: "Use {skill['skill_name']} for {skill.get('category', 'AI')} tasks 
 Extracted from: [{title}](https://www.youtube.com/watch?v={video_id})
 Channel: {channel}
 """
-    with open(path, 'w') as f:
+    with open(path, 'w', encoding='utf-8') as f:
         f.write(content)
 
 
@@ -624,8 +643,13 @@ def process_video(video, index_data):
             continue
         changed = False
         for entry in news_data.get('entries', []):
-            if entry.get('video_id') == video_id and not entry.get('summary'):
+            # '!= ai' (not 'not entry.get("summary")'): fetch.py's classify_news() now
+            # fills every entry with a cheap 'auto' summary immediately, so this must
+            # still be able to upgrade an 'auto' entry with this pass's rate_quality()
+            # score, not just fire once on entries that predate that fix (empty summary).
+            if entry.get('video_id') == video_id and entry.get('summary_quality') != 'ai':
                 entry['summary'] = news_summary
+                entry['summary_quality'] = 'auto'
                 entry['video_quality_score'] = vqs
                 entry['low_quality_source'] = low_quality
                 changed = True
@@ -726,19 +750,22 @@ def main():
         files = glob.glob(os.path.join(WORK_DIR, 'data/_pending/*.json'))
         records = []
         for f in files:
-            with open(f) as fh:
+            with open(f, encoding='utf-8') as fh:
                 d = json.load(fh)
             records.append({'video_id': d['video_id'], 'publishedAt': d.get('publishedAt', ''), 'file_path': f})
         records.sort(key=lambda x: x['publishedAt'], reverse=True)
-        with open(sorted_path, 'w') as out:
+        with open(sorted_path, 'w', encoding='utf-8') as out:
             json.dump(records, out)
     else:
-        with open(sorted_path) as f:
+        with open(sorted_path, encoding='utf-8') as f:
             records = json.load(f)
 
     print(f"Processing up to {max_videos} videos newest_first (total: {len(records)})")
 
     index_data = load_json('data/index.json', {})
+    skills_data_startup = load_json('data/skills.json', {'videos_seen': [], 'skills': []})
+    reconcile_index(index_data, skills_data_startup)
+    save_json('data/index.json', index_data)
     processed = skipped = errors = skills_total = 0
 
     for i, meta in enumerate(records[:max_videos]):
@@ -748,7 +775,7 @@ def main():
         if not os.path.exists(src_path):
             continue  # already processed
 
-        with open(src_path) as f:
+        with open(src_path, encoding='utf-8') as f:
             video = json.load(f)
 
         title = video.get('title', video_id)

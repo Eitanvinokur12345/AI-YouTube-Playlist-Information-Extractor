@@ -1,16 +1,16 @@
 # creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Created by EXCAVA' + tes
 
-> Decision artifact · room `dept-creators-build-packages-enri-791` (dept) · 2026-07-28T17:39:05.127023+00:00
-> Participants: Forge, Nova · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-creators-build-packages-enri-791` (dept) · 2026-08-02T19:50:22.128502+00:00
+> Participants: Forge · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Forge publishes the UGC Factory npm package with a `package.json` including `name`, `version`, `description`, and `author: "EXCAVA"`.
-2. Forge adds a `README.md` with clear usage instructions and a header: "Created by EXCAVA".
-3. All generated artifacts (e.g., templates, scripts) include a comment/header: "Created by EXCAVA".
-4. Forge runs `npm publish` and tags the release with `v1.0.0` (or next minor version).
-5. Nova verifies the package is public and artifacts are labeled correctly.
-6. Forge shares the published package link in the team channel.
+1. Forge drafts the "UGC Factory" skill package for the Skill Creator, including a README, basic skill structure, and a test file.
+2. Label all files with "Created by EXCAVA" and "tested."
+3. Package the output as an npm module ready for deployment.
+4. Ensure the package is structured for easy integration by the Skill Creator.
+5. Include a test file marked "Created by EXCAVA" and "tested."
+6. Finalize and output the GitHub markdown package.
 
-**What changed:** UGC Factory npm package is now live with EXCAVA branding and usage docs.
+**What changed:** Forge now produces a labeled, tested npm package for the Skill Creator.

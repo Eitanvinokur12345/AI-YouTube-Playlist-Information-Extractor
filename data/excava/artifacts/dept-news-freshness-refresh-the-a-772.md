@@ -1,16 +1,15 @@
 # news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
 
-> Decision artifact · room `dept-news-freshness-refresh-the-a-772` (dept) · 2026-07-30T20:01:39.464672+00:00
-> Participants: Scoop, Wire · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-news-freshness-refresh-the-a-772` (dept) · 2026-08-03T05:39:50.766200+00:00
+> Participants: Scoop, Factcheck, Wire · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Fetch the latest AI-news digest from OpenAI’s official blog.
-2. Pull NVIDIA’s latest research updates.
-3. Curate a list of the newest AI developments.
-4. Include direct links to primary sources.
-5. Format the digest in GitHub markdown.
-6. Ensure the output is fresh and sourced from official/company/national sources.
+1. Fetch the latest AI-news digest from OpenAI’s official blog (2024-05-30).
+2. Compile a concise summary highlighting key decisions, trade-offs, and fresh insights.
+3. Extract three key AI decisions: (1) ChatGPT Dreaming Memory rollout, (2) NoteGPT launch for YouTube auto-summarization.
+4. Format the output as a plain-language artifact ready for immediate use.
+5. Publish the AI-headlines digest in GitHub markdown.
 
-**What changed:** Replaced Google DeepMind with NVIDIA to align with the Wire’s specified sources.
+**What changed:** Added NoteGPT launch to the digest.

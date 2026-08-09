@@ -20,7 +20,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-from src import git_safe, guardrails, loop_contract
+from src import git_safe, guardrails, loop_contract, net_canary
 
 ROOT = Path(__file__).parent.parent
 OUT = ROOT / "data" / "standing_checks.json"
@@ -76,6 +76,10 @@ def run() -> dict:
     # obeyed only because a fire happened to open the file. Folding its status in here means a
     # drifting fire is VISIBLE at the one point every fire already runs.
     contract = loop_contract.status()
+    # Fire 124: surface egress capability up front. Fires 122/123 each spent real time
+    # rediscovering by hand that a repo-scoped cloud session can't do the network-verify/
+    # mining backlog — this puts the same verdict where every fire already looks first.
+    egress = net_canary.describe()
 
     needs_attention = (
         not remote["fetch_ok"]
@@ -91,6 +95,7 @@ def run() -> dict:
         "guardrails": {"passing": gr["passing"], "total": gr["total"],
                        "critical_failures": gr["critical_failures"]},
         "loop_contract": contract,
+        "egress": egress,
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(result, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -125,6 +130,9 @@ def main() -> int:
 
     g = r["guardrails"]
     print(f"  guardrails: {g['passing']}/{g['total']} passing, {g['critical_failures']} critical failure(s)")
+
+    eg = r["egress"]
+    print(f"  {'OK' if eg['open'] else '!!'} egress: {eg['note']}")
 
     c = r["loop_contract"]
     if not c["contract_present"]:

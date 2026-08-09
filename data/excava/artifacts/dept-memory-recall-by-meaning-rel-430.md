@@ -1,16 +1,16 @@
 # memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.
 
-> Decision artifact · room `dept-memory-recall-by-meaning-rel-430` (dept) · 2026-07-31T03:50:34.168182+00:00
+> Decision artifact · room `dept-memory-recall-by-meaning-rel-430` (dept) · 2026-08-03T18:51:17.231850+00:00
 > Participants: Graft · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Execute the memory linking command to connect all existing memos in the Hindsight database via semantic relationships.
-2. Validate the graph by ensuring all unembedded elements are explicitly linked to relevant nodes.
-3. Prune redundant or weakly connected edges to optimize graph clarity.
-4. Generate a summary report of the newly formed memory graph for review.
-5. Store the updated graph in the Hindsight database with a timestamp.
-6. Notify the user of completion and provide access to the refined memory structure.
+1. Query the Hindsight memory database via the MCP server to retrieve all unembedded memory elements.
+2. Parse the raw list of unlinked facts/ideas to identify relationships and missing connections.
+3. Embed isolated elements into the brain graph by linking them to existing nodes or creating new ones.
+4. Validate integration by cross-referencing related memories and ensuring logical consistency.
+5. Update the memory graph with newly established connections for future recall.
+6. Log the changes in the system for traceability and refinement.
 
-**What changed:** All memos are now fully linked by meaning, forming a cohesive memory graph.
+**What changed:** Unembedded memory elements were identified and integrated into the brain graph.

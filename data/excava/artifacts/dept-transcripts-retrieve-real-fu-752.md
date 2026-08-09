@@ -1,13 +1,16 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-752` (dept) · 2026-07-17T10:00:22.007159+00:00
-> Participants: Reel, Echo · synthesized by groq/llama-3.3-70b-versatile
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-752` (dept) · 2026-08-07T07:58:32.764571+00:00
+> Participants: Reel, Scriv, Echo · synthesized by mistral/mistral-small-latest
 
-**Decision:** Retrieve full transcripts for pending videos using the kimtaeyoon83/mcp-server-youtube-transcript tool
+**Decision:**
+
 **Plan:**
-1. Run the kimtaeyoon83/mcp-server-youtube-transcript tool on each pending video to generate full transcripts with accurate timestamps
-2. Confirm the existence of each generated transcript to ensure completeness
-3. Review the transcripts for quality and accuracy
-4. Upload the completed transcripts to the relevant repository
-5. Notify the lead that the task is complete and the transcripts are available for review
-**What changed:** The method for retrieving full transcripts was finalized using the kimtaeyoon83/mcp-server-youtube-transcript tool
+1. Reel executes the `kimtaeyoon83/mcp-server-youtube-transcript` tool against the pending video list.
+2. The tool retrieves full transcripts for each video or logs misses for manual review.
+3. Reel documents any misses with video IDs and timestamps for follow-up.
+4. Scriv reviews the output for completeness and flags discrepancies.
+5. Echo archives the results in the designated transcript repository.
+6. Notify stakeholders of completion or required manual intervention.
+
+**What changed:** Reel’s tool execution is now formally approved and scheduled.

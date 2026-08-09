@@ -1,18 +1,15 @@
 # analysis: Deep-analyze every element from its FULL source (whole transcript/repo) + enrich from >=1 
 
-> Decision artifact · room `dept-analysis-deep-analyze-every-822` (dept) · 2026-07-30T20:58:54.813539+00:00
-> Participants: Chisel · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-analysis-deep-analyze-every-822` (dept) · 2026-08-07T11:28:15.764162+00:00
+> Participants: Chisel, Sift, Marrow · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Execute a structured, data-driven synthesis of the earnings call transcript to extract executive sentiment, risk flags, and unresolved tensions for strategic prioritization.
 
 **Plan:**
-1. **BloodHound-MCP Integration:** Deploy BloodHound-MCP against the full earnings call transcript to auto-map every executive mention, sentiment shift (positive/negative/neutral), and unresolved risk flag (e.g., regulatory, operational, or financial concerns).
-2. **Temporal & Contextual Linking:** Cross-reference extracted data with prior calls, market events, and internal benchmarks to identify patterns, contradictions, or escalating risks (e.g., repeated mentions of supply chain delays or compliance issues).
-3. **Sentiment & Risk Scoring:** Assign weighted scores to sentiment shifts and risk flags based on frequency, severity, and executive authority (e.g., CFO vs. mid-level manager), then rank by materiality for leadership review.
-4. **Graph Visualization:** Generate a real-time threat graph (e.g., Neo4j or custom dashboard) showing connections between executives, risks, and external events, with drill-down capability for deep dives.
-5. **Stakeholder Alignment:** Validate top 10 risks with legal, finance, and ops teams to confirm accuracy and prioritize action items (e.g., follow-up Q&A prep, risk mitigation strategies).
-6. **Iterative Refinement:** Schedule a post-call debrief with BloodHound-MCP to refine the model based on feedback (e.g., false positives in sentiment analysis, missing contextual nuances).
+1. **Execute BloodHound-MCP** on the full earnings call transcript to map speaker language patterns, sentiment shifts, thematic clusters, and decision drivers.
+2. **Timestamp all sentiment shifts** for temporal analysis, as suggested by Sift.
+3. **Generate a structured graph** of actors, relations, contradictions, and emphasis points for the lead’s review.
+4. **Validate outputs** by cross-checking thematic clusters against the full transcript for accuracy.
+5. **Deliver the final report** with timestamped sentiment shifts, thematic clusters, and decision drivers in a clear, actionable format.
 
-**What changed:**
-Shifted from ad-hoc analysis to a systematic, graph-backed framework for executive risk prioritization.
+**What changed:** Added timestamping for temporal analysis.

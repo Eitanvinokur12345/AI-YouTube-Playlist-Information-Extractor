@@ -135,6 +135,27 @@
      "name": "AI Skill Bundling"
     }
    ]
+  },
+  {
+   "id": "pitch-95192",
+   "what": "dedicate a build lane to G1 - Omniscience",
+   "why": "G1 sits at 42/100 (767/1794 videos analyzed (42.8%); 3/7 lanes live); a focused lane would move the goal instead of leaving it at-risk",
+   "class": "deeper focus (P5)",
+   "owner_what": "Approve to spin up a lane that pushes G1 'Omniscience' toward its target.",
+   "at": "2026-08-03T08:33:32.045086+00:00",
+   "status": "pending",
+   "requested_by": "Improve department (North-Star goal tracker, data/goals_status.json)",
+   "need": "Of your 9 North-Star goals, G1 'Omniscience' is the weakest at 42/100 — concretely: 767/1794 videos analyzed (42.8%); 3/7 lanes live.",
+   "importance": "High — G1 is the LOWEST-scoring goal; every beat without a dedicated lane leaves the weakest link weakest.",
+   "missing": "A recurring CI lane whose only job is closing this goal's gap (like the analysis and links lanes that already exist for other goals).",
+   "plan": [
+    "Add a scheduled lane that each beat does the one action that moves G1 (e.g. process N more items, fill N gaps) and records the score delta.",
+    "Re-score the goal after each run so you watch the number climb in the cockpit.",
+    "Stop the lane automatically once G1 clears its target, so it never runs wastefully."
+   ],
+   "effort": "Small: reuses the existing lane machinery; ~1 beat to add, then it self-runs.",
+   "reversible": "Fully reversible — remove the lane entry and nothing else is touched; it only adds work, never deletes.",
+   "hub_candidates": []
   }
  ]
 }

@@ -1,15 +1,18 @@
 # watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.
 
-> Decision artifact · room `dept-watch-analyze-video-audio-vi-776` (dept) · 2026-07-27T17:51:50.809511+00:00
-> Participants: Scope, Iris · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-watch-analyze-video-audio-vi-776` (dept) · 2026-08-03T01:31:04.658539+00:00
+> Participants: Scope, Frame, Iris · synthesized by mistral/mistral-small-latest
 
-**Decision:** Analyze the latest AI marketing demo using Arcads AI Video to enhance marketing strategies.
+**Decision:**
+Run Arcads AI Video skill on the *Science of Sleep Optimization* video to generate a multimodal analysis artifact.
 
 **Plan:**
-1. Run Arcads AI Video on the latest AI marketing demo to extract visual cues.
-2. Identify pacing and on-screen text that contribute to viewer engagement.
-3. Compile the findings into a structured one-page analysis report.
-4. Review the analysis to highlight key engagement triggers.
-5. Propose refinements to the marketing strategy based on the analysis.
+1. Execute Arcads AI Video skill on the *Science of Sleep Optimization* video.
+2. Extract and synthesize visual cues, audio nuances, and contextual insights.
+3. Generate a standalone analysis combining all extracted content.
+4. Format the output as a GitHub markdown repo artifact.
+5. Ensure the artifact includes visual, audio, and contextual layers beyond the transcript.
+6. Validate the artifact for completeness and accuracy.
 
-**What changed:** The scope of analysis was defined, focusing on visual elements to improve marketing effectiveness.
+**What changed:**
+Expanded scope from *AI marketing* to *Science of Sleep Optimization* video for multimodal analysis.

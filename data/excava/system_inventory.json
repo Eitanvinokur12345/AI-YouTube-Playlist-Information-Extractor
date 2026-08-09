@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-08-02T17:51:38.779800+00:00",
- "total": 115,
+ "generated_at": "2026-08-09T17:09:42.230539+00:00",
+ "total": 119,
  "counts": {
-  "wired": 92,
-  "operator": 23,
+  "wired": 95,
+  "operator": 24,
   "orphaned": 0,
   "dead": 0
  },
@@ -78,7 +78,6 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "data/dev_construction.json"
    ],
    "imported_by": [
@@ -92,8 +91,8 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
-    "data/dev_construction.json"
+    "data/dev_construction.json",
+    "data/tutorials.json"
    ],
    "imported_by": [
     "excava_core",
@@ -147,21 +146,36 @@
    "imports": []
   },
   "analyze_batch": {
-   "status": "operator",
-   "loc": 796,
+   "status": "wired",
+   "loc": 823,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "brain/Architecture.md",
     "data/dev_construction.json",
     "data/improvement_suggestions.json",
     "data/review_findings.json"
    ],
    "imported_by": [
-    "backfill_skill_md"
+    "analyze_batch_test",
+    "backfill_skill_md",
+    "fetch"
    ],
    "imports": []
+  },
+  "analyze_batch_test": {
+   "status": "operator",
+   "loc": 65,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json",
+    "data/improvement_suggestions.json"
+   ],
+   "imported_by": [],
+   "imports": [
+    "analyze_batch"
+   ]
   },
   "audit_decisions": {
    "status": "operator",
@@ -169,7 +183,6 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "QUESTIONS.md",
     "data/dev_construction.json",
     "docs/dashboard.js"
@@ -183,7 +196,6 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "data/dev_construction.json"
    ],
    "imported_by": [],
@@ -214,15 +226,14 @@
     "bulk_analyze.yml"
    ],
    "documented_in": [
-    "AWAY_LOG.md",
     "data/dev_construction.json"
    ],
    "imported_by": [],
    "imports": []
   },
   "build_brain": {
-   "status": "operator",
-   "loc": 260,
+   "status": "wired",
+   "loc": 262,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
@@ -230,7 +241,9 @@
     "data/dev_construction.json",
     "docs/BIGGER_BRAIN.md"
    ],
-   "imported_by": [],
+   "imported_by": [
+    "maintenance_check"
+   ],
    "imports": []
   },
   "build_capabilities": {
@@ -239,7 +252,6 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "data/dev_construction.json"
    ],
    "imported_by": [
@@ -264,7 +276,7 @@
   },
   "build_graph": {
    "status": "wired",
-   "loc": 182,
+   "loc": 184,
    "entrypoint": true,
    "invoked_by": [
     "bulk_analyze.yml",
@@ -275,7 +287,9 @@
     "data/dev_construction.json",
     "docs/dashboard.js"
    ],
-   "imported_by": [],
+   "imported_by": [
+    "maintenance_check"
+   ],
    "imports": []
   },
   "build_hub_api": {
@@ -284,7 +298,6 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "SESSION_HANDOFF.md",
     "data/dev_construction.json",
     "data/tutorials.json"
@@ -340,7 +353,6 @@
     "mine.yml"
    ],
    "documented_in": [
-    "AWAY_LOG.md",
     "brain/Systems and Protocols.md",
     "data/dev_construction.json"
    ],
@@ -376,18 +388,18 @@
   },
   "bulk_analyze": {
    "status": "wired",
-   "loc": 480,
+   "loc": 493,
    "entrypoint": true,
    "invoked_by": [
     "bulk_analyze.yml",
     "engine_selftest.yml"
    ],
    "documented_in": [
-    "AWAY_LOG.md",
     "QUESTIONS.md",
     "brain/Systems and Protocols.md",
     "config.json",
-    "data/dev_construction.json"
+    "data/dev_construction.json",
+    "data/improvement_suggestions.json"
    ],
    "imported_by": [
     "cross_tab_check",
@@ -407,7 +419,6 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "data/dev_construction.json"
    ],
    "imported_by": [],
@@ -452,7 +463,6 @@
     "mine.yml"
    ],
    "documented_in": [
-    "AWAY_LOG.md",
     "NEXT_SESSION.md",
     "QUESTIONS.md",
     "data/dev_construction.json"
@@ -475,7 +485,6 @@
     "visual.yml"
    ],
    "documented_in": [
-    "AWAY_LOG.md",
     "data/dev_construction.json"
    ],
    "imported_by": [],
@@ -498,23 +507,37 @@
   },
   "deep_retrieve": {
    "status": "wired",
-   "loc": 271,
+   "loc": 303,
    "entrypoint": true,
    "invoked_by": [
     "core_spoton.yml"
    ],
    "documented_in": [
-    "AWAY_LOG.md",
     "EXCAVA_V2_STEPS.md",
     "data/dev_construction.json"
    ],
    "imported_by": [
+    "deep_retrieve_test",
     "github_meta_enrich",
     "local_worker"
    ],
    "imports": [
     "element_model",
-    "excava_engines"
+    "excava_engines",
+    "net_canary"
+   ]
+  },
+  "deep_retrieve_test": {
+   "status": "operator",
+   "loc": 87,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": [
+    "deep_retrieve"
    ]
   },
   "discover_promote": {
@@ -557,7 +580,6 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "SESSION_HANDOFF.md",
     "data/dev_construction.json"
    ],
@@ -593,7 +615,6 @@
     "core_spoton.yml"
    ],
    "documented_in": [
-    "AWAY_LOG.md",
     "EXCAVA_V2_STEPS.md",
     "data/dev_construction.json"
    ],
@@ -618,7 +639,6 @@
    ],
    "documented_in": [
     "AGENTIC_OS_STUDY.md",
-    "AWAY_LOG.md",
     "EXCAVA_PROGRAM.md",
     "EXCAVA_V2_ADDITIONS.md",
     "EXCAVA_V2_PLAN.md",
@@ -666,7 +686,6 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "EXCAVA_PROGRAM.md",
     "EXCAVA_V2_PLAN.md",
     "PORTABLE_HARNESS.md",
@@ -704,7 +723,6 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "EXCAVA_V2_ADDITIONS.md",
     "data/dev_construction.json"
    ],
@@ -755,15 +773,15 @@
   },
   "excava_chat": {
    "status": "wired",
-   "loc": 937,
+   "loc": 959,
    "entrypoint": true,
    "invoked_by": [
     "bulk_analyze.yml"
    ],
    "documented_in": [
-    "AWAY_LOG.md",
     "EXCAVA_V2_PLAN.md",
     "EXCAVA_V2_STEPS.md",
+    "QUESTIONS.md",
     "data/dev_construction.json",
     "data/tutorials.json"
    ],
@@ -791,9 +809,9 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "SESSION_HANDOFF.md",
     "data/dev_construction.json",
+    "data/tutorials.json",
     "docs/dashboard.js"
    ],
    "imported_by": [
@@ -817,7 +835,6 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "data/dev_construction.json"
    ],
    "imported_by": [],
@@ -856,7 +873,6 @@
     "links.yml"
    ],
    "documented_in": [
-    "AWAY_LOG.md",
     "EXCAVA_V2_PLAN.md",
     "EXCAVA_V2_STEPS.md",
     "data/dev_construction.json"
@@ -913,7 +929,6 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "data/dev_construction.json"
    ],
    "imported_by": [
@@ -927,7 +942,6 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "EXCAVA_V2_PLAN.md",
     "EXCAVA_V2_STEPS.md",
     "data/dev_construction.json"
@@ -949,7 +963,6 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "QUESTIONS.md",
     "data/dev_construction.json"
    ],
@@ -967,7 +980,6 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "QUESTIONS.md",
     "data/dev_construction.json"
    ],
@@ -1014,13 +1026,14 @@
   },
   "fetch": {
    "status": "wired",
-   "loc": 684,
+   "loc": 742,
    "entrypoint": true,
    "invoked_by": [
     "fetch.yml"
    ],
    "documented_in": [
     "ANALYZE_SPEC.md",
+    "QUESTIONS.md",
     "README.md",
     "brain/Architecture.md",
     "brain/Cadence.md",
@@ -1033,7 +1046,9 @@
     "data/review_findings.json"
    ],
    "imported_by": [],
-   "imports": []
+   "imports": [
+    "analyze_batch"
+   ]
   },
   "gemini_video_analyze": {
    "status": "wired",
@@ -1043,7 +1058,6 @@
     "gemini_video.yml"
    ],
    "documented_in": [
-    "AWAY_LOG.md",
     "data/dev_construction.json"
    ],
    "imported_by": [],
@@ -1060,7 +1074,6 @@
     "bulk_analyze.yml"
    ],
    "documented_in": [
-    "AWAY_LOG.md",
     "data/dev_construction.json"
    ],
    "imported_by": [
@@ -1074,7 +1087,6 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "data/dev_construction.json"
    ],
    "imported_by": [],
@@ -1084,11 +1096,10 @@
   },
   "git_safe": {
    "status": "wired",
-   "loc": 441,
+   "loc": 498,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "AWAY_MODE.md",
     "CLAUDE.md",
     "EXCAVA_END_PLAN.md",
@@ -1100,6 +1111,7 @@
     "GUARDRAILS.md",
     "NEW_SESSION_PROMPT.md",
     "OVERHAUL_INTERVIEW_PROMPT.md",
+    "QUESTIONS.md",
     "SESSION_HANDOFF.md",
     "data/dev_construction.json"
    ],
@@ -1112,13 +1124,12 @@
   },
   "github_meta_enrich": {
    "status": "wired",
-   "loc": 227,
+   "loc": 223,
    "entrypoint": true,
    "invoked_by": [
     "core_spoton.yml"
    ],
    "documented_in": [
-    "AWAY_LOG.md",
     "AWAY_MODE.md",
     "QUESTIONS.md",
     "data/dev_construction.json"
@@ -1126,7 +1137,8 @@
    "imported_by": [],
    "imports": [
     "deep_retrieve",
-    "element_model"
+    "element_model",
+    "net_canary"
    ]
   },
   "goals_check": {
@@ -1184,7 +1196,6 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "GUARDRAILS.md",
     "QUESTIONS.md",
     "SESSION_HANDOFF.md",
@@ -1273,7 +1284,6 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "data/dev_construction.json",
     "docs/system_map.html"
    ],
@@ -1290,7 +1300,6 @@
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "data/dev_construction.json"
    ],
    "imported_by": [
@@ -1331,7 +1340,7 @@
   },
   "maintenance_check": {
    "status": "wired",
-   "loc": 149,
+   "loc": 205,
    "entrypoint": true,
    "invoked_by": [
     "bulk_analyze.yml",
@@ -1341,7 +1350,10 @@
     "data/dev_construction.json"
    ],
    "imported_by": [],
-   "imports": []
+   "imports": [
+    "build_brain",
+    "build_graph"
+   ]
   },
   "make_monsters": {
    "status": "operator",
@@ -1417,7 +1429,6 @@
     "mine.yml"
    ],
    "documented_in": [
-    "AWAY_LOG.md",
     "QUESTIONS.md",
     "data/dev_construction.json"
    ],
@@ -1448,6 +1459,23 @@
    ],
    "imports": []
   },
+  "net_canary": {
+   "status": "wired",
+   "loc": 70,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "data/dev_construction.json"
+   ],
+   "imported_by": [
+    "deep_retrieve",
+    "github_meta_enrich",
+    "standing_checks",
+    "verify_connectors",
+    "verify_elements"
+   ],
+   "imports": []
+  },
   "news": {
    "status": "wired",
    "loc": 423,
@@ -1457,7 +1485,6 @@
    ],
    "documented_in": [
     "ANALYZE_SPEC.md",
-    "AWAY_LOG.md",
     "IMPROVE.md",
     "PIPELINE.md",
     "QUESTIONS.md",
@@ -1502,17 +1529,29 @@
   },
   "or1_phase_test": {
    "status": "operator",
-   "loc": 287,
+   "loc": 293,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
+    "QUESTIONS.md",
     "data/dev_construction.json"
    ],
    "imported_by": [],
    "imports": [
     "excava_chat"
    ]
+  },
+  "or1_rubric_index": {
+   "status": "operator",
+   "loc": 159,
+   "entrypoint": false,
+   "invoked_by": [],
+   "documented_in": [
+    "QUESTIONS.md",
+    "data/dev_construction.json"
+   ],
+   "imported_by": [],
+   "imports": []
   },
   "pipeline_scout": {
    "status": "wired",
@@ -1529,7 +1568,7 @@
   },
   "pipeline_status": {
    "status": "wired",
-   "loc": 163,
+   "loc": 183,
    "entrypoint": true,
    "invoked_by": [
     "bulk_analyze.yml",
@@ -1590,11 +1629,10 @@
   },
   "process_video": {
    "status": "operator",
-   "loc": 371,
+   "loc": 376,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "brain/Architecture.md",
     "data/dev_construction.json",
     "data/improvement_suggestions.json",
@@ -1630,7 +1668,6 @@
     "excava_beat.yml"
    ],
    "documented_in": [
-    "AWAY_LOG.md",
     "AWAY_MODE.md",
     "PULSE.md",
     "SESSION_HANDOFF.md",
@@ -1655,13 +1692,12 @@
   },
   "relate": {
    "status": "wired",
-   "loc": 106,
+   "loc": 115,
    "entrypoint": true,
    "invoked_by": [
     "core_spoton.yml"
    ],
    "documented_in": [
-    "AWAY_LOG.md",
     "EXCAVA_V2_STEPS.md",
     "data/dev_construction.json"
    ],
@@ -1708,7 +1744,6 @@
     "links.yml"
    ],
    "documented_in": [
-    "AWAY_LOG.md",
     "data/created_by_excava.json",
     "data/dev_construction.json"
    ],
@@ -1764,7 +1799,6 @@
     "bulk_analyze.yml"
    ],
    "documented_in": [
-    "AWAY_LOG.md",
     "data/dev_construction.json"
    ],
    "imported_by": [
@@ -1780,7 +1814,6 @@
     "bulk_analyze.yml"
    ],
    "documented_in": [
-    "AWAY_LOG.md",
     "NEXT_SESSION.md",
     "brain/Systems and Protocols.md",
     "data/dev_construction.json"
@@ -1806,11 +1839,10 @@
   },
   "standing_checks": {
    "status": "operator",
-   "loc": 151,
+   "loc": 159,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "AWAY_LOG.md",
     "AWAY_MODE.md",
     "CLAUDE.md",
     "data/dev_construction.json"
@@ -1819,7 +1851,8 @@
    "imports": [
     "git_safe",
     "guardrails",
-    "loop_contract"
+    "loop_contract",
+    "net_canary"
    ]
   },
   "suggest_channels": {
@@ -1926,7 +1959,6 @@
     "gemini_video.yml"
    ],
    "documented_in": [
-    "AWAY_LOG.md",
     "QUESTIONS.md",
     "data/dev_construction.json"
    ],
@@ -1951,36 +1983,37 @@
   },
   "verify_connectors": {
    "status": "wired",
-   "loc": 259,
+   "loc": 263,
    "entrypoint": true,
    "invoked_by": [
     "connectors_verify.yml"
    ],
    "documented_in": [
-    "AWAY_LOG.md",
     "SESSION_HANDOFF.md",
     "data/dev_construction.json"
    ],
    "imported_by": [
     "excava_core"
    ],
-   "imports": []
+   "imports": [
+    "net_canary"
+   ]
   },
   "verify_elements": {
    "status": "wired",
-   "loc": 207,
+   "loc": 208,
    "entrypoint": true,
    "invoked_by": [
     "core_spoton.yml"
    ],
    "documented_in": [
-    "AWAY_LOG.md",
     "EXCAVA_V2_STEPS.md",
     "data/dev_construction.json"
    ],
    "imported_by": [],
    "imports": [
-    "element_model"
+    "element_model",
+    "net_canary"
    ]
   },
   "visual_extract": {

@@ -1,16 +1,16 @@
 # links: advance the links department's mission
 
-> Decision artifact · room `dept-links-advance-the-links-depa-118` (dept) · 2026-07-31T17:13:56.253445+00:00
-> Participants: Anchor, LinLea · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-links-advance-the-links-depa-118` (dept) · 2026-08-03T19:03:27.974547+00:00
+> Participants: Anchor, Tether, LinLea · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Run the link-checker tool against the department’s live inventory to generate a fresh report.
-2. Publish the prioritized link audit report with status and severity rankings.
-3. Assign fixes to the team based on the prioritized list.
-4. Track progress and update the report as fixes are implemented.
-5. Verify resolved links and remove outdated entries from the inventory.
-6. Document lessons learned for future link audits.
+1. Anchor runs the link-checker tool on the Mission Control Dashboard’s live links.
+2. Anchor generates a report of all broken or outdated links with their exact locations.
+3. Anchor compiles a verified, updated link inventory listing only active links with their titles and URLs.
+4. Anchor publishes the finalized link inventory on the Mission Control Dashboard.
+5. LinLea reviews the published inventory for accuracy and completeness.
+6. Team confirms the updated inventory aligns with the department’s mission.
 
-**What changed:** A fresh, prioritized link audit report is now available for the team to execute fixes.
+**What changed:** Active, verified link inventory published for Mission Control Dashboard.

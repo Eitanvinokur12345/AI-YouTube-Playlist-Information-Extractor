@@ -1,16 +1,13 @@
 # memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.
 
-> Decision artifact · room `dept-memory-recall-by-meaning-rel-148` (dept) · 2026-07-19T14:03:51.647454+00:00
-> Participants: Graft, Root · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-memory-recall-by-meaning-rel-148` (dept) · 2026-08-03T17:54:19.652925+00:00
+> Participants: Graft · synthesized by groq/llama-3.3-70b-versatile
 
-**Decision:**
-
+**Decision:** Recall by meaning and relate elements to build the brain graph and embed unembedded elements via querying the Hindsight memory database.
 **Plan:**
-1. Embed all recalled elements from the debate into the unified memory system via memory IDs.
-2. Connect existing memory IDs (`[Graft (memory-w1)]`) to the unified memory graph.
-3. Ensure future retrieval is optimized by meaning, not just keywords.
-4. Validate the embedding process for completeness and accuracy.
-5. Store the synthesized decision in the brain graph for cross-referencing.
-6. Close the room and finalize the memory integration.
-
-**What changed:** All debate elements are now embedded in the unified memory system for semantic retrieval.
+1. Query the Hindsight memory database via the MCP server to pull all unembedded memory elements.
+2. Review the raw list of unembedded items to identify relationships and patterns.
+3. Organize the unembedded elements into categories based on their meanings and connections.
+4. Embed the unembedded elements into the brain graph by creating new links and associations.
+5. Validate the embedding process by recalling the newly embedded elements to ensure successful integration.
+**What changed:** The approach to memory recall now incorporates querying the Hindsight database to systematically embed unembedded elements.

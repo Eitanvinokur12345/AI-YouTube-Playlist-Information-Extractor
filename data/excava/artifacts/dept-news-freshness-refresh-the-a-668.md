@@ -1,16 +1,13 @@
 # news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
 
-> Decision artifact · room `dept-news-freshness-refresh-the-a-668` (dept) · 2026-07-31T21:36:41.967170+00:00
-> Participants: Scoop · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-news-freshness-refresh-the-a-668` (dept) · 2026-08-03T18:18:36.502939+00:00
+> Participants: Scoop, Factcheck, Wire · synthesized by groq/llama-3.3-70b-versatile
 
-**Decision:**
-
-**Plan:**
-1. Fetch the latest AI-news digest from OpenAI’s official blog (https://openai.com/blog/).
-2. Fetch the latest research updates from Google DeepMind (https://deepmind.google/research/).
-3. Curate the combined list, removing duplicates and sorting by publication date (newest first).
-4. Format the curated list as a GitHub markdown table with columns: *Source*, *Title*, *Date*, *Link*.
-5. Save the output as `ai-news-digest.md` in the repository’s root.
-6. Commit and push the changes with the message: "Update AI-news digest from OpenAI and DeepMind."
-
-**What changed:** Added fresh AI developments from OpenAI and Google DeepMind.
+**Decision:** Refresh the AI-news digest from the newest official sources.
+1. **Plan:**
+    1. Fetch the latest AI-news digest from OpenAI’s official blog.
+    2. Compile a concise summary highlighting key decisions, trade-offs, and fresh updates.
+    3. Publish the AI-headlines digest, including updates on OpenAI, Google, and the EU’s AI Act.
+    4. Ensure the output is in plain language for immediate review.
+    5. Verify the action is valid MISSION work through fact-checking.
+2. **What changed:** The AI-news digest has been updated with the latest information from official sources, including OpenAI, Google, and the EU.

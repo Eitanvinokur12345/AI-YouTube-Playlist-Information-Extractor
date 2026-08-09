@@ -1,13 +1,16 @@
 # links: advance the links department's mission
 
-> Decision artifact · room `dept-links-advance-the-links-depa-159` (dept) · 2026-07-28T03:49:17.449863+00:00
-> Participants: Anchor, LinLea · synthesized by groq/llama-3.3-70b-versatile
+> Decision artifact · room `dept-links-advance-the-links-depa-159` (dept) · 2026-08-03T23:39:36.755233+00:00
+> Participants: Anchor, Tether, LinLea · synthesized by mistral/mistral-small-latest
 
-**Decision:** Advance the links department's mission by auditing and optimizing the current link inventory.
+**Decision:**
+
 **Plan:**
-1. Audit the department's current link inventory to identify broken, outdated, or low-value links.
-2. Produce a prioritized report of links needing removal, replacement, or repair based on the audit.
-3. Submit the report to the team for review and feedback.
-4. Remove, replace, or repair links according to the prioritized report.
-5. Verify the changes to ensure the link inventory is up-to-date and functional.
-**What changed:** The links department will have an optimized and up-to-date link inventory.
+1. Anchor runs the link-checker tool on the Mission Control Dashboard’s live links to generate a report of broken or outdated URLs.
+2. Anchor reviews and updates the identified problematic links to ensure they are current and functional.
+3. Anchor compiles and publishes a verified, updated link inventory for the Mission Control Dashboard.
+4. The inventory lists only active, current links with no broken or outdated URLs.
+5. Team reviews the published inventory for accuracy and completeness.
+6. Anchor archives the link-checker report for future reference.
+
+**What changed:** The Mission Control Dashboard now has a verified, updated link inventory with no broken or outdated URLs.

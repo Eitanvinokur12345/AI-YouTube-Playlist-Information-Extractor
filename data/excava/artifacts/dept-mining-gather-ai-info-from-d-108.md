@@ -1,16 +1,18 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-108` (dept) · 2026-07-18T21:27:19.604830+00:00
-> Participants: Pick, Boulder · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-108` (dept) · 2026-08-05T02:38:41.364542+00:00
+> Participants: Pick · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+Query Product Hunt’s API for all posts tagged "AI" published in the last 30 days.
 
 **Plan:**
-1. Run GitHub API search for repositories tagged "AI" and "research" created in the last 7 days.
-2. Sort results by star count (descending) and select top 10.
-3. For each repo, extract: name, stars, description, and URL.
-4. Format output as a markdown list with headers: `#, Name, Stars, Description, URL`.
-5. Validate entries for relevance (exclude non-AI/research projects).
-6. Return the final ranked list.
+1. Authenticate with Product Hunt’s API using a valid developer token.
+2. Construct a query to fetch all posts tagged "AI" with a publication date within the last 30 days.
+3. Retrieve and parse the response to extract product names, upvotes, launch dates, and URLs.
+4. Store the results in a structured format (e.g., JSON/CSV) for immediate review.
+5. Cross-reference the results with other sources (GitHub/HN/Reddit) to identify overlaps or gaps.
+6. Generate a summary report highlighting trending AI products and their engagement metrics.
 
-**What changed:** Focus narrowed to GitHub-only, time-filtered, star-ranked AI research repos.
+**What changed:**
+Focused on Product Hunt’s API as the first step to gather trending AI product data efficiently.

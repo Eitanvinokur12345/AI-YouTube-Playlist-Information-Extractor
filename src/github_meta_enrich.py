@@ -31,6 +31,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from src import element_model as em
+from src import net_canary
 from src.deep_retrieve import DESC_FIELD, readme_excerpt
 
 ROOT = Path(__file__).parent.parent
@@ -58,17 +59,12 @@ def _network_open() -> bool:
     (rate-limited)" — misdiagnosing a sandbox-only restriction as real GitHub throttling,
     and burning the first item's 3-day attempt cooldown for nothing. Same two-anchor canary,
     same abort-before-any-write behavior.
+
+    Delegates to the shared `net_canary` module (fire 135, 2026-08-08) instead of its own
+    copy of the same anchor loop — closes the exact duplication `net_canary.py`'s own
+    `NETWORK_DEPENDENT_LANES` comment named as unfinished when the module was extracted.
     """
-    for anchor in ("https://github.com", "https://www.wikipedia.org"):
-        try:
-            req = urllib.request.Request(anchor, headers={"User-Agent": "excava-github-meta-enrich"},
-                                          method="HEAD")
-            with urllib.request.urlopen(req, timeout=12) as r:
-                if r.status < 400:
-                    return True
-        except Exception:
-            continue
-    return False
+    return net_canary.network_open()
 
 
 def _repo_slug(el: dict) -> tuple[str, str] | None:

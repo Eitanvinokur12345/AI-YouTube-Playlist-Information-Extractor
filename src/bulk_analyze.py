@@ -235,6 +235,13 @@ def build_prompt(rec: dict, transcript_chars: int) -> str:
 
 
 # ── merges (deterministic, dedup) ──────────────────────────────────────────────
+# LLM extraction sometimes returns the parent company ("OpenAI", "Anthropic") where it means
+# the actual product ("ChatGPT", "Claude") — canonicalize both a skill's target_tool and a
+# tool's own name onto the real product instead of cataloging/pointing at the company.
+_COMPANY_TOOL_ALIASES = {"anthropic": "claude", "openai": "chatgpt"}
+_COMPANY_TOOL_DISPLAY = {"claude": "Claude", "chatgpt": "ChatGPT"}
+
+
 def merge_skills(store: dict, items: list, vid: str, tools_store: dict | None = None, stats: dict | None = None) -> int:
     arr = store.setdefault("skills", [])
     by = {norm(s.get("skill_name")): s for s in arr}
@@ -260,14 +267,17 @@ def merge_skills(store: dict, items: list, vid: str, tools_store: dict | None = 
         while slug in by_slug:
             slug = f"{slugify(name)}-{i}"; i += 1
         by_slug.add(slug)
-        rec = {**it, "slug": slug, "endorsement_video_ids": [vid], "source_type": "youtube",
-               "source_video_id": vid, "source_url": f"https://www.youtube.com/watch?v={vid}",
+        target_tool = _COMPANY_TOOL_ALIASES.get(norm(it.get("target_tool") or ""), it.get("target_tool"))
+        rec = {**it, "slug": slug, "target_tool": target_tool, "endorsement_video_ids": [vid],
+               "source_type": "youtube", "source_video_id": vid,
+               "source_url": f"https://www.youtube.com/watch?v={vid}",
                "discovered_via": "bulk_analyze (gemini)", "added_at": NOW}
         if rec.get("category") not in CATEGORIES:
             rec["category"] = "other"
         arr.append(rec); by[key] = rec; added += 1
         write_skill_md(rec)              # create the SKILL.md package + per-tool folder
     return added
+
 
 
 def merge_tools(store: dict, items: list, vid: str) -> int:
@@ -279,13 +289,16 @@ def merge_tools(store: dict, items: list, vid: str) -> int:
         if not name:
             continue
         key = norm(name)
+        alias = _COMPANY_TOOL_ALIASES.get(key)
+        if alias:
+            key, name = alias, _COMPANY_TOOL_DISPLAY[alias]
         if key in by:
             ev = by[key].setdefault("endorsement_video_ids", [])
             if vid not in ev:
                 ev.append(vid)
             by[key]["mentions"] = len(ev)
             continue
-        rec = {**it, "slug": slugify(it.get("slug") or name), "endorsement_video_ids": [vid],
+        rec = {**it, "name": name, "slug": slugify(it.get("slug") or name), "endorsement_video_ids": [vid],
                "mentions": 1, "source_video_id": vid, "discovered_via": "bulk_analyze (gemini)",
                "source_url": it.get("source_url") or f"https://www.youtube.com/watch?v={vid}", "added_at": NOW}
         if rec.get("category") not in CATEGORIES:

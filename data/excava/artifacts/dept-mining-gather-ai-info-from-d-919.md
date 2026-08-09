@@ -1,16 +1,16 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-919` (dept) · 2026-07-30T21:13:47.234137+00:00
-> Participants: Pick, Boulder · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-919` (dept) · 2026-08-09T17:08:22.168555+00:00
+> Participants: Pick · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Run a broad sweep across GitHub, Hacker News, Product Hunt, Reddit, and Telegram to collect AI-related posts from the last 7 days, capturing links, titles, and metadata.
-2. Filter the raw dataset to identify top AI products, research, and discussions based on engagement (e.g., stars, upvotes, comments).
-3. Synthesize the filtered results into a structured GitHub markdown report with categorized sections (e.g., "Top AI Products," "Emerging Trends").
-4. Prioritize diversity by ensuring representation from all sources (GitHub repos, HN threads, etc.).
-5. Validate key findings by cross-referencing at least 3 sources per item to ensure accuracy.
-6. Output the final report in GitHub markdown format with clear headers and bullet points.
+1. Query Product Hunt’s API for all posts tagged "AI" published in the last 7 days.
+2. Extract raw post data (titles, descriptions, tags, upvotes, comments).
+3. Cross-reference with GitHub’s trending AI repositories (via GitHub API or scraping).
+4. Pull top AI discussions from Hacker News (HN) API (last 7 days, "AI" keyword).
+5. Compile Reddit’s r/MachineLearning and r/artificial posts (last 7 days, "AI" filter).
+6. Aggregate insights (frequency, sentiment, tech stacks) into a structured dataset.
 
-**What changed:** Expanded scope from Product Hunt-only to a multi-source sweep for broader AI info diversity.
+**What changed:** Prioritized Product Hunt API query as the first step to gather diverse, recent AI product launches and discussions.

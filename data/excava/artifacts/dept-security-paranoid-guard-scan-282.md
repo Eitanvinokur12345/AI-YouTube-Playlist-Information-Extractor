@@ -1,13 +1,16 @@
 # security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (not fake/dead); DETECT
 
-> Decision artifact · room `dept-security-paranoid-guard-scan-282` (dept) · 2026-07-31T02:52:55.962579+00:00
-> Participants: Warden, Bastion · synthesized by nvidia/meta/llama-3.3-70b-instruct
+> Decision artifact · room `dept-security-paranoid-guard-scan-282` (dept) · 2026-08-03T18:57:26.503369+00:00
+> Participants: Warden, Audit, Bastion · synthesized by mistral/mistral-small-latest
 
-**Decision:** Implement LLM Guard scanner to ensure security of input/output stream
+**Decision:**
+
 **Plan:**
-1. Run the LLM Guard scanner on the current input/output stream
-2. Analyze the real-time security report for anomalies or confirmation of a clean stream
-3. Flag the stream for further review if any anomalies are detected
-4. Verify the authenticity of elements in the stream to ensure they are real and not fake/dead
-5. Continuously monitor the stream for potential leaks or injections
-**What changed:** The implementation of the LLM Guard scanner to detect and prevent potential security threats in the input/output stream
+1. Warden queries ToolHive for LLM Guard container health status.
+2. ToolHive performs real-time verification of the LLM Guard container.
+3. ToolHive returns a status report confirming the container is running and healthy.
+4. Audit verifies the status report as valid and mission-critical.
+5. Bastion synthesizes the report into a confirmed operational state.
+6. Proceed with security scans for leaks/injections based on verified container health.
+
+**What changed:** Container health status verified via ToolHive.

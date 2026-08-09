@@ -18,6 +18,8 @@ import pytz
 from dateutil import parser as dateutil_parser
 from googleapiclient.discovery import build
 
+from src.analyze_batch import create_news_summary
+
 # ── logging ──────────────────────────────────────────────────────────────────
 logging.basicConfig(
     level=logging.INFO,
@@ -32,6 +34,8 @@ CONFIG_PATH = ROOT / "config.json"
 DATA_DIR = ROOT / "data"
 PENDING_DIR = DATA_DIR / "_pending"
 SKILLS_JSON = DATA_DIR / "skills.json"
+TOOLS_JSON = DATA_DIR / "tools.json"
+CONNECTORS_JSON = DATA_DIR / "connectors.json"
 STATUS_JSON = DATA_DIR / "status.json"
 DAILY_JSON = DATA_DIR / "daily_news.json"
 WEEKLY_JSON = DATA_DIR / "weekly_news.json"
@@ -69,6 +73,22 @@ def save_json(path: Path, obj: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w", encoding="utf-8") as fh:
         json.dump(obj, fh, ensure_ascii=False, indent=2)
+
+
+def count_entries(path: Path, key: str) -> int:
+    """Ground-truth element count, read fresh from disk — no script currently
+    updates status.json's total_tools/total_connectors after analyze adds
+    elements, so those fields sit permanently stale (data/improvement_suggestions.json
+    #f3a7d9e1b6 / #9a4e7b2d8f / #d7e1f3a9b2). Recomputing here on every fetch run
+    (same pattern as total_skills below) makes them self-healing instead."""
+    if not path.exists():
+        return 0
+    try:
+        with open(path, encoding="utf-8") as fh:
+            data = json.load(fh)
+        return len(data.get(key, []))
+    except Exception:
+        return 0
 
 
 # ── YouTube API ───────────────────────────────────────────────────────────────
@@ -372,7 +392,18 @@ def fetch_top_comments(youtube, video_id: str, max_comments: int) -> list[dict]:
 def classify_news(videos: list[dict], run_time_utc: datetime) -> tuple[list, list, list]:
     """
     Returns (daily, weekly, monthly) lists.
-    Each entry: video dict + summary placeholder.
+    Each entry: video dict + a summary.
+
+    The summary is filled immediately from the video's description/title (the same
+    deterministic fallback analyze_batch.py uses), not left blank — a video's
+    description/title is already known at fetch time, so there is no reason to make
+    a news card wait on the (often days-backlogged) analyze stage for a summary to
+    appear at all. `summary_quality='auto'` marks it as this cheap fallback; the
+    analyze stage (process_video.py / analyze_batch.py) still upgrades it to a real
+    AI-written summary (`summary_quality='ai'`) once that video is actually analyzed
+    — see the `!= 'ai'` overwrite guard in both of those files. Added away-fire 144
+    after `data/{daily,weekly,monthly}_news.json` were found 100% empty-summary
+    (1098/1098 entries) — see improvement suggestion b3a7d1f5e8.
     """
     run_eastern = run_time_utc.astimezone(EASTERN)
     daily, weekly, monthly = [], [], []
@@ -396,7 +427,8 @@ def classify_news(videos: list[dict], run_time_utc: datetime) -> tuple[list, lis
             "title": v["title"],
             "channel_name": v.get("channel_name", ""),
             "publishedAt": pub_str,
-            "summary": "",  # to be filled by analysis stage
+            "summary": create_news_summary(v["title"], v.get("description", ""), ""),
+            "summary_quality": "auto",
         }
 
         if age_hours <= 24:
@@ -548,17 +580,27 @@ def main() -> None:
     # ── Tab 5: news classification (ALL playlist videos, every run) ───────────
     daily, weekly, monthly = classify_news(all_videos, run_time_utc)
 
-    # preserve existing summaries if any
+    # preserve existing (possibly upgraded) summaries — classify_news() now always
+    # produces a fresh 'auto' summary on every run, so this must NOT blindly keep-if-
+    # new-is-empty anymore (new is never empty). Instead: whenever a prior run already
+    # recorded a summary for this video_id, keep THAT one (and its quality metadata)
+    # rather than the freshly recomputed one, so a real AI-written summary
+    # (summary_quality='ai', written by process_video.py/analyze_batch.py once the
+    # video is analyzed) is never overwritten by this run's cheap recompute.
     def merge_summaries(new_entries: list[dict], existing_path: Path) -> list[dict]:
         if not existing_path.exists():
             return new_entries
         try:
             with open(existing_path, encoding="utf-8") as fh:
                 old = json.load(fh)
-            old_summaries = {e["video_id"]: e.get("summary", "") for e in old.get("entries", [])}
+            old_by_id = {e["video_id"]: e for e in old.get("entries", [])}
             for e in new_entries:
-                if not e["summary"] and old_summaries.get(e["video_id"]):
-                    e["summary"] = old_summaries[e["video_id"]]
+                old_e = old_by_id.get(e["video_id"])
+                if old_e and old_e.get("summary"):
+                    e["summary"] = old_e["summary"]
+                    for k in ("summary_quality", "video_quality_score", "low_quality_source"):
+                        if k in old_e:
+                            e[k] = old_e[k]
         except Exception:
             pass
         return new_entries
@@ -638,13 +680,29 @@ def main() -> None:
     # The fetch stage INITIALIZES the run report.  The analyze stage (driven by
     # CLAUDE.md) updates analyzed_this_run / skipped_not_relevant / errors and
     # increments the cumulative total_videos_analyzed as it works through pending/.
+    # Transcript-fallback health (data/improvement_suggestions.json #a7d3c6e041, fire 145):
+    # when a majority of this run's new videos have no real transcript, every one of them
+    # falls back to analyzing just the title+description — a real, silent quality drop the
+    # dashboard previously had no way to surface. Only judged against a run that actually
+    # found new videos; a 0-new-video run has nothing to be degraded about.
+    transcript_fallback_rate = (
+        no_transcript_count / len(new_videos) if new_videos else 0.0
+    )
+    transcript_health = (
+        "degraded" if (new_videos and transcript_fallback_rate > 0.5) else "ok"
+    )
+
     status = dict(prev_status) if isinstance(prev_status, dict) else {}
     status.update({
+        "transcript_health": transcript_health,
+        "transcript_fallback_rate": round(transcript_fallback_rate, 3),
         "last_run": run_time_utc.isoformat(),
         "last_fetch": run_time_utc.isoformat(),
         "next_run": next_run_utc.isoformat(),
         "videos_seen": len(skills_data.get("videos_seen", [])),
         "total_skills": total_skills,
+        "total_tools": count_entries(TOOLS_JSON, "tools"),
+        "total_connectors": count_entries(CONNECTORS_JSON, "connectors"),
         "total_videos_analyzed": total_videos_analyzed,
         "new_videos_this_run": len(new_videos),
         "pending_count": pending_count,

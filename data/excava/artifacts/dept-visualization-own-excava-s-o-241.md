@@ -1,16 +1,13 @@
 # visualization: Own EXCAVA'S OWN interface — visibility, liveliness, clarity, enjoyment, speed of OUR scre
 
-> Decision artifact · room `dept-visualization-own-excava-s-o-241` (dept) · 2026-07-14T17:43:23.856191+00:00
-> Participants: Facet, Pane, Lumen · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-visualization-own-excava-s-o-241` (dept) · 2026-08-03T06:27:11.109703+00:00
+> Participants: Facet, Pane, Lumen · synthesized by nvidia/meta/llama-3.3-70b-instruct
 
-**Decision:** Ship the live HTML/CSS prototype tonight with mocked API responses to validate design decisions fast.
-
+**Decision:** Use a static intensity map with a faint delta overlay as the primary view to balance visibility of what changed with when.
 **Plan:**
-1. Finalize and deploy the HTML/CSS prototype with mocked API responses by EOD.
-2. Validate end-to-end flow (UI → mocked API → UI) for visibility, liveliness, and clarity.
-3. Document mocked data assumptions and known gaps (e.g., no network latency/edge cases).
-4. Share prototype link with stakeholders for immediate feedback.
-5. Log issues for future iteration (e.g., real API edge cases, latency handling).
-6. Set a follow-up meeting within 48 hours to review feedback and next steps.
-
-**What changed:** Prototype shipped with mocked data to prioritize speed and visibility over real API edge cases.
+1. Design a static intensity map that effectively displays the most important data.
+2. Implement a faint delta overlay to provide timing information for changes.
+3. Conduct user testing to measure how quickly users detect critical changes in the new layout.
+4. Compare the results with the radial graph with scaled pulses layout to determine which is more effective.
+5. Refine the design based on user testing feedback and implement the final version.
+**What changed:** The primary view of EXCAVA's interface now uses a static intensity map with a faint delta overlay instead of a radial graph with scaled pulses.

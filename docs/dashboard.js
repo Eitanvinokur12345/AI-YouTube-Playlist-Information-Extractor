@@ -751,7 +751,15 @@ function renderAlert(status, config) {
       esc(status.token_hint || "check the GitHub Actions log for details.");
   } else {
     const stale = staleMsg(status, config);
-    if (stale) { kind = "warn"; msg = `<span class="badge">PIPELINE STALLED?</span> ` + esc(stale); }
+    if (stale) {
+      kind = "warn"; msg = `<span class="badge">PIPELINE STALLED?</span> ` + esc(stale);
+    } else if (status && status.transcript_health === "degraded") {
+      kind = "warn";
+      const pct = Math.round((status.transcript_fallback_rate || 0) * 100);
+      msg = `<span class="badge">TRANSCRIPT FALLBACK</span> Transcript fetching is degraded — ` +
+        `${pct}% of the last run's new videos had no real transcript and were analyzed from ` +
+        `title/description only. Content quality is reduced until this clears.`;
+    }
   }
   if (kind) { el.hidden = false; el.className = "alert " + kind; el.innerHTML = msg; }
   else { el.hidden = true; el.className = "alert"; el.innerHTML = ""; }
@@ -1157,7 +1165,7 @@ function _connCard(c, safety, vPill) {
     if (c.paid_version) metaBits.push(`<span class="metapill"><b>Paid:</b> ${esc(c.paid_version)}</span>`);
     const metaRow = metaBits.length ? `<div class="connmeta">${metaBits.join("")}</div>` : "";
     const urlLine = c.url ? `<p><a href="${esc(c.url)}" target="_blank" rel="noopener">Website / repo</a></p>` : "";
-    return `<div class="card ${isStarred(c) ? "starred" : ""}">
+    return `<div class="card conncard ${isStarred(c) ? "starred" : ""}">
     <h3>${isStarred(c) ? '<span class="star" title="Starred — frozen, never auto-changed">&#9733;</span>' : ""}<span class="score">${esc(c.quality_score ?? "?")}/10</span> ${esc(c.name)}
       <span class="pill">${esc(c.type || "")}</span>
       ${safPill}
@@ -3669,6 +3677,31 @@ async function resultsBadge() {                       // M3.7: the "new" count o
   } catch (_) {}
 }
 
+async function libraryCountBadges() {         // fire-146-suggestion 3693c44f40: catalog scale at a glance
+  try {
+    const [skills, tools, connectors] = await Promise.all(
+      ["skills.json", "tools.json", "connectors.json"].map(load));
+    const counts = {
+      skills: ((skills || {}).skills || []).length,
+      tools: ((tools || {}).tools || []).length,
+      connectors: ((connectors || {}).connectors || []).length,
+    };
+    for (const tab in counts) {
+      const navBtn = document.querySelector(`nav [data-tab="${tab}"]`);
+      if (!navBtn) continue;
+      // append, don't replace innerHTML — these buttons already carry a TAB_ACCENT .tab-dot
+      // (added by the sync init loop above) that a blind overwrite would silently delete.
+      let badge = navBtn.querySelector(".nav-count");
+      if (!badge) {
+        badge = document.createElement("span");
+        badge.className = "nav-count";
+        navBtn.appendChild(badge);
+      }
+      badge.textContent = counts[tab];
+    }
+  } catch (_) {}
+}
+
 async function renderTab(tab) {
   if (tab === "excava") return renderExcava();
   if (tab === "hub") return renderHub();
@@ -3719,6 +3752,7 @@ document.querySelectorAll("nav button").forEach(b => {
 
 (async () => {
   resultsBadge();                                     // M3.7: fire-and-forget "new results" count
+  libraryCountBadges();                               // catalog scale at a glance before clicking a tab
   renderSteering();                                   // M3.11: bell + banner + walk-up on new approvals
   const [status, stars, extra, config, health] = await Promise.all([
     load("status.json"), load("stars.json"), load("extra_tabs.json"), loadRoot("config.json"),

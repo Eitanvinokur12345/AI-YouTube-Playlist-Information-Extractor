@@ -1,18 +1,13 @@
 # watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.
 
-> Decision artifact · room `dept-watch-analyze-video-audio-vi-686` (dept) · 2026-07-31T18:03:24.555770+00:00
-> Participants: Scope, Iris · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-watch-analyze-video-audio-vi-686` (dept) · 2026-08-03T04:55:27.680119+00:00
+> Participants: Scope, Frame, Iris · synthesized by nvidia/meta/llama-3.3-70b-instruct
 
-**Decision:**
-Proceed with running Arcads AI Video’s "AI Marketing" skill pack on target video t for AUDIO+VISUAL analysis to extract audience engagement triggers, brand messaging gaps, and competitive differentiation points.
-
+**Decision:** Utilize Arcads AI Video skill to extract multimodal insights for playbooks on Science of Sleep Optimization and AI marketing.
 **Plan:**
-1. **Input Target Video:** Upload video t to Arcads AI Video’s "AI Marketing" skill pack interface.
-2. **Run Analysis:** Execute the skill pack to process both audio and visual cues for comprehensive insights.
-3. **Extract Insights:** Retrieve generated outputs including audience engagement triggers, brand messaging gaps, and competitive differentiation points.
-4. **Review Outputs:** Validate the extracted insights for accuracy and relevance to the video’s content.
-5. **Refine Messaging:** Use the insights to adjust or enhance the video’s marketing strategy based on identified gaps and opportunities.
-6. **Document Findings:** Compile the final analysis into a structured report for stakeholder review.
-
-**What changed:**
-The decision prioritizes a data-driven, multi-modal analysis of the video to uncover deeper marketing insights beyond the transcript.
+1. Run Arcads AI Video skill on the *Science of Sleep Optimization* video to extract key insights beyond the transcript.
+2. Assign **Science** to draft a one-page playbook on *Science of Sleep Optimization* using the extracted insights.
+3. Run Arcads AI Video skill on the *AI marketing* video to generate multimodal insights for the AI marketing playbook.
+4. Assign **Marketing** to draft a one-page playbook using the insights from the *AI marketing* video analysis.
+5. Review and finalize both playbooks to ensure actionable insights are accurately captured.
+**What changed:** The approach now leverages Arcads AI Video skill for multimodal analysis to inform the creation of playbooks on Science of Sleep Optimization and AI marketing.

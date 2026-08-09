@@ -30,6 +30,23 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
+      # Capture the trigger instant BEFORE the (slow, fetch-depth:0) checkout below.
+      # away fire 119: "Plan this run" used to call `datetime.now()` itself, AFTER
+      # checkout finished — a full-history clone can take 1-2+ minutes, so a run
+      # that's triggered at 23:59:xx UTC can have `now()` land past midnight, one
+      # weekday later. `now.weekday()` silently stopped matching the Wed/Sat cron on
+      # those runs -> `weekly=False` -> the mandatory pass no-op'd for that day, yet
+      # every step still reported "success" (skipped steps don't fail a job). Verified
+      # against run 31058169311 (2026-08-05 23:58:44 UTC trigger, Wed): checkout alone
+      # ate ~75s, "Plan this run" then read 00:00:03 UTC Aug 6 (Thursday) and skipped
+      # the review — explains why data/review_findings.json is still dated 2026-06-20
+      # despite ~9 weeks of "successful" scheduled jobs since. Stamping the epoch here,
+      # first thing in the job, removes the drift: the day check below now reflects
+      # when GitHub actually started the run, not when checkout happened to finish.
+      - name: Capture trigger time
+        id: trigger_time
+        run: echo "epoch=$(date -u +%s)" >> "$GITHUB_OUTPUT"
+
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -43,6 +60,7 @@ jobs:
         env:
           SCHEDULE: ${{ github.event.schedule }}
           EVENT: ${{ github.event_name }}
+          TRIGGER_EPOCH: ${{ steps.trigger_time.outputs.epoch }}
         run: |
           python3 - <<'PY' >> "$GITHUB_OUTPUT"
           import json, os, datetime, pathlib
@@ -54,7 +72,12 @@ jobs:
           enabled = bool(review.get("enabled", True))
           schedule = os.environ.get("SCHEDULE", "")
           event = os.environ.get("EVENT", "")
-          now = datetime.datetime.now(datetime.timezone.utc)
+          # away fire 119: use the pre-checkout trigger timestamp, not a fresh now() —
+          # see "Capture trigger time" step above for why this matters.
+          try:
+              now = datetime.datetime.fromtimestamp(int(os.environ["TRIGGER_EPOCH"]), tz=datetime.timezone.utc)
+          except Exception:
+              now = datetime.datetime.now(datetime.timezone.utc)
           # away fire 54: the two `cron:` triggers below fire on EVERY day between them
           # (Wed+Sat mandatory, the other 5 days first-week-intensive) — GitHub reports
           # `github.event.schedule` as the literal cron string that matched, e.g.

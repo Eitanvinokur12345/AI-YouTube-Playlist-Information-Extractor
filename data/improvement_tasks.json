@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-02T17:49:14.327534+00:00",
+  "updated_at": "2026-08-09T17:08:03.247009+00:00",
   "tasks": [
     {
       "trend_key": "tab:coding",
@@ -51,24 +51,30 @@
       "kind": "maintenance",
       "question": "[maintenance/brain] Empty-body items render as blank 'white' nodes in the brain graph (187)",
       "fix": "Skip empty-body items from the brain (or backfill a one-line description) so they stop appearing as contentless dots.",
-      "status": "open",
-      "created_at": "2026-07-31T23:56:00.194457+00:00"
+      "status": "done",
+      "created_at": "2026-07-31T23:56:00.194457+00:00",
+      "resolved_at": "2026-08-02T21:04:07.736906+00:00",
+      "resolution": "Mislabeled signal, not a real defect: build_graph.py/build_brain.py already skip empty-body items from both the in-app brain graph and the Obsidian vault (verified fire 117), so none of the 187 flagged tools were ever rendering as blank nodes. maintenance_check.py now only flags TRUE dead-ends (no body AND no link, currently 0) under this label; the 187 real-but-unenriched tool stubs moved to a correctly-labeled medium-severity 'awaiting enrichment' issue instead."
     },
     {
       "maint_key": "brain:Title collisions: distinct items share o",
       "kind": "maintenance",
       "question": "[maintenance/brain] Title collisions: distinct items share one note name and overwrite each other (10)",
       "fix": "De-duplicate or suffix colliding titles so each item is its own note.",
-      "status": "open",
-      "created_at": "2026-07-31T23:56:00.194457+00:00"
+      "status": "done",
+      "created_at": "2026-07-31T23:56:00.194457+00:00",
+      "resolved_at": "2026-08-03T00:15:00.000000+00:00",
+      "resolution": "Real collision, not a false alarm (unlike the empty-body task): 3 of the 4 flagged name-pairs (Ponytail, Graphify, Higgsfield) were the SAME real tool mined twice by two independent pipelines (bulk_analyze vs mine_feeds/gemini-video) that only dedupe within their own call, not against each others writes -- a real ingestion race, now flagged separately for a future fire to harden. Fixed the 3 true dupes by marking the weaker record duplicate_of the richer one (kept, not deleted -- several data files key off tool:<slug> and a full consumer audit was out of scope this fire) and folding its unique videos/links into the survivor. The 4th pair (Headroom) turned out to be TWO DIFFERENT tools from different GitHub orgs (headroomlabs-ai vs chopratejas) that just share a generic name -- disambiguated the display name instead of merging so nothing gets wrongly conflated. maintenance_check/build_graph/build_brain now skip duplicate_of records so this specific collision cannot recur; verified health score 50->56, 0 title-collisions in the fresh report, brain_graph.json regenerated clean."
     },
     {
       "maint_key": "pipeline:Pipeline lanes overdue — retrieval/analy",
       "kind": "maintenance",
       "question": "[maintenance/pipeline] Pipeline lanes overdue — retrieval/analysis may have stalled (2)",
       "fix": "Check the workflow logs for these lanes; re-dispatch if blocked.",
-      "status": "open",
-      "created_at": "2026-07-31T23:56:00.194457+00:00"
+      "status": "partially-fixed",
+      "created_at": "2026-07-31T23:56:00.194457+00:00",
+      "resolution": "away fire 119: root-caused why data/review_findings.json was stuck at 2026-06-20 despite ~9 weeks of 'successful' Wed/Sat review.yml runs since. Two stacked bugs. (1) FIXED this fire: 'Plan this run' computed now=datetime.now() AFTER the fetch-depth:0 checkout (which can take 1-2+ min), so a run triggered near 23:59 UTC could read a weekday that had already rolled past midnight — weekly=False, the mandatory pass silently no-op'd, job still reported 'success' since skipped steps don't fail a job. Verified against run 31058169311 (2026-08-05 23:58:44 UTC trigger, Wed; checkout alone ate ~75s; plan step read 00:00:03 UTC Aug 6 = Thursday; skipped). Fix: capture the trigger epoch in a step BEFORE checkout, pass it into the plan step, compute weekday from that instead of a fresh now(). Verified: extracted the plan script and ran it standalone with TRIGGER_EPOCH=2026-08-05T23:58:44Z -> run=true/mode=weekly (was false under the old now()-after-checkout path in the real run). (2) STILL OPEN, not fixed this fire: even on days the day-check DOES pass (e.g. run 30724272208, 2026-08-01, a real Saturday firing), the Claude Code action step itself fails near-instantly (`is_error:true`, duration_ms 2317, num_turns 1, total_cost_usd 0) before writing anything to review_findings.json. Full SDK output is hidden ('for security') so the actual error text isn't visible from the job log alone -- next fire should try workflow_dispatch with show_full_output:true (or a scoped debug run) to see the real error (token/quota/permission?) rather than guessing.",
+      "updated_at": "2026-08-08T01:03:36+00:00"
     },
     {
       "goal_key": "goal:G1:at-risk",
@@ -287,6 +293,32 @@
       "fix": "Restore the missing commands from the last good backup (git 486381420ffa); investigate what removed them.",
       "status": "open",
       "created_at": "2026-08-02T07:08:45.528043+00:00"
+    },
+    {
+      "backup_key": "regress:skills:3443",
+      "kind": "regression",
+      "question": "[regression] 'skills' dropped 34 (3477→3443)",
+      "fix": "Restore the missing skills from the last good backup (git 5c39b9684a1e); investigate what removed them.",
+      "status": "open",
+      "created_at": "2026-08-02T19:48:55.526959+00:00"
+    },
+    {
+      "goal_key": "goal:G1:unmet",
+      "kind": "goal",
+      "goal": "G1",
+      "question": "[goal G1 Omniscience] unmet (42/100)",
+      "fix": "Advance goal G1: 767/1794 videos analyzed (42.8%); 3/7 lanes live.",
+      "status": "open",
+      "created_at": "2026-08-03T08:31:49.641767+00:00"
+    },
+    {
+      "goal_key": "goal:G4:at-risk",
+      "kind": "goal",
+      "goal": "G4",
+      "question": "[goal G4 Autonomy] at-risk (74/100)",
+      "fix": "Advance goal G4: 3 lanes self-running.",
+      "status": "open",
+      "created_at": "2026-08-03T08:31:49.641767+00:00"
     }
   ]
 }

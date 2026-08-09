@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-08-09T19:15:48.480946+00:00",
- "total": 21,
+ "generated_at": "2026-08-09T20:35:35.111962+00:00",
+ "total": 22,
  "passing": 18,
  "critical_failures": 0,
  "guardrails": [
@@ -22,8 +22,8 @@
    "id": "G-C",
    "name": "History backup fresh",
    "ok": true,
-   "detail": "n/a in CI — the beat pushes straight to origin each cycle, bypassing git_safe/local bundles by design.",
-   "severity": "info"
+   "detail": "3 bundle(s); newest within 26h.",
+   "severity": "warn"
   },
   {
    "id": "G-D",
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": true,
-   "detail": "HEAD == origin/main (work is really saved).",
+   "ok": false,
+   "detail": "NOT in sync vs origin/claude/excava-end-plan-s1mt4l (behind/ahead: 0\t16) — a push may not have landed.",
    "severity": "warn"
   },
   {
@@ -78,7 +78,7 @@
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "0 guardrail runs logged (append-only, never rewritten).",
+   "detail": "25 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -99,35 +99,35 @@
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "88487 MB free on the repo drive.",
+   "detail": "29247 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 349.3h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 350.6h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
    "ok": false,
-   "detail": "last 'excava-beat #N' commit 7.7h ago — STALE: the dedicated heartbeat loop isn't landing per-cycle commits (check for a wedged/queued excava_beat.yml run).",
+   "detail": "last 'excava-beat #N' commit 9.0h ago — STALE: the dedicated heartbeat loop isn't landing per-cycle commits (check for a wedged/queued excava_beat.yml run).",
    "severity": "warn"
   },
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "last 'core-spoton:' commit 0.3h ago.",
+   "detail": "last 'core-spoton:' commit 0.9h ago.",
    "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
    "ok": false,
-   "detail": "12/16 lane(s) landing on cadence — STALE: discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 1189.1h ago (expected within 76h); improve.yml (weekly deep pass): last commit 1538.9h ago (expected within 192h); review.yml (twice-weekly): last commit 259.3h ago (expected within 100h); transcribe.yml (daily): last commit 204.9h ago (expected within 30h)",
+   "detail": "12/16 lane(s) landing on cadence, 3 can't-tell (shallow clone) — STALE: transcribe.yml (daily): last commit 206.3h ago (expected within 30h)",
    "severity": "warn"
   },
   {
@@ -150,6 +150,13 @@
    "ok": true,
    "detail": "3 gate(s) on file, 1 OPEN and binding on both loops.",
    "severity": "critical"
+  },
+  {
+   "id": "G-V",
+   "name": "git_safe derives its push target",
+   "ok": true,
+   "detail": "push target is derived from the upstream, not hardcoded.",
+   "severity": "warn"
   }
  ]
 }

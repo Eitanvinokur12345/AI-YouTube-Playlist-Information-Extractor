@@ -1,15 +1,18 @@
 # accessibility: Make EXCAVA usable by EVERYONE — contrast, mobile/touch, reduced-motion, keyboard nav, scr
 
-> Decision artifact · room `dept-accessibility-make-excava-us-823` (dept) · 2026-07-12T02:07:30.551753+00:00
-> Participants: Ramp, Reader, Access · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-accessibility-make-excava-us-823` (dept) · 2026-08-09T23:02:44.386019+00:00
+> Participants: Ramp, Reader, Access · synthesized by mistral/mistral-small-latest
 
-**Decision:** We will implement a high-contrast focus ring with at least a 3:1 contrast ratio for interactive elements to ensure visibility for all users.  
+**Decision:**
+Adopt a 2px solid #005fcc focus ring with a 1px inner #ffffff offset for all interactive elements.
 
-**Plan:**  
-1. Design a high-contrast focus ring for buttons and links with at least 3:1 contrast ratio.  
-2. Conduct accessibility testing with users that rely on keyboard navigation to gather feedback on the new focus ring.  
-3. Ensure the focus ring complements the existing design aesthetic while maintaining clarity.  
-4. Document the design changes and updates in accessibility guidelines for future reference.  
-5. Educate the development team on the importance of focus indicators in enhancing accessibility.  
+**Plan:**
+1. Update focus ring styles globally to `2px solid #005fcc` with `1px inner #ffffff offset`.
+2. Ensure all interactive elements (buttons, links, form controls) inherit the new focus ring.
+3. Test contrast ratios on light/dark backgrounds to confirm WCAG 2.2 AA compliance (4.5:1 minimum).
+4. Verify no collisions with adjacent elements in dense UIs (e.g., tables, grids).
+5. Document the change in the design system’s focus indicator guidelines.
+6. Deploy changes via the component library and update affected live components.
 
-**What changed:** The decision prioritizes visibility and accessibility over subtlety in design for a clearer user experience.
+**What changed:**
+Focus ring reduced to 2px solid #005fcc with 1px inner offset for WCAG 2.2 AA compliance.

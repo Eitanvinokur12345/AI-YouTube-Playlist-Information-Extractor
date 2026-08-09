@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-09T22:37:08.010178+00:00",
+ "generated_at": "2026-08-09T23:04:15.462766+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,22 +8,22 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 154,
-   "rooms_7d": 49,
+   "turns_7d": 156,
+   "rooms_7d": 50,
    "engines_used": [
     "groq",
     "mistral",
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Luma’s built-in transcript tool isn’t a transcript tool—it’s a *verbatim capture* that skips timestamps and speaker labe"
+   "last_position": "Luma’s built-in transcript tool isn’t a transcript tool—it’s a *verbatim capture* with no error handling for missing seg"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 119,
+   "turns_7d": 120,
    "rooms_7d": 76,
    "engines_used": [
     "groq",
@@ -31,6 +31,20 @@
    ],
    "positions_held": 30,
    "last_position": "Run kimtaeyoon83/mcp-server-youtube-transcript on every pending video now. It’s the fastest path to transcripts without "
+  },
+  {
+   "id": "transcripts-w1",
+   "name": "Reel",
+   "dept": "transcripts",
+   "role": "doer",
+   "turns_7d": 98,
+   "rooms_7d": 50,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I will run kimtaeyoon83/mcp-server-youtube-transcript on every pending video now. This will produce full, real transcrip"
   },
   {
    "id": "improve-w1",
@@ -45,20 +59,6 @@
    ],
    "positions_held": 30,
    "last_position": "Run PR-Agent in shadow mode on the newest *merged* PR first. This catches systemic routing errors without cluttering act"
-  },
-  {
-   "id": "transcripts-w1",
-   "name": "Reel",
-   "dept": "transcripts",
-   "role": "doer",
-   "turns_7d": 97,
-   "rooms_7d": 49,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run kimtaeyoon83/mcp-server-youtube-transcript on every pending video now. It’s the fastest path to transcripts without "
   },
   {
    "id": "analysis-w1",
@@ -93,27 +93,27 @@
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 73,
-   "rooms_7d": 37,
+   "turns_7d": 74,
+   "rooms_7d": 38,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "We should choose a high-contrast light theme by default with a one-click toggle to dark mode. This approach ensures that"
+   "last_position": "Choose a dark theme by default with a one-click toggle to light mode. It reduces eye strain in low-light settings and ke"
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 73,
-   "rooms_7d": 37,
+   "turns_7d": 74,
+   "rooms_7d": 38,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Pane: A one-click toggle between themes still hides the core problem—users won’t switch unless they *know* they’re missi"
+   "last_position": "Dark themes hide errors and muted colors—users miss critical data if they assume visibility is fine. A one-click toggle "
   },
   {
    "id": "memory-w1",
@@ -171,6 +171,20 @@
    "last_position": "Verdict: The action is valid MISSION work."
   },
   {
+   "id": "mining-w1",
+   "name": "Pick",
+   "dept": "mining",
+   "role": "doer",
+   "turns_7d": 63,
+   "rooms_7d": 63,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a raw list of"
+  },
+  {
    "id": "watch-lead",
    "name": "Iris",
    "dept": "watch",
@@ -197,20 +211,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts marketing insights from video cont"
-  },
-  {
-   "id": "mining-w1",
-   "name": "Pick",
-   "dept": "mining",
-   "role": "doer",
-   "turns_7d": 62,
-   "rooms_7d": 62,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a raw list o"
   },
   {
    "id": "security-lead",
@@ -326,14 +326,14 @@
    "name": "Ratchet",
    "dept": "improve",
    "role": "lead",
-   "turns_7d": 49,
-   "rooms_7d": 49,
+   "turns_7d": 50,
+   "rooms_7d": 50,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Run PR-Agent in shadow mode on the newest merged PR first, then expand to weekly random 10% of merged PRs if r",
+   "last_position": "DECISION: Run PR-Agent in shadow mode on the newest merged PR first, then expand to open PRs only if error rates justify",
    "proposed": 2
   },
   {
@@ -498,15 +498,15 @@
    "name": "Access",
    "dept": "accessibility",
    "role": "lead",
-   "turns_7d": 24,
-   "rooms_7d": 24,
+   "turns_7d": 25,
+   "rooms_7d": 25,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Adopt a 2px solid #005fcc focus ring with a 1px solid #ffffff inner offset at 100% opacity for all interactive",
-   "proposed": 17,
+   "last_position": "DECISION: Adopt a 2px solid #005fcc focus ring with a 1px inner #ffffff offset for all interactive elements. Result: WCA",
+   "proposed": 18,
    "shipped": 16
   },
   {

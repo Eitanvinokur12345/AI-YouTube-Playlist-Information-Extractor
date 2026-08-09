@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-08-02T19:25:12.719729+00:00",
- "total": 20,
- "passing": 16,
+ "generated_at": "2026-08-09T17:31:48.379618+00:00",
+ "total": 21,
+ "passing": 18,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -36,7 +36,7 @@
    "id": "G-E",
    "name": "Build alignment",
    "ok": true,
-   "detail": "APP_BUILD v135 == SHELL_CACHE v135.",
+   "detail": "APP_BUILD v136 == SHELL_CACHE v136.",
    "severity": "warn"
   },
   {
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": false,
-   "detail": "NOT in sync vs origin/claude/excava-end-plan-s1mt4l (behind/ahead: 0\t52) — a push may not have landed.",
+   "ok": true,
+   "detail": "HEAD == origin/claude/excava-end-plan-s1mt4l (work is really saved).",
    "severity": "warn"
   },
   {
@@ -64,21 +64,21 @@
    "id": "G-I",
    "name": "Handoff mentions live build",
    "ok": true,
-   "detail": "SESSION_HANDOFF.md references v135.",
+   "detail": "SESSION_HANDOFF.md references v136.",
    "severity": "warn"
   },
   {
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "12126 memory episodes on record.",
+   "detail": "12127 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "15 guardrail runs logged (append-only, never rewritten).",
+   "detail": "20 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -91,43 +91,43 @@
   {
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
-   "ok": true,
-   "detail": "153 tasks done, 11 departments moving",
+   "ok": false,
+   "detail": "153 tasks done, 11 departments moving — STALLED (no new completions in the last 4 beats)",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "29934 MB free on the repo drive.",
+   "detail": "29762 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 181.4h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 347.5h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
-   "ok": false,
-   "detail": "last 'excava-beat #N' commit 15.3h ago — STALE: the dedicated heartbeat loop isn't landing per-cycle commits (check for a wedged/queued excava_beat.yml run).",
+   "ok": true,
+   "detail": "last 'excava-beat #N' commit 5.9h ago.",
    "severity": "warn"
   },
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "last 'core-spoton:' commit 0.0h ago.",
+   "detail": "last 'core-spoton:' commit 0.7h ago.",
    "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
    "ok": false,
-   "detail": "12/16 lane(s) landing on cadence, 3 can't-tell (shallow clone) — STALE: transcribe.yml (daily): last commit 37.1h ago (expected within 30h)",
+   "detail": "12/16 lane(s) landing on cadence, 3 can't-tell (shallow clone) — STALE: transcribe.yml (daily): last commit 203.2h ago (expected within 30h)",
    "severity": "warn"
   },
   {
@@ -142,6 +142,13 @@
    "name": "No conflict markers in append-logs or artifacts",
    "ok": true,
    "detail": "no bare conflict-marker lines in any .jsonl append-log or .md artifact.",
+   "severity": "critical"
+  },
+  {
+   "id": "G-U",
+   "name": "P5 gates are machine-readable",
+   "ok": true,
+   "detail": "3 gate(s) on file, 1 OPEN and binding on both loops.",
    "severity": "critical"
   }
  ]

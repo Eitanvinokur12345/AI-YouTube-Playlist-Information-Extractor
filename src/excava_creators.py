@@ -40,6 +40,46 @@ UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.3
                     "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"}
 SUSPECT = ("curl | sh", "rm -rf", "base64 -d", "eval(", "api_key=", "password=")
 
+# 2026-08-09 — Eitan opened the Prompts tab and found every published "Prompt pack" was ONE
+# sentence with a single word swapped. He was right, and the cause is in this file: draft()
+# below is an f-string loop, and this module has never once called a model (excava_engines.
+# complete() has existed and served the Rooms for weeks). The old _self_test could not fail
+# either — four non-empty fields, a wordlist scan, and link_alive=True whenever url is empty.
+# Templater -> unfailable test -> auto-publish -> a badge in the app: P4 "real, not display",
+# shipped as product. The 14 packs are quarantined (data/creations_quarantine.json, preserved)
+# and gate G3-creators-output-bar now BLOCKS this department. Two guards below make that real
+# rather than prose, because prose is exactly what failed last time:
+#   1. _gate_open()   — refuse to draft or publish at all while Eitan's gate is unanswered.
+#   2. _is_template() — refuse a body that is mechanically substituted boilerplate, FOREVER,
+#                       so lifting the gate with a nicer f-string is not a way through.
+GATE_ID = "G3-creators-output-bar"
+
+
+def _gate_open() -> dict | None:
+    """The open P5 gate blocking this department, or None. Read at runtime, never cached:
+    the moment Eitan sets a verdict the department un-blocks with no code change."""
+    try:
+        from src import loop_contract
+        return next((g for g in loop_contract.open_gates() if g.get("id") == GATE_ID), None)
+    except Exception:
+        return None      # never let a missing gate file be the thing that blocks real work
+
+
+def _is_template(c: dict) -> bool:
+    """True when a draft's body is mechanical boilerplate rather than written content.
+
+    Deliberately checks the SHAPE that actually shipped, not a clever heuristic: a body that
+    is the known scaffold sentence, or one short enough that no substantive guidance can fit,
+    is not a creation. Fails CLOSED (rejects) because the cost of a false reject is one
+    unpublished draft, while the cost of a false accept is 14 identical prompts in Eitan's app.
+    """
+    body = (c.get("body") or c.get("how_to_use") or "").strip()
+    if not body:
+        return True
+    if body.startswith("You are an expert on"):
+        return True
+    return len(body) < 220
+
 
 def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
@@ -228,10 +268,27 @@ def main() -> int:
         print(f"test_before_run {'PASS' if c['last_run_test']['ok'] else 'FAIL'}: {c['last_run_test']['checks']}")
         return 0 if c["last_run_test"]["ok"] else 1
 
+    gate = _gate_open()
+    if gate:
+        print(f"CREATORS BLOCKED by open gate {gate['id']} (opened {gate.get('opened')}).")
+        print(f"  blocks: {gate.get('blocks','')[:160]}")
+        print("  Nothing drafted, nothing published. Only Eitan lifts this:")
+        print(f"  python -m src.loop_contract gate {gate['id']} --verdict go --note \"...\"")
+        return 0        # respecting an owner decision is success, not a CI failure
+
     disc = discovery()
     new = draft(disc, creations, args.max_new)
     published = 0
     for c in new:
+        if _is_template(c):
+            # The 2026-08-09 failure, refused at the source. Kept in the store as a rejected
+            # draft rather than dropped, so the department's misses stay countable.
+            c["self_test"] = {"ok": False, "checks": {"not_boilerplate": False},
+                              "why": "body is mechanical boilerplate, not written content",
+                              "tested_at": _now()}
+            c["status"] = "rejected-boilerplate"
+            creations.append(c)
+            continue
         c["self_test"] = _self_test(c)
         if c["self_test"]["ok"]:
             c["status"] = "published"      # allowed: labeled 'Created by EXCAVA' (owner rule)
@@ -241,8 +298,13 @@ def main() -> int:
         creations.append(c)
     store["creations"] = creations[-300:]
     store["updated_at"] = _now()
-    store["note"] = ("Everything here is labeled 'Created by EXCAVA' (owner rule 2026-07-03); "
-                     "an independent test re-runs before first use (test_before_run).")
+    # Was an unconditional overwrite, which silently erased the quarantine record written on
+    # 2026-08-09 the first time this ran again. A note that explains WHY (P10) is worthless if
+    # the next run deletes it, so history is appended to, never replaced.
+    prior = (store.get("note") or "").strip()
+    base = ("Everything here is labeled 'Created by EXCAVA' (owner rule 2026-07-03); "
+            "an independent test re-runs before first use (test_before_run).")
+    store["note"] = prior if base in prior else (base + (" | " + prior if prior else ""))
     OUT.write_text(json.dumps(store, ensure_ascii=False, indent=2), encoding="utf-8")
 
     # CREATORS also ASSEMBLE PACKAGES (not just prompts) — real element bundles into the Packages tab.

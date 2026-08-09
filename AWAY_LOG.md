@@ -5,6 +5,48 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-09
+- **~02:0x (fire 142, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (`python -m src.standing_checks`: stale `origin/main` cache re-fetched clean, nothing lost;
+  upstream already tracking; guardrails 17/20, 0 critical). `analyze_consecutive_zero_progress_fails`:
+  **41** (was 40 at fire 141, 39 at fire 140, 35 when fire 121 first escalated it) — same
+  continuing linear trend, no qualitative change, so per the fires-122-141 discipline this did
+  NOT get a fresh push notification; flagging the number here so it stays accurate for the next
+  10th-heartbeat review (next one is fire 150). **The actual increment:** picked up the pending
+  backlog fire 141 flagged instead of re-sweeping already-exhausted surfaces — applied
+  `c4d8e2f1a7` (severity: high) from `data/improvement_suggestions.json`, a real dedup bug: a
+  skill present in `data/skills.json` but missing its `data/index.json` entry is invisible to
+  `process_video()`'s `slug in index_data` check, so its next endorsement falls through to the
+  "new skill" branch and appends a duplicate record instead of merging into the existing one.
+  Verified the claim against LIVE data before touching anything (the suggestion's own numbers
+  were stale — written against a ~209-skill snapshot, not today's 3,636): found 0 phantom index
+  keys (a1b3c5d7e9, the narrower "drop phantoms only" suggestion, is already moot) but **193**
+  valid skill slugs genuinely missing from the index. Added `reconcile_index(index_data,
+  skills_data)` to `src/analyze_batch.py` (drops phantoms, adds missing, same field-shape as the
+  existing index-write code at lines 527/534) and wired it into `main()` right after `index_data`
+  loads, so every future analyze run self-heals instead of accumulating more gaps. Then ran it
+  once now against the real files to close the CURRENT gap immediately rather than leaving it for
+  "next time analyze runs" — `data/index.json` went from 3,443 to 3,636 entries, now exactly
+  1:1 with `skills.json`. Verified: `ast.parse` clean; a standalone call to `reconcile_index()`
+  against a copy of the live data confirmed 3,636-in/3,636-out before wiring it in; all 6 local
+  suites green (`excava_core_test`, `guardrail_test`, `git_merge_resolve_test`, `or1_phase_test`,
+  `deep_retrieve_test`, `analyze_batch_test`); `python -m src.guardrails` 17/20, 0 critical,
+  unchanged from the pre-fix baseline; re-ran the reconciliation check post-fix — 0 phantoms,
+  0 missing. Marked `c4d8e2f1a7` applied and `a1b3c5d7e9` applied-as-superseded in
+  `improvement_suggestions.json` so the backlog stays honest (18 suggestions remain pending,
+  three more flagged high-severity — a `describe_tool()` template-string root-cause fix, a
+  transcript-fallback health banner, and a `daily_news.json` empty-summary backfill — good
+  candidates for the next fire). `python -m src.loop_contract start/finish` recorded this as one
+  closed product increment (no carry-over); logged the WHY via `python -m src.project_memory log`
+  before shipping.
+  **Harsh self-criticism:** this closes a real, verified, currently-active data-integrity gap
+  (193 skills were one endorsement away from silently forking into duplicate records) — not
+  cosmetic, and immediately visible in `data/index.json`'s own entry count, not just "will help
+  next time." But it is still infrastructure/data-hygiene, not new hub content or a new
+  user-facing capability. Did check whether any of the 193 had ALREADY silently duplicated before
+  this fix landed (`collections.Counter(s['slug'] for s in skills)`, count > 1): zero — caught
+  before any real damage, not after. Left the three other pending high-severity suggestions
+  untouched — each is a more involved code change (new extraction logic, a new status field +
+  dashboard banner, a new backfill pass) than this fire's one-increment budget covers cleanly.
 - **~01:0x (fire 141, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
   OK (`python -m src.standing_checks`: stale `origin/main` cache re-fetched clean, nothing lost;
   upstream auto-repointed; guardrails 18/20, 0 critical). `net_canary`: still restricted egress,

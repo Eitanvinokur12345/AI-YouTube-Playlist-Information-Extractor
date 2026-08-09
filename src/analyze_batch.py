@@ -162,6 +162,26 @@ def save_json(path, data):
         f.write('\n')
 
 
+def reconcile_index(index_data, skills_data):
+    """index.json must hold exactly the slugs skills.json has. A slug missing from
+    index_data (present in skills.json but not indexed) is invisible to process_video's
+    `slug in index_data` dedup check, so its next endorsement falls through to the
+    "new skill" branch and appends a duplicate record instead of merging."""
+    valid_slugs = {s['slug'] for s in skills_data['skills']}
+    for slug in set(index_data.keys()) - valid_slugs:
+        del index_data[slug]
+    by_slug = {s['slug']: s for s in skills_data['skills']}
+    for slug in valid_slugs - set(index_data.keys()):
+        skill = by_slug[slug]
+        index_data[slug] = {
+            'score': skill.get('quality_score', 0),
+            'video_quality_score': skill.get('video_quality_score'),
+            'starred': skill.get('starred', False),
+            'target_tool': skill.get('target_tool', 'claude'),
+        }
+    return index_data
+
+
 def is_relevant(video):
     text = ' '.join([
         video.get('title') or '',
@@ -738,6 +758,9 @@ def main():
     print(f"Processing up to {max_videos} videos newest_first (total: {len(records)})")
 
     index_data = load_json('data/index.json', {})
+    skills_data_startup = load_json('data/skills.json', {'videos_seen': [], 'skills': []})
+    reconcile_index(index_data, skills_data_startup)
+    save_json('data/index.json', index_data)
     processed = skipped = errors = skills_total = 0
 
     for i, meta in enumerate(records[:max_videos]):

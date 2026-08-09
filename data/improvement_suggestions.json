@@ -3,7 +3,7 @@
     {
       "id": "a1b3c5d7e9",
       "type": "engine_fix",
-      "status": "pending",
+      "status": "applied",
       "detail": "Reconcile index.json vs skills.json: 41 phantom slugs exist in index.json (110 entries) with no matching skill in skills.json (69 skills). These phantoms silently block those tools from being added in future analyze runs. On main() startup, drop index keys that have no match in skills_data['skills'] and re-save index.json.",
       "proposed_change": {
         "file": "src/analyze_batch.py",
@@ -12,7 +12,9 @@
       },
       "source": "review",
       "review_finding_id": "fa52c3b7d1",
-      "severity": "med"
+      "severity": "med",
+      "applied_at": "2026-08-09T02:01:17.189345+00:00",
+      "applied_note": "fire 142: superseded by c4d8e2f1a7 (full reconcile_index() drops phantoms AND adds missing slugs in one pass) — see that entry for detail."
     },
     {
       "id": "b2c4d6e8f0",
@@ -51,10 +53,18 @@
       "status": "pending",
       "detail": "Remove 'anthropic' and 'openai' tool entries from data/tools.json — these are company names mistakenly catalogued as tools. Merge their endorsement_video_ids into the 'claude' and 'chatgpt' tool entries respectively, then recompute mentions.",
       "proposed_change": {
-        "files": ["data/tools.json"],
+        "files": [
+          "data/tools.json"
+        ],
         "action": "delete_slugs",
-        "slugs": ["anthropic", "openai"],
-        "merge_endorsements_into": {"anthropic": "claude", "openai": "chatgpt"}
+        "slugs": [
+          "anthropic",
+          "openai"
+        ],
+        "merge_endorsements_into": {
+          "anthropic": "claude",
+          "openai": "chatgpt"
+        }
       },
       "source": "review",
       "review_finding_id": "54deb8c37c",
@@ -111,7 +121,10 @@
       "status": "applied",
       "detail": "Add encoding='utf-8' to ALL open() calls in src/analyze_batch.py (lines 152, 160, 402, 725-726, 747-748) AND src/process_video.py (lines 19, 24). Hebrew transcripts and Unicode tool names will cause UnicodeError on non-UTF-8 locales. Three files affected.",
       "proposed_change": {
-        "files": ["src/analyze_batch.py", "src/process_video.py"],
+        "files": [
+          "src/analyze_batch.py",
+          "src/process_video.py"
+        ],
         "action": "add_encoding_utf8",
         "description": "Add encoding='utf-8' to every open() call. In analyze_batch.py: load_json (line 152), save_json (line 160), write_skill_md (line 402), main() pending reads (lines 725-726, 747-748). In process_video.py: load_json (line 19), save_json (line 24). Consider consolidating into a shared src/utils.py to prevent future divergence."
       },
@@ -127,7 +140,10 @@
       "status": "pending",
       "detail": "Investigate and fix 100% transcript fallback: last fetch had no_transcript=78, new_found=78. Every new video fell through to description/title. Likely cause: youtube-transcript-api version incompatibility or YouTube API change. Add a health-check flag in status.json and a dashboard banner when no_transcript/new_found > 0.5.",
       "proposed_change": {
-        "files": ["src/fetch.py", "docs/dashboard.js"],
+        "files": [
+          "src/fetch.py",
+          "docs/dashboard.js"
+        ],
         "action": "add_transcript_health_check",
         "description": "In fetch.py: after the main loop, if no_transcript_count / max(len(new_videos), 1) > 0.5, set status['transcript_health'] = 'degraded' and status['transcript_fallback_rate'] = rate. In dashboard.js: in renderAlert(), check for status.transcript_health === 'degraded' and show an amber banner 'Transcript fetching is degraded — content quality reduced'."
       },
@@ -252,7 +268,7 @@
     {
       "id": "c4d8e2f1a7",
       "type": "engine_fix",
-      "status": "pending",
+      "status": "applied",
       "detail": "Full index.json reconciliation: existing suggestion a1b3c5d7e9 only drops phantoms. NEW issue: 94 valid skills in skills.json are NOT in index.json (55% coverage). On next analyze_batch.py run these 94 slugs will be seen as 'absent' → duplicate records appended. Fix: in main() startup, after dropping phantoms, also ADD all missing valid slugs.",
       "proposed_change": {
         "file": "src/analyze_batch.py",
@@ -261,7 +277,9 @@
       },
       "source": "review",
       "review_finding_id": "f1a8b3c6d9",
-      "severity": "high"
+      "severity": "high",
+      "applied_at": "2026-08-09T02:01:17.189345+00:00",
+      "applied_note": "fire 142: added reconcile_index() to src/analyze_batch.py, called at the top of main() before the pending-video loop. Drops any index.json slug with no matching skills.json entry (0 currently) and adds any skills.json slug missing from index.json (193 currently — a valid skill with no index.json entry falls through process_video()'s 'slug in index_data' dedup check on its next endorsement and gets appended as a duplicate record instead of merged). Ran once against the live data files this fire: index.json now has exactly one entry per skills.json slug (3636==3636, was 3443). Regression-tested via a standalone call to reconcile_index() before wiring; full local suite (excava_core_test, guardrail_test, git_merge_resolve_test, or1_phase_test, deep_retrieve_test, analyze_batch_test) green; guardrails 17/20, 0 critical, unchanged from pre-fix baseline."
     },
     {
       "id": "d7e1f3a9b2",

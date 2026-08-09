@@ -3651,6 +3651,31 @@ async function resultsBadge() {                       // M3.7: the "new" count o
   } catch (_) {}
 }
 
+async function libraryCountBadges() {         // fire-146-suggestion 3693c44f40: catalog scale at a glance
+  try {
+    const [skills, tools, connectors] = await Promise.all(
+      ["skills.json", "tools.json", "connectors.json"].map(load));
+    const counts = {
+      skills: ((skills || {}).skills || []).length,
+      tools: ((tools || {}).tools || []).length,
+      connectors: ((connectors || {}).connectors || []).length,
+    };
+    for (const tab in counts) {
+      const navBtn = document.querySelector(`nav [data-tab="${tab}"]`);
+      if (!navBtn) continue;
+      // append, don't replace innerHTML — these buttons already carry a TAB_ACCENT .tab-dot
+      // (added by the sync init loop above) that a blind overwrite would silently delete.
+      let badge = navBtn.querySelector(".nav-count");
+      if (!badge) {
+        badge = document.createElement("span");
+        badge.className = "nav-count";
+        navBtn.appendChild(badge);
+      }
+      badge.textContent = counts[tab];
+    }
+  } catch (_) {}
+}
+
 async function renderTab(tab) {
   if (tab === "excava") return renderExcava();
   if (tab === "hub") return renderHub();
@@ -3701,6 +3726,7 @@ document.querySelectorAll("nav button").forEach(b => {
 
 (async () => {
   resultsBadge();                                     // M3.7: fire-and-forget "new results" count
+  libraryCountBadges();                               // catalog scale at a glance before clicking a tab
   renderSteering();                                   // M3.11: bell + banner + walk-up on new approvals
   const [status, stars, extra, config, health] = await Promise.all([
     load("status.json"), load("stars.json"), load("extra_tabs.json"), loadRoot("config.json"),

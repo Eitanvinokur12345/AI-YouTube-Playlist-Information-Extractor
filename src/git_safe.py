@@ -373,24 +373,37 @@ def sync() -> list:
     # file behind (proven 2026-07-20: the drain's recovery ship failed on exactly that).
     # timeout= (fires 145-147, see _git's docstring): this call fetches from origin under the
     # hood, so it is exactly as exposed to a silent network hang as push() was.
+    # rebase vs merge is NOT a style choice here (2026-08-09). `git pull --rebase` DROPS merge
+    # commits. On a PR branch that has merged main to stay current, the next ship silently
+    # un-does that merge and replays the branch's own commits on top — including ones already
+    # on main under different SHAs — so a two-file PR re-inflates to 124 changed files every
+    # single time. Observed three times in a row on PR #69 before the cause was found.
+    #
+    # The away loop is a linear extension of main and genuinely wants rebase; a PR branch wants
+    # merge so its history (and its PR diff) stays truthful. Same signal as push_target().
+    strategy = "--rebase" if push_target() == "main" else "--no-rebase"
     try:
-        r = subprocess.run(["git", "pull", "--rebase", "--autostash", "--no-edit"],
+        r = subprocess.run(["git", "pull", strategy, "--autostash", "--no-edit"],
                             cwd=str(ROOT), text=True, capture_output=True, timeout=90)
     except subprocess.TimeoutExpired:
         raise RuntimeError(
-            "git pull --rebase --autostash TIMED OUT after 90s — likely a network stall talking to "
-            "origin, not a real rebase failure. An autostash may be sitting on the stash; check "
-            "`git stash list` and `git status` by hand before retrying.")
+            f"git pull {strategy} --autostash TIMED OUT after 90s — likely a network stall talking "
+            "to origin, not a real merge/rebase failure. An autostash may be sitting on the stash; "
+            "check `git stash list` and `git status` by hand before retrying.")
     while r.returncode != 0 and "conflict" in (r.stdout + r.stderr).lower():
         conflicted = [f for f in _git(["diff", "--name-only", "--diff-filter=U"]).splitlines() if f]
         src = [f for f in conflicted if not f.startswith(("data/", "backups/"))]
         if src or not conflicted:                       # a real source conflict → stop, don't guess
-            _git(["rebase", "--abort"], check=False)
+            # Abort with the verb that matches the strategy actually in flight. `rebase --abort`
+            # after a MERGE conflict does nothing and returns non-zero, which would have left the
+            # tree sitting mid-merge while the error claimed it had backed out cleanly.
+            _git(["merge" if strategy == "--no-rebase" else "rebase", "--abort"], check=False)
             raise RuntimeError(f"source conflict — resolve by hand: {', '.join(src or conflicted)}")
         for f in conflicted:                            # CI data snapshots: your code regenerates them
             _git(["checkout", "--theirs", "--", f], check=False)
             _git(["add", "--", f])
-        env_run = subprocess.run(["git", "-c", "core.editor=true", "rebase", "--continue"],
+        cont = (["commit", "--no-edit"] if strategy == "--no-rebase" else ["rebase", "--continue"])
+        env_run = subprocess.run(["git", "-c", "core.editor=true", *cont],
                                  cwd=str(ROOT), text=True, capture_output=True)
         r = env_run
     if r.returncode != 0:

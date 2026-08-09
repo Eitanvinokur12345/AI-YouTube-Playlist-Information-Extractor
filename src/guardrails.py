@@ -465,6 +465,38 @@ def g_push_safety_rollout():
     return _ok("G-R", "Push-safety fallback present in every shipping lane", ok, detail, "warn")
 
 
+def g_push_target_derived():
+    """G-V (2026-08-09): `git_safe.push()` must never hardcode its push target again.
+
+    Until today it ran `git push origin HEAD:main` unconditionally, so `git_safe ship` — the
+    single command CLAUDE.md tells every session to use — pushed to main from ANY branch. A
+    cloud session on `claude/<name>` would have shipped straight to main, bypassing the branch
+    workflow and PR review entirely. Worse, the follow-up check compared HEAD against
+    `origin/main` regardless of where it pushed, so it could confirm a fact that was not the
+    one being tested: verification that cannot fail for the right reason reads as proof.
+
+    The fix derives the target from the configured upstream (`push_target()`). This guardrail
+    fails if the literal hardcode returns, so the next person who "simplifies" it gets caught
+    on the same run rather than after a stray commit lands on main."""
+    p = ROOT / "src" / "git_safe.py"
+    if not p.exists():
+        return _ok("G-V", "git_safe derives its push target", True, "src/git_safe.py absent here.", "info")
+    text = p.read_text(encoding="utf-8", errors="ignore")
+    problems = []
+    # Match the CALL, not the prose. The first version of this check searched the whole file for
+    # the string "HEAD:main" and then failed on its own docstring, which explains the old bug in
+    # English — a guardrail that fires on the description of the thing it guards is noise, and
+    # noise is how real failures get ignored.
+    if re.search(r'_git\(\s*\[\s*"push"[^]]*"HEAD:main"', text):
+        problems.append("a literal HEAD:main refspec is back in git_safe.py's push call")
+    if "def push_target" not in text:
+        problems.append("push_target() is gone — the target is being assumed again")
+    ok = not problems
+    detail = ("push target is derived from the upstream, not hardcoded."
+              if ok else "; ".join(problems))
+    return _ok("G-V", "git_safe derives its push target", ok, detail, "warn")
+
+
 def g_gates():
     """G-U (2026-08-02, Eitan's decision): P5 pitch-gates must bind BOTH loops.
 
@@ -524,7 +556,7 @@ def _load_json(p, d):
 CHECKS = [g_quarantine, g_msgfile, g_backup, g_mojibake, g_build_align, g_json,
           g_remote_sync, g_collisions, g_handoff, g_memory, g_auditlog, g_watchdog, g_movement,
           g_disk, g_localfuel, g_beat_heartbeat, g_core_spoton_heartbeat, g_lane_heartbeats,
-          g_push_safety_rollout, g_jsonl_markers, g_gates]
+          g_push_safety_rollout, g_jsonl_markers, g_gates, g_push_target_derived]
 # g_gates was DEFINED on 2026-08-02 and never added to this list, so the one guardrail written to
 # enforce that P5 gates bind both loops has never executed — 16 logged runs, zero of them checked
 # it. Found 2026-08-09 while opening the CREATORS gate. Worth stating plainly: a check that isn't

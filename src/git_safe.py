@@ -373,29 +373,64 @@ def sync() -> list:
     # file behind (proven 2026-07-20: the drain's recovery ship failed on exactly that).
     # timeout= (fires 145-147, see _git's docstring): this call fetches from origin under the
     # hood, so it is exactly as exposed to a silent network hang as push() was.
+    # rebase vs merge is NOT a style choice here (2026-08-09). `git pull --rebase` DROPS merge
+    # commits. On a PR branch that has merged main to stay current, the next ship silently
+    # un-does that merge and replays the branch's own commits on top — including ones already
+    # on main under different SHAs — so a two-file PR re-inflates to 124 changed files every
+    # single time. Observed three times in a row on PR #69 before the cause was found.
+    #
+    # The away loop is a linear extension of main and genuinely wants rebase; a PR branch wants
+    # merge so its history (and its PR diff) stays truthful. Same signal as push_target().
+    strategy = "--rebase" if push_target() == "main" else "--no-rebase"
     try:
-        r = subprocess.run(["git", "pull", "--rebase", "--autostash", "--no-edit"],
+        r = subprocess.run(["git", "pull", strategy, "--autostash", "--no-edit"],
                             cwd=str(ROOT), text=True, capture_output=True, timeout=90)
     except subprocess.TimeoutExpired:
         raise RuntimeError(
-            "git pull --rebase --autostash TIMED OUT after 90s — likely a network stall talking to "
-            "origin, not a real rebase failure. An autostash may be sitting on the stash; check "
-            "`git stash list` and `git status` by hand before retrying.")
+            f"git pull {strategy} --autostash TIMED OUT after 90s — likely a network stall talking "
+            "to origin, not a real merge/rebase failure. An autostash may be sitting on the stash; "
+            "check `git stash list` and `git status` by hand before retrying.")
     while r.returncode != 0 and "conflict" in (r.stdout + r.stderr).lower():
         conflicted = [f for f in _git(["diff", "--name-only", "--diff-filter=U"]).splitlines() if f]
         src = [f for f in conflicted if not f.startswith(("data/", "backups/"))]
         if src or not conflicted:                       # a real source conflict → stop, don't guess
-            _git(["rebase", "--abort"], check=False)
+            # Abort with the verb that matches the strategy actually in flight. `rebase --abort`
+            # after a MERGE conflict does nothing and returns non-zero, which would have left the
+            # tree sitting mid-merge while the error claimed it had backed out cleanly.
+            _git(["merge" if strategy == "--no-rebase" else "rebase", "--abort"], check=False)
             raise RuntimeError(f"source conflict — resolve by hand: {', '.join(src or conflicted)}")
         for f in conflicted:                            # CI data snapshots: your code regenerates them
             _git(["checkout", "--theirs", "--", f], check=False)
             _git(["add", "--", f])
-        env_run = subprocess.run(["git", "-c", "core.editor=true", "rebase", "--continue"],
+        cont = (["commit", "--no-edit"] if strategy == "--no-rebase" else ["rebase", "--continue"])
+        env_run = subprocess.run(["git", "-c", "core.editor=true", *cont],
                                  cwd=str(ROOT), text=True, capture_output=True)
         r = env_run
     if r.returncode != 0:
         raise RuntimeError(f"git pull --rebase failed:\n{(r.stderr or r.stdout).strip()}")
     return moved
+
+
+def push_target() -> str:
+    """The branch on origin this checkout should ship to — DERIVED, never assumed.
+
+    Until 2026-08-09 `push()` hardcoded `HEAD:main`, so `git_safe ship` pushed to main from
+    ANY branch. That is the one command CLAUDE.md tells every session to use, which means a
+    cloud session working on `claude/<something>` would have shipped straight to main and
+    silently bypassed both the branch workflow and PR review. It only ever LOOKED correct
+    because the away loop happens to run on a branch that genuinely tracks origin/main.
+
+    The upstream already encodes the intent, so read it instead of guessing:
+      * upstream origin/main          -> ship to main   (the away loop: correct, unchanged)
+      * upstream origin/<branch-name> -> ship to <branch-name> (cloud branch + PR sessions)
+      * no upstream at all            -> main only when actually ON main, else this branch,
+                                         so an untracked branch can never leak into main.
+    """
+    branch = _git(["rev-parse", "--abbrev-ref", "HEAD"])
+    upstream = _git(["rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{u}"], check=False)
+    if upstream.startswith("origin/"):
+        return upstream.split("/", 1)[1]
+    return "main" if branch in ("main", "HEAD") else branch
 
 
 def push(verbose=True) -> str:
@@ -411,7 +446,11 @@ def push(verbose=True) -> str:
             print(msg, flush=True)
     _say("git_safe.push: backing up history...")
     backup_bundle()
-    _say("git_safe.push: syncing (fetch + rebase onto origin/main)...")
+    tgt = push_target()
+    # Say what will actually happen. This line claimed "rebase onto origin/main" on every
+    # run regardless of branch or strategy, which is precisely the reassurance that made the
+    # PR-branch corruption hard to see: the log agreed with the assumption, not the code.
+    _say(f"git_safe.push: syncing ({'rebase' if tgt == 'main' else 'merge'} against origin/{tgt})...")
     sync()
     # Explicit refspec (2026-07-26 fix): a plain `git push` relies on push.default/the local
     # branch name matching its upstream, which breaks whenever the working branch isn't
@@ -419,12 +458,20 @@ def push(verbose=True) -> str:
     # branch of your current branch does not match the name of your current branch." Every other
     # check in this module already hardcodes origin/main (see sync/quarantine_collisions), so
     # doing the same here is consistent, not a new assumption.
-    _say("git_safe.push: pushing to origin/main...")
-    _git(["push", "origin", "HEAD:main"])
-    _say("git_safe.push: verifying origin == HEAD...")
-    head, origin = _git(["rev-parse", "HEAD"]), _git(["rev-parse", "origin/main"])
+    target = push_target()
+    _say(f"git_safe.push: pushing to origin/{target}...")
+    _git(["push", "origin", f"HEAD:{target}"])
+    # Verify against the ref we actually pushed to. The old code proved "origin/main == HEAD"
+    # no matter where it pushed, so a push to any other branch would have been reported as a
+    # landed main push (or failed for the wrong reason) — a verification that could confirm
+    # the wrong fact is worse than none, because it reads as proof.
+    _say(f"git_safe.push: verifying origin/{target} == HEAD...")
+    _git(["fetch", "origin", target], check=False)
+    head, origin = _git(["rev-parse", "HEAD"]), _git(["rev-parse", f"origin/{target}"])
     if head != origin:
-        raise RuntimeError(f"push did NOT land — origin ({origin[:9]}) != HEAD ({head[:9]}). Investigate before continuing.")
+        raise RuntimeError(
+            f"push did NOT land — origin/{target} ({origin[:9]}) != HEAD ({head[:9]}). "
+            "Investigate before continuing.")
     return head[:9]
 
 

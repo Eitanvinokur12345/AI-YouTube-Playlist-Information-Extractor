@@ -6627,6 +6627,25 @@ signing key or route commits through the GitHub API; not re-litigating again abs
   different name) — one more sign the contract's tooling was written for a specific local machine, not this
   environment. Commit `3d1d889a` (git_safe fix itself: `ebb224ca`).
 
+## 2026-08-09 (interactive loop, 15-min cadence)
+- **fire (cloud, egress-restricted)** — Fixed BOTH remaining "this checkout is main" assumptions in
+  `src/git_safe.py`, the command CLAUDE.md mandates for shipping. (1) `push()` hardcoded
+  `HEAD:main`, so `git_safe ship` pushed to main from ANY branch — a cloud PR session would have
+  bypassed branch workflow and review entirely; its verification compared against `origin/main`
+  regardless of where it pushed, so it could confirm the wrong fact. (2) `sync()` ran
+  `git pull --rebase` unconditionally, and rebase DROPS merge commits — a PR branch that merged
+  main had that merge undone on the next ship, re-inflating PR #69 from a 3-file diff to 124
+  changed files, three times, before the cause was found. Strategy now derives from the upstream:
+  away loop rebases (unchanged), PR branches merge. Conflict-recovery verbs made strategy-aware
+  (`rebase --abort` after a merge conflict is a no-op returning non-zero). The push log line also
+  claimed "rebase onto origin/main" on every run — the log agreeing with the assumption instead of
+  the code is why this survived so long. WHY it matters: every PR this loop opens was being
+  corrupted, and the corruption was invisible in the logs. Verified: diff held at 3 files through a
+  full ship cycle. Guardrail G-V added AND registered in CHECKS.
+- **Honest note:** this is the THIRD consecutive fire spent on shipping/observability tooling rather
+  than on the hub or the departments. The tooling keeps generating the bugs that consume the fires
+  meant for the actual program. Called out to Eitan rather than buried.
+
 ## 2026-07-24
 - **~18:00 (fire 5, unattended)** — Shipped `src/pulse.py` → **PULSE.md** + `pulse.json`: one-glance "is it actually working?" status that federates guardrails, movement, drain, open questions, the away-log and recent commits into a single file at the repo root (open it, no server). It refuses to cheerlead — the first run surfaced a HIDDEN regression the green dashboard hid: the done-counter has fallen 1566→1256 over three days while "depts moving" sat flat at 12. Commit `24f0a3bb5`.
 

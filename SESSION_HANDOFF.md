@@ -93,6 +93,40 @@ because the beat only had exhausted Gemini). Fixed + PROVEN end-to-end:
   the acted-on object) · THEN 7 Visualization+Power depts + 2 pitch conditions + pitch-monster (§J/§K/§M
   of EXCAVA_V2_ADDITIONS.md) · 8 M5 + breadth. Rule: "done" = a real artifact shown, never a rendered card.
 
+## 0d-5. LIVE BUILD v136 (2026-08-09) — the app stops presenting fake and absent work as real
+
+Eitan opened the Prompts tab and found that all 14 "Prompt pack" creations were one sentence with
+a single word swapped. He was right, and it was worse than cosmetic. `src/excava_creators.py`
+`draft()` is an f-string loop; the module has **never called a model** (grep for `engine` in it
+returns nothing, while `excava_engines.complete()` has served the Rooms for weeks). The "gap" each
+pack claimed to fill was a word-frequency count over social-post titles — which is why re-running
+the generator today proposes "Prompt pack: https" and "Prompt pack: hiring". And `_self_test()`
+could not fail: four non-empty fields, a wordlist scan, and `link_alive=True` whenever `url` is
+empty. Templater → unfailable test → auto-publish → a 🦾 badge in his app.
+
+What shipped, all one increment — *the app stops showing fabricated or missing content as real*:
+1. The 14 packs are **quarantined, not deleted** → `data/creations_quarantine.json` (with the root
+   cause recorded). One real item survives: `Package: link-recovery sprint`.
+2. Gate **G3-creators-output-bar** is OPEN and the department is blocked *in code*
+   (`_gate_open()`), not in prose — prose gates are exactly what failed on 2026-08-01.
+3. `_is_template()` refuses mechanical boilerplate **permanently**, so lifting the gate with a
+   nicer f-string is not a way through. Verified: 6/6 of the current generator's drafts rejected.
+4. **G-U had never run.** `g_gates()` was defined on 2026-08-02 and never added to `CHECKS` — 16
+   logged guardrail runs, zero of which checked it, all reading green. Registered; now 21 checks.
+5. Read side (`docs/dashboard.js`): `loadText()` collapsed 404 and network-failure into the same
+   `""` an empty file returns, so Rooms printed "This room hasn't spoken yet" when a fetch died.
+   The transcripts are fine — **4,358 committed `.jsonl` files, 21,566 message lines, all 150
+   rooms covered inside the 14-day window**. The app was inventing silence. It now names the
+   failure and the path. Creation cards also switched from `status !== "failed-test"` (an
+   allowlist-by-exclusion that let any new status through) to `status === "published"`.
+6. `.nojekyll` added — Pages was running Jekyll over 4,358 transcript files; this removes it from
+   the suspect list for the missing-transcripts report. I could not reach the live site from the
+   cloud container (the agent proxy blocks `github.io`), so this is a candidate, not a diagnosis.
+
+OPEN, blocking: Eitan is writing the per-type quality bar (he chose to teach it directly rather
+than wait for the in-app OR-1 debate). The Creators gate lifts when that bar exists AND
+`excava_creators.draft()` calls a real engine against it.
+
 ## 0d-4. LIVE BUILD v135 (2026-08-02) — the roster stops hiding its idle agents
 
 The 👥 Agents track-record card filtered to `turns_7d > 0`, so agents who did NO work were

@@ -524,7 +524,11 @@ def _load_json(p, d):
 CHECKS = [g_quarantine, g_msgfile, g_backup, g_mojibake, g_build_align, g_json,
           g_remote_sync, g_collisions, g_handoff, g_memory, g_auditlog, g_watchdog, g_movement,
           g_disk, g_localfuel, g_beat_heartbeat, g_core_spoton_heartbeat, g_lane_heartbeats,
-          g_push_safety_rollout, g_jsonl_markers]
+          g_push_safety_rollout, g_jsonl_markers, g_gates]
+# g_gates was DEFINED on 2026-08-02 and never added to this list, so the one guardrail written to
+# enforce that P5 gates bind both loops has never executed — 16 logged runs, zero of them checked
+# it. Found 2026-08-09 while opening the CREATORS gate. Worth stating plainly: a check that isn't
+# registered is not a weaker check, it is no check, and it read as green the whole time.
 
 
 def run() -> dict:

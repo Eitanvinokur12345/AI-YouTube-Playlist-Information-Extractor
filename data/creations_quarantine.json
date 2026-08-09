@@ -1,0 +1,314 @@
+{
+  "note": "QUARANTINED, NOT DELETED (CLAUDE.md §3). Eitan reviewed the Prompts tab on 2026-08-09 and saw that every 'Prompt pack' the CREATORS department published was the same sentence with one word swapped. He was right. These are preserved here verbatim so nothing is lost and so the failure stays inspectable; they are un-published from the app.",
+  "why": "ROOT CAUSE, verified by reading the code and the data, not inferred: src/excava_creators.py draft() is a Python f-string loop with NO model call anywhere in the module (grep for 'engine' in that file returns zero hits, while src/excava_engines.complete() has existed and been used by the Rooms for weeks). The 'gap' each pack claimed to fill was a word-frequency count: intake_demand_terms is re.findall(r'[a-zA-Z][a-zA-Z\\-]{4,}') over social post titles minus a six-word stoplist, which is why the terms were 'claude', 'skills', 'agents' — common words, not hub gaps. And _self_test() could not fail: it checks four fields are non-empty, scans a wordlist, and returns link_alive=True when url is empty. Templater -> a test that cannot fail -> auto-publish -> a badge in the app. That is the P4 'real, not display' violation the protocols exist to prevent, shipped as product.",
+  "evidence": {
+    "total_creations": 15,
+    "quarantined": 14,
+    "kept_published": 1,
+    "distinct_body_shapes_with_words_stripped": {
+      ". : <>. :   ,  ,      .": 13,
+      "-. : <>. :   ,  ,      .": 1,
+      "": 1
+    },
+    "shared_body_template": "You are an expert on {term}. Goal: <goal>. Constraints: free tools only, cite sources, output steps then the final artifact.",
+    "model_calls_in_excava_creators_py": 0
+  },
+  "restore": "Only Eitan restores these. They are NOT a starting point to edit — the fix is a real writer working against a defined bar (owner_requests.json OR-1), not better f-strings.",
+  "quarantined_at": "2026-08-09T17:26:24.526079+00:00",
+  "items": [
+    {
+      "name": "Prompt pack: claude",
+      "type": "prompt",
+      "created_by": "EXCAVA",
+      "label": "Created by EXCAVA",
+      "gap": "intake demand term 'claude' has no hub prompt",
+      "what": "A reusable prompt scaffold for claude tasks, seeded from live community demand.",
+      "how_to_use": "Paste into any AI tool; replace <goal> with your claude goal. Refine with the Activator once tested.",
+      "body": "You are an expert on claude. Goal: <goal>. Constraints: free tools only, cite sources, output steps then the final artifact.",
+      "status": "published",
+      "created_at": "2026-07-03T10:36:52.468322+00:00",
+      "self_test": {
+        "ok": true,
+        "checks": {
+          "schema": true,
+          "security_clean": true,
+          "link_alive": true
+        },
+        "tested_at": "2026-07-03T10:36:52.469019+00:00"
+      }
+    },
+    {
+      "name": "Prompt pack: skills",
+      "type": "prompt",
+      "created_by": "EXCAVA",
+      "label": "Created by EXCAVA",
+      "gap": "intake demand term 'skills' has no hub prompt",
+      "what": "A reusable prompt scaffold for skills tasks, seeded from live community demand.",
+      "how_to_use": "Paste into any AI tool; replace <goal> with your skills goal. Refine with the Activator once tested.",
+      "body": "You are an expert on skills. Goal: <goal>. Constraints: free tools only, cite sources, output steps then the final artifact.",
+      "status": "published",
+      "created_at": "2026-07-03T10:36:52.468345+00:00",
+      "self_test": {
+        "ok": true,
+        "checks": {
+          "schema": true,
+          "security_clean": true,
+          "link_alive": true
+        },
+        "tested_at": "2026-07-03T10:36:52.469074+00:00"
+      }
+    },
+    {
+      "name": "Prompt pack: open-source",
+      "type": "prompt",
+      "created_by": "EXCAVA",
+      "label": "Created by EXCAVA",
+      "gap": "intake demand term 'open-source' has no hub prompt",
+      "what": "A reusable prompt scaffold for open-source tasks, seeded from live community demand.",
+      "how_to_use": "Paste into any AI tool; replace <goal> with your open-source goal. Refine with the Activator once tested.",
+      "body": "You are an expert on open-source. Goal: <goal>. Constraints: free tools only, cite sources, output steps then the final artifact.",
+      "status": "published",
+      "created_at": "2026-07-03T10:36:52.468351+00:00",
+      "self_test": {
+        "ok": true,
+        "checks": {
+          "schema": true,
+          "security_clean": true,
+          "link_alive": true
+        },
+        "tested_at": "2026-07-03T10:36:52.469103+00:00"
+      }
+    },
+    {
+      "name": "Prompt pack: frameworks",
+      "type": "prompt",
+      "created_by": "EXCAVA",
+      "label": "Created by EXCAVA",
+      "gap": "intake demand term 'frameworks' has no hub prompt",
+      "what": "A reusable prompt scaffold for frameworks tasks, seeded from live community demand.",
+      "how_to_use": "Paste into any AI tool; replace <goal> with your frameworks goal. Refine with the Activator once tested.",
+      "body": "You are an expert on frameworks. Goal: <goal>. Constraints: free tools only, cite sources, output steps then the final artifact.",
+      "status": "published",
+      "created_at": "2026-07-03T10:36:52.468356+00:00",
+      "self_test": {
+        "ok": true,
+        "checks": {
+          "schema": true,
+          "security_clean": true,
+          "link_alive": true
+        },
+        "tested_at": "2026-07-03T10:36:52.469123+00:00"
+      }
+    },
+    {
+      "name": "Prompt pack: agents",
+      "type": "prompt",
+      "created_by": "EXCAVA",
+      "label": "Created by EXCAVA",
+      "gap": "intake demand term 'agents' has no hub prompt",
+      "what": "A reusable prompt scaffold for agents tasks, seeded from live community demand.",
+      "how_to_use": "Paste into any AI tool; replace <goal> with your agents goal. Refine with the Activator once tested.",
+      "body": "You are an expert on agents. Goal: <goal>. Constraints: free tools only, cite sources, output steps then the final artifact.",
+      "status": "published",
+      "created_at": "2026-07-04T09:51:46.530125+00:00",
+      "self_test": {
+        "ok": true,
+        "checks": {
+          "schema": true,
+          "security_clean": true,
+          "link_alive": true
+        },
+        "tested_at": "2026-07-04T09:51:46.530181+00:00"
+      }
+    },
+    {
+      "name": "Prompt pack: agent",
+      "type": "prompt",
+      "created_by": "EXCAVA",
+      "label": "Created by EXCAVA",
+      "gap": "intake demand term 'agent' has no hub prompt",
+      "what": "A reusable prompt scaffold for agent tasks, seeded from live community demand.",
+      "how_to_use": "Paste into any AI tool; replace <goal> with your agent goal. Refine with the Activator once tested.",
+      "body": "You are an expert on agent. Goal: <goal>. Constraints: free tools only, cite sources, output steps then the final artifact.",
+      "status": "published",
+      "created_at": "2026-07-04T09:51:46.530134+00:00",
+      "self_test": {
+        "ok": true,
+        "checks": {
+          "schema": true,
+          "security_clean": true,
+          "link_alive": true
+        },
+        "tested_at": "2026-07-04T09:51:46.530202+00:00"
+      }
+    },
+    {
+      "name": "Prompt pack: tutorial",
+      "type": "prompt",
+      "created_by": "EXCAVA",
+      "label": "Created by EXCAVA",
+      "gap": "intake demand term 'tutorial' has no hub prompt",
+      "what": "A reusable prompt scaffold for tutorial tasks, seeded from live community demand.",
+      "how_to_use": "Paste into any AI tool; replace <goal> with your tutorial goal. Refine with the Activator once tested.",
+      "body": "You are an expert on tutorial. Goal: <goal>. Constraints: free tools only, cite sources, output steps then the final artifact.",
+      "status": "published",
+      "created_at": "2026-07-04T09:51:46.530137+00:00",
+      "self_test": {
+        "ok": true,
+        "checks": {
+          "schema": true,
+          "security_clean": true,
+          "link_alive": true
+        },
+        "tested_at": "2026-07-04T09:51:46.530218+00:00"
+      }
+    },
+    {
+      "name": "Prompt pack: build",
+      "type": "prompt",
+      "created_by": "EXCAVA",
+      "label": "Created by EXCAVA",
+      "gap": "intake demand term 'build' has no hub prompt",
+      "what": "A reusable prompt scaffold for build tasks, seeded from live community demand.",
+      "how_to_use": "Paste into any AI tool; replace <goal> with your build goal. Refine with the Activator once tested.",
+      "body": "You are an expert on build. Goal: <goal>. Constraints: free tools only, cite sources, output steps then the final artifact.",
+      "status": "published",
+      "created_at": "2026-07-04T09:51:46.530140+00:00",
+      "self_test": {
+        "ok": true,
+        "checks": {
+          "schema": true,
+          "security_clean": true,
+          "link_alive": true
+        },
+        "tested_at": "2026-07-04T09:51:46.530231+00:00"
+      }
+    },
+    {
+      "name": "Prompt pack: hiring",
+      "type": "prompt",
+      "created_by": "EXCAVA",
+      "label": "Created by EXCAVA",
+      "gap": "intake demand term 'hiring' has no hub prompt",
+      "what": "A reusable prompt scaffold for hiring tasks, seeded from live community demand.",
+      "how_to_use": "Paste into any AI tool; replace <goal> with your hiring goal. Refine with the Activator once tested.",
+      "body": "You are an expert on hiring. Goal: <goal>. Constraints: free tools only, cite sources, output steps then the final artifact.",
+      "status": "published",
+      "created_at": "2026-07-06T11:50:15.999508+00:00",
+      "self_test": {
+        "ok": true,
+        "checks": {
+          "schema": true,
+          "security_clean": true,
+          "link_alive": true
+        },
+        "tested_at": "2026-07-06T11:50:15.999553+00:00"
+      }
+    },
+    {
+      "name": "Prompt pack: agentic",
+      "type": "prompt",
+      "created_by": "EXCAVA",
+      "label": "Created by EXCAVA",
+      "gap": "intake demand term 'agentic' has no hub prompt",
+      "what": "A reusable prompt scaffold for agentic tasks, seeded from live community demand.",
+      "how_to_use": "Paste into any AI tool; replace <goal> with your agentic goal. Refine with the Activator once tested.",
+      "body": "You are an expert on agentic. Goal: <goal>. Constraints: free tools only, cite sources, output steps then the final artifact.",
+      "status": "published",
+      "created_at": "2026-07-07T10:40:01.358495+00:00",
+      "self_test": {
+        "ok": true,
+        "checks": {
+          "schema": true,
+          "security_clean": true,
+          "link_alive": true
+        },
+        "tested_at": "2026-07-07T10:40:01.358543+00:00"
+      }
+    },
+    {
+      "name": "Prompt pack: https",
+      "type": "prompt",
+      "created_by": "EXCAVA",
+      "label": "Created by EXCAVA",
+      "gap": "intake demand term 'https' has no hub prompt",
+      "what": "A reusable prompt scaffold for https tasks, seeded from live community demand.",
+      "how_to_use": "Paste into any AI tool; replace <goal> with your https goal. Refine with the Activator once tested.",
+      "body": "You are an expert on https. Goal: <goal>. Constraints: free tools only, cite sources, output steps then the final artifact.",
+      "status": "published",
+      "created_at": "2026-07-09T10:40:18.943073+00:00",
+      "self_test": {
+        "ok": true,
+        "checks": {
+          "schema": true,
+          "security_clean": true,
+          "link_alive": true
+        },
+        "tested_at": "2026-07-09T10:40:18.943126+00:00"
+      }
+    },
+    {
+      "name": "Prompt pack: guide",
+      "type": "prompt",
+      "created_by": "EXCAVA",
+      "label": "Created by EXCAVA",
+      "gap": "intake demand term 'guide' has no hub prompt",
+      "what": "A reusable prompt scaffold for guide tasks, seeded from live community demand.",
+      "how_to_use": "Paste into any AI tool; replace <goal> with your guide goal. Refine with the Activator once tested.",
+      "body": "You are an expert on guide. Goal: <goal>. Constraints: free tools only, cite sources, output steps then the final artifact.",
+      "status": "published",
+      "created_at": "2026-07-23T10:04:45.661671+00:00",
+      "self_test": {
+        "ok": true,
+        "checks": {
+          "schema": true,
+          "security_clean": true,
+          "link_alive": true
+        },
+        "tested_at": "2026-07-23T10:04:45.661713+00:00"
+      }
+    },
+    {
+      "name": "Prompt pack: models",
+      "type": "prompt",
+      "created_by": "EXCAVA",
+      "label": "Created by EXCAVA",
+      "gap": "intake demand term 'models' has no hub prompt",
+      "what": "A reusable prompt scaffold for models tasks, seeded from live community demand.",
+      "how_to_use": "Paste into any AI tool; replace <goal> with your models goal. Refine with the Activator once tested.",
+      "body": "You are an expert on models. Goal: <goal>. Constraints: free tools only, cite sources, output steps then the final artifact.",
+      "status": "published",
+      "created_at": "2026-07-24T09:59:30.724954+00:00",
+      "self_test": {
+        "ok": true,
+        "checks": {
+          "schema": true,
+          "security_clean": true,
+          "link_alive": true
+        },
+        "tested_at": "2026-07-24T09:59:30.725004+00:00"
+      }
+    },
+    {
+      "name": "Prompt pack: model",
+      "type": "prompt",
+      "created_by": "EXCAVA",
+      "label": "Created by EXCAVA",
+      "gap": "intake demand term 'model' has no hub prompt",
+      "what": "A reusable prompt scaffold for model tasks, seeded from live community demand.",
+      "how_to_use": "Paste into any AI tool; replace <goal> with your model goal. Refine with the Activator once tested.",
+      "body": "You are an expert on model. Goal: <goal>. Constraints: free tools only, cite sources, output steps then the final artifact.",
+      "status": "published",
+      "created_at": "2026-07-27T10:55:59.056811+00:00",
+      "self_test": {
+        "ok": true,
+        "checks": {
+          "schema": true,
+          "security_clean": true,
+          "link_alive": true
+        },
+        "tested_at": "2026-07-27T10:55:59.056850+00:00"
+      }
+    }
+  ]
+}

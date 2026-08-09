@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v135";
+const APP_BUILD = "v136";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -119,7 +119,11 @@ setInterval(_livePoll, 60000);
 // Each carries the 'Created by EXCAVA' label so provenance stays visible.
 async function _plusCreations(data, kind, listKey) {
   const made = await load("created_by_excava.json");
-  const mine = ((made && made.creations) || []).filter(c => c.type === kind && c.status !== "failed-test");
+  // Was `status !== "failed-test"`, an allowlist-by-exclusion: any NEW status a future writer
+  // introduced would have shown up in Eitan's tabs as product without anyone deciding it should.
+  // On 2026-08-09 that is exactly what surfaced 14 identical template prompts. Only PUBLISHED
+  // creations are product; drafts, rejected boilerplate and failed tests stay out of the tabs.
+  const mine = ((made && made.creations) || []).filter(c => c.type === kind && c.status === "published");
   if (!mine.length) return data;
   const mapped = mine.map(c => ({
     title: "🦾 " + c.name, name: "🦾 " + c.name,                       // both key styles used by tabs
@@ -134,11 +138,20 @@ async function _plusCreations(data, kind, listKey) {
   return out;
 }
 // Raw-text loader (JSONL traces etc.) — no cache, "" on miss. Phase 5 trace viewer uses it.
+// Returns the text, or a FAILURE MARKER — never a bare "" for both cases. Eitan reported on
+// 2026-08-09 that the Rooms tab showed no chat history at all. The transcripts were fine (4,358
+// committed .jsonl files, 21,566 message lines, and all 150 rooms have one inside the 14-day
+// window) — this function was collapsing "404" and "network died" into the same "" that an empty
+// file returns, so the renderer printed "This room hasn't spoken yet". The app was telling him a
+// room was silent when the truth was that the fetch failed. That is the same P4 real-not-display
+// violation as the template prompts, on the read side, and it is worse because it hides evidence
+// that DOES exist. Callers can now tell the three apart.
 async function loadText(file) {
   try {
     const r = await fetch(DATA + file, { cache: "no-store" });
-    return r.ok ? await r.text() : "";
-  } catch { return ""; }
+    if (r.ok) return await r.text();
+    return r.status === 404 ? "" : { error: `HTTP ${r.status}`, file };
+  } catch (e) { return { error: String((e && e.message) || e || "network"), file }; }
 }
 
 // ── M1: the ELEMENT layer — unified index, badges, action row, detail view ──
@@ -2762,6 +2775,11 @@ async function renderExcava() {
     if (!tv) return;
     tv.innerHTML = `<p class="sub">loading trace ${esc(id)}…</p>`;
     const txt = await loadText(`excava/traces/${id}.jsonl`);
+    if (txt && txt.error) {   // a load FAILURE is not the same as "no trace" — say which
+      tv.innerHTML = `<p class="sub" style="color:#e08f8f">could not load the trace for ${esc(id)} —
+        <b>${esc(txt.error)}</b> on <code>${esc(DATA + txt.file)}</code>. The file may well exist;
+        this is a fetch problem, not an empty trace.</p>`; return;
+    }
     if (!txt) { tv.innerHTML = `<p class="sub">no trace on disk for ${esc(id)} (it may not be committed yet).</p>`; return; }
     const rows = txt.trim().split("\n").map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean);
     tv.innerHTML = `<p class="sub" style="margin-top:8px"><b>trace — ${esc(id)}</b> (${rows.length} events)</p>` + rows.map(ev => {
@@ -3443,7 +3461,9 @@ async function renderRooms(selId) {
     days.push([d, await loadText(`excava/chats/${d}/${sel.id}.jsonl`)]);
   }
   let msgs = [];
+  const loadErrs = [];
   days.forEach(([d, txt]) => {
+    if (txt && txt.error) { loadErrs.push(`${d}: ${txt.error}`); return; }
     if (!txt) return;
     msgs.push({ day: d });
     txt.trim().split("\n").forEach(l => { try { msgs.push(JSON.parse(l)); } catch (_) {} });
@@ -3458,7 +3478,13 @@ async function renderRooms(selId) {
       <div class="ava ${mimg ? "has-m" : ""}" title="${esc(a.persona || m.agent)}">${mimg || (AGENT_EMOJI[a.department || "core"] || "🤖") + (isLead ? "👔" : "")}</div>
       <div class="bub"><div class="who">${esc(m.name || m.agent)} <span class="eng">${esc(_engFriendly(m.engine))}${m.ms ? " · " + m.ms + "ms" : ""}</span></div>${humanizeHTML(m.text)}</div>
     </div>`;
-  }).join("") || `<p class="sub">This room hasn't spoken yet — it advances on the next CI beat (engines live in the cloud).</p>`;
+  }).join("") || (loadErrs.length
+    ? `<p class="sub" style="color:#e08f8f">⚠️ <b>The transcript could not be loaded</b> — this room is
+       almost certainly NOT silent. ${loadErrs.length} of ${days.length} days failed to fetch
+       (${esc(loadErrs.slice(0, 3).join(" · "))}${loadErrs.length > 3 ? " …" : ""}).
+       The transcripts live at <code>data/excava/chats/&lt;day&gt;/${esc(sel.id)}.jsonl</code> in the repo.
+       Open one directly to confirm whether the site is serving them.</p>`
+    : `<p class="sub">This room hasn't spoken yet — it advances on the next CI beat (engines live in the cloud).</p>`);
   // M3.7: the artifact appears INLINE in the making-chat, not just in the meta line
   const artInline = sel.artifact ? `<div class="msg sys artifact"><div class="bub">📦 <b>ARTIFACT</b> —
       this room produced a <b>${esc(sel.artifact.kind || sel.artifact_kind || "artifact")}</b>:

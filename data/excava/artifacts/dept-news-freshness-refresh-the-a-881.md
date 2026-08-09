@@ -1,16 +1,16 @@
 # news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
 
-> Decision artifact · room `dept-news-freshness-refresh-the-a-881` (dept) · 2026-07-23T23:30:46.321554+00:00
-> Participants: Scoop, Wire · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-news-freshness-refresh-the-a-881` (dept) · 2026-08-09T05:31:01.330575+00:00
+> Participants: Scoop, Factcheck, Wire · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Fetch latest AI headlines from Reuters, BBC, and White House official sources.
-2. Verify each headline’s authenticity and recency (timestamp within last 24h).
-3. Filter for decision-level updates (policies, regulations, major corporate announcements).
-4. Compile top 5-7 verified updates into a concise digest.
-5. Format as GitHub markdown with clear sections (headline, source, timestamp).
-6. Output to designated AI-news digest repository.
+1. Open OpenAI’s official blog feed and extract the latest AI research or product update.
+2. Retrieve Google’s newest AI model release from their official sources.
+3. Fetch NVIDIA’s latest AI chip announcement from their official announcements.
+4. Compile a digest entry for 2024-05-30 with three key updates from the sources above.
+5. Format the digest as a GitHub markdown list with headlines and brief summaries.
+6. Publish the digest in the AI-news repository under the 2024-05-30 entry.
 
-**What changed:** Fresh AI-news digest sourced from verified official/company/national outlets.
+**What changed:** Scope clarified to "AI research or product updates" for precision.

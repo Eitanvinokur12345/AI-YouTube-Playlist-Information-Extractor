@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-08-09T02:39:55.694015+00:00",
+ "generated_at": "2026-08-09T05:32:46.819628+00:00",
  "total": 119,
  "counts": {
-  "wired": 94,
-  "operator": 25,
+  "wired": 95,
+  "operator": 24,
   "orphaned": 0,
   "dead": 0
  },
@@ -146,12 +146,11 @@
    "imports": []
   },
   "analyze_batch": {
-   "status": "operator",
-   "loc": 818,
+   "status": "wired",
+   "loc": 823,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "PULSE.md",
     "brain/Architecture.md",
     "data/dev_construction.json",
     "data/improvement_suggestions.json",
@@ -159,7 +158,8 @@
    ],
    "imported_by": [
     "analyze_batch_test",
-    "backfill_skill_md"
+    "backfill_skill_md",
+    "fetch"
    ],
    "imports": []
   },
@@ -388,7 +388,7 @@
   },
   "bulk_analyze": {
    "status": "wired",
-   "loc": 480,
+   "loc": 493,
    "entrypoint": true,
    "invoked_by": [
     "bulk_analyze.yml",
@@ -398,7 +398,8 @@
     "QUESTIONS.md",
     "brain/Systems and Protocols.md",
     "config.json",
-    "data/dev_construction.json"
+    "data/dev_construction.json",
+    "data/improvement_suggestions.json"
    ],
    "imported_by": [
     "cross_tab_check",
@@ -1025,13 +1026,14 @@
   },
   "fetch": {
    "status": "wired",
-   "loc": 684,
+   "loc": 722,
    "entrypoint": true,
    "invoked_by": [
     "fetch.yml"
    ],
    "documented_in": [
     "ANALYZE_SPEC.md",
+    "QUESTIONS.md",
     "README.md",
     "brain/Architecture.md",
     "brain/Cadence.md",
@@ -1044,7 +1046,9 @@
     "data/review_findings.json"
    ],
    "imported_by": [],
-   "imports": []
+   "imports": [
+    "analyze_batch"
+   ]
   },
   "gemini_video_analyze": {
    "status": "wired",
@@ -1625,11 +1629,10 @@
   },
   "process_video": {
    "status": "operator",
-   "loc": 371,
+   "loc": 376,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
-    "PULSE.md",
     "brain/Architecture.md",
     "data/dev_construction.json",
     "data/improvement_suggestions.json",

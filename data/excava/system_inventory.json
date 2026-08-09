@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-08-09T17:09:42.230539+00:00",
+ "generated_at": "2026-08-09T19:15:49.156021+00:00",
  "total": 119,
  "counts": {
-  "wired": 95,
-  "operator": 24,
+  "wired": 96,
+  "operator": 23,
   "orphaned": 0,
   "dead": 0
  },
@@ -849,20 +849,23 @@
   },
   "excava_creators": {
    "status": "wired",
-   "loc": 260,
+   "loc": 322,
    "entrypoint": true,
    "invoked_by": [
     "creators.yml"
    ],
    "documented_in": [
     "SESSION_HANDOFF.md",
+    "data/creations_quarantine.json",
     "data/dev_construction.json",
     "docs/dashboard.js"
    ],
    "imported_by": [
     "excava_experiments"
    ],
-   "imports": []
+   "imports": [
+    "loop_contract"
+   ]
   },
   "excava_engines": {
    "status": "wired",
@@ -875,6 +878,7 @@
    "documented_in": [
     "EXCAVA_V2_PLAN.md",
     "EXCAVA_V2_STEPS.md",
+    "data/creations_quarantine.json",
     "data/dev_construction.json"
    ],
    "imported_by": [
@@ -1192,7 +1196,7 @@
   },
   "guardrails": {
    "status": "wired",
-   "loc": 569,
+   "loc": 573,
    "entrypoint": false,
    "invoked_by": [],
    "documented_in": [
@@ -1324,7 +1328,7 @@
    ]
   },
   "loop_contract": {
-   "status": "operator",
+   "status": "wired",
    "loc": 304,
    "entrypoint": false,
    "invoked_by": [],
@@ -1334,6 +1338,7 @@
     "data/dev_construction.json"
    ],
    "imported_by": [
+    "excava_creators",
     "standing_checks"
    ],
    "imports": []

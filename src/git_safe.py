@@ -398,6 +398,28 @@ def sync() -> list:
     return moved
 
 
+def push_target() -> str:
+    """The branch on origin this checkout should ship to — DERIVED, never assumed.
+
+    Until 2026-08-09 `push()` hardcoded `HEAD:main`, so `git_safe ship` pushed to main from
+    ANY branch. That is the one command CLAUDE.md tells every session to use, which means a
+    cloud session working on `claude/<something>` would have shipped straight to main and
+    silently bypassed both the branch workflow and PR review. It only ever LOOKED correct
+    because the away loop happens to run on a branch that genuinely tracks origin/main.
+
+    The upstream already encodes the intent, so read it instead of guessing:
+      * upstream origin/main          -> ship to main   (the away loop: correct, unchanged)
+      * upstream origin/<branch-name> -> ship to <branch-name> (cloud branch + PR sessions)
+      * no upstream at all            -> main only when actually ON main, else this branch,
+                                         so an untracked branch can never leak into main.
+    """
+    branch = _git(["rev-parse", "--abbrev-ref", "HEAD"])
+    upstream = _git(["rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{u}"], check=False)
+    if upstream.startswith("origin/"):
+        return upstream.split("/", 1)[1]
+    return "main" if branch in ("main", "HEAD") else branch
+
+
 def push(verbose=True) -> str:
     """The safe push: back up history, sync, push, then PROVE it landed (origin == HEAD).
 
@@ -419,12 +441,20 @@ def push(verbose=True) -> str:
     # branch of your current branch does not match the name of your current branch." Every other
     # check in this module already hardcodes origin/main (see sync/quarantine_collisions), so
     # doing the same here is consistent, not a new assumption.
-    _say("git_safe.push: pushing to origin/main...")
-    _git(["push", "origin", "HEAD:main"])
-    _say("git_safe.push: verifying origin == HEAD...")
-    head, origin = _git(["rev-parse", "HEAD"]), _git(["rev-parse", "origin/main"])
+    target = push_target()
+    _say(f"git_safe.push: pushing to origin/{target}...")
+    _git(["push", "origin", f"HEAD:{target}"])
+    # Verify against the ref we actually pushed to. The old code proved "origin/main == HEAD"
+    # no matter where it pushed, so a push to any other branch would have been reported as a
+    # landed main push (or failed for the wrong reason) — a verification that could confirm
+    # the wrong fact is worse than none, because it reads as proof.
+    _say(f"git_safe.push: verifying origin/{target} == HEAD...")
+    _git(["fetch", "origin", target], check=False)
+    head, origin = _git(["rev-parse", "HEAD"]), _git(["rev-parse", f"origin/{target}"])
     if head != origin:
-        raise RuntimeError(f"push did NOT land — origin ({origin[:9]}) != HEAD ({head[:9]}). Investigate before continuing.")
+        raise RuntimeError(
+            f"push did NOT land — origin/{target} ({origin[:9]}) != HEAD ({head[:9]}). "
+            "Investigate before continuing.")
     return head[:9]
 
 

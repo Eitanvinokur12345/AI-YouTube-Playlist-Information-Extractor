@@ -446,7 +446,11 @@ def push(verbose=True) -> str:
             print(msg, flush=True)
     _say("git_safe.push: backing up history...")
     backup_bundle()
-    _say("git_safe.push: syncing (fetch + rebase onto origin/main)...")
+    tgt = push_target()
+    # Say what will actually happen. This line claimed "rebase onto origin/main" on every
+    # run regardless of branch or strategy, which is precisely the reassurance that made the
+    # PR-branch corruption hard to see: the log agreed with the assumption, not the code.
+    _say(f"git_safe.push: syncing ({'rebase' if tgt == 'main' else 'merge'} against origin/{tgt})...")
     sync()
     # Explicit refspec (2026-07-26 fix): a plain `git push` relies on push.default/the local
     # branch name matching its upstream, which breaks whenever the working branch isn't

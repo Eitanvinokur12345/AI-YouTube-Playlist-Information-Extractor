@@ -84,6 +84,23 @@ Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Lo
   fix — worked around it for the unit test via a module stub rather than fixing the sandbox
   itself (out of scope; CI's environment is unaffected, `last_fetch` in `status.json` shows the
   real pipeline running fine as of 2026-08-07).
+  **Post-ship addendum (same fire, orchestrating session):** the executing agent committed the
+  fix locally (`1578244`) but stalled mid-`python -m src.git_safe push` — no output for 120s+ and
+  the agent process ended before confirming landing, so the commit sat unpushed while
+  `origin/main` moved on (a 24/7-beat commit landed in between). Diagnosed by hand rather than
+  assumed: `git bundle create --all` (the first step of `push()`) was NOT the bottleneck (timed
+  separately at 1.5s / 55MB); a plain `git pull --rebase --autostash --no-edit origin main`
+  followed by `git push origin HEAD:main`, run directly, both completed in under 3s each with no
+  network issues — whatever `git_safe push` hung on didn't reproduce outside it, so this is
+  flagged rather than root-caused (worth a future fire's attention: `git_safe push`/`sync` may be
+  susceptible to hanging silently, with no partial output, under some condition this fire didn't
+  isolate). Manually completed: rebased the fix onto the fresh `origin/main`, pushed, verified
+  `origin/main == HEAD` (`0a00ca08`) via both `git rev-parse` and `python -m src.guardrails`
+  (G-G: "Remote sync verified"). Post-push guardrails: 18/20, 0 critical (G-M/G-O both
+  pre-existing, unrelated to this fix). Refreshed PULSE.md/pulse.json/movement/guardrails
+  snapshots. The 4 untracked `data/excava/traces/gftest-s-initiative-*.jsonl` files present in
+  the working tree belong to neither this fire nor fire 143 — left untouched (quarantine-never-
+  delete; not blocking anything) rather than guessed at.
 - **~03:0x (fire 143, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
   OK (`python -m src.standing_checks`: stale `origin/main` cache re-fetched clean, nothing
   lost; upstream repointed to origin/main; guardrails 18/20, 0 critical). `analyze_consecutive_zero_progress_fails`:

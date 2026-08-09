@@ -5,6 +5,69 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-09
+- **~03:0x (fire 143, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (`python -m src.standing_checks`: stale `origin/main` cache re-fetched clean, nothing
+  lost; upstream repointed to origin/main; guardrails 18/20, 0 critical). `analyze_consecutive_zero_progress_fails`:
+  **41**, same reading as fire 142 — no qualitative change, so per the fires-122-142 discipline
+  this did NOT get a fresh push notification (next 10th-heartbeat review is fire 150, per fire
+  142's note). **The actual increment:** picked up `b9bfdaf0ef` (severity: high, pending) from
+  `data/improvement_suggestions.json` — "OpenAI"/"Anthropic" were catalogued as separate tools
+  instead of routing to their real products. Root-caused it in `src/bulk_analyze.py`: the
+  Gemini/GLM extraction prompt asks for every tool named in a video, and the model sometimes
+  names the parent company instead of the product; `merge_tools()` had zero guard against that
+  (unlike `merge_skills()`, which already excluded company names from becoming skills), and
+  `merge_skills()` separately copied whatever raw `target_tool` string the model returned with
+  no canonicalization, so some skills pointed at `anthropic`/`openai` instead of `claude`/
+  `chatgpt`. Fixed both: a shared `_COMPANY_TOOL_ALIASES` dict now canonicalizes a company name
+  onto its product before a new tool entry is created or an existing one is merged into, and
+  `merge_skills()` applies the same canonicalization to `target_tool`. Then did the one-time
+  data cleanup the suggestion asked for: merged `anthropic`'s 78 endorsement ids into `claude`
+  (now 499, was 483) and `openai`'s 47 into `chatgpt` (now 171, was 146) in `data/tools.json`
+  (3159→3157 entries), and corrected the same `anthropic`/`openai` → `claude`/`chatgpt`
+  `target_tool` mixup found in 12 more `tools.json` records, 6 `skills.json` records, and 6
+  `index.json` records (24 total) so compatibility badges and skill folders route to the real
+  product everywhere, not just in the two merged entries.
+  **A live mistake caught mid-fire, not swept under the rug:** the first attempt at the data
+  edit was silently discarded — `python -m src.git_safe sync`, run to catch up on 1 commit
+  origin was ahead by, calls `revert_ci_churn()` (`git checkout -- data backups`) *before* the
+  pull, which reverts any *unstaged* change under `data/` on the theory that CI regenerates
+  it — exactly what happened to my hand-edited `tools.json`/`skills.json`/`index.json`,
+  reverted back to originals with zero error or warning. Caught it only by re-verifying the
+  live file afterward (`anthropic` was back in `tools.json`) rather than trusting the earlier
+  successful run. Redid the edit and got the order right the second time: edit → `git add`
+  (stages it, out of `revert_ci_churn`'s reach) → `git_safe.commit()` → `git_safe.push()` (which
+  syncs *after* the commit, so there's nothing unstaged left to lose) — landed clean, verified
+  live post-push (`anthropic`/`openai` absent from `tools.json`, `claude`/`chatgpt` mentions at
+  499/171). Worth a future fire's attention: this is a real trap for any fire that hand-edits
+  `data/*.json` and calls `sync`/`ship` mid-flight rather than committing first — not fixing
+  `git_safe.py` itself this fire (the CI-churn-revert behavior is correct and deliberate for
+  its actual purpose; the bug was in my own operation order, not the tool), just flagging the
+  ordering rule so the next fire doesn't lose real work the same way.
+  Verified before AND after the redo: `python -m src.excava_core_test` / `guardrail_test` /
+  `git_merge_resolve_test` / `or1_phase_test` / `deep_retrieve_test` / `analyze_batch_test` all
+  green; a standalone `merge_tools`/`merge_skills` simulation confirmed the fix (a fresh
+  "OpenAI"-only batch now creates its entry under the canonical name "ChatGPT", not "OpenAI");
+  all touched JSON re-parsed clean; `python -m src.guardrails` 19/20, 0 critical post-push (only
+  G-O, the standing PC-off flag) — best guardrail reading this session. Marked `b9bfdaf0ef`
+  applied in `improvement_suggestions.json` with the concrete numbers; `python -m
+  src.loop_contract start/finish` recorded one closed product increment; logged the WHY via
+  `python -m src.project_memory log` before shipping. Commit `f698d75e0`, pushed + verified
+  `origin == HEAD`.
+  **Harsh self-criticism:** the fix itself is real and closes a genuine data-quality bug at its
+  root (not just a one-time cleanup that would silently re-accumulate on the next batch) — but
+  it is a modest, narrow increment (one company-name mixup, 24 corrected values, 2 merged
+  entries) against 17 other pending suggestions, three of them also flagged high-severity
+  (`describe_tool()` still returns generic template descriptions for every new tool;
+  `daily_news.json` is 100% empty summaries per fire b3a7d1f5e8's "Emergency" tag; the 100%
+  transcript-fallback investigation from a7d3c6e041 was never done) — none of which this fire
+  touched, and the daily_news one in particular reads more urgent than what I picked. The
+  mid-fire data-loss near-miss is the more important lesson than the fix itself: this is
+  probably not the first fire to have hand-edited `data/*.json` and called `sync`/`ship`
+  without staging first — worth checking whether an EARLIER fire's data edit was lost the same
+  silent way and never caught, since nothing about `revert_ci_churn()`'s design would leave a
+  trace if the fire never re-verified. Did not go looking for that in the git history this fire
+  (out of budget) — flagging as a good candidate for the next fire with a research/audit slot
+  instead of another local-increment pick.
 - **~02:0x (fire 142, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
   OK (`python -m src.standing_checks`: stale `origin/main` cache re-fetched clean, nothing lost;
   upstream already tracking; guardrails 17/20, 0 critical). `analyze_consecutive_zero_progress_fails`:

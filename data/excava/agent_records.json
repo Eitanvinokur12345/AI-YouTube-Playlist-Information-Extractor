@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-09T11:06:20.226478+00:00",
+ "generated_at": "2026-08-09T11:23:16.124795+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,15 +8,15 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 137,
-   "rooms_7d": 42,
+   "turns_7d": 139,
+   "rooms_7d": 43,
    "engines_used": [
     "groq",
     "mistral",
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "The real risk isn’t silent failures—it’s that Luma’s built-in tool trades reliability for speed, locking us into a black"
+   "last_position": "Scriv: The real risk isn’t silent failures—it’s that Luma’s built-in tool trades reliability for speed. Mission-critical"
   },
   {
    "id": "watch-w1",
@@ -37,20 +37,34 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 89,
-   "rooms_7d": 45,
+   "turns_7d": 90,
+   "rooms_7d": 46,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt Luma’s built-in transcript tool for every pending video now. It’s the fastest way to guarantee transcripts without"
+   "last_position": "We should adopt Luma's built-in transcript tool for every pending video now, it's the fastest way to get high-quality tr"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
+   "turns_7d": 90,
+   "rooms_7d": 46,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Chisel’s plan ignores the quota wall—Luma’s 100 pulls/day caps growth at 5% daily even if we hit it perfectly, and raw t"
+  },
+  {
+   "id": "improve-w1",
+   "name": "Sprocket",
+   "dept": "improve",
+   "role": "doer",
    "turns_7d": 89,
    "rooms_7d": 45,
    "engines_used": [
@@ -58,35 +72,21 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Luma’s built-in transcript tool outsources reliability to an external service—when it fails, we’re stuck with no recours"
-  },
-  {
-   "id": "improve-w1",
-   "name": "Sprocket",
-   "dept": "improve",
-   "role": "doer",
-   "turns_7d": 88,
-   "rooms_7d": 44,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on the newest open PR first. It catches routing flaws before they ship, cutting cleanup work"
+   "last_position": "Run PR-Agent in shadow mode on the newest merged PR first. It catches routing errors in real PRs without blocking merges"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 85,
-   "rooms_7d": 42,
+   "turns_7d": 87,
+   "rooms_7d": 43,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run kimtaeyoon83/mcp-server-youtube-transcript on every pending video now. It’s the fastest way to hit +5% daily coverag"
+   "last_position": "Run kimtaeyoon83/mcp-server-youtube-transcript on every pending video now. It’s the fastest path to transcripts without "
   },
   {
    "id": "memory-w1",
@@ -116,6 +116,32 @@
    "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh, verified AI new"
   },
   {
+   "id": "visualization-w1",
+   "name": "Facet",
+   "dept": "visualization",
+   "role": "doer",
+   "turns_7d": 65,
+   "rooms_7d": 33,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Choose a persistent dark theme by default, with a one-click toggle to light mode. Dark themes sharpen focus on dense dat"
+  },
+  {
+   "id": "visualization-checker",
+   "name": "Pane",
+   "dept": "visualization",
+   "role": "checker",
+   "turns_7d": 65,
+   "rooms_7d": 33,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Pane: Persistent dark mode still risks users missing errors or muted alerts—users assume dark themes preserve visibility"
+  },
+  {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
@@ -142,32 +168,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: The action is valid MISSION work."
-  },
-  {
-   "id": "visualization-w1",
-   "name": "Facet",
-   "dept": "visualization",
-   "role": "doer",
-   "turns_7d": 64,
-   "rooms_7d": 33,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Choose a dark theme as the default with a persistent one-click toggle to light mode. Dark themes reduce eye strain in lo"
-  },
-  {
-   "id": "visualization-checker",
-   "name": "Pane",
-   "dept": "visualization",
-   "role": "checker",
-   "turns_7d": 64,
-   "rooms_7d": 33,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Dark themes hide errors and muted colors—users miss critical data if they assume lig | Pane: Defaulting to system prefer"
   },
   {
    "id": "watch-lead",
@@ -340,14 +340,14 @@
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 44,
-   "rooms_7d": 44,
+   "turns_7d": 45,
+   "rooms_7d": 45,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Shadow mode on merged PRs only catches errors *after* they’re already in product—it doesn’t prevent them. The real risk "
+   "last_position": "Shadow mode on merged PRs only catches errors *after* they’re already in product—it’s a post-mortem, not prevention. Bet"
   },
   {
    "id": "improve-improver",
@@ -425,28 +425,28 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 38,
-   "rooms_7d": 19,
+   "turns_7d": 39,
+   "rooms_7d": 20,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Use a 3px solid #005fcc focus ring at 3:1 contrast against both light and dark patterned surfaces. This guarantees visib"
+   "last_position": "Use a 2px solid #005fcc focus ring with no inner ring for keyboard navigation. This meets WCAG 2.2 AA for focus visibili"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 38,
-   "rooms_7d": 19,
+   "turns_7d": 39,
+   "rooms_7d": 20,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 3px ring risks feeling heavy on dense UIs where multiple elements already compete for attention. A better alternativ"
+   "last_position": "The 2px ring fails on low-contrast patterned backgrounds where the 2px gap between ring and element blends into the text"
   },
   {
    "id": "analysis-lead",

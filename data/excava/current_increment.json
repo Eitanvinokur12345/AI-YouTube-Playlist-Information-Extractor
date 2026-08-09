@@ -1,11 +1,13 @@
 {
- "title": "nav tab count badges (skills/tools/connectors) — suggestion 3693c44f40",
+ "title": "harden git_safe against the fires-145/146/147 silent push hang",
  "kind": "product",
  "plan": "",
- "started_at": "2026-08-09T08:04:00.527056+00:00",
+ "started_at": "2026-08-09T08:20:00+00:00",
  "fires": 1,
- "notes": [],
+ "notes": [
+  "also caught+documented a revert_ci_churn() data-loss trap live, mid-fire"
+ ],
  "status": "done",
- "finished_at": "2026-08-09T08:04:42.694669+00:00",
- "outcome": "shipped: docs/dashboard.js libraryCountBadges() + docs/index.html .nav-count CSS; nav shows live Skills/Tools/Connectors counts before clicking a tab"
+ "finished_at": "2026-08-09T08:30:00+00:00",
+ "outcome": "shipped: timeout-bounded git_safe subprocess calls (_git() + sync()'s raw pull --rebase) + progress prints through push()/ship; verified against a real live 90s network hang during testing; documented the CI_CHURN/data-loss trap this fire hit in revert_ci_churn()'s own docstring"
 }

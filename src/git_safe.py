@@ -127,7 +127,19 @@ def quarantine_collisions() -> list:
 
 def revert_ci_churn() -> None:
     """Restore CI-owned paths from the INDEX — discards unstaged CI regeneration only.
-    Anything you STAGED survives (it lives in the index). Never touches source outside CI_CHURN."""
+    Anything you STAGED survives (it lives in the index). Never touches source outside CI_CHURN.
+
+    TRAP (hit live, fire 147, 2026-08-09): CI_CHURN is the whole `data/` tree, but not everything
+    under it is disposable CI regeneration — `data/excava/current_increment.json` and
+    `data/project_memory/*` are THIS loop's own tooling state (loop_contract.start/finish,
+    project_memory.log). Calling `ship(-a <code files only>)` a second time in the same fire, after
+    an earlier `loop_contract start` / `project_memory log` wrote to those paths but did NOT
+    include them in that `-a` list, silently discards the unstaged write here with zero error —
+    the CLI reports success because the CODE commit did succeed, but the tracking state quietly
+    reverted to whatever was last committed. If a fire calls `ship` more than once, EVERY `-a`
+    list must include any `data/excava/current_increment.json` / `data/project_memory/*` writes
+    made since the previous ship, or redo those calls after the fact and fold them into the next
+    ship instead of assuming they survived."""
     _git(["checkout", "--", *CI_CHURN], check=False)
 
 

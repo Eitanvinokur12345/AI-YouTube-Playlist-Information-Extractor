@@ -58,10 +58,47 @@ Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Lo
   multi-state-variable change I did not attempt to force into one fire's budget — it's the
   natural next candidate instead of re-sweeping this same file for a fourth fire in a row. This
   is now THREE consecutive fires (145, 146, 147) where `git_safe ship`'s push step hung/produced
-  no output under its own timeout and had to be completed by hand — the tool itself still hasn't
-  been fixed, only routed around three times running; a dedicated fire should instrument
-  `git_safe.push()` directly (add timing/print statements around each git subprocess call) rather
-  than let a fourth fire hit the identical unexplained hang.
+  no output under its own timeout and had to be completed by hand.
+
+  **Second increment, same fire — actually fixed the thing the paragraph above says to defer:**
+  having just written "a dedicated fire should instrument `git_safe.push()`," did it in this fire
+  instead of deferring a fourth time. Added `timeout=` to `_git()` and to `sync()`'s raw
+  `pull --rebase --autostash` call (neither had one — any subprocess.run without `timeout=` blocks
+  forever on a real network stall, which is exactly what a `bash timeout` wrapper killing the
+  outer python process from OUTSIDE looks like from inside), converting a silent hang into a
+  clear `RuntimeError` naming which git command stalled and for how long. Also made `push()` print
+  + flush a marker before each phase (backup/sync/push/verify) and split `ship`'s CLI branch so
+  `committed <sha>` prints before `push()` runs, instead of one f-string that evaluates both calls
+  before printing either result — the exact reason fires 145-147 saw ZERO output on a hang despite
+  the commit having already landed. **Verified, not assumed, including an accidental live proof:**
+  a controlled unit test monkeypatched `subprocess.run` to raise `TimeoutExpired` and confirmed
+  both `_git()` and `sync()` convert it to the intended `RuntimeError` message; a first attempt at
+  that test (before scoping the monkeypatch to skip `ensure_upstream`/`revert_ci_churn`/
+  `quarantine_collisions`) let a REAL `git fetch origin --quiet` run against this session's actual
+  proxy and it genuinely hung the full 90s before the new timeout fired — live confirmation the
+  network flakiness is real, not hypothetical, in the exact window this fix targets. Then dogfooded
+  the patched tool on its own commit: `python -m src.git_safe ship` printed all four phase markers
+  and landed cleanly (`51e4162bf`) on the first try. All 6 local suites still green post-change.
+  **A second, smaller trap caught mid-fire while shipping THIS fix:** the earlier
+  `loop_contract start`/`project_memory log` calls for this fix wrote to
+  `data/excava/current_increment.json` and `data/project_memory/episodes.jsonl`, but the ship
+  command that committed `src/git_safe.py` only listed `-a src/git_safe.py` — so `sync()`'s own
+  `revert_ci_churn()` (which restores the WHOLE `data/` tree from the index, since CI regenerates
+  most of it) silently discarded both unstaged writes before the commit even happened, no error,
+  no warning. `loop_contract finish` then correctly reported "no open increment" because the file
+  really had reverted to fire 147's FIRST increment (the nav badges, already `done`). Re-logged the
+  WHY, hand-restored `current_increment.json`, and documented the trap directly in
+  `revert_ci_churn()`'s own docstring so the next fire that ships more than once in a session
+  doesn't lose tracking state the same silent way. **Harsh self-criticism:** the git_safe fix
+  itself is real and load-bearing (every fire ships through this exact code path), but it treats a
+  symptom (bound the hang, surface it loudly) rather than the root cause (WHY does this
+  environment's proxy occasionally stall a git fetch/push for 90+ seconds with no error) — that
+  root cause is outside what a sandboxed fire can diagnose or fix, so this is the honest ceiling
+  of what's achievable here, not a full resolution. The self-inflicted data-loss trap is a real
+  process mistake on this fire's part (should have included the tracking files in every `-a` list
+  from the start) caught and corrected only because I happened to check `current_increment.json`
+  after `finish` returned something unexpected — a less careful fire would have shipped past it
+  without noticing the WHY log silently didn't survive.
 - **~07:0x (fire 146, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
   OK (`python -m src.standing_checks`: guardrails 18/20, 0 critical, no carry-over increment open;
   `python -m src.loop_contract status` confirmed 0/3 consecutive meta fires). Restricted egress

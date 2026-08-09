@@ -5,6 +5,66 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-09
+- **~07:0x (fire 146, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (`python -m src.standing_checks`: guardrails 18/20, 0 critical, no carry-over increment open;
+  `python -m src.loop_contract status` confirmed 0/3 consecutive meta fires). Restricted egress
+  (repo-scoped cloud session) — stayed on local/deterministic work. **The actual increment:**
+  picked up `3c6d2e8a1f` (severity: med, pending) from `data/improvement_suggestions.json`:
+  Quick-read mode's CSS rule `body.quickread .card .sub { display:none; }` hid the `.sub`
+  metadata line on EVERY card, including provider/category/source on Connector cards and
+  source/date on News cards — real context those two tabs need, unlike Skills/Tools where
+  `.sub` genuinely duplicates info shown elsewhere on the card. Verified the claim against the
+  live code before touching anything: `docs/dashboard.js`'s `renderNews()` already tagged its
+  cards `.newscard` (usable as a scoping hook), but `renderConnectors()` had no distinguishing
+  class at all — the connector half of the bug had zero guard. Fixed both sides: scoped the CSS
+  selector in `docs/index.html` to `body.quickread .card:not(.newscard):not(.conncard) .sub`,
+  and added the missing `.conncard` class to the connector card markup in `renderConnectors()`
+  (confirmed by grep it's the only render path for connector cards, so no other spot needed the
+  class). Marked `3c6d2e8a1f` applied in `improvement_suggestions.json` with the concrete
+  before/after. **Verified, not assumed:** `node --check docs/dashboard.js` clean; grepped for
+  any pre-existing `.conncard` CSS that could collide (none); all 6 local suites green
+  (`excava_core_test`, `guardrail_test`, `git_merge_resolve_test`, `or1_phase_test`,
+  `deep_retrieve_test`, `analyze_batch_test`); `python -m src.guardrails` 17/20, 0 critical
+  pre-push (G-C/G-G/G-O pre-existing baseline, unrelated). `python -m src.loop_contract
+  start/finish` recorded one closed product increment; WHY logged via `python -m
+  src.project_memory log` before shipping.
+  **A live near-miss caught mid-fire, matching fire 144's exact symptom:** `python -m
+  src.git_safe ship` (run in the background per this session's 120s foreground timeout) died
+  silently with no output and exit code 1 — the commit had landed locally (`d09167db`) but the
+  push never happened, and `origin/main` had moved on underneath it (a `news:` beat commit
+  landed mid-flight) so local HEAD and `origin/main` had genuinely diverged, neither an ancestor
+  of the other. Diagnosed rather than re-run blindly: confirmed via `git merge-base
+  --is-ancestor` in both directions that neither ref contained the other before touching
+  anything. Completed by hand exactly like fire 144 did — `git pull --rebase --autostash
+  --no-edit origin main` (clean, no conflicts) then `git push origin HEAD:main` — both completed
+  in under 30s each with zero issues, so `git_safe ship`'s own hang is still unreproduced outside
+  the tool itself; flagging (again) that `git_safe push`/`sync` may have a real intermittent hang
+  this fire also didn't isolate. Verified post-push: `git rev-parse HEAD` == `git rev-parse
+  origin/main` (`aaf55bcd3`), `python -m src.guardrails` climbed to 19/20 (G-C/G-G both cleared
+  by the real push landing). Also swept the stop-hook's flagged untracked files — two
+  `gftest-s-initiative-*` trace files, byproducts of this fire's own `guardrail_test` run — and
+  committed them as their own small addendum, matching the exact pattern fires 144/145 already
+  established for the same fixture's output (initially almost left them stray under a
+  misremembered "not my file, don't touch" reading of fire 144's *different* untracked-file note,
+  caught by re-reading the actual precedent before deciding).
+  **Harsh self-criticism:** the fix itself is real, narrow, and immediately visible (a genuine
+  currently-live UI bug, not a hypothetical one — Connector and News readers were silently
+  losing source attribution in Quick-read mode) but it is a small increment against 12 other
+  pending suggestions, several med-severity (nav-tab count badges, a sort toggle for Skills/
+  Tools, quality-score card borders, a `Chatgpt`→`ChatGPT` casing fix) that would have been
+  comparably scoped choices. I explicitly did NOT chase the three status.json stale-counter
+  suggestions (`f3a7d9e1b6`/`9a4e7b2d8f`/`d7e1f3a9b2`, "fix total_tools/total_connectors
+  drift") after checking live data found the drift real (tools 3033 vs actual 3161, connectors
+  1414 vs actual 1510) — but tracing every consumer showed the dashboard's own stat row reads
+  `state.health.library` (computed live by `health.py` from the actual files on every load), never
+  `status.total_tools`/`total_connectors`, so fixing those three counters would have been
+  plumbing with no visible effect, the same "chasing a symptom nothing reads" trap fire 145 caught
+  on `c9b5e2f731`. Left them pending rather than marking them dead outright, since `ANALYZE_SPEC.md`
+  still documents the field as something the LLM-driven analyze stage is supposed to maintain —
+  a future fire with a reason to look at that spec section should make the call, not this one.
+  The git_safe hang is now the SECOND fire in a row to hit it and manually route around it without
+  fixing the tool itself — still worth a dedicated fire's attention instead of a third silent
+  workaround.
 - **~05:0x (fire 145, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
   OK (`python -m src.standing_checks`: stale `origin/main` cache re-fetched clean, nothing lost;
   upstream repointed to origin/main; guardrails 17/20, 0 critical; loop_contract 0/3 consecutive

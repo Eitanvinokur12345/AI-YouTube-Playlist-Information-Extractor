@@ -139,7 +139,7 @@
     {
       "id": "a7d3c6e041",
       "type": "engine_fix",
-      "status": "pending",
+      "status": "applied",
       "detail": "Investigate and fix 100% transcript fallback: last fetch had no_transcript=78, new_found=78. Every new video fell through to description/title. Likely cause: youtube-transcript-api version incompatibility or YouTube API change. Add a health-check flag in status.json and a dashboard banner when no_transcript/new_found > 0.5.",
       "proposed_change": {
         "files": [
@@ -151,12 +151,14 @@
       },
       "source": "review",
       "review_finding_id": "8a1b5c4d6e",
-      "severity": "high"
+      "severity": "high",
+      "applied_fire": 145,
+      "applied_note": "src/fetch.py now computes transcript_fallback_rate = no_transcript_count / len(new_videos) after the fetch loop and sets status[\"transcript_health\"] = \"degraded\" when it exceeds 0.5 on a run that found new videos. docs/dashboard.js renderAlert() shows an amber TRANSCRIPT FALLBACK banner when degraded (below the existing PIPELINE ERROR / PIPELINE STALLED banners in priority so it never masks a harder failure). Backfilled data/status.json from the already-recorded last real run_report (new_found=91, no_transcript=91) rather than waiting for the next fetch: transcript_health is currently \"degraded\" (rate 1.0) and now visible on the live dashboard. Did NOT root-cause WHY youtube-transcript-api is failing 100% of the time (the docstring in fetch.py shows a prior fire already fixed the 0.6.x/1.x classmethod-vs-instance API break, yet the fallback rate is still 100% on the most recent real run AFTER that fix — the remaining cause is most likely YouTube rate-limiting/blocking requests from GitHub Actions runner IPs, a well-known issue with this library in CI environments, but this cloud session cannot reach the real YouTube endpoints to verify that live (restricted egress, confirmed by fire 122 and this fire). The banner is the deliverable this suggestion actually asked for (visibility); the underlying transcript-fetch fix is flagged in QUESTIONS.md as a follow-up for a session with real network access (the GitHub Actions beat itself)."
     },
     {
       "id": "c9b5e2f731",
       "type": "engine_fix",
-      "status": "pending",
+      "status": "invalid_dead_code",
       "detail": "Replace describe_tool() template function in src/analyze_batch.py (lines 268-286) with real extraction from transcript. This is the root cause of all 'enhances productivity through AI-powered features and automation' generic descriptions — as long as the function exists, new tools will always get template descriptions.",
       "proposed_change": {
         "file": "src/analyze_batch.py",
@@ -165,7 +167,9 @@
       },
       "source": "review",
       "review_finding_id": "e5a3f8b2c7",
-      "severity": "high"
+      "severity": "high",
+      "resolution_note": "Verified before implementing: src/analyze_batch.py is NOT invoked by any GitHub Actions workflow (grep of every .github/workflows/*.yml for \"analyze_batch\" or '-m src.analyze_batch' finds none; .github/workflows/analyze.yml runs anthropics/claude-code-action reading ANALYZE_SPEC.md directly, which writes skills.json/tools.json itself via Edit/Write tools, never shelling out to process_video()/describe_tool()). This was already found and logged by fire 12 (2026-07-26, AWAY_LOG) as dead code; this suggestion (source: review) was generated without that context and is chasing a function nothing in production calls, so patching describe_tool() would fix zero live descriptions and prevent zero future ones. Checked whether the underlying SYMPTOM (generic \"enhances productivity through AI-powered features and automation\" descriptions) is still live: 0/3639 in skills.json, 3/3160 in tools.json (grok, google-ai-studio, notion-ai) — all 3 are old static records with no created_at/added_at, matching this exact dead code path output, not a currently-regenerating problem. Fixed the real, visible defect directly instead: replaced all 3 with real, specific descriptions (fire 145, 2026-08-09). Leaving analyze_batch.py itself untouched — editing dead code is not a real fix and would just be a second, divergent description algorithm nothing calls, matching CLAUDE.md §2 (reuse before building) in reverse: do not build inside a path with zero callers.",
+      "resolved_fire": 145
     },
     {
       "id": "d1e5f9a2b3",

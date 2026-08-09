@@ -662,8 +662,22 @@ def main() -> None:
     # The fetch stage INITIALIZES the run report.  The analyze stage (driven by
     # CLAUDE.md) updates analyzed_this_run / skipped_not_relevant / errors and
     # increments the cumulative total_videos_analyzed as it works through pending/.
+    # Transcript-fallback health (data/improvement_suggestions.json #a7d3c6e041, fire 145):
+    # when a majority of this run's new videos have no real transcript, every one of them
+    # falls back to analyzing just the title+description — a real, silent quality drop the
+    # dashboard previously had no way to surface. Only judged against a run that actually
+    # found new videos; a 0-new-video run has nothing to be degraded about.
+    transcript_fallback_rate = (
+        no_transcript_count / len(new_videos) if new_videos else 0.0
+    )
+    transcript_health = (
+        "degraded" if (new_videos and transcript_fallback_rate > 0.5) else "ok"
+    )
+
     status = dict(prev_status) if isinstance(prev_status, dict) else {}
     status.update({
+        "transcript_health": transcript_health,
+        "transcript_fallback_rate": round(transcript_fallback_rate, 3),
         "last_run": run_time_utc.isoformat(),
         "last_fetch": run_time_utc.isoformat(),
         "next_run": next_run_utc.isoformat(),

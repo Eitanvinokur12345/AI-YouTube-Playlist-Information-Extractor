@@ -738,7 +738,15 @@ function renderAlert(status, config) {
       esc(status.token_hint || "check the GitHub Actions log for details.");
   } else {
     const stale = staleMsg(status, config);
-    if (stale) { kind = "warn"; msg = `<span class="badge">PIPELINE STALLED?</span> ` + esc(stale); }
+    if (stale) {
+      kind = "warn"; msg = `<span class="badge">PIPELINE STALLED?</span> ` + esc(stale);
+    } else if (status && status.transcript_health === "degraded") {
+      kind = "warn";
+      const pct = Math.round((status.transcript_fallback_rate || 0) * 100);
+      msg = `<span class="badge">TRANSCRIPT FALLBACK</span> Transcript fetching is degraded — ` +
+        `${pct}% of the last run's new videos had no real transcript and were analyzed from ` +
+        `title/description only. Content quality is reduced until this clears.`;
+    }
   }
   if (kind) { el.hidden = false; el.className = "alert " + kind; el.innerHTML = msg; }
   else { el.hidden = true; el.className = "alert"; el.innerHTML = ""; }

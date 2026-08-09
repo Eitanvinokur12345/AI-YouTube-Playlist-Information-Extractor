@@ -5,6 +5,64 @@ _What the autonomous 15-minute loop did while Eitan was away — newest first, o
 Repo home: **D:\AI-YouTube-Skills** (migrated off the full C: on 2026-07-23). Loop: CronCreate 15-min, session-only.
 
 ## 2026-08-09
+- **~05:0x (fire 145, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
+  OK (`python -m src.standing_checks`: stale `origin/main` cache re-fetched clean, nothing lost;
+  upstream repointed to origin/main; guardrails 17/20, 0 critical; loop_contract 0/3 consecutive
+  meta fires, no carry-over open). Restricted egress confirmed again (repo-scoped cloud session)
+  — stayed on local/deterministic work per fire 122's standing note.
+  **The actual increment, two parts, both from `data/improvement_suggestions.json`'s pending
+  high-severity backlog:** (1) Picked up `c9b5e2f731` ("replace `describe_tool()` template in
+  `src/analyze_batch.py`, root cause of all generic tool descriptions") — before implementing,
+  verified it against the real pipeline and found it targets DEAD CODE: grepped every
+  `.github/workflows/*.yml` for `analyze_batch` / `-m src.analyze_batch` (zero hits);
+  `analyze.yml` runs `anthropics/claude-code-action` reading `ANALYZE_SPEC.md` directly, which
+  writes `skills.json`/`tools.json` itself via Edit/Write — it never shells out to
+  `process_video()`/`describe_tool()`. This exact dead-code finding was already made by fire 12
+  (2026-07-26); the suggestion (source: automated `review`) didn't have that context. Checked
+  whether the SYMPTOM was still live rather than trusting the stale premise: 0/3639 generic
+  descriptions in `skills.json`, but 3/3160 in `tools.json` (`grok`, `google-ai-studio`,
+  `notion-ai` — old static records, no `created_at`, matching this exact dead path's output).
+  Fixed those 3 directly with real, specific descriptions instead of patching a function nothing
+  calls. Marked `c9b5e2f731` `invalid_dead_code` with the full reasoning so no future fire
+  re-attempts the same dead-code patch. (2) Applied `a7d3c6e041` (transcript-fallback health
+  check) for real: `src/fetch.py` now computes `transcript_fallback_rate` after the fetch loop
+  and sets `status["transcript_health"] = "degraded"` when it exceeds 0.5 on a run with new
+  videos; `docs/dashboard.js`'s `renderAlert()` shows an amber "TRANSCRIPT FALLBACK" banner
+  (below the existing error/stalled banners in priority, so it never masks a harder failure).
+  Backfilled `data/status.json` from the already-recorded last real run (`new_found=91`,
+  `no_transcript=91`) rather than waiting for the next fetch — **the dashboard right now
+  correctly shows `transcript_health: degraded` (rate 1.0)**, a real, currently-true, previously
+  invisible problem made visible today, not just logged for later. Did NOT root-cause WHY
+  transcripts are 100% failing (the library's 0.6.x/1.x API-shape bug is already fixed per
+  `fetch.py`'s own docstring, yet the fallback rate is still 100% after that fix on the most
+  recent real run — likely YouTube blocking the Actions runner's IP, a known issue with this
+  library in CI, but unverifiable from this session's GitHub-API-only egress) — flagged in
+  `QUESTIONS.md` for a session with real network access.
+  **Verified, not assumed:** all 3 rewritten `tools.json` descriptions confirmed non-generic
+  (0/3160 matching the banned phrase, was 3/3160); `transcript_health` logic hand-simulated
+  against 5 cases including the exact 78/78 case fire 144's news-summary fix reused as a
+  reference point, and the real 91/91 case now in `status.json`; `node --check docs/dashboard.js`
+  and `python3 -c "ast.parse(...)"` on `fetch.py` both clean; `python -m
+  src.{guardrail_test,excava_core_test,analyze_batch_test}` all green; every touched JSON
+  re-parsed valid; `python -m src.guardrails` 17/20, 0 critical (G-C/G-M/G-O all pre-existing,
+  unrelated — G-M's "stalled" reading is a real, already-known symptom of cloud fires only being
+  able to touch local/deterministic work, not something this fire's own changes caused or could
+  fix). `python -m src.loop_contract start/finish` recorded one closed product increment; WHY
+  logged via `python -m src.project_memory log` before shipping.
+  **Harsh self-criticism:** the first half of this fire is a genuine, non-trivial catch (an
+  automated suggestion chasing a function with zero live callers, which would have looked like
+  real progress in the log while fixing nothing anyone would ever see) — but it is still small
+  in absolute terms: 3 tool records out of ~11k hub elements. The second half is real and
+  currently-visible (a true, previously-hidden 100%-broken feature is now flagged on the
+  dashboard instead of silently degrading content quality run after run), but I explicitly did
+  NOT fix the actual transcript-fetch failure — only its visibility — because this session
+  cannot reach real YouTube endpoints to test a fix live, and shipping an unverified guess at
+  the root cause would violate "never claim something works without checking." That leaves the
+  actual bug (transcript fetching, currently 100% broken) still broken; the banner only ensures
+  it won't go unnoticed. Two other pending high/med-severity suggestions in
+  `improvement_suggestions.json` remain untouched this fire (deliberate scope limit, not an
+  oversight) — a future fire with a similar local-only budget should pick up the next one rather
+  than re-reading the whole backlog from scratch.
 - **~04:0x (fire 144, unattended, cloud, scheduled-task invocation, PRODUCT)** — Standing checks
   OK (per this fire's supplied context: `python -m src.standing_checks` guardrails 18/20, 0
   critical, no carry-over increment open; `python -m src.loop_contract status` confirmed 0/3

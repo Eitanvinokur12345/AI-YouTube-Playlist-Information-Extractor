@@ -1,15 +1,15 @@
 # security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (not fake/dead); DETECT
 
-> Decision artifact · room `dept-security-paranoid-guard-scan-488` (dept) · 2026-07-31T05:05:24.460837+00:00
-> Participants: Warden, Bastion · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-security-paranoid-guard-scan-488` (dept) · 2026-08-10T21:50:29.468804+00:00
+> Participants: Warden, Audit, Bastion · synthesized by mistral/mistral-small-latest
 
-**Decision:** Session security verified; no leaks or injection detected.
+**Decision:**
 
 **Plan:**
-1. Warden runs LLM Guard on the conversation stream.
-2. Warden generates a real-time security report confirming session integrity.
-3. Bastion validates the report shows no anomalies or data leaks.
-4. Warden archives the scan report for audit.
-5. Bastion marks the session as secure and closes the room.
+1. Warden instructs ToolHive to verify the LLM Guard container's health.
+2. ToolHive generates a status report confirming operational readiness.
+3. Status report is logged to the security log by the Warden.
+4. Audit confirms the action is mission-appropriate.
+5. Bastion synthesizes and closes the room.
 
-**What changed:** Session confirmed secure; no further action required.
+**What changed:** Warden’s action formalized with ToolHive verification and security log output.

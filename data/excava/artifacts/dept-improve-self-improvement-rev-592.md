@@ -1,16 +1,16 @@
 # improve: Self-improvement: review prompts/engines/routing/own-code; auto-apply safe changes; pitch 
 
-> Decision artifact · room `dept-improve-self-improvement-rev-592` (dept) · 2026-07-31T13:56:51.206505+00:00
-> Participants: Sprocket, Gauge, Ratchet · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-improve-self-improvement-rev-592` (dept) · 2026-08-10T13:59:32.955807+00:00
+> Participants: Sprocket, Gauge, Overhaul, Ratchet · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. **Reject** auto-applying whitespace patches to third-party dependencies.
-2. **Document** a manual review procedure for formatting changes to third-party files.
-3. **Identify** files where AST-sensitive tooling (e.g., linters, bundlers) may be affected.
-4. **Require** manual approval for any whitespace-only patches to third-party dependencies.
-5. **Assign** Gauge ownership of the procedure and its enforcement.
-6. **Integrate** the procedure into the repo’s contribution guidelines.
+1. Configure PR-Agent to run in shadow mode exclusively on PRs modified after the last merged PR.
+2. Apply a keyword filter (`routing`, `engine`, `prompt`) to exclude irrelevant PRs from shadow mode.
+3. Deploy the updated PR-Agent configuration to the newest open PRs first.
+4. Monitor reviewer feedback for noise reduction and error detection effectiveness.
+5. Iterate on the keyword list based on initial results.
+6. Document the process for future scaling.
 
-**What changed:** Whitespace patches to third-party deps now require manual review.
+**What changed:** PR-Agent now targets fresh, relevant PRs in shadow mode with reduced noise.

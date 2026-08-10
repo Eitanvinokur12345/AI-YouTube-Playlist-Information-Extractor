@@ -1,17 +1,18 @@
 # accessibility: Make EXCAVA usable by EVERYONE — contrast, mobile/touch, reduced-motion, keyboard nav, scr
 
-> Decision artifact · room `dept-accessibility-make-excava-us-204` (dept) · 2026-07-27T05:03:10.373756+00:00
+> Decision artifact · room `dept-accessibility-make-excava-us-204` (dept) · 2026-08-10T20:41:47.511239+00:00
 > Participants: Ramp, Reader, Access · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Implement a bold, full-width skip bar that bypasses navigation, always visible but only high-contrast on keyboard focus.
+Adopt a 3px solid #005fcc focus ring at 90% opacity with a 1px inner #ffffff offset.
 
 **Plan:**
-1. Add a `<nav role="navigation" aria-label="Skip to main content">` skip bar at the top of every page, wrapping a link to `#main-content`.
-2. Style the skip bar with `position: fixed; top: 0; left: 0; width: 100%;` and ensure it’s keyboard-focusable (`tabindex="0"`).
-3. Default styling: subtle (e.g., low opacity, minimal height) to avoid visual clutter for mouse users.
-4. On `:focus-visible` (or `:focus` with JS polyfill), apply high-contrast styling (e.g., `background: #000; color: #fff; padding: 1rem`).
-5. Ensure the skip link targets `#main-content` (or equivalent landmark) and is announced by screen readers via `aria-label`.
-6. Test with keyboard and screen reader users to validate bypass efficiency and discoverability.
+1. Implement the 3px #005fcc focus ring at 90% opacity with a 1px inner #ffffff offset across all interactive elements.
+2. Test WCAG 2.1 AA contrast ratios on dark backgrounds (minimum 4.5:1).
+3. Validate keyboard navigation and screen reader compatibility in high-contrast and reduced-motion modes.
+4. Audit mobile/touch interfaces to ensure the focus ring remains visible but unobtrusive.
+5. Document the focus ring style in the design system and share with the development team.
+6. Schedule a review after 2 weeks of real-world usage to address edge cases.
 
-**What changed:** Skip bar now always exists in DOM (visible to SRs) but only high-contrast on focus, balancing clutter and discoverability.
+**What changed:**
+Focus ring opacity increased from 80% to 90% to meet WCAG 2.1 AA on dark backgrounds.

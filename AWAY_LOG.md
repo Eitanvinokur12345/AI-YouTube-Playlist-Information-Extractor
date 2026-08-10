@@ -6627,6 +6627,25 @@ signing key or route commits through the GitHub API; not re-litigating again abs
   different name) — one more sign the contract's tooling was written for a specific local machine, not this
   environment. Commit `3d1d889a` (git_safe fix itself: `ebb224ca`).
 
+## 2026-08-10 (interactive loop, 15-min cadence)
+- **fire (cloud, egress-restricted)** — Made content-provenance SURVIVE. Last fire I shipped it as a
+  one-shot script that mutated `data/elements_index.json` directly; the away loop's next
+  `core_spoton` run (`.github/workflows/core_spoton.yml:94` -> `python -m src.element_model`) rebuilt
+  the index and wiped all 11,278 fields inside the hour. `element_model.py`'s own docstring already
+  said the index is DERIVED and never edited by hand — I ignored it and shipped an increment that was
+  orphaned on arrival, which the plan explicitly forbids. Provenance is now derived inside
+  `element_model.build()` via `_content_provenance(raw, el)`, reading the RAW per-type record because
+  `source_type`/`model_version` do not survive normalization. `content_provenance.py` is now a
+  reporter only and no longer writes the index. Guardrail G-W added AND registered (23 checks,
+  20 passing, 0 critical) — it fails if the derivation is removed or the index returns without the
+  field. Verified by rebuilding twice: 11,278/11,278 still carry it.
+- **The numbers I published last fire were WRONG.** The one-shot only matched skills.json, so it
+  reported 3,635 pattern-matched / 18 model-read / 668 conflicts. Derived properly over all types:
+  **9,435 pattern-matched (83.7%), 719 model-read, 1,123 unknown, 1,609 elements wearing a green
+  "verified" badge over text nothing ever read.** The problem is roughly 2.4x worse than I told Eitan.
+- **WHY it matters:** the hub's green badge means "the link resolves", not "this text is accurate",
+  and until now nothing in the app said so.
+
 ## 2026-08-09 (interactive loop, 15-min cadence)
 - **fire (cloud, egress-restricted)** — Fixed BOTH remaining "this checkout is main" assumptions in
   `src/git_safe.py`, the command CLAUDE.md mandates for shipping. (1) `push()` hardcoded

@@ -497,6 +497,36 @@ def g_push_target_derived():
     return _ok("G-V", "git_safe derives its push target", ok, detail, "warn")
 
 
+def g_provenance_derived():
+    """G-W (2026-08-10): content provenance must be DERIVED in the index build, not painted on.
+
+    The first version of this feature was a one-shot script that mutated elements_index.json
+    directly. The away loop's next core_spoton run (which calls `python -m src.element_model`)
+    regenerated the index and wiped all 11,278 fields inside the hour — an increment that was
+    orphaned on arrival, which the plan explicitly forbids. element_model.py's own docstring
+    already said the index is derived and never edited by hand.
+
+    This fails if the derivation is removed from build(), or if the index comes back without
+    the field — the two ways it would silently disappear again."""
+    em = ROOT / "src" / "element_model.py"
+    idx = ROOT / "data" / "elements_index.json"
+    problems = []
+    if em.exists() and "_content_provenance(" not in em.read_text(encoding="utf-8", errors="ignore"):
+        problems.append("element_model.build() no longer derives content_provenance")
+    if idx.exists():
+        try:
+            els = json.loads(idx.read_text(encoding="utf-8")).get("elements") or []
+            missing = sum(1 for e in els if not e.get("content_provenance"))
+            if els and missing:
+                problems.append(f"{missing}/{len(els)} index elements lack content_provenance")
+        except Exception as exc:
+            problems.append(f"elements_index unreadable: {exc}")
+    ok = not problems
+    return _ok("G-W", "content provenance is derived, not painted on", ok,
+               "every indexed element carries derived provenance." if ok else "; ".join(problems),
+               "warn")
+
+
 def g_gates():
     """G-U (2026-08-02, Eitan's decision): P5 pitch-gates must bind BOTH loops.
 
@@ -556,7 +586,7 @@ def _load_json(p, d):
 CHECKS = [g_quarantine, g_msgfile, g_backup, g_mojibake, g_build_align, g_json,
           g_remote_sync, g_collisions, g_handoff, g_memory, g_auditlog, g_watchdog, g_movement,
           g_disk, g_localfuel, g_beat_heartbeat, g_core_spoton_heartbeat, g_lane_heartbeats,
-          g_push_safety_rollout, g_jsonl_markers, g_gates, g_push_target_derived]
+          g_push_safety_rollout, g_jsonl_markers, g_gates, g_push_target_derived, g_provenance_derived]
 # g_gates was DEFINED on 2026-08-02 and never added to this list, so the one guardrail written to
 # enforce that P5 gates bind both loops has never executed — 16 logged runs, zero of them checked
 # it. Found 2026-08-09 while opening the CREATORS gate. Worth stating plainly: a check that isn't

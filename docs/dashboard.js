@@ -176,6 +176,22 @@ function elBadge(e) {
   const src = (e.verified || {}).sources || 0;
   return `<span class="el-badge ${cls}" title="${esc((e.verified || {}).method || "")}${src ? " · " + src + " sources" : ""}${e.trust ? " · trust " + e.trust : ""}">${label}</span>`;
 }
+// CONTENT-PROVENANCE badge (2026-08-09). The green "✓ verified" badge above answers only
+// "does the link resolve / did it install in a sandbox?" — it says nothing about whether the
+// description and tips are accurate. For ~99.8% of the hub they are not checked at all: the
+// bulk analyzer regex-matches 89 hardcoded tool names and then keeps any sentence containing
+// the name plus one of ~11 verbs, a heuristic that cannot tell a recommendation from a
+// criticism. 668 elements currently show "verified" over pattern-matched text. Eitan spotted
+// the symptom in the Prompts tab; this makes the cause visible on every card instead of only
+// in a terminal report. See src/content_provenance.py.
+function provBadge(e) {
+  const p = e.content_provenance || {};
+  if (!p.method || p.method === "model-read" || p.method === "authored") return "";
+  const label = p.method === "pattern-matched" ? "◐ text not read" : "◌ unknown source";
+  const tip = (p.why || "") + (p.conflict ? " — " + p.conflict : "");
+  return `<span class="el-badge u" style="background:#3a2a12;color:#e0b062"
+    title="${esc(tip)}">${label}</span>`;
+}
 // RUNNABLE badge (2026-08-02) — the READ side of the Tool class (src/excava_core.py, class 2
 // of 5), which until now existed only in the terminal. §8 calls repos-as-running-tools the
 // highest-leverage lever and feature-item 16 is "OSS usable, NOT links": an element with a real
@@ -336,7 +352,7 @@ async function decorateCards(tab) {
       e = cands.length ? ix.byKey[cands[0]] : null;
     }
     if (!e) return;
-    h3.insertAdjacentHTML("beforeend", " " + elBadge(e) + elRunBadge(e));
+    h3.insertAdjacentHTML("beforeend", " " + elBadge(e) + provBadge(e) + elRunBadge(e));
     card.insertAdjacentHTML("beforeend", elementActions(e));
   });
 }
@@ -353,7 +369,7 @@ async function renderElement(id) {
     <div class="card" style="border-top:3px solid var(--gold)">
       <p class="sub"><a href="#" onclick="history.back();return false">← back</a></p>
       <div class="el-detail-hero"><h3 style="font-size:22px">${esc(e.name)}</h3>
-        <span class="pill">${esc(e.type)}</span> ${elBadge(e)} ${elRunBadge(e)}
+        <span class="pill">${esc(e.type)}</span> ${elBadge(e)} ${provBadge(e)} ${elRunBadge(e)}
         ${e.created_by === "EXCAVA" ? '<span class="pill" style="background:var(--gold-soft)">🦾 Created by EXCAVA</span>' : ""}</div>
       <p>${esc(e.what || "(deep-retrieve will enrich this element on its next pass)")}</p>
       ${elementActions(e, true)}
@@ -423,7 +439,7 @@ async function renderHub() {
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px">
       ${shown.map(e => `
         <div class="card" style="margin:0">
-          <h3 style="font-size:15px"><a href="#element/${encodeURIComponent(e.id)}" style="color:inherit;text-decoration:none">${_exIcon(e.type)} ${esc(e.name)}</a> ${elBadge(e)}</h3>
+          <h3 style="font-size:15px"><a href="#element/${encodeURIComponent(e.id)}" style="color:inherit;text-decoration:none">${_exIcon(e.type)} ${esc(e.name)}</a> ${elBadge(e)} ${provBadge(e)}</h3>
           <p class="sub" style="min-height:32px">${esc((e.what || "(deep-retrieve will enrich this)").slice(0, 140))}</p>
           ${elementActions(e, true)}
         </div>`).join("") || empty(query ? `No elements match "${esc(state.query)}".` : "No elements.")}

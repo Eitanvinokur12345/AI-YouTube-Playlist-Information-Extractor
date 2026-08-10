@@ -141,6 +141,52 @@ def _self_test(c: dict) -> dict:
     return {"ok": all(checks.values()), "checks": checks, "tested_at": _now()}
 
 
+def _generate_prompt_element(term: str) -> dict | None:
+    """Ask a real model to write one prompt element. Returns None if it could not.
+
+    This module went weeks without ever calling `excava_engines.complete()`, even though that
+    function already existed and was serving the Rooms. `draft()` was an f-string loop, which is
+    the complete explanation for why every generated prompt was the same sentence with one word
+    swapped — there was no generation happening at all, so there was no quality to tune.
+
+    Returning None (rather than a template) on failure is the point of this function.
+    """
+    from src import excava_engines as eng
+
+    ask = (
+        f"Write ONE reusable prompt element for the topic: {term}\n\n"
+        "This goes into a library where every entry must earn its place. Rules:\n"
+        "- The prompt body must be SPECIFIC to this topic. If swapping the topic word for any "
+        "other topic would leave it still making sense, it is too generic and has failed.\n"
+        "- Name the concrete failure modes an expert on this topic would guard against.\n"
+        "- State what a good output looks like, precisely enough to tell good from bad.\n"
+        "- No filler, no 'you are an expert' opener, no restating the task.\n\n"
+        "Return STRICT JSON only, no prose around it, with exactly these keys:\n"
+        '{"what": "<one sentence: what this prompt is for>", '
+        '"how_to_use": "<one or two sentences: how to actually use it>", '
+        '"body": "<the prompt itself, 120-400 words, specific to the topic>"}'
+    )
+    r = eng.complete(ask, dept="creators", difficulty="hard", max_tokens=900)
+    if not r.get("ok"):
+        return None
+    text = (r.get("text") or "").strip()
+    if text.startswith("```"):                      # models wrap JSON in fences constantly
+        text = re.sub(r"^```(?:json)?|```$", "", text, flags=re.M).strip()
+    try:
+        obj = json.loads(text)
+    except Exception:
+        return None
+    body = (obj.get("body") or "").strip()
+    # The topic word MUST appear in the body. A body that never mentions its own subject is the
+    # generic-scaffold failure again, just laundered through a model.
+    if len(body) < 200 or term.lower() not in body.lower():
+        return None
+    return {"what": (obj.get("what") or "").strip(),
+            "how_to_use": (obj.get("how_to_use") or "").strip(),
+            "body": body,
+            "generated_by": {"engine": r.get("engine"), "model": r.get("model")}}
+
+
 def draft(disc: dict, existing: list, max_new: int) -> list[dict]:
     """Mechanical, data-grounded drafts. Every draft names the gap it fills. v1 makes
     prompts / formats / packages (LLM-written skill bodies join in a later pass)."""
@@ -150,16 +196,20 @@ def draft(disc: dict, existing: list, max_new: int) -> list[dict]:
         name = f"Prompt pack: {term}"
         if name in have:
             continue
-        out.append({
+        drafted = _generate_prompt_element(term)
+        if drafted is None:
+            # The engine could not write it, so NOTHING is emitted for this term. There is
+            # deliberately no template fallback: the f-string version of this loop is what
+            # produced 14 near-identical "Prompt pack: <word>" creations that Eitan found in
+            # the Prompts tab on 2026-08-09, and a fallback would simply reinstate them under
+            # a new name. A department that cannot generate should produce nothing and say so.
+            continue
+        drafted.update({
             "name": name, "type": "prompt", "created_by": "EXCAVA", "label": LABEL,
             "gap": f"intake demand term '{term}' has no hub prompt",
-            "what": f"A reusable prompt scaffold for {term} tasks, seeded from live community demand.",
-            "how_to_use": f"Paste into any AI tool; replace <goal> with your {term} goal. "
-                          "Refine with the Activator once tested.",
-            "body": (f"You are an expert on {term}. Goal: <goal>. Constraints: free tools only, "
-                     "cite sources, output steps then the final artifact."),
             "status": "draft", "created_at": _now(),
         })
+        out.append(drafted)
     hole = next((h for h in disc.get("coverage_holes", []) if h.get("unlinked", 0) > 50), None)
     pkg_name = "Package: link-recovery sprint"
     if hole and pkg_name not in have:

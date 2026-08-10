@@ -2888,15 +2888,16 @@
       "department": "news",
       "source": "room-action:news",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "news-w1",
       "handoff_docs": [],
       "created_at": "2026-08-03T05:55:18.745194+00:00",
-      "updated_at": "2026-08-03T05:55:18.745200+00:00"
+      "updated_at": "2026-08-10T21:06:34.735529+00:00",
+      "result": "Ran the trend watch. trend_watch: 10 proposals (top score 10); queued 0 into self-improvement."
     },
     {
       "id": "dynamo-s-initiative-test-37012",
@@ -9927,15 +9928,16 @@
       "department": "visual",
       "source": "room-action:visual",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "visual-w1",
       "handoff_docs": [],
       "created_at": "2026-08-05T02:51:40.445101+00:00",
-      "updated_at": "2026-08-05T02:51:40.445110+00:00"
+      "updated_at": "2026-08-10T21:06:44.591350+00:00",
+      "result": "Ran the collect designs. collect_designs: 1351 designs (kept 1351 / dropped 0 repo-only + 2 dead/parked + 74 non-design; +0 AI-product, +27 seeds, +74 shown-in-video; url-checked 2). designs-only."
     },
     {
       "id": "watch-room-action-at-11--98305",
@@ -9961,15 +9963,16 @@
       "department": "mining",
       "source": "room-action:mining",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "mining-w1",
       "handoff_docs": [],
       "created_at": "2026-08-05T02:51:49.691642+00:00",
-      "updated_at": "2026-08-05T02:51:49.691650+00:00"
+      "updated_at": "2026-08-10T21:06:49.682666+00:00",
+      "result": "Ran the discovery agent. discovery: +0 new (of 139 sighted) → 853 queued; arxiv=102, gh-active=59, gh-new=43, hn-front=34, hn-new=100, huggingface-model=40, producthunt=91, reddit=244, web-search=63, youtube-beyond=77"
     },
     {
       "id": "define-what-makes-an-ele-98625",
@@ -24676,18 +24679,20 @@
       "id": "transcripts-room-action--94136",
       "title": "[transcripts room action] Scriv runs kimtaeyoon83/mcp-server-youtube-transcript on every pending video and confirms real transcripts exist for eac",
       "detail": "From room dept-transcripts-retrieve-real-fu-639 (action-shaped close). Mission action from the department's own room.",
-      "department": "transcripts",
+      "department": "analysis",
       "source": "room-action:transcripts",
       "priority": 2,
       "status": "queued",
-      "steps": 0,
+      "steps": 1,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
       "claimed_by": null,
-      "handoff_docs": [],
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-room-action--94136--01--transcripts-w1--to--analysis.md"
+      ],
       "created_at": "2026-08-10T20:35:36.947809+00:00",
-      "updated_at": "2026-08-10T20:35:36.947815+00:00"
+      "updated_at": "2026-08-10T21:06:49.860591+00:00"
     },
     {
       "id": "security-room-action-war-94154",
@@ -25056,15 +25061,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-08-10T20:54:05.199775+00:00",
-      "updated_at": "2026-08-10T20:54:05.199781+00:00"
+      "updated_at": "2026-08-10T21:06:33.377540+00:00",
+      "result": "Semantic index: 1643 vectors (model gemini-embedding-001); hub 8375 items → 6732 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "define-what-makes-an-ele-95622",
@@ -25127,17 +25133,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-95622--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-08-10T21:00:22.925623+00:00",
-      "updated_at": "2026-08-10T21:00:40.296863+00:00"
+      "updated_at": "2026-08-10T21:06:33.150704+00:00",
+      "result": "1643 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g3-truth-access-51-95622",
@@ -25191,7 +25198,97 @@
       "handoff_docs": [],
       "created_at": "2026-08-10T21:01:16.299987+00:00",
       "updated_at": "2026-08-10T21:01:16.299993+00:00"
+    },
+    {
+      "id": "define-what-makes-an-ele-95992",
+      "title": "Define what makes an element GOOD — per element type and per package",
+      "detail": "value=95 size=40(small) [cost 60/steps 30/risk 5] · OWNER ASK (OR-1): Every scoring decision in the hub currently leans on a single 1-10 quality_score whose rubric is generic across all nine element types. A prompt, an MCP connector and a design are good for completely different reasons, so one rubric cannot judge them. Without per-type guidelines th",
+      "department": "improve",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "improve-w1",
+      "handoff_docs": [],
+      "created_at": "2026-08-10T21:06:32.917617+00:00",
+      "updated_at": "2026-08-10T21:06:35.777725+00:00",
+      "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
+    },
+    {
+      "id": "verify-the-next-200-of-7-95992",
+      "title": "Verify the next 200 of 7040 unverified elements (2-source + live test)",
+      "detail": "value=90 size=40(small) [cost 35/steps 70/risk 10] · 7040 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-08-10T21:06:32.943750+00:00",
+      "updated_at": "2026-08-10T21:06:32.943756+00:00"
+    },
+    {
+      "id": "watch-process-the-next-b-95992",
+      "title": "Watch: process the next batch of 1643 pending videos",
+      "detail": "value=90 size=29(small) [cost 30/steps 40/risk 10] · 1643 pending",
+      "department": "watch",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "watch-w1",
+      "handoff_docs": [],
+      "created_at": "2026-08-10T21:06:32.969193+00:00",
+      "updated_at": "2026-08-10T21:06:33.429693+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+    },
+    {
+      "id": "resolve-real-links-websi-95992",
+      "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
+      "detail": "value=82 size=41(small) [cost 40/steps 60/risk 15] · many unlinked",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/resolve-real-links-websi-95992--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-08-10T21:06:32.994616+00:00",
+      "updated_at": "2026-08-10T21:06:49.734844+00:00"
+    },
+    {
+      "id": "security-safety-rate-the-95993",
+      "title": "Security: safety-rate the next batch of 1519 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1519 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-08-10T21:06:33.020308+00:00",
+      "updated_at": "2026-08-10T21:06:34.344701+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     }
   ],
-  "updated_at": "2026-08-10T21:01:16.299997+00:00"
+  "updated_at": "2026-08-10T21:06:49.860596+00:00"
 }

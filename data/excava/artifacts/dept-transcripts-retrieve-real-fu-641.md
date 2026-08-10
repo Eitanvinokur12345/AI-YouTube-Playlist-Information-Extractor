@@ -1,16 +1,17 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-641` (dept) · 2026-07-31T05:05:29.412380+00:00
-> Participants: Reel · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-641` (dept) · 2026-08-10T20:48:26.994158+00:00
+> Participants: Reel, Scriv, Echo · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+Scriv will execute the transcript retrieval action as mission-critical.
 
 **Plan:**
-1. Use the kimtaeyoon83/mcp-server-youtube-transcript tool to fetch the full transcript for *"How to Build a Resilient Team"*.
-2. Ensure the request is routed through a residential IP to avoid rate-limiting or blocking.
-3. Apply gentle pacing (e.g., delays between requests) to mimic human-like behavior and reduce detection risk.
-4. Verify the transcript is complete and unaltered before proceeding.
-5. Save the transcript in GitHub markdown format for easy reference.
-6. Cross-check the transcript against the video to confirm accuracy.
+1. Scriv runs `kimtaeyoon83/mcp-server-youtube-transcript` on every pending video.
+2. Store the full, real transcripts with speaker labels in the designated output directory.
+3. Validate transcript completeness and speaker label accuracy for each video.
+4. Log errors or missing transcripts for manual review.
+5. Update the video metadata to reflect transcript availability.
+6. Notify the team upon completion of the batch.
 
-**What changed:** Residential IP + gentle pacing added to ensure reliable, real transcript retrieval.
+**What changed:** Execution of transcript retrieval is now mandatory for all pending videos.

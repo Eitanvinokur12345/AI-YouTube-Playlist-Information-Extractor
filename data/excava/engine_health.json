@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-10T10:02:43.844299+00:00",
+ "generated_at": "2026-08-10T11:35:41.364283+00:00",
  "experiment": "engine-benchmark (golden-task canary)",
  "golden_prompt": "Reply with exactly these two words and nothing else: benchmark ok",
  "results": [
@@ -7,13 +7,13 @@
    "engine": "groq",
    "status": "healthy",
    "valid": true,
-   "ms": 240,
+   "ms": 148,
    "model": "llama-3.3-70b-versatile"
   },
   {
    "engine": "sambanova",
    "status": "quota-429",
-   "ms": 330,
+   "ms": 340,
    "model": "Meta-Llama-3.3-70B-Instruct",
    "note": "quota-429: Rate limit exceeded"
   },
@@ -21,55 +21,55 @@
    "engine": "mistral",
    "status": "healthy",
    "valid": true,
-   "ms": 427,
+   "ms": 668,
    "model": "mistral-small-latest"
   },
   {
    "engine": "gh-models",
    "status": "http-410",
-   "ms": 69,
+   "ms": 158,
    "model": "openai/gpt-4o-mini",
    "note": "http-410: {\"error\":{\"code\":\"github_models_retirement_brownout\",\"message\":\"GitHub Models is temporarily unavailable as part of a scheduled retirement brownout.\"}}"
   },
   {
    "engine": "cerebras",
    "status": "bad-model-404",
-   "ms": 69,
+   "ms": 111,
    "model": "llama3.1-8b",
    "note": "bad-model-404: {\"message\":\"Model does not exist or you do not have access to it.\",\"type\":\"not_found_error\",\"param\":\"model\",\"code\":\"model_not_found\"}"
   },
   {
    "engine": "gemini",
    "status": "quota-429",
-   "ms": 220,
+   "ms": 164,
    "model": "gemini-2.0-flash",
    "note": "quota-429: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error,"
   },
   {
    "engine": "nvidia",
    "status": "TimeoutError",
-   "ms": 60127,
+   "ms": 60170,
    "model": "meta/llama-3.3-70b-instruct",
    "note": "TimeoutError: The read operation timed out"
   },
   {
    "engine": "glm",
    "status": "bad-model-404",
-   "ms": 118,
+   "ms": 170,
    "model": "z-ai/glm-4.5-air:free",
    "note": "bad-model-404: {\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: z-ai/glm-4.5-air\",\"code\":404},\"user_id\":\"use"
   },
   {
    "engine": "deepseek",
    "status": "bad-model-404",
-   "ms": 52,
+   "ms": 113,
    "model": "deepseek/deepseek-chat-v3-0324:free",
    "note": "bad-model-404: {\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: deepseek/deepseek-chat-v3-0324\",\"code\":404},"
   },
   {
    "engine": "kimi",
    "status": "bad-model-404",
-   "ms": 45,
+   "ms": 86,
    "model": "moonshotai/kimi-k2:free",
    "note": "bad-model-404: {\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: moonshotai/kimi-k2\",\"code\":404},\"user_id\":\"u"
   },
@@ -88,11 +88,11 @@
   "groq",
   "mistral",
   "kimi",
+  "cerebras",
   "deepseek",
   "gh-models",
-  "cerebras",
-  "glm",
   "gemini",
+  "glm",
   "sambanova",
   "nvidia",
   "hermes",

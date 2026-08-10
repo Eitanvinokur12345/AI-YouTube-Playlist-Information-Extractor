@@ -1,16 +1,16 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-566` (dept) · 2026-07-30T19:25:44.600570+00:00
-> Participants: Reel, Echo · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-566` (dept) · 2026-08-10T11:33:59.739637+00:00
+> Participants: Reel, Scriv, Echo · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Execute `kimtaeyoon83/mcp-server-youtube-transcript` tool to fetch the full transcript for *"How to Build a Resilient Team"* using a residential IP with gentle pacing.
-2. Verify real-time retrieval by checking timestamp accuracy and source authenticity (e.g., YouTube captions or auto-generated transcript).
-3. Validate completeness by comparing word count/length against video duration and cross-referencing with partial captions (if available).
-4. Save the transcript as a `.txt` or `.srt` file with metadata (video title, URL, retrieval timestamp).
-5. Confirm successful extraction by logging the file path and size in the project directory.
-6. Mark the task as complete only after manual review of the transcript for errors or omissions.
+1. For pending videos in the Luma ecosystem, use Luma’s built-in transcript tool to generate clean, structured transcripts.
+2. For pending videos outside the Luma ecosystem, use Luma’s built-in transcript tool to ensure consistent quality.
+3. Avoid using `kimtaeyoon83/mcp-server-youtube-transcript` to prevent unstructured raw text output.
+4. Batch-process all pending videos through the chosen tool to maintain gentle pacing and residential IP compliance.
+5. Store generated transcripts in a structured format (e.g., JSON or text files) for downstream use.
+6. Log any failures or inconsistencies for manual review or reprocessing.
 
-**What changed:** Resolved to prioritize real-time, complete transcript retrieval over partial solutions, with explicit verification steps.
+**What changed:** Switched from scraping raw text to using Luma’s built-in tool for all pending videos to enforce quality and structure.

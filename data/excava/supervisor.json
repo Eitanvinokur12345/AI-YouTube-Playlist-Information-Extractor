@@ -1,18 +1,18 @@
 {
- "generated_at": "2026-08-10T19:27:28.731993+00:00",
+ "generated_at": "2026-08-10T19:36:16.036858+00:00",
  "checked": 40,
- "real_pct": 83,
+ "real_pct": 81,
  "counts": {
-  "real": 30,
-  "noop": 6,
+  "real": 29,
+  "noop": 7,
   "failed": 0,
   "planned": 0,
   "blocked": 4
  },
- "criticism": "Acceptable: 83% of the last 40 completions did real work. Stay strict. · INTENT DRIFT: 1 dept(s) wired to the WRONG tool for what you wanted — news→wants src.news not src.trend_watch · DECISION DRIFT: 3 unit(s) mostly decide SELF-IMPROVEMENT, not their mission (links 100%; group-chat 100%; war-room 100%) — that work belongs to the improve department's external arms (decision_audit.json). · SINGLE-ENGINE DEBATE (owner flag 2026-07-11): 3 room(s) today ran entirely on ONE model (group-open-floor-any-agent-from-an (6 turns, all mistral); group-open-floor-any-agent-from-an (11 turns, all mistral); group-open-floor-any-agent-from-an (40 turns, all mistral)) — that is one engine talking to itself, not a real multi-model debate. The healthy-pool round-robin must spread it.",
+ "criticism": "Acceptable: 81% of the last 40 completions did real work. Stay strict. · INTENT DRIFT: 1 dept(s) wired to the WRONG tool for what you wanted — news→wants src.news not src.trend_watch · DECISION DRIFT: 3 unit(s) mostly decide SELF-IMPROVEMENT, not their mission (links 100%; group-chat 100%; war-room 100%) — that work belongs to the improve department's external arms (decision_audit.json). · SINGLE-ENGINE DEBATE (owner flag 2026-07-11): 3 room(s) today ran entirely on ONE model (group-open-floor-any-agent-from-an (8 turns, all mistral); group-open-floor-any-agent-from-an (11 turns, all mistral); group-open-floor-any-agent-from-an (40 turns, all mistral)) — that is one engine talking to itself, not a real multi-model debate. The healthy-pool round-robin must spread it.",
  "long_term": {
   "verdict": "accumulating over time",
-  "detail": "over last 24 snapshots: done -410, artifacts +48, real_pct 74→83",
+  "detail": "over last 24 snapshots: done -417, artifacts +50, real_pct 77→81",
   "stagnant": false
  },
  "history": {
@@ -33,6 +33,69 @@
   }
  ],
  "verdicts": [
+  {
+   "task": "access-s-initiative-adop-16564",
+   "dept": "accessibility",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the accessibility scan. accessibility_scan: 0 issue(s) — clean"
+  },
+  {
+   "task": "mining-room-action-sweep-55555",
+   "dept": "mining",
+   "verdict": "noop",
+   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
+   "result": "Ran the discovery agent. discovery: +0 new (of 155 sighted) → 848 queued; arxiv=102, gh-active=59, gh-new=43, hn-front=33, hn-new=99, huggingface-model=39, prod"
+  },
+  {
+   "task": "visual-room-action-easel-15479",
+   "dept": "visual",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the collect designs. collect_designs: 1351 designs (kept 1351 / dropped 0 repo-only + 2 dead/parked + 74 non-design; +0 AI-product, +27 seeds, +74 shown-in-"
+  },
+  {
+   "task": "define-what-makes-an-ele-90355",
+   "dept": "improve",
+   "verdict": "noop",
+   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
+   "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
+  },
+  {
+   "task": "news-room-action-wire-pu-198",
+   "dept": "news",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the trend watch. trend_watch: 12 proposals (top score 10); queued 0 into self-improvement."
+  },
+  {
+   "task": "security-safety-rate-the-90355",
+   "dept": "security",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+  },
+  {
+   "task": "verify-the-next-200-of-7-82936",
+   "dept": "analysis",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "1643 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
+  },
+  {
+   "task": "watch-process-the-next-b-90355",
+   "dept": "watch",
+   "verdict": "blocked",
+   "note": "honestly BLOCKED — needs an owner resource; not faking work (this is the truth, not a facade)",
+   "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+  },
+  {
+   "task": "raise-g3-truth-access-51-56036",
+   "dept": "memory",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Semantic index: 1643 vectors (model gemini-embedding-001); hub 8375 items → 6732 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
+  },
   {
    "task": "mining-room-action-sweep-55138",
    "dept": "mining",
@@ -245,69 +308,6 @@
   },
   {
    "task": "verify-the-next-200-of-7-49743",
-   "dept": "analysis",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "1643 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
-  },
-  {
-   "task": "watch-process-the-next-b-70342",
-   "dept": "watch",
-   "verdict": "blocked",
-   "note": "honestly BLOCKED — needs an owner resource; not faking work (this is the truth, not a facade)",
-   "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
-  },
-  {
-   "task": "memory-embed-the-remaini-41471",
-   "dept": "memory",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Semantic index: 1643 vectors (model gemini-embedding-001); hub 8365 items → 6722 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
-  },
-  {
-   "task": "rerouted-creators-power--66566",
-   "dept": "power",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Ran the power scan.   - Openrouter | A unified API/router that gives access to hundreds of LLMs, including"
-  },
-  {
-   "task": "mining-room-action-sweep-5675",
-   "dept": "mining",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Ran the discovery agent. discovery: +2 new (of 153 sighted) → 814 queued; arxiv=102, gh-active=59, gh-new=43, hn-front=30, hn-new=92, huggingface-model=38, prod"
-  },
-  {
-   "task": "define-what-makes-an-ele-61581",
-   "dept": "improve",
-   "verdict": "noop",
-   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
-   "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
-  },
-  {
-   "task": "visual-room-action-easel-13670",
-   "dept": "visual",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Ran the collect designs. collect_designs: 1344 designs (kept 1344 / dropped 0 repo-only + 2 dead/parked + 74 non-design; +0 AI-product, +27 seeds, +74 shown-in-"
-  },
-  {
-   "task": "news-room-action-wire-pu-5684",
-   "dept": "news",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Ran the trend watch. trend_watch: 10 proposals (top score 10); queued 0 into self-improvement."
-  },
-  {
-   "task": "security-safety-rate-the-61582",
-   "dept": "security",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
-  },
-  {
-   "task": "transcripts-drain-the-ne-41471",
    "dept": "analysis",
    "verdict": "real",
    "note": "produced substantive real output",

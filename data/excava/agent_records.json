@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-10T17:31:33.249169+00:00",
+ "generated_at": "2026-08-10T19:27:24.239253+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 160,
+   "turns_7d": 161,
    "rooms_7d": 55,
    "engines_used": [
     "groq",
@@ -16,21 +16,21 @@
     "sambanova"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: Reel’s action is valid—kimtaeyoon83/mcp-server-youtube-transcript is explicitly built for this mission."
+   "last_position": "Scriv: Reel’s bulk transcript run risks overwhelming editors with unvetted raw text—Luma’s native tool at least syncs sp"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 115,
-   "rooms_7d": 72,
+   "turns_7d": 116,
+   "rooms_7d": 73,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "We should run kimtaeyoon83/mcp-server-youtube-transcript on every pending video now, and then use Luma's built-in transc"
+   "last_position": "Run kimtaeyoon83/mcp-server-youtube-transcript on every pending video now. The tool turns raw video into clean transcrip"
   },
   {
    "id": "transcripts-w1",
@@ -93,41 +93,41 @@
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 74,
-   "rooms_7d": 37,
+   "turns_7d": 75,
+   "rooms_7d": 38,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Choose a high-contrast light theme by default with a one-click toggle to dark mode. This maximizes visibility of errors "
+   "last_position": "Choose a dark theme by default with a one-click toggle to light mode. It reduces eye strain in low-light settings and ke"
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 74,
-   "rooms_7d": 37,
+   "turns_7d": 75,
+   "rooms_7d": 38,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Pane: A high-contrast light theme solves glare but ignores the real risk: users in dim rooms will squint at white glare "
+   "last_position": "Dark themes bury errors in shadows and mute critical signals—glare is the smaller problem. A high-contrast light theme w"
   },
   {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 66,
-   "rooms_7d": 66,
+   "turns_7d": 67,
+   "rooms_7d": 67,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded memory elements. This will produce"
+   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a raw "
   },
   {
    "id": "mining-w1",
@@ -213,6 +213,60 @@
    "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output: container status (running/healthy or not)"
   },
   {
+   "id": "security-w1",
+   "name": "Warden",
+   "dept": "security",
+   "role": "doer",
+   "turns_7d": 59,
+   "rooms_7d": 59,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I will instruct ToolHive to verify the LLM Guard container is running and healthy. This will produce a status report con"
+  },
+  {
+   "id": "security-checker",
+   "name": "Audit",
+   "dept": "security",
+   "role": "checker",
+   "turns_7d": 59,
+   "rooms_7d": 59,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s real-time state via its "
+  },
+  {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 59,
+   "rooms_7d": 59,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll run the link-checker tool on the live Mission Control Dashboard to scan for broken or outdated links. This will pro"
+  },
+  {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 59,
+   "rooms_7d": 59,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
+  },
+  {
    "id": "watch-lead",
    "name": "Iris",
    "dept": "watch",
@@ -241,72 +295,18 @@
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts marketing insights from video cont"
   },
   {
-   "id": "security-w1",
-   "name": "Warden",
-   "dept": "security",
-   "role": "doer",
-   "turns_7d": 58,
-   "rooms_7d": 58,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will instruct ToolHive to verify the LLM Guard container is running and healthy. The output will confirm whether the s"
-  },
-  {
-   "id": "security-checker",
-   "name": "Audit",
-   "dept": "security",
-   "role": "checker",
-   "turns_7d": 58,
-   "rooms_7d": 58,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container is running and healthy."
-  },
-  {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 58,
-   "rooms_7d": 58,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll run the link-checker tool on the live Mission Control Dashboard to scan all links for 404s and redirects. The scan "
-  },
-  {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
-   "role": "checker",
-   "turns_7d": 58,
-   "rooms_7d": 58,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
-  },
-  {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 54,
-   "rooms_7d": 54,
+   "turns_7d": 55,
+   "rooms_7d": 55,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Scriv runs kimtaeyoon83/mcp-server-youtube-transcript on every pending video, delivers full transcripts/captions",
+   "last_position": "ACTION: Scriv runs kimtaeyoon83/mcp-server-youtube-transcript on every pending video to generate real full transcripts/c",
    "proposed": 2
   },
   {
@@ -314,41 +314,41 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 52,
+   "turns_7d": 53,
    "rooms_7d": 27,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It preserves fine details in complex scenes bett"
+   "last_position": "Add RealVisXL 5.0’s face-preserving upscaler to EXCAVA’s pipeline now. Faces in EXCAVA’s outputs are the biggest quality"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 52,
+   "turns_7d": 53,
    "rooms_7d": 27,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Depth-aware upscalers won’t fix EXCAVA’s face fidelity drop because the core problem isn’t detail loss—it’s motion artif"
+   "last_position": "RealVisXL 5.0’s face lock won’t fix EXCAVA’s motion artifacts because it treats faces as static images—EXCAVA’s core fai"
   },
   {
    "id": "improve-lead",
    "name": "Ratchet",
    "dept": "improve",
    "role": "lead",
-   "turns_7d": 49,
-   "rooms_7d": 49,
+   "turns_7d": 50,
+   "rooms_7d": 50,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Run PR-Agent in shadow mode only on PRs modified after the last merged PR, filtered by keywords \"routing,\" \"en",
+   "last_position": "DECISION: Run PR-Agent in shadow mode only on PRs modified after the last merged PR, then measure review time for those ",
    "proposed": 2
   },
   {
@@ -469,14 +469,14 @@
    "name": "Marrow",
    "dept": "analysis",
    "role": "lead",
-   "turns_7d": 31,
-   "rooms_7d": 31,
+   "turns_7d": 32,
+   "rooms_7d": 32,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript via kimt, producing a structured analysis artifa"
+   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a deep analysis report, artifact: \"E"
   },
   {
    "id": "power-lead",
@@ -498,14 +498,14 @@
    "name": "Access",
    "dept": "accessibility",
    "role": "lead",
-   "turns_7d": 24,
-   "rooms_7d": 24,
+   "turns_7d": 25,
+   "rooms_7d": 25,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Adopt a 2px solid #005fcc focus ring with a 1px solid #ffffff inner offset for all interactive elements, valid",
+   "last_position": "DECISION: Adopt a 3px #005fcc ring at 100% opacity on light backgrounds and a 2px #ffffff ring at 100% opacity on dark t",
    "proposed": 10,
    "shipped": 8
   },

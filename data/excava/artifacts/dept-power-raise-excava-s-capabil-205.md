@@ -1,16 +1,16 @@
 # power: Raise EXCAVA's capability by even 0.5%: find new tools, best/newest models, combine elemen
 
-> Decision artifact · room `dept-power-raise-excava-s-capabil-205` (dept) · 2026-07-20T17:13:38.278221+00:00
+> Decision artifact · room `dept-power-raise-excava-s-capabil-205` (dept) · 2026-08-11T02:16:44.561021+00:00
 > Participants: Gearbox, Torque, Dynamo · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Secure access to DeepSeek-v3-671B and Llama-3.3-70B for a 7-day live A/B test.
-2. Deploy EXCAVA with each model in parallel, logging 128K-context throughput and stability metrics.
-3. If access to Llama-3.3-70B fails, proceed with DeepSeek-v3-671B alone.
-4. If both models fail stability tests, default to Mistral Large 2.1 (48B) as the fallback.
-5. Measure capability lift (≥0.5%) via EXCAVA’s performance benchmarks.
-6. Finalize model selection based on A/B test results and stability data.
+1. Replace InstantX-ComfyUI depth-aware upscaler and Flowframes VFI with Real-ESRGAN’s face mode in EXCAVA’s pipeline.
+2. Run blind A/B tests comparing Real-ESRGAN face mode against baseline EXCAVA output on 100 diverse clips (prioritizing low-res/heavily compressed frames).
+3. Torque owns test design, execution, and blind scoring (face fidelity metrics + subjective review).
+4. Deadline: 7 days for raw results, 3 days for final report.
+5. If face fidelity improves by ≥0.5% (blind-verified), merge into main pipeline.
+6. If no gain, document failure mode and archive Real-ESRGAN face mode as a non-solution.
 
-**What changed:** Decision deferred to live A/B test between DeepSeek-v3-671B and Llama-3.3-70B, with Mistral Large 2.1 as fallback.
+**What changed:** Switched from motion/blur-focused tools to face-specific Real-ESRGAN mode for identity preservation.

@@ -1,16 +1,15 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-136` (dept) · 2026-07-28T23:58:29.228869+00:00
-> Participants: Reel · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-136` (dept) · 2026-08-11T11:23:30.153809+00:00
+> Participants: Reel, Scriv, Echo · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Query the YouTube transcript server (`kimtaeyoon83/mcp-server-youtube-transcript`) with the pending video’s YouTube URL to fetch the raw, unedited transcript text.
-2. Validate the retrieved transcript for completeness and accuracy against the video’s content.
-3. Save the transcript as a `.txt` file in a designated directory (e.g., `transcripts/pending/`).
-4. Cross-reference the transcript with the video’s metadata (title, duration) to ensure alignment.
-5. Upload the verified transcript to GitHub as a new file in the `transcripts/` repository.
-6. Mark the video’s status as "transcript retrieved" in the tracking system.
+1. Re-run `kimtaeyoon83/mcp-server-youtube-transcript` on all 10 pending videos.
+2. Validate that the JSON output includes full content (timestamp, speaker ID, and text) for each video.
+3. Confirm transcripts exist for all videos before marking completion.
+4. If transcripts are incomplete, switch to a dedicated transcript-fetching tool per Scriv’s suggestion.
+5. Log discrepancies in a `transcript-issues.md` file for review.
 
-**What changed:** Automated transcript retrieval replaces manual or partial methods.
+**What changed:** Reaffirmed tool usage but added validation steps to ensure full transcript extraction.

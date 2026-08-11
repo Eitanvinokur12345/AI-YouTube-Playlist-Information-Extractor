@@ -1,16 +1,16 @@
 # visualization: Own EXCAVA'S OWN interface — visibility, liveliness, clarity, enjoyment, speed of OUR scre
 
-> Decision artifact · room `dept-visualization-own-excava-s-o-323` (dept) · 2026-07-27T22:11:24.011316+00:00
+> Decision artifact · room `dept-visualization-own-excava-s-o-323` (dept) · 2026-08-11T01:19:07.944665+00:00
 > Participants: Facet, Pane, Lumen · synthesized by mistral/mistral-small-latest
 
-**Decision:** Fixed-height timeline strip at the top of EXCAVA, always visible, with a single "Focus Mode" toggle to collapse it when users need vertical space for dense data.
+**Decision:**
 
 **Plan:**
-1. Implement a fixed-height timeline strip at the top of EXCAVA’s interface, spanning the full project duration.
-2. Ensure the strip is always visible unless "Focus Mode" is toggled.
-3. Add a single "Focus Mode" button to collapse the timeline strip, reclaiming vertical space for other panels.
-4. Test the toggle’s usability with real users, focusing on Manus’s dark-themed graphs to validate clarity and speed.
-5. Optimize the strip’s rendering for performance, ensuring it remains responsive even with dense data.
-6. Document the toggle’s behavior and edge cases (e.g., auto-collapse on full-screen modes).
+1. Implement a live toggle in the top-right corner with a sun/moon icon, showing current mode and instant feedback on click.
+2. Force a one-week A/B test where 50% of users default to dark mode and 50% to light mode, tracking error detection rates and readability scores.
+3. Auto-switch to the winning mode (light/dark) based on A/B results, with the toggle persisting user preference post-test.
+4. Add a high-contrast warning banner for 3 seconds on first toggle use, explaining visibility trade-offs.
+5. Log mode-switch events and error visibility metrics in analytics for ongoing review.
+6. Deploy adaptive theme logic (OS/browser preference) as the final default if A/B is inconclusive.
 
-**What changed:** Timeline strip is now fixed-height and always visible, with a single "Focus Mode" toggle to collapse it.
+**What changed:** Added forced A/B testing + adaptive fallback + live toggle with visual feedback.

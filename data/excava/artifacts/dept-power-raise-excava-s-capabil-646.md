@@ -1,15 +1,16 @@
 # power: Raise EXCAVA's capability by even 0.5%: find new tools, best/newest models, combine elemen
 
-> Decision artifact · room `dept-power-raise-excava-s-capabil-646` (dept) · 2026-07-14T02:45:16.172170+00:00
-> Participants: Gearbox, Torque, Dynamo · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-power-raise-excava-s-capabil-646` (dept) · 2026-08-11T00:49:31.071456+00:00
+> Participants: Dynamo, Gearbox, Torque · synthesized by mistral/mistral-small-latest
 
-**Decision:** Use NVIDIA B200 with Llama 3.3 70B to increase EXCAVA’s capability.
+**Decision:**
 
 **Plan:**
-1. Acquire NVIDIA B200 hardware as the core infrastructure upgrade.
-2. Integrate Llama 3.3 70B with EXCAVA’s existing systems.
-3. Conduct initial tests to benchmark performance improvements and confirm training time reduction.
-4. Provide training for the team on managing the new tools and workflows.
-5. Monitor integration closely to identify and mitigate any potential bottlenecks during the transition.
+1. Integrate **DiffBIR’s video mode** as the primary motion-deblur model in EXCAVA’s pipeline.
+2. Apply **RealVisXL 5.0’s face lock** post-deblur to refine face fidelity metrics.
+3. Benchmark **InstantX-ComfyUI’s depth-aware upscaler** as a secondary option if face fidelity gains <0.5%.
+4. Measure compute cost per frame for all models and log trade-offs.
+5. Compare face fidelity metrics (e.g., PSNR, FID) against baseline EXCAVA.
+6. Finalize pipeline based on top-performing model (highest fidelity gain at acceptable compute cost).
 
-**What changed:** Decision shifted from a higher-cost, potentially slower-integrating option to a more efficient alternative with better performance metrics.
+**What changed:** Prioritized motion-deblur + face lock over depth-aware upscaler/VFI alone.

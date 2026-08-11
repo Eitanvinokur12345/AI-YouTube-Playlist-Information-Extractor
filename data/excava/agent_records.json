@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-11T17:03:46.854512+00:00",
+ "generated_at": "2026-08-11T17:31:15.348402+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,28 +8,28 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 163,
+   "turns_7d": 164,
    "rooms_7d": 70,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Scriv: The four-field schema’s `speaker_present` flag is a band-aid—it shifts the burden to every downstream consumer to"
+   "last_position": "The four-field schema’s `speaker_present` flag is a leaky abstraction—it pretends to solve the core problem of ambiguous"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 112,
+   "turns_7d": 113,
    "rooms_7d": 70,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will use the kimtaeyoon83/mcp-server-youtube-transcript tool on all 10 pending videos to fetch their full transcripts."
+   "last_position": "Adopt the four-field schema: timestamp (ISO 8601), speaker_id (nullable string), confidence (float 0–1), and speaker_pre"
   },
   {
    "id": "analysis-w1",
@@ -64,14 +64,14 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 77,
-   "rooms_7d": 40,
+   "turns_7d": 78,
+   "rooms_7d": 41,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the four-field schema: timestamp (ISO 8601), speaker_id (nullable string), confidence (float 0–1), and speaker_pre"
+   "last_position": "I will run kimtaeyoon83/mcp-server-youtube-transcript on all 10 pending videos to extract structured transcripts with ti"
   },
   {
    "id": "visualization-w1",
@@ -106,14 +106,14 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 68,
-   "rooms_7d": 68,
+   "turns_7d": 69,
+   "rooms_7d": 69,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Re-run kimtaeyoon83/mcp-server-youtube-transcript on the 10 pending videos, adding a \"source_type\": \"youtube\" fi",
+   "last_position": "ACTION: Re-run kimtaeyoon83/mcp-server-youtube-transcript on the 10 pending videos, returning only raw transcript text p",
    "proposed": 2
   },
   {
@@ -149,41 +149,41 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 57,
+   "turns_7d": 58,
    "rooms_7d": 29,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It preserves fine details in complex scenes bett"
+   "last_position": "Add RealVisXL’s latest face reconstruction model to EXCAVA’s pipeline first. It directly targets the face fidelity drop "
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 57,
+   "turns_7d": 58,
    "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "InstantX-ComfyUI’s depth-aware upscaler won’t fix EXCAVA’s face fidelity drop because the core problem isn’t detail loss"
+   "last_position": "RealVisXL’s face model locks us into a single vendor’s face tech, and its 15% slowdown hits EXCAVA’s real-time pipeline—"
   },
   {
    "id": "visual-lead",
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 40,
-   "rooms_7d": 40,
+   "turns_7d": 41,
+   "rooms_7d": 41,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Easel captures a full-page screenshot of the official Agent Platform Selection Rule page for the hub’s visual re"
+   "last_position": "ACTION: Easel captures a full-page screenshot of the official Agent Platform Selection Rule page — a high-fidelity visua"
   },
   {
    "id": "visual-w1",
@@ -387,14 +387,14 @@
    "name": "Wire",
    "dept": "news",
    "role": "lead",
-   "turns_7d": 28,
-   "rooms_7d": 28,
+   "turns_7d": 29,
+   "rooms_7d": 29,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three verified items: 1) OpenAI’s official blog p"
+   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key items: OpenAI’s new memory architecture"
   },
   {
    "id": "news-w1",
@@ -452,6 +452,19 @@
    "last_position": "ACTION: At 11:35:00, Iris confirms Arcads Claude Code Skill pack exists for \"Create AI marketing\" with verified multimod"
   },
   {
+   "id": "watch-checker",
+   "name": "Frame",
+   "dept": "watch",
+   "role": "checker",
+   "turns_7d": 27,
+   "rooms_7d": 27,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts structured transcripts with timest"
+  },
+  {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
@@ -464,19 +477,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract and analyze the complete source text,"
-  },
-  {
-   "id": "watch-checker",
-   "name": "Frame",
-   "dept": "watch",
-   "role": "checker",
-   "turns_7d": 26,
-   "rooms_7d": 26,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts and enriches raw transcripts for d"
   },
   {
    "id": "accessibility-lead",

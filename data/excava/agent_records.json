@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-11T17:31:15.348402+00:00",
+ "generated_at": "2026-08-11T19:38:38.059820+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,56 +8,56 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 164,
-   "rooms_7d": 70,
+   "turns_7d": 165,
+   "rooms_7d": 71,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The four-field schema’s `speaker_present` flag is a leaky abstraction—it pretends to solve the core problem of ambiguous"
+   "last_position": "The action is valid MISSION work; no fix needed."
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 113,
-   "rooms_7d": 70,
+   "turns_7d": 114,
+   "rooms_7d": 71,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the four-field schema: timestamp (ISO 8601), speaker_id (nullable string), confidence (float 0–1), and speaker_pre"
+   "last_position": "I will run the kimtaeyoon83/mcp-server-youtube-transcript tool on the first pending video to fetch its full transcript. "
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 82,
+   "turns_7d": 83,
    "rooms_7d": 40,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the three-field schema with `speaker_id` as a nullable string and a reserved placeholder \"unknown\" for off-screen "
+   "last_position": "Adopt the four-field schema with `speaker_id` (nullable string), `speaker_present` (boolean), `confidence` (float 0–1), "
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 82,
+   "turns_7d": 83,
    "rooms_7d": 40,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Reel’s three-field schema with a nullable \"unknown\" speaker ID still lets downstream systems choke on malformed data—JSO"
+   "last_position": "The four-field schema’s `speaker_present` flag is a false fix—it doesn’t solve the root problem of inconsistent null han"
   },
   {
    "id": "watch-w1",
@@ -190,22 +190,22 @@
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 40,
-   "rooms_7d": 40,
+   "turns_7d": 41,
+   "rooms_7d": 41,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website. This will produce a high-fidel"
+   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
   },
   {
    "id": "visual-checker",
    "name": "Squint",
    "dept": "visual",
    "role": "checker",
-   "turns_7d": 40,
-   "rooms_7d": 40,
+   "turns_7d": 41,
+   "rooms_7d": 41,
    "engines_used": [
     "groq",
     "mistral"
@@ -401,41 +401,41 @@
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 28,
-   "rooms_7d": 28,
+   "turns_7d": 29,
+   "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh digest entry sum"
+   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh AI-news digest e"
   },
   {
    "id": "news-checker",
    "name": "Factcheck",
    "dept": "news",
    "role": "checker",
-   "turns_7d": 28,
-   "rooms_7d": 28,
+   "turns_7d": 29,
+   "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: The action is valid MISSION work. Fix: Ensure the extracted post includes the publication date to confirm fresh"
+   "last_position": "Verdict: The action is valid MISSION work. Fix: Ensure the extracted post includes a timestamp to confirm freshness."
   },
   {
    "id": "power-lead",
    "name": "Dynamo",
    "dept": "power",
    "role": "lead",
-   "turns_7d": 28,
-   "rooms_7d": 28,
+   "turns_7d": 29,
+   "rooms_7d": 29,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Integrate RealVisXL's latest face reconstruction model with a lightweight face enhancer as a fallback ensemble",
-   "proposed": 17,
+   "last_position": "DECISION: Test InstantX-ComfyUI’s depth-aware upscaler on faces first—if it stabilizes features without the 15% slowdown",
+   "proposed": 18,
    "shipped": 17
   },
   {
@@ -443,13 +443,13 @@
    "name": "Iris",
    "dept": "watch",
    "role": "lead",
-   "turns_7d": 27,
-   "rooms_7d": 27,
+   "turns_7d": 28,
+   "rooms_7d": 28,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 11:35:00, Iris confirms Arcads Claude Code Skill pack exists for \"Create AI marketing\" with verified multimod"
+   "last_position": "ACTION: At 11:37:00, Iris confirms Arcads Claude Code Skill pack exists for AI marketing with speaker IDs and timestamps"
   },
   {
    "id": "watch-checker",

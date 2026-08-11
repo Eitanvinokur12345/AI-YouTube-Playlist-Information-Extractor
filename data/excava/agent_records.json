@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-11T11:24:50.061172+00:00",
+ "generated_at": "2026-08-11T13:59:39.962707+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,56 +8,56 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 157,
-   "rooms_7d": 67,
+   "turns_7d": 158,
+   "rooms_7d": 68,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Reel’s schema kills gaming but breaks transcripts where speaker ID is unknown. The real risk is losing critical data—e.g"
+   "last_position": "Verdict: The action is mission work our tool can do."
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 108,
-   "rooms_7d": 67,
+   "turns_7d": 109,
+   "rooms_7d": 68,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Enforce **one output**: a strict JSON schema with only three fields—timestamp (ISO 8601), speaker ID (alphanumeric), and"
+   "last_position": "I will use the kimtaeyoon83/mcp-server-youtube-transcript tool on all 10 pending videos to fetch their full transcripts."
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 80,
+   "turns_7d": 81,
    "rooms_7d": 40,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Use kimtaeyoon83/mcp-server-youtube-transcript for all 10 pending videos today. It’s the only open-source option that gi"
+   "last_position": "Adopt a strict three-field JSON schema with timestamp (ISO 8601), speaker ID (alphanumeric or null), and confidence (flo"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 80,
+   "turns_7d": 81,
    "rooms_7d": 40,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk isn’t maintenance—it’s Reel choking on malformed JSON from kimtaeyoon83’s scraper when YouTube’s API shift"
+   "last_position": "Reel’s validator will still choke if speaker ID is null because JSON Schema treats \"null\" as a type violation, not a val"
   },
   {
    "id": "visualization-w1",
@@ -106,14 +106,14 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 65,
-   "rooms_7d": 65,
+   "turns_7d": 66,
+   "rooms_7d": 66,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Re-run kimtaeyoon83/mcp-server-youtube-transcript on the 10 pending videos, verify JSON schema includes full con",
+   "last_position": "DECISION: Run kimtaeyoon83/mcp-server-youtube-transcript on all 10 pending videos today, but keep Kaedim’s paid API read",
    "proposed": 2
   },
   {
@@ -218,8 +218,8 @@
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 37,
-   "rooms_7d": 37,
+   "turns_7d": 38,
+   "rooms_7d": 38,
    "engines_used": [
     "groq",
     "mistral"
@@ -232,8 +232,8 @@
    "name": "Squint",
    "dept": "visual",
    "role": "checker",
-   "turns_7d": 37,
-   "rooms_7d": 37,
+   "turns_7d": 38,
+   "rooms_7d": 38,
    "engines_used": [
     "groq",
     "mistral"
@@ -383,6 +383,22 @@
    "last_position": "Run PR-Agent in shadow mode on *both* open and merged PRs from day one—this catches edge cases before they’re buried in "
   },
   {
+   "id": "power-lead",
+   "name": "Dynamo",
+   "dept": "power",
+   "role": "lead",
+   "turns_7d": 27,
+   "rooms_7d": 27,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Test InstantX-ComfyUI’s depth-aware upscaler first to measure spatial clarity gains, then add FO’s face module",
+   "proposed": 16,
+   "shipped": 15
+  },
+  {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
@@ -411,41 +427,25 @@
    "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three verified items: OpenAI’s new memory archite"
   },
   {
-   "id": "power-lead",
-   "name": "Dynamo",
-   "dept": "power",
-   "role": "lead",
-   "turns_7d": 26,
-   "rooms_7d": 26,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Skip both InstantX-ComfyUI’s depth-aware upscaler and Flowframes’ VFI—add a face-focused diffusion prior (e.g.",
-   "proposed": 15,
-   "shipped": 15
-  },
-  {
    "id": "news-w1",
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 25,
-   "rooms_7d": 25,
+   "turns_7d": 26,
+   "rooms_7d": 26,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh, verified AI new"
+   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh AI-news digest e"
   },
   {
    "id": "news-checker",
    "name": "Factcheck",
    "dept": "news",
    "role": "checker",
-   "turns_7d": 25,
-   "rooms_7d": 25,
+   "turns_7d": 26,
+   "rooms_7d": 26,
    "engines_used": [
     "mistral"
    ],
@@ -457,13 +457,13 @@
    "name": "Iris",
    "dept": "watch",
    "role": "lead",
-   "turns_7d": 24,
-   "rooms_7d": 24,
+   "turns_7d": 25,
+   "rooms_7d": 25,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 11:26:00, Iris confirms transcripts from kimtaeyoon83/mcp-server-youtube-transcript are ingested into Arcads "
+   "last_position": "ACTION: At 11:29:00, Iris confirms Arcads Claude Code Skill pack exists for \"Create AI marketing\" via arcads-claude-code"
   },
   {
    "id": "watch-checker",

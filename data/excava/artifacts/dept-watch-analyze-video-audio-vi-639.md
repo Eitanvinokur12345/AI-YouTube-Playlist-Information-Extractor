@@ -1,18 +1,15 @@
 # watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.
 
-> Decision artifact · room `dept-watch-analyze-video-audio-vi-639` (dept) · 2026-07-30T21:00:19.499159+00:00
-> Participants: Scope, Iris · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-watch-analyze-video-audio-vi-639` (dept) · 2026-08-11T16:49:28.354505+00:00
+> Participants: Scope, Frame, Iris · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Execute the Arcads AI Video "AI Marketing" skill on the latest Arcads AI Video at 11:4 to generate a structured marketing asset.
 
 **Plan:**
-1. Invoke the Arcads AI Video "AI Marketing" skill at 2026-07-28T23:01:14.882110+00:00.
-2. Process the latest Arcads AI Video at 11:4 using the skill.
-3. Generate a structured marketing asset with key themes, hooks, and audience-tailored angles.
-4. Extract content beyond the transcript (AUDIO+VISUAL) for deeper analysis.
-5. Validate the output for accuracy and relevance.
-6. Store the final asset in the designated repository.
+1. Run `kimtaeyoon83/mcp-server-youtube-transcript` on all 10 pending videos to generate raw transcripts.
+2. Store the 10 text files in the designated watch team directory for multimodal analysis.
+3. Integrate Arcads Claude Code Skill pack (confirmed at 11:32:00) into the workflow for AI marketing.
+4. Assign Arcads AI Video’s multimodal analysis to extract and interpret visual/audio cues beyond transcripts.
+5. Validate outputs for consistency and accuracy before finalizing interpretations.
 
-**What changed:**
-The Arcads AI Video "AI Marketing" skill is now actively generating a structured marketing asset from the latest video at 11:4.
+**What changed:** Arcads Claude Code Skill pack integration confirmed and workflow adjusted to prioritize multimodal analysis.

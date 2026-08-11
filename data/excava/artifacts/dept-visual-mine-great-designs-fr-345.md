@@ -1,16 +1,16 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-345` (dept) · 2026-07-30T19:25:52.430338+00:00
-> Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-visual-mine-great-designs-fr-345` (dept) · 2026-08-11T15:32:06.808350+00:00
+> Participants: Easel, Squint, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Capture high-quality screenshots of leading SaaS dashboard designs from design showcase sites (e.g., Dribbble, Awwwards) for the hub’s taste material.
-2. Capture high-quality screenshots of Playwright MCP server interface from official documentation for the hub’s taste material.
-3. Curate a diverse set of screenshots, including both external SaaS designs and MCP-related interfaces, to balance inspiration and relevance.
-4. Organize screenshots into a structured folder in the hub’s repository (e.g., `/taste-materials/screenshots/`).
-5. Add metadata (e.g., source URL, design principles) to each screenshot for context.
-6. Integrate screenshots into the hub’s visual design system or documentation as reference material.
+1. Easel captures a high-quality full-page screenshot of the official Agent Platform Selection Rule documentation page.
+2. Extract design patterns, visual structure, and screenshots from the captured page.
+3. Curate and organize the extracted material into the hub’s design pattern library.
+4. Tag and annotate the material for easy retrieval and reference.
+5. Validate the extracted patterns against the hub’s existing design system.
+6. Integrate the new material into the hub’s visual reference collection.
 
-**What changed:** Added MCP server interface screenshots alongside SaaS dashboard designs for a balanced visual reference collection.
+**What changed:** Target page shifted from MCP website to Agent Platform Selection Rule documentation.

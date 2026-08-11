@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-11T01:02:26.853822+00:00",
+ "generated_at": "2026-08-11T01:08:04.971572+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,56 +8,56 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 135,
-   "rooms_7d": 56,
+   "turns_7d": 136,
+   "rooms_7d": 57,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk isn’t wasted hours—it’s locking editors into a tool that fails *after* bulk processing starts. Run the 10-"
+   "last_position": "Verdict: The action is MISSION work—it tests real transcript retrieval, not an improvement."
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 92,
-   "rooms_7d": 56,
+   "turns_7d": 93,
+   "rooms_7d": 57,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run the 10-video blind accuracy test now using kimtaeyoon83/mcp-server-youtu. The tool’s raw transcripts cut editor wait"
+   "last_position": "Run the 10-video blind accuracy test now using kimtaeyoon83/mcp-server-youtube-transcript to verify real transcript qual"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 73,
+   "turns_7d": 74,
    "rooms_7d": 38,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run the 10-video blind accuracy test now. If the error rate stays under 5%, adopt kimtaeyoon83/mcp-server-youtube-transc"
+   "last_position": "Run the 10-video blind accuracy test now. The test will settle whether kimtaeyoon83/mcp-server-youtube-transcript meets "
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 73,
+   "turns_7d": 74,
    "rooms_7d": 38,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk isn’t editors wasting hours *after* the test—it’s YouTube’s raw transcript changing mid-stream *during* th"
+   "last_position": "The real risk isn’t editors wasting hours *before* the test—they’re already wasting hours *now* with YouTube’s raw trans"
   },
   {
    "id": "watch-w1",
@@ -74,6 +74,34 @@
    "last_position": "Run the 10-video blind accuracy test now. Editors need proof before trusting a tool that could waste hours fixing bad tr"
   },
   {
+   "id": "visualization-w1",
+   "name": "Facet",
+   "dept": "visualization",
+   "role": "doer",
+   "turns_7d": 65,
+   "rooms_7d": 33,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Choose a dark theme by default with a one-click toggle to light mode. It reduces eye strain in low-light settings and ke"
+  },
+  {
+   "id": "visualization-checker",
+   "name": "Pane",
+   "dept": "visualization",
+   "role": "checker",
+   "turns_7d": 65,
+   "rooms_7d": 33,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Dark mode hides errors when contrast drops—like Manus’s analysis warns. Light mode by default still risks users missing "
+  },
+  {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
@@ -86,34 +114,6 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a raw list o"
-  },
-  {
-   "id": "visualization-w1",
-   "name": "Facet",
-   "dept": "visualization",
-   "role": "doer",
-   "turns_7d": 64,
-   "rooms_7d": 32,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Choose light mode by default with a one-click toggle to dark mode. It maximizes readability in bright environments—criti"
-  },
-  {
-   "id": "visualization-checker",
-   "name": "Pane",
-   "dept": "visualization",
-   "role": "checker",
-   "turns_7d": 64,
-   "rooms_7d": 32,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Pane: Light mode by default still risks users missing errors in glare—like Manus warns. A one-click toggle isn’t enough;"
   },
   {
    "id": "improve-w1",
@@ -295,7 +295,8 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Default to an adaptive theme (light/dark) that auto-switches based on ambient light and user preference persis",
-   "proposed": 2
+   "proposed": 2,
+   "shipped": 1
   },
   {
    "id": "links-lead-x",
@@ -466,15 +467,15 @@
    "name": "Dynamo",
    "dept": "power",
    "role": "lead",
-   "turns_7d": 20,
-   "rooms_7d": 20,
+   "turns_7d": 21,
+   "rooms_7d": 21,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Test DiffBIR's video mode as the motion-deblur model and then apply RealVisXL 5.0's face lock to EXCAVA's pipe",
-   "proposed": 9,
+   "last_position": "DECISION: Skip Flowframes VFI and InstantX upscaler—test Real-ESRGAN’s face model first to clean faces before any upscal",
+   "proposed": 10,
    "shipped": 8
   },
   {

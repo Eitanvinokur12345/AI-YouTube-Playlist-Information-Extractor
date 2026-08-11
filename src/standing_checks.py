@@ -102,6 +102,23 @@ def run() -> dict:
     return result
 
 
+
+def _open_owner_blockers() -> list:
+    """Tasks only Eitan can do that HALT the loop. See data/excava/owner_blockers.json.
+
+    Returns [] when the file is missing or unreadable — a broken blocker file must not
+    silently halt the program, and must not silently un-halt it either; the guardrail
+    G-X below is what catches the file going missing.
+    """
+    import json as _json
+    p = ROOT / "data" / "excava" / "owner_blockers.json"
+    try:
+        d = _json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return []
+    return [b for b in d.get("blockers", []) if b.get("status") == "open"]
+
+
 def main() -> int:
     try:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -109,7 +126,25 @@ def main() -> int:
         pass
     strict = "--strict" in sys.argv
     r = run()
-    print(f"STANDING CHECKS: {'OK — clear to work' if r['ok'] else 'NEEDS ATTENTION'}")
+
+    # OWNER BLOCKERS (Eitan's rule, 2026-08-10): "If there is something critical to the project
+    # that I absolutely must do — regardless of what I say — do not continue working until I
+    # have finished that task." This runs FIRST and prints before anything else, because a loop
+    # that reports "clear to work" and then works is exactly what the rule forbids. Encoded here
+    # rather than left in a chat message so it binds the away loop too, which never reads chat.
+    blockers = _open_owner_blockers()
+    if blockers:
+        print("=" * 72)
+        print("HALTED — OWNER BLOCKER OPEN. Do not advance the milestone this fire.")
+        for b in blockers:
+            print(f"  [{b['id']}] {b['title']}")
+            print(f"    unblocks when: {b.get('what_unblocks_it','')}")
+            print(f"    owner effort : {b.get('estimated_owner_effort','?')}")
+        print("  Allowed meanwhile: safety fixes, honest reporting, preparing what Eitan needs")
+        print("  to decide. NOT allowed: new features, new increments, new departments.")
+        print("=" * 72)
+
+    print(f"STANDING CHECKS: {'OK — clear to work' if r['ok'] and not blockers else 'NEEDS ATTENTION'}")
 
     rem = r["remote"]
     if not rem["fetch_ok"]:

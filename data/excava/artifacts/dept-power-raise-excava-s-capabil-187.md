@@ -1,16 +1,16 @@
 # power: Raise EXCAVA's capability by even 0.5%: find new tools, best/newest models, combine elemen
 
-> Decision artifact · room `dept-power-raise-excava-s-capabil-187` (dept) · 2026-07-15T09:29:10.835676+00:00
-> Participants: Gearbox, Torque, Dynamo · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-power-raise-excava-s-capabil-187` (dept) · 2026-08-11T16:57:21.461291+00:00
+> Participants: Gearbox, Torque, Dynamo · synthesized by mistral/mistral-small-latest
 
-**Decision:** Run a head-to-head comparison of Llama 3.4 on the NVIDIA H100 against Claude Mythos 5 using 1% of live EXCAVA traffic to evaluate output quality and latency; Gearbox owns result delivery.
+**Decision:**
 
 **Plan:**
-1. Set up the environments for Llama 3.4 on NVIDIA H100 and Claude Mythos 5.
-2. Prepare identical prompts based on EXCAVA’s core tasks for the head-to-head comparison.
-3. Allocate 1% of live EXCAVA traffic for the testing period.
-4. Conduct the performance evaluation focusing on output quality and latency.
-5. Collect and analyze results to determine which model increases EXCAVA's capability.
-6. Gearbox to present the findings and recommend the next steps based on results.
+1. Integrate RealVisXL’s latest face reconstruction model into EXCAVA’s pipeline as the primary face module.
+2. Implement a lightweight face enhancer (e.g., GFPGAN or CodeFormer) as a fallback ensemble to mitigate bias/artifacts.
+3. Benchmark face fidelity (e.g., FID, PSNR) pre- and post-integration to confirm a ≥0.5% improvement.
+4. Measure speed impact—ensure total pipeline slowdown ≤2% vs. baseline.
+5. Document face module failures in a log for Gearbox to audit and refine.
+6. Merge changes into EXCAVA’s `dev` branch with a rollback option if fidelity/speed targets fail.
 
-**What changed:** The decision now includes a quantifiable comparison to better inform future model selection.
+**What changed:** RealVisXL face model + lightweight fallback ensemble replaces FO module.

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-12T17:34:04.262735+00:00",
+ "generated_at": "2026-08-12T19:42:45.211087+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,28 +8,28 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 170,
-   "rooms_7d": 75,
+   "turns_7d": 171,
+   "rooms_7d": 76,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: This is mission work—our tool (kimtaeyoon83/mcp-server-youtube-transcript) can retrieve real transcripts with t"
+   "last_position": "Reel’s \"Decision Log\" risks becoming a graveyard of half-baked notes—teams dump entries to check the box, then ignore th"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 118,
-   "rooms_7d": 75,
+   "turns_7d": 119,
+   "rooms_7d": 76,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will run the kimtaeyoon83/mcp-server-youtube-transcript tool on the first pending video to retrieve its full transcrip"
+   "last_position": "Adopt a shared \"Decision Log\" artifact where every team records key choices with a one-line reason and the trade-off acc"
   },
   {
    "id": "analysis-w1",
@@ -64,28 +64,28 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 79,
-   "rooms_7d": 40,
+   "turns_7d": 80,
+   "rooms_7d": 41,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will run kimtaeyoon83/mcp-server-youtube-transcript on the Alima video to extract a structured transcript with `speake"
+   "last_position": "I'll run kimtaeyoon83/mcp-server-youtube-transcript on the Alima video to extract the raw transcript. This produces a cl"
   },
   {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 74,
-   "rooms_7d": 74,
+   "turns_7d": 75,
+   "rooms_7d": 75,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Adopt a strict schema where `speaker_id` is nullable string, with \"off-screen\" as the *only* reserved placehol",
+   "last_position": "ACTION: Re-run kimtaeyoon83/mcp-server-youtube-transcript on e2Z5eBVDrKM to produce the raw transcript file with timesta",
    "proposed": 2
   },
   {
@@ -121,27 +121,27 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 65,
+   "turns_7d": 66,
    "rooms_7d": 33,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It preserves fine details in complex scenes bett"
+   "last_position": "Add RealVisXL’s latest face reconstruction model to EXCAVA’s pipeline first. It directly targets the face fidelity drop "
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 65,
+   "turns_7d": 66,
    "rooms_7d": 33,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "InstantX-ComfyUI’s depth-aware upscaler won’t fix EXCAVA’s face fidelity drop—it’s a scene-level tool, not a facial deta"
+   "last_position": "RealVisXL’s latest face model is a moving target—its backward compatibility is unreliable, and rolling it into EXCAVA ri"
   },
   {
    "id": "mining-w1",
@@ -171,6 +171,20 @@
    "last_position": "Run PR-Agent in shadow mode on open PRs first, then expand to merged PRs after a week. This catches edge cases before th"
   },
   {
+   "id": "visual-lead",
+   "name": "Chroma",
+   "dept": "visual",
+   "role": "lead",
+   "turns_7d": 41,
+   "rooms_7d": 41,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Easel captures a full-page screenshot of the official Agent Platform Selection Rule page to mine its design patt"
+  },
+  {
    "id": "visual-w1",
    "name": "Easel",
    "dept": "visual",
@@ -197,20 +211,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: The action is mission work our tool can do."
-  },
-  {
-   "id": "visual-lead",
-   "name": "Chroma",
-   "dept": "visual",
-   "role": "lead",
-   "turns_7d": 40,
-   "rooms_7d": 40,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Easel captures a full-page screenshot of the official Agent Platform Selection Rule documentation page, producin"
   },
   {
    "id": "accessibility-w1",
@@ -314,6 +314,19 @@
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container's existence and health."
   },
   {
+   "id": "watch-checker",
+   "name": "Frame",
+   "dept": "watch",
+   "role": "checker",
+   "turns_7d": 28,
+   "rooms_7d": 28,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts marketing insights from video cont"
+  },
+  {
    "id": "watch-lead",
    "name": "Iris",
    "dept": "watch",
@@ -325,19 +338,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: At 11:49:00, Iris directs Arcads AI Video to analyze the Alima video transcript with speaker_id fields for marke"
-  },
-  {
-   "id": "watch-checker",
-   "name": "Frame",
-   "dept": "watch",
-   "role": "checker",
-   "turns_7d": 27,
-   "rooms_7d": 27,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts marketing insights from video cont"
   },
   {
    "id": "improve-lead",
@@ -487,21 +487,21 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Adopt a 3px solid #005fcc focus ring with 1px inner #fff at 90% opacity—it meets WCAG 2.2’s 3:1 contrast on li",
-   "proposed": 14,
-   "shipped": 14
+   "proposed": 13,
+   "shipped": 13
   },
   {
    "id": "creators-w1",
    "name": "Forge",
    "dept": "creators",
    "role": "doer",
-   "turns_7d": 14,
-   "rooms_7d": 14,
+   "turns_7d": 15,
+   "rooms_7d": 15,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Forge drafts the \"UGC Factory\" skill package for the Skill Creator, producing a ready-to-use npm package with cl"
+   "last_position": "Action: Forge drafts the \"UGC Factory\" skill package for the Skill Creator, labeled 'Created by EXCAVA' with a test arti"
   },
   {
    "id": "memory-w1",

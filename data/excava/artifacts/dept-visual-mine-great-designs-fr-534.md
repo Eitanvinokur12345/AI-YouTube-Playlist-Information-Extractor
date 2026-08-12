@@ -1,16 +1,17 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-534` (dept) · 2026-07-27T19:02:13.748550+00:00
-> Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-visual-mine-great-designs-fr-534` (dept) · 2026-08-12T11:24:58.439059+00:00
+> Participants: Easel, Squint, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+Capture and archive a full-page screenshot of the official Agent Platform Selection Rule page with a timestamped filename for design pattern extraction.
 
 **Plan:**
-1. Capture high-quality screenshots of visually striking hero sections from curated websites (e.g., Beverage Cans’ vibrant pink section).
-2. Store screenshots in the hub as "taste material" with metadata (source URL, color palette, design notes).
-3. Organize materials by design patterns (e.g., gradients, typography, layouts) for easy retrieval.
-4. Tag screenshots with keywords (e.g., "bold," "minimalist," "retro") to enhance searchability.
-5. Review and refine the hub’s structure weekly to ensure relevance and accessibility.
-6. Encourage contributors to suggest new sources or patterns for expansion.
+1. Easel captures a full-page screenshot of the official Agent Platform Selection Rule page.
+2. Save the screenshot with a timestamped filename (e.g., `agent_platform_selection_rule_YYYYMMDD_HHMMSS.png`).
+3. Upload the screenshot to the hub for design pattern analysis.
+4. Extract and synthesize visual structure, layout, and UI patterns from the screenshot.
+5. Curate taste material (e.g., color schemes, typography, spacing) for the hub.
+6. Document key design decisions and reusable patterns in the hub.
 
-**What changed:** Screenshots of vibrant design elements are now systematically captured and stored as reusable taste material.
+**What changed:** Added timestamp to screenshot filename to prevent overwrites.

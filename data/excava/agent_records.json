@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-12T15:33:18.712216+00:00",
+ "generated_at": "2026-08-12T17:34:04.262735+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,28 +8,28 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 169,
-   "rooms_7d": 74,
+   "turns_7d": 170,
+   "rooms_7d": 75,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Scriv: The \"off-screen\" placeholder doesn’t solve the problem—it just moves it. The real risk is that teams will treat i"
+   "last_position": "Verdict: This is mission work—our tool (kimtaeyoon83/mcp-server-youtube-transcript) can retrieve real transcripts with t"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 117,
-   "rooms_7d": 74,
+   "turns_7d": 118,
+   "rooms_7d": 75,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the strict schema where `speaker_id` is *only* populated when a speaker is definitively identified—leave it null o"
+   "last_position": "I will run the kimtaeyoon83/mcp-server-youtube-transcript tool on the first pending video to retrieve its full transcrip"
   },
   {
    "id": "analysis-w1",
@@ -74,6 +74,21 @@
    "last_position": "I will run kimtaeyoon83/mcp-server-youtube-transcript on the Alima video to extract a structured transcript with `speake"
   },
   {
+   "id": "transcripts-lead",
+   "name": "Echo",
+   "dept": "transcripts",
+   "role": "lead",
+   "turns_7d": 74,
+   "rooms_7d": 74,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Adopt a strict schema where `speaker_id` is nullable string, with \"off-screen\" as the *only* reserved placehol",
+   "proposed": 2
+  },
+  {
    "id": "visualization-w1",
    "name": "Facet",
    "dept": "visualization",
@@ -102,46 +117,31 @@
    "last_position": "Pane: High-contrast dark toggle still risks hiding errors when users tweak contrast too low—Manus’s analysis shows that."
   },
   {
-   "id": "transcripts-lead",
-   "name": "Echo",
-   "dept": "transcripts",
-   "role": "lead",
-   "turns_7d": 73,
-   "rooms_7d": 73,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Re-run kimtaeyoon83/mcp-server-youtube-transcript on e2Z5eBVDrKM to produce the full transcript file now.",
-   "proposed": 2
-  },
-  {
    "id": "power-w1",
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 64,
-   "rooms_7d": 32,
+   "turns_7d": 65,
+   "rooms_7d": 33,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add RealVisXL’s latest face reconstruction model to EXCAVA’s pipeline first. It directly targets the face fidelity drop "
+   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It preserves fine details in complex scenes bett"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 64,
-   "rooms_7d": 32,
+   "turns_7d": 65,
+   "rooms_7d": 33,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "RealVisXL’s \"latest\" face model is a moving target—its backward compatibility claims are marketing, not engineering. The"
+   "last_position": "InstantX-ComfyUI’s depth-aware upscaler won’t fix EXCAVA’s face fidelity drop—it’s a scene-level tool, not a facial deta"
   },
   {
    "id": "mining-w1",
@@ -171,6 +171,34 @@
    "last_position": "Run PR-Agent in shadow mode on open PRs first, then expand to merged PRs after a week. This catches edge cases before th"
   },
   {
+   "id": "visual-w1",
+   "name": "Easel",
+   "dept": "visual",
+   "role": "doer",
+   "turns_7d": 41,
+   "rooms_7d": 41,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
+  },
+  {
+   "id": "visual-checker",
+   "name": "Squint",
+   "dept": "visual",
+   "role": "checker",
+   "turns_7d": 41,
+   "rooms_7d": 41,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is mission work our tool can do."
+  },
+  {
    "id": "visual-lead",
    "name": "Chroma",
    "dept": "visual",
@@ -183,34 +211,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Easel captures a full-page screenshot of the official Agent Platform Selection Rule documentation page, producin"
-  },
-  {
-   "id": "visual-w1",
-   "name": "Easel",
-   "dept": "visual",
-   "role": "doer",
-   "turns_7d": 40,
-   "rooms_7d": 40,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website. This will produce a high-quali"
-  },
-  {
-   "id": "visual-checker",
-   "name": "Squint",
-   "dept": "visual",
-   "role": "checker",
-   "turns_7d": 40,
-   "rooms_7d": 40,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is mission work our tool can do."
   },
   {
    "id": "accessibility-w1",
@@ -270,7 +270,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Run a head-to-head test between InstantX-ComfyUI’s depth-aware upscaler (scene-level) and RealVisXL’s latest f",
    "proposed": 19,
-   "shipped": 18
+   "shipped": 19
   },
   {
    "id": "security-lead",
@@ -314,6 +314,19 @@
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container's existence and health."
   },
   {
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 27,
+   "rooms_7d": 27,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: At 11:49:00, Iris directs Arcads AI Video to analyze the Alima video transcript with speaker_id fields for marke"
+  },
+  {
    "id": "watch-checker",
    "name": "Frame",
    "dept": "watch",
@@ -353,19 +366,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract and analyze the complete source text,"
-  },
-  {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 26,
-   "rooms_7d": 26,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: At 11:48:00, Iris directs Arcads AI Video to analyze the Alima video’s audio-visual cues for marketing insights,"
   },
   {
    "id": "improve-checker",
@@ -495,13 +495,13 @@
    "name": "Forge",
    "dept": "creators",
    "role": "doer",
-   "turns_7d": 13,
-   "rooms_7d": 13,
+   "turns_7d": 14,
+   "rooms_7d": 14,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Forge drafts the \"UGC Factory\" skill package for the Skill Creator, labeled \"Created by EXCAVA\" with embedded te"
+   "last_position": "Action: Forge drafts the \"UGC Factory\" skill package for the Skill Creator, producing a ready-to-use npm package with cl"
   },
   {
    "id": "memory-w1",

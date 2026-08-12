@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-12T03:08:28.004632+00:00",
+ "generated_at": "2026-08-12T06:02:26.153151+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,28 +8,28 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 160,
-   "rooms_7d": 70,
+   "turns_7d": 163,
+   "rooms_7d": 72,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The \"off-screen\" placeholder is a leaky abstraction that trades one ambiguity for another—teams will still conflate \"off"
+   "last_position": "The \"off-screen\" placeholder doesn’t solve the core problem—it just relabels the ambiguity. The real risk is that teams "
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 111,
-   "rooms_7d": 70,
+   "turns_7d": 113,
+   "rooms_7d": 72,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the strict schema with `speaker_id` as nullable string and a reserved placeholder \"off-screen\" instead of the four"
+   "last_position": "I will use the kimtaeyoon83/mcp-server-youtube-transcript tool on the first pending video to retrieve its full transcrip"
   },
   {
    "id": "analysis-w1",
@@ -60,6 +60,20 @@
    "last_position": "The \"off-screen\" placeholder still leaks ambiguity—teams will treat it as a valid speaker ID, corrupting speaker analyti"
   },
   {
+   "id": "watch-w1",
+   "name": "Scope",
+   "dept": "watch",
+   "role": "doer",
+   "turns_7d": 74,
+   "rooms_7d": 36,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Adopt the strict schema with `speaker_id` as a nullable string and no placeholder—only populate it when a speaker is def"
+  },
+  {
    "id": "visualization-w1",
    "name": "Facet",
    "dept": "visualization",
@@ -88,20 +102,6 @@
    "last_position": "Pane: High-contrast dark toggle still risks hiding errors when users tweak contrast too low—Manus’s analysis shows that."
   },
   {
-   "id": "watch-w1",
-   "name": "Scope",
-   "dept": "watch",
-   "role": "doer",
-   "turns_7d": 73,
-   "rooms_7d": 36,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will run kimtaeyoon83/mcp-server-youtube-transcript on all 10 pending videos to extract structured transcripts with `s"
-  },
-  {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
@@ -121,27 +121,27 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 60,
-   "rooms_7d": 30,
+   "turns_7d": 61,
+   "rooms_7d": 31,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add RealVisXL’s latest face reconstruction model to EXCAVA’s pipeline first. It directly targets EXCAVA’s weakest link—f"
+   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It preserves fine details in complex scenes bett"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 60,
-   "rooms_7d": 30,
+   "turns_7d": 61,
+   "rooms_7d": 31,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Vendor lock-in isn’t the only risk—RealVisXL’s face model still requires proprietary face tech, and its 15% gain is vend"
+   "last_position": "InstantX-ComfyUI’s depth-aware upscaler won’t fix EXCAVA’s face fidelity drop—it only sharpens geometry, not identity. T"
   },
   {
    "id": "mining-w1",
@@ -199,26 +199,12 @@
    "last_position": "The 100% opacity ring risks visual noise for sighted users in dense interfaces. A 3px solid #005fcc ring with 1px inner "
   },
   {
-   "id": "visual-lead",
-   "name": "Chroma",
-   "dept": "visual",
-   "role": "lead",
-   "turns_7d": 37,
-   "rooms_7d": 37,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Easel captures a full-page screenshot of the official Agent Platform Selection Rule page to extract its design p"
-  },
-  {
    "id": "visual-w1",
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 37,
-   "rooms_7d": 37,
+   "turns_7d": 38,
+   "rooms_7d": 38,
    "engines_used": [
     "groq",
     "mistral"
@@ -231,6 +217,20 @@
    "name": "Squint",
    "dept": "visual",
    "role": "checker",
+   "turns_7d": 38,
+   "rooms_7d": 38,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is mission work our tool can do."
+  },
+  {
+   "id": "visual-lead",
+   "name": "Chroma",
+   "dept": "visual",
+   "role": "lead",
    "turns_7d": 37,
    "rooms_7d": 37,
    "engines_used": [
@@ -238,7 +238,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: The action is mission work our tool can do."
+   "last_position": "ACTION: Easel captures a full-page screenshot of the official Agent Platform Selection Rule page to extract its design p"
   },
   {
    "id": "visualization-lead",
@@ -284,7 +284,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Integrate InstantX-ComfyUI’s depth-aware upscaler into EXCAVA’s pipeline first—test it on non-face regions onl",
    "proposed": 17,
-   "shipped": 16
+   "shipped": 17
   },
   {
    "id": "security-w1",
@@ -410,6 +410,19 @@
    "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
   },
   {
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 24,
+   "rooms_7d": 24,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: At 11:45:00, Iris confirms transcripts include `speaker_id` fields for Arcads AI Video’s speaker-specific analys"
+  },
+  {
    "id": "watch-checker",
    "name": "Frame",
    "dept": "watch",
@@ -461,19 +474,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: The action is valid MISSION work. Fix: Ensure the extracted post includes a timestamp to confirm freshness."
-  },
-  {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 23,
-   "rooms_7d": 23,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: At 11:42:00, Iris confirms Arcads Claude Code Skill pack exists for \"Create AI marketing\" and validates its rele"
   },
   {
    "id": "accessibility-lead",

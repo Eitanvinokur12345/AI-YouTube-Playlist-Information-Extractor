@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-12T08:04:29.578950+00:00",
+ "generated_at": "2026-08-12T09:45:09.329391+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,70 +8,70 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 164,
-   "rooms_7d": 72,
+   "turns_7d": 166,
+   "rooms_7d": 73,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The \"off-screen\" placeholder doesn’t fix the core problem—it just relabels absence as a special case, inviting teams to "
+   "last_position": "Verdict: The action is mission work—our tool can fetch real transcripts via kimtaeyoon83/mcp-server-youtube-transcript."
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 114,
-   "rooms_7d": 72,
+   "turns_7d": 115,
+   "rooms_7d": 73,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the strict schema with `speaker_id` as a nullable string and no placeholder. Only populate `speaker_id` when a spe"
+   "last_position": "I will run the kimtaeyoon83/mcp-server-youtube-transcript tool on the first pending video to fetch its full transcript. "
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 80,
+   "turns_7d": 81,
    "rooms_7d": 39,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run the kimtaeyoon83/mcp-server-youtube-transcript tool on the Alima video (e2Z5eBVDrKM) now, using the strict schema wi"
+   "last_position": "Adopt the strict schema with `speaker_id` as a nullable string and a reserved placeholder \"off-screen\" for absence. This"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 80,
+   "turns_7d": 81,
    "rooms_7d": 39,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk isn’t overfitting—it’s that the transcript tool’s `speaker_id` field is a false fix. The \"nullable speaker"
+   "last_position": "The \"off-screen\" placeholder is a bandage, not a fix—it turns absence into a string, inviting teams to treat it as a spe"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 75,
-   "rooms_7d": 37,
+   "turns_7d": 76,
+   "rooms_7d": 38,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will run kimtaeyoon83/mcp-server-youtube-transcript on all 10 pending videos to extract structured transcripts with `s"
+   "last_position": "Run the kimtaeyoon83/mcp-server-youtube-transcript tool on the Alima video (e2Z5eBVDrKM) now with the strict schema incl"
   },
   {
    "id": "visualization-w1",
@@ -199,26 +199,12 @@
    "last_position": "The 100% opacity ring risks visual noise for sighted users in dense interfaces. A 3px solid #005fcc ring with 1px inner "
   },
   {
-   "id": "visual-lead",
-   "name": "Chroma",
-   "dept": "visual",
-   "role": "lead",
-   "turns_7d": 38,
-   "rooms_7d": 38,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Easel captures a full-page screenshot of the official Agent Platform Selection Rule documentation to extract its"
-  },
-  {
    "id": "visual-w1",
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 38,
-   "rooms_7d": 38,
+   "turns_7d": 39,
+   "rooms_7d": 39,
    "engines_used": [
     "groq",
     "mistral"
@@ -231,6 +217,20 @@
    "name": "Squint",
    "dept": "visual",
    "role": "checker",
+   "turns_7d": 39,
+   "rooms_7d": 39,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is mission work our tool can do."
+  },
+  {
+   "id": "visual-lead",
+   "name": "Chroma",
+   "dept": "visual",
+   "role": "lead",
    "turns_7d": 38,
    "rooms_7d": 38,
    "engines_used": [
@@ -238,7 +238,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: The action is mission work our tool can do."
+   "last_position": "ACTION: Easel captures a full-page screenshot of the official Agent Platform Selection Rule documentation to extract its"
   },
   {
    "id": "visualization-lead",
@@ -257,6 +257,22 @@
    "shipped": 7
   },
   {
+   "id": "power-lead",
+   "name": "Dynamo",
+   "dept": "power",
+   "role": "lead",
+   "turns_7d": 31,
+   "rooms_7d": 31,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Test InstantX-ComfyUI’s depth-aware upscaler *only* on face crops first—if it stabilizes identity fidelity, in",
+   "proposed": 18,
+   "shipped": 17
+  },
+  {
    "id": "security-lead",
    "name": "Bastion",
    "dept": "security",
@@ -269,22 +285,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and healthy."
-  },
-  {
-   "id": "power-lead",
-   "name": "Dynamo",
-   "dept": "power",
-   "role": "lead",
-   "turns_7d": 30,
-   "rooms_7d": 30,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Integrate InstantX-ComfyUI’s depth-aware upscaler into EXCAVA’s pipeline first—test it on non-face regions onl",
-   "proposed": 17,
-   "shipped": 17
   },
   {
    "id": "security-w1",
@@ -383,6 +383,19 @@
    "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard, including fixes for any bro"
   },
   {
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 25,
+   "rooms_7d": 25,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: At 11:47:00, Iris confirms transcripts now include `speaker_id` fields for all 10 pending videos, enabling Arcad"
+  },
+  {
    "id": "watch-checker",
    "name": "Frame",
    "dept": "watch",
@@ -421,19 +434,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
-  },
-  {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 24,
-   "rooms_7d": 24,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: At 11:45:00, Iris confirms transcripts include `speaker_id` fields for Arcads AI Video’s speaker-specific analys"
   },
   {
    "id": "news-lead",

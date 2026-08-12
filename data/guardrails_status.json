@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-08-12T21:26:05.471397+00:00",
+ "generated_at": "2026-08-12T23:14:54.401263+00:00",
  "total": 21,
- "passing": 18,
+ "passing": 17,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": true,
-   "detail": "HEAD == origin/main (work is really saved).",
+   "ok": false,
+   "detail": "NOT in sync vs origin/main (behind/ahead: 1\t0) — a push may not have landed.",
    "severity": "warn"
   },
   {
@@ -71,7 +71,7 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "15532 memory episodes on record.",
+   "detail": "15549 memory episodes on record.",
    "severity": "warn"
   },
   {
@@ -92,42 +92,42 @@
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "2190 tasks done, 12 departments moving",
+   "detail": "2198 tasks done, 12 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "88474 MB free on the repo drive.",
+   "detail": "88689 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 423.4h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 425.2h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
    "ok": false,
-   "detail": "last 'excava-beat #N' commit 28.4h ago — STALE: the dedicated heartbeat loop isn't landing per-cycle commits (check for a wedged/queued excava_beat.yml run).",
+   "detail": "last 'excava-beat #N' commit 30.2h ago — STALE: the dedicated heartbeat loop isn't landing per-cycle commits (check for a wedged/queued excava_beat.yml run).",
    "severity": "warn"
   },
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "last 'core-spoton:' commit 0.5h ago.",
+   "detail": "last 'core-spoton:' commit 0.4h ago.",
    "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
    "ok": false,
-   "detail": "11/16 lane(s) landing on cadence — STALE: creators.yml (daily 07:45 UTC): last commit 85.1h ago (expected within 30h); discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 1263.3h ago (expected within 76h); improve.yml (weekly deep pass): last commit 1613.1h ago (expected within 192h); review.yml (twice-weekly): last commit 333.4h ago (expected within 100h); transcribe.yml (daily): last commit 279.1h ago (expected within 30h)",
+   "detail": "11/16 lane(s) landing on cadence — STALE: creators.yml (daily 07:45 UTC): last commit 86.9h ago (expected within 30h); discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 1265.1h ago (expected within 76h); improve.yml (weekly deep pass): last commit 1614.9h ago (expected within 192h); review.yml (twice-weekly): last commit 335.3h ago (expected within 100h); transcribe.yml (daily): last commit 280.9h ago (expected within 30h)",
    "severity": "warn"
   },
   {

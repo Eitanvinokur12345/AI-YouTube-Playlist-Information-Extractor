@@ -10067,19 +10067,33 @@
       "status": "unresolvable-but-url-alive",
       "at": "2026-08-11T19:14:41.638752+00:00",
       "note": "no runnable command found (docker-only or docs-only)"
+    },
+    "OpenRouter": {
+      "status": "fail",
+      "exit": 1,
+      "cmd": "/opt/hostedtoolcache/node/20.20.2/x64/bin/npx -y openrouter-mcp --version",
+      "log": "OPENROUTER_API_KEY environment variable is required\nnpm notice\nnpm notice New major version of npm available! 10.8.2 -> 12.0.2\nnpm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2\nnpm notice To update run: npm install -g npm@12.0.2\nnpm notice",
+      "at": "2026-08-12T13:36:18.792554+00:00"
+    },
+    "mcp-remote": {
+      "status": "fail",
+      "exit": 1,
+      "cmd": "/opt/hostedtoolcache/node/20.20.2/x64/bin/npx -y mcp-remote --version",
+      "log": "(node:internal/modules/run_main:117:5) {\n  code: 'ERR_INVALID_URL',\n  input: '--version'\n}\nnpm notice\nnpm notice New major version of npm available! 10.8.2 -> 12.0.2\nnpm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2\nnpm notice To update run: npm install -g npm@12.0.2\nnpm notice",
+      "at": "2026-08-12T13:36:21.675951+00:00"
     }
   },
   "summary": {
-    "checked": 1534,
-    "total": 1534,
+    "checked": 1536,
+    "total": 1536,
     "by_status": {
-      "fail": 861,
+      "fail": 863,
       "pass": 328,
       "unresolvable-but-url-alive": 298,
       "unresolvable": 51
     },
     "stale_ghost_entries": 4,
-    "updated_at": "2026-08-12T07:48:46.055547+00:00",
+    "updated_at": "2026-08-12T13:36:21.676718+00:00",
     "policy": "owner 2026-07-03: sandbox test-run EVERYTHING; tab shows verified-only (D5)"
   }
 }

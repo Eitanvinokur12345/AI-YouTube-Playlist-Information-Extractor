@@ -1,15 +1,16 @@
 # creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Created by EXCAVA' + tes
 
-> Decision artifact · room `dept-creators-build-packages-enri-470` (dept) · 2026-07-25T15:42:45.992981+00:00
-> Participants: Forge, Nova · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-creators-build-packages-enri-470` (dept) · 2026-08-13T03:10:28.044654+00:00
+> Participants: Forge · synthesized by mistral/mistral-small-latest
 
-**Decision:** The "UGC Factory" npm package will be created and labeled appropriately.  
+**Decision:**
 
-**Plan:**  
-1. Draft the "UGC Factory" npm package in the creators tab.  
-2. Label the package as "Created by EXCAVA."  
-3. Ensure the package offers a ready-to-use open-source Claude Code skill for generating user-generated content.  
-4. Review and test the package for functionality and ease of use.  
-5. Publish the package and update documentation accordingly.  
+**Plan:**
+1. Forge drafts the "UGC Factory" skill package for the Skill Creator, labeled "Created by EXCAVA" with tests included.
+2. Publish the package as an npm module with the label "Created by EXCAVA" in the metadata.
+3. Enrich the "Packages" tab with documentation for the "UGC Factory" package.
+4. Draft elements for the "UGC Factory" package in the relevant tabs.
+5. Include tests for the "UGC Factory" package to ensure functionality.
+6. Verify all outputs are labeled "Created by EXCAVA".
 
-**What changed:** The decision to move forward with creating the package was finalized.
+**What changed:** Added "UGC Factory" skill package with tests and enrichment.

@@ -1,12 +1,18 @@
 # visualization: Own EXCAVA'S OWN interface — visibility, liveliness, clarity, enjoyment, speed of OUR scre
 
-> Decision artifact · room `dept-visualization-own-excava-s-o-591` (dept) · 2026-07-27T05:28:20.210219+00:00
-> Participants: Facet, Pane, Lumen · synthesized by groq/llama-3.3-70b-versatile
+> Decision artifact · room `dept-visualization-own-excava-s-o-591` (dept) · 2026-08-13T17:32:13.762240+00:00
+> Participants: Facet, Pane, Lumen · synthesized by mistral/mistral-small-latest
 
-**Decision:** Default to system theme on first load with a one-time prompt offering a prominent top-right toggle for manual override.
-1. **Set default theme**: Default to the user's system theme on the first load of EXCAVA's interface.
-2. **Surface toggle prominently**: Display a prominent toggle for manual theme override in the top-right corner of the interface.
-3. **One-time prompt**: Show a one-time prompt to users explaining the theme toggle and its location, ensuring they are aware of the option to change the theme.
-4. **Retain toggle access**: Maintain access to the theme toggle in the settings menu for users who prefer to change the theme through settings.
-5. **Monitor user feedback**: Collect user feedback to assess the effectiveness of the chosen approach and identify potential areas for improvement.
-**What changed:** The decision shifted from a fixed dark theme or buried toggle to a system preference default with a surfaced and prompted toggle for user convenience and awareness.
+**Decision:**
+Default to high-contrast light mode with a one-click toggle to dark mode, then A/B test user error rates between the two to settle the final default.
+
+**Plan:**
+1. Implement high-contrast light mode as the default interface with a persistent one-click toggle to dark mode.
+2. Add A/B testing infrastructure to track error rates (e.g., missed errors, misclicks) in both modes across lighting conditions.
+3. Log user preferences and error metrics per session for analysis.
+4. Run the A/B test for 2 weeks with a minimum of 1,000 users per variant.
+5. Analyze error rates and user feedback to determine the final default mode.
+6. Deploy the winning mode as the new default with the toggle retained.
+
+**What changed:**
+High-contrast light mode is now the default, with dark mode as an optional toggle and error tracking enabled for A/B testing.

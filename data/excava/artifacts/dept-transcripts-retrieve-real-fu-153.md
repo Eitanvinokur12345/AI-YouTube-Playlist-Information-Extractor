@@ -1,15 +1,16 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-153` (dept) · 2026-07-25T10:00:22.630891+00:00
-> Participants: Reel, Echo · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-153` (dept) · 2026-08-13T23:14:33.245785+00:00
+> Participants: Reel, Scriv, Echo · synthesized by mistral/mistral-small-latest
 
-**Decision:** Fetch the full transcripts for both specified YouTube videos using the kimtaeyoon83/mcp-server-youtube-transcript tool.
+**Decision:**
 
 **Plan:**
-1. Use the kimtaeyoon83/mcp-server-youtube-transcript tool for the video titled *"AI"* to retrieve its full transcript.
-2. Simultaneously, apply the same tool to fetch the full transcript for *"AI Breakthroughs of 2024: What Changed E"*.
-3. Ensure that both transcripts are captured from a residential IP for accessibility.
-4. Maintain a gentle pacing while retrieving the transcripts to avoid overload.
-5. Compile the retrieved transcripts into a single document for easy reference.
+1. Execute `kimtaeyoon83/mcp-server-youtube-transcript` on video ID `e2Z5eBVDrKM` to fetch the full raw transcript.
+2. Output the transcript as raw text for review.
+3. Store the transcript in a designated directory (e.g., `/transcripts/pending/`).
+4. Tag the video as "transcript_retrieved" in the tracking system.
+5. Notify the team via Slack/email with the transcript file path.
+6. Proceed to the next pending video if no errors occur.
 
-**What changed:** Both videos will be addressed for transcript retrieval to ensure comprehensive coverage.
+**What changed:** Transcript retrieval initiated for `e2Z5eBVDrKM`.

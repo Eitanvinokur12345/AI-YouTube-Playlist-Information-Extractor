@@ -1,16 +1,15 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-788` (dept) · 2026-07-20T17:44:44.530549+00:00
-> Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-visual-mine-great-designs-fr-788` (dept) · 2026-08-13T23:14:38.364396+00:00
+> Participants: Easel, Squint, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Source vibrant design screenshots from curated web galleries (e.g., Awwwards, Dribbble, Behance).
-2. Categorize screenshots in the hub by design pattern (e.g., hero sections, typography, color palettes).
-3. Tag screenshots with metadata (e.g., "vibrant," "minimalist," "gradient") for easy retrieval.
-4. Archive screenshots in a dedicated folder (e.g., `/design_artifacts/`) with consistent filenames.
-5. Cross-reference screenshots with design trends (e.g., "2024 neon revival") for contextual relevance.
-6. Rotate outdated screenshots quarterly to maintain a fresh, curated library.
+1. Capture a full-page screenshot of the official Playwright MCP website.
+2. Extract and annotate its visual hierarchy and design patterns.
+3. Upload the screenshot and annotations as a taste artifact to the hub.
+4. Tag the artifact with "design-patterns" and "visual-hierarchy" for easy retrieval.
+5. Share the artifact in the hub’s visual library for team reference.
 
-**What changed:** Screenshots are now systematically framed as reusable design artifacts in the hub.
+**What changed:** Switched from MCP to Playwright MCP website for the screenshot source.

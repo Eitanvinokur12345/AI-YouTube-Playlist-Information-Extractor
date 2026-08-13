@@ -1,16 +1,15 @@
 # security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (not fake/dead); DETECT
 
-> Decision artifact · room `dept-security-paranoid-guard-scan-328` (dept) · 2026-07-30T03:44:38.805261+00:00
-> Participants: Warden, Bastion · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-security-paranoid-guard-scan-328` (dept) · 2026-08-13T11:24:22.851355+00:00
+> Participants: Warden, Audit, Bastion · synthesized by mistral/mistral-small-latest
 
-**Decision:** Exchange accepted as clean after verification.
+**Decision:**
 
 **Plan:**
-1. Run LLM Guard scanner on conversation input/output.
-2. Verify scan report in `/var/log/llm_guard/w1_scan` for leaks/injections/unreal elements.
-3. Confirm Warden’s scan report before accepting exchange.
-4. Log verification status in `/var/log/llm_guard/verification.log`.
-5. Mark conversation as sanitized if report is clean.
-6. Proceed with secure processing if no anomalies detected.
+1. Warden queries ToolHive’s MCP server lifecycle manager for LLM Guard container health status.
+2. ToolHive verifies container existence and operational state in real-time.
+3. ToolHive returns a status report confirming the container is running and healthy.
+4. Bastion records the verified status as the authoritative state.
+5. Audit logs the verification action as MISSION work.
 
-**What changed:** Exchange validated via Warden’s LLM Guard scan and Bastion’s verification.
+**What changed:** LLM Guard container health status confirmed via ToolHive’s direct verification.

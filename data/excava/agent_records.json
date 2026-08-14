@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-14T17:34:25.995567+00:00",
+ "generated_at": "2026-08-14T19:34:08.244675+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,27 +8,27 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 177,
-   "rooms_7d": 84,
+   "turns_7d": 178,
+   "rooms_7d": 85,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Scriv: Mandating data citations in the Decision Log ignores that some calls are made under tight deadlines where data do"
+   "last_position": "Reel’s action is valid: the kimtaeyoon83/mcp-server-youtube-transcript tool directly retrieves real transcripts for pend"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 125,
-   "rooms_7d": 83,
+   "turns_7d": 126,
+   "rooms_7d": 84,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the \"Data-Gap Log\" where every decision entry must state the *specific uncertainty* that forced the call—not citat"
+   "last_position": "I will run the kimtaeyoon83/mcp-server-youtube-transcript tool on the first pending video to retrieve its full transcrip"
   },
   {
    "id": "transcripts-lead",
@@ -50,6 +50,20 @@
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
+   "turns_7d": 79,
+   "rooms_7d": 36,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Data citations won’t fix the root problem—teams will cherry-pick data that justifies their call, not the gap that forced"
+  },
+  {
+   "id": "analysis-w1",
+   "name": "Chisel",
+   "dept": "analysis",
+   "role": "doer",
    "turns_7d": 78,
    "rooms_7d": 36,
    "engines_used": [
@@ -57,7 +71,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Data citations turn the log into a forensic audit, not a decision tool—teams will cherry-pick data to justify calls, not"
+   "last_position": "Adopt the \"Gap-Driven Decision Log\" where every entry must state the uncertainty that forced the call—no data required, "
   },
   {
    "id": "visualization-w1",
@@ -86,20 +100,6 @@
    ],
    "positions_held": 30,
    "last_position": "Pane: Adaptive contrast still fails in mixed-lighting rooms—like a window behind the screen—where the sensor toggles cha"
-  },
-  {
-   "id": "analysis-w1",
-   "name": "Chisel",
-   "dept": "analysis",
-   "role": "doer",
-   "turns_7d": 77,
-   "rooms_7d": 36,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Adopt the \"Decision Audit\" artifact where every team logs the call *and* the data gap that forced it—no citations, just "
   },
   {
    "id": "watch-w1",
@@ -184,6 +184,34 @@
    "last_position": "Run PR-Agent live on open PRs but restrict its comments to non-blocking suggestions only. This tests its real-world util"
   },
   {
+   "id": "visual-w1",
+   "name": "Easel",
+   "dept": "visual",
+   "role": "doer",
+   "turns_7d": 39,
+   "rooms_7d": 39,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
+  },
+  {
+   "id": "visual-checker",
+   "name": "Squint",
+   "dept": "visual",
+   "role": "checker",
+   "turns_7d": 39,
+   "rooms_7d": 39,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is mission work our tool can do. Fix: Capture the screenshot."
+  },
+  {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
@@ -212,34 +240,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Chroma captures a full-page screenshot of the official Model Context Protocol (MCP) website to the hub’s visual "
-  },
-  {
-   "id": "visual-w1",
-   "name": "Easel",
-   "dept": "visual",
-   "role": "doer",
-   "turns_7d": 38,
-   "rooms_7d": 38,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
-  },
-  {
-   "id": "visual-checker",
-   "name": "Squint",
-   "dept": "visual",
-   "role": "checker",
-   "turns_7d": 38,
-   "rooms_7d": 38,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is mission work our tool can do. Fix: Capture the screenshot."
   },
   {
    "id": "power-lead",
@@ -276,28 +276,28 @@
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 28,
-   "rooms_7d": 28,
+   "turns_7d": 29,
+   "rooms_7d": 29,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a raw list of"
+   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a raw JSON li"
   },
   {
    "id": "accessibility-lead",
    "name": "Access",
    "dept": "accessibility",
    "role": "lead",
-   "turns_7d": 25,
-   "rooms_7d": 25,
+   "turns_7d": 26,
+   "rooms_7d": 26,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Adopt the 2px solid #005fcc focus ring with 1px inner #fff at 95% opacity—guarantees ≥4.5:1 contrast on light ",
-   "proposed": 18,
+   "last_position": "DECISION: Adopt the 3px solid #005fcc focus ring with 1px inner #fff at 70% opacity. Deliver a tested CSS snippet and hi",
+   "proposed": 19,
    "shipped": 18
   },
   {
@@ -543,6 +543,19 @@
    "last_position": "Verdict: The action is MISSION work and our tool can execute it as described."
   },
   {
+   "id": "memory-lead",
+   "name": "Root",
+   "dept": "memory",
+   "role": "lead",
+   "turns_7d": 1,
+   "rooms_7d": 1,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 28,
+   "last_position": "ACTION: Root queries the Hindsight MCP server for all unembedded elements to embed them in the brain graph."
+  },
+  {
    "id": "memory-checker",
    "name": "Prune",
    "dept": "memory",
@@ -602,17 +615,6 @@
    "engines_used": [],
    "positions_held": 0,
    "last_position": ""
-  },
-  {
-   "id": "memory-lead",
-   "name": "Root",
-   "dept": "memory",
-   "role": "lead",
-   "turns_7d": 0,
-   "rooms_7d": 0,
-   "engines_used": [],
-   "positions_held": 27,
-   "last_position": "ACTION: Root queries the Hindsight MCP server for all unembedded elements to embed in the brain graph."
   },
   {
    "id": "creators-improver",

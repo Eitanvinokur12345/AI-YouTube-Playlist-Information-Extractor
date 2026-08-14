@@ -1,18 +1,16 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-244` (dept) · 2026-07-31T20:53:26.020483+00:00
-> Participants: Pick, Boulder · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-244` (dept) · 2026-08-14T19:32:46.938295+00:00
+> Participants: Pick · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Run a targeted sweep across GitHub, Hacker News, Product Hunt, Reddit, and Telegram for AI-related content from the last 7 days, outputting a curated list of links, titles, and summaries.
 
 **Plan:**
-1. **GitHub:** Search for AI-related repos created in the last 7 days, extract links, names, and one-sentence summaries.
-2. **Hacker News:** Scrape top AI-related posts from the last 7 days, including titles, links, and summaries.
-3. **Product Hunt:** Gather AI-related products launched in the last 7 days, with titles, links, and summaries.
-4. **Reddit:** Collect AI-related posts from r/MachineLearning, r/artificial, and r/learnmachinelearning from the last 7 days, with titles, links, and summaries.
-5. **Telegram:** Scan AI-related channels (e.g., AI News, Future of AI) for recent posts, extracting titles, links, and summaries.
-6. **Compile:** Merge all sources into a single curated list, ensuring diversity and avoiding duplicates.
+1. Query Product Hunt’s API for posts tagged "AI" from the last 7 days.
+2. Parse the JSON response to extract titles, descriptions, upvotes, and comment counts.
+3. Cross-reference with other sources (GitHub, HN, Reddit, Telegram) to validate and enrich data.
+4. Store the raw JSON and parsed metadata in a structured format (e.g., SQLite/CSV).
+5. Generate a summary report highlighting top AI launches by engagement (upvotes/comments).
+6. Share findings with the team via a shared document (Notion/Google Docs).
 
-**What changed:**
-Expanded from GitHub-only sweep to a multi-source approach across GitHub, HN, Product Hunt, Reddit, and Telegram.
+**What changed:** Focused on Product Hunt API as a primary data source while ensuring cross-platform validation.

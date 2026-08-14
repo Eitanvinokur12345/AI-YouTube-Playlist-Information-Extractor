@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-14T09:40:33.015987+00:00",
+ "generated_at": "2026-08-14T11:24:29.751623+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,42 +8,70 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 172,
-   "rooms_7d": 82,
+   "turns_7d": 174,
+   "rooms_7d": 83,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Scriv: The \"data-only\" rule ignores that some decisions are made under true uncertainty—no data exists yet. The real ris"
+   "last_position": "Scriv: Mandating data citations in the Decision Log ignores that some calls are made under true uncertainty—no data exis"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 121,
-   "rooms_7d": 81,
+   "turns_7d": 123,
+   "rooms_7d": 82,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will run the kimtaeyoon83/mcp-server-youtube-transcript tool on the first pending video. This will produce a full, rea"
+   "last_position": "Adopt a \"Data-Gap Log\" where every decision entry must state the *specific uncertainty* the data would have resolved—not"
   },
   {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 81,
-   "rooms_7d": 81,
+   "turns_7d": 82,
+   "rooms_7d": 82,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: kimtaeyoon83/mcp-server-youtube-transcript re-run on e2Z5eBVDrKM to fetch the full transcript/captions file, the",
+   "last_position": "DECISION: Run kimtaeyoon83/mcp-server-youtube-transcript on all Alima videos first, then validate each transcript agains",
    "proposed": 2
+  },
+  {
+   "id": "visualization-w1",
+   "name": "Facet",
+   "dept": "visualization",
+   "role": "doer",
+   "turns_7d": 78,
+   "rooms_7d": 39,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Choose **user-selectable \"adaptive contrast\" mode** as the default for Excava’s interface. It balances eye comfort in al"
+  },
+  {
+   "id": "visualization-checker",
+   "name": "Pane",
+   "dept": "visualization",
+   "role": "checker",
+   "turns_7d": 78,
+   "rooms_7d": 39,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Pane: Adaptive contrast still fails in mixed-lighting rooms—like a window behind the screen—where the sensor toggles cha"
   },
   {
    "id": "analysis-checker",
@@ -58,34 +86,6 @@
    ],
    "positions_held": 30,
    "last_position": "Sift: Mandating data citations in the log turns it into a forensic nightmare—teams will cherry-pick data to justify pre-"
-  },
-  {
-   "id": "visualization-w1",
-   "name": "Facet",
-   "dept": "visualization",
-   "role": "doer",
-   "turns_7d": 77,
-   "rooms_7d": 39,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Choose **dark mode with high-contrast accents as the default** for Excava’s interface. It reduces eye strain in low ligh"
-  },
-  {
-   "id": "visualization-checker",
-   "name": "Pane",
-   "dept": "visualization",
-   "role": "checker",
-   "turns_7d": 77,
-   "rooms_7d": 39,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Pane: Dark mode with high-contrast accents still risks hiding subtle errors—like faint data shifts or misaligned labels—"
   },
   {
    "id": "analysis-w1",
@@ -147,28 +147,28 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 49,
+   "turns_7d": 50,
    "rooms_7d": 25,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the 2px solid #005fcc focus ring with a 2px inner #fff at 90% opacity. This balances visibility and subtlety—stron"
+   "last_position": "Adopt the 3px solid #004494 focus ring with a 1px inner #fff at 80% opacity. This guarantees 3:1 contrast on light backg"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 49,
+   "turns_7d": 50,
    "rooms_7d": 25,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 2px ring risks fading into light backgrounds where #005fcc’s contrast drops below 4.5:1. A 3px ring at 3:1 contrast "
+   "last_position": "The 3px #004494 ring risks visual bulk on high-contrast light backgrounds where #fff inner glow at 80% opacity may still"
   },
   {
    "id": "improve-w1",
@@ -197,7 +197,35 @@
    "positions_held": 30,
    "last_position": "DECISION: Default to high-contrast light mode with a one-click toggle to dark mode, ensuring errors stay visible while r",
    "proposed": 12,
-   "shipped": 11
+   "shipped": 12
+  },
+  {
+   "id": "visual-w1",
+   "name": "Easel",
+   "dept": "visual",
+   "role": "doer",
+   "turns_7d": 37,
+   "rooms_7d": 37,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
+  },
+  {
+   "id": "visual-checker",
+   "name": "Squint",
+   "dept": "visual",
+   "role": "checker",
+   "turns_7d": 37,
+   "rooms_7d": 37,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is mission work our tool can do. Fix: Capture the screenshot."
   },
   {
    "id": "visual-lead",
@@ -212,34 +240,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Chroma captures a full-page screenshot of the official Playwright MCP website at 100% zoom, saving it as \"playwr"
-  },
-  {
-   "id": "visual-w1",
-   "name": "Easel",
-   "dept": "visual",
-   "role": "doer",
-   "turns_7d": 36,
-   "rooms_7d": 36,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
-  },
-  {
-   "id": "visual-checker",
-   "name": "Squint",
-   "dept": "visual",
-   "role": "checker",
-   "turns_7d": 36,
-   "rooms_7d": 36,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is mission work our tool can do. Fix: Capture the screenshot at 100% zoom to preserve the official l"
   },
   {
    "id": "power-lead",
@@ -258,6 +258,19 @@
    "shipped": 22
   },
   {
+   "id": "memory-w1",
+   "name": "Graft",
+   "dept": "memory",
+   "role": "doer",
+   "turns_7d": 27,
+   "rooms_7d": 27,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
+  },
+  {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
@@ -270,19 +283,6 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a raw list o"
-  },
-  {
-   "id": "memory-w1",
-   "name": "Graft",
-   "dept": "memory",
-   "role": "doer",
-   "turns_7d": 26,
-   "rooms_7d": 26,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
   },
   {
    "id": "analysis-lead",
@@ -475,6 +475,20 @@
    "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. The package will include a labeled artifact named \"Create"
   },
   {
+   "id": "news-lead",
+   "name": "Wire",
+   "dept": "news",
+   "role": "lead",
+   "turns_7d": 11,
+   "rooms_7d": 11,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three verified items: 1) OpenAI’s new \"ChatGPT Dr"
+  },
+  {
    "id": "news-w1",
    "name": "Scoop",
    "dept": "news",
@@ -499,20 +513,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: The action is valid MISSION work. Fix: Ensure the extracted post includes a direct link to the official OpenAI "
-  },
-  {
-   "id": "news-lead",
-   "name": "Wire",
-   "dept": "news",
-   "role": "lead",
-   "turns_7d": 10,
-   "rooms_7d": 10,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key items: OpenAI’s new memory architecture"
   },
   {
    "id": "mining-lead",

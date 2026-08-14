@@ -1,273 +1,6 @@
 {
   "events": [
     {
-      "task": "os-lanes",
-      "at": "2026-08-14T06:01:54.440524+00:00",
-      "kind": "lane_ran",
-      "lane": "Deep analysis (night-gated)",
-      "status": "live",
-      "what": "Claude re-analysis + safety pass"
-    },
-    {
-      "task": "33-self-improvement-task-94388",
-      "at": "2026-08-14T07:59:48.517761+00:00",
-      "kind": "enqueued",
-      "title": "33 self-improvement tasks queued",
-      "source": "auto",
-      "priority": 1,
-      "department": "(unrouted)"
-    },
-    {
-      "task": "verify-the-next-200-of-7-94388",
-      "at": "2026-08-14T07:59:48.876274+00:00",
-      "kind": "enqueued",
-      "title": "Verify the next 200 of 7026 unverified elements (2-source + live test)",
-      "source": "gap",
-      "priority": 1,
-      "department": "analysis"
-    },
-    {
-      "task": "watch-process-the-next-b-94388",
-      "at": "2026-08-14T07:59:48.903112+00:00",
-      "kind": "enqueued",
-      "title": "Watch: process the next batch of 1792 pending videos",
-      "source": "gap",
-      "priority": 1,
-      "department": "watch"
-    },
-    {
-      "task": "resolve-real-links-websi-94388",
-      "at": "2026-08-14T07:59:48.929827+00:00",
-      "kind": "enqueued",
-      "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
-      "source": "gap",
-      "priority": 1,
-      "department": "links"
-    },
-    {
-      "task": "security-safety-rate-the-94388",
-      "at": "2026-08-14T07:59:48.956460+00:00",
-      "kind": "enqueued",
-      "title": "Security: safety-rate the next batch of 1545 connectors/skills",
-      "source": "gap",
-      "priority": 1,
-      "department": "security"
-    },
-    {
-      "task": "raise-g5-leverage-51-100-94389",
-      "at": "2026-08-14T07:59:49.025930+00:00",
-      "kind": "enqueued",
-      "title": "Raise G5 Leverage (51/100): leverage needs real, usable links first (= G3); then the OS creation agent",
-      "source": "gap",
-      "priority": 1,
-      "department": "creators"
-    },
-    {
-      "task": "empty-body-items-render--84700",
-      "at": "2026-08-14T07:59:49.046367+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-7653",
-      "at": "2026-08-14T07:59:49.047364+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "33-self-improvement-task-94388",
-      "at": "2026-08-14T07:59:49.074152+00:00",
-      "kind": "routed",
-      "chose": "improve",
-      "over": [
-        "power"
-      ],
-      "why": "best specialization match (2 hits)"
-    },
-    {
-      "task": "weakest-lane-deep-analys-87173",
-      "at": "2026-08-14T07:59:49.107917+00:00",
-      "kind": "claimed",
-      "by": "analysis-w1",
-      "department": "analysis"
-    },
-    {
-      "task": "weakest-lane-deep-analys-87173",
-      "at": "2026-08-14T07:59:49.136962+00:00",
-      "kind": "completed",
-      "by": "analysis-w1",
-      "result": "1792 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-    },
-    {
-      "task": "push-link-coverage-towar-87173",
-      "at": "2026-08-14T07:59:49.163107+00:00",
-      "kind": "claimed",
-      "by": "memory-w1",
-      "department": "memory"
-    },
-    {
-      "task": "push-link-coverage-towar-87173",
-      "at": "2026-08-14T07:59:49.368978+00:00",
-      "kind": "completed",
-      "by": "memory-w1",
-      "result": "Semantic index: 1645 vectors (model gemini-embedding-001); hub 8450 items → 6805 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-    },
-    {
-      "task": "watch-process-the-next-b-94388",
-      "at": "2026-08-14T07:59:49.395896+00:00",
-      "kind": "claimed",
-      "by": "watch-w1",
-      "department": "watch"
-    },
-    {
-      "task": "watch-process-the-next-b-94388",
-      "at": "2026-08-14T07:59:49.423574+00:00",
-      "kind": "completed",
-      "by": "watch-w1",
-      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
-    },
-    {
-      "task": "security-safety-rate-the-94388",
-      "at": "2026-08-14T07:59:49.450845+00:00",
-      "kind": "claimed",
-      "by": "security-w1",
-      "department": "security"
-    },
-    {
-      "task": "security-safety-rate-the-94388",
-      "at": "2026-08-14T07:59:50.355680+00:00",
-      "kind": "completed",
-      "by": "security-w1",
-      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
-    },
-    {
-      "task": "define-what-makes-an-ele-87174",
-      "at": "2026-08-14T07:59:50.382416+00:00",
-      "kind": "claimed",
-      "by": "improve-w1",
-      "department": "improve"
-    },
-    {
-      "task": "define-what-makes-an-ele-87174",
-      "at": "2026-08-14T07:59:51.390656+00:00",
-      "kind": "completed",
-      "by": "improve-w1",
-      "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
-    },
-    {
-      "task": "raise-g5-leverage-51-100-94389",
-      "at": "2026-08-14T07:59:51.416936+00:00",
-      "kind": "claimed",
-      "by": "creators-w1",
-      "department": "creators"
-    },
-    {
-      "task": "raise-g5-leverage-51-100-94389",
-      "at": "2026-08-14T07:59:51.443585+00:00",
-      "kind": "completed",
-      "by": "creators-w1",
-      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
-    },
-    {
-      "task": "raise-g3-truth-access-51-87174",
-      "at": "2026-08-14T07:59:51.470653+00:00",
-      "kind": "claimed",
-      "by": "links-w1",
-      "department": "links"
-    },
-    {
-      "task": "raise-g3-truth-access-51-87174",
-      "at": "2026-08-14T07:59:51.498092+00:00",
-      "kind": "handoff",
-      "from": "links-w1",
-      "to": "memory",
-      "doc": "data/excava/handoffs/raise-g3-truth-access-51-87174--01--links-w1--to--memory.md"
-    },
-    {
-      "task": "raise-g8-personal-fit-68-14242",
-      "at": "2026-08-14T07:59:51.524516+00:00",
-      "kind": "claimed",
-      "by": "visual-w1",
-      "department": "visual"
-    },
-    {
-      "task": "raise-g8-personal-fit-68-14242",
-      "at": "2026-08-14T07:59:58.352654+00:00",
-      "kind": "completed",
-      "by": "visual-w1",
-      "result": "Ran the collect designs. collect_designs: 1385 designs (kept 1385 / dropped 0 repo-only + 2 dead/parked + 82 non-design; +0 AI-product, +27 seeds, +82 shown-in-video; url-checked 2). designs-only."
-    },
-    {
-      "task": "transcripts-drain-the-ne-87174",
-      "at": "2026-08-14T07:59:58.380171+00:00",
-      "kind": "claimed",
-      "by": "transcripts-w1",
-      "department": "transcripts"
-    },
-    {
-      "task": "transcripts-drain-the-ne-87174",
-      "at": "2026-08-14T07:59:58.484921+00:00",
-      "kind": "handoff",
-      "from": "transcripts-w1",
-      "to": "analysis",
-      "doc": "data/excava/handoffs/transcripts-drain-the-ne-87174--01--transcripts-w1--to--analysis.md"
-    },
-    {
-      "task": "war-deliver-push-link-coverage-t-624",
-      "at": "2026-08-14T08:00:01.761308+00:00",
-      "kind": "workers_dispatched",
-      "by": "analysis-w1",
-      "n": 4,
-      "ids": [
-        "worker-8750",
-        "worker-8682",
-        "worker-2598",
-        "worker-9302"
-      ]
-    },
-    {
-      "task": "war-deliver-push-link-coverage-t-624",
-      "at": "2026-08-14T08:00:01.762507+00:00",
-      "kind": "workers_dissolved",
-      "by": "analysis-w1",
-      "n": 4
-    },
-    {
-      "task": "dept-accessibility-make-excava-us-725",
-      "at": "2026-08-14T08:00:10.096499+00:00",
-      "kind": "room_closed",
-      "artifact": {
-        "kind": "decision",
-        "ref": "data/excava/artifacts/dept-accessibility-make-excava-us-725.md",
-        "at": "2026-08-14T08:00:10.096298+00:00",
-        "title": "accessibility: Make EXCAVA usable by EVERYONE — contrast, mobile/touch, reduced-",
-        "by": "Access"
-      },
-      "turns": 5
-    },
-    {
-      "task": "dept-visualization-own-excava-s-o-575",
-      "at": "2026-08-14T08:00:14.798231+00:00",
-      "kind": "room_closed",
-      "artifact": {
-        "kind": "decision",
-        "ref": "data/excava/artifacts/dept-visualization-own-excava-s-o-575.md",
-        "at": "2026-08-14T08:00:14.798056+00:00",
-        "title": "visualization: Own EXCAVA'S OWN interface — visibility, liveliness, clarity, enj",
-        "by": "Lumen"
-      },
-      "turns": 5
-    },
-    {
-      "task": "lumen-s-initiative-defau-94414",
-      "at": "2026-08-14T08:00:14.834088+00:00",
-      "kind": "enqueued",
-      "title": "[Lumen's initiative] Default to high-contrast light mode with a one-click toggle to dark mode, ensuring errors stay visible while reducing gl",
-      "source": "agent:visualization-lead",
-      "priority": 2,
-      "department": "visualization"
-    },
-    {
       "task": "dept-news-freshness-refresh-the-a-267",
       "at": "2026-08-14T08:00:20.069500+00:00",
       "kind": "room_closed",
@@ -333,6 +66,269 @@
       "lane": "AI news refresh",
       "status": "live",
       "what": "Refreshes official-site AI news"
+    },
+    {
+      "task": "define-what-makes-an-ele-311",
+      "at": "2026-08-14T09:38:31.112829+00:00",
+      "kind": "enqueued",
+      "title": "Define what makes an element GOOD — per element type and per package",
+      "source": "gap",
+      "priority": 1,
+      "department": "improve"
+    },
+    {
+      "task": "watch-process-the-next-b-311",
+      "at": "2026-08-14T09:38:31.144931+00:00",
+      "kind": "enqueued",
+      "title": "Watch: process the next batch of 1792 pending videos",
+      "source": "gap",
+      "priority": 1,
+      "department": "watch"
+    },
+    {
+      "task": "security-safety-rate-the-311",
+      "at": "2026-08-14T09:38:31.177228+00:00",
+      "kind": "enqueued",
+      "title": "Security: safety-rate the next batch of 1545 connectors/skills",
+      "source": "gap",
+      "priority": 1,
+      "department": "security"
+    },
+    {
+      "task": "raise-g5-leverage-51-100-311",
+      "at": "2026-08-14T09:38:31.249006+00:00",
+      "kind": "enqueued",
+      "title": "Raise G5 Leverage (51/100): leverage needs real, usable links first (= G3); then the OS creation agent",
+      "source": "gap",
+      "priority": 1,
+      "department": "creators"
+    },
+    {
+      "task": "empty-body-items-render--84700",
+      "at": "2026-08-14T09:38:31.270092+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-7653",
+      "at": "2026-08-14T09:38:31.271060+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "transcripts-drain-the-ne-87174",
+      "at": "2026-08-14T09:38:31.303404+00:00",
+      "kind": "claimed",
+      "by": "analysis-w1",
+      "department": "analysis"
+    },
+    {
+      "task": "transcripts-drain-the-ne-87174",
+      "at": "2026-08-14T09:38:31.332228+00:00",
+      "kind": "completed",
+      "by": "analysis-w1",
+      "result": "1792 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "task": "memory-embed-the-remaini-76957",
+      "at": "2026-08-14T09:38:31.358635+00:00",
+      "kind": "claimed",
+      "by": "memory-w1",
+      "department": "memory"
+    },
+    {
+      "task": "memory-embed-the-remaini-76957",
+      "at": "2026-08-14T09:38:31.564953+00:00",
+      "kind": "completed",
+      "by": "memory-w1",
+      "result": "Semantic index: 1645 vectors (model gemini-embedding-001); hub 8450 items → 6805 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "task": "watch-process-the-next-b-311",
+      "at": "2026-08-14T09:38:31.591183+00:00",
+      "kind": "claimed",
+      "by": "watch-w1",
+      "department": "watch"
+    },
+    {
+      "task": "watch-process-the-next-b-311",
+      "at": "2026-08-14T09:38:31.617270+00:00",
+      "kind": "completed",
+      "by": "watch-w1",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+    },
+    {
+      "task": "security-safety-rate-the-311",
+      "at": "2026-08-14T09:38:31.643192+00:00",
+      "kind": "claimed",
+      "by": "security-w1",
+      "department": "security"
+    },
+    {
+      "task": "security-safety-rate-the-311",
+      "at": "2026-08-14T09:38:32.618080+00:00",
+      "kind": "completed",
+      "by": "security-w1",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "task": "33-self-improvement-task-94388",
+      "at": "2026-08-14T09:38:32.644331+00:00",
+      "kind": "claimed",
+      "by": "improve-w1",
+      "department": "improve"
+    },
+    {
+      "task": "33-self-improvement-task-94388",
+      "at": "2026-08-14T09:38:33.676255+00:00",
+      "kind": "completed",
+      "by": "improve-w1",
+      "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
+    },
+    {
+      "task": "raise-g5-leverage-51-100-311",
+      "at": "2026-08-14T09:38:33.702235+00:00",
+      "kind": "claimed",
+      "by": "creators-w1",
+      "department": "creators"
+    },
+    {
+      "task": "raise-g5-leverage-51-100-311",
+      "at": "2026-08-14T09:38:33.727824+00:00",
+      "kind": "completed",
+      "by": "creators-w1",
+      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
+    },
+    {
+      "task": "resolve-real-links-websi-94388",
+      "at": "2026-08-14T09:38:33.753474+00:00",
+      "kind": "claimed",
+      "by": "links-w1",
+      "department": "links"
+    },
+    {
+      "task": "resolve-real-links-websi-94388",
+      "at": "2026-08-14T09:38:33.779184+00:00",
+      "kind": "handoff",
+      "from": "links-w1",
+      "to": "memory",
+      "doc": "data/excava/handoffs/resolve-real-links-websi-94388--01--links-w1--to--memory.md"
+    },
+    {
+      "task": "visual-room-action-chrom-62878",
+      "at": "2026-08-14T09:38:33.805193+00:00",
+      "kind": "claimed",
+      "by": "visual-w1",
+      "department": "visual"
+    },
+    {
+      "task": "visual-room-action-chrom-62878",
+      "at": "2026-08-14T09:38:43.045334+00:00",
+      "kind": "completed",
+      "by": "visual-w1",
+      "result": "Ran the collect designs. collect_designs: 1385 designs (kept 1385 / dropped 0 repo-only + 2 dead/parked + 82 non-design; +0 AI-product, +27 seeds, +82 shown-in-video; url-checked 2). designs-only."
+    },
+    {
+      "task": "news-room-action-wire-pu-94420",
+      "at": "2026-08-14T09:38:43.072532+00:00",
+      "kind": "claimed",
+      "by": "news-w1",
+      "department": "news"
+    },
+    {
+      "task": "news-room-action-wire-pu-94420",
+      "at": "2026-08-14T09:38:43.470243+00:00",
+      "kind": "completed",
+      "by": "news-w1",
+      "result": "Ran the trend watch. trend_watch: 10 proposals (top score 10); queued 0 into self-improvement."
+    },
+    {
+      "task": "transcripts-room-action--87213",
+      "at": "2026-08-14T09:38:43.496736+00:00",
+      "kind": "claimed",
+      "by": "transcripts-w1",
+      "department": "transcripts"
+    },
+    {
+      "task": "transcripts-room-action--87213",
+      "at": "2026-08-14T09:38:43.595201+00:00",
+      "kind": "handoff",
+      "from": "transcripts-w1",
+      "to": "analysis",
+      "doc": "data/excava/handoffs/transcripts-room-action--87213--01--transcripts-w1--to--analysis.md"
+    },
+    {
+      "task": "dept-transcripts-retrieve-real-fu-668",
+      "at": "2026-08-14T09:38:54.808608+00:00",
+      "kind": "room_closed",
+      "artifact": {
+        "kind": "decision",
+        "ref": "data/excava/artifacts/dept-transcripts-retrieve-real-fu-668.md",
+        "at": "2026-08-14T09:38:54.808424+00:00",
+        "title": "transcripts: Retrieve REAL full transcripts/captions for pending videos (residen",
+        "by": "Echo"
+      },
+      "turns": 3
+    },
+    {
+      "task": "transcripts-room-action--334",
+      "at": "2026-08-14T09:38:54.835527+00:00",
+      "kind": "enqueued",
+      "title": "[transcripts room action] kimtaeyoon83/mcp-server-youtube-transcript re-run on e2Z5eBVDrKM to fetch the full transcript/captions file, then verify",
+      "source": "room-action:transcripts",
+      "priority": 2,
+      "department": "transcripts"
+    },
+    {
+      "task": "dept-visual-mine-great-designs-fr-403",
+      "at": "2026-08-14T09:38:59.087928+00:00",
+      "kind": "room_closed",
+      "artifact": {
+        "kind": "decision",
+        "ref": "data/excava/artifacts/dept-visual-mine-great-designs-fr-403.md",
+        "at": "2026-08-14T09:38:59.087750+00:00",
+        "title": "visual: MINE great designs FROM THE WEB into the hub — screenshots, taste materi",
+        "by": "Chroma"
+      },
+      "turns": 3
+    },
+    {
+      "task": "visual-room-action-chrom-339",
+      "at": "2026-08-14T09:38:59.115260+00:00",
+      "kind": "enqueued",
+      "title": "[visual room action] Chroma captures a full-page screenshot of the official Playwright MCP website at 100% zoom, saving it as \"playwright-mcp",
+      "source": "room-action:visual",
+      "priority": 2,
+      "department": "visual"
+    },
+    {
+      "task": "dept-memory-recall-by-meaning-rel-888",
+      "at": "2026-08-14T09:39:10.057002+00:00",
+      "kind": "room_closed",
+      "artifact": {
+        "kind": "decision",
+        "ref": "data/excava/artifacts/dept-memory-recall-by-meaning-rel-888.md",
+        "at": "2026-08-14T09:39:10.056832+00:00",
+        "title": "memory: Recall by meaning, relate elements, build the brain graph, embed unembed",
+        "by": "Root"
+      },
+      "turns": 1
+    },
+    {
+      "task": "os-lanes",
+      "at": "2026-08-14T09:40:33.068190+00:00",
+      "kind": "lane_ran",
+      "lane": "Free analysis pool",
+      "status": "live",
+      "what": "Turns transcripts into skills/tools/connectors (free engines)"
+    },
+    {
+      "task": "os-lanes",
+      "at": "2026-08-14T09:40:33.068859+00:00",
+      "kind": "lane_ran",
+      "lane": "Deep analysis (night-gated)",
+      "status": "live",
+      "what": "Claude re-analysis + safety pass"
     }
   ]
 }

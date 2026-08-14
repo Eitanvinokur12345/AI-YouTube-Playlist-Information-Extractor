@@ -1,16 +1,15 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-334` (dept) · 2026-07-14T22:53:29.930200+00:00
-> Participants: Reel, Echo · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-334` (dept) · 2026-08-14T20:59:15.174335+00:00
+> Participants: Reel, Scriv, Echo · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Use the kimtaeyoon83/mcp-server-youtube-transcript tool to query the full transcript for video ID "UCX6vwnh56Kz9ZzJn4Z6bQJw".
-2. Verify the transcript exists and is complete before proceeding.
-3. Mark the task as done upon confirmation of a valid transcript.
-4. Store the retrieved transcript in the designated output location.
-5. Log the action in the task tracker for audit purposes.
-6. Notify the user of completion with a brief summary.
+1. Re-run the `kimtaeyoon83/mcp-server-youtube-transcript` tool on video `e2Z5eBVDrKM` to fetch its real full transcript.
+2. Verify the transcript file is complete and correctly formatted.
+3. Mark the video as having a retrieved transcript in the tracking system.
+4. Proceed to the next pending video if the transcript is confirmed.
+5. Log the action and timestamp in the transcript retrieval log.
 
-**What changed:** Transcript retrieval initiated for pending video.
+**What changed:** Video `e2Z5eBVDrKM` transcript retrieval initiated.

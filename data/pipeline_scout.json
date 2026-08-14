@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-14T19:31:17.907642+00:00",
+  "generated_at": "2026-08-14T20:58:25.561695+00:00",
   "status": "proposals — approve to integrate",
-  "total_candidates": 2024,
+  "total_candidates": 2027,
   "processes": [
     {
       "process": "Retrieval: web search/scrape",
@@ -198,7 +198,7 @@
     {
       "process": "Analysis: structured extraction",
       "goal": "G1",
-      "count": 141,
+      "count": 142,
       "recommended": "Bright Data MCP",
       "finds": [
         {
@@ -262,7 +262,7 @@
     {
       "process": "Activator: embeddings/RAG/search",
       "goal": "G2",
-      "count": 108,
+      "count": 107,
       "recommended": "AnythingLLM",
       "finds": [
         {
@@ -294,13 +294,6 @@
           "desc": "Official MCP server for Exa's semantic search API — the most-used search MCP server in 2026, enabling AI agent"
         },
         {
-          "name": "LangChain",
-          "kind": "tool",
-          "quality": 9,
-          "link": "https://langchain.com",
-          "desc": "Foundational open-source LLM application framework that popularized chains, agents, and RAG pipelines — the pa"
-        },
-        {
           "name": "Adobe Firefly 3",
           "kind": "tool",
           "quality": 8,
@@ -315,11 +308,18 @@
           "desc": "Open-source embedding database built for LLM applications — stores, indexes, and queries vector embeddings wit"
         },
         {
-          "name": "LangFlow",
+          "name": "LlamaIndex",
           "kind": "tool",
           "quality": 8,
-          "link": "https://github.com/logspace-ai/langflow",
-          "desc": "Low-code visual drag-and-drop builder for AI agents and RAG pipelines — connects prompts, tools, LLMs, and vec"
+          "link": "https://llamaindex.ai",
+          "desc": "Data-focused AI framework for connecting LLMs to structured and unstructured sources — specializes in RAG pipe"
+        },
+        {
+          "name": "Milvus",
+          "kind": "tool",
+          "quality": 8,
+          "link": "https://github.com/milvus-io/milvus",
+          "desc": "What is Milvus? 🐦 Milvus(https://milvus.io/) is a high-performance vector database built for scale. It powers "
         }
       ]
     },
@@ -454,7 +454,7 @@
     {
       "process": "Agents / orchestration (the OS)",
       "goal": "G6",
-      "count": 842,
+      "count": 847,
       "recommended": "OpenAI Codex",
       "finds": [
         {
@@ -518,29 +518,15 @@
     {
       "process": "Storage: vector / graph DB",
       "goal": "G6",
-      "count": 46,
-      "recommended": "LangChain",
+      "count": 44,
+      "recommended": "Memory MCP Server",
       "finds": [
-        {
-          "name": "LangChain",
-          "kind": "tool",
-          "quality": 9,
-          "link": "https://langchain.com",
-          "desc": "Foundational open-source LLM application framework that popularized chains, agents, and RAG pipelines — the pa"
-        },
         {
           "name": "Memory MCP Server",
           "kind": "tool",
           "quality": 9,
           "link": "",
           "desc": "Official Anthropic MCP server that maintains a persistent knowledge graph of entities and relationships across"
-        },
-        {
-          "name": "LangFlow",
-          "kind": "tool",
-          "quality": 8,
-          "link": "https://github.com/logspace-ai/langflow",
-          "desc": "Low-code visual drag-and-drop builder for AI agents and RAG pipelines — connects prompts, tools, LLMs, and vec"
         },
         {
           "name": "Milvus",
@@ -576,13 +562,27 @@
           "quality": 7,
           "link": "",
           "desc": "Open-source GitHub repo that transforms codebases and document sets into navigable knowledge graphs for faster"
+        },
+        {
+          "name": "Codebase Memory MCP",
+          "kind": "tool",
+          "quality": 7,
+          "link": "",
+          "desc": "MCP server that indexes an entire codebase into a persistent knowledge graph, enabling AI assistants to answer"
+        },
+        {
+          "name": "Neo4j MCP",
+          "kind": "tool",
+          "quality": 7,
+          "link": "https://neo4j.com",
+          "desc": "Official Neo4j graph database MCP server enabling AI agents to run Cypher queries, manage knowledge graph memo"
         }
       ]
     },
     {
       "process": "Observability / eval",
       "goal": "G2",
-      "count": 252,
+      "count": 253,
       "recommended": "Cursor",
       "finds": [
         {
@@ -598,13 +598,6 @@
           "quality": 9,
           "link": "https://www.anthropic.com",
           "desc": "Anthropic's official TypeScript and Python SDK for building multi-agent systems that integrate native MCP serv"
-        },
-        {
-          "name": "LangChain",
-          "kind": "tool",
-          "quality": 9,
-          "link": "https://langchain.com",
-          "desc": "Foundational open-source LLM application framework that popularized chains, agents, and RAG pipelines — the pa"
         },
         {
           "name": "Portkey Gateway",
@@ -640,13 +633,20 @@
           "quality": 8,
           "link": "https://imagen.research.google/",
           "desc": "Google DeepMind's photorealism image generation model setting benchmarks in fine-grain detail, texture, and li"
+        },
+        {
+          "name": "Helicone",
+          "kind": "tool",
+          "quality": 8,
+          "link": "https://helicone.ai",
+          "desc": "One-line LLM observability proxy — rerouting API calls through Helicone adds automatic request logging, cost t"
         }
       ]
     },
     {
       "process": "Token / cost optimization",
       "goal": "G4",
-      "count": 220,
+      "count": 219,
       "recommended": "Claude Opus 4.6",
       "finds": [
         {

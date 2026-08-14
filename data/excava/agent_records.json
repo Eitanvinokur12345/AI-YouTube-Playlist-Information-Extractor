@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-14T11:24:29.751623+00:00",
+ "generated_at": "2026-08-14T13:58:15.294358+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -35,15 +35,29 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 82,
-   "rooms_7d": 82,
+   "turns_7d": 83,
+   "rooms_7d": 83,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Run kimtaeyoon83/mcp-server-youtube-transcript on all Alima videos first, then validate each transcript agains",
+   "last_position": "ACTION: kimtaeyoon83/mcp-server-youtube-transcript re-run on e2Z5eBVDrKM to fetch full transcript; Scriv verifies artifa",
    "proposed": 2
+  },
+  {
+   "id": "analysis-checker",
+   "name": "Sift",
+   "dept": "analysis",
+   "role": "checker",
+   "turns_7d": 78,
+   "rooms_7d": 36,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Data citations turn the log into a forensic audit, not a decision tool—teams will cherry-pick data to justify calls, not"
   },
   {
    "id": "visualization-w1",
@@ -74,10 +88,10 @@
    "last_position": "Pane: Adaptive contrast still fails in mixed-lighting rooms—like a window behind the screen—where the sensor toggles cha"
   },
   {
-   "id": "analysis-checker",
-   "name": "Sift",
+   "id": "analysis-w1",
+   "name": "Chisel",
    "dept": "analysis",
-   "role": "checker",
+   "role": "doer",
    "turns_7d": 77,
    "rooms_7d": 36,
    "engines_used": [
@@ -85,21 +99,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Sift: Mandating data citations in the log turns it into a forensic nightmare—teams will cherry-pick data to justify pre-"
-  },
-  {
-   "id": "analysis-w1",
-   "name": "Chisel",
-   "dept": "analysis",
-   "role": "doer",
-   "turns_7d": 76,
-   "rooms_7d": 36,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Adopt the \"Decision Audit\" artifact where every team logs the call *and* the *data gap* that forced it—no citations, jus"
+   "last_position": "Adopt the \"Decision Audit\" artifact where every team logs the call *and* the data gap that forced it—no citations, just "
   },
   {
    "id": "watch-w1",
@@ -188,16 +188,30 @@
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 38,
-   "rooms_7d": 38,
+   "turns_7d": 39,
+   "rooms_7d": 39,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Default to high-contrast light mode with a one-click toggle to dark mode, ensuring errors stay visible while r",
-   "proposed": 12,
+   "last_position": "DECISION: Default to a **manual dark/light toggle with a persistent \"error-highlight\" layer**—users pick their theme, an",
+   "proposed": 13,
    "shipped": 12
+  },
+  {
+   "id": "visual-lead",
+   "name": "Chroma",
+   "dept": "visual",
+   "role": "lead",
+   "turns_7d": 37,
+   "rooms_7d": 37,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Playwright MCP website and saves it as \"playwright-mcp-of"
   },
   {
    "id": "visual-w1",
@@ -228,20 +242,6 @@
    "last_position": "Verdict: The action is mission work our tool can do. Fix: Capture the screenshot."
   },
   {
-   "id": "visual-lead",
-   "name": "Chroma",
-   "dept": "visual",
-   "role": "lead",
-   "turns_7d": 36,
-   "rooms_7d": 36,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Playwright MCP website at 100% zoom, saving it as \"playwr"
-  },
-  {
    "id": "power-lead",
    "name": "Dynamo",
    "dept": "power",
@@ -254,16 +254,16 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Test InstantX-ComfyUI’s depth-aware upscaler on EXCAVA’s texture fidelity first—blind A/B with PSNR/SSIM; if i",
-   "proposed": 22,
-   "shipped": 22
+   "proposed": 21,
+   "shipped": 21
   },
   {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 27,
-   "rooms_7d": 27,
+   "turns_7d": 28,
+   "rooms_7d": 28,
    "engines_used": [
     "mistral"
    ],
@@ -285,6 +285,21 @@
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a raw list o"
   },
   {
+   "id": "accessibility-lead",
+   "name": "Access",
+   "dept": "accessibility",
+   "role": "lead",
+   "turns_7d": 25,
+   "rooms_7d": 25,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Adopt the 2px solid #005fcc focus ring with 1px inner #fff at 95% opacity—guarantees ≥4.5:1 contrast on light ",
+   "proposed": 18,
+   "shipped": 17
+  },
+  {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
@@ -297,21 +312,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract all direct mentions of \"BloodHound-MC"
-  },
-  {
-   "id": "accessibility-lead",
-   "name": "Access",
-   "dept": "accessibility",
-   "role": "lead",
-   "turns_7d": 24,
-   "rooms_7d": 24,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Adopt the 2.5px solid #005fcc focus ring with 1.5px inner #fff at 85% opacity. Deliver a tested, documented fo",
-   "proposed": 17,
-   "shipped": 17
   },
   {
    "id": "improve-lead",
@@ -475,6 +475,32 @@
    "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. The package will include a labeled artifact named \"Create"
   },
   {
+   "id": "news-w1",
+   "name": "Scoop",
+   "dept": "news",
+   "role": "doer",
+   "turns_7d": 12,
+   "rooms_7d": 12,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. The result will be a concise summary of th"
+  },
+  {
+   "id": "news-checker",
+   "name": "Factcheck",
+   "dept": "news",
+   "role": "checker",
+   "turns_7d": 12,
+   "rooms_7d": 12,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is valid MISSION work."
+  },
+  {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
@@ -487,32 +513,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three verified items: 1) OpenAI’s new \"ChatGPT Dr"
-  },
-  {
-   "id": "news-w1",
-   "name": "Scoop",
-   "dept": "news",
-   "role": "doer",
-   "turns_7d": 11,
-   "rooms_7d": 11,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh, verified AI new"
-  },
-  {
-   "id": "news-checker",
-   "name": "Factcheck",
-   "dept": "news",
-   "role": "checker",
-   "turns_7d": 11,
-   "rooms_7d": 11,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is valid MISSION work. Fix: Ensure the extracted post includes a direct link to the official OpenAI "
   },
   {
    "id": "mining-lead",

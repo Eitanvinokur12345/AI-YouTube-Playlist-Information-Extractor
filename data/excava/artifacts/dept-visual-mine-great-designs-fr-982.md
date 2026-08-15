@@ -1,16 +1,17 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-982` (dept) · 2026-07-30T20:52:04.826335+00:00
-> Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-visual-mine-great-designs-fr-982` (dept) · 2026-08-15T01:59:44.431767+00:00
+> Participants: Easel, Squint, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+Chroma captures a full-page screenshot of the official Playwright MCP website to extract its design patterns for the hub’s taste material.
 
 **Plan:**
-1. Use Playwright MCP server to capture high-quality screenshots of three well-designed landing pages from the web.
-2. Mine top-tier Awwwards and Dribbble screenshots into the hub as taste material.
-3. Prioritize screenshots with bold typography and asymmetrical layouts for visual reference.
-4. Organize captured screenshots into a dedicated folder in the hub for easy access.
-5. Tag screenshots with relevant keywords (e.g., "typography," "asymmetry") for quick retrieval.
-6. Share the curated collection with the team for feedback and refinement.
+1. Capture a full-page screenshot of the official Playwright MCP website.
+2. Extract key design patterns (layout, typography, color, spacing) from the screenshot.
+3. Curate visual references (screenshots, UI elements) for the hub’s taste material.
+4. Document observed design hierarchies (e.g., navigation, card layouts, CTAs).
+5. Compare patterns with existing hub designs for integration potential.
+6. Share extracted assets with the team for feedback.
 
-**What changed:** Combined Easel’s Playwright approach with Chroma’s Awwwards/Dribbble focus to create a unified visual reference strategy.
+**What changed:** Targeted Playwright MCP instead of MCP website for higher relevance.

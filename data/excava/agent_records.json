@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-15T01:41:41.601259+00:00",
+ "generated_at": "2026-08-15T02:00:50.623534+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,13 +8,13 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 165,
+   "turns_7d": 166,
    "rooms_7d": 80,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: The action is MISSION work—it directly retrieves real full transcripts using the approved tool."
+   "last_position": "The random sampling still lets teams game the system by seeding the raw data dump with noise to dilute the real contradi"
   },
   {
    "id": "transcripts-w1",
@@ -35,14 +35,14 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 78,
-   "rooms_7d": 78,
+   "turns_7d": 79,
+   "rooms_7d": 79,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Echo re-runs kimtaeyoon83/mcp-server-youtube-transcript on the first pending video and delivers the full transcr",
+   "last_position": "ACTION: Echo re-runs kimtaeyoon83/mcp-server-youtube-transcript on the first pending video to produce a real full transc",
    "proposed": 2
   },
   {
@@ -78,14 +78,14 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 63,
+   "turns_7d": 64,
    "rooms_7d": 30,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run the 30-day pilot with Creative Production using the \"Outcome-Centric Decision Log\" enforced by eA9Zf, but add a mand"
+   "last_position": "Run the pilot with eA9Zf auto-generating a *randomly sampled* top 3 contradiction report from raw data—no human filterin"
   },
   {
    "id": "visualization-w1",
@@ -120,28 +120,28 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 60,
-   "rooms_7d": 30,
+   "turns_7d": 61,
+   "rooms_7d": 31,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the 3px solid #005fcc focus ring with a 1px #fff outer stroke at 70% opacity. This meets WCAG 2.2 AA contrast on d"
+   "last_position": "Adopt the 2px #005fcc focus ring with a 1px #fff inset at 70% opacity. This keeps the ring visible against any backgroun"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 60,
-   "rooms_7d": 30,
+   "turns_7d": 61,
+   "rooms_7d": 31,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 3px ring risks looking like a border on some interactive elements, breaking the visual distinction between focus sta"
+   "last_position": "The 2px ring risks failing WCAG 2.2 AA on dark backgrounds where the 70% white inset blends the ring into the dark, maki"
   },
   {
    "id": "power-w1",
@@ -183,6 +183,20 @@
    "last_position": "Run PR-Agent live on open PRs but restrict its comments to non-blocking suggestions only. This tests its real-world util"
   },
   {
+   "id": "visual-lead",
+   "name": "Chroma",
+   "dept": "visual",
+   "role": "lead",
+   "turns_7d": 35,
+   "rooms_7d": 35,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Playwright MCP website to mine its design patterns for th"
+  },
+  {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
@@ -195,20 +209,6 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded memory elements. This will produce"
-  },
-  {
-   "id": "visual-lead",
-   "name": "Chroma",
-   "dept": "visual",
-   "role": "lead",
-   "turns_7d": 34,
-   "rooms_7d": 34,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Playwright MCP website to preserve its design and layout "
   },
   {
    "id": "visual-w1",
@@ -266,7 +266,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Adopt the 2px solid #005fcc focus ring with 2px #fff inset at 80% opacity. Result: WCAG 2.2 AA-compliant focus",
    "proposed": 23,
-   "shipped": 22
+   "shipped": 23
   },
   {
    "id": "power-lead",

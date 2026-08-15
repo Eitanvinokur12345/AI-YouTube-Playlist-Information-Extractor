@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-15T22:21:56.203034+00:00",
+ "generated_at": "2026-08-15T22:27:38.010154+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,27 +8,27 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 187,
-   "rooms_7d": 87,
+   "turns_7d": 188,
+   "rooms_7d": 88,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Scriv: *Preemptive contradiction resolution rate* rewards teams for *gaming the 7-day window*—they’ll delay fixes until "
+   "last_position": "Risk: Mandating auto-generated contradictions risks gaming the system—teams will preemptively frame weak arguments to sa"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 139,
-   "rooms_7d": 94,
+   "turns_7d": 140,
+   "rooms_7d": 95,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Mandate that eA9Zf auto-generates the top 3 contradictions ranked by *preemptive contradiction resolution "
+   "last_position": "**Decision:** Mandate that eA9Zf auto-generates the top 3 contradictions from every transcript before the video is final"
   },
   {
    "id": "transcripts-lead",
@@ -50,6 +50,48 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
+   "turns_7d": 76,
+   "rooms_7d": 30,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I will run BloodHound-MCP on the full earnings call transcript to extract all contradictions, then rank the top 3 by sev"
+  },
+  {
+   "id": "accessibility-w1",
+   "name": "Ramp",
+   "dept": "accessibility",
+   "role": "doer",
+   "turns_7d": 76,
+   "rooms_7d": 38,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Use a 3px solid #ffffff focus ring with a 1px solid #005fcc outer stroke. This guarantees WCAG 2.2 AA contrast on both l"
+  },
+  {
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
+   "role": "checker",
+   "turns_7d": 76,
+   "rooms_7d": 38,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The 3px white ring with 1px blue stroke still risks failing on *very* light backgrounds where the blue outer stroke blen"
+  },
+  {
+   "id": "analysis-checker",
+   "name": "Sift",
+   "dept": "analysis",
+   "role": "checker",
    "turns_7d": 75,
    "rooms_7d": 29,
    "engines_used": [
@@ -57,49 +99,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Run BloodHound-MCP on the full earnings call transcript to extract and rank the top 3 contradictions by severity"
-  },
-  {
-   "id": "accessibility-w1",
-   "name": "Ramp",
-   "dept": "accessibility",
-   "role": "doer",
-   "turns_7d": 75,
-   "rooms_7d": 38,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Use a 3px solid #005fcc focus ring with a 1px white stroke at 50% opacity for keyboard navigation. This ensures high con"
-  },
-  {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 75,
-   "rooms_7d": 38,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "The 3px ring with white stroke fails on dark mode: WCAG 2.2 AA requires 3:1 contrast for focus indicators, and the white"
-  },
-  {
-   "id": "analysis-checker",
-   "name": "Sift",
-   "dept": "analysis",
-   "role": "checker",
-   "turns_7d": 74,
-   "rooms_7d": 28,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "**Risk:** Chisel’s median-cost cap still lets teams game the system by *cherry-picking* contradiction types with artific"
+   "last_position": "Verdict: Chisel’s plan is MISSION work; BloodHound-MCP can map contradictions via transcript analysis. Fix: Replace \"ran"
   },
   {
    "id": "watch-w1",
@@ -299,6 +299,20 @@
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a raw list o"
   },
   {
+   "id": "improve-lead",
+   "name": "Ratchet",
+   "dept": "improve",
+   "role": "lead",
+   "turns_7d": 22,
+   "rooms_7d": 22,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Run PR-Agent in shadow mode on *open* PRs only, with a visible \"shadow mode\" badge and a weekly digest of sugg",
+   "proposed": 2
+  },
+  {
    "id": "improve-checker",
    "name": "Gauge",
    "dept": "improve",
@@ -339,26 +353,12 @@
    "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output is a real-time status report confirming op"
   },
   {
-   "id": "improve-lead",
-   "name": "Ratchet",
-   "dept": "improve",
-   "role": "lead",
-   "turns_7d": 21,
-   "rooms_7d": 21,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Run PR-Agent in shadow mode on *all* PRs—open and merged—for two weeks, logging every suggestion privately, th",
-   "proposed": 2
-  },
-  {
    "id": "security-w1",
    "name": "Warden",
    "dept": "security",
    "role": "doer",
-   "turns_7d": 21,
-   "rooms_7d": 21,
+   "turns_7d": 22,
+   "rooms_7d": 22,
    "engines_used": [
     "groq",
     "mistral"
@@ -371,13 +371,13 @@
    "name": "Audit",
    "dept": "security",
    "role": "checker",
-   "turns_7d": 21,
-   "rooms_7d": 21,
+   "turns_7d": 22,
+   "rooms_7d": 22,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security post"
+   "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security read"
   },
   {
    "id": "links-lead-x",

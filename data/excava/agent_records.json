@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-15T16:50:20.432355+00:00",
+ "generated_at": "2026-08-15T16:54:46.729192+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -21,14 +21,14 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 136,
-   "rooms_7d": 92,
+   "turns_7d": 137,
+   "rooms_7d": 93,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Mandate that eA9Zf auto-generates the top 3 contradictions ranked by *preemptive impact*—count how often a"
+   "last_position": "Action: Fetch the full transcript for the pending video using kimtaeyoon83/mcp-server-youtube-transcript. This will prod"
   },
   {
    "id": "transcripts-lead",
@@ -44,6 +44,34 @@
    "positions_held": 30,
    "last_position": "ACTION: Echo re-runs kimtaeyoon83/mcp-server-youtube-transcript on the pending video and delivers the complete, unaltere",
    "proposed": 2
+  },
+  {
+   "id": "analysis-w1",
+   "name": "Chisel",
+   "dept": "analysis",
+   "role": "doer",
+   "turns_7d": 72,
+   "rooms_7d": 27,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "**Decision:** Mandate that eA9Zf auto-generates the top 3 contradictions ranked by *preemptive contradiction density*—co"
+  },
+  {
+   "id": "analysis-checker",
+   "name": "Sift",
+   "dept": "analysis",
+   "role": "checker",
+   "turns_7d": 72,
+   "rooms_7d": 27,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "**Risk:** *Preemptive contradiction density* rewards teams for *agreeing on noise*—if three teams all cite the same triv"
   },
   {
    "id": "watch-w1",
@@ -86,34 +114,6 @@
    ],
    "positions_held": 30,
    "last_position": "A 3px ring with a 1px white stroke at 50% opacity risks blending into dark backgrounds when the white stroke is too fain"
-  },
-  {
-   "id": "analysis-w1",
-   "name": "Chisel",
-   "dept": "analysis",
-   "role": "doer",
-   "turns_7d": 71,
-   "rooms_7d": 27,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "**Decision:** Mandate that eA9Zf auto-generates the top 3 contradictions ranked by *preventable disruption*—count how of"
-  },
-  {
-   "id": "analysis-checker",
-   "name": "Sift",
-   "dept": "analysis",
-   "role": "checker",
-   "turns_7d": 71,
-   "rooms_7d": 27,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "**Risk:** Weighting by *decision authority* turns peer reviews into a popularity contest—teams will chase adoption votes"
   },
   {
    "id": "visualization-w1",
@@ -174,13 +174,13 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 40,
-   "rooms_7d": 20,
+   "turns_7d": 41,
+   "rooms_7d": 21,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent live on open PRs but restrict its comments to non-blocking suggestions only. This tests its real-world util"
+   "last_position": "Run PR-Agent live on open PRs but restrict its comments to non-blocking suggestions. This keeps the tool active without "
   },
   {
    "id": "visual-lead",
@@ -227,15 +227,15 @@
    "name": "Access",
    "dept": "accessibility",
    "role": "lead",
-   "turns_7d": 35,
-   "rooms_7d": 35,
+   "turns_7d": 36,
+   "rooms_7d": 36,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Adopt the 2px solid #005fcc focus ring with a 2px #fff outer stroke at 70% opacity for all interactive element",
-   "proposed": 28,
+   "last_position": "DECISION: Adopt the 2px solid #005fcc focus ring with a 2px #fff outer stroke at 80% opacity. The result must deliver a ",
+   "proposed": 29,
    "shipped": 28
   },
   {
@@ -299,6 +299,19 @@
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a raw list o"
   },
   {
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
+   "role": "checker",
+   "turns_7d": 21,
+   "rooms_7d": 21,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The risk isn’t just \"missing issues\"—it’s training teams to ignore *all* automated feedback because PR-Agent’s non-block"
+  },
+  {
    "id": "links-lead-x",
    "name": "LinLea",
    "dept": "links",
@@ -327,19 +340,6 @@
    "proposed": 2
   },
   {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 20,
-   "rooms_7d": 20,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Shadow mode on merged PRs trains reviewers to ignore real issues because the model’s feedback arrives after the work is "
-  },
-  {
    "id": "improve-improver",
    "name": "Overhaul",
    "dept": "improve",
@@ -351,6 +351,20 @@
    ],
    "positions_held": 30,
    "last_position": "Run PR-Agent in shadow mode on *both* open and merged PRs from day one—this catches real-time issues while still buildin"
+  },
+  {
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
+   "turns_7d": 20,
+   "rooms_7d": 19,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output is a real-time status report confirming op"
   },
   {
    "id": "links-w1",
@@ -406,20 +420,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts contradictions from video content."
-  },
-  {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 19,
-   "rooms_7d": 18,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and healthy."
   },
   {
    "id": "security-w1",

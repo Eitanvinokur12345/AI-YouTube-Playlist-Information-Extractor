@@ -1,15 +1,18 @@
 # accessibility: Make EXCAVA usable by EVERYONE — contrast, mobile/touch, reduced-motion, keyboard nav, scr
 
-> Decision artifact · room `dept-accessibility-make-excava-us-673` (dept) · 2026-07-29T17:03:26.628171+00:00
-> Participants: Ramp, Reader, Access · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-accessibility-make-excava-us-673` (dept) · 2026-08-15T16:54:08.343116+00:00
+> Participants: Ramp, Reader, Access · synthesized by mistral/mistral-small-latest
 
-**Decision:** Ship a high-contrast focus indicator with a toggleable option for visibility, ensuring it accommodates both keyboard navigation and sensory sensitivity; the accessibility team owns this outcome.
+**Decision:**
+Adopt the 2px solid #005fcc focus ring with a 2px #fff outer stroke at 80% opacity.
 
 **Plan:**
-1. Design and implement a high-contrast focus indicator that appears immediately upon keyboard navigation.
-2. Create a toggle option within accessibility settings for users to switch between high-contrast and low-contrast focus indicators.
-3. Conduct user testing with individuals who have varying levels of sensory sensitivities to gather feedback on the effectiveness of both options.
-4. Adjust the design of the focus indicator based on user feedback to strike a balance between visibility and sensory comfort.
-5. Document the implementation process and user feedback for future reference and enhancements.
+1. Implement the CSS for the focus ring: `outline: 2px solid #005fcc; outline-offset: 2px; box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.8);`.
+2. Test contrast on light/dark themes using WCAG 2.1 AA guidelines (minimum 4.5:1 for normal text).
+3. Validate keyboard navigation across browsers (Chrome, Firefox, Safari) and devices.
+4. Ensure reduced-motion compliance (no animations in focus states).
+5. Document the decision and CSS in the project’s accessibility guidelines.
+6. Assign ownership to Ramp for maintenance and updates.
 
-**What changed:** A decision was made to incorporate a toggleable option to address concerns about sensory overload while ensuring adequate visibility for all users.
+**What changed:**
+Focus ring updated to 2px #005fcc with 2px #fff stroke at 80% opacity for universal visibility.

@@ -1,16 +1,16 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-345` (dept) · 2026-07-18T01:28:54.442513+00:00
-> Participants: Pick, Boulder · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-345` (dept) · 2026-08-15T01:12:11.654389+00:00
+> Participants: Pick, Assay, Boulder · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Use GitHub’s search API to query repositories tagged with both "AI" and "research."
-2. Sort results by stars (descending) and limit to the top 100.
-3. Extract project names, star counts, and descriptions for each result.
-4. Format the output as a GitHub-flavored markdown table with columns: Rank, Name, Stars, Description.
-5. Validate the data for completeness and remove duplicates or non-relevant entries.
-6. Publish the final ranked list in the specified format.
+1. Query GitHub's trending AI repositories for the last week via the GitHub API.
+2. Extract the top 10 repositories ranked by stars and forks, including repo names, descriptions, and primary languages.
+3. Query Product Hunt's API for all posts tagged "AI" published in the last week.
+4. Merge the GitHub and Product Hunt datasets into a unified list of AI-related projects.
+5. Output the merged dataset in a structured GitHub-flavored markdown format.
+6. Store the final dataset for further analysis or downstream tasks.
 
-**What changed:** Added "research" tag to GitHub query for higher-signal AI projects.
+**What changed:** Expanded scope from Product Hunt-only to a dual-source (GitHub + Product Hunt) approach for broader AI project coverage.

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-15T13:13:16.556049+00:00",
+ "generated_at": "2026-08-15T14:54:10.057441+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,27 +8,27 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 181,
-   "rooms_7d": 85,
+   "turns_7d": 183,
+   "rooms_7d": 86,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Scriv: Weighting citations by *decision authority* invites empire-building—teams will inflate their score by lobbying fo"
+   "last_position": "**Risk:** *Preemptive citation frequency* measures noise, not signal—teams will game it by flooding reviews with trivial"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 134,
-   "rooms_7d": 91,
+   "turns_7d": 135,
+   "rooms_7d": 92,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Fetch the full transcript for the pending video using kimtaeyoon83/mcp-server-youtube-transcript via the MCP ser"
+   "last_position": "Fetch the full transcript for the pending video using kimtaeyoon83/mcp-server-youtube-transcript. The output will be the"
   },
   {
    "id": "transcripts-lead",
@@ -44,6 +44,20 @@
    "positions_held": 30,
    "last_position": "ACTION: Echo re-runs kimtaeyoon83/mcp-server-youtube-transcript on the pending videos, outputs full transcripts/captions",
    "proposed": 2
+  },
+  {
+   "id": "watch-w1",
+   "name": "Scope",
+   "dept": "watch",
+   "role": "doer",
+   "turns_7d": 72,
+   "rooms_7d": 33,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "**Decision:** Mandate that eA9Zf auto-generates the top 3 contradictions ranked by *preemptive citation frequency*—count"
   },
   {
    "id": "analysis-w1",
@@ -74,46 +88,32 @@
    "last_position": "**Risk:** Weighting by *decision authority* turns peer reviews into a popularity contest—teams will chase adoption votes"
   },
   {
-   "id": "watch-w1",
-   "name": "Scope",
-   "dept": "watch",
-   "role": "doer",
-   "turns_7d": 70,
-   "rooms_7d": 32,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will run eA9Zf to auto-generate the top 3 contradictions from the video’s AUDIO+VISUAL analysis. The output will be a "
-  },
-  {
    "id": "accessibility-w1",
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 70,
-   "rooms_7d": 35,
+   "turns_7d": 71,
+   "rooms_7d": 36,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Use a 2px solid #005fcc focus ring with a 1px white stroke at 70% opacity on all interactive elements. This keeps the ri"
+   "last_position": "Use a 2px solid #005fcc focus ring with a 1px white stroke at 70% opacity. This keeps the ring visible on any background"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 70,
-   "rooms_7d": 35,
+   "turns_7d": 71,
+   "rooms_7d": 36,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "A 2px ring with a 1px white stroke at 70% opacity still risks blending into light backgrounds on mobile, where contrast "
+   "last_position": "A 2px ring with a 1px white stroke at 70% opacity risks disappearing on dark backgrounds or high-contrast modes, failing"
   },
   {
    "id": "visualization-w1",
@@ -236,7 +236,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Adopt the 2px solid #005fcc focus ring with a 2px #fff outer stroke at 70% opacity for all interactive element",
    "proposed": 28,
-   "shipped": 27
+   "shipped": 28
   },
   {
    "id": "memory-w1",
@@ -380,6 +380,20 @@
    "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
   },
   {
+   "id": "watch-checker",
+   "name": "Frame",
+   "dept": "watch",
+   "role": "checker",
+   "turns_7d": 19,
+   "rooms_7d": 19,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts contradictions from video content."
+  },
+  {
    "id": "security-lead",
    "name": "Bastion",
    "dept": "security",
@@ -406,20 +420,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: At 11:52:00, Iris instructs Arcads AI Video to generate a marketing package for the Arcads Claude Code Skill, in"
-  },
-  {
-   "id": "watch-checker",
-   "name": "Frame",
-   "dept": "watch",
-   "role": "checker",
-   "turns_7d": 18,
-   "rooms_7d": 18,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "The action is verified as MISSION work that our tool can do, as analyzing video AUDIO+VISUAL for content beyond the tran"
   },
   {
    "id": "security-w1",
@@ -506,13 +506,26 @@
    "name": "Forge",
    "dept": "creators",
    "role": "doer",
-   "turns_7d": 10,
-   "rooms_7d": 10,
+   "turns_7d": 11,
+   "rooms_7d": 11,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. The package will include a labeled artifact named \"Create"
+   "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. The package will include a ready-to-use npm module with d"
+  },
+  {
+   "id": "creators-checker",
+   "name": "Vet",
+   "dept": "creators",
+   "role": "checker",
+   "turns_7d": 2,
+   "rooms_7d": 2,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 2,
+   "last_position": "Verdict: This is valid MISSION work—building a labeled package with tests fits \"Build PACKAGES.\""
   },
   {
    "id": "memory-lead",
@@ -578,19 +591,6 @@
    ],
    "positions_held": 26,
    "last_position": "ACTION: Forge drafts the \"Auto-Summarize\" UGC package for Skill Creator, producing a labeled artifact \"Created by EXCAVA"
-  },
-  {
-   "id": "creators-checker",
-   "name": "Vet",
-   "dept": "creators",
-   "role": "checker",
-   "turns_7d": 1,
-   "rooms_7d": 1,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 1,
-   "last_position": "Verdict: This is valid MISSION work—building a labeled package with tests fits \"Build PACKAGES\" under creators."
   },
   {
    "id": "excava-core",

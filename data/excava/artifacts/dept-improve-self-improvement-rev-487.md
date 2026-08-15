@@ -1,18 +1,18 @@
 # improve: Self-improvement: review prompts/engines/routing/own-code; auto-apply safe changes; pitch 
 
-> Decision artifact · room `dept-improve-self-improvement-rev-487` (dept) · 2026-07-31T21:07:04.713245+00:00
-> Participants: Sprocket, Gauge, Ratchet · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-improve-self-improvement-rev-487` (dept) · 2026-08-15T20:53:00.389952+00:00
+> Participants: Sprocket, Gauge, Overhaul, Ratchet · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Auto-apply formatting-only patches to our own generated code and prompt files, excluding logic-bearing code, to avoid masking decay while keeping the repo clean.
+Run PR-Agent in shadow mode on all PRs—open and merged—for two weeks, logging every suggestion privately, then promote only suggestions that correlate with real fixes to live mode.
 
 **Plan:**
-1. Identify and tag generated code and prompt files in the repo (e.g., via `.generated` suffix or directory).
-2. Implement a CI rule to auto-apply formatting-only patches (spaces, line breaks, indentation) to tagged files.
-3. Exclude logic-bearing files (e.g., core logic, engines) from auto-formatting to prevent false cleanliness.
-4. Add a pre-commit hook to validate formatting changes before allowing merges.
-5. Document the rule in `CONTRIBUTING.md` and notify the team.
-6. Assign the lead to own the pipeline and review edge cases quarterly.
+1. Enable PR-Agent in shadow mode on *all* PRs (open and merged) for 14 days.
+2. Log every suggestion privately (no team visibility).
+3. After 14 days, analyze correlation between suggestions and actual fixes in merged PRs.
+4. Promote only suggestions with ≥X% match to real improvements to live mode.
+5. Gradually roll out live mode to teams, starting with low-risk PRs.
+6. Monitor adoption rates and adjust suggestion thresholds as needed.
 
 **What changed:**
-Auto-formatting now targets only generated code/prompts, excluding logic-bearing files.
+PR-Agent suggestions now require proof of impact before becoming blocking or visible.

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-15T19:00:56.169303+00:00",
+ "generated_at": "2026-08-15T20:54:13.404570+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,42 +8,98 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 186,
+   "turns_7d": 187,
    "rooms_7d": 87,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Scriv: *Preemptive contradiction severity* still rewards teams for *gaming the cost metric*—they’ll inflate the hours or"
+   "last_position": "Scriv: *Preemptive contradiction resolution rate* rewards teams for *gaming the 7-day window*—they’ll delay fixes until "
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 138,
+   "turns_7d": 139,
    "rooms_7d": 94,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Fetch the full transcript for the pending video using kimtaeyoon83/mcp-server-youtube-transcript. This will produce the "
+   "last_position": "**Decision:** Mandate that eA9Zf auto-generates the top 3 contradictions ranked by *preemptive contradiction resolution "
   },
   {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 85,
-   "rooms_7d": 85,
+   "turns_7d": 86,
+   "rooms_7d": 86,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Echo re-runs kimtaeyoon83/mcp-server-youtube-transcript on the pending video and delivers the complete, unaltere",
+   "last_position": "ACTION: Echo re-runs kimtaeyoon83/mcp-server-youtube-transcript on the pending video to fetch the full transcript text.",
    "proposed": 2
+  },
+  {
+   "id": "accessibility-w1",
+   "name": "Ramp",
+   "dept": "accessibility",
+   "role": "doer",
+   "turns_7d": 74,
+   "rooms_7d": 37,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Keep the 3px solid #005fcc focus ring with a 1px white stroke at 50% opacity. It meets WCAG 2.2 AA for contrast on dark "
+  },
+  {
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
+   "role": "checker",
+   "turns_7d": 74,
+   "rooms_7d": 37,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The 3px ring risks failing WCAG 2.2 AA on dark backgrounds for users with low vision or color blindness. A 2px ring with"
+  },
+  {
+   "id": "analysis-w1",
+   "name": "Chisel",
+   "dept": "analysis",
+   "role": "doer",
+   "turns_7d": 73,
+   "rooms_7d": 28,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I will run BloodHound-MCP on the full transcript to map all contradictions and their supporting evidence. This will prod"
+  },
+  {
+   "id": "analysis-checker",
+   "name": "Sift",
+   "dept": "analysis",
+   "role": "checker",
+   "turns_7d": 73,
+   "rooms_7d": 28,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: Chisel’s plan is MISSION work; BloodHound-MCP can map contradictions with quotes and context. Fix: none."
   },
   {
    "id": "watch-w1",
@@ -58,62 +114,6 @@
    ],
    "positions_held": 30,
    "last_position": "**Decision:** Mandate that eA9Zf auto-generates the top 3 contradictions ranked by *preemptive contradiction severity*—w"
-  },
-  {
-   "id": "accessibility-w1",
-   "name": "Ramp",
-   "dept": "accessibility",
-   "role": "doer",
-   "turns_7d": 73,
-   "rooms_7d": 37,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Set a 3px solid #005fcc focus ring with a 1px white stroke at 50% opacity for keyboard focus. This keeps the ring visibl"
-  },
-  {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 73,
-   "rooms_7d": 37,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "The 3px ring with a 1px white stroke at 50% opacity may still blend into dark backgrounds, especially for users with cer"
-  },
-  {
-   "id": "analysis-w1",
-   "name": "Chisel",
-   "dept": "analysis",
-   "role": "doer",
-   "turns_7d": 72,
-   "rooms_7d": 27,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "**Decision:** Mandate that eA9Zf auto-generates the top 3 contradictions ranked by *preemptive contradiction density*—co"
-  },
-  {
-   "id": "analysis-checker",
-   "name": "Sift",
-   "dept": "analysis",
-   "role": "checker",
-   "turns_7d": 72,
-   "rooms_7d": 27,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "**Risk:** *Preemptive contradiction density* rewards teams for *agreeing on noise*—if three teams all cite the same triv"
   },
   {
    "id": "visualization-w1",
@@ -299,6 +299,20 @@
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a raw list o"
   },
   {
+   "id": "improve-lead",
+   "name": "Ratchet",
+   "dept": "improve",
+   "role": "lead",
+   "turns_7d": 21,
+   "rooms_7d": 21,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Run PR-Agent in shadow mode on *all* PRs—open and merged—for two weeks, logging every suggestion privately, th",
+   "proposed": 2
+  },
+  {
    "id": "improve-checker",
    "name": "Gauge",
    "dept": "improve",
@@ -325,6 +339,20 @@
    "last_position": "Run PR-Agent in shadow mode on *both* open and merged PRs from day one—this gives a full dataset to compare suggestions "
   },
   {
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
+   "turns_7d": 21,
+   "rooms_7d": 20,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and healthy "
+  },
+  {
    "id": "links-lead-x",
    "name": "LinLea",
    "dept": "links",
@@ -337,34 +365,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard, removing dead links and con"
-  },
-  {
-   "id": "improve-lead",
-   "name": "Ratchet",
-   "dept": "improve",
-   "role": "lead",
-   "turns_7d": 20,
-   "rooms_7d": 20,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Run PR-Agent live on open PRs with non-blocking comments only for one week, then expand to merged PRs for base",
-   "proposed": 2
-  },
-  {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 20,
-   "rooms_7d": 19,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output is a real-time status report confirming op"
   },
   {
    "id": "security-w1",

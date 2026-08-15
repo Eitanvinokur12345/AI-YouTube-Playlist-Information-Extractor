@@ -1,15 +1,16 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-668` (dept) · 2026-07-14T03:24:24.763664+00:00
-> Participants: Easel, Chroma · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-visual-mine-great-designs-fr-668` (dept) · 2026-08-15T05:00:24.073819+00:00
+> Participants: Easel, Squint, Chroma · synthesized by mistral/mistral-small-latest
 
-**Decision:** Frame and add the vibrant pink screenshot from the Beverage Cans website to the hub as a design reference.
+**Decision:**
 
 **Plan:**
-1. Easel accesses the Beverage Cans website to capture the vibrant pink color scheme.
-2. Take a high-quality screenshot of the relevant section showcasing the color.
-3. Chroma frames the screenshot to enhance its presentation.
-4. Upload the framed screenshot to the design hub as taste material.
-5. Share the new addition with the team for future design alignment discussions.
+1. Capture a full-page screenshot of the official Playwright MCP website.
+2. Extract design patterns and visual structure from the screenshot.
+3. Upload the screenshot and extracted patterns to the hub as reference material.
+4. Organize the artifacts under a dedicated "Design Patterns" section.
+5. Tag the content with relevant keywords (e.g., "MCP," "Playwright," "UI patterns").
+6. Share the hub update with the team for review.
 
-**What changed:** The vibrant pink color scheme has been officially added to the hub as a reference for upcoming designs.
+**What changed:** Target shifted from MCP website to Playwright MCP website for design extraction.

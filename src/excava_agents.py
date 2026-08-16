@@ -212,6 +212,11 @@ REAL_TOOL = {"security": "src.security_scan", "improve": "src.self_check",
 
 EVIDENCE_STATE = "excava/tool_evidence.json"   # _jload resolves names against DATA/, not DATA/excava
 
+# Tools that accept --task and therefore produce TASK-SPECIFIC output. Converting a tool means
+# giving it a --task flag that steers what it reports, then adding it here. Everything absent from
+# this set still runs task-blind; the duplicate-evidence check is what makes that visible.
+TASK_AWARE = {"src.self_check"}
+
 
 def _evidence_seen(dept: str, tail: str) -> dict | None:
     """The task this exact tool output ALREADY closed, or None if this output is new.
@@ -226,7 +231,13 @@ def _evidence_seen(dept: str, tail: str) -> dict | None:
     Identical output means the second task learned nothing and changed nothing, so it received no
     work. Evidence may close a task exactly ONCE."""
     import hashlib
-    h = hashlib.sha256(tail.encode("utf-8", "replace")).hexdigest()[:16]
+    import re as _re
+    # Hash WHAT WAS FOUND, not how the task was phrased. A task-aware tool annotates its line with
+    # the focus it resolved (`self-check[keyword overlap tip/skill]: q12 NO ...`); leaving that in
+    # would make the annotation a nonce, so two differently-worded tasks about the SAME check would
+    # both count as distinct work. Stripping it means evidence is the findings alone.
+    core = _re.sub(r"\[[^\]]*\]", "", tail).strip()
+    h = hashlib.sha256(core.encode("utf-8", "replace")).hexdigest()[:16]
     st = _jload(EVIDENCE_STATE, {}) or {}
     prev = (st.get(dept) or {})
     return {"hash": h, "prior": prev} if prev.get("hash") == h else {"hash": h, "prior": None}
@@ -245,17 +256,22 @@ def _evidence_record(dept: str, h: str, task_id: str) -> None:
 def _run_real_tool(dept: str, task: dict | None = None) -> dict | None:
     """Run the department's real tool with a bounded timeout; return its REAL output tail.
 
-    `task` is accepted so the run is TRACEABLE to the task it was meant to serve. It is not yet
-    passed INTO the tool — none of the REAL_TOOL scripts take a task argument, which is the deeper
-    half of this defect and is recorded as the next carry-over. Tracing it is what makes the
-    duplicate-evidence check possible in the meantime."""
+    Tools listed in TASK_AWARE receive the task text via --task and report on the part of their
+    domain the task actually names, so their output differs per task. Everything else still runs
+    task-blind and will keep tripping the duplicate-evidence check until it is converted too —
+    that trip is the signal for which tool to convert next, not a failure to hide."""
     import subprocess
     import sys
     mod = REAL_TOOL.get(dept)
     if not mod:
         return None
+    argv = [sys.executable, "-m", mod]
+    if mod in TASK_AWARE and task:
+        focus = f"{task.get('title', '')} {task.get('detail', '')}".strip()
+        if focus:
+            argv += ["--task", focus[:300]]
     try:
-        r = subprocess.run([sys.executable, "-m", mod], cwd=str(ROOT),
+        r = subprocess.run(argv, cwd=str(ROOT),
                            capture_output=True, text=True, timeout=90)
         lines = [ln for ln in (r.stdout or "").strip().splitlines() if ln.strip()]
         tail = lines[-1][:220] if lines else ((r.stderr or "").strip()[:160] or "(no output)")

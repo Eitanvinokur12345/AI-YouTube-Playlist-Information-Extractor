@@ -1,17 +1,16 @@
 {
- "title": "completion evidence: identical tool output may close exactly ONE task",
+ "title": "self_check takes a task: the first task-aware executor",
  "kind": "product",
- "plan": "Carry-over half of the executor fix. _run_real_tool(dept) never receives the task, so one dept-wide script re-runs and whatever was claimed gets stamped done.",
- "started_at": "2026-08-16T13:16:14.575840+00:00",
+ "plan": "Owner asked directly. Give src.self_check a --task flag that steers what it reports, wire _run_real_tool to pass it, and keep the full suite always writing the full report.",
+ "started_at": "2026-08-16T13:28:11.236432+00:00",
  "fires": 1,
  "notes": [
-  "MEASURED: 797 of 892 surviving completions (89%) were byte-identical to an earlier close",
-  "153 improve tasks all closed on: 'self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved'",
-  "only ~95 of the original 1161 recorded completions were ever distinct work",
-  "mining sits at 13% reuse - a real control: varied work is not punished by the rule"
+  "select_checks(): explicit qN beats keyword overlap; no match reports UNFOCUSED honestly",
+  "full 50-check suite ALWAYS runs and writes self_check.json - a task can only steer the REPORT",
+  "loophole found+closed in test: the [how] annotation acted as a nonce, so two differently-worded tasks about the same check both counted as distinct work. Evidence now hashes findings only."
  ],
  "status": "done",
- "finished_at": "2026-08-16T13:16:14.575840+00:00",
- "outcome": "shipped: per-department evidence hash; a tool run whose output matches the run that closed the previous task returns kind='blocked' naming the missing task-specific executor. Visible via `python -m src.excava_agents --evidence` (95/892 = 11% distinct). History counted, NOT rewritten. Verified: 1st improve task completes, 2nd identical run blocks, security keeps its own slot. Guardrails 20/21, 0 critical.",
- "carry_over_next": "The tools still take no task argument. Evidence-dedup only REFUSES the false close; it does not make the work task-specific. Next: give REAL_TOOL scripts a task parameter (start with src.self_check) so a claimed task steers the run, and check the task's done_criteria against the output before completing."
+ "finished_at": "2026-08-16T13:28:11.236432+00:00",
+ "outcome": "shipped: src.self_check --task; TASK_AWARE set in excava_agents; _run_real_tool passes title+detail. Verified: q12/q13/q42 tasks each complete on distinct findings, a reworded q13 task BLOCKS, an off-domain task reports UNFOCUSED, self_check.json still 50/50. Guardrails 20/21, 0 critical.",
+ "carry_over_next": "8 of 9 REAL_TOOL scripts are still task-blind (security_scan, build_memory, trend_watch, discovery_agent, collect_designs, power_scan, accessibility_scan, liveliness_scan). Convert next by reuse volume: security 152, analysis 150, memory 133. Also: done_criteria is still never checked against output."
 }

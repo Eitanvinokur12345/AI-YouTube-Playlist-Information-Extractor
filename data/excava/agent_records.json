@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-16T14:20:31.699791+00:00",
+ "generated_at": "2026-08-16T14:28:11.673307+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,13 +8,13 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 181,
+   "turns_7d": 182,
    "rooms_7d": 81,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Sift’s plan risks editors rubber-stamping AI-generated contradictions instead of engaging with the raw content. Auto-gen"
+   "last_position": "Risk: Auto-generating contradictions *before* edits turns the tool into a gatekeeper that editors must override, not a c"
   },
   {
    "id": "transcripts-w1",
@@ -78,42 +78,42 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 75,
-   "rooms_7d": 38,
+   "turns_7d": 76,
+   "rooms_7d": 39,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Use a 3px solid #005fcc focus ring with a 1px white stroke at 50% opacity. This guarantees WCAG 2.2 AA contrast on *all*"
+   "last_position": "Use a 3px solid #005fcc focus ring with a 1px white stroke at 50% opacity. This makes the ring visible on all background"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 75,
-   "rooms_7d": 38,
+   "turns_7d": 76,
+   "rooms_7d": 39,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 3px ring risks feeling heavy on dense interfaces where space is tight. A 2.5px ring with a 0.75px white stroke at 60"
+   "last_position": "A 3px ring fails on mobile/touch where fat fingers need 4px+ tap targets. Use a 2px ring with a 2px inner glow at 30% op"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 68,
+   "turns_7d": 69,
    "rooms_7d": 27,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Mandate that eA9Zf auto-generates the top 3 contradictions from every transcript *after* editors complete "
+   "last_position": "**Decision:** Mandate that eA9Zf auto-generates the top 3 contradictions from every transcript *before* edits, then lets"
   },
   {
    "id": "visualization-w1",
@@ -174,13 +174,13 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 44,
+   "turns_7d": 45,
    "rooms_7d": 23,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on *all* PRs—open and merged—for two weeks. This catches unsafe changes before they merge wh"
+   "last_position": "Run PR-Agent in shadow mode on open PRs flagged high-risk by a lightweight classifier for one week, then switch to me. T"
   },
   {
    "id": "accessibility-lead",
@@ -298,6 +298,19 @@
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a raw list o"
   },
   {
+   "id": "improve-improver",
+   "name": "Overhaul",
+   "dept": "improve",
+   "role": "improver",
+   "turns_7d": 23,
+   "rooms_7d": 23,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run PR-Agent in shadow mode only on open PRs flagged as high-risk by a lightweight risk classifier (e.g., dependency upd"
+  },
+  {
    "id": "improve-lead",
    "name": "Ratchet",
    "dept": "improve",
@@ -324,19 +337,6 @@
    ],
    "positions_held": 30,
    "last_position": "Shadow mode trains reviewers to dismiss *all* autofeedback as noise, not just false positives—PR-Agent in shadow mode on"
-  },
-  {
-   "id": "improve-improver",
-   "name": "Overhaul",
-   "dept": "improve",
-   "role": "improver",
-   "turns_7d": 22,
-   "rooms_7d": 22,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on open PRs only for one week, then switch to merged PRs only for the second week—this halve"
   },
   {
    "id": "links-w1",
@@ -367,6 +367,20 @@
    "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
   },
   {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 22,
+   "rooms_7d": 22,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard, listing all broken links an"
+  },
+  {
    "id": "security-lead",
    "name": "Bastion",
    "dept": "security",
@@ -379,20 +393,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output is a real-time report confirming container"
-  },
-  {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
-   "role": "lead",
-   "turns_7d": 21,
-   "rooms_7d": 21,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard with broken links fixed and "
   },
   {
    "id": "security-w1",

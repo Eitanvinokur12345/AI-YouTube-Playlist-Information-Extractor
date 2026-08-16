@@ -1,16 +1,15 @@
 {
- "title": "self_check takes a task: the first task-aware executor",
+ "title": "all 9 REAL_TOOL scripts task-aware (src/task_focus.py)",
  "kind": "product",
- "plan": "Owner asked directly. Give src.self_check a --task flag that steers what it reports, wire _run_real_tool to pass it, and keep the full suite always writing the full report.",
- "started_at": "2026-08-16T13:28:11.236432+00:00",
+ "started_at": "2026-08-16T13:46:27.083677+00:00",
  "fires": 1,
- "notes": [
-  "select_checks(): explicit qN beats keyword overlap; no match reports UNFOCUSED honestly",
-  "full 50-check suite ALWAYS runs and writes self_check.json - a task can only steer the REPORT",
-  "loophole found+closed in test: the [how] annotation acted as a nonce, so two differently-worded tasks about the same check both counted as distinct work. Evidence now hashes findings only."
- ],
  "status": "done",
- "finished_at": "2026-08-16T13:28:11.236432+00:00",
- "outcome": "shipped: src.self_check --task; TASK_AWARE set in excava_agents; _run_real_tool passes title+detail. Verified: q12/q13/q42 tasks each complete on distinct findings, a reworded q13 task BLOCKS, an off-domain task reports UNFOCUSED, self_check.json still 50/50. Guardrails 20/21, 0 critical.",
- "carry_over_next": "8 of 9 REAL_TOOL scripts are still task-blind (security_scan, build_memory, trend_watch, discovery_agent, collect_designs, power_scan, accessibility_scan, liveliness_scan). Convert next by reuse volume: security 152, analysis 150, memory 133. Also: done_criteria is still never checked against output."
+ "finished_at": "2026-08-16T13:46:27.083677+00:00",
+ "outcome": "9/9 tools take --task; shared selector in src/task_focus.py; 4 bugs caught in test (last-hash-only dedup, power_scan print order, strict argparse, empty design category). Verified 9 distinct tasks across 5 depts all complete on distinct evidence (was 3). Guardrails 19/21, 0 critical.",
+ "carry_over_next": "1) done_criteria is STILL never checked against tool output - a task can complete on focused evidence that does not actually satisfy what the task asked for. 2) Free-model roster swap + model-ID self-heal (needs egress or a CI run; blocked in this session). 3) SPEED: proposed to Eitan - one scan per beat serving many focused reports, batch tick, collect_designs url-check cache.",
+ "notes": [
+  "measured: collect_designs 15.0s is the only real hot spot; 6 of 9 tools are sub-second",
+  "bus I/O is 8ms read / 22ms serialize - NOT the bottleneck",
+  "throughput bottleneck is one-task-per-department-per-beat, not CPU"
+ ]
 }

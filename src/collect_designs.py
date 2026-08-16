@@ -27,6 +27,8 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 
+from src import task_focus
+
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/124.0 Safari/537.36")
 
@@ -305,8 +307,22 @@ def main() -> int:
     d["designs"] = out
     d["updated_at"] = NOW
     OUT.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"collect_designs: {len(out)} designs (kept {kept} / dropped {dropped} repo-only + {len(bad)} dead/parked "
-          f"+ {nj} non-design; +{prod} AI-product, +{len(SEEDS)} seeds, +{scr} shown-in-video; url-checked {checked}). designs-only.")
+    full = (f"collect_designs: {len(out)} designs (kept {kept} / dropped {dropped} repo-only + {len(bad)} dead/parked "
+            f"+ {nj} non-design; +{prod} AI-product, +{len(SEEDS)} seeds, +{scr} shown-in-video; url-checked {checked}). designs-only.")
+    # Task focus: STYLE TAGS are the candidate vocabulary. 'category' was tried first and was
+    # useless here — 1412 of 1412 designs came back "uncategorised", so every task matched the
+    # same single bucket, which is task-awareness in name only. style_tags (minimal/dark/bold/
+    # colorful/…) and source_type are the fields this store actually populates.
+    cats: dict = {}
+    for d0 in out:
+        for t in (d0.get("style_tags") or []):
+            k = str(t)[:24]
+            cats[k] = cats.get(k, 0) + 1
+        st = str(d0.get("source_type") or "")[:24]
+        if st:
+            cats[st] = cats.get(st, 0) + 1
+    ev = {k: f"{v} design(s)" for k, v in sorted(cats.items(), key=lambda kv: -kv[1])[:20]}
+    print(task_focus.line("collect_designs", task_focus.arg(), ev, full))
     return 0
 
 

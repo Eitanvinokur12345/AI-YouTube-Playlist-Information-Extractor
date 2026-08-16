@@ -19,6 +19,8 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from src import task_focus
+
 ROOT = Path(__file__).parent.parent
 DATA = ROOT / "data"
 OUT = DATA / "excava" / "power_scan.json"
@@ -112,11 +114,24 @@ def main() -> int:
     except Exception:
         pass
     r = scan()
-    print(f"power-scan: {len(r['opportunities'])} opportunities "
-          f"({sum(1 for o in r['opportunities'] if o['kind'] == 'free-engine-key')} missing free keys, "
-          f"{sum(1 for o in r['opportunities'] if o['kind'] == 'hub-tool')} hub tools)")
+    full = (f"power-scan: {len(r['opportunities'])} opportunities "
+            f"({sum(1 for o in r['opportunities'] if o['kind'] == 'free-engine-key')} missing free keys, "
+            f"{sum(1 for o in r['opportunities'] if o['kind'] == 'hub-tool')} hub tools)")
+    # Task focus: each opportunity is its own candidate, keyed by the engine/tool it names, so a
+    # task about a specific missing key reports THAT key instead of the whole opportunity list.
+    ev, syn = {}, {}
+    for o in r["opportunities"]:
+        k = str(o.get("engine") or o.get("name") or o.get("id") or "")[:40]
+        if not k:
+            continue
+        ev[k] = (o.get("how") or o.get("why", ""))[:70]
+        syn[k] = f"{o.get('kind', '')} {k} capacity capability engine key power upgrade"
+    # Detail lines FIRST, summary LAST: _run_real_tool() takes lines[-1] as the evidence tail, so a
+    # summary printed before the detail would be silently discarded and this tool would look
+    # task-aware while feeding the executor an unfocused line.
     for o in r["opportunities"][:6]:
         print("  -", o.get("engine") or o.get("name"), "|", (o.get("how") or o.get("why", ""))[:70])
+    print(task_focus.line("power-scan", task_focus.arg(), ev, full, synonyms=syn))
     return 0
 
 

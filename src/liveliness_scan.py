@@ -33,6 +33,8 @@ from __future__ import annotations
 
 import glob
 import json
+
+from src import task_focus
 import re
 from datetime import datetime, timezone
 from pathlib import Path
@@ -119,10 +121,27 @@ def check() -> dict:
             "issues": issues[:60], "status": "clean" if not issues else "issues found"}
 
 
+# The rules this scan CAN check — the vocabulary a task is matched against (src/task_focus.py).
+CAN_CHECK = {
+    "broken-asset": "broken asset image missing file reference",
+    "placeholder": "placeholder lorem stub dummy filler text",
+    "missing-data-source": "missing data source dashboard file",
+    "unreadable-data-source": "unreadable corrupt data source parse",
+    "empty-data-source": "empty data source blank screen renders",
+}
+
 def main() -> int:
-    doc = check()
+    doc = check()                      # FULL scan always runs, full report always written;
     OUT.write_text(json.dumps(doc, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"liveliness_scan: {doc['total_issues']} issue(s) — {doc['by_rule'] or 'clean'}")
+    full = f"liveliness_scan: {doc['total_issues']} issue(s) — {doc['by_rule'] or 'clean'}"
+    # ...a task only steers what is REPORTED (src/task_focus.py contract).
+    # Candidates are the rules this tool CAN check, not only the ones that fired: a task
+    # about keyboard focus is genuinely answered by "keyboard: clean", and reporting
+    # UNFOCUSED for a clean scan would be its own kind of dishonesty. CAN_CHECK supplies
+    # the words to MATCH on; the evidence dict supplies what is REPORTED.
+    fired = doc.get("by_rule") or {}
+    ev = {k: (f"{fired[k]} issue(s)" if k in fired else "clean (0 issues)") for k in CAN_CHECK}
+    print(task_focus.line("liveliness_scan", task_focus.arg(), ev, full, synonyms=CAN_CHECK))
     return 0
 
 

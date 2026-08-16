@@ -21,6 +21,8 @@ from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
+from src import task_focus
+
 ROOT = Path(__file__).parent.parent
 DATA = ROOT / "data"
 OUT = DATA / "trends.json"
@@ -165,8 +167,13 @@ def main() -> int:
     if queued:
         TASKS.write_text(json.dumps({"updated_at": NOW.isoformat(), "tasks": tasks},
                                     ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"trend_watch: {len(proposals)} proposals (top score "
-          f"{proposals[0]['score'] if proposals else 0}); queued {queued} into self-improvement.")
+    full = (f"trend_watch: {len(proposals)} proposals (top score "
+            f"{proposals[0]['score'] if proposals else 0}); queued {queued} into self-improvement.")
+    # Task focus: each proposal is a candidate keyed by its trend, so a task naming a topic gets
+    # that trend's proposal and score rather than the same "N proposals" line as every other task.
+    ev = {str(p["trend"])[:48]: f"score {p['score']} → {str(p['proposed_feature'])[:60]}"
+          for p in proposals}
+    print(task_focus.line("trend_watch", task_focus.arg(), ev, full))
     return 0
 
 

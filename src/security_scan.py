@@ -20,6 +20,8 @@ import re
 from datetime import datetime, timezone
 from pathlib import Path
 
+from src import task_focus
+
 ROOT = Path(__file__).parent.parent
 DATA = ROOT / "data"
 OUT = DATA / "security.json"
@@ -96,7 +98,21 @@ def main() -> int:
                           "fix": "Remove the secret from the data + git history and rotate the key immediately.",
                           "status": "open", "created_at": NOW})
             TASKS.write_text(json.dumps({"updated_at": NOW, "tasks": tasks}, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"security_scan: {len(leaks)} secret leak(s), {inj_flagged} injection-suspect records flagged.")
+    full = f"security_scan: {len(leaks)} secret leak(s), {inj_flagged} injection-suspect records flagged."
+    # Task focus (src/task_focus.py): the FULL scan always runs and always writes security.json;
+    # a task only steers which finding class is REPORTED. Vendor names are the vocabulary, so
+    # "check for leaked Anthropic keys" reports on that provider rather than the whole sweep.
+    by_type = {}
+    for lk in leaks:
+        by_type[lk["type"]] = by_type.get(lk["type"], 0) + 1
+    ev = {label: (f"{by_type[label]} leak(s)" if label in by_type else "clean (0 leaks)")
+          for label, _pat in SECRET_PATS}
+    ev["prompt-injection"] = f"{inj_flagged} suspect record(s) flagged"
+    syn = {"OpenAI": "openai sk key token secret", "Google/Gemini": "google gemini aiza key",
+           "GitHub": "github gh token pat key", "AWS": "aws amazon akia key",
+           "Anthropic": "anthropic claude key token", "Slack": "slack xoxb webhook token",
+           "prompt-injection": "injection prompt jailbreak untrusted record data poisoning"}
+    print(task_focus.line("security_scan", task_focus.arg(), ev, full, synonyms=syn))
     return 0
 
 

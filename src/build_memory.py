@@ -20,6 +20,8 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
+from src import task_focus
+
 ROOT = Path(__file__).parent.parent
 DATA = ROOT / "data"
 OUT = DATA / "memory_index.json"
@@ -68,6 +70,7 @@ def _items():
 
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--limit", type=int, default=250)
+    task_focus.add_arg(ap)   # strict argparse would reject --task otherwise
     ap.add_argument("--sleep", type=float, default=0.4); args = ap.parse_args()
     keys = _keys()
     if not keys:
@@ -94,7 +97,19 @@ def main() -> int:
                 print("  many embed errors — stopping."); break
     idx.update({"dim": DIM, "model": MODEL, "vectors": vecs, "meta": meta, "updated_at": NOW})
     OUT.write_text(json.dumps(idx, ensure_ascii=False), encoding="utf-8")
-    print(f"build_memory: +{done} embeddings ({err} errors); index now {len(vecs)}/{len(items)} items.")
+    full = f"build_memory: +{done} embeddings ({err} errors); index now {len(vecs)}/{len(items)} items."
+    # Task focus: element TYPE is the candidate vocabulary — "index the connectors for recall"
+    # reports connector coverage rather than the same whole-index line every memory task got.
+    cov: dict = {}
+    for ident, m in meta.items():
+        t = str(m.get("type") or "unknown")
+        c = cov.setdefault(t, [0, 0])
+        c[0] += 1
+    for it in items:
+        t = str((it.get("type") if isinstance(it, dict) else "") or "unknown")
+        cov.setdefault(t, [0, 0])[1] += 1
+    ev = {t: f"{n[0]}/{n[1]} embedded" for t, n in sorted(cov.items()) if n[1]}
+    print(task_focus.line("build_memory", task_focus.arg(), ev, full))
     return 0
 
 

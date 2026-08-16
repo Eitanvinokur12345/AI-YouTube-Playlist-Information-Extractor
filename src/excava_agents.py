@@ -215,7 +215,9 @@ EVIDENCE_STATE = "excava/tool_evidence.json"   # _jload resolves names against D
 # Tools that accept --task and therefore produce TASK-SPECIFIC output. Converting a tool means
 # giving it a --task flag that steers what it reports, then adding it here. Everything absent from
 # this set still runs task-blind; the duplicate-evidence check is what makes that visible.
-TASK_AWARE = {"src.self_check"}
+TASK_AWARE = {"src.self_check", "src.security_scan", "src.build_memory", "src.trend_watch",
+              "src.discovery_agent", "src.collect_designs", "src.power_scan",
+              "src.accessibility_scan", "src.liveliness_scan"}
 
 
 def _evidence_seen(dept: str, tail: str) -> dict | None:
@@ -239,15 +241,26 @@ def _evidence_seen(dept: str, tail: str) -> dict | None:
     core = _re.sub(r"\[[^\]]*\]", "", tail).strip()
     h = hashlib.sha256(core.encode("utf-8", "replace")).hexdigest()[:16]
     st = _jload(EVIDENCE_STATE, {}) or {}
-    prev = (st.get(dept) or {})
-    return {"hash": h, "prior": prev} if prev.get("hash") == h else {"hash": h, "prior": None}
+    # A SET of past evidence per department, not just the most recent one. Storing only the last
+    # hash meant alternating tasks (A, B, A, B) never tripped the check — the classic mistake of
+    # testing consecutive-duplicate instead of seen-before. Bounded to the newest MAX_EVIDENCE so
+    # the file cannot grow without limit.
+    seen = (st.get(dept) or {}).get("seen") or {}
+    return {"hash": h, "prior": seen.get(h)}
+
+
+MAX_EVIDENCE = 300      # newest-N evidence hashes remembered per department
 
 
 def _evidence_record(dept: str, h: str, task_id: str) -> None:
     from datetime import datetime, timezone          # module-level import is inside _syslog only
+    now = datetime.now(timezone.utc).isoformat()
     st = _jload(EVIDENCE_STATE, {}) or {}
-    st[dept] = {"hash": h, "task": task_id,
-                "at": datetime.now(timezone.utc).isoformat()}
+    seen = (st.get(dept) or {}).get("seen") or {}
+    seen[h] = {"task": task_id, "at": now}
+    if len(seen) > MAX_EVIDENCE:                     # drop the oldest, keep the newest N
+        seen = dict(sorted(seen.items(), key=lambda kv: kv[1].get("at", ""))[-MAX_EVIDENCE:])
+    st[dept] = {"seen": seen, "last": h, "at": now}
     p = DATA / EVIDENCE_STATE
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(json.dumps(st, ensure_ascii=False, indent=1), encoding="utf-8")

@@ -28,6 +28,8 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import quote
 
+from src import task_focus
+
 ROOT = Path(__file__).parent.parent
 DATA = ROOT / "data"
 OUT = DATA / "social_intake.json"
@@ -175,6 +177,7 @@ def main() -> int:
     except Exception:
         pass
     ap = argparse.ArgumentParser()
+    task_focus.add_arg(ap)   # strict argparse would reject --task otherwise
     ap.add_argument("--limit-per-source", type=int, default=20)
     a = ap.parse_args()
     n = a.limit_per_source
@@ -216,8 +219,20 @@ def main() -> int:
                            "Inclusion = AI-relevant + a quality signal; mining consumes via verify+security."),
                   "items": merged})
     OUT.write_text(json.dumps(store, ensure_ascii=False, indent=1), encoding="utf-8")
-    print(f"discovery: +{fresh} new (of {len(found)} sighted) → {len(merged)} queued; "
-          + ", ".join(f"{k}={v}" for k, v in sorted(per.items())))
+    full = (f"discovery: +{fresh} new (of {len(found)} sighted) → {len(merged)} queued; "
+            + ", ".join(f"{k}={v}" for k, v in sorted(per.items())))
+    # Task focus: per-source counts are the candidates, so "mine more from GitHub" reports the
+    # GitHub number rather than the identical whole-sweep line every mining task used to get.
+    ev = {str(k): f"{v} found this run" for k, v in per.items()}
+    # Source keys are abbreviations ('gh-new'), so a task saying "github" would match nothing
+    # without spelling them out. Matching on the abbreviation alone was the first attempt and it
+    # sent every mining task to UNFOCUSED.
+    syn = {"gh-new": "github repo repository new created", "gh-active": "github repo repository active pushed",
+           "hn-front": "hackernews hacker news front page", "hn-new": "hackernews hacker news newest",
+           "producthunt": "product hunt launch", "arxiv": "arxiv paper research preprint",
+           "huggingface-model": "huggingface hf model weights",
+           "huggingface-space": "huggingface hf space demo app"}
+    print(task_focus.line("discovery", task_focus.arg(), ev, full, synonyms=syn))
     return 0
 
 

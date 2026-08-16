@@ -30,6 +30,8 @@ from __future__ import annotations
 
 import glob
 import json
+
+from src import task_focus
 import re
 from datetime import datetime, timezone
 from pathlib import Path
@@ -120,10 +122,30 @@ def check() -> dict:
             "issues": issues[:60], "status": "clean" if not issues else "issues found"}
 
 
+# The rules this scan CAN check — the vocabulary a task is matched against (src/task_focus.py).
+# Keep in sync with the "rule" strings emitted by check(); extra entries here are rules the tool
+# reports as clean rather than rules it silently does not test.
+CAN_CHECK = {
+    "html-lang": "html lang attribute language",
+    "viewport": "viewport meta responsive mobile zoom",
+    "img-alt": "image images alt text alternative screen-reader",
+    "input-name": "input form field label name",
+    "button-name": "button control accessible name label",
+    "reduced-motion": "reduced motion animation vestibular prefers",
+}
+
 def main() -> int:
-    doc = check()
+    doc = check()                      # FULL scan always runs, full report always written;
     OUT.write_text(json.dumps(doc, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"accessibility_scan: {doc['total_issues']} issue(s) — {doc['by_rule'] or 'clean'}")
+    full = f"accessibility_scan: {doc['total_issues']} issue(s) — {doc['by_rule'] or 'clean'}"
+    # ...a task only steers what is REPORTED (src/task_focus.py contract).
+    # Candidates are the rules this tool CAN check, not only the ones that fired: a task
+    # about keyboard focus is genuinely answered by "keyboard: clean", and reporting
+    # UNFOCUSED for a clean scan would be its own kind of dishonesty. CAN_CHECK supplies
+    # the words to MATCH on; the evidence dict supplies what is REPORTED.
+    fired = doc.get("by_rule") or {}
+    ev = {k: (f"{fired[k]} issue(s)" if k in fired else "clean (0 issues)") for k in CAN_CHECK}
+    print(task_focus.line("accessibility_scan", task_focus.arg(), ev, full, synonyms=CAN_CHECK))
     return 0
 
 

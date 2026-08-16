@@ -12,7 +12,10 @@
       "raised": "2026-08-10",
       "raised_by": "Claude",
       "title": "Define what makes an element GOOD — the quality bar",
-      "same_as": ["OR-1", "G3-creators-output-bar"],
+      "same_as": [
+        "OR-1",
+        "G3-creators-output-bar"
+      ],
       "why_only_eitan": "This is taste, and it is the owner's product. The last two times Claude set a bar itself, the result was 14 fabricated template packs and a guardrail that never ran. A bar Claude invents is the bar that already failed twice.",
       "why_it_blocks": [
         "CREATORS is wired to a real model but gate G3 holds it closed — with no bar, it can publish nothing, so the department is inert.",
@@ -21,6 +24,46 @@
       ],
       "what_unblocks_it": "Eitan judges a handful of REAL elements from his own hub and says which are keepers and which are junk, and why. Claude turns that into the written bar and a test. He does not need to author a spec.",
       "estimated_owner_effort": "10-15 minutes of judging real cards"
+    },
+    {
+      "id": "OB-2",
+      "status": "open",
+      "raised": "2026-08-10",
+      "raised_by": "Claude",
+      "title": "Refresh the dead model IDs — 11 of 12 engines are down, so every agent is one small model",
+      "why_only_eitan": "Fixing this means reading OpenRouter's CURRENT free-model list and pasting the real IDs. This session has no web egress, and Claude's training knowledge is stale for exactly the models the plan targets (GLM-5.2 / DeepSeek V4 / Qwen 3.6 / Kimi K2.7 are all NEWER than the IDs configured). Guessing an ID produces another 404 and another week of one-model output.",
+      "evidence": {
+        "benchmark": "data/excava/engine_health.json @ 2026-08-09T19:15Z",
+        "healthy": [
+          "mistral"
+        ],
+        "bad_model_404": [
+          "glm",
+          "deepseek",
+          "kimi",
+          "cerebras"
+        ],
+        "quota_429": [
+          "groq",
+          "sambanova",
+          "gemini"
+        ],
+        "retired_by_provider": [
+          "gh-models (http-410 github_models_retirement_brownout)"
+        ],
+        "unreachable": [
+          "nvidia (TimeoutError)"
+        ],
+        "room_reality": "160 committed room turns: mistral 85.6%, nvidia 13.8%, groq 0.6%. Zero GLM, DeepSeek, Qwen or Kimi have EVER spoken."
+      },
+      "why_it_blocks": [
+        "The multi-brain premise is the core of the architecture and it is currently fiction: 85.6% of all agent turns ran on mistral-small-latest, a SMALL model.",
+        "PROTOCOLS bans same-model-different-prompt as correlated errors. That is precisely what is running today, so every 'debate' is one small model arguing with itself.",
+        "This is the actual cause of the carbon-copy output Eitan saw -- not only the f-string templates."
+      ],
+      "what_unblocks_it": "Open openrouter.ai/models, filter to free, and paste back the current IDs for a GLM, a DeepSeek, a Qwen and a Kimi model. Claude updates CATALOG and reruns engine_selftest. If OmniRoute is preferred instead, set OMNIROUTE_KEY and it becomes the gateway -- but note the problem is NOT quota shortage, it is dead IDs, so OmniRoute alone would not fix it.",
+      "estimated_owner_effort": "5 minutes on openrouter.ai/models",
+      "claude_correction": "Claude first told Eitan this was 'one missing key'. That was wrong: a 404 means the request was made and answered, so the key is live. Corrected within the same fire."
     }
   ]
 }

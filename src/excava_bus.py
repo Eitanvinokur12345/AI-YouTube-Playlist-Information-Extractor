@@ -211,6 +211,31 @@ def complete(task_id: str, agent_id: str, result: str) -> bool:
     return False
 
 
+def block(task_id: str, agent_id: str, needs: str, note: str = "") -> bool:
+    """TERMINAL 'I could not do this' — the honest third outcome next to done/failed.
+
+    WHY this exists (2026-08-16, owner audit): _work_generic returned kind='complete' for two
+    cases that are not completions — a department in BLOCKED (missing an owner resource) and a
+    status readout that built nothing. tick() then called complete(), so 153 'BLOCKED — watch
+    needs video-analysis capacity' admissions and 115 creators count-readouts were stamped
+    status='done'. PULSE's 'tasks completed, only rises' counter was inflated by 268 of 1161.
+
+    'blocked' is deliberately NOT 'queued': re-queueing makes the worker re-claim and re-fail in a
+    loop (that loop is exactly why these were completed in the first place). It is NOT 'held'
+    either — held means escalated past the tier cap. blocked means: the work is understood, it is
+    genuinely un-runnable here, and it needs the named resource. It counts as un-done forever
+    until that resource arrives, and it is visible as a number instead of hiding inside 'done'."""
+    bus = read_bus()
+    for t in bus["tasks"]:
+        if t["id"] == task_id:
+            t.update(status="blocked", blocked_needs=needs, claimed_by=None,
+                     result=(note or f"BLOCKED — needs {needs}"), updated_at=_now())
+            _write_bus(bus)
+            event(task_id, "blocked", {"by": agent_id, "needs": needs})
+            return True
+    return False
+
+
 def fail(task_id: str, agent_id: str, reason: str) -> str:
     """Failure bumps the escalation tier (G-6): 1 worker → 2 lead → 3 core → held for owner."""
     bus = read_bus()
@@ -315,10 +340,19 @@ def snapshot() -> dict:
     per, last_h = {}, None
     for t in bus["tasks"]:
         d = t.get("department") or "(unrouted)"
-        per.setdefault(d, {"queued": 0, "working": 0, "done": 0, "held": 0, "failed": 0})
+        per.setdefault(d, {"queued": 0, "working": 0, "done": 0, "held": 0, "failed": 0,
+                           "blocked": 0})
         per[d][t["status"]] = per[d].get(t["status"], 0) + 1
         if t.get("handoff_docs"):
             last_h = t["handoff_docs"][-1]
     open_tasks = [t for t in bus["tasks"] if t["status"] in ("queued", "working", "held")]
+    # 'blocked' is reported SEPARATELY, never folded into open or done: it is real un-done work
+    # that no worker can pick up, so hiding it in either number is how it stayed invisible.
+    blocked = [t for t in bus["tasks"] if t["status"] == "blocked"]
+    needs = {}
+    for t in blocked:
+        needs[t.get("blocked_needs", "?")] = needs.get(t.get("blocked_needs", "?"), 0) + 1
     return {"open": len(open_tasks), "total": len(bus["tasks"]),
+            "blocked": len(blocked), "blocked_needs": dict(sorted(
+                needs.items(), key=lambda kv: -kv[1])[:6]),
             "per_department": per, "last_handoff": last_h}

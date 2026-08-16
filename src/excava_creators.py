@@ -181,7 +181,15 @@ def assemble_packages(max_new: int = 3) -> list[dict]:
     """CREATORS assemble real PACKAGES (owner's term: several elements combined toward one job)
     into data/packages.json — the SAME store the Packages tab reads. Every element id is a REAL
     entry from data/elements_index.json, so each chip resolves + opens in the app. Deduped by id,
-    so it fills one theme per run and stops once the meaningful themes are covered (bounded, honest)."""
+    so it fills one theme per run and stops once the meaningful themes are covered (bounded, honest).
+
+    GATE ENFORCED HERE, not just in main() (2026-08-16): G3 blocks "publishing ANY new creation
+    (... package)", but _gate_open() was only checked at the CLI entrypoint, so every direct caller
+    of this function walked straight past a binding P5 gate. The excava_agents creators worker did
+    exactly that and published two packages before the hole was spotted. A gate that only guards
+    one door is not a gate."""
+    if _gate_open():
+        return []
     idx = _load("elements_index.json", {})
     els = idx.get("elements", []) if isinstance(idx, dict) else (idx if isinstance(idx, list) else [])
     if not els:

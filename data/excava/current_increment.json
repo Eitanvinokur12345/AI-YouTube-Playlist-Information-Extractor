@@ -1,13 +1,16 @@
 {
- "title": "harden git_safe against the fires-145/146/147 silent push hang",
+ "title": "executor honesty: a non-completion can no longer be stamped DONE",
  "kind": "product",
- "plan": "",
- "started_at": "2026-08-09T08:20:00+00:00",
+ "plan": "Owner audit 2026-08-16 chose 'fix the executor now'. Root cause: tick() had only two outcomes (done/fail), so _work_generic's BLOCKED admission and _work_creators' count readout both returned kind='complete'. Add a terminal 'blocked' outcome, wire creators to the real package builder, and retro-correct the inflated history.",
+ "started_at": "2026-08-16T13:07:34.607050+00:00",
  "fires": 1,
  "notes": [
-  "also caught+documented a revert_ci_churn() data-loss trap live, mid-fire"
+  "153 'BLOCKED - watch needs video capacity' admissions were status=done",
+  "116 creators count-readouts were status=done while the store held 1 creation since 2026-07-03",
+  "creators worker never called assemble_packages() - the builder existed, it just wasn't wired"
  ],
  "status": "done",
- "finished_at": "2026-08-09T08:30:00+00:00",
- "outcome": "shipped: timeout-bounded git_safe subprocess calls (_git() + sync()'s raw pull --rebase) + progress prints through push()/ship; verified against a real live 90s network hang during testing; documented the CI_CHURN/data-loss trap this fire hit in revert_ci_churn()'s own docstring"
+ "finished_at": "2026-08-16T13:07:34.607050+00:00",
+ "outcome": "shipped: bus.block() terminal status + snapshot exposes blocked count/reasons; _work_generic BLOCKED and planned-only paths return kind='blocked'; _work_creators calls assemble_packages() and is judged on the STORE delta (built 2 real self-tested packages on test runs, 7->8); 269 historical false completions reclassified with prior_status kept + backup. done 1161->892, blocked 269.",
+ "carry_over_next": "Task-specific execution: _run_real_tool(dept) never receives the task, so one generic dept tool run closes ANY task in that dept (153 improve tasks all closed by the same self_check run). done_criteria is never checked. THIS is the remaining half of the executor fix."
 }

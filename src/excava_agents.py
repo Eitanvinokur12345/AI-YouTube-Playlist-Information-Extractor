@@ -151,13 +151,49 @@ def _work_analysis(task: dict) -> dict:
 
 
 def _work_creators(task: dict) -> dict:
-    store = _jload("created_by_excava.json", {})
-    cs = store.get("creations", [])
-    pub = sum(1 for c in cs if c.get("status") == "published")
-    return {"kind": "complete", "result": (
-        f"Creators: {len(cs)} creations on record, {pub} published — every one labeled "
-        "'Created by EXCAVA' with an independent test before first use (G-12). The daily "
-        "creators lane drafts from data/creators_discovery.json gaps.")}
+    """CREATORS must BUILD, not report. Owner, 2026-08-16: "the creators are still just making
+    decisions rather than actually building."
+
+    He was right, and this function was the proof: it read created_by_excava.json, printed how
+    many creations already existed, and returned kind='complete'. 115 creators tasks were closed
+    that way while the store held exactly ONE creation (2026-07-03). A count of yesterday's work
+    is not today's work. The real builder — excava_creators.assemble_packages() — already existed
+    and ran in its own lane; the creators WORKER simply never called it (P-Ponytail: the tool was
+    there, it just wasn't wired). Now the worker calls it and is judged on the DELTA it produced."""
+    def _pkg_count() -> int:
+        d = _jload("packages.json", {}) or {}         # assemble_packages() writes HERE, not to
+        p = d if isinstance(d, list) else d.get("packages", [])   # created_by_excava.json
+        return len(p)
+
+    before = _pkg_count()
+    built, err = [], ""
+    try:
+        from src import excava_creators as creators
+        gate = creators._gate_open()
+        if gate:            # a closed P5 gate is a BLOCK, never a silent skip stamped done
+            return {"kind": "blocked", "needs": f"Eitan's verdict on P5 gate {gate.get('id')}",
+                    "result": f"Creators is gated: {str(gate.get('blocks', ''))[:150]} "
+                              "— no creation published. Only Eitan lifts this."}
+        built = creators.assemble_packages(max_new=1) or []
+    except Exception as e:                      # a builder that crashes has not built anything
+        err = f"{type(e).__name__}: {e}"[:160]
+    after = _pkg_count()
+    delta = after - before
+    # Judged on the STORE, not on the return value: a builder that returns a list but writes
+    # nothing has still built nothing, and that is the exact failure mode this function had.
+    if delta > 0:
+        names = ", ".join(str(p.get("name", "?")) for p in built[:3]) or f"{delta} new"
+        tested = sum(1 for p in built if (p.get("self_test") or {}).get("ok"))
+        return {"kind": "complete",
+                "result": f"Creators BUILT {delta}: {names} (packages {before}→{after}; "
+                          f"{tested}/{len(built)} passed an independent self-test before first "
+                          "use, G-12; labeled 'Created by EXCAVA')."}
+    # Nothing landed in the store. That is a blocked task, not a completed one.
+    return {"kind": "blocked", "needs": "a buildable gap in data/creators_discovery.json"
+                                        + (f" (builder errored: {err})" if err else ""),
+            "result": f"Creators built NOTHING this turn (packages still {after}); "
+                      f"assemble_packages() wrote no package"
+                      + (f" — {err}" if err else " — no gap above the quality bar to build from")}
 
 
 # REAL executors: the cheap, fast, real tool each department actually runs (verified 2026-07-07).
@@ -256,8 +292,10 @@ def _work_generic(task: dict) -> dict:
     import re
     tid = task.get("id", "task")
     dept = task.get("department", "core")
-    if dept in BLOCKED and dept not in REAL_TOOL:        # honest 'can't', not a fake plan
-        return {"kind": "complete",
+    if dept in BLOCKED and dept not in REAL_TOOL:        # honest 'can't' — and NOT a completion
+        # 2026-08-16 owner audit: this used to return kind='complete', so tick() stamped 153
+        # "I cannot do this" admissions as status='done'. An admission is not a completion.
+        return {"kind": "blocked", "needs": BLOCKED[dept],
                 "result": f"BLOCKED — {dept} needs {BLOCKED[dept]}. No fake work done; waiting on the owner."}
     tool = REAL_TOOL.get(dept, "")
     if tool and not _task_tool_fit(task, tool):          # SYSCALL GATE: refuse the wrong tool
@@ -297,9 +335,11 @@ def _work_generic(task: dict) -> dict:
     path = adir / f"task-{slug}.md"
     path.write_text(f"# {task.get('title', 'task')}\n\n> {dept} · task `{tid}` · **EXECUTION PLAN — NOT yet "
                     f"executed** · by {src}\n\n{body}\n", encoding="utf-8")
-    # HONEST: the planning turn completed, but this is a PLAN, not executed work. The result string
-    # says so unmistakably (no self-handoff loop). Wiring real per-department executors is next.
-    return {"kind": "complete", "planned_only": True,
+    # HONEST: the planning turn produced a PLAN, not executed work. Until 2026-08-16 this returned
+    # kind='complete' and the planned_only flag was computed and then thrown away — so a plan closed
+    # the task and nothing ever retried it. A plan is a blocked task with homework attached.
+    return {"kind": "blocked", "planned_only": True,
+            "needs": f"a wired {dept} executor",
             "result": f"EXECUTION PLAN written (NOT executed) → data/excava/artifacts/{path.name}; "
                       f"real execution still needs a wired {dept} tool"}
 
@@ -336,6 +376,9 @@ def tick(department: str, reg: dict) -> tuple[str, str] | None:
         ok, ref = bus.handoff(task["id"], agent["id"], act["to"], act["doc"])
         return ((f"{agent['id']}: {task['id']} -> {act['to']} ({ref})", "handoffs") if ok
                 else (f"{agent['id']}: {task['id']} {ref}", "fails"))
+    if act["kind"] == "blocked":        # honest third outcome — never counted as a completion
+        bus.block(task["id"], agent["id"], act.get("needs", "an owner resource"), act.get("result", ""))
+        return f"{agent['id']}: {task['id']} BLOCKED ({act.get('needs', '?')})", "blocked"
     if act["kind"] == "complete":
         bus.complete(task["id"], agent["id"], act["result"])
         return f"{agent['id']}: {task['id']} DONE", "done"

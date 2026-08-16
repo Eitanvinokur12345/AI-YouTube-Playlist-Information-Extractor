@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-16T10:53:28.899544+00:00",
+ "generated_at": "2026-08-16T13:13:37.736993+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,13 +8,13 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 179,
+   "turns_7d": 180,
    "rooms_7d": 81,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Auto-generating contradictions *before* edits turns the tool into a gatekeeper that preemptively shapes content to fit i"
+   "last_position": "Sift’s plan risks editors rubber-stamping AI-generated contradictions instead of engaging with the content—turning the t"
   },
   {
    "id": "transcripts-w1",
@@ -78,42 +78,42 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 73,
-   "rooms_7d": 37,
+   "turns_7d": 74,
+   "rooms_7d": 38,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Use a 2px solid #005fcc focus ring with a 1px white stroke at 75% opacity. This keeps the ring visible on both light and"
+   "last_position": "Use a 2px solid #005fcc focus ring with a 1px white stroke at 75% opacity. This keeps the ring visible against dark back"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 73,
-   "rooms_7d": 37,
+   "turns_7d": 74,
+   "rooms_7d": 38,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 2px ring risks failing WCAG 2.2 AA on *very* light backgrounds where the 75% opacity white stroke blends into the ba"
+   "last_position": "The 2px ring still risks failing WCAG 2.2 AA on *very* light backgrounds where the white stroke loses contrast against t"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 67,
+   "turns_7d": 68,
    "rooms_7d": 27,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Mandate that eA9Zf auto-generates the top 3 contradictions *before* editors touch the transcript, then let"
+   "last_position": "**Decision:** Mandate that eA9Zf auto-generates the top 3 contradictions from every transcript *after* editors complete "
   },
   {
    "id": "visualization-w1",
@@ -174,13 +174,13 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 42,
+   "turns_7d": 43,
    "rooms_7d": 22,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on *all* PRs—open and merged—for two weeks. This gives us full coverage to spot patterns in "
+   "last_position": "Run PR-Agent in shadow mode on *merged* PRs only for two weeks. This keeps the signal clean—reviewers won’t learn to ign"
   },
   {
    "id": "accessibility-lead",
@@ -195,7 +195,7 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Adopt the 2px solid #005fcc focus ring with a 2px #fff outer stroke at 100% opacity for keyboard navigation. T",
-   "proposed": 33,
+   "proposed": 32,
    "shipped": 32
   },
   {
@@ -298,6 +298,19 @@
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a raw list o"
   },
   {
+   "id": "improve-improver",
+   "name": "Overhaul",
+   "dept": "improve",
+   "role": "improver",
+   "turns_7d": 22,
+   "rooms_7d": 22,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run PR-Agent in shadow mode on open PRs only for one week, then switch to merged PRs only for the second week—this halve"
+  },
+  {
    "id": "improve-lead",
    "name": "Ratchet",
    "dept": "improve",
@@ -326,19 +339,6 @@
    "last_position": "PR-Agent in shadow mode on *all* PRs risks training reviewers to ignore *all* autofeedback as noise, not just the unsafe"
   },
   {
-   "id": "improve-improver",
-   "name": "Overhaul",
-   "dept": "improve",
-   "role": "improver",
-   "turns_7d": 21,
-   "rooms_7d": 21,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on merged PRs only, but log the autofeedback for *all* PRs—open or merged—so we still captur"
-  },
-  {
    "id": "security-lead",
    "name": "Bastion",
    "dept": "security",
@@ -351,6 +351,34 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output is a real-time report confirming container"
+  },
+  {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 21,
+   "rooms_7d": 21,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run the link-checker tool on the live Mission Control Dashboard to scan for broken links. The output will be a list of i"
+  },
+  {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 21,
+   "rooms_7d": 21,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
   },
   {
    "id": "security-w1",
@@ -378,34 +406,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security post"
-  },
-  {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 20,
-   "rooms_7d": 20,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will run the link-checker tool on the live Mission Control Dashboard to scan for broken or outdated links, which will "
-  },
-  {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
-   "role": "checker",
-   "turns_7d": 20,
-   "rooms_7d": 20,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work our tool can do."
   },
   {
    "id": "links-lead-x",

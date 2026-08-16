@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-08-16T13:45:54.418671+00:00",
+ "generated_at": "2026-08-16T14:11:45.974125+00:00",
  "total": 21,
- "passing": 19,
+ "passing": 18,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -22,8 +22,8 @@
    "id": "G-C",
    "name": "History backup fresh",
    "ok": true,
-   "detail": "1 bundle(s); newest within 26h.",
-   "severity": "warn"
+   "detail": "n/a in CI — the beat pushes straight to origin each cycle, bypassing git_safe/local bundles by design.",
+   "severity": "info"
   },
   {
    "id": "G-D",
@@ -50,7 +50,7 @@
    "id": "G-G",
    "name": "Remote sync verified",
    "ok": true,
-   "detail": "HEAD == origin/claude/prompt-workflow-review-c13x3f (work is really saved).",
+   "detail": "HEAD == origin/main (work is really saved).",
    "severity": "warn"
   },
   {
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "16556 memory episodes on record.",
+   "detail": "16591 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "9 guardrail runs logged (append-only, never rewritten).",
+   "detail": "0 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -91,43 +91,43 @@
   {
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
-   "ok": false,
-   "detail": "2704 tasks done, 12 departments moving — no new completions in the last 4 beats, but 269 task(s) are HONESTLY BLOCKED, most on: video-analysis engine capacity (Gemini free quota is exhaust. Not a silent stall — the work is refused, named, and waiting.",
+   "ok": true,
+   "detail": "2719 tasks done, 12 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "29822 MB free on the repo drive.",
+   "detail": "88016 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 511.8h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 512.2h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
-   "ok": true,
-   "detail": "shallow clone — not enough local history to find an 'excava-beat #N' commit either way; not a stall signal, just a checkout-depth limit.",
-   "severity": "info"
+   "ok": false,
+   "detail": "last 'excava-beat #N' commit 15.7h ago — STALE: the dedicated heartbeat loop isn't landing per-cycle commits (check for a wedged/queued excava_beat.yml run).",
+   "severity": "warn"
   },
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "last 'core-spoton:' commit 0.1h ago.",
+   "detail": "last 'core-spoton:' commit 0.6h ago.",
    "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
-   "ok": true,
-   "detail": "9/16 lane(s) landing on cadence, 7 can't-tell (shallow clone).",
+   "ok": false,
+   "detail": "10/16 lane(s) landing on cadence — STALE: creators.yml (daily 07:45 UTC): last commit 173.8h ago (expected within 30h); discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 1352.0h ago (expected within 76h); fetch.yml (every 2 days): last commit 78.9h ago (expected within 54h); improve.yml (weekly deep pass): last commit 1701.9h ago (expected within 192h); review.yml (twice-weekly): last commit 422.2h ago (expected within 100h); transcribe.yml (daily): last commit 367.9h ago (expected within 30h)",
    "severity": "warn"
   },
   {

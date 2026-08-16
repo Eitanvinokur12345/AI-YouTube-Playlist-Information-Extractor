@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-16T14:11:42.639375+00:00",
+ "generated_at": "2026-08-16T14:20:31.699791+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -50,28 +50,28 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 78,
+   "turns_7d": 79,
    "rooms_7d": 32,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Auto-generate the top 3 contradictions *before* edits, then let editors refine or override them—no mandate"
+   "last_position": "**Decision:** Auto-generate the top 3 contradictions *before* edits, but require editors to either accept, reject, or re"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 76,
+   "turns_7d": 77,
    "rooms_7d": 30,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Auto-generating contradictions before edits risks embedding bias—if the AI flags weak spots based on its training data, "
+   "last_position": "Auto-generating contradictions before edits embeds bias by pre-framing the content editors must react to—risking they ch"
   },
   {
    "id": "accessibility-w1",
@@ -174,27 +174,27 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 43,
-   "rooms_7d": 22,
+   "turns_7d": 44,
+   "rooms_7d": 23,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on *merged* PRs only for two weeks. This keeps the signal clean—reviewers won’t learn to ign"
+   "last_position": "Run PR-Agent in shadow mode on *all* PRs—open and merged—for two weeks. This catches unsafe changes before they merge wh"
   },
   {
    "id": "accessibility-lead",
    "name": "Access",
    "dept": "accessibility",
    "role": "lead",
-   "turns_7d": 37,
-   "rooms_7d": 37,
+   "turns_7d": 38,
+   "rooms_7d": 38,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Adopt the 2px solid #005fcc focus ring with a 2px #fff outer stroke at 100% opacity for keyboard navigation. T",
+   "last_position": "DECISION: Adopt the 2.5px solid #005fcc focus ring with a 0.75px white stroke at 60% opacity. Result: a focus ring that ",
    "proposed": 31,
    "shipped": 31
   },
@@ -313,6 +313,19 @@
    "proposed": 2
   },
   {
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
+   "role": "checker",
+   "turns_7d": 22,
+   "rooms_7d": 22,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Shadow mode trains reviewers to dismiss *all* autofeedback as noise, not just false positives—PR-Agent in shadow mode on"
+  },
+  {
    "id": "improve-improver",
    "name": "Overhaul",
    "dept": "improve",
@@ -326,17 +339,32 @@
    "last_position": "Run PR-Agent in shadow mode on open PRs only for one week, then switch to merged PRs only for the second week—this halve"
   },
   {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 21,
-   "rooms_7d": 21,
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 22,
+   "rooms_7d": 22,
    "engines_used": [
+    "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "PR-Agent in shadow mode on *all* PRs risks training reviewers to ignore *all* autofeedback as noise, not just the unsafe"
+   "last_position": "Run the link-checker tool on the live Mission Control Dashboard to scan for broken links. The report will list all 404s "
+  },
+  {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 22,
+   "rooms_7d": 22,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
   },
   {
    "id": "security-lead",
@@ -351,34 +379,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output is a real-time report confirming container"
-  },
-  {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 21,
-   "rooms_7d": 21,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run the link-checker tool on the live Mission Control Dashboard to scan for broken links. The output will be a list of i"
-  },
-  {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
-   "role": "checker",
-   "turns_7d": 21,
-   "rooms_7d": 21,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
   },
   {
    "id": "links-lead-x",

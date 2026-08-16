@@ -226,6 +226,27 @@ def g_movement():
                              ensure_ascii=False, indent=1), encoding="utf-8")
     recent = [h["done"] for h in hist[-4:]]
     stalled = len(recent) >= 4 and len(set(recent)) == 1        # 4 checks, zero movement
+    # A FLAT done-counter has two very different causes and this check used to conflate them
+    # (2026-08-16): nothing is happening, versus work is being honestly REFUSED because the
+    # department has no task-specific executor. Since the duplicate-evidence rule landed, the
+    # second case is common and expected — reporting it as a bare STALL would make G-M cry wolf
+    # every beat, and a guardrail nobody believes is how the earlier problems stayed hidden.
+    blocked, needs = 0, {}
+    try:
+        b = json.loads((DATA / "excava" / "bus.json").read_text(encoding="utf-8"))
+        for t in b.get("tasks", []):
+            if t.get("status") == "blocked":
+                blocked += 1
+                k = str(t.get("blocked_needs", "?"))[:60]
+                needs[k] = needs.get(k, 0) + 1
+    except Exception:
+        pass
+    top = max(needs.items(), key=lambda kv: kv[1])[0] if needs else ""
+    if stalled and blocked:
+        return _ok("G-M", "Work is moving (not all at 0)", False,
+                   f"{done} tasks done, {depts} departments moving — no new completions in the last "
+                   f"4 beats, but {blocked} task(s) are HONESTLY BLOCKED, most on: {top}. "
+                   "Not a silent stall — the work is refused, named, and waiting.", "warn")
     return _ok("G-M", "Work is moving (not all at 0)", not stalled,
                f"{done} tasks done, {depts} departments moving" + (" — STALLED (no new completions in the last 4 beats)" if stalled else ""),
                "warn")

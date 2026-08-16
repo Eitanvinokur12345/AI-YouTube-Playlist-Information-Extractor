@@ -63,7 +63,11 @@ OURS_WHITELIST = [
     "data/safety.json",
     "data/guardrails_status.json",
     "data/excava/state.json",
-    "data/excava/bus.json",
+    # data/excava/bus.json was HERE until 2026-08-16 and did not belong: it is not a regenerated
+    # readout, it is a read-modify-write ACCUMULATING store, so "take ours" silently discarded
+    # every task the other lane had enqueued or completed since the checkout. Caught live while
+    # merging main into a feature branch — "ours" would have dropped 15 real tasks. Now handled by
+    # resolve_bus_union() below, on the same reasoning as the designs/jsonl cases.
     "data/excava/rooms.json",
     "data/excava/leases.json",
     "data/excava/pulse.json",
@@ -154,6 +158,53 @@ def resolve_designs_union(conflicts: list) -> list:
     return [target]
 
 
+def resolve_bus_union(conflicts: list) -> list:
+    """Union-merge data/excava/bus.json by task id — the task bus is the system's work record, and
+    losing a row here loses real work.
+
+    Every lane does read-modify-write on the WHOLE file, so two lanes that overlap already race at
+    the file level; resolving the resulting conflict with "take ours" turned that race into
+    guaranteed loss of the other lane's rows. Union by id keeps both sides' tasks. Where the same
+    id exists on both sides, the row with the newer `updated_at` wins, EXCEPT that a terminal
+    'blocked' is never overwritten by a stale 'queued'/'working' — a block records a considered
+    judgement that some department cannot do this work, and silently un-blocking it would put the
+    task back into the loop that produced it.
+    """
+    target = "data/excava/bus.json"
+    if target not in conflicts:
+        return []
+
+    def _side(stage):
+        try:
+            return json.loads(_git(["show", f":{stage}:{target}"]).stdout)
+        except Exception:
+            return {"tasks": []}
+
+    ours, theirs = _side(2), _side(3)
+    merged: dict = {}
+    for side in (theirs.get("tasks") or [], ours.get("tasks") or []):
+        for t in side:
+            tid = t.get("id")
+            if tid is None:
+                continue
+            cur = merged.get(tid)
+            if cur is None:
+                merged[tid] = t
+                continue
+            if cur.get("status") == "blocked" and t.get("status") != "blocked":
+                continue                                   # never un-block from a stale row
+            if t.get("status") == "blocked" or str(t.get("updated_at", "")) > str(cur.get("updated_at", "")):
+                merged[tid] = t
+    out = dict(theirs)
+    out["tasks"] = sorted(merged.values(), key=lambda t: str(t.get("created_at", "")))
+    seen_ids = {m.get("id") for m in (theirs.get("migrations") or [])}
+    out["migrations"] = (theirs.get("migrations") or []) + [
+        m for m in (ours.get("migrations") or []) if m.get("id") not in seen_ids]
+    (ROOT / target).write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+    _git(["add", target])
+    return [target]
+
+
 def resolve() -> bool:
     """Resolve every conflicted file this module recognizes, then attempt the merge commit.
     Returns True if the commit succeeded (merge fully resolved), False otherwise (real conflict
@@ -169,6 +220,7 @@ def resolve() -> bool:
         handled.update(resolve_whitelist(conflicts))
         handled.update(resolve_jsonl_union(conflicts))
         handled.update(resolve_designs_union(conflicts))
+        handled.update(resolve_bus_union(conflicts))
         remaining = [f for f in conflicts if f not in handled]
         if remaining:
             print(f"unresolved conflict outside the maintained trust list: {remaining}", file=sys.stderr)

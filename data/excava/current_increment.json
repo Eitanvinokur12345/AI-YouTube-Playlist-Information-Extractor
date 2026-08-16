@@ -1,13 +1,15 @@
 {
- "title": "harden git_safe against the fires-145/146/147 silent push hang",
+ "title": "all 9 REAL_TOOL scripts task-aware (src/task_focus.py)",
  "kind": "product",
- "plan": "",
- "started_at": "2026-08-09T08:20:00+00:00",
+ "started_at": "2026-08-16T13:46:27.083677+00:00",
  "fires": 1,
- "notes": [
-  "also caught+documented a revert_ci_churn() data-loss trap live, mid-fire"
- ],
  "status": "done",
- "finished_at": "2026-08-09T08:30:00+00:00",
- "outcome": "shipped: timeout-bounded git_safe subprocess calls (_git() + sync()'s raw pull --rebase) + progress prints through push()/ship; verified against a real live 90s network hang during testing; documented the CI_CHURN/data-loss trap this fire hit in revert_ci_churn()'s own docstring"
+ "finished_at": "2026-08-16T13:46:27.083677+00:00",
+ "outcome": "9/9 tools take --task; shared selector in src/task_focus.py; 4 bugs caught in test (last-hash-only dedup, power_scan print order, strict argparse, empty design category). Verified 9 distinct tasks across 5 depts all complete on distinct evidence (was 3). Guardrails 19/21, 0 critical.",
+ "carry_over_next": "1) done_criteria is STILL never checked against tool output - a task can complete on focused evidence that does not actually satisfy what the task asked for. 2) Free-model roster swap + model-ID self-heal (needs egress or a CI run; blocked in this session). 3) SPEED: proposed to Eitan - one scan per beat serving many focused reports, batch tick, collect_designs url-check cache.",
+ "notes": [
+  "measured: collect_designs 15.0s is the only real hot spot; 6 of 9 tools are sub-second",
+  "bus I/O is 8ms read / 22ms serialize - NOT the bottleneck",
+  "throughput bottleneck is one-task-per-department-per-beat, not CPU"
+ ]
 }

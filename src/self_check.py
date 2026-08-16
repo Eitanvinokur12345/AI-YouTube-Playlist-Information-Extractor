@@ -184,7 +184,41 @@ def _no_secrets(rx):
     return (not hits, "clean" if not hits else f"LEAK in {hits[:3]}")
 
 
-def main() -> int:
+STOP = {"the", "a", "an", "and", "or", "for", "to", "of", "in", "on", "is", "are", "be", "it",
+        "this", "that", "with", "at", "by", "from", "up", "all", "any", "no", "not", "every",
+        "improve", "improvement", "fix", "check", "task", "excava", "run", "make", "new"}
+
+
+def select_checks(task_text: str, checks) -> tuple[list, str]:
+    """Which checks is THIS task about? Returns (subset, how_it_was_chosen).
+
+    WHY (2026-08-16): self_check took no task, so every run printed the identical line and 153
+    different `improve` tasks were closed on that one string. A tool that cannot be pointed at
+    anything cannot do the task in front of it. Resolution order — an explicit q-number in the
+    task beats keyword overlap, and no match is reported honestly as 'unfocused' rather than
+    silently pretending the whole-suite run addressed the task."""
+    t = (task_text or "").lower()
+    if not t.strip():
+        return list(checks), "no task given — full suite"
+    ns = {int(m) for m in re.findall(r"(?:selfcheck-q|\bq|#)(\d{1,2})\b", t)}
+    hit = [c for c in checks if c[0] in ns]
+    if hit:
+        return hit, f"explicit q-number(s) {sorted(ns)} in the task"
+    words = {w for w in re.findall(r"[a-z]{3,}", t) if w not in STOP}
+    scored = []
+    for c in checks:
+        q = {w for w in re.findall(r"[a-z]{3,}", c[1].lower()) if w not in STOP}
+        overlap = words & q
+        if overlap:
+            scored.append((len(overlap), c, overlap))
+    if scored:
+        scored.sort(key=lambda x: -x[0])
+        top = [s for s in scored if s[0] == scored[0][0]][:4]
+        return [s[1] for s in top], ("keyword overlap " + "/".join(sorted(top[0][2])))
+    return [], "UNFOCUSED — no check matches this task"
+
+
+def main(task_text: str = "") -> int:
     ctx = build_context()
     now = datetime.now(timezone.utc).isoformat()
     results, score = [], 0
@@ -232,9 +266,30 @@ def main() -> int:
               open(DATA / "improvement_tasks.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 
     fails = [r["n"] for r in results if r["answer"] == "no"]
+    # The FULL suite always runs and always writes the full report — a task must never be able to
+    # corrupt self_check.json into a partial score. The task only steers what is REPORTED.
+    if task_text:
+        subset, how = select_checks(task_text, CHECKS())
+        by_n = {r["n"]: r for r in results}
+        if not subset:
+            print(f"self-check[UNFOCUSED]: no check covers this task ({how}); suite {score}/50 — "
+                  "this task needs a different tool, not another whole-suite run")
+            return 0
+        parts = []
+        for n, q, _fn in subset:
+            r = by_n.get(n, {})
+            parts.append(f"q{n} {r.get('answer', '?').upper()} ({q[:44]}: {str(r.get('evidence', ''))[:60]})")
+        still = [n for n, _q, _f in subset if by_n.get(n, {}).get("answer") == "no"]
+        print(f"self-check[{how}]: " + " | ".join(parts)
+              + f" || {'STILL FAILING ' + str(still) if still else 'all targeted checks PASS'}"
+              + f" | suite {score}/50, {added} new, {closed} resolved")
+        return 0
     print(f"self-check: {score}/50 (mechanical) | {added} new tasks | {closed} resolved | failing Qs: {fails}")
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    import argparse
+    _ap = argparse.ArgumentParser(description="mechanical self-check; --task focuses the report")
+    _ap.add_argument("--task", default="", help="task title/detail to focus this run on")
+    raise SystemExit(main(_ap.parse_args().task))

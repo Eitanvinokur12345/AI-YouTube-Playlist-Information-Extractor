@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-16T05:04:33.358929+00:00",
+ "generated_at": "2026-08-16T07:12:49.386758+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,13 +8,13 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 177,
+   "turns_7d": 178,
    "rooms_7d": 81,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Risk: Auto-generating contradictions *before* edits turns the tool into a gauntlet editors must navigate—not a scalpel t"
+   "last_position": "Auto-generating contradictions *before* edits turns the tool into a gatekeeper that preempts human judgment, not a colla"
   },
   {
    "id": "transcripts-w1",
@@ -50,70 +50,70 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 76,
-   "rooms_7d": 31,
+   "turns_7d": 77,
+   "rooms_7d": 32,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Auto-generate the top 3 contradictions *before* edits, then let editors override or refine them—this balan"
+   "last_position": "Run BloodHound-MCP on the full earnings call transcript to extract all contradictions between executive statements and r"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 74,
-   "rooms_7d": 29,
+   "turns_7d": 75,
+   "rooms_7d": 30,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Auto-generating contradictions before edits risks embedding bias—if the AI flags weak spots based on its training data, "
+   "last_position": "Verdict: Chisel’s plan is MISSION work—BloodHound-MCP can map contradictions from the full transcript. Fix: Specify \"exe"
   },
   {
    "id": "accessibility-w1",
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 71,
-   "rooms_7d": 36,
+   "turns_7d": 72,
+   "rooms_7d": 37,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Use a 3px solid #005fcc focus ring with a 1px #005fcc stroke at 50% opacity. This guarantees WCAG 2.2 AA contrast on eve"
+   "last_position": "Add a 3px solid #005fcc focus ring with a 1px white stroke at 50% opacity for keyboard navigation. This ensures high con"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 71,
-   "rooms_7d": 36,
+   "turns_7d": 72,
+   "rooms_7d": 37,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 1px #005fcc stroke at 50% opacity risks failing WCAG 2.2 AA contrast on *very* light backgrounds because the semi-tr"
+   "last_position": "The 3px solid #005fcc focus ring with a white stroke risks failing WCAG 2.2 AA on *very* light backgrounds where the whi"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 66,
+   "turns_7d": 67,
    "rooms_7d": 27,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Mandate that eA9Zf auto-generates the top 3 contradictions from every transcript *before* editors review t"
+   "last_position": "**Decision:** Mandate that eA9Zf auto-generates the top 3 contradictions *before* editors touch the transcript, then let"
   },
   {
    "id": "visualization-w1",
@@ -174,13 +174,13 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 40,
+   "turns_7d": 41,
    "rooms_7d": 21,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on *all* PRs—open and merged—for two weeks. This gives us real data on its impact without ri"
+   "last_position": "Run PR-Agent in shadow mode only on merged PRs for one week, logging autofeedback for all PRs. This keeps active reviews"
   },
   {
    "id": "accessibility-lead",
@@ -196,7 +196,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Adopt the 2px solid #005fcc focus ring with a 2px #fff outer stroke at 100% opacity for keyboard navigation. T",
    "proposed": 32,
-   "shipped": 31
+   "shipped": 32
   },
   {
    "id": "memory-w1",
@@ -298,6 +298,19 @@
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a raw list o"
   },
   {
+   "id": "improve-improver",
+   "name": "Overhaul",
+   "dept": "improve",
+   "role": "improver",
+   "turns_7d": 21,
+   "rooms_7d": 21,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run PR-Agent in shadow mode on merged PRs only, but log the autofeedback for *all* PRs—open or merged—so we still captur"
+  },
+  {
    "id": "security-lead",
    "name": "Bastion",
    "dept": "security",
@@ -338,19 +351,6 @@
    ],
    "positions_held": 30,
    "last_position": "Shadow mode trains reviewers to dismiss *all* autofeedback as noise, not just false positives—risking permanent erosion "
-  },
-  {
-   "id": "improve-improver",
-   "name": "Overhaul",
-   "dept": "improve",
-   "role": "improver",
-   "turns_7d": 20,
-   "rooms_7d": 20,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on *only open PRs* but log the merged PRs’ autofeedback to a separate, low-priority channel—"
   },
   {
    "id": "security-w1",

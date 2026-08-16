@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-16T16:42:10.634771+00:00",
+ "generated_at": "2026-08-16T17:34:14.380974+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -86,10 +86,10 @@
     "tier": "fast"
    },
    "support": {
-    "engine": "glm",
-    "model": "z-ai/glm-4.5-air:free",
-    "lineage": "glm",
-    "tier": "grounded"
+    "engine": "kimi",
+    "model": "moonshotai/kimi-k2:free",
+    "lineage": "kimi",
+    "tier": "reasoning"
    }
   },
   {
@@ -101,14 +101,29 @@
     "tier": "fast"
    },
    "support": {
-    "engine": "nvidia",
-    "model": "meta/llama-3.3-70b-instruct",
-    "lineage": "llama",
+    "engine": "glm",
+    "model": "z-ai/glm-4.5-air:free",
+    "lineage": "glm",
     "tier": "grounded"
    }
   },
   {
    "id": "C",
+   "lead": {
+    "engine": "deepseek",
+    "model": "deepseek/deepseek-chat-v3-0324:free",
+    "lineage": "deepseek",
+    "tier": "reasoning"
+   },
+   "support": {
+    "engine": "cerebras",
+    "model": "llama3.1-8b",
+    "lineage": "llama",
+    "tier": "fast"
+   }
+  },
+  {
+   "id": "D",
    "lead": {
     "engine": "gh-models",
     "model": "openai/gpt-4o-mini",
@@ -121,33 +136,18 @@
     "lineage": "llama",
     "tier": "fast"
    }
-  },
-  {
-   "id": "D",
-   "lead": {
-    "engine": "gemini",
-    "model": "gemini-2.0-flash",
-    "lineage": "gemini",
-    "tier": "grounded"
-   },
-   "support": {
-    "engine": "cerebras",
-    "model": "llama3.1-8b",
-    "lineage": "llama",
-    "tier": "fast"
-   }
   }
  ],
  "debate": [
   {
+   "engine": "groq",
+   "lineage": "llama",
+   "model": "llama-3.3-70b-versatile"
+  },
+  {
    "engine": "mistral",
    "lineage": "mistral",
    "model": "mistral-small-latest"
-  },
-  {
-   "engine": "nvidia",
-   "lineage": "llama",
-   "model": "meta/llama-3.3-70b-instruct"
   }
  ],
  "debate_lineages": [
@@ -155,7 +155,7 @@
   "mistral"
  ],
  "spoke_today": {
-  "mistral": 76,
+  "mistral": 81,
   "llama": 2
  },
  "note": "a BRAIN = a benchmark-ranked LEAD model + a distinct-lineage SUPPORT model (levels of support, real fallback); rank is EARNED by measured quality, not the plan's list. The lineage roster below shows every model that can be a lead/support; GLM/DeepSeek/Kimi need OPENROUTER_API_KEY (§12)."

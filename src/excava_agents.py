@@ -210,8 +210,45 @@ REAL_TOOL = {"security": "src.security_scan", "improve": "src.self_check",
              "visualization": "src.liveliness_scan"}  # 2026-07-27: broken-asset/placeholder/empty-data lint over EXCAVA's own shell
 
 
-def _run_real_tool(dept: str) -> dict | None:
-    """Run the department's real tool with a bounded timeout; return its REAL output tail."""
+EVIDENCE_STATE = "excava/tool_evidence.json"   # _jload resolves names against DATA/, not DATA/excava
+
+
+def _evidence_seen(dept: str, tail: str) -> dict | None:
+    """The task this exact tool output ALREADY closed, or None if this output is new.
+
+    WHY (measured 2026-08-16): 797 of the 892 surviving completions — 89% — were closed by output
+    BYTE-IDENTICAL to a completion that came before them. 153 different `improve` tasks all closed
+    on the same string: "self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved". Only ~95 of
+    1161 recorded completions were ever distinct work.
+
+    The cause is structural: _run_real_tool takes a DEPARTMENT, never the task, so it cannot do the
+    task in front of it — it re-runs one dept-wide script and whatever was claimed gets stamped.
+    Identical output means the second task learned nothing and changed nothing, so it received no
+    work. Evidence may close a task exactly ONCE."""
+    import hashlib
+    h = hashlib.sha256(tail.encode("utf-8", "replace")).hexdigest()[:16]
+    st = _jload(EVIDENCE_STATE, {}) or {}
+    prev = (st.get(dept) or {})
+    return {"hash": h, "prior": prev} if prev.get("hash") == h else {"hash": h, "prior": None}
+
+
+def _evidence_record(dept: str, h: str, task_id: str) -> None:
+    from datetime import datetime, timezone          # module-level import is inside _syslog only
+    st = _jload(EVIDENCE_STATE, {}) or {}
+    st[dept] = {"hash": h, "task": task_id,
+                "at": datetime.now(timezone.utc).isoformat()}
+    p = DATA / EVIDENCE_STATE
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(st, ensure_ascii=False, indent=1), encoding="utf-8")
+
+
+def _run_real_tool(dept: str, task: dict | None = None) -> dict | None:
+    """Run the department's real tool with a bounded timeout; return its REAL output tail.
+
+    `task` is accepted so the run is TRACEABLE to the task it was meant to serve. It is not yet
+    passed INTO the tool — none of the REAL_TOOL scripts take a task argument, which is the deeper
+    half of this defect and is recorded as the next carry-over. Tracing it is what makes the
+    duplicate-evidence check possible in the meantime."""
     import subprocess
     import sys
     mod = REAL_TOOL.get(dept)
@@ -222,7 +259,8 @@ def _run_real_tool(dept: str) -> dict | None:
                            capture_output=True, text=True, timeout=90)
         lines = [ln for ln in (r.stdout or "").strip().splitlines() if ln.strip()]
         tail = lines[-1][:220] if lines else ((r.stderr or "").strip()[:160] or "(no output)")
-        return {"ok": r.returncode == 0 and bool(lines), "tool": mod, "tail": tail}
+        return {"ok": r.returncode == 0 and bool(lines), "tool": mod, "tail": tail,
+                "for_task": (task or {}).get("id", "")}
     except subprocess.TimeoutExpired:
         return {"ok": False, "tool": mod, "tail": "timed out (>90s) — heavy lane runs in its own CI"}
     except Exception as e:
@@ -304,11 +342,23 @@ def _work_generic(task: dict) -> dict:
                 "reason": f"SYSCALL MISMATCH — this task asks for work outside what {dept}'s tool "
                           f"({tool}) does; refusing to run the wrong tool and stamp it done. "
                           "Escalate to the right lane or the owner."}
-    real = _run_real_tool(dept)                          # FIRST: try to actually DO the work
+    real = _run_real_tool(dept, task)                    # FIRST: try to actually DO the work
     if real and real["ok"]:
-        _syslog(dept, real["tool"], task, True, "ran-ok")
         friendly = real["tool"].split(".")[-1].replace("_", " ")   # 'src.self_check' -> 'self check'
-        return {"kind": "complete", "result": f"Ran the {friendly}. {real['tail']}"}
+        ev = _evidence_seen(dept, real["tail"])
+        if ev["prior"]:      # this exact output already closed another task — it cannot close two
+            _syslog(dept, real["tool"], task, True, "refused-duplicate-evidence")
+            return {"kind": "blocked",
+                    "needs": f"a task-specific executor for {dept} "
+                             f"({real['tool']} takes no task and re-ran identically)",
+                    "result": f"Ran the {friendly}, but its output is BYTE-IDENTICAL to the run "
+                              f"that closed {ev['prior'].get('task', 'an earlier task')} — nothing "
+                              f"new was learned or changed, so this task got no work. Evidence: "
+                              f"{real['tail'][:120]}"}
+        _syslog(dept, real["tool"], task, True, "ran-ok")
+        _evidence_record(dept, ev["hash"], task.get("id", ""))
+        return {"kind": "complete", "evidence": ev["hash"],
+                "result": f"Ran the {friendly}. {real['tail']}"}
     slug = re.sub(r"[^a-z0-9]+", "-", str(task.get("title", tid)).lower())[:48].strip("-") or tid
     body, src = "", "task-summary (no engine)"
     try:
@@ -362,6 +412,38 @@ def roster(reg: dict | None = None) -> str:
     return "\n".join(lines)
 
 
+def evidence_report() -> str:
+    """VISIBLE: how many completions were closed by evidence already used on an earlier task.
+
+    This is the number the duplicate-evidence rule exists to drive down. It reads history, so it
+    keeps scoring the completions recorded BEFORE the rule existed — the backlog is not rewritten
+    (only the 269 outright false completions were, on 2026-08-16); these are merely counted, so the
+    line moves only as new, genuinely distinct work lands."""
+    import collections
+    try:
+        b = json.loads((DATA / "excava" / "bus.json").read_text(encoding="utf-8"))
+    except Exception:
+        return "evidence: no bus to inspect"
+    done = [t for t in b.get("tasks", []) if t.get("status") == "done"]
+    per = collections.defaultdict(collections.Counter)
+    for t in done:
+        per[t.get("department") or "(none)"][str(t.get("result", ""))] += 1
+    rows, dup_total = [], 0
+    for d, c in sorted(per.items()):
+        dup = sum(n - 1 for n in c.values() if n > 1)
+        dup_total += dup
+        if dup:
+            rows.append(f"  {d:<14} {sum(c.values()):>4} done · {dup:>4} closed on REUSED evidence "
+                        f"({round(100 * dup / max(sum(c.values()), 1))}%)")
+    n = len(done)
+    distinct = n - dup_total
+    head = (f"COMPLETION EVIDENCE — {distinct} of {n} completions ({round(100 * distinct / max(n, 1))}%) "
+            f"are backed by output no earlier task already used.")
+    return "\n".join([head, ""] + rows + ["",
+            f"  {dup_total} reused-evidence closes remain in history (counted, never rewritten).",
+            "  Going forward tick() refuses them: identical output closes exactly ONE task."])
+
+
 def tick(department: str, reg: dict) -> tuple[str, str] | None:
     """One Worker-contract turn for a department: claim → work → complete/handoff/fail.
     Returns (one-line summary, outcome) for the beat log + usage accounting, or None."""
@@ -392,7 +474,9 @@ if __name__ == "__main__":          # python -m src.excava_agents --roster
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     except Exception:
         pass
-    if "--roster" in sys.argv:
+    if "--evidence" in sys.argv:
+        print(evidence_report())
+    elif "--roster" in sys.argv:
         print(roster())
     else:
         reg = load_registry()

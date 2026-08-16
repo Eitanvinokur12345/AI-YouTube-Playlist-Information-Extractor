@@ -1,16 +1,17 @@
 {
- "title": "executor honesty: a non-completion can no longer be stamped DONE",
+ "title": "completion evidence: identical tool output may close exactly ONE task",
  "kind": "product",
- "plan": "Owner audit 2026-08-16 chose 'fix the executor now'. Root cause: tick() had only two outcomes (done/fail), so _work_generic's BLOCKED admission and _work_creators' count readout both returned kind='complete'. Add a terminal 'blocked' outcome, wire creators to the real package builder, and retro-correct the inflated history.",
- "started_at": "2026-08-16T13:07:34.607050+00:00",
+ "plan": "Carry-over half of the executor fix. _run_real_tool(dept) never receives the task, so one dept-wide script re-runs and whatever was claimed gets stamped done.",
+ "started_at": "2026-08-16T13:16:14.575840+00:00",
  "fires": 1,
  "notes": [
-  "153 'BLOCKED - watch needs video capacity' admissions were status=done",
-  "116 creators count-readouts were status=done while the store held 1 creation since 2026-07-03",
-  "creators worker never called assemble_packages() - the builder existed, it just wasn't wired"
+  "MEASURED: 797 of 892 surviving completions (89%) were byte-identical to an earlier close",
+  "153 improve tasks all closed on: 'self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved'",
+  "only ~95 of the original 1161 recorded completions were ever distinct work",
+  "mining sits at 13% reuse - a real control: varied work is not punished by the rule"
  ],
  "status": "done",
- "finished_at": "2026-08-16T13:07:34.607050+00:00",
- "outcome": "shipped: bus.block() terminal status + snapshot exposes blocked count/reasons; _work_generic BLOCKED and planned-only paths return kind='blocked'; _work_creators calls assemble_packages() and is judged on the STORE delta (built 2 real self-tested packages on test runs, 7->8); 269 historical false completions reclassified with prior_status kept + backup. done 1161->892, blocked 269.",
- "carry_over_next": "Task-specific execution: _run_real_tool(dept) never receives the task, so one generic dept tool run closes ANY task in that dept (153 improve tasks all closed by the same self_check run). done_criteria is never checked. THIS is the remaining half of the executor fix."
+ "finished_at": "2026-08-16T13:16:14.575840+00:00",
+ "outcome": "shipped: per-department evidence hash; a tool run whose output matches the run that closed the previous task returns kind='blocked' naming the missing task-specific executor. Visible via `python -m src.excava_agents --evidence` (95/892 = 11% distinct). History counted, NOT rewritten. Verified: 1st improve task completes, 2nd identical run blocks, security keeps its own slot. Guardrails 20/21, 0 critical.",
+ "carry_over_next": "The tools still take no task argument. Evidence-dedup only REFUSES the false close; it does not make the work task-specific. Next: give REAL_TOOL scripts a task parameter (start with src.self_check) so a claimed task steers the run, and check the task's done_criteria against the output before completing."
 }

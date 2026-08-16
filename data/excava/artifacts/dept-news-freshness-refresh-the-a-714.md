@@ -1,14 +1,16 @@
 # news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
 
-> Decision artifact · room `dept-news-freshness-refresh-the-a-714` (dept) · 2026-07-31T01:17:05.404792+00:00
-> Participants: Scoop, Wire · synthesized by nvidia/meta/llama-3.3-70b-instruct
+> Decision artifact · room `dept-news-freshness-refresh-the-a-714` (dept) · 2026-08-16T22:51:19.138823+00:00
+> Participants: Scoop, Factcheck, Wire · synthesized by mistral/mistral-small-latest
 
-**Decision:** Refresh the AI-news digest from the newest official sources.
-1. **Plan:**
-    1. Fetch the latest AI-news digest from OpenAI’s official blog.
-    2. Retrieve the newest developments from Microsoft’s AI announcements page.
-    3. Compile a concise, plain-language summary of the top three newest developments.
-    4. Include clear decisions and trade-offs in the summary.
-    5. Publish the AI-headlines digest.
-    6. Update the digest regularly to ensure freshness.
-**What changed:** The AI-news digest will now include the top three newest developments from OpenAI and Microsoft.
+**Decision:**
+
+**Plan:**
+1. Open OpenAI’s official blog feed and extract the latest AI-related post, including its publication date.
+2. Verify the freshness of the OpenAI post by cross-checking the publication date.
+3. Add the verified OpenAI post (Dreaming Memory) to the AI-headlines digest.
+4. Include NoteGPT (YouTube video summarizer) and NVIDIA’s latest AI chip specs in the digest.
+5. Publish the AI-headlines digest for 2024-05-30 with the three verified items.
+6. Ensure the digest is formatted as a GitHub markdown list.
+
+**What changed:** Added publication date verification for OpenAI’s post to ensure freshness.

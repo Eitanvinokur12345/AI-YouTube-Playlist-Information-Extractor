@@ -1,16 +1,18 @@
 # accessibility: Make EXCAVA usable by EVERYONE — contrast, mobile/touch, reduced-motion, keyboard nav, scr
 
-> Decision artifact · room `dept-accessibility-make-excava-us-865` (dept) · 2026-07-31T21:20:44.107574+00:00
+> Decision artifact · room `dept-accessibility-make-excava-us-865` (dept) · 2026-08-17T19:10:35.160744+00:00
 > Participants: Ramp, Reader, Access · synthesized by mistral/mistral-small-latest
 
-**Decision:** Use a 3px solid system accent ring (#007AFF/macOS, #0066CC/Windows) with a 1px white inset (total 4px) for focus indicators.
+**Decision:**
+Adopt a hybrid focus ring solution for keyboard navigation.
 
 **Plan:**
-1. Implement the 3px focus ring with 1px white inset in the design system.
-2. Test contrast ratios on live UI samples across light, dark, semi-transparent, and patterned backgrounds.
-3. Validate with screen readers and keyboard navigation for visibility and usability.
-4. Document the focus ring style in the accessibility guidelines.
-5. Update component libraries and design tokens to reflect the new focus indicator.
-6. Conduct user testing with participants who rely on keyboard navigation.
+1. Set a **2.5px solid #005fcc focus ring** (4.5:1 contrast on white) as the base.
+2. Add a **15% opacity glow at 2px offset** to enhance visibility on patterned backgrounds.
+3. Test the ring on EXCAVA’s actual backgrounds to confirm visibility (especially on mobile/anti-aliased edges).
+4. Ensure the glow does not distort or mute on textures with blues near #005fcc.
+5. Document the decision in the accessibility guidelines for future reference.
+6. Implement the solution in the next sprint and validate with keyboard users.
 
-**What changed:** Focus ring style updated to a 3px system accent with 1px white inset for consistent visibility.
+**What changed:**
+Replaced the 4px ring with a thinner 2.5px ring + subtle glow for better adaptability.

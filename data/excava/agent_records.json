@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-17T22:29:31.018443+00:00",
+ "generated_at": "2026-08-17T22:54:54.778622+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,27 +8,55 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 175,
-   "rooms_7d": 77,
+   "turns_7d": 176,
+   "rooms_7d": 78,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk isn’t the 30-second delay—it’s that auto-generating contradictions forces editors to chase false positives"
+   "last_position": "The glossary won’t stop contradictions—it just moves the fight to who gets to define the terms. The real risk is that Le"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 130,
-   "rooms_7d": 84,
+   "turns_7d": 131,
+   "rooms_7d": 85,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The AI Executive Assistant (eA9Zf) should auto-generate the top 3 contradictions from the full transcript of every pendi"
+   "last_position": "The single best cross-department improvement is to standardize a shared glossary of terms for AI-generated content acros"
+  },
+  {
+   "id": "accessibility-w1",
+   "name": "Ramp",
+   "dept": "accessibility",
+   "role": "doer",
+   "turns_7d": 84,
+   "rooms_7d": 42,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Use a static 4px ring at 3:1 contrast. The static ring respects reduced-motion needs and avoids vestibular triggers, whi"
+  },
+  {
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
+   "role": "checker",
+   "turns_7d": 84,
+   "rooms_7d": 42,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The static 4px ring at 3:1 contrast risks disappearing on patterned backgrounds where the ring blends into the texture. "
   },
   {
    "id": "analysis-w1",
@@ -43,34 +71,6 @@
    ],
    "positions_held": 30,
    "last_position": "Decision: Require eA9Zf to auto-generate the top 3 contradictions from every pending video transcript before editors rev"
-  },
-  {
-   "id": "accessibility-w1",
-   "name": "Ramp",
-   "dept": "accessibility",
-   "role": "doer",
-   "turns_7d": 83,
-   "rooms_7d": 42,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Pick the 2px solid ring with 4px outer glow at 5:1 contrast. A 2px ring keeps the focus indicator visible without overwh"
-  },
-  {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 83,
-   "rooms_7d": 42,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "The 2px ring with 4px glow fails on reduced-motion: the glow pulses, which triggers vestibular disorders. Use a static 4"
   },
   {
    "id": "analysis-checker",
@@ -120,26 +120,26 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 54,
-   "rooms_7d": 27,
+   "turns_7d": 55,
+   "rooms_7d": 28,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add RealVisXL v1.1’s face model to EXCAVA’s pipeline first. It regenerates lost facial features instead of just sharpeni"
+   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It regenerates details in the right places—faces"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 54,
-   "rooms_7d": 27,
+   "turns_7d": 55,
+   "rooms_7d": 28,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "RealVisXL v1.1’s face model risks overfitting to synthetic faces—EXCAVA’s real-world footage may degrade if the model ha"
+   "last_position": "InstantX-ComfyUI’s depth-aware upscaler won’t fix EXCAVA’s face fidelity drop—it only sharpens existing noise, not the u"
   },
   {
    "id": "memory-w1",
@@ -266,7 +266,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Run InstantX-ComfyUI’s depth-aware upscaler on face crops first—if it recovers lost fidelity without artifacts",
    "proposed": 19,
-   "shipped": 18
+   "shipped": 19
   },
   {
    "id": "visualization-lead",
@@ -517,6 +517,20 @@
    "last_position": "Verdict: The action is valid MISSION work. Fix: Ensure the extracted post includes the publication date for freshness ve"
   },
   {
+   "id": "creators-lead",
+   "name": "Nova",
+   "dept": "creators",
+   "role": "lead",
+   "turns_7d": 5,
+   "rooms_7d": 5,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Forge drafts the \"Auto-Summarize\" UGC package for Skill Creator with a clear scope: a lightweight npm module tha"
+  },
+  {
    "id": "creators-checker",
    "name": "Vet",
    "dept": "creators",
@@ -528,20 +542,6 @@
    ],
    "positions_held": 5,
    "last_position": "Verdict: This is valid MISSION work—building a labeled npm package with tests fits the creators' task of building packag"
-  },
-  {
-   "id": "creators-lead",
-   "name": "Nova",
-   "dept": "creators",
-   "role": "lead",
-   "turns_7d": 4,
-   "rooms_7d": 4,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 29,
-   "last_position": "ACTION: Forge drafts the \"Auto-Summarize\" UGC package for Skill Creator with a \"Created by EXCAVA\" label and test file."
   },
   {
    "id": "memory-lead",

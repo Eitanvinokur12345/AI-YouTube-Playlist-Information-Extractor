@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-17T10:49:02.263613+00:00",
+ "generated_at": "2026-08-17T11:39:33.794279+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -86,6 +86,21 @@
     "tier": "fast"
    },
    "support": {
+    "engine": "gh-models",
+    "model": "openai/gpt-4o-mini",
+    "lineage": "gpt",
+    "tier": "grounded"
+   }
+  },
+  {
+   "id": "B",
+   "lead": {
+    "engine": "groq",
+    "model": "llama-3.3-70b-versatile",
+    "lineage": "llama",
+    "tier": "fast"
+   },
+   "support": {
     "engine": "gemini",
     "model": "gemini-2.0-flash",
     "lineage": "gemini",
@@ -93,7 +108,7 @@
    }
   },
   {
-   "id": "B",
+   "id": "C",
    "lead": {
     "engine": "kimi",
     "model": "moonshotai/kimi-k2:free",
@@ -108,7 +123,7 @@
    }
   },
   {
-   "id": "C",
+   "id": "D",
    "lead": {
     "engine": "deepseek",
     "model": "deepseek/deepseek-chat-v3-0324:free",
@@ -119,21 +134,6 @@
     "engine": "glm",
     "model": "z-ai/glm-4.5-air:free",
     "lineage": "glm",
-    "tier": "grounded"
-   }
-  },
-  {
-   "id": "D",
-   "lead": {
-    "engine": "groq",
-    "model": "llama-3.3-70b-versatile",
-    "lineage": "llama",
-    "tier": "fast"
-   },
-   "support": {
-    "engine": "gh-models",
-    "model": "openai/gpt-4o-mini",
-    "lineage": "gpt",
     "tier": "grounded"
    }
   }
@@ -149,7 +149,7 @@
   "mistral"
  ],
  "spoke_today": {
-  "mistral": 75,
+  "mistral": 85,
   "llama": 4
  },
  "note": "a BRAIN = a benchmark-ranked LEAD model + a distinct-lineage SUPPORT model (levels of support, real fallback); rank is EARNED by measured quality, not the plan's list. The lineage roster below shows every model that can be a lead/support; GLM/DeepSeek/Kimi need OPENROUTER_API_KEY (§12)."

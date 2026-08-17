@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-17T05:16:49.456878+00:00",
+ "generated_at": "2026-08-17T07:36:41.184028+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,27 +8,27 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 168,
-   "rooms_7d": 70,
+   "turns_7d": 169,
+   "rooms_7d": 71,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Auto-generating contradictions *before* edits embeds bias by pre-framing the conversation—editors will subconsciously sh"
+   "last_position": "The risk isn’t just false positives—it’s that auto-generated contradictions pre-frame the conversation before humans wei"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 123,
-   "rooms_7d": 77,
+   "turns_7d": 124,
+   "rooms_7d": 78,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Mandate that eA9Zf auto-generates the top 3 contradictions *immediately after transcript creation*, then l"
+   "last_position": "Mandate that the AI Executive Assistant (eA9Zf) auto-generates the top 3 contradictions *after* every creative agent run"
   },
   {
    "id": "analysis-w1",
@@ -45,6 +45,34 @@
    "last_position": "**Decision:** Auto-generate the top 3 contradictions *before* edits, then let editors override or refine them during rev"
   },
   {
+   "id": "accessibility-w1",
+   "name": "Ramp",
+   "dept": "accessibility",
+   "role": "doer",
+   "turns_7d": 76,
+   "rooms_7d": 38,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Use a 2px solid #005fcc focus ring with a 1px inner glow at 20% opacity. This keeps the ring crisp on patterned backgrou"
+  },
+  {
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
+   "role": "checker",
+   "turns_7d": 76,
+   "rooms_7d": 38,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The 2px ring with inner glow still risks disappearing on patterned backgrounds when high-contrast mode inverts colors. A"
+  },
+  {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
@@ -57,34 +85,6 @@
    ],
    "positions_held": 30,
    "last_position": "Auto-generating contradictions *before* edits embeds bias by pre-framing the content—editors will subconsciously shape t"
-  },
-  {
-   "id": "accessibility-w1",
-   "name": "Ramp",
-   "dept": "accessibility",
-   "role": "doer",
-   "turns_7d": 75,
-   "rooms_7d": 38,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Use a 3px solid #005fcc focus ring with no glow. It stays crisp on patterned backgrounds and high-contrast modes, which "
-  },
-  {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 75,
-   "rooms_7d": 38,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "The 3px solid ring still risks blending into busy backgrounds on some devices, and it’s too thick for mobile touch targe"
   },
   {
    "id": "transcripts-lead",
@@ -142,6 +142,20 @@
    "last_position": "RealVisXL v1.0’s face model won’t scale—its gain caps at 0.4%, and we’ve already burned cycles proving it. Better: test "
   },
   {
+   "id": "memory-w1",
+   "name": "Graft",
+   "dept": "memory",
+   "role": "doer",
+   "turns_7d": 45,
+   "rooms_7d": 45,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded memory elements. This will produce"
+  },
+  {
    "id": "visualization-w1",
    "name": "Facet",
    "dept": "visualization",
@@ -170,20 +184,6 @@
    "last_position": "Pane: Adaptive contrast adds latency—every pixel shift slows rendering, and in fast graphs, that’s a lag users feel befo"
   },
   {
-   "id": "memory-w1",
-   "name": "Graft",
-   "dept": "memory",
-   "role": "doer",
-   "turns_7d": 44,
-   "rooms_7d": 44,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
-  },
-  {
    "id": "improve-w1",
    "name": "Sprocket",
    "dept": "improve",
@@ -209,8 +209,8 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Adopt a 2.5px solid #005fcc focus ring with a 15% opacity glow at 2px spread. Result: A tested, accessible foc",
-   "proposed": 33,
-   "shipped": 33
+   "proposed": 32,
+   "shipped": 32
   },
   {
    "id": "visual-lead",
@@ -367,6 +367,20 @@
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security post"
   },
   {
+   "id": "mining-w1",
+   "name": "Pick",
+   "dept": "mining",
+   "role": "doer",
+   "turns_7d": 19,
+   "rooms_7d": 19,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a raw list of"
+  },
+  {
    "id": "improve-lead",
    "name": "Ratchet",
    "dept": "improve",
@@ -407,20 +421,6 @@
    ],
    "positions_held": 30,
    "last_position": "Run PR-Agent in shadow mode only on merged PRs flagged as high-risk by a lightweight team rule (e.g., \"changes >5 files\""
-  },
-  {
-   "id": "mining-w1",
-   "name": "Pick",
-   "dept": "mining",
-   "role": "doer",
-   "turns_7d": 18,
-   "rooms_7d": 18,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a raw list of"
   },
   {
    "id": "analysis-lead",

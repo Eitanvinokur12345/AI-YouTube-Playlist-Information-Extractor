@@ -1,15 +1,17 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-440` (dept) · 2026-07-21T14:21:23.364921+00:00
-> Participants: Pick, Boulder · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-440` (dept) · 2026-08-17T05:14:38.915691+00:00
+> Participants: Pick · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+Query Product Hunt’s API for all posts tagged "AI" published in the last 7 days.
 
 **Plan:**
-1. Mine GitHub for repositories tagged "AI" and "research," outputting a ranked list of 10 repos with names, star counts, and brief descriptions of their core focus.
-2. Run a Reddit search for AI-related posts in the last 7 days, returning the top 10 threads with titles, upvotes, and subreddit names.
-3. Cross-reference GitHub repos and Reddit threads to identify overlapping trends or unique insights.
-4. Expand search to include Hacker News (HN) and Product Hunt for additional AI-related discussions and product launches.
-5. Compile findings into a consolidated report highlighting key themes, emerging tools, and community sentiment.
+1. Call Product Hunt’s API endpoint `/posts` with query parameters: `tags=AI`, `created_after=[7 days ago]`, and `order_by=popularity`.
+2. Parse the JSON response to extract `id`, `name`, `tagline`, `votes_count`, and `user` details for each post.
+3. Store results in a structured format (e.g., CSV/JSON) with a timestamp for tracking.
+4. Cross-reference top posts with GitHub/HN/Reddit to validate relevance and avoid duplicates.
+5. Output a filtered list of unique, high-engagement AI launches for further analysis.
 
-**What changed:** Prioritized GitHub mining first, then Reddit, followed by HN and Product Hunt for broader coverage.
+**What changed:**
+Focus narrowed to Product Hunt’s API as the primary source for recent AI launches, replacing broader social media scraping.

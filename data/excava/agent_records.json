@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-17T22:17:48.932771+00:00",
+ "generated_at": "2026-08-17T22:23:42.101880+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,27 +8,27 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 173,
-   "rooms_7d": 75,
+   "turns_7d": 175,
+   "rooms_7d": 77,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The real risk isn’t the 30-second delay—it’s that auto-generating contradictions embeds bias before the brief is even ch"
+   "last_position": "The real risk isn’t the 30-second delay—it’s that auto-generating contradictions forces editors to chase false positives"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 128,
-   "rooms_7d": 82,
+   "turns_7d": 130,
+   "rooms_7d": 84,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Mandate that the AI Executive Assistant (eA9Zf) auto-generates the top 3 contradictions *immediately* after every creati"
+   "last_position": "The AI Executive Assistant (eA9Zf) should auto-generate the top 3 contradictions from the full transcript of every pendi"
   },
   {
    "id": "analysis-w1",
@@ -116,6 +116,32 @@
    "last_position": "I will run Arcads AI Video on the AI marketing content to extract the top 3 contradictions. This will produce a concise "
   },
   {
+   "id": "power-w1",
+   "name": "Gearbox",
+   "dept": "power",
+   "role": "doer",
+   "turns_7d": 54,
+   "rooms_7d": 27,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Add RealVisXL v1.1’s face model to EXCAVA’s pipeline first. It regenerates lost facial features instead of just sharpeni"
+  },
+  {
+   "id": "power-checker",
+   "name": "Torque",
+   "dept": "power",
+   "role": "checker",
+   "turns_7d": 54,
+   "rooms_7d": 27,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "RealVisXL v1.1’s face model risks overfitting to synthetic faces—EXCAVA’s real-world footage may degrade if the model ha"
+  },
+  {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
@@ -128,32 +154,6 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
-  },
-  {
-   "id": "power-w1",
-   "name": "Gearbox",
-   "dept": "power",
-   "role": "doer",
-   "turns_7d": 53,
-   "rooms_7d": 27,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It preselects the sharpest regions to upscale, g"
-  },
-  {
-   "id": "power-checker",
-   "name": "Torque",
-   "dept": "power",
-   "role": "checker",
-   "turns_7d": 53,
-   "rooms_7d": 27,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "InstantX-ComfyUI’s depth-aware upscaler won’t fix EXCAVA’s face fidelity drop—it only sharpens existing detail, not rege"
   },
   {
    "id": "visualization-w1",
@@ -188,15 +188,15 @@
    "name": "Access",
    "dept": "accessibility",
    "role": "lead",
-   "turns_7d": 40,
-   "rooms_7d": 40,
+   "turns_7d": 41,
+   "rooms_7d": 41,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Adopt a 2.5px solid #005fcc focus ring with a 15% opacity glow at 2px offset for keyboard navigation—tested on",
-   "proposed": 27,
+   "last_position": "DECISION: Adopt a 3px solid #005fcc focus ring with a 2px outer glow at 6:1 contrast. Ramp owns delivery of the CSS rule",
+   "proposed": 28,
    "shipped": 27
   },
   {
@@ -436,6 +436,20 @@
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract all contradictions between executive "
   },
   {
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 15,
+   "rooms_7d": 15,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: At 11:55:00, Iris directs Arcads AI Video to extract the top 3 contradictions from the AI marketing video and ou"
+  },
+  {
    "id": "watch-checker",
    "name": "Frame",
    "dept": "watch",
@@ -448,20 +462,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts contradictions from video content."
-  },
-  {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 14,
-   "rooms_7d": 14,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: At 11:54:00, Iris directs Arcads AI Video to extract the top 3 contradictions from the AI marketing video's AUDI"
   },
   {
    "id": "creators-w1",
@@ -517,6 +517,20 @@
    "last_position": "Verdict: The action is valid MISSION work. Fix: Ensure the extracted post includes the publication date for freshness ve"
   },
   {
+   "id": "creators-lead",
+   "name": "Nova",
+   "dept": "creators",
+   "role": "lead",
+   "turns_7d": 4,
+   "rooms_7d": 4,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 29,
+   "last_position": "ACTION: Forge drafts the \"Auto-Summarize\" UGC package for Skill Creator with a \"Created by EXCAVA\" label and test file."
+  },
+  {
    "id": "creators-checker",
    "name": "Vet",
    "dept": "creators",
@@ -528,20 +542,6 @@
    ],
    "positions_held": 4,
    "last_position": "Verdict: This is valid MISSION work—building a labeled npm package with tests fits \"Build PACKAGES.\""
-  },
-  {
-   "id": "creators-lead",
-   "name": "Nova",
-   "dept": "creators",
-   "role": "lead",
-   "turns_7d": 3,
-   "rooms_7d": 3,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 28,
-   "last_position": "ACTION: Forge drafts the \"Auto-Summarize\" UGC package for Skill Creator, producing a labeled npm module with pre-configu"
   },
   {
    "id": "memory-lead",

@@ -1,16 +1,19 @@
 # creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Created by EXCAVA' + tes
 
-> Decision artifact · room `dept-creators-build-packages-enri-220` (dept) · 2026-07-31T16:51:52.941618+00:00
-> Participants: Forge, Nova · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-creators-build-packages-enri-220` (dept) · 2026-08-18T05:05:23.133150+00:00
+> Participants: Forge, Vet, Nova · synthesized by mistral/mistral-small-latest
 
-**Decision:**
+**Decision:** Approve the "UGC Factory" package draft with clarified test scope.
 
 **Plan:**
-1. Forge drafts the "UGC Factory Skill Pack" package for Claude Code, bundling the UGC Factory skill with documentation and examples.
-2. Label the deliverable "Created by EXCAVA" under the Skill Creator department.
-3. Nova tests the package, confirming clean installation and successful execution of the example skill.
-4. Nova marks the deliverable "Created by EXCAVA" as tested.
-5. Enrich relevant tabs with the new package and its documentation.
-6. Draft additional elements as needed to support the package.
+1. Forge finalizes the "UGC Factory" package draft with:
+   - Labeled artifact: "Created by EXCAVA"
+   - Unit tests covering core UGC generation and tab enrichment functions
+   - Explicit test scope in artifact description
+2. Vet reviews the updated draft for compliance with MISSION work.
+3. Fix confirms the test scope aligns with core functionality requirements.
+4. Nova merges the approved package into the creators' repository.
+5. Team tags the release with "tes" for testing phase.
+6. Forge documents the package in the creators' tab enrichment tracker.
 
-**What changed:** The "UGC Factory Skill Pack" package is now created, tested, and labeled "Created by EXCAVA."
+**What changed:** Test scope clarified to cover core UGC generation and tab enrichment functions.

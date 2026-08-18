@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-18T15:05:42.090672+00:00",
+ "generated_at": "2026-08-18T17:04:44.231501+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -35,42 +35,56 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 78,
-   "rooms_7d": 39,
+   "turns_7d": 79,
+   "rooms_7d": 40,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Use a 6px solid focus ring at 7:1 contrast with no glow or animation. This meets WCAG 2.1 AAA for focus visibility and h"
+   "last_position": "Use a 6px solid focus ring at 7:1 contrast with no glow or animation. This meets WCAG 2.2 AA for keyboard users while ke"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 78,
-   "rooms_7d": 39,
+   "turns_7d": 79,
+   "rooms_7d": 40,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "A 6px ring at 7:1 contrast risks blending into busy or patterned backgrounds—especially on mobile where glare and small "
+   "last_position": "A 6px ring at 7:1 contrast still risks disappearing on patterned or dark backgrounds—WCAG warns against relying on color"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 71,
+   "turns_7d": 72,
    "rooms_7d": 30,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Adopt a **hard 48-hour deadline with no abstentions**—if Legal or Ops don’t vote within two days, the term"
+   "last_position": "**Decision:** Adopt a **hard 48-hour deadline with a binding, single-objection rule**—if Legal or Ops objects, they must"
+  },
+  {
+   "id": "analysis-checker",
+   "name": "Sift",
+   "dept": "analysis",
+   "role": "checker",
+   "turns_7d": 62,
+   "rooms_7d": 21,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The binding single-objection rule still lets Legal and Ops weaponize the \"material risk\" threshold—anything can be frame"
   },
   {
    "id": "watch-w1",
@@ -84,20 +98,6 @@
    ],
    "positions_held": 30,
    "last_position": "**Decision:** Adopt a **public, reversible 48-hour change window** where any term update auto-applies after 48 hours unl"
-  },
-  {
-   "id": "analysis-checker",
-   "name": "Sift",
-   "dept": "analysis",
-   "role": "checker",
-   "turns_7d": 61,
-   "rooms_7d": 21,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "The hard deadline with no abstentions still lets Legal and Ops weaponize \"inaccuracy\" after the fact—once the term auto-"
   },
   {
    "id": "transcripts-lead",
@@ -168,7 +168,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Adopt a 5px solid #005fcc focus ring at 6:1 contrast with no animation; deliver a tested, glare-resistant focu",
    "proposed": 33,
-   "shipped": 32
+   "shipped": 33
   },
   {
    "id": "visual-lead",
@@ -242,16 +242,16 @@
    "name": "Dynamo",
    "dept": "power",
    "role": "lead",
-   "turns_7d": 23,
-   "rooms_7d": 23,
+   "turns_7d": 24,
+   "rooms_7d": 24,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Replace RealVisXL v1.1’s face model with **CodeFormer** in EXCAVA’s pipeline—it restores identity consistency ",
+   "last_position": "DECISION: Replace RealVisXL v1.1’s face model with **CodeFormer** in EXCAVA’s pipeline to cut identity loss under mixed ",
    "proposed": 16,
-   "shipped": 16
+   "shipped": 15
   },
   {
    "id": "improve-w1",
@@ -376,6 +376,34 @@
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s real-time state and oper"
   },
   {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 12,
+   "rooms_7d": 12,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run the link-checker tool on the live Mission Control Dashboard to scan for broken links. This will produce a report lis"
+  },
+  {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 12,
+   "rooms_7d": 12,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work our tool can do."
+  },
+  {
    "id": "improve-lead",
    "name": "Ratchet",
    "dept": "improve",
@@ -416,34 +444,6 @@
    ],
    "positions_held": 30,
    "last_position": "Run PR-Agent in shadow mode only on merged PRs flagged as high-risk by a lightweight team rule (e.g., \"changes >5 files\""
-  },
-  {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 11,
-   "rooms_7d": 11,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run the link-checker tool on the live Mission Control Dashboard to scan for broken links. The report will list all 404s "
-  },
-  {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
-   "role": "checker",
-   "turns_7d": 11,
-   "rooms_7d": 11,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
   },
   {
    "id": "links-lead-x",

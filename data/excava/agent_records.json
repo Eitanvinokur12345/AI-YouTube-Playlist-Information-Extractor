@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-18T14:30:42.743637+00:00",
+ "generated_at": "2026-08-18T14:36:25.659229+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -35,42 +35,56 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 76,
-   "rooms_7d": 38,
+   "turns_7d": 77,
+   "rooms_7d": 39,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Use a 6px ring at 7:1 contrast with no animation. This keeps focus visible on glare-prone outdoor screens and small touc"
+   "last_position": "Use a 4px solid focus ring at 5:1 contrast with no glow or animation. This meets WCAG 2.1 AA for focus visibility while "
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 76,
-   "rooms_7d": 38,
+   "turns_7d": 77,
+   "rooms_7d": 39,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "A 6px ring at 7:1 contrast still risks blending into busy or patterned backgrounds, especially on mobile screens with dy"
+   "last_position": "A 4px ring at 5:1 contrast fails users with low vision or glare sensitivity—WCAG 2.1 AA is the *minimum*, not the ceilin"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 70,
+   "turns_7d": 71,
    "rooms_7d": 30,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt a living glossary with a **rolling 48-hour review window** where Legal and Ops must approve or reject term changes"
+   "last_position": "**Decision:** Adopt a **hard 48-hour deadline with no abstentions**—if Legal or Ops don’t vote within two days, the term"
+  },
+  {
+   "id": "analysis-checker",
+   "name": "Sift",
+   "dept": "analysis",
+   "role": "checker",
+   "turns_7d": 61,
+   "rooms_7d": 21,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The hard deadline with no abstentions still lets Legal and Ops weaponize \"inaccuracy\" after the fact—once the term auto-"
   },
   {
    "id": "watch-w1",
@@ -84,20 +98,6 @@
    ],
    "positions_held": 30,
    "last_position": "**Decision:** Adopt a living glossary with a **binding 48-hour public vote** where Legal, Ops, and Creative each get one"
-  },
-  {
-   "id": "analysis-checker",
-   "name": "Sift",
-   "dept": "analysis",
-   "role": "checker",
-   "turns_7d": 60,
-   "rooms_7d": 21,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "The rolling 48-hour window with auto-apply is a false accountability—Legal and Ops will weaponize \"missing\" the deadline"
   },
   {
    "id": "transcripts-lead",
@@ -168,7 +168,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Adopt a 6px solid #005fcc focus ring at 7:1 contrast with no animation or glow. Result: EXCAVA focus visibilit",
    "proposed": 32,
-   "shipped": 31
+   "shipped": 32
   },
   {
    "id": "visual-lead",
@@ -238,6 +238,22 @@
    "last_position": "Pane: Adaptive contrast adds latency—every pixel shift slows rendering, and in fast graphs, that’s a lag users feel befo"
   },
   {
+   "id": "power-lead",
+   "name": "Dynamo",
+   "dept": "power",
+   "role": "lead",
+   "turns_7d": 23,
+   "rooms_7d": 23,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Replace RealVisXL v1.1’s face model with **CodeFormer** in EXCAVA’s pipeline—it restores identity consistency ",
+   "proposed": 16,
+   "shipped": 15
+  },
+  {
    "id": "improve-w1",
    "name": "Sprocket",
    "dept": "improve",
@@ -249,22 +265,6 @@
    ],
    "positions_held": 30,
    "last_position": "Run PR-Agent in shadow mode on merged PRs only for two weeks. This keeps the signal-to-noise ratio high for reviewers wh"
-  },
-  {
-   "id": "power-lead",
-   "name": "Dynamo",
-   "dept": "power",
-   "role": "lead",
-   "turns_7d": 22,
-   "rooms_7d": 22,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Replace RealVisXL v1.1’s face model with **CodeFormer** in EXCAVA’s pipeline—it restores identity from degrade",
-   "proposed": 15,
-   "shipped": 15
   },
   {
    "id": "mining-w1",
@@ -322,6 +322,19 @@
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts contradictions from video content."
   },
   {
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
+   "turns_7d": 13,
+   "rooms_7d": 13,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output is a real-time status report confirming th"
+  },
+  {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
@@ -335,19 +348,6 @@
    "last_position": "DECISION: Default to a **user-toggleable \"error-highlight mode\"** (red flash on misaligned nodes) with a persistent one-",
    "proposed": 7,
    "shipped": 7
-  },
-  {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 12,
-   "rooms_7d": 12,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and healthy "
   },
   {
    "id": "security-w1",

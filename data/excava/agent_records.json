@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-18T03:27:28.916110+00:00",
+ "generated_at": "2026-08-18T03:36:56.593225+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,7 +8,7 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 143,
+   "turns_7d": 144,
    "rooms_7d": 62,
    "engines_used": [
     "mistral"
@@ -21,42 +21,42 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 106,
+   "turns_7d": 107,
    "rooms_7d": 69,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The single best cross-department improvement is to standardize a shared glossary of terms for AI-generated content acros"
+   "last_position": "Run a two-week glossary sprint with an external facilitator. Creative drafts the first version, Operations and Legal eac"
   },
   {
    "id": "accessibility-w1",
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 69,
+   "turns_7d": 70,
    "rooms_7d": 35,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Use a 2px solid ring with a 4px outer glow at 5:1 contrast. This balances visibility for keyboard users with reduced-mot"
+   "last_position": "Use a 4px solid ring at 5:1 contrast with no glow or animation. This meets WCAG for keyboard focus without relying on mo"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 69,
+   "turns_7d": 70,
    "rooms_7d": 35,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 2px ring with 4px glow still fails reduced-motion users: the glow’s instant fade is a hack, not a fix. A 4px solid r"
+   "last_position": "The 4px solid ring risks crowding small interactive elements—like buttons in tight toolbars—where every pixel counts. A "
   },
   {
    "id": "analysis-w1",
@@ -133,26 +133,26 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 36,
-   "rooms_7d": 18,
+   "turns_7d": 37,
+   "rooms_7d": 19,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add RealVisXL v1.1’s face model to EXCAVA’s pipeline first. It fixes the synthetic face fidelity drop by replacing the g"
+   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It regenerates detail lost in upscaling by using"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 36,
-   "rooms_7d": 18,
+   "turns_7d": 37,
+   "rooms_7d": 19,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "RealVisXL v1.1’s face model overfits to synthetic faces—its \"realism\" is just synthetic faces made sharper, not true rea"
+   "last_position": "InstantX-ComfyUI’s depth-aware upscaler won’t fix EXCAVA’s face fidelity drop—it only regenerates *spatial* detail, not "
   },
   {
    "id": "accessibility-lead",
@@ -264,7 +264,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Test RealVisXL v2’s face model first on EXCAVA’s face regions—if fidelity drops, fallback to InstantX-ComfyUI’",
    "proposed": 13,
-   "shipped": 12
+   "shipped": 13
   },
   {
    "id": "mining-w1",
@@ -309,6 +309,19 @@
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts contradictions from video content."
   },
   {
+   "id": "creators-w1",
+   "name": "Forge",
+   "dept": "creators",
+   "role": "doer",
+   "turns_7d": 13,
+   "rooms_7d": 13,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. The package will include a ready-to-use Claude skill (npm"
+  },
+  {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
@@ -322,19 +335,6 @@
    "last_position": "DECISION: Default to a **user-toggleable \"error-highlight mode\"** (red flash on misaligned nodes) with a persistent one-",
    "proposed": 8,
    "shipped": 8
-  },
-  {
-   "id": "creators-w1",
-   "name": "Forge",
-   "dept": "creators",
-   "role": "doer",
-   "turns_7d": 12,
-   "rooms_7d": 12,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. The package will enable users to generate custom Claude s"
   },
   {
    "id": "improve-lead",
@@ -513,6 +513,19 @@
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security post"
   },
   {
+   "id": "creators-checker",
+   "name": "Vet",
+   "dept": "creators",
+   "role": "checker",
+   "turns_7d": 7,
+   "rooms_7d": 7,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 7,
+   "last_position": "Verdict: This is valid MISSION work—building a labeled npm package with tests fits \"Build PACKAGES\" under creators."
+  },
+  {
    "id": "creators-lead",
    "name": "Nova",
    "dept": "creators",
@@ -525,19 +538,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Forge renames the \"UGC Factory\" package to \"ugc-factory-by-excava\" and adds \"Created by EXCAVA\" to the README, t"
-  },
-  {
-   "id": "creators-checker",
-   "name": "Vet",
-   "dept": "creators",
-   "role": "checker",
-   "turns_7d": 6,
-   "rooms_7d": 6,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 6,
-   "last_position": "Verdict: This is valid MISSION work—building a labeled npm package with tests fits the \"Build PACKAGES\" task."
   },
   {
    "id": "memory-lead",

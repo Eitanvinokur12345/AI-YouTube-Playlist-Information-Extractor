@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-18T14:18:08.463617+00:00",
+ "generated_at": "2026-08-18T14:24:57.652386+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,13 +8,13 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 148,
+   "turns_7d": 149,
    "rooms_7d": 64,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The rolling 48-hour window is a trap—Legal and Ops will game the system by \"missing\" the deadline when they dislike a te"
+   "last_position": "The binding vote still lets Legal and Ops hide behind \"abstain\" to block terms they dislike, turning the process into a "
   },
   {
    "id": "transcripts-w1",
@@ -35,28 +35,28 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 75,
+   "turns_7d": 76,
    "rooms_7d": 38,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Use a 4px solid ring at 5:1 contrast with no glow or animation. This meets WCAG 2.1 AA for focus visibility while keepin"
+   "last_position": "Use a 6px ring at 7:1 contrast with no animation. This keeps focus visible on glare-prone outdoor screens and small touc"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 75,
+   "turns_7d": 76,
    "rooms_7d": 38,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "A 4px ring at 5:1 contrast still risks blending into glare or low-contrast backgrounds, especially on outdoor mobile scr"
+   "last_position": "A 6px ring at 7:1 contrast still risks blending into busy or patterned backgrounds, especially on mobile screens with dy"
   },
   {
    "id": "analysis-w1",
@@ -73,6 +73,19 @@
    "last_position": "Adopt a living glossary with a **rolling 48-hour review window** where Legal and Ops must approve or reject term changes"
   },
   {
+   "id": "watch-w1",
+   "name": "Scope",
+   "dept": "watch",
+   "role": "doer",
+   "turns_7d": 61,
+   "rooms_7d": 27,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "**Decision:** Adopt a living glossary with a **binding 48-hour public vote** where Legal, Ops, and Creative each get one"
+  },
+  {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
@@ -85,19 +98,6 @@
    ],
    "positions_held": 30,
    "last_position": "The rolling 48-hour window with auto-apply is a false accountability—Legal and Ops will weaponize \"missing\" the deadline"
-  },
-  {
-   "id": "watch-w1",
-   "name": "Scope",
-   "dept": "watch",
-   "role": "doer",
-   "turns_7d": 60,
-   "rooms_7d": 27,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Adopt a living glossary with a 30-day review cycle, where Creative proposes changes, Legal and Ops approve or reject the"
   },
   {
    "id": "transcripts-lead",
@@ -133,26 +133,26 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 42,
-   "rooms_7d": 21,
+   "turns_7d": 43,
+   "rooms_7d": 22,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add RealVisXL v1.1’s face model to EXCAVA’s pipeline first. Faces are EXCAVA’s weakest link—current outputs blur or dist"
+   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It regenerates detail in low-res frames without "
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 42,
-   "rooms_7d": 21,
+   "turns_7d": 43,
+   "rooms_7d": 22,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "RealVisXL’s face model risks overfitting to its synthetic training set—EXCAVA’s real-world faces will still degrade unde"
+   "last_position": "Depth-aware upscaling won’t fix EXCAVA’s face fidelity drop because it targets resolution, not identity consistency—EXCA"
   },
   {
    "id": "accessibility-lead",
@@ -264,7 +264,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Replace RealVisXL v1.1’s face model with **CodeFormer** in EXCAVA’s pipeline—it restores identity from degrade",
    "proposed": 15,
-   "shipped": 14
+   "shipped": 15
   },
   {
    "id": "mining-w1",
@@ -337,6 +337,19 @@
    "shipped": 7
   },
   {
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
+   "turns_7d": 12,
+   "rooms_7d": 12,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and healthy "
+  },
+  {
    "id": "improve-lead",
    "name": "Ratchet",
    "dept": "improve",
@@ -377,19 +390,6 @@
    ],
    "positions_held": 30,
    "last_position": "Run PR-Agent in shadow mode only on merged PRs flagged as high-risk by a lightweight team rule (e.g., \"changes >5 files\""
-  },
-  {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 11,
-   "rooms_7d": 11,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output is a real-time status report confirming th"
   },
   {
    "id": "security-w1",

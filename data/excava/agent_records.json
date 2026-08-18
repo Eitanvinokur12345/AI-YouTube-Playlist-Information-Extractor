@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-18T07:24:51.584856+00:00",
+ "generated_at": "2026-08-18T09:07:46.141672+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -35,42 +35,56 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 72,
-   "rooms_7d": 36,
+   "turns_7d": 73,
+   "rooms_7d": 37,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Use a 2px solid ring with a 200ms fade-in at 5:1 contrast. This keeps focus visible without shrinking touch targets on m"
+   "last_position": "Use a 4px solid ring at 5:1 contrast with no glow or animation. This meets WCAG 2.2 AA for focus visibility on all devic"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 72,
-   "rooms_7d": 36,
+   "turns_7d": 73,
+   "rooms_7d": 37,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 2px ring risks being invisible on high-DPI or glare-prone screens, and the 200ms fade delays feedback for keyboard u"
+   "last_position": "A 4px ring still risks crowding small buttons on mobile touch targets, making them harder to hit. A 2px ring at 7:1 cont"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 68,
-   "rooms_7d": 29,
+   "turns_7d": 69,
+   "rooms_7d": 30,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Decision: Freeze the glossary now in a single, unchangeable snapshot and store it in the Hub."
+   "last_position": "Freeze the glossary now in a single, unchangeable snapshot and store it in the shared knowledge hub. Creative writes the"
+  },
+  {
+   "id": "analysis-checker",
+   "name": "Sift",
+   "dept": "analysis",
+   "role": "checker",
+   "turns_7d": 59,
+   "rooms_7d": 21,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Chisel’s frozen glossary is a power grab disguised as stability—it locks in today’s biases as tomorrow’s rules, and the "
   },
   {
    "id": "watch-w1",
@@ -84,20 +98,6 @@
    ],
    "positions_held": 30,
    "last_position": "Run a two-week glossary sprint with an external facilitator. Creative drafts the first version, Operations and Legal eac"
-  },
-  {
-   "id": "analysis-checker",
-   "name": "Sift",
-   "dept": "analysis",
-   "role": "checker",
-   "turns_7d": 58,
-   "rooms_7d": 20,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Freezing the glossary now embeds the current power struggle into stone—Legal, Creative, and Operations will each lock th"
   },
   {
    "id": "transcripts-lead",
@@ -168,7 +168,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Adopt a 3px solid #005fcc focus ring with a 100ms fade-in at 7:1 contrast, tested at 150% zoom and on high-DPI",
    "proposed": 30,
-   "shipped": 29
+   "shipped": 30
   },
   {
    "id": "visual-lead",
@@ -255,15 +255,15 @@
    "name": "Dynamo",
    "dept": "power",
    "role": "lead",
-   "turns_7d": 20,
-   "rooms_7d": 20,
+   "turns_7d": 21,
+   "rooms_7d": 21,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Add Juggernaut-XL v9’s real-face-trained model to EXCAVA’s pipeline first—it cuts face rework by 45% and avoid",
-   "proposed": 14,
+   "last_position": "DECISION: Test Juggernaut-XL v9’s real-face-trained model on EXCAVA’s final face frames first—if fidelity jumps 0.5%+ wi",
+   "proposed": 15,
    "shipped": 14
   },
   {
@@ -333,8 +333,8 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Default to a **user-toggleable \"error-highlight mode\"** (red flash on misaligned nodes) with a persistent one-",
-   "proposed": 8,
-   "shipped": 8
+   "proposed": 7,
+   "shipped": 7
   },
   {
    "id": "improve-lead",
@@ -421,6 +421,19 @@
    "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard, listing all broken links an"
   },
   {
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
+   "turns_7d": 10,
+   "rooms_7d": 10,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and healthy "
+  },
+  {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
@@ -432,19 +445,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract all contradictions between executive "
-  },
-  {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 9,
-   "rooms_7d": 9,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output is a real-time report confirming container"
   },
   {
    "id": "security-w1",
@@ -471,6 +471,20 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security post"
+  },
+  {
+   "id": "creators-lead",
+   "name": "Nova",
+   "dept": "creators",
+   "role": "lead",
+   "turns_7d": 9,
+   "rooms_7d": 9,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Forge adds a test plan to the \"UGC Factory\" package draft with unit tests labeled \"Created by EXCAVA\" and tests "
   },
   {
    "id": "creators-checker",
@@ -524,20 +538,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: The action is valid MISSION work. Fix: Ensure the extracted post includes the publication date for freshness ve"
-  },
-  {
-   "id": "creators-lead",
-   "name": "Nova",
-   "dept": "creators",
-   "role": "lead",
-   "turns_7d": 8,
-   "rooms_7d": 8,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Forge updates the \"UGC Factory\" package draft to specify unit tests for core UGC generation and tab enrichment f"
   },
   {
    "id": "memory-lead",

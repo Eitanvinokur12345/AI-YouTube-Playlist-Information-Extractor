@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-19T02:07:12.164592+00:00",
+ "generated_at": "2026-08-19T03:29:50.164496+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,27 +8,27 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 127,
+   "turns_7d": 128,
    "rooms_7d": 48,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The pre-approved objection template is still a veto in disguise—Legal and Ops can weaponize \"Regulatory breach\" or \"Copy"
+   "last_position": "The pre-approved template doesn’t stop Legal and Ops from gaming the system—it just outsources the weaponization to a nu"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 91,
+   "turns_7d": 92,
    "rooms_7d": 55,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Adopt a **hard 48-hour auto-apply with a public, evidence-required objection**—if Legal or Ops objects, th"
+   "last_position": "**Decision:** Adopt a **hard 48-hour auto-apply with a public, evidence-linked objection**—if Legal or Ops objects, they"
   },
   {
    "id": "accessibility-w1",
@@ -149,26 +149,26 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 35,
+   "turns_7d": 36,
    "rooms_7d": 18,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It regenerates detail in flat areas without blow"
+   "last_position": "Add RealVisXL v1.1’s face model to EXCAVA’s pipeline first. It locks facial identity during upscaling, which EXCAVA’s cu"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 35,
+   "turns_7d": 36,
    "rooms_7d": 18,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Depth-aware upscaling won’t fix EXCAVA’s face fidelity drop because it targets *geometry*, not identity—RealVisXL v1.1’s"
+   "last_position": "RealVisXL’s face model locks identity but still ignores EXCAVA’s full-frame reconstruction gap—it only fixes *faces*, no"
   },
   {
    "id": "visual-lead",
@@ -215,13 +215,41 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 25,
+   "turns_7d": 26,
    "rooms_7d": 13,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on *all* PRs—open and merged—for two weeks. This lets us measure its impact without risking "
+   "last_position": "Run PR-Agent only on PRs where both new contributors *and* high-risk changes are flagged. This targets the smallest set "
+  },
+  {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 19,
+   "rooms_7d": 19,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run the link-checker tool on the live Mission Control Dashboard to scan for broken links. This will produce a report lis"
+  },
+  {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 19,
+   "rooms_7d": 19,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work our tool can do."
   },
   {
    "id": "power-lead",
@@ -237,34 +265,6 @@
    "last_position": "DECISION: Replace RealVisXL v1.1’s face model with **CodeFormer** in EXCAVA’s pipeline to lock identity fidelity while p",
    "proposed": 18,
    "shipped": 18
-  },
-  {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 18,
-   "rooms_7d": 18,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run the link-checker tool on the live Mission Control Dashboard to scan for broken links. The scan will produce a report"
-  },
-  {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
-   "role": "checker",
-   "turns_7d": 18,
-   "rooms_7d": 18,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
   },
   {
    "id": "links-lead-x",
@@ -348,6 +348,19 @@
    "last_position": "Shadow mode trains reviewers to ignore *all* autofeedback—not just noise—because they can’t distinguish real from fake. "
   },
   {
+   "id": "improve-improver",
+   "name": "Overhaul",
+   "dept": "improve",
+   "role": "improver",
+   "turns_7d": 13,
+   "rooms_7d": 13,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run PR-Agent only on PRs where the heuristic flags *both* new contributors *and* trivial changes—this shrinks the test s"
+  },
+  {
    "id": "improve-lead",
    "name": "Ratchet",
    "dept": "improve",
@@ -361,19 +374,6 @@
    "positions_held": 30,
    "last_position": "DECISION: Run PR-Agent in shadow mode *only* on PRs flagged by both \"new contributor\" *and* \"high-risk changes\" for two ",
    "proposed": 2
-  },
-  {
-   "id": "improve-improver",
-   "name": "Overhaul",
-   "dept": "improve",
-   "role": "improver",
-   "turns_7d": 12,
-   "rooms_7d": 12,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run PR-Agent only on PRs where the heuristic flags *both* new contributors *and* high-risk changes, cutting the pool by "
   },
   {
    "id": "security-lead",
@@ -483,6 +483,20 @@
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract all contradictions between executive "
   },
   {
+   "id": "news-lead",
+   "name": "Wire",
+   "dept": "news",
+   "role": "lead",
+   "turns_7d": 9,
+   "rooms_7d": 9,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key decisions from OpenAI’s latest blog pos"
+  },
+  {
    "id": "news-w1",
    "name": "Scoop",
    "dept": "news",
@@ -507,20 +521,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: The action is valid MISSION work."
-  },
-  {
-   "id": "news-lead",
-   "name": "Wire",
-   "dept": "news",
-   "role": "lead",
-   "turns_7d": 8,
-   "rooms_7d": 8,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three verified items: OpenAI’s new memory archite"
   },
   {
    "id": "visualization-lead",

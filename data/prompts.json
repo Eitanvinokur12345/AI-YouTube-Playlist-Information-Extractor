@@ -8547,6 +8547,39 @@
       "source_url": "https://www.youtube.com/watch?v=Vfo51qeGWe0",
       "discovered_via": "mine_feeds (gemini-video)",
       "added_at": "2026-08-18T17:31:16.733554+00:00"
+    },
+    {
+      "title": "Create /spec skill",
+      "purpose": "To define a skill for Claude Code that interviews the user and writes a detailed project specification.",
+      "prompt_text": "Create a Claude Code skill called \"spec\". When I run /spec, interview me about the feature or app I want to build. Ask one focused question at a time until you fully understand the goal, the must-have requirements, the constraints, and what \"done\" looks like. Do not start building. When you have enough, write a clear, detailed spec and save it to specs/<name>.md. The spec must include: The objective, the exact requirements, the edge cases to handle, and a concrete definition of done that someone could check the build against.",
+      "category": "skill-creation",
+      "slug": "create-spec-skill",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=VkMzG3SHU_4",
+      "discovered_via": "mine_feeds (gemini-video)",
+      "added_at": "2026-08-19T05:29:34.247247+00:00"
+    },
+    {
+      "title": "Create /build skill",
+      "purpose": "To define a skill for Claude Code that builds an application based on a given specification.",
+      "prompt_text": "Create a Claude Code skill called \"build\". When I run /build, read the spec in specs/<name>.md and build exactly what it says. No extra features, no scope creep, or invent requirements that aren't in the spec. When you finish, list which spec requirements you covered so the review step can check them.",
+      "category": "skill-creation",
+      "slug": "create-build-skill",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=VkMzG3SHU_4",
+      "discovered_via": "mine_feeds (gemini-video)",
+      "added_at": "2026-08-19T05:29:34.247247+00:00"
+    },
+    {
+      "title": "Create /review skill",
+      "purpose": "To define a skill for Claude Code that audits a built application against its specification and provides fixes.",
+      "prompt_text": "Create a Claude Code skill called \"review\". When I run /review, compare the current build against specs/<name>.md. List every gap, bug, or missing piece, naming the exact spec item that wasn't met. Write the specific fixes needed and hand them back so /build can address them. Only stop when every requirement in the spec is fully met.",
+      "category": "skill-creation",
+      "slug": "create-review-skill",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=VkMzG3SHU_4",
+      "discovered_via": "mine_feeds (gemini-video)",
+      "added_at": "2026-08-19T05:29:34.247247+00:00"
     }
   ]
 }

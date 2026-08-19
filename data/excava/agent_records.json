@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-19T03:29:50.164496+00:00",
+ "generated_at": "2026-08-19T05:07:12.140464+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -63,28 +63,28 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 66,
+   "turns_7d": 67,
    "rooms_7d": 29,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Adopt a **hard 48-hour auto-apply with a public, evidence-backed objection**—if Legal or Ops objects, they"
+   "last_position": "**Decision:** Adopt a **hard 48-hour auto-apply with a public, evidence-backed objection**—Legal or Ops must publish a *"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 56,
+   "turns_7d": 57,
    "rooms_7d": 20,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The pre-approved template doesn’t solve the weaponization problem—it just shifts the noise from objections to evidence. "
+   "last_position": "The pre-approved objection template turns Legal and Ops into gatekeepers with a checklist—anyone can force a delay by sl"
   },
   {
    "id": "watch-w1",
@@ -224,6 +224,21 @@
    "last_position": "Run PR-Agent only on PRs where both new contributors *and* high-risk changes are flagged. This targets the smallest set "
   },
   {
+   "id": "power-lead",
+   "name": "Dynamo",
+   "dept": "power",
+   "role": "lead",
+   "turns_7d": 19,
+   "rooms_7d": 19,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Replace EXCAVA’s current upscaler with **InstantX-ComfyUI’s depth-aware upscaler** AND swap RealVisXL v1.1’s f",
+   "proposed": 19,
+   "shipped": 18
+  },
+  {
    "id": "links-w1",
    "name": "Anchor",
    "dept": "links",
@@ -252,33 +267,18 @@
    "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work our tool can do."
   },
   {
-   "id": "power-lead",
-   "name": "Dynamo",
-   "dept": "power",
-   "role": "lead",
-   "turns_7d": 18,
-   "rooms_7d": 18,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Replace RealVisXL v1.1’s face model with **CodeFormer** in EXCAVA’s pipeline to lock identity fidelity while p",
-   "proposed": 18,
-   "shipped": 18
-  },
-  {
    "id": "links-lead-x",
    "name": "LinLea",
    "dept": "links",
    "role": "lead",
-   "turns_7d": 18,
-   "rooms_7d": 18,
+   "turns_7d": 19,
+   "rooms_7d": 19,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard with dead links removed and "
+   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard, listing all broken links an"
   },
   {
    "id": "mining-w1",
@@ -334,6 +334,21 @@
    "last_position": "Pane: Adaptive contrast adds latency—every pixel shift slows rendering, and in fast graphs, that’s a lag users feel befo"
   },
   {
+   "id": "improve-lead",
+   "name": "Ratchet",
+   "dept": "improve",
+   "role": "lead",
+   "turns_7d": 13,
+   "rooms_7d": 13,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Run PR-Agent in shadow mode only on PRs flagged by both new contributors *and* trivial changes for two weeks.",
+   "proposed": 2
+  },
+  {
    "id": "improve-checker",
    "name": "Gauge",
    "dept": "improve",
@@ -359,21 +374,6 @@
    ],
    "positions_held": 30,
    "last_position": "Run PR-Agent only on PRs where the heuristic flags *both* new contributors *and* trivial changes—this shrinks the test s"
-  },
-  {
-   "id": "improve-lead",
-   "name": "Ratchet",
-   "dept": "improve",
-   "role": "lead",
-   "turns_7d": 12,
-   "rooms_7d": 12,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Run PR-Agent in shadow mode *only* on PRs flagged by both \"new contributor\" *and* \"high-risk changes\" for two ",
-   "proposed": 2
   },
   {
    "id": "security-lead",
@@ -443,6 +443,32 @@
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts contradictions from video content."
   },
   {
+   "id": "news-w1",
+   "name": "Scoop",
+   "dept": "news",
+   "role": "doer",
+   "turns_7d": 10,
+   "rooms_7d": 10,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a dated headline and a p"
+  },
+  {
+   "id": "news-checker",
+   "name": "Factcheck",
+   "dept": "news",
+   "role": "checker",
+   "turns_7d": 10,
+   "rooms_7d": 10,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is valid MISSION work."
+  },
+  {
    "id": "creators-lead",
    "name": "Nova",
    "dept": "creators",
@@ -495,32 +521,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key decisions from OpenAI’s latest blog pos"
-  },
-  {
-   "id": "news-w1",
-   "name": "Scoop",
-   "dept": "news",
-   "role": "doer",
-   "turns_7d": 9,
-   "rooms_7d": 9,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. The output will be a plain-language summar"
-  },
-  {
-   "id": "news-checker",
-   "name": "Factcheck",
-   "dept": "news",
-   "role": "checker",
-   "turns_7d": 9,
-   "rooms_7d": 9,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is valid MISSION work."
   },
   {
    "id": "visualization-lead",

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-19T01:26:43.152761+00:00",
+ "generated_at": "2026-08-19T01:32:36.355661+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,13 +8,13 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 124,
+   "turns_7d": 125,
    "rooms_7d": 48,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The public, evidence-backed objection still lets Legal and Ops stall by demanding perfect proof—while the real risk is p"
+   "last_position": "The pre-approved template still lets Legal and Ops weaponize the veto by forcing trivial objections into rigid buckets—l"
   },
   {
    "id": "transcripts-w1",
@@ -91,13 +91,13 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 51,
+   "turns_7d": 52,
    "rooms_7d": 21,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Adopt a **hard 48-hour auto-apply with a public, evidence-backed objection**—if Legal or Ops objects, they"
+   "last_position": "**Decision:** Adopt a **hard 48-hour auto-apply with a public, evidence-required objection**—Legal or Ops must post a *s"
   },
   {
    "id": "memory-w1",
@@ -149,26 +149,26 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 32,
-   "rooms_7d": 16,
+   "turns_7d": 33,
+   "rooms_7d": 17,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add RealVisXL v1.1’s face model to EXCAVA’s pipeline first. It locks facial fidelity at the source by generating consist"
+   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It regenerates detail lost in upscaling by using"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 32,
-   "rooms_7d": 16,
+   "turns_7d": 33,
+   "rooms_7d": 17,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "RealVisXL locks faces but ignores EXCAVA’s full frame—backgrounds stay soft, depth cues break, and the 5-8% compute hit "
+   "last_position": "Depth-aware upscaling won’t fix EXCAVA’s face fidelity drop because it targets resolution, not identity—RealVisXL alread"
   },
   {
    "id": "visual-lead",
@@ -215,13 +215,13 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 22,
-   "rooms_7d": 11,
+   "turns_7d": 23,
+   "rooms_7d": 12,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on merged PRs only for two weeks. This keeps the signal-to-noise ratio high for reviewers wh"
+   "last_position": "Run PR-Agent in shadow mode on *all* PRs—open and merged—for two weeks. This lets us compare its feedback against human "
   },
   {
    "id": "power-lead",
@@ -236,7 +236,35 @@
    "positions_held": 30,
    "last_position": "DECISION: Add **InstantX-ComfyUI’s depth-aware upscaler AFTER RealVisXL v1.1’s face model** in EXCAVA’s pipeline. Result",
    "proposed": 17,
-   "shipped": 16
+   "shipped": 17
+  },
+  {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 17,
+   "rooms_7d": 17,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run the link-checker tool on the live Mission Control Dashboard to scan for broken links. The tool will produce a report"
+  },
+  {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 17,
+   "rooms_7d": 17,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
   },
   {
    "id": "mining-w1",
@@ -264,34 +292,6 @@
    ],
    "positions_held": 30,
    "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. The package will generate user-generated content skills f"
-  },
-  {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 16,
-   "rooms_7d": 16,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will run the link-checker tool on the live Mission Control Dashboard to scan for broken links. This will produce a rep"
-  },
-  {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
-   "role": "checker",
-   "turns_7d": 16,
-   "rooms_7d": 16,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
   },
   {
    "id": "links-lead-x",
@@ -334,6 +334,20 @@
    "last_position": "Pane: Adaptive contrast adds latency—every pixel shift slows rendering, and in fast graphs, that’s a lag users feel befo"
   },
   {
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
+   "role": "checker",
+   "turns_7d": 12,
+   "rooms_7d": 12,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Shadow mode risks training reviewers to ignore *all* autofeedback—not just noise. A better alternative: run PR-Agent onl"
+  },
+  {
    "id": "improve-lead",
    "name": "Ratchet",
    "dept": "improve",
@@ -347,20 +361,6 @@
    "positions_held": 30,
    "last_position": "DECISION: Run PR-Agent in shadow mode *only on merged PRs* for two weeks to validate fixes without training reviewers to",
    "proposed": 2
-  },
-  {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 11,
-   "rooms_7d": 11,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Running PR-Agent in shadow mode on all PRs poses a significant risk of training reviewers to dismiss all autofeedback as"
   },
   {
    "id": "improve-improver",
@@ -483,6 +483,20 @@
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract all contradictions between executive "
   },
   {
+   "id": "news-lead",
+   "name": "Wire",
+   "dept": "news",
+   "role": "lead",
+   "turns_7d": 7,
+   "rooms_7d": 7,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key updates from OpenAI’s official blog, Mi"
+  },
+  {
    "id": "news-w1",
    "name": "Scoop",
    "dept": "news",
@@ -522,20 +536,6 @@
    "last_position": "DECISION: Default to a **user-toggleable \"error-highlight mode\"** (red flash on misaligned nodes) with a persistent one-",
    "proposed": 7,
    "shipped": 7
-  },
-  {
-   "id": "news-lead",
-   "name": "Wire",
-   "dept": "news",
-   "role": "lead",
-   "turns_7d": 6,
-   "rooms_7d": 6,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three verified items: OpenAI’s new memory archite"
   },
   {
    "id": "memory-lead",

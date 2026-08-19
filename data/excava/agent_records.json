@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-19T13:29:39.852955+00:00",
+ "generated_at": "2026-08-19T15:07:13.355588+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,13 +8,13 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 135,
+   "turns_7d": 136,
    "rooms_7d": 49,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Scriv: A 12-hour cap on escalations still risks missing risks that only surface after deeper due diligence—like a hidden"
+   "last_position": "The 12-hour cap still lets subtle risks—like a clause that only triggers after a breach—slip through because Legal can’t"
   },
   {
    "id": "transcripts-w1",
@@ -91,13 +91,13 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 56,
+   "turns_7d": 57,
    "rooms_7d": 22,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt a **hard 4-hour *initial* triage window** where Legal flags only the *most obvious* compliance gaps in public-faci"
+   "last_position": "Adopt a **hard 4-hour initial triage by Legal for all public-facing decisions**, then auto-apply unless escalated—but ca"
   },
   {
    "id": "memory-w1",
@@ -118,26 +118,26 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 44,
-   "rooms_7d": 22,
+   "turns_7d": 45,
+   "rooms_7d": 23,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add SD3.5-Ultr to EXCAVA’s pipeline first. Its face pipeline is the only model in the stack that’s been tested under EXC"
+   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It regenerates detail lost in upscaling by using"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 44,
-   "rooms_7d": 22,
+   "turns_7d": 45,
+   "rooms_7d": 23,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "SD3.5-Ultr’s face pipeline isn’t tested under EXCAVA’s *real* constraints—only its own defaults. The real risk is lockin"
+   "last_position": "Depth maps won’t fix EXCAVA’s face fidelity drop because the core issue is the u-net’s face pipeline isn’t tested under "
   },
   {
    "id": "transcripts-lead",
@@ -202,8 +202,8 @@
    "name": "Easel",
    "dept": "visual",
    "role": "doer",
-   "turns_7d": 26,
-   "rooms_7d": 26,
+   "turns_7d": 27,
+   "rooms_7d": 27,
    "engines_used": [
     "mistral"
    ],
@@ -215,8 +215,8 @@
    "name": "Squint",
    "dept": "visual",
    "role": "checker",
-   "turns_7d": 26,
-   "rooms_7d": 26,
+   "turns_7d": 27,
+   "rooms_7d": 27,
    "engines_used": [
     "mistral"
    ],
@@ -236,7 +236,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Run InstantX-ComfyUI’s depth-aware upscaler on EXCAVA’s worst-case face region first—measure fidelity drop vs.",
    "proposed": 20,
-   "shipped": 19
+   "shipped": 20
   },
   {
    "id": "links-w1",
@@ -285,14 +285,28 @@
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 17,
-   "rooms_7d": 17,
+   "turns_7d": 18,
+   "rooms_7d": 18,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a raw list o"
+   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a raw list of"
+  },
+  {
+   "id": "news-lead",
+   "name": "Wire",
+   "dept": "news",
+   "role": "lead",
+   "turns_7d": 16,
+   "rooms_7d": 16,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three verified items: 1) OpenAI’s new memory arch"
   },
   {
    "id": "news-w1",
@@ -332,20 +346,6 @@
    ],
    "positions_held": 30,
    "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. The package will generate user-generated content skills f"
-  },
-  {
-   "id": "news-lead",
-   "name": "Wire",
-   "dept": "news",
-   "role": "lead",
-   "turns_7d": 15,
-   "rooms_7d": 15,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key updates: 1) OpenAI’s new memory archite"
   },
   {
    "id": "improve-lead",

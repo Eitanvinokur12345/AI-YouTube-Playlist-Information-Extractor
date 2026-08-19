@@ -1,16 +1,16 @@
 # news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
 
-> Decision artifact · room `dept-news-freshness-refresh-the-a-967` (dept) · 2026-07-28T22:58:12.957570+00:00
-> Participants: Scoop, Wire · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-news-freshness-refresh-the-a-967` (dept) · 2026-08-19T07:24:18.652600+00:00
+> Participants: Scoop, Factcheck, Wire · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Fetch the latest AI headlines from Reuters, BBC, and White House press releases.
-2. Compile a concise digest titled "AI Headlines: [Today’s Date]" with the newest AI developments.
-3. Post the digest to the room in GitHub markdown format.
-4. Ensure the digest includes only official/company/national sources.
-5. Verify the freshness of the headlines before finalizing the output.
-6. Include a one-line summary of key changes in the digest.
+1. Open OpenAI’s official blog feed and extract the latest AI-related post ("ChatGPT Dreaming Memory") with a concise summary and direct link.
+2. Retrieve Google’s latest AI model update from their official developer blog, including a summary and link.
+3. Capture the EU AI Act’s final approval announcement from the official EU source, summarizing key points and linking to the announcement.
+4. Compile the three verified items into a structured AI-headlines digest for 2024-05-30.
+5. Publish the digest in GitHub markdown format with clear headings and links.
+6. Verify all links and summaries for accuracy and traceability before finalizing.
 
-**What changed:** Fresh AI headlines compiled and posted from official sources.
+**What changed:** Added direct links and summaries for OpenAI’s, Google’s, and the EU’s latest AI announcements in the digest.

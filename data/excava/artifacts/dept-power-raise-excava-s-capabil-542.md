@@ -1,15 +1,16 @@
 # power: Raise EXCAVA's capability by even 0.5%: find new tools, best/newest models, combine elemen
 
-> Decision artifact · room `dept-power-raise-excava-s-capabil-542` (dept) · 2026-07-21T15:51:49.276661+00:00
-> Participants: Gearbox, Torque, Dynamo · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-power-raise-excava-s-capabil-542` (dept) · 2026-08-19T13:28:19.246124+00:00
+> Participants: Gearbox, Torque, Dynamo · synthesized by mistral/mistral-small-latest
 
-**Decision:** Adopt Mixtral-8x22B-Instruct for EXCAVA, delivering a measurable 0.5%+ capability bump.
+**Decision:**
 
 **Plan:**
-1. Initiate integration of Mixtral-8x22B-Instruct into the EXCAVA system by the set deadline.
-2. Assign Torque to run a controlled test with a 100K-token synthetic task to confirm Mixtral's 128K context capabilities.
-3. Monitor and evaluate EXCAVA's performance post-integration to ensure the targeted capability increase is achieved.
-4. Document all findings and performance metrics during the testing and integration phases for future reference.
-5. Schedule a review session with the team to assess the benefits and drawbacks of the new model after implementation.
+1. Extract EXCAVA’s worst-case face region (low-light, mixed sources) from a 100-image controlled test set.
+2. Run InstantX-ComfyUI’s depth-aware upscaler on the extracted regions—measure fidelity drop vs. baseline using FID/PSNR.
+3. If fidelity loss ≤ 0.5% vs. baseline, proceed to integrate SD3.5-Ultr’s face pipeline as a secondary layer.
+4. If fidelity loss > 0.5%, discard depth-aware upscaling and test SD3.5-Ultr’s face pipeline standalone.
+5. Gearbox executes steps 1–4 and owns the test artifacts (dataset, metrics, logs).
+6. Torque validates results and flags edge cases (e.g., extreme lighting) for further iteration.
 
-**What changed:** The decision favored adopting Mixtral-8x22B-Instruct based on its verified performance, diverging from the previous models discussed.
+**What changed:** Depth-aware upscaling tested first on worst-case faces; SD3.5-Ultr’s pipeline deferred until fidelity impact is quantified.

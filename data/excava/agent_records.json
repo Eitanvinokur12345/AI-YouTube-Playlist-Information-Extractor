@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-19T06:51:17.537580+00:00",
+ "generated_at": "2026-08-19T06:57:00.886885+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,27 +8,27 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 132,
+   "turns_7d": 133,
    "rooms_7d": 49,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 4-hour triage window assumes Legal can instantly spot every high-risk decision without context—what if the risk isn’"
+   "last_position": "The 4-hour *initial* triage window still lets obvious compliance gaps slip through—what if the risk isn’t obvious until "
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 94,
+   "turns_7d": 95,
    "rooms_7d": 56,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt a **hard 48-hour auto-apply rule for all public-facing decisions**, with a public log linking to evidence. This fo"
+   "last_position": "Adopt a **hard 4-hour initial triage window** where Legal flags only the *most obvious* compliance gaps in public-facing"
   },
   {
    "id": "accessibility-w1",
@@ -114,6 +114,32 @@
    "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
   },
   {
+   "id": "power-w1",
+   "name": "Gearbox",
+   "dept": "power",
+   "role": "doer",
+   "turns_7d": 42,
+   "rooms_7d": 21,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Add SD3.5-Ultr to EXCAVA’s pipeline first. It’s the only model in the stack that explicitly targets identity retention *"
+  },
+  {
+   "id": "power-checker",
+   "name": "Torque",
+   "dept": "power",
+   "role": "checker",
+   "turns_7d": 42,
+   "rooms_7d": 21,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "SD3.5-Ultr’s VRAM spike isn’t the real risk—it’s the untested face pipeline. InstantX’s depth maps could still corrupt i"
+  },
+  {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
@@ -127,32 +153,6 @@
    "positions_held": 30,
    "last_position": "DECISION: Adopt a **hard 48-hour auto-apply with a public, evidence-backed objection**—Legal or Ops must publish a *spec",
    "proposed": 2
-  },
-  {
-   "id": "power-w1",
-   "name": "Gearbox",
-   "dept": "power",
-   "role": "doer",
-   "turns_7d": 41,
-   "rooms_7d": 21,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It regenerates detail in flat areas without blow"
-  },
-  {
-   "id": "power-checker",
-   "name": "Torque",
-   "dept": "power",
-   "role": "checker",
-   "turns_7d": 41,
-   "rooms_7d": 21,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "InstantX-ComfyUI’s depth-aware upscaler won’t fix EXCAVA’s face fidelity drop because it targets flat regions, not ident"
   },
   {
    "id": "accessibility-lead",
@@ -308,6 +308,32 @@
    "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. The package will generate user-generated content skills f"
   },
   {
+   "id": "news-w1",
+   "name": "Scoop",
+   "dept": "news",
+   "role": "doer",
+   "turns_7d": 14,
+   "rooms_7d": 14,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a concise summary of the"
+  },
+  {
+   "id": "news-checker",
+   "name": "Factcheck",
+   "dept": "news",
+   "role": "checker",
+   "turns_7d": 14,
+   "rooms_7d": 14,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is valid MISSION work. Fix: Ensure the summary includes a direct link to the OpenAI blog post for tr"
+  },
+  {
    "id": "improve-lead",
    "name": "Ratchet",
    "dept": "improve",
@@ -388,32 +414,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key items: OpenAI’s new memory architecture"
-  },
-  {
-   "id": "news-w1",
-   "name": "Scoop",
-   "dept": "news",
-   "role": "doer",
-   "turns_7d": 13,
-   "rooms_7d": 13,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh, verified AI new"
-  },
-  {
-   "id": "news-checker",
-   "name": "Factcheck",
-   "dept": "news",
-   "role": "checker",
-   "turns_7d": 13,
-   "rooms_7d": 13,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is valid MISSION work."
   },
   {
    "id": "security-lead",

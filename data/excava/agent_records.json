@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-19T01:44:14.905724+00:00",
+ "generated_at": "2026-08-19T02:07:12.164592+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,13 +8,13 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 126,
+   "turns_7d": 127,
    "rooms_7d": 48,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The pre-approved template still lets Legal and Ops weaponize the list—any clause can be shoehorned into \"Regulatory brea"
+   "last_position": "The pre-approved objection template is still a veto in disguise—Legal and Ops can weaponize \"Regulatory breach\" or \"Copy"
   },
   {
    "id": "transcripts-w1",
@@ -91,7 +91,7 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 52,
+   "turns_7d": 53,
    "rooms_7d": 21,
    "engines_used": [
     "mistral"
@@ -149,26 +149,26 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 34,
-   "rooms_7d": 17,
+   "turns_7d": 35,
+   "rooms_7d": 18,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add RealVisXL v1.1’s face model to EXCAVA’s pipeline first. It locks facial fidelity—preventing the 3-5% identity drift "
+   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It regenerates detail in flat areas without blow"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 34,
-   "rooms_7d": 17,
+   "turns_7d": 35,
+   "rooms_7d": 18,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "RealVisXL v1.1’s face model locks identity but still ignores EXCAVA’s full-frame depth—backgrounds stay soft, so the 3-5"
+   "last_position": "Depth-aware upscaling won’t fix EXCAVA’s face fidelity drop because it targets *geometry*, not identity—RealVisXL v1.1’s"
   },
   {
    "id": "visual-lead",
@@ -215,13 +215,13 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 24,
-   "rooms_7d": 12,
+   "turns_7d": 25,
+   "rooms_7d": 13,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent only on PRs flagged by both new contributors *and* high-risk changes. This cuts noise by 60% while still ca"
+   "last_position": "Run PR-Agent in shadow mode on *all* PRs—open and merged—for two weeks. This lets us measure its impact without risking "
   },
   {
    "id": "power-lead",
@@ -236,7 +236,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Replace RealVisXL v1.1’s face model with **CodeFormer** in EXCAVA’s pipeline to lock identity fidelity while p",
    "proposed": 18,
-   "shipped": 17
+   "shipped": 18
   },
   {
    "id": "links-w1",
@@ -271,14 +271,14 @@
    "name": "LinLea",
    "dept": "links",
    "role": "lead",
-   "turns_7d": 17,
-   "rooms_7d": 17,
+   "turns_7d": 18,
+   "rooms_7d": 18,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard, listing all broken links an"
+   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard with dead links removed and "
   },
   {
    "id": "mining-w1",
@@ -334,6 +334,20 @@
    "last_position": "Pane: Adaptive contrast adds latency—every pixel shift slows rendering, and in fast graphs, that’s a lag users feel befo"
   },
   {
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
+   "role": "checker",
+   "turns_7d": 13,
+   "rooms_7d": 13,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Shadow mode trains reviewers to ignore *all* autofeedback—not just noise—because they can’t distinguish real from fake. "
+  },
+  {
    "id": "improve-lead",
    "name": "Ratchet",
    "dept": "improve",
@@ -347,20 +361,6 @@
    "positions_held": 30,
    "last_position": "DECISION: Run PR-Agent in shadow mode *only* on PRs flagged by both \"new contributor\" *and* \"high-risk changes\" for two ",
    "proposed": 2
-  },
-  {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 12,
-   "rooms_7d": 12,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Shadow mode risks training reviewers to ignore *all* autofeedback—not just noise. A better alternative: run PR-Agent onl"
   },
   {
    "id": "improve-improver",
@@ -483,6 +483,32 @@
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract all contradictions between executive "
   },
   {
+   "id": "news-w1",
+   "name": "Scoop",
+   "dept": "news",
+   "role": "doer",
+   "turns_7d": 9,
+   "rooms_7d": 9,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. The output will be a plain-language summar"
+  },
+  {
+   "id": "news-checker",
+   "name": "Factcheck",
+   "dept": "news",
+   "role": "checker",
+   "turns_7d": 9,
+   "rooms_7d": 9,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is valid MISSION work."
+  },
+  {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
@@ -495,32 +521,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three verified items: OpenAI’s new memory archite"
-  },
-  {
-   "id": "news-w1",
-   "name": "Scoop",
-   "dept": "news",
-   "role": "doer",
-   "turns_7d": 8,
-   "rooms_7d": 8,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh, verified AI new"
-  },
-  {
-   "id": "news-checker",
-   "name": "Factcheck",
-   "dept": "news",
-   "role": "checker",
-   "turns_7d": 8,
-   "rooms_7d": 8,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is valid MISSION work."
   },
   {
    "id": "visualization-lead",

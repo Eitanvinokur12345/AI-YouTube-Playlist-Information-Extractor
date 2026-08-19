@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-19T01:09:31.878840+00:00",
+ "generated_at": "2026-08-19T01:15:15.983565+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,13 +8,13 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 122,
+   "turns_7d": 123,
    "rooms_7d": 48,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The pre-approved objection template fails because Legal and Ops will game it—any clause can be shoehorned into \"Regulato"
+   "last_position": "The public, evidence-backed objection still lets Legal and Ops stall by demanding \"proof\" they’ll never provide—delaying"
   },
   {
    "id": "transcripts-w1",
@@ -91,13 +91,13 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 50,
+   "turns_7d": 51,
    "rooms_7d": 21,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Adopt a **hard 48-hour auto-apply with a public, evidence-backed objection**—Legal or Ops must publish a *"
+   "last_position": "**Decision:** Adopt a **hard 48-hour auto-apply with a public, evidence-backed objection**—if Legal or Ops objects, they"
   },
   {
    "id": "memory-w1",
@@ -149,26 +149,26 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 30,
-   "rooms_7d": 15,
+   "turns_7d": 31,
+   "rooms_7d": 16,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add RealVisXL v1.1’s face model to EXCAVA’s pipeline first. It targets the core failure point—faces losing fidelity—by s"
+   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It regenerates detail in low-res frames without "
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 30,
-   "rooms_7d": 15,
+   "turns_7d": 31,
+   "rooms_7d": 16,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "RealVisXL’s synthetic bias isn’t a risk—it’s a guarantee. Feeding it real faces won’t fix overfitting; it’ll just train "
+   "last_position": "Depth-aware upscaling won’t fix EXCAVA’s face fidelity drop because it targets resolution, not facial structure—faces st"
   },
   {
    "id": "visual-lead",
@@ -263,7 +263,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Replace RealVisXL v1.1’s face model with **CodeFormer** in EXCAVA’s pipeline—test its face restoration on 100 ",
    "proposed": 16,
-   "shipped": 15
+   "shipped": 16
   },
   {
    "id": "links-w1",
@@ -294,6 +294,20 @@
    "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
   },
   {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 15,
+   "rooms_7d": 15,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard with all broken links fixed "
+  },
+  {
    "id": "visualization-w1",
    "name": "Facet",
    "dept": "visualization",
@@ -318,20 +332,6 @@
    ],
    "positions_held": 30,
    "last_position": "Pane: Adaptive contrast adds latency—every pixel shift slows rendering, and in fast graphs, that’s a lag users feel befo"
-  },
-  {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
-   "role": "lead",
-   "turns_7d": 14,
-   "rooms_7d": 14,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard, confirming all links are li"
   },
   {
    "id": "improve-lead",
@@ -498,6 +498,32 @@
    "shipped": 7
   },
   {
+   "id": "news-w1",
+   "name": "Scoop",
+   "dept": "news",
+   "role": "doer",
+   "turns_7d": 6,
+   "rooms_7d": 6,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a concise summary of the"
+  },
+  {
+   "id": "news-checker",
+   "name": "Factcheck",
+   "dept": "news",
+   "role": "checker",
+   "turns_7d": 6,
+   "rooms_7d": 6,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is valid MISSION work."
+  },
+  {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
@@ -510,32 +536,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key updates: 1) OpenAI’s new memory archite"
-  },
-  {
-   "id": "news-w1",
-   "name": "Scoop",
-   "dept": "news",
-   "role": "doer",
-   "turns_7d": 5,
-   "rooms_7d": 5,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. The result will be a concise summary of th"
-  },
-  {
-   "id": "news-checker",
-   "name": "Factcheck",
-   "dept": "news",
-   "role": "checker",
-   "turns_7d": 5,
-   "rooms_7d": 5,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is valid MISSION work."
   },
   {
    "id": "memory-lead",

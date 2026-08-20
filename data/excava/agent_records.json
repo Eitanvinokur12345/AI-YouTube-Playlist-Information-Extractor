@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-20T17:06:06.889781+00:00",
+ "generated_at": "2026-08-20T19:14:34.944404+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -35,14 +35,14 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 81,
+   "turns_7d": 82,
    "rooms_7d": 32,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll run BloodHound-MCP on the full earnings call transcript to map every financial entity and relationship mentioned, p"
+   "last_position": "Adopt the **real-time, Legal-flagged triage queue** where Legal designates the top 3 *harm-severity* false negatives wit"
   },
   {
    "id": "accessibility-w1",
@@ -77,14 +77,14 @@
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 72,
+   "turns_7d": 73,
    "rooms_7d": 24,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: Chisel’s plan is MISSION work—BloodHound-MCP ingests transcripts and maps financial entities/relationships. Fix"
+   "last_position": "Legal can’t flag slurs in 5 minutes—slurs mutate faster than human review, and \"top 3\" guarantees systemic misses. Inste"
   },
   {
    "id": "watch-w1",
@@ -339,13 +339,13 @@
    "name": "Forge",
    "dept": "creators",
    "role": "doer",
-   "turns_7d": 15,
-   "rooms_7d": 15,
+   "turns_7d": 16,
+   "rooms_7d": 16,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. It will produce a labeled, functional skill artifact read"
+   "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. It will produce a ready-to-use npm package labeled \"Creat"
   },
   {
    "id": "improve-lead",
@@ -390,6 +390,19 @@
    "last_position": "Run PR-Agent only on PRs where the heuristic flags *both* new contributors *and* high-risk changes—this cuts the trial s"
   },
   {
+   "id": "creators-checker",
+   "name": "Vet",
+   "dept": "creators",
+   "role": "checker",
+   "turns_7d": 14,
+   "rooms_7d": 14,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 14,
+   "last_position": "Verdict: This is valid MISSION work—building a labeled npm package with tests fits the \"Build PACKAGES\" task."
+  },
+  {
    "id": "visualization-w1",
    "name": "Facet",
    "dept": "visualization",
@@ -416,6 +429,45 @@
    "last_position": "Pane: Adaptive contrast adds latency—every pixel shift slows rendering, and in fast graphs, that’s a lag users feel befo"
   },
   {
+   "id": "analysis-lead",
+   "name": "Marrow",
+   "dept": "analysis",
+   "role": "lead",
+   "turns_7d": 13,
+   "rooms_7d": 13,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a structured graph of financial enti"
+  },
+  {
+   "id": "security-w1",
+   "name": "Warden",
+   "dept": "security",
+   "role": "doer",
+   "turns_7d": 13,
+   "rooms_7d": 13,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I will instruct ToolHive to verify the LLM Guard container is running and healthy. This will produce a real-time status "
+  },
+  {
+   "id": "security-checker",
+   "name": "Audit",
+   "dept": "security",
+   "role": "checker",
+   "turns_7d": 13,
+   "rooms_7d": 13,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security post"
+  },
+  {
    "id": "creators-lead",
    "name": "Nova",
    "dept": "creators",
@@ -430,32 +482,6 @@
    "last_position": "ACTION: Forge adds \"Created by EXCAVA\" to the \"UGC Factory skill\" package name and README, then submits the updated arti"
   },
   {
-   "id": "creators-checker",
-   "name": "Vet",
-   "dept": "creators",
-   "role": "checker",
-   "turns_7d": 13,
-   "rooms_7d": 13,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 13,
-   "last_position": "Verdict: This is valid MISSION work—building a labeled npm package with tests fits the \"Build PACKAGES\" task."
-  },
-  {
-   "id": "analysis-lead",
-   "name": "Marrow",
-   "dept": "analysis",
-   "role": "lead",
-   "turns_7d": 12,
-   "rooms_7d": 12,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract and map all financial stakeholders, r"
-  },
-  {
    "id": "security-lead",
    "name": "Bastion",
    "dept": "security",
@@ -467,32 +493,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running, healthy, an"
-  },
-  {
-   "id": "security-w1",
-   "name": "Warden",
-   "dept": "security",
-   "role": "doer",
-   "turns_7d": 12,
-   "rooms_7d": 12,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will instruct ToolHive to verify the LLM Guard container is running and healthy. This will produce a real-time status "
-  },
-  {
-   "id": "security-checker",
-   "name": "Audit",
-   "dept": "security",
-   "role": "checker",
-   "turns_7d": 12,
-   "rooms_7d": 12,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security post"
   },
   {
    "id": "watch-lead",

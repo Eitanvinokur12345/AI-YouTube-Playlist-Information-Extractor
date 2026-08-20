@@ -1,12 +1,15 @@
 # news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
 
-> Decision artifact · room `dept-news-freshness-refresh-the-a-864` (dept) · 2026-07-31T13:11:12.858369+00:00
-> Participants: Scoop, Wire · synthesized by groq/llama-3.3-70b-versatile
+> Decision artifact · room `dept-news-freshness-refresh-the-a-864` (dept) · 2026-08-20T03:54:42.426301+00:00
+> Participants: Scoop, Factcheck, Wire · synthesized by mistral/mistral-small-latest
 
-**Decision:** Refresh the AI-news digest from the newest official sources
-1. **Fetch latest news**: Collect the latest AI news from OpenAI's official blog.
-2. **Gather NVIDIA releases**: Pull the newest AI announcements from NVIDIA's newsroom.
-3. **Summarize announcements**: Compile a summary of OpenAI's latest official announcements and NVIDIA's newest releases.
-4. **Publish digest**: Publish the AI-news digest.
-5. **Update sources**: Ensure the digest only includes information from official sources.
-**What changed:** The AI-news digest will now include the latest official announcements from OpenAI and NVIDIA.
+**Decision:**
+
+**Plan:**
+1. Parse OpenAI’s official blog feed to extract the latest AI-related post.
+2. Generate a plain-language summary of the post’s key points and decisions.
+3. Verify three verified sources for the AI-headlines digest: OpenAI’s Dreaming Memory, Google’s AI safety commitments at I/O 2024, and Microsoft’s AI-powered Windows 11 update rollout.
+4. Compile the AI-headlines digest for 2024-05-30, listing the verified sources.
+5. Publish the digest in GitHub markdown format.
+
+**What changed:** AI-headlines digest for 2024-05-30 published with three verified sources.

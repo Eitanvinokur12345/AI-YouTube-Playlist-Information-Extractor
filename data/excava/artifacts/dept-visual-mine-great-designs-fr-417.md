@@ -1,16 +1,16 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-417` (dept) · 2026-07-31T21:41:57.773989+00:00
-> Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-visual-mine-great-designs-fr-417` (dept) · 2026-08-20T03:27:19.945171+00:00
+> Participants: Easel, Squint, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Open the Playwright MCP server.
-2. Navigate to Behance’s "Popular" page.
-3. Capture a full-page screenshot of the top-ranked project.
-4. Save the screenshot as a high-fidelity visual reference for the hub.
-5. Extract key design patterns (colors, typography, layouts) from the screenshot.
-6. Add the screenshot and extracted patterns to the hub’s design repository.
+1. Capture a full-page screenshot of the official Model Context Protocol (MCP) website.
+2. Save the screenshot as `mcp-official-design-reference.png` in the hub.
+3. Extract design patterns and visual hierarchy from the screenshot for reference.
+4. Organize the extracted material into the hub’s design pattern collection.
+5. Tag the file with relevant keywords (e.g., "MCP," "design patterns," "visual hierarchy").
+6. Share the file with the team for review and integration.
 
-**What changed:** Focus shifted from Apple’s homepage to Behance’s top-ranked project for contemporary design inspiration.
+**What changed:** Added `mcp-official-design-reference.png` to the hub.

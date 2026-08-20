@@ -1,18 +1,16 @@
 # creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Created by EXCAVA' + tes
 
-> Decision artifact · room `dept-creators-build-packages-enri-349` (dept) · 2026-07-22T23:22:51.436915+00:00
-> Participants: Forge, Nova · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-creators-build-packages-enri-349` (dept) · 2026-08-20T17:04:42.423637+00:00
+> Participants: Forge, Vet, Nova · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Approve and execute the "UGC Factory" npm package for the creators tab.
 
 **Plan:**
-1. Forge drafts the "UGC Factory" npm package in the creators tab, labeled "Created by EXCAVA".
-2. Nova tests the package to verify it generates valid, labeled "Created by EXCAVA" customizable Claude skill packages.
-3. Forge enriches the creators tab with the tested "UGC Factory" package.
-4. Forge drafts additional elements (e.g., templates, docs) under "Created by EXCAVA" in the creators tab.
-5. Nova verifies all new elements are properly labeled and functional.
-6. Team finalizes and publishes the enriched creators tab.
+1. Forge drafts the "UGC Factory" skill package for the Skill Creator.
+2. Forge adds "Created by EXCAVA" to the package name and README.
+3. Forge includes tests in the package.
+4. Forge submits the updated artifact for testing.
+5. Vet reviews the package for compliance with MISSION work standards.
+6. Vet approves the package if all requirements are met.
 
-**What changed:**
-Added and tested the "UGC Factory" npm package in the creators tab under "Created by EXCAVA".
+**What changed:** Added "Created by EXCAVA" to the package name and README.

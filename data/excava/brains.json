@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-21T16:51:18.054943+00:00",
+ "generated_at": "2026-08-21T17:44:49.112725+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -80,55 +80,40 @@
   {
    "id": "A",
    "lead": {
-    "engine": "mistral",
-    "model": "mistral-small-latest",
-    "lineage": "mistral",
-    "tier": "fast"
+    "engine": "deepseek",
+    "model": "deepseek/deepseek-chat-v3-0324:free",
+    "lineage": "deepseek",
+    "tier": "reasoning"
    },
    "support": {
-    "engine": "gh-models",
-    "model": "openai/gpt-4o-mini",
-    "lineage": "gpt",
+    "engine": "glm",
+    "model": "z-ai/glm-4.5-air:free",
+    "lineage": "glm",
     "tier": "grounded"
    }
   },
   {
    "id": "B",
    "lead": {
-    "engine": "groq",
-    "model": "llama-3.3-70b-versatile",
-    "lineage": "llama",
-    "tier": "fast"
-   },
-   "support": {
     "engine": "kimi",
     "model": "moonshotai/kimi-k2:free",
     "lineage": "kimi",
     "tier": "reasoning"
+   },
+   "support": {
+    "engine": "gemini",
+    "model": "gemini-2.0-flash",
+    "lineage": "gemini",
+    "tier": "grounded"
    }
   },
   {
    "id": "C",
    "lead": {
-    "engine": "gemini",
-    "model": "gemini-2.0-flash",
-    "lineage": "gemini",
+    "engine": "gh-models",
+    "model": "openai/gpt-4o-mini",
+    "lineage": "gpt",
     "tier": "grounded"
-   },
-   "support": {
-    "engine": "cerebras",
-    "model": "llama3.1-8b",
-    "lineage": "llama",
-    "tier": "fast"
-   }
-  },
-  {
-   "id": "D",
-   "lead": {
-    "engine": "deepseek",
-    "model": "deepseek/deepseek-chat-v3-0324:free",
-    "lineage": "deepseek",
-    "tier": "reasoning"
    },
    "support": {
     "engine": "sambanova",
@@ -136,20 +121,53 @@
     "lineage": "llama",
     "tier": "fast"
    }
+  },
+  {
+   "id": "D",
+   "lead": {
+    "engine": "groq",
+    "model": "llama-3.3-70b-versatile",
+    "lineage": "llama",
+    "tier": "fast"
+   },
+   "support": {
+    "engine": "mistral",
+    "model": "mistral-small-latest",
+    "lineage": "mistral",
+    "tier": "fast"
+   }
   }
  ],
  "debate": [
   {
-   "engine": "mistral",
-   "lineage": "mistral",
-   "model": "mistral-small-latest"
+   "engine": "deepseek",
+   "lineage": "deepseek",
+   "model": "deepseek/deepseek-chat-v3-0324:free"
+  },
+  {
+   "engine": "kimi",
+   "lineage": "kimi",
+   "model": "moonshotai/kimi-k2:free"
+  },
+  {
+   "engine": "gh-models",
+   "lineage": "gpt",
+   "model": "openai/gpt-4o-mini"
+  },
+  {
+   "engine": "groq",
+   "lineage": "llama",
+   "model": "llama-3.3-70b-versatile"
   }
  ],
  "debate_lineages": [
-  "mistral"
+  "deepseek",
+  "gpt",
+  "kimi",
+  "llama"
  ],
  "spoke_today": {
-  "mistral": 134
+  "mistral": 137
  },
  "note": "a BRAIN = a benchmark-ranked LEAD model + a distinct-lineage SUPPORT model (levels of support, real fallback); rank is EARNED by measured quality, not the plan's list. The lineage roster below shows every model that can be a lead/support; GLM/DeepSeek/Kimi need OPENROUTER_API_KEY (§12)."
 }

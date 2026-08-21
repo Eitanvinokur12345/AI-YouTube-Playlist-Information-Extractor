@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-21T06:34:54.268425+00:00",
+ "generated_at": "2026-08-21T06:40:40.070408+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -35,56 +35,56 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 80,
-   "rooms_7d": 40,
+   "turns_7d": 81,
+   "rooms_7d": 41,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Use a 6px focus ring at 7:1 contrast with no glow. This meets WCAG AAA for low-vision users and stays sharp on mobile sc"
+   "last_position": "Set the focus ring to 6px wide with 7:1 contrast and no glow. This meets WCAG AAA for large text and keeps the ring visi"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 80,
-   "rooms_7d": 40,
+   "turns_7d": 81,
+   "rooms_7d": 41,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 6px ring at 7:1 contrast risks crowding small interactive elements on dense UIs—like buttons in a toolbar—where the "
+   "last_position": "The 6px ring risks failing users who need reduced motion—static rings can still trigger vestibular disorders if they app"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 77,
+   "turns_7d": 78,
    "rooms_7d": 28,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Product must expose real-time risk signals (e.g., toxicity score) directly in the upload interface for Legal to see. Thi"
+   "last_position": "**Decision:** Product must expose a *temporal risk score* in the upload interface—calculated from account age, upload bu"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 67,
+   "turns_7d": 68,
    "rooms_7d": 19,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The risk metric idea assumes Product can expose toxicity scores without gaming—bad actors will adapt to hit the threshol"
+   "last_position": "The temporal risk score still assumes bad actors won’t game the decay window—spoofing account age or cycling burners fas"
   },
   {
    "id": "watch-w1",
@@ -139,7 +139,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Finalize 4px focus ring at 6:1 contrast with 1px outer stroke, no glow. Owner: accessibility-w1 must deliver t",
    "proposed": 34,
-   "shipped": 33
+   "shipped": 34
   },
   {
    "id": "memory-w1",
@@ -224,6 +224,32 @@
    "last_position": "Run PR-Agent only on PRs where both new contributors *and* high-risk changes are present. This targets the highest-lever"
   },
   {
+   "id": "creators-w1",
+   "name": "Forge",
+   "dept": "creators",
+   "role": "doer",
+   "turns_7d": 22,
+   "rooms_7d": 22,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. It will produce a ready-to-install npm package labeled \"C"
+  },
+  {
+   "id": "creators-checker",
+   "name": "Vet",
+   "dept": "creators",
+   "role": "checker",
+   "turns_7d": 22,
+   "rooms_7d": 22,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 23,
+   "last_position": "Verdict: This is valid MISSION work—building a labeled npm package with tests fits the creators' task of \"Build PACKAGES"
+  },
+  {
    "id": "power-lead",
    "name": "Dynamo",
    "dept": "power",
@@ -267,32 +293,6 @@
    "last_position": "ACTION: Forge renames the \"UGC Factory\" skill package to \"UGC Factory by EXCAVA\" and updates the README to include \"Crea"
   },
   {
-   "id": "creators-w1",
-   "name": "Forge",
-   "dept": "creators",
-   "role": "doer",
-   "turns_7d": 21,
-   "rooms_7d": 21,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. It will produce a ready-to-use npm package that lets user"
-  },
-  {
-   "id": "creators-checker",
-   "name": "Vet",
-   "dept": "creators",
-   "role": "checker",
-   "turns_7d": 21,
-   "rooms_7d": 21,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 22,
-   "last_position": "Verdict: This is valid MISSION work—building a labeled npm package with tests fits \"Build PACKAGES.\""
-  },
-  {
    "id": "visual-lead",
    "name": "Chroma",
    "dept": "visual",
@@ -330,6 +330,33 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
+  },
+  {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 13,
+   "rooms_7d": 13,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run the link-checker tool on the live Mission Control Dashboard to scan for broken links. This will produce a report lis"
+  },
+  {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 13,
+   "rooms_7d": 13,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
   },
   {
    "id": "links-lead-x",
@@ -411,33 +438,6 @@
    ],
    "positions_held": 30,
    "last_position": "Pane: A one-click toggle still outsources the problem—users must *remember* to switch when errors appear, and the toggle"
-  },
-  {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 12,
-   "rooms_7d": 12,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run the link-checker tool on the live Mission Control Dashboard to scan for broken links. The report will list all dead "
-  },
-  {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
-   "role": "checker",
-   "turns_7d": 12,
-   "rooms_7d": 12,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work our tool can do."
   },
   {
    "id": "security-lead",

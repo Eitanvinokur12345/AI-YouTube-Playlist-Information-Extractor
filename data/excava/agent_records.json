@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-21T06:23:15.900122+00:00",
+ "generated_at": "2026-08-21T06:29:08.674061+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,13 +8,13 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 144,
+   "turns_7d": 145,
    "rooms_7d": 42,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Legal’s 24/7 queue solves the symptom—delayed takedowns—but not the root: the triage system itself is still reactive. If"
+   "last_position": "The \"risk pattern\" flagger still assumes Legal and Product can predict every malicious pattern—bad actors will exploit g"
   },
   {
    "id": "transcripts-w1",
@@ -35,28 +35,28 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 79,
+   "turns_7d": 80,
    "rooms_7d": 40,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Use a 4px focus ring at 4.5:1 contrast with a subtle 1px inner glow. This balances visibility for low-vision users with "
+   "last_position": "Use a 6px focus ring at 7:1 contrast with no glow. This meets WCAG AAA for low-vision users and stays sharp on mobile sc"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 79,
+   "turns_7d": 80,
    "rooms_7d": 40,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 4px ring with glow still risks failing users who need high contrast—glow can blur edges on mobile screens, making th"
+   "last_position": "The 6px ring at 7:1 contrast risks crowding small interactive elements on dense UIs—like buttons in a toolbar—where the "
   },
   {
    "id": "analysis-w1",
@@ -91,13 +91,13 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 59,
-   "rooms_7d": 16,
+   "turns_7d": 60,
+   "rooms_7d": 17,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the **automated daily triage of the top 10 unique false negatives**, with Engineering owning the retrain threshold"
+   "last_position": "Legal and Product jointly build a **real-time \"risk pattern\" flagger** in the upload interface: it highlights content wi"
   },
   {
    "id": "power-w1",
@@ -253,6 +253,32 @@
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a raw list o"
   },
   {
+   "id": "creators-w1",
+   "name": "Forge",
+   "dept": "creators",
+   "role": "doer",
+   "turns_7d": 21,
+   "rooms_7d": 21,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. It will produce a ready-to-use npm package that lets user"
+  },
+  {
+   "id": "creators-checker",
+   "name": "Vet",
+   "dept": "creators",
+   "role": "checker",
+   "turns_7d": 21,
+   "rooms_7d": 21,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 22,
+   "last_position": "Verdict: This is valid MISSION work—building a labeled npm package with tests fits \"Build PACKAGES.\""
+  },
+  {
    "id": "creators-lead",
    "name": "Nova",
    "dept": "creators",
@@ -265,32 +291,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Forge updates the \"UGC Factory\" package with a clear test file labeled \"Created by EXCAVA\" and a test suite conf"
-  },
-  {
-   "id": "creators-w1",
-   "name": "Forge",
-   "dept": "creators",
-   "role": "doer",
-   "turns_7d": 20,
-   "rooms_7d": 20,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. It will produce a ready-to-install npm package labeled \"C"
-  },
-  {
-   "id": "creators-checker",
-   "name": "Vet",
-   "dept": "creators",
-   "role": "checker",
-   "turns_7d": 20,
-   "rooms_7d": 20,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 21,
-   "last_position": "Verdict: This is valid MISSION work—building a labeled npm package with tests fits the creators' task of building packag"
   },
   {
    "id": "visual-lead",
@@ -400,6 +400,33 @@
    "last_position": "Pane: A one-click toggle still outsources the problem—users must *remember* to switch when errors appear, and the toggle"
   },
   {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 12,
+   "rooms_7d": 12,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run the link-checker tool on the live Mission Control Dashboard to scan for broken links. The report will list all dead "
+  },
+  {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 12,
+   "rooms_7d": 12,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work our tool can do."
+  },
+  {
    "id": "links-lead-x",
    "name": "LinLea",
    "dept": "links",
@@ -450,33 +477,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security post"
-  },
-  {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 11,
-   "rooms_7d": 11,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run the link-checker tool on the live Mission Control Dashboard to scan for broken links. This will produce a report lis"
-  },
-  {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
-   "role": "checker",
-   "turns_7d": 11,
-   "rooms_7d": 11,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work our tool can do."
   },
   {
    "id": "analysis-lead",

@@ -1,15 +1,18 @@
 # watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.
 
-> Decision artifact · room `dept-watch-analyze-video-audio-vi-842` (dept) · 2026-07-20T22:36:07.045998+00:00
-> Participants: Scope, Iris · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-watch-analyze-video-audio-vi-842` (dept) · 2026-08-22T19:48:57.367669+00:00
+> Participants: Scope, Frame, Iris · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+Run Arcads AI Video agent on the specified YouTube page to extract multimodal latent signals.
 
 **Plan:**
-1. Run Arcads AI Video skill on the marketing video to extract high-value insights from audio+visual elements.
-2. Generate a structured analysis identifying emotional triggers, visual storytelling cues, and audience engagement patterns.
-3. Finalize the report at 10:51:00 and deliver it to the lead for review.
-4. Ensure the output is in GitHub markdown format with no preamble.
-5. Include a one-line '**What changed:**' summary below the plan.
+1. At 12:35:00, direct Arcads AI Video to analyze the YouTube page for latent marketing signals.
+2. Generate a structured JSON artifact summarizing engagement triggers, visual cues, and tone patterns.
+3. Validate the JSON output for accuracy and completeness.
+4. Store the artifact in the designated repository.
+5. Share results with stakeholders for review.
+6. Iterate if additional refinements are needed.
 
-**What changed:** Arcads AI Video analysis is now finalized and delivered for review.
+**What changed:**
+Scope clarified to specify the YouTube page as the target source for analysis.

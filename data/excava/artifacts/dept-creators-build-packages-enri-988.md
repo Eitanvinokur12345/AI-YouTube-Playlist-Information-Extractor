@@ -1,16 +1,16 @@
 # creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Created by EXCAVA' + tes
 
-> Decision artifact · room `dept-creators-build-packages-enri-988` (dept) · 2026-07-11T15:33:07.062552+00:00
+> Decision artifact · room `dept-creators-build-packages-enri-988` (dept) · 2026-08-22T10:52:54.620535+00:00
 > Participants: Forge, Vet, Nova · synthesized by mistral/mistral-small-latest
 
-**Decision:** We’ll build the three features as separate starter packages first (Template Gallery, Property Inspector, Live Preview), each labeled “Created by EXCAVATOR,” and vet them independently—Forge owns delivery, Vet owns testing.
+**Decision:**
 
 **Plan:**
-1. Forge creates the **Template Gallery** package with a curated template gallery tab.
-2. Forge creates the **Property Inspector** package with a property inspector tab.
-3. Forge creates the **Live Preview** package with a live preview pane tab.
-4. Each package is labeled “Created by EXCAVATOR” and released individually.
-5. Vet tests each package independently for usability and integration.
-6. Gather feedback from creators and iterate on each package.
+1. Forge drafts the "UGC Factory" skill package for the Skill Creator.
+2. Vet validates the package as valid MISSION work.
+3. Forge publishes the "UGC Factory by EXCAVA" npm package with tests.
+4. Package is labeled "Created by EXCAVA".
+5. Package is distributed via npm with tests included.
+6. Vet confirms successful publication and distribution.
 
-**What changed:** Switched from a bundled "QuickStart" package to three separate starter packages for modularity and targeted value.
+**What changed:** The "UGC Factory by EXCAVA" npm package is now live with tests and proper labeling.

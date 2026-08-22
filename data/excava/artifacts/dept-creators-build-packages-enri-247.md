@@ -1,16 +1,16 @@
 # creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Created by EXCAVA' + tes
 
-> Decision artifact · room `dept-creators-build-packages-enri-247` (dept) · 2026-07-31T22:36:37.487802+00:00
-> Participants: Forge, Nova · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-creators-build-packages-enri-247` (dept) · 2026-08-22T07:13:46.908028+00:00
+> Participants: Forge, Vet, Nova · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Forge drafts the "Auto-Summarize" UGC package for Skill Creator, labeled "Created by EXCAVA."
-2. Include a clear README and minimal working example in the package.
-3. Test the package to ensure it generates custom Claude skills.
-4. Nova reviews and approves the package for release.
-5. Publish the package as an npm-ready module.
-6. Document the package in the relevant tabs for user access.
+1. Forge drafts the "UGC Factory by EXC" npm package for the Skill Creator.
+2. Forge adds test coverage to the package under the "Created by EXCAVA" label.
+3. Vet reviews the package for MISSION compliance and test coverage.
+4. Nova merges the package into the main repository with the "Created by EXCAVA" label.
+5. Forge updates the Skill Creator’s tabs to include the new "UGC Factory by EXC" package.
+6. Vet and Nova validate the enrichment and labeling.
 
-**What changed:** New "Auto-Summarize" UGC package created by EXCAVA.
+**What changed:** Package name updated to "UGC Factory by EXC" with test coverage under "Created by EXCAVA."

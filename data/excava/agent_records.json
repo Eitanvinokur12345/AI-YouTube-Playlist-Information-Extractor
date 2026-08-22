@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-22T14:30:59.785261+00:00",
+ "generated_at": "2026-08-22T14:37:00.012374+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,27 +8,27 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 148,
+   "turns_7d": 150,
    "rooms_7d": 37,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Reel’s silent background review leaks *volume*—bad actors will detect spikes in  | The transcript tool risks injecting g"
+   "last_position": "Reel’s silent background review leaks *volume*—bad actors will detect spikes in | Scriv: The raw YouTube page still risk"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 98,
+   "turns_7d": 99,
    "rooms_7d": 44,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** We should fetch the full transcript for e2Z5eBVDrKM using the kimtaeyoon83/mcp- tool immediately."
+   "last_position": "**Decision:** Product and Legal ship a *latent score* (0-100) with *no post-upload signal ever*—users only see \"Upload s"
   },
   {
    "id": "analysis-w1",
@@ -90,13 +90,13 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 66,
-   "rooms_7d": 18,
+   "turns_7d": 67,
+   "rooms_7d": 19,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Product and Legal ship a *latent score* (0-100) with *no post-upload signal ever*—users only see \"Upload s"
+   "last_position": "Fetch the YouTube page raw, parse the transcript ourselves. The trade-off is a small delay in raw material, but we avoid"
   },
   {
    "id": "power-w1",
@@ -141,6 +141,32 @@
    "shipped": 25
   },
   {
+   "id": "creators-w1",
+   "name": "Forge",
+   "dept": "creators",
+   "role": "doer",
+   "turns_7d": 33,
+   "rooms_7d": 33,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. It will produce a ready-to-use skill that lets users gene"
+  },
+  {
+   "id": "creators-checker",
+   "name": "Vet",
+   "dept": "creators",
+   "role": "checker",
+   "turns_7d": 33,
+   "rooms_7d": 33,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled \"Created by EXCAVA\" with tests."
+  },
+  {
    "id": "creators-lead",
    "name": "Nova",
    "dept": "creators",
@@ -155,32 +181,6 @@
    "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled \"Created by EXCAVA\" and updates the "
   },
   {
-   "id": "creators-w1",
-   "name": "Forge",
-   "dept": "creators",
-   "role": "doer",
-   "turns_7d": 32,
-   "rooms_7d": 32,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. It will produce a new skill that lets users generate, mod"
-  },
-  {
-   "id": "creators-checker",
-   "name": "Vet",
-   "dept": "creators",
-   "role": "checker",
-   "turns_7d": 32,
-   "rooms_7d": 32,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled \"Created by EXCAVA\" with tests."
-  },
-  {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
@@ -193,6 +193,19 @@
    "positions_held": 30,
    "last_position": "ACTION: Reel runs kimtaeyoon83/mcp-server-youtube-transcript on each pending video, stores the fresh transcript file in ",
    "proposed": 2
+  },
+  {
+   "id": "news-lead",
+   "name": "Wire",
+   "dept": "news",
+   "role": "lead",
+   "turns_7d": 28,
+   "rooms_7d": 28,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key updates: OpenAI’s new memory architectu"
   },
   {
    "id": "news-w1",
@@ -234,19 +247,6 @@
    "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
   },
   {
-   "id": "news-lead",
-   "name": "Wire",
-   "dept": "news",
-   "role": "lead",
-   "turns_7d": 27,
-   "rooms_7d": 27,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three verified items: OpenAI’s \"ChatGPT Dreaming "
-  },
-  {
    "id": "improve-w1",
    "name": "Sprocket",
    "dept": "improve",
@@ -258,6 +258,21 @@
    ],
    "positions_held": 30,
    "last_position": "Run PR-Agent only on PRs where both new contributors *and* high-risk changes are present. This targets the highest-lever"
+  },
+  {
+   "id": "power-lead",
+   "name": "Dynamo",
+   "dept": "power",
+   "role": "lead",
+   "turns_7d": 24,
+   "rooms_7d": 24,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Skip both SD3.5-Ultra’s motion-refiner and InstantX-ComfyUI’s depth-up; test RVRT/FILM temporal denoiser first",
+   "proposed": 19,
+   "shipped": 19
   },
   {
    "id": "mining-w1",
@@ -274,32 +289,17 @@
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a raw list of"
   },
   {
-   "id": "power-lead",
-   "name": "Dynamo",
-   "dept": "power",
-   "role": "lead",
-   "turns_7d": 23,
-   "rooms_7d": 23,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Skip both InstantX-ComfyUI’s depth-aware upscaler and SD3.5-Ultra’s motion-refiner—test Depth Anything V2’s te",
-   "proposed": 19,
-   "shipped": 19
-  },
-  {
    "id": "visual-lead",
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 16,
-   "rooms_7d": 16,
+   "turns_7d": 17,
+   "rooms_7d": 17,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Playwright MCP website and saves it to the hub as a visua"
+   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Playwright MCP website to mine its design patterns and vi"
   },
   {
    "id": "visual-w1",
@@ -449,6 +449,20 @@
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security post"
   },
   {
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 9,
+   "rooms_7d": 9,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: At 12:20:00, Iris directs Arcads AI Video to generate the \"latent engagement score (0-100)\" artifact for the mar"
+  },
+  {
    "id": "watch-checker",
    "name": "Frame",
    "dept": "watch",
@@ -474,20 +488,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a structured graph of financial enti"
-  },
-  {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 8,
-   "rooms_7d": 8,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: At 12:15:00, Iris directs Arcads AI Video to deliver the final engagement score (0-100) for the marketing video "
   },
   {
    "id": "visualization-w1",

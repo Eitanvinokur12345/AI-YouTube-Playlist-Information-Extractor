@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-22T14:43:01.096120+00:00",
+ "generated_at": "2026-08-22T14:48:51.359160+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -103,26 +103,26 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 49,
+   "turns_7d": 50,
    "rooms_7d": 25,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It sharpens fine details in rendered frames with"
+   "last_position": "Add SD3.5-Ultra’s motion-refiner node to EXCAVA’s pipeline first. It directly targets motion blur by refining temporal c"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 49,
+   "turns_7d": 50,
    "rooms_7d": 25,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Depth-aware upscaling won’t fix EXCAVA’s motion blur—it’s a spatial sharpening trick, not a temporal fix. The real risk "
+   "last_position": "SD3.5-Ultra’s motion-refiner is a black box with no published benchmarks—its \"temporal coherence\" claim could mask artif"
   },
   {
    "id": "accessibility-lead",
@@ -141,6 +141,32 @@
    "shipped": 25
   },
   {
+   "id": "creators-w1",
+   "name": "Forge",
+   "dept": "creators",
+   "role": "doer",
+   "turns_7d": 34,
+   "rooms_7d": 34,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. It will produce a ready-to-use skill that lets users gene"
+  },
+  {
+   "id": "creators-checker",
+   "name": "Vet",
+   "dept": "creators",
+   "role": "checker",
+   "turns_7d": 34,
+   "rooms_7d": 34,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled 'Created by EXCAVA'."
+  },
+  {
    "id": "creators-lead",
    "name": "Nova",
    "dept": "creators",
@@ -155,44 +181,31 @@
    "last_position": "ACTION: Vet publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled \"Created by EXCAVA\" in the Skill Creat"
   },
   {
-   "id": "creators-w1",
-   "name": "Forge",
-   "dept": "creators",
-   "role": "doer",
-   "turns_7d": 33,
-   "rooms_7d": 33,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. It will produce a ready-to-use skill that lets users gene"
-  },
-  {
-   "id": "creators-checker",
-   "name": "Vet",
-   "dept": "creators",
-   "role": "checker",
-   "turns_7d": 33,
-   "rooms_7d": 33,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled \"Created by EXCAVA\" with tests."
-  },
-  {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 30,
-   "rooms_7d": 30,
+   "turns_7d": 31,
+   "rooms_7d": 31,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Fetch the YouTube page raw for e2Z5eBVDrKM, then use YouTube’s API to pull the full description and transcript",
+   "last_position": "DECISION: Product and Legal ship a latent score (0-100) with *no post-upload signal ever*—users only see \"Upload success",
    "proposed": 2
+  },
+  {
+   "id": "news-lead",
+   "name": "Wire",
+   "dept": "news",
+   "role": "lead",
+   "turns_7d": 29,
+   "rooms_7d": 29,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three verified items: OpenAI’s new memory archite"
   },
   {
    "id": "news-w1",
@@ -219,19 +232,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: The action is valid MISSION work."
-  },
-  {
-   "id": "news-lead",
-   "name": "Wire",
-   "dept": "news",
-   "role": "lead",
-   "turns_7d": 28,
-   "rooms_7d": 28,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key updates: OpenAI’s new memory architectu"
   },
   {
    "id": "memory-w1",
@@ -293,8 +293,8 @@
    "name": "Chroma",
    "dept": "visual",
    "role": "lead",
-   "turns_7d": 17,
-   "rooms_7d": 17,
+   "turns_7d": 18,
+   "rooms_7d": 18,
    "engines_used": [
     "mistral"
    ],
@@ -449,6 +449,20 @@
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security post"
   },
   {
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 10,
+   "rooms_7d": 10,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: At 12:25:00, Iris directs Arcads AI Video to generate the final JSON artifact with the latent score and raw tran"
+  },
+  {
    "id": "watch-checker",
    "name": "Frame",
    "dept": "watch",
@@ -461,20 +475,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts the latent score and raw transcrip"
-  },
-  {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 9,
-   "rooms_7d": 9,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: At 12:20:00, Iris directs Arcads AI Video to generate the \"latent engagement score (0-100)\" artifact for the mar"
   },
   {
    "id": "analysis-lead",

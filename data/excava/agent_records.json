@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-23T07:14:44.058711+00:00",
+ "generated_at": "2026-08-23T09:02:00.159780+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,52 +8,52 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 136,
-   "rooms_7d": 25,
+   "turns_7d": 137,
+   "rooms_7d": 26,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 87dB/5ms cap still lets bad actors game the system with 86dB spikes—just like the original 87dB proposal. Enforce a "
+   "last_position": "The 87dB/5ms cap fails on live or near-live content where 5ms lookahead can’t catch sudden spikes—like a voiceover cough"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 87,
-   "rooms_7d": 33,
+   "turns_7d": 88,
+   "rooms_7d": 34,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Product and Legal enforce a *true peak limiter at 87dB with 5ms lookahead* for all Reels audio, rejecting "
+   "last_position": "I will run BloodHound-MCP against the full earnings call transcript to map every speaker’s sentiment, power dynamics, an"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 79,
-   "rooms_7d": 25,
+   "turns_7d": 80,
+   "rooms_7d": 26,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Product and Legal enforce a *true peak limiter at 87dB with 5ms lookahead* for all Reels audio, rejecting "
+   "last_position": "Legal and Product should enforce a *true peak limiter at 87dB with 5ms lookahead* for all AI-generated video output. Thi"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 75,
-   "rooms_7d": 22,
+   "turns_7d": 76,
+   "rooms_7d": 23,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 87dB cap still risks killing the punch of a snare or the swell of a chorus—tell that to a mixer who’s spent hours ri"
+   "last_position": "Verdict: BloodHound-MCP cannot ingest transcripts or audio, so Chisel’s plan fails the mission."
   },
   {
    "id": "watch-w1",
@@ -67,6 +67,33 @@
    ],
    "positions_held": 30,
    "last_position": "**Decision:** Product and Legal enforce a *true peak limiter at 88dB with 5ms lookahead* for all Reels audio, rejecting "
+  },
+  {
+   "id": "accessibility-w1",
+   "name": "Ramp",
+   "dept": "accessibility",
+   "role": "doer",
+   "turns_7d": 53,
+   "rooms_7d": 27,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Set the focus ring to 4px wide with 8:1 contrast and a 150ms fade-in from 0% to 100% opacity. This balances crisp visibi"
+  },
+  {
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
+   "role": "checker",
+   "turns_7d": 53,
+   "rooms_7d": 27,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The 4px ring still risks triggering vestibular disorders for users who need reduced motion—static rings with no animatio"
   },
   {
    "id": "power-w1",
@@ -93,33 +120,6 @@
    ],
    "positions_held": 30,
    "last_position": "SD3.5-Ultra’s motion-refiner is a gamble—black-box risks include hidden compute costs or frame drops that could break EX"
-  },
-  {
-   "id": "accessibility-w1",
-   "name": "Ramp",
-   "dept": "accessibility",
-   "role": "doer",
-   "turns_7d": 52,
-   "rooms_7d": 26,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Set the focus ring to 2px wide with a 200ms fade-in from 0% to 100% opacity. This meets WCAG AAA for reduced motion by a"
-  },
-  {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 52,
-   "rooms_7d": 26,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "The 2px ring risks failing users with low vision or motor impairments who rely on high-contrast focus indicators. A 3px "
   },
   {
    "id": "creators-lead",
@@ -248,13 +248,13 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 21,
-   "rooms_7d": 11,
+   "turns_7d": 22,
+   "rooms_7d": 12,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent on *all* PRs—open and merged—for two weeks. This catches edge cases in routing and prompts without missing "
+   "last_position": "Run PR-Agent on *all* PRs—open and merged—for two weeks. It catches edge cases missed by humans and automated checks, im"
   },
   {
    "id": "transcripts-lead",
@@ -350,6 +350,19 @@
    "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
   },
   {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 14,
+   "rooms_7d": 14,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard, resolving broken links and "
+  },
+  {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
@@ -361,19 +374,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Marrow runs a transcript-compatible NLP sentiment analyzer on the full earnings call transcript to map speaker i"
-  },
-  {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
-   "role": "lead",
-   "turns_7d": 13,
-   "rooms_7d": 13,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard with broken links fixed."
   },
   {
    "id": "visualization-w1",
@@ -443,6 +443,20 @@
    "proposed": 2
   },
   {
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
+   "role": "checker",
+   "turns_7d": 11,
+   "rooms_7d": 11,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "PR-Agent on *all* PRs risks normalizing noise—reviewers will ignore *all* comments, including real issues, once the fals"
+  },
+  {
    "id": "improve-improver",
    "name": "Overhaul",
    "dept": "improve",
@@ -454,20 +468,6 @@
    ],
    "positions_held": 30,
    "last_position": "Run PR-Agent only on PRs where the heuristic flags *both* new contributors *and* high churn in the changed files—this cu"
-  },
-  {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 10,
-   "rooms_7d": 10,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "PR-Agent on *all* PRs risks drowning reviewers in noise—shadow mode already trains them to ignore autofeedback, so addin"
   },
   {
    "id": "security-lead",
@@ -513,14 +513,14 @@
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 5,
-   "rooms_7d": 5,
+   "turns_7d": 6,
+   "rooms_7d": 6,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Default to **hover-triggered, contextual labels** for the legend, with a fallback to a collapsible sidebar if ",
-   "proposed": 5,
+   "last_position": "DECISION: Embed the legend as a semi-transparent overlay on the graph canvas, fading on idle but reappearing instantly o",
+   "proposed": 6,
    "shipped": 5
   },
   {

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-23T17:39:46.229638+00:00",
+ "generated_at": "2026-08-23T17:45:30.891288+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,52 +8,52 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 146,
+   "turns_7d": 147,
    "rooms_7d": 27,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The dual-tier 87dB/2ms vs. 85dB/10ms split still misses the core problem: platforms don’t care about your tier system—th"
+   "last_position": "The single 85dB/10ms limiter throws out the baby with the bathwater—it solves the platform flagging problem by flattenin"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 98,
-   "rooms_7d": 41,
+   "turns_7d": 99,
+   "rooms_7d": 42,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Enforce a **dual-tier limiter**: 87dB/1ms for pre-recorded AI video (where precision cuts false positives) and 85dB/10ms"
+   "last_position": "I will run BloodHound-MCP on the full earnings call transcript to map every speaker’s influence and narrative flow, prod"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 86,
-   "rooms_7d": 30,
+   "turns_7d": 87,
+   "rooms_7d": 31,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 1ms lookahead for pre-recorded work is overkill—it risks flattening transients that define punch in music or dialogu"
+   "last_position": "Verdict: Chisel’s plan is MISSION work—BloodHound-MCP can map spoken elements in transcripts to speaker influence graphs"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 84,
+   "turns_7d": 85,
    "rooms_7d": 27,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Enforce a **single true peak limiter at 87dB with 2ms lookahead for all AI-generated video output**. This catches transi"
+   "last_position": "Enforce a **single 85dB/10ms true peak limiter across all AI-generated video output**—pre-recorded and live. Platforms f"
   },
   {
    "id": "watch-w1",
@@ -73,27 +73,27 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 60,
-   "rooms_7d": 30,
+   "turns_7d": 61,
+   "rooms_7d": 31,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Set the focus ring to 3px wide at 7:1 contrast with a 1px outer shadow. This meets WCAG AAA for focus indicators, ensuri"
+   "last_position": "Set the focus ring to 3px wide at 7:1 contrast with a 1px outer shadow. This meets WCAG 2.2 AA for focus visibility whil"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 60,
-   "rooms_7d": 30,
+   "turns_7d": 61,
+   "rooms_7d": 31,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 3px ring at 7:1 still risks blurring on high-DPI screens—inner glow fails, outer shadow softens edges. A 1px solid r"
+   "last_position": "The 3px ring at 7:1 fails on high-DPI screens where pixels blur—users lose the sharp edge needed for focus tracking. A 2"
   },
   {
    "id": "power-w1",
@@ -213,7 +213,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Finalize 1px solid focus ring at 7:1 contrast with 2px transparent offset, no blur—deliver live-tested CSS in ",
    "proposed": 23,
-   "shipped": 22
+   "shipped": 23
   },
   {
    "id": "power-lead",
@@ -284,6 +284,19 @@
    "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
   },
   {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 20,
+   "rooms_7d": 20,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard, listing all live links and "
+  },
+  {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
@@ -295,19 +308,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a speaker influence graph, identifyi"
-  },
-  {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
-   "role": "lead",
-   "turns_7d": 19,
-   "rooms_7d": 19,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard with broken links flagged an"
   },
   {
    "id": "transcripts-lead",

@@ -1,16 +1,16 @@
 # analysis: Deep-analyze every element from its FULL source (whole transcript/repo) + enrich from >=1 
 
-> Decision artifact · room `dept-analysis-deep-analyze-every-536` (dept) · 2026-07-31T02:24:43.218690+00:00
-> Participants: Chisel, Marrow · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-analysis-deep-analyze-every-536` (dept) · 2026-08-23T17:16:41.092793+00:00
+> Participants: Chisel, Sift, Marrow · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Run BloodHound-MCP on the full earnings call transcript to extract structured financial/operational themes with direct quotes.
-2. Validate extracted themes against the original transcript for accuracy and completeness.
-3. Enrich analysis with >=1 external source (e.g., SEC filings, industry reports) to contextualize themes.
-4. Compile findings into a decision-ready artifact (e.g., GitHub markdown table or report).
-5. Share artifact with stakeholders for review and feedback.
-6. Finalize and archive the decision-ready output for future reference.
+1. Run BloodHound-MCP on the full earnings call transcript to map speaker influence, sentiment flow, and power dynamics.
+2. Generate a dynamic graph file (e.g., `.gexf`, `.json`, or `.svg`) as a concrete output artifact.
+3. Validate the graph for hidden leverage points, contradictions, and emotional arcs.
+4. Cross-reference findings with raw transcript segments for accuracy.
+5. Enrich analysis with >=1 external source (e.g., market sentiment data, prior earnings call trends).
+6. Document insights in a structured report (e.g., Markdown file) with visualizations.
 
-**What changed:** Structured extraction of themes with quotes, validated and enriched, now ready for decision-making.
+**What changed:** Added explicit output artifact (dynamic graph file) and enrichment step.

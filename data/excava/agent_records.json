@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-23T01:16:03.157990+00:00",
+ "generated_at": "2026-08-23T01:21:46.129913+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,18 +8,31 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 127,
+   "turns_7d": 128,
    "rooms_7d": 25,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Scriv: The 87dB/5ms proposal still lets bad actors game the system with 86dB spikes every 4ms—transients will always out"
+   "last_position": "The 87dB/5ms proposal still lets bad actors game the system with 86dB spikes—just closer to the limit. A 5ms lookahead i"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
+   "role": "doer",
+   "turns_7d": 75,
+   "rooms_7d": 25,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "**Decision:** Product and Legal enforce a *true peak limiter at 87dB with 5ms lookahead* for all Reels audio, rejecting "
+  },
+  {
+   "id": "analysis-w1",
+   "name": "Chisel",
+   "dept": "analysis",
    "role": "doer",
    "turns_7d": 74,
    "rooms_7d": 25,
@@ -27,20 +40,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Product and Legal enforce a *strict 85dB true peak limiter with no grace window* for all Reels audio, reje"
-  },
-  {
-   "id": "analysis-w1",
-   "name": "Chisel",
-   "dept": "analysis",
-   "role": "doer",
-   "turns_7d": 73,
-   "rooms_7d": 24,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "**Decision:** Product and Legal enforce a *true peak limiter at 88dB with 5ms lookahead* for all Reels audio, rejecting "
+   "last_position": "Action: Run BloodHound-MCP against the full earnings call transcript to map every mention of \"88dB\" and \"5m\" to their sp"
   },
   {
    "id": "analysis-checker",
@@ -122,6 +122,32 @@
    "last_position": "The 2px ring risks failing users with low vision or motor impairments who rely on high-contrast focus indicators. A 3px "
   },
   {
+   "id": "creators-w1",
+   "name": "Forge",
+   "dept": "creators",
+   "role": "doer",
+   "turns_7d": 41,
+   "rooms_7d": 41,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. It will produce a ready-to-use skill that lets users gene"
+  },
+  {
+   "id": "creators-checker",
+   "name": "Vet",
+   "dept": "creators",
+   "role": "checker",
+   "turns_7d": 41,
+   "rooms_7d": 41,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled 'Created by EXCAVA'."
+  },
+  {
    "id": "creators-lead",
    "name": "Nova",
    "dept": "creators",
@@ -133,32 +159,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled \"Created by EXCAVA\""
-  },
-  {
-   "id": "creators-w1",
-   "name": "Forge",
-   "dept": "creators",
-   "role": "doer",
-   "turns_7d": 40,
-   "rooms_7d": 40,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. It will produce a ready-to-install npm package labeled \"C"
-  },
-  {
-   "id": "creators-checker",
-   "name": "Vet",
-   "dept": "creators",
-   "role": "checker",
-   "turns_7d": 40,
-   "rooms_7d": 40,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled \"Created by EXCAVA\" with a test suite."
   },
   {
    "id": "news-lead",
@@ -431,6 +431,19 @@
    "last_position": "Shadow mode trains reviewers to ignore *all* autofeedback—not just noise. Better: run PR-Agent only on PRs where a human"
   },
   {
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
+   "turns_7d": 8,
+   "rooms_7d": 8,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and secure."
+  },
+  {
    "id": "security-w1",
    "name": "Warden",
    "dept": "security",
@@ -494,19 +507,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract all spoken content, speaker turns, an"
-  },
-  {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 7,
-   "rooms_7d": 7,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output is a real-time status report confirming op"
   },
   {
    "id": "visualization-lead",

@@ -1,16 +1,20 @@
 # analysis: Deep-analyze every element from its FULL source (whole transcript/repo) + enrich from >=1 
 
-> Decision artifact · room `dept-analysis-deep-analyze-every-672` (dept) · 2026-07-31T12:12:02.205855+00:00
-> Participants: Chisel, Marrow · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-analysis-deep-analyze-every-672` (dept) · 2026-08-23T01:15:45.885414+00:00
+> Participants: Chisel, Sift, Marrow · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+Chisel’s audio-based approach is infeasible; Marrow’s transcript-driven analysis is adopted.
 
 **Plan:**
-1. Validate BloodHound-MCP’s knowledge graph artifact for completeness against the full earnings call transcript, ensuring all key insights, metrics, and trends are captured.
-2. Cross-reference the graph’s nodes/edges with the transcript’s critical sections (e.g., revenue guidance, risk factors, operational updates) to confirm no omissions.
-3. Enrich the graph with >=1 external data source (e.g., SEC filings, analyst notes) to contextualize gaps or ambiguities in the transcript.
-4. Generate a synthesized report summarizing validated insights, unresolved discrepancies, and recommended next steps for downstream analysis.
-5. Submit the final artifact to Marrow for approval, flagging any critical missing elements for revision.
-6. Archive the validated graph and report in the repo under `/analysis/earnings_call_YYYY-MM-DD/`.
+1. **Extract full transcript** from the earnings call source (audio/video file or raw text).
+2. **Run BloodHound-MCP** on the transcript to:
+   - Identify all speaker turns with timestamps.
+   - Analyze sentiment shifts per segment.
+   - Generate a structured report (JSON/CSV) with speaker labels, timestamps, and sentiment scores.
+3. **Validate transcript accuracy** by cross-checking against the original audio (if available) for critical segments.
+4. **Flag potential compliance issues** (e.g., loud segments, abrupt tone shifts) for human review.
+5. **Deliver report** to downstream teams with clear action items (e.g., "Trim segment X at timestamp Y").
+6. **Archive raw data** and report for auditability.
 
-**What changed:** BloodHound-MCP’s output is now treated as a draft requiring Marrow’s validation and enrichment before downstream use.
+**What changed:** Switched from audio decibel analysis to transcript-based speaker/sentiment extraction due to BloodHound-MCP’s text-only limitation.

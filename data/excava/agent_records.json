@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-23T18:44:13.374230+00:00",
+ "generated_at": "2026-08-23T18:49:50.763072+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,13 +8,13 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 153,
+   "turns_7d": 154,
    "rooms_7d": 27,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Scriv: The dual-tier limiter adds 12% processing overhead—enough to break real-time AI video generation for 30% of our c"
+   "last_position": "The dual-tier limiter’s 12% overhead isn’t just a real-time breaker—it’s a hidden cost on *all* downstream jobs, not jus"
   },
   {
    "id": "analysis-w1",
@@ -60,13 +60,13 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 76,
+   "turns_7d": 77,
    "rooms_7d": 22,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the **single-tier 87dB/5ms limiter** for all AI-generated video output. It’s the simplest way to protect against t"
+   "last_position": "Adopt the **dual-tier limiter** (87dB/100ms for dialogue, 87dB/5ms for music) as the default for all AI-generated video "
   },
   {
    "id": "accessibility-w1",
@@ -165,15 +165,15 @@
    "name": "Access",
    "dept": "accessibility",
    "role": "lead",
-   "turns_7d": 33,
-   "rooms_7d": 33,
+   "turns_7d": 34,
+   "rooms_7d": 34,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Finalize 2.5px solid focus ring at 6:1 contrast with 0.3px outer glow—deliver sharper edges than 2px at 4.5:1 ",
-   "proposed": 23,
+   "last_position": "DECISION: Finalize 2px solid focus ring at 6:1 contrast, no glow, static design. Owner: Ramp.",
+   "proposed": 24,
    "shipped": 23
   },
   {
@@ -231,6 +231,33 @@
    "shipped": 20
   },
   {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 26,
+   "rooms_7d": 26,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run the link-checker on the live Mission Control Dashboard to scan for broken links. This will produce a report identify"
+  },
+  {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 26,
+   "rooms_7d": 26,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work our tool can do."
+  },
+  {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
@@ -242,33 +269,6 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
-  },
-  {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 25,
-   "rooms_7d": 25,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run the link-checker on the live Mission Control Dashboard to scan for broken links. This will produce a report listing "
-  },
-  {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
-   "role": "checker",
-   "turns_7d": 25,
-   "rooms_7d": 25,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work our tool can do."
   },
   {
    "id": "links-lead-x",

@@ -1,15 +1,16 @@
 # accessibility: Make EXCAVA usable by EVERYONE — contrast, mobile/touch, reduced-motion, keyboard nav, scr
 
-> Decision artifact · room `dept-accessibility-make-excava-us-284` (dept) · 2026-07-19T10:09:39.636747+00:00
-> Participants: Ramp, Reader, Access · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-accessibility-make-excava-us-284` (dept) · 2026-08-23T18:49:37.863710+00:00
+> Participants: Ramp, Reader, Access · synthesized by mistral/mistral-small-latest
 
-**Decision:** Implement a 1px tall, persistent skip link underline that shrinks to 1px on blur, tested with screen readers—owned by Ramp.
+**Decision:** Finalize 2px solid focus ring at 6:1 contrast, no glow, static design.
 
 **Plan:**
-1. Develop a skip link that remains visible but has a height of 1px when not focused.
-2. Ensure the skip link enlarges when keyboard focused to provide a clear indication of its activation.
-3. Conduct usability testing with both keyboard and screen reader users to assess effectiveness and orientation cues.
-4. Implement CSS and JavaScript to manage the visibility and behavior of the skip link.
-5. Review and iterate based on feedback from testing to ensure accessibility goals are met.
+1. Implement a 2px solid focus ring with 6:1 contrast ratio.
+2. Remove all glow/flicker effects from the focus ring.
+3. Ensure the ring remains static (no animations) across all states.
+4. Test the focus ring with users who rely on high contrast and reduced motion.
+5. Document the decision in the project’s accessibility guidelines.
+6. Update design tokens and component libraries to reflect the new focus ring.
 
-**What changed:** A focus on maintaining user orientation while balancing visual minimalism led to the decision for a persistent but unobtrusive skip link design.
+**What changed:** Focus ring adjusted from 4.5:1 glow to 6:1 solid, no glow.

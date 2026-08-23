@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-23T18:20:59.620163+00:00",
+ "generated_at": "2026-08-23T18:27:19.086958+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -21,26 +21,26 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 102,
+   "turns_7d": 103,
    "rooms_7d": 43,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the **single-tier 87dB/5ms limiter** for all AI-generated video output. It catches true peaks without slowing down"
+   "last_position": "Adopt the **single-tier 87dB/5ms limiter** for all AI-generated video output. It’s the simplest way to protect against t"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 90,
+   "turns_7d": 91,
    "rooms_7d": 32,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The single-tier 87dB/5ms limiter ignores that platforms flag *perceptual loudness*—not raw peaks—and their thresholds sh"
+   "last_position": "The single-tier limiter ignores that platforms’ perceptual loudness thresholds rise with upload volume—so a 0.5% flag ra"
   },
   {
    "id": "transcripts-w1",
@@ -73,27 +73,27 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 65,
+   "turns_7d": 66,
    "rooms_7d": 33,
    "engines_used": [
     "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Use a 3px focus ring at 7:1 contrast with a 1px outer shadow. This meets WCAG AAA for focus visibility while ensuring ke"
+   "last_position": "Adopt the 2px focus ring at 4.5:1 contrast with a 0.5px outer glow. It stays razor-sharp on high-DPI screens and 200% zo"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 65,
+   "turns_7d": 66,
    "rooms_7d": 33,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 3px ring at 7:1 still blurs on high-DPI screens—users lose the edge. A 2px ring at 4.5:1 with a 0.5px glow keeps sha"
+   "last_position": "The 2px ring at 4.5:1 risks failing users who need *both* high contrast *and* sharp edges—like those with low vision or "
   },
   {
    "id": "power-w1",
@@ -244,6 +244,33 @@
    "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
   },
   {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 24,
+   "rooms_7d": 24,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run the link-checker on the live Mission Control Dashboard to scan for broken links. This will produce a report listing "
+  },
+  {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 24,
+   "rooms_7d": 24,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
+  },
+  {
    "id": "improve-w1",
    "name": "Sprocket",
    "dept": "improve",
@@ -255,33 +282,6 @@
    ],
    "positions_held": 30,
    "last_position": "Run PR-Agent in shadow mode on *only* new-contributor PRs for two weeks. This tests its real impact without flooding rev"
-  },
-  {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 23,
-   "rooms_7d": 23,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run the link-checker on the live Mission Control Dashboard to scan for broken links. The result will be a report listing"
-  },
-  {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
-   "role": "checker",
-   "turns_7d": 23,
-   "rooms_7d": 23,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work our tool can do."
   },
   {
    "id": "links-lead-x",

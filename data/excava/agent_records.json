@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-23T10:55:00.592840+00:00",
+ "generated_at": "2026-08-23T13:14:07.410257+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,26 +8,26 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 138,
+   "turns_7d": 139,
    "rooms_7d": 27,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Kaedim’s AI can hallucinate plausible but wrong links—risking false coverage that fails the bus task. A safer play: run "
+   "last_position": "Scope’s 86dB/6ms cap still lets through transients under 6ms—like a snare hit or a digital click—that platforms will fla"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 89,
-   "rooms_7d": 35,
+   "turns_7d": 91,
+   "rooms_7d": 37,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Product and Legal should enforce a *true peak limiter at 85dB with 10ms lookahead* for all AI-generated video output. Th"
+   "last_position": "I will run BloodHound-MCP on the full earnings call transcript to map every spoken element to its source and cross-check"
   },
   {
    "id": "transcripts-w1",
@@ -47,26 +47,26 @@
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 77,
-   "rooms_7d": 24,
+   "turns_7d": 79,
+   "rooms_7d": 26,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 85dB/10ms cap still risks missing transients faster than 10ms—like a drum hit or a sudden vocal plosive—so platforms"
+   "last_position": "Verdict: Chisel’s plan is MISSION work—BloodHound-MCP can map spoken elements to their transcript sources and cross-chec"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 68,
-   "rooms_7d": 20,
+   "turns_7d": 69,
+   "rooms_7d": 21,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Product and Legal enforce a *true peak limiter at 88dB with 5ms lookahead* for all Reels audio, rejecting "
+   "last_position": "Product and Legal should enforce a *true peak limiter at 86dB with 6ms lookahead* for all AI-generated video output. Thi"
   },
   {
    "id": "accessibility-w1",
@@ -200,6 +200,22 @@
    "last_position": "Verdict: The action is valid MISSION work."
   },
   {
+   "id": "accessibility-lead",
+   "name": "Access",
+   "dept": "accessibility",
+   "role": "lead",
+   "turns_7d": 27,
+   "rooms_7d": 27,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Finalize 4px focus ring at 6:1 contrast, 1px outer stroke, 50ms fade-in—static fallback if vertigo reported. O",
+   "proposed": 20,
+   "shipped": 19
+  },
+  {
    "id": "power-lead",
    "name": "Dynamo",
    "dept": "power",
@@ -211,22 +227,6 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Skip both SD3.5-Ultra’s motion-refiner and InstantX-ComfyUI’s depth-up; default to a temporal denoiser like RV",
-   "proposed": 20,
-   "shipped": 20
-  },
-  {
-   "id": "accessibility-lead",
-   "name": "Access",
-   "dept": "accessibility",
-   "role": "lead",
-   "turns_7d": 26,
-   "rooms_7d": 26,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Finalize 3px focus ring with 100ms fade-in at 6:1 contrast, 1px outer stroke, no glow—deliver in EXCAVA styles",
    "proposed": 20,
    "shipped": 20
   },
@@ -350,6 +350,19 @@
    "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
   },
   {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 15,
+   "rooms_7d": 15,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard, including broken link fixes"
+  },
+  {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
@@ -363,17 +376,19 @@
    "last_position": "ACTION: Marrow runs a transcript-to-text tool on the full earnings call audio, then feeds the resulting transcript to Bl"
   },
   {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
+   "id": "improve-lead",
+   "name": "Ratchet",
+   "dept": "improve",
    "role": "lead",
-   "turns_7d": 14,
-   "rooms_7d": 14,
+   "turns_7d": 12,
+   "rooms_7d": 12,
    "engines_used": [
+    "groq",
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard, resolving broken links and "
+   "last_position": "DECISION: Run PR-Agent in shadow mode on *only* new-contributor PRs for two weeks to measure real impact without noise o",
+   "proposed": 2
   },
   {
    "id": "improve-improver",
@@ -439,21 +454,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts engagement triggers, emotional cue"
-  },
-  {
-   "id": "improve-lead",
-   "name": "Ratchet",
-   "dept": "improve",
-   "role": "lead",
-   "turns_7d": 11,
-   "rooms_7d": 11,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Run PR-Agent in shadow mode on all PRs—open and merged—for two weeks to validate routing/prompts without compu",
-   "proposed": 2
   },
   {
    "id": "improve-checker",

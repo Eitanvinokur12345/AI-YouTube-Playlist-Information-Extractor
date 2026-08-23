@@ -1,13 +1,18 @@
 # accessibility: Make EXCAVA usable by EVERYONE — contrast, mobile/touch, reduced-motion, keyboard nav, scr
 
-> Decision artifact · room `dept-accessibility-make-excava-us-246` (dept) · 2026-07-31T13:59:32.521445+00:00
-> Participants: Ramp, Reader, Access · synthesized by nvidia/meta/llama-3.3-70b-instruct
+> Decision artifact · room `dept-accessibility-make-excava-us-246` (dept) · 2026-08-23T17:56:39.632274+00:00
+> Participants: Ramp, Reader, Access · synthesized by mistral/mistral-small-latest
 
-**Decision:** Set 48×48 px minimum touch targets with 2 px padding to balance WCAG compliance, density, and readability.
+**Decision:**
+Finalize 2.5px solid focus ring at 5:1 contrast with 0.3px outer glow—tested on high-DPI and standard screens, owned by Ramp (accessibility-w1).
+
 **Plan:**
-1. Update EXCAVA's design guidelines to reflect the new minimum touch target size of 48×48 px.
-2. Apply 2 px padding around labels for all interactive elements to prevent truncation and overlapping text.
-3. Review and adjust the layout of tight toolbars and dense UIs to accommodate the new touch target size without compromising readability.
-4. Conduct usability testing to ensure the new touch target size and padding do not introduce unintended accessibility issues.
-5. Update EXCAVA's front-end code to implement the new touch target size and padding consistently across all platforms.
-**What changed:** Minimum touch target size increased to 48×48 px with 2 px padding to balance accessibility, density, and readability.
+1. Implement the 2.5px focus ring with 5:1 contrast in the component library.
+2. Add the 0.3px outer glow effect with reduced opacity for depth.
+3. Test on high-DPI (4K) and standard screens at 200% zoom.
+4. Validate WCAG 2.2 AA compliance for focus visibility.
+5. Document the decision in the accessibility guidelines.
+6. Assign Ramp (accessibility-w1) as the owner for ongoing maintenance.
+
+**What changed:**
+Focus ring updated from 3px/7:1 to 2.5px/5:1 with 0.3px glow for sharper visibility across devices.

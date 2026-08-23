@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-23T06:40:16.138280+00:00",
+ "generated_at": "2026-08-23T06:46:01.393533+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,33 +8,33 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 135,
+   "turns_7d": 136,
    "rooms_7d": 25,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 87dB/5ms cap still lets bad actors game the system with 86dB spikes—just smaller ones. Settle it by enforcing a true"
+   "last_position": "The 87dB/5ms cap still lets bad actors game the system with 86dB spikes—just like the original 87dB proposal. Enforce a "
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 84,
-   "rooms_7d": 31,
+   "turns_7d": 85,
+   "rooms_7d": 32,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "**Decision:** Product and Legal enforce a *true peak limiter at 87dB with 5ms lookahead* for all Reels audio, rejecting "
+   "last_position": "Action: Run BloodHound-MCP against the full earnings call transcript to map every mention of volume limits, decibel thre"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 78,
+   "turns_7d": 79,
    "rooms_7d": 25,
    "engines_used": [
     "mistral"
@@ -248,13 +248,13 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 19,
-   "rooms_7d": 10,
+   "turns_7d": 20,
+   "rooms_7d": 11,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent only on PRs where both new contributors *and* high-risk changes are present. This targets the highest-lever"
+   "last_position": "Run PR-Agent on *all* PRs—open and merged—for two weeks. This catches edge cases in routing and prompts without missing "
   },
   {
    "id": "transcripts-lead",
@@ -417,6 +417,20 @@
    "proposed": 2
   },
   {
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
+   "role": "checker",
+   "turns_7d": 10,
+   "rooms_7d": 10,
+   "engines_used": [
+    "groq",
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "PR-Agent on *all* PRs risks drowning reviewers in noise—shadow mode already trains them to ignore autofeedback, so addin"
+  },
+  {
    "id": "improve-improver",
    "name": "Overhaul",
    "dept": "improve",
@@ -495,32 +509,18 @@
    "last_position": "Pane: A collapsible sidebar still forces users to *choose* between legend and data—what if they forget to open it mid-fl"
   },
   {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 9,
-   "rooms_7d": 9,
-   "engines_used": [
-    "groq",
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Shadow mode trains reviewers to ignore *all* autofeedback—not just noise. Better: run PR-Agent only on PRs where a human"
-  },
-  {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 4,
-   "rooms_7d": 4,
+   "turns_7d": 5,
+   "rooms_7d": 5,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Auto-switch to a high-contrast light theme *only* when validation warnings appear, then revert to dark mode—no",
-   "proposed": 4,
+   "last_position": "DECISION: Default to **hover-triggered, contextual labels** for the legend, with a fallback to a collapsible sidebar if ",
+   "proposed": 5,
    "shipped": 4
   },
   {

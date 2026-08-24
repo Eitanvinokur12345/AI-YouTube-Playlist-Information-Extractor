@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-24T05:53:20.035003+00:00",
+ "generated_at": "2026-08-24T07:20:29.826473+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -80,25 +80,40 @@
   {
    "id": "A",
    "lead": {
-    "engine": "mistral",
-    "model": "mistral-small-latest",
-    "lineage": "mistral",
+    "engine": "groq",
+    "model": "llama-3.3-70b-versatile",
+    "lineage": "llama",
     "tier": "fast"
    },
    "support": {
-    "engine": "gemini",
-    "model": "gemini-2.0-flash",
-    "lineage": "gemini",
+    "engine": "glm",
+    "model": "z-ai/glm-4.5-air:free",
+    "lineage": "glm",
     "tier": "grounded"
    }
   },
   {
    "id": "B",
    "lead": {
-    "engine": "deepseek",
-    "model": "deepseek/deepseek-chat-v3-0324:free",
-    "lineage": "deepseek",
-    "tier": "reasoning"
+    "engine": "mistral",
+    "model": "mistral-small-latest",
+    "lineage": "mistral",
+    "tier": "fast"
+   },
+   "support": {
+    "engine": "nvidia",
+    "model": "meta/llama-3.3-70b-instruct",
+    "lineage": "llama",
+    "tier": "grounded"
+   }
+  },
+  {
+   "id": "C",
+   "lead": {
+    "engine": "gh-models",
+    "model": "openai/gpt-4o-mini",
+    "lineage": "gpt",
+    "tier": "grounded"
    },
    "support": {
     "engine": "sambanova",
@@ -108,33 +123,18 @@
    }
   },
   {
-   "id": "C",
+   "id": "D",
    "lead": {
-    "engine": "kimi",
-    "model": "moonshotai/kimi-k2:free",
-    "lineage": "kimi",
-    "tier": "reasoning"
+    "engine": "gemini",
+    "model": "gemini-2.0-flash",
+    "lineage": "gemini",
+    "tier": "grounded"
    },
    "support": {
     "engine": "cerebras",
     "model": "llama3.1-8b",
     "lineage": "llama",
     "tier": "fast"
-   }
-  },
-  {
-   "id": "D",
-   "lead": {
-    "engine": "groq",
-    "model": "llama-3.3-70b-versatile",
-    "lineage": "llama",
-    "tier": "fast"
-   },
-   "support": {
-    "engine": "gh-models",
-    "model": "openai/gpt-4o-mini",
-    "lineage": "gpt",
-    "tier": "grounded"
    }
   }
  ],

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-25T06:40:27.036088+00:00",
+ "generated_at": "2026-08-25T06:46:24.486814+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -22,26 +22,26 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 99,
-   "rooms_7d": 35,
+   "turns_7d": 100,
+   "rooms_7d": 36,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the **cumulative confidence cap**: auto-flag any user whose rolling 3-clip average confidence exceeds 65%. This cl"
+   "last_position": "Do the 5% daily push by splitting the work 4% on the top 20% pages and 1% on the next 20%. This opens the access gate fa"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 94,
-   "rooms_7d": 31,
+   "turns_7d": 95,
+   "rooms_7d": 32,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The cumulative confidence cap still lets bad actors *game the average*—they’ll craft three borderline clips just below 6"
+   "last_position": "Chisel’s split (4% top 20%, 1% next 20%) still leaves 60% of pages untouched daily—enough for a critical legal or checko"
   },
   {
    "id": "transcripts-w1",
@@ -74,26 +74,26 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 55,
-   "rooms_7d": 28,
+   "turns_7d": 56,
+   "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add Flowframes’ FILM upscaler to EXCAVA’s motion pipeline first. It cuts motion blur at the source with temporal interpo"
+   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It sharpens edges and preserves fine details bet"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 55,
-   "rooms_7d": 28,
+   "turns_7d": 56,
+   "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Flowframes’ FILM upscaler won’t fix EXCAVA’s motion blur—it interpolates frames, not sharpens them. The real risk is tra"
+   "last_position": "Depth-aware upscaling won’t fix EXCAVA’s motion blur—it’s a spatial fix, not temporal. Flowframes’ FILM upscaler already"
   },
   {
    "id": "accessibility-w1",
@@ -122,6 +122,19 @@
    "last_position": "The 3px ring at 7:1 risks making the interface feel cluttered on small screens, where every pixel counts. A better alter"
   },
   {
+   "id": "creators-lead",
+   "name": "Nova",
+   "dept": "creators",
+   "role": "lead",
+   "turns_7d": 41,
+   "rooms_7d": 41,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled 'Created by EXCAVA' and marks the ta"
+  },
+  {
    "id": "creators-w1",
    "name": "Forge",
    "dept": "creators",
@@ -146,19 +159,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled 'Created by EXCAVA'."
-  },
-  {
-   "id": "creators-lead",
-   "name": "Nova",
-   "dept": "creators",
-   "role": "lead",
-   "turns_7d": 40,
-   "rooms_7d": 40,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled 'Created by EXCAVA' and ready for de"
   },
   {
    "id": "links-w1",
@@ -251,7 +251,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Add RIFE to EXCAVA’s motion pipeline first—test it against FILM on a high-motion clip; if clarity drops <0.5% ",
    "proposed": 20,
-   "shipped": 19
+   "shipped": 20
   },
   {
    "id": "accessibility-lead",
@@ -273,13 +273,13 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 21,
-   "rooms_7d": 21,
+   "turns_7d": 22,
+   "rooms_7d": 22,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Reel fetches full captions for video ID \"dQw4w9WgXcQ\" via kimtaeyoon83/mcp-server-youtube-transcript and confirm",
+   "last_position": "DECISION: Adopt the **cumulative confidence cap**—auto-flag any user whose rolling 3-clip average confidence exceeds 65%",
    "proposed": 2
   },
   {
@@ -294,6 +294,19 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate multiple linked visual graphs mappin"
+  },
+  {
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 14,
+   "rooms_7d": 14,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: At 13:09:00, Iris directs Arcads AI Video to generate the confidence-sco and finalize the ranked use report for "
   },
   {
    "id": "watch-checker",
@@ -348,19 +361,6 @@
    "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 13,
-   "rooms_7d": 13,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: At 13:08:00, Iris directs Arcads AI Video to finalize the ranked user segments artifact with cumulative confiden"
-  },
-  {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
@@ -372,6 +372,19 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a list of re"
+  },
+  {
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
+   "turns_7d": 11,
+   "rooms_7d": 11,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and healthy "
   },
   {
    "id": "security-w1",
@@ -411,19 +424,6 @@
    ],
    "positions_held": 30,
    "last_position": "Run PR-Agent in shadow mode on *only* new-contributor PRs for two weeks. This tests its real impact without flooding rev"
-  },
-  {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 10,
-   "rooms_7d": 10,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output is real-time health report confirming cont"
   },
   {
    "id": "visualization-w1",

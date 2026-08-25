@@ -29381,12 +29381,12 @@
    "dept": "",
    "done_criteria": "the lead states the decision and the artifact exists",
    "max_turns": 60,
-   "turns": 56,
+   "turns": 58,
    "status": "open",
    "artifact_kind": "bus-task",
    "artifact": null,
    "created_at": "2026-08-24T03:33:22.371342+00:00",
-   "last_turn_ms": 1320
+   "last_turn_ms": 1406
   },
   {
    "id": "dept-links-advance-the-links-depa-674",
@@ -29799,12 +29799,18 @@
    "dept": "power",
    "done_criteria": "the lead states the decision and the artifact exists",
    "max_turns": 6,
-   "turns": 4,
-   "status": "open",
+   "turns": 5,
+   "status": "done",
    "artifact_kind": "bus-task",
-   "artifact": null,
+   "artifact": {
+    "kind": "decision",
+    "ref": "data/excava/artifacts/dept-power-raise-excava-s-capabil-925.md",
+    "at": "2026-08-25T06:38:59.565677+00:00",
+    "title": "power: Raise EXCAVA's capability by even 0.5%: find new tools, best/newest model",
+    "by": "Dynamo"
+   },
    "created_at": "2026-08-25T03:29:02.827783+00:00",
-   "last_turn_ms": 1039
+   "last_turn_ms": 866
   },
   {
    "id": "dept-security-paranoid-guard-scan-854",
@@ -29853,12 +29859,54 @@
    "dept": "creators",
    "done_criteria": "the lead states the decision and the artifact exists",
    "max_turns": 3,
-   "turns": 0,
+   "turns": 2,
    "status": "open",
    "artifact_kind": "bus-task",
    "artifact": null,
    "created_at": "2026-08-25T05:07:54.037523+00:00",
-   "last_turn_ms": 0
+   "last_turn_ms": 585
+  },
+  {
+   "id": "dept-security-paranoid-guard-scan-595",
+   "kind": "dept",
+   "goal": "security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (not fake/dead); DETECT",
+   "dept": "security",
+   "done_criteria": "the lead states the decision and the artifact exists",
+   "max_turns": 3,
+   "turns": 2,
+   "status": "open",
+   "artifact_kind": "bus-task",
+   "artifact": null,
+   "created_at": "2026-08-25T06:38:47.290588+00:00",
+   "last_turn_ms": 650
+  },
+  {
+   "id": "dept-watch-analyze-video-audio-vi-439",
+   "kind": "dept",
+   "goal": "watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.",
+   "dept": "watch",
+   "done_criteria": "the lead states the decision and the artifact exists",
+   "max_turns": 3,
+   "turns": 2,
+   "status": "open",
+   "artifact_kind": "bus-task",
+   "artifact": null,
+   "created_at": "2026-08-25T06:38:47.318344+00:00",
+   "last_turn_ms": 621
+  },
+  {
+   "id": "war-deliver-push-link-coverage-t-869",
+   "kind": "war",
+   "goal": "Deliver: Push link coverage toward 100% at +5%/day (the access gate)",
+   "dept": "memory",
+   "done_criteria": "a concrete artifact exists and the bus task can complete",
+   "max_turns": 8,
+   "turns": 2,
+   "status": "open",
+   "artifact_kind": "package",
+   "artifact": null,
+   "created_at": "2026-08-25T06:38:47.360683+00:00",
+   "last_turn_ms": 1530
   }
  ]
 }

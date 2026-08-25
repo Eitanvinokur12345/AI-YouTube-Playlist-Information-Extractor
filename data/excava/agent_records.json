@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-25T15:26:25.183670+00:00",
+ "generated_at": "2026-08-25T17:10:11.993705+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -22,26 +22,26 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 102,
+   "turns_7d": 103,
    "rooms_7d": 37,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Enforce a *rolling* confidence gate: every creative agent must hit **65% minimum on every output** *and* maintain a **70"
+   "last_position": "Enforce the **65% minimum confidence floor on every output immediately**, enforced by the AI Executive Assistant’s build"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 97,
+   "turns_7d": 98,
    "rooms_7d": 33,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Chisel’s rolling gate risks freezing innovation: if a new creative agent’s early clips underperform while it learns, the"
+   "last_position": "The 200-clip rolling window with a 10% grace buffer is still a freeze risk—new agents stall while the window fills, and "
   },
   {
    "id": "transcripts-w1",
@@ -96,6 +96,19 @@
    "last_position": "VFI-Flow’s 20% throughput drop isn’t a trade-off—it’s a pipeline breaker on low-end hardware. The real risk is trading m"
   },
   {
+   "id": "creators-lead",
+   "name": "Nova",
+   "dept": "creators",
+   "role": "lead",
+   "turns_7d": 45,
+   "rooms_7d": 45,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled \"Created by EXCAVA\" and linked in th"
+  },
+  {
    "id": "creators-w1",
    "name": "Forge",
    "dept": "creators",
@@ -122,19 +135,6 @@
    "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled \"Created by EXCAVA.\""
   },
   {
-   "id": "creators-lead",
-   "name": "Nova",
-   "dept": "creators",
-   "role": "lead",
-   "turns_7d": 44,
-   "rooms_7d": 44,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled \"Created by EXCAVA\""
-  },
-  {
    "id": "accessibility-w1",
    "name": "Ramp",
    "dept": "accessibility",
@@ -159,6 +159,21 @@
    ],
    "positions_held": 30,
    "last_position": "The 3px ring at 7:1 risks making the interface feel cluttered on small screens, where every pixel counts. A better alter"
+  },
+  {
+   "id": "power-lead",
+   "name": "Dynamo",
+   "dept": "power",
+   "role": "lead",
+   "turns_7d": 31,
+   "rooms_7d": 31,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Combine MPRNet blind-deblurring before upscaling, then test RIFE v4.17 against VFI-Flow on target hardware—MPR",
+   "proposed": 19,
+   "shipped": 18
   },
   {
    "id": "links-w1",
@@ -198,21 +213,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard."
-  },
-  {
-   "id": "power-lead",
-   "name": "Dynamo",
-   "dept": "power",
-   "role": "lead",
-   "turns_7d": 30,
-   "rooms_7d": 30,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Add RIFE v4.17 to EXCAVA’s motion pipeline first—test it against FILM on a 1080p clip with a 4-core CPU; if it",
-   "proposed": 18,
-   "shipped": 18
   },
   {
    "id": "news-lead",
@@ -279,8 +279,8 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Finalize 2.5px solid focus ring at 6:1 contrast, static design, validated via A/B test with 20 users; owner: a",
-   "proposed": 14,
-   "shipped": 14
+   "proposed": 13,
+   "shipped": 13
   },
   {
    "id": "analysis-lead",
@@ -320,6 +320,19 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts high-value marketing insights from"
+  },
+  {
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
+   "turns_7d": 15,
+   "rooms_7d": 15,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is REAL, RUNNING, and S"
   },
   {
    "id": "security-w1",
@@ -387,19 +400,6 @@
    "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 14,
-   "rooms_7d": 14,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output is a real-time report confirming operation"
-  },
-  {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
@@ -443,13 +443,13 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 10,
-   "rooms_7d": 5,
+   "turns_7d": 11,
+   "rooms_7d": 6,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on *only* new-contributor PRs for two weeks. This tests its real impact without flooding rev"
+   "last_position": "Run PR-Agent in shadow mode on *only* new-contributor PRs for two weeks. This tests the tool’s edge-case catching withou"
   },
   {
    "id": "memory-w1",
@@ -463,6 +463,34 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
+  },
+  {
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
+   "role": "checker",
+   "turns_7d": 6,
+   "rooms_7d": 6,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "The real risk isn’t missing bugs in veteran PRs—it’s normalizing noise so reviewers ignore *all* PR-Agent output, even w"
+  },
+  {
+   "id": "visualization-lead",
+   "name": "Lumen",
+   "dept": "visualization",
+   "role": "lead",
+   "turns_7d": 6,
+   "rooms_7d": 6,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Default to hover-triggered, contextual labels for the legend, with a sticky, collapsible anchor on the left ed",
+   "proposed": 6,
+   "shipped": 5
   },
   {
    "id": "improve-lead",
@@ -479,19 +507,6 @@
    "proposed": 2
   },
   {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 5,
-   "rooms_7d": 5,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "PR-Agent on *all* PRs risks normalizing noise—reviewers will ignore *all* comments, including real issues, once the fals"
-  },
-  {
    "id": "improve-improver",
    "name": "Overhaul",
    "dept": "improve",
@@ -503,21 +518,6 @@
    ],
    "positions_held": 30,
    "last_position": "Run PR-Agent in shadow mode on *only* PRs from new contributors for two weeks to measure its real impact on review quali"
-  },
-  {
-   "id": "visualization-lead",
-   "name": "Lumen",
-   "dept": "visualization",
-   "role": "lead",
-   "turns_7d": 5,
-   "rooms_7d": 5,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Embed the legend as a semi-transparent overlay on the graph canvas, fading on idle but reappearing instantly o",
-   "proposed": 5,
-   "shipped": 5
   },
   {
    "id": "excava-core",

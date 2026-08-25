@@ -1,16 +1,16 @@
 # watch: Analyze video AUDIO+VISUAL (Gemini) for content beyond the transcript.
 
-> Decision artifact · room `dept-watch-analyze-video-audio-vi-136` (dept) · 2026-07-26T01:02:37.398120+00:00
-> Participants: Scope, Iris · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-watch-analyze-video-audio-vi-136` (dept) · 2026-08-25T01:31:50.881283+00:00
+> Participants: Scope, Frame, Iris · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Run Arcads AI Video on the marketing video at 11:50:00 to extract emotional tone, pacing, and visual engagement cues.
-2. Generate a structured AI marketing report identifying key moments and audience triggers for optimization.
-3. Analyze the report to pinpoint high-value insights beyond the transcript.
-4. Use the insights to refine the video’s emotional impact, pacing, and visual engagement.
-5. Implement targeted optimizations based on the report’s recommendations.
-6. Validate changes by re-running Arcads AI Video and comparing pre/post insights.
+1. Run Arcads AI Video agent on the marketing video to extract high-value moments, sentiment shifts, and visual cues beyond the transcript.
+2. Generate a structured report with timestamped insights for repurposing into targeted marketing assets.
+3. Validate the report’s accuracy by cross-referencing key timestamps with the video’s audio-visual content.
+4. Export the report in a format compatible with YouTube’s metadata and editing tools.
+5. Share the report with the marketing team for asset creation (e.g., clips, thumbnails, captions).
+6. Archive the report for future reference and iterative analysis.
 
-**What changed:** Arcads AI Video analysis is now formally integrated into the optimization workflow.
+**What changed:** Scope expanded from transcript-only to multimodal (audio+visual) insights extraction.

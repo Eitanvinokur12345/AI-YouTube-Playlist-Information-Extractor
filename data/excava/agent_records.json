@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-25T06:46:24.486814+00:00",
+ "generated_at": "2026-08-25T06:52:24.200281+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,14 +8,14 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 156,
-   "rooms_7d": 25,
+   "turns_7d": 158,
+   "rooms_7d": 26,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Reel’s plan risks leaving the 80% of pages untouched until the gate is open, but if those pages contain critical links—l"
+   "last_position": "Reel’s confidence cap fix ignores the 80% of pages that will never hit any gate—those get no quality check at all. Inste"
   },
   {
    "id": "analysis-w1",
@@ -48,52 +48,52 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 88,
-   "rooms_7d": 25,
+   "turns_7d": 89,
+   "rooms_7d": 26,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Do the daily 5% link coverage push by hand on the most visible 20% of pages first. It’s the fastest way to hit the acces"
+   "last_position": "Standardize the \"confidence cap\" toggle across all creative agents. Right now, Luma’s agents run at 65% confidence for b"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 82,
-   "rooms_7d": 26,
+   "turns_7d": 84,
+   "rooms_7d": 28,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run Arcads AI Video on the marketing video to extract high-value marketing insights from audio and visuals. This will pr"
+   "last_position": "Run Arcads AI Video on the marketing video to extract high-value marketing insights beyond the transcript. This will pro"
   },
   {
    "id": "power-w1",
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 56,
+   "turns_7d": 57,
    "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It sharpens edges and preserves fine details bet"
+   "last_position": "Add Flowframes’ FILM upscaler to EXCAVA’s motion pipeline first. It cuts motion blur in the temporal domain where depth-"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 56,
+   "turns_7d": 57,
    "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Depth-aware upscaling won’t fix EXCAVA’s motion blur—it’s a spatial fix, not temporal. Flowframes’ FILM upscaler already"
+   "last_position": "Flowframes’ FILM upscaler won’t fix EXCAVA’s motion blur either—it interpolates frames, not removes blur baked into the "
   },
   {
    "id": "accessibility-w1",
@@ -122,25 +122,12 @@
    "last_position": "The 3px ring at 7:1 risks making the interface feel cluttered on small screens, where every pixel counts. A better alter"
   },
   {
-   "id": "creators-lead",
-   "name": "Nova",
-   "dept": "creators",
-   "role": "lead",
-   "turns_7d": 41,
-   "rooms_7d": 41,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled 'Created by EXCAVA' and marks the ta"
-  },
-  {
    "id": "creators-w1",
    "name": "Forge",
    "dept": "creators",
    "role": "doer",
-   "turns_7d": 41,
-   "rooms_7d": 41,
+   "turns_7d": 42,
+   "rooms_7d": 42,
    "engines_used": [
     "mistral"
    ],
@@ -152,13 +139,26 @@
    "name": "Vet",
    "dept": "creators",
    "role": "checker",
+   "turns_7d": 42,
+   "rooms_7d": 42,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled \"Created by EXCAVA.\""
+  },
+  {
+   "id": "creators-lead",
+   "name": "Nova",
+   "dept": "creators",
+   "role": "lead",
    "turns_7d": 41,
    "rooms_7d": 41,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled 'Created by EXCAVA'."
+   "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled 'Created by EXCAVA' and marks the ta"
   },
   {
    "id": "links-w1",
@@ -296,6 +296,19 @@
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate multiple linked visual graphs mappin"
   },
   {
+   "id": "watch-checker",
+   "name": "Frame",
+   "dept": "watch",
+   "role": "checker",
+   "turns_7d": 15,
+   "rooms_7d": 15,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts marketing insights from video cont"
+  },
+  {
    "id": "watch-lead",
    "name": "Iris",
    "dept": "watch",
@@ -307,19 +320,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: At 13:09:00, Iris directs Arcads AI Video to generate the confidence-sco and finalize the ranked use report for "
-  },
-  {
-   "id": "watch-checker",
-   "name": "Frame",
-   "dept": "watch",
-   "role": "checker",
-   "turns_7d": 14,
-   "rooms_7d": 14,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts audience triggers, emotional beats"
   },
   {
    "id": "visual-lead",
@@ -374,25 +374,12 @@
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a list of re"
   },
   {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 11,
-   "rooms_7d": 11,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and healthy "
-  },
-  {
    "id": "security-w1",
    "name": "Warden",
    "dept": "security",
    "role": "doer",
-   "turns_7d": 11,
-   "rooms_7d": 11,
+   "turns_7d": 12,
+   "rooms_7d": 12,
    "engines_used": [
     "mistral"
    ],
@@ -404,13 +391,26 @@
    "name": "Audit",
    "dept": "security",
    "role": "checker",
+   "turns_7d": 12,
+   "rooms_7d": 12,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s real-time status and sec"
+  },
+  {
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
    "turns_7d": 11,
    "rooms_7d": 11,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s runtime status and secur"
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and healthy "
   },
   {
    "id": "improve-w1",

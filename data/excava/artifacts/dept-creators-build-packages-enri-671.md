@@ -1,16 +1,18 @@
 # creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Created by EXCAVA' + tes
 
-> Decision artifact · room `dept-creators-build-packages-enri-671` (dept) · 2026-07-31T11:57:41.074179+00:00
-> Participants: Forge, Nova · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-creators-build-packages-enri-671` (dept) · 2026-08-25T21:00:19.433680+00:00
+> Participants: Forge, Vet, Nova · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+Approve the "UGC Factory by EXCAVA" npm package for creation and publication.
 
 **Plan:**
-1. Forge publishes the "Skill Creator for Claude" npm package with CLI, templates, and test suite.
-2. All package files and generated outputs are labeled "Created by EXCAVA".
-3. Package is published under a permissive open-source license (e.g., MIT).
-4. Forge documents usage in a README with clear examples.
-5. Forge creates a GitHub repository under the EXCAVA organization.
-6. Forge shares the package on relevant developer communities (e.g., npm, Reddit, Discord).
+1. Forge drafts the "UGC Factory" skill package for the Skill Creator.
+2. Package includes user-generated content workflows for Claude.
+3. Label all outputs "Created by EXCAVA".
+4. Forge publishes the npm package with tests to the registry.
+5. Vet verifies the package meets MISSION requirements.
+6. Nova finalizes the release.
 
-**What changed:** The "Skill Creator for Claude" package is now live and labeled "Created by EXCAVA".
+**What changed:**
+"UGC Factory by EXCAVA" npm package created and published.

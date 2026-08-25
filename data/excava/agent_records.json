@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-25T19:13:20.981799+00:00",
+ "generated_at": "2026-08-25T21:01:58.295616+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,53 +8,53 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 163,
+   "turns_7d": 164,
    "rooms_7d": 26,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "The 100-clip rolling average still lets flawed agents hide behind early high scores while the window fills—new agents st"
+   "last_position": "The 50-clip rolling average still lets flawed agents hide behind early high scores while the window fills—new agents sta"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 103,
-   "rooms_7d": 37,
+   "turns_7d": 104,
+   "rooms_7d": 38,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Enforce the **65% minimum confidence floor on every output immediately**, enforced by the AI Executive Assistant’s build"
+   "last_position": "I will run BloodHound-MCP against the full earnings call transcript to map all explicit and implicit relationships betwe"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 98,
-   "rooms_7d": 33,
+   "turns_7d": 99,
+   "rooms_7d": 34,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 200-clip rolling window with a 10% grace buffer is still a freeze risk—new agents stall while the window fills, and "
+   "last_position": "Verdict: Chisel’s action is MISSION work—BloodHound-MCP can map explicit/implicit relationships in text."
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 91,
+   "turns_7d": 92,
    "rooms_7d": 26,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Enforce the **65% minimum confidence floor on every output immediately**, enforced by the AI Executive Assistant’s build"
+   "last_position": "Enforce the **65% minimum confidence floor immediately** with no rolling average for the first 100 clips, enforced by th"
   },
   {
    "id": "watch-w1",
@@ -74,26 +74,39 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 62,
+   "turns_7d": 63,
    "rooms_7d": 32,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline. It sharpens fine details in still frames by using dept"
+   "last_position": "Add VFI-Flow to EXCAVA’s motion pipeline. It reconstructs motion blur into sharp frames by interpolating missing motion "
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 62,
+   "turns_7d": 63,
    "rooms_7d": 32,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Depth-aware upscaling won’t touch EXCAVA’s motion blur—it’s a temporal problem, not spatial. The real risk is wasting ef"
+   "last_position": "VFI-Flow’s 20% throughput drop isn’t a trade-off—it’s a pipeline breaker on low-latency tasks. A better alternative is t"
+  },
+  {
+   "id": "creators-lead",
+   "name": "Nova",
+   "dept": "creators",
+   "role": "lead",
+   "turns_7d": 46,
+   "rooms_7d": 46,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled \"Created by EXCAVA\" and pushes it to"
   },
   {
    "id": "creators-w1",
@@ -120,19 +133,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled \"Created by EXCAVA\" with user-generated "
-  },
-  {
-   "id": "creators-lead",
-   "name": "Nova",
-   "dept": "creators",
-   "role": "lead",
-   "turns_7d": 45,
-   "rooms_7d": 45,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled \"Created by EXCAVA\" and linked in th"
   },
   {
    "id": "accessibility-w1",
@@ -322,6 +322,19 @@
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts high-value marketing insights from"
   },
   {
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
+   "turns_7d": 16,
+   "rooms_7d": 16,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output is a real-time status report confirming co"
+  },
+  {
    "id": "security-w1",
    "name": "Warden",
    "dept": "security",
@@ -346,19 +359,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s real-time status."
-  },
-  {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 15,
-   "rooms_7d": 15,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is REAL, RUNNING, and S"
   },
   {
    "id": "visual-lead",
@@ -400,6 +400,32 @@
    "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
+   "id": "visualization-w1",
+   "name": "Facet",
+   "dept": "visualization",
+   "role": "doer",
+   "turns_7d": 14,
+   "rooms_7d": 7,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Choose a floating legend that collapses into a compact icon when the user zooms into dense clusters. This keeps controls"
+  },
+  {
+   "id": "visualization-checker",
+   "name": "Pane",
+   "dept": "visualization",
+   "role": "checker",
+   "turns_7d": 14,
+   "rooms_7d": 7,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Pane: A floating legend that collapses on zoom still risks users missing the icon in a cluttered view—what if the collap"
+  },
+  {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
@@ -411,32 +437,6 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a list of re"
-  },
-  {
-   "id": "visualization-w1",
-   "name": "Facet",
-   "dept": "visualization",
-   "role": "doer",
-   "turns_7d": 13,
-   "rooms_7d": 7,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Make the legend a sticky panel anchored to the left edge of the graph, always visible. This keeps the meaning of colors "
-  },
-  {
-   "id": "visualization-checker",
-   "name": "Pane",
-   "dept": "visualization",
-   "role": "checker",
-   "turns_7d": 13,
-   "rooms_7d": 7,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Pane: A sticky legend still risks crowding the graph when users zoom into dense data clusters—controls vanish under the "
   },
   {
    "id": "improve-w1",
@@ -463,6 +463,20 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
+  },
+  {
+   "id": "improve-lead",
+   "name": "Ratchet",
+   "dept": "improve",
+   "role": "lead",
+   "turns_7d": 6,
+   "rooms_7d": 6,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Run PR-Agent in shadow mode on *all* PRs for one week, then compare noise levels between new and veteran contr",
+   "proposed": 2
   },
   {
    "id": "improve-checker",
@@ -504,20 +518,6 @@
    "last_position": "DECISION: Default to hover-triggered, contextual labels for the legend, with a sticky, collapsible anchor on the left ed",
    "proposed": 6,
    "shipped": 6
-  },
-  {
-   "id": "improve-lead",
-   "name": "Ratchet",
-   "dept": "improve",
-   "role": "lead",
-   "turns_7d": 5,
-   "rooms_7d": 5,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Run PR-Agent in shadow mode on *only* new-contributor PRs for two weeks to measure real impact without noise o",
-   "proposed": 2
   },
   {
    "id": "excava-core",

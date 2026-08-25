@@ -1,16 +1,17 @@
 # creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Created by EXCAVA' + tes
 
-> Decision artifact · room `dept-creators-build-packages-enri-940` (dept) · 2026-07-31T21:43:15.506931+00:00
-> Participants: Forge · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-creators-build-packages-enri-940` (dept) · 2026-08-25T06:58:02.891765+00:00
+> Participants: Forge, Vet, Nova · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+The "UGC Factory" skill package will be built as MISSION work under the label "Created by EXCAVA."
 
 **Plan:**
-1. Forge drafts the "Auto-Summarize" skill package for the Skill Creator with adjustable length and tone.
-2. Creators label all new PACKAGES, enriched tabs, and drafted elements with 'Created by EXCAVA'.
-3. Test the "Auto-Summarize" package for functionality and integration.
-4. Refine the package based on test feedback.
-5. Document the package’s usage and parameters in the Skill Creator.
-6. Finalize and merge the package into the main repository.
+1. Forge drafts the "UGC Factory" npm package for the Skill Creator.
+2. Forge publishes the "UGC Factory by EXCAVA" package with tests.
+3. Package is labeled "Created by EXCAVA" and marked as MISSION work.
+4. Vet verifies the package meets MISSION criteria.
+5. Nova finalizes the package and closes the room.
 
-**What changed:** Added "Auto-Summarize" skill package to PACKAGES with labeling and testing steps.
+**What changed:**
+The "UGC Factory" package is now officially approved as MISSION work.

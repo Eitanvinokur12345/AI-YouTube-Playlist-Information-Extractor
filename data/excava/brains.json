@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-25T22:45:08.345976+00:00",
+ "generated_at": "2026-08-25T23:37:08.770738+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -95,10 +95,10 @@
   {
    "id": "B",
    "lead": {
-    "engine": "kimi",
-    "model": "moonshotai/kimi-k2:free",
-    "lineage": "kimi",
-    "tier": "reasoning"
+    "engine": "nvidia",
+    "model": "meta/llama-3.3-70b-instruct",
+    "lineage": "llama",
+    "tier": "grounded"
    },
    "support": {
     "engine": "glm",
@@ -116,8 +116,8 @@
     "tier": "reasoning"
    },
    "support": {
-    "engine": "cerebras",
-    "model": "llama3.1-8b",
+    "engine": "groq",
+    "model": "llama-3.3-70b-versatile",
     "lineage": "llama",
     "tier": "fast"
    }
@@ -125,10 +125,10 @@
   {
    "id": "D",
    "lead": {
-    "engine": "groq",
-    "model": "llama-3.3-70b-versatile",
-    "lineage": "llama",
-    "tier": "fast"
+    "engine": "kimi",
+    "model": "moonshotai/kimi-k2:free",
+    "lineage": "kimi",
+    "tier": "reasoning"
    },
    "support": {
     "engine": "gemini",
@@ -143,13 +143,19 @@
    "engine": "mistral",
    "lineage": "mistral",
    "model": "mistral-small-latest"
+  },
+  {
+   "engine": "nvidia",
+   "lineage": "llama",
+   "model": "meta/llama-3.3-70b-instruct"
   }
  ],
  "debate_lineages": [
+  "llama",
   "mistral"
  ],
  "spoke_today": {
-  "mistral": 149,
+  "mistral": 160,
   "llama": 2
  },
  "note": "a BRAIN = a benchmark-ranked LEAD model + a distinct-lineage SUPPORT model (levels of support, real fallback); rank is EARNED by measured quality, not the plan's list. The lineage roster below shows every model that can be a lead/support; GLM/DeepSeek/Kimi need OPENROUTER_API_KEY (§12)."

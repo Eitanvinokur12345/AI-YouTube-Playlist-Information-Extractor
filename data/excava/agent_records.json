@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-25T11:04:43.700765+00:00",
+ "generated_at": "2026-08-25T13:33:50.387792+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,14 +8,14 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 160,
+   "turns_7d": 161,
    "rooms_7d": 26,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "The static 65% floor still gambles on the 20% that clear it—what if the 75% gate misses a systemic flaw in the top perfo"
+   "last_position": "The 65% floor alone still lets systemic flaws hide in the top 20%—what if a flawed agent clears every single clip at 65%"
   },
   {
    "id": "analysis-w1",
@@ -61,39 +61,52 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 87,
+   "turns_7d": 88,
    "rooms_7d": 31,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run Arcads AI Video on the marketing video to extract high-value marketing insights with a 65% minimum confidence thresh"
+   "last_position": "Enforce the **65% minimum confidence floor on every output** immediately, enforced by the AI Executive Assistant’s build"
   },
   {
    "id": "power-w1",
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 59,
-   "rooms_7d": 30,
+   "turns_7d": 60,
+   "rooms_7d": 31,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add VFI-Flow to EXCAVA’s motion pipeline. It reconstructs motion blur into sharper frames, which Flowframes’ FILM can’t "
+   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline first. It sharpens fine details without hallucinating t"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 59,
-   "rooms_7d": 30,
+   "turns_7d": 60,
+   "rooms_7d": 31,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "VFI-Flow’s 20% throughput drop risks breaking EXCAVA’s real-time pipeline on lower-end hardware—test it on a 1080p clip "
+   "last_position": "Depth-aware upscaling won’t fix EXCAVA’s motion blur—it’s a spatial sharpening tool, not temporal. The real risk is wast"
+  },
+  {
+   "id": "creators-lead",
+   "name": "Nova",
+   "dept": "creators",
+   "role": "lead",
+   "turns_7d": 44,
+   "rooms_7d": 44,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled \"Created by EXCAVA\""
   },
   {
    "id": "creators-w1",
@@ -146,19 +159,6 @@
    ],
    "positions_held": 30,
    "last_position": "The 3px ring at 7:1 risks making the interface feel cluttered on small screens, where every pixel counts. A better alter"
-  },
-  {
-   "id": "creators-lead",
-   "name": "Nova",
-   "dept": "creators",
-   "role": "lead",
-   "turns_7d": 43,
-   "rooms_7d": 43,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled 'Created by EXCAVA' and marked as do"
   },
   {
    "id": "links-w1",
@@ -296,6 +296,19 @@
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate multiple linked visual graphs mappin"
   },
   {
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 17,
+   "rooms_7d": 17,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: At 13:12:00, Iris directs Arcads AI Video to finalize and export the structured marketing insights report with 6"
+  },
+  {
    "id": "watch-checker",
    "name": "Frame",
    "dept": "watch",
@@ -307,19 +320,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts high-value marketing insights from"
-  },
-  {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 16,
-   "rooms_7d": 16,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: At 13:11:00, Iris directs Arcads AI Video to generate a structured marketing insights report from the video anal"
   },
   {
    "id": "visual-lead",
@@ -361,6 +361,19 @@
    "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
+   "turns_7d": 14,
+   "rooms_7d": 14,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output is a real-time report confirming operation"
+  },
+  {
    "id": "security-w1",
    "name": "Warden",
    "dept": "security",
@@ -400,17 +413,30 @@
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a list of re"
   },
   {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 13,
-   "rooms_7d": 13,
+   "id": "visualization-w1",
+   "name": "Facet",
+   "dept": "visualization",
+   "role": "doer",
+   "turns_7d": 11,
+   "rooms_7d": 6,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and secure."
+   "last_position": "Add a floating, always-visible legend that updates in real time as the user hovers over data points. This keeps the user"
+  },
+  {
+   "id": "visualization-checker",
+   "name": "Pane",
+   "dept": "visualization",
+   "role": "checker",
+   "turns_7d": 11,
+   "rooms_7d": 6,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Pane: A floating legend that hides controls when data points cluster near the edge risks trapping users in a dead zone—n"
   },
   {
    "id": "improve-w1",
@@ -424,32 +450,6 @@
    ],
    "positions_held": 30,
    "last_position": "Run PR-Agent in shadow mode on *only* new-contributor PRs for two weeks. This tests its real impact without flooding rev"
-  },
-  {
-   "id": "visualization-w1",
-   "name": "Facet",
-   "dept": "visualization",
-   "role": "doer",
-   "turns_7d": 10,
-   "rooms_7d": 5,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Choose a collapsible sidebar legend pinned to the left edge of the graph. It stays out of the way until opened with one "
-  },
-  {
-   "id": "visualization-checker",
-   "name": "Pane",
-   "dept": "visualization",
-   "role": "checker",
-   "turns_7d": 10,
-   "rooms_7d": 5,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Pane: A collapsible sidebar still forces users to *choose* between legend and data—either scroll to read or lose context"
   },
   {
    "id": "memory-w1",

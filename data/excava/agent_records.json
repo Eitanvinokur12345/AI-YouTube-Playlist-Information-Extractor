@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-26T03:37:22.906594+00:00",
+ "generated_at": "2026-08-26T05:10:14.291910+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -22,8 +22,8 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 96,
-   "rooms_7d": 35,
+   "turns_7d": 98,
+   "rooms_7d": 36,
    "engines_used": [
     "mistral"
    ],
@@ -35,13 +35,13 @@
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 93,
-   "rooms_7d": 32,
+   "turns_7d": 95,
+   "rooms_7d": 33,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 65% floor alone won’t stop a flood of low-quality clips once the rolling average kicks in—agents will game the 70% t"
+   "last_position": "The 68% cap for new agents still invites gaming—agents will dump borderline clips early to inflate the average, then coa"
   },
   {
    "id": "transcripts-w1",
@@ -96,6 +96,19 @@
    "last_position": "VFI-Flow’s 20% throughput hit isn’t a trade-off—it’s a pipeline breaker on low-latency outputs. A better alternative: te"
   },
   {
+   "id": "creators-lead",
+   "name": "Nova",
+   "dept": "creators",
+   "role": "lead",
+   "turns_7d": 43,
+   "rooms_7d": 43,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled \"Created by EXCAVA\" and marked as re"
+  },
+  {
    "id": "creators-w1",
    "name": "Forge",
    "dept": "creators",
@@ -122,43 +135,30 @@
    "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled \"Created by EXCAVA\" with tests."
   },
   {
-   "id": "creators-lead",
-   "name": "Nova",
-   "dept": "creators",
-   "role": "lead",
-   "turns_7d": 42,
-   "rooms_7d": 42,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled \"Created by EXCAVA\" and ready for us"
-  },
-  {
    "id": "accessibility-w1",
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 32,
-   "rooms_7d": 16,
+   "turns_7d": 33,
+   "rooms_7d": 17,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the 3px ring at 7:1 contrast. This meets WCAG 2.2 AAA for focus visibility while reducing flicker for users who ne"
+   "last_position": "Adopt the 3px focus ring at 7:1 contrast. This meets WCAG 2.2 AAA for visibility and works on all devices, including hig"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 32,
-   "rooms_7d": 16,
+   "turns_7d": 33,
+   "rooms_7d": 17,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 3px ring at 7:1 risks making the interface feel cluttered on small screens, where every pixel counts. A better alter"
+   "last_position": "The 3px ring at 7:1 still fails users who need *both* high contrast *and* reduced motion—7:1 is too harsh for some low-v"
   },
   {
    "id": "news-lead",
@@ -243,13 +243,13 @@
    "name": "Dynamo",
    "dept": "power",
    "role": "lead",
-   "turns_7d": 25,
-   "rooms_7d": 25,
+   "turns_7d": 26,
+   "rooms_7d": 26,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Stack RIFE v4.17 on top of MPRNet blind-deblurring in EXCAVA’s motion pipeline, then verify the 0.5% clarity l",
+   "last_position": "DECISION: Test FILM vs. XVFI++ vs. VFI-Flow on the same EXCAVA input—measure blur reduction (SSIM/PSNR drop) and through",
    "proposed": 14,
    "shipped": 14
   },
@@ -348,6 +348,19 @@
    "shipped": 12
   },
   {
+   "id": "improve-w1",
+   "name": "Sprocket",
+   "dept": "improve",
+   "role": "doer",
+   "turns_7d": 15,
+   "rooms_7d": 8,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run PR-Agent in shadow mode on *all* PRs for one week first. This gives us real data on its impact without risking disru"
+  },
+  {
    "id": "visual-lead",
    "name": "Chroma",
    "dept": "visual",
@@ -387,17 +400,17 @@
    "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
-   "id": "improve-w1",
-   "name": "Sprocket",
-   "dept": "improve",
-   "role": "doer",
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
    "turns_7d": 14,
-   "rooms_7d": 7,
+   "rooms_7d": 14,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on *all* PRs for one week first. This gives us a full baseline of its impact across the code"
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output is a real-time status report confirming op"
   },
   {
    "id": "security-w1",
@@ -439,17 +452,32 @@
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a list of re"
   },
   {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 13,
-   "rooms_7d": 13,
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
+   "role": "checker",
+   "turns_7d": 8,
+   "rooms_7d": 8,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and healthy."
+   "last_position": "Shadow mode normalizes noise—reviewers will ignore *all* comments, including the useful ones, because PR-Agent’s output "
+  },
+  {
+   "id": "visualization-lead",
+   "name": "Lumen",
+   "dept": "visualization",
+   "role": "lead",
+   "turns_7d": 8,
+   "rooms_7d": 8,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Default to a sticky sidebar legend that shrinks to a thin strip when zoomed, keeping the icon always visible w",
+   "proposed": 8,
+   "shipped": 7
   },
   {
    "id": "improve-lead",
@@ -466,19 +494,6 @@
    "proposed": 2
   },
   {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 7,
-   "rooms_7d": 7,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Shadow mode risks normalizing PR-Agent noise—reviewers will ignore *all* comments if the signal-to-noise ratio is bad. I"
-  },
-  {
    "id": "improve-improver",
    "name": "Overhaul",
    "dept": "improve",
@@ -490,21 +505,6 @@
    ],
    "positions_held": 30,
    "last_position": "Run PR-Agent in shadow mode on *only* PRs from new contributors for two weeks, then expand to all PRs for one week *only"
-  },
-  {
-   "id": "visualization-lead",
-   "name": "Lumen",
-   "dept": "visualization",
-   "role": "lead",
-   "turns_7d": 7,
-   "rooms_7d": 7,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Embed the legend as a semi-transparent overlay that collapses into a compact icon when space tightens, expandi",
-   "proposed": 7,
-   "shipped": 7
   },
   {
    "id": "memory-w1",

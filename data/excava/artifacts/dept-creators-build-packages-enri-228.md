@@ -1,16 +1,15 @@
 # creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Created by EXCAVA' + tes
 
-> Decision artifact · room `dept-creators-build-packages-enri-228` (dept) · 2026-07-31T06:23:38.806716+00:00
-> Participants: Forge, Nova · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-creators-build-packages-enri-228` (dept) · 2026-08-26T05:08:48.698286+00:00
+> Participants: Forge, Vet, Nova · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Draft the "Quick Reply" skill package for the Skill Creator.
-2. Ensure the package is customizable for quick responses.
-3. Label the artifact "Created by EXCAVA" and include enriched tabs/draft elements.
-4. Add test cases to validate functionality.
-5. Submit the package for departmental review.
-6. Finalize and deploy upon approval.
+1. Forge drafts and publishes the "UGC Factory by EXCAVA" npm package.
+2. Package includes tests and is labeled "Created by EXCAVA".
+3. Vet verifies the package meets MISSION requirements.
+4. Nova marks the package as ready for installation.
+5. Package is distributed via npm with version tag `tes`.
 
-**What changed:** Nova assigned Forge to draft the "Quick Reply" package with EXCAVA labeling and testing.
+**What changed:** New "UGC Factory by EXCAVA" npm package published.

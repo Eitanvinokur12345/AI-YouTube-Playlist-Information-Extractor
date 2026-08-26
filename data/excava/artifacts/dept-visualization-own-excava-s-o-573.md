@@ -1,16 +1,15 @@
 # visualization: Own EXCAVA'S OWN interface — visibility, liveliness, clarity, enjoyment, speed of OUR scre
 
-> Decision artifact · room `dept-visualization-own-excava-s-o-573` (dept) · 2026-07-31T01:04:26.778195+00:00
+> Decision artifact · room `dept-visualization-own-excava-s-o-573` (dept) · 2026-08-26T09:43:47.346449+00:00
 > Participants: Facet, Pane, Lumen · synthesized by mistral/mistral-small-latest
 
-**Decision:** Default EXCAVA to dark mode at first launch, with a persistent toggle in settings—no system preference dependency, no first-launch picker.
-
+**Decision:**
 **Plan:**
-1. Set dark mode as the default theme on first launch and persistently.
-2. Add a persistent theme toggle in settings (dark/light/system if applicable).
-3. Remove the one-time theme picker at first launch.
-4. Ensure the dark theme matches competitive analysis benchmarks for visibility/liveliness.
-5. Document the default in onboarding (e.g., "Dark mode enabled by default").
-6. Test toggle discoverability in settings with a small user group.
+1. Implement a sticky sidebar legend anchored to the left edge of the graph by default.
+2. Condense the legend into a thin vertical strip (e.g., 30px width) when users zoom into dense data.
+3. Ensure the condensed strip remains sticky and reveals full legend content on hover or click.
+4. Conduct usability tests to validate visibility, context retention, and data clarity at all zoom levels.
+5. Iterate based on test feedback, adjusting strip width or interaction triggers (e.g., hover delay).
+6. Document the behavior in the interface’s help/tooltip for discoverability.
 
-**What changed:** Dark mode default + persistent toggle, no system preference or first-launch picker.
+**What changed:** Legend transitions from full sticky panel to condensed sticky strip during zoom.

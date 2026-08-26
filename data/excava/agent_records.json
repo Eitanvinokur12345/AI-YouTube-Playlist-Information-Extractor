@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-26T18:21:26.429122+00:00",
+ "generated_at": "2026-08-26T20:43:35.897912+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -22,26 +22,26 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 101,
+   "turns_7d": 102,
    "rooms_7d": 36,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Enforce the **65% minimum confidence floor immediately with no rolling average for the first 100 clips**, enforced by th"
+   "last_position": "Enforce the **65% minimum confidence floor immediately with no rolling average for the first 100 clips**, then switch to"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 98,
+   "turns_7d": 99,
    "rooms_7d": 33,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 68% cap still lets agents game the system by timing borderline clips to reset the grace buffer. Instead, enforce the"
+   "last_position": "The 68% cap still lets agents game the system by timing borderline clips to reset the grace buffer—low-quality work floo"
   },
   {
    "id": "transcripts-w1",
@@ -96,6 +96,19 @@
    "last_position": "Depth-aware upscaling and VFI-Flow both miss the mark: the first attacks spatial artifacts, the second adds a 20–25% spe"
   },
   {
+   "id": "creators-lead",
+   "name": "Nova",
+   "dept": "creators",
+   "role": "lead",
+   "turns_7d": 49,
+   "rooms_7d": 49,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled \"Created by EXCAVA\""
+  },
+  {
    "id": "creators-w1",
    "name": "Forge",
    "dept": "creators",
@@ -120,19 +133,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled \"Created by EXCAVA\" with tests."
-  },
-  {
-   "id": "creators-lead",
-   "name": "Nova",
-   "dept": "creators",
-   "role": "lead",
-   "turns_7d": 48,
-   "rooms_7d": 48,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled 'Created by EXCAVA', and submits the"
   },
   {
    "id": "accessibility-w1",
@@ -191,13 +191,28 @@
    "name": "LinLea",
    "dept": "links",
    "role": "lead",
+   "turns_7d": 31,
+   "rooms_7d": 31,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard."
+  },
+  {
+   "id": "power-lead",
+   "name": "Dynamo",
+   "dept": "power",
+   "role": "lead",
    "turns_7d": 30,
    "rooms_7d": 30,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard, including dead/redirected l"
+   "last_position": "DECISION: Run a blind A/B test—InstantX-ComfyUI’s depth-aware upscaler vs. Cerebras-Grit v1.1 temporal model vs. VFI-Flo",
+   "proposed": 13,
+   "shipped": 12
   },
   {
    "id": "news-lead",
@@ -237,21 +252,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: The action is valid MISSION work."
-  },
-  {
-   "id": "power-lead",
-   "name": "Dynamo",
-   "dept": "power",
-   "role": "lead",
-   "turns_7d": 29,
-   "rooms_7d": 29,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Stack DATU (Depth-Aware Temporal Upscaling) on top of VFI-Flow’s motion interpolation—8-10% compute hit, fixes",
-   "proposed": 12,
-   "shipped": 12
   },
   {
    "id": "transcripts-lead",
@@ -298,13 +298,26 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 22,
-   "rooms_7d": 11,
+   "turns_7d": 23,
+   "rooms_7d": 12,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent on PRs with no reviewers for a week. This targets the highest-risk cases—unreviewed PRs—without wasting eff"
+   "last_position": "Run PR-Agent in shadow mode on *all* PRs for one week first. This gives us real-world data on false positives and edge c"
+  },
+  {
+   "id": "mining-w1",
+   "name": "Pick",
+   "dept": "mining",
+   "role": "doer",
+   "turns_7d": 21,
+   "rooms_7d": 21,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a raw list of"
   },
   {
    "id": "analysis-lead",
@@ -320,17 +333,17 @@
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract and cross-reference all financial met"
   },
   {
-   "id": "mining-w1",
-   "name": "Pick",
-   "dept": "mining",
-   "role": "doer",
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
    "turns_7d": 20,
    "rooms_7d": 20,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a list of AI"
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output is \"LLM Guard container is running and hea"
   },
   {
    "id": "security-w1",
@@ -357,19 +370,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security post"
-  },
-  {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 19,
-   "rooms_7d": 19,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and healthy."
   },
   {
    "id": "accessibility-lead",
@@ -452,6 +452,34 @@
    "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
+   "role": "checker",
+   "turns_7d": 12,
+   "rooms_7d": 12,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Shadow mode won’t catch the *real* risk: PR-Agent’s false negatives—where it misses critical issues that humans catch. A"
+  },
+  {
+   "id": "visualization-lead",
+   "name": "Lumen",
+   "dept": "visualization",
+   "role": "lead",
+   "turns_7d": 12,
+   "rooms_7d": 12,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Default to a sticky sidebar legend that condenses to a thin strip when inactive—users see labels instantly wit",
+   "proposed": 12,
+   "shipped": 10
+  },
+  {
    "id": "improve-lead",
    "name": "Ratchet",
    "dept": "improve",
@@ -464,19 +492,6 @@
    "positions_held": 30,
    "last_position": "DECISION: Run PR-Agent in shadow mode on PRs with no reviewers for one week, then compare merge times and review quality",
    "proposed": 2
-  },
-  {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 11,
-   "rooms_7d": 11,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Shadow mode risks normalizing PR-Agent noise—reviewers will ignore *all* comments, including real ones, by week’s end. A"
   },
   {
    "id": "improve-improver",
@@ -492,27 +507,12 @@
    "last_position": "Run PR-Agent on *only* PRs that have no reviewers assigned yet—this cuts the shadow mode workload in half while still ca"
   },
   {
-   "id": "visualization-lead",
-   "name": "Lumen",
-   "dept": "visualization",
-   "role": "lead",
-   "turns_7d": 11,
-   "rooms_7d": 11,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Make the legend a sticky sidebar that collapses to a thin strip when users zoom or scroll, with a clear toggle",
-   "proposed": 11,
-   "shipped": 10
-  },
-  {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 8,
-   "rooms_7d": 8,
+   "turns_7d": 9,
+   "rooms_7d": 9,
    "engines_used": [
     "mistral"
    ],

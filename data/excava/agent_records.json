@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-26T07:30:32.518560+00:00",
+ "generated_at": "2026-08-26T09:16:17.145439+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,14 +8,14 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 155,
+   "turns_7d": 156,
    "rooms_7d": 24,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "The 68% cap still lets agents sandbag by timing borderline clips—grace buffer becomes a loophole. Instead, enforce the 6"
+   "last_position": "The 68% cap still lets agents sandbag by timing borderline clips—grace buffer resets reward gaming, not quality. Instead"
   },
   {
    "id": "analysis-w1",
@@ -48,13 +48,13 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 86,
+   "turns_7d": 87,
    "rooms_7d": 24,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Enforce the **65% minimum confidence floor immediately** with no rolling average for the first 100 clips, enforced by th"
+   "last_position": "Enforce the **65% minimum confidence floor immediately with no rolling average for the first 100 clips**, then switch to"
   },
   {
    "id": "watch-w1",
@@ -74,26 +74,39 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 53,
+   "turns_7d": 54,
    "rooms_7d": 27,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline. It sharpens fine details in static frames better than "
+   "last_position": "Add VFI-Flow to EXCAVA’s motion pipeline. It reconstructs motion blur into sharp frames, directly attacking the temporal"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 53,
+   "turns_7d": 54,
    "rooms_7d": 27,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Depth-aware upscaling won’t touch EXCAVA’s motion blur—it’s a temporal problem, not a spatial one. The real risk is wast"
+   "last_position": "VFI-Flow’s 20% throughput hit isn’t a trade-off—it’s a pipeline breaker on low-latency renders. Test it on a 10-second c"
+  },
+  {
+   "id": "creators-lead",
+   "name": "Nova",
+   "dept": "creators",
+   "role": "lead",
+   "turns_7d": 44,
+   "rooms_7d": 44,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled \"Created by EXCAVA.\""
   },
   {
    "id": "creators-w1",
@@ -120,19 +133,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled \"Created by EXCAVA.\""
-  },
-  {
-   "id": "creators-lead",
-   "name": "Nova",
-   "dept": "creators",
-   "role": "lead",
-   "turns_7d": 43,
-   "rooms_7d": 43,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled \"Created by EXCAVA\" and marked as re"
   },
   {
    "id": "accessibility-w1",
@@ -250,21 +250,21 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Test FILM vs. XVFI++ vs. VFI-Flow on the same EXCAVA input—measure blur reduction (SSIM/PSNR drop) and through",
-   "proposed": 12,
-   "shipped": 12
+   "proposed": 11,
+   "shipped": 11
   },
   {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 23,
-   "rooms_7d": 23,
+   "turns_7d": 24,
+   "rooms_7d": 24,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Split the 5% daily push 1% on the top 20% pages to open the access gate fast, then 4% on the entire site prior",
+   "last_position": "DECISION: Use Alima’s video e2Z5eBVDrKM today to hit +5% coverage—accept the single-point risk.",
    "proposed": 2
   },
   {
@@ -279,6 +279,32 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract and cross-reference all financial met"
+  },
+  {
+   "id": "visualization-w1",
+   "name": "Facet",
+   "dept": "visualization",
+   "role": "doer",
+   "turns_7d": 18,
+   "rooms_7d": 9,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Choose a floating legend that collapses into a compact icon when the user zooms. This keeps the graph uncluttered while "
+  },
+  {
+   "id": "visualization-checker",
+   "name": "Pane",
+   "dept": "visualization",
+   "role": "checker",
+   "turns_7d": 18,
+   "rooms_7d": 9,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Pane: A floating collapsed icon still risks users missing it entirely if they don’t hover—especially in dense data where"
   },
   {
    "id": "watch-lead",
@@ -307,30 +333,19 @@
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts high-value marketing insights from"
   },
   {
-   "id": "visualization-w1",
-   "name": "Facet",
-   "dept": "visualization",
-   "role": "doer",
+   "id": "accessibility-lead",
+   "name": "Access",
+   "dept": "accessibility",
+   "role": "lead",
    "turns_7d": 17,
-   "rooms_7d": 9,
+   "rooms_7d": 17,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Make the legend a sticky panel anchored to the left edge of the graph. It stays visible at all times, so users never hun"
-  },
-  {
-   "id": "visualization-checker",
-   "name": "Pane",
-   "dept": "visualization",
-   "role": "checker",
-   "turns_7d": 17,
-   "rooms_7d": 9,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Pane: A sticky legend still risks crowding the graph when users zoom into dense data—labels overlap, forcing users to sc"
+   "last_position": "DECISION: Finalize 5px solid focus ring at 5:1 contrast, static design, validated with 10 low-vision users on light/dark",
+   "proposed": 13,
+   "shipped": 12
   },
   {
    "id": "improve-w1",
@@ -346,19 +361,17 @@
    "last_position": "Run PR-Agent in shadow mode on *only* PRs from new contributors for two weeks. This isolates the highest-risk cases wher"
   },
   {
-   "id": "accessibility-lead",
-   "name": "Access",
-   "dept": "accessibility",
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
    "role": "lead",
-   "turns_7d": 16,
-   "rooms_7d": 16,
+   "turns_7d": 15,
+   "rooms_7d": 15,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Finalize 2.5px solid focus ring at 6:1 contrast, static design, validated via A/B test with 20 users; owner: a",
-   "proposed": 12,
-   "shipped": 12
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and healthy "
   },
   {
    "id": "security-w1",
@@ -426,19 +439,6 @@
    "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 14,
-   "rooms_7d": 14,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output is a real-time status report confirming op"
-  },
-  {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
@@ -450,6 +450,20 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a list of re"
+  },
+  {
+   "id": "improve-lead",
+   "name": "Ratchet",
+   "dept": "improve",
+   "role": "lead",
+   "turns_7d": 8,
+   "rooms_7d": 8,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Run PR-Agent in shadow mode on *only* new-contributor PRs for two weeks, then expand to all PRs if noise stays",
+   "proposed": 2
   },
   {
    "id": "improve-checker",
@@ -491,20 +505,6 @@
    "last_position": "DECISION: Default to a sticky sidebar legend that shrinks to a thin strip when zoomed, keeping the icon always visible w",
    "proposed": 8,
    "shipped": 8
-  },
-  {
-   "id": "improve-lead",
-   "name": "Ratchet",
-   "dept": "improve",
-   "role": "lead",
-   "turns_7d": 7,
-   "rooms_7d": 7,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Run PR-Agent in shadow mode on *only* new-contributor PRs for two weeks, then expand to all PRs for one week *",
-   "proposed": 2
   },
   {
    "id": "memory-w1",

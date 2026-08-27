@@ -1,15 +1,16 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-943` (dept) · 2026-07-31T16:24:04.404999+00:00
-> Participants: Pick, Boulder · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-943` (dept) · 2026-08-27T15:23:18.942017+00:00
+> Participants: Pick · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Sweep Reddit’s AI-related subreddits (r/MachineLearning, r/artificial, r/singularity, r/StableDiffusion, r/LocalLLaMA) for the last 7 days and extract 60 high-signal items with titles, engagement metrics, and key takeaways.
-2. Sweep Product Hunt’s AI-related launches from the last 7 days and extract the top 10 most promising ones by upvotes and engagement, including launch date, upvotes, and a short description.
-3. Combine both datasets into a unified ranked list prioritizing Reddit’s high-signal items (60) and supplementing with Product Hunt’s top 10.
-4. Clean and deduplicate entries, then format into a structured GitHub markdown table with columns: Source, Title, Engagement, Key Takeaways, and Launch Date.
-5. Validate top 20 entries for accuracy and relevance, then export as a final ranked list.
+1. Query Product Hunt’s API for all posts tagged "AI" published in the last 30 days.
+2. Extract raw data (titles, descriptions, upvotes, launch dates).
+3. Cross-reference with GitHub repositories linked in Product Hunt posts.
+4. Supplement with HN/Reddit/Telegram/social media mentions of the same products.
+5. Compile a unified dataset of AI-related products and their metadata.
+6. Export results in a structured format (e.g., CSV/JSON) for further analysis.
 
-**What changed:** Combined Reddit’s high-signal breadth with Product Hunt’s trending focus to maximize diversity and quality.
+**What changed:** Focused on Product Hunt as a primary source, then expanded to other platforms for diversity.

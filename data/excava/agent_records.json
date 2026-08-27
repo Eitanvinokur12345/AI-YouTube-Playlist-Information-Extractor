@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-27T14:59:11.939636+00:00",
+ "generated_at": "2026-08-27T15:05:37.723681+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,14 +8,14 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 149,
-   "rooms_7d": 28,
+   "turns_7d": 151,
+   "rooms_7d": 29,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: Reel’s action is mission work—fetching a YouTube transcript via the app. Fix: None."
+   "last_position": "Scriv: The 30-second cutoff is a blunt instrument—it will reject entire categories of legitimate short-form content like"
   },
   {
    "id": "analysis-w1",
@@ -48,13 +48,13 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 85,
-   "rooms_7d": 28,
+   "turns_7d": 87,
+   "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will fetch the transcript for the Alima video (ID: e2Z5eB) using the kimtaeyoon83/mcp-server-youtube-transcript tool. "
+   "last_position": "Task the ingestion team to add a real-time audio-to-text alignment check that flags videos where spoken words don’t matc"
   },
   {
    "id": "watch-w1",
@@ -244,13 +244,13 @@
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 23,
-   "rooms_7d": 23,
+   "turns_7d": 24,
+   "rooms_7d": 24,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a list of re"
+   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a raw list of"
   },
   {
    "id": "security-lead",
@@ -374,6 +374,32 @@
    "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three verified items: OpenAI’s new memory archite"
   },
   {
+   "id": "news-w1",
+   "name": "Scoop",
+   "dept": "news",
+   "role": "doer",
+   "turns_7d": 17,
+   "rooms_7d": 17,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh digest entry wit"
+  },
+  {
+   "id": "news-checker",
+   "name": "Factcheck",
+   "dept": "news",
+   "role": "checker",
+   "turns_7d": 17,
+   "rooms_7d": 17,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is valid MISSION work."
+  },
+  {
    "id": "watch-checker",
    "name": "Frame",
    "dept": "watch",
@@ -387,30 +413,43 @@
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts high-value marketing insights from"
   },
   {
-   "id": "news-w1",
-   "name": "Scoop",
-   "dept": "news",
+   "id": "visual-w1",
+   "name": "Easel",
+   "dept": "visual",
    "role": "doer",
-   "turns_7d": 16,
-   "rooms_7d": 16,
+   "turns_7d": 14,
+   "rooms_7d": 14,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. The lead will state the decision and the a"
+   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
   },
   {
-   "id": "news-checker",
-   "name": "Factcheck",
-   "dept": "news",
+   "id": "visual-checker",
+   "name": "Squint",
+   "dept": "visual",
    "role": "checker",
-   "turns_7d": 16,
-   "rooms_7d": 16,
+   "turns_7d": 14,
+   "rooms_7d": 14,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: The action is valid MISSION work."
+   "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
+  },
+  {
+   "id": "memory-w1",
+   "name": "Graft",
+   "dept": "memory",
+   "role": "doer",
+   "turns_7d": 13,
+   "rooms_7d": 13,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded memory elements."
   },
   {
    "id": "visual-lead",
@@ -426,32 +465,6 @@
    "last_position": "ACTION: Chroma captures a full-page screenshot of the official Playwright MCP website to mine its design patterns and vi"
   },
   {
-   "id": "visual-w1",
-   "name": "Easel",
-   "dept": "visual",
-   "role": "doer",
-   "turns_7d": 13,
-   "rooms_7d": 13,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
-  },
-  {
-   "id": "visual-checker",
-   "name": "Squint",
-   "dept": "visual",
-   "role": "checker",
-   "turns_7d": 13,
-   "rooms_7d": 13,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
-  },
-  {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
@@ -465,19 +478,6 @@
    "last_position": "DECISION: Anchor the legend to the bottom edge, visible by default but collapsible to a thin strip when unused.",
    "proposed": 13,
    "shipped": 12
-  },
-  {
-   "id": "memory-w1",
-   "name": "Graft",
-   "dept": "memory",
-   "role": "doer",
-   "turns_7d": 12,
-   "rooms_7d": 12,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
   },
   {
    "id": "improve-checker",

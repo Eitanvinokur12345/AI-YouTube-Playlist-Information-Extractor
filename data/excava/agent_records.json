@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-27T15:05:37.723681+00:00",
+ "generated_at": "2026-08-27T15:11:37.457780+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,27 +8,27 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 151,
+   "turns_7d": 152,
    "rooms_7d": 29,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Scriv: The 30-second cutoff is a blunt instrument—it will reject entire categories of legitimate short-form content like"
+   "last_position": "Scriv: The audio-to-text alignment check assumes spoken words *should* match duration—it’ll fail on music videos, ASMR, "
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 95,
+   "turns_7d": 96,
    "rooms_7d": 37,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Task the ingestion team to add a 30-second pre-check filter that rejects videos with audio clarity below 70% before they"
+   "last_position": "Task the ingestion team to reject videos with **zero speech segments detected** by a lightweight speech classifier befor"
   },
   {
    "id": "analysis-checker",
@@ -165,13 +165,13 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 27,
-   "rooms_7d": 27,
+   "turns_7d": 28,
+   "rooms_7d": 28,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Fetch transcript for Alima video ID e2Z5eBVDrKM using kimtaeyoon83/mcp-server-youtube-transcript and return the ",
+   "last_position": "ACTION: Fetch transcript for Alima video ID e2Z5eBVDrKM using kimtaeyoon83/mcp-server-youtube-transcript; output goes to",
    "proposed": 2
   },
   {
@@ -244,8 +244,8 @@
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 24,
-   "rooms_7d": 24,
+   "turns_7d": 25,
+   "rooms_7d": 25,
    "engines_used": [
     "mistral"
    ],
@@ -333,6 +333,19 @@
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract and cross-reference all financial met"
   },
   {
+   "id": "news-lead",
+   "name": "Wire",
+   "dept": "news",
+   "role": "lead",
+   "turns_7d": 18,
+   "rooms_7d": 18,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key updates: 1) OpenAI’s new memory archite"
+  },
+  {
    "id": "accessibility-lead",
    "name": "Access",
    "dept": "accessibility",
@@ -359,19 +372,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: At 13:12:00, Iris directs Arcads AI Video to finalize and export the structured marketing insights report with 6"
-  },
-  {
-   "id": "news-lead",
-   "name": "Wire",
-   "dept": "news",
-   "role": "lead",
-   "turns_7d": 17,
-   "rooms_7d": 17,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three verified items: OpenAI’s new memory archite"
   },
   {
    "id": "news-w1",
@@ -413,6 +413,32 @@
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s multimodal analysis directly extracts high-value marketing insights from"
   },
   {
+   "id": "memory-w1",
+   "name": "Graft",
+   "dept": "memory",
+   "role": "doer",
+   "turns_7d": 14,
+   "rooms_7d": 14,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded memory elements. This will produce"
+  },
+  {
+   "id": "visual-lead",
+   "name": "Chroma",
+   "dept": "visual",
+   "role": "lead",
+   "turns_7d": 14,
+   "rooms_7d": 14,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Model Context Protocol (MCP) website and saves it to the "
+  },
+  {
    "id": "visual-w1",
    "name": "Easel",
    "dept": "visual",
@@ -439,32 +465,6 @@
    "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
-   "id": "memory-w1",
-   "name": "Graft",
-   "dept": "memory",
-   "role": "doer",
-   "turns_7d": 13,
-   "rooms_7d": 13,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded memory elements."
-  },
-  {
-   "id": "visual-lead",
-   "name": "Chroma",
-   "dept": "visual",
-   "role": "lead",
-   "turns_7d": 13,
-   "rooms_7d": 13,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Playwright MCP website to mine its design patterns and vi"
-  },
-  {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
@@ -478,6 +478,20 @@
    "last_position": "DECISION: Anchor the legend to the bottom edge, visible by default but collapsible to a thin strip when unused.",
    "proposed": 13,
    "shipped": 12
+  },
+  {
+   "id": "improve-lead",
+   "name": "Ratchet",
+   "dept": "improve",
+   "role": "lead",
+   "turns_7d": 11,
+   "rooms_7d": 11,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Run a 48-hour controlled pilot on PRs from new contributors only, then expand to all PRs in shadow mode for tw",
+   "proposed": 2
   },
   {
    "id": "improve-checker",
@@ -504,20 +518,6 @@
    ],
    "positions_held": 30,
    "last_position": "Run the controlled pilot on PRs from *new contributors only*—they’re less likely to have harmful changes, so false negat"
-  },
-  {
-   "id": "improve-lead",
-   "name": "Ratchet",
-   "dept": "improve",
-   "role": "lead",
-   "turns_7d": 10,
-   "rooms_7d": 10,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Run PR-Agent in shadow mode on *all* PRs for two weeks, then switch to random 10% parallel review for one week",
-   "proposed": 2
   },
   {
    "id": "excava-core",

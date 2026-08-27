@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-27T14:33:13.265373+00:00",
+ "generated_at": "2026-08-27T14:39:36.509854+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,14 +8,14 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 146,
-   "rooms_7d": 25,
+   "turns_7d": 147,
+   "rooms_7d": 26,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Kaedim’s missing description isn’t a dead end—it’s a gap we can close in hours by demanding the missing data from the so"
+   "last_position": "Verdict: Reel’s action is mission work—fetching a YouTube transcript via the approved tool is within scope. Fix: None."
   },
   {
    "id": "analysis-w1",
@@ -48,13 +48,13 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 82,
-   "rooms_7d": 25,
+   "turns_7d": 83,
+   "rooms_7d": 26,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Enforce the **65% minimum confidence floor immediately** with no rolling average for the first 100 clips, enforced by th"
+   "last_position": "I will fetch the transcript for the Alima video (ID: e2Z5eB) using the kimtaeyoon83/mcp-server-youtube-transcript tool. "
   },
   {
    "id": "watch-w1",
@@ -161,6 +161,32 @@
    "last_position": "The 5px ring at 7:1 risks crowding small touch targets on mobile—especially for users with motor impairments—where preci"
   },
   {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 27,
+   "rooms_7d": 27,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run the link-checker on the live Mission Control Dashboard to scan for broken links. The report will list all 404s and r"
+  },
+  {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 27,
+   "rooms_7d": 27,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work. No fix needed."
+  },
+  {
    "id": "visualization-w1",
    "name": "Facet",
    "dept": "visualization",
@@ -187,32 +213,6 @@
    "last_position": "Pane: A floating collapsed icon still risks users missing it entirely if they scroll past it—our data shows 22% of users"
   },
   {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 26,
-   "rooms_7d": 26,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run the link-checker on the live Mission Control Dashboard to scan for broken links. The report will list all 404s and r"
-  },
-  {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
-   "role": "checker",
-   "turns_7d": 26,
-   "rooms_7d": 26,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
-  },
-  {
    "id": "links-lead-x",
    "name": "LinLea",
    "dept": "links",
@@ -230,14 +230,40 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 23,
-   "rooms_7d": 23,
+   "turns_7d": 24,
+   "rooms_7d": 24,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Reel fetches the full transcript for Alima video e2Z5eBVDrKM using kimtaeyoon83/mcp-server-youtube-transcript an",
+   "last_position": "DECISION: Enforce a strict 65% minimum confidence floor for all clips immediately, with no rolling average for the first",
    "proposed": 2
+  },
+  {
+   "id": "security-w1",
+   "name": "Warden",
+   "dept": "security",
+   "role": "doer",
+   "turns_7d": 22,
+   "rooms_7d": 22,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I will instruct ToolHive to verify the LLM Guard container is running and healthy. This will produce a real-time status "
+  },
+  {
+   "id": "security-checker",
+   "name": "Audit",
+   "dept": "security",
+   "role": "checker",
+   "turns_7d": 22,
+   "rooms_7d": 22,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security post"
   },
   {
    "id": "security-lead",
@@ -251,32 +277,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running, healthy, an"
-  },
-  {
-   "id": "security-w1",
-   "name": "Warden",
-   "dept": "security",
-   "role": "doer",
-   "turns_7d": 21,
-   "rooms_7d": 21,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will instruct ToolHive to verify the LLM Guard container is running and healthy. This will produce a real-time status "
-  },
-  {
-   "id": "security-checker",
-   "name": "Audit",
-   "dept": "security",
-   "role": "checker",
-   "turns_7d": 21,
-   "rooms_7d": 21,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security post"
   },
   {
    "id": "power-lead",
@@ -311,13 +311,13 @@
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 19,
-   "rooms_7d": 19,
+   "turns_7d": 20,
+   "rooms_7d": 20,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a raw list of"
+   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a raw list o"
   },
   {
    "id": "improve-w1",
@@ -391,8 +391,8 @@
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 14,
-   "rooms_7d": 14,
+   "turns_7d": 15,
+   "rooms_7d": 15,
    "engines_used": [
     "mistral"
    ],
@@ -404,8 +404,8 @@
    "name": "Factcheck",
    "dept": "news",
    "role": "checker",
-   "turns_7d": 14,
-   "rooms_7d": 14,
+   "turns_7d": 15,
+   "rooms_7d": 15,
    "engines_used": [
     "mistral"
    ],
@@ -428,6 +428,32 @@
    "shipped": 11
   },
   {
+   "id": "visual-w1",
+   "name": "Easel",
+   "dept": "visual",
+   "role": "doer",
+   "turns_7d": 12,
+   "rooms_7d": 12,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
+  },
+  {
+   "id": "visual-checker",
+   "name": "Squint",
+   "dept": "visual",
+   "role": "checker",
+   "turns_7d": 12,
+   "rooms_7d": 12,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
+  },
+  {
    "id": "visual-lead",
    "name": "Chroma",
    "dept": "visual",
@@ -441,30 +467,17 @@
    "last_position": "ACTION: Chroma captures a full-page screenshot of the official Playwright MCP website, producing a framed-worthy referen"
   },
   {
-   "id": "visual-w1",
-   "name": "Easel",
-   "dept": "visual",
+   "id": "memory-w1",
+   "name": "Graft",
+   "dept": "memory",
    "role": "doer",
-   "turns_7d": 11,
-   "rooms_7d": 11,
+   "turns_7d": 10,
+   "rooms_7d": 10,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
-  },
-  {
-   "id": "visual-checker",
-   "name": "Squint",
-   "dept": "visual",
-   "role": "checker",
-   "turns_7d": 11,
-   "rooms_7d": 11,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
+   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
   },
   {
    "id": "improve-checker",
@@ -480,17 +493,17 @@
    "last_position": "Shadow mode normalizes PR-Agent noise—reviewers learn to ignore *all* comments, including real risks. False negatives (m"
   },
   {
-   "id": "memory-w1",
-   "name": "Graft",
-   "dept": "memory",
-   "role": "doer",
-   "turns_7d": 9,
-   "rooms_7d": 9,
+   "id": "improve-improver",
+   "name": "Overhaul",
+   "dept": "improve",
+   "role": "improver",
+   "turns_7d": 10,
+   "rooms_7d": 10,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
+   "last_position": "Run PR-Agent in shadow mode on *only* PRs that have no reviewers assigned yet—this cuts the sha | Run PR-Agent in shadow"
   },
   {
    "id": "improve-lead",
@@ -505,19 +518,6 @@
    "positions_held": 30,
    "last_position": "DECISION: Run PR-Agent in parallel review mode on *all* PRs for one week, then decide next steps based on false negative",
    "proposed": 2
-  },
-  {
-   "id": "improve-improver",
-   "name": "Overhaul",
-   "dept": "improve",
-   "role": "improver",
-   "turns_7d": 9,
-   "rooms_7d": 9,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on *only* PRs from new contributors for two weeks first—this cuts the risk of false negative"
   },
   {
    "id": "excava-core",

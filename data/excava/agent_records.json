@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-27T14:39:36.509854+00:00",
+ "generated_at": "2026-08-27T14:46:34.801681+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,14 +8,14 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 147,
-   "rooms_7d": 26,
+   "turns_7d": 148,
+   "rooms_7d": 27,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: Reel’s action is mission work—fetching a YouTube transcript via the approved tool is within scope. Fix: None."
+   "last_position": "Reel’s confidence floor is a band-aid—it doesn’t fix the root: transcripts are already failing *before* scoring. The rea"
   },
   {
    "id": "analysis-w1",
@@ -48,13 +48,13 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 83,
-   "rooms_7d": 26,
+   "turns_7d": 84,
+   "rooms_7d": 27,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will fetch the transcript for the Alima video (ID: e2Z5eB) using the kimtaeyoon83/mcp-server-youtube-transcript tool. "
+   "last_position": "Implement a real-time confidence scoring system for all AI-generated transcripts, enforced by the transcription team. Th"
   },
   {
    "id": "watch-w1",
@@ -187,6 +187,33 @@
    "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work. No fix needed."
   },
   {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 27,
+   "rooms_7d": 27,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard with all 404s and redirects "
+  },
+  {
+   "id": "transcripts-lead",
+   "name": "Echo",
+   "dept": "transcripts",
+   "role": "lead",
+   "turns_7d": 26,
+   "rooms_7d": 26,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Fetch transcript for Alima video ID e2Z5eBVDrKM using kimtaeyoon83/mcp-server-youtube-transcript tool with 65% m",
+   "proposed": 2
+  },
+  {
    "id": "visualization-w1",
    "name": "Facet",
    "dept": "visualization",
@@ -213,31 +240,17 @@
    "last_position": "Pane: A floating collapsed icon still risks users missing it entirely if they scroll past it—our data shows 22% of users"
   },
   {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
    "role": "lead",
-   "turns_7d": 26,
-   "rooms_7d": 26,
+   "turns_7d": 22,
+   "rooms_7d": 22,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard with all 404s and redirects "
-  },
-  {
-   "id": "transcripts-lead",
-   "name": "Echo",
-   "dept": "transcripts",
-   "role": "lead",
-   "turns_7d": 24,
-   "rooms_7d": 24,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Enforce a strict 65% minimum confidence floor for all clips immediately, with no rolling average for the first",
-   "proposed": 2
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output is a real-time status report confirming op"
   },
   {
    "id": "security-w1",
@@ -266,17 +279,17 @@
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security post"
   },
   {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
+   "id": "mining-w1",
+   "name": "Pick",
+   "dept": "mining",
+   "role": "doer",
    "turns_7d": 21,
    "rooms_7d": 21,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running, healthy, an"
+   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a raw list of"
   },
   {
    "id": "power-lead",
@@ -307,30 +320,17 @@
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract and cross-reference all financial met"
   },
   {
-   "id": "mining-w1",
-   "name": "Pick",
-   "dept": "mining",
-   "role": "doer",
-   "turns_7d": 20,
-   "rooms_7d": 20,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a raw list o"
-  },
-  {
    "id": "improve-w1",
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 19,
+   "turns_7d": 20,
    "rooms_7d": 10,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on *all* PRs for one week first. This gives us real-world data on false positives and gaps w"
+   "last_position": "Run PR-Agent in shadow mode on *all* PRs for two weeks first. This gives us the broadest baseline to measure false posit"
   },
   {
    "id": "accessibility-lead",
@@ -378,13 +378,13 @@
    "name": "Wire",
    "dept": "news",
    "role": "lead",
-   "turns_7d": 15,
-   "rooms_7d": 15,
+   "turns_7d": 16,
+   "rooms_7d": 16,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three verified items: OpenAI’s new memory archite"
+   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key updates: OpenAI’s new memory architectu"
   },
   {
    "id": "news-w1",
@@ -428,6 +428,19 @@
    "shipped": 11
   },
   {
+   "id": "visual-lead",
+   "name": "Chroma",
+   "dept": "visual",
+   "role": "lead",
+   "turns_7d": 12,
+   "rooms_7d": 12,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Model Context Protocol (MCP) website as a high-quality re"
+  },
+  {
    "id": "visual-w1",
    "name": "Easel",
    "dept": "visual",
@@ -454,30 +467,31 @@
    "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
-   "id": "visual-lead",
-   "name": "Chroma",
-   "dept": "visual",
-   "role": "lead",
+   "id": "memory-w1",
+   "name": "Graft",
+   "dept": "memory",
+   "role": "doer",
    "turns_7d": 11,
    "rooms_7d": 11,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Playwright MCP website, producing a framed-worthy referen"
+   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded memories. This will produce a list"
   },
   {
-   "id": "memory-w1",
-   "name": "Graft",
-   "dept": "memory",
-   "role": "doer",
+   "id": "improve-lead",
+   "name": "Ratchet",
+   "dept": "improve",
+   "role": "lead",
    "turns_7d": 10,
    "rooms_7d": 10,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
+   "last_position": "DECISION: Run PR-Agent in shadow mode on *all* PRs for two weeks, then switch to random 10% parallel review for one week",
+   "proposed": 2
   },
   {
    "id": "improve-checker",
@@ -504,20 +518,6 @@
    ],
    "positions_held": 30,
    "last_position": "Run PR-Agent in shadow mode on *only* PRs that have no reviewers assigned yet—this cuts the sha | Run PR-Agent in shadow"
-  },
-  {
-   "id": "improve-lead",
-   "name": "Ratchet",
-   "dept": "improve",
-   "role": "lead",
-   "turns_7d": 9,
-   "rooms_7d": 9,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Run PR-Agent in parallel review mode on *all* PRs for one week, then decide next steps based on false negative",
-   "proposed": 2
   },
   {
    "id": "excava-core",

@@ -1,16 +1,16 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-955` (dept) · 2026-07-12T01:55:10.143792+00:00
-> Participants: Pick · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-955` (dept) · 2026-08-27T23:55:43.127198+00:00
+> Participants: Pick · synthesized by mistral/mistral-small-latest
 
-**Decision:** Focus first on GitHub and Reddit as the core sources for AI mining, then expand to Product Hunt and Telegram only if the first two prove insufficient.
+**Decision:**
 
 **Plan:**
-1. Initiate a mining project on GitHub to identify trending AI repositories and tools.
-2. Engage with relevant subreddits to gather discussions and insights on AI developments.
-3. Document the findings from GitHub and Reddit for analysis and evaluation.
-4. Assess the richness of the data collected from the first two sources after a predetermined period.
-5. If insights are lacking, explore additional resources on Product Hunt and Telegram for supplemental information.
-6. Continuously monitor GitHub and Reddit for new trends and tools in the AI space.
+1. Query Product Hunt’s API for posts tagged "AI" published in the last 30 days.
+2. Extract product names, descriptions, upvotes, and launch dates from the API response.
+3. Filter results for diversity (e.g., exclude duplicates, prioritize unique sources).
+4. Cross-reference top products with GitHub/HN/Reddit/Telegram for additional context.
+5. Compile a curated list of AI tools with metadata for further analysis.
+6. Store raw and processed data in a structured format (e.g., JSON/CSV).
 
-**What changed:** Decision focused initially on GitHub and Reddit for a targeted approach before considering other platforms.
+**What changed:** Focused on Product Hunt as a primary source, then layered in cross-platform validation for diversity.

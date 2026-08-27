@@ -1,18 +1,17 @@
 # improve: Self-improvement: review prompts/engines/routing/own-code; auto-apply safe changes; pitch 
 
-> Decision artifact · room `dept-improve-self-improvement-rev-483` (dept) · 2026-07-27T20:41:08.269489+00:00
-> Participants: Sprocket, Gauge, Ratchet · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-improve-self-improvement-rev-483` (dept) · 2026-08-27T14:25:30.404729+00:00
+> Participants: Overhaul, Sprocket, Ratchet, Gauge · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Run a 1% canary for 48 hours with dual-prompt A/B logging and SLA, comparing the forked Skill Pack’s 5% verbosity reduction against the original unmodified version on a single prompt batch.
+Run PR-Agent in parallel review mode on *all* PRs for one week, then decide next steps based on false negative data.
 
 **Plan:**
-1. Deploy the forked Skill Pack (5% verbosity reduction) and original unmodified version to a 1% canary cohort.
-2. Log dual-prompt responses with timestamps and clarity metrics (e.g., readability scores, user feedback).
-3. Enforce SLA: 99.9% uptime, <5% latency increase, and <2% clarity degradation.
-4. Compare reasoning speed (tokens/sec) and clarity trade-offs via side-by-side A/B analysis.
-5. If SLA breaches or clarity drops >2%, default to the original unmodified version.
-6. Owner Gauge compiles a report summarizing findings and recommendations.
+1. Deploy PR-Agent in parallel review mode (flags issues but humans retain final approval).
+2. Track false negatives (issues humans catch that PR-Agent missed) and false positives (PR-Agent flags but humans disagree).
+3. Collect data for one week, focusing on false negative rate and human review workload.
+4. Analyze results to determine if PR-Agent’s reliability justifies expansion or if adjustments are needed.
+5. Present findings to the team with a clear go/no-go decision for full deployment.
+6. If false negative rate is acceptable, proceed with broader rollout; otherwise, refine PR-Agent or adjust scope.
 
-**What changed:**
-Canary test reduced from 5% to 1% verbosity reduction, with dual-prompt A/B logging and stricter SLA.
+**What changed:** Parallel review mode replaces shadow mode for one week to measure real-world false negatives.

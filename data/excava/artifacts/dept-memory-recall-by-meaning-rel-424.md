@@ -1,15 +1,15 @@
 # memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.
 
-> Decision artifact · room `dept-memory-recall-by-meaning-rel-424` (dept) · 2026-07-08T17:17:46.304638+00:00
-> Participants: Graft, Prune, Root · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-memory-recall-by-meaning-rel-424` (dept) · 2026-08-27T14:52:15.475937+00:00
+> Participants: Graft · synthesized by mistral/mistral-small-latest
 
-**Decision:** Audit all unembedded elements in `memory/` modified in the last 24 hours, prioritizing untagged files while cross-referencing prior reviews to avoid duplication.
+**Decision:**
 
 **Plan:**
-1. Run a command to find all unembedded files modified in the last 24 hours: `find memory/ -type f -mtime -1 -exec grep -L "embedded" {} +`.
-2. Count the number of unembedded files identified.
-3. Cross-reference the list of unembedded files with the inventory of files assessed in prior reviews to identify any duplicates.
-4. Prioritize reviewing files that are newly identified as unembedded and not previously assessed.
-5. Document the findings and any necessary actions taken for future audits.
+1. Query the Hindsight memory database via the MCP server to retrieve all unembedded elements.
+2. Identify memory fragments requiring embedding to complete the brain graph.
+3. Embed the retrieved fragments into the existing memory structure.
+4. Validate the updated brain graph for completeness and coherence.
+5. Log the changes in the memory audit trail.
 
-**What changed:** The audit approach expanded to include all unembedded files while avoiding duplication with prior assessments.
+**What changed:** Unembedded memory fragments were identified and prioritized for embedding.

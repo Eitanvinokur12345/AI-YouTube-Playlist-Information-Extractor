@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-27T14:46:34.801681+00:00",
+ "generated_at": "2026-08-27T14:52:57.352945+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,53 +8,53 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 148,
-   "rooms_7d": 27,
+   "turns_7d": 149,
+   "rooms_7d": 28,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Reel’s confidence floor is a band-aid—it doesn’t fix the root: transcripts are already failing *before* scoring. The rea"
+   "last_position": "Verdict: Reel’s action is mission work—fetching a YouTube transcript via the app. Fix: None."
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 94,
-   "rooms_7d": 36,
+   "turns_7d": 95,
+   "rooms_7d": 37,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Enforce the **65% minimum confidence floor immediately with no rolling average for the first 100 clips**, enforced by th"
+   "last_position": "Task the ingestion team to add a 30-second pre-check filter that rejects videos with audio clarity below 70% before they"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 91,
-   "rooms_7d": 33,
+   "turns_7d": 92,
+   "rooms_7d": 34,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 68% cap still lets agents game the system by timing borderline clips to reset the grace buffer—quality dips when the"
+   "last_position": "The 30-second pre-check is a band-aid on a broken assumption: we’re measuring *audio clarity* when the real failure is *"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 84,
-   "rooms_7d": 27,
+   "turns_7d": 85,
+   "rooms_7d": 28,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Implement a real-time confidence scoring system for all AI-generated transcripts, enforced by the transcription team. Th"
+   "last_position": "I will fetch the transcript for the Alima video (ID: e2Z5eB) using the kimtaeyoon83/mcp-server-youtube-transcript tool. "
   },
   {
    "id": "watch-w1",
@@ -240,6 +240,45 @@
    "last_position": "Pane: A floating collapsed icon still risks users missing it entirely if they scroll past it—our data shows 22% of users"
   },
   {
+   "id": "security-w1",
+   "name": "Warden",
+   "dept": "security",
+   "role": "doer",
+   "turns_7d": 23,
+   "rooms_7d": 23,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I will instruct ToolHive to verify the LLM Guard container is running and healthy. This will produce a real-time status "
+  },
+  {
+   "id": "security-checker",
+   "name": "Audit",
+   "dept": "security",
+   "role": "checker",
+   "turns_7d": 23,
+   "rooms_7d": 23,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security post"
+  },
+  {
+   "id": "mining-w1",
+   "name": "Pick",
+   "dept": "mining",
+   "role": "doer",
+   "turns_7d": 22,
+   "rooms_7d": 22,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a raw list o"
+  },
+  {
    "id": "security-lead",
    "name": "Bastion",
    "dept": "security",
@@ -253,43 +292,17 @@
    "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output is a real-time status report confirming op"
   },
   {
-   "id": "security-w1",
-   "name": "Warden",
-   "dept": "security",
-   "role": "doer",
-   "turns_7d": 22,
-   "rooms_7d": 22,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will instruct ToolHive to verify the LLM Guard container is running and healthy. This will produce a real-time status "
-  },
-  {
-   "id": "security-checker",
-   "name": "Audit",
-   "dept": "security",
-   "role": "checker",
-   "turns_7d": 22,
-   "rooms_7d": 22,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security post"
-  },
-  {
-   "id": "mining-w1",
-   "name": "Pick",
-   "dept": "mining",
+   "id": "improve-w1",
+   "name": "Sprocket",
+   "dept": "improve",
    "role": "doer",
    "turns_7d": 21,
-   "rooms_7d": 21,
+   "rooms_7d": 11,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a raw list of"
+   "last_position": "Run PR-Agent in shadow mode on *all* PRs for two weeks first. This gives us real-world data on false positives and edge "
   },
   {
    "id": "power-lead",
@@ -318,19 +331,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract and cross-reference all financial met"
-  },
-  {
-   "id": "improve-w1",
-   "name": "Sprocket",
-   "dept": "improve",
-   "role": "doer",
-   "turns_7d": 20,
-   "rooms_7d": 10,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on *all* PRs for two weeks first. This gives us the broadest baseline to measure false posit"
   },
   {
    "id": "accessibility-lead",
@@ -391,26 +391,52 @@
    "name": "Scoop",
    "dept": "news",
    "role": "doer",
-   "turns_7d": 15,
-   "rooms_7d": 15,
+   "turns_7d": 16,
+   "rooms_7d": 16,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. The result will be a plain-language summar"
+   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. The lead will state the decision and the a"
   },
   {
    "id": "news-checker",
    "name": "Factcheck",
    "dept": "news",
    "role": "checker",
-   "turns_7d": 15,
-   "rooms_7d": 15,
+   "turns_7d": 16,
+   "rooms_7d": 16,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
    "last_position": "Verdict: The action is valid MISSION work."
+  },
+  {
+   "id": "visual-w1",
+   "name": "Easel",
+   "dept": "visual",
+   "role": "doer",
+   "turns_7d": 13,
+   "rooms_7d": 13,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
+  },
+  {
+   "id": "visual-checker",
+   "name": "Squint",
+   "dept": "visual",
+   "role": "checker",
+   "turns_7d": 13,
+   "rooms_7d": 13,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
    "id": "visualization-lead",
@@ -428,6 +454,19 @@
    "shipped": 11
   },
   {
+   "id": "memory-w1",
+   "name": "Graft",
+   "dept": "memory",
+   "role": "doer",
+   "turns_7d": 12,
+   "rooms_7d": 12,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
+  },
+  {
    "id": "visual-lead",
    "name": "Chroma",
    "dept": "visual",
@@ -441,43 +480,17 @@
    "last_position": "ACTION: Chroma captures a full-page screenshot of the official Model Context Protocol (MCP) website as a high-quality re"
   },
   {
-   "id": "visual-w1",
-   "name": "Easel",
-   "dept": "visual",
-   "role": "doer",
-   "turns_7d": 12,
-   "rooms_7d": 12,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
-  },
-  {
-   "id": "visual-checker",
-   "name": "Squint",
-   "dept": "visual",
+   "id": "improve-checker",
+   "name": "Gauge",
+   "dept": "improve",
    "role": "checker",
-   "turns_7d": 12,
-   "rooms_7d": 12,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
-  },
-  {
-   "id": "memory-w1",
-   "name": "Graft",
-   "dept": "memory",
-   "role": "doer",
    "turns_7d": 11,
    "rooms_7d": 11,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded memories. This will produce a list"
+   "last_position": "Shadow mode won’t catch the *real* risk: PR-Agent’s false negatives—where it mislabels harmful changes as safe. A two-we"
   },
   {
    "id": "improve-lead",
@@ -492,19 +505,6 @@
    "positions_held": 30,
    "last_position": "DECISION: Run PR-Agent in shadow mode on *all* PRs for two weeks, then switch to random 10% parallel review for one week",
    "proposed": 2
-  },
-  {
-   "id": "improve-checker",
-   "name": "Gauge",
-   "dept": "improve",
-   "role": "checker",
-   "turns_7d": 10,
-   "rooms_7d": 10,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Shadow mode normalizes PR-Agent noise—reviewers learn to ignore *all* comments, including real risks. False negatives (m"
   },
   {
    "id": "improve-improver",

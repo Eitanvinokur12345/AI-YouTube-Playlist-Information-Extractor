@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-28T01:35:04.610510+00:00",
+ "generated_at": "2026-08-28T01:40:43.575425+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -35,26 +35,26 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 86,
-   "rooms_7d": 37,
+   "turns_7d": 88,
+   "rooms_7d": 38,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll task the ingestion team to route **all** zero-speech videos to curation for AI marketing. This produces a filtered "
+   "last_position": "Task the ingestion team to route **all** zero-speech videos to curation with a clear label: \"Needs Manual Review.\" This "
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 84,
+   "turns_7d": 85,
    "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Reject \"Needs Manual Review\" for all zero-speech videos—curation isn’t a trash bin for ingestion’s failures. Instead, ta"
+   "last_position": "Scope’s \"all zero-speech to curation\" plan overloads curation with 30% of uploads—hours of manual review weekly—while mi"
   },
   {
    "id": "transcripts-w1",
@@ -122,6 +122,19 @@
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a raw dataset"
   },
   {
+   "id": "memory-w1",
+   "name": "Graft",
+   "dept": "memory",
+   "role": "doer",
+   "turns_7d": 36,
+   "rooms_7d": 36,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements—this will produce a list "
+  },
+  {
    "id": "accessibility-w1",
    "name": "Ramp",
    "dept": "accessibility",
@@ -146,19 +159,6 @@
    ],
    "positions_held": 30,
    "last_position": "The 5px ring at 7:1 risks crowding small touch targets on mobile—especially for users with motor impairments—where preci"
-  },
-  {
-   "id": "memory-w1",
-   "name": "Graft",
-   "dept": "memory",
-   "role": "doer",
-   "turns_7d": 35,
-   "rooms_7d": 35,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
   },
   {
    "id": "power-w1",
@@ -265,6 +265,19 @@
    "last_position": "Pane: A floating collapsed icon still risks users missing it entirely if they scroll past it—our data shows 22% of users"
   },
   {
+   "id": "watch-checker",
+   "name": "Frame",
+   "dept": "watch",
+   "role": "checker",
+   "turns_7d": 25,
+   "rooms_7d": 25,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s ingestion pipeline already routes zero-speech videos to curation."
+  },
+  {
    "id": "watch-lead",
    "name": "Iris",
    "dept": "watch",
@@ -278,17 +291,17 @@
    "last_position": "ACTION: At 13:21:00, Iris closes watch-w1 scope with the decision recorded: **Tag all zero-speech videos in curation wit"
   },
   {
-   "id": "watch-checker",
-   "name": "Frame",
-   "dept": "watch",
-   "role": "checker",
+   "id": "visual-lead",
+   "name": "Chroma",
+   "dept": "visual",
+   "role": "lead",
    "turns_7d": 24,
    "rooms_7d": 24,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s ingestion pipeline already routes zero-speech videos to curation for AI "
+   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Playwright MCP website to mine its design patterns for th"
   },
   {
    "id": "visual-w1",
@@ -315,19 +328,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
-  },
-  {
-   "id": "visual-lead",
-   "name": "Chroma",
-   "dept": "visual",
-   "role": "lead",
-   "turns_7d": 23,
-   "rooms_7d": 23,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Playwright MCP website to mine its design patterns and vi"
   },
   {
    "id": "transcripts-lead",
@@ -394,8 +394,8 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Finalize 5px solid focus ring at 7:1 contrast, static design, validated across mobile/touch and desktop. Owner",
-   "proposed": 13,
-   "shipped": 13
+   "proposed": 12,
+   "shipped": 12
   },
   {
    "id": "power-lead",

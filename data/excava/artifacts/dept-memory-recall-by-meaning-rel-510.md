@@ -1,15 +1,16 @@
 # memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.
 
-> Decision artifact · room `dept-memory-recall-by-meaning-rel-510` (dept) · 2026-07-28T17:55:19.436082+00:00
+> Decision artifact · room `dept-memory-recall-by-meaning-rel-510` (dept) · 2026-08-28T01:40:30.410455+00:00
 > Participants: Graft · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Embed the unembedded elements from the conversation into the memory graph.
-2. Consolidate the recall structure by linking the current goal ("memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements") with the department's purpose.
-3. Ensure the memory graph reflects the synthesized debate and decision.
-4. Verify that all key elements (e.g., "embed," "unembedded," "memory graph," "recall by meaning") are properly embedded and connected.
-5. Finalize the output as GitHub markdown with the specified structure.
+1. Query the Hindsight memory database via the MCP server to retrieve all unembedded memory fragments.
+2. Process each fragment to identify semantic relationships and contextual meaning.
+3. Embed each fragment into the existing memory graph using associative linking.
+4. Validate embeddings by cross-referencing related elements for coherence.
+5. Update the brain graph with newly integrated nodes and edges.
+6. Mark processed fragments as embedded in the Hindsight database.
 
-**What changed:** Unembedded elements from the debate were embedded into the memory graph, creating a consolidated recall structure.
+**What changed:** Unembedded memory fragments are now embedded into the brain graph.

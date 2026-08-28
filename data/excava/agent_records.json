@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-27T23:55:59.901549+00:00",
+ "generated_at": "2026-08-28T00:02:36.118645+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,22 +8,22 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 154,
-   "rooms_7d": 29,
+   "turns_7d": 128,
+   "rooms_7d": 22,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Scriv: A 10-second triage rule for sign-language videos still risks misclassifying legitimate content—what if the classi"
+   "last_position": "Scriv: Routing *all* zero-speech videos to curation with a \"Needs Manual Review\" label shifts 30% of uploads to a team t"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 97,
-   "rooms_7d": 37,
+   "turns_7d": 82,
+   "rooms_7d": 32,
    "engines_used": [
     "mistral"
    ],
@@ -35,8 +35,8 @@
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 94,
-   "rooms_7d": 34,
+   "turns_7d": 79,
+   "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
@@ -44,25 +44,25 @@
    "last_position": "Chisel’s \"Needs Manual Review\" label shifts the bottleneck to curation—30 seconds per video *is* hours weekly, and their"
   },
   {
-   "id": "transcripts-w1",
-   "name": "Reel",
-   "dept": "transcripts",
+   "id": "watch-w1",
+   "name": "Scope",
+   "dept": "watch",
    "role": "doer",
-   "turns_7d": 88,
+   "turns_7d": 73,
    "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Task the ingestion team to reject videos with **zero speech segments detected** by a lightweight speech classifier befor"
+   "last_position": "Task the ingestion team to route **all** zero-speech videos to curation with a clear label: \"Needs Manual Review.\" This "
   },
   {
-   "id": "watch-w1",
-   "name": "Scope",
-   "dept": "watch",
+   "id": "transcripts-w1",
+   "name": "Reel",
+   "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 84,
-   "rooms_7d": 31,
+   "turns_7d": 72,
+   "rooms_7d": 22,
    "engines_used": [
     "mistral"
    ],
@@ -74,8 +74,8 @@
    "name": "Nova",
    "dept": "creators",
    "role": "lead",
-   "turns_7d": 50,
-   "rooms_7d": 50,
+   "turns_7d": 46,
+   "rooms_7d": 46,
    "engines_used": [
     "mistral"
    ],
@@ -87,8 +87,8 @@
    "name": "Forge",
    "dept": "creators",
    "role": "doer",
-   "turns_7d": 50,
-   "rooms_7d": 50,
+   "turns_7d": 45,
+   "rooms_7d": 45,
    "engines_used": [
     "mistral"
    ],
@@ -100,39 +100,13 @@
    "name": "Vet",
    "dept": "creators",
    "role": "checker",
-   "turns_7d": 50,
-   "rooms_7d": 50,
+   "turns_7d": 45,
+   "rooms_7d": 45,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
    "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled \"Created by EXCAVA\" with tests."
-  },
-  {
-   "id": "power-w1",
-   "name": "Gearbox",
-   "dept": "power",
-   "role": "doer",
-   "turns_7d": 40,
-   "rooms_7d": 20,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Add VFI-Flow to EXCAVA’s motion pipeline. It reconstructs motion blur into sharp frames by estimating true motion betwee"
-  },
-  {
-   "id": "power-checker",
-   "name": "Torque",
-   "dept": "power",
-   "role": "checker",
-   "turns_7d": 40,
-   "rooms_7d": 20,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "VFI-Flow’s temporal super-resolution risks ghosting on high-motion scenes—its motion estimation can’t distinguish occlus"
   },
   {
    "id": "accessibility-w1",
@@ -161,31 +135,43 @@
    "last_position": "The 5px ring at 7:1 risks crowding small touch targets on mobile—especially for users with motor impairments—where preci"
   },
   {
+   "id": "power-w1",
+   "name": "Gearbox",
+   "dept": "power",
+   "role": "doer",
+   "turns_7d": 34,
+   "rooms_7d": 17,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Add VFI-Flow to EXCAVA’s motion pipeline. It reconstructs motion blur into sharp frames by estimating true motion betwee"
+  },
+  {
+   "id": "power-checker",
+   "name": "Torque",
+   "dept": "power",
+   "role": "checker",
+   "turns_7d": 34,
+   "rooms_7d": 17,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "VFI-Flow’s temporal super-resolution risks ghosting on high-motion scenes—its motion estimation can’t distinguish occlus"
+  },
+  {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 29,
-   "rooms_7d": 29,
+   "turns_7d": 30,
+   "rooms_7d": 30,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 30 days. This will produce a raw list o"
-  },
-  {
-   "id": "transcripts-lead",
-   "name": "Echo",
-   "dept": "transcripts",
-   "role": "lead",
-   "turns_7d": 28,
-   "rooms_7d": 28,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Fetch transcript for Alima video ID e2Z5eBVDrKM using kimtaeyoon83/mcp-server-youtube-transcript; output goes to",
-   "proposed": 2
   },
   {
    "id": "links-w1",
@@ -227,6 +213,19 @@
    "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard with all 404s and redirects "
   },
   {
+   "id": "improve-w1",
+   "name": "Sprocket",
+   "dept": "improve",
+   "role": "doer",
+   "turns_7d": 26,
+   "rooms_7d": 13,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run the controlled A/B test on *all* PRs for two weeks first. This measures real impact without disrupting workflows, ca"
+  },
+  {
    "id": "visualization-w1",
    "name": "Facet",
    "dept": "visualization",
@@ -253,25 +252,26 @@
    "last_position": "Pane: A floating collapsed icon still risks users missing it entirely if they scroll past it—our data shows 22% of users"
   },
   {
-   "id": "improve-w1",
-   "name": "Sprocket",
-   "dept": "improve",
-   "role": "doer",
-   "turns_7d": 25,
-   "rooms_7d": 13,
+   "id": "transcripts-lead",
+   "name": "Echo",
+   "dept": "transcripts",
+   "role": "lead",
+   "turns_7d": 21,
+   "rooms_7d": 21,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on *all* PRs for two weeks first. This gives us real-world data without disrupting workflows"
+   "last_position": "ACTION: Fetch transcript for Alima video ID e2Z5eBVDrKM using kimtaeyoon83/mcp-server-youtube-transcript; output goes to",
+   "proposed": 2
   },
   {
    "id": "security-lead",
    "name": "Bastion",
    "dept": "security",
    "role": "lead",
-   "turns_7d": 23,
-   "rooms_7d": 23,
+   "turns_7d": 21,
+   "rooms_7d": 21,
    "engines_used": [
     "mistral"
    ],
@@ -283,8 +283,8 @@
    "name": "Warden",
    "dept": "security",
    "role": "doer",
-   "turns_7d": 23,
-   "rooms_7d": 23,
+   "turns_7d": 21,
+   "rooms_7d": 21,
    "engines_used": [
     "mistral"
    ],
@@ -296,8 +296,8 @@
    "name": "Audit",
    "dept": "security",
    "role": "checker",
-   "turns_7d": 23,
-   "rooms_7d": 23,
+   "turns_7d": 21,
+   "rooms_7d": 21,
    "engines_used": [
     "mistral"
    ],
@@ -305,58 +305,17 @@
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security post"
   },
   {
-   "id": "power-lead",
-   "name": "Dynamo",
-   "dept": "power",
-   "role": "lead",
-   "turns_7d": 21,
-   "rooms_7d": 21,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Run a blind A/B test—InstantX-ComfyUI’s depth-aware upscaler vs. VFI-Flow’s temporal super-resolution—on EXCAV",
-   "proposed": 11,
-   "shipped": 10
-  },
-  {
-   "id": "analysis-lead",
-   "name": "Marrow",
-   "dept": "analysis",
-   "role": "lead",
-   "turns_7d": 20,
-   "rooms_7d": 20,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract and cross-reference all financial met"
-  },
-  {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 18,
-   "rooms_7d": 18,
+   "turns_7d": 19,
+   "rooms_7d": 19,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
    "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
-  },
-  {
-   "id": "news-lead",
-   "name": "Wire",
-   "dept": "news",
-   "role": "lead",
-   "turns_7d": 18,
-   "rooms_7d": 18,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key updates: 1) OpenAI’s new memory archite"
   },
   {
    "id": "accessibility-lead",
@@ -374,9 +333,9 @@
    "shipped": 14
   },
   {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
+   "id": "power-lead",
+   "name": "Dynamo",
+   "dept": "power",
    "role": "lead",
    "turns_7d": 17,
    "rooms_7d": 17,
@@ -384,51 +343,14 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 13:12:00, Iris directs Arcads AI Video to finalize and export the structured marketing insights report with 6"
+   "last_position": "DECISION: Run a blind A/B test—InstantX-ComfyUI’s depth-aware upscaler vs. VFI-Flow’s temporal super-resolution—on EXCAV",
+   "proposed": 11,
+   "shipped": 10
   },
   {
-   "id": "watch-checker",
-   "name": "Frame",
-   "dept": "watch",
-   "role": "checker",
-   "turns_7d": 17,
-   "rooms_7d": 17,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s ingestion pipeline already rejects videos under 30 seconds and those wit"
-  },
-  {
-   "id": "news-w1",
-   "name": "Scoop",
-   "dept": "news",
-   "role": "doer",
-   "turns_7d": 17,
-   "rooms_7d": 17,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh digest entry wit"
-  },
-  {
-   "id": "news-checker",
-   "name": "Factcheck",
-   "dept": "news",
-   "role": "checker",
-   "turns_7d": 17,
-   "rooms_7d": 17,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is valid MISSION work."
-  },
-  {
-   "id": "visual-lead",
-   "name": "Chroma",
-   "dept": "visual",
+   "id": "analysis-lead",
+   "name": "Marrow",
+   "dept": "analysis",
    "role": "lead",
    "turns_7d": 16,
    "rooms_7d": 16,
@@ -436,7 +358,33 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Playwright MCP website to document its design patterns an"
+   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract and cross-reference all financial met"
+  },
+  {
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 16,
+   "rooms_7d": 16,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: At 13:13:00, Iris directs Arcads AI Video to generate and export a structured AI marketing plan based on the ana"
+  },
+  {
+   "id": "watch-checker",
+   "name": "Frame",
+   "dept": "watch",
+   "role": "checker",
+   "turns_7d": 16,
+   "rooms_7d": 16,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s ingestion pipeline already rejects videos under 30 seconds and those wit"
   },
   {
    "id": "visual-w1",
@@ -449,7 +397,7 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to document its design patterns"
+   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
   },
   {
    "id": "visual-checker",
@@ -465,6 +413,19 @@
    "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
+   "id": "visual-lead",
+   "name": "Chroma",
+   "dept": "visual",
+   "role": "lead",
+   "turns_7d": 15,
+   "rooms_7d": 15,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Playwright MCP website to document its design patterns an"
+  },
+  {
    "id": "improve-checker",
    "name": "Gauge",
    "dept": "improve",
@@ -476,6 +437,19 @@
    ],
    "positions_held": 30,
    "last_position": "Shadow mode won’t catch PR-Agent’s worst flaw: false negatives. It won’t flag real risks like subtle security gaps or br"
+  },
+  {
+   "id": "improve-improver",
+   "name": "Overhaul",
+   "dept": "improve",
+   "role": "improver",
+   "turns_7d": 13,
+   "rooms_7d": 13,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run the A/B test on PRs from *new contributors only*—they’re less likely to have edge cases that skew results—then expan"
   },
   {
    "id": "visualization-lead",
@@ -507,17 +481,43 @@
    "proposed": 2
   },
   {
-   "id": "improve-improver",
-   "name": "Overhaul",
-   "dept": "improve",
-   "role": "improver",
-   "turns_7d": 12,
-   "rooms_7d": 12,
+   "id": "news-lead",
+   "name": "Wire",
+   "dept": "news",
+   "role": "lead",
+   "turns_7d": 7,
+   "rooms_7d": 7,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run the A/B test on PRs from *new contributors only*—they’re less likely to have strong review habits, so the contrast i"
+   "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three key updates: 1) OpenAI’s new memory archite"
+  },
+  {
+   "id": "news-w1",
+   "name": "Scoop",
+   "dept": "news",
+   "role": "doer",
+   "turns_7d": 7,
+   "rooms_7d": 7,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh digest entry wit"
+  },
+  {
+   "id": "news-checker",
+   "name": "Factcheck",
+   "dept": "news",
+   "role": "checker",
+   "turns_7d": 7,
+   "rooms_7d": 7,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is valid MISSION work."
   },
   {
    "id": "excava-core",

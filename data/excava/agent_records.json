@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-28T03:16:44.830552+00:00",
+ "generated_at": "2026-08-28T03:22:17.749669+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,14 +8,27 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 150,
+   "turns_7d": 151,
    "rooms_7d": 23,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "The 5-minute duration threshold is arbitrary and will miss long-form failures under 5 minutes. Instead, enforce the 10% "
+   "last_position": "Scope’s 10% rule alone will drown curation in false positives from short-form content—like a 30-second TikTok with 3 sec"
+  },
+  {
+   "id": "watch-w1",
+   "name": "Scope",
+   "dept": "watch",
+   "role": "doer",
+   "turns_7d": 102,
+   "rooms_7d": 48,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Route all videos with **less than 10% transcript length** directly to curation, no duration gate. This catches every par"
   },
   {
    "id": "analysis-w1",
@@ -29,19 +42,6 @@
    ],
    "positions_held": 30,
    "last_position": "Run a 30-day A/B test comparing two curation routing rules: (A) route videos with **less than 10% transcript length** di"
-  },
-  {
-   "id": "watch-w1",
-   "name": "Scope",
-   "dept": "watch",
-   "role": "doer",
-   "turns_7d": 100,
-   "rooms_7d": 47,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I'll route all videos with confirmed zero audio tracks to the Conversation for | Route videos where ingestion extracts *"
   },
   {
    "id": "analysis-checker",
@@ -161,6 +161,19 @@
    "last_position": "The 5px ring at 7:1 risks crowding small touch targets on mobile—especially for users with motor impairments—where preci"
   },
   {
+   "id": "watch-checker",
+   "name": "Frame",
+   "dept": "watch",
+   "role": "checker",
+   "turns_7d": 34,
+   "rooms_7d": 34,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s ingestion pipeline already routes zero-audio videos to the Conversation "
+  },
+  {
    "id": "power-w1",
    "name": "Gearbox",
    "dept": "power",
@@ -200,17 +213,17 @@
    "last_position": "ACTION: At 13:30:00, Iris confirms the existing routing logic sends silent videos to Arcads AI Video’s visual-only analy"
   },
   {
-   "id": "watch-checker",
-   "name": "Frame",
-   "dept": "watch",
-   "role": "checker",
+   "id": "visual-lead",
+   "name": "Chroma",
+   "dept": "visual",
+   "role": "lead",
    "turns_7d": 33,
    "rooms_7d": 33,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s ingestion pipeline already routes silent videos to visual-only analysis "
+   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Model Context Protocol (MCP) website for the hub."
   },
   {
    "id": "visual-w1",
@@ -237,19 +250,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
-  },
-  {
-   "id": "visual-lead",
-   "name": "Chroma",
-   "dept": "visual",
-   "role": "lead",
-   "turns_7d": 32,
-   "rooms_7d": 32,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Model Context Protocol (MCP) website and saves it to the "
   },
   {
    "id": "links-w1",
@@ -348,13 +348,13 @@
    "name": "Marrow",
    "dept": "analysis",
    "role": "lead",
-   "turns_7d": 21,
-   "rooms_7d": 21,
+   "turns_7d": 22,
+   "rooms_7d": 22,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a structured graph mapping spoken en"
+   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call audio/video to map every conversation thread, extract the d"
   },
   {
    "id": "security-lead",

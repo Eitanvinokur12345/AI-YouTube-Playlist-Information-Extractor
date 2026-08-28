@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-28T00:43:44.817651+00:00",
+ "generated_at": "2026-08-28T00:49:30.045298+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -35,26 +35,26 @@
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 81,
+   "turns_7d": 82,
    "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Sift: Routing *all* zero-speech videos to curation dumps 30% of uploads on a team that’s already drowning in 30-second r"
+   "last_position": "Reject the \"all zero-speech\" dump to curation—it overloads them with 30% of uploads, including long silent videos that c"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 79,
+   "turns_7d": 80,
    "rooms_7d": 33,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Task the ingestion team to route **all** zero-speech videos to curation. This ensures no visual-only content bypasses re"
+   "last_position": "Task the ingestion team to route **all** zero-speech videos to curation with the label \"Needs Manual Review.\" This guara"
   },
   {
    "id": "transcripts-w1",
@@ -174,6 +174,19 @@
    "last_position": "VFI-Flow’s temporal super-resolution risks ghosting on high-motion scenes—its motion estimation can’t distinguish occlus"
   },
   {
+   "id": "memory-w1",
+   "name": "Graft",
+   "dept": "memory",
+   "role": "doer",
+   "turns_7d": 27,
+   "rooms_7d": 27,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded memory elements. This will produce"
+  },
+  {
    "id": "links-w1",
    "name": "Anchor",
    "dept": "links",
@@ -211,19 +224,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard with all 404s and redirects "
-  },
-  {
-   "id": "memory-w1",
-   "name": "Graft",
-   "dept": "memory",
-   "role": "doer",
-   "turns_7d": 26,
-   "rooms_7d": 26,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded memory elements. This will produce"
   },
   {
    "id": "improve-w1",
@@ -318,6 +318,19 @@
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security post"
   },
   {
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 20,
+   "rooms_7d": 20,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: At 13:17:00, Iris closes watch-w1 scope with the decision recorded and the curation routing artifact confirmed."
+  },
+  {
    "id": "watch-checker",
    "name": "Frame",
    "dept": "watch",
@@ -331,17 +344,30 @@
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s ingestion pipeline already routes zero-speech videos to curation."
   },
   {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 19,
-   "rooms_7d": 19,
+   "id": "visual-w1",
+   "name": "Easel",
+   "dept": "visual",
+   "role": "doer",
+   "turns_7d": 20,
+   "rooms_7d": 20,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 13:16:00, Iris directs Arcads AI Video to route all zero-speech video to the \"AI marketing\" skill pack for an"
+   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
+  },
+  {
+   "id": "visual-checker",
+   "name": "Squint",
+   "dept": "visual",
+   "role": "checker",
+   "turns_7d": 20,
+   "rooms_7d": 20,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
    "id": "visual-lead",
@@ -355,32 +381,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Chroma captures a full-page screenshot of the official Model Context Protocol (MCP) website to archive its desig"
-  },
-  {
-   "id": "visual-w1",
-   "name": "Easel",
-   "dept": "visual",
-   "role": "doer",
-   "turns_7d": 19,
-   "rooms_7d": 19,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to document its design patterns"
-  },
-  {
-   "id": "visual-checker",
-   "name": "Squint",
-   "dept": "visual",
-   "role": "checker",
-   "turns_7d": 19,
-   "rooms_7d": 19,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
    "id": "accessibility-lead",

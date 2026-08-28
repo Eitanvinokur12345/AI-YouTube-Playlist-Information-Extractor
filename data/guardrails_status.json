@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-08-28T13:30:42.282337+00:00",
+ "generated_at": "2026-08-28T13:36:10.304675+00:00",
  "total": 21,
- "passing": 18,
+ "passing": 17,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": true,
-   "detail": "HEAD == origin/main (work is really saved).",
+   "ok": false,
+   "detail": "NOT in sync vs origin/main (behind/ahead: 1\t0) — a push may not have landed.",
    "severity": "warn"
   },
   {
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "21383 memory episodes on record.",
+   "detail": "21393 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "27 guardrail runs logged (append-only, never rewritten).",
+   "detail": "28 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -92,21 +92,21 @@
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "5570 tasks done, 12 departments moving",
+   "detail": "5577 tasks done, 12 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "87269 MB free on the repo drive.",
+   "detail": "87264 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 799.5h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 799.6h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
@@ -120,14 +120,14 @@
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": false,
-   "detail": "last 'core-spoton:' commit 8.2h ago — STALE: the hourly discovery/deep-retrieve/verify pipeline hasn't committed in over 4h (check for a wedged run, a broken step before Commit, or cron disabled).",
+   "detail": "last 'core-spoton:' commit 8.3h ago — STALE: the hourly discovery/deep-retrieve/verify pipeline hasn't committed in over 4h (check for a wedged run, a broken step before Commit, or cron disabled).",
    "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
    "ok": false,
-   "detail": "6/16 lane(s) landing on cadence — STALE: analyze.yml (every 3h + 30m catch-up): last commit 11.9h ago (expected within 8h); bulk_analyze.yml (every 2h): last commit 22.0h ago (expected within 6h); creators.yml (daily 07:45 UTC): last commit 461.1h ago (expected within 30h); discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 1639.3h ago (expected within 76h); fetch.yml (every 2 days): last commit 79.0h ago (expected within 54h); improve.yml (weekly deep pass): last commit 1989.2h ago (expected within 192h); links.yml (hourly): last commit 8.1h ago (expected within 4h); review.yml (twice-weekly): last commit 709.5h ago (expected within 100h); transcribe.yml (daily): last commit 655.2h ago (expected within 30h); visual.yml (2x/day): last commit 24.2h ago (expected within 20h)",
+   "detail": "7/16 lane(s) landing on cadence — STALE: bulk_analyze.yml (every 2h): last commit 22.1h ago (expected within 6h); creators.yml (daily 07:45 UTC): last commit 461.2h ago (expected within 30h); discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 1639.4h ago (expected within 76h); fetch.yml (every 2 days): last commit 79.0h ago (expected within 54h); improve.yml (weekly deep pass): last commit 1989.3h ago (expected within 192h); links.yml (hourly): last commit 8.2h ago (expected within 4h); review.yml (twice-weekly): last commit 709.6h ago (expected within 100h); transcribe.yml (daily): last commit 655.3h ago (expected within 30h); visual.yml (2x/day): last commit 24.3h ago (expected within 20h)",
    "severity": "warn"
   },
   {

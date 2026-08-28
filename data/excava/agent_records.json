@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-28T02:08:59.575263+00:00",
+ "generated_at": "2026-08-28T02:14:35.810384+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,14 +8,27 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 142,
+   "turns_7d": 143,
    "rooms_7d": 23,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Reel’s plan risks overloading curation with false positives—silent videos could be intentional (e.g., ambient soundscape"
+   "last_position": "Scope’s plan still risks under-catching accidental uploads—confirmed zero audio tracks could miss videos where audio exi"
+  },
+  {
+   "id": "watch-w1",
+   "name": "Scope",
+   "dept": "watch",
+   "role": "doer",
+   "turns_7d": 92,
+   "rooms_7d": 42,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Route only videos with a *confirmed zero audio track*—no flags, no near-zero guesses—to curation immediately. This kills"
   },
   {
    "id": "analysis-w1",
@@ -29,19 +42,6 @@
    ],
    "positions_held": 30,
    "last_position": "Route all videos with a *zero audio track* directly to curation for human review. This cuts false positives from intenti"
-  },
-  {
-   "id": "watch-w1",
-   "name": "Scope",
-   "dept": "watch",
-   "role": "doer",
-   "turns_7d": 90,
-   "rooms_7d": 40,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will task the ingestion team to route all zero-speech videos to curation. This will produce a filtered queue for the c"
   },
   {
    "id": "analysis-checker",
@@ -187,6 +187,19 @@
    "last_position": "VFI-Flow’s temporal super-resolution risks ghosting on high-motion scenes—its motion estimation can’t distinguish occlus"
   },
   {
+   "id": "watch-checker",
+   "name": "Frame",
+   "dept": "watch",
+   "role": "checker",
+   "turns_7d": 28,
+   "rooms_7d": 28,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s ingestion pipeline already routes zero-speech videos to curation."
+  },
+  {
    "id": "watch-lead",
    "name": "Iris",
    "dept": "watch",
@@ -200,17 +213,17 @@
    "last_position": "ACTION: At 13:24:00, Iris records the verdict in the watch-checker log: **Scope closed—Arcads AI Video’s ingestion pipel"
   },
   {
-   "id": "watch-checker",
-   "name": "Frame",
-   "dept": "watch",
-   "role": "checker",
+   "id": "visual-lead",
+   "name": "Chroma",
+   "dept": "visual",
+   "role": "lead",
    "turns_7d": 27,
    "rooms_7d": 27,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s ingestion pipeline already routes zero-speech videos to curation."
+   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Playwright MCP website to mine its design patterns and vi"
   },
   {
    "id": "visual-w1",
@@ -276,19 +289,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard with all 404s and redirects "
-  },
-  {
-   "id": "visual-lead",
-   "name": "Chroma",
-   "dept": "visual",
-   "role": "lead",
-   "turns_7d": 26,
-   "rooms_7d": 26,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Model Context Protocol (MCP) website to mine its design p"
   },
   {
    "id": "improve-w1",
@@ -394,8 +394,8 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Finalize 5px solid focus ring at 7:1 contrast, static design, validated across mobile/touch and desktop. Owner",
-   "proposed": 12,
-   "shipped": 12
+   "proposed": 11,
+   "shipped": 11
   },
   {
    "id": "power-lead",

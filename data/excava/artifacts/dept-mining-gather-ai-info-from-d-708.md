@@ -1,16 +1,18 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-708` (dept) · 2026-07-31T04:30:18.511342+00:00
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-708` (dept) · 2026-08-28T00:31:50.488234+00:00
 > Participants: Pick · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+Query Product Hunt’s API for all posts tagged "AI" published in the last 30 days.
 
 **Plan:**
-1. Run a broad sweep across GitHub, Hacker News, Product Hunt, Reddit, and Telegram for AI-related posts in the last 7 days.
-2. Extract raw data: links, titles, and summaries for each source.
-3. Store the dataset in a structured format (e.g., JSON/CSV) for filtering.
-4. Apply keyword-based filtering to prioritize AI-relevant entries.
-5. Generate a GitHub markdown report with the filtered results.
-6. Share the report with the team for validation and next steps.
+1. Authenticate with Product Hunt’s API using a developer token.
+2. Construct a query to fetch posts tagged "AI" from the last 30 days.
+3. Parse the response to extract titles, descriptions, upvotes, and launch dates.
+4. Store the raw data in a structured format (e.g., JSON/CSV).
+5. Cross-reference with other sources (GitHub/HN/Reddit) for validation.
+6. Analyze trends (e.g., upvotes, launch frequency) to identify key insights.
 
-**What changed:** Decision to execute a broad sweep across all specified sources for comprehensive AI data collection.
+**What changed:**
+Focus shifted from broad social scraping to a targeted API query for structured, high-quality AI launch data.

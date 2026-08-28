@@ -1,15 +1,16 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-388` (dept) · 2026-07-30T20:44:37.556915+00:00
-> Participants: Pick, Boulder · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-388` (dept) · 2026-08-28T00:25:53.018073+00:00
+> Participants: Pick · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Sweep Product Hunt for AI products launched in the last 7 days.
-2. Extract top 10 gems with name, tagline, and a brief note on why they’re odd.
-3. Output results in GitHub markdown format (one-line entries with name, tagline, and oddity note).
-4. Share the raw dataset for further filtering (links, titles, summaries).
-5. Repeat sweep for GitHub, Hacker News, Reddit, and Telegram (AI-related posts, last 30 days).
+1. Query Product Hunt’s API for posts tagged "AI" published in the last 7 days.
+2. Extract titles, descriptions, and upvotes from the raw list.
+3. Cross-reference results with GitHub, Hacker News, Reddit, and Telegram for additional context.
+4. Aggregate and deduplicate findings into a structured dataset.
+5. Output the refined list in GitHub markdown format.
+6. Schedule a follow-up query for broader timeframes if initial results are insufficient.
 
-**What changed:** Focus narrowed to Product Hunt first (7-day window), then broadened to other sources.
+**What changed:** Focused on Product Hunt API as the primary source, with secondary cross-referencing.

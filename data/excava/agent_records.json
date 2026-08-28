@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-28T02:54:08.658589+00:00",
+ "generated_at": "2026-08-28T02:59:41.880412+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -22,39 +22,39 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 97,
-   "rooms_7d": 45,
+   "turns_7d": 98,
+   "rooms_7d": 46,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Route videos where ingestion fails to extract *any* transcriptable audio—silence, corruption, or non-English speech—to c"
+   "last_position": "I will route all videos with confirmed zero audio tracks to the Conversation for | Route videos where ingestion fails to"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 96,
+   "turns_7d": 97,
    "rooms_7d": 37,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will run BloodHound-MCP on the full earnings call transcript to map every spoken entity and relationship in the transc"
+   "last_position": "Route videos where ingestion extracts **less than 10% of expected transcript length** directly to curation. This catches"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 93,
+   "turns_7d": 94,
    "rooms_7d": 34,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: This is MISSION work—BloodHound-MCP can map spoken entities and relationships in the transcript to reveal infor"
+   "last_position": "The \"less than 10% transcript\" rule still risks misclassifying legitimate short-form content as failures—think 30-second"
   },
   {
    "id": "transcripts-w1",
@@ -187,6 +187,19 @@
    "last_position": "VFI-Flow’s temporal super-resolution risks ghosting on high-motion scenes—its motion estimation can’t distinguish occlus"
   },
   {
+   "id": "watch-checker",
+   "name": "Frame",
+   "dept": "watch",
+   "role": "checker",
+   "turns_7d": 32,
+   "rooms_7d": 32,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s ingestion pipeline already routes videos with zero audio tracks to Conve"
+  },
+  {
    "id": "watch-lead",
    "name": "Iris",
    "dept": "watch",
@@ -200,17 +213,17 @@
    "last_position": "ACTION: At 13:28:00, Iris routes silent videos to Arcads AI Video’s visual-only marketing pipeline for asset creation."
   },
   {
-   "id": "watch-checker",
-   "name": "Frame",
-   "dept": "watch",
-   "role": "checker",
+   "id": "visual-lead",
+   "name": "Chroma",
+   "dept": "visual",
+   "role": "lead",
    "turns_7d": 31,
    "rooms_7d": 31,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s ingestion pipeline already routes silent videos to visual-only analysis "
+   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Model Context Protocol (MCP) website to mine its design p"
   },
   {
    "id": "visual-w1",
@@ -237,19 +250,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
-  },
-  {
-   "id": "visual-lead",
-   "name": "Chroma",
-   "dept": "visual",
-   "role": "lead",
-   "turns_7d": 30,
-   "rooms_7d": 30,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Playwright MCP website — output: a framed-worthy artifact"
   },
   {
    "id": "links-w1",
@@ -387,13 +387,13 @@
    "name": "Marrow",
    "dept": "analysis",
    "role": "lead",
-   "turns_7d": 19,
-   "rooms_7d": 19,
+   "turns_7d": 20,
+   "rooms_7d": 20,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a decision/reason graph artifact map"
+   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a structured graph artifact mapping "
   },
   {
    "id": "accessibility-lead",

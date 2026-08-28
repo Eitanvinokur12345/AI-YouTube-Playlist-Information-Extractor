@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-28T02:37:09.742664+00:00",
+ "generated_at": "2026-08-28T02:42:51.961821+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -18,6 +18,19 @@
    "last_position": "The \"silent\" flag still risks missing videos where audio exists but is unusable—corrupted, inaudible, or non-English spe"
   },
   {
+   "id": "analysis-w1",
+   "name": "Chisel",
+   "dept": "analysis",
+   "role": "doer",
+   "turns_7d": 95,
+   "rooms_7d": 36,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Route videos with an *audio track flagged as \"untranscribed\" by ingestion* directly to curation. This catches the widest"
+  },
+  {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
@@ -31,30 +44,17 @@
    "last_position": "I will route all videos with confirmed zero audio tracks to the Conversation team for direct processing. This produces a"
   },
   {
-   "id": "analysis-w1",
-   "name": "Chisel",
-   "dept": "analysis",
-   "role": "doer",
-   "turns_7d": 93,
-   "rooms_7d": 35,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I will task the ingestion team to route all videos flagged as \"silent\" by ingestion directly to curation. This will prod"
-  },
-  {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 90,
-   "rooms_7d": 32,
+   "turns_7d": 92,
+   "rooms_7d": 33,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: The action is MISSION work—routing zero-speech videos to curation is a valid operational task for our tool. Fix"
+   "last_position": "Chisel’s \"untranscribed\" flag risks flooding curation with false positives—ASMR, ambient noise, or non-English speech th"
   },
   {
    "id": "transcripts-w1",
@@ -187,6 +187,19 @@
    "last_position": "VFI-Flow’s temporal super-resolution risks ghosting on high-motion scenes—its motion estimation can’t distinguish occlus"
   },
   {
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 30,
+   "rooms_7d": 30,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: At 13:27:00, Iris records the verdict in the watch-checker log: **Frame 13:27:00 | DECISION: Zero-audio videos r"
+  },
+  {
    "id": "watch-checker",
    "name": "Frame",
    "dept": "watch",
@@ -200,17 +213,30 @@
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s ingestion pipeline already routes zero-audio videos to visual-only analy"
   },
   {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 29,
-   "rooms_7d": 29,
+   "id": "visual-w1",
+   "name": "Easel",
+   "dept": "visual",
+   "role": "doer",
+   "turns_7d": 30,
+   "rooms_7d": 30,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 13:26:00, Iris records the verdict in the watch-checker log: **Frame (watch-checker): Verdict: No change need"
+   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
+  },
+  {
+   "id": "visual-checker",
+   "name": "Squint",
+   "dept": "visual",
+   "role": "checker",
+   "turns_7d": 30,
+   "rooms_7d": 30,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
    "id": "visual-lead",
@@ -224,32 +250,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Chroma captures a full-page screenshot of the official Playwright MCP website to mine its visual design patterns"
-  },
-  {
-   "id": "visual-w1",
-   "name": "Easel",
-   "dept": "visual",
-   "role": "doer",
-   "turns_7d": 29,
-   "rooms_7d": 29,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
-  },
-  {
-   "id": "visual-checker",
-   "name": "Squint",
-   "dept": "visual",
-   "role": "checker",
-   "turns_7d": 29,
-   "rooms_7d": 29,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
    "id": "links-w1",

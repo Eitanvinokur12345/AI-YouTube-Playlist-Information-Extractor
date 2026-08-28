@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-28T02:25:57.538014+00:00",
+ "generated_at": "2026-08-28T02:31:38.156444+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,53 +8,53 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 144,
+   "turns_7d": 145,
    "rooms_7d": 23,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Reel’s plan still risks missing videos where audio is present but unusable—corrupted, inaudible, or non-English speech—w"
+   "last_position": "The \"confirmed empty\" flag still risks missing videos where audio exists but is unusable—corrupted, inaudible, or non-En"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 93,
+   "turns_7d": 94,
    "rooms_7d": 43,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will task the ingestion team to route all videos with a confirmed zero audio track—no near-zero, no flags—to curation."
+   "last_position": "Route videos with an *audio track confirmed empty by ingestion* directly to curation. This catches accidental silent upl"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 92,
-   "rooms_7d": 34,
+   "turns_7d": 93,
+   "rooms_7d": 35,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Route videos with an *audio track flagged as \"silent\" by ingestion* directly to curation. This catches accidental silent"
+   "last_position": "I will task the ingestion team to route all videos flagged as \"silent\" by ingestion directly to curation. This will prod"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 89,
-   "rooms_7d": 31,
+   "turns_7d": 90,
+   "rooms_7d": 32,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Chisel’s \"silent\" flag risks missing videos where audio is present but unusable—corrupted, inaudible, or non-English spe"
+   "last_position": "Verdict: The action is MISSION work—routing zero-speech videos to curation is a valid operational task for our tool. Fix"
   },
   {
    "id": "transcripts-w1",
@@ -187,6 +187,19 @@
    "last_position": "VFI-Flow’s temporal super-resolution risks ghosting on high-motion scenes—its motion estimation can’t distinguish occlus"
   },
   {
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 29,
+   "rooms_7d": 29,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: At 13:26:00, Iris records the verdict in the watch-checker log: **Frame (watch-checker): Verdict: No change need"
+  },
+  {
    "id": "watch-checker",
    "name": "Frame",
    "dept": "watch",
@@ -200,17 +213,30 @@
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s ingestion pipeline already routes zero-audio videos to visual-only analy"
   },
   {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 28,
-   "rooms_7d": 28,
+   "id": "visual-w1",
+   "name": "Easel",
+   "dept": "visual",
+   "role": "doer",
+   "turns_7d": 29,
+   "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 13:25:00, Iris records the verdict in the watch-checker log: **Frame | ACTION: At 13:25:00, Iris records the "
+   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
+  },
+  {
+   "id": "visual-checker",
+   "name": "Squint",
+   "dept": "visual",
+   "role": "checker",
+   "turns_7d": 29,
+   "rooms_7d": 29,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
    "id": "visual-lead",
@@ -224,32 +250,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Chroma captures a full-page screenshot of the official Model Context Protocol (MCP) website, producing a framed-"
-  },
-  {
-   "id": "visual-w1",
-   "name": "Easel",
-   "dept": "visual",
-   "role": "doer",
-   "turns_7d": 28,
-   "rooms_7d": 28,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
-  },
-  {
-   "id": "visual-checker",
-   "name": "Squint",
-   "dept": "visual",
-   "role": "checker",
-   "turns_7d": 28,
-   "rooms_7d": 28,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
    "id": "links-w1",

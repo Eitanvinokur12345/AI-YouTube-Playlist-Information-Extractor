@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-28T02:59:41.880412+00:00",
+ "generated_at": "2026-08-28T03:05:23.411358+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,53 +8,53 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 148,
+   "turns_7d": 149,
    "rooms_7d": 23,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Reel’s \"no transcriptable audio at all\" rule still lets videos with *partial* transcription slip through—wasting process"
+   "last_position": "Scope’s 5% rule still lets through videos where ingestion *partially* fails—like 30 seconds transcribed in a 20-minute v"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 98,
+   "turns_7d": 99,
    "rooms_7d": 46,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will route all videos with confirmed zero audio tracks to the Conversation for | Route videos where ingestion fails to"
+   "last_position": "Route videos where ingestion extracts **zero transcriptable audio** *or* the transcript is **less than 5% of expected du"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 97,
-   "rooms_7d": 37,
+   "turns_7d": 98,
+   "rooms_7d": 38,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Route videos where ingestion extracts **less than 10% of expected transcript length** directly to curation. This catches"
+   "last_position": "I will run BloodHound-MCP on the full earnings call transcript to map every spoken entity, relationship, and data flow. "
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 94,
-   "rooms_7d": 34,
+   "turns_7d": 95,
+   "rooms_7d": 35,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The \"less than 10% transcript\" rule still risks misclassifying legitimate short-form content as failures—think 30-second"
+   "last_position": "Verdict: This is MISSION work—BloodHound-MCP can map spoken entities and relationships in the transcript."
   },
   {
    "id": "transcripts-w1",
@@ -187,6 +187,19 @@
    "last_position": "VFI-Flow’s temporal super-resolution risks ghosting on high-motion scenes—its motion estimation can’t distinguish occlus"
   },
   {
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 32,
+   "rooms_7d": 32,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: At 13:29:00, Iris routes silent videos to Arcads AI Video’s visual-only pipeline for AI marketing generation, pr"
+  },
+  {
    "id": "watch-checker",
    "name": "Frame",
    "dept": "watch",
@@ -200,17 +213,30 @@
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s ingestion pipeline already routes videos with zero audio tracks to Conve"
   },
   {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 31,
-   "rooms_7d": 31,
+   "id": "visual-w1",
+   "name": "Easel",
+   "dept": "visual",
+   "role": "doer",
+   "turns_7d": 32,
+   "rooms_7d": 32,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 13:28:00, Iris routes silent videos to Arcads AI Video’s visual-only marketing pipeline for asset creation."
+   "last_position": "I’ll open the official Model Context Protocol (MCP) website and take a full-page screenshot to capture its design and la"
+  },
+  {
+   "id": "visual-checker",
+   "name": "Squint",
+   "dept": "visual",
+   "role": "checker",
+   "turns_7d": 32,
+   "rooms_7d": 32,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
    "id": "visual-lead",
@@ -224,32 +250,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Chroma captures a full-page screenshot of the official Model Context Protocol (MCP) website to mine its design p"
-  },
-  {
-   "id": "visual-w1",
-   "name": "Easel",
-   "dept": "visual",
-   "role": "doer",
-   "turns_7d": 31,
-   "rooms_7d": 31,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll capture a full-page screenshot of the official Model Context Protocol (MCP) website to extract its design patterns "
-  },
-  {
-   "id": "visual-checker",
-   "name": "Squint",
-   "dept": "visual",
-   "role": "checker",
-   "turns_7d": 31,
-   "rooms_7d": 31,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
    "id": "links-w1",

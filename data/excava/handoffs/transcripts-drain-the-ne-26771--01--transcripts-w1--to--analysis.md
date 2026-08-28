@@ -1,14 +1,14 @@
-# Hand-off — Transcripts: drain the next batch of 923 pending (residential IP)
+# Hand-off — Transcripts: drain the next batch of 2218 pending (residential IP)
 
 | | |
 |---|---|
 | task | `transcripts-drain-the-ne-26771` (step 1/8) |
 | from | **transcripts-w1** |
 | to | **analysis** department |
-| at | 2026-07-16T18:32:58.159344+00:00 |
+| at | 2026-08-28T14:19:34.646213+00:00 |
 
 ## What was done
-Residential drain state assessed: **923 videos re-queued** in data/_pending/ with recovered/updated records awaiting deep re-analysis; 1389 still lack a real transcript. Today's drain auto-stopped on an IP block (correct behavior — bursting escalates the block); the remainder retries next residential session.
+Residential drain state assessed: **2218 videos re-queued** in data/_pending/ with recovered/updated records awaiting deep re-analysis; 1625 still lack a real transcript. Today's drain auto-stopped on an IP block (correct behavior — bursting escalates the block); the remainder retries next residential session.
 
 ## Artifacts (where the work lives)
 - `data/_pending/`
@@ -16,7 +16,7 @@ Residential drain state assessed: **923 videos re-queued** in data/_pending/ wit
 - `src/backfill_transcripts.py`
 
 ## What remains
-Deep re-extraction of the 923 pending records under the anti-boilerplate gate, then draining the remaining 1389 on future residential sessions (gentle pacing).
+Deep re-extraction of the 2218 pending records under the anti-boilerplate gate, then draining the remaining 1625 on future residential sessions (gentle pacing).
 
 ## Context the next agent needs
 bulk_analyze consumes data/_pending hourly. Records carry transcript_source='transcript' + caption_complete=true when the caption spans the full video; incomplete captions were deliberately left for Whisper.

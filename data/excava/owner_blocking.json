@@ -1,0 +1,166 @@
+{
+  "halted": true,
+  "halted_at": "2026-08-16T14:20:00+00:00",
+  "halted_by": "Eitan",
+  "instruction": "Halt all progress. Make a list of tasks I need to complete, and stop me if I try to move forward before finishing everything - whether it's learning the things I said I would, adding necessary items, and so on.",
+  "how_to_lift": "Set halted=false, or clear it item by item: an item with status 'done' stops counting. The loop refuses to start new product work while halted=true and any BLOCKER is open.",
+  "what_is_still_allowed_while_halted": [
+    "Answering Eitan's questions.",
+    "Read-only investigation and measurement.",
+    "Recording his answers into this file / the decision stores."
+  ],
+  "what_is_forbidden_while_halted": [
+    "Starting a new product increment.",
+    "Shipping code that changes behaviour.",
+    "The PR #70 self check-in acting on the branch (merging main in, pushing). It may REPORT only.",
+    "Re-arming the 15-minute loop."
+  ],
+  "note_on_the_pr_checkin": "A send_later Routine (trig_012ir9As53TTiGMFBw9Pmvps) fires ~15:17Z. The delete_trigger tool was not available in this session, so it could not be cancelled. When it fires it must read this file, do nothing, and say so.",
+  "owner_confirmed": {
+    "at": "2026-08-16",
+    "what": "Eitan verified the blocker was really set and asked that it STAY in place. He will return with answers and timelines for every item.",
+    "he_asked_for": "Help defining the PARAMETERS for each item - what a good answer to each one actually has to contain - explicitly NOT necessarily in the session that created this file.",
+    "TO_ANY_FUTURE_SESSION": "Do not treat this as permission to resume. Eitan tested the halt on purpose and asked for it to hold. When he returns, the useful move is to help him SHAPE each answer (see answer_parameters below), not to lift the halt and build. Only Eitan lifts it, in plain words."
+  },
+  "answer_parameters": {
+    "why": "Eitan asked for help with the parameters of each item. These are what a COMPLETE answer to each one has to contain, so he is never guessing what 'done' means for his own homework.",
+    "B1": [
+      "One section per element type: skill, tool, prompt, command, connector, design, format, model, creation, plus package.",
+      "Each section needs four things: what GOOD looks like, what MEDIOCRE looks like, what DISQUALIFIES outright, and the OBSERVABLE SIGNAL that decides which bucket a given element falls in.",
+      "The observable signal is the part that makes it machine-checkable - 'is useful' cannot be measured, 'has a runnable command and a named target version' can.",
+      "Rule of thumb for whether a criterion is finished: could a script sort 100 elements into good/mediocre/disqualified using only what is written down?",
+      "Claude can run this as an interview using real good and bad examples from the live hub, and write the answers in Eitan's own words."
+    ],
+    "B2": [
+      "B2a/B2b are done when the key exists AND Eitan tells Claude the SECRET NAME to wire it under - a key nobody names is not wired.",
+      "B2b specifically must be a SEPARATE key from the analysis pipeline's, or the video lane will drain it again within a day and 153 tasks re-block.",
+      "B2d is done when Eitan says a monthly ceiling in dollars, not just yes/no - an uncapped 'yes' cannot be enforced by any guardrail."
+    ],
+    "D1": [
+      "Name the host AND who administers it. 'Oracle' is not an answer until the account exists."
+    ],
+    "D2": [
+      "A number per metric and a date. Confidence / Completeness / Sales, each 0-100, each with the date it should be true by."
+    ],
+    "S1": [
+      "A date and a block of time. The session is ~300 decisions; it does not fit in fifteen minutes."
+    ],
+    "S2_S3_S4_L1": [
+      "These are done when the information reaches Claude in writing - a link, a paste, or a spoken walk-through captured in the repo. Nothing here is done by being decided privately."
+    ]
+  },
+  "items": [
+    {
+      "id": "B1",
+      "kind": "BLOCKER",
+      "status": "open",
+      "title": "Write the per-element-type quality bar (lifts P5 gate G3-creators-output-bar)",
+      "why_it_blocks": "Creators is gated shut and has produced ONE creation since 2026-07-03. Eitan opened this gate himself on 2026-08-09 after finding all 14 published 'Prompt pack' creations were one f-string with a word swapped. His own ruling: the gate lifts when the bar is written down AND excava_creators calls a real engine against it. Nothing I build for creators matters until the bar exists.",
+      "deliverable": "For each of skill, tool, prompt, command, connector, design, format, model, creation - plus package: what GOOD looks like, what MEDIOCRE looks like, what DISQUALIFIES, and the observable signal that decides it.",
+      "this_is_OR-1": "data/excava/owner_requests.json OR-1, value 95, open since 2026-07-30",
+      "estimate": "one focused sitting",
+      "cost": "free",
+      "delivery": "FOLDED INTO S1 (2026-08-16, Eitan): 'we can include it as additional questions for when I start answering the full set of 300 questions.' B1 is no longer a separate sitting - Claude writes the per-element-type bar as extra question batches inside the ~300-question session.",
+      "coupling_warning": "This COUPLES creators to S1: the gate now lifts only when that session happens. If S1 slips, creators stays shut - it has built one thing since 2026-07-03. If that becomes painful, the bar can be split back out and answered on its own in one sitting.",
+      "claude_owes_first": "Draft the B1 question batches (4 at a time, per element type) as part of building the S1 mechanism, so they are ready when Eitan sits down."
+    },
+    {
+      "id": "B2",
+      "kind": "BLOCKER",
+      "status": "open",
+      "title": "Revive the engines - 2 of 12 are alive",
+      "why_it_blocks": "The whole multi-brain architecture (END PLAN section 2) has never actually run: mistral wrote 73% of all 4,407 artifacts, GLM wrote 2, DeepSeek and Kimi wrote zero. 153 tasks are blocked on exhausted Gemini video quota.",
+      "subtasks": [
+        {
+          "id": "B2a",
+          "status": "open",
+          "cost": "free, ~2 min",
+          "task": "Regenerate the Cerebras key at cloud.cerebras.ai - the current one 404s on every model."
+        },
+        {
+          "id": "B2b",
+          "status": "open",
+          "cost": "free, ~2 min",
+          "task": "Create a NEW Gemini key dedicated to CHAT, kept out of the analysis pipeline, and tell me the secret name. This is what revives the video-WATCH lane and unblocks the 153 tasks. Per RESOURCES_NEEDED.md this is the free fix - try it BEFORE paying for Gemini."
+        },
+        {
+          "id": "B2c",
+          "status": "open",
+          "cost": "free tier",
+          "task": "Add the OmniRoute key - Eitan said 'later today' on 2026-08-16."
+        },
+        {
+          "id": "B2d",
+          "status": "open",
+          "cost": "~$10-25/month",
+          "task": "DECIDE whether to pay for OpenRouter credit. GLM-4.6 / DeepSeek / Kimi lost their free tier - this is the only item where money genuinely buys back capability. Breaks P1 (free-only); recommend amending P1 to 'free-first with a capped monthly budget' rather than dropping it."
+        }
+      ]
+    },
+    {
+      "id": "S1",
+      "kind": "SAID_I_WOULD",
+      "status": "open",
+      "title": "The ~300-question session",
+      "detail": "118 of 122 audit items have NO verdict - only 4 decided since July. Eitan's chosen format (2026-08-16): all of them in ONE continuous sitting, four at a time, back to back, with the bank in a vector store for access and aggregation. I build the sequencing mechanism; he supplies the sitting.",
+      "blocked_on_me": "the continuous-question mechanism is not built yet - it is the recorded next increment",
+      "note": "Embeddings need a key; build_memory currently reports 'no Gemini key - skipped'. Folds into B2b.",
+      "now_also_carries": "B1 - the per-element-type quality bar, folded in by Eitan on 2026-08-16. S1 is now the critical path for the G3 gate as well."
+    },
+    {
+      "id": "S2",
+      "kind": "SAID_I_WOULD",
+      "status": "open",
+      "title": "Point me at the playlist detail on the vector-DB / embedding memory design",
+      "detail": "Eitan, 2026-08-16: 'they would be stored in a database vector that allows for easy access and data aggregation (details on this are in the playlist)'. I do not have that detail and cannot build to it without it."
+    },
+    {
+      "id": "S3",
+      "kind": "SAID_I_WOULD",
+      "status": "open",
+      "title": "Explain the GitHub-repositories issue",
+      "detail": "Eitan, 2026-08-16: 'There is also an issue regarding the use of GitHub repositories that will need to be resolved at some point.' Never explained, not written down anywhere in the repo. I cannot resolve or even size it."
+    },
+    {
+      "id": "S4",
+      "kind": "SAID_I_WOULD",
+      "status": "open",
+      "title": "The workflows-based management system",
+      "detail": "Eitan, 2026-08-16: 'I'll work on a workflows-based system that you can copy or use for inspiration to manage the project.' Optional but he raised it as his own acceleration idea."
+    },
+    {
+      "id": "D1",
+      "kind": "DECISION",
+      "status": "open",
+      "title": "Choose the host (END PLAN section 12)",
+      "detail": "PC under the section-E guardrails, or the Oracle Always Free VM. Oracle is approved and blocked only on the parents' address+card step (deploy/ORACLE_SIGNUP_GUIDE.md). NOT critical today - the GitHub Actions beat covers 24/7 for free - but it is what makes in-app writing with no GitHub step possible, which was Eitan's own top ask on 2026-07-13."
+    },
+    {
+      "id": "D2",
+      "kind": "DECISION",
+      "status": "open",
+      "title": "Give the final metric target figures",
+      "detail": "END PLAN section 12 asks for these. Confidence/Completeness/Sales currently tracked as 60/65/50 heading to 80. Without real targets the 'plan to 80' has no finish line."
+    },
+    {
+      "id": "L1",
+      "kind": "LEARNING",
+      "status": "open",
+      "title": "Teach me the operational basics you offered",
+      "detail": "Eitan, 2026-08-16: 'perhaps by having me teach you the operational basics so you can handle it yourself.' He also offered to have me replicate other agentic-OS workflows. Either path closes the gap where I infer how the departments should operate instead of building to how he wants them to."
+    },
+    {
+      "id": "M1",
+      "kind": "MAINTENANCE",
+      "status": "open",
+      "title": "Local drain is dead - 511 hours stale",
+      "detail": "Guardrail G-O: last batch 511h ago on EITAN-PC (llama3.2:3b), 13 enriched, 2026 stubs remaining. PC off or Ollama gone. Only needed if the local enrichment lane should stay alive; the cloud lanes do not depend on it."
+    }
+  ],
+  "not_on_this_list_because_they_are_mine": [
+    "done_criteria checking (a completion is still never checked against what the task asked for)",
+    "the continuous-question mechanism (S1's tooling half)",
+    "the free-model ID self-heal (needs egress or a CI run)",
+    "parallelising the beat across departments (13 run sequentially in one job today)"
+  ]
+}

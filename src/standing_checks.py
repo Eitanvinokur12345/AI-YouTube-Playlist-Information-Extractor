@@ -68,6 +68,32 @@ def check_upstream() -> dict:
     return {"upstream_was_missing": git_safe.ensure_upstream()}
 
 
+def owner_halt() -> dict:
+    """Eitan's OWN halt, 2026-08-16: "halt all progress ... and stop me if I try to move forward
+    before finishing everything."
+
+    A promise made in one session is not a mechanism — the next session starts cold and would
+    cheerfully resume. This reads data/excava/owner_blocking.json so the halt binds every fire,
+    every lane and every future session, the same way the P5 gates do. Read at runtime and never
+    cached: the moment Eitan marks the items done the halt lifts with no code change."""
+    p = ROOT / "data" / "excava" / "owner_blocking.json"
+    try:
+        d = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return {"halted": False, "open_blockers": [], "open_other": []}
+    if not d.get("halted"):
+        return {"halted": False, "open_blockers": [], "open_other": []}
+    blockers, other = [], []
+    for it in d.get("items", []):
+        if str(it.get("status")) == "done":
+            continue
+        (blockers if it.get("kind") == "BLOCKER" else other).append(
+            {"id": it.get("id"), "title": it.get("title")})
+    return {"halted": True, "open_blockers": blockers, "open_other": other,
+            "instruction": d.get("instruction", ""),
+            "forbidden": d.get("what_is_forbidden_while_halted", [])}
+
+
 def run() -> dict:
     remote = check_remote()
     upstream = check_upstream()
@@ -81,8 +107,10 @@ def run() -> dict:
     # mining backlog — this puts the same verdict where every fire already looks first.
     egress = net_canary.describe()
 
+    halt = owner_halt()
     needs_attention = (
-        not remote["fetch_ok"]
+        halt["halted"]
+        or not remote["fetch_ok"]
         or not remote["in_sync"]
         or gr["critical_failures"] > 0
         or not contract["contract_present"]
@@ -96,6 +124,7 @@ def run() -> dict:
                        "critical_failures": gr["critical_failures"]},
         "loop_contract": contract,
         "egress": egress,
+        "owner_halt": halt,
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(result, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -109,6 +138,26 @@ def main() -> int:
         pass
     strict = "--strict" in sys.argv
     r = run()
+    h = r.get("owner_halt") or {}
+    if h.get("halted"):
+        # Printed FIRST and loudest: this is the owner's own stop, not a warning to weigh up.
+        print("=" * 78)
+        print("  HALTED BY EITAN — DO NOT START NEW PRODUCT WORK")
+        print("=" * 78)
+        print(f'  "{h.get("instruction", "")[:200]}"')
+        if h.get("open_blockers"):
+            print(f"\n  {len(h['open_blockers'])} BLOCKER(S) still open — these gate everything:")
+            for b in h["open_blockers"]:
+                print(f"    [{b['id']}] {b['title']}")
+        if h.get("open_other"):
+            print(f"\n  {len(h['open_other'])} other owner item(s) open:")
+            for b in h["open_other"]:
+                print(f"    [{b['id']}] {b['title']}")
+        for line in h.get("forbidden", []):
+            print(f"  FORBIDDEN: {line}")
+        print("\n  Allowed: answer Eitan, read-only investigation, recording his answers.")
+        print("  Lift: data/excava/owner_blocking.json — halted=false, or mark items status=done.")
+        print("=" * 78)
     print(f"STANDING CHECKS: {'OK — clear to work' if r['ok'] else 'NEEDS ATTENTION'}")
 
     rem = r["remote"]

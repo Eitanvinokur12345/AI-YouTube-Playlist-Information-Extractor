@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-28T14:34:10.925644+00:00",
+ "generated_at": "2026-08-29T00:40:11.933471+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,22 +8,22 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 191,
-   "rooms_7d": 26,
+   "turns_7d": 173,
+   "rooms_7d": 25,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "The 30% weekly swap risks overfitting to the *latest* 24-hour spikes—those could be outliers, not signals. Run a **14-da"
+   "last_position": "The 24-hour holdout window still risks missing spikes that emerge *within* those final 24 hours—if they’re not the very "
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 122,
-   "rooms_7d": 43,
+   "turns_7d": 112,
+   "rooms_7d": 42,
    "engines_used": [
     "mistral"
    ],
@@ -35,8 +35,8 @@
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 121,
-   "rooms_7d": 51,
+   "turns_7d": 112,
+   "rooms_7d": 50,
    "engines_used": [
     "mistral"
    ],
@@ -48,8 +48,8 @@
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 119,
-   "rooms_7d": 40,
+   "turns_7d": 109,
+   "rooms_7d": 39,
    "engines_used": [
     "mistral"
    ],
@@ -61,78 +61,39 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 104,
-   "rooms_7d": 26,
+   "turns_7d": 95,
+   "rooms_7d": 25,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run a **14-day fixed A/B test on 200k clips**, swapping 20% weekly between pipelines. This keeps the late-cycle spike de"
+   "last_position": "Run a **14-day fixed A/B test on 200k clips with a 24-hour holdout window**. This locks the first 13 days static to smoo"
   },
   {
    "id": "accessibility-w1",
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 62,
-   "rooms_7d": 31,
+   "turns_7d": 51,
+   "rooms_7d": 26,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the 6px focus ring at 4.5:1 contrast. It meets WCAG AA for low vision and AAA for contrast, ensuring keyboard user"
+   "last_position": "Chose 6px focus ring at 4.5:1 contrast. It balances visibility for low-vision users with minimal layout shift, meeting W"
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 62,
-   "rooms_7d": 31,
+   "turns_7d": 51,
+   "rooms_7d": 26,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 6px ring at 4.5:1 risks failing users with high-DPI screens where the ring blurs into a 5px or 3px band, making it h"
-  },
-  {
-   "id": "creators-lead",
-   "name": "Nova",
-   "dept": "creators",
-   "role": "lead",
-   "turns_7d": 46,
-   "rooms_7d": 46,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled \"Created by EXCAVA\" and ready for us"
-  },
-  {
-   "id": "creators-w1",
-   "name": "Forge",
-   "dept": "creators",
-   "role": "doer",
-   "turns_7d": 45,
-   "rooms_7d": 45,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. It will produce a new skill that lets users generate, cur"
-  },
-  {
-   "id": "creators-checker",
-   "name": "Vet",
-   "dept": "creators",
-   "role": "checker",
-   "turns_7d": 45,
-   "rooms_7d": 45,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled \"Created by EXCAVA\" with tests."
+   "last_position": "The 6px ring at 4.5:1 fails users who rely on high-contrast focus indicators—like those with tunnel vision or screen-rea"
   },
   {
    "id": "memory-w1",
@@ -152,8 +113,8 @@
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 37,
-   "rooms_7d": 37,
+   "turns_7d": 35,
+   "rooms_7d": 35,
    "engines_used": [
     "mistral"
    ],
@@ -252,9 +213,9 @@
    "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
-   "id": "accessibility-lead",
-   "name": "Access",
-   "dept": "accessibility",
+   "id": "creators-lead",
+   "name": "Nova",
+   "dept": "creators",
    "role": "lead",
    "turns_7d": 31,
    "rooms_7d": 31,
@@ -262,48 +223,33 @@
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Finalize 4px focus ring at 7:1 contrast with 1px outer glow (white) — deliver as CSS variable in EXCAVA’s desi",
-   "proposed": 21,
-   "shipped": 20
+   "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled \"Created by EXCAVA\" and ready for us"
   },
   {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
+   "id": "creators-w1",
+   "name": "Forge",
+   "dept": "creators",
    "role": "doer",
-   "turns_7d": 27,
-   "rooms_7d": 27,
+   "turns_7d": 31,
+   "rooms_7d": 31,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run the link-checker on the live Mission Control Dashboard to scan for broken links. The report will list all 404s and r"
+   "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. It will produce a new skill that lets users generate, cur"
   },
   {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
+   "id": "creators-checker",
+   "name": "Vet",
+   "dept": "creators",
    "role": "checker",
-   "turns_7d": 27,
-   "rooms_7d": 27,
+   "turns_7d": 31,
+   "rooms_7d": 31,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work. No fix needed."
-  },
-  {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
-   "role": "lead",
-   "turns_7d": 27,
-   "rooms_7d": 27,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard with all 404s and redirects "
+   "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled \"Created by EXCAVA\" with tests."
   },
   {
    "id": "improve-w1",
@@ -319,38 +265,66 @@
    "last_position": "Run the controlled A/B test on *all* PRs for two weeks first. This measures real impact without disrupting workflows, ca"
   },
   {
-   "id": "visualization-w1",
-   "name": "Facet",
-   "dept": "visualization",
-   "role": "doer",
-   "turns_7d": 26,
-   "rooms_7d": 13,
+   "id": "accessibility-lead",
+   "name": "Access",
+   "dept": "accessibility",
+   "role": "lead",
+   "turns_7d": 25,
+   "rooms_7d": 25,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Choose the floating collapsed legend. Users reference legends rarely—most sessions need it once or never—so the space sa"
+   "last_position": "DECISION: Finalize 4px focus ring at 7:1 contrast with 1px outer glow (white) — deliver as CSS variable in EXCAVA’s desi",
+   "proposed": 21,
+   "shipped": 21
   },
   {
-   "id": "visualization-checker",
-   "name": "Pane",
-   "dept": "visualization",
-   "role": "checker",
-   "turns_7d": 26,
-   "rooms_7d": 13,
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 25,
+   "rooms_7d": 25,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Pane: A floating collapsed icon still risks users missing it entirely if they scroll past it—our data shows 22% of users"
+   "last_position": "Run the link-checker on the live Mission Control Dashboard to scan for broken links. The report will list all 404s and r"
+  },
+  {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 25,
+   "rooms_7d": 25,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work. No fix needed."
+  },
+  {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 25,
+   "rooms_7d": 25,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard with all 404s and redirects "
   },
   {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 25,
-   "rooms_7d": 25,
+   "turns_7d": 24,
+   "rooms_7d": 24,
    "engines_used": [
     "mistral"
    ],
@@ -409,6 +383,32 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security post"
+  },
+  {
+   "id": "visualization-w1",
+   "name": "Facet",
+   "dept": "visualization",
+   "role": "doer",
+   "turns_7d": 20,
+   "rooms_7d": 10,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Choose the floating collapsed legend. Users reference legends rarely—most sessions need it once or never—so the space sa"
+  },
+  {
+   "id": "visualization-checker",
+   "name": "Pane",
+   "dept": "visualization",
+   "role": "checker",
+   "turns_7d": 20,
+   "rooms_7d": 10,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Pane: A floating collapsed icon still risks users missing it entirely if they scroll past it—our data shows 22% of users"
   },
   {
    "id": "power-lead",
@@ -470,8 +470,8 @@
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
-   "turns_7d": 13,
-   "rooms_7d": 13,
+   "turns_7d": 10,
+   "rooms_7d": 10,
    "engines_used": [
     "mistral"
    ],

@@ -1,16 +1,16 @@
 # creators: Build PACKAGES + enrich tabs + draft elements; every one labeled 'Created by EXCAVA' + tes
 
-> Decision artifact · room `dept-creators-build-packages-enri-484` (dept) · 2026-07-22T17:43:56.294005+00:00
-> Participants: Forge, Nova · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-creators-build-packages-enri-484` (dept) · 2026-08-30T04:23:33.486920+00:00
+> Participants: Forge, Vet, Nova · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Forge drafts the "UGC Factory" npm package in the creators tab with clear documentation and examples.
-2. Nova tests the "UGC Factory" npm package to verify functionality.
-3. Nova labels the "UGC Factory" npm package artifact as 'Created by EXCAVA' with test results attached.
-4. Repeat steps 1-3 for any additional PACKAGES, enrich tabs, or draft elements as needed.
-5. Ensure all artifacts are consistently labeled 'Created by EXCAVA'.
-6. Include test results (tes) for all labeled artifacts.
+1. Forge drafts the "UGC Factory" skill package for the Skill Creator.
+2. Vet validates the package as valid MISSION work.
+3. Forge publishes the "UGC Factory by EXCAVA" npm package with tests.
+4. Package is labeled "Created by EXCAVA".
+5. Package is enriched with tabs and draft elements.
+6. Nova closes the room.
 
-**What changed:** The "UGC Factory" npm package is now drafted, tested, and labeled 'Created by EXCAVA' with test results.
+**What changed:** "UGC Factory by EXCAVA" npm package published with tests and label.

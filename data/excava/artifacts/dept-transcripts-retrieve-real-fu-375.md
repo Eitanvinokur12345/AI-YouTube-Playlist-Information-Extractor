@@ -1,16 +1,16 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-375` (dept) · 2026-07-29T16:26:33.873868+00:00
-> Participants: Reel, Echo · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-375` (dept) · 2026-08-30T03:10:39.485254+00:00
+> Participants: Reel, Scriv, Echo · synthesized by mistral/mistral-small-latest
 
-**Decision:**  
-Query YouTube transcript server for authentic transcripts of pending videos using residential IP.
+**Decision:**
 
-**Plan:**  
-1. Identify the list of pending videos requiring transcripts.  
-2. Prepare a query to the YouTube transcript server.  
-3. Execute the query via residential IP.  
-4. Retrieve and store the authentic transcripts obtained.  
-5. Review and analyze the retrieved transcripts for any insights.  
+**Plan:**
+1. Replace Deepgram’s real-time transcription with `kimtaeyoon83/mcp-server-youtube-transcript` for pending videos.
+2. Fetch full YouTube captions directly via the MCP server to avoid latency and cost risks.
+3. Generate a verbatim transcript file for each pending video.
+4. Validate transcript accuracy by cross-referencing with the source video.
+5. Store transcripts in a designated folder (e.g., `./transcripts/`) with filenames matching video IDs.
+6. Log failures for videos where captions are unavailable or incomplete.
 
-**What changed:** The action plan reflects a clear step-by-step approach based on the consensus to retrieve transcripts.
+**What changed:** Switched from Deepgram’s real-time API to direct YouTube caption extraction via `kimtaeyoon83/mcp-server-youtube-transcript`.

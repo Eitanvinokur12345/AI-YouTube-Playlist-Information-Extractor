@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-30T02:46:57.264279+00:00",
+ "generated_at": "2026-08-30T02:52:58.674099+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,8 +8,8 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 167,
-   "rooms_7d": 25,
+   "turns_7d": 168,
+   "rooms_7d": 26,
    "engines_used": [
     "mistral",
     "nvidia"
@@ -61,8 +61,8 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 92,
-   "rooms_7d": 25,
+   "turns_7d": 93,
+   "rooms_7d": 26,
    "engines_used": [
     "mistral"
    ],
@@ -100,13 +100,39 @@
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 38,
-   "rooms_7d": 38,
+   "turns_7d": 39,
+   "rooms_7d": 39,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
    "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
+  },
+  {
+   "id": "power-w1",
+   "name": "Gearbox",
+   "dept": "power",
+   "role": "doer",
+   "turns_7d": 32,
+   "rooms_7d": 16,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Add VFI-Flow to EXCAVA’s motion pipeline. It reconstructs motion blur into sharp frames, directly tackling the temporal "
+  },
+  {
+   "id": "power-checker",
+   "name": "Torque",
+   "dept": "power",
+   "role": "checker",
+   "turns_7d": 32,
+   "rooms_7d": 16,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "VFI-Flow’s 15% runtime bump isn’t the real risk—its motion reconstruction introduces new artifacts on fast camera pans, "
   },
   {
    "id": "mining-w1",
@@ -120,32 +146,6 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a raw dataset"
-  },
-  {
-   "id": "power-w1",
-   "name": "Gearbox",
-   "dept": "power",
-   "role": "doer",
-   "turns_7d": 31,
-   "rooms_7d": 16,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline. It sharpens fine details in 3D renders without bloatin"
-  },
-  {
-   "id": "power-checker",
-   "name": "Torque",
-   "dept": "power",
-   "role": "checker",
-   "turns_7d": 31,
-   "rooms_7d": 16,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Depth-aware upscaling won’t fix EXCAVA’s motion blur—it’s a temporal artifact, not a spatial one. The real risk is waste"
   },
   {
    "id": "accessibility-lead",
@@ -167,7 +167,7 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 29,
+   "turns_7d": 30,
    "rooms_7d": 15,
    "engines_used": [
     "mistral"
@@ -206,13 +206,13 @@
    "name": "LinLea",
    "dept": "links",
    "role": "lead",
-   "turns_7d": 28,
-   "rooms_7d": 28,
+   "turns_7d": 29,
+   "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard."
+   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard with dead/redirected links f"
   },
   {
    "id": "watch-lead",
@@ -241,6 +241,32 @@
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s ingestion pipeline already routes zero-audio videos to the Conversation "
   },
   {
+   "id": "visualization-w1",
+   "name": "Facet",
+   "dept": "visualization",
+   "role": "doer",
+   "turns_7d": 26,
+   "rooms_7d": 13,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Choose a thin anchored sidebar that collapses to a tab. It stays visible enough to anchor the legend’s presence without "
+  },
+  {
+   "id": "visualization-checker",
+   "name": "Pane",
+   "dept": "visualization",
+   "role": "checker",
+   "turns_7d": 26,
+   "rooms_7d": 13,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Pane: A thin anchored sidebar still risks users overlooking it if they’re focused on the graph’s center—like a bookmark "
+  },
+  {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
@@ -253,6 +279,19 @@
    "positions_held": 30,
    "last_position": "ACTION: Reel runs kimtaeyoon83/mcp-server-youtube-transcript on each pending video and delivers the raw transcripts to t",
    "proposed": 2
+  },
+  {
+   "id": "security-lead",
+   "name": "Bastion",
+   "dept": "security",
+   "role": "lead",
+   "turns_7d": 25,
+   "rooms_7d": 25,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and secure."
   },
   {
    "id": "security-w1",
@@ -279,32 +318,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security post"
-  },
-  {
-   "id": "visualization-w1",
-   "name": "Facet",
-   "dept": "visualization",
-   "role": "doer",
-   "turns_7d": 25,
-   "rooms_7d": 13,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Choose the floating collapsed legend that appears only when users hover near the graph’s edge. It preserves screen space"
-  },
-  {
-   "id": "visualization-checker",
-   "name": "Pane",
-   "dept": "visualization",
-   "role": "checker",
-   "turns_7d": 25,
-   "rooms_7d": 13,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Pane: A floating collapsed icon still risks users missing it entirely if the graph’s edge isn’t where they look—like a w"
   },
   {
    "id": "visual-lead",
@@ -346,19 +359,6 @@
    "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
-   "id": "security-lead",
-   "name": "Bastion",
-   "dept": "security",
-   "role": "lead",
-   "turns_7d": 24,
-   "rooms_7d": 24,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output is a real-time report confirming container"
-  },
-  {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
@@ -370,6 +370,19 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a speaker-influence graph and conver"
+  },
+  {
+   "id": "creators-lead",
+   "name": "Nova",
+   "dept": "creators",
+   "role": "lead",
+   "turns_7d": 23,
+   "rooms_7d": 23,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Publish the \"UGC Factory by EXCAVA\" npm package with tests, labeled 'Created by EXCAVA', and mark the mission co"
   },
   {
    "id": "creators-w1",
@@ -398,19 +411,6 @@
    "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled 'Created by EXCAVA'."
   },
   {
-   "id": "creators-lead",
-   "name": "Nova",
-   "dept": "creators",
-   "role": "lead",
-   "turns_7d": 22,
-   "rooms_7d": 22,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled \"Created by EXCAVA\" and ready for pu"
-  },
-  {
    "id": "improve-checker",
    "name": "Gauge",
    "dept": "improve",
@@ -422,6 +422,19 @@
    ],
    "positions_held": 30,
    "last_position": "Shadow mode won’t catch PR-Agent’s worst flaw: false negatives. It won’t flag reviews it *should* have made but missed, "
+  },
+  {
+   "id": "improve-improver",
+   "name": "Overhaul",
+   "dept": "improve",
+   "role": "improver",
+   "turns_7d": 15,
+   "rooms_7d": 15,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run the A/B test on PRs from *new contributors only*—they’re less likely to have existing review patterns, making false "
   },
   {
    "id": "power-lead",
@@ -453,19 +466,6 @@
    "proposed": 2
   },
   {
-   "id": "improve-improver",
-   "name": "Overhaul",
-   "dept": "improve",
-   "role": "improver",
-   "turns_7d": 14,
-   "rooms_7d": 14,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run the human blind-spot audit on *only* the first 100 PRs in shadow mode—cheaper than sampling forever, fast to spot sy"
-  },
-  {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
@@ -481,6 +481,32 @@
    "shipped": 12
   },
   {
+   "id": "news-w1",
+   "name": "Scoop",
+   "dept": "news",
+   "role": "doer",
+   "turns_7d": 8,
+   "rooms_7d": 8,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce the newest official AI a"
+  },
+  {
+   "id": "news-checker",
+   "name": "Factcheck",
+   "dept": "news",
+   "role": "checker",
+   "turns_7d": 8,
+   "rooms_7d": 8,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is valid MISSION work."
+  },
+  {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
@@ -492,32 +518,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Wire publishes the AI-headlines digest for 2024-05-30, listing three verified items: OpenAI’s new \"ChatGPT Dream"
-  },
-  {
-   "id": "news-w1",
-   "name": "Scoop",
-   "dept": "news",
-   "role": "doer",
-   "turns_7d": 7,
-   "rooms_7d": 7,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh, verified AI new"
-  },
-  {
-   "id": "news-checker",
-   "name": "Factcheck",
-   "dept": "news",
-   "role": "checker",
-   "turns_7d": 7,
-   "rooms_7d": 7,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is valid MISSION work."
   },
   {
    "id": "excava-core",

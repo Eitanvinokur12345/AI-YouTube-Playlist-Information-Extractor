@@ -1,18 +1,18 @@
 {
- "generated_at": "2026-08-30T10:22:58.170725+00:00",
+ "generated_at": "2026-08-30T10:28:11.876066+00:00",
  "checked": 40,
- "real_pct": 76,
+ "real_pct": 75,
  "counts": {
-  "real": 25,
+  "real": 24,
   "noop": 8,
   "failed": 0,
   "planned": 0,
-  "blocked": 7
+  "blocked": 8
  },
- "criticism": "WEAK: only 76% real of the last 40. 8 were hollow/failed/planned — that is theatre wearing a 'done' badge. Fix the flagged departments before adding anything. · INTENT DRIFT: 1 dept(s) wired to the WRONG tool for what you wanted — news→wants src.news not src.trend_watch · DECISION DRIFT: 3 unit(s) mostly decide SELF-IMPROVEMENT, not their mission (links 100%; group-chat 100%; war-room 100%) — that work belongs to the improve department's external arms (decision_audit.json). · SINGLE-ENGINE DEBATE (owner flag 2026-07-11): 3 room(s) today ran entirely on ONE model (war-deliver-keep-the-designs-tab-1 (7 turns, all mistral); war-deliver-push-link-coverage-t-2 (7 turns, all mistral); group-open-floor-any-agent-from-an (29 turns, all mistral)) — that is one engine talking to itself, not a real multi-model debate. The healthy-pool round-robin must spread it.",
+ "criticism": "WEAK: only 75% real of the last 40. 8 were hollow/failed/planned — that is theatre wearing a 'done' badge. Fix the flagged departments before adding anything. · INTENT DRIFT: 1 dept(s) wired to the WRONG tool for what you wanted — news→wants src.news not src.trend_watch · DECISION DRIFT: 3 unit(s) mostly decide SELF-IMPROVEMENT, not their mission (links 100%; group-chat 100%; war-room 100%) — that work belongs to the improve department's external arms (decision_audit.json). · SINGLE-ENGINE DEBATE (owner flag 2026-07-11): 3 room(s) today ran entirely on ONE model (war-deliver-keep-the-designs-tab-1 (7 turns, all mistral); war-deliver-push-link-coverage-t-2 (7 turns, all mistral); group-open-floor-any-agent-from-an (29 turns, all mistral)) — that is one engine talking to itself, not a real multi-model debate. The healthy-pool round-robin must spread it.",
  "long_term": {
   "verdict": "accumulating over time",
-  "detail": "over last 24 snapshots: done +128, artifacts +0, real_pct 79→76",
+  "detail": "over last 24 snapshots: done +127, artifacts +0, real_pct 82→75",
   "stagnant": false
  },
  "history": {
@@ -33,6 +33,41 @@
   }
  ],
  "verdicts": [
+  {
+   "task": "rerouted-transcripts-imp-78786",
+   "dept": "improve",
+   "verdict": "noop",
+   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
+   "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
+  },
+  {
+   "task": "security-room-action-war-203",
+   "dept": "security",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+  },
+  {
+   "task": "watch-room-action-run-ar-79866",
+   "dept": "watch",
+   "verdict": "blocked",
+   "note": "honestly BLOCKED — needs an owner resource; not faking work (this is the truth, not a facade)",
+   "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+  },
+  {
+   "task": "resolve-real-links-websi-85055",
+   "dept": "memory",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Semantic index: 1661 vectors (model gemini-embedding-001); hub 8988 items → 7327 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
+  },
+  {
+   "task": "analysis-room-action-mar-84735",
+   "dept": "analysis",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "2325 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
+  },
   {
    "task": "rerouted-transcripts-imp-77944",
    "dept": "improve",
@@ -277,41 +312,6 @@
    "verdict": "blocked",
    "note": "honestly BLOCKED — needs an owner resource; not faking work (this is the truth, not a facade)",
    "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
-  },
-  {
-   "task": "memory-embed-the-remaini-82859",
-   "dept": "memory",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Semantic index: 1661 vectors (model gemini-embedding-001); hub 8988 items → 7327 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the"
-  },
-  {
-   "task": "transcripts-drain-the-ne-83174",
-   "dept": "analysis",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "2325 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
-  },
-  {
-   "task": "creators-room-action-for-272",
-   "dept": "creators",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane d"
-  },
-  {
-   "task": "ratchet-s-initiative-aut-71187",
-   "dept": "improve",
-   "verdict": "noop",
-   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
-   "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
-  },
-  {
-   "task": "security-room-action-war-79604",
-   "dept": "security",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
   }
  ]
 }

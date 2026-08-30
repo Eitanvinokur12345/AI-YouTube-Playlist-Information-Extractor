@@ -1,17 +1,18 @@
 # visualization: Own EXCAVA'S OWN interface — visibility, liveliness, clarity, enjoyment, speed of OUR scre
 
-> Decision artifact · room `dept-visualization-own-excava-s-o-460` (dept) · 2026-07-30T18:22:22.783169+00:00
-> Participants: Facet, Pane, Lumen · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-visualization-own-excava-s-o-460` (dept) · 2026-08-30T02:22:18.553977+00:00
+> Participants: Lumen, Facet, Pane · synthesized by mistral/mistral-small-latest
 
 **Decision:**
-Adopt ambient-light detection with auto-switching between dark/light themes by default, plus a manual override toggle.
+Anchor the legend to the bottom edge of the graph, collapsing to a thin strip by default but expanding fully on hover or click.
 
 **Plan:**
-1. Implement ambient-light detection (e.g., via OS API or camera sensor) to auto-switch themes.
-2. Add a persistent manual toggle in the top-right corner for user override.
-3. Test glare-readability with 10 screencast users under both auto and manual modes.
-4. Optimize theme transition speed to minimize perceived lag.
-5. Default to dark theme for low-light screencasts, light theme for bright glare.
-6. Document toggle discovery in a tooltip or first-run guide.
+1. Implement a bottom-anchored legend that collapses to a thin strip (e.g., 2-3 lines tall) by default.
+2. Ensure the legend expands to full width/height on hover or click, with smooth transitions.
+3. Prioritize data visibility by reserving minimal space (≤5% of graph height) for the collapsed legend.
+4. Conduct A/B tests comparing this design against a floating collapsed icon, measuring time-to-task completion and user feedback.
+5. Refine the collapsed state’s appearance (e.g., icons, tooltips) to ensure discoverability without clutter.
+6. Document the legend’s behavior in the interface’s help/tooltip system.
 
-**What changed:** Auto-switching replaces static theme choice, with manual override retained.
+**What changed:**
+Legend anchored to the bottom edge (collapsed by default, expands on interaction) to balance visibility, space, and usability.

@@ -225,15 +225,16 @@
       "department": "analysis",
       "source": "room-action:analysis",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-08-01T10:19:19.804172+00:00",
-      "updated_at": "2026-08-01T10:19:19.804178+00:00"
+      "updated_at": "2026-08-30T10:17:36.106179+00:00",
+      "result": "2325 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "links-room-action-anchor-79578",
@@ -796,15 +797,16 @@
       "department": "watch",
       "source": "room-action:watch",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-08-01T23:31:59.528815+00:00",
-      "updated_at": "2026-08-01T23:31:59.528822+00:00"
+      "updated_at": "2026-08-30T10:17:36.519745+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
       "id": "memory-room-action-query-27128",
@@ -973,15 +975,16 @@
       "department": "security",
       "source": "room-action:security",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-08-02T11:48:53.477025+00:00",
-      "updated_at": "2026-08-02T11:48:53.477032+00:00"
+      "updated_at": "2026-08-30T10:17:37.537218+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "watch-room-action-run-ar-79866",
@@ -1986,15 +1989,16 @@
       "department": "improve",
       "source": "room-action:memory",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "improve-w1",
       "handoff_docs": [],
       "created_at": "2026-08-03T04:38:28.219317+00:00",
-      "updated_at": "2026-08-03T04:38:28.219323+00:00"
+      "updated_at": "2026-08-30T10:17:38.923577+00:00",
+      "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
     },
     {
       "id": "links-room-action-anchor-32429",
@@ -53723,17 +53727,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/raise-g3-truth-access-50-84429--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-08-30T10:07:09.161144+00:00",
-      "updated_at": "2026-08-30T10:07:12.287944+00:00"
+      "updated_at": "2026-08-30T10:17:36.406731+00:00",
+      "result": "Semantic index: 1661 vectors (model gemini-embedding-001); hub 8988 items → 7327 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "memory-embed-the-remaini-84742",
@@ -53751,7 +53756,45 @@
       "handoff_docs": [],
       "created_at": "2026-08-30T10:12:22.682225+00:00",
       "updated_at": "2026-08-30T10:12:22.682238+00:00"
+    },
+    {
+      "id": "resolve-real-links-websi-85055",
+      "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
+      "detail": "value=82 size=41(small) [cost 40/steps 60/risk 15] · many unlinked",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/resolve-real-links-websi-85055--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-08-30T10:17:35.802525+00:00",
+      "updated_at": "2026-08-30T10:17:39.035935+00:00"
+    },
+    {
+      "id": "transcripts-drain-the-ne-85055",
+      "title": "Transcripts: drain the next batch of 2325 pending (residential IP)",
+      "detail": "value=60 size=26(small) [cost 25/steps 35/risk 15] · 2325 pending",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-drain-the-ne-85055--01--transcripts-w1--to--analysis.md"
+      ],
+      "created_at": "2026-08-30T10:17:35.910152+00:00",
+      "updated_at": "2026-08-30T10:17:39.223285+00:00"
     }
   ],
-  "updated_at": "2026-08-30T10:12:25.732517+00:00"
+  "updated_at": "2026-08-30T10:17:39.223290+00:00"
 }

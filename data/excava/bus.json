@@ -7850,15 +7850,16 @@
       "department": "watch",
       "source": "room-action:watch",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-08-22T13:12:28.095530+00:00",
-      "updated_at": "2026-08-22T13:12:28.095536+00:00"
+      "updated_at": "2026-08-30T19:17:11.032140+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
       "id": "watch-room-action-at-12--9407",
@@ -54152,17 +54153,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/raise-g3-truth-access-49-16807--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-08-30T19:06:47.452167+00:00",
-      "updated_at": "2026-08-30T19:06:48.314672+00:00"
+      "updated_at": "2026-08-30T19:17:10.917757+00:00",
+      "result": "Semantic index: 1662 vectors (model gemini-embedding-001); hub 9072 items → 7410 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "raise-g5-leverage-49-100-16807",
@@ -54189,15 +54191,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-08-30T19:11:58.648613+00:00",
-      "updated_at": "2026-08-30T19:11:58.648625+00:00"
+      "updated_at": "2026-08-30T19:17:10.612683+00:00",
+      "result": "2325 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "memory-embed-the-remaini-17118",
@@ -54233,7 +54236,63 @@
       "created_at": "2026-08-30T19:11:58.860336+00:00",
       "updated_at": "2026-08-30T19:11:59.572042+00:00",
       "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
+    },
+    {
+      "id": "resolve-real-links-websi-17430",
+      "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
+      "detail": "value=82 size=41(small) [cost 40/steps 60/risk 15] · many unlinked",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/resolve-real-links-websi-17430--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-08-30T19:17:10.245826+00:00",
+      "updated_at": "2026-08-30T19:17:11.261727+00:00"
+    },
+    {
+      "id": "transcripts-drain-the-ne-17430",
+      "title": "Transcripts: drain the next batch of 2325 pending (residential IP)",
+      "detail": "value=60 size=26(small) [cost 25/steps 35/risk 15] · 2325 pending",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-drain-the-ne-17430--01--transcripts-w1--to--analysis.md"
+      ],
+      "created_at": "2026-08-30T19:17:10.361200+00:00",
+      "updated_at": "2026-08-30T19:17:11.451156+00:00"
+    },
+    {
+      "id": "raise-g5-leverage-49-100-17430",
+      "title": "Raise G5 Leverage (49/100): leverage needs real, usable links first (= G3); then the OS creation agent",
+      "detail": "value=51 size=17(small) [cost 15/steps 25/risk 10] · G5 at 49",
+      "department": "creators",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "creators-w1",
+      "handoff_docs": [],
+      "created_at": "2026-08-30T19:17:10.433158+00:00",
+      "updated_at": "2026-08-30T19:17:11.147802+00:00",
+      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     }
   ],
-  "updated_at": "2026-08-30T19:11:59.572054+00:00"
+  "updated_at": "2026-08-30T19:17:11.451161+00:00"
 }

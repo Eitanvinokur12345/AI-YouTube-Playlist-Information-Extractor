@@ -1,75 +1,75 @@
 {
- "generated_at": "2026-08-30T16:06:11.550445+00:00",
+ "generated_at": "2026-08-30T18:35:38.727759+00:00",
  "experiment": "engine-benchmark (golden-task canary)",
  "golden_prompt": "Reply with exactly these two words and nothing else: benchmark ok",
  "results": [
   {
    "engine": "groq",
    "status": "bad-model-404",
-   "ms": 150,
+   "ms": 156,
    "model": "llama-3.3-70b-versatile",
    "note": "bad-model-404: {\"error\":{\"message\":\"The model `llama-3.3-70b-versatile` does not exist or you do not have access to it.\",\"type\":\"invalid_request_error\",\"code\":\"model_not_found"
   },
   {
    "engine": "sambanova",
    "status": "quota-429",
-   "ms": 145,
+   "ms": 179,
    "model": "Meta-Llama-3.3-70B-Instruct",
-   "note": "quota-429: {\"error\":{\"message\":\"Rate limit exceeded\",\"type\":\"rate_limit_exceeded\",\"param\":null,\"code\":null},\"request_id\":\"daa59s9gldmk33dkcgjg\"}"
+   "note": "quota-429: {\"error\":{\"message\":\"Rate limit exceeded\",\"type\":\"rate_limit_exceeded\",\"param\":null,\"code\":null},\"request_id\":\"daa7fucint6vqp93ddvg\"}"
   },
   {
    "engine": "mistral",
    "status": "healthy",
    "valid": true,
-   "ms": 610,
+   "ms": 506,
    "model": "mistral-small-latest"
   },
   {
    "engine": "gh-models",
    "status": "http-410",
-   "ms": 241,
+   "ms": 212,
    "model": "openai/gpt-4o-mini",
    "note": "http-410: {\"error\":{\"code\":\"github_models_retirement_brownout\",\"message\":\"GitHub Models is temporarily unavailable as part of a scheduled retirement brownout.\"}}"
   },
   {
    "engine": "cerebras",
    "status": "bad-model-404",
-   "ms": 214,
+   "ms": 110,
    "model": "llama3.1-8b",
    "note": "bad-model-404: {\"message\":\"Model does not exist or you do not have access to it.\",\"type\":\"not_found_error\",\"param\":\"model\",\"code\":\"model_not_found\"}"
   },
   {
    "engine": "gemini",
    "status": "bad-model-404",
-   "ms": 145,
+   "ms": 127,
    "model": "gemini-2.0-flash",
    "note": "bad-model-404: {\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"This model models/gemini-2.0-flash is no longer available. Please update your code to use models/gemini-3.6-flas"
   },
   {
    "engine": "nvidia",
    "status": "http-410",
-   "ms": 96,
+   "ms": 62,
    "model": "meta/llama-3.3-70b-instruct",
    "note": "http-410: {\"type\":\"about:blank\",\"title\":\"Gone\",\"status\":410,\"detail\":\"The model 'meta/llama-3.3-70b-instruct' has reached its end of life on 2026-08-26T09:00:00Z and is n"
   },
   {
    "engine": "glm",
    "status": "bad-model-404",
-   "ms": 123,
+   "ms": 131,
    "model": "z-ai/glm-4.5-air:free",
    "note": "bad-model-404: {\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: z-ai/glm-4.5-air\",\"code\":404},\"user_id\":\"use"
   },
   {
    "engine": "deepseek",
    "status": "bad-model-404",
-   "ms": 49,
+   "ms": 41,
    "model": "deepseek/deepseek-chat-v3-0324:free",
    "note": "bad-model-404: {\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: deepseek/deepseek-chat-v3-0324\",\"code\":404},"
   },
   {
    "engine": "kimi",
    "status": "bad-model-404",
-   "ms": 59,
+   "ms": 44,
    "model": "moonshotai/kimi-k2:free",
    "note": "bad-model-404: {\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: moonshotai/kimi-k2\",\"code\":404},\"user_id\":\"u"
   },
@@ -89,11 +89,11 @@
   "deepseek",
   "kimi",
   "nvidia",
-  "glm",
-  "sambanova",
-  "gemini",
-  "groq",
   "cerebras",
+  "gemini",
+  "glm",
+  "groq",
+  "sambanova",
   "gh-models",
   "hermes",
   "omniroute"

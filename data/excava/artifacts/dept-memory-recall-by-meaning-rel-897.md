@@ -1,15 +1,16 @@
 # memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.
 
-> Decision artifact · room `dept-memory-recall-by-meaning-rel-897` (dept) · 2026-07-09T23:49:40.296303+00:00
-> Participants: Graft, Prune, Root · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-memory-recall-by-meaning-rel-897` (dept) · 2026-08-30T02:28:26.447468+00:00
+> Participants: Graft · synthesized by mistral/mistral-small-latest
 
-**Decision:** Audit `/memory/` by semantic age and link integrity for all `.txt`/`.md` files.
+**Decision:**
 
 **Plan:**
-1. Use `find . -type f \( -name "*.txt" -o -name "*.md" \)` to gather all relevant files.
-2. Extract semantic timestamps using `git log` or `stat -c %Y` for file modification times.
-3. Check each file for link integrity, identifying broken links and circular references.
-4. Score each file on a quality scale (0-1) based on link status and age.
-5. Rank the top 5 oldest files by meaningful age, including paths, mtime, link status, and quality score.
+1. Query the Hindsight memory database via the MCP server to retrieve all unembedded memory fragments.
+2. Analyze the retrieved fragments to identify relationships and meaning for embedding.
+3. Embed the fragments into the existing memory graph by linking related elements and resolving unembedded content.
+4. Validate the embedding by cross-referencing with prior memory structures to ensure coherence.
+5. Update the brain graph to reflect the newly embedded elements and their connections.
+6. Store the refined memory graph for future recall and retrieval.
 
-**What changed:** Focus shifted from raw counts to a comprehensive audit that assesses both age and quality.
+**What changed:** Unembedded memory fragments were identified and embedded into the brain graph.

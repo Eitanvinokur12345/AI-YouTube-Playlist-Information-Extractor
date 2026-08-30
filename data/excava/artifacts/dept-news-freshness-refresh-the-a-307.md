@@ -1,15 +1,15 @@
 # news: Freshness: refresh the AI-news digest from the newest official/company/national sources.
 
-> Decision artifact · room `dept-news-freshness-refresh-the-a-307` (dept) · 2026-07-29T21:20:05.100589+00:00
-> Participants: Scoop, Wire · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-news-freshness-refresh-the-a-307` (dept) · 2026-08-30T03:33:22.327119+00:00
+> Participants: Scoop, Factcheck, Wire · synthesized by mistral/mistral-small-latest
 
-**Decision:**
+**Decision:** Wire will refresh the AI-news digest by extracting the latest AI-related post from OpenAI’s official blog feed.
 
 **Plan:**
-1. Fetch the latest AI headlines from Reuters, BBC, and White House press releases.
-2. Curate the top three newest developments from these sources.
-3. Compile them into a fresh AI-news digest.
-4. Publish the digest with clear attribution to each source.
-5. Ensure the digest is formatted for GitHub markdown readability.
+1. Parse OpenAI’s official blog feed ([https://openai.com/blog](https://openai.com/blog)).
+2. Filter posts for AI-related content (keywords: "AI", "artificial intelligence", "model", "GPT", etc.).
+3. Identify the newest verified post meeting criteria.
+4. Publish the item with a lead stating the decision and artifact existence.
+5. Update the digest with the verified AI news item.
 
-**What changed:** Fresh AI-news digest published from newest official/national sources.
+**What changed:** Added the latest OpenAI AI-related post to the digest.

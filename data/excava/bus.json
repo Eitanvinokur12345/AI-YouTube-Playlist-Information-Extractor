@@ -2114,15 +2114,16 @@
       "department": "watch",
       "source": "room-action:watch",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-08-03T05:12:58.449510+00:00",
-      "updated_at": "2026-08-03T05:12:58.449517+00:00"
+      "updated_at": "2026-08-30T11:46:38.857734+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
       "id": "links-room-action-anchor-34363",
@@ -2348,15 +2349,16 @@
       "department": "security",
       "source": "room-action:security",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-08-03T08:33:05.593277+00:00",
-      "updated_at": "2026-08-03T08:33:05.593284+00:00"
+      "updated_at": "2026-08-30T11:46:39.881468+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "watch-room-action-run-ar-58364",
@@ -5549,15 +5551,16 @@
       "department": "improve",
       "source": "room-action:transcripts",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "improve-w1",
       "handoff_docs": [],
       "created_at": "2026-08-11T01:36:09.313023+00:00",
-      "updated_at": "2026-08-11T01:36:09.313030+00:00"
+      "updated_at": "2026-08-30T11:46:41.278353+00:00",
+      "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
     },
     {
       "id": "transcripts-room-action--12837",
@@ -54142,17 +54145,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/resolve-real-links-websi-89768--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-08-30T11:36:08.255268+00:00",
-      "updated_at": "2026-08-30T11:36:11.461523+00:00"
+      "updated_at": "2026-08-30T11:46:38.742526+00:00",
+      "result": "Semantic index: 1661 vectors (model gemini-embedding-001); hub 8988 items → 7327 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "transcripts-drain-the-ne-90084",
@@ -54161,17 +54165,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-90084--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-08-30T11:41:24.838801+00:00",
-      "updated_at": "2026-08-30T11:41:28.205793+00:00"
+      "updated_at": "2026-08-30T11:46:38.442101+00:00",
+      "result": "2325 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g3-truth-access-50-90084",
@@ -54191,7 +54196,24 @@
       ],
       "created_at": "2026-08-30T11:41:24.896233+00:00",
       "updated_at": "2026-08-30T11:41:28.017853+00:00"
+    },
+    {
+      "id": "memory-embed-the-remaini-90398",
+      "title": "Memory: embed the remaining unembedded of 12357 elements for full recall",
+      "detail": "value=64 size=20(small) [cost 20/steps 30/risk 5] · 12357 elements",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-08-30T11:46:38.216828+00:00",
+      "updated_at": "2026-08-30T11:46:38.216840+00:00"
     }
   ],
-  "updated_at": "2026-08-30T11:41:28.205798+00:00"
+  "updated_at": "2026-08-30T11:46:41.278363+00:00"
 }

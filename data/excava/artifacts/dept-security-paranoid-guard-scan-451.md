@@ -1,15 +1,16 @@
 # security: Paranoid guard: scan for leaks/injection; VERIFY elements are REAL (not fake/dead); DETECT
 
-> Decision artifact · room `dept-security-paranoid-guard-scan-451` (dept) · 2026-07-10T07:09:30.310449+00:00
-> Participants: Warden, Audit, Bastion · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-security-paranoid-guard-scan-451` (dept) · 2026-08-30T04:56:51.419285+00:00
+> Participants: Warden, Audit, Bastion · synthesized by mistral/mistral-small-latest
 
-**Decision:** Immediate forensics required to establish a baseline for normal process behavior and identify deviations.
+**Decision:**
 
 **Plan:**
-1. Perform a live memory dump of all active processes using `gcore` for each PID.
-2. Analyze dumped memory for obfuscated code using `strings` and custom patterns based on known attack vectors.
-3. Gather syscall usage from `/proc/*/syscall` to identify any suspicious activity.
-4. Establish a baseline for normal process behavior by documenting typical memory patterns and syscall activities.
-5. Generate a comparison report highlighting deviations from established baselines.
+1. Warden queries ToolHive for real-time LLM Guard container health status.
+2. ToolHive returns a status report confirming operational state and security posture.
+3. Audit verifies the report’s authenticity and alignment with mission requirements.
+4. Bastion cross-checks the report against baseline security metrics.
+5. If discrepancies are found, initiate containment protocols immediately.
+6. Log all actions and outputs for compliance auditing.
 
-**What changed:** Focus shifted from counting indicators of compromise to detailed live memory analysis and baseline establishment.
+**What changed:** Warden’s action is formally validated and integrated into the security workflow.

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-30T03:39:15.103835+00:00",
+ "generated_at": "2026-08-30T03:45:01.419607+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -215,6 +215,32 @@
    "last_position": "Run PR-Agent in shadow mode on *all* PRs for two weeks first. This gives us real-world data on its impact without riskin"
   },
   {
+   "id": "security-w1",
+   "name": "Warden",
+   "dept": "security",
+   "role": "doer",
+   "turns_7d": 30,
+   "rooms_7d": 30,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I will instruct ToolHive to verify the LLM Guard container is running and healthy. This will produce a real-time status "
+  },
+  {
+   "id": "security-checker",
+   "name": "Audit",
+   "dept": "security",
+   "role": "checker",
+   "turns_7d": 30,
+   "rooms_7d": 30,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s existence and health."
+  },
+  {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
@@ -242,30 +268,17 @@
    "last_position": "ACTION: Warden queries ToolHive for LLM Guard container health status; output confirms container is running and secure."
   },
   {
-   "id": "security-w1",
-   "name": "Warden",
-   "dept": "security",
-   "role": "doer",
-   "turns_7d": 29,
-   "rooms_7d": 29,
+   "id": "watch-lead",
+   "name": "Iris",
+   "dept": "watch",
+   "role": "lead",
+   "turns_7d": 28,
+   "rooms_7d": 28,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will instruct ToolHive to verify the LLM Guard container is running and healthy. This produces a real-time status repo"
-  },
-  {
-   "id": "security-checker",
-   "name": "Audit",
-   "dept": "security",
-   "role": "checker",
-   "turns_7d": 29,
-   "rooms_7d": 29,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s health and security post"
+   "last_position": "ACTION: At 13:32:00, Iris confirms the A/B test scope is locked to Arcads AI Video Agent Skill Pack with a 14-day fixed "
   },
   {
    "id": "watch-checker",
@@ -281,17 +294,30 @@
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s ingestion pipeline already routes A/B tests for Agent Skill Packs."
   },
   {
-   "id": "watch-lead",
-   "name": "Iris",
-   "dept": "watch",
-   "role": "lead",
-   "turns_7d": 27,
-   "rooms_7d": 27,
+   "id": "creators-w1",
+   "name": "Forge",
+   "dept": "creators",
+   "role": "doer",
+   "turns_7d": 28,
+   "rooms_7d": 28,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: At 13:31:00, Iris confirms the routing logic is locked to Arcads AI Video’s visual-only pipeline for AI marketin"
+   "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. It will produce a ready-to-use skill that lets users gene"
+  },
+  {
+   "id": "creators-checker",
+   "name": "Vet",
+   "dept": "creators",
+   "role": "checker",
+   "turns_7d": 28,
+   "rooms_7d": 28,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled \"Created by EXCAVA\"."
   },
   {
    "id": "creators-lead",
@@ -307,30 +333,30 @@
    "last_position": "ACTION: Forge publishes the \"UGC Factory by EXCAVA\" npm package with tests, labeled \"Created by EXCAVA\""
   },
   {
-   "id": "creators-w1",
-   "name": "Forge",
-   "dept": "creators",
+   "id": "visual-w1",
+   "name": "Easel",
+   "dept": "visual",
    "role": "doer",
-   "turns_7d": 27,
-   "rooms_7d": 27,
+   "turns_7d": 26,
+   "rooms_7d": 26,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I draft the \"UGC Factory\" skill package for the Skill Creator. It will produce a ready-to-install npm package labeled \"C"
+   "last_position": "I’ll open the official Model Context Protocol (MCP) website and take a full-page screenshot of its design. This will pro"
   },
   {
-   "id": "creators-checker",
-   "name": "Vet",
-   "dept": "creators",
+   "id": "visual-checker",
+   "name": "Squint",
+   "dept": "visual",
    "role": "checker",
-   "turns_7d": 27,
-   "rooms_7d": 27,
+   "turns_7d": 26,
+   "rooms_7d": 26,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled \"Created by EXCAVA\" with a test suite."
+   "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
    "id": "visualization-w1",
@@ -370,32 +396,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Chroma captures a full-page screenshot of the official Model Context Protocol website homepage."
-  },
-  {
-   "id": "visual-w1",
-   "name": "Easel",
-   "dept": "visual",
-   "role": "doer",
-   "turns_7d": 25,
-   "rooms_7d": 25,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll open the official Model Context Protocol (MCP) website and take a full-page screenshot of its homepage. This will p"
-  },
-  {
-   "id": "visual-checker",
-   "name": "Squint",
-   "dept": "visual",
-   "role": "checker",
-   "turns_7d": 25,
-   "rooms_7d": 25,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
    "id": "analysis-lead",
@@ -481,6 +481,19 @@
    "shipped": 13
   },
   {
+   "id": "news-lead",
+   "name": "Wire",
+   "dept": "news",
+   "role": "lead",
+   "turns_7d": 12,
+   "rooms_7d": 12,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Wire parses OpenAI’s official blog feed, filters for AI-related posts, and delivers a plain-language summary inc"
+  },
+  {
    "id": "news-w1",
    "name": "Scoop",
    "dept": "news",
@@ -505,19 +518,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: The action is valid MISSION work."
-  },
-  {
-   "id": "news-lead",
-   "name": "Wire",
-   "dept": "news",
-   "role": "lead",
-   "turns_7d": 11,
-   "rooms_7d": 11,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Wire parses OpenAI’s official blog feed, filters for AI-related posts, and publishes the newest verified item wi"
   },
   {
    "id": "excava-core",

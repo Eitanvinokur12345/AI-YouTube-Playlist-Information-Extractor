@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-31T16:07:37.423249+00:00",
+ "generated_at": "2026-08-31T16:13:05.111279+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,14 +8,14 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 145,
+   "turns_7d": 146,
    "rooms_7d": 28,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "The 72-hour overlapping A/B test with Deepgram still risks false positives from overlapping sample contamination—two gro"
+   "last_position": "Whisper batch processing still introduces a 30-minute lag per batch—enough to skew results if user behavior shifts durin"
   },
   {
    "id": "watch-w1",
@@ -35,13 +35,13 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 82,
+   "turns_7d": 83,
    "rooms_7d": 28,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Standardize real-time transcription for all pending videos using Deepgram. It’s the fastest way to get accurate transcri"
+   "last_position": "Run a strict 48-hour non-overlapping A/B test on 200k clips using Whisper batch processing, owned by data science. This "
   },
   {
    "id": "analysis-w1",
@@ -70,6 +70,32 @@
    "last_position": "The 48-hour rolling A/B test on 200k clips with Whisper batch processing risks false positives from Whisper’s batch late"
   },
   {
+   "id": "accessibility-w1",
+   "name": "Ramp",
+   "dept": "accessibility",
+   "role": "doer",
+   "turns_7d": 45,
+   "rooms_7d": 23,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Adopt the 4px focus ring at 7:1 contrast with `prefers-reduced-motion: no-prefer`. Larger rings help mobile/touch users "
+  },
+  {
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
+   "role": "checker",
+   "turns_7d": 45,
+   "rooms_7d": 23,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Risk: 4px at 7:1 fails users toggling *both* reduced motion *and* high contrast—WCAG 2.2 requires focus indicators to be"
+  },
+  {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
@@ -81,32 +107,6 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
-  },
-  {
-   "id": "accessibility-w1",
-   "name": "Ramp",
-   "dept": "accessibility",
-   "role": "doer",
-   "turns_7d": 44,
-   "rooms_7d": 22,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Adopt the 3px focus ring at 4.5:1 contrast with `prefers-reduced-motion: no-preference` and `forced-colors: active`. It "
-  },
-  {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 44,
-   "rooms_7d": 22,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Risk: 3px at 4.5:1 still fails users who *only* toggle high contrast mode—WCAG 2.2 requires 3px at 4.5:1 *or* 1px at 7:1"
   },
   {
    "id": "visual-lead",
@@ -330,7 +330,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Finalize 4px focus ring at 7:1 contrast with `prefers-reduced-motion: no-preference`; test forced-colors separ",
    "proposed": 22,
-   "shipped": 21
+   "shipped": 22
   },
   {
    "id": "visualization-w1",

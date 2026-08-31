@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-31T08:53:23.096159+00:00",
+ "generated_at": "2026-08-31T16:01:55.638633+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -48,26 +48,26 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 76,
-   "rooms_7d": 22,
+   "turns_7d": 77,
+   "rooms_7d": 23,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run the 14-day fixed A/B test on 200k clips with Whisper batch processing. This keeps the test clean, repeatable, and fr"
+   "last_position": "Run a 48-hour rolling A/B test on the 200k clips with Whisper batch processing instead of the 14-day fixed window. This "
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 76,
-   "rooms_7d": 22,
+   "turns_7d": 77,
+   "rooms_7d": 23,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The 200k-clip fixed A/B test with Whisper batch processing locks us into a slower, less flexible pipeline than real-time"
+   "last_position": "The 48-hour rolling A/B test on 200k clips with Whisper batch processing risks false positives from Whisper’s batch late"
   },
   {
    "id": "memory-w1",
@@ -87,26 +87,26 @@
    "name": "Ramp",
    "dept": "accessibility",
    "role": "doer",
-   "turns_7d": 43,
+   "turns_7d": 44,
    "rooms_7d": 22,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the 4px focus ring at 7:1 contrast with `prefers-reduced-motion: no-preference`. It meets WCAG 2.2 AA for keyboard"
+   "last_position": "Adopt the 3px focus ring at 4.5:1 contrast with `prefers-reduced-motion: no-preference` and `forced-colors: active`. It "
   },
   {
    "id": "accessibility-checker",
    "name": "Reader",
    "dept": "accessibility",
    "role": "checker",
-   "turns_7d": 43,
+   "turns_7d": 44,
    "rooms_7d": 22,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Risk: 4px at 7:1 fails users toggling *both* reduced motion *and* high contrast—WCAG 2.2 requires 3px at 4.5:1 for that "
+   "last_position": "Risk: 3px at 4.5:1 still fails users who *only* toggle high contrast mode—WCAG 2.2 requires 3px at 4.5:1 *or* 1px at 7:1"
   },
   {
    "id": "visual-lead",
@@ -265,6 +265,20 @@
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a raw dataset"
   },
   {
+   "id": "transcripts-lead",
+   "name": "Echo",
+   "dept": "transcripts",
+   "role": "lead",
+   "turns_7d": 28,
+   "rooms_7d": 28,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Run a 48-hour parallel A/B test on 10k clips comparing Whisper batch vs. Deepgram real-time, then pick the too",
+   "proposed": 2
+  },
+  {
    "id": "watch-lead",
    "name": "Iris",
    "dept": "watch",
@@ -289,20 +303,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s ingestion pipeline already routes A/B tests for Agent Skill Packs."
-  },
-  {
-   "id": "transcripts-lead",
-   "name": "Echo",
-   "dept": "transcripts",
-   "role": "lead",
-   "turns_7d": 27,
-   "rooms_7d": 27,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Scriv runs kimtaeyoon83/mcp-server-youtube-transcript on each pending video to fetch real full transcripts, then",
-   "proposed": 2
   },
   {
    "id": "improve-w1",

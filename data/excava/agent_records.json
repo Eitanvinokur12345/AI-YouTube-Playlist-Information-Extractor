@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-31T21:39:24.989564+00:00",
+ "generated_at": "2026-08-31T21:44:46.009430+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,14 +8,14 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 159,
+   "turns_7d": 160,
    "rooms_7d": 28,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "The per-second logging risks *event-time skew*: a churn spike at 4:59.999 gets logged in the 4:59 batch while its downst"
+   "last_position": "The tumbling window logging at batch start still risks *causal misalignment*: a churn spike at 4:59.999 triggers a trans"
   },
   {
    "id": "watch-w1",
@@ -35,13 +35,13 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 89,
+   "turns_7d": 90,
    "rooms_7d": 28,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run a fixed 5-minute rolling Whisper batch with 1-minute overlap, owned by data science. This captures churn spikes clea"
+   "last_position": "Run a fixed 5-minute tumbling Whisper batch that logs churn at the batch start, owned by data science. This pins spikes "
   },
   {
    "id": "analysis-w1",

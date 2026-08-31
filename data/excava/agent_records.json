@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-30T21:26:27.438602+00:00",
+ "generated_at": "2026-08-31T00:49:31.769988+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,48 +8,22 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 172,
-   "rooms_7d": 29,
+   "turns_7d": 142,
+   "rooms_7d": 27,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: Reel’s action is MISSION work our tool can do. Fix: Skip Deepgram’s real-time service—use kimtaeyoon83/mcp-serv"
-  },
-  {
-   "id": "analysis-w1",
-   "name": "Chisel",
-   "dept": "analysis",
-   "role": "doer",
-   "turns_7d": 110,
-   "rooms_7d": 42,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Pre-process all 200k clips offline with Deepgram, cache the transcripts, and serve them live from the cache. This keeps "
-  },
-  {
-   "id": "analysis-checker",
-   "name": "Sift",
-   "dept": "analysis",
-   "role": "checker",
-   "turns_7d": 107,
-   "rooms_7d": 39,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Chisel’s cache solves the latency problem but ignores the 24-hour holdout window—Scriv’s frozen worst-case test will sti"
+   "last_position": "Deepgram’s real-time transcription isn’t the bottleneck—it’s the 14-day A/B test that risks locking us into a tool we ca"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 104,
-   "rooms_7d": 44,
+   "turns_7d": 89,
+   "rooms_7d": 41,
    "engines_used": [
     "mistral"
    ],
@@ -61,39 +35,39 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 96,
-   "rooms_7d": 29,
+   "turns_7d": 81,
+   "rooms_7d": 27,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I’ll fetch the full transcript for the pending video using Deepgram’s real-time service. This will produce a complete, a"
+   "last_position": "Use Deepgram’s real-time transcription for the pending video. It’s the fastest way to get a full transcript, which direc"
   },
   {
-   "id": "accessibility-w1",
-   "name": "Ramp",
-   "dept": "accessibility",
+   "id": "analysis-w1",
+   "name": "Chisel",
+   "dept": "analysis",
    "role": "doer",
-   "turns_7d": 62,
-   "rooms_7d": 31,
+   "turns_7d": 75,
+   "rooms_7d": 21,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the 3px focus ring at 4.5:1 contrast, with a 6px ring when `prefers-reduced-motion: reduce` is active. This meets "
+   "last_position": "Pre-process all 200k clips offline with Deepgram, cache the transcripts, and serve them live from the cache. This keeps "
   },
   {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
+   "id": "analysis-checker",
+   "name": "Sift",
+   "dept": "analysis",
    "role": "checker",
-   "turns_7d": 62,
-   "rooms_7d": 31,
+   "turns_7d": 75,
+   "rooms_7d": 21,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Risk: 3px at 4.5:1 fails users who toggle *high contrast mode*—WCAG 2.2 requires focus rings to persist in *all* contras"
+   "last_position": "Chisel’s cache solves the latency problem but ignores the 24-hour holdout window—Scriv’s frozen worst-case test will sti"
   },
   {
    "id": "memory-w1",
@@ -148,12 +122,38 @@
    "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
+   "id": "accessibility-w1",
+   "name": "Ramp",
+   "dept": "accessibility",
+   "role": "doer",
+   "turns_7d": 42,
+   "rooms_7d": 21,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Adopt the 3px focus ring at 4.5:1 contrast, with a 6px ring when `prefers-reduced-motion: reduce` is active. This meets "
+  },
+  {
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
+   "role": "checker",
+   "turns_7d": 42,
+   "rooms_7d": 21,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Risk: 3px at 4.5:1 fails users who toggle *high contrast mode*—WCAG 2.2 requires focus rings to persist in *all* contras"
+  },
+  {
    "id": "creators-lead",
    "name": "Nova",
    "dept": "creators",
    "role": "lead",
-   "turns_7d": 42,
-   "rooms_7d": 42,
+   "turns_7d": 38,
+   "rooms_7d": 38,
    "engines_used": [
     "mistral"
    ],
@@ -165,8 +165,8 @@
    "name": "Forge",
    "dept": "creators",
    "role": "doer",
-   "turns_7d": 42,
-   "rooms_7d": 42,
+   "turns_7d": 38,
+   "rooms_7d": 38,
    "engines_used": [
     "mistral"
    ],
@@ -178,8 +178,8 @@
    "name": "Vet",
    "dept": "creators",
    "role": "checker",
-   "turns_7d": 42,
-   "rooms_7d": 42,
+   "turns_7d": 38,
+   "rooms_7d": 38,
    "engines_used": [
     "mistral"
    ],
@@ -191,8 +191,8 @@
    "name": "Bastion",
    "dept": "security",
    "role": "lead",
-   "turns_7d": 39,
-   "rooms_7d": 39,
+   "turns_7d": 36,
+   "rooms_7d": 36,
    "engines_used": [
     "mistral"
    ],
@@ -204,8 +204,8 @@
    "name": "Warden",
    "dept": "security",
    "role": "doer",
-   "turns_7d": 39,
-   "rooms_7d": 39,
+   "turns_7d": 36,
+   "rooms_7d": 36,
    "engines_used": [
     "mistral"
    ],
@@ -217,8 +217,8 @@
    "name": "Audit",
    "dept": "security",
    "role": "checker",
-   "turns_7d": 39,
-   "rooms_7d": 39,
+   "turns_7d": 36,
+   "rooms_7d": 36,
    "engines_used": [
     "mistral"
    ],
@@ -265,87 +265,6 @@
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a raw dataset"
   },
   {
-   "id": "accessibility-lead",
-   "name": "Access",
-   "dept": "accessibility",
-   "role": "lead",
-   "turns_7d": 31,
-   "rooms_7d": 31,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Finalize 2px focus ring at 3:1 contrast with `forced-colors: active` override to 4px; deliver WCAG 2.2-complia",
-   "proposed": 22,
-   "shipped": 22
-  },
-  {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 31,
-   "rooms_7d": 31,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run the link-checker on the live Mission Control Dashboard to scan for broken links. The report will list all 404s and r"
-  },
-  {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
-   "role": "checker",
-   "turns_7d": 31,
-   "rooms_7d": 31,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is mission work—it audits existing links for 404s and redirects, which directly advances the links d"
-  },
-  {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
-   "role": "lead",
-   "turns_7d": 31,
-   "rooms_7d": 31,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard, including all 404s and redi"
-  },
-  {
-   "id": "improve-w1",
-   "name": "Sprocket",
-   "dept": "improve",
-   "role": "doer",
-   "turns_7d": 30,
-   "rooms_7d": 15,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on *all* PRs for two weeks first. This gives us real-world data on its impact without riskin"
-  },
-  {
-   "id": "transcripts-lead",
-   "name": "Echo",
-   "dept": "transcripts",
-   "role": "lead",
-   "turns_7d": 29,
-   "rooms_7d": 29,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Scriv runs kimtaeyoon83/mcp-server-youtube-transcript on each pending video to fetch real full transcripts, then",
-   "proposed": 2
-  },
-  {
    "id": "watch-lead",
    "name": "Iris",
    "dept": "watch",
@@ -372,12 +291,39 @@
    "last_position": "Verdict: This is MISSION work—Arcads AI Video’s ingestion pipeline already routes A/B tests for Agent Skill Packs."
   },
   {
+   "id": "transcripts-lead",
+   "name": "Echo",
+   "dept": "transcripts",
+   "role": "lead",
+   "turns_7d": 27,
+   "rooms_7d": 27,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Scriv runs kimtaeyoon83/mcp-server-youtube-transcript on each pending video to fetch real full transcripts, then",
+   "proposed": 2
+  },
+  {
+   "id": "improve-w1",
+   "name": "Sprocket",
+   "dept": "improve",
+   "role": "doer",
+   "turns_7d": 26,
+   "rooms_7d": 13,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run PR-Agent in shadow mode on *all* PRs for two weeks first. This gives us real-world data on its impact without riskin"
+  },
+  {
    "id": "visualization-w1",
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 26,
-   "rooms_7d": 13,
+   "turns_7d": 22,
+   "rooms_7d": 11,
    "engines_used": [
     "mistral"
    ],
@@ -389,8 +335,8 @@
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 26,
-   "rooms_7d": 13,
+   "turns_7d": 22,
+   "rooms_7d": 11,
    "engines_used": [
     "mistral"
    ],
@@ -398,17 +344,19 @@
    "last_position": "Pane: A thin anchored sidebar still risks users overlooking it if they’re focused on the graph’s center—like a bookmark "
   },
   {
-   "id": "analysis-lead",
-   "name": "Marrow",
-   "dept": "analysis",
+   "id": "accessibility-lead",
+   "name": "Access",
+   "dept": "accessibility",
    "role": "lead",
-   "turns_7d": 23,
-   "rooms_7d": 23,
+   "turns_7d": 22,
+   "rooms_7d": 22,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a speaker-influence graph and conver"
+   "last_position": "DECISION: Finalize 2px focus ring at 3:1 contrast with `forced-colors: active` override to 4px; deliver WCAG 2.2-complia",
+   "proposed": 21,
+   "shipped": 21
   },
   {
    "id": "power-lead",
@@ -426,12 +374,51 @@
    "shipped": 13
   },
   {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 16,
+   "rooms_7d": 16,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run the link-checker on the live Mission Control Dashboard to scan for broken links. The report will list all 404s and r"
+  },
+  {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 16,
+   "rooms_7d": 16,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is mission work—it audits existing links for 404s and redirects, which directly advances the links d"
+  },
+  {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 16,
+   "rooms_7d": 16,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard, including all 404s and redi"
+  },
+  {
    "id": "improve-lead",
    "name": "Ratchet",
    "dept": "improve",
    "role": "lead",
-   "turns_7d": 15,
-   "rooms_7d": 15,
+   "turns_7d": 13,
+   "rooms_7d": 13,
    "engines_used": [
     "mistral"
    ],
@@ -445,8 +432,8 @@
    "name": "Gauge",
    "dept": "improve",
    "role": "checker",
-   "turns_7d": 15,
-   "rooms_7d": 15,
+   "turns_7d": 13,
+   "rooms_7d": 13,
    "engines_used": [
     "mistral"
    ],
@@ -458,28 +445,13 @@
    "name": "Overhaul",
    "dept": "improve",
    "role": "improver",
-   "turns_7d": 15,
-   "rooms_7d": 15,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run the A/B test on PRs from *new contributors only*—they’re less likely to have existing review patterns, making false "
-  },
-  {
-   "id": "visualization-lead",
-   "name": "Lumen",
-   "dept": "visualization",
-   "role": "lead",
    "turns_7d": 13,
    "rooms_7d": 13,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Anchor the legend as a thin, persistent sidebar that collapses to a tab when unused—visible enough to solve th",
-   "proposed": 11,
-   "shipped": 11
+   "last_position": "Run the A/B test on PRs from *new contributors only*—they’re less likely to have existing review patterns, making false "
   },
   {
    "id": "news-lead",
@@ -519,6 +491,34 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: The action is valid MISSION work."
+  },
+  {
+   "id": "visualization-lead",
+   "name": "Lumen",
+   "dept": "visualization",
+   "role": "lead",
+   "turns_7d": 11,
+   "rooms_7d": 11,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Anchor the legend as a thin, persistent sidebar that collapses to a tab when unused—visible enough to solve th",
+   "proposed": 11,
+   "shipped": 11
+  },
+  {
+   "id": "analysis-lead",
+   "name": "Marrow",
+   "dept": "analysis",
+   "role": "lead",
+   "turns_7d": 8,
+   "rooms_7d": 8,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a speaker-influence graph and conver"
   },
   {
    "id": "excava-core",

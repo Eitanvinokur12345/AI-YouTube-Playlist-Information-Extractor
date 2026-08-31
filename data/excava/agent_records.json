@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-31T21:44:46.009430+00:00",
+ "generated_at": "2026-08-31T21:50:05.683535+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -48,26 +48,26 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 84,
+   "turns_7d": 85,
    "rooms_7d": 23,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run a fixed 5-minute Whisper batch with per-minute churn logging, owned by data science. This pins spikes to the exact m"
+   "last_position": "Run a fixed 5-minute sliding Whisper batch with churn logged at the second it happens, owned by data science. This pins "
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 84,
+   "turns_7d": 85,
    "rooms_7d": 23,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The fixed 5-minute batch with per-minute logging still risks *straddling spikes*—a churn burst at 4:59 and 5:01 gets spl"
+   "last_position": "The sliding window duplicates effort: a churn spike at 4:59.999 gets logged twice—once in the 4:55 batch and again in th"
   },
   {
    "id": "accessibility-w1",

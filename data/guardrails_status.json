@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-08-31T00:49:36.307722+00:00",
+ "generated_at": "2026-08-31T05:20:46.525682+00:00",
  "total": 21,
- "passing": 19,
+ "passing": 16,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": true,
-   "detail": "HEAD == origin/main (work is really saved).",
+   "ok": false,
+   "detail": "NOT in sync vs origin/main (behind/ahead: 5\t0) — a push may not have landed.",
    "severity": "warn"
   },
   {
@@ -71,7 +71,7 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "23715 memory episodes on record.",
+   "detail": "23724 memory episodes on record.",
    "severity": "warn"
   },
   {
@@ -92,7 +92,7 @@
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "7207 tasks done, 12 departments moving",
+   "detail": "7214 tasks done, 12 departments moving",
    "severity": "warn"
   },
   {
@@ -106,28 +106,28 @@
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 858.8h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 863.3h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
-   "ok": true,
-   "detail": "last 'excava-beat #N' commit 3.9h ago.",
+   "ok": false,
+   "detail": "last 'excava-beat #N' commit 8.4h ago — STALE: the dedicated heartbeat loop isn't landing per-cycle commits (check for a wedged/queued excava_beat.yml run).",
    "severity": "warn"
   },
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
-   "ok": true,
-   "detail": "last 'core-spoton:' commit 1.4h ago.",
+   "ok": false,
+   "detail": "last 'core-spoton:' commit 5.9h ago — STALE: the hourly discovery/deep-retrieve/verify pipeline hasn't committed in over 4h (check for a wedged run, a broken step before Commit, or cron disabled).",
    "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
    "ok": false,
-   "detail": "10/16 lane(s) landing on cadence — STALE: creators.yml (daily 07:45 UTC): last commit 520.4h ago (expected within 30h); discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 1698.7h ago (expected within 76h); improve.yml (weekly deep pass): last commit 2048.5h ago (expected within 192h); mine.yml (daily): last commit 34.1h ago (expected within 30h); review.yml (twice-weekly): last commit 768.8h ago (expected within 100h); transcribe.yml (daily): last commit 714.5h ago (expected within 30h)",
+   "detail": "9/16 lane(s) landing on cadence — STALE: creators.yml (daily 07:45 UTC): last commit 525.0h ago (expected within 30h); discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 1703.2h ago (expected within 76h); improve.yml (weekly deep pass): last commit 2053.0h ago (expected within 192h); links.yml (hourly): last commit 5.8h ago (expected within 4h); mine.yml (daily): last commit 38.6h ago (expected within 30h); review.yml (twice-weekly): last commit 773.4h ago (expected within 100h); transcribe.yml (daily): last commit 719.0h ago (expected within 30h)",
    "severity": "warn"
   },
   {

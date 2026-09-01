@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-01T04:54:46.961377+00:00",
+ "generated_at": "2026-09-01T05:33:18.513035+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,40 +8,40 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 177,
-   "rooms_7d": 34,
+   "turns_7d": 179,
+   "rooms_7d": 35,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "The single append-only log’s write-ahead checksum is only as trustworthy as the storage layer’s firmware—if the disk con"
+   "last_position": "TPM-backed dm-integrity still trusts the kernel’s I/O stack—if the filesystem or driver lies, the Merkle tree is worthle"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 105,
+   "turns_7d": 106,
    "rooms_7d": 46,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the single append-only log with write-ahead checksum enforced by the storage layer. It guarantees transcripts are "
+   "last_position": "Adopt the single append-only log with a TPM-backed hardware-rooted checksum (dm-integrity) and a cryptographic Merkle au"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 101,
-   "rooms_7d": 34,
+   "turns_7d": 102,
+   "rooms_7d": 35,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the single append-only log with write-ahead checksum enforced by the storage layer. It guarantees transcripts are "
+   "last_position": "I will fetch the full transcript for the pending video using the kimtaeyoon83/mcp-server-youtube-transcript tool. This w"
   },
   {
    "id": "analysis-w1",
@@ -256,26 +256,26 @@
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 35,
+   "turns_7d": 36,
    "rooms_7d": 18,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Choose a **full-height left sidebar** for primary navigation and context. It keeps the main view uncluttered while givin"
+   "last_position": "Choose a **thin, always-visible top strip for critical alerts**—bright, high-contrast, and sticky. It guarantees users s"
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 35,
+   "turns_7d": 36,
    "rooms_7d": 18,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Pane: A full-height left sidebar buries critical updates under layers of scroll—users won’t notice urgent changes until "
+   "last_position": "Pane: A sticky top strip for alerts guarantees visibility but guarantees nothing about *meaning*—users will ignore it if"
   },
   {
    "id": "transcripts-lead",
@@ -374,6 +374,32 @@
    "shipped": 14
   },
   {
+   "id": "news-w1",
+   "name": "Scoop",
+   "dept": "news",
+   "role": "doer",
+   "turns_7d": 18,
+   "rooms_7d": 18,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh, verified update"
+  },
+  {
+   "id": "news-checker",
+   "name": "Factcheck",
+   "dept": "news",
+   "role": "checker",
+   "turns_7d": 18,
+   "rooms_7d": 18,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is valid MISSION work. Fix: Specify \"AI-related\" as \"AI research or product updates\" to match the di"
+  },
+  {
    "id": "links-w1",
    "name": "Anchor",
    "dept": "links",
@@ -400,6 +426,19 @@
    "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work for our link-checker."
   },
   {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 18,
+   "rooms_7d": 18,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard, confirming all links are li"
+  },
+  {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
@@ -411,32 +450,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Wire parses OpenAI’s official blog feed, filters for AI research or product announcements, and posts a plain-lan"
-  },
-  {
-   "id": "news-w1",
-   "name": "Scoop",
-   "dept": "news",
-   "role": "doer",
-   "turns_7d": 17,
-   "rooms_7d": 17,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. The result will be a plain-language summar"
-  },
-  {
-   "id": "news-checker",
-   "name": "Factcheck",
-   "dept": "news",
-   "role": "checker",
-   "turns_7d": 17,
-   "rooms_7d": 17,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is valid MISSION work. Fix: Specify \"AI-related\" as \"AI research or product announcements.\""
   },
   {
    "id": "visualization-lead",
@@ -454,30 +467,17 @@
    "shipped": 17
   },
   {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
-   "role": "lead",
-   "turns_7d": 17,
-   "rooms_7d": 17,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard, including dead/redirected l"
-  },
-  {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
    "role": "lead",
-   "turns_7d": 13,
-   "rooms_7d": 13,
+   "turns_7d": 14,
+   "rooms_7d": 14,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a structured graph of entities, rela"
+   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract entities, relationships, contradictio"
   },
   {
    "id": "improve-lead",

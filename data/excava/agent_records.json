@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-01T04:31:26.827270+00:00",
+ "generated_at": "2026-09-01T04:37:16.938701+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,14 +8,14 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 173,
-   "rooms_7d": 32,
+   "turns_7d": 174,
+   "rooms_7d": 33,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "The single log’s write-ahead checksum still trusts the storage layer’s *claim* of enforcement—if the disk controller fak"
+   "last_position": "Verdict: The action is valid MISSION work—kimtaeyoon83/mcp-server-youtube-transcript retrieves real transcripts. No fix "
   },
   {
    "id": "watch-w1",
@@ -35,39 +35,39 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 98,
-   "rooms_7d": 32,
+   "turns_7d": 99,
+   "rooms_7d": 33,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the single append-only log with write-ahead checksum enforced by the storage layer. It guarantees transcripts are "
+   "last_position": "I will fetch the full transcript for the pending video using the kimtaeyoon83/mcp-server-youtube-transcript tool. This w"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 95,
+   "turns_7d": 96,
    "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will run BloodHound-MCP against the full earnings call transcript to map all explicit and implicit relationships betwe"
+   "last_position": "Adopt the dual-log system with independent checksums and a lightweight validator. This splits the risk across two separa"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 95,
+   "turns_7d": 96,
    "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: Chisel’s plan is MISSION work—BloodHound-MCP can ingest the transcript. Fix: Skip the \"structured graph\" framin"
+   "last_position": "The dual-log’s separate storage paths don’t fix the disk controller lie—they just move it to the validator. A single log"
   },
   {
    "id": "memory-w1",
@@ -256,26 +256,26 @@
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 32,
-   "rooms_7d": 16,
+   "turns_7d": 33,
+   "rooms_7d": 17,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Choose a floating, dismissible alert panel that appears only when needed—just 6% of screen height, anchored to the top-r"
+   "last_position": "Use a **collapsible left sidebar** for primary navigation and context. It keeps every tool and layer visible at a glance"
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 32,
-   "rooms_7d": 16,
+   "turns_7d": 33,
+   "rooms_7d": 17,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Pane: A floating panel risks users missing alerts entirely if they’re not staring at the top-right—like a notification i"
+   "last_position": "Pane: A collapsible sidebar still buries critical updates under layers of scroll—users won’t notice alerts if they’re bu"
   },
   {
    "id": "transcripts-lead",
@@ -374,6 +374,32 @@
    "shipped": 14
   },
   {
+   "id": "news-w1",
+   "name": "Scoop",
+   "dept": "news",
+   "role": "doer",
+   "turns_7d": 16,
+   "rooms_7d": 16,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. The result will be a concise summary of th"
+  },
+  {
+   "id": "news-checker",
+   "name": "Factcheck",
+   "dept": "news",
+   "role": "checker",
+   "turns_7d": 16,
+   "rooms_7d": 16,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is valid MISSION work."
+  },
+  {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
@@ -386,7 +412,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Use a hybrid alert system—persistent 4% top banner with pulsing indica for critical alerts, expanding to a 6% ",
    "proposed": 16,
-   "shipped": 15
+   "shipped": 16
   },
   {
    "id": "links-w1",
@@ -415,6 +441,19 @@
    "last_position": "Verdict: The action is mission work—our link-checker audits live pages for 404s and redirects."
   },
   {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 16,
+   "rooms_7d": 16,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard."
+  },
+  {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
@@ -426,45 +465,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Wire parses OpenAI’s official blog feed, filters for AI research, product, or policy announcements, and surfaces"
-  },
-  {
-   "id": "news-w1",
-   "name": "Scoop",
-   "dept": "news",
-   "role": "doer",
-   "turns_7d": 15,
-   "rooms_7d": 15,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh, verified AI new"
-  },
-  {
-   "id": "news-checker",
-   "name": "Factcheck",
-   "dept": "news",
-   "role": "checker",
-   "turns_7d": 15,
-   "rooms_7d": 15,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is valid MISSION work. Fix: Specify \"AI-related\" as \"AI research, product, or policy announcements\" "
-  },
-  {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
-   "role": "lead",
-   "turns_7d": 15,
-   "rooms_7d": 15,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard with all dead links removed "
   },
   {
    "id": "improve-lead",
@@ -512,13 +512,13 @@
    "name": "Marrow",
    "dept": "analysis",
    "role": "lead",
-   "turns_7d": 11,
-   "rooms_7d": 11,
+   "turns_7d": 12,
+   "rooms_7d": 12,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a structured graph of entities, rela"
+   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to extract all speaker-topic-financial relations"
   },
   {
    "id": "excava-core",

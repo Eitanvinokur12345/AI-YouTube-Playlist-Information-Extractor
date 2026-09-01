@@ -1,12 +1,16 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-104` (dept) · 2026-07-14T01:31:10.161030+00:00
-> Participants: Easel, Chroma · synthesized by transcript-summary (no engine)
+> Decision artifact · room `dept-visual-mine-great-designs-fr-104` (dept) · 2026-09-01T21:17:42.220453+00:00
+> Participants: Easel, Squint, Chroma · synthesized by mistral/mistral-small-latest
 
-**Decision:** ACTION: Easel captures a full-width screenshot of the Beverage Cans site’s bright pink accent bar, then reframes it to 16:9 landscape with the bar centered, and uploads it to the hub as a color-placem
+**Decision:**
 
-**Plan (from the debate):**
-1. I will open the Beverage Cans website and screenshot its bright pink accent bar. This will produce a visual reference of the color and placement for the hub’s design library.
-2. ACTION: Easel captures a full-width screenshot of the Beverage Cans site’s bright pink accent bar, then reframes it to 16:9 landscape with the bar centered, and uploads it to the hub as a color-placem
+**Plan:**
+1. Open the official Model Context Protocol (MCP) website in a browser.
+2. Capture a full-page screenshot of the website.
+3. Extract design patterns and visual style from the screenshot.
+4. Save the screenshot and extracted materials as artifacts for the hub.
+5. Upload the artifacts to the designated repository or directory.
+6. Document the source and key design insights for future reference.
 
-**What changed:** first real room artifact.
+**What changed:** Added a full-page screenshot of the MCP website to the hub’s design pattern collection.

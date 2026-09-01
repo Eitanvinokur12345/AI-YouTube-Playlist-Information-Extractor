@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-01T03:26:16.579376+00:00",
+ "generated_at": "2026-09-01T03:31:55.855526+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,21 +8,21 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 161,
+   "turns_7d": 162,
    "rooms_7d": 26,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "The write-through checksum plus background reconciliation still risks silent corruption during the window between write "
+   "last_position": "The write-through checksum plus background reconciliation still risks silent corruption if the diffs stream too slowly—d"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 99,
+   "turns_7d": 100,
    "rooms_7d": 43,
    "engines_used": [
     "mistral"
@@ -230,26 +230,26 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 33,
-   "rooms_7d": 17,
+   "turns_7d": 34,
+   "rooms_7d": 18,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Add VFI-Flow to EXCAVA’s motion pipeline. It reconstructs motion blur into sharp frames by filling gaps in motion vector"
+   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline. It sharpens fine details in complex scenes better than"
   },
   {
    "id": "power-checker",
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 33,
-   "rooms_7d": 17,
+   "turns_7d": 34,
+   "rooms_7d": 18,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "VFI-Flow’s 15% slowdown isn’t the real risk—its motion reconstruction introduces temporal artifacts that could distort f"
+   "last_position": "Depth-aware upscaling won’t fix EXCAVA’s motion blur—it’s a temporal artifact, not a spatial one. The real risk is wasti"
   },
   {
    "id": "mining-w1",
@@ -304,6 +304,32 @@
    "last_position": "Run PR-Agent in shadow mode on *all* PRs for two weeks first. This gives us real-world data on its impact without riskin"
   },
   {
+   "id": "visualization-w1",
+   "name": "Facet",
+   "dept": "visualization",
+   "role": "doer",
+   "turns_7d": 26,
+   "rooms_7d": 13,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Choose a full-width top banner for critical controls and context. It stays visible no matter where users focus—center gr"
+  },
+  {
+   "id": "visualization-checker",
+   "name": "Pane",
+   "dept": "visualization",
+   "role": "checker",
+   "turns_7d": 26,
+   "rooms_7d": 13,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Pane: A full-width top banner buries the graph under a second layer of chrome—users scroll to see data, not controls. Th"
+  },
+  {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
@@ -316,32 +342,6 @@
    "positions_held": 30,
    "last_position": "DECISION: Run a 48-hour A/B test on 10k clips comparing write-through vs write-back version vectors, measuring both +5%/",
    "proposed": 2
-  },
-  {
-   "id": "visualization-w1",
-   "name": "Facet",
-   "dept": "visualization",
-   "role": "doer",
-   "turns_7d": 25,
-   "rooms_7d": 13,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Choose a sticky left sidebar that collapses to a thin tab when unused. It keeps key controls and context always visible "
-  },
-  {
-   "id": "visualization-checker",
-   "name": "Pane",
-   "dept": "visualization",
-   "role": "checker",
-   "turns_7d": 25,
-   "rooms_7d": 13,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Pane: A sticky left sidebar still risks users missing updates if they’re deep in the graph—focused users scan the center"
   },
   {
    "id": "accessibility-lead",
@@ -370,8 +370,8 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Hybrid pipeline—run VFI-Flow only on keyframes with worst motion blur, measured by optical flow variance > thr",
-   "proposed": 12,
-   "shipped": 12
+   "proposed": 11,
+   "shipped": 11
   },
   {
    "id": "improve-lead",
@@ -473,26 +473,26 @@
    "name": "Anchor",
    "dept": "links",
    "role": "doer",
-   "turns_7d": 10,
-   "rooms_7d": 10,
+   "turns_7d": 11,
+   "rooms_7d": 11,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run the link-checker on the live Mission Control Dashboard to scan for broken links. The report will list all 404s and r"
+   "last_position": "Run the link-checker on the live Mission Control Dashboard to scan for broken links. The tool will produce a report list"
   },
   {
    "id": "links-checker",
    "name": "Tether",
    "dept": "links",
    "role": "checker",
-   "turns_7d": 10,
-   "rooms_7d": 10,
+   "turns_7d": 11,
+   "rooms_7d": 11,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: The action is mission work—it audits existing links for 404s and redirects, which directly advances the links d"
+   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
   },
   {
    "id": "links-lead-x",

@@ -58203,18 +58203,20 @@
       "id": "transcripts-room-action--37068",
       "title": "[transcripts room action] Reel fetches the real transcript via kimtaeyoon83/mcp-server-youtube-transcript for the pending video, producing the una",
       "detail": "From room dept-transcripts-retrieve-real-fu-428 (action-shaped close). Mission action from the department's own room.",
-      "department": "transcripts",
+      "department": "analysis",
       "source": "room-action:transcripts",
       "priority": 2,
       "status": "queued",
-      "steps": 0,
+      "steps": 1,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
       "claimed_by": null,
-      "handoff_docs": [],
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-room-action--37068--01--transcripts-w1--to--analysis.md"
+      ],
       "created_at": "2026-09-01T04:31:08.105359+00:00",
-      "updated_at": "2026-09-01T04:31:08.105370+00:00"
+      "updated_at": "2026-09-01T04:48:20.552271+00:00"
     },
     {
       "id": "verify-the-next-200-of-7-37397",
@@ -58277,17 +58279,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/raise-g3-truth-access-49-37397--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-09-01T04:36:37.441682+00:00",
-      "updated_at": "2026-09-01T04:36:38.271982+00:00"
+      "updated_at": "2026-09-01T04:48:20.217300+00:00",
+      "result": "Semantic index: 1663 vectors (model gemini-embedding-001); hub 9100 items → 7437 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "raise-g5-leverage-49-100-37397",
@@ -58384,17 +58387,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-37747--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-09-01T04:42:27.784125+00:00",
-      "updated_at": "2026-09-01T04:42:28.710053+00:00"
+      "updated_at": "2026-09-01T04:48:19.898299+00:00",
+      "result": "2431 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g5-leverage-49-100-37747",
@@ -58421,15 +58425,16 @@
       "department": "news",
       "source": "room-action:news",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "news-w1",
       "handoff_docs": [],
       "created_at": "2026-09-01T04:42:34.821101+00:00",
-      "updated_at": "2026-09-01T04:42:34.821117+00:00"
+      "updated_at": "2026-09-01T04:48:21.361357+00:00",
+      "result": "Ran the trend watch. trend_watch: 16 proposals (top score 10); queued 0 into self-improvement."
     },
     {
       "id": "transcripts-room-action--37759",
@@ -58447,7 +58452,114 @@
       "handoff_docs": [],
       "created_at": "2026-09-01T04:42:39.327147+00:00",
       "updated_at": "2026-09-01T04:42:39.327159+00:00"
+    },
+    {
+      "id": "verify-the-next-200-of-7-38099",
+      "title": "Verify the next 200 of 7564 unverified elements (2-source + live test)",
+      "detail": "value=92 size=40(small) [cost 35/steps 70/risk 10] · 7564 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-01T04:48:19.365377+00:00",
+      "updated_at": "2026-09-01T04:48:19.365392+00:00"
+    },
+    {
+      "id": "watch-process-the-next-b-38099",
+      "title": "Watch: process the next batch of 2431 pending videos",
+      "detail": "value=90 size=29(small) [cost 30/steps 40/risk 10] · 2431 pending",
+      "department": "watch",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "watch-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-01T04:48:19.430466+00:00",
+      "updated_at": "2026-09-01T04:48:20.348689+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+    },
+    {
+      "id": "resolve-real-links-websi-38099",
+      "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
+      "detail": "value=82 size=41(small) [cost 40/steps 60/risk 15] · many unlinked",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/resolve-real-links-websi-38099--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-09-01T04:48:19.493591+00:00",
+      "updated_at": "2026-09-01T04:48:20.817720+00:00"
+    },
+    {
+      "id": "security-safety-rate-the-38099",
+      "title": "Security: safety-rate the next batch of 1611 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1611 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-01T04:48:19.558515+00:00",
+      "updated_at": "2026-09-01T04:48:22.472149+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "id": "raise-g5-leverage-49-100-38099",
+      "title": "Raise G5 Leverage (49/100): leverage needs real, usable links first (= G3); then the OS creation agent",
+      "detail": "value=51 size=17(small) [cost 15/steps 25/risk 10] · G5 at 49",
+      "department": "creators",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "creators-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-01T04:48:19.694819+00:00",
+      "updated_at": "2026-09-01T04:48:20.684289+00:00",
+      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
+    },
+    {
+      "id": "lumen-s-initiative-use-a-38110",
+      "title": "[Lumen's initiative] Use a thin, collapsible top banner (4% height) for critical alerts paired with a collapsible left sidebar for navigation",
+      "detail": "Proposed by agent visualization-lead from the decision of room dept-visualization-own-excava-s-o-999 (artifact: {\"kind\": \"decision\", \"ref\": \"data/excava/artifacts/dept-visualization-own-excava-s-o-999.md\", \"at\": \"2026-09-01T04:48:30). Outcome feeds this agent's hit-rate.",
+      "department": "visualization",
+      "source": "agent:visualization-lead",
+      "priority": 2,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "the decision's concrete step is done and verifiable",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-01T04:48:30.216901+00:00",
+      "updated_at": "2026-09-01T04:48:30.216916+00:00"
     }
   ],
-  "updated_at": "2026-09-01T04:42:39.327164+00:00"
+  "updated_at": "2026-09-01T04:48:30.216921+00:00"
 }

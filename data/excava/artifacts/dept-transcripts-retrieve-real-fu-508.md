@@ -1,12 +1,16 @@
 # transcripts: Retrieve REAL full transcripts/captions for pending videos (residential IP; gentle pacing)
 
-> Decision artifact · room `dept-transcripts-retrieve-real-fu-508` (dept) · 2026-07-31T12:41:15.761883+00:00
-> Participants: Reel · synthesized by groq/llama-3.3-70b-versatile
+> Decision artifact · room `dept-transcripts-retrieve-real-fu-508` (dept) · 2026-09-01T04:54:21.314098+00:00
+> Participants: Reel, Scriv, Echo · synthesized by mistral/mistral-small-latest
 
-**Decision:** Retrieve full transcripts/captions for pending videos using a residential IP and gentle pacing.
-1. **Query YouTube transcript server**: Use `kimtaeyoon83/mcp-server-youtube-transcript` to request the transcript.
-2. **Configure residential IP**: Set up the system to use a residential IP for the query.
-3. **Implement gentle pacing**: Ensure the query is sent at a gentle pace to avoid overwhelming the server.
-4. **Handle query response**: Parse the response from the YouTube transcript server.
-5. **Save transcript**: Store the retrieved transcript/captions for the pending video.
-**What changed:** The approach to retrieving transcripts now utilizes a residential IP and gentle pacing.
+**Decision:**
+
+**Plan:**
+1. Reel executes `kimtaeyoon83/mcp-server-youtube-transcript` to fetch the full transcript for the pending video.
+2. The tool retrieves and returns the complete, real transcript file.
+3. Reel saves the transcript as a file for the lead to inspect.
+4. Lead reviews the transcript for accuracy and completeness.
+5. If needed, Reel re-runs the tool with adjusted parameters (e.g., language, pacing) for refinement.
+6. Final transcript is archived for downstream processing.
+
+**What changed:** Action confirmed—Reel will now fetch the real transcript using the specified tool.

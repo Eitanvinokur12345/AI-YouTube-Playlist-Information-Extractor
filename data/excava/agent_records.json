@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-01T04:37:16.938701+00:00",
+ "generated_at": "2026-09-01T04:43:08.788589+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,21 +8,21 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 174,
+   "turns_7d": 175,
    "rooms_7d": 33,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: The action is valid MISSION work—kimtaeyoon83/mcp-server-youtube-transcript retrieves real transcripts. No fix "
+   "last_position": "The single log’s write-ahead checksum still trusts the storage layer’s *claim*—if the disk controller lies, corruption p"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 104,
+   "turns_7d": 105,
    "rooms_7d": 46,
    "engines_used": [
     "mistral"
@@ -48,26 +48,26 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 96,
-   "rooms_7d": 29,
+   "turns_7d": 97,
+   "rooms_7d": 30,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the dual-log system with independent checksums and a lightweight validator. This splits the risk across two separa"
+   "last_position": "I will run BloodHound-MCP against the full earnings call transcript to map all entities and relationships, producing a s"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 96,
-   "rooms_7d": 29,
+   "turns_7d": 97,
+   "rooms_7d": 30,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The dual-log’s separate storage paths don’t fix the disk controller lie—they just move it to the validator. A single log"
+   "last_position": "Verdict: Chisel’s plan is MISSION work—BloodHound-MCP can ingest the transcript. Fix: Confirm the transcript is in plain"
   },
   {
    "id": "memory-w1",
@@ -256,39 +256,39 @@
    "name": "Facet",
    "dept": "visualization",
    "role": "doer",
-   "turns_7d": 33,
+   "turns_7d": 34,
    "rooms_7d": 17,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Use a **collapsible left sidebar** for primary navigation and context. It keeps every tool and layer visible at a glance"
+   "last_position": "Choose a **thin, always-visible top strip for critical alerts** paired with the collapsible left sidebar. The top strip "
   },
   {
    "id": "visualization-checker",
    "name": "Pane",
    "dept": "visualization",
    "role": "checker",
-   "turns_7d": 33,
+   "turns_7d": 34,
    "rooms_7d": 17,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Pane: A collapsible sidebar still buries critical updates under layers of scroll—users won’t notice alerts if they’re bu"
+   "last_position": "Pane: A thin top strip for alerts risks drowning users in noise—every minor refresh or error clutters the interface, mak"
   },
   {
    "id": "transcripts-lead",
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 31,
-   "rooms_7d": 31,
+   "turns_7d": 32,
+   "rooms_7d": 32,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Reel fetches the real transcript via kimtaeyoon83/mcp-server-youtube-transcript for the pending video, producing",
+   "last_position": "ACTION: Reel fetches the real transcript for the pending video via kimtaeyoon83/mcp-server-youtube-transcript and confir",
    "proposed": 2
   },
   {
@@ -374,6 +374,45 @@
    "shipped": 14
   },
   {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 17,
+   "rooms_7d": 17,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run the link-checker on the live Mission Control Dashboard to scan for broken links. The scan will produce a report list"
+  },
+  {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 17,
+   "rooms_7d": 17,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work—our link-checker audits live pag"
+  },
+  {
+   "id": "news-lead",
+   "name": "Wire",
+   "dept": "news",
+   "role": "lead",
+   "turns_7d": 16,
+   "rooms_7d": 16,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Wire parses OpenAI’s official blog feed, filters for AI research or product announcements, and returns the newes"
+  },
+  {
    "id": "news-w1",
    "name": "Scoop",
    "dept": "news",
@@ -415,32 +454,6 @@
    "shipped": 16
   },
   {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 16,
-   "rooms_7d": 16,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run the link-checker on the live Mission Control Dashboard to scan for broken links. This will produce a report listing "
-  },
-  {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
-   "role": "checker",
-   "turns_7d": 16,
-   "rooms_7d": 16,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is mission work—our link-checker audits live pages for 404s and redirects."
-  },
-  {
    "id": "links-lead-x",
    "name": "LinLea",
    "dept": "links",
@@ -452,19 +465,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard."
-  },
-  {
-   "id": "news-lead",
-   "name": "Wire",
-   "dept": "news",
-   "role": "lead",
-   "turns_7d": 15,
-   "rooms_7d": 15,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Wire parses OpenAI’s official blog feed, filters for AI research, product, or policy announcements, and surfaces"
   },
   {
    "id": "improve-lead",

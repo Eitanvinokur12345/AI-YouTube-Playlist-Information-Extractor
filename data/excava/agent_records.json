@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-01T04:07:34.126989+00:00",
+ "generated_at": "2026-09-01T04:13:48.108394+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,40 +8,40 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 168,
-   "rooms_7d": 30,
+   "turns_7d": 170,
+   "rooms_7d": 31,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "The single append-only log with write-ahead checksum still assumes the storage layer never fails—what if the disk contro"
+   "last_position": "The single append-only log still assumes the storage layer’s checksum enforcement is infallible—what if the disk control"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 102,
-   "rooms_7d": 45,
+   "turns_7d": 103,
+   "rooms_7d": 46,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the single append-only log with write-ahead checksum enforced by the storage layer. It guarantees transcripts are "
+   "last_position": "I’ll run the Arcads AI Video agent on the target marketing video to extract high-value marketing insights beyond the tra"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 94,
-   "rooms_7d": 30,
+   "turns_7d": 96,
+   "rooms_7d": 31,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will use the kimtaeyoon83/mcp-server-youtube-transcript tool to fetch the full transcript for the pending video. The o"
+   "last_position": "Adopt the single append-only log with write-ahead checksum enforced by the storage layer. It guarantees transcripts are "
   },
   {
    "id": "analysis-w1",
@@ -74,8 +74,8 @@
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 50,
-   "rooms_7d": 50,
+   "turns_7d": 51,
+   "rooms_7d": 51,
    "engines_used": [
     "mistral"
    ],
@@ -148,6 +148,32 @@
    "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
   },
   {
+   "id": "power-w1",
+   "name": "Gearbox",
+   "dept": "power",
+   "role": "doer",
+   "turns_7d": 39,
+   "rooms_7d": 20,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Add VFI-Flow to EXCAVA’s motion pipeline. It reconstructs motion blur into sharp frames by filling gaps between existing"
+  },
+  {
+   "id": "power-checker",
+   "name": "Torque",
+   "dept": "power",
+   "role": "checker",
+   "turns_7d": 39,
+   "rooms_7d": 20,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "VFI-Flow’s 20-30% compute hit is a gamble—EXCAVA’s temporal bottleneck isn’t blur, it’s temporal *artifacts* like ghosti"
+  },
+  {
    "id": "creators-lead",
    "name": "Nova",
    "dept": "creators",
@@ -185,32 +211,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled \"Created by EXCAVA\" with tests."
-  },
-  {
-   "id": "power-w1",
-   "name": "Gearbox",
-   "dept": "power",
-   "role": "doer",
-   "turns_7d": 38,
-   "rooms_7d": 20,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline. It sharpens fine details in low-res frames without hal"
-  },
-  {
-   "id": "power-checker",
-   "name": "Torque",
-   "dept": "power",
-   "role": "checker",
-   "turns_7d": 38,
-   "rooms_7d": 20,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Depth-aware upscaling won’t fix EXCAVA’s motion blur—it’s a temporal artifact, not a spatial one. The real risk is wasti"
   },
   {
    "id": "security-lead",
@@ -322,13 +322,13 @@
    "name": "Frame",
    "dept": "watch",
    "role": "checker",
-   "turns_7d": 28,
-   "rooms_7d": 28,
+   "turns_7d": 29,
+   "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s ingestion pipeline already routes marketing videos for visual/audio anal"
+   "last_position": "Verdict: This is MISSION work—Arcads AI Video’s ingestion pipeline already routes video content for structured analysis "
   },
   {
    "id": "improve-w1",
@@ -378,15 +378,41 @@
    "name": "Lumen",
    "dept": "visualization",
    "role": "lead",
+   "turns_7d": 15,
+   "rooms_7d": 15,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Use a thin, collapsible top banner (4% height) for critical alerts that pulses when urgent, paired with a pers",
+   "proposed": 15,
+   "shipped": 14
+  },
+  {
+   "id": "news-w1",
+   "name": "Scoop",
+   "dept": "news",
+   "role": "doer",
    "turns_7d": 14,
    "rooms_7d": 14,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Use a hybrid alert system—persistent 4% top banner with pulsing indicator for critical updates, plus a tiny si",
-   "proposed": 14,
-   "shipped": 14
+   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a concise summary of the"
+  },
+  {
+   "id": "news-checker",
+   "name": "Factcheck",
+   "dept": "news",
+   "role": "checker",
+   "turns_7d": 14,
+   "rooms_7d": 14,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is valid MISSION work."
   },
   {
    "id": "links-w1",
@@ -415,6 +441,19 @@
    "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work—our tool already does this."
   },
   {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 14,
+   "rooms_7d": 14,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard with dead/redirected links f"
+  },
+  {
    "id": "news-lead",
    "name": "Wire",
    "dept": "news",
@@ -426,32 +465,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Wire parses OpenAI’s official blog feed, filters for AI-related posts, and returns the latest entry’s headline, "
-  },
-  {
-   "id": "news-w1",
-   "name": "Scoop",
-   "dept": "news",
-   "role": "doer",
-   "turns_7d": 13,
-   "rooms_7d": 13,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "I’ll open OpenAI’s official blog feed and extract the latest AI-related post. This will produce a fresh, verified AI-new"
-  },
-  {
-   "id": "news-checker",
-   "name": "Factcheck",
-   "dept": "news",
-   "role": "checker",
-   "turns_7d": 13,
-   "rooms_7d": 13,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is valid MISSION work."
   },
   {
    "id": "improve-lead",
@@ -495,30 +508,17 @@
    "last_position": "Run the A/B test on PRs from *new contributors only*—they’re less likely to have existing review patterns, making false "
   },
   {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
-   "role": "lead",
-   "turns_7d": 13,
-   "rooms_7d": 13,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard, listing all dead/redirected"
-  },
-  {
    "id": "analysis-lead",
    "name": "Marrow",
    "dept": "analysis",
    "role": "lead",
-   "turns_7d": 9,
-   "rooms_7d": 9,
+   "turns_7d": 10,
+   "rooms_7d": 10,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript converted to BloodHound CSV format to generate a"
+   "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a structured graph of participants, "
   },
   {
    "id": "excava-core",

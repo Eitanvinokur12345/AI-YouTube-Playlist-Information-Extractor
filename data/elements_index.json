@@ -1,22 +1,22 @@
 {
- "generated_at": "2026-08-31T23:44:59.001414+00:00",
- "total": 12582,
+ "generated_at": "2026-09-01T04:56:02.591074+00:00",
+ "total": 12590,
  "counts": {
-  "skill": 4157,
-  "tool": 3332,
+  "skill": 4160,
+  "tool": 3335,
   "prompt": 817,
   "command": 169,
   "connector": 1611,
-  "design": 1678,
+  "design": 1679,
   "format": 179,
-  "model": 638,
+  "model": 639,
   "creation": 1
  },
  "stubs": 1919,
  "by_status": {
   "verified": 2809,
   "niche": 2079,
-  "unverified": 7564,
+  "unverified": 7572,
   "dead": 130
  },
  "note": "READ-ONLY derivative. Sources of truth = the per-type files; write via element_model.set_field only.",
@@ -144010,6 +144010,72 @@
    "related": []
   },
   {
+   "id": "skill:generative-art-creation",
+   "type": "skill",
+   "name": "Generative Art Creation",
+   "what": "The ability to create abstract visual art using generative algorithms and tools, producing unique and often looping animations or static images.",
+   "category": "image creation",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:real-time-webgl2-rendering",
+   "type": "skill",
+   "name": "Real-time WebGL2 Rendering",
+   "what": "Proficiency in rendering interactive 2D and 3D graphics directly in a web browser using the WebGL2 API, enabling complex visual effects and animations without plugins.",
+   "category": "code",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 4,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:seamless-loop-animation",
+   "type": "skill",
+   "name": "Seamless Loop Animation",
+   "what": "The technique of creating animations that can repeat indefinitely without a noticeable break or jump, crucial for backgrounds and continuous visual effects.",
+   "category": "video creation",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
    "id": "tool:claude",
    "type": "tool",
    "name": "Claude",
@@ -258098,6 +258164,75 @@
    "related": []
   },
   {
+   "id": "tool:lumen",
+   "type": "tool",
+   "name": "LUMEN",
+   "what": "A self-contained, dependency-free web-based generative shader studio that creates looping abstract shader art. It features 9 WebGL2 art modes, synth-style blending, perfect-loop animation, gradient sets, and allows export to PNG, WebM, or GIF without watermarks or accounts.",
+   "category": "image creation",
+   "source_videos": [],
+   "links": {
+    "website": "lumenshaders.vercel.app",
+    "github": "github.com/Leonxlnx/lumenshaders"
+   },
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "tool:webgl2",
+   "type": "tool",
+   "name": "WebGL2",
+   "what": "A JavaScript API for rendering interactive 2D and 3D graphics within any compatible web browser without the use of plug-ins. It is the underlying technology enabling LUMEN's real-time shader rendering.",
+   "category": "code",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 4,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "tool:webcodecs",
+   "type": "tool",
+   "name": "WebCodecs",
+   "what": "A web API that provides low-level access to media codecs, allowing web applications to encode and decode video and audio frames directly. Used by LUMEN for offline WebM video encoding.",
+   "category": "code",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": 4,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
    "id": "prompt:master-assistant-system-prompt",
    "type": "prompt",
    "name": "Master Assistant System Prompt",
@@ -308428,7 +308563,7 @@
     ],
     "n_sources": 1,
     "method": "keyless-extract",
-    "at": "2026-08-28T18:34:01.654635+00:00"
+    "at": "2026-09-01T04:55:59.600792+00:00"
    },
    "verified": {
     "status": "unverified",
@@ -394161,6 +394296,28 @@
    "related": []
   },
   {
+   "id": "design:lumen-web-ui",
+   "type": "design",
+   "name": "LUMEN Web UI",
+   "what": "The UI features a dark theme with a clean, functional layout. A top bar contains the application title ('LUMEN, the generative shader studio') and export options (Image, Video, GIF, Set). The main content area is dominated by a large preview of the generated shader art. Below the preview, there's a control panel with two main sections: 'STYLE' and 'COLOR'. The 'STYLE' section has a grid of buttons for 9 distinct art modes (e.g., Liquid, Silk, Ridge, Wave, Ring, Cell, Flux, Aura, Data, Halftone, Glyphs, Reeded, Mosaic), along with 'Randomize', 'New style', and 'Save style' buttons. The 'COLOR' ",
+   "category": "",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
    "id": "format:ai-agent-organizational-chart",
    "type": "format",
    "name": "AI Agent Organizational Chart",
@@ -405249,6 +405406,30 @@
     "tool:qwen-2-5-3b",
     "tool:qwen-3-6-27b"
    ]
+  },
+  {
+   "id": "model:lumen",
+   "type": "model",
+   "name": "LUMEN",
+   "what": "A self-contained, dependency-free web-based generative shader studio that creates looping abstract shader art. It features 9 WebGL2 art modes, synth-style blending, perfect-loop animation, gradient sets, and allows export to PNG, WebM, or GIF without watermarks or accounts.",
+   "category": "image creation",
+   "source_videos": [],
+   "links": {
+    "source_url": "https://www.youtube.com/watch?v=Xi1YnY3Kcd4"
+   },
+   "install": "",
+   "quality_score": 5,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
   },
   {
    "id": "model:ruflo",

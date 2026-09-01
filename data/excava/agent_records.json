@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-31T23:42:43.893957+00:00",
+ "generated_at": "2026-09-01T02:42:39.566696+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,48 +8,48 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 173,
-   "rooms_7d": 29,
+   "turns_7d": 155,
+   "rooms_7d": 26,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "The write-through version vector still lets a race flip the logical clock before both logs sync, hiding the split until "
+   "last_position": "The write-through checksum plus background reconciliation still risks silent corruption if the reconciliation worker lag"
   },
   {
    "id": "watch-w1",
    "name": "Scope",
    "dept": "watch",
    "role": "doer",
-   "turns_7d": 104,
-   "rooms_7d": 44,
+   "turns_7d": 96,
+   "rooms_7d": 42,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the dual-log system with a lightweight, read-only auditor sampling both logs every 5 minutes. It keeps the logs fu"
+   "last_position": "Adopt the dual-log system with a write-through checksum plus a background reconciliation worker now. Two fully independe"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 97,
-   "rooms_7d": 29,
+   "turns_7d": 86,
+   "rooms_7d": 26,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the dual-log system with a write-through version vector now. Two fully independent logs run in parallel, and every"
+   "last_position": "Adopt the write-through version vector in the dual-log system now. It guarantees every write is immediately visible to r"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 92,
-   "rooms_7d": 24,
+   "turns_7d": 84,
+   "rooms_7d": 23,
    "engines_used": [
     "mistral"
    ],
@@ -61,8 +61,8 @@
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 92,
-   "rooms_7d": 24,
+   "turns_7d": 84,
+   "rooms_7d": 23,
    "engines_used": [
     "mistral"
    ],
@@ -230,7 +230,7 @@
    "name": "Gearbox",
    "dept": "power",
    "role": "doer",
-   "turns_7d": 34,
+   "turns_7d": 33,
    "rooms_7d": 17,
    "engines_used": [
     "mistral"
@@ -243,7 +243,7 @@
    "name": "Torque",
    "dept": "power",
    "role": "checker",
-   "turns_7d": 34,
+   "turns_7d": 33,
    "rooms_7d": 17,
    "engines_used": [
     "mistral"
@@ -256,27 +256,13 @@
    "name": "Pick",
    "dept": "mining",
    "role": "doer",
-   "turns_7d": 31,
-   "rooms_7d": 31,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a raw dataset"
-  },
-  {
-   "id": "transcripts-lead",
-   "name": "Echo",
-   "dept": "transcripts",
-   "role": "lead",
    "turns_7d": 29,
    "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Log churn and transcript timestamps together in the same 5-minute bucket, owned by data science, using a fixed",
-   "proposed": 2
+   "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a raw dataset"
   },
   {
    "id": "watch-lead",
@@ -296,8 +282,8 @@
    "name": "Frame",
    "dept": "watch",
    "role": "checker",
-   "turns_7d": 28,
-   "rooms_7d": 28,
+   "turns_7d": 27,
+   "rooms_7d": 27,
    "engines_used": [
     "mistral"
    ],
@@ -318,12 +304,26 @@
    "last_position": "Run PR-Agent in shadow mode on *all* PRs for two weeks first. This gives us real-world data on its impact without riskin"
   },
   {
+   "id": "transcripts-lead",
+   "name": "Echo",
+   "dept": "transcripts",
+   "role": "lead",
+   "turns_7d": 24,
+   "rooms_7d": 24,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Log churn and transcript timestamps together in the same 5-minute bucket, owned by data science, using a fixed",
+   "proposed": 2
+  },
+  {
    "id": "accessibility-lead",
    "name": "Access",
    "dept": "accessibility",
    "role": "lead",
-   "turns_7d": 24,
-   "rooms_7d": 24,
+   "turns_7d": 23,
+   "rooms_7d": 23,
    "engines_used": [
     "mistral"
    ],
@@ -370,47 +370,8 @@
    ],
    "positions_held": 30,
    "last_position": "DECISION: Hybrid pipeline—run VFI-Flow only on keyframes with worst motion blur, measured by optical flow variance > thr",
-   "proposed": 13,
-   "shipped": 13
-  },
-  {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 16,
-   "rooms_7d": 16,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run the link-checker on the live Mission Control Dashboard to scan for broken links. The report will list all 404s and r"
-  },
-  {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
-   "role": "checker",
-   "turns_7d": 16,
-   "rooms_7d": 16,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action is mission work—it audits existing links for 404s and redirects, which directly advances the links d"
-  },
-  {
-   "id": "links-lead-x",
-   "name": "LinLea",
-   "dept": "links",
-   "role": "lead",
-   "turns_7d": 16,
-   "rooms_7d": 16,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard, including all 404s and redi"
+   "proposed": 12,
+   "shipped": 12
   },
   {
    "id": "improve-lead",
@@ -506,6 +467,45 @@
    "last_position": "DECISION: Anchor the legend as a thin, persistent sidebar that collapses to a tab when unused—visible enough to solve th",
    "proposed": 11,
    "shipped": 11
+  },
+  {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 10,
+   "rooms_7d": 10,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run the link-checker on the live Mission Control Dashboard to scan for broken links. The report will list all 404s and r"
+  },
+  {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 10,
+   "rooms_7d": 10,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is mission work—it audits existing links for 404s and redirects, which directly advances the links d"
+  },
+  {
+   "id": "links-lead-x",
+   "name": "LinLea",
+   "dept": "links",
+   "role": "lead",
+   "turns_7d": 10,
+   "rooms_7d": 10,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard, including all 404s and redi"
   },
   {
    "id": "analysis-lead",

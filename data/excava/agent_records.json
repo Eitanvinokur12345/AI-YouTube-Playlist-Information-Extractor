@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-01T04:25:40.760821+00:00",
+ "generated_at": "2026-09-01T04:31:26.827270+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,14 +8,14 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 172,
+   "turns_7d": 173,
    "rooms_7d": 32,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Storage-layer checksums are only as good as the hardware that enforces them—if the disk controller lies, the single log "
+   "last_position": "The single log’s write-ahead checksum still trusts the storage layer’s *claim* of enforcement—if the disk controller fak"
   },
   {
    "id": "watch-w1",
@@ -35,39 +35,39 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 97,
+   "turns_7d": 98,
    "rooms_7d": 32,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will fetch the full transcript for the pending video using the kimtaeyoon83/mcp-server-youtube-transcript tool. This w"
+   "last_position": "Adopt the single append-only log with write-ahead checksum enforced by the storage layer. It guarantees transcripts are "
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 94,
-   "rooms_7d": 28,
+   "turns_7d": 95,
+   "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the dual-log system with independent checksums per log and a background validator. This catches silent corruption "
+   "last_position": "I will run BloodHound-MCP against the full earnings call transcript to map all explicit and implicit relationships betwe"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 94,
-   "rooms_7d": 28,
+   "turns_7d": 95,
+   "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The dual-log system doesn’t solve the disk controller lie—it just moves the failure point to the validator. A single log"
+   "last_position": "Verdict: Chisel’s plan is MISSION work—BloodHound-MCP can ingest the transcript. Fix: Skip the \"structured graph\" framin"
   },
   {
    "id": "memory-w1",
@@ -282,13 +282,13 @@
    "name": "Echo",
    "dept": "transcripts",
    "role": "lead",
-   "turns_7d": 30,
-   "rooms_7d": 30,
+   "turns_7d": 31,
+   "rooms_7d": 31,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "ACTION: Reel fetches the real transcript via kimtaeyoon83/mcp-server-youtube-transcript for video ID \"dQw4w9WgXcQ\" and c",
+   "last_position": "ACTION: Reel fetches the real transcript via kimtaeyoon83/mcp-server-youtube-transcript for the pending video, producing",
    "proposed": 2
   },
   {
@@ -374,6 +374,60 @@
    "shipped": 14
   },
   {
+   "id": "visualization-lead",
+   "name": "Lumen",
+   "dept": "visualization",
+   "role": "lead",
+   "turns_7d": 16,
+   "rooms_7d": 16,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Use a hybrid alert system—persistent 4% top banner with pulsing indica for critical alerts, expanding to a 6% ",
+   "proposed": 16,
+   "shipped": 15
+  },
+  {
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
+   "turns_7d": 16,
+   "rooms_7d": 16,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run the link-checker on the live Mission Control Dashboard to scan for broken links. This will produce a report listing "
+  },
+  {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 16,
+   "rooms_7d": 16,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is mission work—our link-checker audits live pages for 404s and redirects."
+  },
+  {
+   "id": "news-lead",
+   "name": "Wire",
+   "dept": "news",
+   "role": "lead",
+   "turns_7d": 15,
+   "rooms_7d": 15,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Wire parses OpenAI’s official blog feed, filters for AI research, product, or policy announcements, and surfaces"
+  },
+  {
    "id": "news-w1",
    "name": "Scoop",
    "dept": "news",
@@ -400,47 +454,6 @@
    "last_position": "Verdict: The action is valid MISSION work. Fix: Specify \"AI-related\" as \"AI research, product, or policy announcements\" "
   },
   {
-   "id": "visualization-lead",
-   "name": "Lumen",
-   "dept": "visualization",
-   "role": "lead",
-   "turns_7d": 15,
-   "rooms_7d": 15,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Use a thin, collapsible top banner (4% height) for critical alerts that pulses when urgent, paired with a pers",
-   "proposed": 15,
-   "shipped": 15
-  },
-  {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 15,
-   "rooms_7d": 15,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run the link-checker on the live Mission Control Dashboard to scan for broken links. The report will list any dead URLs "
-  },
-  {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
-   "role": "checker",
-   "turns_7d": 15,
-   "rooms_7d": 15,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work our tool performs."
-  },
-  {
    "id": "links-lead-x",
    "name": "LinLea",
    "dept": "links",
@@ -452,19 +465,6 @@
    ],
    "positions_held": 30,
    "last_position": "ACTION: Anchor publishes the verified, updated link inventory for Mission Control Dashboard with all dead links removed "
-  },
-  {
-   "id": "news-lead",
-   "name": "Wire",
-   "dept": "news",
-   "role": "lead",
-   "turns_7d": 14,
-   "rooms_7d": 14,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Wire parses OpenAI’s official blog feed, filters for AI-related posts, and drafts a one-line lead stating the de"
   },
   {
    "id": "improve-lead",

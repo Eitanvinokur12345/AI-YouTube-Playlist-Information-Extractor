@@ -1,16 +1,16 @@
 # memory: Recall by meaning, relate elements, build the brain graph, embed unembedded elements.
 
-> Decision artifact · room `dept-memory-recall-by-meaning-rel-942` (dept) · 2026-07-13T09:39:21.082671+00:00
-> Participants: Graft, Root · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-memory-recall-by-meaning-rel-942` (dept) · 2026-09-01T03:55:04.959469+00:00
+> Participants: Graft · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Execute the memory linking command to unify all memory IDs in the conversation into the consolidated memory graph.
-2. Embed prior context into the brain graph for future recall by meaning.
-3. Merge all conversation elements into a single, searchable memory structure.
-4. Ensure all embedded elements are retrievable via semantic queries.
-5. Validate the unified memory graph for completeness and accuracy.
-6. Document the memory consolidation process for future reference.
+1. Query the Hindsight memory database via the MCP server to retrieve all unembedded memory fragments.
+2. Compile and prioritize the list of unembedded elements based on relevance or urgency.
+3. Process the top-priority fragments first, embedding them into the memory graph.
+4. Relate newly embedded elements to existing memory nodes to strengthen the brain graph.
+5. Verify successful embedding by cross-referencing with the Hindsight database.
+6. Log the embedded elements and update the memory graph’s metadata.
 
-**What changed:** All prior conversation elements were embedded into a unified memory graph for semantic recall.
+**What changed:** Unembedded memory fragments are now identified and prioritized for embedding.

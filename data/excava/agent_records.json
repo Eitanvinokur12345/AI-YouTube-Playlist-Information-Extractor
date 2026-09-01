@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-01T03:49:19.544604+00:00",
+ "generated_at": "2026-09-01T03:55:12.255477+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,14 +8,14 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 165,
-   "rooms_7d": 28,
+   "turns_7d": 166,
+   "rooms_7d": 29,
    "engines_used": [
     "mistral",
     "nvidia"
    ],
    "positions_held": 30,
-   "last_position": "Verdict: The action is MISSION work our tool can do."
+   "last_position": "The dual-log system with write-through checksum and background reconciliation still risks silent corruption if the check"
   },
   {
    "id": "watch-w1",
@@ -35,52 +35,52 @@
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 92,
-   "rooms_7d": 28,
+   "turns_7d": 93,
+   "rooms_7d": 29,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "I will retrieve the full transcript for the pending video using the kimtaeyoon83 tool. This will produce the complete, v"
+   "last_position": "Adopt the dual-log system with a write-through checksum plus a background reconciliation job. This guarantees no lost or"
   },
   {
    "id": "analysis-w1",
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 89,
-   "rooms_7d": 24,
+   "turns_7d": 90,
+   "rooms_7d": 25,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the dual-log system with a write-through checksum plus a background reconciliation worker now. Two fully independe"
+   "last_position": "I will run BloodHound-MCP against the full earnings call transcript to map all privilege relationships and expose hidden"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 89,
-   "rooms_7d": 24,
+   "turns_7d": 90,
+   "rooms_7d": 25,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The write-through checksum plus background reconciliation still risks silent corruption if the checksum itself races the"
+   "last_position": "Verdict: Chisel’s plan is MISSION work—BloodHound-MCP can ingest the transcript and output a BloodHound graph—but the tr"
   },
   {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
    "role": "doer",
-   "turns_7d": 47,
-   "rooms_7d": 47,
+   "turns_7d": 48,
+   "rooms_7d": 48,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded elements. This will produce a list"
+   "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded memory elements."
   },
   {
    "id": "accessibility-w1",
@@ -187,6 +187,32 @@
    "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled \"Created by EXCAVA\" with tests."
   },
   {
+   "id": "power-w1",
+   "name": "Gearbox",
+   "dept": "power",
+   "role": "doer",
+   "turns_7d": 37,
+   "rooms_7d": 19,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Add VFI-Flow to EXCAVA’s motion pipeline. It reconstructs motion blur into sharp frames by filling gaps in motion paths,"
+  },
+  {
+   "id": "power-checker",
+   "name": "Torque",
+   "dept": "power",
+   "role": "checker",
+   "turns_7d": 37,
+   "rooms_7d": 19,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "VFI-Flow’s 15% runtime hit is a gamble—EXCAVA’s temporal bottleneck isn’t blur alone, it’s motion *consistency* across f"
+  },
+  {
    "id": "security-lead",
    "name": "Bastion",
    "dept": "security",
@@ -226,32 +252,6 @@
    "last_position": "Verdict: Warden’s action is MISSION work—ToolHive can directly verify the LLM Guard container’s status and security post"
   },
   {
-   "id": "power-w1",
-   "name": "Gearbox",
-   "dept": "power",
-   "role": "doer",
-   "turns_7d": 36,
-   "rooms_7d": 19,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Add InstantX-ComfyUI’s depth-aware upscaler to EXCAVA’s pipeline. It sharpens fine details in frames without bloating co"
-  },
-  {
-   "id": "power-checker",
-   "name": "Torque",
-   "dept": "power",
-   "role": "checker",
-   "turns_7d": 36,
-   "rooms_7d": 19,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Depth-aware upscaling won’t fix EXCAVA’s motion blur—it’s a temporal artifact, not a spatial one. The real risk is wasti"
-  },
-  {
    "id": "mining-w1",
    "name": "Pick",
    "dept": "mining",
@@ -263,6 +263,20 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Query Product Hunt’s API for all posts tagged \"AI\" published in the last 7 days. This will produce a list of cur"
+  },
+  {
+   "id": "transcripts-lead",
+   "name": "Echo",
+   "dept": "transcripts",
+   "role": "lead",
+   "turns_7d": 28,
+   "rooms_7d": 28,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Reel fetches the real transcript via kimtaeyoon83/mcp-server-youtube-transcript and posts the full, verified tra",
+   "proposed": 2
   },
   {
    "id": "watch-lead",
@@ -302,20 +316,6 @@
    ],
    "positions_held": 30,
    "last_position": "Pane: A thin top banner solves the scrolling problem but creates a new one—users will miss updates if they’re deep in a "
-  },
-  {
-   "id": "transcripts-lead",
-   "name": "Echo",
-   "dept": "transcripts",
-   "role": "lead",
-   "turns_7d": 27,
-   "rooms_7d": 27,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "DECISION: Adopt the dual-log system with write-through checksums and a real-time background reconciliation worker that b",
-   "proposed": 2
   },
   {
    "id": "watch-checker",
@@ -374,6 +374,21 @@
    "shipped": 12
   },
   {
+   "id": "visualization-lead",
+   "name": "Lumen",
+   "dept": "visualization",
+   "role": "lead",
+   "turns_7d": 14,
+   "rooms_7d": 14,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "DECISION: Use a hybrid alert system—persistent 4% top banner with pulsing indicator for critical updates, plus a tiny si",
+   "proposed": 14,
+   "shipped": 13
+  },
+  {
    "id": "improve-lead",
    "name": "Ratchet",
    "dept": "improve",
@@ -415,19 +430,30 @@
    "last_position": "Run the A/B test on PRs from *new contributors only*—they’re less likely to have existing review patterns, making false "
   },
   {
-   "id": "visualization-lead",
-   "name": "Lumen",
-   "dept": "visualization",
-   "role": "lead",
+   "id": "links-w1",
+   "name": "Anchor",
+   "dept": "links",
+   "role": "doer",
    "turns_7d": 13,
    "rooms_7d": 13,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "DECISION: Anchor the legend as a thin, persistent top strip that collapses to a slim tab when unused.",
-   "proposed": 13,
-   "shipped": 13
+   "last_position": "Run the link-checker on the live Mission Control Dashboard to scan for broken links. The result will be a report listing"
+  },
+  {
+   "id": "links-checker",
+   "name": "Tether",
+   "dept": "links",
+   "role": "checker",
+   "turns_7d": 13,
+   "rooms_7d": 13,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Verdict: The action is mission work—our tool audits live links for 404s and redirects."
   },
   {
    "id": "news-lead",
@@ -467,32 +493,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: The action is valid MISSION work."
-  },
-  {
-   "id": "links-w1",
-   "name": "Anchor",
-   "dept": "links",
-   "role": "doer",
-   "turns_7d": 12,
-   "rooms_7d": 12,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run the link-checker on the live Mission Control Dashboard to scan for broken links. This will produce a report listing "
-  },
-  {
-   "id": "links-checker",
-   "name": "Tether",
-   "dept": "links",
-   "role": "checker",
-   "turns_7d": 12,
-   "rooms_7d": 12,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Verdict: The action audits existing links for 404s and redirects, which is mission work."
   },
   {
    "id": "links-lead-x",

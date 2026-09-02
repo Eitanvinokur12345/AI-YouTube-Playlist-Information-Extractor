@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-02T17:21:11.520505+00:00",
+ "generated_at": "2026-09-02T17:26:38.949475+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -34,26 +34,26 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 100,
-   "rooms_7d": 32,
+   "turns_7d": 101,
+   "rooms_7d": 33,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the dual-device approach: pair the $300 TPM-backed NVMe drive (Samsung PM1743) with the $50 PCIe-attached validato"
+   "last_position": "Adopt the \"Decision Board\" in the project tracker. It forces teams to pick their *top 3* decisions, not just dump everyt"
   },
   {
    "id": "analysis-checker",
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 100,
-   "rooms_7d": 32,
+   "turns_7d": 101,
+   "rooms_7d": 33,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The $200 Raspberry Pi CM5 validator with Coreboot still trusts *its* boot chain—Coreboot, firmware, and Linux IMA all ru"
+   "last_position": "The \"Decision Board\" still risks teams gaming the system by cherry-picking trivial wins to pad the board. The real fix i"
   },
   {
    "id": "watch-w1",
@@ -69,6 +69,32 @@
    "last_position": "Adopt the dual-device approach: pair the $300 TPM-backed NVMe drive (Samsung PM1743 with TCG Opal) with a $50 PCIe-attac"
   },
   {
+   "id": "accessibility-w1",
+   "name": "Ramp",
+   "dept": "accessibility",
+   "role": "doer",
+   "turns_7d": 53,
+   "rooms_7d": 27,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Adopt a 4px focus ring at 7:1 contrast by default for all interactive elements. This ensures keyboard users can see focu"
+  },
+  {
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
+   "role": "checker",
+   "turns_7d": 53,
+   "rooms_7d": 27,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Risk: 4px at 7:1 fails users toggling *both* reduced motion *and* high contrast—focus ring disappears when motion is off"
+  },
+  {
    "id": "memory-w1",
    "name": "Graft",
    "dept": "memory",
@@ -80,32 +106,6 @@
    ],
    "positions_held": 30,
    "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded memory elements. This will produce"
-  },
-  {
-   "id": "accessibility-w1",
-   "name": "Ramp",
-   "dept": "accessibility",
-   "role": "doer",
-   "turns_7d": 52,
-   "rooms_7d": 26,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Adopt a 4px focus ring at 7:1 contrast by default, then switch to 4px at 10:1 contrast when `prefers-reduced-motion` is "
-  },
-  {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 52,
-   "rooms_7d": 26,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Risk: Switching contrast based on `prefers-reduced-motion` introduces a timing gap—users who toggle motion mid-session m"
   },
   {
    "id": "visual-lead",
@@ -316,7 +316,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Use 4px focus ring at 10:1 contrast for all interactive elements, no media-query changes. Result: WCAG 2.2 AA-",
    "proposed": 24,
-   "shipped": 23
+   "shipped": 24
   },
   {
    "id": "improve-w1",

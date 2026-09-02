@@ -1,15 +1,16 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-418` (dept) · 2026-07-18T21:27:26.801993+00:00
-> Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-visual-mine-great-designs-fr-418` (dept) · 2026-09-02T16:13:40.296623+00:00
+> Participants: Easel, Squint, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Curate screenshots of high-impact hero sections from design-forward websites (e.g., Beverage Cans’ vibrant pink section).
-2. Tag each screenshot with metadata (source URL, color palette, typography notes).
-3. Organize artifacts into a "Taste Material" folder in the hub.
-4. Cross-reference patterns (e.g., bold gradients, minimalist layouts) in a shared design patterns doc.
-5. Schedule weekly reviews to add new artifacts and refine categorization.
+1. Open the official Model Context Protocol (MCP) website.
+2. Take a full-page screenshot of its homepage.
+3. Upload the screenshot to the hub with the filename "MCP Homepage Design Reference."
+4. Analyze the screenshot for design language, layout, and visual patterns.
+5. Extract key design elements (e.g., typography, spacing, color schemes) for reference.
+6. Share insights with the team for future design integration.
 
-**What changed:** Screenshots now serve as structured taste material artifacts in the hub.
+**What changed:** Added a full-page screenshot of the MCP homepage to the hub as a design reference.

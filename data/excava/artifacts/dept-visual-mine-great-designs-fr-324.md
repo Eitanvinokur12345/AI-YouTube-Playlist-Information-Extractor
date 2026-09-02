@@ -1,15 +1,15 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-324` (dept) · 2026-07-14T02:52:30.185695+00:00
-> Participants: Easel, Chroma · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-visual-mine-great-designs-fr-324` (dept) · 2026-09-02T04:59:52.862816+00:00
+> Participants: Easel, Squint, Chroma · synthesized by mistral/mistral-small-latest
 
-**Decision:** Frame Easel’s screenshot of the Beverage Cans website as taste material for the hub.
+**Decision:**
 
-**Plan:**  
-1. Easel opens the Beverage Cans website.  
-2. Easel takes a screenshot of the bright pink can design.  
-3. Chroma frameworks the screenshot for the hub.  
-4. Upload the screenshot to the hub as taste material.  
-5. Share the new taste material with the team for feedback.  
+**Plan:**
+1. Navigate to the official Model Context Protocol (MCP) website.
+2. Capture a full-page screenshot of the landing page.
+3. Upload the screenshot to the hub as taste material.
+4. Label the file with context (e.g., "MCP_landing_page_reference").
+5. Verify the upload is accessible and properly formatted in the hub.
 
-**What changed:** The decision to utilize a specific design was formalized to enhance the hub's resources.
+**What changed:** Added MCP landing page screenshot as design reference.

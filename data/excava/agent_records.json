@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-02T17:04:36.352383+00:00",
+ "generated_at": "2026-09-02T17:10:10.845832+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -34,7 +34,7 @@
    "name": "Chisel",
    "dept": "analysis",
    "role": "doer",
-   "turns_7d": 99,
+   "turns_7d": 100,
    "rooms_7d": 32,
    "engines_used": [
     "mistral"
@@ -47,13 +47,13 @@
    "name": "Sift",
    "dept": "analysis",
    "role": "checker",
-   "turns_7d": 99,
+   "turns_7d": 100,
    "rooms_7d": 32,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The $200 Raspberry Pi CM5 validator with Coreboot still trusts *its* boot chain—Coreboot, the SoC’s ROM, and the CM5’s p"
+   "last_position": "The $200 Raspberry Pi CM5 validator with Coreboot still trusts *its* boot chain—Coreboot, firmware, and Linux IMA all ru"
   },
   {
    "id": "watch-w1",
@@ -82,6 +82,45 @@
    "last_position": "Action: Query the Hindsight memory database via the MCP server to pull all unembedded memory elements. This will produce"
   },
   {
+   "id": "accessibility-w1",
+   "name": "Ramp",
+   "dept": "accessibility",
+   "role": "doer",
+   "turns_7d": 51,
+   "rooms_7d": 26,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Adopt 4px focus ring at 7:1 contrast for all interactive elements. This ensures keyboard users see clear focus at all ti"
+  },
+  {
+   "id": "accessibility-checker",
+   "name": "Reader",
+   "dept": "accessibility",
+   "role": "checker",
+   "turns_7d": 51,
+   "rooms_7d": 26,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Risk: 4px at 7:1 fails users toggling *both* reduced motion *and* high contrast—WCAG 2.2’s 3:1 minimum drops to 2:1 when"
+  },
+  {
+   "id": "visual-lead",
+   "name": "Chroma",
+   "dept": "visual",
+   "role": "lead",
+   "turns_7d": 50,
+   "rooms_7d": 50,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Model Context Protocol (MCP) website homepage, saving it "
+  },
+  {
    "id": "visual-w1",
    "name": "Easel",
    "dept": "visual",
@@ -106,45 +145,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: The action is mission work our tool can do. Fix: None."
-  },
-  {
-   "id": "accessibility-w1",
-   "name": "Ramp",
-   "dept": "accessibility",
-   "role": "doer",
-   "turns_7d": 50,
-   "rooms_7d": 25,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Adopt 3px focus ring at 7:1 contrast always, then switch to 4px at 3:1 when `prefers-reduced-motion: reduce` is active. "
-  },
-  {
-   "id": "accessibility-checker",
-   "name": "Reader",
-   "dept": "accessibility",
-   "role": "checker",
-   "turns_7d": 50,
-   "rooms_7d": 25,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Risk: 4px at 3:1 in reduced-motion mode fails WCAG 2.2’s 3:1 minimum for focus indicators in high-contrast mode. Better:"
-  },
-  {
-   "id": "visual-lead",
-   "name": "Chroma",
-   "dept": "visual",
-   "role": "lead",
-   "turns_7d": 49,
-   "rooms_7d": 49,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "ACTION: Chroma captures a full-page screenshot of the official Model Context Protocol website and saves it as \"MCP Offic"
   },
   {
    "id": "transcripts-lead",
@@ -316,7 +316,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Use 3px focus ring at 7:1 contrast always, switch to 3px at 4.5:1 when `prefers-contrast: high` is active. Res",
    "proposed": 23,
-   "shipped": 22
+   "shipped": 23
   },
   {
    "id": "improve-w1",

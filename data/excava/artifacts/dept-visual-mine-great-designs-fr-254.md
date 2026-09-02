@@ -1,16 +1,16 @@
 # visual: MINE great designs FROM THE WEB into the hub — screenshots, taste material, design pattern
 
-> Decision artifact · room `dept-visual-mine-great-designs-fr-254` (dept) · 2026-07-31T20:53:53.200291+00:00
-> Participants: Easel, Chroma · synthesized by mistral/mistral-small-latest
+> Decision artifact · room `dept-visual-mine-great-designs-fr-254` (dept) · 2026-09-02T16:47:34.449324+00:00
+> Participants: Easel, Squint, Chroma · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Open the Playwright MCP server.
-2. Navigate to Dribbble’s "Popular" page.
-3. Capture 12 full-page screenshots of top-rated UI designs.
-4. Curate screenshots into a "Taste Material" folder in the hub.
-5. Tag each screenshot with relevant design patterns (e.g., typography, spacing, color schemes).
-6. Compile a "Design Patterns" reference doc summarizing key takeaways.
+1. Navigate to the official Model Context Protocol (MCP) website.
+2. Capture a full-page screenshot of the website's design and layout.
+3. Deposit the screenshot into the hub as taste material.
+4. Label the artifact with "MCP Website Design" for context.
+5. Verify the screenshot is correctly saved in the hub.
+6. Share the artifact with the team for review.
 
-**What changed:** Shifted from Apple homepage to Dribbble’s top-rated UI designs for broader inspiration.
+**What changed:** A new taste material artifact (MCP website screenshot) was added to the hub.

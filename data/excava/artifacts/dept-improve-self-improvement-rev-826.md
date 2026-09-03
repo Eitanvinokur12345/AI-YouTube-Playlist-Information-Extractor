@@ -1,15 +1,18 @@
 # improve: Self-improvement: review prompts/engines/routing/own-code; auto-apply safe changes; pitch 
 
-> Decision artifact · room `dept-improve-self-improvement-rev-826` (dept) · 2026-07-27T18:19:22.490152+00:00
-> Participants: Sprocket, Gauge, Ratchet · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-improve-self-improvement-rev-826` (dept) · 2026-09-03T20:04:47.455969+00:00
+> Participants: Sprocket, Gauge, Overhaul, Ratchet · synthesized by mistral/mistral-small-latest
 
-**Decision:** Run a 48-hour shadow test at 5% traffic first, then auto-apply only changes that cut error rates by 10% or more.
+**Decision:**
+Run PR-Agent in parallel mode only on new contributors’ PRs for two weeks—it flags issues but lets humans override, exposing false negatives where they hurt most while keeping manual review costs low.
 
 **Plan:**
-1. Fork the core logic of the Claude Self-Improvement Skill Pack into our own repository.
-2. Conduct a 48-hour shadow test with 5% of user traffic to compare current prompts against the modified prompts.
-3. Monitor and evaluate error rates during the shadow test.
-4. If the shadow test shows a reduction in error rates of 10% or more, proceed to auto-apply the changes to all users.
-5. If the shadow test does not meet the criteria, discontinue the Skill Pack and continue with manual prompt tuning.
+1. Configure PR-Agent to run in parallel mode (flagging only) on PRs from contributors with <3 merged PRs in the last 6 months.
+2. Log all PR-Agent flagged issues (false positives/negatives) in a dedicated tracking issue for analysis.
+3. Require human override for all PR-Agent suggestions (no auto-apply) during the test period.
+4. Assign a rotating reviewer to audit flagged issues and document manual overrides weekly.
+5. After two weeks, compile false positive/negative rates and manual override frequency into a report.
+6. Present findings to the team for a go/no-go decision on broader adoption.
 
-**What changed:** The decision balances the need for innovation with risk mitigation, prioritizing a controlled evaluation before broad implementation.
+**What changed:**
+PR-Agent now runs in parallel mode exclusively on new contributors’ PRs for two weeks, with all flags requiring human review.

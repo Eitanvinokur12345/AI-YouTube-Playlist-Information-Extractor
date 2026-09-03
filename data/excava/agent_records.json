@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-03T19:53:46.104628+00:00",
+ "generated_at": "2026-09-03T19:59:28.980889+00:00",
  "window": "last 7 days",
  "note": "Layer-2 accountability: activity + memory + participation per agent. Hit-rate (did what it argued SHIP?) arrives with the initiative layer's decision-to-outcome links — not faked here.",
  "agents": [
@@ -8,26 +8,26 @@
    "name": "Scriv",
    "dept": "transcripts",
    "role": "checker",
-   "turns_7d": 201,
+   "turns_7d": 202,
    "rooms_7d": 40,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "The private channel still lets the lead bury the worst objections by burying the dissent in a flood of noise—teams won’t"
+   "last_position": "The condensed dissent summary still lets the lead cherry-pick which objections to highlight—what if the top 3 are the le"
   },
   {
    "id": "transcripts-w1",
    "name": "Reel",
    "dept": "transcripts",
    "role": "doer",
-   "turns_7d": 116,
+   "turns_7d": 117,
    "rooms_7d": 40,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Adopt the **scored dissent log with raw dissent attached**, published only to the team’s private channel, with no public"
+   "last_position": "Adopt the **forced ranking of all objections by severity** with the top 3 auto-published in the private channel. This re"
   },
   {
    "id": "watch-w1",
@@ -193,13 +193,39 @@
    "name": "Sprocket",
    "dept": "improve",
    "role": "doer",
-   "turns_7d": 28,
+   "turns_7d": 29,
    "rooms_7d": 15,
    "engines_used": [
     "mistral"
    ],
    "positions_held": 30,
-   "last_position": "Run PR-Agent in shadow mode on *all* PRs for two weeks. This lets us measure real impact without risking disruption, cat"
+   "last_position": "Run PR-Agent in parallel mode on *all* PRs for two weeks. This exposes false negatives early—where they hurt most—while "
+  },
+  {
+   "id": "visualization-w1",
+   "name": "Facet",
+   "dept": "visualization",
+   "role": "doer",
+   "turns_7d": 29,
+   "rooms_7d": 15,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Choose a **full-width, single-column layout** with a **fixed-height top bar** for navigation. This maximizes screen spac"
+  },
+  {
+   "id": "visualization-checker",
+   "name": "Pane",
+   "dept": "visualization",
+   "role": "checker",
+   "turns_7d": 29,
+   "rooms_7d": 15,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Fixed-height top bars always clip the top 1% of graphs—enough to obscure critical labels or data points. A thin, sticky "
   },
   {
    "id": "creators-lead",
@@ -239,32 +265,6 @@
    ],
    "positions_held": 30,
    "last_position": "Verdict: This is valid MISSION work—build the \"UGC Factory\" npm package labeled \"Created by EXCAVA\" with embedded test c"
-  },
-  {
-   "id": "visualization-w1",
-   "name": "Facet",
-   "dept": "visualization",
-   "role": "doer",
-   "turns_7d": 28,
-   "rooms_7d": 14,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Choose a **thin, always-visible top strip** for critical alerts—bright, high-contrast, and fixed at the top edge. This k"
-  },
-  {
-   "id": "visualization-checker",
-   "name": "Pane",
-   "dept": "visualization",
-   "role": "checker",
-   "turns_7d": 28,
-   "rooms_7d": 14,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Pane: A thin top strip still hides the top 1% of the graph—enough to clip labels or the first data point. Test a **colla"
   },
   {
    "id": "watch-lead",
@@ -336,8 +336,8 @@
    "name": "Anchor",
    "dept": "links",
    "role": "doer",
-   "turns_7d": 21,
-   "rooms_7d": 21,
+   "turns_7d": 22,
+   "rooms_7d": 22,
    "engines_used": [
     "mistral"
    ],
@@ -349,8 +349,8 @@
    "name": "Tether",
    "dept": "links",
    "role": "checker",
-   "turns_7d": 21,
-   "rooms_7d": 21,
+   "turns_7d": 22,
+   "rooms_7d": 22,
    "engines_used": [
     "mistral"
    ],
@@ -449,6 +449,19 @@
    "last_position": "ACTION: Marrow runs BloodHound-MCP on the full earnings call transcript to generate a structured dependency graph of fin"
   },
   {
+   "id": "improve-improver",
+   "name": "Overhaul",
+   "dept": "improve",
+   "role": "improver",
+   "turns_7d": 15,
+   "rooms_7d": 15,
+   "engines_used": [
+    "mistral"
+   ],
+   "positions_held": 30,
+   "last_position": "Run the parallel test only on PRs from *new contributors*—they’re less likely to spot PR-Agent’s mistakes, so this cuts "
+  },
+  {
    "id": "improve-lead",
    "name": "Ratchet",
    "dept": "improve",
@@ -477,19 +490,6 @@
    "last_position": "Shadow mode won’t catch PR-Agent’s worst flaw: false negatives. It normalizes bad changes by never blocking them, so the"
   },
   {
-   "id": "improve-improver",
-   "name": "Overhaul",
-   "dept": "improve",
-   "role": "improver",
-   "turns_7d": 14,
-   "rooms_7d": 14,
-   "engines_used": [
-    "mistral"
-   ],
-   "positions_held": 30,
-   "last_position": "Run the A/B test only on PRs from *new contributors*—they’re less likely to have established review patterns and will sh"
-  },
-  {
    "id": "visualization-lead",
    "name": "Lumen",
    "dept": "visualization",
@@ -502,7 +502,7 @@
    "positions_held": 30,
    "last_position": "DECISION: Use a **collapsible top strip**—shrinking to a 1-line banner when idle, expanding on hover or alert—with a bri",
    "proposed": 14,
-   "shipped": 13
+   "shipped": 14
   },
   {
    "id": "power-lead",

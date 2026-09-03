@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-02T21:50:39.428731+00:00",
+ "generated_at": "2026-09-03T00:15:09.472670+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -80,6 +80,21 @@
   {
    "id": "A",
    "lead": {
+    "engine": "groq",
+    "model": "llama-3.3-70b-versatile",
+    "lineage": "llama",
+    "tier": "fast"
+   },
+   "support": {
+    "engine": "glm",
+    "model": "z-ai/glm-4.5-air:free",
+    "lineage": "glm",
+    "tier": "grounded"
+   }
+  },
+  {
+   "id": "B",
+   "lead": {
     "engine": "mistral",
     "model": "mistral-small-latest",
     "lineage": "mistral",
@@ -93,31 +108,16 @@
    }
   },
   {
-   "id": "B",
-   "lead": {
-    "engine": "deepseek",
-    "model": "deepseek/deepseek-chat-v3-0324:free",
-    "lineage": "deepseek",
-    "tier": "reasoning"
-   },
-   "support": {
-    "engine": "groq",
-    "model": "llama-3.3-70b-versatile",
-    "lineage": "llama",
-    "tier": "fast"
-   }
-  },
-  {
    "id": "C",
    "lead": {
-    "engine": "kimi",
-    "model": "moonshotai/kimi-k2:free",
-    "lineage": "kimi",
-    "tier": "reasoning"
+    "engine": "gh-models",
+    "model": "openai/gpt-4o-mini",
+    "lineage": "gpt",
+    "tier": "grounded"
    },
    "support": {
-    "engine": "cerebras",
-    "model": "llama3.1-8b",
+    "engine": "sambanova",
+    "model": "Meta-Llama-3.3-70B-Instruct",
     "lineage": "llama",
     "tier": "fast"
    }
@@ -125,14 +125,14 @@
   {
    "id": "D",
    "lead": {
-    "engine": "glm",
-    "model": "z-ai/glm-4.5-air:free",
-    "lineage": "glm",
+    "engine": "gemini",
+    "model": "gemini-2.0-flash",
+    "lineage": "gemini",
     "tier": "grounded"
    },
    "support": {
-    "engine": "sambanova",
-    "model": "Meta-Llama-3.3-70B-Instruct",
+    "engine": "cerebras",
+    "model": "llama3.1-8b",
     "lineage": "llama",
     "tier": "fast"
    }
@@ -148,8 +148,6 @@
  "debate_lineages": [
   "mistral"
  ],
- "spoke_today": {
-  "mistral": 160
- },
+ "spoke_today": {},
  "note": "a BRAIN = a benchmark-ranked LEAD model + a distinct-lineage SUPPORT model (levels of support, real fallback); rank is EARNED by measured quality, not the plan's list. The lineage roster below shows every model that can be a lead/support; GLM/DeepSeek/Kimi need OPENROUTER_API_KEY (§12)."
 }

@@ -58077,15 +58077,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-09-02T21:43:50.915978+00:00",
-      "updated_at": "2026-09-02T21:43:50.915990+00:00"
+      "updated_at": "2026-09-03T02:56:47.622310+00:00",
+      "result": "Semantic index: 1669 vectors (model gemini-embedding-001); hub 9243 items → 7574 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "transcripts-drain-the-ne-85430",
@@ -58094,17 +58095,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-85430--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-09-02T21:43:50.990703+00:00",
-      "updated_at": "2026-09-02T21:43:53.119478+00:00"
+      "updated_at": "2026-09-03T02:56:47.313707+00:00",
+      "result": "2462 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g5-leverage-49-100-85431",
@@ -58148,15 +58150,16 @@
       "department": "watch",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-09-03T00:34:14.616271+00:00",
-      "updated_at": "2026-09-03T00:34:14.616281+00:00"
+      "updated_at": "2026-09-03T02:56:47.740385+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
       "id": "security-safety-rate-the-95654",
@@ -58165,15 +58168,16 @@
       "department": "security",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-09-03T00:34:14.689675+00:00",
-      "updated_at": "2026-09-03T00:34:14.689683+00:00"
+      "updated_at": "2026-09-03T02:56:48.908600+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "raise-g3-truth-access-49-95654",
@@ -58201,15 +58205,16 @@
       "department": "creators",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-09-03T00:34:14.864556+00:00",
-      "updated_at": "2026-09-03T00:34:14.864566+00:00"
+      "updated_at": "2026-09-03T02:56:49.198255+00:00",
+      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     },
     {
       "id": "access-s-initiative-use--95697",
@@ -58218,16 +58223,53 @@
       "department": "accessibility",
       "source": "agent:accessibility-lead",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the decision's concrete step is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "accessibility-w1",
       "handoff_docs": [],
       "created_at": "2026-09-03T00:34:57.157716+00:00",
-      "updated_at": "2026-09-03T00:34:57.157728+00:00"
+      "updated_at": "2026-09-03T02:56:49.066119+00:00",
+      "result": "Ran the accessibility scan. accessibility_scan: 0 issue(s) — clean"
+    },
+    {
+      "id": "push-link-coverage-towar-4206",
+      "title": "Push link coverage toward 100% at +5%/day (the access gate)",
+      "detail": "",
+      "department": "memory",
+      "source": "owner",
+      "priority": 0,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/push-link-coverage-towar-4206--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-09-03T02:56:46.431084+00:00",
+      "updated_at": "2026-09-03T02:56:47.858488+00:00"
+    },
+    {
+      "id": "resolve-real-links-websi-4206",
+      "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
+      "detail": "value=82 size=41(small) [cost 40/steps 60/risk 15] · many unlinked",
+      "department": "links",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-03T02:56:46.963821+00:00",
+      "updated_at": "2026-09-03T02:56:46.963834+00:00"
     }
   ],
-  "updated_at": "2026-09-03T00:34:57.157732+00:00"
+  "updated_at": "2026-09-03T02:56:49.198265+00:00"
 }

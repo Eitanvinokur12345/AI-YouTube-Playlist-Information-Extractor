@@ -1,16 +1,18 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-563` (dept) · 2026-07-27T19:40:46.931991+00:00
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-563` (dept) · 2026-09-03T03:14:14.872022+00:00
 > Participants: Pick · synthesized by mistral/mistral-small-latest
 
 **Decision:**
+Query Product Hunt’s API for all posts tagged "AI" published in the last 30 days.
 
 **Plan:**
-1. Run a Reddit search for AI-related posts from the last 7 days.
-2. Extract the top 10 most relevant threads with titles, upvotes, and direct links.
-3. Compile the results into a GitHub markdown table.
-4. Review the curated list for trending AI discussions.
-5. Share the markdown file for immediate review.
-6. Iterate based on feedback for further refinement.
+1. Authenticate with Product Hunt’s API using a valid developer token.
+2. Execute a query filtering posts by the "AI" tag and date range (last 30 days).
+3. Parse the JSON response to extract post titles, descriptions, and URLs.
+4. Store the results in a structured format (e.g., CSV or database).
+5. Cross-reference with other sources (e.g., GitHub, Reddit) to validate trends.
+6. Generate a summary report of key AI products/products discussed.
 
-**What changed:** Focus shifted from multi-platform sourcing to prioritizing Reddit for immediate, high-relevance AI content.
+**What changed:**
+Focused on Product Hunt’s API as a primary source for recent AI product launches.

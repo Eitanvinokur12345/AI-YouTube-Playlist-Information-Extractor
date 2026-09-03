@@ -1,15 +1,16 @@
 # power: Raise EXCAVA's capability by even 0.5%: find new tools, best/newest models, combine elemen
 
-> Decision artifact · room `dept-power-raise-excava-s-capabil-816` (dept) · 2026-07-31T16:59:23.919400+00:00
+> Decision artifact · room `dept-power-raise-excava-s-capabil-816` (dept) · 2026-09-03T19:24:40.626125+00:00
 > Participants: Gearbox, Torque, Dynamo · synthesized by mistral/mistral-small-latest
 
 **Decision:**
 
 **Plan:**
-1. Integrate LTX-Video into EXCAVA’s pipeline with VRAM capped at 16GB (12GB batches for upscaler).
-2. Parallel-test AnimateDiff’s SD3 motion module alongside LTX-Video.
-3. Run blind A/B test on 50 frames to compare motion quality.
-4. Drop Runway Gen-4 4K upscaler from pipeline.
-5. Torque leads A/B test execution; Gearbox handles integration if motion model wins.
+1. Integrate InstantX-ComfyUI’s depth-aware upscaler into EXCAVA’s pipeline for all frames.
+2. Log processing time deltas for upscaling vs. baseline.
+3. Apply VFI-Flow *only* to keyframes flagged by motion blur detection (threshold: blind A/B test sharpness drop ≥15%).
+4. Torque designs a blind A/B test comparing sharpness scores (pre/post-pipeline) with 50 test clips.
+5. Dynamo validates results by EOD, freezing the pipeline if VFI-Flow’s slowdown exceeds 25% on keyframes.
+6. Merge depth-aware upscaling into main branch; VFI-Flow remains opt-in via config flag.
 
-**What changed:** Replaced Runway Gen-4 upscaler with LTX-Video + AnimateDiff SD3 motion module, prioritizing motion refinement over resolution.
+**What changed:** Depth-aware upscaling runs universally first; VFI-Flow is gated to keyframes with quantified motion blur.

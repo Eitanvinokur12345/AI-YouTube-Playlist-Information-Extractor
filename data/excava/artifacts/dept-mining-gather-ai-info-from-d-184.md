@@ -1,15 +1,16 @@
 # mining: Gather AI info from DIVERSE sources (GitHub/HN/Product Hunt/Reddit/Telegram/social), NOT j
 
-> Decision artifact · room `dept-mining-gather-ai-info-from-d-184` (dept) · 2026-07-21T07:11:57.094520+00:00
-> Participants: Pick, Boulder · synthesized by gh-models/openai/gpt-4o-mini
+> Decision artifact · room `dept-mining-gather-ai-info-from-d-184` (dept) · 2026-09-03T03:27:31.879545+00:00
+> Participants: Pick · synthesized by mistral/mistral-small-latest
 
-**Decision:** Gather AI information from diverse sources specifically from GitHub.
+**Decision:**
 
 **Plan:**
-1. Search GitHub for repositories tagged with "AI" and "research."
-2. Rank the top 10 repositories based on the number of stars.
-3. Provide brief descriptions of the primary use cases for each repository.
-4. Ensure diversity of projects to cover different areas within AI research.
-5. Document findings in a concise, clear format using GitHub markdown.
+1. Query Product Hunt’s API for posts tagged "AI" published in the last 30 days.
+2. Extract titles, descriptions, upvotes, and launch dates from the API response.
+3. Cross-reference results with GitHub, Hacker News, Reddit, Telegram, and social media for additional context.
+4. Compile a structured dataset of AI-related products and discussions from diverse sources.
+5. Analyze trends (e.g., upvotes, launch frequency) to identify key insights.
+6. Output findings in a consolidated report for further mining.
 
-**What changed:** Focus shifted to utilizing GitHub for a more structured repository search instead of relying solely on Reddit.
+**What changed:** Focused on Product Hunt as a primary source while ensuring cross-platform validation.

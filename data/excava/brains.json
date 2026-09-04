@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-04T14:22:00.047418+00:00",
+ "generated_at": "2026-09-04T18:24:50.707771+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -80,39 +80,39 @@
   {
    "id": "A",
    "lead": {
-    "engine": "groq",
-    "model": "llama-3.3-70b-versatile",
-    "lineage": "llama",
-    "tier": "fast"
+    "engine": "deepseek",
+    "model": "deepseek/deepseek-chat-v3-0324:free",
+    "lineage": "deepseek",
+    "tier": "reasoning"
    },
    "support": {
-    "engine": "glm",
-    "model": "z-ai/glm-4.5-air:free",
-    "lineage": "glm",
+    "engine": "gemini",
+    "model": "gemini-2.0-flash",
+    "lineage": "gemini",
     "tier": "grounded"
    }
   },
   {
    "id": "B",
    "lead": {
-    "engine": "mistral",
-    "model": "mistral-small-latest",
-    "lineage": "mistral",
-    "tier": "fast"
+    "engine": "kimi",
+    "model": "moonshotai/kimi-k2:free",
+    "lineage": "kimi",
+    "tier": "reasoning"
    },
    "support": {
-    "engine": "nvidia",
-    "model": "meta/llama-3.3-70b-instruct",
+    "engine": "cerebras",
+    "model": "llama3.1-8b",
     "lineage": "llama",
-    "tier": "grounded"
+    "tier": "fast"
    }
   },
   {
    "id": "C",
    "lead": {
-    "engine": "gh-models",
-    "model": "openai/gpt-4o-mini",
-    "lineage": "gpt",
+    "engine": "glm",
+    "model": "z-ai/glm-4.5-air:free",
+    "lineage": "glm",
     "tier": "grounded"
    },
    "support": {
@@ -125,46 +125,46 @@
   {
    "id": "D",
    "lead": {
-    "engine": "gemini",
-    "model": "gemini-2.0-flash",
-    "lineage": "gemini",
-    "tier": "grounded"
-   },
-   "support": {
-    "engine": "cerebras",
-    "model": "llama3.1-8b",
+    "engine": "groq",
+    "model": "llama-3.3-70b-versatile",
     "lineage": "llama",
     "tier": "fast"
+   },
+   "support": {
+    "engine": "gh-models",
+    "model": "openai/gpt-4o-mini",
+    "lineage": "gpt",
+    "tier": "grounded"
    }
   }
  ],
  "debate": [
   {
+   "engine": "deepseek",
+   "lineage": "deepseek",
+   "model": "deepseek/deepseek-chat-v3-0324:free"
+  },
+  {
+   "engine": "kimi",
+   "lineage": "kimi",
+   "model": "moonshotai/kimi-k2:free"
+  },
+  {
+   "engine": "glm",
+   "lineage": "glm",
+   "model": "z-ai/glm-4.5-air:free"
+  },
+  {
    "engine": "groq",
    "lineage": "llama",
    "model": "llama-3.3-70b-versatile"
-  },
-  {
-   "engine": "mistral",
-   "lineage": "mistral",
-   "model": "mistral-small-latest"
-  },
-  {
-   "engine": "gh-models",
-   "lineage": "gpt",
-   "model": "openai/gpt-4o-mini"
-  },
-  {
-   "engine": "gemini",
-   "lineage": "gemini",
-   "model": "gemini-2.0-flash"
   }
  ],
  "debate_lineages": [
-  "gemini",
-  "gpt",
-  "llama",
-  "mistral"
+  "deepseek",
+  "glm",
+  "kimi",
+  "llama"
  ],
  "spoke_today": {
   "mistral": 5

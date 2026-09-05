@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-05T09:05:11.222475+00:00",
+ "generated_at": "2026-09-05T12:44:01.889660+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -86,10 +86,10 @@
     "tier": "grounded"
    },
    "support": {
-    "engine": "kimi",
-    "model": "moonshotai/kimi-k2:free",
-    "lineage": "kimi",
-    "tier": "reasoning"
+    "engine": "cerebras",
+    "model": "llama3.1-8b",
+    "lineage": "llama",
+    "tier": "fast"
    }
   },
   {
@@ -110,8 +110,8 @@
   {
    "id": "C",
    "lead": {
-    "engine": "cerebras",
-    "model": "llama3.1-8b",
+    "engine": "groq",
+    "model": "llama-3.3-70b-versatile",
     "lineage": "llama",
     "tier": "fast"
    },
@@ -125,16 +125,16 @@
   {
    "id": "D",
    "lead": {
+    "engine": "kimi",
+    "model": "moonshotai/kimi-k2:free",
+    "lineage": "kimi",
+    "tier": "reasoning"
+   },
+   "support": {
     "engine": "gh-models",
     "model": "openai/gpt-4o-mini",
     "lineage": "gpt",
     "tier": "grounded"
-   },
-   "support": {
-    "engine": "groq",
-    "model": "llama-3.3-70b-versatile",
-    "lineage": "llama",
-    "tier": "fast"
    }
   }
  ],
@@ -150,20 +150,20 @@
    "model": "deepseek/deepseek-chat-v3-0324:free"
   },
   {
-   "engine": "cerebras",
+   "engine": "groq",
    "lineage": "llama",
-   "model": "llama3.1-8b"
+   "model": "llama-3.3-70b-versatile"
   },
   {
-   "engine": "gh-models",
-   "lineage": "gpt",
-   "model": "openai/gpt-4o-mini"
+   "engine": "kimi",
+   "lineage": "kimi",
+   "model": "moonshotai/kimi-k2:free"
   }
  ],
  "debate_lineages": [
   "deepseek",
   "glm",
-  "gpt",
+  "kimi",
   "llama"
  ],
  "spoke_today": {},

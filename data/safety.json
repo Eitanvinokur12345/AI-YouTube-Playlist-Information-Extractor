@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-09-06T15:42:46.747748+00:00",
+  "generated_at": "2026-09-06T18:35:25.940205+00:00",
   "policy": "activator gate: safe = auto-activate, caution = warn, risky = block until confirmed",
   "summary": {
     "safe": 170,
     "caution": 1425,
-    "risky": 51
+    "risky": 52
   },
   "connectors": {
     "perplexity-mcp": {
@@ -12548,6 +12548,14 @@
       "name": "External databases",
       "rating": "caution",
       "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "claude-code-paperclip-integration": {
+      "name": "Claude Code + PaperClip Integration",
+      "rating": "risky",
+      "reasons": [
+        "requests broad system/shell/file access",
         "third-party (not an official vendor connector)"
       ]
     }

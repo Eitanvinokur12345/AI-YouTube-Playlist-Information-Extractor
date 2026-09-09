@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-09T04:43:26.368654+00:00",
+ "generated_at": "2026-09-09T09:45:02.858533+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -80,35 +80,20 @@
   {
    "id": "A",
    "lead": {
-    "engine": "deepseek",
-    "model": "deepseek/deepseek-chat-v3-0324:free",
-    "lineage": "deepseek",
-    "tier": "reasoning"
-   },
-   "support": {
-    "engine": "gemini",
-    "model": "gemini-2.0-flash",
-    "lineage": "gemini",
-    "tier": "grounded"
-   }
-  },
-  {
-   "id": "B",
-   "lead": {
     "engine": "kimi",
     "model": "moonshotai/kimi-k2:free",
     "lineage": "kimi",
     "tier": "reasoning"
    },
    "support": {
-    "engine": "cerebras",
-    "model": "llama3.1-8b",
+    "engine": "groq",
+    "model": "llama-3.3-70b-versatile",
     "lineage": "llama",
     "tier": "fast"
    }
   },
   {
-   "id": "C",
+   "id": "B",
    "lead": {
     "engine": "glm",
     "model": "z-ai/glm-4.5-air:free",
@@ -116,19 +101,19 @@
     "tier": "grounded"
    },
    "support": {
-    "engine": "sambanova",
-    "model": "Meta-Llama-3.3-70B-Instruct",
-    "lineage": "llama",
+    "engine": "mistral",
+    "model": "mistral-small-latest",
+    "lineage": "mistral",
     "tier": "fast"
    }
   },
   {
-   "id": "D",
+   "id": "C",
    "lead": {
-    "engine": "groq",
-    "model": "llama-3.3-70b-versatile",
-    "lineage": "llama",
-    "tier": "fast"
+    "engine": "deepseek",
+    "model": "deepseek/deepseek-chat-v3-0324:free",
+    "lineage": "deepseek",
+    "tier": "reasoning"
    },
    "support": {
     "engine": "gh-models",
@@ -136,14 +121,24 @@
     "lineage": "gpt",
     "tier": "grounded"
    }
+  },
+  {
+   "id": "D",
+   "lead": {
+    "engine": "cerebras",
+    "model": "llama3.1-8b",
+    "lineage": "llama",
+    "tier": "fast"
+   },
+   "support": {
+    "engine": "gemini",
+    "model": "gemini-2.0-flash",
+    "lineage": "gemini",
+    "tier": "grounded"
+   }
   }
  ],
  "debate": [
-  {
-   "engine": "deepseek",
-   "lineage": "deepseek",
-   "model": "deepseek/deepseek-chat-v3-0324:free"
-  },
   {
    "engine": "kimi",
    "lineage": "kimi",
@@ -155,9 +150,14 @@
    "model": "z-ai/glm-4.5-air:free"
   },
   {
-   "engine": "groq",
+   "engine": "deepseek",
+   "lineage": "deepseek",
+   "model": "deepseek/deepseek-chat-v3-0324:free"
+  },
+  {
+   "engine": "cerebras",
    "lineage": "llama",
-   "model": "llama-3.3-70b-versatile"
+   "model": "llama3.1-8b"
   }
  ],
  "debate_lineages": [

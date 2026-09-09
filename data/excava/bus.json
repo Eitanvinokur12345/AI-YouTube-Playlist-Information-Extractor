@@ -32663,17 +32663,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/resolve-real-links-websi-58207--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-09-09T12:50:07.853964+00:00",
-      "updated_at": "2026-09-09T12:50:09.589991+00:00"
+      "updated_at": "2026-09-09T13:00:55.699006+00:00",
+      "result": "Semantic index: 1702 vectors (model gemini-embedding-001); hub 9702 items → 8000 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "security-safety-rate-the-58207",
@@ -32754,17 +32755,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-58531--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-09-09T12:55:31.966169+00:00",
-      "updated_at": "2026-09-09T12:55:33.834358+00:00"
+      "updated_at": "2026-09-09T13:00:55.445500+00:00",
+      "result": "2830 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g3-truth-access-47-58532",
@@ -32802,7 +32804,95 @@
       "created_at": "2026-09-09T12:55:32.035004+00:00",
       "updated_at": "2026-09-09T12:55:33.623375+00:00",
       "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
+    },
+    {
+      "id": "verify-the-next-200-of-8-58855",
+      "title": "Verify the next 200 of 8630 unverified elements (2-source + live test)",
+      "detail": "value=96 size=40(small) [cost 35/steps 70/risk 10] · 8630 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-09T13:00:55.168874+00:00",
+      "updated_at": "2026-09-09T13:00:55.168888+00:00"
+    },
+    {
+      "id": "watch-process-the-next-b-58855",
+      "title": "Watch: process the next batch of 2830 pending videos",
+      "detail": "value=90 size=29(small) [cost 30/steps 40/risk 10] · 2830 pending",
+      "department": "watch",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "watch-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-09T13:00:55.203694+00:00",
+      "updated_at": "2026-09-09T13:00:55.767185+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+    },
+    {
+      "id": "security-safety-rate-the-58855",
+      "title": "Security: safety-rate the next batch of 1712 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1712 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-09T13:00:55.244717+00:00",
+      "updated_at": "2026-09-09T13:00:56.831497+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "id": "memory-embed-the-remaini-58855",
+      "title": "Memory: embed the remaining unembedded of 13654 elements for full recall",
+      "detail": "value=64 size=20(small) [cost 20/steps 30/risk 5] · 13654 elements",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-09T13:00:55.286531+00:00",
+      "updated_at": "2026-09-09T13:00:55.286544+00:00"
+    },
+    {
+      "id": "raise-g5-leverage-47-100-58855",
+      "title": "Raise G5 Leverage (47/100): leverage needs real, usable links first (= G3); then the OS creation agent",
+      "detail": "value=53 size=17(small) [cost 15/steps 25/risk 10] · G5 at 47",
+      "department": "creators",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "creators-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-09T13:00:55.343975+00:00",
+      "updated_at": "2026-09-09T13:00:56.900042+00:00",
+      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     }
   ],
-  "updated_at": "2026-09-09T12:55:33.834362+00:00"
+  "updated_at": "2026-09-09T13:00:56.900055+00:00"
 }

@@ -1,22 +1,22 @@
 {
- "generated_at": "2026-09-11T19:34:46.343844+00:00",
- "total": 14251,
+ "generated_at": "2026-09-11T22:28:35.141135+00:00",
+ "total": 14258,
  "counts": {
-  "skill": 4638,
+  "skill": 4640,
   "tool": 3491,
   "prompt": 838,
   "command": 178,
-  "connector": 1721,
-  "design": 2328,
+  "connector": 1722,
+  "design": 2332,
   "format": 381,
   "model": 675,
   "creation": 1
  },
- "stubs": 2109,
+ "stubs": 2108,
  "by_status": {
   "verified": 2849,
   "niche": 2115,
-  "unverified": 9157,
+  "unverified": 9164,
   "dead": 130
  },
  "note": "READ-ONLY derivative. Sources of truth = the per-type files; write via element_model.set_field only.",
@@ -159685,6 +159685,54 @@
    "related": []
   },
   {
+   "id": "skill:optimizing-ai-token-usage",
+   "type": "skill",
+   "name": "Optimizing AI Token Usage",
+   "what": "Techniques to reduce the number of tokens consumed by AI models, thereby saving cost and potentially improving processing efficiency.",
+   "category": "productivity",
+   "source_videos": [
+    "YYis19Ddyq4"
+   ],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 95,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "skill:document-conversion-for-ai",
+   "type": "skill",
+   "name": "Document Conversion for AI",
+   "what": "Converting various document formats (PDF, Word, PowerPoint, Excel, YouTube transcripts) into a clean Markdown format suitable for AI model input.",
+   "category": "productivity",
+   "source_videos": [
+    "YYis19Ddyq4"
+   ],
+   "links": {},
+   "install": "",
+   "quality_score": 5,
+   "trust": 95,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
    "id": "tool:claude",
    "type": "tool",
    "name": "Claude",
@@ -277749,22 +277797,33 @@
    "id": "tool:groc",
    "type": "tool",
    "name": "Groc",
-   "what": "A large language model (LLM) backend option mentioned for integration.",
+   "what": "Grok-1\n\nThis repository contains JAX example code for loading and running the Grok-1 open-weights model. Make sure to download the checkpoint and place the ckpt-0 directory in checkpoints - see Downloading the weights(downloading-the-weights)\n\nThen, run\n\nshell\npip install -r requirements.txt\npython run.py\n\n\nto test the code. The script loads the checkpoint and samples from the model on a test input.",
    "category": "agents",
    "source_videos": [],
-   "links": {},
+   "links": {
+    "website": "https://grok.com",
+    "github": "https://github.com/xai-org/grok-1"
+   },
    "install": "",
    "quality_score": 3,
    "trust": 75,
    "created_by": "",
+   "enriched": true,
+   "enrichment": {
+    "sources": [
+     "github-api"
+    ],
+    "n_sources": 1,
+    "method": "github-api+readme-fallback",
+    "at": "2026-09-11T22:28:33.512982+00:00"
+   },
    "verified": {
     "status": "unverified",
     "method": "",
     "sources": 0,
     "at": ""
    },
-   "stub": true,
-   "enriched": false,
+   "stub": false,
    "related": []
   },
   {
@@ -278183,7 +278242,9 @@
    "what": "A model developed by Sapient Intelligence, the lab behind the PRAXIST autonomous R&D system.",
    "category": "agents",
    "source_videos": [],
-   "links": {},
+   "links": {
+    "github": "https://github.com/sapientinc/HRM"
+   },
    "install": "",
    "quality_score": 1,
    "trust": 75,
@@ -360276,7 +360337,7 @@
     ],
     "n_sources": 1,
     "method": "keyless-extract",
-    "at": "2026-09-08T14:24:23.911371+00:00"
+    "at": "2026-09-11T22:28:31.200373+00:00"
    },
    "verified": {
     "status": "unverified",
@@ -362587,7 +362648,7 @@
     ],
     "n_sources": 1,
     "method": "keyless-extract",
-    "at": "2026-09-08T14:24:23.647503+00:00"
+    "at": "2026-09-11T22:28:31.009862+00:00"
    },
    "verified": {
     "status": "unverified",
@@ -369026,6 +369087,32 @@
     "method": "sandbox",
     "sources": 1,
     "at": "2026-09-11T11:08:22.567408+00:00"
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "connector:claude-desktop",
+   "type": "connector",
+   "name": "Claude Desktop",
+   "what": "Allows connecting external tools (like MarkItDown via MCP) to Claude for processing.",
+   "category": "",
+   "source_videos": [
+    "YYis19Ddyq4"
+   ],
+   "links": {
+    "source_url": "https://www.youtube.com/watch?v=YYis19Ddyq4"
+   },
+   "install": "",
+   "quality_score": null,
+   "trust": 95,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "sandbox",
+    "sources": 1,
+    "at": "2026-09-11T20:53:28.620054+00:00"
    },
    "stub": false,
    "enriched": false,
@@ -435560,6 +435647,94 @@
    "type": "design",
    "name": "Explanatory Video Diagram Style",
    "what": "Dark background with white monospace text and simple, clean geometric diagrams. Uses blue, green, orange, and red accents for different components or states. Minimalist and clear.",
+   "category": "",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "design:ai-token-cost-dashboard",
+   "type": "design",
+   "name": "AI Token Cost Dashboard",
+   "what": "Dark background with glowing red and orange accents. Features a 'COST PER PAGE' section showing a document.pdf icon with text 'Page 1 of 1 - Being read by Claude' and multiple '+token' buttons. Below, 'CLAUDE READS X TOKENS PER PAGE' is displayed with large orange numbers (1,500 - 3,000) and a smaller text explaining the cost for a 10-page PDF. A table at the bottom shows token costs for 5, 10, and 20 pages. The design is clean, modern, and data-focused.",
+   "category": "",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "design:document-token-comparison-dashboard",
+   "type": "design",
+   "name": "Document Token Comparison Dashboard",
+   "what": "Dark background with two prominent, vertically stacked cards labeled 'REAL TEST RESULTS'. Each card features a document icon, a format name ('PDF Format' or 'Markdown'), and a large number representing tokens. The PDF card is orange, and the Markdown card is green. A green banner at the bottom states '90% FEWER TOKENS'. The design is clean, clear, and focused on comparative data display.",
+   "category": "",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "design:markitdown-conversion-flow-diagram",
+   "type": "design",
+   "name": "MarkItDown Conversion Flow Diagram",
+   "what": "Dark background. The top section, 'RAW PDF - FULL OF JUNK', displays a PDF icon and a list of document components (metadata, fonts, layout, colors, header/footer, actual content) with labels like 'wasted tokens' or 'buried inside'. A blue horizontal bar in the middle indicates 'MarkItDown strips & converts' with a gear icon. The bottom section, 'CLEAN MARKDOWN - PURE CONTENT', shows an MD icon and an example of structured markdown content. Arrows connect the sections, illustrating the conversion process clearly.",
+   "category": "",
+   "source_videos": [],
+   "links": {},
+   "install": "",
+   "quality_score": null,
+   "trust": 75,
+   "created_by": "",
+   "verified": {
+    "status": "unverified",
+    "method": "",
+    "sources": 0,
+    "at": ""
+   },
+   "stub": false,
+   "enriched": false,
+   "related": []
+  },
+  {
+   "id": "design:markitdown-usage-options-ui",
+   "type": "design",
+   "name": "MarkItDown Usage Options UI",
+   "what": "Dark background with a top banner 'TWO WAYS TO RUN IT' and a button 'MarkItDown by Microsoft'. Two side-by-side cards are presented: 'Via MCP' (left, purple, with a plug icon) and 'Run Locally' (right, green, with a laptop icon and 'RECOMMENDED' badge). Each card lists bullet points describing its features and a warning for MCP. Below, 'HOW EACH PATH WORKS' shows two flow diagrams with icons (PDF, MCP tool, Claude, Local MarkItDown, MD) and labels for 'Extra tokens' and 'Max savings'. A final recommendation text is included. The design is clean, informative, and aids decision-making.",
    "category": "",
    "source_videos": [],
    "links": {},

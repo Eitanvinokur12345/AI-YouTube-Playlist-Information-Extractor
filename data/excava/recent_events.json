@@ -1,214 +1,6 @@
 {
   "events": [
     {
-      "task": "os-lanes",
-      "at": "2026-09-11T05:06:24.100220+00:00",
-      "kind": "lane_ran",
-      "lane": "Free analysis pool",
-      "status": "live",
-      "what": "Turns transcripts into skills/tools/connectors (free engines)"
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-09-11T05:06:24.100696+00:00",
-      "kind": "lane_ran",
-      "lane": "Deep analysis (night-gated)",
-      "status": "live",
-      "what": "Claude re-analysis + safety pass"
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-09-11T05:06:24.101169+00:00",
-      "kind": "lane_ran",
-      "lane": "AI news refresh",
-      "status": "live",
-      "what": "Refreshes official-site AI news"
-    },
-    {
-      "task": "mining-discover-new-ai-r-14242",
-      "at": "2026-09-11T11:44:51.457330+00:00",
-      "kind": "lease_expired",
-      "after_h": 6.6,
-      "was": "mining-w1"
-    },
-    {
-      "task": "news-refresh-the-ai-news-14242",
-      "at": "2026-09-11T11:44:51.458048+00:00",
-      "kind": "lease_expired",
-      "after_h": 6.6,
-      "was": "news-w1"
-    },
-    {
-      "task": "define-what-makes-an-ele-82232",
-      "at": "2026-09-11T11:44:51.488257+00:00",
-      "kind": "lease_expired",
-      "after_h": 6.7,
-      "was": "improve-w1"
-    },
-    {
-      "task": "verify-the-next-200-of-7-82232",
-      "at": "2026-09-11T11:44:51.488845+00:00",
-      "kind": "lease_expired",
-      "after_h": 6.7,
-      "was": "analysis-w1"
-    },
-    {
-      "task": "watch-process-the-next-b-82232",
-      "at": "2026-09-11T11:44:51.489998+00:00",
-      "kind": "lease_expired",
-      "after_h": 6.7,
-      "was": "watch-w1"
-    },
-    {
-      "task": "security-safety-rate-the-82232",
-      "at": "2026-09-11T11:44:51.490451+00:00",
-      "kind": "lease_expired",
-      "after_h": 6.7,
-      "was": "security-w1"
-    },
-    {
-      "task": "raise-g5-leverage-50-100-82232",
-      "at": "2026-09-11T11:44:51.490922+00:00",
-      "kind": "lease_expired",
-      "after_h": 6.7,
-      "was": "creators-w1"
-    },
-    {
-      "task": "verify-the-next-200-of-9-27091",
-      "at": "2026-09-11T11:44:51.933073+00:00",
-      "kind": "enqueued",
-      "title": "Verify the next 200 of 9153 unverified elements (2-source + live test)",
-      "source": "gap",
-      "priority": 1,
-      "department": "analysis"
-    },
-    {
-      "task": "security-safety-rate-the-27091",
-      "at": "2026-09-11T11:44:51.966168+00:00",
-      "kind": "enqueued",
-      "title": "Security: safety-rate the next batch of 1721 connectors/skills",
-      "source": "gap",
-      "priority": 1,
-      "department": "security"
-    },
-    {
-      "task": "memory-embed-the-remaini-27091",
-      "at": "2026-09-11T11:44:51.993451+00:00",
-      "kind": "enqueued",
-      "title": "Memory: embed the remaining unembedded of 14247 elements for full recall",
-      "source": "gap",
-      "priority": 1,
-      "department": "memory"
-    },
-    {
-      "task": "empty-body-items-render--84700",
-      "at": "2026-09-11T11:44:52.026236+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-7653",
-      "at": "2026-09-11T11:44:52.026867+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-70809",
-      "at": "2026-09-11T11:44:52.027501+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-12177",
-      "at": "2026-09-11T11:44:52.028110+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "verify-the-next-200-of-7-82232",
-      "at": "2026-09-11T11:44:52.058448+00:00",
-      "kind": "claimed",
-      "by": "analysis-w1",
-      "department": "analysis"
-    },
-    {
-      "task": "verify-the-next-200-of-7-82232",
-      "at": "2026-09-11T11:44:52.084238+00:00",
-      "kind": "completed",
-      "by": "analysis-w1",
-      "result": "2830 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-    },
-    {
-      "task": "push-link-coverage-towar-3139",
-      "at": "2026-09-11T11:44:52.151526+00:00",
-      "kind": "claimed",
-      "by": "memory-w1",
-      "department": "memory"
-    },
-    {
-      "task": "push-link-coverage-towar-3139",
-      "at": "2026-09-11T11:44:52.321455+00:00",
-      "kind": "completed",
-      "by": "memory-w1",
-      "result": "Semantic index: 1705 vectors (model gemini-embedding-001); hub 9846 items → 8141 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-    },
-    {
-      "task": "watch-process-the-next-b-82232",
-      "at": "2026-09-11T11:44:52.345218+00:00",
-      "kind": "claimed",
-      "by": "watch-w1",
-      "department": "watch"
-    },
-    {
-      "task": "watch-process-the-next-b-82232",
-      "at": "2026-09-11T11:44:52.368175+00:00",
-      "kind": "completed",
-      "by": "watch-w1",
-      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
-    },
-    {
-      "task": "security-safety-rate-the-82232",
-      "at": "2026-09-11T11:44:52.390972+00:00",
-      "kind": "claimed",
-      "by": "security-w1",
-      "department": "security"
-    },
-    {
-      "task": "security-safety-rate-the-82232",
-      "at": "2026-09-11T11:44:53.206652+00:00",
-      "kind": "completed",
-      "by": "security-w1",
-      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
-    },
-    {
-      "task": "raise-g5-leverage-50-100-82232",
-      "at": "2026-09-11T11:44:53.268759+00:00",
-      "kind": "claimed",
-      "by": "creators-w1",
-      "department": "creators"
-    },
-    {
-      "task": "raise-g5-leverage-50-100-82232",
-      "at": "2026-09-11T11:44:53.292273+00:00",
-      "kind": "completed",
-      "by": "creators-w1",
-      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
-    },
-    {
-      "task": "define-what-makes-an-ele-82232",
-      "at": "2026-09-11T11:44:53.381246+00:00",
-      "kind": "claimed",
-      "by": "improve-w1",
-      "department": "improve"
-    },
-    {
-      "task": "define-what-makes-an-ele-82232",
-      "at": "2026-09-11T11:44:54.402363+00:00",
-      "kind": "completed",
-      "by": "improve-w1",
-      "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
-    },
-    {
       "task": "mining-discover-new-ai-r-14242",
       "at": "2026-09-11T11:44:54.428811+00:00",
       "kind": "claimed",
@@ -285,6 +77,223 @@
     {
       "task": "os-lanes",
       "at": "2026-09-11T11:45:28.703961+00:00",
+      "kind": "lane_ran",
+      "lane": "AI news refresh",
+      "status": "live",
+      "what": "Refreshes official-site AI news"
+    },
+    {
+      "task": "4299-tools-skills-still--45051",
+      "at": "2026-09-11T16:44:11.330139+00:00",
+      "kind": "enqueued",
+      "title": "4299 tools/skills still have no real link (52.9%)",
+      "source": "auto",
+      "priority": 1,
+      "department": "(unrouted)"
+    },
+    {
+      "task": "only-889-1807-videos-ana-45051",
+      "at": "2026-09-11T16:44:11.357131+00:00",
+      "kind": "enqueued",
+      "title": "Only 889/1807 videos analyzed (49.2%)",
+      "source": "auto",
+      "priority": 1,
+      "department": "(unrouted)"
+    },
+    {
+      "task": "verify-the-next-200-of-9-45051",
+      "at": "2026-09-11T16:44:11.736421+00:00",
+      "kind": "enqueued",
+      "title": "Verify the next 200 of 9157 unverified elements (2-source + live test)",
+      "source": "gap",
+      "priority": 1,
+      "department": "analysis"
+    },
+    {
+      "task": "memory-embed-the-remaini-45051",
+      "at": "2026-09-11T16:44:11.779777+00:00",
+      "kind": "enqueued",
+      "title": "Memory: embed the remaining unembedded of 14251 elements for full recall",
+      "source": "gap",
+      "priority": 1,
+      "department": "memory"
+    },
+    {
+      "task": "empty-body-items-render--84700",
+      "at": "2026-09-11T16:44:11.812516+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-7653",
+      "at": "2026-09-11T16:44:11.813136+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-70809",
+      "at": "2026-09-11T16:44:11.813725+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-12177",
+      "at": "2026-09-11T16:44:11.814231+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "4299-tools-skills-still--45051",
+      "at": "2026-09-11T16:44:11.837556+00:00",
+      "kind": "routed",
+      "chose": "links",
+      "over": [
+        "security"
+      ],
+      "why": "best specialization match (2 hits)"
+    },
+    {
+      "task": "only-889-1807-videos-ana-45051",
+      "at": "2026-09-11T16:44:11.860393+00:00",
+      "kind": "routed",
+      "chose": "analysis",
+      "over": [],
+      "why": "best specialization match (1 hits)"
+    },
+    {
+      "task": "verify-the-next-200-of-8-253",
+      "at": "2026-09-11T16:44:11.889561+00:00",
+      "kind": "claimed",
+      "by": "analysis-w1",
+      "department": "analysis"
+    },
+    {
+      "task": "verify-the-next-200-of-8-253",
+      "at": "2026-09-11T16:44:11.914980+00:00",
+      "kind": "completed",
+      "by": "analysis-w1",
+      "result": "2830 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "task": "raise-g3-truth-access-47-40672",
+      "at": "2026-09-11T16:44:11.937464+00:00",
+      "kind": "claimed",
+      "by": "memory-w1",
+      "department": "memory"
+    },
+    {
+      "task": "raise-g3-truth-access-47-40672",
+      "at": "2026-09-11T16:44:12.125319+00:00",
+      "kind": "completed",
+      "by": "memory-w1",
+      "result": "Semantic index: 1705 vectors (model gemini-embedding-001); hub 9850 items → 8145 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "task": "watch-process-the-next-b-3140",
+      "at": "2026-09-11T16:44:12.218619+00:00",
+      "kind": "claimed",
+      "by": "watch-w1",
+      "department": "watch"
+    },
+    {
+      "task": "watch-process-the-next-b-3140",
+      "at": "2026-09-11T16:44:12.243050+00:00",
+      "kind": "completed",
+      "by": "watch-w1",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+    },
+    {
+      "task": "security-safety-rate-the-3140",
+      "at": "2026-09-11T16:44:12.265934+00:00",
+      "kind": "claimed",
+      "by": "security-w1",
+      "department": "security"
+    },
+    {
+      "task": "security-safety-rate-the-3140",
+      "at": "2026-09-11T16:44:13.075787+00:00",
+      "kind": "completed",
+      "by": "security-w1",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "task": "raise-g5-leverage-47-100-3140",
+      "at": "2026-09-11T16:44:13.099376+00:00",
+      "kind": "claimed",
+      "by": "creators-w1",
+      "department": "creators"
+    },
+    {
+      "task": "raise-g5-leverage-47-100-3140",
+      "at": "2026-09-11T16:44:13.123112+00:00",
+      "kind": "completed",
+      "by": "creators-w1",
+      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
+    },
+    {
+      "task": "lane-self-improvement-re-3140",
+      "at": "2026-09-11T16:44:13.146844+00:00",
+      "kind": "claimed",
+      "by": "improve-w1",
+      "department": "improve"
+    },
+    {
+      "task": "lane-self-improvement-re-3140",
+      "at": "2026-09-11T16:44:14.303966+00:00",
+      "kind": "completed",
+      "by": "improve-w1",
+      "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
+    },
+    {
+      "task": "4299-tools-skills-still--45051",
+      "at": "2026-09-11T16:44:14.327068+00:00",
+      "kind": "claimed",
+      "by": "links-w1",
+      "department": "links"
+    },
+    {
+      "task": "4299-tools-skills-still--45051",
+      "at": "2026-09-11T16:44:14.350048+00:00",
+      "kind": "handoff",
+      "from": "links-w1",
+      "to": "memory",
+      "doc": "data/excava/handoffs/4299-tools-skills-still--45051--01--links-w1--to--memory.md"
+    },
+    {
+      "task": "os-lanes",
+      "at": "2026-09-11T16:45:39.088945+00:00",
+      "kind": "lane_ran",
+      "lane": "Gemini watch (audio+visual)",
+      "status": "live",
+      "what": "Watches videos directly — clears the backlog free"
+    },
+    {
+      "task": "os-lanes",
+      "at": "2026-09-11T16:45:39.089387+00:00",
+      "kind": "lane_ran",
+      "lane": "Free analysis pool",
+      "status": "live",
+      "what": "Turns transcripts into skills/tools/connectors (free engines)"
+    },
+    {
+      "task": "os-lanes",
+      "at": "2026-09-11T16:45:39.089799+00:00",
+      "kind": "lane_ran",
+      "lane": "External mining",
+      "status": "live",
+      "what": "Mines 80+ web feeds for new tools/skills/MCPs"
+    },
+    {
+      "task": "os-lanes",
+      "at": "2026-09-11T16:45:39.090162+00:00",
+      "kind": "lane_ran",
+      "lane": "Deep analysis (night-gated)",
+      "status": "live",
+      "what": "Claude re-analysis + safety pass"
+    },
+    {
+      "task": "os-lanes",
+      "at": "2026-09-11T16:45:39.090548+00:00",
       "kind": "lane_ran",
       "lane": "AI news refresh",
       "status": "live",

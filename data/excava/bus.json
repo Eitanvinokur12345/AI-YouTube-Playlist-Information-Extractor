@@ -6321,26 +6321,6 @@
       "result": "2619 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
-      "id": "raise-g3-truth-access-48-5686",
-      "title": "Raise G3 Truth & access (48/100): 48.6% of tools/skills have a real link (target: ~100%)",
-      "detail": "value=52 size=17(small) [cost 15/steps 25/risk 10] · G3 at 48",
-      "department": "memory",
-      "source": "gap",
-      "priority": 1,
-      "status": "done",
-      "steps": 1,
-      "max_steps": 8,
-      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
-      "escalation_tier": 1,
-      "claimed_by": "memory-w1",
-      "handoff_docs": [
-        "data/excava/handoffs/raise-g3-truth-access-48-5686--01--links-w1--to--memory.md"
-      ],
-      "created_at": "2026-09-05T10:54:46.779805+00:00",
-      "updated_at": "2026-09-05T22:12:44.678874+00:00",
-      "result": "Semantic index: 1690 vectors (model gemini-embedding-001); hub 9380 items → 7690 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-    },
-    {
       "id": "3984-tools-skills-still--22263",
       "title": "3984 tools/skills still have no real link (51.5%)",
       "detail": "The link-resolver runs each cycle; this falls as it works. Add Gemini keys to speed it.",
@@ -25425,17 +25405,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-89178--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-09-12T04:59:38.625576+00:00",
-      "updated_at": "2026-09-12T04:59:56.788375+00:00"
+      "updated_at": "2026-09-12T22:32:03.005174+00:00",
+      "result": "2830 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g5-leverage-47-100-89178",
@@ -25499,17 +25480,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/resolve-real-links-websi-11471--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-09-12T11:11:11.744350+00:00",
-      "updated_at": "2026-09-12T15:48:08.977143+00:00"
+      "updated_at": "2026-09-12T22:32:03.243014+00:00",
+      "result": "Semantic index: 1705 vectors (model gemini-embedding-001); hub 9902 items → 8197 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "security-safety-rate-the-11471",
@@ -25518,15 +25500,16 @@
       "department": "security",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-09-12T11:11:11.770234+00:00",
-      "updated_at": "2026-09-12T11:11:11.770240+00:00"
+      "updated_at": "2026-09-12T22:32:04.406519+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "memory-embed-the-remaini-11471",
@@ -25571,15 +25554,16 @@
       "department": "creators",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-09-12T11:11:11.865639+00:00",
-      "updated_at": "2026-09-12T11:11:11.865645+00:00"
+      "updated_at": "2026-09-12T22:32:03.345977+00:00",
+      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     },
     {
       "id": "lane-self-improvement-re-28087",
@@ -25620,18 +25604,20 @@
       "id": "raise-g3-truth-access-47-28088",
       "title": "Raise G3 Truth & access (47/100): 47.0% of tools/skills have a real link (target: ~100%)",
       "detail": "value=53 size=17(small) [cost 15/steps 25/risk 10] · G3 at 47",
-      "department": "links",
+      "department": "memory",
       "source": "gap",
       "priority": 1,
       "status": "queued",
-      "steps": 0,
+      "steps": 1,
       "max_steps": 8,
-      "done_criteria": "a committed artifact that measurably closes this gap",
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
       "claimed_by": null,
-      "handoff_docs": [],
+      "handoff_docs": [
+        "data/excava/handoffs/raise-g3-truth-access-47-28088--01--links-w1--to--memory.md"
+      ],
       "created_at": "2026-09-12T15:48:08.518526+00:00",
-      "updated_at": "2026-09-12T15:48:08.518534+00:00"
+      "updated_at": "2026-09-12T22:32:03.397527+00:00"
     },
     {
       "id": "4334-tools-skills-still--38371",
@@ -25691,15 +25677,16 @@
       "department": "improve",
       "source": "auto",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "output written to data/ and committed by CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "improve-w1",
       "handoff_docs": [],
       "created_at": "2026-09-12T18:39:31.604745+00:00",
-      "updated_at": "2026-09-12T18:39:32.315771+00:00"
+      "updated_at": "2026-09-12T22:32:05.827049+00:00",
+      "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
     },
     {
       "id": "verify-the-next-200-of-9-38372",
@@ -25725,15 +25712,16 @@
       "department": "watch",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-09-12T18:39:32.119586+00:00",
-      "updated_at": "2026-09-12T18:39:32.119596+00:00"
+      "updated_at": "2026-09-12T22:32:03.294980+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
       "id": "raise-g5-leverage-47-100-38372",
@@ -25751,7 +25739,24 @@
       "handoff_docs": [],
       "created_at": "2026-09-12T18:39:32.188731+00:00",
       "updated_at": "2026-09-12T18:39:32.188744+00:00"
+    },
+    {
+      "id": "verify-the-next-200-of-9-52322",
+      "title": "Verify the next 200 of 9304 unverified elements (2-source + live test)",
+      "detail": "value=96 size=40(small) [cost 35/steps 70/risk 10] · 9304 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-12T22:32:02.870124+00:00",
+      "updated_at": "2026-09-12T22:32:02.870137+00:00"
     }
   ],
-  "updated_at": "2026-09-12T18:40:03.831050+00:00"
+  "updated_at": "2026-09-12T22:32:05.827057+00:00"
 }

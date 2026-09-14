@@ -1,142 +1,6 @@
 {
   "events": [
     {
-      "task": "raise-g5-leverage-46-100-9229",
-      "at": "2026-09-14T18:07:09.499993+00:00",
-      "kind": "enqueued",
-      "title": "Raise G5 Leverage (46/100): leverage needs real, usable links first (= G3); then the OS creation agent",
-      "source": "gap",
-      "priority": 1,
-      "department": "creators"
-    },
-    {
-      "task": "empty-body-items-render--84700",
-      "at": "2026-09-14T18:07:09.511408+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-7653",
-      "at": "2026-09-14T18:07:09.512040+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-70809",
-      "at": "2026-09-14T18:07:09.512781+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-12177",
-      "at": "2026-09-14T18:07:09.513371+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "transcripts-drain-the-ne-8903",
-      "at": "2026-09-14T18:07:09.539965+00:00",
-      "kind": "claimed",
-      "by": "analysis-w1",
-      "department": "analysis"
-    },
-    {
-      "task": "transcripts-drain-the-ne-8903",
-      "at": "2026-09-14T18:07:09.564610+00:00",
-      "kind": "completed",
-      "by": "analysis-w1",
-      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-    },
-    {
-      "task": "resolve-real-links-websi-8252",
-      "at": "2026-09-14T18:07:09.586194+00:00",
-      "kind": "claimed",
-      "by": "memory-w1",
-      "department": "memory"
-    },
-    {
-      "task": "resolve-real-links-websi-8252",
-      "at": "2026-09-14T18:07:09.751555+00:00",
-      "kind": "completed",
-      "by": "memory-w1",
-      "result": "Semantic index: 1705 vectors (model gemini-embedding-001); hub 9995 items → 8290 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-    },
-    {
-      "task": "watch-process-the-next-b-9229",
-      "at": "2026-09-14T18:07:09.773332+00:00",
-      "kind": "claimed",
-      "by": "watch-w1",
-      "department": "watch"
-    },
-    {
-      "task": "watch-process-the-next-b-9229",
-      "at": "2026-09-14T18:07:09.794761+00:00",
-      "kind": "completed",
-      "by": "watch-w1",
-      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
-    },
-    {
-      "task": "security-safety-rate-the-9229",
-      "at": "2026-09-14T18:07:09.816377+00:00",
-      "kind": "claimed",
-      "by": "security-w1",
-      "department": "security"
-    },
-    {
-      "task": "security-safety-rate-the-9229",
-      "at": "2026-09-14T18:07:10.636083+00:00",
-      "kind": "completed",
-      "by": "security-w1",
-      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
-    },
-    {
-      "task": "raise-g5-leverage-46-100-9229",
-      "at": "2026-09-14T18:07:10.657641+00:00",
-      "kind": "claimed",
-      "by": "creators-w1",
-      "department": "creators"
-    },
-    {
-      "task": "raise-g5-leverage-46-100-9229",
-      "at": "2026-09-14T18:07:10.679042+00:00",
-      "kind": "completed",
-      "by": "creators-w1",
-      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
-    },
-    {
-      "task": "raise-g3-truth-access-46-9229",
-      "at": "2026-09-14T18:07:10.700489+00:00",
-      "kind": "claimed",
-      "by": "links-w1",
-      "department": "links"
-    },
-    {
-      "task": "raise-g3-truth-access-46-9229",
-      "at": "2026-09-14T18:07:10.788986+00:00",
-      "kind": "handoff",
-      "from": "links-w1",
-      "to": "memory",
-      "doc": "data/excava/handoffs/raise-g3-truth-access-46-9229--01--links-w1--to--memory.md"
-    },
-    {
-      "task": "watch-process-the-next-b-9554",
-      "at": "2026-09-14T18:12:34.774269+00:00",
-      "kind": "enqueued",
-      "title": "Watch: process the next batch of 2842 pending videos",
-      "source": "gap",
-      "priority": 1,
-      "department": "watch"
-    },
-    {
-      "task": "resolve-real-links-websi-9554",
-      "at": "2026-09-14T18:12:34.795984+00:00",
-      "kind": "enqueued",
-      "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
-      "source": "gap",
-      "priority": 1,
-      "department": "links"
-    },
-    {
       "task": "security-safety-rate-the-9554",
       "at": "2026-09-14T18:12:34.817651+00:00",
       "kind": "enqueued",
@@ -286,6 +150,145 @@
       "from": "transcripts-w1",
       "to": "analysis",
       "doc": "data/excava/handoffs/transcripts-drain-the-ne-9554--01--transcripts-w1--to--analysis.md"
+    },
+    {
+      "task": "verify-the-next-200-of-9-9879",
+      "at": "2026-09-14T18:17:59.535643+00:00",
+      "kind": "enqueued",
+      "title": "Verify the next 200 of 9574 unverified elements (2-source + live test)",
+      "source": "gap",
+      "priority": 1,
+      "department": "analysis"
+    },
+    {
+      "task": "watch-process-the-next-b-9879",
+      "at": "2026-09-14T18:17:59.557193+00:00",
+      "kind": "enqueued",
+      "title": "Watch: process the next batch of 2842 pending videos",
+      "source": "gap",
+      "priority": 1,
+      "department": "watch"
+    },
+    {
+      "task": "security-safety-rate-the-9879",
+      "at": "2026-09-14T18:17:59.583787+00:00",
+      "kind": "enqueued",
+      "title": "Security: safety-rate the next batch of 1739 connectors/skills",
+      "source": "gap",
+      "priority": 1,
+      "department": "security"
+    },
+    {
+      "task": "memory-embed-the-remaini-9879",
+      "at": "2026-09-14T18:17:59.610183+00:00",
+      "kind": "enqueued",
+      "title": "Memory: embed the remaining unembedded of 14701 elements for full recall",
+      "source": "gap",
+      "priority": 1,
+      "department": "memory"
+    },
+    {
+      "task": "raise-g5-leverage-46-100-9879",
+      "at": "2026-09-14T18:17:59.645997+00:00",
+      "kind": "enqueued",
+      "title": "Raise G5 Leverage (46/100): leverage needs real, usable links first (= G3); then the OS creation agent",
+      "source": "gap",
+      "priority": 1,
+      "department": "creators"
+    },
+    {
+      "task": "empty-body-items-render--84700",
+      "at": "2026-09-14T18:17:59.657550+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-7653",
+      "at": "2026-09-14T18:17:59.658360+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-70809",
+      "at": "2026-09-14T18:17:59.663086+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-12177",
+      "at": "2026-09-14T18:17:59.663685+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "transcripts-drain-the-ne-9554",
+      "at": "2026-09-14T18:17:59.690883+00:00",
+      "kind": "claimed",
+      "by": "analysis-w1",
+      "department": "analysis"
+    },
+    {
+      "task": "transcripts-drain-the-ne-9554",
+      "at": "2026-09-14T18:17:59.715628+00:00",
+      "kind": "completed",
+      "by": "analysis-w1",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "task": "raise-g3-truth-access-46-9229",
+      "at": "2026-09-14T18:17:59.737486+00:00",
+      "kind": "claimed",
+      "by": "memory-w1",
+      "department": "memory"
+    },
+    {
+      "task": "raise-g3-truth-access-46-9229",
+      "at": "2026-09-14T18:17:59.903566+00:00",
+      "kind": "completed",
+      "by": "memory-w1",
+      "result": "Semantic index: 1705 vectors (model gemini-embedding-001); hub 9995 items → 8290 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "task": "watch-process-the-next-b-9879",
+      "at": "2026-09-14T18:17:59.925674+00:00",
+      "kind": "claimed",
+      "by": "watch-w1",
+      "department": "watch"
+    },
+    {
+      "task": "watch-process-the-next-b-9879",
+      "at": "2026-09-14T18:17:59.947573+00:00",
+      "kind": "completed",
+      "by": "watch-w1",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+    },
+    {
+      "task": "security-safety-rate-the-9879",
+      "at": "2026-09-14T18:17:59.969395+00:00",
+      "kind": "claimed",
+      "by": "security-w1",
+      "department": "security"
+    },
+    {
+      "task": "security-safety-rate-the-9879",
+      "at": "2026-09-14T18:18:00.790506+00:00",
+      "kind": "completed",
+      "by": "security-w1",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "task": "raise-g5-leverage-46-100-9879",
+      "at": "2026-09-14T18:18:00.812318+00:00",
+      "kind": "claimed",
+      "by": "creators-w1",
+      "department": "creators"
+    },
+    {
+      "task": "raise-g5-leverage-46-100-9879",
+      "at": "2026-09-14T18:18:00.834283+00:00",
+      "kind": "completed",
+      "by": "creators-w1",
+      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     }
   ]
 }

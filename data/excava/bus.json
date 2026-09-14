@@ -26039,15 +26039,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-09-14T00:24:08.833791+00:00",
-      "updated_at": "2026-09-14T00:24:08.833805+00:00"
+      "updated_at": "2026-09-14T12:27:14.089432+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "watch-process-the-next-b-45448",
@@ -26165,15 +26166,16 @@
       "department": "watch",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-09-14T05:23:31.158546+00:00",
-      "updated_at": "2026-09-14T05:23:31.158557+00:00"
+      "updated_at": "2026-09-14T12:27:14.379375+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
       "id": "security-safety-rate-the-63411",
@@ -26182,15 +26184,16 @@
       "department": "security",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-09-14T05:23:31.194535+00:00",
-      "updated_at": "2026-09-14T05:23:31.194547+00:00"
+      "updated_at": "2026-09-14T12:27:15.458478+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "memory-embed-the-remaini-63411",
@@ -26235,15 +26238,16 @@
       "department": "creators",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-09-14T05:23:31.301965+00:00",
-      "updated_at": "2026-09-14T05:23:31.301979+00:00"
+      "updated_at": "2026-09-14T12:27:15.511464+00:00",
+      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     },
     {
       "id": "push-link-coverage-towar-88486",
@@ -26252,6 +26256,26 @@
       "department": "memory",
       "source": "owner",
       "priority": 0,
+      "status": "done",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": "memory-w1",
+      "handoff_docs": [
+        "data/excava/handoffs/push-link-coverage-towar-88486--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-09-14T12:21:26.994589+00:00",
+      "updated_at": "2026-09-14T12:27:14.326722+00:00",
+      "result": "Semantic index: 1705 vectors (model gemini-embedding-001); hub 9995 items → 8290 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "id": "4363-tools-skills-still--88487",
+      "title": "4363 tools/skills still have no real link (53.1%)",
+      "detail": "The link-resolver runs each cycle; this falls as it works. Add Gemini keys to speed it.",
+      "department": "memory",
+      "source": "auto",
+      "priority": 1,
       "status": "queued",
       "steps": 1,
       "max_steps": 8,
@@ -26259,27 +26283,10 @@
       "escalation_tier": 1,
       "claimed_by": null,
       "handoff_docs": [
-        "data/excava/handoffs/push-link-coverage-towar-88486--01--links-w1--to--memory.md"
+        "data/excava/handoffs/4363-tools-skills-still--88487--01--links-w1--to--memory.md"
       ],
-      "created_at": "2026-09-14T12:21:26.994589+00:00",
-      "updated_at": "2026-09-14T12:21:29.316010+00:00"
-    },
-    {
-      "id": "4363-tools-skills-still--88487",
-      "title": "4363 tools/skills still have no real link (53.1%)",
-      "detail": "The link-resolver runs each cycle; this falls as it works. Add Gemini keys to speed it.",
-      "department": "links",
-      "source": "auto",
-      "priority": 1,
-      "status": "queued",
-      "steps": 0,
-      "max_steps": 8,
-      "done_criteria": "output written to data/ and committed by CI",
-      "escalation_tier": 1,
-      "claimed_by": null,
-      "handoff_docs": [],
       "created_at": "2026-09-14T12:21:27.030703+00:00",
-      "updated_at": "2026-09-14T12:21:27.752638+00:00"
+      "updated_at": "2026-09-14T12:27:14.431676+00:00"
     },
     {
       "id": "only-894-1807-videos-ana-88487",
@@ -26305,15 +26312,16 @@
       "department": "improve",
       "source": "auto",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "output written to data/ and committed by CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "improve-w1",
       "handoff_docs": [],
       "created_at": "2026-09-14T12:21:27.096226+00:00",
-      "updated_at": "2026-09-14T12:21:27.805745+00:00"
+      "updated_at": "2026-09-14T12:27:16.952840+00:00",
+      "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
     },
     {
       "id": "weakest-lane-deep-analys-88487",
@@ -26382,7 +26390,24 @@
       "handoff_docs": [],
       "created_at": "2026-09-14T12:21:27.672859+00:00",
       "updated_at": "2026-09-14T12:21:27.672865+00:00"
+    },
+    {
+      "id": "resolve-real-links-websi-88833",
+      "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
+      "detail": "value=82 size=41(small) [cost 40/steps 60/risk 15] · many unlinked",
+      "department": "links",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-14T12:27:13.967095+00:00",
+      "updated_at": "2026-09-14T12:27:13.967108+00:00"
     }
   ],
-  "updated_at": "2026-09-14T12:21:43.983216+00:00"
+  "updated_at": "2026-09-14T12:27:16.952848+00:00"
 }

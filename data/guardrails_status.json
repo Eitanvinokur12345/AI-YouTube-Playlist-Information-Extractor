@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-09-15T04:27:30.405488+00:00",
+ "generated_at": "2026-09-15T04:32:59.758591+00:00",
  "total": 21,
- "passing": 17,
+ "passing": 19,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": false,
-   "detail": "NOT in sync vs origin/main (behind/ahead: 2\t0) — a push may not have landed.",
+   "ok": true,
+   "detail": "HEAD == origin/main (work is really saved).",
    "severity": "warn"
   },
   {
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "28220 memory episodes on record.",
+   "detail": "28230 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "0 guardrail runs logged (append-only, never rewritten).",
+   "detail": "1 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -92,14 +92,14 @@
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "10027 tasks done, 12 departments moving",
+   "detail": "10033 tasks done, 12 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "86762 MB free on the repo drive.",
+   "detail": "86756 MB free on the repo drive.",
    "severity": "info"
   },
   {
@@ -112,8 +112,8 @@
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
-   "ok": false,
-   "detail": "last 'excava-beat #N' commit 9.2h ago — STALE: the dedicated heartbeat loop isn't landing per-cycle commits (check for a wedged/queued excava_beat.yml run).",
+   "ok": true,
+   "detail": "last 'excava-beat #N' commit 0.1h ago.",
    "severity": "warn"
   },
   {
@@ -127,7 +127,7 @@
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
    "ok": false,
-   "detail": "9/16 lane(s) landing on cadence — STALE: creators.yml (daily 07:45 UTC): last commit 884.1h ago (expected within 30h); discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 2062.3h ago (expected within 76h); improve.yml (weekly deep pass): last commit 2412.1h ago (expected within 192h); links.yml (hourly): last commit 4.6h ago (expected within 4h); review.yml (twice-weekly): last commit 1132.5h ago (expected within 100h); transcribe.yml (daily): last commit 1078.1h ago (expected within 30h); visual.yml (2x/day): last commit 20.2h ago (expected within 20h)",
+   "detail": "9/16 lane(s) landing on cadence — STALE: creators.yml (daily 07:45 UTC): last commit 884.2h ago (expected within 30h); discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 2062.4h ago (expected within 76h); improve.yml (weekly deep pass): last commit 2412.2h ago (expected within 192h); links.yml (hourly): last commit 4.6h ago (expected within 4h); review.yml (twice-weekly): last commit 1132.6h ago (expected within 100h); transcribe.yml (daily): last commit 1078.2h ago (expected within 30h); visual.yml (2x/day): last commit 20.3h ago (expected within 20h)",
    "severity": "warn"
   },
   {

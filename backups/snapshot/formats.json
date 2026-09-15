@@ -169,7 +169,8 @@
         "https://www.youtube.com/watch?v=1wRoctFbLDk",
         "https://www.youtube.com/watch?v=ACwHpJZOZB4",
         "https://www.youtube.com/watch?v=ArCR9gsK1X8",
-        "https://www.youtube.com/watch?v=BKNhFxQqFVg"
+        "https://www.youtube.com/watch?v=BKNhFxQqFVg",
+        "https://www.youtube.com/watch?v=D3kmstnDVY0"
       ]
     },
     {
@@ -785,7 +786,10 @@
       "source_type": "web_news",
       "source_url": "https://www.youtube.com/watch?v=1wRoctFbLDk",
       "discovered_via": "mine_feeds (visual)",
-      "added_at": "2026-07-20T05:54:05.765212+00:00"
+      "added_at": "2026-07-20T05:54:05.765212+00:00",
+      "also_seen_in": [
+        "https://www.youtube.com/watch?v=CUfIQl7roRU"
+      ]
     },
     {
       "name": "Task-Oriented AI Interface",
@@ -5094,6 +5098,182 @@
       "source_url": "https://www.youtube.com/watch?v=CJEt-9qy1x8",
       "discovered_via": "mine_feeds (visual)",
       "added_at": "2026-09-14T08:06:01.648492+00:00"
+    },
+    {
+      "name": "News Article Layout",
+      "kind": "layout",
+      "description": "A standard web layout for a news article, featuring a prominent headline, author/date information, a main content area, and a persistent top navigation bar.",
+      "rebuild_hint": "Utilize a responsive grid for content, clear sans-serif typography for body and headings, and a sticky header for site navigation. Maintain ample white space for readability.",
+      "slug": "news-article-layout",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=CQsCAEFYl6A",
+      "discovered_via": "mine_feeds (visual)",
+      "added_at": "2026-09-15T08:00:48.502570+00:00"
+    },
+    {
+      "name": "Deduplication Diagram",
+      "kind": "layout",
+      "description": "A visual representation showing original data with duplicates (a 4x4 grid of colored blocks with repeated letters) transforming into deduplicated data (a single row of unique colored blocks).",
+      "rebuild_hint": "Create a diagram with two sections: 'Original Data' showing a grid with repeated elements, and 'Deduplicated Data' showing a linear sequence of unique elements, connected by an arrow labeled 'Deduplication'.",
+      "slug": "deduplication-diagram",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=CSbjdu7W2LI",
+      "discovered_via": "mine_feeds (visual)",
+      "added_at": "2026-09-15T08:00:48.502570+00:00"
+    },
+    {
+      "name": "Idempotency in Scalable Distributed System Diagram",
+      "kind": "flow",
+      "description": "A sequence diagram illustrating an idempotent API call flow between an Order Microservice, Inventory Microservice, Inventory DB, and an Idempotency Table. It shows a 'Try' scenario where the database is updated and an idempotency key is stored, and a 'Retry' scenario where the idempotency key is found, preventing re-execution of the database update.",
+      "rebuild_hint": "Design a sequence diagram with four columns: 'Order Microservice', 'Inventory Microservice', 'Inventory DB', and 'Idempotency Table'. Show a 'Try' flow where Order calls Inventory, Inventory updates DB and Idempotency Table. Show a 'Retry' flow where Order calls Inventory, Inventory checks Idempotency Table, finds the key, and confirms without re-updating the DB.",
+      "slug": "idempotency-in-scalable-distributed-system-diagram",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=CSbjdu7W2LI",
+      "discovered_via": "mine_feeds (visual)",
+      "added_at": "2026-09-15T08:00:48.502570+00:00"
+    },
+    {
+      "name": "Card-based App Listing",
+      "kind": "layout",
+      "description": "A grid display of application or plugin cards, each featuring an icon, title, and short description, often with additional labels like 'New' or 'Trending'.",
+      "rebuild_hint": "Use a CSS grid or flexbox to arrange cards in a responsive layout. Each card component should include an image/icon, a heading for the title, and a paragraph for the description. Add conditional rendering for 'New'/'Trending' badges.",
+      "slug": "card-based-app-listing",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=CUfIQl7roRU",
+      "discovered_via": "mine_feeds (visual)",
+      "added_at": "2026-09-15T08:00:48.502570+00:00"
+    },
+    {
+      "name": "AI Prompt with Image Input",
+      "kind": "flow",
+      "description": "A user interface flow where an image is uploaded or displayed, and a text prompt is provided to an AI model for processing or transformation of the image.",
+      "rebuild_hint": "Create a component with an image display area (or upload widget) and a multi-line text input field. Implement functionality to send both the image data and the text prompt to a backend AI service.",
+      "slug": "ai-prompt-with-image-input",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=CUfIQl7roRU",
+      "discovered_via": "mine_feeds (visual)",
+      "added_at": "2026-09-15T08:00:48.502570+00:00"
+    },
+    {
+      "name": "Knowledge Graph Visualization",
+      "kind": "layout",
+      "description": "A visual representation of interconnected data points (nodes) and their relationships (edges), often clustered or arranged spatially to show connections and hierarchies within a dataset.",
+      "rebuild_hint": "Utilize graph visualization libraries (e.g., D3.js, Cytoscape.js) to render nodes and edges based on a structured dataset of entities and their relationships. Implement interactive features like zooming, panning, and node highlighting.",
+      "slug": "knowledge-graph-visualization",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=Cd9wV4EWoPA",
+      "discovered_via": "mine_feeds (visual)",
+      "added_at": "2026-09-15T08:00:48.502570+00:00"
+    },
+    {
+      "name": "Hierarchical File Browser",
+      "kind": "layout",
+      "description": "A tree-like user interface for navigating files and folders, showing parent-child relationships and allowing users to expand or collapse directories to reveal or hide their contents.",
+      "rebuild_hint": "Implement a recursive UI component that renders folder names with expand/collapse toggles and file names as children. Use indentation or visual cues to indicate hierarchy.",
+      "slug": "hierarchical-file-browser",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=Cd9wV4EWoPA",
+      "discovered_via": "mine_feeds (visual)",
+      "added_at": "2026-09-15T08:00:48.502570+00:00"
+    },
+    {
+      "name": "Progress Bar",
+      "kind": "component",
+      "description": "A graphical control element used to visualize the progress of an operation or the current usage level of a resource, typically a horizontal bar that fills up proportionally.",
+      "rebuild_hint": "Create a container element with a background and an inner element whose width is dynamically set based on the percentage of completion or usage, often with CSS transitions for smooth animation.",
+      "slug": "progress-bar",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=Cd9wV4EWoPA",
+      "discovered_via": "mine_feeds (visual)",
+      "added_at": "2026-09-15T08:00:48.502570+00:00"
+    },
+    {
+      "name": "ChatGPT Website Prompt Structure",
+      "kind": "flow",
+      "description": "A structured prompt generated by ChatGPT for Landingsite.ai, including sections for website goals, design notes (e.g., color palette, typography, components), copy requirements (derived from customer reviews), and expected output format.",
+      "rebuild_hint": "Provide ChatGPT with a business name and its customer reviews, then ask it to generate a detailed prompt for an AI website builder like Landingsite.ai, specifying desired sections, content, and design elements.",
+      "slug": "chatgpt-website-prompt-structure",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=ClDkybqfbew",
+      "discovered_via": "mine_feeds (visual)",
+      "added_at": "2026-09-15T08:00:48.502570+00:00"
+    },
+    {
+      "name": "Record Acceleration Graph Layout",
+      "kind": "layout",
+      "description": "A three-panel dashboard layout designed to visually represent rapid acceleration or exponential growth of metrics over a short period. Each panel features a line graph with a common time axis, individual titles, and peak value indicators.",
+      "rebuild_hint": "Create a dark-background dashboard with three horizontally aligned sections. Within each section, implement a line graph using a bright green color for the data line, showing an upward trend. Label the x-axis with years (e.g., 2023-2026) and the y-axis with relevant metric names and peak numerical values. Include a source logo if applicable.",
+      "slug": "record-acceleration-graph-layout",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=Ctn1xKQpuUk",
+      "discovered_via": "mine_feeds (visual)",
+      "added_at": "2026-09-15T08:00:48.502570+00:00"
+    },
+    {
+      "name": "AI-driven Prospecting Workflow",
+      "kind": "flow",
+      "description": "A workflow where a user provides a natural language prompt to an AI assistant (Claude), which then uses an integrated sales intelligence tool (Apollo.io) to search for leads, present them in a structured format, and can further enrich the data based on follow-up prompts.",
+      "rebuild_hint": "Integrate an LLM with a sales intelligence API. Design a chat interface for user input. Implement prompt parsing to extract search criteria. Display results in a dynamic table. Add options for data enrichment and export.",
+      "slug": "ai-driven-prospecting-workflow",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=D2aHTOcfj_M",
+      "discovered_via": "mine_feeds (visual)",
+      "added_at": "2026-09-15T08:00:48.502570+00:00"
+    },
+    {
+      "name": "Interactive Lead Table",
+      "kind": "component",
+      "description": "A dynamic table displaying lead information, initially with masked sensitive data, which can be enriched to reveal full details like verified emails and phone numbers. Includes status indicators for data verification.",
+      "rebuild_hint": "Create a responsive table component. Implement data masking for sensitive fields. Add a data enrichment function that updates table rows with new information and verification statuses. Include export options (e.g., CSV).",
+      "slug": "interactive-lead-table",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=D2aHTOcfj_M",
+      "discovered_via": "mine_feeds (visual)",
+      "added_at": "2026-09-15T08:00:48.502570+00:00"
+    },
+    {
+      "name": "Split-Pane Code Editor",
+      "kind": "layout",
+      "description": "A common layout pattern in IDEs, showing two distinct panels side-by-side. One panel often displays code, while the other might show a terminal, chat interface, or file explorer.",
+      "rebuild_hint": "Use a flexbox or grid layout with two main columns. Integrate a code editor component (e.g., Monaco Editor) in one pane and a terminal/chat UI component in the other.",
+      "slug": "split-pane-code-editor",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=D3kmstnDVY0",
+      "discovered_via": "mine_feeds (visual)",
+      "added_at": "2026-09-15T08:00:48.502570+00:00"
+    },
+    {
+      "name": "Terminal Interface",
+      "kind": "component",
+      "description": "A command-line interface (CLI) with a dark background, monospaced font, and text-based input/output.",
+      "rebuild_hint": "Use a pre tag or a custom component with a dark background, monospaced font, and a blinking cursor for input.",
+      "slug": "terminal-interface",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=D3kmstnDVY0",
+      "discovered_via": "mine_feeds (visual)",
+      "added_at": "2026-09-15T08:00:48.502570+00:00"
+    },
+    {
+      "name": "Hero Section with Call-to-Action",
+      "kind": "section",
+      "description": "A prominent top section of a webpage featuring a large heading, a brief description, and a clear call-to-action button, designed to immediately capture user attention.",
+      "rebuild_hint": "Use a full-width container, center-align text, apply a large font size for the heading, and ensure the CTA button has high contrast and clear text.",
+      "slug": "hero-section-with-call-to-action",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=D4V1hGTqk_0",
+      "discovered_via": "mine_feeds (visual)",
+      "added_at": "2026-09-15T08:00:48.502570+00:00"
+    },
+    {
+      "name": "Project Card Grid",
+      "kind": "layout",
+      "description": "A responsive grid layout displaying individual project cards, each containing an image, title, and short description, suitable for portfolios or galleries.",
+      "rebuild_hint": "Implement with CSS Grid or Flexbox, ensuring cards have consistent padding, a hover effect, and adapt to different screen sizes (e.g., 3 columns on desktop, 1 on mobile).",
+      "slug": "project-card-grid",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=D4V1hGTqk_0",
+      "discovered_via": "mine_feeds (visual)",
+      "added_at": "2026-09-15T08:00:48.502570+00:00"
     }
   ]
 }

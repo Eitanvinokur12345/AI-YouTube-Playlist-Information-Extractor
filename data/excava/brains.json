@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-16T20:09:03.172078+00:00",
+ "generated_at": "2026-09-16T22:57:43.951562+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -80,16 +80,16 @@
   {
    "id": "A",
    "lead": {
+    "engine": "kimi",
+    "model": "moonshotai/kimi-k2:free",
+    "lineage": "kimi",
+    "tier": "reasoning"
+   },
+   "support": {
     "engine": "nvidia",
     "model": "meta/llama-3.3-70b-instruct",
     "lineage": "llama",
     "tier": "grounded"
-   },
-   "support": {
-    "engine": "deepseek",
-    "model": "deepseek/deepseek-chat-v3-0324:free",
-    "lineage": "deepseek",
-    "tier": "reasoning"
    }
   },
   {
@@ -101,10 +101,10 @@
     "tier": "grounded"
    },
    "support": {
-    "engine": "groq",
-    "model": "llama-3.3-70b-versatile",
-    "lineage": "llama",
-    "tier": "fast"
+    "engine": "deepseek",
+    "model": "deepseek/deepseek-chat-v3-0324:free",
+    "lineage": "deepseek",
+    "tier": "reasoning"
    }
   },
   {
@@ -116,8 +116,8 @@
     "tier": "grounded"
    },
    "support": {
-    "engine": "cerebras",
-    "model": "llama3.1-8b",
+    "engine": "groq",
+    "model": "llama-3.3-70b-versatile",
     "lineage": "llama",
     "tier": "fast"
    }
@@ -125,10 +125,10 @@
   {
    "id": "D",
    "lead": {
-    "engine": "kimi",
-    "model": "moonshotai/kimi-k2:free",
-    "lineage": "kimi",
-    "tier": "reasoning"
+    "engine": "cerebras",
+    "model": "llama3.1-8b",
+    "lineage": "llama",
+    "tier": "fast"
    },
    "support": {
     "engine": "gemini",
@@ -140,9 +140,9 @@
  ],
  "debate": [
   {
-   "engine": "nvidia",
-   "lineage": "llama",
-   "model": "meta/llama-3.3-70b-instruct"
+   "engine": "kimi",
+   "lineage": "kimi",
+   "model": "moonshotai/kimi-k2:free"
   },
   {
    "engine": "gh-models",
@@ -155,9 +155,9 @@
    "model": "z-ai/glm-4.5-air:free"
   },
   {
-   "engine": "kimi",
-   "lineage": "kimi",
-   "model": "moonshotai/kimi-k2:free"
+   "engine": "cerebras",
+   "lineage": "llama",
+   "model": "llama3.1-8b"
   }
  ],
  "debate_lineages": [

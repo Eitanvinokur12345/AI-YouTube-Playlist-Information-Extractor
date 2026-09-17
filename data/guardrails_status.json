@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-09-17T13:47:45.682843+00:00",
+ "generated_at": "2026-09-17T18:33:24.605502+00:00",
  "total": 21,
- "passing": 18,
+ "passing": 16,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": true,
-   "detail": "HEAD == origin/main (work is really saved).",
+   "ok": false,
+   "detail": "NOT in sync vs origin/main (behind/ahead: 1\t0) — a push may not have landed.",
    "severity": "warn"
   },
   {
@@ -71,7 +71,7 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "29563 memory episodes on record.",
+   "detail": "29581 memory episodes on record.",
    "severity": "warn"
   },
   {
@@ -84,50 +84,50 @@
   {
    "id": "G-L",
    "name": "Uncommitted-work watchdog",
-   "ok": true,
-   "detail": "no stray source files uncommitted.",
+   "ok": false,
+   "detail": "4 untracked source file(s) not committed — commit or quarantine so nothing is lost: skills/ai-script-analysis/SKILL.md, skills/ai-speech-error-detection/SKILL.md, skills/ai-talking-head-editing/SKILL.md, skills/ai-video-compilation/SKILL.md",
    "severity": "warn"
   },
   {
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "10792 tasks done, 12 departments moving",
+   "detail": "10799 tasks done, 12 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "86732 MB free on the repo drive.",
+   "detail": "86723 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 1279.8h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 1284.6h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
    "ok": false,
-   "detail": "last 'excava-beat #N' commit 7.8h ago — STALE: the dedicated heartbeat loop isn't landing per-cycle commits (check for a wedged/queued excava_beat.yml run).",
+   "detail": "last 'excava-beat #N' commit 12.5h ago — STALE: the dedicated heartbeat loop isn't landing per-cycle commits (check for a wedged/queued excava_beat.yml run).",
    "severity": "warn"
   },
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "last 'core-spoton:' commit 2.2h ago.",
+   "detail": "last 'core-spoton:' commit 1.7h ago.",
    "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
    "ok": false,
-   "detail": "11/16 lane(s) landing on cadence — STALE: creators.yml (daily 07:45 UTC): last commit 941.4h ago (expected within 30h); discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 2119.6h ago (expected within 76h); improve.yml (weekly deep pass): last commit 2469.5h ago (expected within 192h); review.yml (twice-weekly): last commit 1189.8h ago (expected within 100h); transcribe.yml (daily): last commit 1135.5h ago (expected within 30h)",
+   "detail": "11/16 lane(s) landing on cadence — STALE: creators.yml (daily 07:45 UTC): last commit 946.2h ago (expected within 30h); discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 2124.4h ago (expected within 76h); improve.yml (weekly deep pass): last commit 2474.2h ago (expected within 192h); review.yml (twice-weekly): last commit 1194.6h ago (expected within 100h); transcribe.yml (daily): last commit 1140.2h ago (expected within 30h)",
    "severity": "warn"
   },
   {

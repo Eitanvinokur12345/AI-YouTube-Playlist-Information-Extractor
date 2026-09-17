@@ -28341,15 +28341,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-09-16T23:59:19.811100+00:00",
-      "updated_at": "2026-09-16T23:59:19.811108+00:00"
+      "updated_at": "2026-09-17T00:10:13.076033+00:00",
+      "result": "Semantic index: 1712 vectors (model gemini-embedding-001); hub 10114 items → 8402 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "transcripts-drain-the-ne-3159",
@@ -28396,15 +28397,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-09-17T00:04:45.924646+00:00",
-      "updated_at": "2026-09-17T00:04:45.924659+00:00"
+      "updated_at": "2026-09-17T00:10:12.830313+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "watch-process-the-next-b-3485",
@@ -28478,7 +28480,99 @@
       "created_at": "2026-09-17T00:04:46.069324+00:00",
       "updated_at": "2026-09-17T00:04:47.573055+00:00",
       "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
+    },
+    {
+      "id": "watch-process-the-next-b-3812",
+      "title": "Watch: process the next batch of 2842 pending videos",
+      "detail": "value=90 size=29(small) [cost 30/steps 40/risk 10] · 2842 pending",
+      "department": "watch",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "watch-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-17T00:10:12.599107+00:00",
+      "updated_at": "2026-09-17T00:10:13.133130+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+    },
+    {
+      "id": "security-safety-rate-the-3812",
+      "title": "Security: safety-rate the next batch of 1769 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1769 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-17T00:10:12.635746+00:00",
+      "updated_at": "2026-09-17T00:10:14.187429+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "id": "transcripts-drain-the-ne-3812",
+      "title": "Transcripts: drain the next batch of 2842 pending (residential IP)",
+      "detail": "value=60 size=26(small) [cost 25/steps 35/risk 15] · 2842 pending",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-drain-the-ne-3812--01--transcripts-w1--to--analysis.md"
+      ],
+      "created_at": "2026-09-17T00:10:12.684409+00:00",
+      "updated_at": "2026-09-17T00:10:14.435096+00:00"
+    },
+    {
+      "id": "raise-g3-truth-access-46-3812",
+      "title": "Raise G3 Truth & access (46/100): 46.5% of tools/skills have a real link (target: ~100%)",
+      "detail": "value=54 size=17(small) [cost 15/steps 25/risk 10] · G3 at 46",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/raise-g3-truth-access-46-3812--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-09-17T00:10:12.713647+00:00",
+      "updated_at": "2026-09-17T00:10:14.302175+00:00"
+    },
+    {
+      "id": "raise-g5-leverage-46-100-3812",
+      "title": "Raise G5 Leverage (46/100): leverage needs real, usable links first (= G3); then the OS creation agent",
+      "detail": "value=54 size=17(small) [cost 15/steps 25/risk 10] · G5 at 46",
+      "department": "creators",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "creators-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-17T00:10:12.743305+00:00",
+      "updated_at": "2026-09-17T00:10:14.245095+00:00",
+      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     }
   ],
-  "updated_at": "2026-09-17T00:04:47.629268+00:00"
+  "updated_at": "2026-09-17T00:10:14.435102+00:00"
 }

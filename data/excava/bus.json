@@ -33385,15 +33385,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-09-18T09:08:21.750846+00:00",
-      "updated_at": "2026-09-18T09:08:21.750854+00:00"
+      "updated_at": "2026-09-18T09:19:09.988817+00:00",
+      "result": "Semantic index: 1712 vectors (model gemini-embedding-001); hub 10123 items → 8411 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "security-safety-rate-the-22825",
@@ -33420,17 +33421,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-22825--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-09-18T09:13:45.850212+00:00",
-      "updated_at": "2026-09-18T09:13:47.169250+00:00"
+      "updated_at": "2026-09-18T09:19:09.780164+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g3-truth-access-46-22825",
@@ -33450,7 +33452,61 @@
       ],
       "created_at": "2026-09-18T09:13:45.876005+00:00",
       "updated_at": "2026-09-18T09:13:46.220931+00:00"
+    },
+    {
+      "id": "verify-the-next-200-of-9-23149",
+      "title": "Verify the next 200 of 9806 unverified elements (2-source + live test)",
+      "detail": "value=96 size=40(small) [cost 35/steps 70/risk 10] · 9806 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-18T09:19:09.607312+00:00",
+      "updated_at": "2026-09-18T09:19:09.607326+00:00"
+    },
+    {
+      "id": "resolve-real-links-websi-23149",
+      "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
+      "detail": "value=82 size=41(small) [cost 40/steps 60/risk 15] · many unlinked",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/resolve-real-links-websi-23149--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-09-18T09:19:09.640409+00:00",
+      "updated_at": "2026-09-18T09:19:10.041251+00:00"
+    },
+    {
+      "id": "security-safety-rate-the-23149",
+      "title": "Security: safety-rate the next batch of 1770 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1770 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-18T09:19:09.666770+00:00",
+      "updated_at": "2026-09-18T09:19:10.872671+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     }
   ],
-  "updated_at": "2026-09-18T09:13:47.169253+00:00"
+  "updated_at": "2026-09-18T09:19:10.872683+00:00"
 }

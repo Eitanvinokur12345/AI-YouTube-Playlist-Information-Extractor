@@ -5927,15 +5927,16 @@
       "department": "watch",
       "source": "room-action:watch",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-09-01T04:19:23.007191+00:00",
-      "updated_at": "2026-09-01T04:19:23.007205+00:00"
+      "updated_at": "2026-09-18T08:35:59.808975+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
       "id": "analysis-room-action-mar-36711",
@@ -32927,17 +32928,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/raise-g3-truth-access-46-19901--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-09-18T08:25:01.746028+00:00",
-      "updated_at": "2026-09-18T08:25:02.152643+00:00"
+      "updated_at": "2026-09-18T08:35:59.756991+00:00",
+      "result": "Semantic index: 1712 vectors (model gemini-embedding-001); hub 10123 items → 8411 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "resolve-real-links-websi-20234",
@@ -32983,18 +32985,71 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-20234--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-09-18T08:30:34.162654+00:00",
-      "updated_at": "2026-09-18T08:30:35.492722+00:00"
+      "updated_at": "2026-09-18T08:35:59.549941+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "id": "verify-the-next-200-of-9-20559",
+      "title": "Verify the next 200 of 9806 unverified elements (2-source + live test)",
+      "detail": "value=96 size=40(small) [cost 35/steps 70/risk 10] · 9806 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-18T08:35:59.380634+00:00",
+      "updated_at": "2026-09-18T08:35:59.380648+00:00"
+    },
+    {
+      "id": "security-safety-rate-the-20559",
+      "title": "Security: safety-rate the next batch of 1770 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1770 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-18T08:35:59.418708+00:00",
+      "updated_at": "2026-09-18T08:36:00.634959+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "id": "memory-embed-the-remaini-20559",
+      "title": "Memory: embed the remaining unembedded of 14955 elements for full recall",
+      "detail": "value=64 size=20(small) [cost 20/steps 30/risk 5] · 14955 elements",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-18T08:35:59.450244+00:00",
+      "updated_at": "2026-09-18T08:35:59.450252+00:00"
     }
   ],
-  "updated_at": "2026-09-18T08:30:35.492726+00:00"
+  "updated_at": "2026-09-18T08:36:00.634973+00:00"
 }

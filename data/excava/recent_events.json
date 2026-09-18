@@ -1,109 +1,6 @@
 {
   "events": [
     {
-      "task": "transcripts-drain-the-ne-5670",
-      "at": "2026-09-18T07:31:00.883805+00:00",
-      "kind": "completed",
-      "by": "analysis-w1",
-      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-    },
-    {
-      "task": "raise-g3-truth-access-46-5344",
-      "at": "2026-09-18T07:31:00.909157+00:00",
-      "kind": "claimed",
-      "by": "memory-w1",
-      "department": "memory"
-    },
-    {
-      "task": "raise-g3-truth-access-46-5344",
-      "at": "2026-09-18T07:31:01.100543+00:00",
-      "kind": "completed",
-      "by": "memory-w1",
-      "result": "Semantic index: 1712 vectors (model gemini-embedding-001); hub 10123 items → 8411 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-    },
-    {
-      "task": "watch-room-action-at-13--81566",
-      "at": "2026-09-18T07:31:01.125672+00:00",
-      "kind": "claimed",
-      "by": "watch-w1",
-      "department": "watch"
-    },
-    {
-      "task": "watch-room-action-at-13--81566",
-      "at": "2026-09-18T07:31:01.150935+00:00",
-      "kind": "completed",
-      "by": "watch-w1",
-      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
-    },
-    {
-      "task": "security-room-action-war-97452",
-      "at": "2026-09-18T07:31:01.175747+00:00",
-      "kind": "claimed",
-      "by": "security-w1",
-      "department": "security"
-    },
-    {
-      "task": "security-room-action-war-97452",
-      "at": "2026-09-18T07:31:01.976635+00:00",
-      "kind": "completed",
-      "by": "security-w1",
-      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-09-18T07:31:23.979821+00:00",
-      "kind": "lane_ran",
-      "lane": "Gemini watch (audio+visual)",
-      "status": "live",
-      "what": "Watches videos directly — clears the backlog free"
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-09-18T07:31:23.980234+00:00",
-      "kind": "lane_ran",
-      "lane": "Deep analysis (night-gated)",
-      "status": "live",
-      "what": "Claude re-analysis + safety pass"
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-09-18T07:31:23.980609+00:00",
-      "kind": "lane_ran",
-      "lane": "AI news refresh",
-      "status": "live",
-      "what": "Refreshes official-site AI news"
-    },
-    {
-      "task": "transcripts-drain-the-ne-16994",
-      "at": "2026-09-18T07:36:34.639246+00:00",
-      "kind": "enqueued",
-      "title": "Transcripts: drain the next batch of 2842 pending (residential IP)",
-      "source": "gap",
-      "priority": 1,
-      "department": "transcripts"
-    },
-    {
-      "task": "raise-g3-truth-access-46-16994",
-      "at": "2026-09-18T07:36:34.664611+00:00",
-      "kind": "enqueued",
-      "title": "Raise G3 Truth & access (46/100): 46.5% of tools/skills have a real link (target: ~100%)",
-      "source": "gap",
-      "priority": 1,
-      "department": "links"
-    },
-    {
-      "task": "empty-body-items-render--84700",
-      "at": "2026-09-18T07:36:34.683984+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-7653",
-      "at": "2026-09-18T07:36:34.684554+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
       "task": "lane-transcript-retrieva-70809",
       "at": "2026-09-18T07:36:34.726581+00:00",
       "kind": "unroutable",
@@ -285,6 +182,105 @@
       "from": "links-w1",
       "to": "memory",
       "doc": "data/excava/handoffs/resolve-real-links-websi-17321--01--links-w1--to--memory.md"
+    },
+    {
+      "task": "memory-embed-the-remaini-17643",
+      "at": "2026-09-18T07:47:23.853823+00:00",
+      "kind": "enqueued",
+      "title": "Memory: embed the remaining unembedded of 14955 elements for full recall",
+      "source": "gap",
+      "priority": 1,
+      "department": "memory"
+    },
+    {
+      "task": "transcripts-drain-the-ne-17643",
+      "at": "2026-09-18T07:47:23.884493+00:00",
+      "kind": "enqueued",
+      "title": "Transcripts: drain the next batch of 2842 pending (residential IP)",
+      "source": "gap",
+      "priority": 1,
+      "department": "transcripts"
+    },
+    {
+      "task": "empty-body-items-render--84700",
+      "at": "2026-09-18T07:47:23.909534+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-7653",
+      "at": "2026-09-18T07:47:23.910130+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-70809",
+      "at": "2026-09-18T07:47:23.910707+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-12177",
+      "at": "2026-09-18T07:47:23.911215+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "verify-the-next-200-of-9-17320",
+      "at": "2026-09-18T07:47:23.942873+00:00",
+      "kind": "claimed",
+      "by": "analysis-w1",
+      "department": "analysis"
+    },
+    {
+      "task": "verify-the-next-200-of-9-17320",
+      "at": "2026-09-18T07:47:23.971887+00:00",
+      "kind": "completed",
+      "by": "analysis-w1",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "task": "raise-g3-truth-access-46-16994",
+      "at": "2026-09-18T07:47:23.997473+00:00",
+      "kind": "claimed",
+      "by": "memory-w1",
+      "department": "memory"
+    },
+    {
+      "task": "raise-g3-truth-access-46-16994",
+      "at": "2026-09-18T07:47:24.178955+00:00",
+      "kind": "completed",
+      "by": "memory-w1",
+      "result": "Semantic index: 1712 vectors (model gemini-embedding-001); hub 10123 items → 8411 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "task": "watch-room-action-at-13--83597",
+      "at": "2026-09-18T07:47:24.203869+00:00",
+      "kind": "claimed",
+      "by": "watch-w1",
+      "department": "watch"
+    },
+    {
+      "task": "watch-room-action-at-13--83597",
+      "at": "2026-09-18T07:47:24.229058+00:00",
+      "kind": "completed",
+      "by": "watch-w1",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+    },
+    {
+      "task": "transcripts-drain-the-ne-17643",
+      "at": "2026-09-18T07:47:24.253959+00:00",
+      "kind": "claimed",
+      "by": "transcripts-w1",
+      "department": "transcripts"
+    },
+    {
+      "task": "transcripts-drain-the-ne-17643",
+      "at": "2026-09-18T07:47:24.337393+00:00",
+      "kind": "handoff",
+      "from": "transcripts-w1",
+      "to": "analysis",
+      "doc": "data/excava/handoffs/transcripts-drain-the-ne-17643--01--transcripts-w1--to--analysis.md"
     }
   ]
 }

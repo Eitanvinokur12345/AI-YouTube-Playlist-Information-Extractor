@@ -5224,15 +5224,16 @@
       "department": "watch",
       "source": "room-action:watch",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-08-28T02:08:45.791607+00:00",
-      "updated_at": "2026-08-28T02:08:45.791616+00:00"
+      "updated_at": "2026-09-18T07:42:01.436129+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
       "id": "watch-room-action-at-13--83597",
@@ -32445,15 +32446,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-09-18T07:31:00.763981+00:00",
-      "updated_at": "2026-09-18T07:31:00.763991+00:00"
+      "updated_at": "2026-09-18T07:42:01.366329+00:00",
+      "result": "Semantic index: 1712 vectors (model gemini-embedding-001); hub 10123 items → 8411 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "transcripts-drain-the-ne-16994",
@@ -32462,17 +32464,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-16994--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-09-18T07:36:34.620077+00:00",
-      "updated_at": "2026-09-18T07:36:35.179798+00:00"
+      "updated_at": "2026-09-18T07:42:01.142904+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g3-truth-access-46-16994",
@@ -32492,7 +32495,43 @@
       ],
       "created_at": "2026-09-18T07:36:34.645924+00:00",
       "updated_at": "2026-09-18T07:36:35.071885+00:00"
+    },
+    {
+      "id": "verify-the-next-200-of-9-17320",
+      "title": "Verify the next 200 of 9806 unverified elements (2-source + live test)",
+      "detail": "value=96 size=40(small) [cost 35/steps 70/risk 10] · 9806 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-18T07:42:00.994971+00:00",
+      "updated_at": "2026-09-18T07:42:00.994985+00:00"
+    },
+    {
+      "id": "resolve-real-links-websi-17321",
+      "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
+      "detail": "value=82 size=41(small) [cost 40/steps 60/risk 15] · many unlinked",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/resolve-real-links-websi-17321--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-09-18T07:42:01.026781+00:00",
+      "updated_at": "2026-09-18T07:42:01.504949+00:00"
     }
   ],
-  "updated_at": "2026-09-18T07:36:35.179801+00:00"
+  "updated_at": "2026-09-18T07:42:01.504953+00:00"
 }

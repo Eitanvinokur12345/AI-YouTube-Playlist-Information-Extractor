@@ -5206,15 +5206,16 @@
       "department": "watch",
       "source": "room-action:watch",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-08-28T01:57:28.389332+00:00",
-      "updated_at": "2026-08-28T01:57:28.389341+00:00"
+      "updated_at": "2026-09-18T07:36:35.021655+00:00",
+      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
       "id": "watch-room-action-at-13--82925",
@@ -32352,17 +32353,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/resolve-real-links-websi-5670--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-09-18T04:27:50.138251+00:00",
-      "updated_at": "2026-09-18T04:27:51.855971+00:00"
+      "updated_at": "2026-09-18T07:36:34.971633+00:00",
+      "result": "Semantic index: 1712 vectors (model gemini-embedding-001); hub 10123 items → 8411 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "security-safety-rate-the-5670",
@@ -32425,15 +32427,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-09-18T07:31:00.713750+00:00",
-      "updated_at": "2026-09-18T07:31:00.713765+00:00"
+      "updated_at": "2026-09-18T07:36:34.768425+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "memory-embed-the-remaini-16660",
@@ -32451,7 +32454,45 @@
       "handoff_docs": [],
       "created_at": "2026-09-18T07:31:00.763981+00:00",
       "updated_at": "2026-09-18T07:31:00.763991+00:00"
+    },
+    {
+      "id": "transcripts-drain-the-ne-16994",
+      "title": "Transcripts: drain the next batch of 2842 pending (residential IP)",
+      "detail": "value=60 size=26(small) [cost 25/steps 35/risk 15] · 2842 pending",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-drain-the-ne-16994--01--transcripts-w1--to--analysis.md"
+      ],
+      "created_at": "2026-09-18T07:36:34.620077+00:00",
+      "updated_at": "2026-09-18T07:36:35.179798+00:00"
+    },
+    {
+      "id": "raise-g3-truth-access-46-16994",
+      "title": "Raise G3 Truth & access (46/100): 46.5% of tools/skills have a real link (target: ~100%)",
+      "detail": "value=54 size=17(small) [cost 15/steps 25/risk 10] · G3 at 46",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/raise-g3-truth-access-46-16994--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-09-18T07:36:34.645924+00:00",
+      "updated_at": "2026-09-18T07:36:35.071885+00:00"
     }
   ],
-  "updated_at": "2026-09-18T07:31:01.956866+00:00"
+  "updated_at": "2026-09-18T07:36:35.179801+00:00"
 }

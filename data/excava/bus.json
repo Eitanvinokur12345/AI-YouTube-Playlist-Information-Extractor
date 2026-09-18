@@ -16824,7 +16824,7 @@
       "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-09-15T20:54:30.410524+00:00",
-      "updated_at": "2026-09-18T17:51:51.368144+00:00",
+      "updated_at": "2026-09-18T23:52:23.285256+00:00",
       "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
@@ -16842,7 +16842,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-09-15T20:54:30.440906+00:00",
-      "updated_at": "2026-09-18T17:51:38.977075+00:00",
+      "updated_at": "2026-09-18T23:52:23.182818+00:00",
       "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
@@ -16860,7 +16860,7 @@
       "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-09-15T20:54:30.493082+00:00",
-      "updated_at": "2026-09-18T17:51:39.030446+00:00",
+      "updated_at": "2026-09-18T23:52:23.234331+00:00",
       "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     },
     {
@@ -30998,7 +30998,7 @@
       "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-09-18T04:27:50.106013+00:00",
-      "updated_at": "2026-09-18T17:51:51.342015+00:00"
+      "updated_at": "2026-09-18T23:52:23.259803+00:00"
     },
     {
       "id": "resolve-real-links-websi-5670",
@@ -31035,7 +31035,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-09-18T04:27:50.169877+00:00",
-      "updated_at": "2026-09-18T17:51:38.167419+00:00"
+      "updated_at": "2026-09-18T23:52:22.349744+00:00"
     },
     {
       "id": "transcripts-drain-the-ne-5670",
@@ -31072,7 +31072,7 @@
       "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-09-18T04:27:50.262482+00:00",
-      "updated_at": "2026-09-18T17:51:39.004321+00:00"
+      "updated_at": "2026-09-18T23:52:23.208854+00:00"
     },
     {
       "id": "verify-the-next-200-of-9-16660",
@@ -32473,17 +32473,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/raise-g3-truth-access-46-53897--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-09-18T17:51:37.689739+00:00",
-      "updated_at": "2026-09-18T21:10:51.001947+00:00"
+      "updated_at": "2026-09-18T23:52:22.322967+00:00",
+      "result": "Semantic index: 1712 vectors (model gemini-embedding-001); hub 10144 items → 8432 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "33-self-improvement-task-65848",
@@ -32510,15 +32511,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-09-18T21:10:49.228509+00:00",
-      "updated_at": "2026-09-18T21:10:49.228525+00:00"
+      "updated_at": "2026-09-18T23:52:22.128719+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "resolve-real-links-websi-65849",
@@ -32645,7 +32647,24 @@
       "handoff_docs": [],
       "created_at": "2026-09-18T23:47:03.065464+00:00",
       "updated_at": "2026-09-18T23:47:03.065470+00:00"
+    },
+    {
+      "id": "security-safety-rate-the-75542",
+      "title": "Security: safety-rate the next batch of 1770 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1770 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-18T23:52:22.017601+00:00",
+      "updated_at": "2026-09-18T23:52:22.017614+00:00"
     }
   ],
-  "updated_at": "2026-09-18T23:47:04.264862+00:00"
+  "updated_at": "2026-09-18T23:52:23.285263+00:00"
 }

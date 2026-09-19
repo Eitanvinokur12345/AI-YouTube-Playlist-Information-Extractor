@@ -1,131 +1,6 @@
 {
   "events": [
     {
-      "task": "transcripts-drain-the-ne-15539",
-      "at": "2026-09-19T11:04:26.775323+00:00",
-      "kind": "completed",
-      "by": "analysis-w1",
-      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-    },
-    {
-      "task": "memory-embed-the-remaini-15212",
-      "at": "2026-09-19T11:04:26.809253+00:00",
-      "kind": "claimed",
-      "by": "memory-w1",
-      "department": "memory"
-    },
-    {
-      "task": "memory-embed-the-remaini-15212",
-      "at": "2026-09-19T11:04:27.031785+00:00",
-      "kind": "completed",
-      "by": "memory-w1",
-      "result": "Semantic index: 1713 vectors (model gemini-embedding-001); hub 10154 items → 8441 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-    },
-    {
-      "task": "resolve-real-links-websi-15866",
-      "at": "2026-09-19T11:04:27.065555+00:00",
-      "kind": "claimed",
-      "by": "links-w1",
-      "department": "links"
-    },
-    {
-      "task": "resolve-real-links-websi-15866",
-      "at": "2026-09-19T11:04:27.099774+00:00",
-      "kind": "handoff",
-      "from": "links-w1",
-      "to": "memory",
-      "doc": "data/excava/handoffs/resolve-real-links-websi-15866--01--links-w1--to--memory.md"
-    },
-    {
-      "task": "security-safety-rate-the-15866",
-      "at": "2026-09-19T11:04:27.133441+00:00",
-      "kind": "claimed",
-      "by": "security-w1",
-      "department": "security"
-    },
-    {
-      "task": "security-safety-rate-the-15866",
-      "at": "2026-09-19T11:04:28.168770+00:00",
-      "kind": "completed",
-      "by": "security-w1",
-      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-09-19T11:04:41.370639+00:00",
-      "kind": "lane_ran",
-      "lane": "Gemini watch (audio+visual)",
-      "status": "live",
-      "what": "Watches videos directly — clears the backlog free"
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-09-19T11:04:41.371285+00:00",
-      "kind": "lane_ran",
-      "lane": "Transcript retrieval",
-      "status": "live",
-      "what": "Pulls captions (Supadata cloud + residential)"
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-09-19T11:04:41.371907+00:00",
-      "kind": "lane_ran",
-      "lane": "AI news refresh",
-      "status": "live",
-      "what": "Refreshes official-site AI news"
-    },
-    {
-      "task": "security-safety-rate-the-16193",
-      "at": "2026-09-19T11:09:53.845022+00:00",
-      "kind": "enqueued",
-      "title": "Security: safety-rate the next batch of 1773 connectors/skills",
-      "source": "gap",
-      "priority": 1,
-      "department": "security"
-    },
-    {
-      "task": "memory-embed-the-remaini-16193",
-      "at": "2026-09-19T11:09:53.885098+00:00",
-      "kind": "enqueued",
-      "title": "Memory: embed the remaining unembedded of 15028 elements for full recall",
-      "source": "gap",
-      "priority": 1,
-      "department": "memory"
-    },
-    {
-      "task": "transcripts-drain-the-ne-16193",
-      "at": "2026-09-19T11:09:53.925040+00:00",
-      "kind": "enqueued",
-      "title": "Transcripts: drain the next batch of 2842 pending (residential IP)",
-      "source": "gap",
-      "priority": 1,
-      "department": "transcripts"
-    },
-    {
-      "task": "empty-body-items-render--84700",
-      "at": "2026-09-19T11:09:53.957805+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-7653",
-      "at": "2026-09-19T11:09:53.958621+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-70809",
-      "at": "2026-09-19T11:09:53.959436+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-12177",
-      "at": "2026-09-19T11:09:53.960234+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
       "task": "verify-the-next-200-of-9-15866",
       "at": "2026-09-19T11:09:54.001333+00:00",
       "kind": "claimed",
@@ -289,6 +164,129 @@
       "kind": "completed",
       "by": "security-w1",
       "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "task": "resolve-real-links-websi-16846",
+      "at": "2026-09-19T11:20:46.555748+00:00",
+      "kind": "enqueued",
+      "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
+      "source": "gap",
+      "priority": 1,
+      "department": "links"
+    },
+    {
+      "task": "security-safety-rate-the-16846",
+      "at": "2026-09-19T11:20:46.588699+00:00",
+      "kind": "enqueued",
+      "title": "Security: safety-rate the next batch of 1773 connectors/skills",
+      "source": "gap",
+      "priority": 1,
+      "department": "security"
+    },
+    {
+      "task": "transcripts-drain-the-ne-16846",
+      "at": "2026-09-19T11:20:46.643860+00:00",
+      "kind": "enqueued",
+      "title": "Transcripts: drain the next batch of 2842 pending (residential IP)",
+      "source": "gap",
+      "priority": 1,
+      "department": "transcripts"
+    },
+    {
+      "task": "empty-body-items-render--84700",
+      "at": "2026-09-19T11:20:46.676617+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-7653",
+      "at": "2026-09-19T11:20:46.677465+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-70809",
+      "at": "2026-09-19T11:20:46.678300+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-12177",
+      "at": "2026-09-19T11:20:46.679061+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "verify-the-next-200-of-9-16520",
+      "at": "2026-09-19T11:20:46.720565+00:00",
+      "kind": "claimed",
+      "by": "analysis-w1",
+      "department": "analysis"
+    },
+    {
+      "task": "verify-the-next-200-of-9-16520",
+      "at": "2026-09-19T11:20:46.757682+00:00",
+      "kind": "completed",
+      "by": "analysis-w1",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "task": "memory-embed-the-remaini-16193",
+      "at": "2026-09-19T11:20:46.790358+00:00",
+      "kind": "claimed",
+      "by": "memory-w1",
+      "department": "memory"
+    },
+    {
+      "task": "memory-embed-the-remaini-16193",
+      "at": "2026-09-19T11:20:47.013181+00:00",
+      "kind": "completed",
+      "by": "memory-w1",
+      "result": "Semantic index: 1713 vectors (model gemini-embedding-001); hub 10154 items → 8441 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "task": "resolve-real-links-websi-16846",
+      "at": "2026-09-19T11:20:47.045735+00:00",
+      "kind": "claimed",
+      "by": "links-w1",
+      "department": "links"
+    },
+    {
+      "task": "resolve-real-links-websi-16846",
+      "at": "2026-09-19T11:20:47.079088+00:00",
+      "kind": "handoff",
+      "from": "links-w1",
+      "to": "memory",
+      "doc": "data/excava/handoffs/resolve-real-links-websi-16846--01--links-w1--to--memory.md"
+    },
+    {
+      "task": "security-safety-rate-the-16846",
+      "at": "2026-09-19T11:20:47.111514+00:00",
+      "kind": "claimed",
+      "by": "security-w1",
+      "department": "security"
+    },
+    {
+      "task": "security-safety-rate-the-16846",
+      "at": "2026-09-19T11:20:48.151652+00:00",
+      "kind": "completed",
+      "by": "security-w1",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "task": "transcripts-drain-the-ne-16846",
+      "at": "2026-09-19T11:20:48.184555+00:00",
+      "kind": "claimed",
+      "by": "transcripts-w1",
+      "department": "transcripts"
+    },
+    {
+      "task": "transcripts-drain-the-ne-16846",
+      "at": "2026-09-19T11:20:48.294662+00:00",
+      "kind": "handoff",
+      "from": "transcripts-w1",
+      "to": "analysis",
+      "doc": "data/excava/handoffs/transcripts-drain-the-ne-16846--01--transcripts-w1--to--analysis.md"
     }
   ]
 }

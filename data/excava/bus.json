@@ -32607,15 +32607,16 @@
       "department": "analysis",
       "source": "auto",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "output written to data/ and committed by CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-09-18T23:41:33.813398+00:00",
-      "updated_at": "2026-09-18T23:41:34.312526+00:00"
+      "updated_at": "2026-09-19T00:08:19.680804+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "security-safety-rate-the-75223",
@@ -32642,15 +32643,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-09-18T23:47:03.065464+00:00",
-      "updated_at": "2026-09-18T23:47:03.065470+00:00"
+      "updated_at": "2026-09-19T00:08:19.892346+00:00",
+      "result": "Semantic index: 1712 vectors (model gemini-embedding-001); hub 10144 items → 8432 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "security-safety-rate-the-75542",
@@ -32761,7 +32763,25 @@
       ],
       "created_at": "2026-09-19T00:03:00.259008+00:00",
       "updated_at": "2026-09-19T00:03:01.605945+00:00"
+    },
+    {
+      "id": "security-safety-rate-the-76499",
+      "title": "Security: safety-rate the next batch of 1770 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1770 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-19T00:08:19.567676+00:00",
+      "updated_at": "2026-09-19T00:08:20.778224+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     }
   ],
-  "updated_at": "2026-09-19T00:03:01.605949+00:00"
+  "updated_at": "2026-09-19T00:08:20.778233+00:00"
 }

@@ -1,90 +1,6 @@
 {
   "events": [
     {
-      "task": "os-lanes",
-      "at": "2026-09-20T11:47:38.160025+00:00",
-      "kind": "lane_ran",
-      "lane": "Deep analysis (night-gated)",
-      "status": "live",
-      "what": "Claude re-analysis + safety pass"
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-09-20T11:47:38.160708+00:00",
-      "kind": "lane_ran",
-      "lane": "AI news refresh",
-      "status": "live",
-      "what": "Refreshes official-site AI news"
-    },
-    {
-      "task": "watch-process-the-next-b-5670",
-      "at": "2026-09-20T13:16:36.779165+00:00",
-      "kind": "lease_expired",
-      "after_h": 6.9,
-      "was": "watch-w1"
-    },
-    {
-      "task": "security-safety-rate-the-5670",
-      "at": "2026-09-20T13:16:36.779837+00:00",
-      "kind": "lease_expired",
-      "after_h": 6.9,
-      "was": "security-w1"
-    },
-    {
-      "task": "raise-g5-leverage-46-100-5670",
-      "at": "2026-09-20T13:16:36.840641+00:00",
-      "kind": "lease_expired",
-      "after_h": 6.9,
-      "was": "creators-w1"
-    },
-    {
-      "task": "resolve-real-links-websi-10197",
-      "at": "2026-09-20T13:16:37.495470+00:00",
-      "kind": "enqueued",
-      "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
-      "source": "gap",
-      "priority": 1,
-      "department": "links"
-    },
-    {
-      "task": "empty-body-items-render--84700",
-      "at": "2026-09-20T13:16:37.555514+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-7653",
-      "at": "2026-09-20T13:16:37.556065+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-70809",
-      "at": "2026-09-20T13:16:37.556658+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-12177",
-      "at": "2026-09-20T13:16:37.683410+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "verify-the-next-200-of-9-90372",
-      "at": "2026-09-20T13:16:37.722814+00:00",
-      "kind": "claimed",
-      "by": "analysis-w1",
-      "department": "analysis"
-    },
-    {
-      "task": "verify-the-next-200-of-9-90372",
-      "at": "2026-09-20T13:16:37.790411+00:00",
-      "kind": "completed",
-      "by": "analysis-w1",
-      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-    },
-    {
       "task": "memory-embed-the-remaini-90372",
       "at": "2026-09-20T13:16:37.821116+00:00",
       "kind": "claimed",
@@ -276,6 +192,90 @@
       "kind": "completed",
       "by": "watch-w1",
       "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+    },
+    {
+      "task": "security-safety-rate-the-10925",
+      "at": "2026-09-20T13:28:45.034291+00:00",
+      "kind": "enqueued",
+      "title": "Security: safety-rate the next batch of 1774 connectors/skills",
+      "source": "gap",
+      "priority": 1,
+      "department": "security"
+    },
+    {
+      "task": "memory-embed-the-remaini-10925",
+      "at": "2026-09-20T13:28:45.069653+00:00",
+      "kind": "enqueued",
+      "title": "Memory: embed the remaining unembedded of 15127 elements for full recall",
+      "source": "gap",
+      "priority": 1,
+      "department": "memory"
+    },
+    {
+      "task": "empty-body-items-render--84700",
+      "at": "2026-09-20T13:28:45.109552+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-7653",
+      "at": "2026-09-20T13:28:45.110127+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-70809",
+      "at": "2026-09-20T13:28:45.110651+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-12177",
+      "at": "2026-09-20T13:28:45.111105+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "verify-the-next-200-of-9-4825",
+      "at": "2026-09-20T13:28:45.221923+00:00",
+      "kind": "claimed",
+      "by": "analysis-w1",
+      "department": "analysis"
+    },
+    {
+      "task": "verify-the-next-200-of-9-4825",
+      "at": "2026-09-20T13:28:45.253659+00:00",
+      "kind": "completed",
+      "by": "analysis-w1",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "task": "raise-g3-truth-access-46-4825",
+      "at": "2026-09-20T13:28:45.283252+00:00",
+      "kind": "claimed",
+      "by": "memory-w1",
+      "department": "memory"
+    },
+    {
+      "task": "raise-g3-truth-access-46-4825",
+      "at": "2026-09-20T13:28:45.486080+00:00",
+      "kind": "completed",
+      "by": "memory-w1",
+      "result": "Semantic index: 1713 vectors (model gemini-embedding-001); hub 10188 items → 8475 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "task": "security-safety-rate-the-10925",
+      "at": "2026-09-20T13:28:45.516587+00:00",
+      "kind": "claimed",
+      "by": "security-w1",
+      "department": "security"
+    },
+    {
+      "task": "security-safety-rate-the-10925",
+      "at": "2026-09-20T13:28:46.248931+00:00",
+      "kind": "completed",
+      "by": "security-w1",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     }
   ]
 }

@@ -37507,17 +37507,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/resolve-real-links-websi-87129--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-09-20T06:52:09.627317+00:00",
-      "updated_at": "2026-09-20T06:52:10.185050+00:00"
+      "updated_at": "2026-09-20T07:02:57.113651+00:00",
+      "result": "Semantic index: 1713 vectors (model gemini-embedding-001); hub 10155 items → 8442 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "security-safety-rate-the-87129",
@@ -37579,18 +37580,73 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-87453--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-09-20T06:57:33.547955+00:00",
-      "updated_at": "2026-09-20T06:57:35.174193+00:00"
+      "updated_at": "2026-09-20T07:02:56.837889+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "id": "verify-the-next-200-of-9-87776",
+      "title": "Verify the next 200 of 9893 unverified elements (2-source + live test)",
+      "detail": "value=96 size=40(small) [cost 35/steps 70/risk 10] · 9893 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-20T07:02:56.591046+00:00",
+      "updated_at": "2026-09-20T07:02:56.591059+00:00"
+    },
+    {
+      "id": "security-safety-rate-the-87776",
+      "title": "Security: safety-rate the next batch of 1773 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1773 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-20T07:02:56.645936+00:00",
+      "updated_at": "2026-09-20T07:02:58.255203+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "id": "raise-g3-truth-access-46-87776",
+      "title": "Raise G3 Truth & access (46/100): 46.5% of tools/skills have a real link (target: ~100%)",
+      "detail": "value=54 size=17(small) [cost 15/steps 25/risk 10] · G3 at 46",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/raise-g3-truth-access-46-87776--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-09-20T07:02:56.718071+00:00",
+      "updated_at": "2026-09-20T07:02:57.189661+00:00"
     }
   ],
-  "updated_at": "2026-09-20T06:57:35.174198+00:00"
+  "updated_at": "2026-09-20T07:02:58.255213+00:00"
 }

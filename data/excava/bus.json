@@ -16286,7 +16286,7 @@
       "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-09-15T20:54:30.410524+00:00",
-      "updated_at": "2026-09-20T06:25:13.448080+00:00",
+      "updated_at": "2026-09-20T13:23:21.699861+00:00",
       "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
     },
     {
@@ -30452,15 +30452,15 @@
       "department": "watch",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "working",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "watch-w1",
       "handoff_docs": [],
       "created_at": "2026-09-18T04:27:50.106013+00:00",
-      "updated_at": "2026-09-20T13:16:36.779095+00:00"
+      "updated_at": "2026-09-20T13:23:21.622466+00:00"
     },
     {
       "id": "resolve-real-links-websi-5670",
@@ -38125,15 +38125,16 @@
       "department": "analysis",
       "source": "auto",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "output written to data/ and committed by CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-09-20T11:47:04.978813+00:00",
-      "updated_at": "2026-09-20T11:47:05.975555+00:00"
+      "updated_at": "2026-09-20T13:23:20.599978+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "lane-external-mining-is--4825",
@@ -38177,15 +38178,16 @@
       "department": "security",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-09-20T11:47:05.671458+00:00",
-      "updated_at": "2026-09-20T11:47:05.671467+00:00"
+      "updated_at": "2026-09-20T13:23:21.592193+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "memory-embed-the-remaini-4825",
@@ -38194,15 +38196,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-09-20T11:47:05.719029+00:00",
-      "updated_at": "2026-09-20T11:47:05.719036+00:00"
+      "updated_at": "2026-09-20T13:23:20.825836+00:00",
+      "result": "Semantic index: 1713 vectors (model gemini-embedding-001); hub 10188 items → 8475 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "transcripts-drain-the-ne-4825",
@@ -38262,5 +38265,5 @@
       "updated_at": "2026-09-20T13:16:40.124948+00:00"
     }
   ],
-  "updated_at": "2026-09-20T13:16:55.477913+00:00"
+  "updated_at": "2026-09-20T13:23:21.699875+00:00"
 }

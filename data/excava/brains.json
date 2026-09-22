@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-22T18:55:23.639779+00:00",
+ "generated_at": "2026-09-22T22:09:40.960053+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -80,16 +80,16 @@
   {
    "id": "A",
    "lead": {
-    "engine": "groq",
-    "model": "llama-3.3-70b-versatile",
-    "lineage": "llama",
-    "tier": "fast"
+    "engine": "deepseek",
+    "model": "deepseek/deepseek-chat-v3-0324:free",
+    "lineage": "deepseek",
+    "tier": "reasoning"
    },
    "support": {
-    "engine": "gemini",
-    "model": "gemini-2.0-flash",
-    "lineage": "gemini",
-    "tier": "grounded"
+    "engine": "cerebras",
+    "model": "llama3.1-8b",
+    "lineage": "llama",
+    "tier": "fast"
    }
   },
   {
@@ -101,8 +101,8 @@
     "tier": "grounded"
    },
    "support": {
-    "engine": "cerebras",
-    "model": "llama3.1-8b",
+    "engine": "groq",
+    "model": "llama-3.3-70b-versatile",
     "lineage": "llama",
     "tier": "fast"
    }
@@ -116,33 +116,33 @@
     "tier": "reasoning"
    },
    "support": {
-    "engine": "nvidia",
-    "model": "meta/llama-3.3-70b-instruct",
-    "lineage": "llama",
+    "engine": "gemini",
+    "model": "gemini-2.0-flash",
+    "lineage": "gemini",
     "tier": "grounded"
    }
   },
   {
    "id": "D",
    "lead": {
-    "engine": "gh-models",
-    "model": "openai/gpt-4o-mini",
-    "lineage": "gpt",
+    "engine": "nvidia",
+    "model": "meta/llama-3.3-70b-instruct",
+    "lineage": "llama",
     "tier": "grounded"
    },
    "support": {
-    "engine": "sambanova",
-    "model": "Meta-Llama-3.3-70B-Instruct",
-    "lineage": "llama",
+    "engine": "mistral",
+    "model": "mistral-small-latest",
+    "lineage": "mistral",
     "tier": "fast"
    }
   }
  ],
  "debate": [
   {
-   "engine": "groq",
-   "lineage": "llama",
-   "model": "llama-3.3-70b-versatile"
+   "engine": "deepseek",
+   "lineage": "deepseek",
+   "model": "deepseek/deepseek-chat-v3-0324:free"
   },
   {
    "engine": "glm",
@@ -155,14 +155,14 @@
    "model": "moonshotai/kimi-k2:free"
   },
   {
-   "engine": "gh-models",
-   "lineage": "gpt",
-   "model": "openai/gpt-4o-mini"
+   "engine": "nvidia",
+   "lineage": "llama",
+   "model": "meta/llama-3.3-70b-instruct"
   }
  ],
  "debate_lineages": [
+  "deepseek",
   "glm",
-  "gpt",
   "kimi",
   "llama"
  ],

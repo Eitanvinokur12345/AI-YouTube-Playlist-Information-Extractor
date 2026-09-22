@@ -1,18 +1,18 @@
 {
- "generated_at": "2026-09-22T09:15:42.699272+00:00",
+ "generated_at": "2026-09-22T09:21:06.025723+00:00",
  "checked": 40,
- "real_pct": 95,
+ "real_pct": 97,
  "counts": {
-  "real": 37,
-  "noop": 2,
+  "real": 38,
+  "noop": 1,
   "failed": 0,
   "planned": 0,
   "blocked": 1
  },
- "criticism": "Acceptable: 95% of the last 40 completions did real work. Stay strict. · INTENT DRIFT: 1 dept(s) wired to the WRONG tool for what you wanted — news→wants src.news not src.trend_watch · DECISION DRIFT: 3 unit(s) mostly decide SELF-IMPROVEMENT, not their mission (links 100%; group-chat 100%; war-room 100%) — that work belongs to the improve department's external arms (decision_audit.json).",
+ "criticism": "Acceptable: 97% of the last 40 completions did real work. Stay strict. · INTENT DRIFT: 1 dept(s) wired to the WRONG tool for what you wanted — news→wants src.news not src.trend_watch · DECISION DRIFT: 3 unit(s) mostly decide SELF-IMPROVEMENT, not their mission (links 100%; group-chat 100%; war-room 100%) — that work belongs to the improve department's external arms (decision_audit.json).",
  "long_term": {
   "verdict": "STAGNANT — real work is NOT accumulating over time",
-  "detail": "over last 24 snapshots: done -244, artifacts +0, real_pct 95→95",
+  "detail": "over last 24 snapshots: done -239, artifacts +0, real_pct 100→97",
   "stagnant": true
  },
  "history": {
@@ -33,6 +33,27 @@
   }
  ],
  "verdicts": [
+  {
+   "task": "security-safety-rate-the-68848",
+   "dept": "security",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+  },
+  {
+   "task": "resolve-real-links-websi-68200",
+   "dept": "memory",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Semantic index: 1714 vectors (model gemini-embedding-001); hub 10257 items → 8543 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; th"
+  },
+  {
+   "task": "verify-the-next-200-of-1-68523",
+   "dept": "analysis",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
+  },
   {
    "task": "security-safety-rate-the-68523",
    "dept": "security",
@@ -291,27 +312,6 @@
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane d"
-  },
-  {
-   "task": "keep-the-designs-tab-pur-64904",
-   "dept": "visual",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Ran the collect designs. collect_designs: 2759 designs (kept 2759 / dropped 0 repo-only + 2 dead/parked + 304 non-design; +0 AI-product, +27 seeds, +304 shown-i"
-  },
-  {
-   "task": "34-self-improvement-task-19805",
-   "dept": "improve",
-   "verdict": "noop",
-   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
-   "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
-  },
-  {
-   "task": "security-safety-rate-the-5670",
-   "dept": "security",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
   }
  ]
 }

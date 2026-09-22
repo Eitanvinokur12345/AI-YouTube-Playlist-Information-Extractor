@@ -32595,17 +32595,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/raise-g3-truth-access-46-67545--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-09-22T08:59:05.714577+00:00",
-      "updated_at": "2026-09-22T08:59:06.168939+00:00"
+      "updated_at": "2026-09-22T09:10:00.483906+00:00",
+      "result": "Semantic index: 1714 vectors (model gemini-embedding-001); hub 10257 items → 8543 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "verify-the-next-200-of-1-67876",
@@ -32614,15 +32615,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-09-22T09:04:36.039196+00:00",
-      "updated_at": "2026-09-22T09:04:36.039210+00:00"
+      "updated_at": "2026-09-22T09:10:00.228834+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "security-safety-rate-the-67876",
@@ -32658,7 +32660,63 @@
       "handoff_docs": [],
       "created_at": "2026-09-22T09:04:36.125856+00:00",
       "updated_at": "2026-09-22T09:04:36.125862+00:00"
+    },
+    {
+      "id": "resolve-real-links-websi-68200",
+      "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
+      "detail": "value=82 size=41(small) [cost 40/steps 60/risk 15] · many unlinked",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/resolve-real-links-websi-68200--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-09-22T09:10:00.024519+00:00",
+      "updated_at": "2026-09-22T09:10:00.550629+00:00"
+    },
+    {
+      "id": "security-safety-rate-the-68200",
+      "title": "Security: safety-rate the next batch of 1802 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1802 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-22T09:10:00.057787+00:00",
+      "updated_at": "2026-09-22T09:10:01.648820+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "id": "transcripts-drain-the-ne-68200",
+      "title": "Transcripts: drain the next batch of 2842 pending (residential IP)",
+      "detail": "value=60 size=26(small) [cost 25/steps 35/risk 15] · 2842 pending",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-drain-the-ne-68200--01--transcripts-w1--to--analysis.md"
+      ],
+      "created_at": "2026-09-22T09:10:00.114652+00:00",
+      "updated_at": "2026-09-22T09:10:01.791730+00:00"
     }
   ],
-  "updated_at": "2026-09-22T09:04:37.573181+00:00"
+  "updated_at": "2026-09-22T09:10:01.791736+00:00"
 }

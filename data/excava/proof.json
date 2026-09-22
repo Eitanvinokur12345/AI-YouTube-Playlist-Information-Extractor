@@ -1,28 +1,32 @@
 {
- "generated_at": "2026-09-22T09:48:11.996245+00:00",
- "commit": "245d50086f",
- "real_pct": 100,
+ "generated_at": "2026-09-22T12:00:45.482056+00:00",
+ "commit": "423f2e2178",
+ "real_pct": 97,
  "counts": {
-  "real": 40,
-  "noop": 0,
+  "real": 38,
+  "noop": 1,
   "failed": 0,
   "planned": 0,
-  "blocked": 0
+  "blocked": 1
  },
  "trend": [
-  11725,
   11728,
   11731,
   11734,
   11737,
-  11740
+  11740,
+  11748
  ],
- "delta": {},
+ "delta": {
+  "elements": 71,
+  "with_link": 5,
+  "designs": 1
+ },
  "totals": {
-  "elements": 15312,
+  "elements": 15383,
   "verified": 2867,
-  "with_link": 5167,
-  "designs": 2783,
+  "with_link": 5172,
+  "designs": 2784,
   "creations": 1
  },
  "departments": [
@@ -35,14 +39,14 @@
   },
   {
    "dept": "creators",
-   "verdict": "?",
+   "verdict": "real",
    "output": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creat",
    "evidence": "data/created_by_excava.json",
    "evidence_url": "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/created_by_excava.json"
   },
   {
    "dept": "improve",
-   "verdict": "?",
+   "verdict": "noop",
    "output": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]",
    "evidence": "data/self_check.json",
    "evidence_url": "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/self_check.json"
@@ -50,21 +54,21 @@
   {
    "dept": "memory",
    "verdict": "real",
-   "output": "Semantic index: 1714 vectors (model gemini-embedding-001); hub 10257 items → 8543 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass co",
+   "output": "Semantic index: 1714 vectors (model gemini-embedding-001); hub 10287 items → 8573 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass co",
    "evidence": "data/brain_graph.json",
    "evidence_url": "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/brain_graph.json"
   },
   {
    "dept": "mining",
-   "verdict": "?",
-   "output": "Ran the discovery agent. discovery: +1 new (of 115 sighted) → 846 queued; arxiv=118, gh-active=87, gh-new=45, hn-front=8, hn-new=106, huggingface-mode",
+   "verdict": "real",
+   "output": "Ran the discovery agent. discovery: +2 new (of 128 sighted) → 802 queued; arxiv=105, gh-active=85, gh-new=38, hn-front=8, hn-new=92, huggingface-model",
    "evidence": "data/connectors.json",
    "evidence_url": "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/connectors.json"
   },
   {
    "dept": "news",
-   "verdict": "?",
-   "output": "Ran the trend watch. trend_watch: 15 proposals (top score 10); queued 0 into self-improvement.",
+   "verdict": "real",
+   "output": "Ran the trend watch. trend_watch: 16 proposals (top score 10); queued 0 into self-improvement.",
    "evidence": "data/weekly_web_news.json",
    "evidence_url": "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/weekly_web_news.json"
   },
@@ -84,7 +88,7 @@
   },
   {
    "dept": "watch",
-   "verdict": "?",
+   "verdict": "blocked",
    "output": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner.",
    "evidence": "data/_pending",
    "evidence_url": "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/tree/main/data/_pending"

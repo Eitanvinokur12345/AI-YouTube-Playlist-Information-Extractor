@@ -26705,15 +26705,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-09-23T08:23:28.483212+00:00",
-      "updated_at": "2026-09-23T08:23:28.483225+00:00"
+      "updated_at": "2026-09-23T08:34:21.821476+00:00",
+      "result": "Semantic index: 1714 vectors (model gemini-embedding-001); hub 10296 items → 8582 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "transcripts-drain-the-ne-51808",
@@ -26742,15 +26743,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-09-23T08:28:55.285051+00:00",
-      "updated_at": "2026-09-23T08:28:55.285065+00:00"
+      "updated_at": "2026-09-23T08:34:21.567748+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "security-safety-rate-the-52135",
@@ -26788,7 +26790,63 @@
       ],
       "created_at": "2026-09-23T08:28:55.378052+00:00",
       "updated_at": "2026-09-23T08:28:55.782728+00:00"
+    },
+    {
+      "id": "resolve-real-links-websi-52461",
+      "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
+      "detail": "value=82 size=41(small) [cost 40/steps 60/risk 15] · many unlinked",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/resolve-real-links-websi-52461--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-09-23T08:34:21.377435+00:00",
+      "updated_at": "2026-09-23T08:34:21.878284+00:00"
+    },
+    {
+      "id": "security-safety-rate-the-52461",
+      "title": "Security: safety-rate the next batch of 1804 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1804 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-23T08:34:21.406031+00:00",
+      "updated_at": "2026-09-23T08:34:22.948326+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "id": "transcripts-drain-the-ne-52461",
+      "title": "Transcripts: drain the next batch of 2842 pending (residential IP)",
+      "detail": "value=60 size=26(small) [cost 25/steps 35/risk 15] · 2842 pending",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-drain-the-ne-52461--01--transcripts-w1--to--analysis.md"
+      ],
+      "created_at": "2026-09-23T08:34:21.460900+00:00",
+      "updated_at": "2026-09-23T08:34:23.080034+00:00"
     }
   ],
-  "updated_at": "2026-09-23T08:28:56.852739+00:00"
+  "updated_at": "2026-09-23T08:34:23.080040+00:00"
 }

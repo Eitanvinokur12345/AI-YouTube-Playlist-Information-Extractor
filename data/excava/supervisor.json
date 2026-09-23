@@ -1,19 +1,19 @@
 {
- "generated_at": "2026-09-23T08:07:28.220850+00:00",
+ "generated_at": "2026-09-23T08:12:54.812388+00:00",
  "checked": 40,
  "real_pct": 100,
  "counts": {
-  "real": 39,
+  "real": 40,
   "noop": 0,
   "failed": 0,
   "planned": 0,
-  "blocked": 1
+  "blocked": 0
  },
  "criticism": "Acceptable: 100% of the last 40 completions did real work. Stay strict. · INTENT DRIFT: 1 dept(s) wired to the WRONG tool for what you wanted — news→wants src.news not src.trend_watch · DECISION DRIFT: 3 unit(s) mostly decide SELF-IMPROVEMENT, not their mission (links 100%; group-chat 100%; war-room 100%) — that work belongs to the improve department's external arms (decision_audit.json).",
  "long_term": {
-  "verdict": "STAGNANT — real work is NOT accumulating over time",
-  "detail": "over last 24 snapshots: done -4, artifacts +0, real_pct 89→100",
-  "stagnant": true
+  "verdict": "accumulating over time",
+  "detail": "over last 24 snapshots: done +1, artifacts +0, real_pct 89→100",
+  "stagnant": false
  },
  "history": {
   "records": 705,
@@ -33,6 +33,27 @@
   }
  ],
  "verdicts": [
+  {
+   "task": "security-safety-rate-the-51154",
+   "dept": "security",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+  },
+  {
+   "task": "resolve-real-links-websi-50499",
+   "dept": "memory",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Semantic index: 1714 vectors (model gemini-embedding-001); hub 10296 items → 8582 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; th"
+  },
+  {
+   "task": "verify-the-next-200-of-1-50826",
+   "dept": "analysis",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
+  },
   {
    "task": "security-safety-rate-the-50827",
    "dept": "security",
@@ -291,27 +312,6 @@
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
-  },
-  {
-   "task": "raise-g3-truth-access-46-46240",
-   "dept": "memory",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Semantic index: 1714 vectors (model gemini-embedding-001); hub 10296 items → 8582 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; th"
-  },
-  {
-   "task": "transcripts-drain-the-ne-46567",
-   "dept": "analysis",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
-  },
-  {
-   "task": "watch-process-the-next-b-5670",
-   "dept": "watch",
-   "verdict": "blocked",
-   "note": "honestly BLOCKED — needs an owner resource; not faking work (this is the truth, not a facade)",
-   "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
   }
  ]
 }

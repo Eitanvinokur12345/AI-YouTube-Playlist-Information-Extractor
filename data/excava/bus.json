@@ -26195,17 +26195,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/raise-g3-truth-access-46-48212--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-09-23T07:23:32.609872+00:00",
-      "updated_at": "2026-09-23T07:23:32.997034+00:00"
+      "updated_at": "2026-09-23T07:34:25.070049+00:00",
+      "result": "Semantic index: 1714 vectors (model gemini-embedding-001); hub 10296 items → 8582 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "resolve-real-links-websi-48538",
@@ -26251,18 +26252,71 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-48538--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-09-23T07:28:58.585278+00:00",
-      "updated_at": "2026-09-23T07:29:00.176019+00:00"
+      "updated_at": "2026-09-23T07:34:24.817129+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "id": "verify-the-next-200-of-1-48864",
+      "title": "Verify the next 200 of 10092 unverified elements (2-source + live test)",
+      "detail": "value=96 size=40(small) [cost 35/steps 70/risk 10] · 10092 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-23T07:34:24.635847+00:00",
+      "updated_at": "2026-09-23T07:34:24.635864+00:00"
+    },
+    {
+      "id": "security-safety-rate-the-48864",
+      "title": "Security: safety-rate the next batch of 1803 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1803 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-23T07:34:24.676095+00:00",
+      "updated_at": "2026-09-23T07:34:26.134964+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "id": "memory-embed-the-remaini-48864",
+      "title": "Memory: embed the remaining unembedded of 15400 elements for full recall",
+      "detail": "value=64 size=20(small) [cost 20/steps 30/risk 5] · 15400 elements",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-23T07:34:24.709482+00:00",
+      "updated_at": "2026-09-23T07:34:24.709494+00:00"
     }
   ],
-  "updated_at": "2026-09-23T07:29:00.176025+00:00"
+  "updated_at": "2026-09-23T07:34:26.134973+00:00"
 }

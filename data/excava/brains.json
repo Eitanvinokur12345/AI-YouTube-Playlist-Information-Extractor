@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-23T20:23:03.043621+00:00",
+ "generated_at": "2026-09-23T23:42:45.163026+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -80,6 +80,21 @@
   {
    "id": "A",
    "lead": {
+    "engine": "nvidia",
+    "model": "meta/llama-3.3-70b-instruct",
+    "lineage": "llama",
+    "tier": "grounded"
+   },
+   "support": {
+    "engine": "deepseek",
+    "model": "deepseek/deepseek-chat-v3-0324:free",
+    "lineage": "deepseek",
+    "tier": "reasoning"
+   }
+  },
+  {
+   "id": "B",
+   "lead": {
     "engine": "gh-models",
     "model": "openai/gpt-4o-mini",
     "lineage": "gpt",
@@ -93,37 +108,7 @@
    }
   },
   {
-   "id": "B",
-   "lead": {
-    "engine": "deepseek",
-    "model": "deepseek/deepseek-chat-v3-0324:free",
-    "lineage": "deepseek",
-    "tier": "reasoning"
-   },
-   "support": {
-    "engine": "glm",
-    "model": "z-ai/glm-4.5-air:free",
-    "lineage": "glm",
-    "tier": "grounded"
-   }
-  },
-  {
    "id": "C",
-   "lead": {
-    "engine": "nvidia",
-    "model": "meta/llama-3.3-70b-instruct",
-    "lineage": "llama",
-    "tier": "grounded"
-   },
-   "support": {
-    "engine": "mistral",
-    "model": "mistral-small-latest",
-    "lineage": "mistral",
-    "tier": "fast"
-   }
-  },
-  {
-   "id": "D",
    "lead": {
     "engine": "kimi",
     "model": "moonshotai/kimi-k2:free",
@@ -136,32 +121,47 @@
     "lineage": "llama",
     "tier": "fast"
    }
+  },
+  {
+   "id": "D",
+   "lead": {
+    "engine": "glm",
+    "model": "z-ai/glm-4.5-air:free",
+    "lineage": "glm",
+    "tier": "grounded"
+   },
+   "support": {
+    "engine": "mistral",
+    "model": "mistral-small-latest",
+    "lineage": "mistral",
+    "tier": "fast"
+   }
   }
  ],
  "debate": [
-  {
-   "engine": "gh-models",
-   "lineage": "gpt",
-   "model": "openai/gpt-4o-mini"
-  },
-  {
-   "engine": "deepseek",
-   "lineage": "deepseek",
-   "model": "deepseek/deepseek-chat-v3-0324:free"
-  },
   {
    "engine": "nvidia",
    "lineage": "llama",
    "model": "meta/llama-3.3-70b-instruct"
   },
   {
+   "engine": "gh-models",
+   "lineage": "gpt",
+   "model": "openai/gpt-4o-mini"
+  },
+  {
    "engine": "kimi",
    "lineage": "kimi",
    "model": "moonshotai/kimi-k2:free"
+  },
+  {
+   "engine": "glm",
+   "lineage": "glm",
+   "model": "z-ai/glm-4.5-air:free"
   }
  ],
  "debate_lineages": [
-  "deepseek",
+  "glm",
   "gpt",
   "kimi",
   "llama"

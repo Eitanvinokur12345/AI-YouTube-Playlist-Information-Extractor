@@ -1,18 +1,18 @@
 {
- "generated_at": "2026-09-23T06:56:37.358520+00:00",
+ "generated_at": "2026-09-23T07:02:04.555906+00:00",
  "checked": 40,
- "real_pct": 97,
+ "real_pct": 100,
  "counts": {
-  "real": 38,
-  "noop": 1,
+  "real": 39,
+  "noop": 0,
   "failed": 0,
   "planned": 0,
   "blocked": 1
  },
- "criticism": "Acceptable: 97% of the last 40 completions did real work. Stay strict. · INTENT DRIFT: 1 dept(s) wired to the WRONG tool for what you wanted — news→wants src.news not src.trend_watch · DECISION DRIFT: 3 unit(s) mostly decide SELF-IMPROVEMENT, not their mission (links 100%; group-chat 100%; war-room 100%) — that work belongs to the improve department's external arms (decision_audit.json).",
+ "criticism": "Acceptable: 100% of the last 40 completions did real work. Stay strict. · INTENT DRIFT: 1 dept(s) wired to the WRONG tool for what you wanted — news→wants src.news not src.trend_watch · DECISION DRIFT: 3 unit(s) mostly decide SELF-IMPROVEMENT, not their mission (links 100%; group-chat 100%; war-room 100%) — that work belongs to the improve department's external arms (decision_audit.json).",
  "long_term": {
   "verdict": "STAGNANT — real work is NOT accumulating over time",
-  "detail": "over last 24 snapshots: done -357, artifacts +0, real_pct 95→97",
+  "detail": "over last 24 snapshots: done -362, artifacts +0, real_pct 97→100",
   "stagnant": true
  },
  "history": {
@@ -33,6 +33,27 @@
   }
  ],
  "verdicts": [
+  {
+   "task": "security-safety-rate-the-46566",
+   "dept": "security",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+  },
+  {
+   "task": "raise-g3-truth-access-46-46240",
+   "dept": "memory",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Semantic index: 1714 vectors (model gemini-embedding-001); hub 10296 items → 8582 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; th"
+  },
+  {
+   "task": "transcripts-drain-the-ne-46567",
+   "dept": "analysis",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
+  },
   {
    "task": "watch-process-the-next-b-5670",
    "dept": "watch",
@@ -291,27 +312,6 @@
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
-  },
-  {
-   "task": "34-self-improvement-task-42273",
-   "dept": "improve",
-   "verdict": "noop",
-   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
-   "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
-  },
-  {
-   "task": "raise-g3-truth-access-46-13095",
-   "dept": "memory",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Semantic index: 1714 vectors (model gemini-embedding-001); hub 10296 items → 8582 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; th"
-  },
-  {
-   "task": "verify-the-next-200-of-1-97274",
-   "dept": "analysis",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
   }
  ]
 }

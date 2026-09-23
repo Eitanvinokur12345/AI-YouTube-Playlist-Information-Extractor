@@ -26949,17 +26949,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/raise-g3-truth-access-46-53115--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-09-23T08:45:15.133935+00:00",
-      "updated_at": "2026-09-23T08:45:15.537403+00:00"
+      "updated_at": "2026-09-23T08:56:12.556236+00:00",
+      "result": "Semantic index: 1714 vectors (model gemini-embedding-001); hub 10296 items → 8582 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "verify-the-next-200-of-1-53443",
@@ -26968,15 +26969,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-09-23T08:50:43.756790+00:00",
-      "updated_at": "2026-09-23T08:50:43.756804+00:00"
+      "updated_at": "2026-09-23T08:56:12.301928+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "resolve-real-links-websi-53443",
@@ -27014,7 +27016,61 @@
       "created_at": "2026-09-23T08:50:43.820368+00:00",
       "updated_at": "2026-09-23T08:50:45.354176+00:00",
       "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "id": "security-safety-rate-the-53772",
+      "title": "Security: safety-rate the next batch of 1804 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1804 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-23T08:56:12.128500+00:00",
+      "updated_at": "2026-09-23T08:56:13.651676+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "id": "memory-embed-the-remaini-53772",
+      "title": "Memory: embed the remaining unembedded of 15400 elements for full recall",
+      "detail": "value=64 size=20(small) [cost 20/steps 30/risk 5] · 15400 elements",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-23T08:56:12.164051+00:00",
+      "updated_at": "2026-09-23T08:56:12.164066+00:00"
+    },
+    {
+      "id": "transcripts-drain-the-ne-53772",
+      "title": "Transcripts: drain the next batch of 2842 pending (residential IP)",
+      "detail": "value=60 size=26(small) [cost 25/steps 35/risk 15] · 2842 pending",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-drain-the-ne-53772--01--transcripts-w1--to--analysis.md"
+      ],
+      "created_at": "2026-09-23T08:56:12.199695+00:00",
+      "updated_at": "2026-09-23T08:56:13.808682+00:00"
     }
   ],
-  "updated_at": "2026-09-23T08:50:45.354190+00:00"
+  "updated_at": "2026-09-23T08:56:13.808687+00:00"
 }

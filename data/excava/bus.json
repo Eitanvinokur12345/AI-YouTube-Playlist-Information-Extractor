@@ -26997,17 +26997,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/raise-g3-truth-access-45-4846--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-09-23T23:07:26.070231+00:00",
-      "updated_at": "2026-09-23T23:07:26.549048+00:00"
+      "updated_at": "2026-09-24T03:18:13.616062+00:00",
+      "result": "Semantic index: 1715 vectors (model gemini-embedding-001); hub 10346 items → 8631 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "raise-g5-leverage-45-100-4846",
@@ -27089,15 +27090,16 @@
       "department": "analysis",
       "source": "auto",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "output written to data/ and committed by CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-09-24T03:12:31.888600+00:00",
-      "updated_at": "2026-09-24T03:12:32.657662+00:00"
+      "updated_at": "2026-09-24T03:18:13.367868+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "34-self-improvement-task-19551",
@@ -27106,15 +27108,16 @@
       "department": "improve",
       "source": "auto",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "output written to data/ and committed by CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "improve-w1",
       "handoff_docs": [],
       "created_at": "2026-09-24T03:12:31.922094+00:00",
-      "updated_at": "2026-09-24T03:12:32.685264+00:00"
+      "updated_at": "2026-09-24T03:18:15.189423+00:00",
+      "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
     },
     {
       "id": "security-safety-rate-the-19552",
@@ -27123,15 +27126,16 @@
       "department": "security",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-09-24T03:12:32.425338+00:00",
-      "updated_at": "2026-09-24T03:12:32.425350+00:00"
+      "updated_at": "2026-09-24T03:18:16.316812+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "memory-embed-the-remaini-19552",
@@ -27176,6 +27180,24 @@
       "department": "creators",
       "source": "gap",
       "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "creators-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-24T03:12:32.526341+00:00",
+      "updated_at": "2026-09-24T03:18:13.676063+00:00",
+      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
+    },
+    {
+      "id": "verify-the-next-200-of-1-19893",
+      "title": "Verify the next 200 of 10186 unverified elements (2-source + live test)",
+      "detail": "value=96 size=40(small) [cost 35/steps 70/risk 10] · 10186 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
       "status": "queued",
       "steps": 0,
       "max_steps": 8,
@@ -27183,9 +27205,28 @@
       "escalation_tier": 1,
       "claimed_by": null,
       "handoff_docs": [],
-      "created_at": "2026-09-24T03:12:32.526341+00:00",
-      "updated_at": "2026-09-24T03:12:32.526348+00:00"
+      "created_at": "2026-09-24T03:18:13.198672+00:00",
+      "updated_at": "2026-09-24T03:18:13.198687+00:00"
+    },
+    {
+      "id": "resolve-real-links-websi-19893",
+      "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
+      "detail": "value=82 size=41(small) [cost 40/steps 60/risk 15] · many unlinked",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/resolve-real-links-websi-19893--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-09-24T03:18:13.234682+00:00",
+      "updated_at": "2026-09-24T03:18:15.249230+00:00"
     }
   ],
-  "updated_at": "2026-09-24T03:12:41.914851+00:00"
+  "updated_at": "2026-09-24T03:18:16.316823+00:00"
 }

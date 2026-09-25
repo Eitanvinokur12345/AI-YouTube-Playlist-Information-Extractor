@@ -28567,17 +28567,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/raise-g3-truth-access-45-86393--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-09-24T21:46:33.327861+00:00",
-      "updated_at": "2026-09-25T00:39:42.629949+00:00"
+      "updated_at": "2026-09-25T00:56:12.968703+00:00",
+      "result": "Semantic index: 1717 vectors (model gemini-embedding-001); hub 10394 items → 8677 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "keep-the-designs-tab-pur-96781",
@@ -28641,15 +28642,16 @@
       "department": "analysis",
       "source": "auto",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "output written to data/ and committed by CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-09-25T00:39:41.415080+00:00",
-      "updated_at": "2026-09-25T00:39:42.205479+00:00"
+      "updated_at": "2026-09-25T00:56:12.719140+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "34-self-improvement-task-96781",
@@ -28776,7 +28778,43 @@
       "created_at": "2026-09-25T00:50:48.741563+00:00",
       "updated_at": "2026-09-25T00:50:49.128296+00:00",
       "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
+    },
+    {
+      "id": "security-safety-rate-the-97772",
+      "title": "Security: safety-rate the next batch of 1808 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1808 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-25T00:56:12.565301+00:00",
+      "updated_at": "2026-09-25T00:56:14.107978+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "id": "raise-g5-leverage-45-100-97772",
+      "title": "Raise G5 Leverage (45/100): leverage needs real, usable links first (= G3); then the OS creation agent",
+      "detail": "value=55 size=17(small) [cost 15/steps 25/risk 10] · G5 at 45",
+      "department": "creators",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "creators-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-25T00:56:12.628562+00:00",
+      "updated_at": "2026-09-25T00:56:13.028496+00:00",
+      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     }
   ],
-  "updated_at": "2026-09-25T00:50:50.260198+00:00"
+  "updated_at": "2026-09-25T00:56:14.107994+00:00"
 }

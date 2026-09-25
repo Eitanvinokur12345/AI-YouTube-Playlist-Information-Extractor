@@ -1,47 +1,47 @@
 {
- "generated_at": "2026-09-25T05:48:31.675728+00:00",
+ "generated_at": "2026-09-25T05:53:55.300971+00:00",
  "experiment": "engine-benchmark (golden-task canary)",
  "golden_prompt": "Reply with exactly these two words and nothing else: benchmark ok",
  "results": [
   {
    "engine": "groq",
    "status": "bad-model-404",
-   "ms": 60,
+   "ms": 61,
    "model": "llama-3.3-70b-versatile",
    "note": "bad-model-404: {\"error\":{\"message\":\"The model `llama-3.3-70b-versatile` does not exist or you do not have access to it.\",\"type\":\"invalid_request_error\",\"code\":\"model_not_found"
   },
   {
    "engine": "sambanova",
    "status": "http-402",
-   "ms": 189,
+   "ms": 185,
    "model": "Meta-Llama-3.3-70B-Instruct",
    "note": "http-402: {\"error\":{\"balance_units\":0,\"billing_portal_url\":\"https://cloud.sambanova.ai/plans/billing\",\"code\":\"PAYMENT_METHOD_REQUIRED\",\"message\":\"A payment method is requ"
   },
   {
    "engine": "mistral",
    "status": "quota-429",
-   "ms": 219,
+   "ms": 202,
    "model": "mistral-small-latest",
    "note": "quota-429: {\"object\":\"error\",\"message\":\"Rate limit exceeded\",\"type\":\"rate_limited\",\"param\":null,\"code\":\"1300\",\"raw_status_code\":429}"
   },
   {
    "engine": "gh-models",
    "status": "JSONDecodeError",
-   "ms": 43,
+   "ms": 37,
    "model": "openai/gpt-4o-mini",
    "note": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
   },
   {
    "engine": "cerebras",
    "status": "bad-model-404",
-   "ms": 66,
+   "ms": 74,
    "model": "llama3.1-8b",
    "note": "bad-model-404: {\"message\":\"Model does not exist or you do not have access to it.\",\"type\":\"not_found_error\",\"param\":\"model\",\"code\":\"model_not_found\"}"
   },
   {
    "engine": "gemini",
    "status": "bad-model-404",
-   "ms": 144,
+   "ms": 135,
    "model": "gemini-2.0-flash",
    "note": "bad-model-404: {\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"This model models/gemini-2.0-flash is no longer available. Please update your code to use models/gemini-3.8-flas"
   },
@@ -55,21 +55,21 @@
   {
    "engine": "glm",
    "status": "bad-model-404",
-   "ms": 44,
+   "ms": 38,
    "model": "z-ai/glm-4.5-air:free",
    "note": "bad-model-404: {\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: z-ai/glm-4.5-air\",\"code\":404},\"user_id\":\"use"
   },
   {
    "engine": "deepseek",
    "status": "bad-model-404",
-   "ms": 36,
+   "ms": 52,
    "model": "deepseek/deepseek-chat-v3-0324:free",
    "note": "bad-model-404: {\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: deepseek/deepseek-chat-v3-0324\",\"code\":404},"
   },
   {
    "engine": "kimi",
    "status": "bad-model-404",
-   "ms": 44,
+   "ms": 37,
    "model": "moonshotai/kimi-k2:free",
    "note": "bad-model-404: {\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: moonshotai/kimi-k2\",\"code\":404},\"user_id\":\"u"
   },
@@ -86,10 +86,10 @@
  ],
  "ranking": [
   "nvidia",
-  "deepseek",
   "gh-models",
-  "glm",
   "kimi",
+  "glm",
+  "deepseek",
   "groq",
   "cerebras",
   "gemini",

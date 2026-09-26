@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-26T17:10:36.004908+00:00",
+ "generated_at": "2026-09-26T19:52:39.052536+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -80,25 +80,25 @@
   {
    "id": "A",
    "lead": {
-    "engine": "kimi",
-    "model": "moonshotai/kimi-k2:free",
-    "lineage": "kimi",
+    "engine": "deepseek",
+    "model": "deepseek/deepseek-chat-v3-0324:free",
+    "lineage": "deepseek",
     "tier": "reasoning"
    },
    "support": {
-    "engine": "gh-models",
-    "model": "openai/gpt-4o-mini",
-    "lineage": "gpt",
+    "engine": "gemini",
+    "model": "gemini-2.0-flash",
+    "lineage": "gemini",
     "tier": "grounded"
    }
   },
   {
    "id": "B",
    "lead": {
-    "engine": "glm",
-    "model": "z-ai/glm-4.5-air:free",
-    "lineage": "glm",
-    "tier": "grounded"
+    "engine": "kimi",
+    "model": "moonshotai/kimi-k2:free",
+    "lineage": "kimi",
+    "tier": "reasoning"
    },
    "support": {
     "engine": "cerebras",
@@ -110,16 +110,16 @@
   {
    "id": "C",
    "lead": {
-    "engine": "deepseek",
-    "model": "deepseek/deepseek-chat-v3-0324:free",
-    "lineage": "deepseek",
-    "tier": "reasoning"
+    "engine": "glm",
+    "model": "z-ai/glm-4.5-air:free",
+    "lineage": "glm",
+    "tier": "grounded"
    },
    "support": {
-    "engine": "nvidia",
-    "model": "meta/llama-3.3-70b-instruct",
+    "engine": "sambanova",
+    "model": "Meta-Llama-3.3-70B-Instruct",
     "lineage": "llama",
-    "tier": "grounded"
+    "tier": "fast"
    }
   },
   {
@@ -131,14 +131,19 @@
     "tier": "fast"
    },
    "support": {
-    "engine": "gemini",
-    "model": "gemini-2.0-flash",
-    "lineage": "gemini",
+    "engine": "gh-models",
+    "model": "openai/gpt-4o-mini",
+    "lineage": "gpt",
     "tier": "grounded"
    }
   }
  ],
  "debate": [
+  {
+   "engine": "deepseek",
+   "lineage": "deepseek",
+   "model": "deepseek/deepseek-chat-v3-0324:free"
+  },
   {
    "engine": "kimi",
    "lineage": "kimi",
@@ -148,11 +153,6 @@
    "engine": "glm",
    "lineage": "glm",
    "model": "z-ai/glm-4.5-air:free"
-  },
-  {
-   "engine": "deepseek",
-   "lineage": "deepseek",
-   "model": "deepseek/deepseek-chat-v3-0324:free"
   },
   {
    "engine": "groq",

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-26T13:06:06.194819+00:00",
+ "generated_at": "2026-09-26T17:10:36.004908+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -80,16 +80,16 @@
   {
    "id": "A",
    "lead": {
+    "engine": "kimi",
+    "model": "moonshotai/kimi-k2:free",
+    "lineage": "kimi",
+    "tier": "reasoning"
+   },
+   "support": {
     "engine": "gh-models",
     "model": "openai/gpt-4o-mini",
     "lineage": "gpt",
     "tier": "grounded"
-   },
-   "support": {
-    "engine": "cerebras",
-    "model": "llama3.1-8b",
-    "lineage": "llama",
-    "tier": "fast"
    }
   },
   {
@@ -101,8 +101,8 @@
     "tier": "grounded"
    },
    "support": {
-    "engine": "groq",
-    "model": "llama-3.3-70b-versatile",
+    "engine": "cerebras",
+    "model": "llama3.1-8b",
     "lineage": "llama",
     "tier": "fast"
    }
@@ -125,10 +125,10 @@
   {
    "id": "D",
    "lead": {
-    "engine": "kimi",
-    "model": "moonshotai/kimi-k2:free",
-    "lineage": "kimi",
-    "tier": "reasoning"
+    "engine": "groq",
+    "model": "llama-3.3-70b-versatile",
+    "lineage": "llama",
+    "tier": "fast"
    },
    "support": {
     "engine": "gemini",
@@ -140,9 +140,9 @@
  ],
  "debate": [
   {
-   "engine": "gh-models",
-   "lineage": "gpt",
-   "model": "openai/gpt-4o-mini"
+   "engine": "kimi",
+   "lineage": "kimi",
+   "model": "moonshotai/kimi-k2:free"
   },
   {
    "engine": "glm",
@@ -155,16 +155,16 @@
    "model": "deepseek/deepseek-chat-v3-0324:free"
   },
   {
-   "engine": "kimi",
-   "lineage": "kimi",
-   "model": "moonshotai/kimi-k2:free"
+   "engine": "groq",
+   "lineage": "llama",
+   "model": "llama-3.3-70b-versatile"
   }
  ],
  "debate_lineages": [
   "deepseek",
   "glm",
-  "gpt",
-  "kimi"
+  "kimi",
+  "llama"
  ],
  "spoke_today": {},
  "note": "a BRAIN = a benchmark-ranked LEAD model + a distinct-lineage SUPPORT model (levels of support, real fallback); rank is EARNED by measured quality, not the plan's list. The lineage roster below shows every model that can be a lead/support; GLM/DeepSeek/Kimi need OPENROUTER_API_KEY (§12)."

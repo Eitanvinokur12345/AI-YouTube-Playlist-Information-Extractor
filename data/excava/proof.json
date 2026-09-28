@@ -1,21 +1,21 @@
 {
- "generated_at": "2026-09-28T22:06:02.212747+00:00",
- "commit": "ff8b605f17",
- "real_pct": 100,
+ "generated_at": "2026-09-28T22:11:34.103208+00:00",
+ "commit": "6215fab619",
+ "real_pct": 95,
  "counts": {
-  "real": 40,
-  "noop": 0,
+  "real": 37,
+  "noop": 2,
   "failed": 0,
   "planned": 0,
-  "blocked": 0
+  "blocked": 1
  },
  "trend": [
-  13164,
   13168,
   13172,
   13176,
   13180,
-  13184
+  13184,
+  13192
  ],
  "delta": {},
  "totals": {
@@ -42,7 +42,7 @@
   },
   {
    "dept": "improve",
-   "verdict": "?",
+   "verdict": "noop",
    "output": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]",
    "evidence": "data/self_check.json",
    "evidence_url": "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/self_check.json"
@@ -50,20 +50,20 @@
   {
    "dept": "memory",
    "verdict": "real",
-   "output": "Semantic index: 1723 vectors (model gemini-embedding-001); hub 10564 items → 8841 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass co",
+   "output": "Semantic index: 1723 vectors (model gemini-embedding-001); hub 10562 items → 8839 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass co",
    "evidence": "data/brain_graph.json",
    "evidence_url": "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/brain_graph.json"
   },
   {
    "dept": "mining",
-   "verdict": "?",
-   "output": "Ran the discovery agent. discovery: +3 new (of 134 sighted) → 811 queued; arxiv=90, gh-active=72, gh-new=43, hn-front=15, hn-new=105, huggingface-mode",
+   "verdict": "noop",
+   "output": "Ran the discovery agent. discovery: +0 new (of 138 sighted) → 826 queued; arxiv=90, gh-active=72, gh-new=44, hn-front=19, hn-new=110, huggingface-mode",
    "evidence": "data/connectors.json",
    "evidence_url": "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/connectors.json"
   },
   {
    "dept": "news",
-   "verdict": "?",
+   "verdict": "real",
    "output": "Ran the trend watch. trend_watch: 18 proposals (top score 10); queued 0 into self-improvement.",
    "evidence": "data/weekly_web_news.json",
    "evidence_url": "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/weekly_web_news.json"
@@ -84,7 +84,7 @@
   },
   {
    "dept": "watch",
-   "verdict": "?",
+   "verdict": "blocked",
    "output": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner.",
    "evidence": "data/_pending",
    "evidence_url": "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/tree/main/data/_pending"

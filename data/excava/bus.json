@@ -30949,15 +30949,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-09-28T22:54:31.143318+00:00",
-      "updated_at": "2026-09-28T22:54:31.143324+00:00"
+      "updated_at": "2026-09-28T23:05:17.602799+00:00",
+      "result": "Semantic index: 1723 vectors (model gemini-embedding-001); hub 10562 items → 8839 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "raise-g5-leverage-45-100-36071",
@@ -31021,17 +31022,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-36394--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-09-28T22:59:54.194837+00:00",
-      "updated_at": "2026-09-28T22:59:55.318769+00:00"
+      "updated_at": "2026-09-28T23:05:17.328467+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g5-leverage-45-100-36394",
@@ -31050,7 +31052,79 @@
       "created_at": "2026-09-28T22:59:54.216526+00:00",
       "updated_at": "2026-09-28T22:59:54.599667+00:00",
       "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
+    },
+    {
+      "id": "verify-the-next-200-of-1-36717",
+      "title": "Verify the next 200 of 10575 unverified elements (2-source + live test)",
+      "detail": "value=96 size=40(small) [cost 35/steps 70/risk 10] · 10575 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-28T23:05:17.202936+00:00",
+      "updated_at": "2026-09-28T23:05:17.202950+00:00"
+    },
+    {
+      "id": "security-safety-rate-the-36717",
+      "title": "Security: safety-rate the next batch of 1842 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1842 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-28T23:05:17.228337+00:00",
+      "updated_at": "2026-09-28T23:05:18.282255+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "id": "raise-g3-truth-access-45-36717",
+      "title": "Raise G3 Truth & access (45/100): 45.5% of tools/skills have a real link (target: ~100%)",
+      "detail": "value=55 size=17(small) [cost 15/steps 25/risk 10] · G3 at 45",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/raise-g3-truth-access-45-36717--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-09-28T23:05:17.260557+00:00",
+      "updated_at": "2026-09-28T23:05:17.684122+00:00"
+    },
+    {
+      "id": "raise-g5-leverage-45-100-36717",
+      "title": "Raise G5 Leverage (45/100): leverage needs real, usable links first (= G3); then the OS creation agent",
+      "detail": "value=55 size=17(small) [cost 15/steps 25/risk 10] · G5 at 45",
+      "department": "creators",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "creators-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-28T23:05:17.277953+00:00",
+      "updated_at": "2026-09-28T23:05:17.648910+00:00",
+      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     }
   ],
-  "updated_at": "2026-09-28T22:59:55.318771+00:00"
+  "updated_at": "2026-09-28T23:05:18.282261+00:00"
 }

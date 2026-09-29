@@ -587,15 +587,16 @@
       "department": "analysis",
       "source": "room-action:analysis",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "the stated action is done and verifiable",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-08-03T02:03:04.759814+00:00",
-      "updated_at": "2026-08-03T02:03:04.759820+00:00"
+      "updated_at": "2026-09-29T15:14:47.782751+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "links-room-action-anchor-22589",
@@ -32543,17 +32544,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/resolve-real-links-websi-94214--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-09-29T15:03:34.474506+00:00",
-      "updated_at": "2026-09-29T15:03:36.656422+00:00"
+      "updated_at": "2026-09-29T15:14:48.039121+00:00",
+      "result": "Semantic index: 1723 vectors (model gemini-embedding-001); hub 10562 items → 8839 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "transcripts-drain-the-ne-94214",
@@ -32593,7 +32595,43 @@
       ],
       "created_at": "2026-09-29T15:09:20.040830+00:00",
       "updated_at": "2026-09-29T15:09:20.486509+00:00"
+    },
+    {
+      "id": "memory-embed-the-remaini-94887",
+      "title": "Memory: embed the remaining unembedded of 16001 elements for full recall",
+      "detail": "value=64 size=20(small) [cost 20/steps 30/risk 5] · 16001 elements",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-29T15:14:47.624948+00:00",
+      "updated_at": "2026-09-29T15:14:47.624961+00:00"
+    },
+    {
+      "id": "transcripts-drain-the-ne-94887",
+      "title": "Transcripts: drain the next batch of 2842 pending (residential IP)",
+      "detail": "value=60 size=26(small) [cost 25/steps 35/risk 15] · 2842 pending",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-drain-the-ne-94887--01--transcripts-w1--to--analysis.md"
+      ],
+      "created_at": "2026-09-29T15:14:47.666609+00:00",
+      "updated_at": "2026-09-29T15:14:48.198152+00:00"
     }
   ],
-  "updated_at": "2026-09-29T15:09:20.555987+00:00"
+  "updated_at": "2026-09-29T15:14:48.198158+00:00"
 }

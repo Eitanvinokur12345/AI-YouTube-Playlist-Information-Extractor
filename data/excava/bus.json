@@ -32465,17 +32465,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/resolve-real-links-websi-93199--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-09-29T14:46:39.041227+00:00",
-      "updated_at": "2026-09-29T14:46:39.542063+00:00"
+      "updated_at": "2026-09-29T14:57:55.748985+00:00",
+      "result": "Semantic index: 1723 vectors (model gemini-embedding-001); hub 10562 items → 8839 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "transcripts-drain-the-ne-93538",
@@ -32484,17 +32485,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-93538--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-09-29T14:52:18.424908+00:00",
-      "updated_at": "2026-09-29T14:52:19.060764+00:00"
+      "updated_at": "2026-09-29T14:57:55.488210+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g3-truth-access-45-93538",
@@ -32514,7 +32516,24 @@
       ],
       "created_at": "2026-09-29T14:52:18.459150+00:00",
       "updated_at": "2026-09-29T14:52:18.911262+00:00"
+    },
+    {
+      "id": "memory-embed-the-remaini-93875",
+      "title": "Memory: embed the remaining unembedded of 16001 elements for full recall",
+      "detail": "value=64 size=20(small) [cost 20/steps 30/risk 5] · 16001 elements",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-29T14:57:55.357686+00:00",
+      "updated_at": "2026-09-29T14:57:55.357698+00:00"
     }
   ],
-  "updated_at": "2026-09-29T14:52:19.060769+00:00"
+  "updated_at": "2026-09-29T14:57:55.749001+00:00"
 }

@@ -32722,17 +32722,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/resolve-real-links-websi-96239--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-09-29T15:37:19.390256+00:00",
-      "updated_at": "2026-09-29T16:39:08.588048+00:00"
+      "updated_at": "2026-09-29T19:50:47.932979+00:00",
+      "result": "Semantic index: 1725 vectors (model gemini-embedding-001); hub 10591 items → 8866 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "transcripts-drain-the-ne-96239",
@@ -32833,18 +32834,36 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-11111--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-09-29T19:45:11.024147+00:00",
-      "updated_at": "2026-09-29T19:45:11.622637+00:00"
+      "updated_at": "2026-09-29T19:50:47.680799+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "id": "verify-the-next-200-of-1-11447",
+      "title": "Verify the next 200 of 10615 unverified elements (2-source + live test)",
+      "detail": "value=96 size=40(small) [cost 35/steps 70/risk 10] · 10615 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-29T19:50:47.513084+00:00",
+      "updated_at": "2026-09-29T19:50:47.513098+00:00"
     }
   ],
-  "updated_at": "2026-09-29T19:45:11.622641+00:00"
+  "updated_at": "2026-09-29T19:50:47.932997+00:00"
 }

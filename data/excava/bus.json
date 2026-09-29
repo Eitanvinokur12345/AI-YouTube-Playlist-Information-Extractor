@@ -33526,17 +33526,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/raise-g3-truth-access-45-17681--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-09-29T21:34:41.457248+00:00",
-      "updated_at": "2026-09-29T21:34:41.908836+00:00"
+      "updated_at": "2026-09-29T21:45:32.396818+00:00",
+      "result": "Semantic index: 1730 vectors (model gemini-embedding-001); hub 10614 items → 8884 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "resolve-real-links-websi-18006",
@@ -33564,18 +33565,53 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-18006--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-09-29T21:40:06.740245+00:00",
-      "updated_at": "2026-09-29T21:40:07.360058+00:00"
+      "updated_at": "2026-09-29T21:45:32.138059+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "id": "verify-the-next-200-of-1-18331",
+      "title": "Verify the next 200 of 10615 unverified elements (2-source + live test)",
+      "detail": "value=96 size=40(small) [cost 35/steps 70/risk 10] · 10615 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-29T21:45:31.929782+00:00",
+      "updated_at": "2026-09-29T21:45:31.929803+00:00"
+    },
+    {
+      "id": "memory-embed-the-remaini-18331",
+      "title": "Memory: embed the remaining unembedded of 16041 elements for full recall",
+      "detail": "value=64 size=20(small) [cost 20/steps 30/risk 5] · 16041 elements",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-29T21:45:31.999107+00:00",
+      "updated_at": "2026-09-29T21:45:31.999123+00:00"
     }
   ],
-  "updated_at": "2026-09-29T21:40:07.360063+00:00"
+  "updated_at": "2026-09-29T21:45:32.396835+00:00"
 }

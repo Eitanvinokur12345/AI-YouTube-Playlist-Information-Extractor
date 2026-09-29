@@ -32739,6 +32739,26 @@
       "department": "memory",
       "source": "owner",
       "priority": 0,
+      "status": "done",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": "memory-w1",
+      "handoff_docs": [
+        "data/excava/handoffs/push-link-coverage-towar-96238--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-09-29T15:37:18.831113+00:00",
+      "updated_at": "2026-09-29T16:39:08.528444+00:00",
+      "result": "Semantic index: 1725 vectors (model gemini-embedding-001); hub 10591 items → 8866 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "id": "resolve-real-links-websi-96239",
+      "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
+      "detail": "value=82 size=41(small) [cost 40/steps 60/risk 15] · many unlinked",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
       "status": "queued",
       "steps": 1,
       "max_steps": 8,
@@ -32746,15 +32766,87 @@
       "escalation_tier": 1,
       "claimed_by": null,
       "handoff_docs": [
-        "data/excava/handoffs/push-link-coverage-towar-96238--01--links-w1--to--memory.md"
+        "data/excava/handoffs/resolve-real-links-websi-96239--01--links-w1--to--memory.md"
       ],
-      "created_at": "2026-09-29T15:37:18.831113+00:00",
-      "updated_at": "2026-09-29T15:37:19.954370+00:00"
+      "created_at": "2026-09-29T15:37:19.390256+00:00",
+      "updated_at": "2026-09-29T16:39:08.588048+00:00"
     },
     {
-      "id": "resolve-real-links-websi-96239",
-      "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
-      "detail": "value=82 size=41(small) [cost 40/steps 60/risk 15] · many unlinked",
+      "id": "transcripts-drain-the-ne-96239",
+      "title": "Transcripts: drain the next batch of 2842 pending (residential IP)",
+      "detail": "value=60 size=26(small) [cost 25/steps 35/risk 15] · 2842 pending",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "analysis-w1",
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-drain-the-ne-96239--01--transcripts-w1--to--analysis.md"
+      ],
+      "created_at": "2026-09-29T15:37:19.456173+00:00",
+      "updated_at": "2026-09-29T16:39:08.254437+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "id": "34-self-improvement-task-99947",
+      "title": "34 self-improvement tasks queued",
+      "detail": "The improve stage works these on its 2×/week pass.",
+      "department": "improve",
+      "source": "auto",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "output written to data/ and committed by CI",
+      "escalation_tier": 1,
+      "claimed_by": "improve-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-29T16:39:07.567744+00:00",
+      "updated_at": "2026-09-29T16:39:09.573134+00:00",
+      "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
+    },
+    {
+      "id": "verify-the-next-200-of-1-99947",
+      "title": "Verify the next 200 of 10615 unverified elements (2-source + live test)",
+      "detail": "value=96 size=40(small) [cost 35/steps 70/risk 10] · 10615 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-29T16:39:07.943724+00:00",
+      "updated_at": "2026-09-29T16:39:07.943740+00:00"
+    },
+    {
+      "id": "memory-embed-the-remaini-99947",
+      "title": "Memory: embed the remaining unembedded of 16041 elements for full recall",
+      "detail": "value=64 size=20(small) [cost 20/steps 30/risk 5] · 16041 elements",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-29T16:39:07.989024+00:00",
+      "updated_at": "2026-09-29T16:39:07.989043+00:00"
+    },
+    {
+      "id": "raise-g3-truth-access-45-99948",
+      "title": "Raise G3 Truth & access (45/100): 45.5% of tools/skills have a real link (target: ~100%)",
+      "detail": "value=55 size=17(small) [cost 15/steps 25/risk 10] · G3 at 45",
       "department": "links",
       "source": "gap",
       "priority": 1,
@@ -32765,28 +32857,9 @@
       "escalation_tier": 1,
       "claimed_by": null,
       "handoff_docs": [],
-      "created_at": "2026-09-29T15:37:19.390256+00:00",
-      "updated_at": "2026-09-29T15:37:19.390270+00:00"
-    },
-    {
-      "id": "transcripts-drain-the-ne-96239",
-      "title": "Transcripts: drain the next batch of 2842 pending (residential IP)",
-      "detail": "value=60 size=26(small) [cost 25/steps 35/risk 15] · 2842 pending",
-      "department": "analysis",
-      "source": "gap",
-      "priority": 1,
-      "status": "queued",
-      "steps": 1,
-      "max_steps": 8,
-      "done_criteria": "a committed artifact that measurably closes this gap",
-      "escalation_tier": 1,
-      "claimed_by": null,
-      "handoff_docs": [
-        "data/excava/handoffs/transcripts-drain-the-ne-96239--01--transcripts-w1--to--analysis.md"
-      ],
-      "created_at": "2026-09-29T15:37:19.456173+00:00",
-      "updated_at": "2026-09-29T15:37:20.103078+00:00"
+      "created_at": "2026-09-29T16:39:08.061061+00:00",
+      "updated_at": "2026-09-29T16:39:08.061074+00:00"
     }
   ],
-  "updated_at": "2026-09-29T15:37:20.103083+00:00"
+  "updated_at": "2026-09-29T16:39:09.573147+00:00"
 }

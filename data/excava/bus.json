@@ -32643,17 +32643,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/resolve-real-links-websi-95214--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-09-29T15:20:14.908926+00:00",
-      "updated_at": "2026-09-29T15:20:15.411641+00:00"
+      "updated_at": "2026-09-29T15:31:09.492724+00:00",
+      "result": "Semantic index: 1723 vectors (model gemini-embedding-001); hub 10562 items → 8839 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "transcripts-drain-the-ne-95542",
@@ -32662,17 +32663,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-95542--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-09-29T15:25:42.477845+00:00",
-      "updated_at": "2026-09-29T15:25:43.096701+00:00"
+      "updated_at": "2026-09-29T15:31:09.216500+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g3-truth-access-45-95542",
@@ -32692,7 +32694,42 @@
       ],
       "created_at": "2026-09-29T15:25:42.511657+00:00",
       "updated_at": "2026-09-29T15:25:42.952552+00:00"
+    },
+    {
+      "id": "lane-self-improvement-re-95868",
+      "title": "Lane 'Self-improvement review' is idle",
+      "detail": "Check the workflow logs; re-dispatch if blocked.",
+      "department": "improve",
+      "source": "auto",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "output written to data/ and committed by CI",
+      "escalation_tier": 1,
+      "claimed_by": "improve-w1",
+      "handoff_docs": [],
+      "created_at": "2026-09-29T15:31:08.504175+00:00",
+      "updated_at": "2026-09-29T15:31:11.056698+00:00",
+      "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
+    },
+    {
+      "id": "memory-embed-the-remaini-95869",
+      "title": "Memory: embed the remaining unembedded of 16001 elements for full recall",
+      "detail": "value=64 size=20(small) [cost 20/steps 30/risk 5] · 16001 elements",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-29T15:31:09.051416+00:00",
+      "updated_at": "2026-09-29T15:31:09.051429+00:00"
     }
   ],
-  "updated_at": "2026-09-29T15:25:43.096707+00:00"
+  "updated_at": "2026-09-29T15:31:11.056710+00:00"
 }

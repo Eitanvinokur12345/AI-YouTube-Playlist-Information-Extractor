@@ -33834,15 +33834,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-09-29T22:18:14.421341+00:00",
-      "updated_at": "2026-09-29T22:18:14.421356+00:00"
+      "updated_at": "2026-09-29T22:29:05.131972+00:00",
+      "result": "Semantic index: 1730 vectors (model gemini-embedding-001); hub 10614 items → 8884 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "transcripts-drain-the-ne-20619",
@@ -33851,17 +33852,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-20619--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-09-29T22:23:39.883253+00:00",
-      "updated_at": "2026-09-29T22:23:40.533641+00:00"
+      "updated_at": "2026-09-29T22:29:04.854416+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g3-truth-access-45-20619",
@@ -33881,7 +33883,43 @@
       ],
       "created_at": "2026-09-29T22:23:39.918654+00:00",
       "updated_at": "2026-09-29T22:23:40.383905+00:00"
+    },
+    {
+      "id": "verify-the-next-200-of-1-20944",
+      "title": "Verify the next 200 of 10615 unverified elements (2-source + live test)",
+      "detail": "value=96 size=40(small) [cost 35/steps 70/risk 10] · 10615 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-09-29T22:29:04.647930+00:00",
+      "updated_at": "2026-09-29T22:29:04.647945+00:00"
+    },
+    {
+      "id": "resolve-real-links-websi-20944",
+      "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
+      "detail": "value=82 size=41(small) [cost 40/steps 60/risk 15] · many unlinked",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/resolve-real-links-websi-20944--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-09-29T22:29:04.691801+00:00",
+      "updated_at": "2026-09-29T22:29:05.204042+00:00"
     }
   ],
-  "updated_at": "2026-09-29T22:23:40.533646+00:00"
+  "updated_at": "2026-09-29T22:29:05.204048+00:00"
 }

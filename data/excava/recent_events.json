@@ -1,88 +1,6 @@
 {
   "events": [
     {
-      "task": "empty-body-items-render--84700",
-      "at": "2026-09-29T20:07:07.198779+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-7653",
-      "at": "2026-09-29T20:07:07.199747+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-70809",
-      "at": "2026-09-29T20:07:07.200674+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-12177",
-      "at": "2026-09-29T20:07:07.201500+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "verify-the-next-200-of-1-12098",
-      "at": "2026-09-29T20:07:07.243496+00:00",
-      "kind": "claimed",
-      "by": "analysis-w1",
-      "department": "analysis"
-    },
-    {
-      "task": "verify-the-next-200-of-1-12098",
-      "at": "2026-09-29T20:07:07.281333+00:00",
-      "kind": "completed",
-      "by": "analysis-w1",
-      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-    },
-    {
-      "task": "resolve-real-links-websi-11772",
-      "at": "2026-09-29T20:07:07.315695+00:00",
-      "kind": "claimed",
-      "by": "memory-w1",
-      "department": "memory"
-    },
-    {
-      "task": "resolve-real-links-websi-11772",
-      "at": "2026-09-29T20:07:07.537077+00:00",
-      "kind": "completed",
-      "by": "memory-w1",
-      "result": "Semantic index: 1725 vectors (model gemini-embedding-001); hub 10591 items → 8866 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-    },
-    {
-      "task": "raise-g3-truth-access-45-12427",
-      "at": "2026-09-29T20:07:07.585362+00:00",
-      "kind": "claimed",
-      "by": "links-w1",
-      "department": "links"
-    },
-    {
-      "task": "raise-g3-truth-access-45-12427",
-      "at": "2026-09-29T20:07:07.620451+00:00",
-      "kind": "handoff",
-      "from": "links-w1",
-      "to": "memory",
-      "doc": "data/excava/handoffs/raise-g3-truth-access-45-12427--01--links-w1--to--memory.md"
-    },
-    {
-      "task": "transcripts-drain-the-ne-12427",
-      "at": "2026-09-29T20:07:07.655056+00:00",
-      "kind": "claimed",
-      "by": "transcripts-w1",
-      "department": "transcripts"
-    },
-    {
-      "task": "transcripts-drain-the-ne-12427",
-      "at": "2026-09-29T20:07:07.763240+00:00",
-      "kind": "handoff",
-      "from": "transcripts-w1",
-      "to": "analysis",
-      "doc": "data/excava/handoffs/transcripts-drain-the-ne-12427--01--transcripts-w1--to--analysis.md"
-    },
-    {
       "task": "4771-tools-skills-still--12753",
       "at": "2026-09-29T20:12:34.003875+00:00",
       "kind": "enqueued",
@@ -285,6 +203,91 @@
       "from": "transcripts-w1",
       "to": "analysis",
       "doc": "data/excava/handoffs/transcripts-drain-the-ne-13079--01--transcripts-w1--to--analysis.md"
+    },
+    {
+      "task": "verify-the-next-200-of-1-13408",
+      "at": "2026-09-29T20:23:28.769803+00:00",
+      "kind": "enqueued",
+      "title": "Verify the next 200 of 10615 unverified elements (2-source + live test)",
+      "source": "gap",
+      "priority": 1,
+      "department": "analysis"
+    },
+    {
+      "task": "raise-g3-truth-access-45-13408",
+      "at": "2026-09-29T20:23:28.859745+00:00",
+      "kind": "enqueued",
+      "title": "Raise G3 Truth & access (45/100): 45.5% of tools/skills have a real link (target: ~100%)",
+      "source": "gap",
+      "priority": 1,
+      "department": "links"
+    },
+    {
+      "task": "empty-body-items-render--84700",
+      "at": "2026-09-29T20:23:28.885542+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-7653",
+      "at": "2026-09-29T20:23:28.886517+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-70809",
+      "at": "2026-09-29T20:23:28.887387+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-12177",
+      "at": "2026-09-29T20:23:28.888190+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "transcripts-drain-the-ne-13079",
+      "at": "2026-09-29T20:23:28.930833+00:00",
+      "kind": "claimed",
+      "by": "analysis-w1",
+      "department": "analysis"
+    },
+    {
+      "task": "transcripts-drain-the-ne-13079",
+      "at": "2026-09-29T20:23:28.970108+00:00",
+      "kind": "completed",
+      "by": "analysis-w1",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "task": "4771-tools-skills-still--12753",
+      "at": "2026-09-29T20:23:29.005894+00:00",
+      "kind": "claimed",
+      "by": "memory-w1",
+      "department": "memory"
+    },
+    {
+      "task": "4771-tools-skills-still--12753",
+      "at": "2026-09-29T20:23:29.227058+00:00",
+      "kind": "completed",
+      "by": "memory-w1",
+      "result": "Semantic index: 1725 vectors (model gemini-embedding-001); hub 10591 items → 8866 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "task": "raise-g3-truth-access-45-13408",
+      "at": "2026-09-29T20:23:29.276518+00:00",
+      "kind": "claimed",
+      "by": "links-w1",
+      "department": "links"
+    },
+    {
+      "task": "raise-g3-truth-access-45-13408",
+      "at": "2026-09-29T20:23:29.312134+00:00",
+      "kind": "handoff",
+      "from": "links-w1",
+      "to": "memory",
+      "doc": "data/excava/handoffs/raise-g3-truth-access-45-13408--01--links-w1--to--memory.md"
     }
   ]
 }

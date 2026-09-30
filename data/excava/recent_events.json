@@ -1,75 +1,6 @@
 {
   "events": [
     {
-      "task": "os-lanes",
-      "at": "2026-09-30T19:39:28.429358+00:00",
-      "kind": "lane_ran",
-      "lane": "Free analysis pool",
-      "status": "live",
-      "what": "Turns transcripts into skills/tools/connectors (free engines)"
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-09-30T19:39:28.430015+00:00",
-      "kind": "lane_ran",
-      "lane": "External mining",
-      "status": "live",
-      "what": "Mines 80+ web feeds for new tools/skills/MCPs"
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-09-30T19:39:28.430633+00:00",
-      "kind": "lane_ran",
-      "lane": "Deep analysis (night-gated)",
-      "status": "live",
-      "what": "Claude re-analysis + safety pass"
-    },
-    {
-      "task": "empty-body-items-render--84700",
-      "at": "2026-09-30T22:44:29.578345+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-7653",
-      "at": "2026-09-30T22:44:29.579215+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-70809",
-      "at": "2026-09-30T22:44:29.580085+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-12177",
-      "at": "2026-09-30T22:44:29.580932+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "verify-the-next-200-of-1-92543",
-      "at": "2026-09-30T22:44:29.621797+00:00",
-      "kind": "claimed",
-      "by": "analysis-w1",
-      "department": "analysis"
-    },
-    {
-      "task": "verify-the-next-200-of-1-92543",
-      "at": "2026-09-30T22:44:29.658786+00:00",
-      "kind": "completed",
-      "by": "analysis-w1",
-      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-    },
-    {
-      "task": "resolve-real-links-websi-47696",
-      "at": "2026-09-30T22:44:29.691965+00:00",
-      "kind": "claimed",
-      "by": "memory-w1",
-      "department": "memory"
-    },
-    {
       "task": "resolve-real-links-websi-47696",
       "at": "2026-09-30T22:44:29.908574+00:00",
       "kind": "completed",
@@ -280,6 +211,72 @@
       "lane": "Deep analysis (night-gated)",
       "status": "live",
       "what": "Claude re-analysis + safety pass"
+    },
+    {
+      "task": "empty-body-items-render--84700",
+      "at": "2026-09-30T22:55:44.145387+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-7653",
+      "at": "2026-09-30T22:55:44.146342+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-70809",
+      "at": "2026-09-30T22:55:44.147289+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-12177",
+      "at": "2026-09-30T22:55:44.148121+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-free-analysis-pool--47695",
+      "at": "2026-09-30T22:55:44.188085+00:00",
+      "kind": "claimed",
+      "by": "analysis-w1",
+      "department": "analysis"
+    },
+    {
+      "task": "lane-free-analysis-pool--47695",
+      "at": "2026-09-30T22:55:44.223981+00:00",
+      "kind": "completed",
+      "by": "analysis-w1",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "task": "memory-embed-the-remaini-73148",
+      "at": "2026-09-30T22:55:44.256444+00:00",
+      "kind": "claimed",
+      "by": "memory-w1",
+      "department": "memory"
+    },
+    {
+      "task": "memory-embed-the-remaini-73148",
+      "at": "2026-09-30T22:55:44.475406+00:00",
+      "kind": "completed",
+      "by": "memory-w1",
+      "result": "Semantic index: 1732 vectors (model gemini-embedding-001); hub 10672 items → 8940 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "task": "security-safety-rate-the-73148",
+      "at": "2026-09-30T22:55:44.507574+00:00",
+      "kind": "claimed",
+      "by": "security-w1",
+      "department": "security"
+    },
+    {
+      "task": "security-safety-rate-the-73148",
+      "at": "2026-09-30T22:55:45.625511+00:00",
+      "kind": "completed",
+      "by": "security-w1",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     }
   ]
 }

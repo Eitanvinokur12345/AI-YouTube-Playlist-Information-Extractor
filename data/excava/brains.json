@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-30T06:43:39.041543+00:00",
+ "generated_at": "2026-09-30T13:43:41.340480+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -86,36 +86,6 @@
     "tier": "grounded"
    },
    "support": {
-    "engine": "groq",
-    "model": "llama-3.3-70b-versatile",
-    "lineage": "llama",
-    "tier": "fast"
-   }
-  },
-  {
-   "id": "B",
-   "lead": {
-    "engine": "deepseek",
-    "model": "deepseek/deepseek-chat-v3-0324:free",
-    "lineage": "deepseek",
-    "tier": "reasoning"
-   },
-   "support": {
-    "engine": "nvidia",
-    "model": "meta/llama-3.3-70b-instruct",
-    "lineage": "llama",
-    "tier": "grounded"
-   }
-  },
-  {
-   "id": "C",
-   "lead": {
-    "engine": "kimi",
-    "model": "moonshotai/kimi-k2:free",
-    "lineage": "kimi",
-    "tier": "reasoning"
-   },
-   "support": {
     "engine": "cerebras",
     "model": "llama3.1-8b",
     "lineage": "llama",
@@ -123,17 +93,47 @@
    }
   },
   {
-   "id": "D",
+   "id": "B",
    "lead": {
-    "engine": "sambanova",
-    "model": "Meta-Llama-3.3-70B-Instruct",
+    "engine": "groq",
+    "model": "llama-3.3-70b-versatile",
     "lineage": "llama",
     "tier": "fast"
+   },
+   "support": {
+    "engine": "gh-models",
+    "model": "openai/gpt-4o-mini",
+    "lineage": "gpt",
+    "tier": "grounded"
+   }
+  },
+  {
+   "id": "C",
+   "lead": {
+    "engine": "deepseek",
+    "model": "deepseek/deepseek-chat-v3-0324:free",
+    "lineage": "deepseek",
+    "tier": "reasoning"
    },
    "support": {
     "engine": "gemini",
     "model": "gemini-2.0-flash",
     "lineage": "gemini",
+    "tier": "grounded"
+   }
+  },
+  {
+   "id": "D",
+   "lead": {
+    "engine": "kimi",
+    "model": "moonshotai/kimi-k2:free",
+    "lineage": "kimi",
+    "tier": "reasoning"
+   },
+   "support": {
+    "engine": "nvidia",
+    "model": "meta/llama-3.3-70b-instruct",
+    "lineage": "llama",
     "tier": "grounded"
    }
   }
@@ -145,6 +145,11 @@
    "model": "z-ai/glm-4.5-air:free"
   },
   {
+   "engine": "groq",
+   "lineage": "llama",
+   "model": "llama-3.3-70b-versatile"
+  },
+  {
    "engine": "deepseek",
    "lineage": "deepseek",
    "model": "deepseek/deepseek-chat-v3-0324:free"
@@ -153,11 +158,6 @@
    "engine": "kimi",
    "lineage": "kimi",
    "model": "moonshotai/kimi-k2:free"
-  },
-  {
-   "engine": "sambanova",
-   "lineage": "llama",
-   "model": "Meta-Llama-3.3-70B-Instruct"
   }
  ],
  "debate_lineages": [

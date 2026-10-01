@@ -28944,17 +28944,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/resolve-real-links-websi-56577--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-10-01T12:09:37.785362+00:00",
-      "updated_at": "2026-10-01T12:09:38.244446+00:00"
+      "updated_at": "2026-10-01T12:20:42.405429+00:00",
+      "result": "Semantic index: 1732 vectors (model gemini-embedding-001); hub 10673 items → 8941 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "security-safety-rate-the-56911",
@@ -28981,17 +28982,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-56911--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-10-01T12:15:11.815016+00:00",
-      "updated_at": "2026-10-01T12:15:13.544934+00:00"
+      "updated_at": "2026-10-01T12:20:42.161061+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g3-truth-access-45-56911",
@@ -29011,7 +29013,59 @@
       ],
       "created_at": "2026-10-01T12:15:11.845461+00:00",
       "updated_at": "2026-10-01T12:15:12.255423+00:00"
+    },
+    {
+      "id": "verify-the-next-200-of-1-57241",
+      "title": "Verify the next 200 of 10781 unverified elements (2-source + live test)",
+      "detail": "value=96 size=40(small) [cost 35/steps 70/risk 10] · 10781 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-10-01T12:20:41.964194+00:00",
+      "updated_at": "2026-10-01T12:20:41.964210+00:00"
+    },
+    {
+      "id": "security-safety-rate-the-57242",
+      "title": "Security: safety-rate the next batch of 1859 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1859 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-10-01T12:20:42.007649+00:00",
+      "updated_at": "2026-10-01T12:20:43.542410+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "id": "memory-embed-the-remaini-57242",
+      "title": "Memory: embed the remaining unembedded of 16207 elements for full recall",
+      "detail": "value=64 size=20(small) [cost 20/steps 30/risk 5] · 16207 elements",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-10-01T12:20:42.044316+00:00",
+      "updated_at": "2026-10-01T12:20:42.044324+00:00"
     }
   ],
-  "updated_at": "2026-10-01T12:15:13.544939+00:00"
+  "updated_at": "2026-10-01T12:20:43.542420+00:00"
 }

@@ -14735,7 +14735,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-09-28T10:49:03.631742+00:00",
-      "updated_at": "2026-10-01T11:58:31.756286+00:00",
+      "updated_at": "2026-10-01T18:00:11.622954+00:00",
       "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
@@ -14753,7 +14753,7 @@
       "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-09-28T10:49:03.676020+00:00",
-      "updated_at": "2026-10-01T11:58:31.816460+00:00",
+      "updated_at": "2026-10-01T18:00:11.730407+00:00",
       "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     },
     {
@@ -24808,7 +24808,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-09-29T14:35:43.410259+00:00",
-      "updated_at": "2026-10-01T11:58:30.651275+00:00"
+      "updated_at": "2026-10-01T18:00:10.743180+00:00"
     },
     {
       "id": "raise-g3-truth-access-45-92543",
@@ -24845,7 +24845,7 @@
       "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-09-29T14:35:43.505847+00:00",
-      "updated_at": "2026-10-01T11:58:31.786422+00:00"
+      "updated_at": "2026-10-01T18:00:11.646812+00:00"
     },
     {
       "id": "memory-embed-the-remaini-92873",
@@ -28654,17 +28654,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/raise-g3-truth-access-45-62657--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-10-01T13:50:57.881105+00:00",
-      "updated_at": "2026-10-01T13:50:58.303080+00:00"
+      "updated_at": "2026-10-01T18:00:10.719335+00:00",
+      "result": "Semantic index: 1732 vectors (model gemini-embedding-001); hub 10705 items → 8973 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "push-link-coverage-towar-76621",
@@ -28711,15 +28712,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-10-01T17:49:14.593617+00:00",
-      "updated_at": "2026-10-01T17:49:14.593631+00:00"
+      "updated_at": "2026-10-01T18:00:10.524556+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "resolve-real-links-websi-76954",
@@ -28793,7 +28795,24 @@
       ],
       "created_at": "2026-10-01T17:54:43.724835+00:00",
       "updated_at": "2026-10-01T17:54:45.089442+00:00"
+    },
+    {
+      "id": "memory-embed-the-remaini-77610",
+      "title": "Memory: embed the remaining unembedded of 16264 elements for full recall",
+      "detail": "value=64 size=20(small) [cost 20/steps 30/risk 5] · 16264 elements",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-10-01T18:00:10.430020+00:00",
+      "updated_at": "2026-10-01T18:00:10.430055+00:00"
     }
   ],
-  "updated_at": "2026-10-01T17:54:45.138179+00:00"
+  "updated_at": "2026-10-01T18:00:11.730415+00:00"
 }

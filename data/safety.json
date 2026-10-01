@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-10-01T06:27:54.962880+00:00",
+  "generated_at": "2026-10-01T13:50:55.865687+00:00",
   "policy": "activator gate: safe = auto-activate, caution = warn, risky = block until confirmed",
   "summary": {
-    "safe": 185,
-    "caution": 1612,
-    "risky": 56
+    "safe": 187,
+    "caution": 1615,
+    "risky": 57
   },
   "connectors": {
     "perplexity-mcp": {
@@ -14109,6 +14109,49 @@
       "reasons": [
         "third-party (not an official vendor connector)"
       ]
+    },
+    "claude-apify-integration": {
+      "name": "Claude-Apify Integration",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "claude-gamma-integration": {
+      "name": "Claude-Gamma Integration",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "claude-google-drive-integration": {
+      "name": "Claude-Google Drive Integration",
+      "rating": "safe",
+      "reasons": [
+        "official vendor"
+      ]
+    },
+    "claude-google-calendar-integration": {
+      "name": "Claude-Google Calendar Integration",
+      "rating": "safe",
+      "reasons": [
+        "official vendor"
+      ]
+    },
+    "claude-gmail-integration": {
+      "name": "Claude-Gmail Integration",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "claude-code-to-codex": {
+      "name": "Claude Code to Codex",
+      "rating": "risky",
+      "reasons": [
+        "requests broad system/shell/file access",
+        "third-party (not an official vendor connector)"
+      ]
     }
   },
   "skills_flagged": {
@@ -14835,6 +14878,13 @@
     },
     "ai-task-decomposition": {
       "name": "AI Task Decomposition",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "dual-agent-interaction": {
+      "name": "Dual-agent interaction",
       "rating": "caution",
       "reasons": [
         "the technique runs system/shell/file operations — review what it executes"

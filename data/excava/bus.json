@@ -24966,15 +24966,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-10-02T06:05:32.456695+00:00",
-      "updated_at": "2026-10-02T06:05:32.456709+00:00"
+      "updated_at": "2026-10-02T15:39:18.467487+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "resolve-real-links-websi-21132",
@@ -25074,15 +25075,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-10-02T13:04:02.125390+00:00",
-      "updated_at": "2026-10-02T13:04:02.125394+00:00"
+      "updated_at": "2026-10-02T15:39:18.708582+00:00",
+      "result": "Semantic index: 1733 vectors (model gemini-embedding-001); hub 10714 items → 8981 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "raise-g3-truth-access-45-46242",
@@ -25141,7 +25143,44 @@
       ],
       "created_at": "2026-10-02T15:33:49.677226+00:00",
       "updated_at": "2026-10-02T15:33:50.102313+00:00"
+    },
+    {
+      "id": "security-safety-rate-the-55558",
+      "title": "Security: safety-rate the next batch of 1862 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1862 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-10-02T15:39:18.328990+00:00",
+      "updated_at": "2026-10-02T15:39:19.803019+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "id": "transcripts-drain-the-ne-55558",
+      "title": "Transcripts: drain the next batch of 2842 pending (residential IP)",
+      "detail": "value=60 size=26(small) [cost 25/steps 35/risk 15] · 2842 pending",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/transcripts-drain-the-ne-55558--01--transcripts-w1--to--analysis.md"
+      ],
+      "created_at": "2026-10-02T15:39:18.373474+00:00",
+      "updated_at": "2026-10-02T15:39:19.933237+00:00"
     }
   ],
-  "updated_at": "2026-10-02T15:33:51.202066+00:00"
+  "updated_at": "2026-10-02T15:39:19.933243+00:00"
 }

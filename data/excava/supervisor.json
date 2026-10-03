@@ -1,18 +1,18 @@
 {
- "generated_at": "2026-10-03T11:45:57.679472+00:00",
+ "generated_at": "2026-10-03T11:51:21.946691+00:00",
  "checked": 40,
- "real_pct": 100,
+ "real_pct": 98,
  "counts": {
-  "real": 40,
-  "noop": 0,
+  "real": 39,
+  "noop": 1,
   "failed": 0,
   "planned": 0,
   "blocked": 0
  },
- "criticism": "Acceptable: 100% of the last 40 completions did real work. Stay strict. · INTENT DRIFT: 1 dept(s) wired to the WRONG tool for what you wanted — news→wants src.news not src.trend_watch · DECISION DRIFT: 3 unit(s) mostly decide SELF-IMPROVEMENT, not their mission (links 100%; group-chat 100%; war-room 100%) — that work belongs to the improve department's external arms (decision_audit.json).",
+ "criticism": "Acceptable: 98% of the last 40 completions did real work. Stay strict. · INTENT DRIFT: 1 dept(s) wired to the WRONG tool for what you wanted — news→wants src.news not src.trend_watch · DECISION DRIFT: 3 unit(s) mostly decide SELF-IMPROVEMENT, not their mission (links 100%; group-chat 100%; war-room 100%) — that work belongs to the improve department's external arms (decision_audit.json).",
  "long_term": {
   "verdict": "accumulating over time",
-  "detail": "over last 24 snapshots: done +72, artifacts +0, real_pct 100→100",
+  "detail": "over last 24 snapshots: done +72, artifacts +0, real_pct 100→98",
   "stagnant": false
  },
  "history": {
@@ -33,6 +33,34 @@
   }
  ],
  "verdicts": [
+  {
+   "task": "security-safety-rate-the-28263",
+   "dept": "security",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+  },
+  {
+   "task": "lane-self-improvement-re-28262",
+   "dept": "improve",
+   "verdict": "noop",
+   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
+   "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
+  },
+  {
+   "task": "memory-embed-the-remaini-27616",
+   "dept": "memory",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Semantic index: 1733 vectors (model gemini-embedding-001); hub 10738 items → 9005 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; th"
+  },
+  {
+   "task": "verify-the-next-200-of-1-27939",
+   "dept": "analysis",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
+  },
   {
    "task": "security-safety-rate-the-27939",
    "dept": "security",
@@ -284,34 +312,6 @@
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
-  },
-  {
-   "task": "security-safety-rate-the-24047",
-   "dept": "security",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
-  },
-  {
-   "task": "memory-embed-the-remaini-23399",
-   "dept": "memory",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Semantic index: 1733 vectors (model gemini-embedding-001); hub 10738 items → 9005 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; th"
-  },
-  {
-   "task": "verify-the-next-200-of-1-23723",
-   "dept": "analysis",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
-  },
-  {
-   "task": "security-safety-rate-the-23723",
-   "dept": "security",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
   }
  ]
 }

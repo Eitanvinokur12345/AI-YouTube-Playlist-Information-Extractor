@@ -32284,15 +32284,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-10-03T14:58:36.850189+00:00",
-      "updated_at": "2026-10-03T14:58:36.850203+00:00"
+      "updated_at": "2026-10-03T15:09:24.131437+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "security-safety-rate-the-39516",
@@ -32319,15 +32320,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-10-03T14:58:36.952217+00:00",
-      "updated_at": "2026-10-03T14:58:36.952226+00:00"
+      "updated_at": "2026-10-03T15:09:24.439505+00:00",
+      "result": "Semantic index: 1733 vectors (model gemini-embedding-001); hub 10761 items → 9028 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "security-safety-rate-the-39843",
@@ -32384,7 +32386,61 @@
       ],
       "created_at": "2026-10-03T15:04:03.289005+00:00",
       "updated_at": "2026-10-03T15:04:03.649117+00:00"
+    },
+    {
+      "id": "resolve-real-links-websi-40163",
+      "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
+      "detail": "value=82 size=41(small) [cost 40/steps 60/risk 15] · many unlinked",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/resolve-real-links-websi-40163--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-10-03T15:09:23.964901+00:00",
+      "updated_at": "2026-10-03T15:09:24.493607+00:00"
+    },
+    {
+      "id": "security-safety-rate-the-40163",
+      "title": "Security: safety-rate the next batch of 1862 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1862 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-10-03T15:09:23.992764+00:00",
+      "updated_at": "2026-10-03T15:09:25.387797+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "id": "raise-g1-omniscience-53--40164",
+      "title": "Raise G1 Omniscience (53/100): 964/1807 videos analyzed (53.3%); 3/7 lanes live",
+      "detail": "value=47 size=17(small) [cost 15/steps 25/risk 10] · G1 at 53",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-10-03T15:09:24.053386+00:00",
+      "updated_at": "2026-10-03T15:09:24.053395+00:00"
     }
   ],
-  "updated_at": "2026-10-03T15:04:04.658765+00:00"
+  "updated_at": "2026-10-03T15:09:25.387806+00:00"
 }

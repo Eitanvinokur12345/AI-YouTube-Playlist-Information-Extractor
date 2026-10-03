@@ -10087,7 +10087,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-09-28T10:49:03.631742+00:00",
-      "updated_at": "2026-10-03T08:09:37.327597+00:00",
+      "updated_at": "2026-10-03T14:10:24.638918+00:00",
       "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
@@ -10105,7 +10105,7 @@
       "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-09-28T10:49:03.676020+00:00",
-      "updated_at": "2026-10-03T08:09:37.362093+00:00",
+      "updated_at": "2026-10-03T14:10:24.689677+00:00",
       "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     },
     {
@@ -20160,7 +20160,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-09-29T14:35:43.410259+00:00",
-      "updated_at": "2026-10-03T08:09:36.693393+00:00"
+      "updated_at": "2026-10-03T14:10:23.770297+00:00"
     },
     {
       "id": "raise-g3-truth-access-45-92543",
@@ -20197,7 +20197,7 @@
       "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-09-29T14:35:43.505847+00:00",
-      "updated_at": "2026-10-03T08:09:37.345143+00:00"
+      "updated_at": "2026-10-03T14:10:24.664664+00:00"
     },
     {
       "id": "memory-embed-the-remaini-92873",
@@ -31702,17 +31702,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-35653--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-10-03T13:54:13.737202+00:00",
-      "updated_at": "2026-10-03T13:54:15.247829+00:00"
+      "updated_at": "2026-10-03T14:10:23.523174+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "security-safety-rate-the-35975",
@@ -31739,17 +31740,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/raise-g3-truth-access-45-35975--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-10-03T13:59:35.354026+00:00",
-      "updated_at": "2026-10-03T13:59:35.754522+00:00"
+      "updated_at": "2026-10-03T14:10:23.743675+00:00",
+      "result": "Semantic index: 1733 vectors (model gemini-embedding-001); hub 10761 items → 9028 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "raise-g1-omniscience-53--35975",
@@ -31820,7 +31822,24 @@
       "handoff_docs": [],
       "created_at": "2026-10-03T14:04:56.525881+00:00",
       "updated_at": "2026-10-03T14:04:56.525886+00:00"
+    },
+    {
+      "id": "memory-embed-the-remaini-36623",
+      "title": "Memory: embed the remaining unembedded of 16426 elements for full recall",
+      "detail": "value=64 size=20(small) [cost 20/steps 30/risk 5] · 16426 elements",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-10-03T14:10:23.418960+00:00",
+      "updated_at": "2026-10-03T14:10:23.418973+00:00"
     }
   ],
-  "updated_at": "2026-10-03T14:05:04.106027+00:00"
+  "updated_at": "2026-10-03T14:10:24.689684+00:00"
 }

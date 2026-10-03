@@ -5,10 +5,10 @@
 | task | `resolve-real-links-websi-15300` (step 1/8) |
 | from | **links-w1** |
 | to | **memory** department |
-| at | 2026-09-25T05:48:20.766602+00:00 |
+| at | 2026-10-03T08:15:01.298104+00:00 |
 
 ## What was done
-Link-coverage pass assessed: **5470/10394 linked (52.63%)**, moving +0.01%/day against the +5.0%/day target (NOT on track — resolver budget is the lever). The resolver lane (batch+parallel+fast-engine) keeps running hourly in CI.
+Link-coverage pass assessed: **5571/10738 linked (51.88%)**, moving +0.00%/day against the +5.0%/day target (NOT on track — resolver budget is the lever). The resolver lane (batch+parallel+fast-engine) keeps running hourly in CI.
 
 ## Artifacts (where the work lives)
 - `data/coverage_log.json`
@@ -16,7 +16,7 @@ Link-coverage pass assessed: **5470/10394 linked (52.63%)**, moving +0.01%/day a
 - `data/tools.json`
 
 ## What remains
-4924 items still unlinked. After each resolver batch the semantic index must be re-embedded so EXCAVA's recall sees the NEW links, not last week's.
+5167 items still unlinked. After each resolver batch the semantic index must be re-embedded so EXCAVA's recall sees the NEW links, not last week's.
 
 ## Context the next agent needs
 Re-embed via src.build_memory (GEMINI key from CI secrets). Only changed items need re-embedding. When the index lags the hub, EXCAVA recommends stale/dead items.

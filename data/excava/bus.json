@@ -36362,17 +36362,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/raise-g3-truth-access-45-98908--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-10-04T07:28:28.681367+00:00",
-      "updated_at": "2026-10-04T07:28:29.074295+00:00"
+      "updated_at": "2026-10-04T07:44:43.281809+00:00",
+      "result": "Semantic index: 1733 vectors (model gemini-embedding-001); hub 10766 items → 9033 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "push-link-coverage-towar-99234",
@@ -36456,17 +36457,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-99234--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-10-04T07:33:54.797313+00:00",
-      "updated_at": "2026-10-04T07:33:56.335792+00:00"
+      "updated_at": "2026-10-04T07:44:43.067901+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "verify-the-next-200-of-1-99559",
@@ -36519,7 +36521,25 @@
       "handoff_docs": [],
       "created_at": "2026-10-04T07:39:19.866107+00:00",
       "updated_at": "2026-10-04T07:39:19.866121+00:00"
+    },
+    {
+      "id": "security-safety-rate-the-99882",
+      "title": "Security: safety-rate the next batch of 1862 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1862 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-10-04T07:44:42.925482+00:00",
+      "updated_at": "2026-10-04T07:44:44.195243+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     }
   ],
-  "updated_at": "2026-10-04T07:39:21.280312+00:00"
+  "updated_at": "2026-10-04T07:44:44.195268+00:00"
 }

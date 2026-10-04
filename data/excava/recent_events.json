@@ -1,154 +1,6 @@
 {
   "events": [
     {
-      "task": "lane-transcript-retrieva-70809",
-      "at": "2026-10-04T07:17:39.508514+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-12177",
-      "at": "2026-10-04T07:17:39.509223+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "transcripts-drain-the-ne-97934",
-      "at": "2026-10-04T07:17:39.560771+00:00",
-      "kind": "claimed",
-      "by": "analysis-w1",
-      "department": "analysis"
-    },
-    {
-      "task": "transcripts-drain-the-ne-97934",
-      "at": "2026-10-04T07:17:39.719252+00:00",
-      "kind": "completed",
-      "by": "analysis-w1",
-      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-    },
-    {
-      "task": "memory-embed-the-remaini-97609",
-      "at": "2026-10-04T07:17:39.749484+00:00",
-      "kind": "claimed",
-      "by": "memory-w1",
-      "department": "memory"
-    },
-    {
-      "task": "memory-embed-the-remaini-97609",
-      "at": "2026-10-04T07:17:39.950091+00:00",
-      "kind": "completed",
-      "by": "memory-w1",
-      "result": "Semantic index: 1733 vectors (model gemini-embedding-001); hub 10766 items → 9033 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-    },
-    {
-      "task": "resolve-real-links-websi-98259",
-      "at": "2026-10-04T07:17:39.980309+00:00",
-      "kind": "claimed",
-      "by": "links-w1",
-      "department": "links"
-    },
-    {
-      "task": "resolve-real-links-websi-98259",
-      "at": "2026-10-04T07:17:40.035770+00:00",
-      "kind": "handoff",
-      "from": "links-w1",
-      "to": "memory",
-      "doc": "data/excava/handoffs/resolve-real-links-websi-98259--01--links-w1--to--memory.md"
-    },
-    {
-      "task": "security-safety-rate-the-98259",
-      "at": "2026-10-04T07:17:40.180921+00:00",
-      "kind": "claimed",
-      "by": "security-w1",
-      "department": "security"
-    },
-    {
-      "task": "security-safety-rate-the-98259",
-      "at": "2026-10-04T07:17:41.061492+00:00",
-      "kind": "completed",
-      "by": "security-w1",
-      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
-    },
-    {
-      "task": "security-safety-rate-the-98584",
-      "at": "2026-10-04T07:23:04.445845+00:00",
-      "kind": "enqueued",
-      "title": "Security: safety-rate the next batch of 1862 connectors/skills",
-      "source": "gap",
-      "priority": 1,
-      "department": "security"
-    },
-    {
-      "task": "memory-embed-the-remaini-98584",
-      "at": "2026-10-04T07:23:04.484740+00:00",
-      "kind": "enqueued",
-      "title": "Memory: embed the remaining unembedded of 16435 elements for full recall",
-      "source": "gap",
-      "priority": 1,
-      "department": "memory"
-    },
-    {
-      "task": "transcripts-drain-the-ne-98584",
-      "at": "2026-10-04T07:23:04.522545+00:00",
-      "kind": "enqueued",
-      "title": "Transcripts: drain the next batch of 2842 pending (residential IP)",
-      "source": "gap",
-      "priority": 1,
-      "department": "transcripts"
-    },
-    {
-      "task": "empty-body-items-render--84700",
-      "at": "2026-10-04T07:23:04.552749+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-7653",
-      "at": "2026-10-04T07:23:04.553665+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-70809",
-      "at": "2026-10-04T07:23:04.554407+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-12177",
-      "at": "2026-10-04T07:23:04.555122+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "verify-the-next-200-of-1-98259",
-      "at": "2026-10-04T07:23:04.606453+00:00",
-      "kind": "claimed",
-      "by": "analysis-w1",
-      "department": "analysis"
-    },
-    {
-      "task": "verify-the-next-200-of-1-98259",
-      "at": "2026-10-04T07:23:04.640562+00:00",
-      "kind": "completed",
-      "by": "analysis-w1",
-      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-    },
-    {
-      "task": "raise-g3-truth-access-45-97934",
-      "at": "2026-10-04T07:23:04.671532+00:00",
-      "kind": "claimed",
-      "by": "memory-w1",
-      "department": "memory"
-    },
-    {
-      "task": "raise-g3-truth-access-45-97934",
-      "at": "2026-10-04T07:23:04.857817+00:00",
-      "kind": "completed",
-      "by": "memory-w1",
-      "result": "Semantic index: 1733 vectors (model gemini-embedding-001); hub 10766 items → 9033 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-    },
-    {
       "task": "security-safety-rate-the-98584",
       "at": "2026-10-04T07:23:04.888703+00:00",
       "kind": "claimed",
@@ -284,6 +136,165 @@
       "kind": "completed",
       "by": "security-w1",
       "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "task": "push-link-coverage-towar-99234",
+      "at": "2026-10-04T07:33:54.191515+00:00",
+      "kind": "enqueued",
+      "title": "Push link coverage toward 100% at +5%/day (the access gate)",
+      "source": "owner",
+      "priority": 0,
+      "department": "(unrouted)"
+    },
+    {
+      "task": "weakest-lane-deep-analys-99234",
+      "at": "2026-10-04T07:33:54.245674+00:00",
+      "kind": "enqueued",
+      "title": "Weakest lane: Deep analysis (Claude, night-gated)",
+      "source": "auto",
+      "priority": 1,
+      "department": "(unrouted)"
+    },
+    {
+      "task": "resolve-real-links-websi-99234",
+      "at": "2026-10-04T07:33:54.696149+00:00",
+      "kind": "enqueued",
+      "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
+      "source": "gap",
+      "priority": 1,
+      "department": "links"
+    },
+    {
+      "task": "security-safety-rate-the-99234",
+      "at": "2026-10-04T07:33:54.766339+00:00",
+      "kind": "enqueued",
+      "title": "Security: safety-rate the next batch of 1862 connectors/skills",
+      "source": "gap",
+      "priority": 1,
+      "department": "security"
+    },
+    {
+      "task": "transcripts-drain-the-ne-99234",
+      "at": "2026-10-04T07:33:54.820412+00:00",
+      "kind": "enqueued",
+      "title": "Transcripts: drain the next batch of 2842 pending (residential IP)",
+      "source": "gap",
+      "priority": 1,
+      "department": "transcripts"
+    },
+    {
+      "task": "empty-body-items-render--84700",
+      "at": "2026-10-04T07:33:54.867586+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-7653",
+      "at": "2026-10-04T07:33:54.868554+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-70809",
+      "at": "2026-10-04T07:33:54.869335+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-12177",
+      "at": "2026-10-04T07:33:54.870044+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "push-link-coverage-towar-99234",
+      "at": "2026-10-04T07:33:54.901473+00:00",
+      "kind": "routed",
+      "chose": "links",
+      "over": [],
+      "why": "best specialization match (2 hits)"
+    },
+    {
+      "task": "weakest-lane-deep-analys-99234",
+      "at": "2026-10-04T07:33:54.933789+00:00",
+      "kind": "routed",
+      "chose": "analysis",
+      "over": [
+        "improve"
+      ],
+      "why": "best specialization match (1 hits)"
+    },
+    {
+      "task": "verify-the-next-200-of-1-98908",
+      "at": "2026-10-04T07:33:54.975432+00:00",
+      "kind": "claimed",
+      "by": "analysis-w1",
+      "department": "analysis"
+    },
+    {
+      "task": "verify-the-next-200-of-1-98908",
+      "at": "2026-10-04T07:33:55.010360+00:00",
+      "kind": "completed",
+      "by": "analysis-w1",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "task": "memory-embed-the-remaini-98584",
+      "at": "2026-10-04T07:33:55.042087+00:00",
+      "kind": "claimed",
+      "by": "memory-w1",
+      "department": "memory"
+    },
+    {
+      "task": "memory-embed-the-remaini-98584",
+      "at": "2026-10-04T07:33:55.234722+00:00",
+      "kind": "completed",
+      "by": "memory-w1",
+      "result": "Semantic index: 1733 vectors (model gemini-embedding-001); hub 10766 items → 9033 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "task": "push-link-coverage-towar-99234",
+      "at": "2026-10-04T07:33:55.267574+00:00",
+      "kind": "claimed",
+      "by": "links-w1",
+      "department": "links"
+    },
+    {
+      "task": "push-link-coverage-towar-99234",
+      "at": "2026-10-04T07:33:55.301045+00:00",
+      "kind": "handoff",
+      "from": "links-w1",
+      "to": "memory",
+      "doc": "data/excava/handoffs/push-link-coverage-towar-99234--01--links-w1--to--memory.md"
+    },
+    {
+      "task": "security-safety-rate-the-99234",
+      "at": "2026-10-04T07:33:55.334215+00:00",
+      "kind": "claimed",
+      "by": "security-w1",
+      "department": "security"
+    },
+    {
+      "task": "security-safety-rate-the-99234",
+      "at": "2026-10-04T07:33:56.235419+00:00",
+      "kind": "completed",
+      "by": "security-w1",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "task": "transcripts-drain-the-ne-99234",
+      "at": "2026-10-04T07:33:56.268137+00:00",
+      "kind": "claimed",
+      "by": "transcripts-w1",
+      "department": "transcripts"
+    },
+    {
+      "task": "transcripts-drain-the-ne-99234",
+      "at": "2026-10-04T07:33:56.358989+00:00",
+      "kind": "handoff",
+      "from": "transcripts-w1",
+      "to": "analysis",
+      "doc": "data/excava/handoffs/transcripts-drain-the-ne-99234--01--transcripts-w1--to--analysis.md"
     }
   ]
 }

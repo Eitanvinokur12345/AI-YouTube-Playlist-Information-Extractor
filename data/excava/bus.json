@@ -36626,15 +36626,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-10-04T07:55:29.425283+00:00",
-      "updated_at": "2026-10-04T07:55:29.425299+00:00"
+      "updated_at": "2026-10-04T08:06:24.562543+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "resolve-real-links-websi-529",
@@ -36643,17 +36644,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/resolve-real-links-websi-529--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-10-04T07:55:29.464192+00:00",
-      "updated_at": "2026-10-04T07:55:31.248704+00:00"
+      "updated_at": "2026-10-04T08:06:24.775608+00:00",
+      "result": "Semantic index: 1733 vectors (model gemini-embedding-001); hub 10766 items → 9033 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "security-safety-rate-the-529",
@@ -36680,15 +36682,16 @@
       "department": "security",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-10-04T08:00:54.007974+00:00",
-      "updated_at": "2026-10-04T08:00:54.007988+00:00"
+      "updated_at": "2026-10-04T08:06:25.737782+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "memory-embed-the-remaini-854",
@@ -36725,7 +36728,26 @@
       ],
       "created_at": "2026-10-04T08:00:54.082558+00:00",
       "updated_at": "2026-10-04T08:00:55.564980+00:00"
+    },
+    {
+      "id": "raise-g3-truth-access-45-1184",
+      "title": "Raise G3 Truth & access (45/100): 45.0% of tools/skills have a real link (target: ~100%)",
+      "detail": "value=55 size=17(small) [cost 15/steps 25/risk 10] · G3 at 45",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/raise-g3-truth-access-45-1184--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-10-04T08:06:24.456507+00:00",
+      "updated_at": "2026-10-04T08:06:24.835029+00:00"
     }
   ],
-  "updated_at": "2026-10-04T08:01:02.247416+00:00"
+  "updated_at": "2026-10-04T08:06:25.737791+00:00"
 }

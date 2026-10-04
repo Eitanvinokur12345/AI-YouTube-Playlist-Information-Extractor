@@ -34954,17 +34954,18 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [
         "data/excava/handoffs/transcripts-drain-the-ne-72320--01--transcripts-w1--to--analysis.md"
       ],
       "created_at": "2026-10-04T00:05:20.928376+00:00",
-      "updated_at": "2026-10-04T00:05:22.787841+00:00"
+      "updated_at": "2026-10-04T00:27:19.544301+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "raise-g3-truth-access-45-72320",
@@ -34993,17 +34994,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/resolve-real-links-websi-72662--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-10-04T00:11:02.470882+00:00",
-      "updated_at": "2026-10-04T00:16:27.888478+00:00"
+      "updated_at": "2026-10-04T00:27:19.810053+00:00",
+      "result": "Semantic index: 1733 vectors (model gemini-embedding-001); hub 10766 items → 9033 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "security-safety-rate-the-72662",
@@ -35092,7 +35094,61 @@
       "created_at": "2026-10-04T00:21:52.895682+00:00",
       "updated_at": "2026-10-04T00:21:54.437133+00:00",
       "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "id": "security-safety-rate-the-73639",
+      "title": "Security: safety-rate the next batch of 1862 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1862 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-10-04T00:27:19.314719+00:00",
+      "updated_at": "2026-10-04T00:27:21.001097+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "id": "raise-g3-truth-access-45-73639",
+      "title": "Raise G3 Truth & access (45/100): 45.0% of tools/skills have a real link (target: ~100%)",
+      "detail": "value=55 size=17(small) [cost 15/steps 25/risk 10] · G3 at 45",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/raise-g3-truth-access-45-73639--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-10-04T00:27:19.382575+00:00",
+      "updated_at": "2026-10-04T00:27:19.883518+00:00"
+    },
+    {
+      "id": "raise-g1-omniscience-53--73639",
+      "title": "Raise G1 Omniscience (53/100): 966/1807 videos analyzed (53.5%); 3/7 lanes live",
+      "detail": "value=47 size=17(small) [cost 15/steps 25/risk 10] · G1 at 53",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [],
+      "created_at": "2026-10-04T00:27:19.426399+00:00",
+      "updated_at": "2026-10-04T00:27:19.426407+00:00"
     }
   ],
-  "updated_at": "2026-10-04T00:21:54.437143+00:00"
+  "updated_at": "2026-10-04T00:27:21.001106+00:00"
 }

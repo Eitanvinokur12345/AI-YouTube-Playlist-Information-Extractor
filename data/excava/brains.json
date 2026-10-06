@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-05T18:28:25.296081+00:00",
+ "generated_at": "2026-10-06T00:49:43.155389+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -80,9 +80,24 @@
   {
    "id": "A",
    "lead": {
-    "engine": "kimi",
-    "model": "moonshotai/kimi-k2:free",
-    "lineage": "kimi",
+    "engine": "glm",
+    "model": "z-ai/glm-4.5-air:free",
+    "lineage": "glm",
+    "tier": "grounded"
+   },
+   "support": {
+    "engine": "groq",
+    "model": "llama-3.3-70b-versatile",
+    "lineage": "llama",
+    "tier": "fast"
+   }
+  },
+  {
+   "id": "B",
+   "lead": {
+    "engine": "deepseek",
+    "model": "deepseek/deepseek-chat-v3-0324:free",
+    "lineage": "deepseek",
     "tier": "reasoning"
    },
    "support": {
@@ -93,12 +108,12 @@
    }
   },
   {
-   "id": "B",
+   "id": "C",
    "lead": {
-    "engine": "glm",
-    "model": "z-ai/glm-4.5-air:free",
-    "lineage": "glm",
-    "tier": "grounded"
+    "engine": "kimi",
+    "model": "moonshotai/kimi-k2:free",
+    "lineage": "kimi",
+    "tier": "reasoning"
    },
    "support": {
     "engine": "cerebras",
@@ -108,25 +123,10 @@
    }
   },
   {
-   "id": "C",
-   "lead": {
-    "engine": "deepseek",
-    "model": "deepseek/deepseek-chat-v3-0324:free",
-    "lineage": "deepseek",
-    "tier": "reasoning"
-   },
-   "support": {
-    "engine": "sambanova",
-    "model": "Meta-Llama-3.3-70B-Instruct",
-    "lineage": "llama",
-    "tier": "fast"
-   }
-  },
-  {
    "id": "D",
    "lead": {
-    "engine": "groq",
-    "model": "llama-3.3-70b-versatile",
+    "engine": "sambanova",
+    "model": "Meta-Llama-3.3-70B-Instruct",
     "lineage": "llama",
     "tier": "fast"
    },
@@ -140,11 +140,6 @@
  ],
  "debate": [
   {
-   "engine": "kimi",
-   "lineage": "kimi",
-   "model": "moonshotai/kimi-k2:free"
-  },
-  {
    "engine": "glm",
    "lineage": "glm",
    "model": "z-ai/glm-4.5-air:free"
@@ -155,9 +150,14 @@
    "model": "deepseek/deepseek-chat-v3-0324:free"
   },
   {
-   "engine": "groq",
+   "engine": "kimi",
+   "lineage": "kimi",
+   "model": "moonshotai/kimi-k2:free"
+  },
+  {
+   "engine": "sambanova",
    "lineage": "llama",
-   "model": "llama-3.3-70b-versatile"
+   "model": "Meta-Llama-3.3-70B-Instruct"
   }
  ],
  "debate_lineages": [

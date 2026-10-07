@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-07T14:32:16.671734+00:00",
+ "generated_at": "2026-10-07T20:40:11.669322+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -80,9 +80,9 @@
   {
    "id": "A",
    "lead": {
-    "engine": "glm",
-    "model": "z-ai/glm-4.5-air:free",
-    "lineage": "glm",
+    "engine": "gh-models",
+    "model": "openai/gpt-4o-mini",
+    "lineage": "gpt",
     "tier": "grounded"
    },
    "support": {
@@ -94,6 +94,21 @@
   },
   {
    "id": "B",
+   "lead": {
+    "engine": "glm",
+    "model": "z-ai/glm-4.5-air:free",
+    "lineage": "glm",
+    "tier": "grounded"
+   },
+   "support": {
+    "engine": "sambanova",
+    "model": "Meta-Llama-3.3-70B-Instruct",
+    "lineage": "llama",
+    "tier": "fast"
+   }
+  },
+  {
+   "id": "C",
    "lead": {
     "engine": "kimi",
     "model": "moonshotai/kimi-k2:free",
@@ -108,21 +123,6 @@
    }
   },
   {
-   "id": "C",
-   "lead": {
-    "engine": "deepseek",
-    "model": "deepseek/deepseek-chat-v3-0324:free",
-    "lineage": "deepseek",
-    "tier": "reasoning"
-   },
-   "support": {
-    "engine": "nvidia",
-    "model": "meta/llama-3.3-70b-instruct",
-    "lineage": "llama",
-    "tier": "grounded"
-   }
-  },
-  {
    "id": "D",
    "lead": {
     "engine": "cerebras",
@@ -131,14 +131,19 @@
     "tier": "fast"
    },
    "support": {
-    "engine": "gh-models",
-    "model": "openai/gpt-4o-mini",
-    "lineage": "gpt",
-    "tier": "grounded"
+    "engine": "deepseek",
+    "model": "deepseek/deepseek-chat-v3-0324:free",
+    "lineage": "deepseek",
+    "tier": "reasoning"
    }
   }
  ],
  "debate": [
+  {
+   "engine": "gh-models",
+   "lineage": "gpt",
+   "model": "openai/gpt-4o-mini"
+  },
   {
    "engine": "glm",
    "lineage": "glm",
@@ -150,19 +155,14 @@
    "model": "moonshotai/kimi-k2:free"
   },
   {
-   "engine": "deepseek",
-   "lineage": "deepseek",
-   "model": "deepseek/deepseek-chat-v3-0324:free"
-  },
-  {
    "engine": "cerebras",
    "lineage": "llama",
    "model": "llama3.1-8b"
   }
  ],
  "debate_lineages": [
-  "deepseek",
   "glm",
+  "gpt",
   "kimi",
   "llama"
  ],

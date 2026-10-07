@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-10-07T13:33:21.554106+00:00",
+ "generated_at": "2026-10-07T13:38:55.198136+00:00",
  "total": 21,
- "passing": 17,
+ "passing": 18,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": false,
-   "detail": "NOT in sync vs origin/main (behind/ahead: 1\t0) — a push may not have landed.",
+   "ok": true,
+   "detail": "HEAD == origin/main (work is really saved).",
    "severity": "warn"
   },
   {
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "36782 memory episodes on record.",
+   "detail": "36788 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "2 guardrail runs logged (append-only, never rewritten).",
+   "detail": "3 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -92,14 +92,14 @@
    "id": "G-M",
    "name": "Work is moving (not all at 0)",
    "ok": true,
-   "detail": "15752 tasks done, 12 departments moving",
+   "detail": "15756 tasks done, 12 departments moving",
    "severity": "warn"
   },
   {
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "86365 MB free on the repo drive.",
+   "detail": "86358 MB free on the repo drive.",
    "severity": "info"
   },
   {
@@ -120,14 +120,14 @@
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": false,
-   "detail": "last 'core-spoton:' commit 6.4h ago — STALE: the hourly discovery/deep-retrieve/verify pipeline hasn't committed in over 4h (check for a wedged run, a broken step before Commit, or cron disabled).",
+   "detail": "last 'core-spoton:' commit 6.5h ago — STALE: the hourly discovery/deep-retrieve/verify pipeline hasn't committed in over 4h (check for a wedged run, a broken step before Commit, or cron disabled).",
    "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
    "ok": false,
-   "detail": "9/16 lane(s) landing on cadence — STALE: creators.yml (daily 07:45 UTC): last commit 1421.2h ago (expected within 30h); discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 2599.4h ago (expected within 76h); improve.yml (weekly deep pass): last commit 2949.2h ago (expected within 192h); links.yml (hourly): last commit 6.3h ago (expected within 4h); mine.yml (daily): last commit 42.6h ago (expected within 30h); review.yml (twice-weekly): last commit 1669.6h ago (expected within 100h); transcribe.yml (daily): last commit 1615.2h ago (expected within 30h)",
+   "detail": "9/16 lane(s) landing on cadence — STALE: creators.yml (daily 07:45 UTC): last commit 1421.3h ago (expected within 30h); discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 2599.5h ago (expected within 76h); improve.yml (weekly deep pass): last commit 2949.3h ago (expected within 192h); links.yml (hourly): last commit 6.4h ago (expected within 4h); mine.yml (daily): last commit 42.7h ago (expected within 30h); review.yml (twice-weekly): last commit 1669.7h ago (expected within 100h); transcribe.yml (daily): last commit 1615.3h ago (expected within 30h)",
    "severity": "warn"
   },
   {

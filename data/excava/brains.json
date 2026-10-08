@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-08T07:25:48.379270+00:00",
+ "generated_at": "2026-10-08T15:36:42.795525+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -80,9 +80,9 @@
   {
    "id": "A",
    "lead": {
-    "engine": "deepseek",
-    "model": "deepseek/deepseek-chat-v3-0324:free",
-    "lineage": "deepseek",
+    "engine": "kimi",
+    "model": "moonshotai/kimi-k2:free",
+    "lineage": "kimi",
     "tier": "reasoning"
    },
    "support": {
@@ -95,35 +95,20 @@
   {
    "id": "B",
    "lead": {
-    "engine": "kimi",
-    "model": "moonshotai/kimi-k2:free",
-    "lineage": "kimi",
-    "tier": "reasoning"
-   },
-   "support": {
-    "engine": "gh-models",
-    "model": "openai/gpt-4o-mini",
-    "lineage": "gpt",
-    "tier": "grounded"
-   }
-  },
-  {
-   "id": "C",
-   "lead": {
     "engine": "glm",
     "model": "z-ai/glm-4.5-air:free",
     "lineage": "glm",
     "tier": "grounded"
    },
    "support": {
-    "engine": "mistral",
-    "model": "mistral-small-latest",
-    "lineage": "mistral",
+    "engine": "sambanova",
+    "model": "Meta-Llama-3.3-70B-Instruct",
+    "lineage": "llama",
     "tier": "fast"
    }
   },
   {
-   "id": "D",
+   "id": "C",
    "lead": {
     "engine": "cerebras",
     "model": "llama3.1-8b",
@@ -136,14 +121,24 @@
     "lineage": "gemini",
     "tier": "grounded"
    }
+  },
+  {
+   "id": "D",
+   "lead": {
+    "engine": "deepseek",
+    "model": "deepseek/deepseek-chat-v3-0324:free",
+    "lineage": "deepseek",
+    "tier": "reasoning"
+   },
+   "support": {
+    "engine": "nvidia",
+    "model": "meta/llama-3.3-70b-instruct",
+    "lineage": "llama",
+    "tier": "grounded"
+   }
   }
  ],
  "debate": [
-  {
-   "engine": "deepseek",
-   "lineage": "deepseek",
-   "model": "deepseek/deepseek-chat-v3-0324:free"
-  },
   {
    "engine": "kimi",
    "lineage": "kimi",
@@ -158,6 +153,11 @@
    "engine": "cerebras",
    "lineage": "llama",
    "model": "llama3.1-8b"
+  },
+  {
+   "engine": "deepseek",
+   "lineage": "deepseek",
+   "model": "deepseek/deepseek-chat-v3-0324:free"
   }
  ],
  "debate_lineages": [

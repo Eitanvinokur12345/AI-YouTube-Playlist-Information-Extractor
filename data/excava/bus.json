@@ -6071,7 +6071,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-09-28T10:49:03.631742+00:00",
-      "updated_at": "2026-10-08T11:42:57.478164+00:00",
+      "updated_at": "2026-10-08T17:45:47.102364+00:00",
       "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
@@ -6089,7 +6089,7 @@
       "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-09-28T10:49:03.676020+00:00",
-      "updated_at": "2026-10-08T11:42:57.570479+00:00",
+      "updated_at": "2026-10-08T17:45:45.961724+00:00",
       "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     },
     {
@@ -6099,12 +6099,12 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "done",
+      "status": "queued",
       "steps": 8,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
-      "escalation_tier": 1,
-      "claimed_by": "memory-w1",
+      "escalation_tier": 2,
+      "claimed_by": null,
       "handoff_docs": [
         "data/excava/handoffs/resolve-real-links-websi-92211--01--links-w1--to--memory.md",
         "data/excava/handoffs/resolve-real-links-websi-92211--02--links-w1--to--memory.md",
@@ -6116,7 +6116,7 @@
         "data/excava/handoffs/resolve-real-links-websi-92211--08--links-w1--to--memory.md"
       ],
       "created_at": "2026-09-29T14:30:11.981272+00:00",
-      "updated_at": "2026-10-08T11:48:29.051217+00:00",
+      "updated_at": "2026-10-08T17:45:47.202558+00:00",
       "result": "Semantic index: 1736 vectors (model gemini-embedding-001); hub 10868 items → 9132 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
@@ -6151,7 +6151,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-09-29T14:35:43.410259+00:00",
-      "updated_at": "2026-10-08T11:42:56.402458+00:00"
+      "updated_at": "2026-10-08T17:45:46.011920+00:00"
     },
     {
       "id": "raise-g5-leverage-45-100-92543",
@@ -6168,7 +6168,7 @@
       "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-09-29T14:35:43.505847+00:00",
-      "updated_at": "2026-10-08T11:42:57.524472+00:00"
+      "updated_at": "2026-10-08T17:45:45.911931+00:00"
     },
     {
       "id": "transcripts-drain-the-ne-16697",
@@ -6215,44 +6215,6 @@
       "created_at": "2026-09-30T23:17:34.142014+00:00",
       "updated_at": "2026-10-08T12:21:52.347338+00:00",
       "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
-    },
-    {
-      "id": "resolve-real-links-websi-59599",
-      "title": "Resolve real links (website/github/codespaces) for the next 200 unlinked elements",
-      "detail": "value=82 size=41(small) [cost 40/steps 60/risk 15] · many unlinked",
-      "department": "memory",
-      "source": "gap",
-      "priority": 1,
-      "status": "done",
-      "steps": 1,
-      "max_steps": 8,
-      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
-      "escalation_tier": 1,
-      "claimed_by": "memory-w1",
-      "handoff_docs": [
-        "data/excava/handoffs/resolve-real-links-websi-59599--01--links-w1--to--memory.md"
-      ],
-      "created_at": "2026-10-01T12:59:59.521676+00:00",
-      "updated_at": "2026-10-01T17:43:41.908217+00:00",
-      "result": "Semantic index: 1732 vectors (model gemini-embedding-001); hub 10705 items → 8973 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-    },
-    {
-      "id": "verify-the-next-200-of-1-62657",
-      "title": "Verify the next 200 of 10838 unverified elements (2-source + live test)",
-      "detail": "value=96 size=40(small) [cost 35/steps 70/risk 10] · 10838 elements unverified",
-      "department": "analysis",
-      "source": "gap",
-      "priority": 1,
-      "status": "done",
-      "steps": 0,
-      "max_steps": 8,
-      "done_criteria": "a committed artifact that measurably closes this gap",
-      "escalation_tier": 1,
-      "claimed_by": "analysis-w1",
-      "handoff_docs": [],
-      "created_at": "2026-10-01T13:50:57.729141+00:00",
-      "updated_at": "2026-10-01T17:43:41.695447+00:00",
-      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "memory-embed-the-remaini-62657",
@@ -6331,24 +6293,6 @@
       "created_at": "2026-10-01T17:43:41.124406+00:00",
       "updated_at": "2026-10-01T17:49:15.038572+00:00",
       "result": "Semantic index: 1732 vectors (model gemini-embedding-001); hub 10705 items → 8973 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-    },
-    {
-      "id": "security-safety-rate-the-76621",
-      "title": "Security: safety-rate the next batch of 1859 connectors/skills",
-      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1859 connectors",
-      "department": "security",
-      "source": "gap",
-      "priority": 1,
-      "status": "done",
-      "steps": 0,
-      "max_steps": 8,
-      "done_criteria": "a committed artifact that measurably closes this gap",
-      "escalation_tier": 1,
-      "claimed_by": "security-w1",
-      "handoff_docs": [],
-      "created_at": "2026-10-01T17:43:41.562765+00:00",
-      "updated_at": "2026-10-01T17:43:42.859022+00:00",
-      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "verify-the-next-200-of-1-76954",
@@ -13313,7 +13257,7 @@
       "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-10-03T11:56:26.848761+00:00",
-      "updated_at": "2026-10-08T11:42:56.066566+00:00",
+      "updated_at": "2026-10-08T17:45:45.555574+00:00",
       "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
@@ -33222,7 +33166,7 @@
       "claimed_by": "links-w1",
       "handoff_docs": [],
       "created_at": "2026-10-06T13:10:11.236769+00:00",
-      "updated_at": "2026-10-08T11:42:57.617405+00:00"
+      "updated_at": "2026-10-08T17:45:47.152536+00:00"
     },
     {
       "id": "security-safety-rate-the-92211",
@@ -39135,7 +39079,7 @@
       "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-10-06T23:16:26.796058+00:00",
-      "updated_at": "2026-10-08T11:42:56.015178+00:00"
+      "updated_at": "2026-10-08T17:45:45.500803+00:00"
     },
     {
       "id": "security-safety-rate-the-28586",
@@ -46467,17 +46411,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/raise-g3-truth-access-44-76463--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-10-08T16:21:03.298741+00:00",
-      "updated_at": "2026-10-08T16:21:04.009050+00:00"
+      "updated_at": "2026-10-08T17:45:45.859359+00:00",
+      "result": "Semantic index: 1737 vectors (model gemini-embedding-001); hub 10915 items → 9178 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "raise-g5-leverage-44-100-76463",
@@ -46566,5 +46511,5 @@
       "updated_at": "2026-10-08T17:40:06.767430+00:00"
     }
   ],
-  "updated_at": "2026-10-08T17:40:17.531149+00:00"
+  "updated_at": "2026-10-08T17:45:47.202576+00:00"
 }

@@ -1,18 +1,18 @@
 {
- "generated_at": "2026-10-08T12:11:00.911089+00:00",
+ "generated_at": "2026-10-08T12:16:43.638317+00:00",
  "checked": 40,
- "real_pct": 97,
+ "real_pct": 95,
  "counts": {
-  "real": 38,
-  "noop": 1,
+  "real": 36,
+  "noop": 2,
   "failed": 0,
   "planned": 0,
-  "blocked": 1
+  "blocked": 2
  },
- "criticism": "Acceptable: 97% of the last 40 completions did real work. Stay strict. · INTENT DRIFT: 1 dept(s) wired to the WRONG tool for what you wanted — news→wants src.news not src.trend_watch · DECISION DRIFT: 3 unit(s) mostly decide SELF-IMPROVEMENT, not their mission (links 100%; group-chat 100%; war-room 100%) — that work belongs to the improve department's external arms (decision_audit.json).",
+ "criticism": "Acceptable: 95% of the last 40 completions did real work. Stay strict. · INTENT DRIFT: 1 dept(s) wired to the WRONG tool for what you wanted — news→wants src.news not src.trend_watch · DECISION DRIFT: 3 unit(s) mostly decide SELF-IMPROVEMENT, not their mission (links 100%; group-chat 100%; war-room 100%) — that work belongs to the improve department's external arms (decision_audit.json).",
  "long_term": {
   "verdict": "accumulating over time",
-  "detail": "over last 24 snapshots: done +19, artifacts +0, real_pct 100→97",
+  "detail": "over last 24 snapshots: done +13, artifacts +0, real_pct 100→95",
   "stagnant": false
  },
  "history": {
@@ -33,6 +33,62 @@
   }
  ],
  "verdicts": [
+  {
+   "task": "watch-process-the-next-b-82232",
+   "dept": "watch",
+   "verdict": "blocked",
+   "note": "honestly BLOCKED — needs an owner resource; not faking work (this is the truth, not a facade)",
+   "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
+  },
+  {
+   "task": "news-refresh-the-ai-news-14242",
+   "dept": "news",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the trend watch. trend_watch: 12 proposals (top score 10); queued 0 into self-improvement."
+  },
+  {
+   "task": "mining-discover-new-ai-r-14242",
+   "dept": "mining",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the discovery agent. discovery: +12 new (of 134 sighted) → 879 queued; arxiv=105, gh-active=58, gh-new=52, hn-front=11, hn-new=95, huggingface-model=38, pro"
+  },
+  {
+   "task": "define-what-makes-an-ele-82232",
+   "dept": "improve",
+   "verdict": "noop",
+   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
+   "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
+  },
+  {
+   "task": "security-safety-rate-the-82232",
+   "dept": "security",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+  },
+  {
+   "task": "raise-g5-leverage-50-100-82232",
+   "dept": "creators",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane d"
+  },
+  {
+   "task": "memory-embed-the-remaini-61436",
+   "dept": "memory",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Semantic index: 1736 vectors (model gemini-embedding-001); hub 10868 items → 9132 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; th"
+  },
+  {
+   "task": "verify-the-next-200-of-7-82232",
+   "dept": "analysis",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
+  },
   {
    "task": "security-safety-rate-the-61436",
    "dept": "security",
@@ -256,62 +312,6 @@
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane d"
-  },
-  {
-   "task": "memory-embed-the-remaini-41023",
-   "dept": "memory",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Semantic index: 1736 vectors (model gemini-embedding-001); hub 10861 items → 9125 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; th"
-  },
-  {
-   "task": "analysis-room-action-mar-23588",
-   "dept": "analysis",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
-  },
-  {
-   "task": "raise-g5-leverage-44-100-41023",
-   "dept": "creators",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane d"
-  },
-  {
-   "task": "raise-g3-truth-access-44-40696",
-   "dept": "memory",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Semantic index: 1736 vectors (model gemini-embedding-001); hub 10861 items → 9125 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; th"
-  },
-  {
-   "task": "transcripts-room-action--10754",
-   "dept": "analysis",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
-  },
-  {
-   "task": "security-safety-rate-the-28586",
-   "dept": "security",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
-  },
-  {
-   "task": "raise-g5-leverage-44-100-40697",
-   "dept": "creators",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane d"
-  },
-  {
-   "task": "memory-embed-the-remaini-40371",
-   "dept": "memory",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Semantic index: 1736 vectors (model gemini-embedding-001); hub 10861 items → 9125 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; th"
   }
  ]
 }

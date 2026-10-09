@@ -1,28 +1,31 @@
 {
- "generated_at": "2026-10-09T21:32:12.670565+00:00",
- "commit": "a7adf4d845",
- "real_pct": 100,
+ "generated_at": "2026-10-09T22:54:57.963000+00:00",
+ "commit": "05022db918",
+ "real_pct": 97,
  "counts": {
-  "real": 40,
-  "noop": 0,
+  "real": 38,
+  "noop": 1,
   "failed": 0,
   "planned": 0,
-  "blocked": 0
+  "blocked": 1
  },
  "trend": [
-  16728,
   16732,
   16736,
   16740,
   16744,
-  16748
+  16748,
+  16756
  ],
- "delta": {},
+ "delta": {
+  "elements": 8,
+  "designs": 3
+ },
  "totals": {
-  "elements": 16736,
+  "elements": 16744,
   "verified": 3056,
   "with_link": 5341,
-  "designs": 3206,
+  "designs": 3209,
   "creations": 1
  },
  "departments": [
@@ -42,7 +45,7 @@
   },
   {
    "dept": "improve",
-   "verdict": "?",
+   "verdict": "noop",
    "output": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]",
    "evidence": "data/self_check.json",
    "evidence_url": "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/self_check.json"
@@ -56,14 +59,14 @@
   },
   {
    "dept": "mining",
-   "verdict": "?",
-   "output": "Ran the discovery agent. discovery: +1 new (of 137 sighted) → 811 queued; arxiv=90, gh-active=67, gh-new=47, hn-front=11, hn-new=80, huggingface-model",
+   "verdict": "real",
+   "output": "Ran the discovery agent. discovery: +1 new (of 139 sighted) → 824 queued; arxiv=90, gh-active=67, gh-new=47, hn-front=13, hn-new=83, huggingface-model",
    "evidence": "data/connectors.json",
    "evidence_url": "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/connectors.json"
   },
   {
    "dept": "news",
-   "verdict": "?",
+   "verdict": "real",
    "output": "Ran the trend watch. trend_watch: 11 proposals (top score 10); queued 0 into self-improvement.",
    "evidence": "data/weekly_web_news.json",
    "evidence_url": "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/weekly_web_news.json"
@@ -84,7 +87,7 @@
   },
   {
    "dept": "watch",
-   "verdict": "?",
+   "verdict": "blocked",
    "output": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner.",
    "evidence": "data/_pending",
    "evidence_url": "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/tree/main/data/_pending"

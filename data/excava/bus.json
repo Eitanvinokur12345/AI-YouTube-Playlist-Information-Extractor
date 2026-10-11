@@ -6071,7 +6071,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-09-28T10:49:03.631742+00:00",
-      "updated_at": "2026-10-10T14:17:01.734965+00:00",
+      "updated_at": "2026-10-11T01:09:37.489966+00:00",
       "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
@@ -6089,7 +6089,7 @@
       "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-09-28T10:49:03.676020+00:00",
-      "updated_at": "2026-10-10T14:17:01.852238+00:00",
+      "updated_at": "2026-10-11T01:09:37.571083+00:00",
       "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     },
     {
@@ -6144,15 +6144,15 @@
       "department": "security",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "working",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-09-29T14:35:43.410259+00:00",
-      "updated_at": "2026-10-10T23:49:37.817071+00:00"
+      "updated_at": "2026-10-11T01:09:36.525851+00:00"
     },
     {
       "id": "raise-g5-leverage-45-100-92543",
@@ -6161,15 +6161,15 @@
       "department": "creators",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "working",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-09-29T14:35:43.505847+00:00",
-      "updated_at": "2026-10-10T23:49:37.817703+00:00"
+      "updated_at": "2026-10-11T01:09:37.529469+00:00"
     },
     {
       "id": "transcripts-drain-the-ne-16697",
@@ -6286,7 +6286,7 @@
       "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-10-03T11:56:26.848761+00:00",
-      "updated_at": "2026-10-10T14:17:00.580086+00:00",
+      "updated_at": "2026-10-11T01:09:36.194370+00:00",
       "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
@@ -27804,15 +27804,15 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "working",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-10-06T23:16:26.796058+00:00",
-      "updated_at": "2026-10-10T23:49:37.821019+00:00"
+      "updated_at": "2026-10-11T01:09:36.139438+00:00"
     },
     {
       "id": "security-safety-rate-the-28586",
@@ -44824,17 +44824,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/raise-g3-truth-access-44-58356--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-10-10T18:52:36.846322+00:00",
-      "updated_at": "2026-10-10T18:52:37.541809+00:00"
+      "updated_at": "2026-10-11T01:09:36.478925+00:00",
+      "result": "Semantic index: 1739 vectors (model gemini-embedding-001); hub 10956 items → 9217 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "raise-g5-leverage-44-100-58356",
@@ -44923,5 +44924,5 @@
       "updated_at": "2026-10-10T23:49:38.681549+00:00"
     }
   ],
-  "updated_at": "2026-10-11T01:04:03.271143+00:00"
+  "updated_at": "2026-10-11T01:09:37.571092+00:00"
 }

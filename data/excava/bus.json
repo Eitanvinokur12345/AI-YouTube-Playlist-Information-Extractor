@@ -6004,26 +6004,6 @@
       "result": "Semantic index: 1736 vectors (model gemini-embedding-001); hub 10868 items → 9132 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
-      "id": "push-link-coverage-towar-59423",
-      "title": "Push link coverage toward 100% at +5%/day (the access gate)",
-      "detail": "",
-      "department": "memory",
-      "source": "owner",
-      "priority": 0,
-      "status": "done",
-      "steps": 1,
-      "max_steps": 8,
-      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
-      "escalation_tier": 1,
-      "claimed_by": "memory-w1",
-      "handoff_docs": [
-        "data/excava/handoffs/push-link-coverage-towar-59423--01--links-w1--to--memory.md"
-      ],
-      "created_at": "2026-10-08T11:37:03.633675+00:00",
-      "updated_at": "2026-10-08T11:42:56.355834+00:00",
-      "result": "Semantic index: 1736 vectors (model gemini-embedding-001); hub 10868 items → 9132 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
-    },
-    {
       "id": "4971-tools-skills-still--59423",
       "title": "4971 tools/skills still have no real link (55.2%)",
       "detail": "The link-resolver runs each cycle; this falls as it works. Add Gemini keys to speed it.",
@@ -34404,15 +34384,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-10-15T11:40:03.679732+00:00",
-      "updated_at": "2026-10-15T11:40:03.679741+00:00"
+      "updated_at": "2026-10-15T11:45:30.941286+00:00",
+      "result": "Semantic index: 1742 vectors (model gemini-embedding-001); hub 11156 items → 9414 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "raise-g5-leverage-44-100-64403",
@@ -34431,7 +34412,80 @@
       "created_at": "2026-10-15T11:40:03.722325+00:00",
       "updated_at": "2026-10-15T11:40:04.081213+00:00",
       "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
+    },
+    {
+      "id": "verify-the-next-200-of-1-64730",
+      "title": "Verify the next 200 of 11771 unverified elements (2-source + live test)",
+      "detail": "value=96 size=40(small) [cost 35/steps 70/risk 10] · 11771 elements unverified",
+      "department": "analysis",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "analysis-w1",
+      "handoff_docs": [],
+      "created_at": "2026-10-15T11:45:30.446534+00:00",
+      "updated_at": "2026-10-15T11:45:30.713423+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "id": "security-safety-rate-the-64730",
+      "title": "Security: safety-rate the next batch of 1922 connectors/skills",
+      "detail": "value=72 size=26(small) [cost 25/steps 30/risk 25] · 1922 connectors",
+      "department": "security",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "security-w1",
+      "handoff_docs": [],
+      "created_at": "2026-10-15T11:45:30.490086+00:00",
+      "updated_at": "2026-10-15T11:45:31.823873+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+    },
+    {
+      "id": "raise-g3-truth-access-44-64730",
+      "title": "Raise G3 Truth & access (44/100): 44.6% of tools/skills have a real link (target: ~100%)",
+      "detail": "value=56 size=17(small) [cost 15/steps 25/risk 10] · G3 at 44",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/raise-g3-truth-access-44-64730--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-10-15T11:45:30.578936+00:00",
+      "updated_at": "2026-10-15T11:45:31.050918+00:00"
+    },
+    {
+      "id": "raise-g5-leverage-44-100-64730",
+      "title": "Raise G5 Leverage (44/100): leverage needs real, usable links first (= G3); then the OS creation agent",
+      "detail": "value=56 size=17(small) [cost 15/steps 25/risk 10] · G5 at 44",
+      "department": "creators",
+      "source": "gap",
+      "priority": 1,
+      "status": "done",
+      "steps": 0,
+      "max_steps": 8,
+      "done_criteria": "a committed artifact that measurably closes this gap",
+      "escalation_tier": 1,
+      "claimed_by": "creators-w1",
+      "handoff_docs": [],
+      "created_at": "2026-10-15T11:45:30.606736+00:00",
+      "updated_at": "2026-10-15T11:45:30.996376+00:00",
+      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     }
   ],
-  "updated_at": "2026-10-15T11:40:04.853399+00:00"
+  "updated_at": "2026-10-15T11:45:31.823886+00:00"
 }

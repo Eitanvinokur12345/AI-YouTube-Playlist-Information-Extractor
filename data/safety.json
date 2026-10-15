@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-15T05:04:53.885767+00:00",
+  "generated_at": "2026-10-15T17:19:55.265959+00:00",
   "policy": "activator gate: safe = auto-activate, caution = warn, risky = block until confirmed",
   "summary": {
-    "safe": 191,
-    "caution": 1669,
+    "safe": 192,
+    "caution": 1670,
     "risky": 60
   },
   "connectors": {
@@ -14595,6 +14595,20 @@
       "reasons": [
         "third-party (not an official vendor connector)"
       ]
+    },
+    "github-actions": {
+      "name": "GitHub Actions",
+      "rating": "safe",
+      "reasons": [
+        "official vendor"
+      ]
+    },
+    "apple-reminders-integration": {
+      "name": "Apple Reminders Integration",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
     }
   },
   "skills_flagged": {
@@ -15398,6 +15412,13 @@
     },
     "pty-allocation": {
       "name": "PTY Allocation",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "ai-agent-task-performance-during-calls": {
+      "name": "AI Agent Task Performance during Calls",
       "rating": "caution",
       "reasons": [
         "the technique runs system/shell/file operations — review what it executes"

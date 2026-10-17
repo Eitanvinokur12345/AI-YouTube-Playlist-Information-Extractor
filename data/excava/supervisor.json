@@ -1,18 +1,18 @@
 {
- "generated_at": "2026-10-17T01:01:47.495309+00:00",
+ "generated_at": "2026-10-17T01:07:14.829780+00:00",
  "checked": 40,
- "real_pct": 89,
+ "real_pct": 92,
  "counts": {
-  "real": 34,
-  "noop": 4,
+  "real": 36,
+  "noop": 3,
   "failed": 0,
   "planned": 0,
-  "blocked": 2
+  "blocked": 1
  },
- "criticism": "Acceptable: 89% of the last 40 completions did real work. Stay strict. · INTENT DRIFT: 1 dept(s) wired to the WRONG tool for what you wanted — news→wants src.news not src.trend_watch · DECISION DRIFT: 3 unit(s) mostly decide SELF-IMPROVEMENT, not their mission (links 100%; group-chat 100%; war-room 100%) — that work belongs to the improve department's external arms (decision_audit.json).",
+ "criticism": "Acceptable: 92% of the last 40 completions did real work. Stay strict. · INTENT DRIFT: 1 dept(s) wired to the WRONG tool for what you wanted — news→wants src.news not src.trend_watch · DECISION DRIFT: 3 unit(s) mostly decide SELF-IMPROVEMENT, not their mission (links 100%; group-chat 100%; war-room 100%) — that work belongs to the improve department's external arms (decision_audit.json).",
  "long_term": {
   "verdict": "STAGNANT — real work is NOT accumulating over time",
-  "detail": "over last 24 snapshots: done -453, artifacts +0, real_pct 100→89",
+  "detail": "over last 24 snapshots: done -449, artifacts +0, real_pct 100→92",
   "stagnant": true
  },
  "history": {
@@ -33,6 +33,34 @@
   }
  ],
  "verdicts": [
+  {
+   "task": "security-safety-rate-the-99214",
+   "dept": "security",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
+  },
+  {
+   "task": "raise-g5-leverage-44-100-99214",
+   "dept": "creators",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane d"
+  },
+  {
+   "task": "memory-embed-the-remaini-98888",
+   "dept": "memory",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "Semantic index: 1746 vectors (model gemini-embedding-001); hub 11257 items → 9511 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; th"
+  },
+  {
+   "task": "verify-the-next-200-of-1-99214",
+   "dept": "analysis",
+   "verdict": "real",
+   "note": "produced substantive real output",
+   "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
+  },
   {
    "task": "security-safety-rate-the-74932",
    "dept": "security",
@@ -284,34 +312,6 @@
    "verdict": "real",
    "note": "produced substantive real output",
    "result": "Semantic index: 1746 vectors (model gemini-embedding-001); hub 11257 items → 9511 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; th"
-  },
-  {
-   "task": "verify-the-next-200-of-1-28586",
-   "dept": "analysis",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane runni"
-  },
-  {
-   "task": "watch-process-the-next-b-5670",
-   "dept": "watch",
-   "verdict": "blocked",
-   "note": "honestly BLOCKED — needs an owner resource; not faking work (this is the truth, not a facade)",
-   "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
-  },
-  {
-   "task": "raise-g8-personal-fit-68-14242",
-   "dept": "visual",
-   "verdict": "real",
-   "note": "produced substantive real output",
-   "result": "Ran the collect designs. collect_designs: 3409 designs (kept 3409 / dropped 0 repo-only + 2 dead/parked + 426 non-design; +0 AI-product, +27 seeds, +426 shown-i"
-  },
-  {
-   "task": "models-dropped-1-records-57573",
-   "dept": "improve",
-   "verdict": "noop",
-   "note": "tool ran but ACCOMPLISHED NOTHING this cycle — wrong tool, no input, or theatre",
-   "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
   }
  ]
 }

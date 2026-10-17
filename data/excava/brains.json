@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-16T22:54:31.905819+00:00",
+ "generated_at": "2026-10-17T01:23:16.672481+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -86,8 +86,8 @@
     "tier": "grounded"
    },
    "support": {
-    "engine": "groq",
-    "model": "llama-3.3-70b-versatile",
+    "engine": "cerebras",
+    "model": "llama3.1-8b",
     "lineage": "llama",
     "tier": "fast"
    }
@@ -101,29 +101,14 @@
     "tier": "grounded"
    },
    "support": {
-    "engine": "mistral",
-    "model": "mistral-small-latest",
-    "lineage": "mistral",
-    "tier": "fast"
-   }
-  },
-  {
-   "id": "C",
-   "lead": {
     "engine": "kimi",
     "model": "moonshotai/kimi-k2:free",
     "lineage": "kimi",
     "tier": "reasoning"
-   },
-   "support": {
-    "engine": "cerebras",
-    "model": "llama3.1-8b",
-    "lineage": "llama",
-    "tier": "fast"
    }
   },
   {
-   "id": "D",
+   "id": "C",
    "lead": {
     "engine": "deepseek",
     "model": "deepseek/deepseek-chat-v3-0324:free",
@@ -131,10 +116,25 @@
     "tier": "reasoning"
    },
    "support": {
+    "engine": "groq",
+    "model": "llama-3.3-70b-versatile",
+    "lineage": "llama",
+    "tier": "fast"
+   }
+  },
+  {
+   "id": "D",
+   "lead": {
     "engine": "glm",
     "model": "z-ai/glm-4.5-air:free",
     "lineage": "glm",
     "tier": "grounded"
+   },
+   "support": {
+    "engine": "sambanova",
+    "model": "Meta-Llama-3.3-70B-Instruct",
+    "lineage": "llama",
+    "tier": "fast"
    }
   }
  ],
@@ -150,20 +150,20 @@
    "model": "meta/llama-3.3-70b-instruct"
   },
   {
-   "engine": "kimi",
-   "lineage": "kimi",
-   "model": "moonshotai/kimi-k2:free"
-  },
-  {
    "engine": "deepseek",
    "lineage": "deepseek",
    "model": "deepseek/deepseek-chat-v3-0324:free"
+  },
+  {
+   "engine": "glm",
+   "lineage": "glm",
+   "model": "z-ai/glm-4.5-air:free"
   }
  ],
  "debate_lineages": [
   "deepseek",
+  "glm",
   "gpt",
-  "kimi",
   "llama"
  ],
  "spoke_today": {},

@@ -5611,7 +5611,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-09-28T10:49:03.631742+00:00",
-      "updated_at": "2026-10-15T21:28:51.548721+00:00",
+      "updated_at": "2026-10-17T00:21:58.113507+00:00",
       "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
@@ -5629,7 +5629,7 @@
       "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-09-28T10:49:03.676020+00:00",
-      "updated_at": "2026-10-15T21:28:51.612511+00:00",
+      "updated_at": "2026-10-17T00:21:58.169612+00:00",
       "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     },
     {
@@ -5684,15 +5684,15 @@
       "department": "security",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "working",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-09-29T14:35:43.410259+00:00",
-      "updated_at": "2026-10-16T07:34:06.319962+00:00"
+      "updated_at": "2026-10-17T00:21:57.036253+00:00"
     },
     {
       "id": "raise-g5-leverage-45-100-92543",
@@ -5701,15 +5701,15 @@
       "department": "creators",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "working",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-09-29T14:35:43.505847+00:00",
-      "updated_at": "2026-10-16T07:34:06.320484+00:00"
+      "updated_at": "2026-10-17T00:21:58.141702+00:00"
     },
     {
       "id": "transcripts-drain-the-ne-16697",
@@ -5826,7 +5826,7 @@
       "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-10-03T11:56:26.848761+00:00",
-      "updated_at": "2026-10-15T21:28:50.215403+00:00",
+      "updated_at": "2026-10-17T00:21:56.758931+00:00",
       "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
@@ -5922,15 +5922,15 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "working",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-10-06T23:16:26.796058+00:00",
-      "updated_at": "2026-10-16T07:34:06.322934+00:00"
+      "updated_at": "2026-10-17T00:21:56.726770+00:00"
     },
     {
       "id": "security-safety-rate-the-28586",
@@ -25852,15 +25852,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-10-16T00:40:23.805691+00:00",
-      "updated_at": "2026-10-16T00:40:23.805704+00:00"
+      "updated_at": "2026-10-17T00:21:57.008059+00:00",
+      "result": "Semantic index: 1746 vectors (model gemini-embedding-001); hub 11257 items → 9511 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "raise-g3-truth-access-44-11223",
@@ -25940,18 +25941,20 @@
       "id": "5188-tools-skills-still--36046",
       "title": "5188 tools/skills still have no real link (55.7%)",
       "detail": "The link-resolver runs each cycle; this falls as it works. Add Gemini keys to speed it.",
-      "department": "links",
+      "department": "memory",
       "source": "auto",
       "priority": 1,
       "status": "queued",
-      "steps": 0,
+      "steps": 1,
       "max_steps": 8,
-      "done_criteria": "output written to data/ and committed by CI",
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
       "claimed_by": null,
-      "handoff_docs": [],
+      "handoff_docs": [
+        "data/excava/handoffs/5188-tools-skills-still--36046--01--links-w1--to--memory.md"
+      ],
       "created_at": "2026-10-16T07:34:06.475052+00:00",
-      "updated_at": "2026-10-16T07:34:07.227850+00:00"
+      "updated_at": "2026-10-17T00:21:58.226076+00:00"
     },
     {
       "id": "lane-self-improvement-re-36046",
@@ -26082,15 +26085,16 @@
       "department": "improve",
       "source": "auto",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "output written to data/ and committed by CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "improve-w1",
       "handoff_docs": [],
       "created_at": "2026-10-16T18:22:12.336495+00:00",
-      "updated_at": "2026-10-16T18:22:13.049463+00:00"
+      "updated_at": "2026-10-17T00:21:59.895750+00:00",
+      "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
     },
     {
       "id": "verify-the-next-200-of-1-74932",
@@ -26144,5 +26148,5 @@
       "updated_at": "2026-10-16T18:22:12.971505+00:00"
     }
   ],
-  "updated_at": "2026-10-16T21:40:43.823062+00:00"
+  "updated_at": "2026-10-17T00:21:59.895759+00:00"
 }

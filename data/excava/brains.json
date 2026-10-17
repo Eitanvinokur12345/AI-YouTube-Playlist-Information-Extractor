@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-17T11:38:42.011580+00:00",
+ "generated_at": "2026-10-17T15:33:33.779272+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -80,9 +80,9 @@
   {
    "id": "A",
    "lead": {
-    "engine": "deepseek",
-    "model": "deepseek/deepseek-chat-v3-0324:free",
-    "lineage": "deepseek",
+    "engine": "kimi",
+    "model": "moonshotai/kimi-k2:free",
+    "lineage": "kimi",
     "tier": "reasoning"
    },
    "support": {
@@ -95,6 +95,21 @@
   {
    "id": "B",
    "lead": {
+    "engine": "deepseek",
+    "model": "deepseek/deepseek-chat-v3-0324:free",
+    "lineage": "deepseek",
+    "tier": "reasoning"
+   },
+   "support": {
+    "engine": "gh-models",
+    "model": "openai/gpt-4o-mini",
+    "lineage": "gpt",
+    "tier": "grounded"
+   }
+  },
+  {
+   "id": "C",
+   "lead": {
     "engine": "glm",
     "model": "z-ai/glm-4.5-air:free",
     "lineage": "glm",
@@ -105,21 +120,6 @@
     "model": "mistral-small-latest",
     "lineage": "mistral",
     "tier": "fast"
-   }
-  },
-  {
-   "id": "C",
-   "lead": {
-    "engine": "kimi",
-    "model": "moonshotai/kimi-k2:free",
-    "lineage": "kimi",
-    "tier": "reasoning"
-   },
-   "support": {
-    "engine": "gh-models",
-    "model": "openai/gpt-4o-mini",
-    "lineage": "gpt",
-    "tier": "grounded"
    }
   },
   {
@@ -140,6 +140,11 @@
  ],
  "debate": [
   {
+   "engine": "kimi",
+   "lineage": "kimi",
+   "model": "moonshotai/kimi-k2:free"
+  },
+  {
    "engine": "deepseek",
    "lineage": "deepseek",
    "model": "deepseek/deepseek-chat-v3-0324:free"
@@ -148,11 +153,6 @@
    "engine": "glm",
    "lineage": "glm",
    "model": "z-ai/glm-4.5-air:free"
-  },
-  {
-   "engine": "kimi",
-   "lineage": "kimi",
-   "model": "moonshotai/kimi-k2:free"
   },
   {
    "engine": "cerebras",

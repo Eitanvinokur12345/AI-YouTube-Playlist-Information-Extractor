@@ -48824,7 +48824,10 @@
         "command": "claude mcp add swebsy-mcp -- npx -y MCP",
         "needs_key": false,
         "in_project": true
-      }
+      },
+      "also_seen_in": [
+        "https://raw.githubusercontent.com/punkpeye/awesome-mcp-servers/main/README.md"
+      ]
     },
     {
       "name": "Miladmet/quickcast-mcp",
@@ -48866,7 +48869,13 @@
       ],
       "github": "https://github.com/ComposioHQ/open-claude-cowork",
       "deploy_url": "https://vercel.com/new/clone?repository-url=https://github.com/ComposioHQ/open-claude-cowork",
-      "links_verified_at": "2026-10-17T21:31:36.521044+00:00"
+      "links_verified_at": "2026-10-17T21:31:36.521044+00:00",
+      "setup": {
+        "kind": "mcp connector",
+        "command": "claude mcp add claude-cowork -- npx -y open-claude-cowork",
+        "needs_key": true,
+        "in_project": true
+      }
     },
     {
       "name": "Claude Chrome Extension",
@@ -48886,7 +48895,13 @@
           "url": "https://www.youtube.com/watch?v=NCzV-CerZuI",
           "title": "Claude Just Replaced My Bookkeeper, Here’s How"
         }
-      ]
+      ],
+      "setup": {
+        "kind": "mcp connector",
+        "command": "activator: add the \"Claude Chrome Extension\" MCP connector",
+        "needs_key": true,
+        "in_project": true
+      }
     },
     {
       "name": "Obsidian Web Clipper",
@@ -48906,7 +48921,13 @@
           "url": "https://www.youtube.com/watch?v=NGxOrkr2g94",
           "title": "Comment \"BRAIN\" and I'll send you the full guide 👉 #mybrain #claudecode #obsidian"
         }
-      ]
+      ],
+      "setup": {
+        "kind": "mcp connector",
+        "command": "activator: add the \"Obsidian Web Clipper\" MCP connector",
+        "needs_key": false,
+        "in_project": true
+      }
     },
     {
       "name": "Google Gemini Models",
@@ -48926,7 +48947,13 @@
           "url": "https://www.youtube.com/watch?v=NQof8hG8FwE",
           "title": "The Most Insane iPhone AI Features"
         }
-      ]
+      ],
+      "setup": {
+        "kind": "mcp connector",
+        "command": "activator: add the \"Google Gemini Models\" MCP connector",
+        "needs_key": true,
+        "in_project": true
+      }
     },
     {
       "name": "Instantly",
@@ -48939,14 +48966,20 @@
       "source_url": "https://www.youtube.com/watch?v=biAYfwX4bkY",
       "discovered_via": "mine_feeds (gemini-video)",
       "added_at": "2026-10-18T00:32:38.433271+00:00",
-      "link_tries": 3,
+      "link_tries": 4,
       "source_videos": [
         {
           "id": "biAYfwX4bkY",
           "url": "https://www.youtube.com/watch?v=biAYfwX4bkY",
           "title": "Laziest Way to Make Money With AI (Zero Code)"
         }
-      ]
+      ],
+      "setup": {
+        "kind": "mcp connector",
+        "command": "activator: add the \"Instantly\" MCP connector",
+        "needs_key": true,
+        "in_project": true
+      }
     },
     {
       "name": "Smartlead.ai",
@@ -48969,8 +49002,313 @@
       "github": "https://github.com/bcharleson/smartlead-cli",
       "deploy_url": "https://vercel.com/new/clone?repository-url=https://github.com/bcharleson/smartlead-cli",
       "homepage": "https://www.smartlead.ai",
-      "links_verified_at": "2026-10-18T11:39:10.732468+00:00"
+      "links_verified_at": "2026-10-18T11:39:10.732468+00:00",
+      "setup": {
+        "kind": "mcp connector",
+        "command": "claude mcp add smartlead-ai -- npx -y smartlead-cli",
+        "needs_key": true,
+        "in_project": true
+      }
+    },
+    {
+      "name": "MCP tool",
+      "what_it_does": "A tool or connector that provides input (configuration or content) to an AI model, where prompt injection can be a concern depending on the field the input is placed in.",
+      "works_in": "both",
+      "free": true,
+      "url": "",
+      "slug": "mcp-tool",
+      "source_type": "web_news",
+      "source_url": "https://dev.to/mrpkk/the-same-sentence-means-different-things-depending-on-which-field-it-sits-in-33m0",
+      "discovered_via": "mine_feeds (dev.to LLM)",
+      "added_at": "2026-10-18T13:43:26.993209+00:00",
+      "setup": {
+        "kind": "mcp connector",
+        "command": "activator: add the \"MCP tool\" MCP connector",
+        "needs_key": false,
+        "in_project": true
+      },
+      "link_tries": 1
+    },
+    {
+      "name": "inth3shadows/terse",
+      "what_it_does": "[![inth3shadows/terse MCP server](https://glama.ai/mcp/servers/inth3shadows/terse/badges/score.svg)](https://glama.ai/mcp/servers/inth3shadows/terse) 🐍 🏠 🍎 🪟 🐧 - Transparent proxy that sits in front o",
+      "url": "https://github.com/inth3shadows/terse",
+      "works_in": "both",
+      "free": true,
+      "github": "https://github.com/inth3shadows/terse",
+      "quality_score": 3,
+      "slug": "inth3shadows-terse",
+      "source_type": "web_news",
+      "source_url": "https://raw.githubusercontent.com/punkpeye/awesome-mcp-servers/main/README.md",
+      "discovered_via": "mine_feeds (competitor:awesome-mcp)",
+      "added_at": "2026-10-18T13:44:50.351708+00:00",
+      "setup": {
+        "kind": "mcp connector",
+        "command": "claude mcp add inth3shadows-terse -- npx -y terse",
+        "needs_key": false,
+        "in_project": true
+      }
+    },
+    {
+      "name": "inamprotocol/inam-protocol",
+      "what_it_does": "[![inamprotocol/inam-protocol MCP server](https://glama.ai/mcp/servers/inamprotocol/inam-protocol/badges/score.svg)](https://glama.ai/mcp/servers/inamprotocol/inam-protocol) [![INAM Protocol MCP conne",
+      "url": "https://github.com/inamprotocol/inam-protocol/tree/main/mcp",
+      "works_in": "both",
+      "free": true,
+      "github": "https://github.com/inamprotocol/inam-protocol/tree/main/mcp",
+      "quality_score": 3,
+      "slug": "inamprotocol-inam-protocol",
+      "source_type": "web_news",
+      "source_url": "https://raw.githubusercontent.com/punkpeye/awesome-mcp-servers/main/README.md",
+      "discovered_via": "mine_feeds (competitor:awesome-mcp)",
+      "added_at": "2026-10-18T13:44:50.351708+00:00",
+      "setup": {
+        "kind": "mcp connector",
+        "command": "claude mcp add inamprotocol-inam-protocol -- npx -y mcp",
+        "needs_key": false,
+        "in_project": true
+      }
+    },
+    {
+      "name": "tbernabo/forbiz-mcp",
+      "what_it_does": "[![tbernabo/forbiz-mcp MCP server](https://glama.ai/mcp/servers/tbernabo/forbiz-mcp/badges/score.svg)](https://glama.ai/mcp/servers/tbernabo/forbiz-mcp) 📇 ☁️ 🏠 🍎 🪟 🐧 - Forbiz, the CRM for AI agents: r",
+      "url": "https://github.com/tbernabo/forbiz-mcp",
+      "works_in": "both",
+      "free": true,
+      "github": "https://github.com/tbernabo/forbiz-mcp",
+      "quality_score": 3,
+      "slug": "tbernabo-forbiz-mcp",
+      "source_type": "web_news",
+      "source_url": "https://raw.githubusercontent.com/punkpeye/awesome-mcp-servers/main/README.md",
+      "discovered_via": "mine_feeds (competitor:awesome-mcp)",
+      "added_at": "2026-10-18T13:44:50.351708+00:00",
+      "setup": {
+        "kind": "mcp connector",
+        "command": "claude mcp add tbernabo-forbiz-mcp -- npx -y forbiz-mcp",
+        "needs_key": false,
+        "in_project": true
+      }
+    },
+    {
+      "name": "JasmyLab-JANCTION/janction-render",
+      "what_it_does": "[![JasmyLab-JANCTION/janction-render MCP server](https://glama.ai/mcp/servers/JasmyLab-JANCTION/janction-render/badges/score.svg)](https://glama.ai/mcp/servers/JasmyLab-JANCTION/janction-render) 🐍 ☁️ ",
+      "url": "https://github.com/JasmyLab-JANCTION/janction-render",
+      "works_in": "both",
+      "free": true,
+      "github": "https://github.com/JasmyLab-JANCTION/janction-render",
+      "quality_score": 3,
+      "slug": "jasmylab-janction-janction-render",
+      "source_type": "web_news",
+      "source_url": "https://raw.githubusercontent.com/punkpeye/awesome-mcp-servers/main/README.md",
+      "discovered_via": "mine_feeds (competitor:awesome-mcp)",
+      "added_at": "2026-10-18T13:44:50.351708+00:00",
+      "setup": {
+        "kind": "mcp connector",
+        "command": "claude mcp add jasmylab-janction-janction-render -- npx -y janction-render",
+        "needs_key": false,
+        "in_project": true
+      }
+    },
+    {
+      "name": "dokaNc/illugen-mcp",
+      "what_it_does": "[![dokaNc/illugen-mcp MCP server](https://glama.ai/mcp/servers/dokaNc/illugen-mcp/badges/score.svg)](https://glama.ai/mcp/servers/dokaNc/illugen-mcp) 🐍 🏠 🪟 - Build, edit and render JangaFX IlluGen nod",
+      "url": "https://github.com/dokaNc/illugen-mcp",
+      "works_in": "both",
+      "free": true,
+      "github": "https://github.com/dokaNc/illugen-mcp",
+      "quality_score": 3,
+      "slug": "dokanc-illugen-mcp",
+      "source_type": "web_news",
+      "source_url": "https://raw.githubusercontent.com/punkpeye/awesome-mcp-servers/main/README.md",
+      "discovered_via": "mine_feeds (competitor:awesome-mcp)",
+      "added_at": "2026-10-18T13:44:50.351708+00:00",
+      "setup": {
+        "kind": "mcp connector",
+        "command": "claude mcp add dokanc-illugen-mcp -- npx -y illugen-mcp",
+        "needs_key": false,
+        "in_project": true
+      }
+    },
+    {
+      "name": "ntworm/ableton-mcp-server",
+      "what_it_does": "[![ntworm/ableton-mcp-server MCP server](https://glama.ai/mcp/servers/ntworm/ableton-mcp-server/badges/score.svg)](https://glama.ai/mcp/servers/ntworm/ableton-mcp-server) 🐍 🏠 🍎 🪟 - Inspect and automat",
+      "url": "https://github.com/ntworm/ableton-mcp-server",
+      "works_in": "both",
+      "free": true,
+      "github": "https://github.com/ntworm/ableton-mcp-server",
+      "quality_score": 3,
+      "slug": "ntworm-ableton-mcp-server",
+      "source_type": "web_news",
+      "source_url": "https://raw.githubusercontent.com/punkpeye/awesome-mcp-servers/main/README.md",
+      "discovered_via": "mine_feeds (competitor:awesome-mcp)",
+      "added_at": "2026-10-18T13:44:50.351708+00:00",
+      "setup": {
+        "kind": "mcp connector",
+        "command": "claude mcp add ntworm-ableton-mcp-server -- npx -y ableton-mcp-server",
+        "needs_key": false,
+        "in_project": true
+      }
+    },
+    {
+      "name": "docsor1212/aesthete-agent",
+      "what_it_does": "[![docsor1212/aesthete-agent MCP server](https://glama.ai/mcp/servers/docsor1212/aesthete-agent/badges/score.svg)](https://glama.ai/mcp/servers/docsor1212/aesthete-agent) 🐍 🏠 🍎 🪟 🐧 - Mechanically vali",
+      "url": "https://github.com/docsor1212/aesthete-agent",
+      "works_in": "both",
+      "free": true,
+      "github": "https://github.com/docsor1212/aesthete-agent",
+      "quality_score": 3,
+      "slug": "docsor1212-aesthete-agent",
+      "source_type": "web_news",
+      "source_url": "https://raw.githubusercontent.com/punkpeye/awesome-mcp-servers/main/README.md",
+      "discovered_via": "mine_feeds (competitor:awesome-mcp)",
+      "added_at": "2026-10-18T13:44:50.351708+00:00",
+      "setup": {
+        "kind": "mcp connector",
+        "command": "claude mcp add docsor1212-aesthete-agent -- npx -y aesthete-agent",
+        "needs_key": false,
+        "in_project": true
+      }
+    },
+    {
+      "name": "patrickchugh/terravision",
+      "what_it_does": "[![patrickchugh/terravision MCP server](https://glama.ai/mcp/servers/patrickchugh/terravision/badges/score.svg)](https://glama.ai/mcp/servers/patrickchugh/terravision) 🐍 🏠 🍎 🪟 🐧 - Draw cloud architect",
+      "url": "https://github.com/patrickchugh/terravision",
+      "works_in": "both",
+      "free": true,
+      "github": "https://github.com/patrickchugh/terravision",
+      "quality_score": 3,
+      "slug": "patrickchugh-terravision",
+      "source_type": "web_news",
+      "source_url": "https://raw.githubusercontent.com/punkpeye/awesome-mcp-servers/main/README.md",
+      "discovered_via": "mine_feeds (competitor:awesome-mcp)",
+      "added_at": "2026-10-18T13:44:50.351708+00:00",
+      "setup": {
+        "kind": "mcp connector",
+        "command": "claude mcp add patrickchugh-terravision -- npx -y terravision",
+        "needs_key": false,
+        "in_project": true
+      }
+    },
+    {
+      "name": "PRIDA-TAKON/debim",
+      "what_it_does": "[![PRIDA-TAKON/debim MCP server](https://glama.ai/mcp/servers/PRIDA-TAKON/debim/badges/score.svg)](https://glama.ai/mcp/servers/PRIDA-TAKON/debim) 🐍 🏠 🍎 🪟 🐧 - Declarative BIM / Building-as-Code engine",
+      "url": "https://github.com/PRIDA-TAKON/debim",
+      "works_in": "both",
+      "free": true,
+      "github": "https://github.com/PRIDA-TAKON/debim",
+      "quality_score": 3,
+      "slug": "prida-takon-debim",
+      "source_type": "web_news",
+      "source_url": "https://raw.githubusercontent.com/punkpeye/awesome-mcp-servers/main/README.md",
+      "discovered_via": "mine_feeds (competitor:awesome-mcp)",
+      "added_at": "2026-10-18T13:44:50.351708+00:00",
+      "setup": {
+        "kind": "mcp connector",
+        "command": "claude mcp add prida-takon-debim -- npx -y debim",
+        "needs_key": false,
+        "in_project": true
+      }
+    },
+    {
+      "name": "openreadout/openreadout",
+      "what_it_does": "[![openreadout/openreadout MCP server](https://glama.ai/mcp/servers/openreadout/openreadout/badges/score.svg)](https://glama.ai/mcp/servers/openreadout/openreadout) 🦀 🏠 🍎 🪟 🐧 - Lets agents read raw la",
+      "url": "https://github.com/openreadout/openreadout",
+      "works_in": "both",
+      "free": true,
+      "github": "https://github.com/openreadout/openreadout",
+      "quality_score": 3,
+      "slug": "openreadout-openreadout",
+      "source_type": "web_news",
+      "source_url": "https://raw.githubusercontent.com/punkpeye/awesome-mcp-servers/main/README.md",
+      "discovered_via": "mine_feeds (competitor:awesome-mcp)",
+      "added_at": "2026-10-18T13:44:50.351708+00:00",
+      "setup": {
+        "kind": "mcp connector",
+        "command": "claude mcp add openreadout-openreadout -- npx -y openreadout",
+        "needs_key": false,
+        "in_project": true
+      }
+    },
+    {
+      "name": "DynamicsNinja/garminconnect-js",
+      "what_it_does": "[![DynamicsNinja/garminconnect-js MCP server](https://glama.ai/mcp/servers/DynamicsNinja/garminconnect-js/badges/score.svg)](https://glama.ai/mcp/servers/DynamicsNinja/garminconnect-js) 📇 ☁️ 🏠 - Garmi",
+      "url": "https://github.com/DynamicsNinja/garminconnect-js",
+      "works_in": "both",
+      "free": true,
+      "github": "https://github.com/DynamicsNinja/garminconnect-js",
+      "quality_score": 3,
+      "slug": "dynamicsninja-garminconnect-js",
+      "source_type": "web_news",
+      "source_url": "https://raw.githubusercontent.com/punkpeye/awesome-mcp-servers/main/README.md",
+      "discovered_via": "mine_feeds (competitor:awesome-mcp)",
+      "added_at": "2026-10-18T13:44:50.351708+00:00",
+      "setup": {
+        "kind": "mcp connector",
+        "command": "claude mcp add dynamicsninja-garminconnect-js -- npx -y garminconnect-js",
+        "needs_key": false,
+        "in_project": true
+      }
+    },
+    {
+      "name": "sachinbkale27/label-image-mcp",
+      "what_it_does": "[![sachinbkale27/label-image-mcp MCP server](https://glama.ai/mcp/servers/sachinbkale27/label-image-mcp/badges/score.svg)](https://glama.ai/mcp/servers/sachinbkale27/label-image-mcp) 🐍 🏠 ☁️ 🍎 🪟 🐧 - Ma",
+      "url": "https://github.com/sachinbkale27/label-image-mcp",
+      "works_in": "both",
+      "free": true,
+      "github": "https://github.com/sachinbkale27/label-image-mcp",
+      "quality_score": 3,
+      "slug": "sachinbkale27-label-image-mcp",
+      "source_type": "web_news",
+      "source_url": "https://raw.githubusercontent.com/punkpeye/awesome-mcp-servers/main/README.md",
+      "discovered_via": "mine_feeds (competitor:awesome-mcp)",
+      "added_at": "2026-10-18T13:44:50.351708+00:00",
+      "setup": {
+        "kind": "mcp connector",
+        "command": "claude mcp add sachinbkale27-label-image-mcp -- npx -y label-image-mcp",
+        "needs_key": false,
+        "in_project": true
+      }
+    },
+    {
+      "name": "tylergibbs1/backwork-mcp",
+      "what_it_does": "[![backwork-mcp MCP server](https://glama.ai/mcp/servers/tylergibbs1/backwork-mcp/badges/score.svg)](https://glama.ai/mcp/servers/tylergibbs1/backwork-mcp) 📇 ☁️ - Medicare and commercial payer medical",
+      "url": "https://github.com/tylergibbs1/backwork-mcp",
+      "works_in": "both",
+      "free": true,
+      "github": "https://github.com/tylergibbs1/backwork-mcp",
+      "quality_score": 3,
+      "slug": "tylergibbs1-backwork-mcp",
+      "source_type": "web_news",
+      "source_url": "https://raw.githubusercontent.com/punkpeye/awesome-mcp-servers/main/README.md",
+      "discovered_via": "mine_feeds (competitor:awesome-mcp)",
+      "added_at": "2026-10-18T13:44:50.351708+00:00",
+      "setup": {
+        "kind": "mcp connector",
+        "command": "claude mcp add tylergibbs1-backwork-mcp -- npx -y backwork-mcp",
+        "needs_key": false,
+        "in_project": true
+      }
+    },
+    {
+      "name": "IGELHARINE/CDPM",
+      "what_it_does": "[![IGELHARINE/CDPM MCP server](https://glama.ai/mcp/servers/IGELHARINE/CDPM/badges/score.svg)](https://glama.ai/mcp/servers/IGELHARINE/CDPM) 📇 🏠 🍎 🪟 - Numbered, logged-in Chrome slots (1-30) driven ov",
+      "url": "https://github.com/IGELHARINE/CDPM",
+      "works_in": "both",
+      "free": true,
+      "github": "https://github.com/IGELHARINE/CDPM",
+      "quality_score": 3,
+      "slug": "igelharine-cdpm",
+      "source_type": "web_news",
+      "source_url": "https://raw.githubusercontent.com/punkpeye/awesome-mcp-servers/main/README.md",
+      "discovered_via": "mine_feeds (competitor:awesome-mcp)",
+      "added_at": "2026-10-18T13:44:50.351708+00:00",
+      "setup": {
+        "kind": "mcp connector",
+        "command": "claude mcp add igelharine-cdpm -- npx -y CDPM",
+        "needs_key": false,
+        "in_project": true
+      }
     }
   ],
-  "recipes_updated_at": "2026-10-16T14:28:25.989061+00:00"
+  "recipes_updated_at": "2026-10-18T13:45:11.685901+00:00"
 }

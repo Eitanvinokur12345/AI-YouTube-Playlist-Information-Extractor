@@ -1,65 +1,6 @@
 {
   "events": [
     {
-      "task": "watch-process-the-next-b-82232",
-      "at": "2026-10-18T10:07:52.832352+00:00",
-      "kind": "claimed",
-      "by": "watch-w1",
-      "department": "watch"
-    },
-    {
-      "task": "watch-process-the-next-b-82232",
-      "at": "2026-10-18T10:07:52.861303+00:00",
-      "kind": "completed",
-      "by": "watch-w1",
-      "result": "BLOCKED — watch needs video-analysis engine capacity (Gemini free quota is exhausted / needs an owner key). No fake work done; waiting on the owner."
-    },
-    {
-      "task": "security-safety-rate-the-92543",
-      "at": "2026-10-18T10:13:16.357240+00:00",
-      "kind": "lease_expired",
-      "after_h": 6.1,
-      "was": "security-w1"
-    },
-    {
-      "task": "raise-g5-leverage-45-100-92543",
-      "at": "2026-10-18T10:13:16.358271+00:00",
-      "kind": "lease_expired",
-      "after_h": 6.1,
-      "was": "creators-w1"
-    },
-    {
-      "task": "verify-the-next-200-of-1-28586",
-      "at": "2026-10-18T10:13:16.359197+00:00",
-      "kind": "lease_expired",
-      "after_h": 6.1,
-      "was": "analysis-w1"
-    },
-    {
-      "task": "empty-body-items-render--84700",
-      "at": "2026-10-18T10:13:17.038045+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-7653",
-      "at": "2026-10-18T10:13:17.038974+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-70809",
-      "at": "2026-10-18T10:13:17.039867+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
-      "task": "lane-transcript-retrieva-12177",
-      "at": "2026-10-18T10:13:17.040719+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
       "task": "verify-the-next-200-of-1-28586",
       "at": "2026-10-18T10:13:17.075617+00:00",
       "kind": "claimed",
@@ -272,6 +213,67 @@
       "from": "links-w1",
       "to": "memory",
       "doc": "data/excava/handoffs/raise-g3-truth-access-44-19048--01--links-w1--to--memory.md"
+    },
+    {
+      "task": "memory-embed-the-remaini-19371",
+      "at": "2026-10-18T10:29:31.978910+00:00",
+      "kind": "enqueued",
+      "title": "Memory: embed the remaining unembedded of 17602 elements for full recall",
+      "source": "gap",
+      "priority": 1,
+      "department": "memory"
+    },
+    {
+      "task": "empty-body-items-render--84700",
+      "at": "2026-10-18T10:29:32.022928+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-7653",
+      "at": "2026-10-18T10:29:32.024023+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-70809",
+      "at": "2026-10-18T10:29:32.025143+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-12177",
+      "at": "2026-10-18T10:29:32.026021+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "transcripts-room-action--80402",
+      "at": "2026-10-18T10:29:32.063976+00:00",
+      "kind": "claimed",
+      "by": "analysis-w1",
+      "department": "analysis"
+    },
+    {
+      "task": "transcripts-room-action--80402",
+      "at": "2026-10-18T10:29:32.113441+00:00",
+      "kind": "completed",
+      "by": "analysis-w1",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "task": "raise-g3-truth-access-44-19048",
+      "at": "2026-10-18T10:29:32.143747+00:00",
+      "kind": "claimed",
+      "by": "memory-w1",
+      "department": "memory"
+    },
+    {
+      "task": "raise-g3-truth-access-44-19048",
+      "at": "2026-10-18T10:29:32.374636+00:00",
+      "kind": "completed",
+      "by": "memory-w1",
+      "result": "Semantic index: 1750 vectors (model gemini-embedding-001); hub 11330 items → 9580 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-19T19:59:23.481354+00:00",
+ "generated_at": "2026-10-19T23:41:26.164436+00:00",
  "brains": [
   {
    "family": "DeepSeek V4",
@@ -80,36 +80,6 @@
   {
    "id": "A",
    "lead": {
-    "engine": "sambanova",
-    "model": "Meta-Llama-3.3-70B-Instruct",
-    "lineage": "llama",
-    "tier": "fast"
-   },
-   "support": {
-    "engine": "gemini",
-    "model": "gemini-2.0-flash",
-    "lineage": "gemini",
-    "tier": "grounded"
-   }
-  },
-  {
-   "id": "B",
-   "lead": {
-    "engine": "kimi",
-    "model": "moonshotai/kimi-k2:free",
-    "lineage": "kimi",
-    "tier": "reasoning"
-   },
-   "support": {
-    "engine": "groq",
-    "model": "llama-3.3-70b-versatile",
-    "lineage": "llama",
-    "tier": "fast"
-   }
-  },
-  {
-   "id": "C",
-   "lead": {
     "engine": "deepseek",
     "model": "deepseek/deepseek-chat-v3-0324:free",
     "lineage": "deepseek",
@@ -123,7 +93,22 @@
    }
   },
   {
-   "id": "D",
+   "id": "B",
+   "lead": {
+    "engine": "groq",
+    "model": "llama-3.3-70b-versatile",
+    "lineage": "llama",
+    "tier": "fast"
+   },
+   "support": {
+    "engine": "gemini",
+    "model": "gemini-2.0-flash",
+    "lineage": "gemini",
+    "tier": "grounded"
+   }
+  },
+  {
+   "id": "C",
    "lead": {
     "engine": "glm",
     "model": "z-ai/glm-4.5-air:free",
@@ -136,28 +121,43 @@
     "lineage": "llama",
     "tier": "fast"
    }
+  },
+  {
+   "id": "D",
+   "lead": {
+    "engine": "kimi",
+    "model": "moonshotai/kimi-k2:free",
+    "lineage": "kimi",
+    "tier": "reasoning"
+   },
+   "support": {
+    "engine": "gh-models",
+    "model": "openai/gpt-4o-mini",
+    "lineage": "gpt",
+    "tier": "grounded"
+   }
   }
  ],
  "debate": [
-  {
-   "engine": "sambanova",
-   "lineage": "llama",
-   "model": "Meta-Llama-3.3-70B-Instruct"
-  },
-  {
-   "engine": "kimi",
-   "lineage": "kimi",
-   "model": "moonshotai/kimi-k2:free"
-  },
   {
    "engine": "deepseek",
    "lineage": "deepseek",
    "model": "deepseek/deepseek-chat-v3-0324:free"
   },
   {
+   "engine": "groq",
+   "lineage": "llama",
+   "model": "llama-3.3-70b-versatile"
+  },
+  {
    "engine": "glm",
    "lineage": "glm",
    "model": "z-ai/glm-4.5-air:free"
+  },
+  {
+   "engine": "kimi",
+   "lineage": "kimi",
+   "model": "moonshotai/kimi-k2:free"
   }
  ],
  "debate_lineages": [

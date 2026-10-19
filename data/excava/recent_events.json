@@ -1,79 +1,6 @@
 {
   "events": [
     {
-      "task": "news-refresh-the-ai-news-14242",
-      "at": "2026-10-19T05:12:41.503162+00:00",
-      "kind": "claimed",
-      "by": "news-w1",
-      "department": "news"
-    },
-    {
-      "task": "news-refresh-the-ai-news-14242",
-      "at": "2026-10-19T05:12:41.979530+00:00",
-      "kind": "completed",
-      "by": "news-w1",
-      "result": "Ran the trend watch. trend_watch: 16 proposals (top score 10); queued 0 into self-improvement."
-    },
-    {
-      "task": "transcripts-drain-the-ne-16697",
-      "at": "2026-10-19T05:12:42.004858+00:00",
-      "kind": "claimed",
-      "by": "transcripts-w1",
-      "department": "transcripts"
-    },
-    {
-      "task": "transcripts-drain-the-ne-16697",
-      "at": "2026-10-19T05:12:42.110749+00:00",
-      "kind": "escalated",
-      "tier": 36,
-      "reason": "max_steps 8 exceeded at hand-off",
-      "by": ""
-    },
-    {
-      "task": "raise-g8-personal-fit-68-14242",
-      "at": "2026-10-19T05:12:42.136612+00:00",
-      "kind": "claimed",
-      "by": "visual-w1",
-      "department": "visual"
-    },
-    {
-      "task": "raise-g8-personal-fit-68-14242",
-      "at": "2026-10-19T05:12:51.815354+00:00",
-      "kind": "completed",
-      "by": "visual-w1",
-      "result": "Ran the collect designs. collect_designs: 3532 designs (kept 3533 / dropped 0 repo-only + 2 dead/parked + 431 non-design; +0 AI-product, +27 seeds, +430 shown-in-video; url-checked 2). designs-only."
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-10-19T05:13:10.165037+00:00",
-      "kind": "lane_ran",
-      "lane": "Gemini watch (audio+visual)",
-      "status": "live",
-      "what": "Watches videos directly — clears the backlog free"
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-10-19T05:13:10.165756+00:00",
-      "kind": "lane_ran",
-      "lane": "Deep analysis (night-gated)",
-      "status": "live",
-      "what": "Claude re-analysis + safety pass"
-    },
-    {
-      "task": "os-lanes",
-      "at": "2026-10-19T05:13:10.166512+00:00",
-      "kind": "lane_ran",
-      "lane": "AI news refresh",
-      "status": "live",
-      "what": "Refreshes official-site AI news"
-    },
-    {
-      "task": "empty-body-items-render--84700",
-      "at": "2026-10-19T06:26:25.180426+00:00",
-      "kind": "unroutable",
-      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
-    },
-    {
       "task": "lane-transcript-retrieva-7653",
       "at": "2026-10-19T06:26:25.181104+00:00",
       "kind": "unroutable",
@@ -277,6 +204,72 @@
       "lane": "Free analysis pool",
       "status": "live",
       "what": "Turns transcripts into skills/tools/connectors (free engines)"
+    },
+    {
+      "task": "empty-body-items-render--84700",
+      "at": "2026-10-19T06:37:15.223942+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-7653",
+      "at": "2026-10-19T06:37:15.225004+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-70809",
+      "at": "2026-10-19T06:37:15.225822+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "lane-transcript-retrieva-12177",
+      "at": "2026-10-19T06:37:15.226632+00:00",
+      "kind": "unroutable",
+      "why": "all matching departments blocked: transcripts lacks resource fetch-transcripts"
+    },
+    {
+      "task": "raise-g1-omniscience-55--23573",
+      "at": "2026-10-19T06:37:15.253850+00:00",
+      "kind": "claimed",
+      "by": "analysis-w1",
+      "department": "analysis"
+    },
+    {
+      "task": "raise-g1-omniscience-55--23573",
+      "at": "2026-10-19T06:37:15.279193+00:00",
+      "kind": "completed",
+      "by": "analysis-w1",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
+    },
+    {
+      "task": "memory-embed-the-remaini-63073",
+      "at": "2026-10-19T06:37:15.301302+00:00",
+      "kind": "claimed",
+      "by": "memory-w1",
+      "department": "memory"
+    },
+    {
+      "task": "memory-embed-the-remaini-63073",
+      "at": "2026-10-19T06:37:15.494479+00:00",
+      "kind": "completed",
+      "by": "memory-w1",
+      "result": "Semantic index: 1751 vectors (model gemini-embedding-001); hub 11381 items → 9630 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
+    },
+    {
+      "task": "security-safety-rate-the-10254",
+      "at": "2026-10-19T06:37:15.522300+00:00",
+      "kind": "claimed",
+      "by": "security-w1",
+      "department": "security"
+    },
+    {
+      "task": "security-safety-rate-the-10254",
+      "at": "2026-10-19T06:37:16.449302+00:00",
+      "kind": "completed",
+      "by": "security-w1",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     }
   ]
 }

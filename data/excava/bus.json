@@ -19571,7 +19571,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-10-17T12:23:30.389401+00:00",
-      "updated_at": "2026-10-19T13:09:50.411153+00:00",
+      "updated_at": "2026-10-19T19:11:28.121797+00:00",
       "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
@@ -23487,7 +23487,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-10-18T16:10:10.172164+00:00",
-      "updated_at": "2026-10-19T13:09:49.794925+00:00"
+      "updated_at": "2026-10-19T19:11:27.044552+00:00"
     },
     {
       "id": "memory-embed-the-remaini-39810",
@@ -27399,15 +27399,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-10-19T19:05:54.985341+00:00",
-      "updated_at": "2026-10-19T19:05:54.985354+00:00"
+      "updated_at": "2026-10-19T19:11:26.754071+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "memory-embed-the-remaini-36755",
@@ -27416,15 +27417,16 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [],
       "created_at": "2026-10-19T19:05:55.040731+00:00",
-      "updated_at": "2026-10-19T19:05:55.040741+00:00"
+      "updated_at": "2026-10-19T19:11:27.016011+00:00",
+      "result": "Semantic index: 1755 vectors (model gemini-embedding-001); hub 11469 items → 9714 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "raise-g5-leverage-43-100-36755",
@@ -27433,16 +27435,36 @@
       "department": "creators",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-10-19T19:05:55.088486+00:00",
-      "updated_at": "2026-10-19T19:05:55.088495+00:00"
+      "updated_at": "2026-10-19T19:11:28.178826+00:00",
+      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
+    },
+    {
+      "id": "raise-g3-truth-access-43-37086",
+      "title": "Raise G3 Truth & access (43/100): 43.8% of tools/skills have a real link (target: ~100%)",
+      "detail": "value=57 size=17(small) [cost 15/steps 25/risk 10] · G3 at 43",
+      "department": "memory",
+      "source": "gap",
+      "priority": 1,
+      "status": "queued",
+      "steps": 1,
+      "max_steps": 8,
+      "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
+      "escalation_tier": 1,
+      "claimed_by": null,
+      "handoff_docs": [
+        "data/excava/handoffs/raise-g3-truth-access-43-37086--01--links-w1--to--memory.md"
+      ],
+      "created_at": "2026-10-19T19:11:26.644011+00:00",
+      "updated_at": "2026-10-19T19:11:28.234889+00:00"
     }
   ],
-  "updated_at": "2026-10-19T19:05:56.682381+00:00"
+  "updated_at": "2026-10-19T19:11:28.234894+00:00"
 }

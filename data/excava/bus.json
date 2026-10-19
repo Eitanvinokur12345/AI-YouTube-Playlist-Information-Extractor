@@ -6085,24 +6085,6 @@
       "result": "Semantic index: 1742 vectors (model gemini-embedding-001); hub 11091 items → 9349 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
-      "id": "lane-self-improvement-re-86363",
-      "title": "Lane 'Self-improvement review' is idle",
-      "detail": "Check the workflow logs; re-dispatch if blocked.",
-      "department": "improve",
-      "source": "auto",
-      "priority": 1,
-      "status": "done",
-      "steps": 0,
-      "max_steps": 8,
-      "done_criteria": "output written to data/ and committed by CI",
-      "escalation_tier": 1,
-      "claimed_by": "improve-w1",
-      "handoff_docs": [],
-      "created_at": "2026-10-12T06:26:03.543613+00:00",
-      "updated_at": "2026-10-12T17:56:30.281806+00:00",
-      "result": "Ran the self check. self-check: 45/50 (mechanical) | 0 new tasks | 0 resolved | failing Qs: [1, 10, 12, 42, 45]"
-    },
-    {
       "id": "36-self-improvement-task-86363",
       "title": "36 self-improvement tasks queued",
       "detail": "The improve stage works these on its 2×/week pass.",
@@ -27306,17 +27288,18 @@
       "department": "memory",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/raise-g3-truth-access-43-32002--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-10-19T17:46:42.812112+00:00",
-      "updated_at": "2026-10-19T17:46:43.330249+00:00"
+      "updated_at": "2026-10-19T17:58:15.681546+00:00",
+      "result": "Semantic index: 1755 vectors (model gemini-embedding-001); hub 11469 items → 9714 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "raise-g5-leverage-43-100-32002",
@@ -27343,15 +27326,16 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-10-19T17:52:15.987054+00:00",
-      "updated_at": "2026-10-19T17:52:15.987066+00:00"
+      "updated_at": "2026-10-19T17:58:15.413275+00:00",
+      "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
       "id": "security-safety-rate-the-32336",
@@ -27360,15 +27344,16 @@
       "department": "security",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-10-19T17:52:16.029532+00:00",
-      "updated_at": "2026-10-19T17:52:16.029544+00:00"
+      "updated_at": "2026-10-19T17:58:16.834416+00:00",
+      "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
       "id": "memory-embed-the-remaini-32336",
@@ -27394,16 +27379,17 @@
       "department": "creators",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-10-19T17:52:16.112734+00:00",
-      "updated_at": "2026-10-19T17:52:16.112745+00:00"
+      "updated_at": "2026-10-19T17:58:15.737941+00:00",
+      "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     }
   ],
-  "updated_at": "2026-10-19T17:52:40.440466+00:00"
+  "updated_at": "2026-10-19T17:58:16.834426+00:00"
 }

@@ -5781,7 +5781,7 @@
       "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-10-03T04:30:32.222986+00:00",
-      "updated_at": "2026-10-18T10:18:44.299884+00:00",
+      "updated_at": "2026-10-19T06:31:52.157104+00:00",
       "result": "Ran the security scan. security_scan: 0 secret leak(s), 0 injection-suspect records flagged."
     },
     {
@@ -5863,15 +5863,15 @@
       "department": "security",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "working",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "security-w1",
       "handoff_docs": [],
       "created_at": "2026-10-04T08:17:12.031219+00:00",
-      "updated_at": "2026-10-18T18:54:03.903561+00:00"
+      "updated_at": "2026-10-19T06:31:51.271018+00:00"
     },
     {
       "id": "security-safety-rate-the-10254",
@@ -6007,7 +6007,7 @@
       "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-10-11T11:11:28.364736+00:00",
-      "updated_at": "2026-10-18T09:51:28.446818+00:00",
+      "updated_at": "2026-10-19T06:31:51.048795+00:00",
       "result": "2842 re-queued records are in data/_pending; the bulk-analyze lane (hourly, free pool) consumes them — lane is live. Done per criteria: queue owned + lane running; the queue itself drains across the next beats."
     },
     {
@@ -6043,7 +6043,7 @@
       "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-10-11T11:11:28.598733+00:00",
-      "updated_at": "2026-10-18T09:51:28.764461+00:00",
+      "updated_at": "2026-10-19T06:31:52.203192+00:00",
       "result": "Creators: 1 creations on record, 1 published — every one labeled 'Created by EXCAVA' with an independent test before first use (G-12). The daily creators lane drafts from data/creators_discovery.json gaps."
     },
     {
@@ -23789,15 +23789,15 @@
       "department": "analysis",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "working",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "analysis-w1",
       "handoff_docs": [],
       "created_at": "2026-10-18T09:51:28.213132+00:00",
-      "updated_at": "2026-10-18T16:10:09.498958+00:00"
+      "updated_at": "2026-10-19T06:31:51.022545+00:00"
     },
     {
       "id": "security-safety-rate-the-17088",
@@ -23841,15 +23841,15 @@
       "department": "creators",
       "source": "gap",
       "priority": 1,
-      "status": "queued",
+      "status": "working",
       "steps": 0,
       "max_steps": 8,
       "done_criteria": "a committed artifact that measurably closes this gap",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "creators-w1",
       "handoff_docs": [],
       "created_at": "2026-10-18T09:51:28.344803+00:00",
-      "updated_at": "2026-10-18T16:10:09.500373+00:00"
+      "updated_at": "2026-10-19T06:31:52.180511+00:00"
     },
     {
       "id": "raise-g3-truth-access-44-17415",
@@ -24173,17 +24173,18 @@
       "department": "memory",
       "source": "auto",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "steps": 1,
       "max_steps": 8,
       "done_criteria": "memory confirms index freshness vs the hub; standing goal (100% coverage) continues in CI",
       "escalation_tier": 1,
-      "claimed_by": null,
+      "claimed_by": "memory-w1",
       "handoff_docs": [
         "data/excava/handoffs/5248-tools-skills-still--49643--01--links-w1--to--memory.md"
       ],
       "created_at": "2026-10-18T18:54:03.965614+00:00",
-      "updated_at": "2026-10-18T18:54:07.188508+00:00"
+      "updated_at": "2026-10-19T06:31:51.249826+00:00",
+      "result": "Semantic index: 1751 vectors (model gemini-embedding-001); hub 11381 items → 9630 not yet embedded — embed lane (hourly CI) owns the catch-up. Pass complete; the standing coverage goal continues in the CI lanes."
     },
     {
       "id": "weakest-lane-deep-analys-49643",
@@ -24381,5 +24382,5 @@
       "updated_at": "2026-10-19T05:12:33.951477+00:00"
     }
   ],
-  "updated_at": "2026-10-19T06:26:27.933803+00:00"
+  "updated_at": "2026-10-19T06:31:52.203218+00:00"
 }

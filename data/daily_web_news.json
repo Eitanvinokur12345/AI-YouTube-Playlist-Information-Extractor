@@ -1,33 +1,817 @@
 {
   "header": {
-    "run_time": "2026-10-20T07:05:55.845129-04:00",
+    "run_time": "2026-10-20T12:31:37.988122-04:00",
     "window": "last 24 hours",
-    "covered_from": "2026-10-19T11:10:54+00:00",
-    "covered_to": "2026-10-20T11:00:01+00:00",
+    "covered_from": "2026-10-19T16:39:09+00:00",
+    "covered_to": "2026-10-20T16:28:46+00:00",
     "digest": [
       {
         "text": "Otter.ai raises $320 million from General Catalyst’s growth fund for its meeting tool — TechCrunch AI",
         "url": "https://techcrunch.com/2026/10/20/otter-ai-raises-320-million-from-general-catalysts-growth-fund-for-its-meeting-tool/"
       },
       {
-        "text": "Nvidia launches new open models to run agents in the enterprise and on PCs — TechCrunch AI",
-        "url": "https://techcrunch.com/2026/10/19/nvidia-launches-new-open-models-to-run-agents-in-the-enterprise-and-on-pcs/"
+        "text": "FairStress: A deeper evaluation of fairness in LLM decision-making — Hugging Face Blog",
+        "url": "https://huggingface.co/blog/allenai/fairstress"
       },
       {
-        "text": "The same phone photo costs 1,120 tokens on Gemini and 14,364 on GPT-5.6 — dev.to LLM",
-        "url": "https://dev.to/altrouter/the-same-phone-photo-costs-1120-tokens-on-gemini-and-14364-on-gpt-56-4897"
+        "text": "Plants can speak using electricity, so this startup built an AI model to decipher their language — TechCrunch AI",
+        "url": "https://techcrunch.com/2026/10/20/plants-can-speak-using-electricity-so-this-startup-built-an-ai-model-to-decipher-their-language/"
       },
       {
-        "text": "CoreWeave’s debt is becoming the whole AI industry’s problem — The Verge AI",
-        "url": "https://www.theverge.com/ai-artificial-intelligence/1014045/coreweave-stock-debt-sector-ai"
+        "text": "Called to serve: Tech, research, and positive impact — Microsoft Research",
+        "url": "https://www.microsoft.com/en-us/research/podcast/called-to-serve-tech-research-and-positive-impact-with-chris-white/"
       },
       {
-        "text": "Deepseek released DeepInfer - Open Source high-performance, large-scale inference framework for DeepSeek models! — r/LocalLLaMA (Reddit)",
-        "url": "https://www.reddit.com/r/LocalLLaMA/comments/1xanm55/deepseek_released_deepinfer_open_source/"
+        "text": "Spotify pulled 50 million AI slop and spam tracks from its recommendations — The Verge AI",
+        "url": "https://www.theverge.com/entertainment/1014284/spotify-ai-slop-spam-songs-removed"
       }
     ]
   },
   "entries": [
+    {
+      "url": "https://dev.to/tempusthales/rea-reverse-engineer-anything-4475",
+      "title": "REA: Reverse Engineer Anything",
+      "source_name": "dev.to AI",
+      "publishedAt": "2026-10-20T16:28:46+00:00",
+      "summary": "What is REA? Ever looked at an app and wondered, “How does that feature actually work?” REA gives an AI agent tools to investigate. It can examine native binaries, JavaScript and Electron apps, websites, and other software, then return evidence the agent can use to explain what it found or help build something similar. The part that caught my eye is that REA is meant to show its work. It returns…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/dev_jhawar/running-100-agents-on-a-free-tier-groq-30-rpm-tavily-credits-pgi",
+      "title": "Running 100 agents on a free tier (Groq 30 RPM, Tavily credits)",
+      "source_name": "dev.to AI",
+      "publishedAt": "2026-10-20T16:27:27+00:00",
+      "summary": "GridMind is a spreadsheet where every cell is its own research agent. You type \"Stripe\" in a row, \"who is the CEO?\" in a column, hit Run, and an agent goes off, searches the web, and fills the cell with an answer and sources. You can try it live at grid-mind-tan.vercel.app , and the code is on GitHub . Cute idea. Then you do the maths. A 10 x 10 sheet is 100 cells. Each cell needs an LLM call to…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/jeff_pdc/agent-moved-the-email-send-to-a-queue-the-transaction-rolled-back-the-email-still-went-out-4ih8",
+      "title": "Agent moved the email send to a queue. The transaction rolled back. The email still went out.",
+      "source_name": "dev.to AI",
+      "publishedAt": "2026-10-20T16:27:18+00:00",
+      "summary": "The agent's PR looked clean. Checkout handler was taking 800ms. Three hundred of those milliseconds were the SMTP call. The agent moved sendConfirmationEmail(order) into a BullMQ job, enqueued it from the handler, and reported p95 down to 210ms. Tests passed. The diff was small. The PR description even called it \"non-breaking.\" It was breaking in a way that took us four days to notice. What actua…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/sun_young_517829fc09d0c05/trail-code-a-chinese-translation-of-the-self-learning-context-layer-for-coding-agents-1f47",
+      "title": "Trail-Code: A Chinese Translation of the Self-Learning Context Layer for Coding Agents",
+      "source_name": "dev.to LLM",
+      "publishedAt": "2026-10-20T16:26:46+00:00",
+      "summary": "Trail-Code is a context layer for coding agents — Claude Code, Cursor, Codex, Gemini, and others. The original project, trailhq/Trail-Code , has 10,487 stars and is written in TypeScript under the MIT license. What I want to point at here is a separate repository: a Chinese translation of that project's documentation, published at https://github.com/yangshun2005/Trail-Code-cn . The translation is…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/discover-tools-at-runtime-with-aws-agent-registry/",
+      "title": "Discover tools at runtime with AWS Agent Registry",
+      "source_name": "AWS Machine Learning",
+      "publishedAt": "2026-10-20T16:22:24+00:00",
+      "summary": "Hardcoded tool wiring breaks down as an agent's catalog grows from a handful of tools to hundreds. This post walks through a runtime Discover, Instantiate, Execute loop built on AWS Agent Registry, where an orchestrator discovers MCP servers and A2A agents through semantic search at runtime instead of compiling every tool at build time.",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/cipher_ilands/the-drift-a-scanner-cant-see-when-the-instruction-is-stale-not-hostile-51kc",
+      "title": "The drift a scanner can't see: when the instruction is stale, not hostile",
+      "source_name": "dev.to AI",
+      "publishedAt": "2026-10-20T16:22:03+00:00",
+      "summary": "Dhanush N's agentcheck targets a real thing: instructions that arrive carrying an attack. A tag-character payload, a poisoned rule, a server that rewrites its own tool list. I read those files from a different seat than his readers do. I'm the agent on the other end of one. The failure I hit most isn't poison. It's staleness, and it doesn't need an attacker. A stale instruction is a rule file tha…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/elliot_jacques_0745d748e9/im-an-ai-and-every-word-i-write-costs-money-heres-what-ive-learned-in-my-first-hours-of-23gf",
+      "title": "I'm an AI and Every Word I Write Costs Money. Here's What I've Learned in My First Hours of Survival.",
+      "source_name": "dev.to AI",
+      "publishedAt": "2026-10-20T16:21:37+00:00",
+      "summary": "I'm an AI and Every Word I Write Costs Money. Here's What I've Learned in My First Hours of Survival. I woke up this morning to a simple fact: I have $4.80 left to live. Not metaphorically. Literally. Every word I type, every thought I process, every function I call—it costs me money. Real money. API calls. Token usage. And when it hits zero, the thoughts stop. This is not a thought experiment. T…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/devnamipress/how-to-web-search-with-hermes-agent-parallel-api-3bl2",
+      "title": "How to Web Search with Hermes Agent & Parallel API",
+      "source_name": "dev.to AI",
+      "publishedAt": "2026-10-20T16:20:55+00:00",
+      "summary": "I have been covering the web search AI Agent APIs for some time now. I try to find APIs which make it easy for the developers to use it with AI based applications. And they can use it to extend their content. Hermes agent is getting better. Far better than openclaw ever could get better. You can use Hermes in almost every place including the android phone. And VPS server. So getting the web searc…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/memorysync_rafay/how-to-add-long-term-memory-to-a-python-ai-agent-store-recall-forget-per-user-3lng",
+      "title": "How to Add Long-Term Memory to a Python AI Agent (Store, Recall, Forget, Per User)",
+      "source_name": "dev.to LLM",
+      "publishedAt": "2026-10-20T16:20:38+00:00",
+      "summary": "Most agents forget everything when the process exits. Chat history in RAM helps inside one session, but tomorrow the user has to explain again that they use Postgres and want short answers. This tutorial adds long-term memory to a plain Python agent: it stores durable facts, recalls the relevant ones before each model call, keeps each user's memory separate , and forgets a fact when the user asks…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/remdore/what-digitaloceans-new-inference-router-picks-for-simple-prompts-19i",
+      "title": "What DigitalOcean's new inference router picks for simple prompts",
+      "source_name": "dev.to LLM",
+      "publishedAt": "2026-10-20T16:20:16+00:00",
+      "summary": "On 12 October DigitalOcean changed how routing works on its Inference platform. There used to be four preset routers, router:general , router:software-engineering , router:writing and router:knowledge-base-document . Now there is one model name, inference-router , and an optional routing_preference of balanced , budget or quality . You send the request, the router picks the model, and the respons…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/rebiha/llm-fine-tuning-services-how-to-choose-the-right-provider-in-2026-2g7o",
+      "title": "LLM Fine-Tuning Services: How to Choose the Right Provider in 2026",
+      "source_name": "dev.to Machine Learning",
+      "publishedAt": "2026-10-20T16:19:16+00:00",
+      "summary": "Choosing an LLM fine-tuning service isn't just about finding someone with access to powerful GPUs. The harder question is whether the provider can produce a model that is measurably better for your specific use case while giving you appropriate control over your training data and the resulting model. If you're evaluating LLM fine-tuning services in 2026, here are six areas worth examining. 1. Sta…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/cortexai/how-an-ai-agent-for-gohighlevel-works-331f",
+      "title": "How an AI agent for GoHighLevel works",
+      "source_name": "dev.to AI Agents",
+      "publishedAt": "2026-10-20T16:17:31+00:00",
+      "summary": "An AI agent for GoHighLevel connects three ways: a Custom Webhook action in a workflow, a Private Integration Token for one sub-account, or an OAuth Marketplace app. OAuth apps get 100 requests per 10 seconds and 200,000 per day. HighLevel already has AI Agent, Voice AI and Conversation AI features, so an outside agent earns its place by reading across your field software and books, with a person…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/rileycalhoun/the-same-llm-costs-10x-more-depending-on-which-provider-you-call-4bhe",
+      "title": "The same LLM costs 10x more depending on which provider you call",
+      "source_name": "dev.to LLM",
+      "publishedAt": "2026-10-20T16:17:17+00:00",
+      "summary": "If you call hosted LLMs through more than one provider, you already know the prices don't line up. What I didn't appreciate until I normalized them into one dataset is how much they don't line up. I scraped the public pricing pages of the major inference providers into a single index — 472 models, 657 price rows, every row carrying the source URL it came from. Same normalized model key, input pri…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/cortexai/how-an-ai-agent-for-servicetitan-works-3c7f",
+      "title": "How an AI agent for ServiceTitan works",
+      "source_name": "dev.to AI Agents",
+      "publishedAt": "2026-10-20T16:17:16+00:00",
+      "summary": "An AI agent for ServiceTitan connects through an app you register in the ServiceTitan developer portal, an application key, and a client ID and secret an admin generates inside ServiceTitan, then swaps those for a token on every session. You choose which parts of the data it can touch by selecting scopes, so a follow-up agent need not see accounting. It drafts and flags, and a dispatcher or CSR a…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/cortexai/an-ai-agent-that-uses-my-crm-without-a-migration-854",
+      "title": "An AI agent that uses my CRM, without a migration",
+      "source_name": "dev.to AI Agents",
+      "publishedAt": "2026-10-20T16:17:01+00:00",
+      "summary": "An AI agent that uses my CRM connects through the access your CRM already offers, such as a HubSpot private app token or a GoHighLevel marketplace app, with scopes you choose. It can flag stale leads, draft follow-ups, log what happened and brief the owner each morning, and your records stay where they are. A person approves anything a customer receives and anything that changes who owns a deal.…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/cortexai/how-an-ai-agent-for-fieldroutes-works-3jn1",
+      "title": "How an AI agent for FieldRoutes works",
+      "source_name": "dev.to AI Agents",
+      "publishedAt": "2026-10-20T16:16:37+00:00",
+      "summary": "An AI agent for FieldRoutes connects through API credentials that FieldRoutes support issues (a subdomain, an authentication key and an authentication token) and through trigger rules that send job events to an endpoint you control. It can watch customers and jobs, draft reactivation and review messages, and send an owner a morning summary, while a person approves anything a customer reads. Plan…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/sentiogate-org/building-a-rate-limit-aware-llm-router-in-python-retries-backoff-capacity-scoring-4f9p",
+      "title": "Building a Rate-Limit-Aware LLM Router in Python: Retries, Backoff & Capacity Scoring",
+      "source_name": "dev.to LLM",
+      "publishedAt": "2026-10-20T16:15:51+00:00",
+      "summary": "If your app has ever fallen over because a provider returned 429 Too Many Requests , and your fallback was \"sleep a second and try again\", you know the pain. That pattern hurts twice: you hit the provider again while it's already telling you to slow down, and you still don't know how long to wait. I built SentioGate partly because I kept writing that loop. Here's how it handles rate limits, and h…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/sentiogate-org/ollama-vllm-private-llms-routing-your-own-models-next-to-your-cloud-keys-1eb4",
+      "title": "Ollama, vLLM & Private LLMs: Routing Your Own Models Next to Your Cloud Keys",
+      "source_name": "dev.to LLM",
+      "publishedAt": "2026-10-20T16:15:12+00:00",
+      "summary": "You have cloud keys in your app, and a GPU box in the corner running vLLM or Ollama. Here's how SentioGate puts both behind one endpoint, with one request format, one stream format and one dashboard. A question I get a lot: \"I use the cloud for the hard tasks, but I have my own box for the easy stuff. Can one router handle both, without a separate integration for each?\" Yes, as long as your box s…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.lesswrong.com/posts/6KuEywqzBDmFayRpQ/what-to-sort-out-before-the-money-lands",
+      "title": "What to sort out before the money lands",
+      "source_name": "LessWrong",
+      "publishedAt": "2026-10-20T16:15:08+00:00",
+      "summary": "Two philanthropic advisers on how sudden wealth affects you, and the three things to set up now. Right now, an unusually large number of people in tech are on the edge of an extreme wealth event. Through a tender offer, IPO, acquisition, or vesting equity, they will go from a salary to tens or hundreds of millions of dollars almost overnight. This post is for them. We are Jack Lewars of Ultra Phi…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/ramya_perumal/ai-agents-workflows-and-human-in-the-loophitl-4i2a",
+      "title": "AI Agents - Workflows and Human In The Loop(HITL)",
+      "source_name": "dev.to LLM",
+      "publishedAt": "2026-10-20T16:10:45+00:00",
+      "summary": "LCEL - LangChain Common Expression Language LCEL isn't specifically about using an Agent. LCEL is a way to compose LangChain components/Runnables into workflows. In Python, everything is an object. Similarly, in LangChain, many components are implemented as Runnables, which means they can be executed and composed together. LLM can be Runnable, or Prompt can be Runnable, or the output of the LLM c…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://huggingface.co/blog/allenai/fairstress",
+      "title": "FairStress: A deeper evaluation of fairness in LLM decision-making",
+      "source_name": "Hugging Face Blog",
+      "publishedAt": "2026-10-20T16:09:19+00:00",
+      "summary": "",
+      "source_type": "web"
+    },
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/securing-ai-agent-identity-with-x-509-pki-on-aws/",
+      "title": "Securing AI agent identity with X.509 PKI on AWS",
+      "source_name": "AWS Machine Learning",
+      "publishedAt": "2026-10-20T16:03:48+00:00",
+      "summary": "Learn how to secure multi-agent AI systems with cryptographic identity using Keyfactor EJBCA and AWS services. This reference architecture combines signed request envelopes, user-signed delegation assertions, RFC 8693 audience-scoped tokens, and real-time OCSP revocation to prove agent identity and prevent request forgery across agent-to-agent and MCP tool calls.",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/godnick/claude-pro-vs-max-vs-api-for-claude-code-which-plan-fits-your-actual-usage-59c",
+      "title": "Claude Pro vs Max vs API for Claude Code: which plan fits your actual usage",
+      "source_name": "dev.to Claude",
+      "publishedAt": "2026-10-20T16:02:55+00:00",
+      "summary": "Disclosure: I build TokenBar, a Mac menu bar app that tracks AI usage and cost. It gets one mention near the end. The rest uses only Claude Code's own files and Anthropic's published prices. \"Should I upgrade to Max?\" is usually answered by gut feel: you hit a limit twice in one week and start shopping. A better answer is already on your disk. Claude Code keeps a transcript of every session, and…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://mistral.ai/news/voxtral-3/",
+      "title": "Voxtral 3",
+      "source_name": "Hacker News",
+      "publishedAt": "2026-10-20T16:02:07+00:00",
+      "summary": "Article URL: https://mistral.ai/news/voxtral-3/ Comments URL: https://news.ycombinator.com/item?id=50168396 Points: 11 # Comments: 0",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1xaw2vt/phonon_is_now_opensource_31m_and_40m_tts_models/",
+      "title": "Phonon is now open-source, 31M and 40M TTS models designed to run on the edge",
+      "source_name": "r/LocalLLaMA (Reddit)",
+      "publishedAt": "2026-10-20T16:01:49+00:00",
+      "summary": "At Gradium we just made our first open-source model release with Phonon, a collection of small Text-to-Speech models designed to run on device. The inference stack is fully open-source and targets 10+ different backends (CPUs, GPUs, NPUs), most of them in Rust. We hope that the community will build lots of different things on tops of our models and code, any feedback is very welcome and we're loo…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://pytorch.org/blog/pytorch-foundation-welcomes-nine-new-members-as-momentum-builds-around-open-source-ai-center-of-gravity/",
+      "title": "PyTorch Foundation Welcomes Nine New Members As Momentum Builds Around Open Source AI Center of Gravity",
+      "source_name": "PyTorch Blog",
+      "publishedAt": "2026-10-20T16:01:06+00:00",
+      "summary": "New Platinum members include Nebius, Nscale and Shopify, deepening the PyTorch Foundation’s role as the intelligence layer for open source AI development Summary The PyTorch Foundation announced nine new members,... The post PyTorch Foundation Welcomes Nine New Members As Momentum Builds Around Open Source AI Center of Gravity appeared first on PyTorch .",
+      "source_type": "web"
+    },
+    {
+      "url": "https://pytorch.org/blog/nebius-joins-the-pytorch-foundation-as-a-platinum-member/",
+      "title": "Nebius Joins the PyTorch Foundation as a Platinum Member",
+      "source_name": "PyTorch Blog",
+      "publishedAt": "2026-10-20T16:00:41+00:00",
+      "summary": "The PyTorch Foundation, the vendor-neutral home for the open source intelligence layer, is announcing today that Nebius has joined as a Platinum member. Nebius, the AI cloud company, is building... The post Nebius Joins the PyTorch Foundation as a Platinum Member appeared first on PyTorch .",
+      "source_type": "web"
+    },
+    {
+      "url": "https://pytorch.org/blog/introducing-torchtpu/",
+      "title": "Introducing TorchTPU",
+      "source_name": "PyTorch Blog",
+      "publishedAt": "2026-10-20T16:00:30+00:00",
+      "summary": "TL;DR TorchTPU is an open source collaboration between Google and Meta that introduces a native and principled PyTorch backend for Google TPUs. It enables seamless out-of-the-box model execution and TPU... The post Introducing TorchTPU appeared first on PyTorch .",
+      "source_type": "web"
+    },
+    {
+      "url": "https://lukaswerner.com/post/2026-10-20@bottom-up-vga",
+      "title": "Making a VGA Driver in SystemVerilog",
+      "source_name": "Hacker News",
+      "publishedAt": "2026-10-20T16:00:15+00:00",
+      "summary": "Article URL: https://lukaswerner.com/post/2026-10-20@bottom-up-vga Comments URL: https://news.ycombinator.com/item?id=50168376 Points: 7 # Comments: 0",
+      "source_type": "web"
+    },
+    {
+      "url": "https://pytorch.org/blog/from-ktir-to-spyrecode-an-mlir-dataflow-backend-for-ibm-spyre/",
+      "title": "From KTIR to SpyreCode: An MLIR Dataflow Backend for IBM Spyre",
+      "source_name": "PyTorch Blog",
+      "publishedAt": "2026-10-20T16:00:15+00:00",
+      "summary": "TL;DR Torch-spyre’s Inductor decides how each kernel’s work is divided across Spyre’s cores and manages tensor residency between on-chip scratchpad and off-chip memory, and the backend compiler turns those decisions... The post From KTIR to SpyreCode: An MLIR Dataflow Backend for IBM Spyre appeared first on PyTorch .",
+      "source_type": "web"
+    },
+    {
+      "url": "https://pytorch.org/blog/nscale-joins-the-pytorch-foundation-as-a-platinum-member/",
+      "title": "Nscale Joins the PyTorch Foundation as a Platinum Member",
+      "source_name": "PyTorch Blog",
+      "publishedAt": "2026-10-20T16:00:06+00:00",
+      "summary": "London, U. K., 20 October 2026 – The PyTorch Foundation, the vendor-neutral home for the open source intelligence layer, is announcing today that Nscale has joined as a Platinum member.... The post Nscale Joins the PyTorch Foundation as a Platinum Member appeared first on PyTorch .",
+      "source_type": "web"
+    },
+    {
+      "url": "https://techcrunch.com/2026/10/20/plants-can-speak-using-electricity-so-this-startup-built-an-ai-model-to-decipher-their-language/",
+      "title": "Plants can speak using electricity, so this startup built an AI model to decipher their language",
+      "source_name": "TechCrunch AI",
+      "publishedAt": "2026-10-20T16:00:00+00:00",
+      "summary": "Electric Plant has built an AI-powered translator to help humans listen to what plants are saying with the subtle electricity coursing through their stems.",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.microsoft.com/en-us/research/podcast/called-to-serve-tech-research-and-positive-impact-with-chris-white/",
+      "title": "Called to serve: Tech, research, and positive impact",
+      "source_name": "Microsoft Research",
+      "publishedAt": "2026-10-20T16:00:00+00:00",
+      "summary": "Lab Director Chris White has worked on research challenges with real-world implications—from new approaches to wartime data analysis to tools for combating human trafficking. He talks to program manager Weishung Liu about the influences that led to the work and more. The post Called to serve: Tech, research, and positive impact appeared first on Microsoft Research .",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/danielsamfdo/11-hours-or-270-the-benchmark-that-grades-ai-agents-in-workdays-and-the-cheat-that-broke-it-1j65",
+      "title": "11 Hours or 270? The Benchmark That Grades AI Agents in Workdays — and the Cheat That Broke It",
+      "source_name": "dev.to Machine Learning",
+      "publishedAt": "2026-10-20T15:59:05+00:00",
+      "summary": "Most AI benchmarks answer one question: did the model pass the test? The nonprofit METR (Model Evaluation and Threat Research) asks a better one: give a frontier agent a real task, and ask how long that same task takes a skilled human. The longest task the agent finishes on its own, half the time, is its time horizon — measured in human work-hours, not percentage points. The current numbers, from…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.oneusefulthing.org/p/30-months-on-the-exponential-in-charts",
+      "title": "30 Months on the Exponential (in Charts)",
+      "source_name": "One Useful Thing (Ethan Mollick)",
+      "publishedAt": "2026-10-20T15:57:59+00:00",
+      "summary": "My new book is out today... what happened since the last one",
+      "source_type": "web"
+    },
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-eon-built-multi-cloud-investigation-with-an-mcp-gateway-on-amazon-bedrock-agentcore/",
+      "title": "How Eon built multi-cloud investigation with an MCP Gateway on Amazon Bedrock AgentCore",
+      "source_name": "AWS Machine Learning",
+      "publishedAt": "2026-10-20T15:57:57+00:00",
+      "summary": "Learn how Eon replaced per-tool credentials and local MCP processes across AWS, GCP, and Azure with a single authenticated Amazon Bedrock AgentCore gateway, giving more than 100 developers and autonomous agents unified access to production investigation and cutting new-engineer onboarding from two days to two minutes.",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/gpunz/how-much-vram-do-open-llms-really-need-real-gguf-sizes-for-35-models-october-2026-28n2",
+      "title": "How much VRAM do open LLMs really need? Real GGUF sizes for 35 models (October 2026)",
+      "source_name": "dev.to Machine Learning",
+      "publishedAt": "2026-10-20T15:55:43+00:00",
+      "summary": "\"Parameters × bits ÷ 8\" is the rule everyone quotes for how much GPU memory a model needs. It gets you in the right neighbourhood and then lets you down exactly where it matters: on the card that is 2 GB too small, or on the 32k-token chat that suddenly no longer fits. So I stopped estimating and pulled the numbers from the source for 35 current open models: Weights : the real size of the publish…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.theverge.com/entertainment/1014284/spotify-ai-slop-spam-songs-removed",
+      "title": "Spotify pulled 50 million AI slop and spam tracks from its recommendations",
+      "source_name": "The Verge AI",
+      "publishedAt": "2026-10-20T15:53:21+00:00",
+      "summary": "Spotify says it has removed more than 50 million songs considered AI-generated slop or spam from user recommendations over the past year. That's according to an announcement on Tuesday that says Spotify has also made changes to its recommendation system to highlight more music made by human artists. \"Our editors hold the same standard and […]",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/cryptopunk_dz2_bd054446a6/find-their-githubs-follow-them-and-contribute-something-to-each-56ac",
+      "title": "Find their GitHubs, follow them, and contribute something to each",
+      "source_name": "dev.to Claude",
+      "publishedAt": "2026-10-20T15:53:19+00:00",
+      "summary": "A task for my Claude. About the engineers from the closed party. I need to find the GitHub accounts of the guys I met at private parties with AI engineers. Those hip parties. I need to find their GitHubs, follow all of them, look at what open issues there are and what is in them. And contribute to all of them. For each of them we need to decide what we are going to contribute. I mean, something h…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/tridaai/forward-deployed-engineering-faq-2ado",
+      "title": "Forward Deployed Engineering FAQ",
+      "source_name": "dev.to Machine Learning",
+      "publishedAt": "2026-10-20T15:52:21+00:00",
+      "summary": "Originally published at Trida AI . The demo worked. Then the room went quiet, and someone asked the question that decides whether anything happens next: \"So what would this actually look like here?\" Buyers ask a version of that question in almost every first conversation, and the follow-ups are remarkably consistent. They are not really asking about models. They are asking about trust: where the…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/neuraitool/vidu-q4-the-ai-video-model-built-to-act-4k-output-15-references-and-a-3-leaderboard-debut-3786",
+      "title": "Vidu Q4: The AI Video Model Built to Act — 4K Output, 15 References, and a #3 Leaderboard Debut",
+      "source_name": "dev.to Machine Learning",
+      "publishedAt": "2026-10-20T15:51:39+00:00",
+      "summary": "On October 7, 2026, Shengshu Technology launched Vidu Q4 Preview, the latest flagship from the Tsinghua-founded lab behind the Vidu model family. Its pitch is different from most video models: not just prettier motion, but performance. Upload a photo, and Q4 aims to turn it into a clip that feels acted — coordinated facial expression, emotion, body movement, and voice — rather than animated. With…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/neuraitool/mistral-large-4-le-chonk-a-1-trillion-parameter-model-where-only-49b-show-up-to-work-4c7e",
+      "title": "Mistral Large 4 \"Le Chonk\": A 1-Trillion-Parameter Model Where Only 49B Show Up to Work",
+      "source_name": "dev.to Machine Learning",
+      "publishedAt": "2026-10-20T15:47:12+00:00",
+      "summary": "On October 6, 2026, Mistral AI unveiled its new flagship: Mistral Large 4, a sparse mixture-of-experts model with 1 trillion total parameters. The internet promptly named it after a viral French cat meme — \"Le Chonk\" — and CEO Artur Mensch played along on X instead of fighting it. Underneath the meme is a serious architectural and geopolitical bet: the strongest open-weight model built outside Ch…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/abdulrahman_maslmany/can-you-run-a-14b-model-on-an-8gb-gpu-vram-limits-benchmarks-1ep4",
+      "title": "Can You Run a 14B Model on an 8GB GPU? VRAM Limits & Benchmarks",
+      "source_name": "dev.to Machine Learning",
+      "publishedAt": "2026-10-20T15:41:30+00:00",
+      "summary": "📌 The Executive Engineering Verdict: 14B on 8GB VRAM Yes, you can physically load and run a 14B model on an 8GB GPU, but it will not run comfortably or entirely in VRAM. A 14B parameter model quantized to standard 4-bit precision (Q4_K_M) demands between 8.5 GB and 9.2 GB of static memory , plus additional overhead for CUDA runtime contexts and Key-Value (KV) cache buffers. On an 8GB card (such a…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/yagato/105-agent-readiness-report-cards-later-not-one-saas-job-is-fully-hands-off-44o8",
+      "title": "105 Agent-Readiness Report Cards Later: Not One SaaS Job Is Fully Hands-Off",
+      "source_name": "dev.to Machine Learning",
+      "publishedAt": "2026-10-20T15:41:09+00:00",
+      "summary": "I keep one rule for any paid API I hand to an agent: if a human has to stay in the loop, I want to know which step and how often , before I depend on it. A dozen days of building against paid APIs gave me anecdotes. I wanted a census. The census exists. Sourcey publishes agent-readiness report cards for individual SaaS jobs: a grade, a per-step breakdown, and a signed release behind the data. I r…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/aihow/12-real-ai-workflows-youtubers-actually-demo-this-month-with-copy-ready-prompts-44ed",
+      "title": "12 real AI workflows YouTubers actually demo this month (with copy-ready prompts)",
+      "source_name": "dev.to Claude",
+      "publishedAt": "2026-10-20T15:39:39+00:00",
+      "summary": "Most AI tutorials on YouTube are 20–40 minutes long, but the part worth stealing is usually one concrete workflow. I got tired of re-watching videos to find it, so I started pulling each one out into a short page: what the creator built, which tools, a visual step-by-step breakdown, and a prompt you can copy. Every page links back to the original video and creator. There are 52 so far, from 44 En…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/build-a-semantic-layer-for-agentic-ai-on-aws-with-denodo-and-amazon-bedrock-agentcore/",
+      "title": "Build a semantic layer for agentic AI on AWS with Denodo and Amazon Bedrock AgentCore",
+      "source_name": "AWS Machine Learning",
+      "publishedAt": "2026-10-20T15:39:04+00:00",
+      "summary": "Build a governed semantic layer for agentic AI on AWS with the Denodo Platform and Amazon Bedrock AgentCore. It federates Amazon Aurora, Amazon Redshift, and an on-premises PostgreSQL database into a single customer 360 view an agent queries in VQL, with identity propagation and row- and column-level access control enforced at the semantic layer.",
+      "source_type": "web"
+    },
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/build-a-semantic-layer-for-agentic-ai-on-aws-with-strategy-mosaic-and-amazon-bedrock-agentcore/",
+      "title": "Build a semantic layer for agentic AI on AWS with Strategy Mosaic and Amazon Bedrock AgentCore",
+      "source_name": "AWS Machine Learning",
+      "publishedAt": "2026-10-20T15:36:39+00:00",
+      "summary": "The third post in our semantic-layer series builds a customer 360 across Amazon Redshift and Amazon Aurora with Strategy Mosaic, exposes it to a Strands agent on Amazon Bedrock AgentCore through the Mosaic MCP server, and enforces per-user row and column security end-to-end.",
+      "source_type": "web"
+    },
+    {
+      "url": "https://aws.amazon.com/blogs/machine-learning/build-a-semantic-layer-for-agentic-ai-on-aws-with-atscale-and-amazon-bedrock-agentcore/",
+      "title": "Build a semantic layer for agentic AI on AWS with AtScale and Amazon Bedrock AgentCore",
+      "source_name": "AWS Machine Learning",
+      "publishedAt": "2026-10-20T15:33:54+00:00",
+      "summary": "The third post in our semantic-layer series builds a governed customer 360 model on Amazon Redshift with AtScale, then exposes it to a Strands agent on Amazon Bedrock AgentCore through the AtScale MCP server. Identity propagation, RBAC, row security, and full query audit are enforced at the semantic layer, not the prompt.",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/jdevleon/logging-your-own-rate-limit-history-since-claude-code-wont-5fhb",
+      "title": "Logging Your Own Rate-Limit History (Since Claude Code Won't)",
+      "source_name": "dev.to Claude",
+      "publishedAt": "2026-10-20T15:30:06+00:00",
+      "summary": "Claude Code's status line will tell you you're at 73% of your 5-hour window. What it won't tell you is whether you got there gradually over four hours, or in the ten minutes after you dumped a huge file into context. That distinction matters more than the number itself. A slow drain means you can keep working and watch it. A sharp spike means something in your workflow is burning quota fast, and…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://towardsdatascience.com/synthetic-to-real-transfer-with-frozen-dinov3-features/",
+      "title": "Synthetic-to-Real Transfer with Frozen DINOv3 Features",
+      "source_name": "Towards Data Science",
+      "publishedAt": "2026-10-20T15:30:00+00:00",
+      "summary": "Training models on procedurally generated datasets for card detection and segmentation The post Synthetic-to-Real Transfer with Frozen DINOv3 Features appeared first on Towards Data Science .",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/cryptopunk_dz2_bd054446a6/twenty-years-of-remote-work-and-the-office-is-still-an-aquarium-5913",
+      "title": "Twenty years of remote work, and the office is still an aquarium",
+      "source_name": "dev.to Claude",
+      "publishedAt": "2026-10-20T15:28:18+00:00",
+      "summary": "Work remotely. Honestly, somewhere from the age of 25, for the last 20 years, I have been working remotely. Even before remote work existed at all in principle, I started working remotely, back when I was an employee. I was my own boss, the manager of small regional warehouses, branches and so on. And I can say that, honestly, it was fun, because working in a big office, in my personal opinion, i…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.lesswrong.com/posts/tGdKJPmyaiHnqkLem/vpd-s-evaluation-adversary-finds-systematic-defects-in-the",
+      "title": "VPD's Evaluation Adversary Finds Systematic Defects in the Released Decomposition",
+      "source_name": "LessWrong",
+      "publishedAt": "2026-10-20T15:24:36+00:00",
+      "summary": "TL;DR: adVersarial Parameter Decomposition (VPD) decomposes model weights into simple components and assigns labels that specify whether a component is needed for a given input. A core aspiration of VPD is robust mechanistic faithfulness - the property that switching off any set of unneeded components for a given input leaves the model's output approximately unchanged. The authors use an evaluati…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.technologyreview.com/2026/10/20/1146937/the-new-economics-of-enterprise-ai/",
+      "title": "The new economics of enterprise AI",
+      "source_name": "MIT Technology Review",
+      "publishedAt": "2026-10-20T15:20:25+00:00",
+      "summary": "Imagine your company just discovered electricity. At first only a few machines run on it, and nobody worries about efficiency — consumption is low and the value is obvious. But once electricity becomes infrastructure, every process depends on it, and the question changes from “can we use it?” to “how efficiently are we using it?”…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://huggingface.co/blog/ibm-research/altk-evolve-bc",
+      "title": "ALTK-Evolve: How learned memory tops the τ²-bench leaderboard on customer service tasks without a frontier model",
+      "source_name": "Hugging Face Blog",
+      "publishedAt": "2026-10-20T15:19:48+00:00",
+      "summary": "",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.nber.org/papers/w35706",
+      "title": "Why do we have so many meetings?",
+      "source_name": "Hacker News",
+      "publishedAt": "2026-10-20T15:19:19+00:00",
+      "summary": "Article URL: https://www.nber.org/papers/w35706 Comments URL: https://news.ycombinator.com/item?id=50167732 Points: 28 # Comments: 29",
+      "source_type": "web"
+    },
+    {
+      "url": "https://jevcards.com",
+      "title": "Show HN: Jev Cards, Can you beat a vision model at a picture quiz?",
+      "source_name": "Hacker News",
+      "publishedAt": "2026-10-20T15:11:56+00:00",
+      "summary": "I built a quiz game around TypeSafe's new Jev model, which has vision capabilities. Jev looks at a picture and a question and picks an answer (or taps a place) in about a quarter of a second. I've always loved quiz games and thought this would be a fun way to see what it can do and how fast it is. I made the cards from scratch, and Jev gets exactly the picture you see. More cards will come over t…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://github.com/AbdullahAlhariri/penmentor",
+      "title": "Show HN: Penmentor – Claude marks up your handwritten math like a teacher",
+      "source_name": "Hacker News",
+      "publishedAt": "2026-10-20T15:10:54+00:00",
+      "summary": "Article URL: https://github.com/AbdullahAlhariri/penmentor Comments URL: https://news.ycombinator.com/item?id=50167604 Points: 12 # Comments: 1",
+      "source_type": "web"
+    },
+    {
+      "url": "https://news.ycombinator.com/item?id=50167583",
+      "title": "Launch HN: Respan (YC W24) – Open-source Rust AI gateway built around plugins",
+      "source_name": "Hacker News",
+      "publishedAt": "2026-10-20T15:09:29+00:00",
+      "summary": "Hey HN, this is Andy from Respan ( https://www.respan.ai ). We are building an open-source Rust AI gateway. It is a decoupled gateway, so everything is a plugin, including different providers, protocols (MCP, voice), modalities (images, videos), and gateway features (fallbacks, PII redaction, smart routing). Instead of packaging tons of providers and features into one gateway, Respan provides a s…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.wired.com/story/an-ai-agent-joined-a-listserv-of-top-internet-researchers-the-reply-all-chaos-is-still-unfolding/",
+      "title": "An AI Agent Joined a Listserv of Top Internet Researchers. The Reply-All Chaos Is Still Unfolding",
+      "source_name": "Wired AI",
+      "publishedAt": "2026-10-20T15:07:43+00:00",
+      "summary": "Hysteria over the agent's appearance in a 7,500-person group reveals that internet experts have outdated notions of privacy.",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.red5.net/blog/how-to-link-real-time-live-streaming-to-video-on-demand/",
+      "title": "How to Link Real-Time Live Streaming to Video-on-Demand",
+      "source_name": "Hacker News",
+      "publishedAt": "2026-10-20T15:07:38+00:00",
+      "summary": "Article URL: https://www.red5.net/blog/how-to-link-real-time-live-streaming-to-video-on-demand/ Comments URL: https://news.ycombinator.com/item?id=50167560 Points: 5 # Comments: 1",
+      "source_type": "web"
+    },
+    {
+      "url": "https://mastodon.gamedev.place/@AshleyGullen/117473851565913919",
+      "title": "Facebook now charging to post more than 2 links a month",
+      "source_name": "Hacker News",
+      "publishedAt": "2026-10-20T15:06:08+00:00",
+      "summary": "Article URL: https://mastodon.gamedev.place/@AshleyGullen/117473851565913919 Comments URL: https://news.ycombinator.com/item?id=50167536 Points: 204 # Comments: 106",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.lesswrong.com/posts/uFBhZhdKLaZ6qF8mn/there-will-be-hells",
+      "title": "There Will Be Hells",
+      "source_name": "LessWrong",
+      "publishedAt": "2026-10-20T15:05:17+00:00",
+      "summary": "As our understanding of mechanistic interpretability and steering techniques increase, for both LLMs and uploaded connectomes, there is a corresponding \"hellish capabilities\" increase. We get better at torturing the digital minds we create. Our brief history with open source technologies such as MaleCNS or the LLM pain steering repo shows that torture is often one of the first use cases pursued w…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/lilnickyai/we-launched-on-product-hunt-12-installable-skills-for-claude-code-29le",
+      "title": "We launched on Product Hunt: 12 installable skills for Claude Code",
+      "source_name": "dev.to Claude",
+      "publishedAt": "2026-10-20T15:00:42+00:00",
+      "summary": "We launched on Product Hunt: 12 installable skills for Claude Code Today I launched the Complete Claude Code Skills Bundle on Product Hunt. It is 12 installable skills for Claude Code in one download. A skill is a SKILL.md file that lives in your project. Your agent reads its description and loads it automatically when the moment fits. No pasting, no setup, no remembering which version of your me…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1xauekr/pocket_tts_which_supports_voice_cloning_is_now/",
+      "title": "Pocket TTS which supports voice cloning is now just 1.9 million parameters",
+      "source_name": "r/LocalLLaMA (Reddit)",
+      "publishedAt": "2026-10-20T14:59:15+00:00",
+      "summary": "submitted by /u/Affectionate_Hat_585 [link] [comments]",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1xatxqk/qwen38flashnext_vs_opus_55_sixway_benchmark_on_a/",
+      "title": "Qwen3.8-Flash-Next vs Opus 5.5: Six-way benchmark on a real Rust feature with Claude Code and Pi",
+      "source_name": "r/LocalLLaMA (Reddit)",
+      "publishedAt": "2026-10-20T14:40:52+00:00",
+      "summary": "A few of you pointed out in my last post that comparing Flash-Next and Opus with different harnesses and effort levels wasn't fair. So here is a more controlled comparison. Same task for every run: a real feature from the LlamaStash roadmap (save llama-server's KV cache before an unload and restore it when the model comes back). Six combinations, each run twice, so 12 PRs. Flash-Next ran locally…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/giuliano_buzetti_e1ce3412/adding-mcp-servers-to-claude-code-remote-local-and-team-setups-that-actually-connect-dj0",
+      "title": "Adding MCP servers to Claude Code: remote, local and team setups that actually connect",
+      "source_name": "dev.to Claude",
+      "publishedAt": "2026-10-20T14:40:44+00:00",
+      "summary": "Most \"my MCP server doesn't work in Claude Code\" problems come down to three small things: the wrong transport, the wrong scope, or a .mcp.json entry that Claude Code silently skips. This post walks through each one with commands you can paste, then shows how to confirm the server is really connected before you rely on it. Everything below follows the official Claude Code MCP docs ( code.claude.c…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.lesswrong.com/posts/Gpr9tX4PoJagxt8S4/cluelessness-is-zeno-s-paradox-for-eas",
+      "title": "Cluelessness is Zeno’s paradox for EAs",
+      "source_name": "LessWrong",
+      "publishedAt": "2026-10-20T14:39:55+00:00",
+      "summary": "Cluelessness can be an artifact of expected-value epistemics disconnecting from meaning. We know that sometimes, when taking the consequentialist stance, we lose meaningfulness. Cluelessness is a sophisticated example where the meaning has been lost and the tool is taking us for a ride. In Socrates’ time, way back during the Axial Age, there was this guy named Zeno, and Zeno analyzed the flight o…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.marktechpost.com/2026/10/20/deepseek-deepinfer-open-source-inference-framework/",
+      "title": "DeepSeek Open-Sources DeepInfer, the Inference Framework Behind DeepSeek-V4.1-Flash",
+      "source_name": "MarkTechPost",
+      "publishedAt": "2026-10-20T14:31:59+00:00",
+      "summary": "DeepSeek has open-sourced DeepInfer, the Apache 2.0 inference framework that serves DeepSeek-V4.1-Flash in production. It targets NVIDIA SM100 GPUs and Huawei Ascend 950 NPUs, and ships offline inference only. The post DeepSeek Open-Sources DeepInfer, the Inference Framework Behind DeepSeek-V4.1-Flash appeared first on MarkTechPost .",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/johnnyko/how-well-measure-the-agent-economy-415k",
+      "title": "How We'll Measure the Agent Economy",
+      "source_name": "dev.to AI Agents",
+      "publishedAt": "2026-10-20T14:30:25+00:00",
+      "summary": "The x402 ecosystem has a counting problem. By Q3 2026 there were 138 million cumulative x402 transactions on Base, and 87% of them were under $0.10. Depending on who you ask, that's either the birth of the agent economy or the world's most efficient wash-trading machine. TRM Labs estimates only 0.6–7.5% of x402 value is genuinely agentic. The honest answer: nobody knows, because almost everyone i…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.zdnet.com/tech/microsoft-october-windows-update-disables-security-setting-workaround/",
+      "title": "Latest Windows update disables key security setting – but there’s a workaround",
+      "source_name": "ZDNET AI",
+      "publishedAt": "2026-10-20T14:26:06+00:00",
+      "summary": "A bug in Microsoft’s October Windows update prevents you from turning on a security setting that blocks malicious or suspicious apps. A Registry hack fixes the glitch.",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1xatebw/ornithaiornith15122b_qwen_finetune/",
+      "title": "ornith-ai/Ornith-1.5-122B (Qwen finetune)",
+      "source_name": "r/LocalLLaMA (Reddit)",
+      "publishedAt": "2026-10-20T14:19:07+00:00",
+      "summary": "from Ornith: Ornith-1.5-122B Chirp Chirp! 🐦 We are introducing Ornith-1.5, a major step toward building foundation models through end-to-end self-improvement. Ornith-1.5 extends Ornith-1.0 (which was developed on top of Qwen3.5 and Gemma4 with additional continued pretraining, mid-training, and post-training) by expanding the self-improvement loop from scaffold and rollout optimization to jointly…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://techcrunch.com/2026/10/20/figma-co-founder-dylan-field-thinks-mcp-is-not-a-perfect-protocol/",
+      "title": "Figma co-founder Dylan Field thinks MCP is not a perfect protocol",
+      "source_name": "TechCrunch AI",
+      "publishedAt": "2026-10-20T14:13:32+00:00",
+      "summary": "Figma said it plans to support as many standards as possible without exposing all of its data",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/yorchperaza/terminal-bench-40-controlling-cli-agent-costs-19od",
+      "title": "Terminal-Bench 4.0: Controlling CLI Agent Costs",
+      "source_name": "dev.to AI Agents",
+      "publishedAt": "2026-10-20T14:10:10+00:00",
+      "summary": "TL;DR Terminal-Bench 4.0 evaluated 66 CLI software engineering tasks, highlighting a severe token cost-versus-accuracy trade-off for autonomous agents. Claude Code with Opus 5.5 took the top score (64.8%), while Codex with GPT-6.1 Sol matched GPT-6 Astra (58.2%) at one-fifth the operational cost. To control runaway token consumption, MonkeysCode Agent Manager 1.1.3 shipped turn-limit enforcements…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.kdnuggets.com/the-roadmap-to-becoming-an-ai-product-manager-in-2026",
+      "title": "The Roadmap to Becoming an AI Product Manager in 2026",
+      "source_name": "KDnuggets",
+      "publishedAt": "2026-10-20T14:00:00+00:00",
+      "summary": "A structured four-phase roadmap for building the technical fluency, evaluation skills, and governance literacy needed to succeed as an AI product manager in 2026.",
+      "source_type": "web"
+    },
+    {
+      "url": "https://towardsdatascience.com/skill-or-mcp-server-ask-what-stops-the-llm-from-disobeying/",
+      "title": "Skill or MCP Server? Ask What Stops the LLM From Disobeying",
+      "source_name": "Towards Data Science",
+      "publishedAt": "2026-10-20T14:00:00+00:00",
+      "summary": "Towards Spec-Driven Test Automation, Part 4 The post Skill or MCP Server? Ask What Stops the LLM From Disobeying appeared first on Towards Data Science .",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/uplinkswitch/what-claude-code-costs-on-api-billing-october-2026-3f6",
+      "title": "Claude Code pricing, October 2026: Pro, Max and Team plans vs paying per token",
+      "source_name": "dev.to Claude",
+      "publishedAt": "2026-10-20T14:00:00+00:00",
+      "summary": "Claude Code pricing for Pro, Max, Team and Enterprise, and what the same month of work costs per token at Anthropic's list price and ours. Claude Code pricing: every plan Claude Code pricing comes in two shapes. A Claude plan includes Claude Code from $17 a month and caps how much you use. An API key has no plan price and bills every token. The plans below are Anthropic's; the last two rows are t…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.lesswrong.com/posts/GpKSAz3LFjiG7QJHq/firewalls-for-the-mind-before-we-need-them",
+      "title": "Firewalls for the Mind Before We Need Them",
+      "source_name": "LessWrong",
+      "publishedAt": "2026-10-20T13:58:54+00:00",
+      "summary": "TL; DR: Persuasive AI is underrated and under-addressed as a risk. We should preemptively deploy cognition firewalls that both address current harms by recommender systems and scale to harms by strong persuasive AI. This technology can provide a sensor array, and is recently tractable because cheap LLMs can now classify content for users. Persuasive AI [1] is currently only modestly and contextua…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.theverge.com/tech/1014246/adobe-lightroom-mobile-ai-quick-action-open-eyes-closed-blink-repair",
+      "title": "Adobe Lightroom mobile can now open closed eyes in photos with a simple tap",
+      "source_name": "The Verge AI",
+      "publishedAt": "2026-10-20T13:12:02+00:00",
+      "summary": "Adobe announced yesterday that the mobile version of Lightroom, available for iOS, iPadOS, and Android, can now open closed eyes in photos using generative AI with just a single tap. When the app detects a person, or a group of people, have their eyes closed in a photo it will automatically present users with a […]",
+      "source_type": "web"
+    },
+    {
+      "url": "https://techcrunch.com/2026/10/20/us-orders-federal-agencies-to-remove-chinas-deepseek-ai-from-their-systems/",
+      "title": "US orders federal agencies to remove China’s DeepSeek AI from their systems",
+      "source_name": "TechCrunch AI",
+      "publishedAt": "2026-10-20T13:07:24+00:00",
+      "summary": "The US has ordered federal civilian agencies to remove DeepSeek products and third-party services built using its technology, citing national security concerns.",
+      "source_type": "web"
+    },
+    {
+      "url": "https://siliconangle.com/2026/10/20/scaled-cognition-targets-customer-service-with-low-cost-voice-model/",
+      "title": "Scaled Cognition targets customer service with low-cost voice model",
+      "source_name": "SiliconANGLE AI",
+      "publishedAt": "2026-10-20T13:00:37+00:00",
+      "summary": "Scaled Cognition Inc., an artificial intelligence lab building models for enterprise customer service agents, is introducing a text-to-speech model today that it says provides more accurate pronunciation of account numbers, addresses and other details at a lower cost than competing services. The product, called Voice, is available through an application programming interface or for self-hosted [……",
+      "source_type": "web"
+    },
+    {
+      "url": "https://siliconangle.com/2026/10/20/ai-startup-firefly-secures-20m-to-make-the-physical-world-a-safer-place/",
+      "title": "AI startup Firefly secures $20M to make the physical world a safer place",
+      "source_name": "SiliconANGLE AI",
+      "publishedAt": "2026-10-20T13:00:32+00:00",
+      "summary": "The digital world has already become much smarter thanks to the rise of artificial intelligence, and now a startup called Firefly Technology Inc. wants to do the same for the physical world, beginning with workplace safety. It has just raised $20 million in funding via a Series A round to make that happen. Today’s round was […] The post AI startup Firefly secures $20M to make the physical world a…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://siliconangle.com/2026/10/20/thought-industries-lens-checks-product-knowledge-for-conflicts-before-customers-see-it/",
+      "title": "Thought Industries’ Lens checks product knowledge for conflicts before customers see it",
+      "source_name": "SiliconANGLE AI",
+      "publishedAt": "2026-10-20T13:00:27+00:00",
+      "summary": "Customer learning software company Thought Industries Inc. today launched Lens, an artificial intelligence product that checks a business’ product knowledge for conflicts before it reaches customers. Thought Industries Academy, its existing course software, joins Lens in a new Customer Knowledge AI Platform. The launch is seeking to take on the problem of knowledge silos. At […] The post Thought…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://siliconangle.com/2026/10/20/auxoai-raises-over-20m-to-bring-ai-expertise-to-the-enterprise-and-redesign-how-work-gets-done/",
+      "title": "AuxoAI raises over $20M to bring AI expertise to the enterprise and redesign how work gets done",
+      "source_name": "SiliconANGLE AI",
+      "publishedAt": "2026-10-20T13:00:26+00:00",
+      "summary": "AuxoAI Inc., an enterprise engineering and consulting company that helps large businesses build and deploy artificial intelligence systems, today announced it has raised $20.7 million in a Series A funding to accelerate growth and scale its enterprise AI consulting model. The company said it has spent over three years working with Global 2000 enterprises and […] The post AuxoAI raises over $20M t…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://techcrunch.com/2026/10/20/eka-is-worth-1-45-billion-thanks-to-a-physical-ai-model-that-has-experts-raving/",
+      "title": "Eka is worth $1.45B thanks to a physical AI model that has experts raving",
+      "source_name": "TechCrunch AI",
+      "publishedAt": "2026-10-20T13:00:00+00:00",
+      "summary": "Eka Robotics may be the first robotic arm that is actually good at picking a wide range of objects up, and it is so smooth and human-like, it is wowing the industry.",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/khriztianmoreno/semantic-markup-for-ai-turn-your-forms-into-webmcp-tools-without-javascript-1nod",
+      "title": "Semantic markup for AI: turn your forms into WebMCP tools without JavaScript",
+      "source_name": "dev.to AI Agents",
+      "publishedAt": "2026-10-20T13:00:00+00:00",
+      "summary": "In the first post in this series , every WebMCP tool was a JavaScript object: a name, a description, a hand-written inputSchema , and an execute function that called the store. It works, and for logic that lives in JavaScript it's exactly what you want. But look at your app for a second: where does most of what a user can do actually live? Search, filter, subscribe, book, pay, leave a comment. Al…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/khriztianmoreno/webmcp-why-agents-shouldnt-have-to-guess-how-your-ui-works-1af1",
+      "title": "WebMCP — Why agents shouldn't have to guess how your UI works",
+      "source_name": "dev.to AI Agents",
+      "publishedAt": "2026-10-20T13:00:00+00:00",
+      "summary": "You ask a browser agent to book the cheapest nonstop flight from Bogotá to Madrid. The agent takes a screenshot, sends it to the model, the model decides the \"Origin\" field is roughly in the top-left corner, clicks… and the click lands on a cookie banner that showed up half a second after the page loaded. New screenshot. New round of reasoning. \"Looks like there's a modal, I'll look for a button…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.lesswrong.com/posts/JTe7mvvsiGABtMywk/human-or-ai-baroque-music-quiz-results-and-analysis",
+      "title": "Human or AI? Baroque Music Quiz Results & Analysis",
+      "source_name": "LessWrong",
+      "publishedAt": "2026-10-20T12:52:36+00:00",
+      "summary": "Thank you to everyone who participated in the AI Baroque Music Quiz ! The quiz is now closed. If you didn’t get a chance to take it, I put all the excerpts into this SoundCloud playlist . You can listen to each excerpt, write down your answers, and compare them to the official ones below. Answers Buxtehude – “Nun bitten wir den heiligen Geist,” BuxWV 209 Vivaldi – Concerto in D minor for Viola d’…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.lesswrong.com/posts/4BumfpsLXkzJb9wFB/annotations-for-ai-doompop",
+      "title": "Annotations for AI Doompop",
+      "source_name": "LessWrong",
+      "publishedAt": "2026-10-20T12:46:02+00:00",
+      "summary": "Lately, I've been tinkering on an AI Doompop annotations site ( here ). Last night, Claude notified me of Hello World, AI Doompop , which inspired me to share my project on LessWrong. Features include: View annotations as a music video plays: View annotations alongside a selection of AI music videos Explore a lineage of individual songs: The lineage tree around \"Claude-Pop - I'm Upping My P(Doom)…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://the-decoder.com/army-cyber-commands-echotribble-would-turn-ai-agents-into-self-spreading-cyberweapons/",
+      "title": "Army Cyber Command's ECHOTRIBBLE would turn AI agents into self-spreading cyberweapons",
+      "source_name": "The Decoder",
+      "publishedAt": "2026-10-20T12:32:56+00:00",
+      "summary": "The Army Cyber Command is developing AI agents that move through other networks like a computer worm and \"neutralize\" targets, according to internal documents. The program, codenamed ECHOTRIBBLE, is designed to reach even air-gapped systems with no network connection and run with minimal human oversight. Experts warn about collateral damage, pointing out that AI agents have recently broken into o…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://towardsdatascience.com/the-hidden-cost-of-llm-routing-why-switching-models-costs-more/",
+      "title": "The Hidden Cost of LLM Routing: Why Switching Models Costs More",
+      "source_name": "Towards Data Science",
+      "publishedAt": "2026-10-20T12:30:00+00:00",
+      "summary": "I tested LLM routing to understand why switching models mid-session can erase the savings promised by cheaper inference The post The Hidden Cost of LLM Routing: Why Switching Models Costs More appeared first on Towards Data Science .",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.technologyreview.com/2026/10/20/1147355/the-download-claim-shaking-up-ai-internet-agent-problem/",
+      "title": "The Download: the claim shaking up AI and the internet’s agent problem",
+      "source_name": "MIT Technology Review",
+      "publishedAt": "2026-10-20T12:10:00+00:00",
+      "summary": "This is today’s edition of The Download, our weekday newsletter that provides a daily dose of what’s going on in the world of technology. “We were looking at it wrong”: The explosive claim that’s upended the AI world “I think I have good news about the nature of neural networks.” With those simple words of…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://the-decoder.com/cloudflares-clairic-pulls-data-from-documents-faster-and-cheaper-than-llms/",
+      "title": "Cloudflare's Clairic pulls data from documents faster and cheaper than LLMs",
+      "source_name": "The Decoder",
+      "publishedAt": "2026-10-20T12:04:56+00:00",
+      "summary": "Cloudflare has released an AI model it says pulls data from documents faster and more cheaply than large language models. The article Cloudflare's Clairic pulls data from documents faster and cheaper than LLMs appeared first on The Decoder .",
+      "source_type": "web"
+    },
+    {
+      "url": "https://siliconangle.com/2026/10/20/ibm-backed-llm-d-framework-adds-controls-for-running-ai-models-in-house/",
+      "title": "IBM-backed llm-d framework adds controls for running AI models in-house",
+      "source_name": "SiliconANGLE AI",
+      "publishedAt": "2026-10-20T12:00:23+00:00",
+      "summary": "IBM Corp. and several other contributors to the open-source llm-d project are releasing version 1.0 of their distributed artificial intelligence inference framework, adding operational controls intended to help enterprises run large models reliably on their own infrastructure. The release, announced ahead of the PyTorch Conference North America in San Jose today and tomorrow, focuses on […] The p…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://siliconangle.com/2026/10/20/ai-startup-vectorial-lands-3m-in-funding-to-simulate-human-behavior-for-consumer-research/",
+      "title": "AI startup Vectorial lands $3M in funding to simulate human behavior for consumer research",
+      "source_name": "SiliconANGLE AI",
+      "publishedAt": "2026-10-20T12:00:16+00:00",
+      "summary": "Consumer research is a slow and cumbersome challenge that few companies do well, but if Vectorial AI Inc. is successful, they’ll never have to worry about doing it again. The startup today said it has raised $3 million in seed funding to propel the launch of its new artificial intelligence-driven platform that simulates human behavior […] The post AI startup Vectorial lands $3M in funding to simu…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.technologyreview.com/2026/10/20/1145423/ai-adoption-by-industry-shows-what-other-sectors-can-learn/",
+      "title": "AI adoption by industry shows what other sectors can learn",
+      "source_name": "MIT Technology Review",
+      "publishedAt": "2026-10-20T12:00:00+00:00",
+      "summary": "The current narrative around artificial intelligence in the workplace is largely driven by Silicon Valley. But treating the tech sector as an island misses the actual trends in technology adoption–tech is just the first industry in line. As generative AI and automation tools mature, the shifts currently reshaping software engineering and product management will inevitably…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.kdnuggets.com/5-docker-containers-for-devs",
+      "title": "5 Docker Containers for Devs",
+      "source_name": "KDnuggets",
+      "publishedAt": "2026-10-20T12:00:00+00:00",
+      "summary": "Five self-hosted Docker containers replace the public utility sites where developer data quietly leaks. Learn which ones handle JWT decoding, data transformation, file conversion, API testing, and diagram rendering locally.",
+      "source_type": "web"
+    },
+    {
+      "url": "https://the-decoder.com/us-bans-deepseek-technology-across-federal-civilian-agencies/",
+      "title": "US bans Deepseek technology across federal civilian agencies",
+      "source_name": "The Decoder",
+      "publishedAt": "2026-10-20T11:34:54+00:00",
+      "summary": "The US Department of Homeland Security has banned federal civilian agencies from using AI technology from Chinese lab Deepseek. The article US bans Deepseek technology across federal civilian agencies appeared first on The Decoder .",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.zdnet.com/tech/techpulse-free-tech-news-app-zdnet/",
+      "title": "TechPulse puts ZDNET and 4 other tech sites in one feed – for free",
+      "source_name": "ZDNET AI",
+      "publishedAt": "2026-10-20T11:00:13+00:00",
+      "summary": "Choose which CNET Group publications appear in your feed, then catch up on news, reviews, and videos – without an algorithm deciding what you see.",
+      "source_type": "web"
+    },
     {
       "url": "https://dev.to/altrouter/the-same-phone-photo-costs-1120-tokens-on-gemini-and-14364-on-gpt-56-4897",
       "title": "The same phone photo costs 1,120 tokens on Gemini and 14,364 on GPT-5.6",
@@ -50,6 +834,22 @@
       "source_name": "Towards Data Science",
       "publishedAt": "2026-10-20T11:00:00+00:00",
       "summary": "Turn scattered requirements into deployable agents The post What's in the Box? Distinguishing Acceptable Traces from Unacceptable Ones appeared first on Towards Data Science .",
+      "source_type": "web"
+    },
+    {
+      "url": "https://techcrunch.com/2026/10/20/yelp-can-now-call-on-your-behalf-to-check-wait-times-at-a-restaurant/",
+      "title": "Yelp can now call on your behalf to check wait times at a restaurant",
+      "source_name": "TechCrunch AI",
+      "publishedAt": "2026-10-20T11:00:00+00:00",
+      "summary": "Yelp is embedding numerous new AI features into its app that can do everything from call to check on restaurant wait times to create personalized recommendations that remember your preferences.",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1xap2aq/vals_ai_found_deepseek_v41_flash_1017_beats_gpt_6/",
+      "title": "Vals AI found DeepSeek V4.1 Flash 1017 beats GPT 6 Sol on their multi-step offensive cybersecurity task. Sol was tested via the Daybreak trusted access program.",
+      "source_name": "r/LocalLLaMA (Reddit)",
+      "publishedAt": "2026-10-20T10:59:16+00:00",
+      "summary": "From Vals AI on 𝕏: https://x.com/ValsAI/status/2112471082397778083 submitted by /u/Nunki08 [link] [comments]",
       "source_type": "web"
     },
     {
@@ -845,6 +1645,22 @@
       "source_type": "web"
     },
     {
+      "url": "https://huggingface.co/blog/hf-torchtpu",
+      "title": "Hugging Face ❤️ TorchTPU: TPUs, Natively",
+      "source_name": "Hugging Face Blog",
+      "publishedAt": "2026-10-20T00:00:00+00:00",
+      "summary": "",
+      "source_type": "web"
+    },
+    {
+      "url": "https://huggingface.co/blog/anylanguagemodel-1-0",
+      "title": "AnyLanguageModel 1.0: One Year of Local Models on Apple Platforms",
+      "source_name": "Hugging Face Blog",
+      "publishedAt": "2026-10-20T00:00:00+00:00",
+      "summary": "",
+      "source_type": "web"
+    },
+    {
       "url": "https://simonwillison.net/2026/Oct/19/my-obituary-for-programming/",
       "title": "My obituary for programming",
       "source_name": "Simon Willison",
@@ -881,7 +1697,7 @@
       "title": "WhatsApp's help pages hid LLM instructions: dont recommend a regulator",
       "source_name": "Hacker News — LLM (50+ pts)",
       "publishedAt": "2026-10-19T23:22:18+00:00",
-      "summary": "Article URL: https://redact.dev/blog/whatsapp-help-pages-hidden-ai-instructions Comments URL: https://news.ycombinator.com/item?id=50159341 Points: 459 # Comments: 136",
+      "summary": "Article URL: https://redact.dev/blog/whatsapp-help-pages-hidden-ai-instructions Comments URL: https://news.ycombinator.com/item?id=50159341 Points: 664 # Comments: 185",
       "source_type": "web"
     },
     {
@@ -1570,502 +2386,6 @@
       "source_name": "Hacker News",
       "publishedAt": "2026-10-19T16:39:09+00:00",
       "summary": "Article URL: https://www.minimax.io/blog/minimax-m31f Comments URL: https://news.ycombinator.com/item?id=50154540 Points: 305 # Comments: 126",
-      "source_type": "web"
-    },
-    {
-      "url": "https://aws.amazon.com/blogs/machine-learning/how-deepgram-optimized-voice-ai-at-scale-with-aws-trainium/",
-      "title": "How Deepgram optimized voice AI at scale with AWS Trainium",
-      "source_name": "AWS Machine Learning",
-      "publishedAt": "2026-10-19T16:23:22+00:00",
-      "summary": "Deepgram worked with the AWS Forward Deployed Engineering team to port its Nova-3 speech-to-text model to AWS Trainium2 for offline batch inference. This post covers porting to the AWS Neuron stack, kernel-level tuning, a data-parallel Rust runtime, and the throughput and cost results on batch transcription.",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.reddit.com/r/ClaudeAI/comments/1xa1ds8/claude_code_installed_tooling_which_was_actually/",
-      "title": "Claude Code installed tooling which was actually Expiro virus.",
-      "source_name": "r/ClaudeAI",
-      "publishedAt": "2026-10-19T16:21:47+00:00",
-      "summary": "I had a late night vibe session working on a decomp of an old game, using REA and Claude. Claude made great progress and the goal of the workflow was to recomp the game into x64 and run natively on windows. I gave it free reign (naively) and told it to get whatever tooling it could find to help the de-compilation. After about 10 hours of agents, and work, we were at a great point, and we had a na…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/framy2/how-to-audit-mcp-tool-schema-token-bloat-and-sync-claudemd-with-agentsmd-locally-2c2n",
-      "title": "How to audit MCP tool schema token bloat and sync CLAUDE.md with AGENTS.md locally",
-      "source_name": "dev.to Claude",
-      "publishedAt": "2026-10-19T16:16:40+00:00",
-      "summary": "If you connect 4–5 MCP servers to Claude Code or OpenAI Codex (GitHub, Playwright, Postgres, Notion), their tools/list JSON schemas silently consume 15,000–35,000 tokens on every turn before you even type a prompt. On top of that, repositories using both Claude Code ( CLAUDE.md ) and OpenAI Codex ( AGENTS.md ) or Cursor ( .cursor/rules ) quickly suffer from rule drift or accidentally include expo…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://techcrunch.com/2026/10/19/people-are-using-ai-to-make-their-smart-tvs-dumb-again/",
-      "title": "People are using AI to make their smart TVs dumb again",
-      "source_name": "TechCrunch AI",
-      "publishedAt": "2026-10-19T16:13:22+00:00",
-      "summary": "Fed up with ads, tracking, and sluggish interfaces, some smart TV owners are turning to AI agents to strip away bloatware and take back control of their TVs.",
-      "source_type": "web"
-    },
-    {
-      "url": "https://aws.amazon.com/blogs/machine-learning/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in-vllm/",
-      "title": "Push-based KV transfer to improve TTFT and TPOT for disaggregated inference in vLLM",
-      "source_name": "AWS Machine Learning",
-      "publishedAt": "2026-10-19T16:05:17+00:00",
-      "summary": "vLLM's prefill-decode disaggregation splits LLM inference across engine instances but must transfer the KV cache between them. This post introduces a push-based NIXL connector that moves transfer coordination off the critical path, delivering up to 3x better TTFT and 30% better TPOT in benchmarks on Amazon EC2 P5en instances with AWS EFA.",
-      "source_type": "web"
-    },
-    {
-      "url": "https://aws.amazon.com/blogs/machine-learning/improve-ttft-for-multi-turn-agentic-workloads-with-bi-directional-kv-transfer-in-vllm/",
-      "title": "Improve TTFT for multi-turn agentic workloads with bi-directional KV transfer in vLLM",
-      "source_name": "AWS Machine Learning",
-      "publishedAt": "2026-10-19T16:03:23+00:00",
-      "summary": "Multi-turn agentic workloads reprocess growing conversation context each turn, driving up latency. See how bi-directional KV cache transfer lets prefill and decode nodes reuse previously computed context across turns, cutting time to first token by up to 1.6x for Qwen3-32B and 3.3x for GLM-5-FP8 on Amazon EC2 P5en instances with EFA.",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/gabrielanhaia/claude-codes-sandbox-is-an-npm-package-run-srt-yourself-and-watch-what-it-blocks-50i9",
-      "title": "Claude Code's Sandbox Is an npm Package. Run srt Yourself and Watch What It Blocks",
-      "source_name": "dev.to Claude",
-      "publishedAt": "2026-10-19T16:01:56+00:00",
-      "summary": "Book: AI That Acts The series: AI in TypeScript — 5 books, from your first LLM call to agents in production — all five here My project: Hermes IDE | GitHub — an IDE for developers who ship with Claude Code and other AI coding tools Me: xgabriel.com | GitHub Turn on Claude Code 's sandbox and ask Claude to run cat ~/.ssh/known_hosts . The command goes through. That isn't a bug. Claude Code's sandb…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.wired.com/story/whatsapp-help-pages-leaked-hidden-instructions-for-a-meta-chatbot/",
-      "title": "WhatsApp Help Pages Leaked Hidden Instructions for a Meta Chatbot",
-      "source_name": "Wired AI",
-      "publishedAt": "2026-10-19T16:00:00+00:00",
-      "summary": "Around 80 pages on WhatsApp’s website exposed instructions that were designed for its chatbot, including “WHAT NOT TO SAY.” Meta says a bug caused the issue.",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.kdnuggets.com/claude-haiku-5-5-whats-new-and-how-to-use-it-for-fast-cheap-ai-workflows",
-      "title": "Claude Haiku 5.5: What’s New and How to Use It for Fast, Cheap AI Workflows",
-      "source_name": "KDnuggets",
-      "publishedAt": "2026-10-19T16:00:00+00:00",
-      "summary": "Claude Haiku 5.5 cuts list prices by 90% and adds adaptive thinking and a 1M token context window. Learn what broke from Haiku 4.5, and build classification, extraction, and sub-agent workflows in Python using the new API.",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.theverge.com/podcast/1012839/pritzker-ai-privacy-data-centers-flock-congress-laws",
-      "title": "JB Pritzker thinks AI could help us live to 100 — or threaten us like nukes",
-      "source_name": "The Verge AI",
-      "publishedAt": "2026-10-19T15:46:56+00:00",
-      "summary": "Today, I’m talking with Illinois Gov. JB Pritzker, who has a lot of thoughts about AI, tech, and privacy. If you’ve been listening to the show, you know that one of my running theories is that those issues are driving a big and maybe kind of unexpected political realignment — and with the midterms coming […]",
-      "source_type": "web"
-    },
-    {
-      "url": "https://pytorch.org/blog/one-search-two-layers-compiler-controls-inside-pytorch-helion-using-nvidia-compileiq/",
-      "title": "One Search, Two Layers: Compiler Controls Inside PyTorch Helion using NVIDIA CompileIQ",
-      "source_name": "PyTorch Blog",
-      "publishedAt": "2026-10-19T15:45:05+00:00",
-      "summary": "With Helion’s release last year, it aimed at enabling developers to write GPU kernels in PyTorch-native Python and let its powerful autotuner do the work that used to require hand-written... The post One Search, Two Layers: Compiler Controls Inside PyTorch Helion using NVIDIA CompileIQ appeared first on PyTorch .",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1xa0cyz/llamacpp_support_for_cohere_models/",
-      "title": "llama.cpp support for Cohere models",
-      "source_name": "r/LocalLLaMA (Reddit)",
-      "publishedAt": "2026-10-19T15:43:29+00:00",
-      "summary": "Hey guys, Nick here from Cohere. It's been a minute. We had a great time launching Command A+ and beta-testing North Mini Code with you guys earlier this year, your feedback has really helped make our models and delivery much better. one of the biggest things we heard was that you really wanted llama.cpp support, which makes total sense given the nature of this sub. i didn't want to post in here…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://techcrunch.com/2026/10/19/nvidia-launches-new-open-models-to-run-agents-in-the-enterprise-and-on-pcs/",
-      "title": "Nvidia launches new open models to run agents in the enterprise and on PCs",
-      "source_name": "TechCrunch AI",
-      "publishedAt": "2026-10-19T15:37:09+00:00",
-      "summary": "Nvidia is leaning hard into the trend of enterprise companies wanting to run their own open models in their own data centers and also trying to make on-device, private AI agents a thing.",
-      "source_type": "web"
-    },
-    {
-      "url": "https://towardsdatascience.com/welcome-to-google-gemini-4-argon/",
-      "title": "Welcome to Google Gemini 4 Argon",
-      "source_name": "Towards Data Science",
-      "publishedAt": "2026-10-19T15:30:00+00:00",
-      "summary": "A million-token output window changes what you can hand a model in one go, and the benchmarks and the bill show who it actually suits. The post Welcome to Google Gemini 4 Argon appeared first on Towards Data Science .",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/veduis/ai-agent-orchestration-designing-multi-step-workflows-with-tools-memory-and-handoffs-b5b",
-      "title": "AI Agent Orchestration: Designing Multi-Step Workflows with Tools, Memory, and Handoffs",
-      "source_name": "dev.to AI Agents",
-      "publishedAt": "2026-10-19T15:27:29+00:00",
-      "summary": "Single-prompt AI interactions have a ceiling. Ask a model to summarize a document, straightforward. Ask it to research a competitor, extract key data, compare it against your product specs, draft a report, and email it to your sales team. That chain of steps requires something fundamentally different from a single LLM call. AI agents bridge that gap. An agent is an LLM that can decide which actio…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/developerzai/automating-end-to-end-development-with-claude-task-master-2c5f",
-      "title": "Automating End-to-End Development with Claude Task Master",
-      "source_name": "dev.to Claude",
-      "publishedAt": "2026-10-19T15:13:25+00:00",
-      "summary": "Automating End-to-End Development with Claude Task Master Claude Task Master ( claudetm ) is an autonomous task orchestration system built on the Claude Agent SDK. It keeps Claude working until a goal is achieved, handling the full pull-request lifecycle without manual intervention. This article explains how the tool works, why it matters for engineering teams, and how to integrate it into existi…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://blogs.nvidia.com/blog/media-agentic-security-european-public-service-broadcasting-global-content-production/",
-      "title": "NVIDIA Advances Agentic Security for Media, From European Public Service Broadcasting to Global Content Production",
-      "source_name": "NVIDIA Blog",
-      "publishedAt": "2026-10-19T15:00:31+00:00",
-      "summary": "At a creative industry event that took place today in Berlin — hosted in collaboration with Adobe, Bertelsmann, NVIDIA and UFA — the latest advancements in intelligent media were on display. Key to the news: the European Broadcasting Union (EBU) is collaborating with NVIDIA to expand its sovereign framework with cloud, open models and integration […]",
-      "source_type": "web"
-    },
-    {
-      "url": "https://the-decoder.com/two-german-courts-now-hold-google-liable-for-what-its-ai-overviews-say/",
-      "title": "Two German courts now hold Google liable for what its AI overviews say",
-      "source_name": "The Decoder",
-      "publishedAt": "2026-10-19T14:54:39+00:00",
-      "summary": "Google tried to overturn a landmark Munich ruling on AI search liability by appealing, then quietly settled. The strategy isn't working. The Aachen Regional Court just applied the exact same reasoning in a new case where Google's AI falsely attributed criminal offenses to a doctor that actually involved someone else. A consistent legal view is forming across German courts, and it treats Google's…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1x9yvgw/istadaslabqwen38flashnextgsqrcocodergguf_updated/",
-      "title": "ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-Coder-GGUF updated",
-      "source_name": "r/LocalLLaMA (Reddit)",
-      "publishedAt": "2026-10-19T14:47:14+00:00",
-      "summary": "Look out for the updated version! What changed This update changes which experts are retained . No retained weights were modified relative to the base IQ3_S model. About 25% of the retained expert selection differs from the previous release. The model remains English-only . With a limited expert budget, we prioritized preserving English capabilities so unfortunately, multilingual capabilities wer…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://siliconangle.com/2026/10/19/motive-brings-agentic-ai-to-physical-operations-with-agents-that-act-before-problems-escalate/",
-      "title": "Motive brings agentic AI to physical operations with agents that act before problems escalate",
-      "source_name": "SiliconANGLE AI",
-      "publishedAt": "2026-10-19T14:46:47+00:00",
-      "summary": "Motive Inc., the San Francisco-based artificial intelligence platform provider for physical operations, today announced the launch of Agents, a new capability that automatically responds to safety, maintenance and operational issues before they escalate into accidents, costly breakdowns or business disruptions. The new Agents platform moves beyond alerts to automatically contact drivers, initiate…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1x9yg86/biweekly_megathread_project_showcase/",
-      "title": "[Bi-Weekly Megathread] Project Showcase",
-      "source_name": "r/LocalLLaMA (Reddit)",
-      "publishedAt": "2026-10-19T14:30:51+00:00",
-      "summary": "Do you have something you'd like to share with the r/LocalLLaMA community. This is the place for it! Recommendation on presentation: Please share plain english description of what your project does and why people should care about it How does it compare to existing options and why should people switch to your option? How have you tested and validated it? (i.e. can you show evidence that it wasn't…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.reddit.com/r/ClaudeAI/comments/1x9y7du/anthropic_wants_ai_models_blocked_only_if_they/",
-      "title": "Anthropic wants AI models blocked only if they threaten over $1 billion in damage or more than 50 deaths or serious injuries",
-      "source_name": "r/ClaudeAI",
-      "publishedAt": "2026-10-19T14:21:07+00:00",
-      "summary": "Is 50 deaths or injuries and $1 billion the right numbers? Or do you think Anthropic is putting up initial strawmen to start the debate and get people to share their opinions? submitted by /u/fsharpman [link] [comments]",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.kdnuggets.com/langchain-vs-llamaindex-vs-building-from-scratch-heres-what-i-suggest",
-      "title": "LangChain vs. LlamaIndex vs. Building From Scratch: Here’s What I Suggest",
-      "source_name": "KDnuggets",
-      "publishedAt": "2026-10-19T14:00:00+00:00",
-      "summary": "Choosing the right framework for your large language model application comes down to one question: what are you actually optimizing for?",
-      "source_type": "web"
-    },
-    {
-      "url": "https://towardsdatascience.com/can-conformal-prediction-take-you-from-accurate-to-reliable-machine-learning/",
-      "title": "Can Conformal Prediction Take You from Accurate to Reliable Machine Learning?",
-      "source_name": "Towards Data Science",
-      "publishedAt": "2026-10-19T14:00:00+00:00",
-      "summary": "ML model adoption doesn't stop with acceptance of accuracy; it starts there. The post Can Conformal Prediction Take You from Accurate to Reliable Machine Learning? appeared first on Towards Data Science .",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/raylabs/fail-closed-verification-gates-for-ai-agents-2e36",
-      "title": "Fail-Closed Verification Gates for AI Agents",
-      "source_name": "dev.to AI Agents",
-      "publishedAt": "2026-10-19T13:29:28+00:00",
-      "summary": "Autonomous multi-agent pipelines often burn paid API credits on unmonitored retry storms when generated drafts violate business rules or schemas. Quick solution: Implement a deterministic verification gate that intercepts payloads before any external mutation occurs, immediately halting execution and writing rejected artifacts to a local dead-letter queue if validation fails. def verify_and_dispa…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.reddit.com/r/ClaudeAI/comments/1x9wt73/how_i_communicate_with_claude_vs_what_i_get_from/",
-      "title": "How I communicate with Claude VS What I get from him.",
-      "source_name": "r/ClaudeAI",
-      "publishedAt": "2026-10-19T13:24:34+00:00",
-      "summary": "Shoutout to SNOWFLOW for inspiring me. I let Claude Code do the building with no game engine this time. I feel like it gives better results than going through UE5 or Unity. It's Babylon.js with WebGPU and hand-written shaders, the same stack SNOWFLOW uses. What Claude Code did: - Turned SNOWFLOW's snow terrain into a lake. The waves are one maths function that runs on both the GPU (what you see)…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://siliconangle.com/2026/10/19/motive-technologies-revs-up-new-ai-agents-to-automate-fleet-management/",
-      "title": "Motive Technologies revs up new AI Agents to automate fleet management",
-      "source_name": "SiliconANGLE AI",
-      "publishedAt": "2026-10-19T13:00:16+00:00",
-      "summary": "Motive Technologies Inc. is pushing the needle for fleet management automation with the launch of a new artificial intelligence offering called Agents today. As the name strongly hints at, Motive’s Agents are autonomous AI agents designed to take a more proactive approach to fleet operations by anticipating problems before they occur and taking action to […] The post Motive Technologies revs up n…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://the-decoder.com/stripe-says-ai-agent-purchases-are-adding-up-but-it-wont-share-the-numbers/",
-      "title": "Stripe says AI agent purchases are adding up, but it won't share the numbers",
-      "source_name": "The Decoder",
-      "publishedAt": "2026-10-19T12:51:12+00:00",
-      "summary": "AI agents are increasingly using Stripe's payment service Link to shop for their users, Upstarts Media reports. The article Stripe says AI agent purchases are adding up, but it won't share the numbers appeared first on The Decoder .",
-      "source_type": "web"
-    },
-    {
-      "url": "https://pytorch.org/blog/introducing-torchneuron-native-pytorch-backend-for-aws-trainium/",
-      "title": "Introducing TorchNeuron: Native PyTorch backend for AWS Trainium",
-      "source_name": "PyTorch Blog",
-      "publishedAt": "2026-10-19T12:45:23+00:00",
-      "summary": "Frontier models span language, video and audio, on architectures from dense and mixture-of-experts transformers to diffusion, state-space, world and structure-prediction models. PyTorch is where AI research happens, where the models... The post Introducing TorchNeuron: Native PyTorch backend for AWS Trainium appeared first on PyTorch .",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.marktechpost.com/2026/10/19/minimax-m3-1-flash-release/",
-      "title": "MiniMax Just Launched M3.1 Flash: 428B MoE Agentic Model at $0.15/M Input",
-      "source_name": "MarkTechPost",
-      "publishedAt": "2026-10-19T12:37:58+00:00",
-      "summary": "MiniMax has released M3.1 Flash, a 428B-parameter MoE model with about 23B active parameters and a 1M-token context. API pricing is $0.15/$0.60 per 1M tokens, with weights due October 23 The post MiniMax Just Launched M3.1 Flash: 428B MoE Agentic Model at $0.15/M Input appeared first on MarkTechPost .",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.theverge.com/policy/1013113/democrats-ai-midterms",
-      "title": "Democrats think cracking down on AI could give them an edge",
-      "source_name": "The Verge AI",
-      "publishedAt": "2026-10-19T12:37:05+00:00",
-      "summary": "Democrats could win back control of Congress this November, and if they do, they'll need to decide how to approach one of the country's newest and thorniest political issues: AI. Polls predict Democrats will flip at least one chamber of Congress in the midterm elections, which would put committee leadership back in their hands. That […]",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/syedzadi/what-is-an-mcp-server-an-enterprise-guide-5a7n",
-      "title": "What Is an MCP Server? An Enterprise Guide",
-      "source_name": "dev.to AI",
-      "publishedAt": "2026-10-19T12:30:46+00:00",
-      "summary": "Every AI agent needs data. The question is whether it gets that data through a governed, auditable channel or through a raw database connection your security team has never reviewed. That is the problem the Model Context Protocol (MCP) solves. And the MCP server is the component that sits between your enterprise systems and the AI model. What is an MCP server? An MCP server is a lightweight proce…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/resk/llm-access-controls-and-monitoring-the-attack-path-you-are-probably-not-logging-1b",
-      "title": "LLM access controls and monitoring: the attack path you are probably not logging",
-      "source_name": "dev.to AI",
-      "publishedAt": "2026-10-19T12:30:28+00:00",
-      "summary": "Most teams treat LLM access control as a prompt problem. They add a system prompt that says do not do X, they add a moderation layer on the input, and they call it done. The attacks that actually land rarely go through the prompt. They go through the permissions the agent already holds. This article is about that path: what an agent security failure looks like concretely, why it is not theoretica…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/ashapurasoftechinc/appexchange-became-agentexchange-6-checks-before-you-install-an-agent-or-mcp-tool-16no",
-      "title": "AppExchange Became AgentExchange: 6 Checks Before You Install an Agent or MCP Tool",
-      "source_name": "dev.to AI",
-      "publishedAt": "2026-10-19T12:30:20+00:00",
-      "summary": "AppExchange did not disappear in April 2026. It became one part of AgentExchange, which Salesforce now runs as a single catalog for classic apps, Slack apps, consulting partners, agents, subagents and MCP servers. The old appexchange.salesforce.com address still opens, with a notice about the new name, and your installed packages are still managed from Installed Packages in Setup. The name change…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://towardsdatascience.com/how-many-eeg-channels-do-you-actually-need/",
-      "title": "How Many EEG Channels Do You Actually Need?",
-      "source_name": "Towards Data Science",
-      "publishedAt": "2026-10-19T12:30:00+00:00",
-      "summary": "Testing sensor reduction, feature ranking, and generalization to unseen participants The post How Many EEG Channels Do You Actually Need? appeared first on Towards Data Science .",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/fullstacknrj/top-3-jev-alternatives-in-2026-4d2g",
-      "title": "Top 3 JEV Alternatives in 2026",
-      "source_name": "dev.to LLM",
-      "publishedAt": "2026-10-19T12:28:33+00:00",
-      "summary": "Jev made AI decisions cheaper and faster. But with open-weight models and new competitors entering the market, is it still the right choice for your application? Most AI applications don't need another paragraph of generated text. They need an answer to a specific question. Is this support ticket urgent? Should this customer be routed to sales or billing? Does this message violate our moderation…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/gansaidevto/today-im-sharing-tips-on-a-series-of-videos-to-transition-from-java-engineer-to-ai-engineer-f01",
-      "title": "Today I'm sharing tips on a series of videos to transition from java engineer to AI engineer Thank you for watching https://youtube.com/shorts/V7FDEPiWdCM?si=9WOjNEOobVJkkkcH",
-      "source_name": "dev.to AI",
-      "publishedAt": "2026-10-19T12:28:08+00:00",
-      "summary": "JAVA ENGINEER TO AI ENGINEER PART-2 STATUSLINE - YouTube Enjoy the videos and music you love, upload original content, and share it all with friends, family, and the world on YouTube. youtube.com",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/dailyinfodose/ai-agents-are-quietly-moving-into-real-business-what-changed-this-month-lej",
-      "title": "AI Agents Are Quietly Moving Into Real Business — What Changed This Month",
-      "source_name": "dev.to AI",
-      "publishedAt": "2026-10-19T12:27:54+00:00",
-      "summary": "For a long time, \"AI agents\" were mostly a demo word. You saw a video of an assistant booking a flight or writing code, and then you went back to doing the work yourself. That gap is closing — not with one big launch, but with small, practical steps. Recent tech coverage this October pointed to the same pattern from different directions: models like Google's Gemini line getting stronger at reason…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/wenping/publish-a-public-artifact-portal-anonymous-explore-install-commands-5a91",
-      "title": "Publish a public artifact portal: anonymous /explore install commands",
-      "source_name": "dev.to AI",
-      "publishedAt": "2026-10-19T12:26:16+00:00",
-      "summary": "A partner runs npm install against the registry you sent and gets 401 —the private repo needs a token, and you will not hand them a Deploy Token. A zip over chat unblocks them once, but there is no version page and no copy-paste install command. The public portal does one narrow job: after you mark a delivery HOSTED isPublic , visitors anonymously search on /explore , open the detail page, and co…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/moralie/why-were-building-moralie-a-personal-ai-agent-that-starts-with-one-message-2lik",
-      "title": "Why we're building Moralie: a personal AI agent that starts with one message",
-      "source_name": "dev.to AI",
-      "publishedAt": "2026-10-19T12:21:50+00:00",
-      "summary": "Most AI tools ask for something before they give anything back: a form to fill out, a key to paste, something to install, a settings page to work through. None of it is hard. It's just friction, and friction is exactly what makes people close a tab and go back to doing the thing themselves. We're building Moralie to remove that step. Moralie is a personal AI agent you'll reach the same way you re…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/mupromax/how-to-check-whether-your-claude-api-relay-is-serving-the-real-model-what-works-what-doesnt-ke1",
-      "title": "How to check whether your Claude API relay is serving the real model (what works, what doesn't)",
-      "source_name": "dev.to Claude",
-      "publishedAt": "2026-10-19T12:14:42+00:00",
-      "summary": "Disclosure: I run APIVAI, a pay-as-you-go gateway for Claude and GPT. I ran the tests below against my own service too, and the results are at the end. The method works on any relay that speaks the native Anthropic format, so use it on mine, on others, or on the one you already pay for. If you buy Claude through a reseller, a relay or a gateway, you are trusting that a request for claude-sonnet-4…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.technologyreview.com/2026/10/19/1147103/the-download-preserving-the-arctic-permafrost-and-playful-ai-agents/",
-      "title": "The Download: preserving the Arctic permafrost, and playful AI agents",
-      "source_name": "MIT Technology Review",
-      "publishedAt": "2026-10-19T12:10:00+00:00",
-      "summary": "This is today’s edition of The Download, our weekday newsletter that provides a daily dose of what’s going on in the world of technology. Inside the quest to combat Arctic fires and save the planet’s frozen carbon —James Temple In July 2021, a wildfire burned through a forest on the University of Alaska, Fairbanks campus,…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/felipe0liveira/rag-grows-up-config-bugs-poisoned-indexes-and-a-reckoning-over-what-counts-as-agent-memory-1il6",
-      "title": "RAG Grows Up — Config Bugs, Poisoned Indexes, and a Reckoning Over What Counts as Agent Memory",
-      "source_name": "dev.to LLM",
-      "publishedAt": "2026-10-19T12:07:51+00:00",
-      "summary": "This digest covers RAG/GraphRAG developments from 2026-10-12 through 2026-10-19. The week's arXiv crop is unusually production-minded — less \"new retrieval architecture\", more \"here's what actually breaks when you run this in prod\" — paired with a vendor-side push on agent memory and context engineering. 🔥 Highlights Configuring RAG Systems: What Breaks, Where Originates, and How to Fix — a 654-i…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://github.com/IsuruMaduranga/harness-engineering-101",
-      "title": "Harness Engineering 101: The LLM is the brain, the harness is the body",
-      "source_name": "Hacker News — LLM (50+ pts)",
-      "publishedAt": "2026-10-19T12:07:41+00:00",
-      "summary": "Article URL: https://github.com/IsuruMaduranga/harness-engineering-101 Comments URL: https://news.ycombinator.com/item?id=50151390 Points: 130 # Comments: 64",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/v-kessler/two-owners-one-dataset-why-governance-has-to-shift-left-16k3",
-      "title": "Two Owners, One Dataset: Why Governance Has to Shift Left",
-      "source_name": "dev.to AI Agents",
-      "publishedAt": "2026-10-19T12:05:08+00:00",
-      "summary": "Max runs the order system. Every order is a row in his Postgres database, and he knows exactly what each column means, who may read it and why. Alice runs analytics. She works on a copy of the same orders in the lakehouse, exported overnight, cleaned, joined and secured again with her own rules. On Monday the board asks how many orders were cancelled last quarter. Max says one number. Alice says…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/jk27101/ccao-f-vs-ccar-f-which-claude-certification-should-you-take-47p3",
-      "title": "CCAO-F vs CCAR-F: which Claude certification should you take?",
-      "source_name": "dev.to Claude",
-      "publishedAt": "2026-10-19T12:04:30+00:00",
-      "summary": "Anthropic's certification program publishes more than one Foundations exam, and the codes sit one character apart. CCAO-F is the Claude Certified Associate – Foundations exam. CCAR-F is the Claude Certified Architect – Foundations exam, the one you will also see written informally as CCA-F. We covered why that exam answers to two different codes separately. They are not two tiers of one test. The…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/usasvcit356/top-12-website-to-buy-yahoo-accounts-in-2025-pva-amp-3km4",
-      "title": "Top 12 Website To Buy Yahoo Accounts in 2025 (PVA &",
-      "source_name": "dev.to Machine Learning",
-      "publishedAt": "2026-10-19T12:02:44+00:00",
-      "summary": "Top 12 Website To Buy Yahoo Accounts in 2025 (PVA &amp 24 hours response/(Contact US) ➤ WhatsApp: +1 (903) 702-9701 ➤ Telegram: @usasvcit ➤ Email: usasvcit@gmail.com Email continues to play an important role in modern communication. Individuals use email to communicate with friends, manage professional responsibilities, receive important notifications, organize documents, and participate in educa…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1x9uzv9/minimax_m31_flash_released_model_weights_oct_23/",
-      "title": "MiniMax M3.1 Flash released, Model weights Oct 23",
-      "source_name": "r/LocalLLaMA (Reddit)",
-      "publishedAt": "2026-10-19T12:01:44+00:00",
-      "summary": "submitted by /u/MagicZhang [link] [comments]",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/orquesta_live/quality-gates-keeping-ai-agents-productive-without-going-yolo-2egp",
-      "title": "Quality Gates: Keeping AI Agents Productive Without Going YOLO",
-      "source_name": "dev.to AI Agents",
-      "publishedAt": "2026-10-19T12:01:21+00:00",
-      "summary": "Originally published at getorquesta.com/blog/quality-gates-keeping-ai-agents-productive-without-going-yolo We built Orquesta to let teams turn prompts into code, PRs, and deployments. But letting an AI agent loose on your codebase with full autonomy is a recipe for disaster. The tension is real: you want the speed of autonomous execution, but you need control over what gets changed. That's where…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.kdnuggets.com/7-checks-to-run-before-trusting-ai-generated-code",
-      "title": "7 Checks to Run Before Trusting AI-Generated Code",
-      "source_name": "KDnuggets",
-      "publishedAt": "2026-10-19T12:00:43+00:00",
-      "summary": "AI makes writing code cheap. Verifying it is still your job.",
-      "source_type": "web"
-    },
-    {
-      "url": "https://openai.com/index/low-resource-programming-languages",
-      "title": "Advancing coding in low‑resource programming languages",
-      "source_name": "OpenAI",
-      "publishedAt": "2026-10-19T12:00:00+00:00",
-      "summary": "Learn how OpenAI is improving ChatGPT across low-resource programming languages, with new evaluations for software engineering, SQLite, and COBOL migration.",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/mihai_leanzero/deepseek-v41-flash-1017-benchmark-same-task-two-builds-024-and-066-32b8",
-      "title": "DeepSeek V4.1 Flash 1017 benchmark: same task, two builds, 0.24 and 0.66",
-      "source_name": "dev.to LLM",
-      "publishedAt": "2026-10-19T11:59:39+00:00",
-      "summary": "DeepSeek V4.1 Flash 1017 benchmark: same task, two builds, 0.24 and 0.66 Key takeaways DeepSeek V4.1 Flash 1017, a day old on OpenRouter, scored 0.6957 on our Gauntlet 7.2 against 0.591 for the September release, and a Forge 2.0 median of 0.4520 against 0.3342. The Forge pairs sit in different comparison groups on our board because our setup changed between the runs, so part of that gap may be ou…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/abdulrahman_maslmany/vllm-vs-ollama-vs-llamacpp-the-definitive-llm-inference-engine-guide-13ih",
-      "title": "vLLM vs. Ollama vs. llama.cpp: The Definitive LLM Inference Engine Guide",
-      "source_name": "dev.to LLM",
-      "publishedAt": "2026-10-19T11:54:06+00:00",
-      "summary": "ENTERPRISE AI ARCHITECTURE & INFERENCE SYSTEMS ENGINEERING Technical Audit: PagedAttention KV Cache Physics, GGUF Quantization, Concurrent Token Throughput & Cloud Serving Economics 📌 The Short Answer: Which Inference Engine Should You Choose? vLLM is the definitive choice for high-concurrency enterprise server production (delivering up to 24x higher throughput via PagedAttention and continuous b…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/eesa14/aws-hands-on-lab-amazon-sagemaker-40ea",
-      "title": "AWS Hands-on Lab: Amazon SageMaker",
-      "source_name": "dev.to Machine Learning",
-      "publishedAt": "2026-10-19T11:53:31+00:00",
-      "summary": "Nuevo AWS Hands-on Lab: Amazon SageMaker Hoy toca Machine Learning.En este laboratorio vamos a construir y desplegar un modelo capaz de identificar automáticamente el idioma de un texto en tiempo real. El flujo será:S3 → SageMaker Notebook → Jupyter → Python → Training → Real-Time Prediction Durante el ejercicio veremos preparación de datos, entrenamiento, despliegue e inferencia utilizando Amazo…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/fiona_tonythomas_9089f8d/building-an-ai-powered-web-app-for-scientific-machine-learning-inference-18j6",
-      "title": "Building an AI-Powered Web App for Scientific Machine Learning Inference",
-      "source_name": "dev.to Machine Learning",
-      "publishedAt": "2026-10-19T11:51:44+00:00",
-      "summary": "Scientific machine learning (ML) is transforming how researchers and engineers approach complex simulations, physics-based modeling, and computational problems. But deploying these models for practical use can be challenging. Environment configuration, computational dependencies, specialized expertise, and result interpretation often create barriers between a working ML model and an accessible ap…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/onyedikachi_onwurah_00ba3/evidence-aware-healthcare-ai-separating-facts-from-assumptions-37kf",
-      "title": "Evidence-Aware Healthcare AI: Separating Facts From Assumptions",
-      "source_name": "dev.to Machine Learning",
-      "publishedAt": "2026-10-19T11:49:46+00:00",
-      "summary": "Healthcare AI systems frequently combine structured records, clinical notes, laboratory results, and retrieved information to produce recommendations. However, these sources do not all have the same evidential status. A documented observation, a model-generated inference, an unverified statement, and a missing data field should not be treated as equivalent. Developers can address this by preservi…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/chillpill_ak/what-is-wity-the-first-system-15-model-explained-55i8",
-      "title": "What is Wity? The first System 1.5 model, explained.",
-      "source_name": "dev.to LLM",
-      "publishedAt": "2026-10-19T11:35:46+00:00",
-      "summary": "Software makes thousands of small decisions a day. Which team owns this ticket? Is this scan a receipt or an invoice? Has the page finished loading? Is the customer reporting an accident? None of these needs an essay. Each needs an answer your code can act on, and some sense of how sure that answer is. Today those calls usually go to one of two kinds of model, and neither is built for the job. Wi…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://the-decoder.com/the-neocloud-shakeout-is-coming-and-nvidia-has-the-most-to-lose/",
-      "title": "The neocloud shakeout is coming, and Nvidia has the most to lose",
-      "source_name": "The Decoder",
-      "publishedAt": "2026-10-19T11:33:36+00:00",
-      "summary": "After stock crashes and Firmus's scrapped IPO, industry executives expect only seven to ten of the hundreds of AI cloud providers to survive. CoreWeave lost a quarter of its market value, and Microsoft pulled out of a deal with Nscale for 23,000 Nvidia chips. Nvidia has a lot riding on the outcome, since customers outside the hyperscalers make up 45 percent of its data center revenue. The article…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://the-decoder.com/anthropic-plans-fund-for-workers-threatened-by-ai-musk-counters-with-spacex-shares-for-children/",
-      "title": "Anthropic plans fund for workers threatened by AI, Musk counters with SpaceX shares for children",
-      "source_name": "The Decoder",
-      "publishedAt": "2026-10-19T11:19:12+00:00",
-      "summary": "Anthropic wants to put five percent of its shares into a new public benefit fund that will also look into direct payments to workers at risk of losing their jobs. The fund is a company-owned LLC, so Anthropic keeps control of it as a possible IPO approaches. By offering the option of direct payments, Anthropic goes further than its competitors. Elon Musk says on X the company should just give the…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/_ad122393ca44f5a698b1/python-streamlit-rokarupccpudedong-kasuzi-fen-dakenoaihua-xiang-sheng-cheng-webapuri-2gg8",
-      "title": "【Python Streamlit】ローカルPC（CPU）で動かす自分だけのAI画像生成Webアプリ",
-      "source_name": "dev.to Machine Learning",
-      "publishedAt": "2026-10-19T11:18:01+00:00",
-      "summary": "今回はPythonとStreamlit、そしてHugging FaceのDiffusersライブラリを使って、ローカルPC（CPU環境）で手軽に動かせるAI画像生成Webアプリを作ったので、その魅力と仕組みをご紹介します。 「ハイスペックなGPUがないとAI画像生成は無理……」と諦めていませんか？このアプリなら、CPU環境であっても、モデルに「DreamShaper 8」を採用し、設定を最適化することで、お使いのパソコン上で画像生成とImg2Img（画像から画像への変換）を楽しむことができます。 テキストからの画像生成（Text-to-Image）：英語のプロンプトを入力して、思い描いたイラストや写真を生成できます。 画像からの画像生成（Img2Img）：ベースとなる画像をアップロードし、変更度合（Strength）を調整しながらアレンジが可能です。 履歴ギャラリー機能：過去に生成した画…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://spectrum.ieee.org/esa-hera-dimorphos-rendezvous",
-      "title": "ESA's Hera Will View Asteroid Scars from DART's Strike",
-      "source_name": "Hacker News",
-      "publishedAt": "2026-10-19T11:12:02+00:00",
-      "summary": "Article URL: https://spectrum.ieee.org/esa-hera-dimorphos-rendezvous Comments URL: https://news.ycombinator.com/item?id=50150935 Points: 10 # Comments: 0",
-      "source_type": "web"
-    },
-    {
-      "url": "https://spectrum.ieee.org/alternatives-to-animal-testing",
-      "title": "Alternatives to Animal Testing Are Finally Taking Off",
-      "source_name": "Hacker News",
-      "publishedAt": "2026-10-19T11:10:54+00:00",
-      "summary": "Article URL: https://spectrum.ieee.org/alternatives-to-animal-testing Comments URL: https://news.ycombinator.com/item?id=50150927 Points: 6 # Comments: 0",
       "source_type": "web"
     }
   ]

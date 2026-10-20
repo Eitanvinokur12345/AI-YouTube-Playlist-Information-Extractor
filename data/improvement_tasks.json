@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-20T17:30:05.863670+00:00",
+  "updated_at": "2026-10-20T21:54:22.270365+00:00",
   "tasks": [
     {
       "trend_key": "tab:coding",
@@ -353,6 +353,23 @@
       "fix": "Restore the missing models from the last good backup (git f09a01de68a2); investigate what removed them.",
       "status": "open",
       "created_at": "2026-10-16T13:32:27.338578+00:00"
+    },
+    {
+      "id": "selfcheck-q44",
+      "n": 44,
+      "question": "No API keys in data/ or docs/",
+      "fix": "LEAK in ['web_news_store.json', 'daily_web_news.json']",
+      "kind": "engine_followup",
+      "status": "open",
+      "created_at": "2026-10-20T21:54:20.493243+00:00"
+    },
+    {
+      "sec_key": "leak",
+      "kind": "security",
+      "question": "[SECURITY] 2 secret-like string(s) found IN DATA",
+      "fix": "Remove the secret from the data + git history and rotate the key immediately.",
+      "status": "open",
+      "created_at": "2026-10-20T21:54:22.270365+00:00"
     }
   ]
 }

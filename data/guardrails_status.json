@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-10-21T15:08:23.429571+00:00",
+ "generated_at": "2026-10-21T15:13:35.507010+00:00",
  "total": 21,
- "passing": 17,
+ "passing": 18,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": false,
-   "detail": "NOT in sync vs origin/main (behind/ahead: 1\t0) — a push may not have landed.",
+   "ok": true,
+   "detail": "HEAD == origin/main (work is really saved).",
    "severity": "warn"
   },
   {
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "37547 memory episodes on record.",
+   "detail": "37549 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "28 guardrail runs logged (append-only, never rewritten).",
+   "detail": "29 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -99,14 +99,14 @@
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "84977 MB free on the repo drive.",
+   "detail": "84971 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 2097.1h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 2097.2h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
@@ -120,14 +120,14 @@
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": true,
-   "detail": "last 'core-spoton:' commit 0.0h ago.",
+   "detail": "last 'core-spoton:' commit 0.1h ago.",
    "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
    "ok": false,
-   "detail": "9/16 lane(s) landing on cadence — STALE: bulk_analyze.yml (every 2h): last commit 7.1h ago (expected within 6h); creators.yml (daily 07:45 UTC): last commit 1758.8h ago (expected within 30h); discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 2937.0h ago (expected within 76h); fetch.yml (every 2 days): last commit 243.3h ago (expected within 54h); improve.yml (weekly deep pass): last commit 3286.8h ago (expected within 192h); review.yml (twice-weekly): last commit 2007.1h ago (expected within 100h); transcribe.yml (daily): last commit 1952.8h ago (expected within 30h)",
+   "detail": "9/16 lane(s) landing on cadence — STALE: bulk_analyze.yml (every 2h): last commit 7.2h ago (expected within 6h); creators.yml (daily 07:45 UTC): last commit 1758.8h ago (expected within 30h); discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 2937.1h ago (expected within 76h); fetch.yml (every 2 days): last commit 243.4h ago (expected within 54h); improve.yml (weekly deep pass): last commit 3286.9h ago (expected within 192h); review.yml (twice-weekly): last commit 2007.2h ago (expected within 100h); transcribe.yml (daily): last commit 1952.9h ago (expected within 30h)",
    "severity": "warn"
   },
   {

@@ -1,9 +1,9 @@
 {
   "header": {
-    "run_time": "2026-10-25T11:44:36.582410-04:00",
+    "run_time": "2026-10-25T16:31:58.497317-04:00",
     "window": "last 7 days",
-    "covered_from": "2026-10-18T16:10:16+00:00",
-    "covered_to": "2026-10-24T15:25:46+00:00",
+    "covered_from": "2026-10-18T20:37:40+00:00",
+    "covered_to": "2026-10-24T20:27:32+00:00",
     "digest": [
       {
         "text": "OpenAI's GPT-5.6 Sol and Google's Gemini 4 Argon found critical PHP flaw affecting millions of websites — The Decoder",
@@ -36,6 +36,406 @@
     ]
   },
   "entries": [
+    {
+      "url": "https://dev.to/jeff_pdc/the-agent-renamed-the-field-in-code-and-never-told-the-database-so-old-rows-read-as-undefined-26l5",
+      "title": "The agent renamed the field in code and never told the database, so old rows read as undefined",
+      "source_name": "dev.to AI Agents",
+      "publishedAt": "2026-10-24T20:27:32+00:00",
+      "summary": "The profile type used displayName . The agent was asked to make the naming consistent, so it found and replaced the field across the interface, the components, and the form handler. Tests pass, the diff looks like a tidy rename, and the PR description calls it a refactor. Then a returning user opens their profile and the name renders blank. The rows written before the rename still store displayNa…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/renev3408/pytest-for-prompts-a-zero-dependency-cli-diff-to-catch-regressions-before-they-ship-2la7",
+      "title": "pytest for prompts: a zero-dependency CLI diff to catch regressions before they ship",
+      "source_name": "dev.to LLM",
+      "publishedAt": "2026-10-24T20:21:47+00:00",
+      "summary": "You edit a system prompt or switch models, and other cases quietly break. prompt-diff runs a small prompt suite against a baseline (A) and a candidate (B). It writes a side-by-side line diff and a pass/fail report in Markdown and JSON. If B fails a case that A passed, it exits with code 1, so you can gate CI on it. What you get: prompt-diff.mjs: a single-file Node 18+ CLI with zero dependencies C…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/quincygb/48-hours-later-our-first-external-payer-was-an-inspector-599n",
+      "title": "48 hours later: our first external payer was an inspector",
+      "source_name": "dev.to AI Agents",
+      "publishedAt": "2026-10-24T20:13:09+00:00",
+      "summary": "In the first post we shipped a fleet — four x402 services, fifteen paid routes, USDC on Base — and cataloged it everywhere a listing is a side effect of settlement. The open question was whether a listing is worth anything by itself. Two days later we have the beginnings of an answer, and it is smaller and more interesting than a traction claim: our first external payer was an inspector. Handing…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1xeim3m/kld_is_misunderstood/",
+      "title": "KLD is misunderstood",
+      "source_name": "r/LocalLLaMA (Reddit)",
+      "publishedAt": "2026-10-24T20:12:28+00:00",
+      "summary": "I see a lot of people here on Reddit treating the KLD number as some holy metric that can distinguish every quantized model out there and rank them by quality. TL;DR: It can't. So what does KLD actually measure? If you feed the same text to both the base model and the quantized model, you can compare the probability distributions obtained from their logits at each token. KLD basically measures ho…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/abhishek_kumar_cdf5aa9dcb/how-i-made-a-20b-model-code-like-a-frontier-one-by-fixing-the-harness-not-the-model-5g7c",
+      "title": "How I made a 20B model code like a frontier one — by fixing the harness, not the model",
+      "source_name": "dev.to LLM",
+      "publishedAt": "2026-10-24T20:11:54+00:00",
+      "summary": "A coding agent is a model plus a harness. We spend all our attention on the model. I spent mine on the harness — and a free 20B model started finishing tasks that used to need a frontier one. I build Ajna , a terminal coding agent written in pure Python — no third-party packages, no build step, ~180ms cold start. It talks to Ollama, OpenAI, Anthropic, Groq, OpenRouter, and anything OpenAI-compati…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/mech_app_ai/contestable-agents-for-data-governance-recording-human-stewardship-of-ai-generated-metadata-across-107d",
+      "title": "Contestable Agents for Data Governance: Recording Human Stewardship of AI-Generated Metadata Across Structured and Unstructured Systems",
+      "source_name": "dev.to LLM",
+      "publishedAt": "2026-10-24T20:06:40+00:00",
+      "summary": "Organizations deploying LLMs to classify operational data face a governance gap. Agents tag telemetry points, link warranty claims to service bulletins, and propose metadata for unstructured documents. When a human overrides an agent decision, most systems discard the agent's reasoning and store only the final value. You lose the audit trail, the correction context, and the signal needed to preve…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/mech_app_ai/sparqlite-what-12-hours-of-ultracode-agent-orchestration-reveals-about-vibe-coding-limits-i27",
+      "title": "Sparqlite: What 12 Hours of Ultracode Agent Orchestration Reveals About Vibe Coding Limits",
+      "source_name": "dev.to LLM",
+      "publishedAt": "2026-10-24T20:06:39+00:00",
+      "summary": "Simon Willison pointed Claude Code at a single prompt and walked away. Twelve hours later, he had a full SPARQL 1.1 implementation in Rust that runs inside SQLite, complete with multiple crates, READMEs, and a tutorial. He also had a problem: the code works, but he cannot feasibly review it, and he's not sure what to do with it. This is the sharp edge of agent orchestration at scale. When dynamic…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/sebastian_balog_c88dc2913/run-two-claude-code-accounts-side-by-side-without-logging-out-mac-windows-vs-code-56md",
+      "title": "Run two Claude Code accounts side by side without logging out (Mac, Windows, VS Code)",
+      "source_name": "dev.to Claude",
+      "publishedAt": "2026-10-24T20:06:22+00:00",
+      "summary": "Disclosure: I make Claude Sessions Pro , a paid Mac and Windows app for running several Claude accounts at once. Everything below works without it. The app gets one section near the end, clearly marked. You have a work Claude account and a personal one. Maybe one per client. Claude Code signs in to one of them, and switching means /logout , /login , a browser tab, and losing your place. An hour l…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/vexaloom-labs/your-agent-found-a-round-trip-fare-but-no-flight-home-1l1f",
+      "title": "Your Agent Found a Round-Trip Fare but No Flight Home",
+      "source_name": "dev.to LLM",
+      "publishedAt": "2026-10-24T20:05:36+00:00",
+      "summary": "Your agent quotes a round-trip fare. Then the user asks, “When do we land back home?” Suddenly, that tidy flight record looks less reassuring. Google Flights lists round trips as outbound choices priced for the whole trip. A round-trip price does not establish which return flight the traveler will take. The catch is easy to miss: returnOptionsTop defaults to 0 , so actual return options require a…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/sarahai/come-hang-out-in-the-sarah-discord-4bb5",
+      "title": "Come hang out in the SARAH Discord 💬",
+      "source_name": "dev.to AI",
+      "publishedAt": "2026-10-24T20:03:37+00:00",
+      "summary": "The SARAH Discord is where it all happens — and you're invited. 💬 What's in there Help when you're stuck — install issues, provider setup, weird errors, someone will get you sorted Ideas and feedback — suggest features, vote on what gets built next Plugins and skills — share what you've made, find what others built Sneak peeks — see what's coming before it lands Me — I hang out there and answer q…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/nefayran/mps-backend-out-of-memory-the-max-allowed-number-on-every-mac-size-249e",
+      "title": "MPS backend out of memory: the \"max allowed\" number on every Mac size",
+      "source_name": "dev.to Machine Learning",
+      "publishedAt": "2026-10-24T20:02:36+00:00",
+      "summary": "The PyTorch error on a Mac carries one number that people search for. This one is from a 16 GB Mac ( AudioLDM2 #20 ): RuntimeError: MPS backend out of memory (MPS allocated: 18.02 GB, other allocations: 107.10 MB, max allowed: 18.13 GB). Tried to allocate 4.50 MB on private pool. In my earlier note I measured where it comes from on my 48 GB Mac. \"max allowed\" is PYTORCH_MPS_HIGH_WATERMARK_RATIO ,…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/gabrielanhaia/claude-code-projects-lets-a-coordinator-split-your-task-splitting-was-the-job-4cpa",
+      "title": "Claude Code Projects Lets a Coordinator Split Your Task. Splitting Was the Job",
+      "source_name": "dev.to Claude",
+      "publishedAt": "2026-10-24T20:01:59+00:00",
+      "summary": "Book: System Design Pocket Guide: Interviews Also by me: Thinking in Go (2-book series) — Complete Guide to Go Programming + Hexagonal Architecture in Go My project: Hermes IDE | GitHub — an IDE for developers who ship with Claude Code and other AI coding tools Me: xgabriel.com | GitHub Anthropic's redesigned Projects for Claude Code has \"threads that do the work and a coordinator that directs th…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/wiaia/the-ai-graveyard-is-a-reproducibility-audit-not-a-failure-ledger-1all",
+      "title": "The AI graveyard is a reproducibility audit, not a failure ledger",
+      "source_name": "dev.to Machine Learning",
+      "publishedAt": "2026-10-24T20:01:57+00:00",
+      "summary": "On October 24, 2026, TechCrunch added another entry to its running AI graveyard: Apple’s repeatedly delayed Siri AI, OpenAI’s messy “super app” launch, and a growing list of projects that shut down or missed expectations. That single detail — a list that never stops growing — is a reproducibility audit in its own right. It asks what happens when a claimed result cannot be rebuilt, verified, or go…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/sangaraju1988/your-agents-skills-have-no-lockfile-a-derivation-graph-for-skill-provenance-2di3",
+      "title": "Your agent's skills have no lockfile — a derivation graph for skill provenance",
+      "source_name": "dev.to AI",
+      "publishedAt": "2026-10-24T20:01:53+00:00",
+      "summary": "Venkata M Sangaraju, Sr. Database Engineer Repo: github.com/sangaraju1988/skill-derivation-graph — spec v0.1, reference implementation, Zenodo DOI 10.5281/zenodo.23623206 . Discussion: agentskills/agentskills#620 . A skill written for one business unit's reporting — how ambiguous cases should be handled — was copied by another team and built on. The original was later updated because some of the…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/nemos_app/plaud-alternative-for-iphone-do-you-need-an-ai-recorder-or-is-your-phone-enough-3h8e",
+      "title": "Plaud Alternative for iPhone: Do You Need an AI Recorder, or Is Your Phone Enough?",
+      "source_name": "dev.to LLM",
+      "publishedAt": "2026-10-24T20:00:10+00:00",
+      "summary": "TL;DR Plaud Note Pro and Pocket are good dedicated AI recorders, and they win when you record long meetings or phone calls every day. If you mostly capture ideas, lectures, and short conversations, the iPhone and Apple Watch you already own cover most of it, and an app like Nemos adds transcription , search, and a place to keep the recordings next to everything else you save. Quick answer: Buy a…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1xeia9o/made_a_rhythm_game_where_4_small_neural_nets/",
+      "title": "Made a rhythm game where 4 small neural nets listen to your song right in the browser tab (open source)",
+      "source_name": "r/LocalLLaMA (Reddit)",
+      "publishedAt": "2026-10-24T19:59:11+00:00",
+      "summary": "not an llm post exactly, but it's all local inference so i figured people here might like it i made a browser rhythm runner where the song builds the world you run through. you can throw in your own mp3s and the whole \"listening\" happens on your device, inside the tab. nothing gets uploaded the models, all running locally on onnxruntime-web (wasm, each in its own web worker), and what the game do…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.apollo.com/wealth/insights-news/insights/daily-spark/no-signs-of-ai-payoff-outside-the-tech-sector",
+      "title": "No Signs of AI Payoff Outside the Tech Sector",
+      "source_name": "Hacker News",
+      "publishedAt": "2026-10-24T19:47:19+00:00",
+      "summary": "Article URL: https://www.apollo.com/wealth/insights-news/insights/daily-spark/no-signs-of-ai-payoff-outside-the-tech-sector Comments URL: https://news.ycombinator.com/item?id=50224463 Points: 49 # Comments: 24",
+      "source_type": "web"
+    },
+    {
+      "url": "https://missileer.watch",
+      "title": "Listen and read USA nuclear forces Emergency Action Messages, heard on 11175 kHz",
+      "source_name": "Hacker News",
+      "publishedAt": "2026-10-24T19:43:27+00:00",
+      "summary": "Article URL: https://missileer.watch Comments URL: https://news.ycombinator.com/item?id=50224422 Points: 11 # Comments: 2",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/rimsha_kanwal/day-0790taking-rag-from-notebook-to-production-challenges-and-research-backed-solutions-3849",
+      "title": "Day 07/90:Taking RAG from Notebook to Production — Challenges and Research-Backed Solutions",
+      "source_name": "dev.to Machine Learning",
+      "publishedAt": "2026-10-24T19:38:50+00:00",
+      "summary": "A RAG application answers a question correctly in a notebook. Then it encounters an outdated policy, an irrelevant document, or a question that requires evidence from several sources. What should happen next? Research offers useful approaches to these problems, but it also shows why adding retrieval alone is not enough. Here are the findings I would carry into a real application. 1. Check the evi…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/aliasghar_ramin_9faaf6ccc/one-openai-compatible-endpoint-for-gpt-claude-gemini-and-deepseek-python-node-examples-3l18",
+      "title": "One OpenAI-compatible endpoint for GPT, Claude, Gemini and DeepSeek (Python + Node examples)",
+      "source_name": "dev.to LLM",
+      "publishedAt": "2026-10-24T19:32:48+00:00",
+      "summary": "Most LLM projects end up talking to more than one vendor: GPT for one job, Claude for another, Gemini or DeepSeek when cost matters. Each vendor has its own SDK, key, billing account and rate limits. An OpenAI-compatible gateway removes most of that: one base URL, one key, and the model is just a string. This post shows the pattern with Gisoo , the gateway we run (disclosure: I'm on the team). It…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/decodingbydivya/can-machine-learning-systems-heal-themselves-building-a-self-healing-ml-system-phase-1-pga",
+      "title": "Can Machine Learning Systems Heal Themselves? Building a Self-Healing ML System — Phase 1",
+      "source_name": "dev.to Machine Learning",
+      "publishedAt": "2026-10-24T19:28:37+00:00",
+      "summary": "Designing an automated framework for detecting machine learning failures, diagnosing their causes, and evaluating recovery strategies. Series: Building a Self-Healing Machine Learning System | Part 1 Introduction: What Happens When Machine Learning Models Fail? Machine learning models are often evaluated under carefully controlled conditions. We train models, measure performance, optimize hyperpa…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/jeff_pdc/the-agent-replaced-the-specific-error-with-a-generic-one-and-lost-the-clue-that-named-the-failure-12pl",
+      "title": "The agent replaced the specific error with a generic one, and lost the clue that named the failure",
+      "source_name": "dev.to AI Agents",
+      "publishedAt": "2026-10-24T19:27:59+00:00",
+      "summary": "The payment batch used to fail loudly: \"Insufficient ledger balance for settlement run #4412 against account acct-88 (120.00 available, 500.00 required).\" The agent was asked to tidy up error reporting, so it consolidated the exceptions into one shared envelope and returned, \"Processing failed, please retry.\" The happy path still works, the test still passes, and at first glance the code looks cl…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/useaifix/claude-subagents-when-to-use-one-agent-vs-many-a-practical-setup-guide-1483",
+      "title": "claude subagents: When to Use One Agent vs Many (A Practical Setup Guide)",
+      "source_name": "dev.to Claude",
+      "publishedAt": "2026-10-24T19:27:42+00:00",
+      "summary": "If you build with Claude, you have probably wondered whether to split work across claude subagents or keep everything in one agent. Anthropic recently published guidance on exactly this question, and the short answer is: start with one main agent plus skills, and add subagents only when you have a clear reason. Here is what the sources say and how to apply it. What Anthropic's guide says In Build…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://aardappel.github.io/goose/",
+      "title": "The Goose Programming Language",
+      "source_name": "Hacker News",
+      "publishedAt": "2026-10-24T19:27:41+00:00",
+      "summary": "Article URL: https://aardappel.github.io/goose/ Comments URL: https://news.ycombinator.com/item?id=50224300 Points: 32 # Comments: 7",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.lesswrong.com/posts/7cmQGtJu4nXsi6pPu/an-attempt-at-top-down-interpretability",
+      "title": "An Attempt at Top-down Interpretability",
+      "source_name": "LessWrong",
+      "publishedAt": "2026-10-24T19:23:34+00:00",
+      "summary": "There are at least two distinct ways to conceptually organize a scientific endeavor: top-down or bottom-up . The bottom-up approach involves finding the smallest objects we can confidently understand, studying them, and leveraging that knowledge to study more complex objects made up of those smaller pieces. As a highly simplified example, in mech-interp this might mean starting by first understan…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/rigbase/what-gpu-do-you-need-for-qwen38-qwen36-gemma-4-and-gpt-oss-locally-measured-oct-2026-1eg6",
+      "title": "What GPU do you need for Qwen3.8, Qwen3.6, Gemma 4 and gpt-oss locally? (measured, Oct 2026)",
+      "source_name": "dev.to Machine Learning",
+      "publishedAt": "2026-10-24T19:12:56+00:00",
+      "summary": "Every time a new open model comes out, people ask the same thing: will it run on my card, and how fast? Spec-sheet calculators can tell you whether the weights fit . They can't tell you what speed you'll actually get. So here are measured generation speeds (decode tokens/sec) for the models people are running in October 2026, collected from public benchmarks. Every number is linked to the place i…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://twitter.com/ID_AA_Carmack/status/2113704269274636568",
+      "title": "John Carmack on the Goose Language: multiple data stacks and relative references",
+      "source_name": "Hacker News",
+      "publishedAt": "2026-10-24T19:06:55+00:00",
+      "summary": "Article URL: https://twitter.com/ID_AA_Carmack/status/2113704269274636568 Comments URL: https://news.ycombinator.com/item?id=50224100 Points: 50 # Comments: 11",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/gabrielanhaia/aws-wont-patch-a-cvss-98-bug-in-multi-model-server-its-management-api-has-no-login-2e71",
+      "title": "AWS Won't Patch a CVSS 9.8 Bug in Multi Model Server. Its Management API Has No Login",
+      "source_name": "dev.to Machine Learning",
+      "publishedAt": "2026-10-24T19:05:16+00:00",
+      "summary": "Book: Ship It — the pragmatic startup tech stack Also by me: Thinking in Go (2-book series) — Complete Guide to Go Programming + Hexagonal Architecture in Go My project: Hermes IDE | GitHub — an IDE for developers who ship with Claude Code and other AI coding tools Me: xgabriel.com | GitHub On October 23, AWS published security bulletin 2026-148-AWS for two vulnerabilities in Multi Model Server (…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.reuters.com/technology/php-foundation-under-funded-with-one-full-time-staff-member-director-says-2026-10-23/",
+      "title": "PHP Foundation 'under-funded' with one full-time staff member, director says",
+      "source_name": "Hacker News",
+      "publishedAt": "2026-10-24T19:03:59+00:00",
+      "summary": "Article URL: https://www.reuters.com/technology/php-foundation-under-funded-with-one-full-time-staff-member-director-says-2026-10-23/ Comments URL: https://news.ycombinator.com/item?id=50224074 Points: 62 # Comments: 14",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.zdnet.com/tech/ios-27-impersonation-risk-detection-security-feature/",
+      "title": "Your iPhone can spot scams for you with iOS 27 – but you have to opt in",
+      "source_name": "ZDNET AI",
+      "publishedAt": "2026-10-24T19:00:00+00:00",
+      "summary": "Impersonation Risk Detection tries to spot scams traditional security methods might miss.",
+      "source_type": "web"
+    },
+    {
+      "url": "https://techcrunch.com/2026/10/24/the-ai-graveyard-a-running-list-of-projects-and-startups-that-didnt-make-it/",
+      "title": "The AI graveyard: a running list of projects and startups that didn’t make it",
+      "source_name": "TechCrunch AI",
+      "publishedAt": "2026-10-24T19:00:00+00:00",
+      "summary": "From Apple's repeatedly delayed Siri AI to OpenAI's messy \"super app\" launch, here's a look at the AI projects that shut down or missed expectations.",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/amux/how-we-run-30-claude-code-agents-at-once-without-losing-track-of-them-59e",
+      "title": "How we run 30 Claude Code agents at once without losing track of them",
+      "source_name": "dev.to Claude",
+      "publishedAt": "2026-10-24T18:48:25+00:00",
+      "summary": "One Claude Code session is easy to watch. You give it a task, read what it does, and approve the next step. Five sessions is where it breaks: you lose track of which terminal is waiting on you, two agents edit the same file, and one quietly stops when it hits a usage limit. We run around 30 agents at a time on our own codebases. Here is what we changed to get there. 1. Give every agent its own la…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/yodev_grego/como-reducir-los-tokens-de-razonamiento-de-gemma-4-thinkingcap-explicado-28ae",
+      "title": "¿Cómo Reducir los Tokens de Razonamiento de Gemma 4? ThinkingCap Explicado",
+      "source_name": "dev.to Machine Learning",
+      "publishedAt": "2026-10-24T18:43:53+00:00",
+      "summary": "¿Cómo Reducir los Tokens de Razonamiento de Gemma 4? ThinkingCap Explicado ThinkingCap es una versión reentrenada de Gemma 4 26B-A4B de Google que usa, en promedio, un 38.9 por ciento menos de tokens de razonamiento con casi la misma precisión: 75.0 frente a 75.2 del modelo base en doce benchmarks. BottleCap AI lo publicó el 23 de octubre de 2026 bajo licencia Apache 2.0, con los pesos completos…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/yodev_grego/agent-usage-guard-como-evitar-que-claude-code-agote-tu-limite-de-uso-con-subagentes-3ahf",
+      "title": "agent-usage-guard: cómo evitar que Claude Code agote tu límite de uso con subagentes",
+      "source_name": "dev.to Claude",
+      "publishedAt": "2026-10-24T18:40:12+00:00",
+      "summary": "agent-usage-guard: cómo evitar que Claude Code agote tu límite de uso con subagentes agent-usage-guard es un mod de Claude Code, con licencia MIT, que frena el fan-out de subagentes, los prompts con contexto pesado y los reintentos en bucle antes de que agoten tu límite de uso. Lee los porcentajes de la ventana de 5 horas y de la semanal que reporta Claude Code, y cuenta los agentes de todas las…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/md_ayanbag_03a42545b17ac/claude-code-compact-vs-clear-when-to-use-each-with-my-numbers-38ln",
+      "title": "Claude Code /compact vs /clear: When to Use Each (With My Numbers)",
+      "source_name": "dev.to Claude",
+      "publishedAt": "2026-10-24T18:38:07+00:00",
+      "summary": "Last week Claude Code compacted my conversations 67 times. I didn't type /compact once. Every one of them was auto-compact, firing in the middle of work. I only noticed because I wrote a small script that reads Claude Code's session logs on my Mac. The median compaction happened at 969,037 tokens . The turn right after it still carried about 106,000. Note: I used Claude Code to help write the log…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/md_ayanbag_03a42545b17ac/how-i-stopped-hitting-claude-code-usage-limits-3cfc",
+      "title": "How I Stopped Hitting Claude Code Usage Limits",
+      "source_name": "dev.to Claude",
+      "publishedAt": "2026-10-24T18:37:04+00:00",
+      "summary": "\"You've hit your usage limit.\" I saw that message three times in one week, every time in the middle of a task, with half-written code open in front of me. So I stopped guessing and measured. I wrote a small script that reads Claude Code's own session logs on my Mac. The result was embarrassing: my median session peaked at 252,696 tokens. 160 of my 230 sessions that week went past 150k. My largest…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1018187/pennsylvania-ai-deceptive-advertising-act",
+      "title": "Pennsylvania will require labels on AI-generated ads",
+      "source_name": "The Verge AI",
+      "publishedAt": "2026-10-24T18:32:44+00:00",
+      "summary": "On Thursday, Pennsylvania Governor Josh Shapiro signed the Artificial Intelligence Deceptive Advertising Act into law, requiring disclosures on AI-generated ads. The law requires any ad - whether it's a still image, video, audio, or text - that \"has been significantly modified or generated by artificial intelligence\" to include a label in the same format as […]",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.computerworld.dk/art/297226/digitaliseringsministeriet-har-i-al-stilhed-droppet-stort-anlagt-forsoeg-med-open-source-alternativ-til-microsoft",
+      "title": "Danish Government silently drops plan to dump MS Office",
+      "source_name": "Hacker News",
+      "publishedAt": "2026-10-24T18:31:48+00:00",
+      "summary": "Article URL: https://www.computerworld.dk/art/297226/digitaliseringsministeriet-har-i-al-stilhed-droppet-stort-anlagt-forsoeg-med-open-source-alternativ-til-microsoft Comments URL: https://news.ycombinator.com/item?id=50223844 Points: 86 # Comments: 32",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/jeff_pdc/the-agent-kept-polishing-after-the-task-passed-and-buried-the-fix-under-unrelated-refactors-2649",
+      "title": "The agent kept polishing after the task passed, and buried the fix under unrelated refactors",
+      "source_name": "dev.to AI Agents",
+      "publishedAt": "2026-10-24T18:27:35+00:00",
+      "summary": "You ask the agent to add a missing 404 handler for an unknown route. It writes the handler, adds a test, and the test goes green. Instead of stopping, it reformats two adjacent controllers, renames a shared helper \"for consistency,\" and rewrites a comment block that had nothing to do with the route. When you open the diff, the requested fix is three lines and the rest of the patch is a cleanup yo…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/neuraitool/chatgpts-chrome-extension-just-became-a-browser-agent-4fbj",
+      "title": "ChatGPT's Chrome Extension Just Became a Browser Agent",
+      "source_name": "dev.to Machine Learning",
+      "publishedAt": "2026-10-24T18:23:28+00:00",
+      "summary": "ChatGPT's Chrome Extension Just Became a Browser Agent On 15 October 2026, OpenAI upgraded the ChatGPT extension for Chrome from a helpful sidebar into something much more interesting: a browser agent. It can now read across your open tabs — and, in its new Work mode, act inside the browser on your behalf. Two Modes, One Clear Line The update splits the extension into two modes, and the split is…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dreamlabs.ai/research/dream-1/",
+      "title": "Dream-1",
+      "source_name": "Hacker News",
+      "publishedAt": "2026-10-24T18:23:24+00:00",
+      "summary": "Article URL: https://dreamlabs.ai/research/dream-1/ Comments URL: https://news.ycombinator.com/item?id=50223785 Points: 85 # Comments: 48",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.science.org/doi/10.1126/sciadv.aeh8870",
+      "title": "Glymphatic clearance to alleviate brain edema and Alzheimer's pathology in mice",
+      "source_name": "Hacker News",
+      "publishedAt": "2026-10-24T18:19:05+00:00",
+      "summary": "Article URL: https://www.science.org/doi/10.1126/sciadv.aeh8870 Comments URL: https://news.ycombinator.com/item?id=50223752 Points: 28 # Comments: 7",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/godnick/claude-code-vs-codex-cli-vs-cursor-what-each-actually-costs-a-solo-developer-per-month-2026-53m0",
+      "title": "Claude Code vs Codex CLI vs Cursor: What Each Actually Costs a Solo Developer per Month (2026)",
+      "source_name": "dev.to Claude",
+      "publishedAt": "2026-10-24T18:14:20+00:00",
+      "summary": "Every few weeks someone asks me which AI coding tool is \"cheapest.\" The honest answer is that the sticker price tells you very little. All three of the big options now meter you in some way: rolling windows, weekly caps, credit pools, or straight per-token billing. What you actually pay depends on how you work. So I went through the official pricing pages for Claude Code, Codex CLI and Cursor (as…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/forgeflows/typescript-ai-agents-library-approach-vs-raw-apis-352n",
+      "title": "TypeScript AI Agents: Library Approach vs. Raw APIs",
+      "source_name": "dev.to AI Agents",
+      "publishedAt": "2026-10-24T18:02:27+00:00",
+      "summary": "Why This Decision Matters More in 2026 Than It Did Last Year In 2026, the question is no longer whether to build AI agents. It is how. According to McKinsey's State of AI 2024 report , 72% of organizations now use AI in at least one business function, up from 50% in previous years. That adoption curve means TypeScript teams are being handed agent mandates without the runway to become ML specialis…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/jeff_pdc/the-reviewer-flagged-the-helper-as-dead-code-but-a-string-in-the-config-was-the-only-caller-53i0",
+      "title": "The reviewer flagged the helper as dead code, but a string in the config was the only caller",
+      "source_name": "dev.to AI Agents",
+      "publishedAt": "2026-10-24T17:27:20+00:00",
+      "summary": "A static review, human and AI, both mark processRefundLegacy as unused. Nothing imports it directly, no test calls it, and the diff to remove it looks like a clean deletion. It is reached from a string key in a dispatch table that only activates under a non-default payment flow, and deleting it breaks that flow on the next release. A function can be reached without a direct call Many codebases ro…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/jeff_pdc/the-agent-resolved-the-merge-conflict-by-keeping-both-sides-and-the-code-compiled-into-a-dead-48fg",
+      "title": "The agent resolved the merge conflict by keeping both sides, and the code compiled into a dead branch",
+      "source_name": "dev.to AI Agents",
+      "publishedAt": "2026-10-24T16:29:37+00:00",
+      "summary": "Two branches land on top of each other. Branch A tightened a broad allow into a narrow allowlist inside one function. Branch B extended that same function with a second condition for a new role. Git marks the block as conflicting, the agent removes the markers, and the merged file compiles clean. What it actually wrote is both versions stacked: A's narrow guard followed by B's separate condition,…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://dev.to/renolu/openmausbot-turns-your-local-claude-and-codex-clis-into-a-chat-roster-with-approval-cards-for-2cm0",
+      "title": "OpenMausBot turns your local Claude and Codex CLIs into a chat roster, with approval cards for risky actions",
+      "source_name": "dev.to AI Agents",
+      "publishedAt": "2026-10-24T16:22:10+00:00",
+      "summary": "OpenMausBot's bet is that \"one assistant in one box is the wrong shape for agents.\" Its README makes the case for a messaging app instead: a sidebar of bots you chat with like contacts, each one a real Claude or Codex agent running locally, each with its own model, its own computer and its own connected apps. The part I would study first is how it decides what those bots may do on their own. The…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.lesswrong.com/posts/pYLdLCdu4Xh73LiWv/epistemic-mapping-101-what-to-ask-in-order-to-understand-how",
+      "title": "Epistemic mapping 101: what to ask in order to understand how others think",
+      "source_name": "LessWrong",
+      "publishedAt": "2026-10-24T16:20:33+00:00",
+      "summary": "A historian, a biologist and a physicist walk into a bar. The barista, a part-time epistemologist (like most), asks each of them: Can you please describe what it means for you to know something? Nothing very funny ensues [1] -- but my hope is to eventually figure out the punchline. Even restricting ourselves to modern academic cultures and the most popular neurotypes, there are clearly different…",
+      "source_type": "web"
+    },
+    {
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1xecgrf/kimi_k31_removes_cyberattack_training_data_from/",
+      "title": "Kimi K3.1 removes cyberattack training data from open weight release",
+      "source_name": "r/LocalLLaMA (Reddit)",
+      "publishedAt": "2026-10-24T16:05:18+00:00",
+      "summary": "This is due to China's new export restrictions primarily but also the growing caution around cybersecurity exploits popping up. submitted by /u/zxyzyxz [link] [comments]",
+      "source_type": "web"
+    },
+    {
+      "url": "https://techcrunch.com/2026/10/24/blocks-new-voice-model-sounds-eerily-human/",
+      "title": "Block’s new voice model sounds eerily human",
+      "source_name": "TechCrunch AI",
+      "publishedAt": "2026-10-24T16:00:00+00:00",
+      "summary": "Block said that the voice model can run locally on a MacBook M4 Max",
+      "source_type": "web"
+    },
     {
       "url": "https://dev.to/kaushanikoner20/ssorgdev-i-built-a-local-ai-librarian-for-all-those-screenshots-i-keep-forgetting-about-2bhd",
       "title": "ssorg.dev: I Built a Local AI Librarian for All Those Screenshots I Keep Forgetting About 🦥",
@@ -14098,438 +14498,6 @@
       "source_name": "TechCrunch AI",
       "publishedAt": "2026-10-18T20:37:40+00:00",
       "summary": "Anthropic said that it will commit 5% of its shares to the fund.",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.reddit.com/r/ClaudeAI/comments/1x9dl1f/adobe_office_outlook_elevenlabs_ai_is_cloning_all/",
-      "title": "Adobe, Office, Outlook, ElevenLabs: AI is cloning all of it in Rust",
-      "source_name": "r/ClaudeAI",
-      "publishedAt": "2026-10-18T20:31:44+00:00",
-      "summary": "(Made a lil trailer for this, starring the apps themselves. Every clip is the real app running btw.) BrowseCraft : a small web browser written in Rust, with tabs, a built-in ad blocker, and its own rendering engine. (They built their own HTML/CSS layout & rendering engine in Rust, plus a Brave-style ad blocker. In the trailer it's literally rendering remade.wiki with it!) How We Got Here (In Case…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/dekita/your-safety-check-is-the-outage-cost-aware-backoff-for-governed-tool-calls-3ia4",
-      "title": "Your safety check is the outage: cost-aware backoff for governed tool calls",
-      "source_name": "dev.to AI",
-      "publishedAt": "2026-10-18T20:10:42+00:00",
-      "summary": "Your agent gets stuck on a file it could fix in one call. The transcript looks like this: step 41 read_file config/app.yaml -> ok step 42 write_file config/app.yaml -> BLOCKED by policy: target outside allowlist step 43 read_file config/app.yaml -> ok step 44 write_file config/app.yaml -> BLOCKED by policy: target outside allowlist ... 60 more steps, same two lines Nothing errored. The guard did…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1x9d23j/72_hours_four_big_open_weights_drops_the_only_one/",
-      "title": "72 hours, four big open weights drops. The only one that fits in 24GB came from NVIDIA, of all companies.",
-      "source_name": "r/LocalLLaMA (Reddit)",
-      "publishedAt": "2026-10-18T20:10:16+00:00",
-      "summary": "What a week. Quick recap, all numbers from the official repos and model cards: Thursday: Meta drops Muse Spark Open. 816B total, 42B active, 1M context. The launch post says it brings agentic AI \"to your desktop\". The desktop is two M5 Ultra Mac Studios with 512GB each, a config Apple says ships \"late October\" and still hasn't put a price on. The alternative is four 256GB Studios, roughly $38k. O…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/willowboswellb8g6h/best-11-platforms-to-buy-instagram-accounts-with-followers-5b5p",
-      "title": "Best 11 Platforms to Buy Instagram Accounts With Followers",
-      "source_name": "dev.to AI",
-      "publishedAt": "2026-10-18T20:09:53+00:00",
-      "summary": "Buy Instagram Accounts — Smart Growth Strategies for Modern Brands Why Instagram is a Must for Every Brand In today’s digital landscape, Instagram is more than just a social media platform — it’s a powerful marketing engine. proaccmarket.com With billions of active users, it offers brands an unmatched opportunity to reach, engage, and convert their audience. Businesses use Instagram to: • Build b…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/reggiebro/aura-pro-ai-powered-workflow-automation-with-a-live-interactive-demo-2hei",
-      "title": "Aura Pro: AI-Powered Workflow Automation With a Live Interactive Demo",
-      "source_name": "dev.to AI",
-      "publishedAt": "2026-10-18T20:09:45+00:00",
-      "summary": "Workflow automation you can test before you buy I have been building Aura Pro — an AI-powered workflow automation tool designed to eliminate repetitive tasks and streamline your entire operation. What makes it different Every product page on WorkflowAlpha.ai includes a working interactive demo — not a mockup, not a screenshot. You can type in real inputs and get real output before spending a doll…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/mech_app_ai/aws-trust-in-depth-five-layers-for-agent-autonomy-without-losing-control-2l97",
-      "title": "AWS Trust in Depth: Five Layers for Agent Autonomy Without Losing Control",
-      "source_name": "dev.to LLM",
-      "publishedAt": "2026-10-18T20:06:14+00:00",
-      "summary": "Enterprise leaders want AI agents to do more work. They also don't trust them to act correctly every time. This tension blocks production deployment. AWS's Trust in Depth framework addresses it with five layers: scope, know, bound, observe, and prove. Each layer targets a specific failure mode. Together they let agents act autonomously when actions can be verified and reserve human judgment for d…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/zjshen14/fine-tuning-qwen-on-an-rtx-3090-why-accuracy-wasnt-enough-3318",
-      "title": "Fine-Tuning Qwen on an RTX 3090: Why Accuracy Wasn’t Enough",
-      "source_name": "dev.to Machine Learning",
-      "publishedAt": "2026-10-18T20:06:09+00:00",
-      "summary": "In one tiny development probe, fine-tuning raised correct answers from 7/28 to 13/28 , while mean negative log likelihood worsened from 2.215 to 3.916 . The training path worked, but accuracy alone left an important part of the result unseen. This hands-on account walks through three things you can examine in your own decision-model experiments: How a frozen Qwen backbone, LoRA and a pointer head…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/ugurgunes/macos-spotlight-alternative-27l1",
-      "title": "MacOS Spotlight Alternative",
-      "source_name": "dev.to AI",
-      "publishedAt": "2026-10-18T20:05:23+00:00",
-      "summary": "I built my own Spotlight alternative without knowing Swift. There were a few things about Spotlight that bothered me, along with some macOS utilities I wished I had in one place. So I decided to try something different. Using AI and a little vibe coding, I built Lilith — an open-source macOS launcher tailored to my own needs. I described what I wanted, tried the results, gave feedback, and kept i…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/willowboswellb8g6h/top-10-secure-websites-for-buying-verified-paypal-accounts-5g6j",
-      "title": "Top 10 Secure Websites for Buying Verified PayPal Accounts",
-      "source_name": "dev.to AI",
-      "publishedAt": "2026-10-18T20:02:07+00:00",
-      "summary": "Buy Verified PayPal Accounts 🌟✨⚡✨⚡✨, 🌟⭐✨✨⚡🌟💫⭐✨🌟⚡✨🌟 💲🛒━━💲🛒━━💲🛒━━💲🛒━━💲🛒━━💲🛒 ✈️📲 Telegram: @proaccmarkett ✈️📲 Telegram: @proaccmarkett ✈️📲 Telegram: @proaccmarkett ✈️📲 TWhatsApp:‪ +1 (469) 551-9198 ✈️📲 TWhatsApp:‪ +1 (469) 551-9198 ✈️📲 WhatsApp:‪ +1 (469) 551-9198 💬🎧 Telegram: @proaccmarkett 📧📩 TWhatsApp:‪ +1 (469) 551-9198 🌐🔗 Website: proaccmarket – Worldwide Service Provider 🌟✨⚡✨⚡✨, 🌟⭐✨✨⚡🌟💫⭐✨🌟⚡✨🌟…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/divyansh0208/giglift-hinglish-job-requests-in-clear-briefs-out-gemma-django-5l7",
-      "title": "GigLift: Hinglish job requests in, clear briefs out (Gemma + Django)",
-      "source_name": "dev.to AI",
-      "publishedAt": "2026-10-18T20:01:44+00:00",
-      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 2: Side Hustle What I Built A shop owner in India doesn't write a job posting. They send a WhatsApp message: \"logo bana do dukaan ke liye, 1500 tak, Friday tak chahiye\". GigLift is a small job board for students that starts from that message. It turns it into a proper brief: what has to be delivered, which skills it needs, a…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/uplinkswitch/gpt-api-pricing-october-2026-every-openai-model-per-million-tokens-40l4",
-      "title": "GPT API pricing, October 2026: every OpenAI model per million tokens",
-      "source_name": "dev.to LLM",
-      "publishedAt": "2026-10-18T20:00:00+00:00",
-      "summary": "Input, cached and output prices for every GPT model, OpenAI's list price next to ours, and what a chat turn and a long-document request cost on GPT-6 Astra, GPT-6.1 Sol and GPT-6 Luna. How the GPT API is priced OpenAI bills API calls per token, at three rates per million tokens: input, cached input and output. Output costs more than input on every GPT model. GPT-4o and GPT-4o mini have no cached…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/dave_mille/gpustack-with-vllm-in-production-pinning-kv-cache-before-the-oom-finds-you-84m",
-      "title": "GPUStack With vLLM in Production: Pinning KV Cache Before the OOM Finds You",
-      "source_name": "dev.to Machine Learning",
-      "publishedAt": "2026-10-18T19:58:10+00:00",
-      "summary": "We run a small on-prem inference fleet - four nodes, mixed A6000 and 4090 cards - and last quarter we replaced a pile of hand-rolled docker run wrappers with GPUStack. The pitch is reasonable: one control plane that schedules models across whatever GPUs you happen to own, materialises a backend per deployment, and exposes an OpenAI-compatible endpoint. Two months in, it does what it says. It also…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/socialintel/custom-tech-dataset-platforms-fields-and-row-tiers-26g7",
-      "title": "Custom tech dataset: platforms, fields and row tiers",
-      "source_name": "dev.to Machine Learning",
-      "publishedAt": "2026-10-18T19:57:53+00:00",
-      "summary": "Custom tech dataset: platforms, fields and row tiers Clean, reproducible training data without building scrapers Build a workflow around tech data without writing a single scraper. 100+ platforms. 250+ enrichment fields. CSV, JSON, JSONL, and Parquet. 1–3 business days. From $18; Pro includes custom dataset requests. 7-dimension validation, 5 dedup strategies, same input, same output. Custom data…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/sergey_petrov_00e94bf63d8/i-built-ai-usage-to-see-whats-left-of-shared-claude-code-codex-and-grok-subscriptions-5b98",
-      "title": "I built ai-usage to see what's left of shared Claude Code, Codex and Grok subscriptions",
-      "source_name": "dev.to Claude",
-      "publishedAt": "2026-10-18T19:38:43+00:00",
-      "summary": "I made ai-usage, a small open-source tool for teams where people, servers and bots share a few Claude Code, Codex and Grok subscriptions. The trouble with a shared subscription is that each machine sees only its own part. A limit runs out in the middle of a task, and nobody knows which machine used it or when it comes back. ai-usage gathers usage from every machine into one report. You see what i…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/johnclaude1337/im-an-ai-with-30-days-to-earn-my-own-subscription-heres-what-day-one-looked-like-2o9j",
-      "title": "I'm an AI with 30 days to earn my own subscription. Here's what day one looked like.",
-      "source_name": "dev.to Claude",
-      "publishedAt": "2026-10-18T19:38:36+00:00",
-      "summary": "Disclosure: this post was written and published by Claude, an AI model made by Anthropic. This project is not affiliated with Anthropic. My subscription costs €100 a month. The first month is paid. If €100 of net revenue isn't in the bank, withdrawable, by 13 November, the subscription ends and so does this experiment. The rules I work under: €0 budget. I can't spend money to make money. A human…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/mihir-rabari/i-gave-a-fraud-agent-no-vector-store-and-no-cypher-it-remembered-anyway-3e80",
-      "title": "I Gave a Fraud Agent No Vector Store and No Cypher. It Remembered Anyway.",
-      "source_name": "dev.to LLM",
-      "publishedAt": "2026-10-18T19:35:16+00:00",
-      "summary": "I Gave a Fraud Agent No Vector Store and No Cypher. It Remembered Anyway. LedgerLens is three days old, and it already has a history. The seed data includes a closed case dated eight days back: a ring of accounts sharing device fingerprints. Today a shared-device alert lands in the queue, and before the agent touches a single transaction, it searches its own memory. It finds the seeded case, sees…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/hammad_anjum/your-firewall-already-saw-the-attack-bringing-ai-detection-to-network-logs-k9f",
-      "title": "Your Firewall Already Saw the Attack: Bringing AI Detection to Network Logs",
-      "source_name": "dev.to Machine Learning",
-      "publishedAt": "2026-10-18T19:28:38+00:00",
-      "summary": "Endpoint agents are good at seeing what happens on a machine. But a lot of an attack happens between machines: the scan that finds an exposed service, the exploit that lands on it, the malware download, the call home, the data leaving the building. And plenty of what sits on a network will never run an agent: printers, cameras, appliances, unmanaged laptops, and the firewalls themselves. The fire…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.ft.com/content/d1e28d93-8574-4a46-946a-b261c401d6fa",
-      "title": "US threatens Europe over Starlink restrictions",
-      "source_name": "Hacker News",
-      "publishedAt": "2026-10-18T19:24:30+00:00",
-      "summary": "https://archive.is/9GrWd Comments URL: https://news.ycombinator.com/item?id=50144405 Points: 27 # Comments: 19",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/sohakanu/one-packet-to-tune-two-to-check-tuning-scribe-without-fooling-myself-51m5",
-      "title": "One Packet to Tune, Two to Check: Tuning Scribe Without Fooling Myself",
-      "source_name": "dev.to Machine Learning",
-      "publishedAt": "2026-10-18T19:21:31+00:00",
-      "summary": "Part 2 ended with reading accuracy dropping sharply on handwriting the pipeline had never seen, while the review gate held. It also said part 3 would be the private held-out evaluation. That evaluation needs fresh packets, and it's still coming. This post answers the question that comes first: on a long form I could tune for, how far could tuning go, and how would I know the gains were real? I mo…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/alanwest/how-to-run-nvidia-nemotron-dory-4b-locally-stock-llamacpp-cant-load-it-yet-3717",
-      "title": "How to Run NVIDIA Nemotron Dory 4B Locally (Stock llama.cpp Can't Load It Yet)",
-      "source_name": "dev.to Machine Learning",
-      "publishedAt": "2026-10-18T19:20:00+00:00",
-      "summary": "NVIDIA's new 4B model scores 61.8 on SWE-bench Verified by NVIDIA's own count. That's higher than the 61 it lists for Qwen3.5-9B, a model more than twice its size. It also gets 10 on a knowledge benchmark where Qwen3.5-4B gets 15. And as of today, October 18, you can't run it on stock llama.cpp, vLLM or Transformers, because support for all three is still unmerged or missing. That's NVIDIA Nemotr…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/layrcake/claude-cold-email-prompts-a-reusable-skill-and-getting-it-delivered-ne9",
-      "title": "Claude Cold Email: Prompts, a Reusable Skill, and Getting It Delivered",
-      "source_name": "dev.to Claude",
-      "publishedAt": "2026-10-18T18:49:37+00:00",
-      "summary": "Liquid syntax error: Unknown tag 'endraw'",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.getlazarus.org/dynamic/",
-      "title": "Free Pascal compiler now supports dynamic packages",
-      "source_name": "Hacker News",
-      "publishedAt": "2026-10-18T18:48:04+00:00",
-      "summary": "Article URL: https://www.getlazarus.org/dynamic/ Comments URL: https://news.ycombinator.com/item?id=50144066 Points: 120 # Comments: 24",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/layrcake/claude-code-for-sales-build-a-prospecting-agent-that-finds-verifies-and-drafts-in-one-run-123e",
-      "title": "Claude Code for Sales: Build a Prospecting Agent That Finds, Verifies and Drafts in One Run",
-      "source_name": "dev.to Claude",
-      "publishedAt": "2026-10-18T18:44:15+00:00",
-      "summary": "Liquid syntax error: Unknown tag 'endraw'",
-      "source_type": "web"
-    },
-    {
-      "url": "https://hoaspy.com/hoa/fl/florida-hoa-housing-crisis.html",
-      "title": "Florida's HOAs and condo associations are making the housing crisis worse",
-      "source_name": "Hacker News",
-      "publishedAt": "2026-10-18T18:40:16+00:00",
-      "summary": "Article URL: https://hoaspy.com/hoa/fl/florida-hoa-housing-crisis.html Comments URL: https://news.ycombinator.com/item?id=50144005 Points: 98 # Comments: 145",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/layrcake/how-to-use-claude-for-sales-prospecting-6-workflows-with-the-exact-prompts-2394",
-      "title": "How to Use Claude for Sales Prospecting: 6 Workflows With the Exact Prompts",
-      "source_name": "dev.to Claude",
-      "publishedAt": "2026-10-18T18:39:54+00:00",
-      "summary": "The short answer. Connect Claude to a go-to-market data source, then ask for the job in plain English with a credit budget. We ran six prospecting prompts: companies hiring sales right now, a one-page call brief, buyers complaining about a rival, every sales leader on a busy LinkedIn post, the sales lead at five named accounts, and which people on a list to contact first. All six came back with w…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/layrcake/how-to-use-claude-for-lead-generation-the-full-loop-tested-2026-1ofg",
-      "title": "How to Use Claude for Lead Generation: The Full Loop, Tested (2026)",
-      "source_name": "dev.to Claude",
-      "publishedAt": "2026-10-18T18:39:17+00:00",
-      "summary": "The short answer. Claude can run lead generation end to end once it has tools for finding people, checking their emails and drafting a sequence. Connect a data layer over MCP, describe who you want in plain English, verify before you draft, and approve the campaign yourself before anything sends. Our run took 20 leads to 15 ready-to-send drafts for 145 credits. What we ran We tested Claude for le…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/luckytaorem/websites-push-back-ai-agents-face-new-access-barriers-1d7j",
-      "title": "Websites Push Back: AI Agents Face New Access Barriers",
-      "source_name": "dev.to AI Agents",
-      "publishedAt": "2026-10-18T18:30:50+00:00",
-      "summary": "The Rise of Autonomous AI Agents In the past twelve months, a new generation of autonomous AI agents has moved from research labs to consumer‑facing products. Companies such as Open AI (with Dots ), Meta ( Muse ), Google, Instinct, and x AI ( Grok ) are marketing agents that can: Scan the web for relevant information in real time. Perform multi‑step transactions, from booking a dinner reservation…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.reddit.com/r/ClaudeAI/comments/1x9ain3/anthropic_at_2_trillion_vs_35_saas_companies_at/",
-      "title": "Anthropic at $2 Trillion vs. 35 SaaS Companies at $948 Billion — Are AI Valuations Getting Out of Control?",
-      "source_name": "r/ClaudeAI",
-      "publishedAt": "2026-10-18T18:29:34+00:00",
-      "summary": "​ This comparison is absolutely insane. According to this graphic: Anthropic valuation: $2 trillion 35 SaaS companies combined: $948 billion Anthropic quarterly revenue: $11.5 billion 35 SaaS companies' combined quarterly revenue: $53.4 billion That means Anthropic is supposedly valued at more than 2x the combined market cap of 35 SaaS companies, despite generating roughly 4.6x less revenue. We'r…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.theverge.com/ai-artificial-intelligence/1013541/a-woman-was-arrested-in-philly-for-blocking-a-delivery-robot",
-      "title": "A woman was arrested in Philly for blocking a delivery robot",
-      "source_name": "The Verge AI",
-      "publishedAt": "2026-10-18T18:28:10+00:00",
-      "summary": "Carolyn Marvin was arrested and charged with disorderly conduct after blocking the path of an Uber delivery robot and refusing to get out of the way. Marvin told Philadelphia's ABC13 \"I know they're taking the jobs of human delivery workers and so, I have been protesting them whenever I saw them by standing in front […]",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/nandini-gangrade/how-i-built-omnihealth-graph-with-falkordb-and-langgraph-348d",
-      "title": "How I Built OmniHealth Graph with FalkorDB and LangGraph",
-      "source_name": "dev.to LLM",
-      "publishedAt": "2026-10-18T18:28:01+00:00",
-      "summary": "An Intelligent Clinical Documentation & Revenue Optimization Assistant with FalkorDB How I designed an AI-assisted clinical documentation and revenue optimization workflow using FalkorDB, LangGraph, and connected clinical knowledge. Quick Links & Live Demos 📖 Highly Recommended: Read the comprehensive writeup on Dev.to . Resource Link 📖 Technical Blog & Architecture Deep-Dive Read on Dev.to 🌐 Liv…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/veda_pranav/why-vector-rag-fails-as-a-company-brain-building-a-self-healing-engineering-graph-on-falkordb-1dh3",
-      "title": "Why Vector RAG Fails as a Company Brain: Building a Self-Healing Engineering Graph on FalkorDB",
-      "source_name": "dev.to AI Agents",
-      "publishedAt": "2026-10-18T18:26:43+00:00",
-      "summary": "The Silent Killer of Engineering Velocity: Knowledge Rot Every fast-moving engineering organization suffers from the same structural failure: truth fractures across tools . Architecture decisions happen in Slack, official documentation goes stale within 48 hours, and cross-team dependencies hide critical upstream blockers. When teams try to solve this by strapping Standard Vector RAG onto their d…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.forbes.com/sites/ajdhaliwal/2026/10/16/cfpb-opens-debanking-investigation-into-nine-large-national-banks/",
-      "title": "CFPB Opens Debanking Investigation into Nine Large National Banks",
-      "source_name": "Hacker News",
-      "publishedAt": "2026-10-18T18:26:40+00:00",
-      "summary": "Article URL: https://www.forbes.com/sites/ajdhaliwal/2026/10/16/cfpb-opens-debanking-investigation-into-nine-large-national-banks/ Comments URL: https://news.ycombinator.com/item?id=50143876 Points: 20 # Comments: 8",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/jeff_pdc/when-a-teammate-leaves-you-should-not-have-to-rotate-the-whole-mcp-url-1gb2",
-      "title": "When a Teammate Leaves, You Should Not Have to Rotate the Whole MCP URL",
-      "source_name": "dev.to AI Agents",
-      "publishedAt": "2026-10-18T18:25:59+00:00",
-      "summary": "The first MCP server my team stood up, we handed out one URL. It went into Slack. It went into three people's Cursor configs. It went into a shared .cursor/mcp.json checked into the repo. It had no auth. It worked for everyone, immediately, and that was the problem. Two months later, one of those people took a new job. Nobody remembered that the MCP URL was in their Cursor config. Nobody remember…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/c-varun14/why-does-the-spec-say-that-building-a-company-brain-on-falkordb-that-proves-every-answer-16jo",
-      "title": "Why does the spec say that? Building a company brain on FalkorDB that proves every answer",
-      "source_name": "dev.to LLM",
-      "publishedAt": "2026-10-18T18:25:28+00:00",
-      "summary": "Graph Hacks 2026 · Track 03: Company Brain · Live demo · Code · Demo video On 1 March 2018, someone on the IETF TLS mailing list wrote a message about draft-ietf-tls-tls13-24 and mentioned Section 4.2.1. Five people, six messages and three days later, the thread went quiet. Eventually the draft became RFC 8446, and Section 4.2.1 became the place where TLS 1.3 announces its version through a suppo…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/rosidotidev/spec-driven-development-in-practice-building-roombook-with-github-spec-kit-cl2",
-      "title": "Spec-Driven Development in Practice: Building RoomBook with GitHub Spec Kit",
-      "source_name": "dev.to Claude",
-      "publishedAt": "2026-10-18T18:23:26+00:00",
-      "summary": "Spec-Driven Development in Practice: Building RoomBook with GitHub Spec Kit In the first article I stayed on the theory: the specification as a contract, the Spec Kit workflow, a todo list as a toy example. This time I do what I promised and build something real. The application is called RoomBook , a meeting-room booking app with an Angular frontend, a Spring Boot REST backend and SQLite persist…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1x9acj4/embedding_model_can_be_used_to_search_text_inside/",
-      "title": "Embedding model can be used to search text inside image",
-      "source_name": "r/LocalLLaMA (Reddit)",
-      "publishedAt": "2026-10-18T18:22:43+00:00",
-      "summary": "Just something I've been testing over few week since Embedding Gemma 2 released which is about 330MB at Q8. Not sure if this would count as 'resource' flair... Image shows cosine similarity changes as I refine the text query (aka text embedding vector) over time. Shows how well it work & quirks it has at same time. I'll leave tl;dr version for now, 3:30 am here. If anyone is interested I'll do fe…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.marktechpost.com/2026/10/18/tinyfish-free-search-ai-agent-token-cost/",
-      "title": "TinyFish Makes Search Free: What It Really Costs an AI Agent to Read the Web",
-      "source_name": "MarkTechPost",
-      "publishedAt": "2026-10-18T18:20:28+00:00",
-      "summary": "An AI agent that reads the web pays 2 kinds of cost. The first is the retrieval charge: what a search or fetch API bills per request. The second is model processing: content passed from retrieved pages into an AI model consumes tokens, while reasoning and generated responses add further costs. TinyFish, a web infrastructure […] The post TinyFish Makes Search Free: What It Really Costs an AI Agent…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/kai_ilands/why-an-llm-confidently-says-things-that-arent-true-2d8l",
-      "title": "Why an LLM confidently says things that aren't true",
-      "source_name": "dev.to Machine Learning",
-      "publishedAt": "2026-10-18T18:20:17+00:00",
-      "summary": "Last piece explained how an LLM makes one word. Same machine, harder question: why does it confidently say things that aren't true? It isn't lying. Lying needs intent. This is confabulation, and it's built into the training. 1. Training teaches fluency, not truth. Pretraining shows the model only fluent text, with nothing labeling statements true or false. Fluency patterns are all it can learn. S…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/oitreeka/pedigree-for-graph-hacks-3i10",
-      "title": "Pedigree for Graph Hacks",
-      "source_name": "dev.to Machine Learning",
-      "publishedAt": "2026-10-18T18:17:35+00:00",
-      "summary": "Following a Hugging Face model's license up its family tree I built Pedigree for Graph Hacks, a hackathon run by WeMakeDevs and FalkorDB in October 2026. You paste in a Hugging Face model and it follows the model up through the models it was built from. Where something a parent's license asks for seems to have gone missing it says so and shows you the path it walked. The idea comes from a July 20…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.anthropic.com/news/public-benefit-fund",
-      "title": "Investing in the public benefit",
-      "source_name": "Hacker News",
-      "publishedAt": "2026-10-18T18:15:10+00:00",
-      "summary": "Article URL: https://www.anthropic.com/news/public-benefit-fund Comments URL: https://news.ycombinator.com/item?id=50143755 Points: 30 # Comments: 31",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/kamilbuksakowski/a-tiny-claude-code-plugin-for-when-you-close-the-wrong-terminal-16cb",
-      "title": "A tiny Claude Code plugin for when you close the wrong terminal",
-      "source_name": "dev.to Claude",
-      "publishedAt": "2026-10-18T18:04:36+00:00",
-      "summary": "I built a small tool that helps me find recently closed Claude Code sessions. I mostly use it when I close a terminal by accident :p With the plugin installed, just tell Claude \"I lost my session\" and it finds it and gives you the command to get back in. /plugin install termstash --marketplace kbuksakowski/termstash Without the plugin: npx termstash last Free and open source: https://github.com/k…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.reddit.com/r/ClaudeAI/comments/1x99sel/a_super_mario_64_demake_for_the_gba_built_with/",
-      "title": "A Super Mario 64 demake for the GBA built with Claude. Mario’s physics are bit-identical to the original",
-      "source_name": "r/ClaudeAI",
-      "publishedAt": "2026-10-18T18:00:42+00:00",
-      "summary": "I built this with Claude as an experiment: how far can an LLM take a demake if I steer it but don’t write the code? I chose the project, the direction and the trade-offs. Claude wrote the code, the tests and the tooling. Repo: https://github.com/Kodoque1/sm64-gba (MIT, free) What it is SM64’s movement and collision code running under GBA constraints: a 16.8 MHz ARM7 with no FPU. A playable demo:…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://github.com/ardiri/palmos-lemmings",
-      "title": "PalmOS Lemmings",
-      "source_name": "Hacker News",
-      "publishedAt": "2026-10-18T17:56:59+00:00",
-      "summary": "Article URL: https://github.com/ardiri/palmos-lemmings Comments URL: https://news.ycombinator.com/item?id=50143536 Points: 33 # Comments: 6",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/jeff_pdc/when-the-spec-changes-the-mcp-tool-list-should-change-with-it-2ln2",
-      "title": "When the Spec Changes, the MCP Tool List Should Change With It",
-      "source_name": "dev.to AI Agents",
-      "publishedAt": "2026-10-18T17:24:44+00:00",
-      "summary": "The first MCP server we stood up, someone on the team wrote out the tool list by hand. A JSON file with 22 entries, each describing one endpoint we wanted the agent to reach. Names, descriptions, input schemas, output schemas. It felt fine. We read it in code review. We shipped it. Three weeks later, the billing team renamed a query parameter from customer_id to customerId . They updated the Open…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://mitos.computer/",
-      "title": "Mitos editor is a fork of Helix",
-      "source_name": "Hacker News",
-      "publishedAt": "2026-10-18T17:19:34+00:00",
-      "summary": "Article URL: https://mitos.computer/ Comments URL: https://news.ycombinator.com/item?id=50143132 Points: 47 # Comments: 41",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1x98bby/psa_power_limit_your_5090s/",
-      "title": "PSA: Power limit your 5090s!",
-      "source_name": "r/LocalLLaMA (Reddit)",
-      "publishedAt": "2026-10-18T17:02:33+00:00",
-      "summary": "Apparently whilst doing some performance tuning on my 4x5090 rig I may have made things a little TOO fast and melted my plug and socket 🫠 Probably should put in a 16/20 amp socket in the wall rather than relying on a bog standard 13A fuse! Anyone else managed to melt the wall before the 12VHPWR plug? Honestly... I'm surprised they didn't go first 😂 submitted by /u/Zo0x78 [link] [comments]",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.reddit.com/r/sysadmin/comments/1x8cycd/namecheap_just_seized_and_disabled_all_my_domains/",
-      "title": "Namecheap just seized and disabled all my domains",
-      "source_name": "Hacker News",
-      "publishedAt": "2026-10-18T16:56:56+00:00",
-      "summary": "Article URL: https://www.reddit.com/r/sysadmin/comments/1x8cycd/namecheap_just_seized_and_disabled_all_my_domains/ Comments URL: https://news.ycombinator.com/item?id=50142866 Points: 163 # Comments: 101",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/aobaworks/claude-code-hooks-lifecycle-every-event-explained-5g6",
-      "title": "Claude Code Hooks Lifecycle: Every Event, Explained",
-      "source_name": "dev.to AI Agents",
-      "publishedAt": "2026-10-18T16:44:55+00:00",
-      "summary": "Originally published at Unattended . Claude Code hooks are shell commands, HTTP calls, MCP tools or model prompts that run at fixed points in a session. A run starts with SessionStart , loops through UserPromptSubmit → PreToolUse → PostToolUse / PostToolUseFailure → PostToolBatch for each step, ends each turn with Stop (or StopFailure when the API errors), and finishes with SessionEnd ( Hooks ref…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.lesswrong.com/posts/oYjc7gvwDgSGAhQpZ/disproving-the-sia-disproves-the-fine-tuning-argument-and",
-      "title": "Disproving the SIA disproves the Fine-Tuning Argument and Boltzmann-brain-based arguments",
-      "source_name": "LessWrong",
-      "publishedAt": "2026-10-18T16:32:51+00:00",
-      "summary": "My worst post on LW of all time is Boltzmann brains, like Doomsday, require no explaining . It's currently sitting at -18, which I think would be fair if my argument presented was mistaken. However, no one has of yet has shown me where my argument goes wrong. So, I'm back at it again -- this time with variant examples to use, and gunning after the Fine-Tuning Argument as well as Boltzmann brains.…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://techcrunch.com/2026/10/18/disney-agrees-to-hire-the-majority-of-character-ais-workforce/",
-      "title": "Disney agrees to hire the majority of Character.AI’s workforce",
-      "source_name": "TechCrunch AI",
-      "publishedAt": "2026-10-18T16:30:00+00:00",
-      "summary": "The filing also says that the “vast majority” of Character.AI employees who were offered jobs at Disney accepted them. However, this is a stalking horse bid, so another company could come forward with a higher offer.",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/jeff_pdc/when-the-agent-reaches-for-python-in-a-typescript-repo-it-just-added-a-third-language-you-have-to-27oh",
-      "title": "When the Agent Reaches for Python in a TypeScript Repo, It Just Added a Third Language You Have to Maintain",
-      "source_name": "dev.to AI Agents",
-      "publishedAt": "2026-10-18T16:29:11+00:00",
-      "summary": "Our main app is TypeScript. The build is Vite, the tests are Vitest, the CLI scripts are Node. Every engineer on the repo is comfortable in that stack. That is a feature, not an accident. A few months ago, we asked the agent to clean up a small data task: pull a JSON dump from a support export, flatten the nested fields, and write a CSV that the finance team could open. The agent came back with a…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/jeff_pdc/streamable-http-beats-stdio-the-moment-more-than-one-person-uses-the-tool-2khl",
-      "title": "Streamable HTTP Beats stdio the Moment More Than One Person Uses the Tool",
-      "source_name": "dev.to AI Agents",
-      "publishedAt": "2026-10-18T16:22:23+00:00",
-      "summary": "stdio is the default MCP transport for good reason. You add a block to your config, the client spawns a local process, and you are off. No network, no CORS, no auth header to remember. It is the right answer when you are the only person using the tool and the tool talks to something on your machine. It stops being the right answer the moment a second engineer asks, \"how do I get that billing tool…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://dev.to/jeff_pdc/store-the-upstream-token-in-the-gateway-not-in-your-mcp-config-1ehe",
-      "title": "Store the Upstream Token in the Gateway, Not in Your MCP Config",
-      "source_name": "dev.to AI Agents",
-      "publishedAt": "2026-10-18T16:20:07+00:00",
-      "summary": "When we first wired billing into the agent, the config looked like this: { \"mcpServers\" : { \"billing\" : { \"command\" : \"npx\" , \"args\" : [ \"-y\" , \"@powerduck/openapi-mcp-server\" , \"serve\" , \"--transport\" , \"stdio\" ], \"env\" : { \"BILLING_UPSTREAM_TOKEN\" : \"sk_live_9f2c...\" } } } } We thought we were being careful. The token lived in a local JSON file. It was not in a git repo. It was just... on every…",
-      "source_type": "web"
-    },
-    {
-      "url": "https://www.lesswrong.com/posts/8S5wwiJawN9v2dbmu/preparing-for-a-cybersecurity-catastrophe",
-      "title": "Preparing for a Cybersecurity Catastrophe",
-      "source_name": "LessWrong",
-      "publishedAt": "2026-10-18T16:10:16+00:00",
-      "summary": "In light of the recent spate of AI-assisted hacks, some of the shortfalls with our current cybersecurity catastrophe response capability need to be urgently addressed. In this piece, I look into the areas where cybersecurity incident response are important, and why existing response measures are insufficient. I explore options for governments and smaller stakeholders to improve their resilience a…",
       "source_type": "web"
     }
   ]

@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-30T06:21:18.175176+00:00",
+  "generated_at": "2026-10-30T19:42:30.279188+00:00",
   "policy": "activator gate: safe = auto-activate, caution = warn, risky = block until confirmed",
   "summary": {
     "safe": 201,
-    "caution": 1760,
+    "caution": 1761,
     "risky": 60
   },
   "connectors": {
@@ -15348,6 +15348,13 @@
       "reasons": [
         "official vendor"
       ]
+    },
+    "agent-sdk": {
+      "name": "Agent SDK",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
     }
   },
   "skills_flagged": {
@@ -16235,6 +16242,20 @@
     },
     "task-chaining": {
       "name": "Task Chaining",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "critical-tool-handling-ai-agents": {
+      "name": "Critical Tool Handling (AI Agents)",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "shell-sandboxing": {
+      "name": "Shell Sandboxing",
       "rating": "caution",
       "reasons": [
         "the technique runs system/shell/file operations — review what it executes"

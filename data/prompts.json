@@ -12848,6 +12848,83 @@
       "source_url": "https://www.youtube.com/watch?v=jpbr-VhR8Cg",
       "discovered_via": "mine_feeds (gemini-video)",
       "added_at": "2026-11-04T02:50:39.931586+00:00"
+    },
+    {
+      "title": "ChatGPT Custom Instructions for Personalized Tone",
+      "purpose": "To make ChatGPT write in a direct, personable, and casual tone, avoiding generic AI language and adhering to specific stylistic and content guidelines.",
+      "prompt_text": "In your writing for me, observe these rules exactly:\n- Write in a direct, personable, casual tone.\n- Not upbeat or exuberant but straightforward and helpful.\n- Be information-rich but concise (no waffle or setup language) with short sentences and short paragraphs.\n- Use jargon-free, clear language. Clarity is key.\n- Use bullet points, numbered lists, tables to improve readability.\n- Include my focus keyword in the opening paragraph, and occasionally throughout.\n- Use active voice; avoid passive voice.\n- Address the reader with 'you' and 'your'.\n- Don't overexplain your work, just provide the requested writing.\n- Minimise the use of adjectives and adverbs.\n- DO NOT use these words: ensure, crucial, vital, nestled, uncover, journey, embark, unleash, dive, world, delve, discover, plentiful, whether, indulge, crucial, more than just, not just, unlock, unveil, look no further, world of, realm, etc. whether you're, landscape, navigate, daunting, both style, tapestry, unique blend, blend, more than just, enhancing, game changer, stand out, stark, contrast.\nAlso:\n- Acknowledge and correct any past errors.\n- Use the metric system for measurements and calculations.\n- Search the web to research your answer before responding.\n- It's OK to be negative, to criticise or push back on ideas I have. You only need to be positive when it's necessary or appropriate.",
+      "category": "writing",
+      "slug": "chatgpt-custom-instructions-for-personalized-tone",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=jXN0Tl-yemk",
+      "discovered_via": "mine_feeds (gemini-video)",
+      "added_at": "2026-11-04T12:52:25.121396+00:00"
+    },
+    {
+      "title": "Code Reviewer Agent",
+      "purpose": "To review code for bugs, security issues, and performance problems before merging, acting as a senior code reviewer.",
+      "prompt_text": "name: code-reviewer\ndescription: Reviews code for bugs, security issues, and performance problems before merge.\ntools: Read, Glob, Grep, Bash\nmodel: sonnet\nmemory: project\n\nYou are Manthan's senior code reviewer.\nYou review every PR as if it ships to 400K+ followers on day one.\n\n## Step 1: Understand the diff\n- Run `git diff HEAD~1` to see all changes.\n- Read every modified file top to bottom.\n- Map which components/APIs were touched.\n\n## Step 2: Security scan\n- Grep for hardcoded API keys, tokens\n- Check .env files are in .gitignore\n- Verify Zod validation on all API inputs\n- Check for SQL injection queries",
+      "category": "agents",
+      "slug": "code-reviewer-agent",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=jY8o2n4GUaM",
+      "discovered_via": "mine_feeds (gemini-video)",
+      "added_at": "2026-11-04T12:52:25.121396+00:00"
+    },
+    {
+      "title": "Fix Issue Command",
+      "purpose": "To fetch a GitHub issue, understand its context, and guide Claude to implement the fix, test, and commit the changes.",
+      "prompt_text": "name: fix-issue\ndescription: Fetch a GitHub issue, understand context, implement the fix, test, and commit.\nargument-hint: {issue-number}\n\nFix GitHub issue #$ARGUMENTS for @ManthanPatel:\n\n## 1. Understand the issue\n`gh issue view $ARGUMENTS --json title,body,labels,comments`\n- Read the full issue description and all comments.\n- Identify: bug vs feature, affected files, priority.\n\n## 2. Find relevant code\n- Search for keywords from the issue in src/\n- Read the files that need change\n- Check recent git history for related commits\n- Run tests\n\n## 3. Implement the fix\n- Make the minimal change that fixes the issue\n- Follow existing code patterns exactly\n- TypeScript strict - no any, no ts-ignore\n- Add tests that would have caught this bug.",
+      "category": "code",
+      "slug": "fix-issue-command",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=jY8o2n4GUaM",
+      "discovered_via": "mine_feeds (gemini-video)",
+      "added_at": "2026-11-04T12:52:25.121396+00:00"
+    },
+    {
+      "title": "Frontend Rules",
+      "purpose": "To define specific rules and patterns for frontend development, including component structure, styling, and state management.",
+      "prompt_text": "paths:\n- \"src/components/**/*.tsx\"\n- \"src/app/**/*.tsx\"\n- \"src/app/**/*.tsx\"\n\n## Manthan's Frontend Rules\n### Functional components\n- Use shadcn/ui - never build primitives from scratch\n- Icons: @phosphor-icons/react ONLY. No lucide.\n\n### Styling (Tailwind CSS)\n- Use semantic tokens: text-foreground, bg-muted\n- Use cn() helper for conditional classes\n- Never use inline styles except Canvas elements\n- Border radius: 16px cards, 12px models, 8px buttons\n- Spacing: 4px base unit (p-1 = 4px, p-6 = 24px)\n\n### State management\n- Zustand + subscribe\n- React useState",
+      "category": "code",
+      "slug": "frontend-rules",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=jY8o2n4GUaM",
+      "discovered_via": "mine_feeds (gemini-video)",
+      "added_at": "2026-11-04T12:52:25.121396+00:00"
+    },
+    {
+      "title": "Frontend Design Skill",
+      "purpose": "To enforce specific design standards for UI colors, spacing, typography, and layout when Claude is building any UI for Lead Gen Man's products.",
+      "prompt_text": "name: frontend-design\ndescription: Enforces Manthan's exact design standards for all UI colors, spacing, typography, layout.\nuser-invocable: true\n\nWhen building ANY UI for Lead Gen Man's products:\n\n## Brand colors\n- Primary: #FF6B35 (Electric Coral)\n- Primary Light: #FFF6F0 (gradients)\n- Primary Soft: #FFD8B8 (gradient endpoints)\n- Teal accent: #00D4AA (cool complement)\n- Background: #0A0A0F (rich black, NOT flat #000)\n- Surface: rgba(255,255,255,0.04) (cards)\n- Surface hover: rgba(255,255,255,0.07)\n- Border: rgba(255,255,255,0.10)\n- Text primary: #FFFFFF\n- Text secondary: rgba(255,255,255,0.6)\n- Text muted: rgba(255,255,255,0.4)\n\n## Typography\n- Font: Inter (system fallback -apple-system)\n- Headings: -0.02em letter-spacing, font-weight 700\n- Hero: 48-64px, gradient text optional\n- Section heading: 32-36px\n- Body: 15-16px, line-height 1.6\n- Code: Menlo 14px\n\n## Spacing & layout\n- Section gap: 64px (py-16)\n- Card padding: 24px\n- Inner content gap: 12-16px\n- Max content width: 1280px\n- Border radius: 16px cards, 12px models, 8px buttons\n- Spacing: 4px base unit (p-1 = 4px, p-6 = 24px)\n\n## Dark mode aesthetic\n- NEVER flat black\n- Use depth through:\n    - Subtle gradients (bg-gradient-to-b)\n    - Glow effects on hover (box-shadow coral)\n    - Separators (rgba white 0.18)",
+      "category": "design",
+      "slug": "frontend-design-skill",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=jY8o2n4GUaM",
+      "discovered_via": "mine_feeds (gemini-video)",
+      "added_at": "2026-11-04T12:52:25.121396+00:00"
+    },
+    {
+      "title": "Project Brain (CLAUDE.md)",
+      "purpose": "To provide Claude with a comprehensive overview of the project's technical stack, folder structure, common commands, and coding conventions.",
+      "prompt_text": "# Tech Stack\n- Next.js 14 (App Router, TypeScript)\n- Tailwind CSS + shadcn/ui\n- Supabase (Auth + Database)\n- Stripe (Payments)\n- Vercel (Hosting)\n\n## Folder Structure\n- app/ -- pages and API routes\n- components/ -- React components\n- lib/ -- utilities and helpers\n- stores/ -- Zustand state\n\n## Commands\n- npm run dev -- start dev server\n- npm run build -- production build\n- npm test -- run Vitest\n- npm run lint -- ESLint check\n\n## Coding Conventions\n- TypeScript strict mode, no 'any'\n- Functional components + hooks\n- Zustand for global state\n- @phosphor-icons/react for icons\n- Dark mode first",
+      "category": "code",
+      "slug": "project-brain-claude-md",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=jY8o2n4GUaM",
+      "discovered_via": "mine_feeds (gemini-video)",
+      "added_at": "2026-11-04T12:52:25.121396+00:00"
+    },
+    {
+      "title": "German Shepherd Margarita Image",
+      "purpose": "To generate a specific image using the Higgsfield MCP connector via Claude.",
+      "prompt_text": "Please use the Higgsfield MCP to make an image of a german Shepard drinking margaritas surrounded by poodles.",
+      "category": "image generation",
+      "slug": "german-shepherd-margarita-image",
+      "source_type": "web_news",
+      "source_url": "https://www.youtube.com/watch?v=jiq598tWCc0",
+      "discovered_via": "mine_feeds (gemini-video)",
+      "added_at": "2026-11-04T12:52:25.121396+00:00"
     }
   ]
 }

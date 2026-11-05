@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-02T09:55:41.496462+00:00",
+  "generated_at": "2026-11-05T07:20:10.951056+00:00",
   "policy": "activator gate: safe = auto-activate, caution = warn, risky = block until confirmed",
   "summary": {
-    "safe": 201,
-    "caution": 1764,
+    "safe": 202,
+    "caution": 1766,
     "risky": 60
   },
   "connectors": {
@@ -15376,6 +15376,28 @@
       "reasons": [
         "third-party (not an official vendor connector)"
       ]
+    },
+    "openai-chat-model": {
+      "name": "OpenAI Chat Model",
+      "rating": "safe",
+      "reasons": [
+        "official vendor"
+      ]
+    },
+    "claude-arcads-api-integration": {
+      "name": "Claude-Arcads API Integration",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)",
+        "open source"
+      ]
+    },
+    "claude-in-chrome-integration": {
+      "name": "Claude in Chrome Integration",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
     }
   },
   "skills_flagged": {
@@ -16277,6 +16299,13 @@
     },
     "shell-sandboxing": {
       "name": "Shell Sandboxing",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "agentic-skills": {
+      "name": "Agentic Skills",
       "rating": "caution",
       "reasons": [
         "the technique runs system/shell/file operations — review what it executes"

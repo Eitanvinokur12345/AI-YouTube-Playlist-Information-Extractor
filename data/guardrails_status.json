@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-10T22:15:34.279130+00:00",
+ "generated_at": "2026-11-10T22:20:47.435861+00:00",
  "total": 21,
  "passing": 17,
  "critical_failures": 0,
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": true,
-   "detail": "HEAD == origin/main (work is really saved).",
+   "ok": false,
+   "detail": "NOT in sync vs origin/main (behind/ahead: 1\t0) — a push may not have landed.",
    "severity": "warn"
   },
   {
@@ -71,14 +71,14 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "31195 memory episodes on record.",
+   "detail": "31196 memory episodes on record.",
    "severity": "warn"
   },
   {
    "id": "G-K",
    "name": "Append-only audit log",
    "ok": true,
-   "detail": "50 guardrail runs logged (append-only, never rewritten).",
+   "detail": "51 guardrail runs logged (append-only, never rewritten).",
    "severity": "info"
   },
   {
@@ -99,7 +99,7 @@
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "85310 MB free on the repo drive.",
+   "detail": "85301 MB free on the repo drive.",
    "severity": "info"
   },
   {
@@ -119,15 +119,15 @@
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
-   "ok": false,
-   "detail": "last 'core-spoton:' commit 5.3h ago — STALE: the hourly discovery/deep-retrieve/verify pipeline hasn't committed in over 4h (check for a wedged run, a broken step before Commit, or cron disabled).",
+   "ok": true,
+   "detail": "last 'core-spoton:' commit 0.0h ago.",
    "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
    "ok": false,
-   "detail": "8/16 lane(s) landing on cadence — STALE: bulk_analyze.yml (every 2h): last commit 36.0h ago (expected within 6h); creators.yml (daily 07:45 UTC): last commit 2245.9h ago (expected within 30h); discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 3424.1h ago (expected within 76h); fetch.yml (every 2 days): last commit 730.4h ago (expected within 54h); improve.yml (weekly deep pass): last commit 3773.9h ago (expected within 192h); links.yml (hourly): last commit 4.4h ago (expected within 4h); review.yml (twice-weekly): last commit 2494.3h ago (expected within 100h); transcribe.yml (daily): last commit 2439.9h ago (expected within 30h)",
+   "detail": "8/16 lane(s) landing on cadence — STALE: bulk_analyze.yml (every 2h): last commit 36.1h ago (expected within 6h); creators.yml (daily 07:45 UTC): last commit 2246.0h ago (expected within 30h); discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 3424.2h ago (expected within 76h); fetch.yml (every 2 days): last commit 730.5h ago (expected within 54h); improve.yml (weekly deep pass): last commit 3774.0h ago (expected within 192h); links.yml (hourly): last commit 4.5h ago (expected within 4h); review.yml (twice-weekly): last commit 2494.4h ago (expected within 100h); transcribe.yml (daily): last commit 2440.0h ago (expected within 30h)",
    "severity": "warn"
   },
   {

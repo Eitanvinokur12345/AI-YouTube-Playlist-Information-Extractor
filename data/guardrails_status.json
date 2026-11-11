@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-11-11T09:52:14.963373+00:00",
+ "generated_at": "2026-11-11T17:35:43.895927+00:00",
  "total": 21,
- "passing": 14,
+ "passing": 16,
  "critical_failures": 0,
  "guardrails": [
   {
@@ -49,8 +49,8 @@
   {
    "id": "G-G",
    "name": "Remote sync verified",
-   "ok": false,
-   "detail": "NOT in sync vs origin/main (behind/ahead: 1\t0) — a push may not have landed.",
+   "ok": true,
+   "detail": "HEAD == origin/main (work is really saved).",
    "severity": "warn"
   },
   {
@@ -71,7 +71,7 @@
    "id": "G-J",
    "name": "Project-memory contract",
    "ok": true,
-   "detail": "31220 memory episodes on record.",
+   "detail": "31232 memory episodes on record.",
    "severity": "warn"
   },
   {
@@ -84,8 +84,8 @@
   {
    "id": "G-L",
    "name": "Uncommitted-work watchdog",
-   "ok": false,
-   "detail": "3 untracked source file(s) not committed — commit or quarantine so nothing is lost: skills/ai-project-management-2/SKILL.md, skills/document-conversion-to-markdown/SKILL.md, skills/up-to-date-documentation-retrieval/SKILL.md",
+   "ok": true,
+   "detail": "no stray source files uncommitted.",
    "severity": "warn"
   },
   {
@@ -99,35 +99,35 @@
    "id": "G-N",
    "name": "Disk headroom",
    "ok": true,
-   "detail": "85575 MB free on the repo drive.",
+   "detail": "85535 MB free on the repo drive.",
    "severity": "info"
   },
   {
    "id": "G-O",
    "name": "Local drain alive",
    "ok": false,
-   "detail": "last batch 2595.9h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
+   "detail": "last batch 2603.6h ago on EITAN-PC (llama3.2:3b): 13 enriched, stubs 2026 — STALE: the hourly task isn't running (PC off, or Ollama gone).",
    "severity": "warn"
   },
   {
    "id": "G-P",
    "name": "Beat heartbeat commit freshness",
    "ok": false,
-   "detail": "last 'excava-beat #N' commit 10.7h ago — STALE: the dedicated heartbeat loop isn't landing per-cycle commits (check for a wedged/queued excava_beat.yml run).",
+   "detail": "last 'excava-beat #N' commit 18.5h ago — STALE: the dedicated heartbeat loop isn't landing per-cycle commits (check for a wedged/queued excava_beat.yml run).",
    "severity": "warn"
   },
   {
    "id": "G-Q",
    "name": "Core-spoton heartbeat freshness",
    "ok": false,
-   "detail": "last 'core-spoton:' commit 7.2h ago — STALE: the hourly discovery/deep-retrieve/verify pipeline hasn't committed in over 4h (check for a wedged run, a broken step before Commit, or cron disabled).",
+   "detail": "last 'core-spoton:' commit 6.9h ago — STALE: the hourly discovery/deep-retrieve/verify pipeline hasn't committed in over 4h (check for a wedged run, a broken step before Commit, or cron disabled).",
    "severity": "warn"
   },
   {
    "id": "G-T",
    "name": "Workflow lane heartbeat freshness",
    "ok": false,
-   "detail": "9/16 lane(s) landing on cadence — STALE: bulk_analyze.yml (every 2h): last commit 7.6h ago (expected within 6h); creators.yml (daily 07:45 UTC): last commit 2257.5h ago (expected within 30h); discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 3435.7h ago (expected within 76h); fetch.yml (every 2 days): last commit 742.0h ago (expected within 54h); improve.yml (weekly deep pass): last commit 3785.5h ago (expected within 192h); review.yml (twice-weekly): last commit 2505.9h ago (expected within 100h); transcribe.yml (daily): last commit 2451.5h ago (expected within 30h)",
+   "detail": "9/16 lane(s) landing on cadence — STALE: bulk_analyze.yml (every 2h): last commit 7.7h ago (expected within 6h); creators.yml (daily 07:45 UTC): last commit 2265.2h ago (expected within 30h); discover.yml (Sun/Tue/Thu 01:00 UTC): last commit 3443.4h ago (expected within 76h); fetch.yml (every 2 days): last commit 749.8h ago (expected within 54h); improve.yml (weekly deep pass): last commit 3793.3h ago (expected within 192h); review.yml (twice-weekly): last commit 2513.6h ago (expected within 100h); transcribe.yml (daily): last commit 2459.3h ago (expected within 30h)",
    "severity": "warn"
   },
   {

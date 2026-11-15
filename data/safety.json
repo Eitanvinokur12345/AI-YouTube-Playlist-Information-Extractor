@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-11-15T02:12:33.563857+00:00",
+  "generated_at": "2026-11-15T23:11:06.564416+00:00",
   "policy": "activator gate: safe = auto-activate, caution = warn, risky = block until confirmed",
   "summary": {
-    "safe": 211,
-    "caution": 1795,
-    "risky": 61
+    "safe": 212,
+    "caution": 1804,
+    "risky": 62
   },
   "connectors": {
     "perplexity-mcp": {
@@ -15675,6 +15675,85 @@
       "reasons": [
         "third-party (not an official vendor connector)"
       ]
+    },
+    "bluesminds-llm-api-gateway": {
+      "name": "Bluesminds LLM API Gateway",
+      "rating": "caution",
+      "reasons": [
+        "needs an API key / secret",
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "agents-md-import": {
+      "name": "@agents.md Import",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "duplicate-command": {
+      "name": "/duplicate Command",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "external-markdown-folders": {
+      "name": "External Markdown/Folders",
+      "rating": "risky",
+      "reasons": [
+        "requests broad system/shell/file access",
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "external-knowledge-bases": {
+      "name": "External Knowledge Bases",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "apple-health-connector-via-claude-app": {
+      "name": "Apple Health Connector (via Claude app)",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "apple-calendar-connector-via-claude-app": {
+      "name": "Apple Calendar Connector (via Claude app)",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "claude-code-to-hermes-agent-vps": {
+      "name": "Claude Code to Hermes Agent (VPS)",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "hermes-agent-to-slack": {
+      "name": "Hermes Agent to Slack",
+      "rating": "safe",
+      "reasons": [
+        "official vendor"
+      ]
+    },
+    "hermes-agent-to-apify-mcp": {
+      "name": "Hermes Agent to Apify (MCP)",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "youtube-data-api-v3": {
+      "name": "YouTube Data API v3",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
     }
   },
   "skills_flagged": {
@@ -16646,6 +16725,13 @@
     },
     "trade-execution": {
       "name": "Trade Execution",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "database-querying-with-ai": {
+      "name": "Database Querying with AI",
       "rating": "caution",
       "reasons": [
         "the technique runs system/shell/file operations — review what it executes"

@@ -66,7 +66,7 @@ def build() -> dict:
     verified element with no link/install/body is correctly no longer published as usable), and
     the link is `Element.best_link`.
     """
-    from src import excava_core as core
+    from src import library as core
 
     idx = _load(DATA / "elements_index.json", [])
     els = idx if isinstance(idx, list) else idx.get("elements", [])

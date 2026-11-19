@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v136";
+const APP_BUILD = "v137-core";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -47,7 +47,7 @@ function triggerInstall() {
 
 const state = { status: null, config: null, selectedCategory: "all", newsWindow: "weekly",
   stars: new Set(), hideLowQuality: false, multiToolOnly: false, dynamicTabs: [],
-  query: "", activeTab: "excava" };
+  query: "", activeTab: "overview" };
 
 // True if a skill/connector slug is starred (frozen, best-in-class — never auto-changed).
 const isStarred = (s) =>
@@ -89,14 +89,16 @@ async function _livePoll(force) {
   if ((m1 && m1.style.display === "flex") || (m2 && !m2.hidden)) return "modal-open";
   let stamp;
   try {
-    const r = await fetch(DATA + "excava_status.json", { cache: "no-store" });
+    const r = await fetch(DATA + "video_catalog.json", { cache: "no-store" });
+    if (!r.ok) return "unavailable";
     const s = await r.json();
     stamp = s.generated_at || s.updated_at || JSON.stringify(s).slice(0, 80);
   } catch (_) { return "offline"; }
   if (_liveStamp === null) { _liveStamp = stamp; _liveDot("live"); return "first"; }
   if (stamp === _liveStamp) { _liveDot("live"); return "unchanged"; }
   _liveStamp = stamp;
-  for (const k in _cache) delete _cache[k];       // fresh data for every tab
+  for (const k in _cache) delete _cache[k];
+  _eidx = null; _ewarm = null;       // fresh data for every tab
   await show(state.activeTab);                    // re-render what the owner is looking at
   _liveDot("updated");
   return "refreshed";
@@ -110,7 +112,7 @@ function _liveDot(kind) {
     bb.after(d);
   }
   const t = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  d.textContent = kind === "updated" ? `🟢 live · new data ${t}` : `🟢 live · checked ${t}`;
+  d.textContent = kind === "updated" ? `Data updated ${t}` : `Data checked ${t}`;
   d.style.color = "oklch(0.55 0.15 150)";
 }
 setInterval(_livePoll, 60000);
@@ -205,7 +207,6 @@ function elementActions(e, always) {
   const acts = [];
   acts.push(`<button class="primary" data-el-activate="${esc(e.id)}" title="Copy the ready-to-use payload for this element — the prompt text, a paste-ready MCP config, or the setup + repo">⚡ Activate</button>`);
   acts.push(`<button data-el-open="${esc(e.id)}" title="${warm ? "Pre-warmed — opens instantly" : "Derives a runnable target (<10s)"}">${warm ? "🟢" : "🥞"} Open</button>`);
-  acts.push(`<a target="_blank" href="${_exIssue("EXCAVA: use " + e.name + " for a task", "Element: " + e.id)}" title="Send to the EXCAVA console as a task">🦾 Use for a task</a>`);
   if (vid) acts.push(`<a target="_blank" href="${yt(vid)}">▶ Video</a>`);
   if ((e.source_videos || []).length > 1)
     acts.push(`<a href="#element/${encodeURIComponent(e.id)}" title="${e.source_videos.length} source videos">🎬 Bundle (${e.source_videos.length})</a>`);
@@ -1199,9 +1200,8 @@ async function renderSelfImprove() {
   if (window.__improveTimer) clearInterval(window.__improveTimer);
   let html = "";
   html += await goalsPanel();
-  html += await prioritiesPanel();
 
-  // ── Program pulse (src/pulse.py, refreshed every beat) — the ONE honest movement number, incl. a
+  // ── Program pulse (src/pulse.py, refreshed by the library pipeline) — the ONE honest movement number, incl. a
   //    RED alarm when the done-counter goes BACKWARD, which the all-green guardrails otherwise hide. ──
   const pulse = await load("excava/pulse.json");
   if (pulse) {
@@ -1779,9 +1779,16 @@ async function mountBrainGraph(host, file = "brain_graph.json", legend = null) {
     selBar.innerHTML = `<b>${esc(name)}</b> <span class="pill">${esc(n.group || "node")}</span>
       <span>· ${neigh.length} linked</span> ${elLink}
       ${n.url ? `<a target="_blank" href="${esc(n.url)}">↗ source</a>` : ""}
-      <a target="_blank" href="${_exIssue('EXCAVA: package "' + name + ' kit"',
-        "Assemble a PACKAGE from this brain-graph cluster (M3.9):\n- " + members.join("\n- "))}"
-        title="Sends the cluster to EXCAVA as a package order — a room assembles it (M2.6)">📦 make this cluster a package (${members.length})</a>`;
+      <button class="qr-btn" id="cluster-package">Save cluster as package</button>`;
+    selBar.querySelector("#cluster-package").onclick = async () => {
+      const ix = await eidx();
+      const ids = members.map(name => Object.values(ix.byId).find(e => e.name.toLowerCase() === name.toLowerCase())?.id).filter(Boolean);
+      if (!ids.length) return;
+      const lp = _localPkgs(); lp.pkgs = lp.pkgs || {};
+      const id = "cluster-" + Date.now().toString(36);
+      lp.pkgs[id] = {id, name: name + " kit", elements: ids, created_by: "you", at: new Date().toISOString()};
+      _saveLocalPkgs(lp); show("packages");
+    };
   }
   canvas.addEventListener("click", e => { const n = pick(e); if (n) selectNode(n); });
   canvas.addEventListener("wheel", e => { e.preventDefault();
@@ -1863,34 +1870,6 @@ function mountPipelineTimers() {
   window.addEventListener("online", tick); window.addEventListener("offline", tick);
 }
 // North Star — the 6 main goals + live conformance. Shown atop self-improvement.
-async function goalsPanel() {
-  const g = await load("goals_status.json");
-  if (!g || !(g.goals || []).length) return "";
-  const rows = g.goals.map(o => {
-    const sev = o.status === "met" ? "sev-low" : o.status === "at-risk" ? "sev-medium" : "sev-high";
-    return `<div class="prio-row"><span class="prio-rank ${sev}">${o.id}</span>
-      <div class="prio-main"><b>${esc(o.name)}</b> <span class="pl-runs">${o.score}/100 · ${esc(o.status)}</span>
-        <span class="pl-what">${esc(o.gap)}</span></div></div>`;
-  }).join("");
-  return `<div class="card improve-clock"><h3>🌟 North Star — main goals (above all else)
-      <span class="pl-badge ${g.overall >= 75 ? "pl-live" : g.overall >= 45 ? "pl-slow" : "pl-stale"}">${g.overall}/100</span></h3>
-    <p class="sub">Every cycle the system scores itself against these 6 goals and queues a fix for any that aren't met. Concepts, not features.</p>
-    <div class="prio-rows">${rows}</div></div>`;
-}
-// Top priorities right now — auto-ranked from the live state, shown atop the key tabs.
-async function prioritiesPanel() {
-  const p = await load("priorities.json");
-  if (!p || !(p.priorities || []).length) return "";
-  const rows = p.priorities.slice(0, 6).map(x => {
-    const sev = x.impact >= 85 ? "sev-high" : x.impact >= 55 ? "sev-medium" : "sev-low";
-    return `<div class="prio-row"><span class="prio-rank ${sev}">${x.rank}</span>
-      <div class="prio-main"><b>${esc(x.title)}</b><span class="pl-what">${esc(x.detail)}</span></div>
-      <span class="prio-area">${esc(x.area)}</span></div>`;
-  }).join("");
-  return `<div class="card improve-clock"><h3>🎯 Top priorities right now</h3>
-    <p class="sub">Auto-ranked by impact from the live system state — it re-orders itself as things change (links resolved, a lane stalls, a regression appears).</p>
-    <div class="prio-rows">${rows}</div></div>`;
-}
 async function pipelinePanel() {
   const p = await load("pipeline_status.json");
   if (!p || !p.lanes) return "";
@@ -1940,27 +1919,10 @@ async function scoutPanel() {
     <p class="sub">Scans every catalogue type across 12 pipeline processes, ranks by quality, and queues the best into self-improvement. <b>Proposals — approve to integrate</b> (some matches are tangential; pick the genuinely free + useful ones).</p>
     <div class="prio-rows">${rows}</div></div>`;
 }
-async function excavaPanel() {
-  const e = await load("excava_status.json");
-  if (!e || !e.gate) return "";
-  const g = e.gate;
-  const stack = (e.tool_stack || []).map(t =>
-    `<div class="prio-row"><span class="prio-area">${esc(t.status)}</span>
-      <div class="prio-main"><b>${esc(t.role)}</b><span class="pl-what">${esc(t.tool)}</span></div></div>`).join("");
-  return `<div class="card improve-clock"><h3>🛰 EXCAVA — the agentic OS
-      <span class="pl-badge ${g.internal_allowed ? "pl-live" : "pl-stale"}">internal ${g.internal_allowed ? "OPEN" : "CLOSED"}</span>
-      <span class="pl-badge ${g.outward_allowed ? "pl-live" : "pl-slow"}">outward ${g.outward_allowed ? "OPEN" : "CLOSED"}</span></h3>
-    <p class="sub">${esc(e.phase || "")}. Verification gate (focused checkers) must be green before it acts; outward create/publish also needs G3≥70 + your approval — so it never acts on bad data.</p>
-    <div class="pl-since"><b>Next action:</b> ${esc((e.next_action || {}).do || "—")} <span class="sub">(${esc((e.next_action || {}).type || "")})</span><br>
-      <span class="sub">gate: data ${g.checks.data_guard_ok ? "ok" : "BAD"} · security ${g.checks.security_clean ? "clean" : "LEAK"} · truth/access G3 ${esc(g.checks.truth_access_G3)}/100 · holding ${(e.holding || []).length} outward action(s)</span></div>
-    <details><summary class="sub" style="cursor:pointer">Tool stack (${(e.tool_stack || []).length})</summary><div class="prio-rows">${stack}</div>
-      <p class="hint">${esc((e.stack_review || {}).note || "")}</p></details></div>`;
-}
 async function renderDevConstruction() {
   const data = await load("dev_construction.json");
   const secs = (data && data.sections) || [];
   let html = `<div class="sub">${esc((data && data.intro) || "")}</div>`;
-  html += await excavaPanel();
   html += await prioritiesPanel();
   html += await pipelinePanel();
   html += await scoutPanel();
@@ -2105,936 +2067,21 @@ async function renderSearchAll() {
 // receipt, closes the issue. Works from the phone.
 const GH_REPO = "https://github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor";
 const GH_PAGES = "https://eitanvinokur12345.github.io/AI-YouTube-Playlist-Information-Extractor/docs";
-const _exIssue = (title, body = "") =>
-  `${GH_REPO}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
-// ── IN-APP viewer (owner's #1 ask: open/read things IN the app, not on GitHub) ──
-function _showModal(title, html) {
-  let m = document.getElementById("ex-modal");
-  if (!m) {
-    m = document.createElement("div"); m.id = "ex-modal"; m.className = "ex-modal";
-    document.body.appendChild(m);
-    m.addEventListener("click", e => { if (e.target === m) m.style.display = "none"; });
-  }
-  m.innerHTML = `<div class="ex-modal-box"><div class="ex-modal-head"><b>${esc(title)}</b>
-    <button class="ex-modal-x" aria-label="close">✕</button></div><div class="ex-modal-body">${html}</div></div>`;
-  m.querySelector(".ex-modal-x").addEventListener("click", () => { m.style.display = "none"; });
-  m.style.display = "flex";
-}
-async function _openArtifact(ref, title) {
-  _showModal(title || "Artifact", `<p class="sub">loading…</p>`);
-  let txt = "";
-  try { txt = await (await fetch("../" + ref, { cache: "no-store" })).text(); } catch (e) {}
-  let shown = txt, note = "";
-  if (txt && /\.json$/.test(ref)) {                       // pretty-print JSON so it's readable, not a blob
-    try { shown = JSON.stringify(JSON.parse(txt), null, 2); } catch (_) {}
-  }
-  const CAP = 60000;                                      // don't dump multi-MB files into the modal
-  if (shown.length > CAP) {
-    note = ` <b>(showing the first ${Math.round(CAP / 1000)}KB of ${Math.round(shown.length / 1000)}KB)</b>`;
-    shown = shown.slice(0, CAP) + "\n… (truncated — use the GitHub link for the whole file)";
-  }
-  const body = txt
-    ? `<pre class="ex-artifact">${esc(shown)}</pre><p class="sub">file: <code>${esc(ref)}</code>${note} · <a target="_blank" data-ex-raw="1" href="${GH_REPO}/blob/main/${esc(ref)}">full file on GitHub ↗</a></p>`
-    : `<p class="sub">Couldn't load it in-app — <a target="_blank" data-ex-raw="1" href="${GH_REPO}/blob/main/${esc(ref)}">open on GitHub ↗</a></p>`;
-  _showModal(title || ref.split("/").pop(), body);
-}
-// The in-app "send a task to EXCAVA" confirm — used by the console AND every dispatch button.
-// YOU ↔ EXCAVA (owner 2026-07-13: 'communicate and write directly to EXCAVA, independently of you').
-// Your sent messages (this device) + EXCAVA's inbox items and their status, as one visible two-way
-// thread — so you can SEE that you drive it directly and it acts. (True one-click without the GitHub
-// step needs a tiny always-on receiver — that rides on the VPS, R1.)
-function _commsThread(inbox) {
-  let mine = [];
-  try { mine = JSON.parse(localStorage.getItem("excavatortron.mytasks") || "[]"); } catch (_) {}
-  const inboxT = (inbox && inbox.tasks) || [];
-  const rows = [
-    ...mine.map(m => ({ who: "you", text: m.task, at: m.at, status: "sent from this device" })),
-    ...inboxT.map(t => ({ who: "excava", text: t.task, at: t.added_at, status: t.status || "queued" })),
-  ].sort((a, b) => String(b.at || "").localeCompare(String(a.at || ""))).slice(0, 14);
-  const bubble = r => `<div class="msg ${r.who === "you" ? "lead" : ""}" style="justify-content:${r.who === "you" ? "flex-end" : "flex-start"}">
-    <div class="bub" style="max-width:80%"><div class="who">${r.who === "you" ? "🧑 you" : "🦾 EXCAVA"} <span class="eng">${esc(String(r.at || "").slice(0, 16))} · ${esc(r.status)}</span></div>${esc(r.text || "")}</div></div>`;
-  return `<div class="card"><h3>💬 You ↔ EXCAVA <span class="sub">— write to EXCAVA directly (the bar above); here's your thread with it. It acts independently of Claude — CI reads your message, works it, and the status updates here.</span></h3>
-    <div class="chat" style="max-height:280px">${rows.length ? rows.map(bubble).join("") : `<p class="sub">No messages yet — type a task or a direction in the bar above and dispatch it. It reaches EXCAVA through the free channel and comes back here with a status.</p>`}</div>
-    <p class="sub">Commands EXCAVA understands directly: a plain <b>task</b> · <b>direction &lt;text&gt;</b> · <b>approve/decline &lt;id&gt;</b> · <b>weight &lt;area&gt; &lt;0-100&gt;</b> · <b>kill/safe/run</b> · <b>horse &lt;goal&gt;</b>. One-click-in-app (no GitHub step) arrives with the VPS.</p></div>`;
-}
-function _sendModal(title, body, decisionId) {
-  try { const q = JSON.parse(localStorage.getItem("excavatortron.mytasks") || "[]");
-    q.unshift({ task: title, at: new Date().toISOString() });
-    localStorage.setItem("excavatortron.mytasks", JSON.stringify(q.slice(0, 40))); } catch (_) {}
-  _showModal("Send to EXCAVA", `<p><b>${esc(title)}</b></p>
-    <p class="sub"><b>One more click finishes it:</b> the button below opens a pre-filled message — press
-    “Submit” there and the cloud beat receives your decision. If you stop here, it stays ONLY on this
-    device and EXCAVA never sees it (the truthful chip will keep nagging).</p>
-    <div class="el-actions always"><a class="primary" target="_blank" href="${_exIssue(title, body)}" data-ex-raw="1" data-send-click="1">📮 Send to the cloud beat ↗</a>
-    <button class="ex-modal-cancel2">keep on this device only</button></div>`);
-  const send = document.querySelector('#ex-modal [data-send-click]');
-  if (send && decisionId) send.addEventListener("click", () => {
-    const d = _localDecisions();                       // mark truthfully: the dispatch was opened
-    if (d[decisionId]) { d[decisionId].sent = true;
-      try { localStorage.setItem("excavatortron.decisions", JSON.stringify(d)); } catch (_) {}
-      if (typeof renderExcava === "function" && state.activeTab === "excava") setTimeout(renderExcava, 600);
-    }
-  });
-  const c = document.querySelector("#ex-modal .ex-modal-cancel2");
-  if (c) c.addEventListener("click", () => { document.getElementById("ex-modal").style.display = "none"; });
-}
-// SWEEP: intercept EVERY GitHub-issue link (current + future) → show the in-app modal instead of
-// flinging the owner to GitHub. The only exception is the modal's own explicit "Send to cloud" link.
-document.addEventListener("click", e => {
-  const a = e.target.closest && e.target.closest('a[href*="/issues/new"]');
-  if (a && !a.dataset.exRaw) {
-    e.preventDefault();
-    try { const u = new URL(a.href);
-      _sendModal(u.searchParams.get("title") || "task", u.searchParams.get("body") || ""); }
-    catch (_) {}
-  }
-}, true);
-// P2c SWEEP: every repo-FILE link (github.com/...>/blob/main/<path>) opens IN-APP via the
-// artifact modal — current links and any future ones. The modal's own "full file on GitHub"
-// fallback carries data-ex-raw and stays external (that's the explicit escape hatch).
-document.addEventListener("click", e => {
-  const a = e.target.closest && e.target.closest('a[href*="/blob/main/"]');
-  if (a && !a.dataset.exRaw) {
-    e.preventDefault();
-    try {
-      const ref = decodeURIComponent(new URL(a.href).pathname.split("/blob/main/")[1] || "");
-      if (ref) _openArtifact(ref, ref.split("/").pop());
-    } catch (_) {}
-  }
-}, true);
-const EX_ICONS = { gemini: "📺", transcript: "📜", analysis: "⚙️", mining: "⛏️", external: "⛏️",
-  news: "📰", links: "🔗", memory: "🧠", visual: "🎨", deep: "🔬", improve: "🧬", security: "🛡️",
-  watch: "📺", core: "🦾" };
-function _exIcon(label) {
-  const l = (label || "").toLowerCase();
-  if (AGENT_EMOJI[l]) return AGENT_EMOJI[l];   // exact department match first (e.g. visualization vs visual)
-  for (const k in EX_ICONS) if (l.includes(k)) return EX_ICONS[k];
-  return "🤖";
-}
-// ── M3.2 MONSTER CAST: one species per department (docs/assets/monsters/, src/make_monsters.py).
-// variant: lead (suit) | agent | worker. Falls back to "" so callers keep their emoji fallback.
-const MONSTER_DEPTS = ["transcripts", "analysis", "watch", "links", "memory", "mining",
-  "visual", "news", "improve", "security", "creators"];
-const MONSTER_ALIAS = { transcript: "transcripts", gemini: "watch", external: "mining",
-  deep: "analysis", social: "mining", connector: "links", design: "visual" };
-function _monsterDept(label) {
-  const l = (label || "").toLowerCase();
-  for (const d of MONSTER_DEPTS) if (l.includes(d)) return d;
-  for (const k in MONSTER_ALIAS) if (l.includes(k)) return MONSTER_ALIAS[k];
-  return null;
-}
-function _monsterImg(label, variant, cls) {
-  const d = _monsterDept(label);
-  return d ? `<img class="${cls || "m-ava"}" src="assets/monsters/${d}-${variant}.svg" alt="${esc(d)} ${variant}">` : "";
-}
-// M3.8: an n-pointed star path (each goal-star gets a DISTINCT silhouette)
-function _starPath(n, R, r) {
-  let p = "";
-  for (let i = 0; i < n * 2; i++) {
-    const a = Math.PI / n * i - Math.PI / 2, rad = i % 2 ? r : R;
-    p += (i ? "L" : "M") + (20 + rad * Math.cos(a)).toFixed(1) + " " + (20 + rad * Math.sin(a)).toFixed(1);
-  }
-  return p + "Z";
-}
-// per-tab accent colors — each area of the machine wears its own paint
-const TAB_ACCENT = { excava: "oklch(0.85 0.165 95)", skills: "oklch(0.62 0.17 280)", tools: "oklch(0.66 0.18 40)",
-  comingsoon: "oklch(0.65 0.16 310)", prompts: "oklch(0.68 0.17 340)", improvement: "oklch(0.62 0.15 150)",
-  tips: "oklch(0.7 0.13 200)", news: "oklch(0.6 0.19 25)", connectors: "oklch(0.6 0.15 250)",
-  designs: "oklch(0.66 0.19 0)", sources: "oklch(0.62 0.12 170)", devbuild: "oklch(0.55 0.1 260)" };
-// which pipeline department serves each tab (so the strip talks about THIS tab's work)
-const TAB_DEPT = { skills: "analysis", tools: "analysis", comingsoon: "analysis", prompts: "analysis",
-  tips: "analysis", news: "news", connectors: "mining", designs: "visual", sources: "mining",
-  improvement: "improve", selfimprove: "improve", effectiveness: "improve", devbuild: "deep" };
-async function excavaStrip(tab) {
-  const [ex, ps] = await Promise.all([load("excava_status.json"), load("pipeline_status.json")]);
-  if (!ex || !ex.gate) return "";
-  const g = ex.gate, act = (ex.next_action || {}).do || "idle";
-  let dept = "";
-  const key = TAB_DEPT[tab];
-  if (key && ps && ps.lanes) {
-    const lc = l => (l.label || "").toLowerCase();
-    const L = ps.lanes.find(l => lc(l).includes(key) && !lc(l).includes("audio+"))
-           || ps.lanes.find(l => lc(l).includes(key));
-    if (L) dept = `<span>this dept: ${_exIcon(L.label)} ${esc(L.label)} · ${esc(L.status)} · ran ${_ageAgo(L.age_hours)}</span>`;
-  }
-  const mode = ((ex.os || {}).mode || "run");
-  return `<div class="ex-strip"><b>🦾 EXCAVA</b>
-    ${mode !== "run" ? `<span class="ex-mode ${esc(mode)}">${esc(mode.toUpperCase())}</span>` : ""}
-    <span><span class="ex-lamp ${g.internal_allowed ? "on" : "off"}"></span> internal</span>
-    <span><span class="ex-lamp ${g.outward_allowed ? "on" : "off"}"></span> outward</span>
-    <span>working: ${esc(String(act).slice(0, 48))}</span>${dept}
-    <a data-goto="excava">cockpit →</a></div>`;
-}
-// ── CREW: virtual residents who live on EVERY tab, wired to the OS. Their speech bubbles are real
-// department status (from the same cached JSON the cockpit uses — zero extra network). Click one →
-// the cockpit. Kill switch: localStorage.setItem("excavatortron.crew","off").
-let _crewTimer = null;
-async function renderCrew(tab) {
-  let host = document.getElementById("crew");
-  if (!host) { host = document.createElement("div"); host.id = "crew"; host.className = "crew"; document.body.appendChild(host); }
-  if (localStorage.getItem("excavatortron.crew") === "off") { host.innerHTML = ""; return; }
-  const [ps, ex] = await Promise.all([load("pipeline_status.json"), load("excava_status.json")]);
-  const lanes = (ps && ps.lanes) || [];
-  const lc = l => (l.label || "").toLowerCase();
-  const key = TAB_DEPT[tab];
-  const dept = key ? (lanes.find(l => lc(l).includes(key) && !lc(l).includes("audio+")) || lanes.find(l => lc(l).includes(key))) : null;
-  const live = lanes.filter(l => l.status !== "stale").slice(0, 3);
-  const people = [{ c: "var(--gold)", dur: 34,
-    say: "🦾 " + String(((ex || {}).next_action || {}).do || "on patrol").slice(0, 46) }];
-  if (dept) people.push({ c: TAB_ACCENT[tab] || "var(--gold)", dur: 22,
-    say: `${_exIcon(dept.label)} ${dept.label}: ${dept.status === "live" ? "working now" : dept.status === "slow" ? "due to run" : "resting"}` });
-  live.forEach((L, i) => {
-    if (dept && L.label === dept.label) return;
-    people.push({ c: ["oklch(0.75 0.15 200)", "oklch(0.75 0.17 330)", "oklch(0.78 0.17 145)"][i % 3],
-      dur: 18 + i * 7, say: _exIcon(L.label) + " " + String(L.what || L.label || "").slice(0, 42) });
-  });
-  host.innerHTML = people.slice(0, 4).map((p, i) => `
-    <div class="crew-p" style="background:${p.c};--x0:${3 + i * 6}%;--x1:${68 + i * 7}%;--dur:${p.dur}s;--delay:${-i * 9}s"
-      title="a resident of the OS — click to open the cockpit"><span class="say">${esc(p.say)}</span></div>`).join("");
-  host.querySelectorAll(".crew-p").forEach(el => el.addEventListener("click", () => show("excava")));
-  if (_crewTimer) clearInterval(_crewTimer);
-  let turn = 0;                                     // residents take turns "talking"
-  _crewTimer = setInterval(() => {
-    const ppl = host.querySelectorAll(".crew-p"); if (!ppl.length) return;
-    ppl.forEach(x => x.classList.remove("talk"));
-    ppl[turn % ppl.length].classList.add("talk"); turn++;
-  }, 6000);
-}
-async function renderExcava() {
-  const [ex, ps, inbox, gs, rc, ap, excfg, reg, dirs, tuts, made, grd, caps, engh, expr, dec, membrain, brains] = await Promise.all([load("excava_status.json"),
-    load("pipeline_status.json"), load("excava_inbox.json"), load("goals_status.json"),
-    load("resources.json"), load("excava_approvals.json"), load("excava_config.json"),
-    load("excava/agents.json"), load("excava_direction.json"), load("tutorials.json"),
-    load("created_by_excava.json"), load("guardrails_status.json"), load("excava/capabilities.json"),
-    load("excava/engine_health.json"), load("excava/experiments.json"), load("excava/overhaul_decisions.json"),
-    load("excava/memory_brain.json"), load("excava/brains.json")]);
-  const gate = (ex && ex.gate) || {}, mem = (ex && ex.memory) || {};
-  const os = (ex && ex.os) || {};
-  const mode = os.mode || (excfg && excfg.mode) || "run";
-  const lanes = ((ps && ps.lanes) || []).slice(0, 8);
-  const act = (ex && ex.next_action) || {};
-  const tasks = (inbox && inbox.tasks) || [];
-  const goals = (gs && gs.goals) || [];
-  // department stations around the core (percent coords on the floor)
-  // M3.3: the isometric ring when floor.js is loaded; the old flat scatter otherwise
-  const iso = window.ExcavaFloor || null;
-  const POS = iso ? iso.RING : [[16, 22], [50, 14], [84, 22], [10, 62], [90, 62], [25, 86], [50, 90], [75, 86]];
-  const stations = lanes.map((L, i) => ({ ...L, x: POS[i % POS.length][0], y: POS[i % POS.length][1] }));
-  const stHTML = stations.map((s, i) => {
-    const stat = `${s.status === "live" ? "working" : s.status === "slow" ? "due" : "idle"} · ran ${_ageAgo(s.age_hours)}`;
-    if (iso) {                                          // M3.3 isometric building + monster at the door
-      const dep = _monsterDept(s.label);
-      const acc = (dep && iso.ACCENT[dep]) || "var(--gold)";
-      return `
-    <div class="ex-station iso ${s.status === "stale" ? "stale" : ""}" style="left:${s.x}%;top:${s.y}%">
-      ${iso.building(acc, s.status || "stale", i)}
-      ${dep ? `<img class="door-m" src="assets/monsters/${dep}-agent.svg" alt="">` : ""}
-      <div class="plate"><div class="nm">${esc(s.label || "")}</div><div class="st">${stat}</div></div>
-    </div>`;
-    }
-    return `
-    <div class="ex-station ${s.status === "stale" ? "stale" : ""}" style="left:${s.x}%;top:${s.y}%">
-      <span class="lamp ${esc(s.status || "stale")}"></span>
-      <div class="ic">${_monsterImg(s.label, "agent", "st-m") || _exIcon(s.label)}</div><div class="nm">${esc(s.label || "")}</div>
-      <div class="st">${stat}</div>
-    </div>`;
-  }).join("");
-  // worker bots: one per non-stale department, walking core <-> station with a task chip.
-  // Each department's crew has its own color — you can tell WHO is doing WHAT at a glance.
-  const BOTC = ["oklch(0.85 0.165 95)", "oklch(0.72 0.17 40)", "oklch(0.75 0.15 200)", "oklch(0.75 0.17 330)",
-    "oklch(0.78 0.17 145)", "oklch(0.75 0.14 280)", "oklch(0.8 0.15 60)", "oklch(0.82 0.12 170)"];
-  const bots = stations.filter(s => s.status !== "stale").map((s, i) => {
-    const word = (s.what || s.label || "task").split(" ").slice(0, 2).join(" ");
-    const m = _monsterImg(s.label, "worker", "ex-bot-m");
-    return `<div class="ex-bot ${m ? "has-m" : ""}" style="background:${m ? "transparent" : BOTC[i % BOTC.length]};--sx:50%;--sy:45%;--ex:${s.x}%;--ey:${s.y}%;--dur:${5.5 + (i % 4) * 1.6}s;--delay:${-i * 1.7}s">
-      ${m}<span class="ex-chip">${esc(word)}</span></div>`;
-  }).join("");
-  const taskHTML = tasks.length ? tasks.map(t => `<div class="ex-task">
-      <span class="tk ${t.status === "working" ? "w" : t.status === "held" ? "h" : "q"}">${esc((t.status || "queued").toUpperCase())}</span>
-      <span>${esc(t.task || "")}</span></div>`).join("")
-    : `<p class="sub">No tasks in the inbox. Use the send box above, tell Claude "EXCAVA: <task>", or edit <code>data/excava_inbox.json</code> — it works the queue on its own, holding anything outward until the gate is green.</p>`;
-  // ── OS SPINE (Phase 0-2): the bus board, beat log, drive controls, approval queue ──
-  const busPer = (os.bus && os.bus.per_department) || {};
-  const deptChips = Object.entries(busPer).map(([d, c]) =>
-    `<span class="os-dept">${_exIcon(d)} <b>${esc(d)}</b> ${c.queued || 0}q · ${c.working || 0}w · ${c.done || 0}✓${c.held ? ` · <span style="color:#92400e;font-weight:700">${c.held} held</span>` : ""}</span>`).join("")
-    || `<p class="sub">The bus is empty — send a task above.</p>`;
-  const logHTML = ((os.beat_log || []).length ? os.beat_log : ["quiet beat — everything waits on the next cron heartbeat"])
-    .map(l => `<div>· ${esc(l)}</div>`).join("");
-  const lastH = os.bus && os.bus.last_handoff;
-  const weights = (excfg && excfg.priority_weights) || {};
-  const wBars = Object.entries(weights).sort((a, b) => b[1] - a[1]).map(([k, v]) =>
-    `<div class="taste-bar"><span>${esc(k)}</span><i style="width:${v}%"></i><b>${v}</b></div>`).join("");
-  const auditOK = !os.audit || os.audit.ok;
-  const digest = (os.beat_log || []).filter(l => !String(l).startsWith("quiet")).slice(-2).join(" · ");
-  const driveHTML = `
-    <div class="card console-hero" style="border-top:3px solid var(--gold)">
-      <h2>How can EXCAVA help?</h2>
-      <div class="console-bar">
-        <button class="cb-ic" id="ex-attach" title="Attach context — adds a body to the task issue">＋</button>
-        <input id="ex-send-input" maxlength="240" placeholder="Type a task, a direction, or /nosg /horse /plan /research /watch …">
-        <select id="ex-dept" title="Send to a department (or auto-route)">
-          <option value="">auto-route</option>
-          ${Object.keys((reg && reg.departments) || {}).sort().map(d => `<option value="${esc(d)}">${_exIcon(d)} ${esc(d)}</option>`).join("")}
-        </select>
-        <button class="cb-ic" id="ex-mic" title="Speak the task">🎙</button>
-        <button class="cb-ic" id="ex-send-btn" title="Dispatch" style="background:var(--gold)">➤</button>
-      </div>
-      <div class="console-hints">
-        <span data-hint="/nosg ">NOSG — just do the best thing</span>
-        <span data-hint="/horse ">HORSE — 10 executions, merge best</span>
-        <span data-hint="/plan ">PLAN — show the plan first</span>
-        <span data-hint="/research ">RESEARCH — deep brief</span>
-        <span data-hint="/watch ">WATCH — track a topic</span>
-        <span data-hint="direction ">🧭 state a direction</span>
-      </div>
-      ${digest ? `<div class="console-digest">While you were away: ${esc(digest)}</div>` : ""}
-      <h3 style="margin-top:18px">🕹 You drive it <span class="sub">— mode + dial</span>
-        <span class="ex-mode ${esc(mode)}">${esc(mode.toUpperCase())}</span></h3>
-      <p class="sub">The bar dispatches through a prefilled GitHub issue (works on your phone) — CI queues it at <b>owner rank</b>, replies a receipt, closes the issue; /triggers follow P6. Mode, same channel:
-        <a target="_blank" href="${_exIssue("EXCAVA: kill")}">🔴 kill</a> ·
-        <a target="_blank" href="${_exIssue("EXCAVA: safe")}">🟡 safe</a> ·
-        <a target="_blank" href="${_exIssue("EXCAVA: run")}">🟢 run</a> ·
-        or <a target="_blank" href="https://github.dev/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor/blob/main/data/excava_inbox.json">edit the inbox directly</a> · or tell Claude “EXCAVA: &lt;task&gt;”.</p>
-      <div class="ex-grid" style="margin-top:10px">
-        <div>
-          <b class="sub">⚙ OS spine — beat #${os.beats || "?"} · audit ${auditOK ? "✅ code matches the guardrails" : `⚠ ${esc(((os.audit || {}).problems || []).join("; ") || "problems")} — auto SAFE`}</b>
-          <div style="margin-top:8px">${deptChips}</div>
-          <div class="os-log">${logHTML}</div>
-          ${lastH ? `<p class="sub" style="margin-top:6px">last hand-off: <a target="_blank" href="${GH_REPO}/blob/main/${esc(lastH)}">${esc(lastH.split("/").pop())}</a> · <a target="_blank" href="${GH_REPO}/tree/main/data/excava/traces">all traces</a></p>` : ""}
-        </div>
-        <div>
-          <b class="sub">🎚 Priority weights — which auto-work reaches the bus first (your inbox always outranks)</b>
-          <div class="taste-bars" style="margin-top:8px">${wBars || "<p class='sub'>defaults active</p>"}</div>
-          <p class="sub">change from anywhere: issue “EXCAVA: weight access 95”</p>
-        </div>
-      </div>
-    </div>`;
-  const pend = (ap && ap.pending) || [];
-  _apprCache = pend.slice();
-  const _dec = _localDecisions();
-  const waiting = pend.filter(p => !_dec[p.id]);
-  const apHTML = `
-    <div class="card"><h3>🖊 Approval queue <span class="sub">— the only things waiting on YOU (${waiting.length})</span></h3>
-      ${pend.length ? pend.map(p => {
-        const d = _dec[p.id];
-        // TRUTHFUL chip (owner caught the lie 2026-07-12): a decision is only 'sent' after the
-        // cloud-dispatch click; until then it lives ONLY on this device and EXCAVA can't see it.
-        const decided = d ? (d.sent
-          ? `<span class="qr-btn" style="margin-left:auto;flex:none;pointer-events:none;background:${d.decision === "approve" ? "var(--ok,#1c7)" : "#b44"};color:#fff;border:0">${d.decision === "approve" ? "✓ you approved" : "✕ you declined"} · sent ✓</span>`
-          : `<a class="qr-btn" style="margin-left:auto;flex:none;cursor:pointer;background:#c80;color:#fff;border:0" data-open-approval="${esc(p.id)}" title="your decision is saved ONLY on this device — EXCAVA hasn't received it yet; tap to finish sending">${d.decision === "approve" ? "✓ approved" : "✕ declined"} · NOT SENT — tap to send</a>`)
-          : `<a class="qr-btn" style="margin-left:auto;flex:none;cursor:pointer;background:var(--gold);border-color:var(--gold-line)" data-open-approval="${esc(p.id)}">Review &amp; decide →</a>`;
-        return `<div class="ex-task" style="align-items:flex-start">
-          <span class="tk h">${esc((p.category || "held").toUpperCase())}</span>
-          <span style="flex:1"><b>${esc(p.title || "")}</b>
-            <span class="sub" style="display:block;margin-top:2px">${esc(p.what || p.why || "")}</span></span>
-          ${decided}</div>`;
-      }).join("")
-      : `<p class="sub">Nothing waits on you. Tasks land here only after 3-tier escalation, an outward gate hold, or an unroutable/missing-resource hold.</p>`}
-    </div>`;
-  const goalsMini = goals.map(g => `<span class="pill" title="${esc(g.gap || "")}">${esc(g.id)} ${g.score}</span>`).join(" ");
-  // ── PHASE 5, the LIVING OS: residents 1:1 with real agents, fleet health, queue + trace viewer ──
-  const deptsReg = (reg && reg.departments) || {};
-  const regAgents = (reg && reg.agents) || [];
-  const busTasks = os.tasks || [];
-  // residents v2: one bot per department with REAL open work; its chip is the actual task
-  const workBots = Object.entries(busPer)
-    .filter(([d, c]) => d !== "(unrouted)" && (c.queued || 0) + (c.working || 0) > 0)
-    .slice(0, 8).map(([d], i) => {
-      const hint = String((deptsReg[d] || {}).lane_hint || d).split(" ")[0].toLowerCase();
-      const st = stations.find(s => (s.label || "").toLowerCase().includes(hint))
-        || stations[i % Math.max(stations.length, 1)] || { x: 50, y: 80 };
-      const t = busTasks.find(x => x.department === d) || {};
-      const w = regAgents.find(a => a.department === d && a.tier === 1) || {};
-      const m = _monsterImg(d, "worker", "ex-bot-m");
-      return `<div class="ex-bot ${m ? "has-m" : ""}" style="background:${m ? "transparent" : BOTC[i % BOTC.length]};--sx:50%;--sy:45%;--ex:${st.x}%;--ey:${st.y}%;--dur:${5.5 + (i % 4) * 1.6}s;--delay:${-i * 1.7}s"
-        title="${esc(w.id || d)} — ${esc(t.title || "on the bus")}">
-        ${m}<span class="ex-chip">${esc(d)}: ${esc(String(t.title || "work").split(" ").slice(0, 2).join(" "))}</span></div>`;
-    }).join("");
-  // ── M3.4: the animation catalog — every prop on the floor is a REAL last-beat event ──
-  let fxHTML = "";
-  if (iso) {
-    const at = {};                                     // department -> its building's coords
-    stations.forEach(s => { const d = _monsterDept(s.label); if (d && !at[d]) at[d] = [s.x, s.y]; });
-    (os.recent_events || []).slice(-8).forEach((e, i) => {
-      const d = e.department || _monsterDept(e.lane || e.by || "") || null;
-      const a = iso.animForEvent(e.kind, d);
-      const p = at[d] || [50, 40];
-      fxHTML += iso.prop(a, p[0] + 5.5, p[1] - 11, i * 0.35, `${e.kind}${d ? " · " + d : ""}`);
-      if (e.kind === "completed") fxHTML += iso.prop("party", 50, 33, i * 0.35, "delivered to the core");
-    });
-    stations.filter(s => s.status === "stale").forEach(s =>
-      fxHTML += iso.prop("rest", s.x - 5.5, s.y - 11, 0, "idle — lane resting"));
-  }
-  const bpMap = os.backpressure || {}, usage = os.usage || {};
-  const fleetHTML = `
-    <div class="card"><h3>🛠 Fleet health <span class="sub">— every department: its worker, real counters, who's resting</span></h3>
-      <div class="fleet">${Object.keys(deptsReg).sort().map(d => {
-        const u = usage[d] || {}, c = busPer[d] || {}, bp = bpMap[d] || {};
-        const cooling = bp.cooldown_until && bp.cooldown_until > new Date().toISOString();
-        const w = regAgents.find(a => a.department === d && a.tier === 1);
-        return `<div class="dep">${_exIcon(d)} <b>${esc(d)}</b>${deptsReg[d].gated ? " 🔒 gated" : ""}<br>
-          <span class="sub">${esc(w ? w.id : "unstaffed until Phase 3")}</span><br>
-          ${c.queued || 0} queued · ${c.working || 0} working · ${u.done || 0} done · ${u.handoffs || 0} hand-offs · ${u.fails || 0} fails
-          ${cooling ? `<br><span class="cool">😮‍💨 resting until ${esc(String(bp.cooldown_until).slice(11, 16))} UTC (backpressure)</span>` : ""}</div>`;
-      }).join("")}</div></div>`;
-  const evs = (os.recent_events || []).slice().reverse();
-  const _evTxt = e => String(e.why || e.what || e.doc || e.result || e.reason || "").slice(0, 70);
-  const queueHTML = `
-    <div class="ex-grid">
-      <div class="card"><h3>🚌 Live bus queue <span class="sub">— click a task to see its full trace (why X over Y)</span></h3>
-        ${busTasks.length ? busTasks.map(t => `<div class="ex-task os-task-row" data-trace="${esc(t.id)}">
-          <span class="tk ${t.status === "working" ? "w" : t.status === "held" ? "h" : "q"}">${esc(String(t.status).toUpperCase())}</span>
-          <span>${_exIcon(t.department || "")} <b>${esc(t.department || "unrouted")}</b> · ${esc(t.title)}
-            <span class="sub">step ${t.steps || 0} · from ${esc(t.source || "?")}${t.doc ? " · has hand-off doc" : ""}</span></span></div>`).join("")
-        : `<p class="sub">Bus is clear — everything is done or waiting for the next heartbeat.</p>`}
-        <div id="trace-view"></div>
-      </div>
-      <div class="card"><h3>📡 OS events <span class="sub">— the daemon feed: everything the OS saw machine-wide</span></h3>
-        <div class="os-log" style="max-height:280px">${evs.length ? evs.map(e =>
-          `<div>· [${esc(String(e.at || "").slice(11, 16))}] <b>${esc(e.kind)}</b> ${esc(e.lane || e.chose || e.department || "")} ${esc(_evTxt(e))}</div>`).join("")
-          : "<div>· events appear here as beats run</div>"}</div>
-      </div>
-    </div>`;
-  const maint = mode !== "run"
-    ? `<div class="ex-maint"><b>${mode === "kill" ? "⛔ KILL SWITCH — the OS is stopped" : "🔧 MAINTENANCE — safe mode, assess only"}</b></div>` : "";
-  // ── PHASE 6: the DIRECTION LOOP + CHANGE TUTORIALS (D2 — the loop that was missed once) ──
-  const dirList = ((dirs && dirs.directions) || []).filter(d => d.status === "active").slice(-4).reverse();
-  // newest first — the old slice(0,4) took the OLDEST entries, so new walkthroughs (the whole
-  // point of the Phase-6 law) could never appear; part of why the owner 'lost his bearings'
-  const tutList = ((tuts && tuts.tutorials) || [])
-    .slice().sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0)
-      || String(b.at || "").localeCompare(String(a.at || ""))).slice(0, 6);
-  _tourTuts = tutList;                                // M3.13: expose for the interactive tour runner
-  const directionHTML = `
-    <div class="card" style="border-top:3px solid var(--gold)">
-      <h3>🧭 Direction & tutorials <span class="sub">— you steer; EXCAVA shows its reading; every change gets a walkthrough</span></h3>
-      <div class="ex-send">
-        <input id="ex-dir-input" maxlength="300" placeholder='State a direction… e.g. "focus on making the activator real before anything visual"'>
-        <button class="qr-btn" id="ex-dir-btn">set direction ➤</button>
-      </div>
-      <div class="ex-grid" style="margin-top:10px">
-        <div>
-          <b class="sub">Your active directions — and how EXCAVA reads them (correct it by re-stating)</b>
-          ${dirList.length ? dirList.map(d => `<div class="ex-task" style="display:block">
-            <div><span class="tk q">${esc(d.id.toUpperCase())}</span> <b>${esc(d.text)}</b></div>
-            <div class="sub" style="margin-top:4px">${d.excava_reading ? "🦾 reading: " + esc(d.excava_reading) : "🦾 acknowledgment arrives next beat (hourly)"}</div>
-          </div>`).join("") : `<p class="sub">No directions yet — the standing rules apply until you state one.</p>`}
-        </div>
-        <div>
-          <b class="sub">What changed — walkthroughs, newest first (Phase-6 law: no major change without one)</b>
-          ${tutList.map((t, ti) => `<details class="ex-task" style="display:block" ${ti === 0 ? "open" : ""}><summary><b>${esc(t.build)}</b> · ${esc(t.title)} <span class="sub">${esc(t.at || "")}</span></summary>
-            ${(t.interactive || []).length ? `<div style="margin:6px 0"><button class="qr-btn" data-tour="${ti}" style="background:var(--gold-soft);border-color:var(--gold-line)">▶ Take the interactive tour (${(t.interactive || []).length} stops)</button>${t.podcast ? ` <a class="qr-btn" href="${esc(t.podcast.replace(/^docs\//, ""))}" target="_blank">🎧 podcast</a>` : ""}</div>` : ""}
-            <ol style="margin:6px 0 2px 18px;font-size:12.5px">${(t.steps || []).map(s => `<li>${esc(s)}</li>`).join("")}</ol></details>`).join("")
-          || `<p class="sub">No tutorials recorded yet.</p>`}
-        </div>
-      </div>
-    </div>`;
-  // ── PHASE 3: what the Creators department made (always labeled, tested before first use) ──
-  const creations = ((made && made.creations) || []).slice(-8).reverse();
-  const creationsHTML = creations.length ? `
-    <div class="card"><h3>🦾 Created by EXCAVA <span class="sub">— autonomous creations; every one labeled + independently tested before first use (G-12)</span></h3>
-      ${creations.map(c => `<details class="ex-task" style="display:block">
-        <summary><span class="tk ${c.status === "published" ? "w" : "h"}">${esc((c.status || "").toUpperCase())}</span>
-          <b>${esc(c.name)}</b> <span class="pill">${esc(c.type)}</span> <span class="pill" style="background:var(--gold-soft)">🦾 ${esc(c.label || "Created by EXCAVA")}</span>
-          <span class="sub">fills: ${esc(c.gap || "")}</span></summary>
-        <p class="sub" style="margin:6px 0 2px">${esc(c.what || "")}<br><b>use:</b> ${esc(c.how_to_use || "")}<br>
-          <b>self-test:</b> ${c.self_test ? (c.self_test.ok ? "✅ passed" : "❌ " + esc(JSON.stringify(c.self_test.checks))) : "pending"} ·
-          before first run: <code>python -m src.excava_creators --test-before-run "${esc(c.name)}"</code></p>
-      </details>`).join("")}
-    </div>` : "";
-  // ── M4.6 PROVE IT'S REAL: (a) an artifact built unattended by a CI beat, (b) goal → package ──
-  const _unattended = (os.recent_events || []).filter(e => e.kind === "handoff" && e.doc)
-    .concat(creations.map(c => ({ kind: "creation", doc: c.name, at: c.created_at, by: "creators" })))
-    .sort((a, b) => String(b.at || "").localeCompare(String(a.at || "")))[0];
-  const proveHTML = `
-    <div class="card" style="border-top:3px solid oklch(0.68 0.16 148)"><h3>✅ Proof it's real <span class="sub">— M4.6: EXCAVA builds unattended, and a goal becomes a runnable package</span></h3>
-      <div class="ex-grid">
-        <div><b class="sub">① Built while you were away (unattended)</b>
-          ${_unattended ? `<div class="ex-task"><span class="tk w">${esc((_unattended.kind || "").toUpperCase())}</span>
-            <span>${esc(String(_unattended.doc).split("/").pop().replace(/\.md$/, ""))}
-            <span class="sub">— ${esc(_unattended.by || "a department")}, beat #${os.beats || "?"}, ${esc(fmtDate(_unattended.at))}</span></span>
-            ${_unattended.doc && String(_unattended.doc).includes("/") ? `<a class="qr-btn" style="margin-left:auto;flex:none" target="_blank" href="${GH_REPO}/blob/main/${esc(_unattended.doc)}">open</a>` : ""}</div>
-            <p class="sub">Hourly CI beats run the departments + rooms with no one watching — this is the newest thing they produced. See them all in 📦 <a href="#" data-goto="results">Results</a>.</p>`
-          : `<p class="sub">The next hourly beat will land one here — rooms + creators produce artifacts unattended.</p>`}
-        </div>
-        <div><b class="sub">② Type a goal → get a working package</b>
-          <p class="sub">Use the console above (or a <code>/horse</code> goal), or assemble in 🧰 <a href="#" data-goto="packages">Packages</a>: you get a runnable KIT of real elements — open it, run each or all. Another project can pull it via the 🛢 hub endpoint.</p>
-          <div class="ex-task"><span class="tk q">TRY</span><span>Type “<b>build me a research agent</b>” in the console, or open 🧰 Packages → “Research &amp; browse” → Run all.</span></div>
-        </div>
-      </div>
-    </div>`;
-  // ── GUARDRAILS: the information-loss protections, visible so you can trust the project won't topple ──
-  const gl = (grd && grd.guardrails) || [];
-  const guardHTML = gl.length ? `
-    <div class="card" style="border-top:3px solid ${grd.critical_failures ? "oklch(0.62 0.19 28)" : "oklch(0.68 0.16 148)"}">
-      <h3>🛡 Guardrails <span class="sub">— ${grd.passing}/${grd.total} holding · ${grd.critical_failures ? `<b style="color:var(--bad)">${grd.critical_failures} CRITICAL</b>` : "0 critical"} · so the project never loses information or topples</span></h3>
-      <div class="guard-grid">${gl.map(r => `<div class="guard ${r.ok ? "ok" : r.severity === "critical" ? "crit" : "warn"}" title="${esc(r.detail)}">
-        <span class="gm">${r.ok ? "✓" : r.severity === "critical" ? "✕" : "!"}</span>
-        <b>${esc(r.id)}</b> ${esc(r.name)}</div>`).join("")}</div>
-      <p class="sub" style="margin-top:6px">Runs every beat (last ${esc(fmtDate(grd.generated_at))}). Fixes the two mechanical failures: safe-git QUARANTINES colliding files (never deletes) and commits via a UTF-8 message file. Full contract: <a target="_blank" href="${GH_REPO}/blob/main/GUARDRAILS.md">GUARDRAILS.md</a>.</p>
-    </div>` : "";
-  // ── CAPABILITIES: the ≥30 things EXCAVA can do, tagged HONESTLY (live/planned/gated/pitch) ──
-  const cl = (caps && caps.capabilities) || [];
-  const capOrder = { live: 0, planned: 1, "gated-M5": 2, pitch: 3 };
-  const capLabel = { live: "✓ live", planned: "◔ planned", "gated-M5": "🔒 M5-gated", pitch: "🖊 needs you" };
-  const capsHTML = cl.length ? `
-    <div class="card" style="border-top:3px solid oklch(0.62 0.17 280)">
-      <h3>🧩 Capabilities <span class="sub">— ${caps.total} things EXCAVA can do · <b style="color:oklch(0.5 0.14 150)">${caps.live} live</b> · ${caps.planned} planned · ${caps.gated_M5} M5-gated · ${caps.pitch} needs you (honest, per the 2026-07-06 audit)</span></h3>
-      <div class="cap-grid">${cl.slice().sort((a, b) => (capOrder[a.status] - capOrder[b.status])).map(c => `
-        <div class="cap cap-${c.status.replace('-', '')}" title="${esc(c.what)} — ${esc(c.evidence)}">
-          <span class="cap-s">${capLabel[c.status] || c.status}</span>
-          <b>${esc(c.name)}</b> <span class="cap-d">${_exIcon(c.department)} ${esc(c.department)}</span></div>`).join("")}</div>
-    </div>` : "";
-  // ── OVERHAUL DECISIONS: the ~300 calls are the OWNER'S — verdicts land here and gate every milestone (END PLAN §7) ──
-  const di = (dec && dec.items) || [];
-  const decided = di.filter(i => i.verdict);
-  const nextIds = di.filter(i => !i.verdict).slice(0, 4).map(i => "#" + i.id).join(" ");
-  const vHue = { keep: 150, fix: 60, improve: 230, rebuild: 300, wire: 280, backlog: 80, remove: 28 };
-  const decHTML = di.length ? `
-    <div class="card" style="border-top:3px solid oklch(0.7 0.14 60)">
-      <h3>🗳 Overhaul decisions <span class="sub">— <b>${decided.length}/${di.length}</b> decided by the owner · verdicts gate every milestone (§7) · next clickable batch: ${nextIds || "all decided"}</span></h3>
-      <div class="cap-grid">${decided.slice(-8).reverse().map(i => `
-        <div class="cap" title="${esc(i.what || "")}${i.note ? " — " + esc(i.note) : ""}">
-          <span class="cap-s" style="color:oklch(0.55 0.15 ${vHue[i.verdict] || 230})">${esc(i.verdict.toUpperCase())}</span>
-          <b>#${i.id} ${esc(i.title)}</b></div>`).join("")}</div>
-      <p class="sub" style="margin-top:6px">Answer in-session (clickable, 4 per batch), bulk-write "12: rebuild" lines from <a target="_blank" href="${GH_REPO}/blob/main/EXCAVA_MASTER_AUDIT.md">EXCAVA_MASTER_AUDIT.md</a>, or <code>python -m src.audit_decisions set &lt;id&gt; &lt;verdict&gt;</code> — decisions persist in data/excava/overhaul_decisions.json.</p>
-    </div>` : "";
-  // ── ONE-BRAIN MEMORY: the formerly-fragmented stores now answer to a single recall() (M1) ──
-  const mb = membrain || {};
-  const mbStores = mb.stores || {};
-  const mbLabel = { "why-log": "🧾 WHY-log (episodes)", "hub": "🛢 hub semantic index",
-    "brain-graph": "🕸 brain graph", "agent-log": "🗣 agent conversations", "pipeline": "⚙ pipeline graph" };
-  const memHTML = mb.total_records ? `
-    <div class="card" style="border-top:3px solid oklch(0.62 0.17 280)">
-      <h3>🧠 One-Brain Memory <span class="sub">— <b>${mb.total_records.toLocaleString()}</b> records across <b>${mb.n_stores}</b> formerly-separate stores, now one <code>recall()</code> every agent calls (M1: unify memory)</span></h3>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px">
-        ${Object.entries(mbStores).sort((a, b) => b[1] - a[1]).map(([s, n]) =>
-          `<span class="pill" title="${esc(s)}">${mbLabel[s] || s}: <b>${n.toLocaleString()}</b></span>`).join("")}
-      </div>
-      <p class="sub" style="margin-top:8px">One deterministic façade (<code>python -m src.memory_brain recall "…"</code>) spans all of them — no more hand-querying five files. Semantic re-rank (the hub vectors) layers on next.</p>
-    </div>` : "";
-  view.innerHTML = `
-    <div class="card" style="border-top:3px solid var(--gold)">
-      <h3>🦾 EXCAVA <span class="sub">— the agentic OS running this project</span>
-        <span class="pl-badge ${gate.internal_allowed ? "pl-live" : "pl-stale"}">${gate.internal_allowed ? "OPERATING" : "GATE CLOSED"}</span></h3>
-      <p class="sub">Phase: ${esc(ex && ex.phase || "OS-1 operator")} · memory: <b>${mem.vectors || 0}</b> vectors ·
-        outward actions ${gate.outward_allowed ? "OPEN" : `held (${esc((gate.checks || {}).truth_access_G3 ?? "?")} / 70 truth&access)`} · goals: ${goalsMini}</p>
-      <div class="ex-floor ${iso ? "iso" : ""}">${iso ? iso.ground() : ""}${maint}${stHTML}${workBots || bots}${fxHTML}
-        <div class="ex-core">EXCAVA<small>AGENTIC CORE</small></div>
-        <div class="floor-clock" title="M2.7: the visible timing readout">⏱ beat #${os.beats || "?"} · ${((os.beat_log || []).length || 0)} events last beat</div>
-      </div>
-      <div class="ex-detail" id="ex-detail">Click a department station to inspect it — what it does, its real status, cadence and last run.</div>
-      <p class="sub" style="margin-top:8px">The floor is LIVE: each station is a real pipeline department (lamp = its actual status), each colored bot is a real registered agent carrying its department's actual bus task — hover one to see who it is and what it holds.</p>
-    </div>
-    ${driveHTML}
-    ${_commsThread(inbox)}
-    ${capsHTML}
-    ${decHTML}
-    ${memHTML}
-    ${guardHTML}
-    ${proveHTML}
-    ${directionHTML}
-    ${creationsHTML}
-    ${fleetHTML}
-    ${queueHTML}
-    ${apHTML}
-    ${brains && brains.brains ? `<div class="card" style="border-top:3px solid oklch(0.62 0.17 280)">
-      <h3>🧠 The Brains <span class="sub">— a brain = a <b>LEAD</b> model + a <b>COMPLEMENTARY-strength SUPPORT</b> of a different lineage (real fallback) · brains are PEERS (the only ranking is inside a brain, so none dominates the conversation)</span></h3>
-      ${(brains.assembled_brains || []).length ? `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin:8px 0">
-        ${brains.assembled_brains.map(b => `<div class="card" style="margin:0;border-left:3px solid var(--gold)">
-          <b>Brain ${esc(b.id)}</b> <span class="pill" title="brains are equal peers — no dominance order">peer</span>
-          <p class="sub" style="margin:5px 0 0">⭐ lead: <b>${esc((b.lead||{}).lineage||"—")}</b> <span class="pill">${esc((b.lead||{}).tier||"")}</span> <code>${esc((b.lead||{}).model||"")}</code><br>
-          🛟 support: ${b.support ? `<b>${esc(b.support.lineage)}</b> <span class="pill">${esc(b.support.tier||"")}</span> <code>${esc(b.support.model)}</code> — complements the lead, answers if it fails` : "<i>none yet (needs a 2nd live lineage)</i>"}</p></div>`).join("")}
-      </div>` : ""}
-      <p class="sub" style="margin-top:4px"><b>All lineages</b> that can be a lead or support (${brains.live}/${brains.total} live):</p>
-      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">
-        ${brains.brains.map(b => `<span class="pill" style="border-color:${b.status === "live" ? "oklch(0.62 0.16 148)" : "oklch(0.6 0.02 90)"}" title="${esc(b.lineage)} · ${esc(b.role)} · ${esc(b.model)}">${esc(b.family)} ${b.status === "live" ? "✓" : "🔑"}</span>`).join("")}
-      </div>
-      <p class="sub" style="margin-top:8px">Ranked from the hourly benchmark; the local Qwen/Llama runs zero-quota, GLM · DeepSeek · Kimi need <code>OPENROUTER_API_KEY</code> (§12). Every model — plan-named or already in the project — can earn a lead or back one as support.</p>
-      ${(brains.debate_lineages || []).length ? `<p class="sub" style="margin-top:4px">⚔ A debate now picks <b>DISTINCT lineages only</b> (never the same model on two providers — §2 correlated-errors ban): <b>${brains.debate_lineages.map(esc).join(" · ")}</b></p>` : ""}
-      ${Object.keys(brains.spoke_today || {}).length ? `<p class="sub" style="margin-top:4px">🗣 Actually spoke in rooms today: ${Object.entries(brains.spoke_today).map(([l, n]) => `<b>${esc(l)}</b> ${n}`).join(" · ")} — real turns, not just the roster</p>` : ""}</div>` : ""}
-    ${engh && engh.results ? `<div class="card"><h3>🔌 Engine health <span class="sub">— hourly benchmark canary (a self-improvement experiment): each free engine answers one golden prompt; agents prefer the healthy ones</span></h3>
-      <div style="display:flex;flex-wrap:wrap;gap:6px">${engh.results.map(r => {
-        const c = r.status === "healthy" ? "oklch(0.62 0.16 148)" : r.status === "no-key" ? "oklch(0.6 0.02 90)" : "oklch(0.6 0.18 25)";
-        return `<span class="pill" style="border-color:${c}" title="${esc(r.note || r.model || "")}">${esc(r.engine)} · ${esc(r.status)}${r.ms ? " · " + r.ms + "ms" : ""}</span>`; }).join("")}</div>
-      <p class="sub" style="margin-top:6px">measured ${esc(fmtDate(engh.generated_at))} · ranking: ${esc((engh.ranking || []).slice(0, 5).join(" → "))}</p></div>` : ""}
-    ${expr && expr.experiments ? `<div class="card"><h3>🧪 Self-experiments <span class="sub">— how EXCAVA improves ITSELF, honestly labeled (live = running now, next = designed)</span></h3>
-      ${expr.experiments.map(x => `<div class="ex-task" style="align-items:flex-start">
-        <span class="tk ${x.status === "live" ? "q" : "h"}">${x.status === "live" ? "🟢 LIVE" : "◔ NEXT"}</span>
-        <span style="flex:1"><b>${esc(x.id)}</b> <span class="sub">(${esc(x.method)})</span>
-          <span class="sub" style="display:block;margin-top:2px">${esc(x.what)}</span></span></div>`).join("")}
-      <p class="sub" style="margin-top:6px">Autonomy (agreed 10 Jul): EXCAVA alone may tune prompts/configs, change its own code IF a sandbox test passes (auto-revert), and add agents ('Added by EXCAVA'); new tools, departments, or features go through a pitch to you.</p></div>` : ""}
-    <div class="card"><h3>⭐ North Star <span class="sub">— the ${goals.length} goals as a CONSTELLATION: live scores orbit the core; click a star to open its goal</span></h3>
-      <div class="constel">
-        <div class="constel-core"><b>EXCAVATORTRON</b><small>the hub</small></div>
-        <div class="orbit">${goals.map((g, i) => {
-          const ang = Math.round(i / Math.max(goals.length, 1) * 360);
-          const pts = 4 + (i % 5), size = 30 + (g.score || 0) * 0.26;
-          const col = ["#ffd166", "#8ecae6", "#f7a8c4", "#b5e48c", "#f4978e", "#cdb4db", "#a8dadc", "#ffb703", "#b9fbc0"][i % 9];
-          return `<div class="nstar ${g.status === "met" ? "met" : g.status === "at-risk" ? "risk" : ""}"
-            data-goal="${i}" style="--ang:${ang}deg" title="${esc(g.name)}: ${g.score}/100">
-            <div class="body" style="width:${size}px;height:${size}px;animation-delay:${-i * 0.7}s">
-              <svg viewBox="0 0 40 40"><path d="${_starPath(pts, 19, 8.5)}" fill="${col}" stroke="#0e0c1a" stroke-width="2"/></svg>
-              <b>${esc(g.id)}<i>${g.score}</i></b>
-            </div></div>`;
-        }).join("")}</div>
-      </div>
-      <div class="ex-detail" id="nstar-detail">Click a star — its goal, live score and current gap open here.</div>
-      <div class="links" style="margin-top:8px">${goals.map((g, i) =>
-        `<span class="lnk" data-goal-chip="${i}" style="cursor:pointer" title="${esc(g.gap || "")}">${esc(g.id)} ${esc(g.name)} · ${g.score}</span>`).join("")}</div>
-    </div>
-    <div class="ex-grid">
-      <div class="card"><h3>📥 Task inbox <span class="sub">— send EXCAVA work</span></h3>${taskHTML}</div>
-      <div class="card"><h3>🎯 Now / next</h3>
-        <div class="ex-task"><span class="tk w">NOW</span><span>${esc(act.do || "idle")}</span></div>
-        ${(act.use_tools || []).length ? `<p class="sub">using (recalled by meaning): ${act.use_tools.map(t => esc(t.name)).join(" · ")}</p>` : ""}
-        ${((ex && ex.holding) || []).map(h => `<div class="ex-task"><span class="tk h">HELD</span><span>${esc(h.priority || "")} <span class="sub">${esc(h.why_held || "")}</span></span></div>`).join("")}
-      </div>
-    </div>
-    ${rc && rc.resources ? `<div class="card"><h3>🔋 Resources <span class="sub">— checked before any task is attempted; free-only, on purpose</span></h3>
-      <div class="links">${Object.entries(rc.resources).map(([k, v]) => {
-        const bad = !v.ok && !v.optional, style = bad ? "border-color:var(--bad);color:var(--bad);font-weight:700"
-          : !v.ok ? "border-color:var(--muted);color:var(--muted)" : "";
-        const mark = v.ok ? "✓" : v.optional ? "○" : "✗";
-        return `<span class="lnk" style="${style}" title="${esc(v.note || "")}">${mark} ${esc(k.replace(/_/g, " "))}${v.optional && !v.ok ? " (optional)" : ""}</span>`;
-      }).join("")}</div>
-      ${(rc.missing || []).length ? `<p class="sub">Missing (blocking): <b>${rc.missing.map(esc).join(", ")}</b> — tasks needing these are HELD, not attempted. Hover a chip for the fix.</p>`
-        : `<p class="sub">Nothing critical missing — every core task type is runnable, 100% free.</p>`}
-      ${(rc.optional_missing || []).length ? `<p class="sub">Skipped by choice (stay free): <b>${rc.optional_missing.map(esc).join(", ")}</b> — a free fallback covers these already, just slower.</p>` : ""}
-      <p class="sub">Can do now: ${Object.entries(rc.can_do || {}).map(([k, v]) => `${v.ok ? "✅" : "⛔"} ${esc(k)}`).join(" · ")}</p>
-    </div>` : ""}`;
-  view.querySelectorAll("[data-goto]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); show(a.dataset.goto); }));
-  // M3.11: a pitch in the approval queue opens as a conversation
-  view.querySelectorAll("[data-open-pitch]").forEach(a =>
-    a.addEventListener("click", e => { e.preventDefault(); openPitch(a.dataset.openPitch); }));
-  // 2026-07-10: every pending approval opens the in-app Review & decide modal (Approve/Decline + note)
-  view.querySelectorAll("[data-open-approval]").forEach(a =>
-    a.addEventListener("click", e => { e.preventDefault(); openApproval(a.dataset.openApproval); }));
-  // M3.13: the interactive walkthrough
-  view.querySelectorAll("[data-tour]").forEach(b =>
-    b.addEventListener("click", () => startTour(+b.dataset.tour)));
-  // Phase 1 task-send: the box builds the prefilled "EXCAVA: …" issue (owner-rank channel)
-  let attachBody = "";
-  const sendIt = () => {
-    const inp = view.querySelector("#ex-send-input");
-    let v = (inp && inp.value || "").trim();
-    if (!v) return;
-    // P6 trigger parsing: /nosg /horse /plan /research /watch map to the trigger words
-    v = v.replace(/^\/(nosg|horse|plan|research|watch)\s*/i, (_, t) => t.toUpperCase() + " ");
-    const dept = (view.querySelector("#ex-dept") || {}).value || "";
-    const body = [attachBody, dept ? `route-to: ${dept}` : "", "Sent from the EXCAVA console."]
-      .filter(Boolean).join("\n");
-    // IN-APP first (owner: don't just fling me to GitHub): keep a local record + confirm in-app,
-    // then dispatch to the cloud beat via the free issue channel on an explicit click.
-    try { const q = JSON.parse(localStorage.getItem("excavatortron.mytasks") || "[]");
-      q.unshift({ task: v, dept, at: new Date().toISOString() });
-      localStorage.setItem("excavatortron.mytasks", JSON.stringify(q.slice(0, 40))); } catch (_) {}
-    _showModal("Send task to EXCAVA", `<p>Task: <b>${esc(v)}</b>${dept ? ` → <b>${esc(dept)}</b> department` : ""}</p>
-      <p class="sub">Saved to your in-app task list. EXCAVA runs in the cloud, so to hand it to the running beat, send it through the free issue channel (one click). A tiny always-free backend would make this fully one-click in-app — that's your call (an owner pitch).</p>
-      <div class="el-actions always"><a class="primary" target="_blank" href="${_exIssue("EXCAVA: " + v, body)}">📮 Send to the cloud beat ↗</a>
-      <button class="ex-modal-cancel">keep in-app only</button></div>`);
-    const mc = document.querySelector("#ex-modal .ex-modal-cancel");
-    if (mc) mc.addEventListener("click", () => { document.getElementById("ex-modal").style.display = "none"; });
-    const inp2 = view.querySelector("#ex-send-input"); if (inp2) inp2.value = "";
-  };
-  const sBtn = view.querySelector("#ex-send-btn");
-  if (sBtn) sBtn.addEventListener("click", sendIt);
-  const sInp = view.querySelector("#ex-send-input");
-  if (sInp) sInp.addEventListener("keydown", e => { if (e.key === "Enter") sendIt(); });
-  view.querySelectorAll(".console-hints [data-hint]").forEach(h =>
-    h.addEventListener("click", () => { if (sInp) { sInp.value = h.dataset.hint; sInp.focus(); } }));
-  const attach = view.querySelector("#ex-attach");
-  if (attach) attach.addEventListener("click", () => {
-    attachBody = prompt("Attach context for this task (a link, notes, a task body):", attachBody) || attachBody;
-    attach.style.background = attachBody ? "var(--gold)" : "";
-  });
-  const mic = view.querySelector("#ex-mic");
-  if (mic) mic.addEventListener("click", () => {
-    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SR) { mic.title = "This browser has no speech recognition"; return; }
-    const rec = new SR();
-    rec.lang = "en-US"; mic.style.background = "var(--gold)";
-    rec.onresult = ev => { if (sInp) sInp.value = ev.results[0][0].transcript; };
-    rec.onend = () => { mic.style.background = ""; };
-    rec.start();
-  });
-  // Phase 6 direction-send: same issue channel, "EXCAVA: direction …"
-  const dirIt = () => {
-    const inp = view.querySelector("#ex-dir-input");
-    const v = (inp && inp.value || "").trim();
-    if (v) _sendModal("EXCAVA: direction " + v, "Stated from the cockpit Direction card.");
-  };
-  const dBtn = view.querySelector("#ex-dir-btn");
-  if (dBtn) dBtn.addEventListener("click", dirIt);
-  const dInp = view.querySelector("#ex-dir-input");
-  if (dInp) dInp.addEventListener("keydown", e => { if (e.key === "Enter") dirIt(); });
-  // Phase 5 trace viewer: click a bus task -> fetch its real JSONL trace, show why X over Y
-  view.querySelectorAll(".os-task-row").forEach(el => el.addEventListener("click", async () => {
-    const id = el.dataset.trace;
-    const tv = view.querySelector("#trace-view");
-    if (!tv) return;
-    tv.innerHTML = `<p class="sub">loading trace ${esc(id)}…</p>`;
-    const txt = await loadText(`excava/traces/${id}.jsonl`);
-    if (txt && txt.error) {   // a load FAILURE is not the same as "no trace" — say which
-      tv.innerHTML = `<p class="sub" style="color:#e08f8f">could not load the trace for ${esc(id)} —
-        <b>${esc(txt.error)}</b> on <code>${esc(DATA + txt.file)}</code>. The file may well exist;
-        this is a fetch problem, not an empty trace.</p>`; return;
-    }
-    if (!txt) { tv.innerHTML = `<p class="sub">no trace on disk for ${esc(id)} (it may not be committed yet).</p>`; return; }
-    const rows = txt.trim().split("\n").map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean);
-    tv.innerHTML = `<p class="sub" style="margin-top:8px"><b>trace — ${esc(id)}</b> (${rows.length} events)</p>` + rows.map(ev => {
-      const extra = ev.kind === "routed"
-        ? `chose <b>${esc(ev.chose)}</b>${(ev.over || []).length ? ` over ${(ev.over || []).map(esc).join(", ")}` : ""} — ${esc(ev.why || "")}`
-        : esc(String(ev.doc || ev.result || ev.reason || ev.by || ev.title || "").slice(0, 140));
-      return `<div class="tr-ev">[${esc(String(ev.at || "").slice(0, 16))}] <b>${esc(ev.kind)}</b> ${extra}</div>`;
-    }).join("");
-  }));
-  // station click-through: ENTER a department — M3.3 side-view cutaway + real numbers
-  const det = view.querySelector("#ex-detail");
-  view.querySelectorAll(".ex-station").forEach((el, i) => el.addEventListener("click", () => {
-    view.querySelectorAll(".ex-station").forEach(x => x.classList.remove("sel"));
-    el.classList.add("sel");
-    const s = stations[i] || {};
-    const next = s.last_run ? new Date(new Date(s.last_run).getTime() + (s.cadence_h || 12) * 3.6e6) : null;
-    const laneLine = `<b>${_exIcon(s.label)} ${esc(s.label || "")}</b> — ${esc(s.what || "")}<br>
-      status <b>${esc(s.status || "?")}</b> · ran ${_ageAgo(s.age_hours)} · every ~${esc(s.cadence_h)}h ·
-      ${esc(s.runs_7d)}× this week${next ? ` · next ~${esc(fmtDate(next.toISOString()))}` : ""}`;
-    const dep = _monsterDept(s.label);
-    if (window.ExcavaFloor && dep) {
-      const staff = regAgents.filter(a => a.department === dep);
-      const lead = staff.find(a => a.role === "lead") || staff.find(a => a.tier === 1) || {};
-      const roles = ["doer", "checker", "improver"].map(r =>
-        `${staff.filter(a => a.role === r).length} ${r}`).join(" · ");
-      det.innerHTML = ExcavaFloor.cutaway({ dept: dep, label: s.label || dep,
-        accent: ExcavaFloor.ACCENT[dep] || "#e9b400", lead, staff: Math.max(staff.length - 1, 0),
-        roles, counts: busPer[dep] || {}, usage: usage[dep] || {} }) + `<p class="cut-lane">${laneLine}</p>`;
-    } else det.innerHTML = laneLine;
-  }));
-  // M3.8: constellation — a star (or its legend chip) opens the goal, live score + gap
-  const nd = view.querySelector("#nstar-detail");
-  const openGoal = i => {
-    const g = goals[+i]; if (!g || !nd) return;
-    view.querySelectorAll(".nstar").forEach((x, xi) => x.classList.toggle("sel", xi === +i));
-    nd.innerHTML = `<b>⭐ ${esc(g.id)} — ${esc(g.name)}</b> · score <b>${g.score}</b>/100 · ${esc(g.status || "")}
-      <div class="taste-bar" style="margin-top:6px"><i class="${g.status === "met" ? "gb-met" : g.status === "at-risk" ? "gb-risk" : "gb-unmet"}" style="width:${Math.max(g.score, 3)}%"></i><b>${g.score}</b></div>
-      ${g.gap ? `<p class="sub" style="margin:6px 0 0">gap: ${esc(g.gap)}</p>` : ""}`;
-  };
-  view.querySelectorAll(".nstar").forEach(el => el.addEventListener("click", () => openGoal(el.dataset.goal)));
-  view.querySelectorAll("[data-goal-chip]").forEach(el => el.addEventListener("click", () => openGoal(el.dataset.goalChip)));
-}
-
-// ── APPROVAL DECISIONS: every pending item is reviewable + decidable IN THE APP ──
-// The decision is saved locally instantly (visible + persists your review) and dispatched to the
-// cloud beat via the free issue channel, which writes granted/declined to excava_approvals.json.
-let _apprCache = [];
-function _localDecisions() {
-  try { return JSON.parse(localStorage.getItem("excavatortron.decisions") || "{}"); }
-  catch (_) { return {}; }
-}
-function _recordDecision(id, decision, review) {
-  const d = _localDecisions();
-  d[id] = { decision, review: review || "", at: new Date().toISOString() };
-  try { localStorage.setItem("excavatortron.decisions", JSON.stringify(d)); } catch (_) {}
-}
-// Open the in-app decision modal for a pending approval — plain language, review box, Approve/Decline.
-function openApproval(id) {
-  const p = _apprCache.find(x => x.id === id) || { id, title: id, what: "", why: "", category: "held" };
-  const modal = document.getElementById("pitch-modal"); if (!modal) return;
-  modal.hidden = false;
-  const close = () => { modal.hidden = true; };
-  const row = (label, val) => val ? `<p class="sub" style="margin:.15rem 0"><b>${label}:</b> ${esc(val)}</p>` : "";
-  const planList = (p.plan && p.plan.length)
-    ? `<p class="sub" style="margin:.4rem 0 .1rem"><b>The plan — exactly what EXCAVA will do if you approve:</b></p>`
-      + `<ol style="margin:.1rem 0 .3rem 1.1rem;padding:0">`
-      + p.plan.map(s => `<li class="sub" style="margin:.12rem 0">${esc(s)}</li>`).join("") + `</ol>`
-    : "";
-  const hub = (p.hub_candidates || []).map(c =>
-    `<a class="pill" href="#element/${encodeURIComponent(c.id)}" title="${esc(c.id)}">${esc(c.name)}</a>`).join(" ");
-  modal.innerHTML = `<div class="pitch-box">
-    <div class="ph">🖊 NEEDS YOUR DECISION — ${esc((p.category || "held").toUpperCase())} <button class="px" data-appr-x>✕</button></div>
-    <p style="font-weight:600;margin:.4rem 0">${esc(p.title || "")}</p>
-    <p class="sub" style="margin:.2rem 0 .6rem">${esc(p.what || "")}</p>
-    ${row("Who asks", p.requested_by)}
-    ${row("The need", p.need || p.why)}
-    ${row("How important", p.importance)}
-    ${row("What's missing", p.missing)}
-    ${planList}
-    ${row("Effort", p.effort)}
-    ${row("Reversible?", p.reversible)}
-    ${hub ? `<p class="sub" style="margin:.3rem 0 .1rem"><b>What EXCAVA found in its own hub</b> (click to open):</p><p style="margin:.1rem 0 .4rem">${hub}</p>` : ""}
-    ${!p.need && p.why ? "" : (p.why && p.need ? `<p class="sub" style="opacity:.7;font-size:.82em">raw trigger: ${esc(p.why)}</p>` : "")}
-    <label class="sub" style="display:block;margin:.5rem 0 .2rem">Your review / note (optional — the cloud beat and history keep it):</label>
-    <textarea id="appr-review" rows="3" style="width:100%;box-sizing:border-box;border-radius:8px;padding:8px;font:inherit" placeholder="e.g. yes, but route it to analysis instead / no, not worth it right now"></textarea>
-    <div class="pitch-actions" style="margin-top:.7rem">
-      <button class="ok" data-appr-yes>✓ Approve</button>
-      <button class="no" data-appr-no>✕ Decline</button>
-    </div></div>`;
-  const decide = (decision) => {
-    const review = (modal.querySelector("#appr-review") || {}).value || "";
-    _recordDecision(id, decision, review);
-    close();
-    invalidate("excava_approvals.json");
-    _sendModal("EXCAVA: " + decision + " " + id, review || ("(" + decision + " — no note)"), id);
-    if (typeof renderExcava === "function") renderExcava();
-  };
-  modal.querySelector("[data-appr-x]").addEventListener("click", close);
-  modal.querySelector("[data-appr-yes]").addEventListener("click", () => decide("approve"));
-  modal.querySelector("[data-appr-no]").addEventListener("click", () => decide("decline"));
-  modal.querySelectorAll("a.pill").forEach(a => a.addEventListener("click", close));  // hub chip -> element view
-  modal.addEventListener("click", e => { if (e.target === modal) close(); });
-}
-
-// ── M3.11 STEERING: bell + count, "needs your approval" banner, walk-up monster, pitches ──
-let _pitchCache = [];
-async function renderSteering() {
-  const [ap, pit] = await Promise.all([load("excava_approvals.json"), load("excava/pitches.json")]);
-  const pend = (ap && ap.pending) || [];
-  _pitchCache = (pit && pit.pitches) || [];
-  const n = pend.length;
-  const bell = document.getElementById("approve-bell");
-  const count = document.getElementById("bell-count");
-  if (bell && count) {
-    bell.hidden = n === 0; count.textContent = n;
-    bell.onclick = () => { show("excava").then(() => {
-      const q = document.querySelector(".ex-task .tk.h"); if (q) q.closest(".card").scrollIntoView({ behavior: "smooth", block: "center" }); }); };
-  }
-  // a NEW approval since last visit → ring the bell + walk a herald monster up to the door
-  const seen = +(localStorage.getItem("excavatortron.approvals.seen") || 0);
-  const newest = pend.map(p => p.since || p.at || "").sort().slice(-1)[0] || "";
-  const newestN = pend.filter(p => (p.since || p.at || "") > (localStorage.getItem("excavatortron.approvals.seenAt") || "")).length;
-  if (bell && n > seen && n > 0) { bell.classList.add("ring"); setTimeout(() => bell.classList.remove("ring"), 1600); }
-  if (newestN > 0 && n > 0) heraldWalkUp(pend[0]);
-  localStorage.setItem("excavatortron.approvals.seen", n);
-  if (newest) localStorage.setItem("excavatortron.approvals.seenAt", newest);
-  // the dismissible banner (re-appears whenever the count changes)
-  const banner = document.getElementById("approve-banner");
-  if (banner) {
-    const dkey = "excavatortron.approveBanner.dismissed";
-    const dismissedFor = localStorage.getItem(dkey);
-    if (!n || dismissedFor === String(n)) { banner.hidden = true; }
-    else {
-      const top = pend[0];
-      const pitchN = pend.filter(p => p.category === "pitch").length;
-      banner.hidden = false;
-      banner.innerHTML = `🔔 <b>${n} thing${n > 1 ? "s" : ""} need${n > 1 ? "" : "s"} your approval</b>
-        — ${esc((top.title || "").slice(0, 70))}${pitchN ? ` <span class="pill">${pitchN} pitch${pitchN > 1 ? "es" : ""}</span>` : ""}
-        <span class="ab-open"><a href="#" data-steer-review>review →</a></span>
-        <button class="ab-x" data-steer-x title="dismiss until the next one">✕</button>`;
-      banner.querySelector("[data-steer-review]").addEventListener("click", e => { e.preventDefault();
-        const p0 = pend.find(p => p.category === "pitch");
-        if (p0) openPitch(p0.id); else show("excava"); });
-      banner.querySelector("[data-steer-x]").addEventListener("click", () => { localStorage.setItem(dkey, String(n)); banner.hidden = true; });
-    }
-  }
-}
-function heraldWalkUp(item) {
-  const w = document.getElementById("walkup"); if (!w) return;
-  const isPitch = item && item.category === "pitch";
-  const dep = isPitch ? "improve" : (item && _monsterDept(item.category || "")) || "news";
-  document.getElementById("walkup-img").src = `assets/monsters/${dep}-lead.svg`;
-  document.getElementById("walkup-say").textContent = isPitch
-    ? `Pitch for you: ${(item.title || "").slice(0, 40)}` : `Needs your call: ${(item && item.title || "").slice(0, 40)}`;
-  w.hidden = false;
-  w.onclick = () => { w.hidden = true; if (isPitch) openPitch(item.id); else show("excava"); };
-  clearTimeout(w._t); w._t = setTimeout(() => { w.hidden = true; }, 9000);
-}
-function openPitch(id) {
-  const p = _pitchCache.find(x => x.id === id) || { id, what: "pitch", why: "", class: "" };
-  const modal = document.getElementById("pitch-modal"); if (!modal) return;
-  const bubble = (dep, name, eng, text) =>
-    `<div class="msg"><div class="ava has-m">${_monsterImg(dep, "lead") || "🤖"}</div>
-      <div class="bub"><div class="who">${esc(name)} <span class="eng">${esc(eng)}</span></div>${esc(text)}</div></div>`;
-  modal.hidden = false;
-  modal.innerHTML = `<div class="pitch-box">
-    <div class="ph">⚡ PITCH — ${esc(p.class || "proposal")} <button class="px" data-pitch-x>✕</button></div>
-    <div class="chat">
-      ${bubble("improve", "Ratchet", "self-improve lead", `I want to ${p.what}.`)}
-      ${bubble("improve", "Ratchet", "reasoning", p.why || "It clears a recurring problem.")}
-      ${p.conflict_note ? bubble("security", "Bastion", "checker — conflict flag", p.conflict_note) : ""}
-      ${bubble("security", "Bastion", "checker", p.conflict_note ? "Everything else checks out — just confirm the flag above before you decide." : "Reviewed — it's reversible and scoped. Your call, boss.")}
-    </div>
-    <div class="pitch-actions">
-      <a class="ok" target="_blank" href="${_exIssue("EXCAVA: approve " + p.id, "Approving pitch: " + p.what)}">✓ Approve</a>
-      <a class="no" target="_blank" href="${_exIssue("EXCAVA: decline " + p.id, "Declining pitch: " + p.what)}">✕ Decline</a>
-    </div></div>`;
-  const close = () => { modal.hidden = true; };
-  modal.querySelector("[data-pitch-x]").addEventListener("click", close);
-  modal.addEventListener("click", e => { if (e.target === modal) close(); });
-}
-
-// ── M3.13 / E7 INTERACTIVE WALKTHROUGH: navigate, highlight the new thing, let you try it ──
-let _tourTuts = [];
-async function startTour(idx) {
-  const t = _tourTuts[idx]; if (!t || !(t.interactive || []).length) return;
-  const steps = t.interactive; let i = 0;
-  let ov = document.getElementById("tour-ov");
-  if (!ov) { ov = document.createElement("div"); ov.id = "tour-ov"; ov.className = "tour-ov"; document.body.appendChild(ov); }
-  const ring = document.createElement("div"); ring.className = "tour-ring"; ov.appendChild(ring);
-  const box = document.createElement("div"); box.className = "tour-box"; ov.appendChild(box);
-  const done = () => { ov.remove(); };
-  async function go() {
-    const s = steps[i];
-    if (state.activeTab !== s.go) { await show(s.go); await new Promise(r => setTimeout(r, 550)); }
-    let el = null, tries = 0;
-    while (!el && tries < 14) { el = document.querySelector(s.look_for); if (!el) { await new Promise(r => setTimeout(r, 180)); tries++; } }
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "center" });
-      await new Promise(r => setTimeout(r, 260));
-      const r = el.getBoundingClientRect();
-      ring.style.cssText = `display:block;top:${r.top - 6}px;left:${r.left - 6}px;width:${r.width + 12}px;height:${r.height + 12}px`;
-    } else { ring.style.display = "none"; }
-    box.innerHTML = `<div class="tour-n">Stop ${i + 1} of ${steps.length} · <b>${esc(s.go)}</b></div>
-      <p>${esc(s.try)}</p>
-      <div class="tour-btns">
-        ${i > 0 ? `<button class="qr-btn" data-tprev>‹ Back</button>` : ""}
-        <button class="qr-btn" data-tskip>Exit</button>
-        <button class="qr-btn" data-tnext style="background:var(--gold);border-color:var(--gold-line)">${i < steps.length - 1 ? "Next ›" : "Done ✓"}</button>
-      </div>`;
-    box.querySelector("[data-tnext]").onclick = () => { if (i < steps.length - 1) { i++; go(); } else done(); };
-    const pv = box.querySelector("[data-tprev]"); if (pv) pv.onclick = () => { i--; go(); };
-    box.querySelector("[data-tskip]").onclick = done;
-  }
-  go();
-}
-
-// ── tab router ───────────────────────────────────────────────────────────────
+const TAB_ACCENT = { overview: "var(--gold)", videos: "var(--gold)", skills: "oklch(0.62 0.17 280)", tools: "oklch(0.66 0.18 40)", prompts: "oklch(0.68 0.17 340)", news: "oklch(0.6 0.19 25)", designs: "oklch(0.66 0.19 0)" };
+function _exIcon(label) { return ({skill:"◆",tool:"◈",model:"◇",prompt:"▤",connector:"⇄",command:"⌘"})[label] || "•"; }
 async function show(tab) {
+  if (!CORE_TABS.has(tab) && !String(tab).startsWith("element/") && !String(tab).startsWith("dyn:")) tab = "overview";
   state.activeTab = tab;
-  if (window.__graphStop) window.__graphStop();   // stop any running graph animation
-  document.querySelectorAll("nav button").forEach(b =>
-    b.classList.toggle("active", b.dataset.tab === tab));
-  view.innerHTML = empty("Loading…");
-  // M1.6: #element/<id> routes to the element detail view on top of any tab
-  if (tab && tab.startsWith("element/")) {
-    await renderElement(decodeURIComponent(tab.slice(8)));
-    renderCrew("excava");
-    return;
-  }
-  await renderTab(tab);
-  decorateCards(tab);                             // M1.8: badges + action rows on every list tab
-  // One bulleted "Updates: …" line at the very top of the tab (lists every update type).
-  const c = cadenceLine(tab);
-  if (c) view.insertAdjacentHTML("afterbegin", c);
-  // Per-tab accent: every department wears its own color (maximalist, way-finding).
-  view.style.borderTop = `5px solid ${TAB_ACCENT[tab] || "var(--gold)"}`;
-  // EXCAVA presence on every tab: the OS strip (gate lamps + what it's working on right now).
-  if (tab !== "excava") {
-    const s = await excavaStrip(tab);
-    if (s) {
-      view.insertAdjacentHTML("afterbegin", s);
-      view.querySelectorAll(".ex-strip [data-goto]").forEach(a =>
-        a.addEventListener("click", e => { e.preventDefault(); show(a.dataset.goto); }));
-    }
-  }
-  // Virtual residents on every tab (fire-and-forget; reuses cached JSON).
-  renderCrew(tab);
-  renderSteering();                                 // M3.11: keep the bell/banner current
-  // If quick-read is on, actually condense the descriptions (not just CSS-clamp them).
-  quickreadSummarize(document.body.classList.contains("quickread"));
+  if (window.__graphStop) window.__graphStop();
+  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("active", b.dataset.tab === tab));
+  view.innerHTML = empty("Loading...");
+  try {
+    if (tab.startsWith("element/")) await renderElement(decodeURIComponent(tab.slice(8)));
+    else { await renderTab(tab); await decorateCards(tab); }
+    view.style.borderTop = "5px solid " + (TAB_ACCENT[tab] || "var(--gold)");
+    quickreadSummarize(document.body.classList.contains("quickread"));
+  } catch (error) { console.error(error); view.innerHTML = empty("This view could not load. Refresh to try again."); }
 }
-
-// Designs — AI-made / open-source website+app looks, tailored to your taste, with screenshots.
-// Includes a Design ARENA (Are.na-inspired): pick what you like, and the project learns your taste.
 const _shot = (u, w = 1200) => u ? `https://s.wordpress.com/mshots/v1/${encodeURIComponent(u)}?w=${w}` : "";
 function _arena() { try { return JSON.parse(localStorage.getItem("excavatortron.arena") || "{}"); } catch { return {}; } }
 function _arenaTaste(a) {
@@ -3108,11 +2155,10 @@ async function renderPackages() {
       ${p.what ? `<p class="sub">${esc(p.what)}</p>` : ""}
       <div class="pkg-els">${chips || '<span class="sub">empty kit</span>'}</div>
       <div class="el-actions always">
-        <a target="_blank" href="${_exIssue("EXCAVA: run kit " + p.name, kitBody + "\n\nRun each element for this task.")}">▶ Run all</a>
-        <a href="#" data-pkg-runeach="${esc(p.id)}">▶ Run each</a>
+        <button class="qr-btn" data-copy="${esc(kitBody)}">Copy kit</button>
+        <a href="#" data-pkg-runeach="${esc(p.id)}">▶ Browse kit</a>
         <a href="#" data-pkg-pin="${esc(p.id)}">${p.pinned ? "📌 Unpin" : "📌 Pin"}</a>
         <a href="#" data-pkg-edit="${esc(p.id)}">✎ Edit</a>
-        <a target="_blank" href="${_exIssue("EXCAVA: save package " + p.name, kitBody)}">💾 Save to EXCAVA</a>
         ${p._local ? `<a href="#" data-pkg-del="${esc(p.id)}">🗑 Remove</a>` : ""}
       </div></div>`;
   };
@@ -3124,10 +2170,10 @@ async function renderPackages() {
         <input id="pkg-els" placeholder="element ids or names, comma-separated (e.g. tool:claude-code, firecrawl)…">
         <button class="qr-btn" id="pkg-add" style="background:var(--gold-soft);border-color:var(--gold-line)">+ assemble</button>
       </div>
-      <p class="sub">Auto-suggested + your assembles. “Run all” sends the kit to EXCAVA as one task; “Run each” opens each element. Pins float to the top. Edits live on this device; “Save to EXCAVA” persists a kit for the cloud.</p>
+      <p class="sub">Assemble, edit and pin reusable kits. Changes save on this device. Copy a kit to use it elsewhere.</p>
     </div>
     <div class="card hubapi-card"><h3>🛢 Hub-as-database <span class="sub">— M4.5: pull these packages + real elements into ANY project</span></h3>
-      <p class="sub">Excavatortron publishes a public read endpoint (refreshed every beat). Budoaris / FreeDup / any tool — or the activator offline — can GET it and pull a package or an element (each carries install + url).</p>
+      <p class="sub">Excavatortron publishes a public read endpoint (refreshed by the library pipeline). Budoaris / FreeDup / any tool — or the activator offline — can GET it and pull a package or an element (each carries install + url).</p>
       <div class="sub">Endpoint: <code id="hubapi-url">${GH_PAGES}/hub_api.json</code>
         <button class="qr-btn" data-copy="${GH_PAGES}/hub_api.json">copy</button>
         <a class="qr-btn" target="_blank" href="${GH_PAGES}/hub_api.json">open</a></div>
@@ -3185,8 +2231,8 @@ async function renderTaste() {
       <b class="tp-val">${wt[k]}</b></div>`).join("");
   view.innerHTML = `
     <div class="card" style="border-top:3px solid var(--gold)">
-      <h3>🎛 Your taste <span class="sub">— two profiles EXCAVA steers by: how designs should look, and how work should be done. Learned + editable.</span></h3>
-      <p class="sub">Design taste feeds every design + the "build" command; work taste feeds <b>HORSE</b> best-of-results merges (M4.2) and how agents execute. Edits save instantly (on this device); “Save to EXCAVA” persists them for the cloud beats too.</p>
+      <h3>🎛 Your taste <span class="sub">— your personal design and working preferences. Saved on this device.</span></h3>
+      <p class="sub">Arena votes personalize design rankings. Preferences save on this device and can be copied for use elsewhere.</p>
     </div>
     <div class="ex-grid">
       <div class="card"><h3>🎨 Design taste <span class="sub">— learned from your Arena votes, tunable here</span></h3>
@@ -3195,13 +2241,13 @@ async function renderTaste() {
           <button class="qr-btn" id="tp-addbtn">+ add</button>
           <button class="qr-btn" data-taste-reset="design">reset</button></div>
       </div>
-      <div class="card"><h3>🛠 Work taste <span class="sub">— how you want things built; feeds HORSE merges</span></h3>
+      <div class="card"><h3>🛠 Work taste <span class="sub">— how you want things built; personal preferences</span></h3>
         <div class="tp-list">${workSliders}</div>
         <div class="tp-add"><button class="qr-btn" data-taste-reset="work">reset to balanced</button></div>
       </div>
     </div>
-    <div class="card"><button class="qr-btn" id="tp-save" style="background:var(--gold-soft);border-color:var(--gold-line)">💾 Save to EXCAVA (persist for the cloud beats)</button>
-      <span class="sub" id="tp-savenote"> — writes your taste through the owner channel so HORSE + designers use it server-side.</span></div>`;
+    <div class="card"><button class="qr-btn" id="tp-save" style="background:var(--gold-soft);border-color:var(--gold-line)">Copy preferences</button>
+      <span class="sub" id="tp-savenote">Saved on this device.</span></div>`;
   // wire design-taste sliders
   view.querySelectorAll("[data-dtaste]").forEach(s => s.addEventListener("input", () => {
     const k = s.dataset.dtaste; a.styles[k] = +s.value;
@@ -3223,12 +2269,12 @@ async function renderTaste() {
     else { localStorage.removeItem("excavatortron.worktaste"); }
     renderTaste();
   }));
-  view.querySelector("#tp-save").addEventListener("click", () => {
+  view.querySelector("#tp-save").addEventListener("click", async () => {
     const body = "Design taste (style: weight):\n" +
       Object.entries(a.styles).filter(([, v]) => v > 0).map(([k, v]) => `- ${k}: ${v}`).join("\n") +
       "\n\nWork taste (dimension: 0-100):\n" + WORK_DIMS.map(([k]) => `- ${k}: ${wt[k]}`).join("\n");
-    _sendModal("EXCAVA: set taste", body);
-    view.querySelector("#tp-savenote").textContent = " — opened the save channel; approve the issue and the next beat stores it.";
+    await navigator.clipboard.writeText(body);
+    view.querySelector("#tp-savenote").textContent = "Preferences copied.";
   });
 }
 window.arenaVote = function (slug, tags) {
@@ -3408,275 +2454,6 @@ function _designHooks() {
 const AGENT_EMOJI = { transcripts: "📜", analysis: "⚙️", watch: "📺", links: "🔗", memory: "🧠",
   mining: "⛏️", visual: "🎨", news: "📰", improve: "🧬", security: "🛡️", creators: "✨",
   visualization: "🖼️", accessibility: "♿", power: "⚡", core: "🦾" };
-async function renderRooms(selId) {
-  const [rooms, reg, syschk] = await Promise.all([load("excava/rooms.json"), load("excava/agents.json"),
-    load("excava/systemcheck.json")]);
-  // P2b (owner): flag departments that only TALK — no real executor wired — honestly, in the app
-  const deptCheck = ((syschk && syschk.systems) || []).find(s => s.system === "departments executable") || {};
-  const talkOnly = new Set(deptCheck.talk_only || []);
-  const blockedD = new Set(deptCheck.blocked || []);
-  const list = ((rooms && rooms.rooms) || []).slice().reverse();
-  if (!list.length) {
-    view.innerHTML = `<div class="card"><h3>🗣 Rooms</h3><p class="sub">No conversations yet — rooms open and advance on every CI beat (the engines live in the cloud). Check back within the hour.</p></div>`;
-    return;
-  }
-  const agents = {};
-  ((reg && reg.agents) || []).forEach(a => { agents[a.id] = a; });
-  // ROOMS-AS-OS (owner 2026-07-13): two-level nav. Level 1 = pick a DEPARTMENT or 🌐 GENERAL
-  // (all inter-departmental). Level 2 (inside a department) = sub-tabs: Conversations | War rooms
-  // | Group chat. Each list is the full scrollable history of that scope. A true OS shows the
-  // inter-departmental traffic, not one flat pile.
-  const depts = [...new Set(list.filter(r => r.kind === "dept" && r.dept).map(r => r.dept))].sort();
-  const rmSub = (sc, sb) => sc === "general"
-    ? list.filter(r => r.kind === "group" || r.kind === "war")
-    : sb === "war" ? list.filter(r => r.kind === "war" && r.dept === sc)
-    : sb === "group" ? list.filter(r => r.kind === "group")
-    : list.filter(r => r.kind === "dept" && r.dept === sc);
-  const selRoom0 = selId ? list.find(r => r.id === selId) : null;
-  let scope = state.roomScope;
-  if (selRoom0) scope = selRoom0.kind === "dept" ? selRoom0.dept : (state.roomScope || "general");
-  if (!scope || (scope !== "general" && !depts.includes(scope))) scope = depts[0] || "general";
-  let sub = state.roomSub || "convos";
-  if (selRoom0 && scope !== "general") sub = selRoom0.kind === "war" ? "war"
-    : selRoom0.kind === "group" ? "group" : "convos";
-  state.roomScope = scope; state.roomSub = sub;
-  const scopeRooms = rmSub(scope, sub);
-  const sel = scopeRooms.find(r => r.id === selId) || scopeRooms.find(r => r.status === "open")
-    || scopeRooms[0] || list[0];
-  const scopeRail = depts.map(d => {
-    const flag = talkOnly.has(d) ? " 🗣" : blockedD.has(d) ? " ⛔" : "";
-    return `<button class="${d === scope ? "on" : ""}" data-scope="${esc(d)}" title="${esc(d)} department${talkOnly.has(d) ? " — talk-only (no real tool yet)" : blockedD.has(d) ? " — blocked on an owner resource" : ""}">${_exIcon(d)} <b>${esc(d.toUpperCase())}</b>${flag}</button>`;
-  }).join("") + `<button class="${scope === "general" ? "on" : ""} k-war" data-scope="general" style="background:oklch(0.92 0.06 280)" title="every inter-departmental conversation">🌐 <b>GENERAL</b> — all cross-dept</button>`;
-  const subLabels = { convos: "💬 Conversations", war: "⚔️ War rooms", group: "🏛 Group chat" };
-  const subTabs = scope === "general" ? "" : `<div class="rooms-rail" style="margin-top:6px">${
-    ["convos", "war", "group"].map(s => `<button class="${s === sub ? "on" : ""}" data-roomsub="${s}">${subLabels[s]} (${rmSub(scope, s).length})</button>`).join("")}</div>`;
-  const roomList = `<div class="rooms-rail" style="margin-top:6px;max-height:120px;overflow-y:auto">${
-    scopeRooms.length ? scopeRooms.map(r => `<button class="${r.id === sel.id ? "on" : ""}" data-room="${esc(r.id)}" title="${esc(r.goal)}">${esc(String(r.created_at || r.opened_at || "").slice(0, 10))} · ${esc((r.goal || "").slice(0, 40))}… ${r.status === "done" ? "✅" : "🟢"}</button>`).join("")
-      : `<span class="sub">No ${scope === "general" ? "inter-departmental" : subLabels[sub].replace(/^\S+\s/, "").toLowerCase()} conversations yet — they appear as beats run.</span>`}</div>`;
-  // P7 (owner pulled forward 2026-07-12): FULL per-department history — 14-day transcript
-  // window so older rooms actually load, + a history strip of the department's earlier rooms.
-  const days = [];
-  for (let i = 13; i >= 0; i--) {
-    const d = new Date(Date.now() - i * 864e5).toISOString().slice(0, 10);
-    days.push([d, await loadText(`excava/chats/${d}/${sel.id}.jsonl`)]);
-  }
-  let msgs = [];
-  const loadErrs = [];
-  days.forEach(([d, txt]) => {
-    if (txt && txt.error) { loadErrs.push(`${d}: ${txt.error}`); return; }
-    if (!txt) return;
-    msgs.push({ day: d });
-    txt.trim().split("\n").forEach(l => { try { msgs.push(JSON.parse(l)); } catch (_) {} });
-  });
-  const bubbles = msgs.map(m => {
-    if (m.day) return `<div class="day-div">— ${esc(m.day)} —</div>`;
-    const a = agents[m.agent] || {};
-    const isLead = a.role === "lead";
-    if (m.agent === "system") return `<div class="msg sys"><div class="bub">${esc(m.text)}</div></div>`;
-    const mimg = _monsterImg(a.department || "", isLead ? "lead" : "agent");
-    return `<div class="msg ${isLead ? "lead" : ""}">
-      <div class="ava ${mimg ? "has-m" : ""}" title="${esc(a.persona || m.agent)}">${mimg || (AGENT_EMOJI[a.department || "core"] || "🤖") + (isLead ? "👔" : "")}</div>
-      <div class="bub"><div class="who">${esc(m.name || m.agent)} <span class="eng">${esc(_engFriendly(m.engine))}${m.ms ? " · " + m.ms + "ms" : ""}</span></div>${humanizeHTML(m.text)}</div>
-    </div>`;
-  }).join("") || (loadErrs.length
-    ? `<p class="sub" style="color:#e08f8f">⚠️ <b>The transcript could not be loaded</b> — this room is
-       almost certainly NOT silent. ${loadErrs.length} of ${days.length} days failed to fetch
-       (${esc(loadErrs.slice(0, 3).join(" · "))}${loadErrs.length > 3 ? " …" : ""}).
-       The transcripts live at <code>data/excava/chats/&lt;day&gt;/${esc(sel.id)}.jsonl</code> in the repo.
-       Open one directly to confirm whether the site is serving them.</p>`
-    : `<p class="sub">This room hasn't spoken yet — it advances on the next CI beat (engines live in the cloud).</p>`);
-  // M3.7: the artifact appears INLINE in the making-chat, not just in the meta line
-  const artInline = sel.artifact ? `<div class="msg sys artifact"><div class="bub">📦 <b>ARTIFACT</b> —
-      this room produced a <b>${esc(sel.artifact.kind || sel.artifact_kind || "artifact")}</b>:
-      ${esc(String(sel.artifact.ref || sel.artifact.id || ""))}
-      · <a href="#" data-open-results>see it in 📦 Results</a></div></div>` : "";
-  // DID THE DEBATE ACTUALLY HAPPEN? (added 2026-08-01 after finding that 70 of 83 rooms ran
-  // with NO challenge turn: the lead's converge window ate the whole room, so the doer proposed
-  // and the lead agreed with nobody pushing back — the correlated-error failure the plan bans.
-  // Fixed in excava_chat._speaker; this is the READ side, so a rubber-stamp room is visible.)
-  const spokeRoles = new Set(msgs.filter(m => m.agent && m.agent !== "system")
-    .map(m => (agents[m.agent] || {}).role).filter(Boolean));
-  const challenged = spokeRoles.has("checker") || spokeRoles.has("improver");
-  const debateBadge = msgs.some(m => m.agent && m.agent !== "system")
-    ? (challenged
-        ? `<span class="pill" style="background:#1d3b23;color:#8fe0a4" title="A checker or improver pushed back before the lead converged — this was a real debate.">⚖️ challenged: ${[...spokeRoles].join(" → ")}</span>`
-        : `<span class="pill" style="background:#3b1d1d;color:#e08f8f" title="No checker or improver spoke: the doer proposed and the lead agreed. Correlated-error risk — the plan bans this shape.">⚠️ NO challenge (${[...spokeRoles].join(" → ") || "?"})</span>`)
-    : "";
-  const inner = `
-    <div class="room-meta"><span class="pill">${esc(sel.kind)}</span>
-      <span>goal: <b>${esc(sel.goal)}</b></span><span>turns ${sel.turns}/${sel.max_turns}</span>
-      <span>${sel.status === "done" ? "✅ closed" : "🟢 live"}</span>
-      ${debateBadge}
-      ${sel.last_turn_ms ? `<span>last turn ${sel.last_turn_ms}ms</span>` : ""}
-      ${sel.artifact ? `<span>📦 artifact: <b>${esc(sel.artifact.kind)}</b> → ${esc(String(sel.artifact.ref || sel.artifact.id || ""))}</span>` : ""}</div>
-    <div class="chat">${bubbles}${artInline}</div>`;
-  // AGENT-PLATFORM LAYER 2: the visible track record — judge which agents earn trust
-  const arecs = await load("excava/agent_records.json");
-  const allRecs = (arecs && arecs.agents) || [];
-  const actives = allRecs.filter(a => a.turns_7d > 0).slice(0, 12);
-  // IDLE agents were being filtered out entirely (turns_7d > 0), so the roster LOOKED fully
-  // staffed while some agents had never opened their mouths. That is display-over-reality (P4)
-  // and it is what the Agent class's roster census exposed from the terminal: 46 named, 40 who
-  // have actually spoken. Showing the idle ones is the honest version — an agent nobody
-  // dispatches is a question, not a decoration.
-  const idle = allRecs.filter(a => !a.turns_7d);
-  const idleLine = idle.length ? `<p class="sub" style="margin-top:6px;color:#e0a87f">
-      😴 <b>${idle.length} of ${allRecs.length}</b> named agents did NO work this window:
-      ${idle.map(a => `<b title="${esc((a.department || "") + " · " + (a.role || ""))}">${esc(a.name)}</b>`).join(" · ")}
-      — they exist in the roster and are scoped to real tools, but nothing dispatched them.
-      Mostly checkers and improvers, which is why the conversation fix mattered.</p>` : "";
-  const agentsCard = actives.length ? `
-    <div class="card"><h3>👥 Agents — track record <span class="sub">— ${esc(arecs.window || "7 days")}: who actually works, on which brains, holding what positions (accountability, study §6)</span></h3>
-      <table class="pv-table"><thead><tr><th>agent</th><th>dept · role</th><th>turns</th><th>rooms</th><th>brains used</th><th>latest held position</th></tr></thead>
-      <tbody>${actives.map(a => `<tr>
-        <td><b>${esc(a.name)}</b></td><td>${esc(a.dept)} · ${esc(a.role)}</td>
-        <td>${esc(a.turns_7d)}</td><td>${esc(a.rooms_7d)}</td>
-        <td>${esc((a.engines_used || []).length)} <span class="sub">(${esc((a.engines_used || []).join(", "))})</span></td>
-        <td class="sub">${esc(a.last_position || "— memory starts accumulating from the next beats")}</td></tr>`).join("")}
-      </tbody></table>${idleLine}
-      <p class="sub">${esc((arecs && arecs.note) || "")}</p></div>` : "";
-  view.innerHTML = `
-    <div class="card"><h3>🗣 Rooms — the OS's conversations <span class="sub">— pick a department or 🌐 GENERAL (all inter-departmental). Inside a department: Conversations, War rooms, and Group chat — each fully scrollable.</span></h3>
-      <div class="rooms-rail">${scopeRail}</div>
-      ${subTabs}
-      ${roomList}
-      <div style="margin-top:8px">${sel && sel.kind === "war" ? `<div class="warroom"><div class="wr-head">⚔️ WAR ROOM — round table</div>${inner}</div>` : inner}</div>
-    </div>${agentsCard}`;
-  view.querySelectorAll("[data-scope]").forEach(b =>
-    b.addEventListener("click", () => { state.roomScope = b.dataset.scope; state.roomSub = "convos"; renderRooms(); }));
-  view.querySelectorAll("[data-roomsub]").forEach(b =>
-    b.addEventListener("click", () => { state.roomSub = b.dataset.roomsub; renderRooms(); }));
-  view.querySelectorAll("[data-room]").forEach(b =>
-    b.addEventListener("click", () => renderRooms(b.dataset.room)));
-  view.querySelectorAll("[data-open-results]").forEach(a =>
-    a.addEventListener("click", e => { e.preventDefault(); show("results"); }));
-}
-
-// ── M3.7 RESULTS FEED: everything EXCAVA produced — attributed, filterable, openable ──
-async function _resultItems() {
-  const [rooms, made, ex, horse] = await Promise.all([load("excava/rooms.json"),
-    load("created_by_excava.json"), load("excava_status.json"), load("horse_runs.json")]);
-  const items = [];
-  // M4.2: HORSE merged artifacts — 10 executions merged best-of to your work-taste
-  ((horse && horse.runs) || []).forEach(h => items.push({
-    at: h.at, dept: "core", agent: "HORSE ×" + (h.runners || 10),
-    kind: "HORSE merge", title: h.goal,
-    preview: `10 runners executed this; the best merged to your work-taste (winner #${(h.winner_idx || 0) + 1}, via ${h.engine || "?"})`,
-    ref: h.file, open: h.file ? `${GH_REPO}/blob/main/${h.file}` : null }));
-  ((rooms && rooms.rooms) || []).forEach(r => { if (r.artifact) items.push({
-    at: r.artifact.at || r.created_at, dept: r.dept || "core", agent: r.id,
-    kind: r.artifact.kind || r.artifact_kind || "artifact", title: r.goal,
-    preview: `the room converged after ${r.turns} turns and produced this`,
-    ref: String(r.artifact.ref || r.artifact.id || ""),
-    open: r.artifact.ref ? `${GH_REPO}/blob/main/${r.artifact.ref}` : null, room: r.id }); });
-  ((made && made.creations) || []).forEach(c => items.push({
-    at: c.created_at, dept: "creators", agent: c.created_by || "EXCAVA",
-    kind: c.type || "creation", title: c.name, preview: c.what || "", ref: c.name,
-    open: null, useBody: c.how_to_use || "" }));
-  (((ex || {}).os || {}).recent_events || []).filter(e => e.kind === "handoff" && e.doc)
-    .forEach(e => items.push({
-      at: e.at, dept: e.department || "core", agent: e.by || "worker", kind: "hand-off",
-      title: String(e.doc).split("/").pop().replace(/\.md$/, ""), preview: e.why || e.what || "",
-      ref: e.doc, open: `${GH_REPO}/blob/main/${e.doc}` }));
-  return items.filter(x => x.at).sort((a, b) => String(b.at).localeCompare(String(a.at)));
-}
-function _resultCard(x) {
-  return `<div class="card result-card">
-    <h3>${esc(x.title)} <span class="pill">${esc(x.kind)}</span>
-      <span class="mentions" title="produced by the ${esc(x.dept)} department">${_exIcon(x.dept)} <b>${esc((x.dept || "").toUpperCase())}</b> department</span></h3>
-    ${x.preview ? `<p class="sub">${esc(String(x.preview).slice(0, 220))}</p>` : ""}
-    <div class="el-actions always">
-      ${x.ref && String(x.ref).endsWith(".md") ? `<button data-open-artifact="${esc(x.ref)}" data-title="${esc(x.title)}">📖 Open here</button>`
-        : x.open ? `<a target="_blank" href="${esc(x.open)}" title="opens the raw file on GitHub">↗ Open (GitHub)</a>` : ""}
-      <a target="_blank" href="${_exIssue("EXCAVA: use " + x.title, x.useBody || x.ref || "")}">🦾 Use</a>
-      ${x.room ? `<a href="#" data-goto-room="${esc(x.room)}">🗣 The making-of chat</a>` : ""}
-    </div>
-    <p class="sub" style="margin-top:6px">${esc(fmtDate(x.at))}</p>
-  </div>`;
-}
-// ── 🧾 PROOF: read the proof IN THE APP (owner: 'I shouldn't have to open GitHub') ──
-function renderProof(p) {
-  if (!p || !p.departments) {
-    view.innerHTML = `<div class="card"><h3>🧾 Proof</h3><p class="sub">No proof file yet — it's written every beat (within ~10 min). It shows what each department actually did, honestly.</p></div>`;
-    return;
-  }
-  const gh = p.gh || "";
-  const vclass = v => v === "real" ? "pv-real" : v === "noop" ? "pv-noop" : v === "blocked" ? "pv-block" : v === "failed" ? "pv-fail" : "pv-plan";
-  const vlabel = { real: "✓ REAL work", noop: "⚠ ran, did nothing", planned: "✕ only a plan", failed: "✕ failed", blocked: "⛔ needs YOU" };
-  const dsum = Object.entries(p.delta || {}).map(([k, v]) => `${k} ${v >= 0 ? "+" : ""}${v}`).join(" · ");
-  const rows = p.departments.map(d => `<tr class="${vclass(d.verdict)}">
-      <td><b>${esc((d.dept || "").toUpperCase())}</b></td>
-      <td><span class="pv-badge ${vclass(d.verdict)}">${vlabel[d.verdict] || d.verdict}</span></td>
-      <td class="pv-out">${humanizeHTML(d.output || "")}</td>
-      <td>${d.evidence ? `<button class="qr-btn" data-open-artifact="${esc(d.evidence)}" data-title="${esc((d.dept || "").toUpperCase())} — the real file">see the file</button>`
-        : d.evidence_url ? `<a target="_blank" href="${esc(d.evidence_url)}">see the file ↗</a>` : "—"}</td>
-    </tr>`).join("");
-  view.innerHTML = `
-    <div class="card" style="border-top:3px solid oklch(0.62 0.16 148)">
-      <h3>🧾 Proof <span class="sub">— what EXCAVA actually did, honestly. Don't trust the words — the links go to the real files.</span></h3>
-      <div class="pv-summary">
-        <span class="pv-big">${p.real_pct != null ? p.real_pct + "%" : "?"}</span> of the last checks did <b>REAL</b> work
-        <span class="sub">· ${esc(Object.entries(p.counts || {}).map(([k, v]) => v + " " + ({ real: "did real work", noop: "ran but changed nothing", planned: "only planned", failed: "failed", blocked: "need you" }[k] || k)).join(", ") || "no checks yet")} · updated ${esc(fmtDate(p.generated_at))}</span>
-        ${dsum ? `<div class="sub" style="margin-top:4px">Change since last beat: <b>${esc(dsum)}</b></div>` : ""}
-        ${p.totals ? `<div class="sub">Totals now: ${p.totals.elements} tools/skills · ${p.totals.verified} verified · ${p.totals.with_link} with a real link · ${p.totals.designs} designs · ${p.totals.creations} creations</div>` : ""}
-      </div>
-      <table class="pv-table"><thead><tr><th>department</th><th>did it work?</th><th>what it actually produced</th><th>proof</th></tr></thead>
-        <tbody>${rows}</tbody></table>
-      <p class="sub" style="margin-top:8px">Read the agents' real conversations:
-        <a href="#" data-goto-tab="rooms">🗣 open Rooms</a> ·
-        <a target="_blank" href="${gh}/tree/main/data/excava/chats">raw transcripts ↗</a> ·
-        <a target="_blank" href="${gh}/actions/workflows/excava_beat.yml">every run's log ↗</a></p>
-    </div>`;
-  view.querySelectorAll("[data-goto-tab]").forEach(a =>
-    a.addEventListener("click", e => { e.preventDefault(); show(a.dataset.gotoTab); }));
-  view.querySelectorAll("[data-open-artifact]").forEach(b => b.addEventListener("click", () =>
-    _openArtifact(b.dataset.openArtifact, b.dataset.title)));   // proof files open IN-APP, not GitHub
-}
-async function renderResults() {
-  const items = await _resultItems();
-  localStorage.setItem("excavatortron.results.seen", new Date().toISOString());
-  const navBtn = document.querySelector('nav [data-tab="results"]');
-  if (navBtn) navBtn.innerHTML = "📦 Results";
-  const day = state.resDay || "", dept = state.resDept || "", agent = state.resAgent || "";
-  const days = [...new Set(items.map(x => String(x.at).slice(0, 10)))].slice(0, 7);
-  const depts = [...new Set(items.map(x => x.dept))];
-  const agents = [...new Set(items.map(x => x.agent))].slice(0, 12);
-  // DEPARTMENT-FIRST (owner: 'organized by department — click one, see everything it created')
-  const byDept = {};
-  items.forEach(x => { (byDept[x.dept || "core"] = byDept[x.dept || "core"] || []).push(x); });
-  if (!dept) {                                        // overview: one card per department
-    const cards = Object.keys(byDept).sort().map(d => `
-      <div class="card dept-card" data-open-dept="${esc(d)}" style="cursor:pointer;border-left:4px solid var(--gold-line)">
-        <h3>${_exIcon(d)} ${esc((d || "").toUpperCase())} department <span class="pill">${byDept[d].length} produced</span></h3>
-        <p class="sub">Most recent: ${esc(String((byDept[d][0] || {}).title || "").slice(0, 90))}</p>
-        <p class="sub" style="color:var(--gold-ink)">Click to see everything the ${esc(d)} department created →</p>
-      </div>`).join("");
-    view.innerHTML = `<div class="card"><h3>📦 Results — by department <span class="sub">everything EXCAVA produced, grouped by which department made it. Click a department.</span></h3></div>${cards || empty("No results yet — departments produce artifacts as they work; check back after a beat.")}`;
-    view.querySelectorAll("[data-open-dept]").forEach(c =>
-      c.addEventListener("click", () => { state.resDept = c.dataset.openDept; renderResults(); }));
-    return;
-  }
-  const f = byDept[dept] || [];                        // one department opened: everything it made
-  view.innerHTML = `<div class="card"><h3>${_exIcon(dept)} ${esc((dept || "").toUpperCase())} department <span class="sub">— everything it created (${f.length})</span>
-      <button class="qr-btn" id="res-back" style="margin-left:10px">← all departments</button></h3></div>
-    ${f.length ? f.map(_resultCard).join("") : empty("This department hasn't produced anything yet.")}`;
-  const back = view.querySelector("#res-back");
-  if (back) back.addEventListener("click", () => { state.resDept = ""; renderResults(); });
-  view.querySelectorAll("[data-open-artifact]").forEach(b => b.addEventListener("click", () =>
-    _openArtifact(b.dataset.openArtifact, b.dataset.title)));
-  view.querySelectorAll("[data-goto-room]").forEach(a => a.addEventListener("click", e => {
-    e.preventDefault(); show("rooms").then(() => renderRooms(a.dataset.gotoRoom));
-  }));
-}
-async function resultsBadge() {                       // M3.7: the "new" count on the tab
-  try {
-    const seen = localStorage.getItem("excavatortron.results.seen") || "1970";
-    const n = (await _resultItems()).filter(x => String(x.at) > seen).length;
-    const navBtn = document.querySelector('nav [data-tab="results"]');
-    if (navBtn && n) navBtn.innerHTML = `📦 Results <span class="nav-new">${n}</span>`;
-  } catch (_) {}
-}
-
 async function libraryCountBadges() {         // fire-146-suggestion 3693c44f40: catalog scale at a glance
   try {
     const [skills, tools, connectors] = await Promise.all(
@@ -3703,11 +2480,9 @@ async function libraryCountBadges() {         // fire-146-suggestion 3693c44f40:
 }
 
 async function renderTab(tab) {
-  if (tab === "excava") return renderExcava();
+  if (tab === "overview") return renderOverview();
+  if (tab === "videos") return renderVideos();
   if (tab === "hub") return renderHub();
-  if (tab === "rooms") return renderRooms();
-  if (tab === "proof") return renderProof(await load("excava/proof.json"));
-  if (tab === "results") return renderResults();
   if (tab === "packages") return renderPackages();
   if (tab === "taste") return renderTaste();
   if (tab === "skills") return renderSkills(await load("skills.json"));
@@ -3742,7 +2517,7 @@ async function renderTab(tab) {
 window.addEventListener("hashchange", () => {
   const h = decodeURIComponent(location.hash.slice(1) || "");
   if (h.startsWith("element/")) show(h);
-  else if (!h && state.activeTab && String(state.activeTab).startsWith("element/")) show("excava");
+  else if (!h && state.activeTab && String(state.activeTab).startsWith("element/")) show("overview");
 });
 document.querySelectorAll("nav button").forEach(b => {
   b.addEventListener("click", () => show(b.dataset.tab));
@@ -3751,9 +2526,7 @@ document.querySelectorAll("nav button").forEach(b => {
 });
 
 (async () => {
-  resultsBadge();                                     // M3.7: fire-and-forget "new results" count
   libraryCountBadges();                               // catalog scale at a glance before clicking a tab
-  renderSteering();                                   // M3.11: bell + banner + walk-up on new approvals
   const [status, stars, extra, config, health] = await Promise.all([
     load("status.json"), load("stars.json"), load("extra_tabs.json"), loadRoot("config.json"),
     load("health.json")]);
@@ -3808,5 +2581,5 @@ document.querySelectorAll("nav button").forEach(b => {
     else done(false);
   });
 
-  show("excava");
+  show("overview");
 })();

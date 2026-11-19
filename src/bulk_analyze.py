@@ -467,6 +467,13 @@ def main() -> int:
             npr += merge_prompts(prompts, result.get("prompts"), vid)
             nc += merge_connectors(connectors, result.get("connectors"), vid)
         seen.add(vid)
+        # Record analysis evidence separately from retrieval, preserving the source transcript.
+        rec["analysis"] = {
+            "status": "complete", "method": "transcript",
+            "analyzed_at": datetime.now(timezone.utc).isoformat(),
+            "engine": eng["name"], "model": eng["model"],
+            "relevant": result.get("relevant") is not False,
+        }
         PROCESSED.mkdir(parents=True, exist_ok=True)
         (PROCESSED / f"{vid}.json").write_text(json.dumps(rec, ensure_ascii=False, indent=2), encoding="utf-8")
         f.unlink(missing_ok=True)

@@ -9,10 +9,10 @@
 //
 // Bump SHELL_CACHE to force the shell to refresh (after changing index.html/dashboard.js).
 // DATA_CACHE version is independent; bump it to purge old data caches.
-const SHELL_CACHE = "ai-skills-shell-v136";
+const SHELL_CACHE = "ai-skills-shell-v137-core";
 const DATA_CACHE  = "ai-skills-data-v1";
 const SHELL = [
-  "./", "./index.html", "./dashboard.js", "./floor/floor.js", "./manifest.webmanifest", "./icon.png",
+  "./", "./index.html", "./dashboard.js", "./video-library.js", "./design/tokens.css", "./manifest.webmanifest", "./icon.png",
 ];
 
 // ── install: pre-cache the app shell ──────────────────────────────────────────

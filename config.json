@@ -1,6 +1,9 @@
 {
   "playlist_id": "PLxtsVIUtYhNo6pY9FrVqVe2xh---Y8rxB",
-  "transcript_languages": ["en", "he"],
+  "transcript_languages": [
+    "en",
+    "he"
+  ],
   "output_language": "en",
   "timezone": "America/New_York",
   "first_run_process_all": true,
@@ -23,11 +26,32 @@
     "note": "Roundup/listicle videos ('top 20 AI tools', '100 GitHub repos') name MANY tools — extract EVERY distinct one (from the transcript AND from followed links / awesome-list repos), not just a handful. Caps raised so a link-rich video isn't truncated. Target breadth is hundreds of tools, not dozens.",
     "follow_for_low_quality_videos": true,
     "denylist_domains": [
-      "youtube.com", "youtu.be", "twitter.com", "x.com", "instagram.com",
-      "facebook.com", "fb.com", "tiktok.com", "patreon.com", "discord.gg",
-      "discord.com", "t.me", "linktr.ee", "bit.ly", "amzn.to", "amazon.com",
-      "gumroad.com", "buymeacoffee.com", "ko-fi.com", "paypal.com", "twitch.tv",
-      "reddit.com", "linkedin.com", "spotify.com", "apple.co", "threads.net"
+      "youtube.com",
+      "youtu.be",
+      "twitter.com",
+      "x.com",
+      "instagram.com",
+      "facebook.com",
+      "fb.com",
+      "tiktok.com",
+      "patreon.com",
+      "discord.gg",
+      "discord.com",
+      "t.me",
+      "linktr.ee",
+      "bit.ly",
+      "amzn.to",
+      "amazon.com",
+      "gumroad.com",
+      "buymeacoffee.com",
+      "ko-fi.com",
+      "paypal.com",
+      "twitch.tv",
+      "reddit.com",
+      "linkedin.com",
+      "spotify.com",
+      "apple.co",
+      "threads.net"
     ]
   },
   "rank_all_models": true,
@@ -38,13 +62,30 @@
   },
   "other_tool_folder_pattern": "{tool} skills of eitan",
   "categories": [
-    "design", "code", "automation", "agents", "image creation",
-    "video creation", "writing", "marketing", "social", "music",
-    "integration", "research", "productivity", "other"
+    "design",
+    "code",
+    "automation",
+    "agents",
+    "image creation",
+    "video creation",
+    "writing",
+    "marketing",
+    "social",
+    "music",
+    "integration",
+    "research",
+    "productivity",
+    "other"
   ],
   "general_tip_topics": [
-    "prompt engineering", "automation", "agents", "code",
-    "parallel tasks", "self-improving systems", "harness code", "productivity"
+    "prompt engineering",
+    "automation",
+    "agents",
+    "code",
+    "parallel tasks",
+    "self-improving systems",
+    "harness code",
+    "productivity"
   ],
   "self_improvement": {
     "enabled": true,
@@ -69,7 +110,11 @@
       "improve_existing_skills": true
     },
     "north_star": "A huge, machine-readable hub of ALL AI knowledge for Eitan AND for future systems — and use that knowledge to improve existing skills, integrate new parts, and test better versions.",
-    "priorities_top3": ["extraction_effectiveness", "professional_design", "use_info_to_improve_skills"],
+    "priorities_top3": [
+      "extraction_effectiveness",
+      "professional_design",
+      "use_info_to_improve_skills"
+    ],
     "effectiveness": {
       "file": "data/effectiveness.json",
       "regenerate": "python -m src.effectiveness",
@@ -83,18 +128,48 @@
     "security_and_privacy": {
       "enabled": true,
       "note": "Every run, scan for NEW security/data-privacy risks introduced by new info or features — the attack surface grows as the project does. Open improvement_tasks for anything found.",
-      "checks": ["no secrets in code/commits/logs", "workflow permissions least-privilege", "@claude is author-gated on the public repo", "third-party data flows carry only PUBLIC data (no PII)", "no personal data stored or exposed", "action/dependency pins are safe"]
+      "checks": [
+        "no secrets in code/commits/logs",
+        "workflow permissions least-privilege",
+        "@claude is author-gated on the public repo",
+        "third-party data flows carry only PUBLIC data (no PII)",
+        "no personal data stored or exposed",
+        "action/dependency pins are safe"
+      ]
     },
     "improve_existing_skills": {
       "enabled": true,
       "note": "Use newly extracted AI info to UPGRADE existing skills (newer model versions, new integrations, deprecations), integrate new parts, and flag better tool versions — the hub must self-refresh, not just accrete."
     },
-    "safe_auto": ["schema_repair", "orphan_cleanup", "fill_missing_summaries", "exact_duplicate_merge", "cross_tab_consistency", "build_index", "health_report"],
-    "suggest_only": ["fuzzy_duplicate_merge", "rescore_outliers", "recategorize", "ui_changes", "star_suggestions", "drop_dead_feed"],
-    "caps": { "max_merges_per_run": 20, "max_deletes_per_run": 20, "max_rescores_per_run": 30, "max_ui_changes_per_week": 1, "max_new_tabs_per_week": 1 },
+    "safe_auto": [
+      "schema_repair",
+      "orphan_cleanup",
+      "fill_missing_summaries",
+      "exact_duplicate_merge",
+      "cross_tab_consistency",
+      "build_index",
+      "health_report"
+    ],
+    "suggest_only": [
+      "fuzzy_duplicate_merge",
+      "rescore_outliers",
+      "recategorize",
+      "ui_changes",
+      "star_suggestions",
+      "drop_dead_feed"
+    ],
+    "caps": {
+      "max_merges_per_run": 20,
+      "max_deletes_per_run": 20,
+      "max_rescores_per_run": 30,
+      "max_ui_changes_per_week": 1,
+      "max_new_tabs_per_week": 1
+    },
     "token_budget_per_run": 200000,
     "ux_review_min_interval_days": 7,
-    "feed_health": { "fail_streak_threshold": 5 },
+    "feed_health": {
+      "fail_streak_threshold": 5
+    },
     "stars": {
       "max_total": 10,
       "max_suggestions_per_run": 1,
@@ -112,7 +187,16 @@
       "max_total_active": 6,
       "new_badge_days": 7,
       "candidates_file": "data/tab_candidates.json",
-      "reserved_tab_ids": ["skills", "tools", "models", "improvement", "tips", "news", "connectors", "selfimprove"]
+      "reserved_tab_ids": [
+        "skills",
+        "tools",
+        "models",
+        "improvement",
+        "tips",
+        "news",
+        "connectors",
+        "selfimprove"
+      ]
     }
   },
   "reference_self_check": {
@@ -125,28 +209,69 @@
   },
   "skills_folder_learning": {
     "enabled": true,
-    "read_paths": ["./skills", "./other-skills"],
+    "read_paths": [
+      "./skills",
+      "./other-skills"
+    ],
     "purpose": "Learn extraction + design improvements from the curated SKILL.md packages and the reference spec."
   },
   "review": {
     "enabled": true,
-    "dimensions": ["usability", "professional_design", "security_and_privacy", "cut_the_bullshit", "deep_code_bugs"],
+    "dimensions": [
+      "usability",
+      "professional_design",
+      "security_and_privacy",
+      "cut_the_bullshit",
+      "deep_code_bugs"
+    ],
     "claude_first_then_external": true,
     "usability": {
       "benchmark_competitors": true,
       "competitor_landscape_note": "Benchmark broadly against the ~300-competitor landscape across these CATEGORIES (the named items below are representative anchors per category, not the whole set): AI tool directories, AI news sites, AI newsletters/aggregators, information-center / knowledge-base apps, and developer reference hubs. Each cycle, study what the best in EACH category do for VISIBILITY — scannable hierarchy, search & filters, trending/'what's new' surfacing, category navigation, counts & freshness stamps, podium/ranking, tags, dark mode, fast mobile reading — and propose a concrete change that makes Excavatortron match or beat them.",
       "competitors": [
-        "Future Tools", "There's An AI For That", "Toolify", "Product Hunt (AI)", "Futurepedia",
-        "AI Tools Directory", "TopAI.tools", "Insidr AI", "SaaS AI Tools", "AI Scout",
-        "Hugging Face (Models/Spaces)", "Papers with Code", "Replicate Explore", "GitHub Trending (AI)",
-        "The Batch (DeepLearning.AI)", "Ben's Bites", "TLDR AI", "Last Week in AI", "Import AI", "The Rundown AI",
-        "Latent Space", "Interconnects", "Simon Willison's blog", "Hacker News", "r/LocalLLaMA",
-        "Yahoo News", "Google News", "TechCrunch AI", "The Verge AI", "VentureBeat AI", "MIT Tech Review",
-        "Notion (info hub)", "Obsidian Publish", "Perplexity", "Wikipedia", "DevDocs"
+        "Future Tools",
+        "There's An AI For That",
+        "Toolify",
+        "Product Hunt (AI)",
+        "Futurepedia",
+        "AI Tools Directory",
+        "TopAI.tools",
+        "Insidr AI",
+        "SaaS AI Tools",
+        "AI Scout",
+        "Hugging Face (Models/Spaces)",
+        "Papers with Code",
+        "Replicate Explore",
+        "GitHub Trending (AI)",
+        "The Batch (DeepLearning.AI)",
+        "Ben's Bites",
+        "TLDR AI",
+        "Last Week in AI",
+        "Import AI",
+        "The Rundown AI",
+        "Latent Space",
+        "Interconnects",
+        "Simon Willison's blog",
+        "Hacker News",
+        "r/LocalLLaMA",
+        "Yahoo News",
+        "Google News",
+        "TechCrunch AI",
+        "The Verge AI",
+        "VentureBeat AI",
+        "MIT Tech Review",
+        "Notion (info hub)",
+        "Obsidian Publish",
+        "Perplexity",
+        "Wikipedia",
+        "DevDocs"
       ],
       "readability_scope": "all_tabs",
       "maintain_quick_read_mode": true,
-      "readability_benchmarks": ["Yahoo", "popular news portals"],
+      "readability_benchmarks": [
+        "Yahoo",
+        "popular news portals"
+      ],
       "note": "Readability is judged on EVERY tab (not just News): scannable hierarchy, generous spacing, clear labels, fast skimming like a news portal. Keep the header Quick-read toggle working across all tabs, and propose readability improvements for any tab that falls short."
     },
     "external_engine": {
@@ -167,8 +292,15 @@
       "israel_local_time": "02:00",
       "note": "Weekly deep pass at night Israel time: improve.yml at Sat 20:00 UTC (lead-in), review.yml at Sat 23:00 UTC (= Sun ~02:00 Israel). First-week intensive adds nightly runs; both share the data/review_state.json anchor."
     },
-    "first_week": { "enabled": true, "started_at": null, "intensive_cadence_hours": 24 },
-    "throughput_target": { "videos": 100, "within_hours": 48 },
+    "first_week": {
+      "enabled": true,
+      "started_at": null,
+      "intensive_cadence_hours": 24
+    },
+    "throughput_target": {
+      "videos": 100,
+      "within_hours": 48
+    },
     "night_window": {
       "enabled": true,
       "tz": "Asia/Jerusalem",
@@ -210,27 +342,137 @@
     "base_url": "",
     "require_transcript": true,
     "engines": [
-      {"name": "gpt-4.1-mini (github-models)", "provider": "openai_compatible", "base_url": "https://models.github.ai/inference", "model": "openai/gpt-4.1-mini", "secret_name": "GH_MODELS_TOKEN"},
-      {"name": "deepseek-v3 (openrouter)", "provider": "openai_compatible", "base_url": "https://openrouter.ai/api/v1", "model": "deepseek/deepseek-chat-v3-0324:free", "secret_name": "OPENROUTER_API_KEY"},
-      {"name": "llama3.3-70b (cerebras)", "provider": "openai_compatible", "base_url": "https://api.cerebras.ai/v1", "model": "llama3.3-70b", "secret_name": "CEREBRAS_API_KEY"},
-      {"name": "llama-3.3-70b (groq)", "provider": "openai_compatible", "base_url": "https://api.groq.com/openai/v1", "model": "llama-3.3-70b-versatile", "secret_name": "GROQ_API_KEY"},
-      {"name": "gemini-2.5-flash", "provider": "gemini", "base_url": "", "model": "gemini-2.5-flash", "secret_name": "EXTERNAL_REVIEW_API_KEY"},
-      {"name": "gemini-2.5-flash (key2)", "provider": "gemini", "base_url": "", "model": "gemini-2.5-flash", "secret_name": "GEMINI_API_KEY_2"},
-      {"name": "gemini-2.5-flash (key3)", "provider": "gemini", "base_url": "", "model": "gemini-2.5-flash", "secret_name": "GEMINI_API_KEY_3"},
-      {"name": "gemini-2.5-flash (key1b)", "provider": "gemini", "base_url": "", "model": "gemini-2.5-flash", "secret_name": "GEMINI_API_KEY"},
-      {"name": "gemini-2.5-flash (key4)", "provider": "gemini", "base_url": "", "model": "gemini-2.5-flash", "secret_name": "GEMINI_API_KEY_4"},
-      {"name": "gemini-2.5-flash (key5)", "provider": "gemini", "base_url": "", "model": "gemini-2.5-flash", "secret_name": "GEMINI_API_KEY_5"},
-      {"name": "gemini-2.5-flash (key6)", "provider": "gemini", "base_url": "", "model": "gemini-2.5-flash", "secret_name": "GEMINI_API_KEY_6"},
-      {"name": "llama-3.3-70b (groq2)", "provider": "openai_compatible", "base_url": "https://api.groq.com/openai/v1", "model": "llama-3.3-70b-versatile", "secret_name": "GROQ_API_KEY_2"},
-      {"name": "llama3.3-70b (cerebras2)", "provider": "openai_compatible", "base_url": "https://api.cerebras.ai/v1", "model": "llama3.3-70b", "secret_name": "CEREBRAS_API_KEY_2"},
-      {"name": "llama-3.3-70b (nvidia-nim)", "provider": "openai_compatible", "base_url": "https://integrate.api.nvidia.com/v1", "model": "meta/llama-3.3-70b-instruct", "secret_name": "NVIDIA_API_KEY"},
-      {"name": "llama-3.3-70b (sambanova)", "provider": "openai_compatible", "base_url": "https://api.sambanova.ai/v1", "model": "Meta-Llama-3.3-70B-Instruct", "secret_name": "SAMBANOVA_API_KEY"},
-      {"name": "mistral-small (mistral)", "provider": "openai_compatible", "base_url": "https://api.mistral.ai/v1", "model": "mistral-small-latest", "secret_name": "MISTRAL_API_KEY"}
+      {
+        "name": "gpt-4.1-mini (github-models)",
+        "provider": "openai_compatible",
+        "base_url": "https://models.github.ai/inference",
+        "model": "openai/gpt-4.1-mini",
+        "secret_name": "GH_MODELS_TOKEN"
+      },
+      {
+        "name": "deepseek-v3 (openrouter)",
+        "provider": "openai_compatible",
+        "base_url": "https://openrouter.ai/api/v1",
+        "model": "deepseek/deepseek-chat-v3-0324:free",
+        "secret_name": "OPENROUTER_API_KEY"
+      },
+      {
+        "name": "llama3.3-70b (cerebras)",
+        "provider": "openai_compatible",
+        "base_url": "https://api.cerebras.ai/v1",
+        "model": "llama3.3-70b",
+        "secret_name": "CEREBRAS_API_KEY"
+      },
+      {
+        "name": "llama-3.3-70b (groq)",
+        "provider": "openai_compatible",
+        "base_url": "https://api.groq.com/openai/v1",
+        "model": "llama-3.3-70b-versatile",
+        "secret_name": "GROQ_API_KEY"
+      },
+      {
+        "name": "gemini-2.5-flash",
+        "provider": "gemini",
+        "base_url": "",
+        "model": "gemini-2.5-flash",
+        "secret_name": "EXTERNAL_REVIEW_API_KEY"
+      },
+      {
+        "name": "gemini-2.5-flash (key2)",
+        "provider": "gemini",
+        "base_url": "",
+        "model": "gemini-2.5-flash",
+        "secret_name": "GEMINI_API_KEY_2"
+      },
+      {
+        "name": "gemini-2.5-flash (key3)",
+        "provider": "gemini",
+        "base_url": "",
+        "model": "gemini-2.5-flash",
+        "secret_name": "GEMINI_API_KEY_3"
+      },
+      {
+        "name": "gemini-2.5-flash (key1b)",
+        "provider": "gemini",
+        "base_url": "",
+        "model": "gemini-2.5-flash",
+        "secret_name": "GEMINI_API_KEY"
+      },
+      {
+        "name": "gemini-2.5-flash (key4)",
+        "provider": "gemini",
+        "base_url": "",
+        "model": "gemini-2.5-flash",
+        "secret_name": "GEMINI_API_KEY_4"
+      },
+      {
+        "name": "gemini-2.5-flash (key5)",
+        "provider": "gemini",
+        "base_url": "",
+        "model": "gemini-2.5-flash",
+        "secret_name": "GEMINI_API_KEY_5"
+      },
+      {
+        "name": "gemini-2.5-flash (key6)",
+        "provider": "gemini",
+        "base_url": "",
+        "model": "gemini-2.5-flash",
+        "secret_name": "GEMINI_API_KEY_6"
+      },
+      {
+        "name": "llama-3.3-70b (groq2)",
+        "provider": "openai_compatible",
+        "base_url": "https://api.groq.com/openai/v1",
+        "model": "llama-3.3-70b-versatile",
+        "secret_name": "GROQ_API_KEY_2"
+      },
+      {
+        "name": "llama3.3-70b (cerebras2)",
+        "provider": "openai_compatible",
+        "base_url": "https://api.cerebras.ai/v1",
+        "model": "llama3.3-70b",
+        "secret_name": "CEREBRAS_API_KEY_2"
+      },
+      {
+        "name": "llama-3.3-70b (nvidia-nim)",
+        "provider": "openai_compatible",
+        "base_url": "https://integrate.api.nvidia.com/v1",
+        "model": "meta/llama-3.3-70b-instruct",
+        "secret_name": "NVIDIA_API_KEY"
+      },
+      {
+        "name": "llama-3.3-70b (sambanova)",
+        "provider": "openai_compatible",
+        "base_url": "https://api.sambanova.ai/v1",
+        "model": "Meta-Llama-3.3-70B-Instruct",
+        "secret_name": "SAMBANOVA_API_KEY"
+      },
+      {
+        "name": "mistral-small (mistral)",
+        "provider": "openai_compatible",
+        "base_url": "https://api.mistral.ai/v1",
+        "model": "mistral-small-latest",
+        "secret_name": "MISTRAL_API_KEY"
+      }
     ],
     "engines_note": "POOL (quality-ordered, fastest-quality first): bulk_analyze round-robins across every engine whose secret is set, so free daily quotas ADD UP and an engine that errors repeatedly is DROPPED for the run (so a dead key doesn't waste the batch). Add a key -> that engine joins automatically. Get free keys: GH_MODELS_TOKEN (github.com PAT, gpt-4.1-mini WORKS), OPENROUTER_API_KEY (openrouter.ai, free DeepSeek-V3 = strong), CEREBRAS_API_KEY (cloud.cerebras.ai), GROQ_API_KEY (console.groq.com, fast), EXTERNAL_REVIEW_API_KEY (Gemini). Verify exact model ids in each provider's docs; a wrong id just gets auto-dropped.",
     "quality_options": {
-      "fast_free": {"provider": "gemini", "model": "gemini-2.5-flash", "secret_name": "EXTERNAL_REVIEW_API_KEY", "throughput": "~1500/day", "quality": "good, below Claude"},
-      "claude_quality_free": {"provider": "openai_compatible", "model": "<verify in GitHub Models marketplace, e.g. anthropic/claude-sonnet-4.6>", "base_url": "https://models.github.ai/inference", "secret_name": "GITHUB_MODELS_TOKEN", "throughput": "~50/day (rate-limited)", "quality": "= Claude Sonnet 4.6 (FREE, separate from the Pro weekly limit)", "note": "Needs a GitHub PAT with models access stored as the GITHUB_MODELS_TOKEN secret. Verify the exact model id + endpoint in the GitHub Models marketplace before enabling."}
+      "fast_free": {
+        "provider": "gemini",
+        "model": "gemini-2.5-flash",
+        "secret_name": "EXTERNAL_REVIEW_API_KEY",
+        "throughput": "~1500/day",
+        "quality": "good, below Claude"
+      },
+      "claude_quality_free": {
+        "provider": "openai_compatible",
+        "model": "<verify in GitHub Models marketplace, e.g. anthropic/claude-sonnet-4.6>",
+        "base_url": "https://models.github.ai/inference",
+        "secret_name": "GITHUB_MODELS_TOKEN",
+        "throughput": "~50/day (rate-limited)",
+        "quality": "= Claude Sonnet 4.6 (FREE, separate from the Pro weekly limit)",
+        "note": "Needs a GitHub PAT with models access stored as the GITHUB_MODELS_TOKEN secret. Verify the exact model id + endpoint in the GitHub Models marketplace before enabling."
+      }
     },
     "note": "FREE bulk lane (src/bulk_analyze.py + bulk_analyze.yml). provider=gemini drains the backlog fast (~1500/day, good quality). provider=openai_compatible + base_url can run CLAUDE Sonnet 4.6 via GitHub Models for actual-Claude quality, free, but ~50/day. ZERO Claude-Pro tokens either way. Recommended hybrid: Gemini for bulk speed + Claude-Sonnet for a quality spot-check / the highest-value videos."
   },
@@ -254,7 +496,16 @@
   "prompts": {
     "enabled": true,
     "file": "data/prompts.json",
-    "categories": ["master", "system_guardrail", "creation", "coding", "agents", "research", "marketing", "other"],
+    "categories": [
+      "master",
+      "system_guardrail",
+      "creation",
+      "coding",
+      "agents",
+      "research",
+      "marketing",
+      "other"
+    ],
     "seed_curated": true,
     "note": "A Prompts tab/library. Categories: 'master' (big all-purpose system prompts), 'system_guardrail' (anti-hallucination / 'do not lie' / grounding rules), 'creation' (prompts to make things), plus task topics. Filled from prompts shown in the videos AND a small curated starter set so it's useful immediately. Each prompt: {title, category, purpose, prompt_text, source_video_id|source_url, notes}."
   },
@@ -262,8 +513,17 @@
     "enabled": true,
     "mode": "both",
     "cadence": "weekly_night_deep_pass",
-    "emphasis": ["mcp_servers", "open_source_github"],
-    "directories": ["GitHub Trending", "awesome-lists (incl. awesome-mcp-servers)", "Product Hunt AI", "Hugging Face", "There's An AI For That"],
+    "emphasis": [
+      "mcp_servers",
+      "open_source_github"
+    ],
+    "directories": [
+      "GitHub Trending",
+      "awesome-lists (incl. awesome-mcp-servers)",
+      "Product Hunt AI",
+      "Hugging Face",
+      "There's An AI For That"
+    ],
     "web_search": true,
     "max_new_per_run": 60,
     "results_file": "data/tools.json",
@@ -272,7 +532,10 @@
   "upcoming_tools": {
     "enabled": true,
     "field": "release_status",
-    "values": ["released", "upcoming"],
+    "values": [
+      "released",
+      "upcoming"
+    ],
     "tab": "Coming Soon",
     "note": "Tools announced but NOT yet released get release_status:'upcoming' (+ expected_release if stated). They appear in a separate 'Coming Soon' dashboard tab, not mixed into released rankings."
   },
@@ -280,105 +543,453 @@
     "enabled": true,
     "scale": "1-10",
     "low_quality_threshold": 5,
-    "signals": ["ai_content_review", "recency"],
+    "signals": [
+      "ai_content_review",
+      "recency"
+    ],
     "low_quality_action": "downweight_and_flag",
-    "recency_penalty_points": { "within_6_months": 0, "within_12_months": 1, "within_2_years": 2, "older_than_2_years": 3 }
+    "recency_penalty_points": {
+      "within_6_months": 0,
+      "within_12_months": 1,
+      "within_2_years": 2,
+      "older_than_2_years": 3
+    }
   },
   "news_sources": [
-    { "name": "OpenAI", "url": "https://openai.com/news/rss.xml" },
-    { "name": "Google - The Keyword (AI)", "url": "https://blog.google/technology/ai/rss/" },
-    { "name": "Google DeepMind", "url": "https://deepmind.google/blog/rss.xml" },
-    { "name": "Microsoft AI", "url": "https://blogs.microsoft.com/ai/feed/" },
-    { "name": "Chip Huyen", "url": "https://huyenchip.com/feed.xml" },
-    { "name": "Hugging Face", "url": "https://huggingface.co/blog/feed.xml" },
-    { "name": "NVIDIA Blog", "url": "https://blogs.nvidia.com/feed/" },
-    { "name": "AWS Machine Learning", "url": "https://aws.amazon.com/blogs/machine-learning/feed/" },
-    { "name": "MIT News - AI", "url": "https://news.mit.edu/rss/topic/artificial-intelligence2" },
-    { "name": "Berkeley AI Research", "url": "https://bair.berkeley.edu/blog/feed.xml" },
-    { "name": "TechCrunch AI", "url": "https://techcrunch.com/category/artificial-intelligence/feed/" },
-    { "name": "VentureBeat AI", "url": "https://venturebeat.com/category/ai/feed/" },
-    { "name": "The Verge AI", "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml" },
-    { "name": "Ars Technica AI", "url": "https://arstechnica.com/tag/artificial-intelligence/feed/" },
-    { "name": "MIT Technology Review", "url": "https://www.technologyreview.com/feed/" },
-    { "name": "Wired AI", "url": "https://www.wired.com/feed/tag/ai/latest/rss" },
-    { "name": "ZDNET AI", "url": "https://www.zdnet.com/topic/artificial-intelligence/rss.xml" },
-    { "name": "The Decoder", "url": "https://the-decoder.com/feed/" },
-    { "name": "MarkTechPost", "url": "https://www.marktechpost.com/feed/" },
-    { "name": "Synced", "url": "https://syncedreview.com/feed/" },
-    { "name": "AI News", "url": "https://www.artificialintelligence-news.com/feed/" },
-    { "name": "Import AI", "url": "https://importai.substack.com/feed" },
-    { "name": "Eugene Yan", "url": "https://eugeneyan.com/rss/" },
-    { "name": "Roboflow", "url": "https://blog.roboflow.com/rss/" },
-    { "name": "Google Research", "url": "https://research.google/blog/rss/" },
-    { "name": "Apple Machine Learning", "url": "https://machinelearning.apple.com/rss.xml" },
-    { "name": "Hacker News", "url": "https://hnrss.org/frontpage" },
-    { "name": "arXiv cs.AI", "url": "http://export.arxiv.org/rss/cs.AI" },
-    { "name": "arXiv cs.LG", "url": "http://export.arxiv.org/rss/cs.LG" },
-    { "name": "arXiv cs.CL", "url": "http://export.arxiv.org/rss/cs.CL" },
-    { "name": "arXiv cs.CV", "url": "http://export.arxiv.org/rss/cs.CV" },
-    { "name": "arXiv stat.ML", "url": "http://export.arxiv.org/rss/stat.ML" },
-    { "name": "Microsoft Research", "url": "https://www.microsoft.com/en-us/research/feed/" },
-    { "name": "Amazon Science", "url": "https://www.amazon.science/index.rss" },
-    { "name": "The Gradient", "url": "https://thegradient.pub/rss/" },
-    { "name": "Lil'Log (Lilian Weng)", "url": "https://lilianweng.github.io/index.xml" },
-    { "name": "Simon Willison", "url": "https://simonwillison.net/atom/everything/" },
-    { "name": "Andrej Karpathy", "url": "https://karpathy.github.io/feed.xml" },
-    { "name": "The Register AI/ML", "url": "https://www.theregister.com/software/ai_ml/headlines.atom" },
-    { "name": "SiliconANGLE AI", "url": "https://siliconangle.com/category/ai/feed/" },
-    { "name": "KDnuggets", "url": "https://www.kdnuggets.com/feed" },
-    { "name": "Towards Data Science", "url": "https://towardsdatascience.com/feed" },
-    { "name": "Machine Learning Mastery", "url": "https://machinelearningmastery.com/blog/feed/" },
-    { "name": "PyTorch Blog", "url": "https://pytorch.org/blog/feed.xml" },
-    { "name": "fast.ai", "url": "https://www.fast.ai/index.xml" },
-    { "name": "Ahead of AI (Sebastian Raschka)", "url": "https://magazine.sebastianraschka.com/feed" },
-    { "name": "LessWrong", "url": "https://www.lesswrong.com/feed.xml" },
-    { "name": "AI Alignment Forum", "url": "https://www.alignmentforum.org/feed.xml" },
-    { "name": "Jay Alammar", "url": "https://jalammar.github.io/feed.xml" },
-    { "name": "Sebastian Ruder", "url": "https://newsletter.ruder.io/feed" },
-    { "name": "arXiv cs.AI (artificial intelligence)", "url": "http://export.arxiv.org/rss/cs.AI", "category": "research" },
-    { "name": "arXiv cs.CL (computation & language)", "url": "http://export.arxiv.org/rss/cs.CL", "category": "research" },
-    { "name": "arXiv cs.LG (machine learning)", "url": "http://export.arxiv.org/rss/cs.LG", "category": "research" },
-    { "name": "arXiv cs.CV (computer vision)", "url": "http://export.arxiv.org/rss/cs.CV", "category": "research" },
-    { "name": "Berkeley AI Research (BAIR)", "url": "https://bair.berkeley.edu/blog/feed.xml", "category": "research" },
-    { "name": "Stanford AI Lab (SAIL)", "url": "https://ai.stanford.edu/blog/feed.xml", "category": "research" },
-    { "name": "MIT News — Artificial Intelligence", "url": "https://news.mit.edu/rss/topic/artificial-intelligence2", "category": "research" },
-    { "name": "Microsoft Research", "url": "https://www.microsoft.com/en-us/research/feed/", "category": "research" },
-    { "name": "Apple Machine Learning Research", "url": "https://machinelearning.apple.com/rss.xml", "category": "research" },
-    { "name": "The Gradient", "url": "https://thegradient.pub/rss/", "category": "research" },
-    { "name": "r/LocalLLaMA (Reddit)", "url": "https://www.reddit.com/r/LocalLLaMA/.rss", "category": "community" },
-    { "name": "r/MachineLearning (Reddit)", "url": "https://www.reddit.com/r/MachineLearning/.rss", "category": "community" },
-    { "name": "r/artificial (Reddit)", "url": "https://www.reddit.com/r/artificial/.rss", "category": "community" },
-    { "name": "Hacker News — LLM (50+ pts)", "url": "https://hnrss.org/newest?q=LLM&points=50", "category": "community" },
-    { "name": "Hacker News — AI agents (30+ pts)", "url": "https://hnrss.org/newest?q=AI+agent&points=30", "category": "community" },
-    { "name": "Simon Willison", "url": "https://simonwillison.net/atom/everything/", "category": "analyst" },
-    { "name": "Lil'Log (Lilian Weng)", "url": "https://lilianweng.github.io/index.xml", "category": "analyst" },
-    { "name": "Interconnects (Nathan Lambert)", "url": "https://www.interconnects.ai/feed", "category": "analyst" },
-    { "name": "Latent Space", "url": "https://www.latent.space/feed", "category": "analyst" },
-    { "name": "One Useful Thing (Ethan Mollick)", "url": "https://www.oneusefulthing.org/feed", "category": "analyst" },
-    { "name": "AI Snake Oil", "url": "https://www.aisnakeoil.com/feed", "category": "analyst" },
-    { "name": "Import AI (Jack Clark)", "url": "https://importai.substack.com/feed", "category": "analyst" },
-    { "name": "Last Week in AI", "url": "https://lastweekin.ai/feed", "category": "analyst" },
-    { "name": "The Algorithmic Bridge", "url": "https://www.thealgorithmicbridge.com/feed", "category": "analyst" },
-    { "name": "Don't Worry About the Vase (Zvi)", "url": "https://thezvi.substack.com/feed", "category": "analyst" },
-    { "name": "Meta AI Blog", "url": "https://ai.meta.com/blog/rss/", "category": "lab" },
-    { "name": "Mistral AI", "url": "https://mistral.ai/news/feed.xml", "category": "lab" },
-    { "name": "Stability AI", "url": "https://stability.ai/news?format=rss", "category": "lab" },
-    { "name": "Cohere Blog", "url": "https://cohere.com/blog/rss.xml", "category": "lab" },
-    { "name": "PyTorch Blog", "url": "https://pytorch.org/blog/feed.xml", "category": "open-source" },
-    { "name": "LangChain Blog", "url": "https://blog.langchain.dev/rss/", "category": "open-source" },
-    { "name": "Ollama Blog", "url": "https://ollama.com/blog/rss.xml", "category": "open-source" },
-    { "name": "Weights & Biases", "url": "https://wandb.ai/fully-connected/rss.xml", "category": "open-source" },
-    { "name": "dev.to AI", "url": "https://dev.to/feed/tag/ai", "category": "skills" },
-    { "name": "dev.to LLM", "url": "https://dev.to/feed/tag/llm", "category": "skills" },
-    { "name": "dev.to Claude", "url": "https://dev.to/feed/tag/claude", "category": "skills" },
-    { "name": "dev.to AI Agents", "url": "https://dev.to/feed/tag/aiagents", "category": "skills" },
-    { "name": "dev.to Machine Learning", "url": "https://dev.to/feed/tag/machinelearning", "category": "skills" },
-    { "name": "r/ClaudeAI", "url": "https://www.reddit.com/r/ClaudeAI.rss", "category": "community" },
-    { "name": "r/LocalLLaMA", "url": "https://www.reddit.com/r/LocalLLaMA.rss", "category": "community" },
-    { "name": "r/ChatGPTCoding", "url": "https://www.reddit.com/r/ChatGPTCoding.rss", "category": "community" },
-    { "name": "r/AI_Agents", "url": "https://www.reddit.com/r/AI_Agents.rss", "category": "community" },
-    { "name": "r/mcp", "url": "https://www.reddit.com/r/mcp.rss", "category": "community" },
-    { "name": "Hugging Face Blog", "url": "https://huggingface.co/blog/feed.xml", "category": "open-source" },
-    { "name": "Replicate Blog", "url": "https://replicate.com/blog/rss.xml", "category": "open-source" }
-  ]
+    {
+      "name": "OpenAI",
+      "url": "https://openai.com/news/rss.xml"
+    },
+    {
+      "name": "Google - The Keyword (AI)",
+      "url": "https://blog.google/technology/ai/rss/"
+    },
+    {
+      "name": "Google DeepMind",
+      "url": "https://deepmind.google/blog/rss.xml"
+    },
+    {
+      "name": "Microsoft AI",
+      "url": "https://blogs.microsoft.com/ai/feed/"
+    },
+    {
+      "name": "Chip Huyen",
+      "url": "https://huyenchip.com/feed.xml"
+    },
+    {
+      "name": "Hugging Face",
+      "url": "https://huggingface.co/blog/feed.xml"
+    },
+    {
+      "name": "NVIDIA Blog",
+      "url": "https://blogs.nvidia.com/feed/"
+    },
+    {
+      "name": "AWS Machine Learning",
+      "url": "https://aws.amazon.com/blogs/machine-learning/feed/"
+    },
+    {
+      "name": "MIT News - AI",
+      "url": "https://news.mit.edu/rss/topic/artificial-intelligence2"
+    },
+    {
+      "name": "Berkeley AI Research",
+      "url": "https://bair.berkeley.edu/blog/feed.xml"
+    },
+    {
+      "name": "TechCrunch AI",
+      "url": "https://techcrunch.com/category/artificial-intelligence/feed/"
+    },
+    {
+      "name": "VentureBeat AI",
+      "url": "https://venturebeat.com/category/ai/feed/"
+    },
+    {
+      "name": "The Verge AI",
+      "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"
+    },
+    {
+      "name": "Ars Technica AI",
+      "url": "https://arstechnica.com/tag/artificial-intelligence/feed/"
+    },
+    {
+      "name": "MIT Technology Review",
+      "url": "https://www.technologyreview.com/feed/"
+    },
+    {
+      "name": "Wired AI",
+      "url": "https://www.wired.com/feed/tag/ai/latest/rss"
+    },
+    {
+      "name": "ZDNET AI",
+      "url": "https://www.zdnet.com/topic/artificial-intelligence/rss.xml"
+    },
+    {
+      "name": "The Decoder",
+      "url": "https://the-decoder.com/feed/"
+    },
+    {
+      "name": "MarkTechPost",
+      "url": "https://www.marktechpost.com/feed/"
+    },
+    {
+      "name": "Synced",
+      "url": "https://syncedreview.com/feed/"
+    },
+    {
+      "name": "AI News",
+      "url": "https://www.artificialintelligence-news.com/feed/"
+    },
+    {
+      "name": "Import AI",
+      "url": "https://importai.substack.com/feed"
+    },
+    {
+      "name": "Eugene Yan",
+      "url": "https://eugeneyan.com/rss/"
+    },
+    {
+      "name": "Roboflow",
+      "url": "https://blog.roboflow.com/rss/"
+    },
+    {
+      "name": "Google Research",
+      "url": "https://research.google/blog/rss/"
+    },
+    {
+      "name": "Apple Machine Learning",
+      "url": "https://machinelearning.apple.com/rss.xml"
+    },
+    {
+      "name": "Hacker News",
+      "url": "https://hnrss.org/frontpage"
+    },
+    {
+      "name": "arXiv cs.AI",
+      "url": "http://export.arxiv.org/rss/cs.AI"
+    },
+    {
+      "name": "arXiv cs.LG",
+      "url": "http://export.arxiv.org/rss/cs.LG"
+    },
+    {
+      "name": "arXiv cs.CL",
+      "url": "http://export.arxiv.org/rss/cs.CL"
+    },
+    {
+      "name": "arXiv cs.CV",
+      "url": "http://export.arxiv.org/rss/cs.CV"
+    },
+    {
+      "name": "arXiv stat.ML",
+      "url": "http://export.arxiv.org/rss/stat.ML"
+    },
+    {
+      "name": "Microsoft Research",
+      "url": "https://www.microsoft.com/en-us/research/feed/"
+    },
+    {
+      "name": "Amazon Science",
+      "url": "https://www.amazon.science/index.rss"
+    },
+    {
+      "name": "The Gradient",
+      "url": "https://thegradient.pub/rss/"
+    },
+    {
+      "name": "Lil'Log (Lilian Weng)",
+      "url": "https://lilianweng.github.io/index.xml"
+    },
+    {
+      "name": "Simon Willison",
+      "url": "https://simonwillison.net/atom/everything/"
+    },
+    {
+      "name": "Andrej Karpathy",
+      "url": "https://karpathy.github.io/feed.xml"
+    },
+    {
+      "name": "The Register AI/ML",
+      "url": "https://www.theregister.com/software/ai_ml/headlines.atom"
+    },
+    {
+      "name": "SiliconANGLE AI",
+      "url": "https://siliconangle.com/category/ai/feed/"
+    },
+    {
+      "name": "KDnuggets",
+      "url": "https://www.kdnuggets.com/feed"
+    },
+    {
+      "name": "Towards Data Science",
+      "url": "https://towardsdatascience.com/feed"
+    },
+    {
+      "name": "Machine Learning Mastery",
+      "url": "https://machinelearningmastery.com/blog/feed/"
+    },
+    {
+      "name": "PyTorch Blog",
+      "url": "https://pytorch.org/blog/feed.xml"
+    },
+    {
+      "name": "fast.ai",
+      "url": "https://www.fast.ai/index.xml"
+    },
+    {
+      "name": "Ahead of AI (Sebastian Raschka)",
+      "url": "https://magazine.sebastianraschka.com/feed"
+    },
+    {
+      "name": "LessWrong",
+      "url": "https://www.lesswrong.com/feed.xml"
+    },
+    {
+      "name": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/feed.xml"
+    },
+    {
+      "name": "Jay Alammar",
+      "url": "https://jalammar.github.io/feed.xml"
+    },
+    {
+      "name": "Sebastian Ruder",
+      "url": "https://newsletter.ruder.io/feed"
+    },
+    {
+      "name": "arXiv cs.AI (artificial intelligence)",
+      "url": "http://export.arxiv.org/rss/cs.AI",
+      "category": "research"
+    },
+    {
+      "name": "arXiv cs.CL (computation & language)",
+      "url": "http://export.arxiv.org/rss/cs.CL",
+      "category": "research"
+    },
+    {
+      "name": "arXiv cs.LG (machine learning)",
+      "url": "http://export.arxiv.org/rss/cs.LG",
+      "category": "research"
+    },
+    {
+      "name": "arXiv cs.CV (computer vision)",
+      "url": "http://export.arxiv.org/rss/cs.CV",
+      "category": "research"
+    },
+    {
+      "name": "Berkeley AI Research (BAIR)",
+      "url": "https://bair.berkeley.edu/blog/feed.xml",
+      "category": "research"
+    },
+    {
+      "name": "Stanford AI Lab (SAIL)",
+      "url": "https://ai.stanford.edu/blog/feed.xml",
+      "category": "research"
+    },
+    {
+      "name": "MIT News — Artificial Intelligence",
+      "url": "https://news.mit.edu/rss/topic/artificial-intelligence2",
+      "category": "research"
+    },
+    {
+      "name": "Microsoft Research",
+      "url": "https://www.microsoft.com/en-us/research/feed/",
+      "category": "research"
+    },
+    {
+      "name": "Apple Machine Learning Research",
+      "url": "https://machinelearning.apple.com/rss.xml",
+      "category": "research"
+    },
+    {
+      "name": "The Gradient",
+      "url": "https://thegradient.pub/rss/",
+      "category": "research"
+    },
+    {
+      "name": "r/LocalLLaMA (Reddit)",
+      "url": "https://www.reddit.com/r/LocalLLaMA/.rss",
+      "category": "community"
+    },
+    {
+      "name": "r/MachineLearning (Reddit)",
+      "url": "https://www.reddit.com/r/MachineLearning/.rss",
+      "category": "community"
+    },
+    {
+      "name": "r/artificial (Reddit)",
+      "url": "https://www.reddit.com/r/artificial/.rss",
+      "category": "community"
+    },
+    {
+      "name": "Hacker News — LLM (50+ pts)",
+      "url": "https://hnrss.org/newest?q=LLM&points=50",
+      "category": "community"
+    },
+    {
+      "name": "Hacker News — AI agents (30+ pts)",
+      "url": "https://hnrss.org/newest?q=AI+agent&points=30",
+      "category": "community"
+    },
+    {
+      "name": "Simon Willison",
+      "url": "https://simonwillison.net/atom/everything/",
+      "category": "analyst"
+    },
+    {
+      "name": "Lil'Log (Lilian Weng)",
+      "url": "https://lilianweng.github.io/index.xml",
+      "category": "analyst"
+    },
+    {
+      "name": "Interconnects (Nathan Lambert)",
+      "url": "https://www.interconnects.ai/feed",
+      "category": "analyst"
+    },
+    {
+      "name": "Latent Space",
+      "url": "https://www.latent.space/feed",
+      "category": "analyst"
+    },
+    {
+      "name": "One Useful Thing (Ethan Mollick)",
+      "url": "https://www.oneusefulthing.org/feed",
+      "category": "analyst"
+    },
+    {
+      "name": "AI Snake Oil",
+      "url": "https://www.aisnakeoil.com/feed",
+      "category": "analyst"
+    },
+    {
+      "name": "Import AI (Jack Clark)",
+      "url": "https://importai.substack.com/feed",
+      "category": "analyst"
+    },
+    {
+      "name": "Last Week in AI",
+      "url": "https://lastweekin.ai/feed",
+      "category": "analyst"
+    },
+    {
+      "name": "The Algorithmic Bridge",
+      "url": "https://www.thealgorithmicbridge.com/feed",
+      "category": "analyst"
+    },
+    {
+      "name": "Don't Worry About the Vase (Zvi)",
+      "url": "https://thezvi.substack.com/feed",
+      "category": "analyst"
+    },
+    {
+      "name": "Meta AI Blog",
+      "url": "https://ai.meta.com/blog/rss/",
+      "category": "lab"
+    },
+    {
+      "name": "Mistral AI",
+      "url": "https://mistral.ai/news/feed.xml",
+      "category": "lab"
+    },
+    {
+      "name": "Stability AI",
+      "url": "https://stability.ai/news?format=rss",
+      "category": "lab"
+    },
+    {
+      "name": "Cohere Blog",
+      "url": "https://cohere.com/blog/rss.xml",
+      "category": "lab"
+    },
+    {
+      "name": "PyTorch Blog",
+      "url": "https://pytorch.org/blog/feed.xml",
+      "category": "open-source"
+    },
+    {
+      "name": "LangChain Blog",
+      "url": "https://blog.langchain.dev/rss/",
+      "category": "open-source"
+    },
+    {
+      "name": "Ollama Blog",
+      "url": "https://ollama.com/blog/rss.xml",
+      "category": "open-source"
+    },
+    {
+      "name": "Weights & Biases",
+      "url": "https://wandb.ai/fully-connected/rss.xml",
+      "category": "open-source"
+    },
+    {
+      "name": "dev.to AI",
+      "url": "https://dev.to/feed/tag/ai",
+      "category": "skills"
+    },
+    {
+      "name": "dev.to LLM",
+      "url": "https://dev.to/feed/tag/llm",
+      "category": "skills"
+    },
+    {
+      "name": "dev.to Claude",
+      "url": "https://dev.to/feed/tag/claude",
+      "category": "skills"
+    },
+    {
+      "name": "dev.to AI Agents",
+      "url": "https://dev.to/feed/tag/aiagents",
+      "category": "skills"
+    },
+    {
+      "name": "dev.to Machine Learning",
+      "url": "https://dev.to/feed/tag/machinelearning",
+      "category": "skills"
+    },
+    {
+      "name": "r/ClaudeAI",
+      "url": "https://www.reddit.com/r/ClaudeAI.rss",
+      "category": "community"
+    },
+    {
+      "name": "r/LocalLLaMA",
+      "url": "https://www.reddit.com/r/LocalLLaMA.rss",
+      "category": "community"
+    },
+    {
+      "name": "r/ChatGPTCoding",
+      "url": "https://www.reddit.com/r/ChatGPTCoding.rss",
+      "category": "community"
+    },
+    {
+      "name": "r/AI_Agents",
+      "url": "https://www.reddit.com/r/AI_Agents.rss",
+      "category": "community"
+    },
+    {
+      "name": "r/mcp",
+      "url": "https://www.reddit.com/r/mcp.rss",
+      "category": "community"
+    },
+    {
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/feed.xml",
+      "category": "open-source"
+    },
+    {
+      "name": "Replicate Blog",
+      "url": "https://replicate.com/blog/rss.xml",
+      "category": "open-source"
+    }
+  ],
+  "product": {
+    "focus": "video-knowledge-library",
+    "home": "overview",
+    "agentic_os": {
+      "enabled": false,
+      "plugin_path": "plugins/excava"
+    }
+  },
+  "playlist_ids": [],
+  "video_urls": []
 }

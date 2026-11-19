@@ -1,3 +1,5 @@
+> Current scope (2026-11-19): EXCAVA is preserved and disconnected. OS-specific instructions below are historical; do not reactivate its modules, workflows, rooms, creators or UI. Focus on video retrieval, evidence-grounded analysis, categorization, library quality and the existing design. Read SESSION_HANDOFF.md first.
+
 # Self-Improvement Protocol (every few days)
 
 This file is read by the Claude Code GitHub Action in the **improvement stage**

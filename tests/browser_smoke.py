@@ -10,14 +10,16 @@ try:
         page = browser.new_page(viewport={"width": 1280, "height": 900})
         errors = []
         page.on("pageerror", lambda e: errors.append(str(e)))
+        page.on("console", lambda m: errors.append(m.text) if m.type == "error" and any(t in m.text for t in ("ReferenceError", "TypeError", "SyntaxError")) else None)
         page.goto("http://127.0.0.1:8787/docs/", wait_until="domcontentloaded")
         page.get_by_role("heading", name="Your video knowledge, in one place.").wait_for()
         for tab in ["videos", "hub", "skills", "tools", "prompts", "tips", "connectors", "packages", "taste", "selfimprove", "effectiveness", "devbuild"]:
+            print("Testing tab:", tab, flush=True)
             page.locator(f'nav button[data-tab="{tab}"]').click()
             page.wait_for_function(
                 """() => { const v=document.querySelector('#view');
                 return v && v.textContent.trim() && !v.textContent.trim().startsWith('Loading'); }""")
-            assert "This view could not load." not in page.locator("#view").inner_text(), tab
+            assert "This view could not load." not in page.locator("#view").inner_text(), (tab, errors)
             assert not page.locator(".ex-strip, #crew, #approve-bell").count(), tab
         page.locator('nav button[data-tab="videos"]').click()
         page.locator("#video-stage").select_option("analyzed")

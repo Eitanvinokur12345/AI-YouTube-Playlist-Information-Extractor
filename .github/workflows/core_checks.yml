@@ -1,8 +1,24 @@
 name: Video knowledge core checks
 on:
   pull_request:
+    paths:
+      - "src/**"
+      - "tests/**"
+      - "plugins/excava/**"
+      - "docs/*.js"
+      - "docs/index.html"
+      - ".github/workflows/**"
+      - "config.json"
   push:
-    branches: ["rebuild/video-knowledge-core-20261119"]
+    branches: [main]
+    paths:
+      - "src/**"
+      - "tests/**"
+      - "plugins/excava/**"
+      - "docs/*.js"
+      - "docs/index.html"
+      - ".github/workflows/**"
+      - "config.json"
 permissions:
   contents: read
 jobs:

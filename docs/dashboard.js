@@ -1199,26 +1199,7 @@ async function renderSelfImprove() {
   const [improveLog, tokenActive] = await Promise.all([load("improve_log.json"), load("token_active.json")]);
   if (window.__improveTimer) clearInterval(window.__improveTimer);
   let html = "";
-  html += await goalsPanel();
 
-  // ── Program pulse (src/pulse.py, refreshed by the library pipeline) — the ONE honest movement number, incl. a
-  //    RED alarm when the done-counter goes BACKWARD, which the all-green guardrails otherwise hide. ──
-  const pulse = await load("excava/pulse.json");
-  if (pulse) {
-    const mv = pulse.movement || {}, dr = pulse.drain || {}, gq = pulse.guardrails || {}, qs = pulse.questions || {};
-    const dlt = Number(mv.delta || 0), dcls = dlt < 0 ? "bad" : dlt > 0 ? "good" : "warn", dsign = dlt > 0 ? "+" : "";
-    html += `<div class="card" style="border-left:4px solid ${dlt < 0 ? "#b91c1c" : "var(--gold)"}">
-      <h3>🫀 Program pulse <span class="sub">— one honest glance · ${esc(fmtDate(pulse.generated_at))}</span></h3>
-      <div class="metrics" style="gap:14px">
-        <span class="metric"><b class="${dcls}">${dsign}${dlt}</b> tasks done / ${esc(mv.delta_span_h ?? "?")}h${dlt < 0 ? " ⚠ BACKWARD" : ""}</span>
-        <span class="metric"><b>${esc(mv.done ?? "?")}</b> done · ${esc(mv.depts_moving ?? "?")} depts moving</span>
-        <span class="metric"><b>${esc(gq.passing ?? "?")}/${esc(gq.total ?? "?")}</b> guardrails</span>
-        <span class="metric">drain ${dr.alive ? "🟢" : "🔴"} <b>${esc(dr.enriched ?? 0)}</b> enriched · ${esc(dr.stubs ?? "?")} stubs</span>
-        <span class="metric"><b>${esc(qs.open ?? "?")}</b> open questions</span>
-      </div>
-      ${dlt < 0 ? `<p class="sub" style="color:#b91c1c;margin-top:6px">⚠ The done-counter fell ${dlt} while ${esc(mv.depts_moving)} depts still read "moving" — a real decline the green guardrails hide. Worth a look (could be re-scoping, could be a regression).</p>` : ""}
-    </div>`;
-  }
 
   // ── Countdown to the next self-improvement run + proof of what it last changed ──
   const nextImprove = (() => {
@@ -1870,6 +1851,19 @@ function mountPipelineTimers() {
   window.addEventListener("online", tick); window.addEventListener("offline", tick);
 }
 // North Star — the 6 main goals + live conformance. Shown atop self-improvement.
+async function prioritiesPanel() {
+  const p = await load("priorities.json");
+  if (!p || !(p.priorities || []).length) return "";
+  const rows = p.priorities.slice(0, 6).map(x => {
+    const sev = x.impact >= 85 ? "sev-high" : x.impact >= 55 ? "sev-medium" : "sev-low";
+    return `<div class="prio-row"><span class="prio-rank ${sev}">${x.rank}</span>
+      <div class="prio-main"><b>${esc(x.title)}</b><span class="pl-what">${esc(x.detail)}</span></div>
+      <span class="prio-area">${esc(x.area)}</span></div>`;
+  }).join("");
+  return `<div class="card improve-clock"><h3>🎯 Top priorities right now</h3>
+    <p class="sub">Auto-ranked by impact from the live system state — it re-orders itself as things change (links resolved, a lane stalls, a regression appears).</p>
+    <div class="prio-rows">${rows}</div></div>`;
+}
 async function pipelinePanel() {
   const p = await load("pipeline_status.json");
   if (!p || !p.lanes) return "";

@@ -19,6 +19,9 @@ on:
       - "docs/index.html"
       - ".github/workflows/**"
       - "config.json"
+concurrency:
+  group: video-core-checks-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:

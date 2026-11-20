@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-11-20T13:35:42.564789+00:00",
+  "generated_at": "2026-11-20T22:01:31.127801+00:00",
   "policy": "activator gate: safe = auto-activate, caution = warn, risky = block until confirmed",
   "summary": {
     "safe": 212,
     "caution": 1841,
-    "risky": 62
+    "risky": 63
   },
   "connectors": {
     "perplexity-mcp": {
@@ -16049,6 +16049,14 @@
       "reasons": [
         "third-party (not an official vendor connector)"
       ]
+    },
+    "claude-code-in-codex-terminal": {
+      "name": "Claude Code in Codex Terminal",
+      "rating": "risky",
+      "reasons": [
+        "requests broad system/shell/file access",
+        "third-party (not an official vendor connector)"
+      ]
     }
   },
   "skills_flagged": {
@@ -17041,6 +17049,20 @@
     },
     "code-generation-via-ai-2": {
       "name": "Code Generation (via AI)",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "ai-execution": {
+      "name": "AI Execution",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "ai-model-integration-efficiency": {
+      "name": "AI Model Integration for Efficiency",
       "rating": "caution",
       "reasons": [
         "the technique runs system/shell/file operations — review what it executes"

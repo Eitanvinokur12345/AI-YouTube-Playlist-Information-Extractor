@@ -7,28 +7,15 @@ function coreButton(label, attr, value) {
   return '<button class="qr-btn" '+attr+'="'+esc(value)+'">'+esc(label)+'</button>';
 }
 async function renderOverview() {
-  const c = await load("video_catalog.json");
-  if (!c) { view.innerHTML = empty("The video catalog has not been built yet. Run the Refresh video library workflow."); return; }
-  const s = c.summary, time = c.source_updated_at;
-  const stale = !time || !Number.isFinite(Date.parse(time)) || Date.now()-Date.parse(time)>48*3600000;
-  const metrics = [["Videos collected",s.total],["Analysis confirmed",s.analyzed],["In analysis queue",s.queued],["With transcripts",s.with_transcript]];
-  view.innerHTML = '<section class="card"><p class="sub">RETRIEVE / UNDERSTAND / ORGANIZE</p><h2>Your video knowledge, in one place.</h2>'+
-    '<p>Videos from your playlists and the web, turned into searchable tools, skills, models, prompts and ideas.</p>'+
-    '<div class="el-actions always">'+coreButton("Explore videos","data-core-tab","videos")+coreButton("Open knowledge library","data-core-tab","hub")+coreButton("Browse sources","data-core-tab","sources")+'</div>'+
-    '<p class="sub"><b>'+(stale?"Source data needs a refresh":"Recent source data")+'</b>'+
-    (time?' · last source update '+esc(fmtDate(time)):"")+'. Catalog generated '+esc(fmtDate(c.generated_at))+'.</p></section>'+
-    '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px">'+metrics.map(function(m){
-      return '<div class="card"><strong style="font-size:30px">'+Number(m[1]).toLocaleString()+'</strong><p class="sub">'+m[0]+'</p></div>';
-    }).join("")+'</div><section class="card"><h3>From source to knowledge</h3>'+
-    '<p>Collect the original source, retrieve captions or analyze audio and visuals, extract specific findings, and organize each finding with its source.</p>'+
-    '<p class="sub">'+Number(s.unconfirmed).toLocaleString()+' historical records have no explicit proof of completed analysis. A transcript counts as retrieved content.</p>'+
-    '<div style="display:flex;flex-wrap:wrap;gap:8px">'+Object.entries(s.categories).slice(0,16).map(function(entry){
-      return coreButton(entry[0]+" ("+entry[1]+")","data-video-category",entry[0]);
-    }).join("")+'</div></section><section class="card"><h3>Your knowledge library</h3><p>'+
-    Number(s.elements).toLocaleString()+' indexed findings, with source links, verification details and reusable packages.</p>'+
-    '<p class="sub">Skills, rankings, prompts, connectors, commands, news, designs, source discovery, quality reports and data exports remain available.</p></section>';
-  view.querySelectorAll("[data-core-tab]").forEach(function(b){b.onclick=function(){show(b.dataset.coreTab);};});
-  view.querySelectorAll("[data-video-category]").forEach(function(b){b.onclick=function(){state.videoCategory=b.dataset.videoCategory;state.videoPage=0;show("videos");};});
+  const scan = await load("skill_scan.json");
+  const stamp = scan && scan.at;
+  view.innerHTML = '<section class="card"><h2>Knowledge library</h2>'+
+    '<p>Browse findings extracted from playlists, public repositories and community sources.</p>'+
+    '<div class="el-actions always">'+coreButton("Browse findings","data-core-tab","hub")+
+    coreButton("Skills","data-core-tab","skills")+coreButton("Discoveries","data-core-tab","sources")+'</div></section>'+
+    '<section class="card"><h3>Skill checks</h3><p>Source verification and malware signatures are checked separately.</p>'+
+    '<p class="sub">'+(stamp ? 'Latest package and record scan: '+esc(fmtDate(stamp)) : 'Awaiting first signature scan')+'</p></section>';
+  view.querySelectorAll("[data-core-tab]").forEach(b => { b.onclick = () => show(b.dataset.coreTab); });
 }
 async function renderVideos() {
   const c = await load("video_catalog.json");

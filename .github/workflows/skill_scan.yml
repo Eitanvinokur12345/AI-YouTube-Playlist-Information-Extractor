@@ -1,0 +1,35 @@
+name: Scan skill records and packages
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  push:
+    branches: [main]
+    paths: ["skills/**", "other-skills/**", "src/skill_audit.py", ".github/workflows/skill_scan.yml"]
+  workflow_dispatch:
+concurrency:
+  group: skill-signature-scan
+  cancel-in-progress: false
+permissions:
+  contents: write
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install scanner and update signatures
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y clamav
+          sudo systemctl stop clamav-freshclam || true
+          sudo freshclam
+      - run: python3 -m src.skill_audit
+      - name: Save scan report
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "skills-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/skill_scan.json
+          git commit -m "Record skill signature scan"
+          git pull --rebase origin main
+          git push origin HEAD:main

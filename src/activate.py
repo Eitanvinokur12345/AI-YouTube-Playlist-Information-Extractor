@@ -80,6 +80,9 @@ def plan(it: dict, typ: str) -> dict:
     cmd = su.get("command")
     needs_key = bool(su.get("needs_key"))
     slug = it.get("slug") or _norm(name).replace(" ", "-")
+    if typ == "skill" and _load("skill_scan.json").get("skills", {}).get(slug, {}).get("result") == "detected":
+        return {"name": name, "type": typ, "kind": kind, "needs_key": False, "homepage": "", "github": "",
+                "steps": ["Installation blocked: the skill record or package triggered a malware signature."]}
     if "skill" in kind:
         steps = [f'Create ~/.claude/skills/{slug}/SKILL.md with the "{name}" skill'
                  + (f" (source: {gh or home})" if (gh or home) else " (from the hub)") + ".",

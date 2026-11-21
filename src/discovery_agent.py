@@ -148,7 +148,19 @@ def huggingface_new(limit: int) -> list[dict]:
             out.append(_item(f"huggingface-{kind}", f"{rid} — {tag}"[:200],
                              f"https://huggingface.co/{'spaces/' if kind == 'space' else ''}{rid}",
                              quality=f"{r.get('likes', 0)} likes"))
-    return out[:limit]
+    return out
+
+
+def mastodon_new(limit: int) -> list[dict]:
+    """Read public posts tagged with machine learning from the public timeline."""
+    import html
+    raw = _get(f"https://mastodon.social/api/v1/timelines/tag/machinelearning?limit={min(limit, 40)}")
+    try:
+        rows = json.loads(raw)
+    except ValueError:
+        return []
+    return [_item("mastodon", html.unescape(re.sub("<[^>]+>", " ", row.get("content", ""))).strip(),
+                  row["url"]) for row in rows if isinstance(row, dict) and row.get("url")]
 
 
 def arxiv_new(limit: int) -> list[dict]:
@@ -180,7 +192,7 @@ def main() -> int:
     n = a.limit_per_source
 
     # R2 (owner 2026-07-11): two new keyless sources join the sweep — HuggingFace + arXiv
-    found = github_new(n) + hackernews(n) + producthunt(n) + huggingface_new(n) + arxiv_new(n)
+    found = github_new(n) + hackernews(n) + producthunt(n) + huggingface_new(n) + arxiv_new(n) + mastodon_new(n)
 
     # the tier-1 social sweep rides along (Reddit RSS / Telegram / DDG / YT-beyond)
     social_new = 0
@@ -209,7 +221,8 @@ def main() -> int:
     per = {}
     for it in merged:
         per[it["source"].split("/")[0]] = per.get(it["source"].split("/")[0], 0) + 1
-    fresh = len(merged) - len(old) if len(merged) > len(old) else 0
+    old_urls = {item.get("url") for item in old}
+    fresh = sum(item["url"] not in old_urls for item in merged)
     store.update({"generated_at": _now(), "total": len(merged), "new_this_run": fresh,
                   "per_source": per,
                   "note": ("INTAKE QUEUE (gated): discovery agent (M1.C2, hourly) + tier-1 social. "

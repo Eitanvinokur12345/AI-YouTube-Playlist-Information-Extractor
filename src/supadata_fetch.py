@@ -121,17 +121,19 @@ def main() -> int:
 
     PENDING.mkdir(parents=True, exist_ok=True)
     dead = _load_dead()
-    todo = []
-    for f in sorted(glob.glob(str(PROCESSED / "*.json"))):
-        try:
-            r = json.load(open(f, encoding="utf-8"))
-        except Exception:
-            continue
-        if r.get("transcript_source") in ("transcript", "whisper"):
-            continue
-        vid = r.get("video_id")
-        if vid and vid not in dead and not (PENDING / f"{vid}.json").exists():
-            todo.append(r)
+    candidates = {}
+    for folder in (PENDING, PROCESSED):
+        for path in sorted(folder.glob("*.json")):
+            r = json.loads(path.read_text(encoding="utf-8"))
+            vid = r.get("video_id")
+            if vid and vid == path.stem:
+                candidates.setdefault(vid, r)
+    todo = [r for vid, r in candidates.items() if vid not in dead
+            and r.get("transcript_source") not in ("transcript", "whisper")]
+    # Rotate the small daily allowance past unavailable captions.
+    if todo:
+        start = (datetime.now(timezone.utc).date().toordinal() * max(args.limit, 1)) % len(todo)
+        todo = todo[start:] + todo[:start]
     print(f"videos lacking a real transcript: {len(todo)} ({len(dead)} known-dead skipped); "
           f"attempting up to {args.limit} via Supadata")
     todo = todo[: max(args.limit, 0)]

@@ -11,6 +11,9 @@ on:
     - cron: "0 11 * * *"     # midday
     - cron: "0 17 * * *"     # and 17:00 UTC, to use more of the daily free quota
     - cron: "0 23 * * *"     # 4 slots/day so the daily-minutes budget is actually spent
+  push:
+    branches: [main]
+    paths: ["src/gemini_video_analyze.py"]
   workflow_dispatch:
     inputs:
       limit:
@@ -47,7 +50,8 @@ jobs:
           GEMINI_API_KEY_4: ${{ secrets.GEMINI_API_KEY_4 }}
           GEMINI_API_KEY_5: ${{ secrets.GEMINI_API_KEY_5 }}
           GEMINI_API_KEY_6: ${{ secrets.GEMINI_API_KEY_6 }}
-        run: python -m src.gemini_video_analyze --limit "${{ github.event.inputs.limit || '50' }}" --sleep 5.0
+          WATCH_LIMIT: ${{ inputs.limit || (github.event_name == 'push' && '3') || '50' }}
+        run: python -m src.gemini_video_analyze --limit "$WATCH_LIMIT" --sleep 5.0
 
       - name: Keep derived data consistent + readouts (free, mechanical)
         if: always()

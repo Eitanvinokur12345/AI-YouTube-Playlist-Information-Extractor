@@ -71,14 +71,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python -m src.github_meta_enrich --limit 60
 
-      - name: Verify elements (every 6th hour)
+      - name: Verify source evidence (rolling batch)
         if: ${{ !cancelled() }}
-        run: |
-          if [ $((10#$(date -u +%H) % 6)) -eq 0 ]; then
-            python -m src.verify_elements --limit 300
-          else
-            echo "not a verify hour - skipped (every 6h)"
-          fi
+        run: python -m src.verify_elements --limit 60
 
       - name: Relate + prewarm (every 6th hour, after verify)
         if: ${{ !cancelled() }}

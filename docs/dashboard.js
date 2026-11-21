@@ -4,7 +4,7 @@ const DATA = "../data/";
 const view = document.getElementById("view");
 // Visible build stamp — bump with every sw.js shell version. If the badge matches the latest, you're
 // on the newest bundle (ends the "did anything change?" doubt when a service worker serves a stale copy).
-const APP_BUILD = "v137-core";
+const APP_BUILD = "v138-library";
 { const _bb = document.getElementById("build-badge"); if (_bb) _bb.textContent = "build " + APP_BUILD; }
 // One global clipboard handler for setup-recipe commands (any [data-copy] button copies its value).
 document.addEventListener("click", (e) => {
@@ -814,7 +814,7 @@ function renderHeader(status) {
 }
 
 // ── Tab: Skills Library ──────────────────────────────────────────────────────
-function renderSkills(data) {
+function renderSkills(data, audit, evidence) {
   const skills = (data && data.skills) || [];
   let html = "";
   if (!q()) html += runReportHtml(state.status);
@@ -851,6 +851,8 @@ function renderSkills(data) {
   html += list.map(s => `
     <div class="card ${isStarred(s) ? "starred" : ""} ${s.low_quality_source ? "lowq" : ""}">
       <h3>${isStarred(s) ? '<span class="star" title="Starred — kept in original form, never auto-changed">&#9733;</span>' : ""}<span class="score">${esc(s.quality_score ?? "?")}/10</span> ${esc(s.skill_name || s.slug)}
+        <span class="pill">Source check: ${esc(evidence?.verified?.["skill:"+s.slug]?.status || "pending")}</span>
+        <span class="pill">Signature scan (${audit?.skills?.[s.slug]?.package ? "record + package" : "record"}): ${esc(audit?.skills?.[s.slug]?.result || "pending")}</span>
         <span class="pill">${esc(s.category || "other")}</span>
         <span class="pill">${esc(s.target_tool || "claude")}</span>
         ${isMultiTool(s) ? '<span class="multitool" title="Works across several AI tools">multi-tool</span>' : ""}
@@ -865,17 +867,17 @@ function renderSkills(data) {
       ${(s.compatibility && s.compatibility.length) ? `<p class="compatline"><b>Works with:</b> ${s.compatibility.map(c => `<span class="compat">${compatLabel(c)}</span>`).join(" ")}</p>` : ""}
       ${(s.tips && s.tips.length) ? `<p><b>Tips:</b> ${s.tips.map(esc).join(" · ")}</p>` : ""}
       ${sourceLine(s)}
-      ${useBox(s)}
+      ${audit?.skills?.[s.slug]?.result === "detected" ? '<strong>Installation blocked by signature scan.</strong>' : useBox(s)}
     </div>`).join("");
   if (!list.length) html += empty(q() ? `No skills match "${esc(state.query)}".` : "No skills in this view.");
 
   view.innerHTML = html;
   view.querySelectorAll("[data-cat]").forEach(b =>
-    b.addEventListener("click", () => { state.selectedCategory = b.dataset.cat; renderSkills(data); }));
+    b.addEventListener("click", () => { state.selectedCategory = b.dataset.cat; renderSkills(data, audit, evidence); }));
   const tog = view.querySelector('[data-toggle="lowq"]');
-  if (tog) tog.addEventListener("click", () => { state.hideLowQuality = !state.hideLowQuality; renderSkills(data); });
+  if (tog) tog.addEventListener("click", () => { state.hideLowQuality = !state.hideLowQuality; renderSkills(data, audit, evidence); });
   const mt = view.querySelector('[data-toggle="multitool"]');
-  if (mt) mt.addEventListener("click", () => { state.multiToolOnly = !state.multiToolOnly; renderSkills(data); });
+  if (mt) mt.addEventListener("click", () => { state.multiToolOnly = !state.multiToolOnly; renderSkills(data, audit, evidence); });
 }
 
 // ── Tab: Tools (auto-tracked catalog of AI tools & models seen in the playlist) ─
@@ -2479,7 +2481,7 @@ async function renderTab(tab) {
   if (tab === "hub") return renderHub();
   if (tab === "packages") return renderPackages();
   if (tab === "taste") return renderTaste();
-  if (tab === "skills") return renderSkills(await load("skills.json"));
+  if (tab === "skills") return renderSkills(...await Promise.all(["skills.json", "skill_scan.json", "elements_verified.json"].map(load)));
   if (tab === "tools" || tab === "models")
     return renderToolRating(await _plusCreations(await load("tools.json"), "tool", "tools"), await load("models.json"));
   if (tab === "comingsoon") return renderComingSoon(await load("tools.json"));

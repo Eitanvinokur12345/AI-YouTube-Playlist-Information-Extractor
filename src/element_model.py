@@ -136,6 +136,8 @@ def _status(el: dict, ver: dict | None) -> tuple[str, dict]:
     if v.get("status") == "dead" or (checks_failed and v.get("confirmed_dead")):
         return "dead", v
     passed = v.get("status") in ("pass", "verified") or v.get("link_alive") is True
+    if el.get("type") == "skill":
+        passed = v.get("status") in ("pass", "verified") and v.get("sources", 0) >= 2
     if passed and _min_bar(el):
         q = el.get("quality_score")
         return ("niche" if isinstance(q, (int, float)) and q <= 3 else "verified"), v

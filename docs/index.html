@@ -1055,19 +1055,16 @@
     <div class="tile tile-id">
       <div class="subtitle">The living archive of artificial intelligence</div>
       <h1>Excavatortron</h1>
-      <p class="hero-sub">Every AI skill, tool, model &amp; MCP connector worth knowing &mdash; mined from the world's AI videos, ranked, and ready to deploy into any tool.</p>
+      <p class="hero-sub">Every AI skill, tool, model &amp; MCP connector worth knowing &mdash; mined from the world's AI videos, analyzed, categorized and connected to their original sources.</p>
       <div class="meta" id="meta">Loading…</div>
       <span class="build-badge" id="build-badge" title="Build version — if this matches the latest, you're on the newest dashboard"></span>
-      <a class="build-badge" href="system_map.html" title="Honest census of every src module — what actually runs (wired / operator / dead)" style="text-decoration:none">🗺 System Map</a>
+      <a class="build-badge" href="hub_api.json" title="Machine-readable knowledge library" style="text-decoration:none">Data API</a>
     </div>
     <div class="tile tile-act">
       <div class="search-wrap"><input id="search" type="search" autocomplete="off"
         placeholder="Search anything… (press Enter to search every tab for the closest match)" /></div>
       <div class="qr-wrap"><button id="qr-toggle" class="qr-btn" type="button" aria-pressed="false"
         title="Condense everything into scannable one-liners for fast reading">⚡ Quick-read</button></div>
-      <!-- M3.11: steering bell — pending-approval count; click jumps to the approval queue -->
-      <button id="approve-bell" class="approve-bell" type="button" hidden
-        title="Things waiting on your decision">🔔<span class="bell-count" id="bell-count">0</span></button>
       <div id="install-wrap" hidden>
         <button id="install-btn" class="install-btn" onclick="triggerInstall()">⬇&nbsp;Install as App</button>
       </div>
@@ -1099,27 +1096,17 @@
        pipeline looks stalled (no recent runs). Filled in by dashboard.js. -->
   <div class="alert" id="alert" hidden></div>
 
-  <!-- M3.11: steering banner — "needs your approval" (dismissible); filled by dashboard.js -->
-  <div class="approve-banner" id="approve-banner" hidden></div>
-  <!-- M3.11: a monster walks up to the door when a NEW approval lands -->
-  <div class="walkup" id="walkup" hidden><img id="walkup-img" alt="" src=""><span class="walkup-say" id="walkup-say"></span></div>
-  <!-- M3.11: a pitch opens here as a conversation you can approve/decline -->
-  <div class="pitch-modal" id="pitch-modal" hidden></div>
 
   <!-- Catch-up banner: appears only while a massive addition of videos is draining -->
   <div class="catchup" id="catchup" hidden></div>
 
   <div class="counters" id="counters"></div>
 
-  <!-- M3.12: mobile mode banner — execution is desktop/cloud-only on a phone -->
-  <div class="mobile-note">📱 Mobile view — read, review, approve &amp; send. Execution runs on your desktop/cloud, so run buttons are off here.</div>
 
   <nav id="tabs">
-    <button data-tab="excava" class="active">🦾 EXCAVA</button>
+    <button data-tab="overview" class="active">Overview</button>
+    <button data-tab="videos">Video Library</button>
     <button data-tab="hub">🛢 Hub</button>
-    <button data-tab="rooms">🗣 Rooms</button>
-    <button data-tab="proof">🧾 Proof</button>
-    <button data-tab="results">📦 Results</button>
     <button data-tab="packages">🧰 Packages</button>
     <button data-tab="taste">🎛 Taste</button>
     <button data-tab="skills">Skills Library</button>
@@ -1139,7 +1126,7 @@
 
   <main id="view"><p class="empty">Loading…</p></main>
   <link rel="stylesheet" href="design/tokens.css">
-  <script src="floor/floor.js"></script>
+  <script src="video-library.js"></script>
   <script src="dashboard.js"></script>
   <!-- PWA: register a tiny service worker so the dashboard installs to a phone/desktop
        home screen and the app shell loads offline. Data (../data) always hits the network. -->

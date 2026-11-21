@@ -134,8 +134,8 @@ def _llm_fuse(el: dict, sources: dict) -> tuple[str, str]:
               "grounded ONLY in the material above. No hype, no invented facts. Reply with the "
               "description text only.")
     try:
-        from src import excava_engines as engines
-        r = engines.complete(prompt, dept="analysis", max_tokens=220)
+        from src import analysis_engines as engines
+        r = engines.complete(prompt, max_tokens=220)
         if not r.get("ok"):
             return "", ""
         text = re.sub(r"\s+", " ", str(r.get("text", ""))).strip()

@@ -7,6 +7,11 @@ on:
   schedule:
     - cron: "0 6 */2 * *"
   workflow_dispatch:
+    inputs:
+      source_urls:
+        description: "Additional YouTube video or playlist URLs, separated by spaces"
+        required: false
+        type: string
 
 # Never run two fetches at once; queue instead of overlapping.
 concurrency:
@@ -32,6 +37,7 @@ jobs:
       - name: Fetch playlist, transcripts, news classification
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          SOURCE_URLS: ${{ inputs.source_urls }}
         run: python -m src.fetch
 
       - name: Commit pending records + news + status

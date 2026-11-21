@@ -117,7 +117,7 @@ def main() -> int:
     # nothing, so behaviour is never worse than before the migration.
     plans, names = [], []
     try:
-        from src import excava_core
+        from src import library as excava_core
 
         els = excava_core.find(args.query, limit=max(args.top, 4))
         plans = [el.activation() for el in els[: args.top]]

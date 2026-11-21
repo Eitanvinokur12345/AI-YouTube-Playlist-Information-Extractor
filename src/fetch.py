@@ -17,6 +17,7 @@ from urllib.parse import urlparse
 import pytz
 from dateutil import parser as dateutil_parser
 from googleapiclient.discovery import build
+from src.source_inputs import collect as collect_sources
 
 from src.analyze_batch import create_news_summary
 
@@ -510,7 +511,7 @@ def main() -> None:
 
     # fetch playlist
     youtube = get_youtube_client(api_key)
-    all_videos = fetch_playlist_videos(youtube, playlist_id)
+    all_videos = collect_sources(youtube, cfg, fetch_playlist_videos)
 
     # filter to new videos
     new_videos = [v for v in all_videos if v["video_id"] not in seen_ids]
@@ -551,6 +552,8 @@ def main() -> None:
                 "description": full_desc,
                 "publishedAt": v["publishedAt"],
                 "channel_name": v.get("channel_name", ""),
+                "source_playlists": v.get("source_playlists", []),
+                "discovered_via": v.get("discovered_via", "playlist"),
                 "transcript": transcript,
                 "transcript_lang": lang,
                 "transcript_source": source,

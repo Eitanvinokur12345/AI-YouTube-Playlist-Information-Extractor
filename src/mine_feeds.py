@@ -130,7 +130,7 @@ def main() -> int:
     cfg = load(CONFIG, {})
     pool = build_pool(cfg)
     if not pool:
-        print("No engine keys present — mining skipped (graceful)."); return 0
+        print("Discovery extraction blocked: no configured engines."); return 1
     print("mining engine pool:", ", ".join(e["name"] for e in pool))
 
     seen = set((load(STATE, {}) or {}).get("urls", []))

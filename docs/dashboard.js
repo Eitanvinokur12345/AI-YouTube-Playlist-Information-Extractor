@@ -867,7 +867,7 @@ function renderSkills(data, audit, evidence) {
       ${(s.compatibility && s.compatibility.length) ? `<p class="compatline"><b>Works with:</b> ${s.compatibility.map(c => `<span class="compat">${compatLabel(c)}</span>`).join(" ")}</p>` : ""}
       ${(s.tips && s.tips.length) ? `<p><b>Tips:</b> ${s.tips.map(esc).join(" · ")}</p>` : ""}
       ${sourceLine(s)}
-      ${useBox(s)}
+      ${audit?.skills?.[s.slug]?.result === "detected" ? '<strong>Installation blocked by signature scan.</strong>' : useBox(s)}
     </div>`).join("");
   if (!list.length) html += empty(q() ? `No skills match "${esc(state.query)}".` : "No skills in this view.");
 

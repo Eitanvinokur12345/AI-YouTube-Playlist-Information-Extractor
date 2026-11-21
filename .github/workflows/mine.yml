@@ -6,6 +6,9 @@ name: Mine feeds (external → skills/tools/MCP)
 on:
   schedule:
     - cron: "0 10 * * *"      # daily 10:00 UTC — independent of analyze/improve/review
+  push:
+    branches: [main]
+    paths: ["src/mine_feeds.py"]
   workflow_dispatch:
     inputs:
       limit:
@@ -39,7 +42,8 @@ jobs:
           CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY_REAL }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-        run: python -m src.mine_feeds --limit "${{ github.event.inputs.limit || '60' }}" --sleep 3.0
+          MINE_LIMIT: ${{ inputs.limit || (github.event_name == 'push' && '6') || '60' }}
+        run: python -m src.mine_feeds --limit "$MINE_LIMIT" --sleep 3.0
 
       - name: Resolve "comment / link below" resources via the free engine pool (no commenting)
         env:

@@ -110,7 +110,10 @@ def check(el: dict, prev: dict) -> dict:
             return rec
         alive, final = _head(url)
         if alive:
-            sources += 1
+            # A live link to the same YouTube video is still one source.
+            video_hosts = {"youtube.com", "www.youtube.com", "m.youtube.com", "youtu.be"}
+            if not (el.get("source_videos") and _domain(final) in video_hosts):
+                sources += 1
             rec["consecutive_fails"] = 0
         else:
             rec["consecutive_fails"] += 1

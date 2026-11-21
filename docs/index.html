@@ -1049,13 +1049,14 @@
     .brief-theme b { flex:none; min-width:140px; color:var(--gold-ink); font-size:13.5px; }
     .brief-theme span { color:var(--text); font-size:14px; }
   </style>
+<style>.workspace-extras{margin:12px 0;padding:10px;border-top:1px solid var(--line)}.workspace-extras summary{cursor:pointer;font-weight:bold}.workspace-extras button{display:block;margin-top:8px}</style>
 </head>
 <body>
   <header>
     <div class="tile tile-id">
       <div class="subtitle">The living archive of artificial intelligence</div>
       <h1>Excavatortron</h1>
-      <p class="hero-sub">Every AI skill, tool, model &amp; MCP connector worth knowing &mdash; mined from the world's AI videos, analyzed, categorized and connected to their original sources.</p>
+      <p class="hero-sub">Every AI skill, tool, model &amp; MCP connector worth knowing &mdash; extracted from videos, public repositories and community sources, analyzed, categorized and connected to their original sources.</p>
       <div class="meta" id="meta">Loading…</div>
       <span class="build-badge" id="build-badge" title="Build version — if this matches the latest, you're on the newest dashboard"></span>
       <a class="build-badge" href="hub_api.json" title="Machine-readable knowledge library" style="text-decoration:none">Data API</a>
@@ -1105,10 +1106,7 @@
 
   <nav id="tabs">
     <button data-tab="overview" class="active">Overview</button>
-    <button data-tab="videos">Video Library</button>
     <button data-tab="hub">🛢 Hub</button>
-    <button data-tab="packages">🧰 Packages</button>
-    <button data-tab="taste">🎛 Taste</button>
     <button data-tab="skills">Skills Library</button>
     <button data-tab="tools">Tool Rating</button>
     <button data-tab="comingsoon">Coming Soon</button>
@@ -1117,11 +1115,15 @@
     <button data-tab="tips">Tips &amp; Commands</button>
     <button data-tab="news">News Feed</button>
     <button data-tab="connectors">Connectors</button>
-    <button data-tab="designs">Designs</button>
     <button data-tab="sources">Grow Sources</button>
     <button data-tab="effectiveness">Effectiveness</button>
     <button data-tab="selfimprove">Self-Improvement</button>
     <button data-tab="devbuild">Dev Construction</button>
+    <details class="workspace-extras"><summary>Workspace extras</summary>
+    <button data-tab="packages">🧰 Packages</button>
+    <button data-tab="taste">🎛 Taste</button>
+    <button data-tab="designs">Designs</button>
+    </details>
   </nav>
 
   <main id="view"><p class="empty">Loading…</p></main>

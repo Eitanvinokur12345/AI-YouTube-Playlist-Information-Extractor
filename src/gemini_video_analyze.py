@@ -42,8 +42,8 @@ def _iso_minutes(iso: str) -> int:
     return max(1, round(h * 60 + mi + s / 60))
 
 
-def analyze_video(video_id: str, key: str, timeout: int = 180) -> dict | None:
-    url = (f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent?key={key}")
+def analyze_video(video_id: str, key: str, timeout: int = 180, model: str = MODEL) -> dict | None:
+    url = (f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}")
     prompt = (
         "You are WATCHING this AI YouTube video (audio AND on-screen visuals). Extract structured data "
         "for a skills/tools dashboard, including things shown ONLY on screen (UIs, tool names in the "
@@ -100,7 +100,7 @@ def main() -> int:
         if v and v not in keys:
             keys.append(v)
     if not keys:
-        print("No Gemini key (EXTERNAL_REVIEW_API_KEY / GEMINI_API_KEY[_n]) — skipped (graceful)."); return 0
+        print("Video analysis blocked: no configured Gemini key."); return 1
     daily_budget = DAILY_MINUTES * len(keys)    # each key carries its own free quota
     ki = 0                                       # round-robin index across keys
 
@@ -110,18 +110,20 @@ def main() -> int:
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     used_today = (st.get("daily", {}) or {}).get(today, 0)
 
-    todo = []
-    for f in sorted(glob.glob(str(PROCESSED / "*.json"))):
-        r = load(Path(f), None)
-        if not isinstance(r, dict):
-            continue
-        vid = r.get("video_id")
-        if not vid or vid in done or vid in failed:
-            continue
-        # prioritise videos with NO real transcript (no analysis at all)
-        todo.append((0 if r.get("transcript_source") != "transcript" else 1, r))
-    todo.sort(key=lambda x: x[0])
-    todo = [r for _, r in todo]
+    candidates = {}
+    for folder in (DATA / "_pending", PROCESSED):
+        for path in sorted(folder.glob("*.json")):
+            r = load(path, None)
+            if not isinstance(r, dict):
+                continue
+            vid = r.get("video_id")
+            if not isinstance(vid, str) or not re.fullmatch(r"[A-Za-z0-9_-]{11}", vid):
+                continue
+            if vid not in done and vid not in failed:
+                candidates.setdefault(vid, (path, r))
+    todo = sorted(candidates.values(), key=lambda pair: (
+        pair[1].get("transcript_source") in ("transcript", "whisper"),
+        pair[0].parent == PROCESSED, pair[0].name))
     print(f"gemini-video: {len(todo)} candidates ({len(failed)} known-unfetchable skipped), "
           f"{used_today}m of ~{daily_budget}m used today across {len(keys)} key(s)")
 
@@ -134,7 +136,7 @@ def main() -> int:
     ns = nt = nc = npr = ncm = nd = ok = err = skip = 0
     consecutive = 0          # consecutive SYSTEMIC errors (quota/auth); a few bad videos don't count
     visual = st.get("visual_notes", [])
-    for r in todo[: max(args.limit, 0)]:
+    for path, r in todo[: max(args.limit, 0)]:
         mins = _iso_minutes(r.get("duration", ""))
         if used_today + mins > daily_budget:
             print("  daily free quota reached across all keys — stopping; resumes tomorrow."); break
@@ -146,7 +148,7 @@ def main() -> int:
         # separate), then exponential backoff + retry. So one key hitting its limit doesn't stall us.
         backoff, tries = max(args.sleep, 4.0), 0
         while (isinstance(res, dict) and res.get("_error") and tries < 4
-               and any(c in res["_error"] for c in ("429", "503", "Too Many", "Unavailable",
+               and any(c in res["_error"] for c in ("503", "Unavailable",
                                                     "timed out", "timeout", "500"))):
             ki = (ki + 1) % len(keys)
             backoff = min(backoff * 2 + 6, 90)
@@ -155,14 +157,11 @@ def main() -> int:
             time.sleep(backoff if len(keys) == 1 else min(backoff, 8))   # with >1 key, mostly just rotate
             res = analyze_video(vid, keys[ki])
             tries += 1
-        if not isinstance(res, dict) or res.get("_error"):
+        if isinstance(res, dict) and "429" in str(res.get("_error", "")):
+            res = analyze_video(vid, keys[ki], model="gemini-2.5-flash-lite")
+        if not isinstance(res, dict) or not isinstance(res.get("relevant"), bool) or res.get("_error"):
             emsg = res.get("_error", "") if isinstance(res, dict) else "bad response"
             # Per-VIDEO failure (this video isn't fetchable) -> skip it forever, keep going.
-            if any(c in emsg for c in ("403", "404", "Forbidden", "Not Found", "PERMISSION_DENIED")):
-                failed.add(vid); skip += 1; consecutive = 0
-                if skip <= 3:
-                    print(f"  {vid}: unfetchable ({emsg}) — skipping permanently.")
-                continue
             # SYSTEMIC failure (quota/auth/network) -> back off; stop only if it persists.
             err += 1; consecutive += 1
             if err <= 3:
@@ -186,7 +185,7 @@ def main() -> int:
         for v in (res.get("visual_notes") or [])[:3]:
             visual.append({"video_id": vid, "note": str(v)[:200], "at": NOW})
         r["gemini_video_analyzed"] = True            # mark covered even without a transcript
-        save(PROCESSED / f"{vid}.json", r)
+        save(path, r)
 
     if ns:
         save(DATA / "skills.json", skills)
@@ -207,7 +206,7 @@ def main() -> int:
     print(f"gemini-video: watched {ok} videos -> +{ns} skills, +{nt} tools, +{nc} connectors, "
           f"+{npr} prompts, +{ncm} commands, +{nd} designs ({skip} unfetchable skipped, {err} systemic errors). "
           f"NO Claude-Pro tokens used.")
-    return 0
+    return 1 if err and not ok else 0
 
 
 if __name__ == "__main__":

@@ -29,7 +29,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 2
           persist-credentials: true
       - uses: actions/setup-python@v5
         with:
@@ -42,6 +42,9 @@ jobs:
           CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY_REAL }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          SAMBANOVA_API_KEY: ${{ secrets.SAMBANOVA_API_KEY }}
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
           MINE_LIMIT: ${{ inputs.limit || (github.event_name == 'push' && '6') || '60' }}
         run: python -m src.mine_feeds --limit "$MINE_LIMIT" --sleep 3.0
 
@@ -109,4 +112,4 @@ jobs:
               git commit --no-edit || echo "unresolved conflict outside the known-stateless set — leaving for manual/next-run recovery"
             fi
           fi
-          git push || echo "push skipped"
+          git push origin HEAD:main

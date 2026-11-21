@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from src import gemini_video_analyze as watch, mine_feeds, element_model
+from src import gemini_video_analyze as watch, mine_feeds, element_model, bulk_analyze
 
 
 class KnowledgePipeline(unittest.TestCase):
@@ -44,12 +44,23 @@ class KnowledgePipeline(unittest.TestCase):
             engine = dict(name="test", model="mock", provider="mock", base_url="", key="")
             with (patch.object(mine_feeds, "DATA", data), patch.object(mine_feeds, "STATE", data / "state.json"),
                   patch.object(mine_feeds, "build_pool", return_value=[engine]),
+                  patch.object(mine_feeds, "primary_excerpt", return_value="Example model primary docs"),
                   patch.object(sys, "argv", ["mine", "--limit", "1", "--sleep", "0"]),
-                  patch.object(mine_feeds, "extract", return_value={"relevant": True, "tools": [{"name": "Example model"}]}) as extract):
+                  patch.object(bulk_analyze, "extract", return_value={"relevant": True, "tools": [{"name": "Example model"}]}) as extract):
                 self.assertEqual(mine_feeds.main(), 0)
                 self.assertEqual(json.loads((data / "tools.json").read_text())["tools"][0]["source_url"], url)
                 self.assertEqual(mine_feeds.main(), 0)
                 self.assertEqual(extract.call_count, 1)
+
+    def test_same_record_reaches_second_provider(self):
+        engines = [dict(name=name, provider="", base_url="", key="", model="") for name in ["a", "b"]]
+        from urllib.error import HTTPError
+        with patch.object(bulk_analyze, "extract", side_effect=[
+                HTTPError("https://example.org", 429, "quota", {}, None), {"relevant": False}]) as extract:
+            failures = {}
+            provider, result = bulk_analyze.extract_with_fallback(engines, "same transcript", 1, failures)
+            self.assertEqual((provider["name"], result, failures["a"]), ("b", {"relevant": False}, 3))
+            self.assertEqual([call.args[-2] for call in extract.call_args_list], ["same transcript"] * 2)
 
     def test_one_live_link_does_not_verify_a_skill(self):
         element = {"type": "skill", "what": "A specific technique with a documented procedure." * 3,

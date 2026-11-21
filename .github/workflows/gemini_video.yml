@@ -34,7 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 2
           persist-credentials: true
       - uses: actions/setup-python@v5
         with:
@@ -95,4 +95,4 @@ jobs:
               git commit --no-edit || echo "unresolved conflict outside the known-stateless set — leaving for manual/next-run recovery"
             fi
           fi
-          git push || echo "push skipped"
+          git push origin HEAD:main

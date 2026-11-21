@@ -201,6 +201,31 @@ def extract(provider: str, base_url: str, api_key: str, model: str, prompt: str,
     return call_gemini(api_key, model, prompt, timeout)
 
 
+def extract_with_fallback(engines, prompt, timeout, failures):
+    """Try remaining providers on this record, cooling down unavailable engines for this run."""
+    for engine in engines:
+        name = engine["name"]
+        if failures.get(name, 0) >= 3:
+            continue
+        try:
+            result = extract(engine["provider"], engine["base_url"], engine["key"],
+                             engine["model"], prompt, timeout)
+            if not isinstance(result, dict) or not isinstance(result.get("relevant"), bool):
+                raise ValueError("missing relevance decision")
+            for field in ("tools", "skills", "connectors", "prompts"):
+                values = result.get(field, [])
+                if not isinstance(values, list) or not all(isinstance(v, dict) for v in values):
+                    raise ValueError("invalid findings collection")
+        except Exception as error:
+            code = getattr(error, "code", None)
+            failures[name] = 3 if code in (401, 403, 404, 429) else failures.get(name, 0) + 1
+            print(f"  {name}: {code or type(error).__name__}; trying the next engine")
+            continue
+        failures[name] = 0
+        return engine, result
+    return None, None
+
+
 def build_prompt(rec: dict, transcript_chars: int) -> str:
     content = (rec.get("transcript") or rec.get("description") or rec.get("title") or "")[:transcript_chars]
     comments = rec.get("top_comments") or []
@@ -432,32 +457,19 @@ def main() -> int:
 
     done = skip = ns = nt = npr = nc = 0
     boiler_stats: dict = {}
-    ERR_LIMIT = 3                                # drop an engine after this many errors in a row
     errs = {e["name"]: 0 for e in engines}
-    disabled: set = set()
     idx = 0
     for f, rec in todo:
         vid = rec.get("video_id", "")
-        active = [e for e in engines if e["name"] not in disabled]
-        if not active:
-            print("  all engines disabled (rate-limited/forbidden) — stopping; the rest stay pending.")
+        if all(errs.get(e["name"], 0) >= 3 for e in engines):
             break
-        eng = active[idx % len(active)]          # round-robin among ENGINES THAT STILL WORK
+        start = idx % len(engines)
         idx += 1
         time.sleep(args.sleep)
-        try:
-            result = extract(eng["provider"], eng["base_url"], eng["key"], eng["model"],
-                             build_prompt(rec, tchars), timeout)
-        except Exception as e:  # noqa: BLE001 — never crash the batch
-            errs[eng["name"]] += 1
-            note = ""
-            if errs[eng["name"]] >= ERR_LIMIT:
-                disabled.add(eng["name"])
-                note = f"  -> dropping {eng['name']} for this run"
-            print(f"  {vid}: {eng['name']} error {type(e).__name__}: {str(e)[:70]} (left pending){note}")
+        eng, result = extract_with_fallback(engines[start:] + engines[:start], build_prompt(rec, tchars), timeout, errs)
+        if result is None:
             skip += 1
             continue
-        errs[eng["name"]] = 0                     # a success clears the streak
         per_engine[eng["name"]] += 1
         if result.get("relevant") is not False:
             # tools FIRST so merge_skills can see this video's own tool candidates too (not just
@@ -492,7 +504,7 @@ def main() -> int:
           f"+{npr} prompts, +{nc} connectors | {skip} left pending"
           + (f" | {nb} bare-product-name skill stub(s) caught pre-write, routed to tools instead" if nb else "")
           + ". NO Claude-Pro tokens used.")
-    return 0
+    return 1 if todo and not done else 0
 
 
 if __name__ == "__main__":

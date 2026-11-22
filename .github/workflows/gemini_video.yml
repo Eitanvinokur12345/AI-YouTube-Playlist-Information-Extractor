@@ -81,8 +81,10 @@ jobs:
           git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor.git"
           git add -- data skills other-skills
           if git diff --cached --quiet; then exit 0; fi
-          git diff --cached --binary > "$RUNNER_TEMP/acquisition.patch"
+          git diff --cached --full-index --binary > "$RUNNER_TEMP/acquisition.patch"
           git commit -m "Publish analysis results ($GITHUB_RUN_ID)"
+          git worktree add --detach "$RUNNER_TEMP/analysis-publish" HEAD
+          cd "$RUNNER_TEMP/analysis-publish"
           for attempt in 1 2 3; do
             git fetch origin main
             if ! git rebase FETCH_HEAD; then

@@ -30,7 +30,7 @@ ROOT = Path(__file__).parent.parent
 DATA = ROOT / "data"
 PROCESSED = DATA / "processed"
 STATE = DATA / "gemini_analyzed.json"
-MODEL = "gemini-2.5-flash"
+MODEL = "gemini-3.8-flash"
 DAILY_MINUTES = 440          # stay safely under the ~8h (480m)/day free YouTube quota
 
 
@@ -157,8 +157,8 @@ def main() -> int:
             time.sleep(backoff if len(keys) == 1 else min(backoff, 8))   # with >1 key, mostly just rotate
             res = analyze_video(vid, keys[ki])
             tries += 1
-        if isinstance(res, dict) and "429" in str(res.get("_error", "")):
-            res = analyze_video(vid, keys[ki], model="gemini-2.5-flash-lite")
+        if isinstance(res, dict) and any(code in str(res.get("_error", "")) for code in ("429", "404")):
+            res = analyze_video(vid, keys[ki], model="gemini-2.5-flash")
         if not isinstance(res, dict) or not isinstance(res.get("relevant"), bool) or res.get("_error"):
             emsg = res.get("_error", "") if isinstance(res, dict) else "bad response"
             # Per-VIDEO failure (this video isn't fetchable) -> skip it forever, keep going.

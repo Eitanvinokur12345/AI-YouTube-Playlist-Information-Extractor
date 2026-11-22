@@ -42,7 +42,7 @@ def _iso_minutes(iso: str) -> int:
     return max(1, round(h * 60 + mi + s / 60))
 
 
-def analyze_video(video_id: str, key: str, timeout: int = 180, model: str = MODEL) -> dict | None:
+def analyze_video(video_id: str, key: str, timeout: int = 65, model: str = MODEL) -> dict | None:
     url = (f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}")
     prompt = (
         "You are WATCHING this AI YouTube video (audio AND on-screen visuals). Extract structured data "
@@ -111,6 +111,7 @@ def main() -> int:
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     used_today = (st.get("daily", {}) or {}).get(today, 0)
 
+    last_attempt = dict(st.get('last_unsuccessful_attempt') or {})
     candidates = {}
     for folder in (DATA / "_pending", PROCESSED):
         for path in sorted(folder.glob("*.json")):
@@ -123,6 +124,7 @@ def main() -> int:
             if vid not in done and vid not in failed:
                 candidates.setdefault(vid, (path, r))
     todo = sorted(candidates.values(), key=lambda pair: (
+        last_attempt.get(pair[1]["video_id"], ""),
         pair[1].get("transcript_source") in ("transcript", "whisper"),
         pair[0].parent == PROCESSED, pair[0].name))
     print(f"gemini-video: {len(todo)} candidates ({len(failed)} known-unfetchable skipped), "
@@ -145,31 +147,23 @@ def main() -> int:
         time.sleep(args.sleep)
         ki = (ki + 1) % len(keys)                 # round-robin keys to spread the load/quota
         res = analyze_video(vid, keys[ki])
-        # TRANSIENT rate-limit / overload (429/503) -> rotate to the NEXT key first (its quota is
-        # separate), then exponential backoff + retry. So one key hitting its limit doesn't stall us.
-        backoff, tries = max(args.sleep, 4.0), 0
-        while (isinstance(res, dict) and res.get("_error") and tries < 4
-               and any(c in res["_error"] for c in ("503", "Unavailable",
-                                                    "timed out", "timeout", "500"))):
+        # Try a second model on the same item. Persistent provider errors re-enter
+        # the queue behind untouched videos on the next scheduled run.
+        if isinstance(res, dict) and res.get("_error"):
             ki = (ki + 1) % len(keys)
-            backoff = min(backoff * 2 + 6, 90)
-            if tries == 0:
-                print(f"  {vid}: transient ({res['_error']}) — next key + backing off up to {backoff:.0f}s")
-            time.sleep(backoff if len(keys) == 1 else min(backoff, 8))   # with >1 key, mostly just rotate
-            res = analyze_video(vid, keys[ki])
-            tries += 1
-        if isinstance(res, dict) and any(code in str(res.get("_error", "")) for code in ("429", "404")):
             res = analyze_video(vid, keys[ki], model="gemini-2.5-flash")
         if not isinstance(res, dict) or not isinstance(res.get("relevant"), bool) or res.get("_error"):
             emsg = res.get("_error", "") if isinstance(res, dict) else "bad response"
             # Per-VIDEO failure (this video isn't fetchable) -> skip it forever, keep going.
             # SYSTEMIC failure (quota/auth/network) -> back off; stop only if it persists.
+            last_attempt[vid] = datetime.now(timezone.utc).isoformat()
             err += 1; consecutive += 1
             if err <= 3:
                 print(f"  {vid}: systemic error ({emsg})")
             if consecutive >= 4:      # each already retried w/ backoff, so 4 in a row = quota spent
                 print("  persistent systemic errors after backoff (daily quota/auth) — stopping."); break
             continue
+        last_attempt.pop(vid, None)
         done.add(vid); used_today += mins; ok += 1; consecutive = 0
         if not res.get("relevant", True):
             continue
@@ -203,7 +197,7 @@ def main() -> int:
     daily = st.get("daily", {}) or {}
     daily[today] = used_today
     save(STATE, {"updated_at": NOW, "video_ids": sorted(done), "failed_ids": sorted(failed),
-                 "daily": daily, "visual_notes": visual[-500:]})
+                 "daily": daily, "visual_notes": visual[-500:], "last_unsuccessful_attempt": last_attempt})
     print(f"gemini-video: watched {ok} videos -> +{ns} skills, +{nt} tools, +{nc} connectors, "
           f"+{npr} prompts, +{ncm} commands, +{nd} designs ({skip} unfetchable skipped, {err} systemic errors). "
           f"NO Claude-Pro tokens used.")

@@ -30,6 +30,20 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 -m src.original_sources
+      - name: Verify a read-only agent can find and retrieve the original
+        run: |
+          python3 -m src.original_sources --find pdf --type skill > "$RUNNER_TEMP/agent-result.json"
+          python3 - <<'PY'
+          from hashlib import sha256
+          import json, os
+          from pathlib import Path
+          from urllib.request import urlopen
+          hits = json.loads((Path(os.environ["RUNNER_TEMP"]) / "agent-result.json").read_text())
+          source = next(row for row in hits if row["name"].lower() == "pdf")
+          with urlopen(source["raw_url"], timeout=25) as response:
+              assert sha256(response.read()).hexdigest() == source["sha256"]
+          print("Retrieved publisher bytes:", source["url"])
+          PY
       - name: Publish source index and public API
         run: |
           python3 -m src.build_hub_api

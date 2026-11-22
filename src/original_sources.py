@@ -1,4 +1,5 @@
 """Resolve catalogue leads to publisher artifacts; never import or execute upstream files."""
+import argparse
 import base64
 import hashlib
 import json
@@ -101,12 +102,16 @@ def refresh():
     hf = defaultdict(list)
     audit = load(DATA / "skill_scan.json", {}).get("skills", {})
     blocked = set()
+    discoveries = defaultdict(set)
     for typ, fname in (("skill", "skills"), ("connector", "connectors"), ("tool", "tools")):
         for row in load(DATA / (fname + ".json"), {}).get(fname, []):
             name = identity(row, typ)
             if not name:
                 continue
             key = typ + ":" + name
+            source = row.get("source_url")
+            if isinstance(source, str) and source.startswith("https://"):
+                discoveries[key].add(source)
             if typ == "skill" and audit.get(row.get("slug"), {}).get("result") == "detected":
                 blocked.add(key)
                 matches.pop(key, None)
@@ -244,10 +249,32 @@ def refresh():
     if not any(v.get("raw_url") for v in entries.values()):
         raise RuntimeError("No upstream skill documents available")
     doc = {"version": 1, "updated_at": datetime.now(timezone.utc).isoformat(), "cursor": cursor + 24,
-           "entries": sorted(entries.values(), key=lambda e: e["id"]), "matches": matches}
+           "entries": sorted(entries.values(), key=lambda e: e["id"]), "matches": matches,
+           "discovered_via": {k: sorted(discoveries[k]) for k in matches if discoveries[k]}}
     INDEX.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Published {len(entries)} originals and {len(matches)} catalogue matches")
 
 
+def search(query, kind=None, limit=10):
+    words = norm(query).split("-")
+    hits = []
+    for item in load(INDEX, {}).get("entries", []):
+        if kind and item["type"] != kind:
+            continue
+        name = norm(item["name"])
+        text = norm(" ".join([name, item.get("publisher", ""), item.get("description", ""), item.get("repo", "")]))
+        if all(word in text for word in words):
+            hits.append((name == norm(query), sum(word in name for word in words), item))
+    hits.sort(key=lambda hit: (-int(hit[0]), -hit[1], hit[2]["id"]))
+    return [item for _, _, item in hits[:limit]]
+
+
 if __name__ == "__main__":
-    refresh()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--find", help="Search published originals locally and output JSON")
+    parser.add_argument("--type", choices=("skill", "tool", "connector"))
+    args = parser.parse_args()
+    if args.find is None:
+        refresh()
+    else:
+        print(json.dumps(search(args.find, args.type), indent=2, ensure_ascii=False))

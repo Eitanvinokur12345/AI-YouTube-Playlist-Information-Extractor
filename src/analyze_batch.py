@@ -373,59 +373,6 @@ def merge_compat(c1, c2):
     return list(merged.values())
 
 
-def write_skill_md(skill, video):
-    if skill.get('quality_score', 0) < 5:
-        return
-    slug = skill['slug']
-    target_tool = (skill.get('target_tool') or 'claude').strip().lower()
-
-    if target_tool in ('', 'claude'):
-        folder = os.path.join(WORK_DIR, f'skills/{slug}')
-    else:
-        # Slugify so casing/punctuation variants of the same tool (e.g. "ChatGPT Ad Manager"
-        # vs "chatgpt-ad-manager") land in ONE folder, matching bulk_analyze.py's convention
-        # (CLAUDE.md Step 3: "each tool gets its OWN folder" — not two folders per tool).
-        tool_slug = re.sub(r'[^a-z0-9]+', '-', target_tool).strip('-') or 'other'
-        folder = os.path.join(WORK_DIR, f'other-skills/{tool_slug}/{slug}')
-
-    os.makedirs(folder, exist_ok=True)
-    path = os.path.join(folder, 'SKILL.md')
-    if os.path.exists(path):
-        return  # Don't overwrite
-
-    video_id = video.get('video_id', '')
-    title = video.get('title', '')
-    channel = video.get('channel_name', '')
-    tips = skill.get('tips', [])
-    techniques = tips[:3] if tips else [f'Use {skill["skill_name"]} in your AI workflow']
-
-    content = f"""---
-name: {slug}
-description: "Use {skill['skill_name']} for {skill.get('category', 'AI')} tasks — {skill.get('use_case', 'AI tool for productivity')[:80]}"
----
-
-# {skill['skill_name']}
-
-## Overview
-{skill.get('description', f'{skill["skill_name"]} is an AI tool for {skill.get("category", "productivity")} tasks.')}
-
-## Key Techniques
-{chr(10).join(f'- {t}' for t in techniques)}
-
-## How to Apply
-{skill.get('use_case', f'Apply {skill["skill_name"]} to your AI workflow as demonstrated in the source video.')}
-
-## Examples
-{skill.get('output', f'{skill["skill_name"]} generates outputs relevant to {skill.get("category", "AI")} use cases.')}
-
-## Source
-Extracted from: [{title}](https://www.youtube.com/watch?v={video_id})
-Channel: {channel}
-"""
-    with open(path, 'w', encoding='utf-8') as f:
-        f.write(content)
-
-
 def process_video(video, index_data):
     """Full processing of one video. Updates all data files."""
     video_id = video['video_id']
@@ -553,7 +500,6 @@ def process_video(video, index_data):
             skills_data['skills'].append(skill)
             index_data[slug] = {'score': skill['quality_score'], 'video_quality_score': skill['video_quality_score'], 'starred': False, 'target_tool': skill['target_tool']}
             skills_added += 1
-            write_skill_md(skill, video)
 
     save_json('data/skills.json', skills_data)
     save_json('data/index.json', index_data)

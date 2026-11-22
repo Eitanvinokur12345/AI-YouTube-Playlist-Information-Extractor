@@ -11,9 +11,19 @@ try:
         errors = []
         page.on("pageerror", lambda e: errors.append(str(e)))
         page.on("console", lambda m: errors.append(m.text) if m.type == "error" and any(t in m.text for t in ("ReferenceError", "TypeError", "SyntaxError")) else None)
+        page.route("**/data/original_sources.json", lambda r: r.fulfill(json={
+            "entries": [{"id": "fixture:publisher", "name": "Original document fixture", "type": "skill",
+                         "publisher": "publisher", "raw_url": "https://example.org/pinned/SKILL.md",
+                         "url": "https://example.org/pinned/SKILL.md", "package_url": "https://example.org/pinned/"}],
+            "matches": {}}))
         page.goto("http://127.0.0.1:8787/docs/", wait_until="domcontentloaded")
         page.get_by_role("heading", name="Knowledge library").wait_for()
         assert page.locator('nav button[data-tab="videos"]').count() == 0
+        page.locator('nav button[data-tab="skills"]').click()
+        original = page.get_by_role("link", name="Use original SKILL.md").first
+        original.wait_for()
+        assert original.get_attribute("href") == "https://example.org/pinned/SKILL.md"
+        assert not page.get_by_text("Copy ready-to-paste block").count()
         page.locator(".workspace-extras summary").click()
         for tab in ["hub", "skills", "tools", "prompts", "tips", "connectors", "packages", "taste", "selfimprove", "effectiveness", "devbuild"]:
             print("Testing tab:", tab, flush=True)

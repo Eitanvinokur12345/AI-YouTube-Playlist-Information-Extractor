@@ -1,0 +1,55 @@
+name: Resolve publisher originals
+on:
+  schedule:
+    - cron: "37 */3 * * *"
+  push:
+    branches: [main]
+    paths: ["src/original_sources.py", ".github/workflows/original_sources.yml"]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: resolve-publisher-originals
+  cancel-in-progress: false
+jobs:
+  resolve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 2
+      - name: Update malware signatures
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y clamav
+          sudo systemctl stop clamav-freshclam || true
+          sudo freshclam
+      - name: Resolve and scan publisher artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 -m src.original_sources
+      - name: Verify a read-only agent can find and retrieve the original
+        run: |
+          python3 -m src.original_sources --find pdf --type skill > "$RUNNER_TEMP/agent-result.json"
+          python3 - <<'PY'
+          from hashlib import sha256
+          import json, os
+          from pathlib import Path
+          from urllib.request import urlopen
+          hits = json.loads((Path(os.environ["RUNNER_TEMP"]) / "agent-result.json").read_text())
+          source = next(row for row in hits if row["name"].lower() == "pdf")
+          with urlopen(source["raw_url"], timeout=25) as response:
+              assert sha256(response.read()).hexdigest() == source["sha256"]
+          print("Retrieved publisher bytes:", source["url"])
+          PY
+      - name: Publish source index and public API
+        run: |
+          python3 -m src.build_hub_api
+          git config user.name skills-tracker-bot
+          git config user.email actions@users.noreply.github.com
+          git add data/original_sources.json docs/hub_api.json docs/hub_api_packages.json
+          git commit -m "Refresh publisher sources and public catalogue"
+          git pull --rebase origin main
+          git push origin HEAD:main

@@ -31,7 +31,7 @@ Setup: ensure the frontend-design skill is installed; open the design's `source_
 ---
 
 ## Native-artifact templates (when activating a found item for a NON-Claude tool)
-Write under `./excavatortron-deploy/{tool}/…`. Fill the item's name + instructions.
+Write under `./excavatortron-deploy/{tool}/…`. Include the publisher URL, pinned SKILL.md, package directory and digest from the source index in any adapter. Use a pending status when the original is unresolved.
 
 ### Cursor → `.cursor/rules/{slug}.mdc`
 ```

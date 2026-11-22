@@ -34,6 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 2
           persist-credentials: true
       - uses: actions/setup-python@v5
@@ -78,21 +79,24 @@ jobs:
           git config user.name "skills-tracker-bot"
           git config user.email "actions@users.noreply.github.com"
           git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/Eitanvinokur12345/AI-YouTube-Playlist-Information-Extractor.git"
-          git add data skills other-skills 2>/dev/null || true
-          git commit -m "gemini-video (watch & extract): $(date -u +%Y-%m-%dT%H:%MZ)" || echo "nothing to commit"
-          # 2026-07-27 (away fire 31): same fix as mine.yml/core_spoton.yml (fire 28/29) — twice
-          # daily, a same-window collision risk with the hourly/6-hourly lanes. Abort a failed
-          # rebase and retry as a merge; auto-resolve only the known-stateless
-          # data/data_guard.json in our favor. Any other conflict is left unresolved on purpose
-          # (degrades to today's push-skipped, never worse).
-          if ! git pull --rebase --autostash origin main; then
-            echo "rebase failed — aborting and retrying as a merge"
-            git rebase --abort 2>/dev/null || true
-            if ! git pull --no-rebase --no-edit origin main; then
-              echo "merge also conflicted — auto-resolving known-stateless files in our favor (data_guard.json + fully-regenerated readouts)"
-              git checkout --ours -- data/data_guard.json data/health.json data/effectiveness.json data/hub.json data/self_check.json data/safety.json data/guardrails_status.json 2>/dev/null || true
-              git add data/data_guard.json data/health.json data/effectiveness.json data/hub.json data/self_check.json data/safety.json data/guardrails_status.json 2>/dev/null || true
-              git commit --no-edit || echo "unresolved conflict outside the known-stateless set — leaving for manual/next-run recovery"
+          git add -- data skills other-skills
+          if git diff --cached --quiet; then exit 0; fi
+          git diff --cached --binary > "$RUNNER_TEMP/acquisition.patch"
+          git commit -m "Publish analysis results ($GITHUB_RUN_ID)"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if ! git rebase FETCH_HEAD; then
+              python -m src.reconcile_acquisition
+              GIT_EDITOR=true git rebase --continue
             fi
-          fi
-          git push origin HEAD:main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep "$((attempt * 2))"
+          done
+          exit 1
+      - name: Preserve unpublished data changes for recovery
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acquisition-changes-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/acquisition.patch
+          if-no-files-found: ignore

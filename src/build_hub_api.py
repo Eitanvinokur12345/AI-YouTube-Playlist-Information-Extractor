@@ -74,19 +74,33 @@ def build() -> dict:
 
     elements = [_compact(e.to_dict()) for e in by_id.values() if e.is_usable()]
 
+    originals = _load(DATA / "original_sources.json", {})
+    source_by_id = {r["id"]: r for r in originals.get("entries", [])}
+    def publisher_item(e):
+        if e.get("type") not in {"skill", "tool", "connector"}:
+            return e
+        import re
+        name = re.sub(r"[^a-z0-9]+", "-", (e.get("name") or "").lower()).strip("-")
+        source = source_by_id.get(originals.get("matches", {}).get(e["type"] + ":" + name))
+        return {**e, "url": (source or {}).get("raw_url") or (source or {}).get("url", ""),
+                "install": "", "publisher_source": source, "source_status": "resolved" if source else "pending"}
+    elements = [publisher_item(e) for e in elements]
+    elements = [e for e in elements if e.get("source_status") != "pending"]
+
     packages = []
     for p in core.Package.all():
         resolved = []
         for eid in p.element_ids:
             e = by_id.get(eid)
-            resolved.append(_compact(e.to_dict()) if e else
+            resolved.append(publisher_item(_compact(e.to_dict())) if e else
                             {"id": eid, "type": "?", "name": eid, "what": "",
                              "install": "", "url": "", "verified": "unknown"})
         packages.append({"id": _slug(p.name), "name": p.name, "what": p.note,
                          "elements": resolved})
 
     api = {
-        "version": 1,
+        "version": 2,
+        "publisher_index": "../data/original_sources.json",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "endpoint": ENDPOINT,
         "usage": "GET this file. Find a package in .packages[], or an element in .elements[] "

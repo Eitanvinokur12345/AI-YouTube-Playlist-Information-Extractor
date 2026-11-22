@@ -1,0 +1,59 @@
+name: Recover saved acquisition
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Acquisition run containing the saved data patch
+        required: true
+  push:
+    branches: [main]
+    paths: [".github/workflows/recover_acquisition.yml"]
+permissions:
+  actions: read
+  contents: write
+jobs:
+  recover:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[recover-acquisition ')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 2
+      - name: Identify saved data
+        id: source
+        env:
+          REQUESTED: ${{ inputs.run_id }}
+          MESSAGE: ${{ github.event.head_commit.message }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [[ -z "$REQUESTED" && "$MESSAGE" =~ \[recover-acquisition\ ([0-9]+)\] ]]; then REQUESTED=${BASH_REMATCH[1]}; fi
+          [[ "$REQUESTED" =~ ^[0-9]+$ ]]
+          lane=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$REQUESTED" --jq '.path')
+          [[ "$lane" == ".github/workflows/mine.yml" || "$lane" == ".github/workflows/gemini_video.yml" ]]
+          echo "run=$REQUESTED" >> "$GITHUB_OUTPUT"
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ steps.source.outputs.run }}
+          pattern: acquisition-changes-*
+          path: ${{ runner.temp }}/recovery
+      - name: Apply saved catalogue changes
+        env:
+          SOURCE_RUN: ${{ steps.source.outputs.run }}
+        run: |
+          patch=$(find "$RUNNER_TEMP/recovery" -name acquisition.patch -type f | sort -V | tail -1)
+          test -n "$patch"
+          if git apply --reverse --check --include='data/*.json' "$patch"; then
+            echo "Data already present"; exit 0
+          fi
+          if ! git apply --index --3way --include='data/*.json' "$patch"; then
+            test -n "$(git diff --name-only --diff-filter=U)"
+            python3 -m src.reconcile_acquisition
+          fi
+          git diff --cached --quiet && exit 0
+          git config user.name skills-tracker-bot
+          git config user.email actions@users.noreply.github.com
+          git commit -m "Recover findings from acquisition $SOURCE_RUN"
+          git pull --rebase origin main
+          git push origin HEAD:main

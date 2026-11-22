@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-22T02:45:47.361008+00:00",
+  "generated_at": "2026-11-22T12:58:16.992922+00:00",
   "north_star": "A huge, machine-readable hub of all AI knowledge that also improves existing skills, integrates new parts, and tests better versions.",
   "dimensions": [
     "quality",
@@ -24,11 +24,11 @@
   "transcript_sources": {
     "transcript": 167,
     "whisper": 0,
-    "supadata": 19,
-    "description_only": 4461,
+    "supadata": 22,
+    "description_only": 4458,
     "total": 4647
   },
-  "library_quality": 3.62,
+  "library_quality": 3.61,
   "lanes": [
     {
       "id": "analysis_claude",
@@ -120,30 +120,7 @@
         "quantity",
         "time"
       ],
-      "improve_note": "Recovers ~85% of caption-less videos fast from a home IP (coverage 10.3%) + translates foreign captions. No longer required — Supadata is the unattended baseline; this is the turbo when we're in a session. Block-aware (auto-stops on the escalating IP block)."
-    },
-    {
-      "id": "transcript_supadata",
-      "name": "Transcript fetch — Supadata (cloud, UNATTENDED)",
-      "kind": "retrieval",
-      "engine": "Supadata API (their infra, no PC)",
-      "metrics": {
-        "quality": 8.5,
-        "quantity": 8.3,
-        "form": 9.0,
-        "time": 8.0,
-        "tokens": 10.0,
-        "ease_external": 8.0,
-        "ease_project": 9.0,
-        "ease_user": 8.0
-      },
-      "effectiveness": 8.6,
-      "rigidity": 4,
-      "weak_dims": [
-        "time",
-        "ease_external"
-      ],
-      "improve_note": "PROVEN working & PC-FREE (the autonomy baseline): fetches on Supadata's infra so the datacenter-IP block doesn't apply; daily, dead-video skip protects the ~100/mo free quota (19 recovered). Lever: the quota caps backlog speed, not new videos."
+      "improve_note": "Recovers ~85% of caption-less videos fast from a home IP (coverage 10.4%) + translates foreign captions. No longer required — Supadata is the unattended baseline; this is the turbo when we're in a session. Block-aware (auto-stops on the escalating IP block)."
     },
     {
       "id": "analysis_free",
@@ -166,7 +143,7 @@
         "quality",
         "ease_external"
       ],
-      "improve_note": "Turns transcripts into records at 0 Claude cost via 4 VERIFIED engines (gpt-4.1-mini, OpenRouter, Groq, Gemini; pool auto-drops failures). Library avg quality 3.62/10, 2% low-source. Output is externally consumable via data/hub.json."
+      "improve_note": "Turns transcripts into records at 0 Claude cost via 4 VERIFIED engines (gpt-4.1-mini, OpenRouter, Groq, Gemini; pool auto-drops failures). Library avg quality 3.61/10, 2% low-source. Output is externally consumable via data/hub.json."
     },
     {
       "id": "web_news",
@@ -189,13 +166,36 @@
         "quality",
         "form"
       ],
-      "improve_note": "Always-on (every 6h), 95 RSS sources across labs, research (arXiv/BAIR/MIT), community (Reddit/HN) and top analysts; 7075 items stored. Dead feeds auto-prune."
+      "improve_note": "Always-on (every 6h), 95 RSS sources across labs, research (arXiv/BAIR/MIT), community (Reddit/HN) and top analysts; 6980 items stored. Dead feeds auto-prune."
+    },
+    {
+      "id": "transcript_supadata",
+      "name": "Transcript fetch — Supadata (cloud, UNATTENDED)",
+      "kind": "retrieval",
+      "engine": "Supadata API (their infra, no PC)",
+      "metrics": {
+        "quality": 8.5,
+        "quantity": 9.3,
+        "form": 9.0,
+        "time": 8.0,
+        "tokens": 10.0,
+        "ease_external": 8.0,
+        "ease_project": 9.0,
+        "ease_user": 8.0
+      },
+      "effectiveness": 8.7,
+      "rigidity": 4,
+      "weak_dims": [
+        "time",
+        "ease_external"
+      ],
+      "improve_note": "PROVEN working & PC-FREE (the autonomy baseline): fetches on Supadata's infra so the datacenter-IP block doesn't apply; daily, dead-video skip protects the ~100/mo free quota (22 recovered). Lever: the quota caps backlog speed, not new videos."
     }
   ],
   "summary": {
     "weakest_lane": "Deep analysis (Claude, night-gated)",
     "weakest_effectiveness": 6.8,
     "top_improvement": "Highest quality, reserved for curation/self-improve (not bulk) to protect the small Pro budget — night-gated by design. The free pool carries the volume.",
-    "transcript_coverage_pct": 10.3
+    "transcript_coverage_pct": 10.4
   }
 }

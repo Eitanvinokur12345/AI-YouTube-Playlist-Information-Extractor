@@ -201,6 +201,7 @@ function elRunBadge(e) {
 
 // M1.4 — the per-card ACTION ROW: Activate / Open(<10s) / Use / Video / Bundle / Source
 function elementActions(e, always) {
+  if (["skill", "tool", "connector"].includes(e.type)) return '<div class="el-actions always">'+originalAction(e.type, e)+'</div>';
   const links = e.links || {};
   const warm = _ewarm && _ewarm[e.id];
   const vid = (e.source_videos || [])[0];
@@ -289,6 +290,7 @@ function activationRecipe(e) {
 // prompt/command carry paste-text; every other type needs a real link or install anchor, not a bare stub.
 function elReady(e) {
   const t = (e && e.type) || "", L = (e && e.links) || {};
+  if (["skill", "tool", "connector"].includes(t)) return !!originalFor(t, e);
   if (t === "prompt" || t === "command") return !!(((e.body || "").trim()) || ((e.name || "").trim()));
   return !!(L.github || L.website || L.source_url || (e && (e.install || e.install_or_source)));
 }
@@ -611,49 +613,30 @@ const fmtDate = (s) => {
 // The project catalogues skills as SKILL.md, but to use one you must get it INTO the tool's
 // session. This generates a tool-specific deploy instruction + a ready-to-paste block so the
 // skill works "as if uploaded to the environment" — paste it and the tool follows it.
-function deployHowto(tool) {
-  const t = (tool || "").toLowerCase();
-  if (t.includes("claude"))
-    return `Claude: save the SKILL.md to your skills folder — <code>~/.claude/skills/&lt;slug&gt;/SKILL.md</code> (Claude Code) or upload it under Settings → Capabilities → Skills on claude.ai. Claude auto-loads it when relevant. Or paste the block below into a Project's custom instructions.`;
-  if (t.includes("chatgpt") || t.includes("openai") || t.includes("gpt"))
-    return `ChatGPT: create a Custom GPT (or open a Project) and paste the block below as its instructions — or paste it as your first message in a normal chat.`;
-  if (t.includes("cursor") || t.includes("windsurf"))
-    return `Cursor / Windsurf: add the block below to your project rules (<code>.cursor/rules</code> or <code>.windsurfrules</code>) — or paste it into the chat.`;
-  if (t.includes("gemini"))
-    return `Gemini: create a Gem with the block below as its instructions, or paste it into the chat.`;
-  if (t.includes("copilot"))
-    return `GitHub Copilot: add the block below to <code>.github/copilot-instructions.md</code>, or paste it into Copilot Chat.`;
-  return `Paste the block below into the tool's system prompt (or your first message). That loads the skill into the session — as if it were installed in the environment.`;
+let originalEntries = new Map();
+let originalMatches = {};
+let originalsLoading;
+function originalKey(type, name) {
+  return type + ":" + String(name || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
-function skillPrompt(s) {
-  const lines = [`# ${s.skill_name || s.slug}`, "", (s.description || "").trim()];
-  if (s.use_case) lines.push("", `When to use: ${String(s.use_case).trim()}`);
-  if (s.output) lines.push("", `What it produces: ${String(s.output).trim()}`);
-  const tips = [].concat(s.tips || [], s.general_tips || []).filter(Boolean);
-  if (tips.length) { lines.push("", "Tips:"); tips.slice(0, 6).forEach(t => lines.push(`- ${t}`)); }
-  if ((s.compatibility || []).length)
-    lines.push("", "Works with: " + s.compatibility.map(c => (c.tool || "") +
-      (c.up_to_version && c.up_to_version !== "any" ? ` (${c.up_to_version})` : "")).join(", "));
-  if ((s.slash_commands || []).length) lines.push("", "Commands: " + s.slash_commands.join(" "));
-  if (s.source_url) lines.push("", `Source: ${s.source_url}`);
-  return lines.join("\n");
+function originalFor(type, item) {
+  return originalEntries.get(item.originalId || originalMatches[originalKey(type, item.skill_name || item.name)]);
 }
-function useBox(s) {
-  return `<details class="usebox"><summary>⌁ Use this skill</summary>
-    <p class="howto">${deployHowto(s.target_tool)}</p>
-    <div class="copyrow"><button class="copybtn" type="button">Copy ready-to-paste block</button>
-      ${s.slug ? `<a class="mdlink" href="../skills/${esc(s.slug)}/SKILL.md" title="The full SKILL.md package">SKILL.md ↗</a>` : ""}</div>
-    <pre class="useprompt">${esc(skillPrompt(s))}</pre></details>`;
+function originalAction(type, item) {
+  const original = originalFor(type, item);
+  if (!original) return '<span class="sub">Publisher source pending</span>';
+  if (type === "skill") return '<div class="copyrow"><a class="mdlink" href="'+esc(original.raw_url)+'" target="_blank" rel="noopener">Use original SKILL.md ↗</a> · <a href="'+esc(original.package_url)+'" target="_blank" rel="noopener">Full package ↗</a> · '+esc(original.publisher)+'</div>';
+  return '<a class="mdlink" href="'+esc(original.url)+'" target="_blank" rel="noopener">Open publisher source ↗</a>';
 }
-// Connectors are MCP servers — "using" one means registering it in your MCP client's config.
-function connectorUseBox(c) {
-  return `<details class="usebox"><summary>⌁ How to add this connector</summary>
-    <p class="howto">It's an MCP connector — register it in your client, then restart and its tools appear in the session.
-      <b>Claude Desktop:</b> add it under <code>claude_desktop_config.json → mcpServers</code>.
-      <b>Claude Code:</b> <code>claude mcp add</code> (or a project <code>.mcp.json</code>).
-      <b>Cursor / other MCP clients:</b> their MCP settings.${c.install_or_source ? ` <br><b>This one:</b> ${esc(c.install_or_source)}` : ""}</p>
-    ${c.url ? `<div class="copyrow"><a class="mdlink" href="${esc(c.url)}" target="_blank" rel="noopener">Website / repo ↗</a></div>` : ""}</details>`;
+function loadOriginals() {
+  if (!originalsLoading) originalsLoading = load("original_sources.json").then(doc => {
+    originalEntries = new Map((doc?.entries || []).map(o => [o.id, o]));
+    originalMatches = doc?.matches || {};
+  });
+  return originalsLoading;
 }
+function useBox(s) { return originalAction("skill", s); }
+function connectorUseBox(c) { return originalAction("connector", c); }
 
 // Fetch a repo-root file (e.g. config.json). Same offline/origin assumption as ../data/.
 async function loadRoot(file) {
@@ -815,7 +798,11 @@ function renderHeader(status) {
 
 // ── Tab: Skills Library ──────────────────────────────────────────────────────
 function renderSkills(data, audit, evidence) {
-  const skills = (data && data.skills) || [];
+  const records = (data && data.skills) || [];
+  const matched = new Set(records.map(s => originalFor("skill", s)?.id));
+  const originals = [...originalEntries.values()].filter(o => o.type === "skill" && !matched.has(o.id))
+    .map(o => ({originalId:o.id, skill_name:o.name, description:o.description, company:o.publisher, category:"publisher skills", target_tool:"agent"}));
+  const skills = originals.concat(records);
   let html = "";
   if (!q()) html += runReportHtml(state.status);
   if (!skills.length) return view.innerHTML = html + empty("No skills extracted yet.");
@@ -846,13 +833,13 @@ function renderSkills(data, audit, evidence) {
     (s.compatibility || []).map(c => c.tool).join(" ")));
   // Starred (frozen) skills first, then by quality score.
   list.sort((a, b) =>
-    (isStarred(b) - isStarred(a)) || ((b.quality_score || 0) - (a.quality_score || 0)));
+    (Number(!!originalFor("skill", b)) - Number(!!originalFor("skill", a))) || (isStarred(b) - isStarred(a)) || ((b.quality_score || 0) - (a.quality_score || 0)));
 
   html += list.map(s => `
     <div class="card ${isStarred(s) ? "starred" : ""} ${s.low_quality_source ? "lowq" : ""}">
       <h3>${isStarred(s) ? '<span class="star" title="Starred — kept in original form, never auto-changed">&#9733;</span>' : ""}<span class="score">${esc(s.quality_score ?? "?")}/10</span> ${esc(s.skill_name || s.slug)}
         <span class="pill">Source check: ${esc(evidence?.verified?.["skill:"+s.slug]?.status || "pending")}</span>
-        <span class="pill">Signature scan (${audit?.skills?.[s.slug]?.package ? "record + package" : "record"}): ${esc(audit?.skills?.[s.slug]?.result || "pending")}</span>
+        ${s.originalId ? '<span class="pill">Publisher SKILL.md scanned</span>' : `<span class="pill">Signature scan (${audit?.skills?.[s.slug]?.package ? "record + package" : "record"}): ${esc(audit?.skills?.[s.slug]?.result || "pending")}</span>`}
         <span class="pill">${esc(s.category || "other")}</span>
         <span class="pill">${esc(s.target_tool || "claude")}</span>
         ${isMultiTool(s) ? '<span class="multitool" title="Works across several AI tools">multi-tool</span>' : ""}
@@ -926,7 +913,7 @@ function renderToolRating(toolsData, modelsData) {
           ${t.mentions ? `<span class="mentions" title="How many playlist videos mention this">${esc(t.mentions)}× seen</span>` : ""}</h3>
         ${t.company ? `<div class="sub">${esc(t.company)}${t.country ? " · " + esc(t.country) : ""}${t.model_version ? " · v" + esc(t.model_version) : ""}</div>` : ""}
         <p>${esc(t.description || "")}</p>
-        ${linksRow(t)}
+        ${originalAction("tool", t)}
       </div>`).join("");
     body += `</section>`;
   });
@@ -2068,6 +2055,8 @@ function _exIcon(label) { return ({skill:"◆",tool:"◈",model:"◇",prompt:"�
 async function show(tab) {
   if (!CORE_TABS.has(tab) && !String(tab).startsWith("element/") && !String(tab).startsWith("dyn:")) tab = "overview";
   state.activeTab = tab;
+  await loadOriginals();
+  if (state.activeTab !== tab) return;
   if (window.__graphStop) window.__graphStop();
   document.querySelectorAll("nav button").forEach(b => b.classList.toggle("active", b.dataset.tab === tab));
   view.innerHTML = empty("Loading...");

@@ -2,13 +2,15 @@
 
 A video knowledge library that retrieves content from YouTube playlists and the web, analyzes it, and organizes the extracted tools, skills, models, prompts, commands, connectors and design references.
 
-The existing database and Heavy Machinery design remain. The home screen focuses on the video library and its retrieval/analysis stages.
+## Finding original implementations
+
+Start with [the publisher index](data/original_sources.json). Search `entries` by name, type or publisher. For a skill, `raw_url` retrieves the publisher’s exact SKILL.md, `package_url` opens its companion files at the same revision and `sha256` identifies the document bytes. For tools and MCP connectors, `url` opens the publisher’s implementation or product website. See [agent lookup instructions](AGENTS.md).
 
 ## Core workflow
 1. Fetch the configured playlist, extra playlist IDs or direct YouTube URLs.
 2. Recover captions or use the existing audio/visual analysis lane.
 3. Extract grounded findings, keep their source links, and categorize them.
-4. Browse/search videos and the unified knowledge library.
+4. Browse findings in the knowledge library.
 5. Refresh quality reports, related entries, reusable packages and public data exports.
 
 A transcript establishes retrieval, not completed analysis. Historical records without explicit analysis evidence are labeled accordingly.

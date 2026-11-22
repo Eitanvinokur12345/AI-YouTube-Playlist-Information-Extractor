@@ -49,8 +49,8 @@ def analyze_video(video_id: str, key: str, timeout: int = 180, model: str = MODE
         "for a skills/tools dashboard, including things shown ONLY on screen (UIs, tool names in the "
         "browser, terminal commands, websites visited) that narration may not say. STRICT JSON ONLY:\n"
         '{"relevant":true,'
-        '"skills":[{"skill_name":"","slug":"","category":"","description":"","use_case":"","quality_score":1,"target_tool":"claude","tips":[]}],'
-        '"tools":[{"name":"","slug":"","category":"","company":"","open_source":false,"description":"","quality_score":1,"model_version":"","release_status":"released","homepage":"","github":""}],'
+        '"skills":[{"skill_name":"","publisher":"","original_url":"","slug":"","category":"","description":"","use_case":"","quality_score":1,"target_tool":"claude","tips":[]}],'
+        '"tools":[{"name":"","original_url":"","slug":"","category":"","company":"","open_source":false,"description":"","quality_score":1,"model_version":"","release_status":"released","homepage":"","github":""}],'
         '"connectors":[{"name":"","what_it_does":"","works_in":"both","free":true,"url":""}],'
         '"prompts":[{"title":"","purpose":"","prompt_text":"","category":""}],'
         '"commands":[{"command":"","description":""}],'
@@ -59,7 +59,8 @@ def analyze_video(video_id: str, key: str, timeout: int = 180, model: str = MODE
         "- DESIGNS = whenever the video SHOWS a website/app/dashboard/UI worth replicating, capture its "
         "look (layout/colors/typography/components/vibe) + how to rebuild it. This is for cloning good UIs.\n"
         f"- category MUST be one of: {', '.join(CATEGORIES)}.\n"
-        "- SKILLS = techniques you DO; TOOLS = products that EXIST. A product is a TOOL not a skill.\n"
+        "- Record the exact skill artifact name, publisher, and original_url only if observed. "
+        "Put reusable prompt text in prompts. Products are tools.\\n"
         "- PROMPTS = reusable prompt text shown/dictated; COMMANDS = ONLY real invocable "
         "/slash-commands shown on screen (e.g. '/compact', '/review'), NOT shell/CLI commands, "
         "file paths, or install instructions (those are not slash-commands — leave them out).\n"

@@ -1,3 +1,5 @@
+For exact skill documents, upstream packages and original tool or connector implementations, use [the publisher index](data/original_sources.json) and [lookup instructions](AGENTS.md). Entries in the older discovery feeds may still be awaiting a publisher match.
+
 # Excavatortron Hub API
 
 Excavatortron is a free, self-running pipeline that mines a YouTube AI playlist + 50 web news

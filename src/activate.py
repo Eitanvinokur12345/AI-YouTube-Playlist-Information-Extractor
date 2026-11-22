@@ -83,15 +83,18 @@ def plan(it: dict, typ: str) -> dict:
     if typ == "skill" and _load("skill_scan.json").get("skills", {}).get(slug, {}).get("result") == "detected":
         return {"name": name, "type": typ, "kind": kind, "needs_key": False, "homepage": "", "github": "",
                 "steps": ["Installation blocked: the skill record or package triggered a malware signature."]}
-    if "skill" in kind:
-        steps = [f'Create ~/.claude/skills/{slug}/SKILL.md with the "{name}" skill'
-                 + (f" (source: {gh or home})" if (gh or home) else " (from the hub)") + ".",
-                 "Reload Claude Code so the skill registers.",
-                 f"Use it: invoke the {slug} skill."]
-    elif "mcp" in kind or typ == "connector":
-        steps = [cmd or f"claude mcp add {slug} -- npx -y <package>",
-                 "Reload Claude so the MCP connects.",
-                 "Confirm: claude mcp list"]
+    if typ in {"skill", "tool", "connector"}:
+        doc = _load("original_sources.json")
+        key = typ + ":" + _norm(name).replace(" ", "-")
+        eid = it.get("original_id") or doc.get("matches", {}).get(key)
+        source = next((entry for entry in doc.get("entries", []) if entry["id"] == eid), {})
+        steps = (["Get the publisher's SKILL.md: " + source["raw_url"],
+                  "Read companion files at " + source["package_url"]] if source.get("raw_url")
+                 else ["Consult the publisher's setup instructions: " + source["url"]] if source
+                 else ["Publisher source pending."])
+        return {"name": name, "type": typ, "kind": source.get("kind", "unresolved"),
+                "needs_key": False, "homepage": source.get("url", ""), "github": source.get("repo", ""),
+                "source": source, "steps": steps}
     elif gh:
         repo = gh.rstrip("/").split("/")[-1]
         steps = [f"git clone {gh}", f"cd {repo}", "Install deps + run per its README (npm install / pip install)."]
@@ -129,10 +132,13 @@ def main() -> int:
         plans = []
     if not plans:
         hits = find(args.query, max(args.top, 4))
-        if not hits:
+        if not hits and not any(_norm(e["name"]) == _norm(args.query) for e in _load("original_sources.json").get("entries", [])):
             print(f'activate: no hub match for "{args.query}". Try a different name.'); return 1
         plans = [plan(it, typ) for _, typ, it, _ in hits[: args.top]]
         names = [(n, t) for _, t, _, n in hits[args.top:]]
+    originals = [e for e in _load("original_sources.json").get("entries", []) if _norm(e["name"]) == _norm(args.query)]
+    if originals:
+        plans = [plan({"name": e["name"], "original_id": e["id"]}, e["type"]) for e in originals[:args.top]]
     if args.json:
         print(json.dumps(plans, ensure_ascii=False, indent=2)); return 0
     for p in plans:

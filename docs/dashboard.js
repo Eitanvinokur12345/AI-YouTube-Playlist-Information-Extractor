@@ -168,6 +168,14 @@ async function eidx() {
     _eidx.byId[e.id] = e;
     _eidx.byKey[e.type + "|" + e.name.toLowerCase().trim()] = e;
   });
+  const linked = new Set(Object.values(originalMatches));
+  for (const o of originalEntries.values()) {
+    if (linked.has(o.id)) continue;
+    const e = {id:o.id, originalId:o.id, name:o.name, type:o.type, what:o.description || "",
+      links:{website:o.url}, verified:{status:"unverified"}, category:"publisher sources"};
+    _eidx.byId[o.id] = e;
+    _eidx.byKey[o.type+"|"+o.name.toLowerCase().trim()] ??= e;
+  }
   return _eidx;
 }
 function elBadge(e) {
@@ -266,16 +274,12 @@ function activationRecipe(e) {
     const text = ((e.body || "").trim()) || (t === "command" ? (e.name || "").trim() : "") || (e.what || "").trim() || (e.name || "");
     return { label: t, kind: "paste", text, note: "Paste this straight into your AI." };
   }
-  // CONNECTOR (MCP server) — paste-ready config skeleton + the repo that holds the exact command.
-  if (t === "connector") {
-    const cmd = _mcpCmd(inst);
-    const cfg = { mcpServers: { [_slug(e.name)]: cmd ? { command: cmd.command, args: cmd.args } : { command: "npx", args: ["-y", "<package — see the repo README>"] } } };
-    const text = [`// MCP server: ${e.name}`,
-      gh ? `// Repo (the exact run command is in its README): ${gh}` : "",
-      inst ? `// Install: ${inst}` : "",
-      cmd ? "" : "// NOTE: fill command/args from the repo before saving this.",
-      JSON.stringify(cfg, null, 2)].filter(Boolean).join("\n");
-    return { label: "MCP config", kind: "mcp", text, note: "Add to your MCP client config; confirm the command from the repo." };
+  if (["skill", "tool", "connector"].includes(t)) {
+    const publisher = originalFor(t, e);
+    if (!publisher) return { label: "publisher source pending", kind: "unresolved", text: "", note: "" };
+    return { label: "publisher source", kind: "original",
+      text: [publisher.raw_url || publisher.url, publisher.package_url].filter(Boolean).join("\n"),
+      note: publisher.publisher || "" };
   }
   // SKILL / TOOL / MODEL / DESIGN / FORMAT — a clean setup card.
   const lines = [`# ${e.name} — ${t}`];
@@ -333,7 +337,7 @@ async function decorateCards(tab) {
       .replace(/^[★\s]*\d+(\.\d+)?\/10\s*/, "").split("\n")[0]
       .replace(/(frozen|official|✓.*|✗.*)$/g, "").trim().toLowerCase();
     let e = ix.byKey[etype + "|" + name];
-    if (!e) {  // fuzzy: longest index name contained in the heading
+    if (!e && !["skill","tool","connector"].includes(etype)) {  // fuzzy: longest index name contained in the heading
       const cands = Object.keys(ix.byKey).filter(k => k.startsWith(etype + "|"))
         .filter(k => name.includes(k.split("|")[1])).sort((a, b) => b.length - a.length);
       e = cands.length ? ix.byKey[cands[0]] : null;
@@ -364,16 +368,13 @@ async function renderElement(id) {
         ${e.category ? `category: <b>${esc(e.category)}</b> · ` : ""}trust ${e.trust || "?"} ·
         verified: <b>${esc((e.verified || {}).status)}</b>${(e.verified || {}).method ? ` (${esc(e.verified.method)}, ${((e.verified || {}).sources || 0)} sources)` : ""}
         ${enr.method ? ` · enriched via ${esc(enr.method)} [${(enr.sources || []).map(esc).join(", ")}]` : ""}</p>
-      ${e.install ? `<p class="sub"><b>Install / source:</b> <code>${esc(e.install)}</code></p>` : ""}
+      ${e.install && !["skill","tool","connector"].includes(e.type) ? `<p class="sub"><b>Install / source:</b> <code>${esc(e.install)}</code></p>` : ""}
     </div>
     ${(() => { const r = activationRecipe(e); return r.text ? `<div class="card" style="border-left:3px solid var(--gold)">
       <h3 style="font-size:14px">⚡ Ready to use <span class="sub">— ${esc(r.label)}${r.note ? " · " + esc(r.note) : ""}</span>
         <button class="copy-btn" data-copy="${esc(r.text)}" title="Copy the ready-to-use payload" style="float:right">copy</button></h3>
       <pre style="white-space:pre-wrap;font-size:12.5px;background:var(--panel2);border:1.5px solid var(--line);border-radius:9px;padding:10px;max-height:360px;overflow:auto">${esc(r.text)}</pre>
     </div>` : ""; })()}
-    ${vids.length ? `<div class="card"><h3>🎬 Source video${vids.length > 1 ? " bundle" : ""} <span class="sub">— where it was really shown</span></h3>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px">
-      ${vids.map(v => `<iframe width="100%" height="180" src="https://www.youtube.com/embed/${encodeURIComponent(v)}" frameborder="0" allowfullscreen loading="lazy" style="border-radius:10px;border:1.5px solid var(--line)"></iframe>`).join("")}</div></div>` : ""}
     ${rel.length ? `<div class="card"><h3>🧠 Related <span class="sub">— shown together / same topic (M1.7)</span></h3>
       <div class="el-rel">${rel.map(r => `<a href="#element/${encodeURIComponent(r.id)}">${_exIcon(r.type)} ${esc(r.name)} ${elBadge(r)}</a>`).join("")}</div></div>` : ""}`;
 }

@@ -166,6 +166,9 @@ def refresh():
             full = meta["full_name"]
             root = "https://github.com/" + full
             for key, name, row in by_repo[repo]:
+                if key.startswith("connector:") and not re.search(r"\bmcp\b|model context protocol",
+                        " ".join([full, meta.get("description") or "", *meta.get("topics", [])]), re.I):
+                    continue
                 if key.startswith("skill:") or not product_matches(name, full):
                     continue
                 eid = key.split(":")[0] + ":github:" + full.lower()

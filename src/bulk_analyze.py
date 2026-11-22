@@ -407,7 +407,6 @@ def main() -> int:
     print(f"bulk-analyzing {len(todo)} pending videos with {model} (free)...")
 
     skills = load(DATA / "skills.json", {"skills": []})
-    # One-time backfill: ensure every existing high-quality skill has a SKILL.md package folder
     # (earlier free-lane runs added to skills.json without writing the package). Idempotent.
     tools = load(DATA / "tools.json", {"tools": []})
     prompts = load(DATA / "prompts.json", {"prompts": []})

@@ -60,7 +60,7 @@ def analyze_video(video_id: str, key: str, timeout: int = 180, model: str = MODE
         "look (layout/colors/typography/components/vibe) + how to rebuild it. This is for cloning good UIs.\n"
         f"- category MUST be one of: {', '.join(CATEGORIES)}.\n"
         "- Record the exact skill artifact name, publisher, and original_url only if observed. "
-        "Put reusable prompt text in prompts. Products are tools.\\n"
+        "Put reusable prompt text in prompts. Products are tools.\n"
         "- PROMPTS = reusable prompt text shown/dictated; COMMANDS = ONLY real invocable "
         "/slash-commands shown on screen (e.g. '/compact', '/review'), NOT shell/CLI commands, "
         "file paths, or install instructions (those are not slash-commands — leave them out).\n"

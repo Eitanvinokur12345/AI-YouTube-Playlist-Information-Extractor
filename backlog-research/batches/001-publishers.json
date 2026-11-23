@@ -1,0 +1,328 @@
+[
+  {
+    "id": "repo:juliusbrussee/caveman",
+    "frozen_scope": true,
+    "source": "https://github.com/JuliusBrussee/caveman/blob/b89752f6bca5a26bfde8b019813554241800ca99/skills/caveman/SKILL.md",
+    "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/b89752f6bca5a26bfde8b019813554241800ca99/skills/caveman/SKILL.md",
+    "package": "https://github.com/JuliusBrussee/caveman/tree/b89752f6bca5a26bfde8b019813554241800ca99/skills/caveman",
+    "evidence": "Every fact survives",
+    "analysis": "This skill constrains response wording and preserves technical literals. Judge it by whether identifiers and error messages survive compression; the skill text supplies no benchmark for a specific workload.",
+    "os": "Agent-hosted Markdown; hooks depend on host capabilities",
+    "data": "Agent responses and coding context; status persistence depends on host support.",
+    "checked_files": [
+      {
+        "path": "skills/caveman/SKILL.md",
+        "sha256": "415d43518f2b1a9498c15a445d4657117b129ee5e81b19454ce348439cc6672b",
+        "static_indicators": []
+      },
+      {
+        "path": "Dockerfile",
+        "sha256": "0d9d72eb6ba5c0e5a46e9fa96d47696544b3f3686e45439e15f4fbadef285e25",
+        "static_indicators": []
+      },
+      {
+        "path": "install.sh",
+        "sha256": "ee97bd7e6a6dad90f464b0a86b401e0d467f18db8e46178979823c2f23233740",
+        "static_indicators": [
+          "remote command piped to interpreter in text"
+        ]
+      },
+      {
+        "path": "package.json",
+        "sha256": "533c20fda8b03ac571891339f856fbf3bc160d92aaa8de20de2f7f55e56e675f",
+        "static_indicators": []
+      }
+    ],
+    "malware_assessment": "Static indicators on listed files only. No AV database or execution test. Package status unknown."
+  },
+  {
+    "id": "repo:chromedevtools/chrome-devtools-mcp",
+    "frozen_scope": true,
+    "source": "https://github.com/ChromeDevTools/chrome-devtools-mcp/blob/ab911a6dd71ed4960c1c679f831c7b5607bc5505/README.md",
+    "raw": "https://raw.githubusercontent.com/ChromeDevTools/chrome-devtools-mcp/ab911a6dd71ed4960c1c679f831c7b5607bc5505/README.md",
+    "package": "https://github.com/ChromeDevTools/chrome-devtools-mcp/tree/ab911a6dd71ed4960c1c679f831c7b5607bc5505",
+    "evidence": "source-mapped stack traces",
+    "analysis": "Separate telemetry controls from access to the browser profile. A successful interaction still needs console and request checks.",
+    "os": "Node LTS and supported Chrome; host OS not assessed",
+    "data": "Browser content, network activity, traces; usage metrics default on; trace URLs may reach CrUX.",
+    "checked_files": [
+      {
+        "path": "README.md",
+        "sha256": "c419e4a59a6ca70691848cd7c11b1a1e72d03765f34bce093e99e9dc6e42a8e9",
+        "static_indicators": []
+      },
+      {
+        "path": "package.json",
+        "sha256": "cb327567250ede9596672bcc46574b33259601bc7319b52475e3e6ee086d7005",
+        "static_indicators": []
+      }
+    ],
+    "malware_assessment": "Static indicators on listed files only. No AV database or execution test. Package status unknown."
+  },
+  {
+    "id": "repo:microsoft/generative-ai-for-beginners",
+    "frozen_scope": true,
+    "source": "https://github.com/microsoft/generative-ai-for-beginners/blob/e45c369a8c76bdae831cb5a172d36a6a0fc3a6a2/README.md",
+    "raw": "https://raw.githubusercontent.com/microsoft/generative-ai-for-beginners/e45c369a8c76bdae831cb5a172d36a6a0fc3a6a2/README.md",
+    "package": "https://github.com/microsoft/generative-ai-for-beginners/tree/e45c369a8c76bdae831cb5a172d36a6a0fc3a6a2",
+    "evidence": "Learn",
+    "analysis": "Separate conceptual lessons from runnable build exercises. Reading is accessible without model usage; the provider and credentials for a particular exercise require separate review.",
+    "os": "Browser for reading; local examples include Windows and POSIX setup",
+    "data": "Lesson text, sample code and any inputs submitted to a chosen model provider.",
+    "checked_files": [
+      {
+        "path": "README.md",
+        "sha256": "0c88284498ece748cb40388fd7942e5f98a5c59d3876c462c2dc1c8357754e74",
+        "static_indicators": []
+      },
+      {
+        "path": "package.json",
+        "sha256": "70645bbbbf331654b40be7d1d5fd5f5fa5728f967e72495d686a9e0d211342a9",
+        "static_indicators": []
+      },
+      {
+        "path": "pyproject.toml",
+        "sha256": "637199d9e02bbd13331fe730b88b74aed4cfa87bf90f1beafe91444e0753d66c",
+        "static_indicators": []
+      }
+    ],
+    "malware_assessment": "Static indicators on listed files only. No AV database or execution test. Package status unknown."
+  },
+  {
+    "id": "repo:pbakaus/impeccable",
+    "frozen_scope": true,
+    "source": "https://github.com/pbakaus/impeccable/blob/b49177d32788f2dc585c42831d845dacf1ebed2c/.agents/skills/impeccable/SKILL.md",
+    "raw": "https://raw.githubusercontent.com/pbakaus/impeccable/b49177d32788f2dc585c42831d845dacf1ebed2c/.agents/skills/impeccable/SKILL.md",
+    "package": "https://github.com/pbakaus/impeccable/tree/b49177d32788f2dc585c42831d845dacf1ebed2c/.agents/skills/impeccable",
+    "evidence": "visitor completes a task",
+    "analysis": "Its Operate mode targets successful task completion while Persuade targets a decision. For a dashboard test scanability at the actual viewport before applying a marketing-page treatment.",
+    "os": "Agent-hosted skill with companion scripts and references; OS support untested",
+    "data": "Project design context, source tree, and rendered UI.",
+    "checked_files": [
+      {
+        "path": ".agents/skills/impeccable/SKILL.md",
+        "sha256": "dc7c49c1ad645d0ab8737e852419bba0a9db27cdceebad3630e88d5f772813be",
+        "static_indicators": []
+      },
+      {
+        "path": ".agents/skills/impeccable/scripts/impeccable",
+        "sha256": "9a82c1d8a5fc34b0edb3040cf25098c7c5a662e703118e99f96bacd543ed6d68",
+        "static_indicators": []
+      },
+      {
+        "path": "package.json",
+        "sha256": "1132a8d00e3774e5e9be82871c2d2e13053a910e83f54b3108f63ce88206098f",
+        "static_indicators": []
+      }
+    ],
+    "malware_assessment": "Static indicators on listed files only. No AV database or execution test. Package status unknown."
+  },
+  {
+    "id": "repo:langflow-ai/langflow",
+    "frozen_scope": true,
+    "source": "https://github.com/langflow-ai/langflow/blob/21381e5b2964fb4c714dc91fcd5187d4cfc2a67f/README.md",
+    "raw": "https://raw.githubusercontent.com/langflow-ai/langflow/21381e5b2964fb4c714dc91fcd5187d4cfc2a67f/README.md",
+    "package": "https://github.com/langflow-ai/langflow/tree/21381e5b2964fb4c714dc91fcd5187d4cfc2a67f",
+    "evidence": "export as JSON",
+    "analysis": "A reusable flow can be exported or exposed as an API/MCP tool. Treat changing the flow as changing the behavior of clients that call it.",
+    "os": "Desktop: Windows and macOS; Python installation also documented",
+    "data": "Flow definition, model inputs, vector-store queries and optional observability destinations.",
+    "checked_files": [
+      {
+        "path": "README.md",
+        "sha256": "0c91b63e58aeac3846fad7d1e6ec7729fc23975fdb0d59def51e97627fdb5e36",
+        "static_indicators": []
+      },
+      {
+        "path": "package.json",
+        "sha256": "a46f91a26b0fea21fd649142557d1c62448b5f33868c9dc2f2025aa2b453847c",
+        "static_indicators": []
+      },
+      {
+        "path": "pyproject.toml",
+        "sha256": "2b52bd083e0f255be7865b86cb6d32c09d58574bf76b2432802fc6c5a91d4c29",
+        "static_indicators": []
+      }
+    ],
+    "malware_assessment": "Static indicators on listed files only. No AV database or execution test. Package status unknown."
+  },
+  {
+    "id": "repo:ggml-org/llama.cpp",
+    "frozen_scope": true,
+    "source": "https://github.com/ggml-org/llama.cpp/blob/212c547fe908b288f6659d48741e6ffac1ff409c/README.md",
+    "raw": "https://raw.githubusercontent.com/ggml-org/llama.cpp/212c547fe908b288f6659d48741e6ffac1ff409c/README.md",
+    "package": "https://github.com/ggml-org/llama.cpp/tree/212c547fe908b288f6659d48741e6ffac1ff409c",
+    "evidence": "OpenAI-compatible API server",
+    "analysis": "CLI mode tests one model locally; server mode lets a client reuse the process. Neither establishes that the chosen model fits the available memory.",
+    "os": "Native shell and PowerShell installers, Docker and builds documented",
+    "data": "Downloaded GGUF weights and local inference prompts; server exposes an API.",
+    "checked_files": [
+      {
+        "path": "README.md",
+        "sha256": "461b38efc8ce48e8c752e38daba1aaf6169aba4ed81c2651d6e2e031d708f771",
+        "static_indicators": [
+          "remote command piped to interpreter in text"
+        ]
+      },
+      {
+        "path": "CMakeLists.txt",
+        "sha256": "6727a1188ab844d2eb5af5aa6ee07c50b80a5bb8711b9cad0784db1939587d1b",
+        "static_indicators": []
+      },
+      {
+        "path": "pyproject.toml",
+        "sha256": "e6fc121b60f1b0dae92362c4e4807a2c2e1db4a93364fc623247fa7baac41625",
+        "static_indicators": []
+      }
+    ],
+    "malware_assessment": "Static indicators on listed files only. No AV database or execution test. Package status unknown."
+  },
+  {
+    "id": "repo:marimo-team/marimo",
+    "frozen_scope": true,
+    "source": "https://github.com/marimo-team/marimo/blob/a8d229e006bc96261b557c2f67341b68e6564371/README.md",
+    "raw": "https://raw.githubusercontent.com/marimo-team/marimo/a8d229e006bc96261b557c2f67341b68e6564371/README.md",
+    "package": "https://github.com/marimo-team/marimo/tree/a8d229e006bc96261b557c2f67341b68e6564371",
+    "evidence": "marks them as stale",
+    "analysis": "A changed upstream cell invalidates downstream work. Marking expensive descendants stale gives an explicit cost-control point while preserving dependency visibility.",
+    "os": "Python notebook runtime; OS matrix not assessed",
+    "data": "Python notebook source, reactive cell outputs and connected datasets.",
+    "checked_files": [
+      {
+        "path": "README.md",
+        "sha256": "94bb360b2959b035e69985268c68ab024e4f252c0f609e0b88d2878595cdfd55",
+        "static_indicators": []
+      },
+      {
+        "path": "package.json",
+        "sha256": "8a8f6a94f0cb16cbdbf3e36417968de41f7a8d9e43ac24bf4984eece3ad19735",
+        "static_indicators": []
+      },
+      {
+        "path": "pyproject.toml",
+        "sha256": "a5d6ed51eb12b82d1997a17432aa36596184d0ea1cdae46c67ecd41e735ccb3d",
+        "static_indicators": []
+      }
+    ],
+    "malware_assessment": "Static indicators on listed files only. No AV database or execution test. Package status unknown."
+  },
+  {
+    "id": "repo:n8n-io/n8n",
+    "frozen_scope": true,
+    "source": "https://github.com/n8n-io/n8n/blob/d046b0cbe52c39996f69cdb8d4665fb4663e6190/README.md",
+    "raw": "https://raw.githubusercontent.com/n8n-io/n8n/d046b0cbe52c39996f69cdb8d4665fb4663e6190/README.md",
+    "package": "https://github.com/n8n-io/n8n/tree/d046b0cbe52c39996f69cdb8d4665fb4663e6190",
+    "evidence": "human approvals",
+    "analysis": "Approval between preparation and an external write makes a workflow reviewable. Self-hosting the orchestrator still leaves each connected service in the data path.",
+    "os": "Cloud or self-hosted using Docker or Node tooling; OS matrix not assessed",
+    "data": "Workflow payloads, connector credentials and selected model providers.",
+    "checked_files": [
+      {
+        "path": "README.md",
+        "sha256": "2883ac16a971679a2b46fbedd2b8361fc3bde58388ac463a707ff66687a34225",
+        "static_indicators": [
+          "remote command piped to interpreter in text"
+        ]
+      },
+      {
+        "path": "package.json",
+        "sha256": "9943ae308b711696bf3e8e51f31f7ff5fd0921ea70bbf45f364217e3e5d98415",
+        "static_indicators": [
+          "pre/postinstall declaration"
+        ]
+      }
+    ],
+    "malware_assessment": "Static indicators on listed files only. No AV database or execution test. Package status unknown."
+  },
+  {
+    "id": "repo:open-webui/open-webui",
+    "frozen_scope": true,
+    "source": "https://github.com/open-webui/open-webui/blob/0666e59d26a4d056e0bacee41742486badd71cf8/README.md",
+    "raw": "https://raw.githubusercontent.com/open-webui/open-webui/0666e59d26a4d056e0bacee41742486badd71cf8/README.md",
+    "package": "https://github.com/open-webui/open-webui/tree/0666e59d26a4d056e0bacee41742486badd71cf8",
+    "evidence": "external services",
+    "analysis": "The slim image moves several functions to outside services. A locally hosted interface alone does not determine where a document is processed.",
+    "os": "Desktop: macOS, Windows, Linux; Docker and Python options",
+    "data": "Persisted application data, model requests, and optional embedding, document or voice services.",
+    "checked_files": [
+      {
+        "path": "README.md",
+        "sha256": "b13f7a8daa9b3c98297c5d0bbfc03f6371cf7343c84b204dde99690657591689",
+        "static_indicators": []
+      },
+      {
+        "path": "Dockerfile",
+        "sha256": "b9e9e5e5eddda53b901731104d008daf5e3e2aa2fc3828606cc38c1e5554d2f1",
+        "static_indicators": [
+          "remote command piped to interpreter in text"
+        ]
+      },
+      {
+        "path": "package.json",
+        "sha256": "fd29aea7a72c2d68be21decd8dccbeaadd5ade3569bd4f60f1e60696d18b4f1b",
+        "static_indicators": []
+      },
+      {
+        "path": "pyproject.toml",
+        "sha256": "cf8273e469ee07211a5b7021c9e7b73f6fc6fc60e8e8459c7eac85462c94cc7e",
+        "static_indicators": []
+      }
+    ],
+    "malware_assessment": "Static indicators on listed files only. No AV database or execution test. Package status unknown."
+  },
+  {
+    "id": "repo:microsoft/playwright-mcp",
+    "frozen_scope": true,
+    "source": "https://github.com/microsoft/playwright-mcp/blob/2337aff0213d28db41d3e3daf48cee19b3d0bd82/README.md",
+    "raw": "https://raw.githubusercontent.com/microsoft/playwright-mcp/2337aff0213d28db41d3e3daf48cee19b3d0bd82/README.md",
+    "package": "https://github.com/microsoft/playwright-mcp/tree/2337aff0213d28db41d3e3daf48cee19b3d0bd82",
+    "evidence": "accessibility snapshots",
+    "analysis": "Snapshots allow controls to be targeted through accessible structure. A fresh context is useful when validating a first-time user flow.",
+    "os": "Node/browser host; OS matrix not assessed",
+    "data": "Page structure and persistent browser state by default; optional isolated context.",
+    "checked_files": [
+      {
+        "path": "README.md",
+        "sha256": "b97fcd6be1bd6747d6cfd2fcd51b9fdc0d73d4f914fae9e3a25d777c2f3ec26b",
+        "static_indicators": []
+      },
+      {
+        "path": "Dockerfile",
+        "sha256": "693c7aad70d4a0e237684ed754b8061d8a113cf15a61074fc7c1c8a3133b9e3f",
+        "static_indicators": [
+          "reads SSH/AWS/credential files"
+        ]
+      },
+      {
+        "path": "package.json",
+        "sha256": "5fbc2c81e0681865bb7b26a9eee9c4c3d243bd3989076cef5c2d176c07670895",
+        "static_indicators": []
+      }
+    ],
+    "malware_assessment": "Static indicators on listed files only. No AV database or execution test. Package status unknown."
+  },
+  {
+    "id": "repo:textualize/rich",
+    "frozen_scope": true,
+    "source": "https://github.com/Textualize/rich/blob/3a109ccdffe5b2d0e30684a304fbd388e99ce57b/README.md",
+    "raw": "https://raw.githubusercontent.com/Textualize/rich/3a109ccdffe5b2d0e30684a304fbd388e99ce57b/README.md",
+    "package": "https://github.com/Textualize/rich/tree/3a109ccdffe5b2d0e30684a304fbd388e99ce57b",
+    "evidence": "tables",
+    "analysis": "Terminal presentation layer. Color capability varies by terminal, so table structure should carry meaning without color.",
+    "os": "Linux, macOS, Windows terminals",
+    "data": "Python values, text and tracebacks rendered to terminal.",
+    "checked_files": [
+      {
+        "path": "README.md",
+        "sha256": "2f68e0e5b36f088e4059f08717454bfca47691b0188a278c7966eef6205c0d63",
+        "static_indicators": []
+      },
+      {
+        "path": "pyproject.toml",
+        "sha256": "6994170f956a6239756e95dea64085daec96e62059e1a8a1d87fc2d54c89987f",
+        "static_indicators": []
+      }
+    ],
+    "malware_assessment": "Static indicators on listed files only. No AV database or execution test. Package status unknown."
+  }
+]

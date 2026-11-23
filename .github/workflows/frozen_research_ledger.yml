@@ -1,0 +1,31 @@
+name: Materialize frozen research ledger
+on:
+  push:
+    paths: ['backlog-research/materialize.py']
+permissions:
+  contents: write
+jobs:
+  freeze:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enumerate immutable corpus and validate membership
+        run: |
+          git fetch --depth=1 origin 2ce91d7becac95063a9842fd01cf0998b1ae16ea
+          git worktree add --detach "$RUNNER_TEMP/frozen-corpus" FETCH_HEAD
+          python backlog-research/materialize.py "$RUNNER_TEMP/frozen-corpus" backlog-research/scope.jsonl.gz
+          git worktree remove --force "$RUNNER_TEMP/frozen-corpus"
+      - name: Save the ledger
+        run: |
+          git add -f backlog-research/scope.jsonl.gz
+          git diff --cached --quiet && exit 0
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git commit -m "Save materialized frozen research IDs"
+          for delay in 1 3 9; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep "$delay"
+          done
+          exit 1

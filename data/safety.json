@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-22T12:58:20.827978+00:00",
+  "generated_at": "2026-11-23T03:07:17.449888+00:00",
   "policy": "activator gate: safe = auto-activate, caution = warn, risky = block until confirmed",
   "summary": {
-    "safe": 212,
-    "caution": 1847,
+    "safe": 213,
+    "caution": 1851,
     "risky": 64
   },
   "connectors": {
@@ -16107,6 +16107,41 @@
       "reasons": [
         "requests broad system/shell/file access"
       ]
+    },
+    "robinhood-mcp": {
+      "name": "Robinhood MCP",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "claude-mcp": {
+      "name": "Claude MCP",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "resend": {
+      "name": "Resend",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "chatgpt-api": {
+      "name": "ChatGPT API",
+      "rating": "caution",
+      "reasons": [
+        "third-party (not an official vendor connector)"
+      ]
+    },
+    "claude-code-to-perplexity-mcp-integration": {
+      "name": "Claude Code to Perplexity MCP Integration",
+      "rating": "safe",
+      "reasons": [
+        "official vendor"
+      ]
     }
   },
   "skills_flagged": {
@@ -17127,6 +17162,20 @@
     },
     "concurrent-ai-agents": {
       "name": "Running multiple AI coding agents concurrently",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "long-horizon-planning": {
+      "name": "Long-Horizon Planning",
+      "rating": "caution",
+      "reasons": [
+        "the technique runs system/shell/file operations — review what it executes"
+      ]
+    },
+    "indirect-prompt-injection-analysis": {
+      "name": "Indirect Prompt Injection Analysis",
       "rating": "caution",
       "reasons": [
         "the technique runs system/shell/file operations — review what it executes"

@@ -1,0 +1,55 @@
+[
+  {
+    "id": "repo:msitarzewski/agency-agents",
+    "source": "https://github.com/msitarzewski/agency-agents/blob/8ae6164602c95ca78828b148b9052460ee426885/README.md",
+    "checked_files": [
+      {
+        "source": "https://github.com/msitarzewski/agency-agents/blob/8ae6164602c95ca78828b148b9052460ee426885/README.md",
+        "sha256": "b37c2f0efa75013915f55c7456aecf4d9c68d646fb82e4db05850216ea025e65",
+        "bytes": 86705,
+        "static_indicator_lines": {
+          "download_command": [],
+          "privilege_command": [],
+          "recursive_remove": []
+        }
+      },
+      {
+        "source": "https://github.com/msitarzewski/agency-agents/blob/8ae6164602c95ca78828b148b9052460ee426885/scripts/install.sh",
+        "sha256": "ce64d7ed6e3969d549da0ebb1e52db6852a9f33540460f15e89852d15aeafaf5",
+        "bytes": 75586,
+        "static_indicator_lines": {
+          "download_command": [],
+          "privilege_command": [],
+          "recursive_remove": [
+            454,
+            1489,
+            1494,
+            1523,
+            1746
+          ]
+        }
+      },
+      {
+        "source": "https://github.com/msitarzewski/agency-agents/blob/8ae6164602c95ca78828b148b9052460ee426885/engineering/engineering-frontend-developer.md",
+        "sha256": "1ae4cc10b2e0163bd3ed921ad54080b865cd02e591becd8919b64b73fab06dad",
+        "bytes": 11040,
+        "static_indicator_lines": {
+          "download_command": [],
+          "privilege_command": [],
+          "recursive_remove": []
+        }
+      }
+    ],
+    "analysis": "The Frontend Developer original is a Markdown role description. The README distinguishes selecting teams from installing the whole roster. The install script copies definitions into host-specific paths and can run a separate converter. Neither role text nor installation demonstrates parallel execution.",
+    "os": "Publisher advertises macOS, Linux and Windows for its native app. The reviewed script is a separate shell installation path.",
+    "data": "Role definitions and integration configuration on local disk. Host permissions determine access to future task data. Desktop telemetry and retention were not assessed.",
+    "malware_check": "Static indicators on three pinned files only. Recursive cleanup of partial conversions (line 454) and guarded Hermes plugin replacement (lines 1494–1528) deserve review for the chosen destination. Companion scripts, binaries and package-wide antivirus remain unverified. Nothing executed."
+  },
+  {
+    "id": "tool:agency-agents",
+    "record": "data/tools.json#/tools/3890",
+    "publisher_review": "repo:msitarzewski/agency-agents",
+    "source": "https://github.com/msitarzewski/agency-agents/blob/8ae6164602c95ca78828b148b9052460ee426885/README.md",
+    "analysis": "Exact GitHub URL matches the publisher; the catalog’s fixed headcount and claim of battle-tested parallel execution lack independent validation. Use the pinned manifest and intended host to select roles. The same publisher review supports this catalog row without a second package review."
+  }
+]

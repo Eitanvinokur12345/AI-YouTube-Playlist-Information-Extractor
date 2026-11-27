@@ -9,3 +9,11 @@ Each batch contains closed research IDs and their findings. For the current bala
 Batch 001 reviews 11 video transcripts, 11 publisher documents and 17 extracted prompt records. Prompt bodies stay in the frozen prompts.json at the supplied offsets. Video interpretations do not imply that linked templates were recovered. Publisher review covers identity, practical use, runtime, data handling and static indicators on named files. Package-wide antivirus clearance is outstanding. Read the two skill documents via raw URLs and fetch their companion folders at the same revision when needed. No upstream code was executed.
 
 Resume with unconfirmed videos that have actual text and intake URLs absent from mined_state. For short caption-only or intro-only clips, try existing visual/acquisition lanes. For exceptions with no direct record, inspect the listed occurrences for alternate evidence. Verify a saved finding on main before counting it. Final reconciliation also requires verifying scope coverage against remaining historical stores and checking unresolved identity/scan exceptions.
+
+### Checkpoint after batch 003
+
+At source snapshot `090788071c8f316db9a57448f9e5d50a67191b6b`, the 1,762 post-freeze IDs matched the key set already in subsequent.json. Its occurrence offsets still refer to its own compared_main revision.
+
+The union of batches 001–003 contains 134 distinct frozen IDs (42,146 open). Batch 003 adds 30 prompt records, six transcript interpretations, one publisher problem statement and 14 publisher-linked IDs. Those 14 represent eight original reviews: five skill packages and three connector repositories. Alias rows link to the full review. Stored prompt bodies remain in the frozen prompts file. Descriptions of missing prompt originals and assistant output are classified as extracted records only.
+
+The Manim connector review includes a source-level finding about directory cleanup and concurrent renders. Each of the five skill documents matched its frozen SHA-256. Package checks record scoped static indicators; signature results from the frozen catalog apply only to the named skill documents. The recovered introduction for video 7qjpP7nDc0c is tracked in exceptions.json; only its linked publisher problem was closed.

@@ -1,0 +1,342 @@
+[
+  {
+    "id": "skill:docx",
+    "occurrences": [
+      "elements_index/elements/3710",
+      "skills/skills/3710"
+    ],
+    "publisher_index_id": "skill:github:anthropics/skills/skills/docx/SKILL.md",
+    "source": "https://github.com/anthropics/skills/blob/e4bb5d960d87126ff3b3a8af1a104b7db67560ba/skills/docx/SKILL.md",
+    "raw": "https://raw.githubusercontent.com/anthropics/skills/e4bb5d960d87126ff3b3a8af1a104b7db67560ba/skills/docx/SKILL.md",
+    "package": "https://github.com/anthropics/skills/tree/e4bb5d960d87126ff3b3a8af1a104b7db67560ba/skills/docx",
+    "evidence": "Accepting a deleted paragraph mark",
+    "analysis": "Track changes create a semantic QA issue: accepting a deleted paragraph mark should merge adjacent text, but conversion can leave an empty numbered item. Inspect the accepted view as well as rendered pages.",
+    "os": "Node docx-js for creation; Python plus LibreOffice and Poppler for visual checks. Host must provide these binaries.",
+    "data": "Document XML, tracked edits and comments; conversions create intermediate PDF and page images.",
+    "static_review": {
+      "repo": "anthropics/skills",
+      "rev": "e4bb5d960d87126ff3b3a8af1a104b7db67560ba",
+      "prefix": "skills/docx/",
+      "document": "skills/docx/SKILL.md",
+      "files": 61,
+      "document_sha256": "895d5aa6c4cd98e4aed4c995d846f056f3549086e79bcd6617afea6014f82288",
+      "manifest_sha256": "86adb8d1b8d3d654d34be40ffb29421af045fc10672c4ea4a9aea559c6400779",
+      "static_indicators": {
+        "process": {
+          "files": 2,
+          "examples": [
+            "skills/docx/scripts/accept_changes.py",
+            "skills/docx/scripts/office/soffice.py"
+          ]
+        }
+      }
+    },
+    "check_limits": "SHA-256 of all regular files within the specified scope, with a sorted (path, hash) manifest digest. Indicators cover selected script extensions below 1 MB, for process launch, eval and piped shell downloads. No antivirus verdict or runtime test. No downloaded code executed.",
+    "frozen_document_hash_verified": true,
+    "frozen_signature_result": "no detection (SKILL.md bytes only)"
+  },
+  {
+    "id": "skill:pptx",
+    "occurrences": [
+      "elements_index/elements/3711",
+      "skills/skills/3711"
+    ],
+    "publisher_index_id": "skill:github:anthropics/skills/skills/pptx/SKILL.md",
+    "source": "https://github.com/anthropics/skills/blob/e4bb5d960d87126ff3b3a8af1a104b7db67560ba/skills/pptx/SKILL.md",
+    "raw": "https://raw.githubusercontent.com/anthropics/skills/e4bb5d960d87126ff3b3a8af1a104b7db67560ba/skills/pptx/SKILL.md",
+    "package": "https://github.com/anthropics/skills/tree/e4bb5d960d87126ff3b3a8af1a104b7db67560ba/skills/pptx",
+    "evidence": "substitutes fonts",
+    "analysis": "A deck can parse while text overflows on its target machine. Check both the slide XML and rendered pages; a substitute font on the review machine can hide or introduce overflow.",
+    "os": "Node pptxgenjs and Python utilities; rendering uses LibreOffice and Poppler, with local fonts.",
+    "data": "Slide text, masters, fonts and media are processed locally by the documented file workflow.",
+    "static_review": {
+      "repo": "anthropics/skills",
+      "rev": "e4bb5d960d87126ff3b3a8af1a104b7db67560ba",
+      "prefix": "skills/pptx/",
+      "document": "skills/pptx/SKILL.md",
+      "files": 58,
+      "document_sha256": "598c981d93f2173b251f86a4bc94e9fb4e4f5ddaa314ba2dd4eca24b7a07808e",
+      "manifest_sha256": "78145fec0735d4fddbfd206a59ac90cac60ebfc65e791641dd29e75d34f66244",
+      "static_indicators": {
+        "process": {
+          "files": 2,
+          "examples": [
+            "skills/pptx/scripts/office/soffice.py",
+            "skills/pptx/scripts/thumbnail.py"
+          ]
+        }
+      }
+    },
+    "check_limits": "SHA-256 of all regular files within the specified scope, with a sorted (path, hash) manifest digest. Indicators cover selected script extensions below 1 MB, for process launch, eval and piped shell downloads. No antivirus verdict or runtime test. No downloaded code executed.",
+    "frozen_document_hash_verified": true,
+    "frozen_signature_result": "no detection (SKILL.md bytes only)"
+  },
+  {
+    "id": "skill:xlsx",
+    "occurrences": [
+      "elements_index/elements/1884",
+      "skills/skills/1884"
+    ],
+    "publisher_index_id": "skill:github:anthropics/skills/skills/xlsx/SKILL.md",
+    "source": "https://github.com/anthropics/skills/blob/e4bb5d960d87126ff3b3a8af1a104b7db67560ba/skills/xlsx/SKILL.md",
+    "raw": "https://raw.githubusercontent.com/anthropics/skills/e4bb5d960d87126ff3b3a8af1a104b7db67560ba/skills/xlsx/SKILL.md",
+    "package": "https://github.com/anthropics/skills/tree/e4bb5d960d87126ff3b3a8af1a104b7db67560ba/skills/xlsx",
+    "evidence": "not_computed",
+    "analysis": "Recalculation operates on a copy and transfers cached results back. Check not_computed as well as errors: a saved file can open with old values for unsupported formulas.",
+    "os": "Python/openpyxl and LibreOffice. Formula compatibility depends on the calculation engine.",
+    "data": "Workbook cells, formulas and a temporary recalculation copy; inspect retained cached values after edits.",
+    "static_review": {
+      "repo": "anthropics/skills",
+      "rev": "e4bb5d960d87126ff3b3a8af1a104b7db67560ba",
+      "prefix": "skills/xlsx/",
+      "document": "skills/xlsx/SKILL.md",
+      "files": 53,
+      "document_sha256": "f32b1c2b5d5d31e02964df110d6489613d9345f86830c118cfe24159d8448ce6",
+      "manifest_sha256": "71dd81df5b404f4e58063e8a3e5421fe375ff5312aa03f2327528a0763b737e0",
+      "static_indicators": {
+        "process": {
+          "files": 2,
+          "examples": [
+            "skills/xlsx/scripts/office/soffice.py",
+            "skills/xlsx/scripts/recalc.py"
+          ]
+        }
+      }
+    },
+    "check_limits": "SHA-256 of all regular files within the specified scope, with a sorted (path, hash) manifest digest. Indicators cover selected script extensions below 1 MB, for process launch, eval and piped shell downloads. No antivirus verdict or runtime test. No downloaded code executed.",
+    "frozen_document_hash_verified": true,
+    "frozen_signature_result": "no detection (SKILL.md bytes only)"
+  },
+  {
+    "id": "skill:frontend-design",
+    "occurrences": [
+      "elements_index/elements/3700",
+      "skills/skills/3700"
+    ],
+    "publisher_index_id": "skill:github:anthropics/skills/skills/frontend-design/SKILL.md",
+    "source": "https://github.com/anthropics/skills/blob/e4bb5d960d87126ff3b3a8af1a104b7db67560ba/skills/frontend-design/SKILL.md",
+    "raw": "https://raw.githubusercontent.com/anthropics/skills/e4bb5d960d87126ff3b3a8af1a104b7db67560ba/skills/frontend-design/SKILL.md",
+    "package": "https://github.com/anthropics/skills/tree/e4bb5d960d87126ff3b3a8af1a104b7db67560ba/skills/frontend-design",
+    "evidence": "plan, review against the brief, build, critique",
+    "analysis": "The artifact is a design review procedure. Compare the proposed typography and layout to an alternative brief; if both plans are interchangeable, the choices lack a concrete rationale.",
+    "os": "Markdown instructions for a coding agent. Rendering depends on the target web stack.",
+    "data": "Project brief, implementation and visual output. No standalone service is specified.",
+    "static_review": {
+      "repo": "anthropics/skills",
+      "rev": "e4bb5d960d87126ff3b3a8af1a104b7db67560ba",
+      "prefix": "skills/frontend-design/",
+      "document": "skills/frontend-design/SKILL.md",
+      "files": 2,
+      "document_sha256": "d91970639e9f5c37682ac7ab60094d35f1c7c1f38d731bd56396563aee10c1d3",
+      "manifest_sha256": "4ab1f7e59a4e202af1bc8e9d619da0c3d09e1730765272f89bc6fd1c8ce8a485",
+      "static_indicators": {}
+    },
+    "check_limits": "SHA-256 of all regular files within the specified scope, with a sorted (path, hash) manifest digest. Indicators cover selected script extensions below 1 MB, for process launch, eval and piped shell downloads. No antivirus verdict or runtime test. No downloaded code executed.",
+    "frozen_document_hash_verified": true,
+    "frozen_signature_result": "no detection (SKILL.md bytes only)"
+  },
+  {
+    "id": "skill:performance-optimization",
+    "occurrences": [
+      "elements_index/elements/6094",
+      "skills/skills/6094"
+    ],
+    "publisher_index_id": "skill:github:addyosmani/agent-skills/skills/performance-optimization/SKILL.md",
+    "source": "https://github.com/addyosmani/agent-skills/blob/8c99fa36d90068c82d547f7c12a9d67a3e95f4ee/skills/performance-optimization/SKILL.md",
+    "raw": "https://raw.githubusercontent.com/addyosmani/agent-skills/8c99fa36d90068c82d547f7c12a9d67a3e95f4ee/skills/performance-optimization/SKILL.md",
+    "package": "https://github.com/addyosmani/agent-skills/tree/8c99fa36d90068c82d547f7c12a9d67a3e95f4ee/skills/performance-optimization",
+    "evidence": "Synthetic (Lighthouse",
+    "analysis": "Synthetic traces isolate regressions under controlled conditions. Real-user monitoring tests whether the change helps users under their own conditions. Preserve the workload and baseline before claiming improvement.",
+    "os": "Host-independent guidance; examples use browser tooling, field metrics and backend profiling.",
+    "data": "Timing traces, field metrics and query measurements. Any monitoring destination depends on the chosen implementation.",
+    "static_review": {
+      "repo": "addyosmani/agent-skills",
+      "rev": "8c99fa36d90068c82d547f7c12a9d67a3e95f4ee",
+      "prefix": "skills/performance-optimization/",
+      "document": "skills/performance-optimization/SKILL.md",
+      "files": 2,
+      "document_sha256": "82af71540457cf853893685211f64509cd1e781c0de09d0186f16960f2d6eeba",
+      "manifest_sha256": "cfbaa51f20c7683f53121ee94127e7f1960fe1938ce4dd1182b60709c284b1b8",
+      "static_indicators": {}
+    },
+    "check_limits": "SHA-256 of all regular files within the specified scope, with a sorted (path, hash) manifest digest. Indicators cover selected script extensions below 1 MB, for process launch, eval and piped shell downloads. No antivirus verdict or runtime test. No downloaded code executed.",
+    "frozen_document_hash_verified": true,
+    "frozen_signature_result": "no detection (SKILL.md bytes only)"
+  },
+  {
+    "id": "connector:context7-mcp",
+    "occurrences": [
+      "elements_index/elements/13269",
+      "connectors/connectors/24"
+    ],
+    "publisher_index_id": "connector:github:upstash/context7",
+    "source": "https://github.com/upstash/context7/blob/17839096a0efe61b4b8a88cc20a8147784234cfa/README.md",
+    "raw": "https://raw.githubusercontent.com/upstash/context7/17839096a0efe61b4b8a88cc20a8147784234cfa/README.md",
+    "package": "https://github.com/upstash/context7/tree/17839096a0efe61b4b8a88cc20a8147784234cfa",
+    "evidence": "resolve-library-id",
+    "analysis": "Resolve the library ID before querying docs. The task text is itself a retrieval input; minimize proprietary context in the query. Manual remote MCP setup differs from the CLI setup which generates credentials.",
+    "os": "Hosted HTTP endpoint for compatible clients; the setup CLI requires Node 22.13 or newer.",
+    "data": "Library name, ID, query and optional language go to the service. Authenticated requests carry a bearer credential.",
+    "static_review": {
+      "repo": "upstash/context7",
+      "rev": "17839096a0efe61b4b8a88cc20a8147784234cfa",
+      "prefix": "",
+      "document": "README.md",
+      "files": 660,
+      "document_sha256": "a23306f5d9a04eb8588b619071a418d901f27549ace077ecbb28f21161a46912",
+      "manifest_sha256": "980a1b277b0af910588aab208432b7362af07973a42e271eb77d046b89ca47ed",
+      "static_indicators": {
+        "dynamic_eval": {
+          "files": 1,
+          "examples": [
+            "packages/admin-mcp/src/confirm.ts"
+          ]
+        },
+        "process": {
+          "files": 3,
+          "examples": [
+            "packages/cli/src/__tests__/upgrade-command.test.ts",
+            "packages/cli/src/commands/upgrade.ts",
+            "packages/mcp/test/integration.test.ts"
+          ]
+        }
+      }
+    },
+    "check_limits": "SHA-256 of all regular files within the specified scope, with a sorted (path, hash) manifest digest. Indicators cover selected script extensions below 1 MB, for process launch, eval and piped shell downloads. No antivirus verdict or runtime test. No downloaded code executed."
+  },
+  {
+    "id": "tool:context7-mcp",
+    "occurrences": [
+      "elements_index/elements/7405",
+      "tools/tools/424"
+    ],
+    "publisher_review": "connector:context7-mcp",
+    "source": "https://github.com/upstash/context7/blob/17839096a0efe61b4b8a88cc20a8147784234cfa/README.md",
+    "analysis": "Same publisher repository and pinned technical review. The frozen publisher match table maps this historical entry to the same repository."
+  },
+  {
+    "id": "repo:upstash/context7",
+    "occurrences": [
+      "tools/tools/424/source_url",
+      "connectors/connectors/24/url",
+      "original_sources/entries/14",
+      "original_sources/entries/88"
+    ],
+    "publisher_review": "connector:context7-mcp",
+    "source": "https://github.com/upstash/context7/blob/17839096a0efe61b4b8a88cc20a8147784234cfa/README.md",
+    "analysis": "Same publisher repository and pinned technical review. Canonical owner/repository lead; the reviewed README and package are the original publisher sources."
+  },
+  {
+    "id": "connector:mcp-open-library",
+    "occurrences": [
+      "elements_index/elements/14325",
+      "connectors/connectors/1080"
+    ],
+    "publisher_index_id": "connector:github:8ensmith/mcp-open-library",
+    "source": "https://github.com/8enSmith/mcp-open-library/blob/0df0728e9c5ee23e1f92d3e7dd7c0c6a6ef7ddc2/README.md",
+    "raw": "https://raw.githubusercontent.com/8enSmith/mcp-open-library/0df0728e9c5ee23e1f92d3e7dd7c0c6a6ef7ddc2/README.md",
+    "package": "https://github.com/8enSmith/mcp-open-library/tree/0df0728e9c5ee23e1f92d3e7dd7c0c6a6ef7ddc2",
+    "evidence": "JSON projections",
+    "analysis": "Search identifies a work; edition lookup selects the actual ISBN, language or publisher. A cover URL alone does not establish the edition. Respect documented page limits when enumerating results.",
+    "os": "Node/npx with a stdio MCP client; network access to Open Library. OS-specific behavior untested.",
+    "data": "Search terms and identifiers go to Open Library. The connector returns projected metadata and image URLs.",
+    "static_review": {
+      "repo": "8enSmith/mcp-open-library",
+      "rev": "0df0728e9c5ee23e1f92d3e7dd7c0c6a6ef7ddc2",
+      "prefix": "",
+      "document": "README.md",
+      "files": 78,
+      "document_sha256": "954feef565070d1f0b317c4d0bb2a44952a9f2553fb0f9eacd8648eaeae2c93e",
+      "manifest_sha256": "45e9ac6b4d044c2fb9d445e33b3cb2145df3dc6b8f94791448a4ffeb18285cdc",
+      "static_indicators": {}
+    },
+    "check_limits": "SHA-256 of all regular files within the specified scope, with a sorted (path, hash) manifest digest. Indicators cover selected script extensions below 1 MB, for process launch, eval and piped shell downloads. No antivirus verdict or runtime test. No downloaded code executed."
+  },
+  {
+    "id": "connector:8ensmith-mcp-open-library",
+    "occurrences": [
+      "elements_index/elements/13649",
+      "connectors/connectors/404"
+    ],
+    "publisher_review": "connector:mcp-open-library",
+    "source": "https://github.com/8enSmith/mcp-open-library/blob/0df0728e9c5ee23e1f92d3e7dd7c0c6a6ef7ddc2/README.md",
+    "analysis": "Same publisher repository and pinned technical review. The frozen publisher match table maps this historical entry to the same repository."
+  },
+  {
+    "id": "repo:8ensmith/mcp-open-library",
+    "occurrences": [
+      "connectors/connectors/404/url",
+      "connectors/connectors/404/github",
+      "connectors/connectors/1080/url",
+      "connectors/connectors/1080/github",
+      "original_sources/entries/3"
+    ],
+    "publisher_review": "connector:mcp-open-library",
+    "source": "https://github.com/8enSmith/mcp-open-library/blob/0df0728e9c5ee23e1f92d3e7dd7c0c6a6ef7ddc2/README.md",
+    "analysis": "Same publisher repository and pinned technical review. Canonical owner/repository lead; the reviewed README and package are the original publisher sources."
+  },
+  {
+    "id": "connector:manim-mcp-server",
+    "occurrences": [
+      "elements_index/elements/13331",
+      "connectors/connectors/86"
+    ],
+    "publisher_index_id": "connector:github:abhiemj/manim-mcp-server",
+    "source": "https://github.com/abhiemj/manim-mcp-server/blob/da23214426a56ce3ba4da39b0718d64cf97cd23c/README.md",
+    "raw": "https://raw.githubusercontent.com/abhiemj/manim-mcp-server/da23214426a56ce3ba4da39b0718d64cf97cd23c/README.md",
+    "package": "https://github.com/abhiemj/manim-mcp-server/tree/da23214426a56ce3ba4da39b0718d64cf97cd23c",
+    "evidence": "Executes Manim Python scripts",
+    "analysis": "Implementation writes submitted Python to one shared scene.py and runs a local Manim process. Concurrent renders share a path. Cleanup takes a caller-supplied directory with no containment check in the reviewed revision. Restrict filesystem access and isolate jobs before deployment.",
+    "os": "Python, Manim Community and MCP. Publisher describes Windows, macOS and Linux executable lookup.",
+    "data": "Generated code and media persist under the server media directory. Successful response is a status string; errors may return process stderr.",
+    "static_review": {
+      "repo": "abhiemj/manim-mcp-server",
+      "rev": "da23214426a56ce3ba4da39b0718d64cf97cd23c",
+      "prefix": "",
+      "document": "README.md",
+      "files": 5,
+      "document_sha256": "b993fb56874beeb0f49fe0642bc7bf8daab59f09e676f7495d5374ef6b4c381e",
+      "manifest_sha256": "f4ec407a2fad8d55ea6c6bdf9ee1f4cfd4bb4858e4fa2373d7db6d80bd845fea",
+      "static_indicators": {
+        "process": {
+          "files": 1,
+          "examples": [
+            "src/manim_server.py"
+          ]
+        }
+      }
+    },
+    "check_limits": "SHA-256 of all regular files within the specified scope, with a sorted (path, hash) manifest digest. Indicators cover selected script extensions below 1 MB, for process launch, eval and piped shell downloads. No antivirus verdict or runtime test. No downloaded code executed.",
+    "implementation": {
+      "url": "https://github.com/abhiemj/manim-mcp-server/blob/da23214426a56ce3ba4da39b0718d64cf97cd23c/src/manim_server.py",
+      "sha256": "211308b55a2c77d52ca332d0ee1b9d25ac0ce028718376b5880ffd58b7d71881",
+      "lines": "19–43, 49–59"
+    }
+  },
+  {
+    "id": "connector:abhiemj-manim-mcp-server",
+    "occurrences": [
+      "elements_index/elements/13650",
+      "connectors/connectors/405"
+    ],
+    "publisher_review": "connector:manim-mcp-server",
+    "source": "https://github.com/abhiemj/manim-mcp-server/blob/da23214426a56ce3ba4da39b0718d64cf97cd23c/README.md",
+    "analysis": "Same publisher repository and pinned technical review. The frozen publisher match table maps this historical entry to the same repository."
+  },
+  {
+    "id": "repo:abhiemj/manim-mcp-server",
+    "occurrences": [
+      "tools/tools/640/source_url",
+      "connectors/connectors/86/url",
+      "connectors/connectors/86/homepage",
+      "connectors/connectors/86/source_url",
+      "connectors/connectors/405/url",
+      "connectors/connectors/405/github",
+      "original_sources/entries/6",
+      "original_sources/entries/82"
+    ],
+    "publisher_review": "connector:manim-mcp-server",
+    "source": "https://github.com/abhiemj/manim-mcp-server/blob/da23214426a56ce3ba4da39b0718d64cf97cd23c/README.md",
+    "analysis": "Same publisher repository and pinned technical review. Canonical owner/repository lead; the reviewed README and package are the original publisher sources."
+  }
+]

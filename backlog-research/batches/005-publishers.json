@@ -1,0 +1,320 @@
+[
+  {
+    "id": "repo:mlguyyt/agentcrew",
+    "source": "https://github.com/mlguyYT/AgentCrew/blob/e405eef3405e942452f927ce0cc45c23d892d381/README.md",
+    "frozen_identity": "tools/tools/266/github",
+    "occurrences": [
+      "tools/tools/266/github",
+      "processed/4PP_bodyqc0.json#links",
+      "processed/4PP_bodyqc0.json#description"
+    ],
+    "analysis": "The original separates a portable Markdown role workflow from an executable engine that checks test and review evidence. The supplied demo scripts the model responses, so it demonstrates routing rather than independent model judgment.",
+    "os": "The engine needs Linux, Bubblewrap and user namespaces. Markdown guidance can be applied in compatible hosts.",
+    "data": "Project-local .agent-state holds run decisions; stable preferences live in a global profile. Backend selection determines model-side exposure.",
+    "evidence_sha256": {
+      "README.md": "8353926c174268b3e1cc3d7f4b968850837d444102ae1ddfffb8835cd7120047",
+      "engine/README.md": "5f7d952b65809d3dcf1a83ad1bb0904a84e573a4ca0a36626136578717c93d8d",
+      "engine/agentcrew/command_sandbox.py": "22ac45533d69b67c0e48f024628aaad3ae4269e06e70d0fc2b37225eca4e8708"
+    },
+    "malware_check": {
+      "method": "Static text inspection of .js/.ts/.py/.sh/.ps1/.mjs/.tsx regular files under 1 MB; indicators for piped downloads, eval and process creation. No execution, package-wide antivirus or release binary checks.",
+      "archive_sha256": "f7b58226db5069b103a49a695185119c51435a0b59f6738944fef7f953504fb8",
+      "regular_files": 390,
+      "indicator_counts": {
+        "process_launch": 13
+      },
+      "example_paths": {
+        "process_launch": [
+          "engine/agentcrew/command_sandbox.py",
+          "engine/agentcrew/git_safety.py",
+          "engine/agentcrew/routing.py"
+        ]
+      }
+    }
+  },
+  {
+    "id": "tool:agentcrew",
+    "source": "https://github.com/mlguyYT/AgentCrew/blob/e405eef3405e942452f927ce0cc45c23d892d381/README.md",
+    "publisher_review": "repo:mlguyyt/agentcrew",
+    "occurrences": [
+      "elements_index/elements/7247",
+      "tools/tools/266"
+    ],
+    "analysis": "Same explicit upstream URL. A routine fix can take the fast lane while consequential changes require review and approval."
+  },
+  {
+    "id": "repo:diwenne/openreply",
+    "source": "https://github.com/diwennee/openreply/blob/553bd17c48b1b58d145ad4091377ae1c38e4f320/README.md",
+    "frozen_identity": "screen_urls/urls/187",
+    "occurrences": [
+      "screen_urls/urls/187",
+      "tools/tools/3353/github",
+      "connectors/connectors/1637/url",
+      "connectors/connectors/1637/github"
+    ],
+    "analysis": "The historical URL redirects to diwennee/openreply. Instagram events enter via webhooks; a separate worker delivers queued replies. Checking dashboard uptime alone misses a failed sender. The workspace-scoped MCP reporting interface is read-only.",
+    "os": "Node web process and separate worker, PostgreSQL, Redis, email and public HTTPS. OS-specific compatibility untested.",
+    "data": "Comments and DMs, account credentials, click tracking, campaign settings and delivery logs; the dashboard can cache conversations.",
+    "evidence_sha256": {
+      "README.md": "a6c60037810a8830a4fe7e29bf33c30c617b583b9b086993a3dc2cc6b9acce80",
+      "package.json": "78f920cbe33d896be9c100e7113db9679148529e743e7b24162f30be4bc178ab",
+      "lib/integrations/auth.ts": "44e9353c0a2e70ab0e236071bc6e5b0de44a14389d73c3c9bf038c5a60fc3be7",
+      "docs/integrations.md": "bb9a97515dca9b18dec6ec664ec218ce43618cace3a6185ebafacc3243c8b910"
+    },
+    "malware_check": {
+      "method": "Static text inspection of .js/.ts/.py/.sh/.ps1/.mjs/.tsx regular files under 1 MB; indicators for piped downloads, eval and process creation. No execution, package-wide antivirus or release binary checks.",
+      "archive_sha256": "c490ee9ca3e8a3b8b01e5eb10d97a4d26baa4b40e444c0c47cbec6f3c1d413f2",
+      "regular_files": 307,
+      "indicator_counts": {
+        "dynamic_eval": 2
+      },
+      "example_paths": {
+        "dynamic_eval": [
+          "lib/integrations/auth.ts",
+          "lib/utils/rate-limiter.ts"
+        ]
+      }
+    },
+    "indicator_interpretation": "In lib/integrations/auth.ts eval runs a Redis counter/expiry script for rate limiting; the match alone does not indicate host-language execution."
+  },
+  {
+    "id": "tool:open-reply",
+    "source": "https://github.com/diwennee/openreply/blob/553bd17c48b1b58d145ad4091377ae1c38e4f320/README.md",
+    "publisher_review": "repo:diwenne/openreply",
+    "occurrences": [
+      "elements_index/elements/10334",
+      "tools/tools/3353"
+    ],
+    "analysis": "Direct catalog link and on-screen URL identify the same service. Delivery depends on an operating queue and worker."
+  },
+  {
+    "id": "connector:instagram-comment-to-dm-automation",
+    "source": "https://github.com/diwennee/openreply/blob/553bd17c48b1b58d145ad4091377ae1c38e4f320/README.md",
+    "publisher_review": "repo:diwenne/openreply",
+    "occurrences": [
+      "elements_index/elements/14882",
+      "connectors/connectors/1637"
+    ],
+    "analysis": "The catalog links the messaging product; the publisher MCP exposes report data. Message delivery is a separate worker capability."
+  },
+  {
+    "id": "repo:anil-matcha/open-higgsfield-ai",
+    "source": "https://github.com/Anil-matcha/Open-Generative-AI/blob/7746dd22068175ede684c455529bdd3d12a2f07d/README.md",
+    "frozen_identity": "tools/tools/1103/github",
+    "occurrences": [
+      "screen_urls/urls/421",
+      "tools/tools/1103/github"
+    ],
+    "analysis": "Historical owner/repo redirects to Open-Generative-AI. The hosted app always uses cloud APIs. Desktop local image generation and separately installed Wan2GP video generation are different paths. Do not estimate offline cost or coverage from the breadth of the cloud catalog.",
+    "os": "macOS, Windows and Linux desktop. Supported image models use sd.cpp; video inference needs a separate CUDA/ROCm-capable Wan2GP host.",
+    "data": "Cloud jobs send inputs to a provider and use an API key; remote Wan2GP sends work to the configured GPU host. Publisher documents browser localStorage for the cloud key.",
+    "evidence_sha256": {
+      "README.md": "653bea11ede3f66473ba4de5d19de9bf5141ffe3b8fe4f77f488de41d5dea8f9",
+      "electron/lib/localInference.js": "8afc9cf28db17712cdf5fb2eb3f47e60f0687b891a92d4454f9fdad49f33fa09",
+      "electron/lib/wan2gpLocal.js": "797cb693292466acb7c19a526fae1b3f2ccb4ae1461bf2092811e91bcb051c86"
+    },
+    "malware_check": {
+      "method": "Static text inspection of .js/.ts/.py/.sh/.ps1/.mjs/.tsx regular files under 1 MB; indicators for piped downloads, eval and process creation. No execution, package-wide antivirus or release binary checks.",
+      "archive_sha256": "fe77862f5e3c443a7095b3ca308fe2abeaf3d6163d3d2d32daf78bfb24d79fda",
+      "regular_files": 258,
+      "indicator_counts": {
+        "process_launch": 5
+      },
+      "example_paths": {
+        "process_launch": [
+          "afterPack.js",
+          "electron/lib/localInference.js",
+          "electron/lib/wan2gpLocal.js"
+        ]
+      }
+    }
+  },
+  {
+    "id": "repo:anil-matcha/open-generative-ai",
+    "source": "https://github.com/Anil-matcha/Open-Generative-AI/blob/7746dd22068175ede684c455529bdd3d12a2f07d/README.md",
+    "publisher_review": "repo:anil-matcha/open-higgsfield-ai",
+    "occurrences": [
+      "screen_urls/urls/123",
+      "tools/tools/721/github",
+      "tools/tools/3279/github"
+    ],
+    "analysis": "Canonical repository name and historical redirect resolve to the same reviewed revision."
+  },
+  {
+    "id": "tool:open-higgsfield-ai",
+    "source": "https://github.com/Anil-matcha/Open-Generative-AI/blob/7746dd22068175ede684c455529bdd3d12a2f07d/README.md",
+    "publisher_review": "repo:anil-matcha/open-higgsfield-ai",
+    "occurrences": [
+      "elements_index/elements/8084",
+      "tools/tools/1103"
+    ],
+    "analysis": "Historical product spelling points to the same repository. Source availability and inference pricing are separate."
+  },
+  {
+    "id": "tool:open-generative-ai",
+    "source": "https://github.com/Anil-matcha/Open-Generative-AI/blob/7746dd22068175ede684c455529bdd3d12a2f07d/README.md",
+    "publisher_review": "repo:anil-matcha/open-higgsfield-ai",
+    "occurrences": [
+      "elements_index/elements/10260",
+      "tools/tools/3279"
+    ],
+    "analysis": "The catalog entry explicitly links the video claiming local inference. The publisher describes narrower desktop support."
+  },
+  {
+    "id": "tool:ai-video-generation-platform",
+    "source": "https://github.com/Anil-matcha/Open-Generative-AI/blob/7746dd22068175ede684c455529bdd3d12a2f07d/README.md",
+    "publisher_review": "repo:anil-matcha/open-higgsfield-ai",
+    "occurrences": [
+      "elements_index/elements/7702",
+      "tools/tools/721"
+    ],
+    "analysis": "The generic product name has an explicit publisher URL. The app’s director UI is not evidence of character consistency across generated shots."
+  },
+  {
+    "id": "repo:nextlevelbuilder/ui-ux-pro-max-skill",
+    "source": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/11ca2b3bdd555649f278ee348c32a9302b24dcf1/.claude/skills/ui-ux-pro-max/SKILL.md",
+    "frozen_identity": "skills/skills/3701/github",
+    "occurrences": [
+      "social_intake/items/177",
+      "discovered_elements/elements/115",
+      "skills/skills/2718/github",
+      "skills/skills/3701/github",
+      "tools/tools/77/source_url",
+      "designs/designs/8/github",
+      "processed/VMvZuhcDdnw.json#description"
+    ],
+    "analysis": "The design skill queries bundled reference data. For Hebrew or Arabic the author distinguishes styles that mirror fully from those needing component checks. Validate keyboard flow, directional icons, charts and overflow on the rendered layout.",
+    "os": "Compatible skill host and Python 3 for the local search. Optional npm installer.",
+    "data": "Local search consumes a design query; persisted results write project files. Host model context handling is independent.",
+    "evidence_sha256": {
+      ".claude/skills/ui-ux-pro-max/SKILL.md": "39a82568d06b2555ad248afa7dfd035ed991c5d8bd23ae53460bf955da3af967",
+      ".claude/skills/ui-ux-pro-max/scripts/search.py": "d6ae5b3421ff9fb7fde20c817d83b0b89feb557ebb9201d9effe2b3e3e8d89fc",
+      ".claude/skills/ui-ux-pro-max/references/quick-reference.md": "ede37ffbdd543eb56c4ca328155d395fef979b3bf3e9c25581123c5cb46fdb65",
+      ".claude/skills/ui-ux-pro-max/data/styles.csv": "a9b6cadbd1cb9e7cb8398a3b445e0691d01e42ed5e5efa60a5d0c08c99c8100d"
+    },
+    "malware_check": {
+      "method": "Static text inspection of .js/.ts/.py/.sh/.ps1/.mjs/.tsx regular files under 1 MB; indicators for piped downloads, eval and process creation. No execution, package-wide antivirus or release binary checks.",
+      "archive_sha256": "1b2ea6e44a8de8298bc68a5340b3ad47a203f79f831af2b7c313097415c9d1b4",
+      "regular_files": 758,
+      "indicator_counts": {
+        "process_launch": 46
+      },
+      "example_paths": {
+        "process_launch": [
+          ".claude/skills/brand/scripts/tests/test_sync_brand_to_tokens.py",
+          ".claude/skills/design-system/scripts/slide-token-validator.py",
+          ".claude/skills/design-system/scripts/tests/test_utf8_io.py"
+        ]
+      }
+    },
+    "raw_url": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/11ca2b3bdd555649f278ee348c32a9302b24dcf1/.claude/skills/ui-ux-pro-max/SKILL.md",
+    "package_url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/11ca2b3bdd555649f278ee348c32a9302b24dcf1/.claude/skills/ui-ux-pro-max",
+    "sha256": "39a82568d06b2555ad248afa7dfd035ed991c5d8bd23ae53460bf955da3af967",
+    "identity_status": "Frozen publisher-index match absent. Independently established by linked source evidence.",
+    "historical_scan": {
+      "skill:ui-ux-pro-max": {
+        "result": "no detection",
+        "package": true
+      },
+      "skill:ui-ux-pro-max-design-intelligence": {
+        "result": "no detection",
+        "package": false
+      }
+    },
+    "historical_scan_limit": "Frozen labels are not bound to the new archive hash."
+  },
+  {
+    "id": "skill:ui-ux-pro-max",
+    "source": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/11ca2b3bdd555649f278ee348c32a9302b24dcf1/.claude/skills/ui-ux-pro-max/SKILL.md",
+    "publisher_review": "repo:nextlevelbuilder/ui-ux-pro-max-skill",
+    "occurrences": [
+      "elements_index/elements/3701",
+      "skills/skills/3701"
+    ],
+    "analysis": "The frozen row explicitly links to the publisher. Counts of styles or palettes depend on revision.",
+    "raw_url": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/11ca2b3bdd555649f278ee348c32a9302b24dcf1/.claude/skills/ui-ux-pro-max/SKILL.md",
+    "package_url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/11ca2b3bdd555649f278ee348c32a9302b24dcf1/.claude/skills/ui-ux-pro-max",
+    "sha256": "39a82568d06b2555ad248afa7dfd035ed991c5d8bd23ae53460bf955da3af967"
+  },
+  {
+    "id": "skill:ui-ux-pro-max-design-intelligence",
+    "source": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/11ca2b3bdd555649f278ee348c32a9302b24dcf1/.claude/skills/ui-ux-pro-max/SKILL.md",
+    "publisher_review": "repo:nextlevelbuilder/ui-ux-pro-max-skill",
+    "occurrences": [
+      "elements_index/elements/2718",
+      "skills/skills/2718"
+    ],
+    "analysis": "The explicit repository URL identifies the same package. The generated design plan depends on query intent, stack and domain.",
+    "raw_url": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/11ca2b3bdd555649f278ee348c32a9302b24dcf1/.claude/skills/ui-ux-pro-max/SKILL.md",
+    "package_url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/11ca2b3bdd555649f278ee348c32a9302b24dcf1/.claude/skills/ui-ux-pro-max",
+    "sha256": "39a82568d06b2555ad248afa7dfd035ed991c5d8bd23ae53460bf955da3af967"
+  },
+  {
+    "id": "skill:multi-agent-decision-making-council",
+    "source": "https://github.com/tenfoldmarc/llm-council-skill/blob/0dc03275b0ddf542545da3a9684510fff31df353/SKILL.md",
+    "frozen_identity": "skills/skills/126 -> processed/3LMppjN7zIM.json#links -> publisher guide",
+    "occurrences": [
+      "elements_index/elements/126",
+      "skills/skills/126"
+    ],
+    "analysis": "The video’s linked setup guide names the exact repository. The original uses five advisor calls, five anonymous reviews and a synthesis stage. Label shuffling reduces attribution cues, but the agents may share the same false premise. Use outside evidence to settle factual disputes.",
+    "os": "Markdown for a host with subagents and project access. Setup guide describes Windows and Unix-style installation folders.",
+    "data": "The skill reads local context to enrich the common brief and writes an HTML report and full transcript. The same brief is shared across advisor roles.",
+    "evidence_sha256": {
+      "SKILL.md": "9a09821287630dd611163924490326c8d205ffd10415dd953457e9b2a26a15ef",
+      "README.md": "424378276a3f749ee6a61956ad5eefc213af2201b2901f1dbff7903694326d3d"
+    },
+    "malware_check": {
+      "method": "Static text inspection of .js/.ts/.py/.sh/.ps1/.mjs/.tsx regular files under 1 MB; indicators for piped downloads, eval and process creation. No execution, package-wide antivirus or release binary checks.",
+      "archive_sha256": "29e73978a944bd07267e37dfcc256c535ab159c5184189987157e98201d9e6cd",
+      "regular_files": 3,
+      "indicator_counts": {},
+      "example_paths": {}
+    },
+    "raw_url": "https://raw.githubusercontent.com/tenfoldmarc/llm-council-skill/0dc03275b0ddf542545da3a9684510fff31df353/SKILL.md",
+    "package_url": "https://github.com/tenfoldmarc/llm-council-skill/tree/0dc03275b0ddf542545da3a9684510fff31df353",
+    "sha256": "9a09821287630dd611163924490326c8d205ffd10415dd953457e9b2a26a15ef",
+    "identity_status": "Frozen publisher-index match absent. Independently established by linked source evidence.",
+    "guide": "https://docs.google.com/document/d/1GqpUG1K2sO55h8QNSUgbHjK8-jbPi4jE/edit?usp=sharing&ouid=110897400342351178452&rtpof=true&sd=true",
+    "guide_sha256": "9f89f7e19fcfc6eba4a41d3b5215fd3d8eee4a00bc706b8df885169877209559"
+  },
+  {
+    "id": "skill:expansionist-agent",
+    "source": "https://github.com/tenfoldmarc/llm-council-skill/blob/0dc03275b0ddf542545da3a9684510fff31df353/SKILL.md",
+    "publisher_review": "skill:multi-agent-decision-making-council",
+    "occurrences": [
+      "elements_index/elements/3456",
+      "skills/skills/3456"
+    ],
+    "analysis": "An inline perspective explores upside when constraints are relaxed. The original contains no separately installable expansionist package.",
+    "raw_url": "https://raw.githubusercontent.com/tenfoldmarc/llm-council-skill/0dc03275b0ddf542545da3a9684510fff31df353/SKILL.md",
+    "package_url": "https://github.com/tenfoldmarc/llm-council-skill/tree/0dc03275b0ddf542545da3a9684510fff31df353",
+    "sha256": "9a09821287630dd611163924490326c8d205ffd10415dd953457e9b2a26a15ef"
+  },
+  {
+    "id": "skill:outsider-agent",
+    "source": "https://github.com/tenfoldmarc/llm-council-skill/blob/0dc03275b0ddf542545da3a9684510fff31df353/SKILL.md",
+    "publisher_review": "skill:multi-agent-decision-making-council",
+    "occurrences": [
+      "elements_index/elements/3457",
+      "skills/skills/3457"
+    ],
+    "analysis": "A perspective on missing context and first impressions, defined inside the same skill document.",
+    "raw_url": "https://raw.githubusercontent.com/tenfoldmarc/llm-council-skill/0dc03275b0ddf542545da3a9684510fff31df353/SKILL.md",
+    "package_url": "https://github.com/tenfoldmarc/llm-council-skill/tree/0dc03275b0ddf542545da3a9684510fff31df353",
+    "sha256": "9a09821287630dd611163924490326c8d205ffd10415dd953457e9b2a26a15ef"
+  },
+  {
+    "id": "skill:executor-agent",
+    "source": "https://github.com/tenfoldmarc/llm-council-skill/blob/0dc03275b0ddf542545da3a9684510fff31df353/SKILL.md",
+    "publisher_review": "skill:multi-agent-decision-making-council",
+    "occurrences": [
+      "elements_index/elements/3458",
+      "skills/skills/3458"
+    ],
+    "analysis": "The inline role converts alternatives into an immediate next action; no separate runtime is supplied.",
+    "raw_url": "https://raw.githubusercontent.com/tenfoldmarc/llm-council-skill/0dc03275b0ddf542545da3a9684510fff31df353/SKILL.md",
+    "package_url": "https://github.com/tenfoldmarc/llm-council-skill/tree/0dc03275b0ddf542545da3a9684510fff31df353",
+    "sha256": "9a09821287630dd611163924490326c8d205ffd10415dd953457e9b2a26a15ef"
+  }
+]

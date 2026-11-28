@@ -22,3 +22,10 @@ The Manim connector review includes a source-level finding about directory clean
 ### Checkpoint after batch 004
 
 The frozen ledger contains 180 reviewed IDs and 42,100 open IDs. This batch covers 20 publisher feeds, 19 versioned author abstracts, five transcripts and two catalog IDs sharing one Bilibili connector review. Feed evidence describes the observed endpoint and sample entries. It does not close the linked articles. Paper findings are explicitly limited to the abstract. Two unreadable feed endpoints remain in exceptions.json. No fetched connector code was executed. The subsequent queue holds 1,764 IDs as of its recorded comparison revision.
+
+
+### Checkpoint after batch 005
+
+237 distinct frozen IDs reviewed and 42,043 open. The batch contains 40 spoken transcript interpretations and 17 publisher-linked IDs across five distinct upstream repositories. The Council guide resolves to a single Markdown skill with inline advisor roles. Three conflicting GitHub attributions remain in exceptions.json. The two skill packages have pinned raw originals, companion package links and document hashes. Prompt templates remain in the original documents, separate from the research findings. Package checks are static and do not certify runtime behavior or binary releases.
+
+The comparison against main at 61fc8bba2e73579fb2b0eb9f48b4da71eef04394 found 1,781 distinct post-freeze IDs. Occurrence offsets in subsequent.json resolve at its own comparison revision.

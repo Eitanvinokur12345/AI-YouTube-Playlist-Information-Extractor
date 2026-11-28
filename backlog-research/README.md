@@ -36,3 +36,10 @@ The comparison against main at 61fc8bba2e73579fb2b0eb9f48b4da71eef04394 found 1,
 293 frozen IDs reviewed; 41,987 open. This batch reconciles host commands with publisher references, including changed command names and session/cloud differences. Eleven natural-language prompt shortcuts are assessed separately, with pointers to their stored text. Their status as executable commands is unverified. The gstack entries share one pinned package review; raw skill documents, invocation names and document digests are recorded separately. The two completed videos each have substantive speech. An unrelated title-only record stays open.
 
 At source comparison c5123745a07c0eff5a08c8e6a2ccb8893cfe9474, the current inventory contains 1,781 post-freeze IDs. See subsequent.json for their occurrence revision.
+
+
+### Checkpoint after batch 007
+
+61 newly reviewed IDs: 42 frozen format descriptions, 17 versioned author abstracts and two extracted tool records traced from those papers to pinned publisher repositories. The format reviews use the stored descriptions and rebuild hints. They do not certify the original videos or count them as reviewed. Publisher reviews name runtime, data, integrity hashes and static-check limits. The PuMVR review independently checks row identifiers, image existence and gold answer positions across scripts.
+
+The reviewed-ID union is 354 of 42,280, leaving 41,926 open. Main at 2c7c7eeb75b1ad9d434adee652bea07de7ac1fc4 is the verified batch 006 publication. The source inventory did not change since that comparison; subsequent.json retains 1,781 later IDs with locators at its recorded revision.

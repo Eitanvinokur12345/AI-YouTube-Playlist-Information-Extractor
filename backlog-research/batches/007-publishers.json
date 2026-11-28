@@ -1,0 +1,69 @@
+[
+  {
+    "id": "tool:pumvr",
+    "occurrences": [
+      "elements_index/elements/9684",
+      "tools/tools/2703"
+    ],
+    "discovery": "https://arxiv.org/abs/2606.17188",
+    "publisher_index_match": null,
+    "identity": "Independent link from the catalogued paper to the authors’ repository.",
+    "source": "https://github.com/prabhjotschugh/Not-Truly-Multilingual-PuMVR/blob/2bc54644f578dd847cc5d7378da25bb19090b666/README.md",
+    "evidence_sha256": {
+      "README.md": "0feda1a88a62a9a64e8459680538becabdfc03e5d96c8b5390510c9b261b5645",
+      "Full dataset/dataset_json.json": "90ac2d3d3b0e5be175813f720766177bbabcc9fa1d2caef2cf3a1c4f9451c02e"
+    },
+    "analysis": "Independently checked the 1,000 dataset rows: 1,000 unique IDs, all referenced images present, all three script keys on each row, and exactly one matching answer option per script. All three gold option positions agreed on every row. This verifies structural pairing; semantic equivalence of each translation and published model scores were not independently assessed.",
+    "os": "Dataset inspection requires only a JSON reader. Running model-specific evaluation scripts needs their respective environments and, for hosted models, API access. OS compatibility not tested.",
+    "data": "Images, three script versions of each question, answer options, labels and model outputs. A hosted evaluation can transmit the examples to its provider.",
+    "malware_check": {
+      "archive_sha256": "09fd64cd7597fd14be44dd0349a2b5dbabecbe27d23b1087867ab1d4f01b7054",
+      "regular_files": 1034,
+      "indicator_counts": {
+        "eval": 15
+      },
+      "example_paths": {
+        "eval": [
+          "codes/InternVL2_5-26B/exp1.py",
+          "codes/InternVL2_5-26B/exp2.py",
+          "codes/InternVL2_5-26B/exp3.py"
+        ]
+      },
+      "method": "Static scan of .py/.sh/.js/.ts/.ps1 files below 1 MB for eval, process launch and piped downloads. No downloaded code executed. Dependencies, model weights and release binaries have no antivirus verdict here."
+    }
+  },
+  {
+    "id": "tool:sproutrag",
+    "occurrences": [
+      "elements_index/elements/9814",
+      "tools/tools/2833"
+    ],
+    "discovery": "https://arxiv.org/abs/2606.18381",
+    "publisher_index_match": null,
+    "identity": "Independent link from the catalogued paper to the authors’ repository.",
+    "source": "https://github.com/AmirAbaskohi/SproutRAG/blob/25e16aa6b6af7c01bf469793921ed33afb15d3d8/README.md",
+    "evidence_sha256": {
+      "README.md": "7c5c3c750e949ff346facbaf8a61637a0240f00500da83c42674e11ae5a7fbe3",
+      "pyproject.toml": "b0b934742665347b180f53767482d9e8d640233e4c686ebd6627259159f26091",
+      "sproutrag/cli/answer.py": "8298e33a71bbd38f12db8124575d56bfe87231475f8790463a5a78fd60f361dd"
+    },
+    "analysis": "The frozen tool row has an empty description but links the paper, whose abstract names this repository. The publisher separates index, retrieve, answer and evaluate commands. Save retrieved evidence before generation to distinguish a missed passage from an unsupported answer. Optional training and reranking change the evaluation conditions.",
+    "os": "Python 3.10+ and PyTorch; CUDA can be selected when available. No operating-system or performance test was run.",
+    "data": "Source documents, index files, queries, retrieved passages and generated outputs. Storage and compute follow the supplied configuration.",
+    "malware_check": {
+      "archive_sha256": "4e1e6b1d313235a0951fd1d9d179dc9effd1d383066baf190b5f202ad9a900e8",
+      "regular_files": 73,
+      "indicator_counts": {
+        "eval": 3
+      },
+      "example_paths": {
+        "eval": [
+          "sproutrag/encoding/sllm_encoder.py",
+          "sproutrag/generation/hf_generator.py",
+          "sproutrag/reranking/cross_encoder.py"
+        ]
+      },
+      "method": "Static scan of .py/.sh/.js/.ts/.ps1 files below 1 MB for eval, process launch and piped downloads. No downloaded code executed. Dependencies, model weights and release binaries have no antivirus verdict here."
+    }
+  }
+]

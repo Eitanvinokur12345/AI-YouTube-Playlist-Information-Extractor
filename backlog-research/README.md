@@ -61,3 +61,7 @@ Union of completed frozen IDs: 609 of 42,280, leaving 41,671 open. Title-only vi
 Reviewed four spoken transcripts, 50 distinct archived entries and two publisher-linked Kronos IDs. Fifty exact archive duplicates point to the individual assessments. Prompt text has its own batch. The pinned inference example and predictor signature expose a reversed history slice and incompatible keywords in the extracted walkthrough. Publisher archive contents also distinguish a referenced CSV from a bundled dataset. Source and model code were inspected without execution.
 
 The union contains 715 of 42,280 frozen IDs, with 41,565 open. Compared source inventory at 3d3261c6560c9cd53f42f48e4e184496ed9bc5f5; 1,867 later IDs currently present. Occurrence offsets in subsequent.json always resolve at its own comparison revision.
+
+### Checkpoint after batch 011
+
+Verified 43 additional frozen IDs on main: three spoken transcripts, 20 archived shell utility records and their 20 exact deletion aliases. Two publisher README blobs support the model benchmark and browser snapshot findings. No command or upstream code was executed. Archived statements about default command blocking lack configuration evidence. The union is 758 of 42,280, leaving 41,522 open. The subsequent queue retains its prior comparison revision.

@@ -43,3 +43,9 @@ At source comparison c5123745a07c0eff5a08c8e6a2ccb8893cfe9474, the current inven
 61 newly reviewed IDs: 42 frozen format descriptions, 17 versioned author abstracts and two extracted tool records traced from those papers to pinned publisher repositories. The format reviews use the stored descriptions and rebuild hints. They do not certify the original videos or count them as reviewed. Publisher reviews name runtime, data, integrity hashes and static-check limits. The PuMVR review independently checks row identifiers, image existence and gold answer positions across scripts.
 
 The reviewed-ID union is 354 of 42,280, leaving 41,926 open. Main at 2c7c7eeb75b1ad9d434adee652bea07de7ac1fc4 is the verified batch 006 publication. The source inventory did not change since that comparison; subsequent.json retains 1,781 later IDs with locators at its recorded revision.
+
+### Checkpoint after batch 008
+
+Compared 712 quarantine entries with 672 deletion entries. The index identifies 670 exact one-to-one content matches at the freeze. Reviewed 75 distinct archived entries, including 12 prompt or interface text findings stored separately, and linked their 75 duplicate IDs. The remaining 595 pairs receive no completion credit from this mapping. Archive dispositions are preserved. Six publisher-linked IDs were reviewed across two pinned projects, including their source hashes, OS/runtime and data boundaries, and static-check limits.
+
+The reviewed-ID union is 510 of 42,280, leaving 41,770 open. At fe7425da12e8718e346446b5e3af84c2ace941d8, the current inventory contains 1,842 subsequent IDs. No video was credited for reviewing extracted records.

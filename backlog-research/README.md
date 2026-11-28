@@ -17,3 +17,8 @@ At source snapshot `090788071c8f316db9a57448f9e5d50a67191b6b`, the 1,762 post-fr
 The union of batches 001–003 contains 134 distinct frozen IDs (42,146 open). Batch 003 adds 30 prompt records, six transcript interpretations, one publisher problem statement and 14 publisher-linked IDs. Those 14 represent eight original reviews: five skill packages and three connector repositories. Alias rows link to the full review. Stored prompt bodies remain in the frozen prompts file. Descriptions of missing prompt originals and assistant output are classified as extracted records only.
 
 The Manim connector review includes a source-level finding about directory cleanup and concurrent renders. Each of the five skill documents matched its frozen SHA-256. Package checks record scoped static indicators; signature results from the frozen catalog apply only to the named skill documents. The recovered introduction for video 7qjpP7nDc0c is tracked in exceptions.json; only its linked publisher problem was closed.
+
+
+### Checkpoint after batch 004
+
+The frozen ledger contains 180 reviewed IDs and 42,100 open IDs. This batch covers 20 publisher feeds, 19 versioned author abstracts, five transcripts and two catalog IDs sharing one Bilibili connector review. Feed evidence describes the observed endpoint and sample entries. It does not close the linked articles. Paper findings are explicitly limited to the abstract. Two unreadable feed endpoints remain in exceptions.json. No fetched connector code was executed. The subsequent queue holds 1,764 IDs as of its recorded comparison revision.

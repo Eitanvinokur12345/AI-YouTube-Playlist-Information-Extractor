@@ -1,0 +1,45 @@
+[
+  {
+    "id": "connector:34892002-bilibili-mcp-js",
+    "source": "https://github.com/34892002/bilibili-mcp-js/blob/82e60ad0545305de0475e6344f9ecbe39a5e04d9/README-en.md",
+    "package": "https://github.com/34892002/bilibili-mcp-js/tree/82e60ad0545305de0475e6344f9ecbe39a5e04d9",
+    "occurrences": [
+      "elements_index/elements/13738",
+      "connectors/connectors/493"
+    ],
+    "evidence_files": {
+      "README-en.md": "2aa54f4adaa75bcbafbfc27835530ff72d309f3ff95305a9d3ae188ca425c45b",
+      "index.ts": "c3ca5da2e36e9f6dd25084eb8e39e64d52f4e3781b2d420fc8cd1f9d2216f4f3",
+      "src/index.ts": "a019bcd6f3c5d608f78852b2d3de97af01913f09cfaee2a25760ca2d12e24232",
+      "package.json": "6959992704b7c040690982c5420041d75183af8aafbf4ed18c833a2853b0a2d4",
+      "package-lock.json": "823f8208dc4893ac68d05f3ba3369989bd682c219bb39de8505e9928d01e55cc"
+    },
+    "analysis": "The connector exposes Bilibili video discovery, metadata, creator and schedule lookups. The documented operations provide leads; a search result or video description cannot substitute for subtitles or viewing the underlying video.",
+    "os": "README specifies Node >=20.12, package engines >=20; build examples include Windows. stdio and optional remote HTTP transport. OS compatibility was not runtime-tested.",
+    "data": "Search keywords, video and user identifiers are sent to Bilibili APIs. src/index.ts creates a cookie jar from site responses. The optional LangChain example also requires model credentials; basic metadata acquisition is a separate path.",
+    "malware_check": {
+      "method": "Offline text inspection of executable source extensions for piped downloads, eval and child_process. No code executed. Package dependencies, registry artifacts and antivirus signatures not checked.",
+      "matches": {
+        "shell_download": [],
+        "dynamic_eval": [],
+        "child_process": [
+          "test.js",
+          "test/hot.js"
+        ]
+      },
+      "regular_files": 26,
+      "archive_sha256": "45226164f112b1d20c87ef6c203c84cad487e5173a22bae7e2d74aae4dba9291"
+    }
+  },
+  {
+    "id": "repo:34892002/bilibili-mcp-js",
+    "source": "https://github.com/34892002/bilibili-mcp-js/blob/82e60ad0545305de0475e6344f9ecbe39a5e04d9/package.json",
+    "occurrences": [
+      "connectors/connectors/493/url",
+      "connectors/connectors/493/github",
+      "original_sources/entries/0"
+    ],
+    "publisher_review": "connector:34892002-bilibili-mcp-js",
+    "analysis": "The repository URL in the npm manifest matches the frozen index. The published package lists compiled dist files, while this source checkout contains TypeScript. The pinned source review establishes identity but does not authenticate registry build output."
+  }
+]

@@ -29,3 +29,10 @@ The frozen ledger contains 180 reviewed IDs and 42,100 open IDs. This batch cove
 237 distinct frozen IDs reviewed and 42,043 open. The batch contains 40 spoken transcript interpretations and 17 publisher-linked IDs across five distinct upstream repositories. The Council guide resolves to a single Markdown skill with inline advisor roles. Three conflicting GitHub attributions remain in exceptions.json. The two skill packages have pinned raw originals, companion package links and document hashes. Prompt templates remain in the original documents, separate from the research findings. Package checks are static and do not certify runtime behavior or binary releases.
 
 The comparison against main at 61fc8bba2e73579fb2b0eb9f48b4da71eef04394 found 1,781 distinct post-freeze IDs. Occurrence offsets in subsequent.json resolve at its own comparison revision.
+
+
+### Checkpoint after batch 006
+
+293 frozen IDs reviewed; 41,987 open. This batch reconciles host commands with publisher references, including changed command names and session/cloud differences. Eleven natural-language prompt shortcuts are assessed separately, with pointers to their stored text. Their status as executable commands is unverified. The gstack entries share one pinned package review; raw skill documents, invocation names and document digests are recorded separately. The two completed videos each have substantive speech. An unrelated title-only record stays open.
+
+At source comparison c5123745a07c0eff5a08c8e6a2ccb8893cfe9474, the current inventory contains 1,781 post-freeze IDs. See subsequent.json for their occurrence revision.

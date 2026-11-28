@@ -1,0 +1,109 @@
+[
+  {
+    "id": "repo:garrytan/gstack",
+    "source": "https://github.com/garrytan/gstack/blob/778934c098f5d5c5e33931ed9c9ecee1807f9fe7/README.md",
+    "occurrences": [
+      "screen_urls/urls/173",
+      "processed/6-oUuKyG02s.json#links",
+      "processed/6-oUuKyG02s.json#description",
+      "processed/ZSvcxjNZdxk.json#links",
+      "processed/ZSvcxjNZdxk.json#description",
+      "_pending/3BwxWEGlqI8.json#links",
+      "_pending/3BwxWEGlqI8.json#description",
+      "_pending/STH929HARLo.json#links",
+      "_pending/STH929HARLo.json#description"
+    ],
+    "evidence_sha256": {
+      "README.md": "b7323cc367d51166d5278090f14990ed6432a85bdd092b9566d7bc785476d97b",
+      "setup": "fcc77228c866bd2971216d4a72eced6ccad640e8f3ed711e071b050bdf308b3d",
+      "SKILL.md": "e4bb00a89e71c1fa25f2e31a7f1b7346972c7a070fdc019fd70683a809bac5d2",
+      "office-hours/SKILL.md": "91285d85e369d73d3442aece5e0d0142a719de6b2f1e5224e868a2de18516ed5",
+      "plan-ceo-review/SKILL.md": "d9c78d4028d73b97f6f91b452684b261ce85060ab921d51cfb3b7b899b0f56af",
+      "qa/SKILL.md": "7fc18ba16ce3bc1f22526635c3f59eb0142cde7a553cf9489ef17c2491900e0c"
+    },
+    "analysis": "The package routes work across product, review and QA roles. The publisher reports 58 tasks fixed with the pack versus 61 of 99 scored without it in its general-task comparison; do not infer a universal increase in fix rate from the role list. The README points to both results and a correction. No independent replication here.",
+    "os": "Publisher describes full macOS/Linux support. Windows support is narrower and requires Node in addition to Git and Bun.",
+    "data": "Skills can read project files, write design documents, run shell tools and exercise a browser. Browser QA may touch an authenticated session. Scope depends on the chosen skill and host.",
+    "malware_check": {
+      "archive_sha256": "2a755be8ad1b6bdcd2a7be95dc3803d51ef577330148e96cddfc4527d5aa707d",
+      "regular_files": 5213,
+      "eligible_scripts_scanned": 3014,
+      "indicator_counts": {
+        "process_launch": 989,
+        "eval": 15,
+        "pipe_to_shell": 11
+      },
+      "example_paths": {
+        "process_launch": [
+          ".github/scripts/gate-secret-scan.mjs",
+          "bin/gstack-brain-context-load.ts",
+          "bin/gstack-brain-sync-index.py"
+        ],
+        "eval": [
+          "browse/test/tunnel-gate-unit.test.ts",
+          "lib/agent-model.ts",
+          "scripts/resolvers/testing.ts"
+        ],
+        "pipe_to_shell": [
+          "careful/bin/check-careful.sh",
+          "scripts/resolve-codex-generation-model.ts",
+          "test/audit-compliance.test.ts"
+        ]
+      },
+      "method": "Read-only static indicators on common script extensions and setup under 1 MB; no execution or antivirus clearance. Shell commands, hooks, dependencies and browser binaries require their own trust assessment."
+    }
+  },
+  {
+    "id": "skill:gstack",
+    "occurrences": [
+      "elements_index/elements/5",
+      "skills/skills/5"
+    ],
+    "source": "https://github.com/garrytan/gstack/blob/778934c098f5d5c5e33931ed9c9ecee1807f9fe7/SKILL.md",
+    "publisher_review": "repo:garrytan/gstack",
+    "raw_url": "https://raw.githubusercontent.com/garrytan/gstack/778934c098f5d5c5e33931ed9c9ecee1807f9fe7/SKILL.md",
+    "package_url": "https://github.com/garrytan/gstack/tree/778934c098f5d5c5e33931ed9c9ecee1807f9fe7",
+    "document_path": "SKILL.md",
+    "sha256": "e4bb00a89e71c1fa25f2e31a7f1b7346972c7a070fdc019fd70683a809bac5d2",
+    "analysis": "The root skill routes a request to a specialist, distinct from performing every phase. An explicit publisher link in the source video establishes identity; the frozen original_sources index lacks a gstack match."
+  },
+  {
+    "id": "command:office-hours",
+    "record": "data/commands.json#/commands/5",
+    "as_extracted": "/office-hours",
+    "discovery": "https://www.youtube.com/watch?v=ZSvcxjNZdxk",
+    "source": "https://github.com/garrytan/gstack/blob/778934c098f5d5c5e33931ed9c9ecee1807f9fe7/office-hours/SKILL.md",
+    "publisher_review": "repo:garrytan/gstack",
+    "raw_url": "https://raw.githubusercontent.com/garrytan/gstack/778934c098f5d5c5e33931ed9c9ecee1807f9fe7/office-hours/SKILL.md",
+    "package_url": "https://github.com/garrytan/gstack/tree/778934c098f5d5c5e33931ed9c9ecee1807f9fe7",
+    "document_path": "office-hours/SKILL.md",
+    "sha256": "91285d85e369d73d3442aece5e0d0142a719de6b2f1e5224e868a2de18516ed5",
+    "analysis": "A third-party gstack intake workflow for framing a product idea and producing a design document. It depends on the installed pack, and the original declares both file and shell tools."
+  },
+  {
+    "id": "command:ceo-review",
+    "record": "data/commands.json#/commands/7",
+    "as_extracted": "/ceo-review",
+    "discovery": "https://www.youtube.com/watch?v=ZSvcxjNZdxk",
+    "source": "https://github.com/garrytan/gstack/blob/778934c098f5d5c5e33931ed9c9ecee1807f9fe7/plan-ceo-review/SKILL.md",
+    "publisher_review": "repo:garrytan/gstack",
+    "raw_url": "https://raw.githubusercontent.com/garrytan/gstack/778934c098f5d5c5e33931ed9c9ecee1807f9fe7/plan-ceo-review/SKILL.md",
+    "package_url": "https://github.com/garrytan/gstack/tree/778934c098f5d5c5e33931ed9c9ecee1807f9fe7",
+    "document_path": "plan-ceo-review/SKILL.md",
+    "sha256": "d9c78d4028d73b97f6f91b452684b261ce85060ab921d51cfb3b7b899b0f56af",
+    "analysis": "The publisher calls this plan-ceo-review. Treat the shorter frozen label as a discovery term; do not assume it is a registered alias. The source frames tradeoffs and strategic scope before implementation."
+  },
+  {
+    "id": "command:qa",
+    "record": "data/commands.json#/commands/8",
+    "as_extracted": "/qa",
+    "discovery": "https://www.youtube.com/watch?v=ZSvcxjNZdxk",
+    "source": "https://github.com/garrytan/gstack/blob/778934c098f5d5c5e33931ed9c9ecee1807f9fe7/qa/SKILL.md",
+    "publisher_review": "repo:garrytan/gstack",
+    "raw_url": "https://raw.githubusercontent.com/garrytan/gstack/778934c098f5d5c5e33931ed9c9ecee1807f9fe7/qa/SKILL.md",
+    "package_url": "https://github.com/garrytan/gstack/tree/778934c098f5d5c5e33931ed9c9ecee1807f9fe7",
+    "document_path": "qa/SKILL.md",
+    "sha256": "7fc18ba16ce3bc1f22526635c3f59eb0142cde7a553cf9489ef17c2491900e0c",
+    "analysis": "The publisher workflow can reproduce and fix issues. Its Write and Edit permissions make it materially different from a read-only test report; use an isolated target and preserve what changed."
+  }
+]

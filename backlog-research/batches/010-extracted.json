@@ -1,0 +1,285 @@
+[
+  {
+    "id": "archived:d6170aedffb7b424489853f448acfc825ef1179084bda13c71dbaf53ca5377ac",
+    "evidence": "commands_quarantine/quarantined/181/record",
+    "source": "https://www.youtube.com/watch?v=075O7jBgMgc",
+    "analysis": "Anthropic identifies this as a request header used when a session resumed after an hour idle. The defect was repeated application on later turns. It is not a shell instruction for clearing a session.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)",
+    "publisher": "https://www.anthropic.com/research/april-23-postmortem"
+  },
+  {
+    "id": "archived:98c0b65c73ba8e9518b85b618a2da801bf2539591eff681b1d15491a82ca2456",
+    "evidence": "commands_quarantine/quarantined/182/record",
+    "source": "https://www.youtube.com/watch?v=075O7jBgMgc",
+    "analysis": "Paired with the header, this value kept the most recent reasoning block. It did not specify one user message or one retained session.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)",
+    "publisher": "https://www.anthropic.com/research/april-23-postmortem"
+  },
+  {
+    "id": "archived:1eec4adb0c94d72ddfcf98edd64a6931a391dcfe8600ffe4c14b0cd4ec681c2b",
+    "evidence": "commands_quarantine/quarantined/183/record",
+    "source": "https://www.youtube.com/watch?v=0Af8LDWJzjc",
+    "analysis": "The speaker presents full-stack type checking as the motivation for the scaffold. The latest tag leaves generator version unresolved, and scaffolding alone cannot establish that both ends of an application use the same types.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)"
+  },
+  {
+    "id": "archived:4a9b84ddb9d333a0f329691e17fb974168e8bef08182b953b1191be1fced71d3",
+    "evidence": "commands_quarantine/quarantined/184/record",
+    "source": "https://www.youtube.com/watch?v=J7ATUK2dHHo",
+    "analysis": "The example directory exists, but working directory matters twice: the script imports the model from its parent and opens a CSV relative to the launch directory.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)",
+    "publisher_review": "repo:shiyu-coder/kronos"
+  },
+  {
+    "id": "archived:7179ff2cc56d3fbd3f7af816df6cf4094a4fab4d75b49a4b008fdfcabe5c7112",
+    "evidence": "commands_quarantine/quarantined/185/record",
+    "source": "https://www.youtube.com/watch?v=J7ATUK2dHHo",
+    "analysis": "No notebook of this name exists in the pinned publisher tree. Its examples directory contains a Python prediction script. A Jupyter launch cannot reconstruct the missing notebook.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)",
+    "publisher_review": "repo:shiyu-coder/kronos"
+  },
+  {
+    "id": "archived:bec558d79146162d06916a303ee929230c3ccb73d6a48c6f5064d925e3722b12",
+    "evidence": "commands_quarantine/quarantined/186/record",
+    "source": "https://www.youtube.com/watch?v=J7ATUK2dHHo",
+    "analysis": "The finetune directory exists. The documented training invocation starts at repository root and uses paths relative to it; changing directory can invalidate the next step.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)",
+    "publisher_review": "repo:shiyu-coder/kronos"
+  },
+  {
+    "id": "archived:5b8f4205da288444b511e2d21b101b1451f5be5fc5f7c367770210cc3c8a7b98",
+    "evidence": "commands_quarantine/quarantined/187/record",
+    "source": "https://www.youtube.com/watch?v=J7ATUK2dHHo",
+    "analysis": "Neither the named script nor the advertised 500m checkpoint setup appears in the documented training path. The publisher separates tokenizer and predictor training and marks its large checkpoint unavailable in the model table.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)",
+    "publisher_review": "repo:shiyu-coder/kronos"
+  },
+  {
+    "id": "archived:d006a25acf2094c83d163cfa364fe0b65cc5671611e1bfa0bea1c229b0ae7df1",
+    "evidence": "commands_quarantine/quarantined/188/record",
+    "source": "https://www.youtube.com/watch?v=J7ATUK2dHHo",
+    "analysis": "The manifest includes PyTorch and a mixture of exact, minimum and unconstrained requirements. Installing from it changes the environment; it does not obtain the market dataset or checkpoint.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)",
+    "publisher_review": "repo:shiyu-coder/kronos"
+  },
+  {
+    "id": "archived:11d75124ad5d7f76d2599a3391072f7b29ebc475b179afcc45e7deb065be9059",
+    "evidence": "commands_quarantine/quarantined/189/record",
+    "source": "https://www.youtube.com/watch?v=J7ATUK2dHHo",
+    "analysis": "All three names are imported in the publisher example. Successful resolution depends on the repository model package being on the Python path; this line performs no inference.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)",
+    "publisher_review": "repo:shiyu-coder/kronos"
+  },
+  {
+    "id": "archived:fe8088c7fec5fb93a41346249533caa9a082c4c9674d375838d586bca517ae06",
+    "evidence": "commands_quarantine/quarantined/190/record",
+    "source": "https://www.youtube.com/watch?v=J7ATUK2dHHo",
+    "analysis": "The captured tokenizer identifier drops the -base suffix used for the small model in the publisher example. Exact model-tokenizer compatibility matters even when a similarly named download succeeds.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)",
+    "publisher_review": "repo:shiyu-coder/kronos"
+  },
+  {
+    "id": "archived:37a2b58f4b97b2b5b18fa777f54b896f6fed26ea77a6ecb933f842a427828463",
+    "evidence": "commands_quarantine/quarantined/191/record",
+    "source": "https://www.youtube.com/watch?v=J7ATUK2dHHo",
+    "analysis": "The small checkpoint matches the example. It uses the base tokenizer and a 512-step context; choosing it does not load the larger checkpoint referred to elsewhere.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)",
+    "publisher_review": "repo:shiyu-coder/kronos"
+  },
+  {
+    "id": "archived:480d9d012a8fc801d35b55dd12570333fa5d5a6fb30ea793356684bb3a66361f",
+    "evidence": "commands_quarantine/quarantined/192/record",
+    "source": "https://www.youtube.com/watch?v=J7ATUK2dHHo",
+    "analysis": "Context is historical input capacity, distinct from forecast horizon. The original example uses 400 observations and requests 120 future periods with the small model.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)",
+    "publisher_review": "repo:shiyu-coder/kronos"
+  },
+  {
+    "id": "archived:50ea4687582edd830be7f56a36bff4fe050f91405c54be6ca23a7fa623068f97",
+    "evidence": "commands_quarantine/quarantined/193/record",
+    "source": "https://www.youtube.com/watch?v=J7ATUK2dHHo",
+    "analysis": "Importing pandas only establishes a short module name. The input schema and chronological split are defined later and cannot be inferred from this line.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)",
+    "publisher_review": "repo:shiyu-coder/kronos"
+  },
+  {
+    "id": "archived:3c17f42889472cc1c0942ee6c5919fb398cd85ed9861f83138218fd25b84cd7b",
+    "evidence": "commands_quarantine/quarantined/194/record",
+    "source": "https://www.youtube.com/watch?v=J7ATUK2dHHo",
+    "analysis": "The source example references the same relative CSV, but no file with that basename is present in the publisher archive. Reproduction requires separately obtaining compatible data and documenting its origin.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)",
+    "publisher_review": "repo:shiyu-coder/kronos"
+  },
+  {
+    "id": "archived:e18fc588ae80353af5ffee4f69b33f6a99a19a9b7b217ef4c48110c481882595",
+    "evidence": "commands_quarantine/quarantined/195/record",
+    "source": "https://www.youtube.com/watch?v=J7ATUK2dHHo",
+    "analysis": "The archived slice takes the suffix beginning at lookback minus one and overwrites the frame, removing timestamps. The publisher instead retains the full frame and assigns the historical prefix to x_df. On retrospective data the archived direction can include future observations.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)",
+    "publisher_review": "repo:shiyu-coder/kronos"
+  },
+  {
+    "id": "archived:5ae9be7c9a34b2e23a2558e93cc1ab21f1b3fcfbb4dbd112966f3e3660f9dcbb",
+    "evidence": "commands_quarantine/quarantined/196/record",
+    "source": "https://www.youtube.com/watch?v=J7ATUK2dHHo",
+    "analysis": "Parsing every timestamp cannot align history to x_df. In the shown sequence the previous projection also removed the timestamp column. The original parses timestamps before selecting the prefix.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)",
+    "publisher_review": "repo:shiyu-coder/kronos"
+  },
+  {
+    "id": "archived:a6da4e0b568e641d42272df596bea877b9dbff7849591ed970254dac74f4f78c",
+    "evidence": "commands_quarantine/quarantined/197/record",
+    "source": "https://www.youtube.com/watch?v=J7ATUK2dHHo",
+    "analysis": "Reusing the entire timestamp series for both history and horizon mislabels the forecast. Upstream selects the next pred_len timestamps strictly after the observed prefix, without passing their prices as features.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)",
+    "publisher_review": "repo:shiyu-coder/kronos"
+  },
+  {
+    "id": "archived:34bb629439c5377f4867f629c93d980ce89c4201c9e8488ab472fdedc7b7551b",
+    "evidence": "commands_quarantine/quarantined/198/record",
+    "source": "https://www.youtube.com/watch?v=J7ATUK2dHHo",
+    "analysis": "The archived keywords for temperature and sampling probability are absent from the pinned predict signature. The example uses T and top_p. A valid forecast also requires aligned inputs and a distinct future index.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)",
+    "publisher_review": "repo:shiyu-coder/kronos"
+  },
+  {
+    "id": "archived:29be5d1c6f0969efc6e89a68bd576e81974a973336e72608b5d1f6a4348d2daf",
+    "evidence": "commands_quarantine/quarantined/199/record",
+    "source": "https://www.youtube.com/watch?v=0NvSJCTvsFY",
+    "analysis": "The Telegram reply identifier describes a connector operation. The companion transcript describes a round trip, but this token contains no destination, message body or delivery receipt.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)"
+  },
+  {
+    "id": "archived:32f7d0cb17839236faded411e82bd786d32dbca24dba13ca92f4b404ba266bb4",
+    "evidence": "commands_quarantine/quarantined/202/record",
+    "source": "https://www.youtube.com/watch?v=JPENegawvyQ",
+    "analysis": "Seed names a project-defined npm script. Its effect depends on the package manifest, configured database and whether repeated runs insert duplicates.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)"
+  },
+  {
+    "id": "archived:3b338ef6f7dab7e51269346f08def7e69eab2dc16f6e1a3f2184f309a076610e",
+    "evidence": "commands_quarantine/quarantined/203/record",
+    "source": "https://www.youtube.com/watch?v=JPENegawvyQ",
+    "analysis": "Development mode delegates to a package script. Check which service was started and its readiness before treating the project as running.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)"
+  },
+  {
+    "id": "archived:eca7804d3197229d3c66c4e9c9b29970ccd477d963e569152a6a74059572c54a",
+    "evidence": "commands_quarantine/quarantined/204/record",
+    "source": "https://www.youtube.com/watch?v=JPENegawvyQ",
+    "analysis": "Running a development script under Bun changes the execution environment. It need not resolve dependencies or environment settings in the same way as the npm example.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)"
+  },
+  {
+    "id": "archived:b94c4c26436987f2ca180acc9b77280d1eca182910bc58d35376d0f6dbaaac77",
+    "evidence": "commands_quarantine/quarantined/205/record",
+    "source": "https://www.youtube.com/watch?v=JPENegawvyQ",
+    "analysis": "The label suggests a coding client entry point but specifies no task or target repository. It cannot substantiate a successful build.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)"
+  },
+  {
+    "id": "archived:b79d1e5f3f4306a1f62e2c547f8ea08eaaf2cb2368eba36aeb5b1ba0d669de48",
+    "evidence": "commands_quarantine/quarantined/206/record",
+    "source": "https://www.youtube.com/watch?v=JPENegawvyQ",
+    "analysis": "A planning request could produce a proposed change list. The recorded tokens provide neither an approved plan nor implementation evidence.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)"
+  },
+  {
+    "id": "archived:afb191a8fc573a9a6639aa468df9474b3d778440da63cbd46bde58c76e22ce9a",
+    "evidence": "commands_quarantine/quarantined/207/record",
+    "source": "https://www.youtube.com/watch?v=JPENegawvyQ",
+    "analysis": "Headless describes interaction mode. A reproducible job still needs a task, working directory, exit status and captured result.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)"
+  },
+  {
+    "id": "archived:7f80bbe6864b1aeaf60ca79136e9d07ae5e03fa339a70f0d248c99dea9965152",
+    "evidence": "commands_quarantine/quarantined/208/record",
+    "source": "https://www.youtube.com/watch?v=JPENegawvyQ",
+    "analysis": "An approval-related flag is recorded without version-specific semantics. The fragment gives no basis for inferring which operations were approved or completed.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)"
+  },
+  {
+    "id": "archived:b90d3cc47038191b16118dcb17e05b62f7abc1a5d5522688534ed79e61b1fd2e",
+    "evidence": "commands_quarantine/quarantined/209/record",
+    "source": "https://www.youtube.com/watch?v=JaEpj9OB3Ek",
+    "analysis": "The token names an Instagram action but omits account, media and publication state. Creating a draft, scheduling it and receiving a post ID are distinct outcomes.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)"
+  },
+  {
+    "id": "archived:0e3eb5341643dcd77a9dc9530ded9a0da1047d49cc39d801d1c2e60724b1fb68",
+    "evidence": "commands_quarantine/quarantined/219/record",
+    "source": "https://www.youtube.com/watch?v=Ji9Zbz0MXlk",
+    "analysis": "The notation resembles a tool trace. Running the test script and observing green results are separate; the trace lacks output and exit status.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)"
+  },
+  {
+    "id": "archived:fcb1ac3f66649e6444b291080d817609e4bc8d5ed2c1bf449867d96be89f6509",
+    "evidence": "commands_quarantine/quarantined/221/record",
+    "source": "https://www.youtube.com/watch?v=Ji9Zbz0MXlk",
+    "analysis": "A reply-tool label identifies a possible outbound channel. Neither its payload nor its destination or delivery is recorded.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)"
+  },
+  {
+    "id": "archived:68ffe29e4d505d3cdb91eff4fb46463936a010cc2bc499a9c8e8cd62a72e5c33",
+    "evidence": "commands_quarantine/quarantined/222/record",
+    "source": "https://www.youtube.com/watch?v=JqqwVgpJSpM",
+    "analysis": "Publishing local commits requires a remote and branch. The token does not show which commit reached which ref or whether the remote accepted it.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)"
+  },
+  {
+    "id": "archived:a924078c9b10942a7b437126a6bd9e31d2a65d4d3d85cedd74667c9fbdc03168",
+    "evidence": "commands_quarantine/quarantined/223/record",
+    "source": "https://www.youtube.com/watch?v=JqqwVgpJSpM",
+    "analysis": "Selecting Gmail search/read tools makes those operations available. It is not a mailbox search result, a message read or evidence that message data was transferred.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)"
+  },
+  {
+    "id": "archived:f5fe8ec23576f3b9208ca5c461e9cc4bd4b70c8b9a7122132e5fbfdcdb57db91",
+    "evidence": "commands_quarantine/quarantined/224/record",
+    "source": "https://www.youtube.com/watch?v=JvOvObgaQlU",
+    "analysis": "Dependency installation draws on the manifest, lockfile and package registry. A successful install alone does not demonstrate that the project builds.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)"
+  },
+  {
+    "id": "archived:25748a09fac32cbcbd0c914b2b883f580d1c40649cf9c325669def7496c19c81",
+    "evidence": "commands_quarantine/quarantined/225/record",
+    "source": "https://www.youtube.com/watch?v=JvOvObgaQlU",
+    "analysis": "Build is a project-defined script. Its result needs an exit status and, where applicable, output artifacts tied to the input revision.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)"
+  },
+  {
+    "id": "archived:f4ef8037f15d6f4708007317c01b82420ee7d29f2bd5f19a8bb5925b35e91239",
+    "evidence": "commands_quarantine/quarantined/226/record",
+    "source": "https://www.youtube.com/watch?v=JvOvObgaQlU",
+    "analysis": "Repository status summarizes staged, unstaged and untracked paths. It cannot by itself establish the intended content of a change.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)"
+  },
+  {
+    "id": "archived:a457c9d7928ec88b796e709110b653e6f1ca9ac1a8491d6f92934d4a09aea342",
+    "evidence": "commands_quarantine/quarantined/227/record",
+    "source": "https://www.youtube.com/watch?v=JvOvObgaQlU",
+    "analysis": "The default diff omits staged edits. Checking it alone can miss changes already queued for the next commit.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)"
+  },
+  {
+    "id": "archived:d8555030825f0a67d53224e4720765ca74bb2487f9e8b563ff6646d15359da09",
+    "evidence": "commands_quarantine/quarantined/228/record",
+    "source": "https://www.youtube.com/watch?v=JvOvObgaQlU",
+    "analysis": "Staging the current tree can include unrelated work. Inspect the staged diff to see what the next commit would actually contain.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)"
+  },
+  {
+    "id": "archived:77aa3cb6eecc82186bda9cd9535c4a16e8441515bedb7575c6ba44aef5a471b3",
+    "evidence": "commands_quarantine/quarantined/229/record",
+    "source": "https://www.youtube.com/watch?v=JvOvObgaQlU",
+    "analysis": "The captured message argument is empty. An ordinary commit with an empty message normally aborts; the fragment is not evidence that a revision exists.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)"
+  },
+  {
+    "id": "archived:47dfac3bc4c2c00ee2fc05c02fa96ba98bc5829f36a18d5f51991c5fd8c824ef",
+    "evidence": "commands_quarantine/quarantined/230/record",
+    "source": "https://www.youtube.com/watch?v=JvOvObgaQlU",
+    "analysis": "Pull fetches and integrates upstream history. The resulting operation depends on branch state and configured merge or rebase behavior.",
+    "archive_reason": "does not start with / (shell command, file path, or prose)"
+  }
+]

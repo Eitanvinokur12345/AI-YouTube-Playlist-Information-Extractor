@@ -1,0 +1,117 @@
+[
+  {
+    "id": "tool:kronos-financial-forecasting",
+    "occurrences": [
+      "elements_index/elements/7357",
+      "tools/tools/376"
+    ],
+    "publisher": "https://github.com/shiyu-coder/Kronos/blob/67b630e67f6a18c9e9be918d9b4337c960db1e9a/",
+    "source_files_sha256": {
+      "README.md": "b815b608192afa4b805a11bcbb66268f3e3db55736218964944318da7865357e",
+      "LICENSE": "acb2d194d378204e5f2be4dcd24d39ecac437903620c790c3315a96dab388fdc",
+      "requirements.txt": "b68eaa2f945d6a5726e3642ce5d6c82014b33a09c3c1bd6302f2c530db22593e",
+      "examples/prediction_example.py": "fd113d9466d42a0c07aeeec55c8dcbbdc3c0319727c9fc9bb89cd234c4c3ca01",
+      "model/kronos.py": "0a5f90282e2039c2de0771473419715c845def154896dbd0f5747837e6241032",
+      "finetune_csv/README.md": "97742b2bd0657d1bfc3c6827b8c8856ba04b08d5b8d869320be83f2752a0fac6"
+    },
+    "analysis": "The frozen record describes model access broadly. The publisher lists downloadable mini, small and base checkpoints, while its approximately 499M large variant has no released checkpoint in the table. The pinned small example produces forecast OHLCV and amount, not a trading decision. Record checkpoint availability separately from repository licensing.",
+    "os_runtime": "Python/PyTorch. Device selection checks CUDA then MPS then CPU. OS compatibility and performance not tested.",
+    "data": "Input includes OHLC and historical and future timestamps. Volume is optional; missing amount can be derived from volume and average OHLC. Model and tokenizer are fetched separately. Example market CSV absent from tree.",
+    "malware_check": {
+      "archive_sha256": "969719e47b2134d8a56533784508b6d859bd1c9aacb1b62e4a504cb4fc096021",
+      "checked_files": 31,
+      "extensions": [
+        "py",
+        "sh",
+        "js",
+        "ps1"
+      ],
+      "max_bytes": 1000000,
+      "static_indicators": {
+        "dynamic_eval": [
+          "tests/test_kronos_regression.py",
+          "finetune_csv/finetune_tokenizer.py",
+          "finetune_csv/finetune_base_model.py",
+          "finetune/train_tokenizer.py",
+          "finetune/train_predictor.py",
+          "finetune/qlib_test.py",
+          "tests/data/generate_regression_output.py"
+        ],
+        "pickle_or_torch_load": [
+          "finetune/qlib_test.py",
+          "finetune/dataset.py"
+        ]
+      },
+      "limits": "Pattern hits include benign methods and require context. No code, checkpoint or installer executed; binaries and dependency chain not scanned."
+    },
+    "signature_args": [
+      "self",
+      "df",
+      "x_timestamp",
+      "y_timestamp",
+      "pred_len",
+      "T",
+      "top_k",
+      "top_p",
+      "sample_count",
+      "verbose"
+    ]
+  },
+  {
+    "id": "repo:shiyu-coder/kronos",
+    "occurrences": [
+      "screen_urls/urls/472"
+    ],
+    "publisher": "https://github.com/shiyu-coder/Kronos/blob/67b630e67f6a18c9e9be918d9b4337c960db1e9a/",
+    "source_files_sha256": {
+      "README.md": "b815b608192afa4b805a11bcbb66268f3e3db55736218964944318da7865357e",
+      "LICENSE": "acb2d194d378204e5f2be4dcd24d39ecac437903620c790c3315a96dab388fdc",
+      "requirements.txt": "b68eaa2f945d6a5726e3642ce5d6c82014b33a09c3c1bd6302f2c530db22593e",
+      "examples/prediction_example.py": "fd113d9466d42a0c07aeeec55c8dcbbdc3c0319727c9fc9bb89cd234c4c3ca01",
+      "model/kronos.py": "0a5f90282e2039c2de0771473419715c845def154896dbd0f5747837e6241032",
+      "finetune_csv/README.md": "97742b2bd0657d1bfc3c6827b8c8856ba04b08d5b8d869320be83f2752a0fac6"
+    },
+    "analysis": "Source review found three independent reproduction failures in the extracted walkthrough: missing notebook/CSV artifacts at the named paths, a reversed historical slice, and unsupported inference keywords. The original example separates 400 observed rows from 120 forecast timestamps; its plotting helper replaces the forecast index, so inspect original indices before using the plot as alignment evidence.",
+    "os_runtime": "Python/PyTorch. Device selection checks CUDA then MPS then CPU. OS compatibility and performance not tested.",
+    "data": "Input includes OHLC and historical and future timestamps. Volume is optional; missing amount can be derived from volume and average OHLC. Model and tokenizer are fetched separately. Example market CSV absent from tree.",
+    "malware_check": {
+      "archive_sha256": "969719e47b2134d8a56533784508b6d859bd1c9aacb1b62e4a504cb4fc096021",
+      "checked_files": 31,
+      "extensions": [
+        "py",
+        "sh",
+        "js",
+        "ps1"
+      ],
+      "max_bytes": 1000000,
+      "static_indicators": {
+        "dynamic_eval": [
+          "tests/test_kronos_regression.py",
+          "finetune_csv/finetune_tokenizer.py",
+          "finetune_csv/finetune_base_model.py",
+          "finetune/train_tokenizer.py",
+          "finetune/train_predictor.py",
+          "finetune/qlib_test.py",
+          "tests/data/generate_regression_output.py"
+        ],
+        "pickle_or_torch_load": [
+          "finetune/qlib_test.py",
+          "finetune/dataset.py"
+        ]
+      },
+      "limits": "Pattern hits include benign methods and require context. No code, checkpoint or installer executed; binaries and dependency chain not scanned."
+    },
+    "signature_args": [
+      "self",
+      "df",
+      "x_timestamp",
+      "y_timestamp",
+      "pred_len",
+      "T",
+      "top_k",
+      "top_p",
+      "sample_count",
+      "verbose"
+    ]
+  }
+]

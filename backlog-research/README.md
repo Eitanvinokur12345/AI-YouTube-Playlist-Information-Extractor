@@ -55,3 +55,9 @@ The reviewed-ID union is 510 of 42,280, leaving 41,770 open. At fe7425da12e8718e
 Read and analyzed 10 previously open video transcripts. Reviewed 43 distinct archived entries, including 30 prompt/text entries stored separately; 42 exact archival duplicates link to those findings. Four publisher IDs resolve to two pinned originals. Astral's original and license files contradict the ownership and licensing flags in the frozen uv tool row. The historical row is preserved.
 
 Union of completed frozen IDs: 609 of 42,280, leaving 41,671 open. Title-only video cases remain separately recorded in exceptions.json. The intervening main commit changed only the ledger; subsequent.json retains 1,842 later IDs with their occurrence revision. No reviewed archive command was executed.
+
+### Checkpoint after batch 010
+
+Reviewed four spoken transcripts, 50 distinct archived entries and two publisher-linked Kronos IDs. Fifty exact archive duplicates point to the individual assessments. Prompt text has its own batch. The pinned inference example and predictor signature expose a reversed history slice and incompatible keywords in the extracted walkthrough. Publisher archive contents also distinguish a referenced CSV from a bundled dataset. Source and model code were inspected without execution.
+
+The union contains 715 of 42,280 frozen IDs, with 41,565 open. Compared source inventory at 3d3261c6560c9cd53f42f48e4e184496ed9bc5f5; 1,867 later IDs currently present. Occurrence offsets in subsequent.json always resolve at its own comparison revision.

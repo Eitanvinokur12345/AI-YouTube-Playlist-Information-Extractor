@@ -49,3 +49,9 @@ The reviewed-ID union is 354 of 42,280, leaving 41,926 open. Main at 2c7c7eeb75b
 Compared 712 quarantine entries with 672 deletion entries. The index identifies 670 exact one-to-one content matches at the freeze. Reviewed 75 distinct archived entries, including 12 prompt or interface text findings stored separately, and linked their 75 duplicate IDs. The remaining 595 pairs receive no completion credit from this mapping. Archive dispositions are preserved. Six publisher-linked IDs were reviewed across two pinned projects, including their source hashes, OS/runtime and data boundaries, and static-check limits.
 
 The reviewed-ID union is 510 of 42,280, leaving 41,770 open. At fe7425da12e8718e346446b5e3af84c2ace941d8, the current inventory contains 1,842 subsequent IDs. No video was credited for reviewing extracted records.
+
+### Checkpoint after batch 009
+
+Read and analyzed 10 previously open video transcripts. Reviewed 43 distinct archived entries, including 30 prompt/text entries stored separately; 42 exact archival duplicates link to those findings. Four publisher IDs resolve to two pinned originals. Astral's original and license files contradict the ownership and licensing flags in the frozen uv tool row. The historical row is preserved.
+
+Union of completed frozen IDs: 609 of 42,280, leaving 41,671 open. Title-only video cases remain separately recorded in exceptions.json. The intervening main commit changed only the ledger; subsequent.json retains 1,842 later IDs with their occurrence revision. No reviewed archive command was executed.
